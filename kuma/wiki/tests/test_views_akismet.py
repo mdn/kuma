@@ -4,6 +4,7 @@ import pytest
 from django.contrib.auth.models import Permission
 from waffle.models import Flag
 
+from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.spam.akismet import Akismet
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
@@ -52,10 +53,7 @@ def test_disallowed_methods(db, client, http_method):
     url = reverse('wiki.submit_akismet_spam', locale='en-US')
     response = getattr(client, http_method)(url)
     assert response.status_code == 405
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 @pytest.mark.spam
@@ -65,10 +63,7 @@ def test_spam_valid_response(create_revision, akismet_wiki_user, user_client,
     url = reverse('wiki.submit_akismet_spam', locale='en-US')
     response = user_client.post(url, data={'revision': create_revision.id})
     assert response.status_code == 201
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
     # One RevisionAkismetSubmission record should exist for this revision.
     ras = RevisionAkismetSubmission.objects.get(revision=create_revision)
@@ -104,10 +99,7 @@ def test_spam_with_many_response(create_revision, akismet_wiki_user,
     url = reverse('wiki.submit_akismet_spam', locale='en-US')
     response = user_client.post(url, data={'revision': create_revision.id})
     assert response.status_code == 201
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     data = json.loads(response.content)
     assert len(data) == 2
     assert data[0]['type'] == 'ham'
@@ -128,10 +120,7 @@ def test_spam_no_permission(create_revision, wiki_user, user_client,
     # Redirects to login page when without permission.
     assert response.status_code == 302
     assert response['Location'].endswith('users/signin?next={}'.format(url))
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
     # No RevisionAkismetSubmission record should exist.
     ras = RevisionAkismetSubmission.objects.filter(revision=create_revision)
@@ -151,10 +140,7 @@ def test_spam_revision_does_not_exist(create_revision, akismet_wiki_user,
     url = reverse('wiki.submit_akismet_spam', locale='en-US')
     response = user_client.post(url, data={'revision': revision_id})
     assert response.status_code == 400
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
     # No RevisionAkismetSubmission record should exist.
     ras = RevisionAkismetSubmission.objects.filter(revision_id=revision_id)

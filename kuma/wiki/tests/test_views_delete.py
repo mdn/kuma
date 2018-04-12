@@ -1,6 +1,7 @@
 import pytest
 from django.contrib.auth.models import Permission
 
+from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 
 from ..models import Document, DocumentDeletionLog
@@ -27,10 +28,7 @@ def test_login(root_doc, client, endpoint):
     response = client.get(url)
     assert response.status_code == 302
     assert 'en-US/users/signin?' in response['Location']
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 @pytest.mark.parametrize(
@@ -46,10 +44,7 @@ def test_permission(root_doc, editor_client, endpoint):
     url = reverse('wiki.{}'.format(endpoint), locale='en-US', args=args)
     response = editor_client.get(url)
     assert response.status_code == 403
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 @pytest.mark.parametrize('endpoint', ['revert_document', 'delete_document',
@@ -61,20 +56,14 @@ def test_read_only_mode(root_doc, user_client, endpoint):
     url = reverse('wiki.{}'.format(endpoint), locale='en-US', args=args)
     response = user_client.get(url)
     assert response.status_code == 403
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 def test_delete_get(root_doc, delete_client):
     url = reverse('wiki.delete_document', locale='en-US', args=[root_doc.slug])
     response = delete_client.get(url)
     assert response.status_code == 200
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 @pytest.mark.xfail(reason='The "wiki/confirm_purge.html" template is missing'
@@ -84,10 +73,7 @@ def test_purge_get(root_doc, delete_client):
     url = reverse('wiki.purge_document', locale='en-US', args=[root_doc.slug])
     response = delete_client.get(url)
     assert response.status_code == 200
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 def test_restore_get(root_doc, delete_client):
@@ -99,10 +85,7 @@ def test_restore_get(root_doc, delete_client):
     response = delete_client.get(url)
     assert response.status_code == 302
     assert response['Location'].endswith(root_doc.get_absolute_url())
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     assert Document.objects.get(slug=root_doc.slug, locale=root_doc.locale)
 
 
@@ -111,10 +94,7 @@ def test_revert_get(root_doc, delete_client):
                   args=[root_doc.slug, root_doc.current_revision.id])
     response = delete_client.get(url)
     assert response.status_code == 200
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 def test_delete_post(root_doc, delete_client):
@@ -122,10 +102,7 @@ def test_delete_post(root_doc, delete_client):
     response = delete_client.post(url, data=dict(reason='test'))
     assert response.status_code == 302
     assert response['Location'].endswith(root_doc.get_absolute_url())
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     assert len(Document.admin_objects.filter(
         slug=root_doc.slug, locale=root_doc.locale, deleted=True)) == 1
     with pytest.raises(Document.DoesNotExist):
@@ -141,10 +118,7 @@ def test_purge_post(root_doc, delete_client):
     response = delete_client.post(url, data=dict(confirm='true'))
     assert response.status_code == 302
     assert response['Location'].endswith(root_doc.get_absolute_url())
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     with pytest.raises(Document.DoesNotExist):
         Document.admin_objects.get(slug=root_doc.slug, locale=root_doc.locale)
 
@@ -159,10 +133,7 @@ def test_revert_post(edit_revision, delete_client):
     assert response.status_code == 302
     assert response['Location'].endswith(reverse('wiki.document_revisions',
                                                  args=[root_doc.slug]))
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     assert len(root_doc.revisions.all()) == 3
     root_doc.refresh_from_db()
     assert root_doc.current_revision.id != edit_revision.id

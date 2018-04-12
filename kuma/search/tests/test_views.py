@@ -2,6 +2,7 @@
 import elasticsearch
 import pytest
 
+from kuma.core.tests import assert_no_cache_header, assert_shared_cache_header
 from kuma.core.urlresolvers import reverse
 
 from . import ElasticTestCase
@@ -17,10 +18,7 @@ class ViewTests(ElasticTestCase):
     def test_search_filters(self):
         response = self.client.get('/en-US/search?q=article')
         assert response.status_code == 200
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         assert 'Results for' in response.content
         assert 'an article title' in response.content
         assert '4 documents found for "article" in English' in response.content
@@ -139,17 +137,11 @@ class ViewTests(ElasticTestCase):
 
         response = self.client.head('/en-US/search?q=test')
         assert response.status_code == 405
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
 
         response = self.client.post('/en-US/search?q=test')
         assert response.status_code == 405
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
 
     def test_handled_exceptions(self):
 
@@ -241,8 +233,7 @@ class ViewTests(ElasticTestCase):
 def test_search_plugin(db, client, locale):
     response = client.get(reverse('search.plugin', locale=locale))
     assert response.status_code == 200
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     assert response['Content-Type'] == 'application/opensearchdescription+xml'
     assert 'search/plugin.html' in [t.name for t in response.templates]
     assert '/{}/search'.format(locale) in response.content

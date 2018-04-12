@@ -17,6 +17,7 @@ from pyquery import PyQuery as pq
 from pytz import timezone, utc
 from waffle.models import Flag
 
+from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.spam.akismet import Akismet
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
@@ -69,10 +70,7 @@ class BanTestCase(UserTestCase):
                           kwargs={'username': admin.username})
         resp = self.client.get(ban_url)
         assert resp.status_code == 302
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         assert str(settings.LOGIN_URL) in resp['Location']
         self.client.logout()
 
@@ -83,10 +81,7 @@ class BanTestCase(UserTestCase):
                           kwargs={'username': testuser.username})
         resp = self.client.get(ban_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
     def test_ban_view(self):
         testuser = self.user_model.objects.get(username='testuser')
@@ -100,10 +95,7 @@ class BanTestCase(UserTestCase):
 
         resp = self.client.post(ban_url, data)
         assert resp.status_code == 302
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         assert testuser.get_absolute_url() in resp['Location']
 
         testuser_banned = self.user_model.objects.get(username='testuser')
@@ -127,10 +119,7 @@ class BanTestCase(UserTestCase):
 
         resp = self.client.post(ban_url, data)
         assert resp.status_code == 404
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         bans = UserBan.objects.filter(user__username=nonexistent_username,
                                       by=admin,
@@ -150,10 +139,7 @@ class BanTestCase(UserTestCase):
         # POST without data kwargs
         resp = self.client.post(ban_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         bans = UserBan.objects.filter(user=testuser,
                                       by=admin,
@@ -164,10 +150,7 @@ class BanTestCase(UserTestCase):
         data = {'reason': ''}
         resp = self.client.post(ban_url, data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         bans = UserBan.objects.filter(user=testuser,
                                       by=admin,
@@ -183,10 +166,7 @@ class BanTestCase(UserTestCase):
         # User viewable if not banned
         response = self.client.get(url)
         assert response.status_code == 200
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
 
         # Ban User
         admin = self.user_model.objects.get(username='admin')
@@ -198,19 +178,13 @@ class BanTestCase(UserTestCase):
         # User not viewable if banned
         response = self.client.get(url)
         assert response.status_code == 404
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
 
         # Admin can view banned user
         self.client.login(username='admin', password='testpass')
         response = self.client.get(url)
         assert response.status_code == 200
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
 
     def test_get_ban_user_view(self):
         # For an unbanned user get the ban_user view
@@ -223,10 +197,7 @@ class BanTestCase(UserTestCase):
 
         resp = self.client.get(ban_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         # For a banned user redirect to user detail page
         UserBan.objects.create(user=testuser, by=admin,
@@ -234,10 +205,7 @@ class BanTestCase(UserTestCase):
                                is_active=True)
         resp = self.client.get(ban_url)
         assert resp.status_code == 302
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         assert testuser.get_absolute_url() in resp['Location']
 
 
@@ -257,10 +225,7 @@ class BanAndCleanupTestCase(UserTestCase):
                           kwargs={'username': admin.username})
         resp = self.client.get(ban_url)
         assert resp.status_code == 302
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         assert str(settings.LOGIN_URL) in resp['Location']
         self.client.logout()
 
@@ -271,10 +236,7 @@ class BanAndCleanupTestCase(UserTestCase):
                           kwargs={'username': testuser.username})
         resp = self.client.get(ban_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
     def test_ban_nonexistent_user(self):
         """GETs to ban_user_and_cleanup for nonexistent user return 404."""
@@ -288,10 +250,7 @@ class BanAndCleanupTestCase(UserTestCase):
         testuser.delete()
         resp = self.client.get(ban_url)
         assert resp.status_code == 404
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
 
 @pytest.mark.bans
@@ -371,28 +330,19 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         self.testuser.delete()
         resp = self.client.post(self.ban_testuser_url)
         assert resp.status_code == 404
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
     def test_post_returns_summary_page(self):
         """POSTing to ban_user_and_cleanup returns the summary page."""
         resp = self.client.post(self.ban_testuser_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
     def test_post_bans_user(self):
         """POSTing to the ban_user_and_cleanup bans user for "spam" reason."""
         resp = self.client.post(self.ban_testuser_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         testuser_banned = self.user_model.objects.get(username='testuser')
         assert not testuser_banned.is_active
@@ -410,10 +360,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         resp = self.client.post(self.ban_testuser_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         assert not self.testuser.is_active
 
@@ -443,10 +390,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-id': [rev.id for rev in revisions_created]}
         resp = self.client.post(self.ban_testuser_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         # All of self.testuser's revisions have been submitted
         testuser_submissions = RevisionAkismetSubmission.objects.filter(revision__creator=self.testuser.id)
@@ -469,10 +413,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         resp = self.client.post(self.ban_testuser_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         # Akismet endpoints were not called
         assert mock_requests.call_count == 0
@@ -496,10 +437,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         resp = self.client.post(self.ban_testuser_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         # No revisions submitted for self.testuser, since no revisions were selected
         testuser_submissions = RevisionAkismetSubmission.objects.filter(
@@ -527,10 +465,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         resp = self.client.post(self.ban_testuser2_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         # No revisions submitted for self.testuser2, since revisions in the POST
         # were made by self.testuser
@@ -557,10 +492,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         self.client.login(username='admin', password='testpass')
         resp = self.client.post(self.ban_testuser_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         # Test that the document was deleted successfully
         deleted_doc = Document.admin_objects.filter(pk=new_document.pk).first()
@@ -595,10 +527,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         self.client.login(username='admin', password='testpass')
         resp = self.client.post(self.ban_testuser_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         new_document = Document.objects.filter(id=new_document.id).first()
         # Make sure that the current revision is not the spam revision
@@ -645,10 +574,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         self.client.login(username='admin', password='testpass')
         resp = self.client.post(self.ban_testuser_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         # Document A: No changes should have been made
         new_document_a = Document.objects.filter(id=new_document_a.id).first()
@@ -690,10 +616,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         self.client.login(username='admin', password='testpass')
         resp = self.client.post(self.ban_testuser_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         # No changes should have been made to the document
         new_document = Document.objects.get(id=new_document.id)
@@ -728,10 +651,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         self.client.login(username='admin', password='testpass')
         resp = self.client.post(self.ban_testuser_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         # The document should be reverted to the last good revision
         new_document = Document.objects.get(id=new_document.id)
@@ -784,10 +704,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         self.client.login(username='admin', password='testpass')
         resp = self.client.post(self.ban_testuser_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         tz = timezone(settings.TIME_ZONE)
 
@@ -874,10 +791,7 @@ def test_user_detail_view(wiki_user, client):
                   args=(wiki_user.username,))
     response = client.get(url)
     assert response.status_code == 200
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     doc = pq(response.content)
     assert doc.find('#user-head.vcard .nickname').text() == wiki_user.username
     assert doc.find('#user-head.vcard .fn').text() == wiki_user.fullname
@@ -891,10 +805,7 @@ def test_user_detail_view(wiki_user, client):
 def test_my_user_page(wiki_user, user_client):
     resp = user_client.get(reverse('users.my_detail_page', locale='en-US'))
     assert resp.status_code == 302
-    assert 'max-age=0' in resp['Cache-Control']
-    assert 'no-cache' in resp['Cache-Control']
-    assert 'no-store' in resp['Cache-Control']
-    assert 'must-revalidate' in resp['Cache-Control']
+    assert_no_cache_header(resp)
     assert resp['Location'].endswith(reverse('users.user_detail',
                                              args=(wiki_user.username,)))
 
@@ -906,10 +817,7 @@ def test_bug_698971(wiki_user, client):
 
     response = client.get(url, dict(page='asdf'))
     assert response.status_code == 200
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 def test_user_edit(wiki_user, client, user_client):
@@ -917,10 +825,7 @@ def test_user_edit(wiki_user, client, user_client):
                   args=(wiki_user.username,))
     response = client.get(url, follow=True)
     assert response.status_code == 200
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     doc = pq(response.content)
     assert doc.find('#user-head .edit .button').length == 0
 
@@ -928,10 +833,7 @@ def test_user_edit(wiki_user, client, user_client):
                   args=(wiki_user.username,))
     response = user_client.get(url)
     assert response.status_code == 200
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     doc = pq(response.content)
     edit_button = doc.find('#user-head .user-buttons #edit-user')
     assert edit_button.length == 1
@@ -939,10 +841,7 @@ def test_user_edit(wiki_user, client, user_client):
     url = edit_button.attr('href')
     response = user_client.get(url)
     assert response.status_code == 200
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     doc = pq(response.content)
 
     assert (doc.find('#user-edit input[name="user-fullname"]').val() ==
@@ -983,10 +882,7 @@ def test_user_edit(wiki_user, client, user_client):
 def test_my_user_edit(wiki_user, user_client):
     response = user_client.get(reverse('users.my_edit_page', locale='en-US'))
     assert response.status_code == 302
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     assert response['Location'].endswith(
         reverse('users.user_edit', args=(wiki_user.username,)))
 
@@ -997,10 +893,7 @@ def test_user_edit_beta(wiki_user, wiki_user_github_account,
                   args=(wiki_user.username,))
     response = user_client.get(url)
     assert response.status_code == 200
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     doc = pq(response.content)
     assert doc.find('input#id_user-beta').attr('checked') is None
 
@@ -1009,10 +902,7 @@ def test_user_edit_beta(wiki_user, wiki_user_github_account,
 
     response = user_client.post(url, form)
     assert response.status_code == 302
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     assert response['Location'].endswith(
         reverse('users.user_detail', args=(wiki_user.username,)))
 
@@ -1027,10 +917,7 @@ def test_user_edit_websites(wiki_user, wiki_user_github_account, user_client):
                   args=(wiki_user.username,))
     response = user_client.get(url)
     assert response.status_code == 200
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     doc = pq(response.content)
 
     test_sites = {
@@ -1095,10 +982,7 @@ def test_user_edit_interests(wiki_user, wiki_user_github_account, user_client):
                   args=(wiki_user.username,))
     response = user_client.get(url)
     assert response.status_code == 200
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     doc = pq(response.content)
 
     test_tags = ['javascript', 'css', 'canvas', 'html', 'homebrewing']
@@ -1183,19 +1067,13 @@ def test_user_edit_github_is_public(wiki_user, wiki_user_github_account,
                   args=(wiki_user.username,))
     response = user_client.get(url)
     assert response.status_code == 200
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     form = _get_current_form_field_values(pq(response.content))
     assert not form['user-is_github_url_public']
     form['user-is_github_url_public'] = True
     response = user_client.post(url, form)
     assert response.status_code == 302
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     assert response['Location'].endswith(
         reverse('users.user_detail', args=(wiki_user.username,)))
     wiki_user.refresh_from_db()
@@ -1254,19 +1132,13 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         self.github_login()
         response = self.client.get(self.signup_url)
         assert response.status_code == 200
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         assert 'matching_user' in response.context
         assert response.context['matching_user'] is None
         octocat = user(username='octocat', save=True)
         response = self.client.get(self.signup_url)
         assert response.status_code == 200
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         assert response.context['matching_user'] == octocat
 
     @mock.patch.dict(os.environ, {'RECAPTCHA_TESTING': 'True'})
@@ -1295,10 +1167,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         self.github_login(profile_data=profile_data, email_data=email_data)
         response = self.client.get(self.signup_url)
         assert response.status_code == 200
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         assert private_email not in response.context
         email_address = response.context['email_addresses']
 
@@ -1329,10 +1198,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         assert not EmailAddress.objects.filter(email=unverified_email).exists()
         response = self.client.post(self.signup_url, data=data)
         assert response.status_code == 302
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         unverified_email_addresses = EmailAddress.objects.filter(
             email=unverified_email)
         assert unverified_email_addresses.exists()
@@ -1349,10 +1215,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         self.github_login(profile_data=profile_data, email_data=email_data)
         response = self.client.get(self.signup_url)
         assert response.status_code == 200
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         assert response.context["form"].initial["email"] == private_email
 
     def test_email_addresses_with_no_alternatives(self):
@@ -1360,10 +1223,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         self.github_login(email_data=[])
         response = self.client.get(self.signup_url)
         assert response.status_code == 200
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         assert response.context["form"].initial["email"] == private_email
 
     def test_no_email_addresses(self):
@@ -1373,10 +1233,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         self.github_login(profile_data=profile_data, email_data=[])
         response = self.client.get(self.signup_url)
         assert response.status_code == 200
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         assert response.context["form"].initial["email"] == ''
 
     def test_signup_public_github(self, is_public=True):
@@ -1390,10 +1247,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                 'is_github_url_public': is_public}
         response = self.client.post(self.signup_url, data=data)
         assert response.status_code == 302
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         user = User.objects.get(username='octocat')
         assert user.is_github_url_public == is_public
 
@@ -1416,10 +1270,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         self.github_login(profile_data=profile_data, email_data=email_data)
         response = self.client.get(self.signup_url)
         assert response.status_code == 200
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         assert not response.context['matching_accounts']
 
         # Create a legacy Persona account with the given email address
@@ -1488,10 +1339,7 @@ def test_missing_user_is_missing(db, client):
                   kwargs={'username': 'missing'})
     response = client.get(url)
     assert response.status_code == 404
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 @pytest.mark.parametrize('user_case', ['wrong_user', 'right_user'])
@@ -1506,10 +1354,7 @@ def test_user_can_delete(wiki_user, wiki_user_2, user_client, user_case):
                   kwargs={'username': user.username})
     response = user_client.get(url)
     assert response.status_code == expected_status
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 @pytest.mark.parametrize(
@@ -1520,10 +1365,7 @@ def test_send_recovery_email(db, client, email, expected_status):
     url = reverse('users.send_recovery_email', locale='en-US')
     response = client.post(url, {'email': email})
     assert response.status_code == expected_status
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     if expected_status == 302:
         assert response['Location'].endswith(
             reverse('users.recovery_email_sent'))
@@ -1533,10 +1375,7 @@ def test_recover_valid(wiki_user, client):
     recover_url = wiki_user.get_recovery_url()
     response = client.get(recover_url)
     assert response.status_code == 302
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     assert response['Location'].endswith(reverse('users.recover_done'))
     wiki_user.refresh_from_db()
     assert not wiki_user.has_usable_password()
@@ -1556,8 +1395,5 @@ def test_invalid_uid_fails(wiki_user, client):
     wiki_user.delete()
     response = client.get(bad_recover_url)
     assert response.status_code == 200
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     assert 'This link is no longer valid.' in response.content

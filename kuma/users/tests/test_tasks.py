@@ -8,6 +8,7 @@ from django.core import mail
 from django.test import RequestFactory, TestCase
 from waffle.models import Switch
 
+from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.users.tasks import send_recovery_email, send_welcome_email
 
@@ -130,16 +131,10 @@ class TestWelcomeEmails(UserTestCase):
                        args=[confirmation.key])
         resp = self.client.get(link)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         resp = self.client.post(link)
         assert resp.status_code == 302
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         # a second email, the welcome email, is sent
         self.assertEqual(len(mail.outbox), 2)
@@ -166,16 +161,10 @@ class TestWelcomeEmails(UserTestCase):
                         args=[confirmation2.key])
         resp = self.client.get(link2)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         resp = self.client.post(link2)
         assert resp.status_code == 302
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         # no increase in number of emails (no 2nd welcome email)
         self.assertEqual(len(mail.outbox), 3)

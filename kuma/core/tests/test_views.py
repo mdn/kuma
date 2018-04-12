@@ -10,7 +10,8 @@ from pyquery import PyQuery as pq
 from ratelimit.exceptions import Ratelimited
 from soapbox.models import Message
 
-from . import eq_, KumaTestCase, ok_
+from . import (assert_no_cache_header, assert_shared_cache_header, eq_,
+               KumaTestCase, ok_)
 from ..urlresolvers import reverse
 
 
@@ -136,20 +137,14 @@ def test_setting_language_cookie_disallowed_methods(client, http_method):
     url = reverse('set-language-cookie')
     response = getattr(client, http_method)(url, {'language': 'bn-BD'})
     assert response.status_code == 405
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 def test_setting_language_cookie_working(client):
     url = reverse('set-language-cookie')
     response = client.post(url, {'language': 'bn-BD'})
     assert response.status_code == 204
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
     lang_cookie = response.client.cookies.get(settings.LANGUAGE_COOKIE_NAME)
 
@@ -164,10 +159,7 @@ def test_not_possible_to_set_non_locale_cookie(client):
     url = reverse('set-language-cookie')
     response = client.post(url, {'language': 'foo'})
     assert response.status_code == 204
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     # No language cookie should be saved as `foo` is not a supported locale
     assert not response.client.cookies.get(settings.LANGUAGE_COOKIE_NAME)
 
@@ -177,8 +169,7 @@ def test_sitemap(client, settings, sitemaps, db, method):
     settings.MEDIA_ROOT = sitemaps['tmpdir'].realpath()
     response = getattr(client, method)(reverse('sitemap'))
     assert response.status_code == 200
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     assert response['Content-Type'] == 'application/xml'
     if method == 'get':
         assert ''.join(response.streaming_content) == sitemaps['index']
@@ -191,8 +182,7 @@ def test_sitemap(client, settings, sitemaps, db, method):
 def test_sitemap_405s(client, db, method):
     response = getattr(client, method)(reverse('sitemap'))
     assert response.status_code == 405
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
 
 
 @pytest.mark.parametrize('method', ['get', 'head'])
@@ -205,8 +195,7 @@ def test_sitemaps(client, settings, sitemaps, db, method):
         )
     )
     assert response.status_code == 200
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     assert response['Content-Type'] == 'application/xml'
     if method == 'get':
         assert (''.join(response.streaming_content) ==
@@ -225,8 +214,7 @@ def test_sitemaps_405s(client, db, method):
         )
     )
     assert response.status_code == 405
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
 
 
 def test_ratelimit_429(client, db):
@@ -238,7 +226,4 @@ def test_ratelimit_429(client, db):
     assert response.status_code == 429
     assert '429.html' in [t.name for t in response.templates]
     assert response['Retry-After'] == '60'
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)

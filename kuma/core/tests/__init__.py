@@ -13,6 +13,18 @@ from ..cache import memcache
 from ..urlresolvers import split_path
 
 
+def assert_no_cache_header(response):
+    assert 'max-age=0' in response['Cache-Control']
+    assert 'no-cache' in response['Cache-Control']
+    assert 'no-store' in response['Cache-Control']
+    assert 'must-revalidate' in response['Cache-Control']
+
+
+def assert_shared_cache_header(response):
+    assert 'public' in response['Cache-Control']
+    assert 's-maxage' in response['Cache-Control']
+
+
 def eq_(first, second, msg=None):
     """Rough reimplementation of nose.tools.eq_
 

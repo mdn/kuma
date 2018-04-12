@@ -2,6 +2,7 @@
 import pytest
 
 from kuma.core.models import IPBan
+from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 
 
@@ -10,10 +11,7 @@ def test_edit_get(editor_client, root_doc):
     response = editor_client.get(url)
     assert response.status_code == 200
     assert response['X-Robots-Tag'] == 'noindex'
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 @pytest.mark.parametrize('method', ('GET', 'POST'))
@@ -25,8 +23,5 @@ def test_edit_banned_ip_not_allowed(method, editor_client, root_doc,
     caller = getattr(editor_client, method.lower())
     response = caller(url, REMOTE_ADDR=ip)
     assert response.status_code == 403
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     assert 'Your IP address has been banned.' in response.content

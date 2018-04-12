@@ -2,6 +2,7 @@ import pytest
 from django.contrib.auth.models import Permission
 from pyquery import PyQuery as pq
 
+from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 
 from ..models import Document
@@ -28,10 +29,7 @@ def test_translate_get(root_doc, trans_doc_client):
     response = trans_doc_client.get(url)
     assert response.status_code == 200
     assert response['X-Robots-Tag'] == 'noindex'
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     page = pq(response.content)
     assert page.find('input[name=slug]')[0].value == root_doc.slug
 
@@ -54,10 +52,7 @@ def test_translate_post(root_doc, trans_doc_client):
     response = trans_doc_client.post(url, data)
     assert response.status_code == 302
     assert response['X-Robots-Tag'] == 'noindex'
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     doc_url = reverse('wiki.document', args=(root_doc.slug,), locale='fr')
     assert doc_url + '?rev_saved=' in response['Location']
     assert len(Document.objects.filter(locale='fr', slug=root_doc.slug)) == 1

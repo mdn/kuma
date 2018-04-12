@@ -19,6 +19,7 @@ from waffle.models import Switch
 
 from kuma.authkeys.models import Key
 from kuma.core.models import IPBan
+from kuma.core.tests import assert_no_cache_header, assert_shared_cache_header
 from kuma.core.urlresolvers import reverse
 
 from ..events import EditDocumentEvent, EditDocumentInTreeEvent
@@ -117,9 +118,7 @@ def test_disallowed_methods(client, http_method, endpoint):
     url = reverse('wiki.{}'.format(endpoint), locale='en-US', kwargs=kwargs)
     response = getattr(client, http_method)(url)
     assert response.status_code == 405
-    assert 'Cache-Control' in response
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
 
 
 @pytest.mark.parametrize('method', ('GET', 'HEAD'))
@@ -155,8 +154,7 @@ def test_api_safe(client, section_doc, section_case, if_none_match, method):
         assert response.status_code == 304
     else:
         assert response.status_code == 200
-        assert 'public' in response['Cache-Control']
-        assert 's-maxage' in response['Cache-Control']
+        assert_shared_cache_header(response)
         assert 'etag' in response
         assert 'x-kuma-revision' in response
         assert 'last-modified' not in response
@@ -180,10 +178,7 @@ def test_api_put_forbidden_when_no_authkey(client, user_client, root_doc,
     url = root_doc.get_absolute_url() + '$api'
     response = (client if user_case == 'anonymous' else user_client).put(url)
     assert response.status_code == 403
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 def test_api_put_unsupported_content_type(client, authkey):
@@ -199,8 +194,7 @@ def test_api_put_unsupported_content_type(client, authkey):
         HTTP_AUTHORIZATION=authkey.header
     )
     assert response.status_code == 400
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
 
 
 def test_api_put_authkey_tracking(client, authkey):
@@ -220,8 +214,7 @@ def test_api_put_authkey_tracking(client, authkey):
         HTTP_AUTHORIZATION=authkey.header
     )
     assert response.status_code == 201
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     last_log = authkey.key.history.order_by('-pk').all()[0]
     assert last_log.action == 'created'
 
@@ -234,8 +227,7 @@ def test_api_put_authkey_tracking(client, authkey):
         HTTP_AUTHORIZATION=authkey.header
     )
     assert response.status_code == 205
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     last_log = authkey.key.history.order_by('-pk').all()[0]
     assert last_log.action == 'updated'
 
@@ -300,8 +292,7 @@ def test_api_put_existing(client, section_doc, authkey, section_case,
     else:
         expected_content = SECTIONS
 
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
 
     if if_match == 'mismatch':
         assert response.status_code == 412
@@ -375,14 +366,10 @@ def test_api_put_new(settings, client, root_doc, authkey, section_case,
 
     if slug_case == 'nonexistent-parent':
         assert response.status_code == 404
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
     else:
         assert response.status_code == 201
-        assert 'public' in response['Cache-Control']
-        assert 's-maxage' in response['Cache-Control']
+        assert_shared_cache_header(response)
         assert 'location' in response
         assert urlparse(response['location']).path == url_path
         # Confirm that the PUT worked.
@@ -407,8 +394,7 @@ def test_conditional_get(client, section_doc):
     # Ensure the ETag value is based on the entire content of the response.
     response = client.get(url)
     assert response.status_code == 200
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     assert 'etag' in response
     assert 'last-modified' not in response
     assert '"{}"'.format(calculate_etag(response.content)) in response['etag']
@@ -418,8 +404,7 @@ def test_conditional_get(client, section_doc):
     # conditional request.
     response = client.get(url, HTTP_ACCEPT_ENCODING='gzip')
     assert response.status_code == 200
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     assert 'etag' in response
 
     response = client.get(
@@ -677,13 +662,9 @@ def test_json(doc_hierarchy_with_zones, client, params_case):
 
     assert response.status_code == expected_status_code
     if response.status_code == 404:
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
     else:
-        assert 'public' in response['Cache-Control']
-        assert 's-maxage' in response['Cache-Control']
+        assert_shared_cache_header(response)
         assert response['Access-Control-Allow-Origin'] == '*'
     if response.status_code == 200:
         data = json.loads(response.content)
@@ -703,8 +684,7 @@ def test_fallback_to_translation(root_doc, trans_doc, client, params_case):
     url = reverse('wiki.document', args=[root_doc.slug], locale='fr')
     response = client.get(url + params)
     assert response.status_code == 302
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     assert response['Location'].endswith(trans_doc.get_absolute_url() + params)
 
 
@@ -713,10 +693,7 @@ def test_redirect_with_no_slug(db, client):
     url = '/en-US/docs/en-US/'
     response = client.get(url)
     assert response.status_code == 404
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 @pytest.mark.parametrize(
@@ -728,10 +705,7 @@ def test_watch_405(client, root_doc, endpoint, http_method):
     url = reverse(endpoint, locale=root_doc.locale, args=[root_doc.slug])
     response = getattr(client, http_method)(url)
     assert response.status_code == 405
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 @pytest.mark.parametrize(
@@ -741,10 +715,7 @@ def test_watch_login_required(client, root_doc, endpoint):
     url = reverse(endpoint, locale=root_doc.locale, args=[root_doc.slug])
     response = client.post(url)
     assert response.status_code == 302
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     assert response['Location'].endswith(
         reverse('account_login') + '?next=' + quote(url))
 
@@ -759,10 +730,7 @@ def test_watch_unwatch(user_client, wiki_user, root_doc, endpoint, event):
     # Subscribe
     response = user_client.post(url)
     assert response.status_code == 302
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     assert response['Location'].endswith(
         reverse('wiki.document', locale=root_doc.locale, args=[root_doc.slug]))
     assert event.is_notifying(wiki_user, root_doc), 'Watch was not created'
@@ -770,10 +738,7 @@ def test_watch_unwatch(user_client, wiki_user, root_doc, endpoint, event):
     # Unsubscribe
     response = user_client.post(url)
     assert response.status_code == 302
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     assert response['Location'].endswith(
         reverse('wiki.document', locale=root_doc.locale, args=[root_doc.slug]))
     assert not event.is_notifying(wiki_user, root_doc), \
@@ -788,24 +753,17 @@ def test_zone_styles(client, doc_hierarchy_with_zones):
     url = reverse('wiki.styles', locale=top_doc.locale, args=(top_doc.slug,))
     response = client.get(url, follow=False)
     assert response.status_code == 302
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     assert response['Location'].endswith('build/styles/zones.css')
 
     url = reverse('wiki.styles', locale=bottom_doc.locale,
                   args=(bottom_doc.slug,))
     response = client.get(url, follow=True)
     assert response.status_code == 404
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
     url = reverse('wiki.styles', locale='en-US',
                   args=('some-unknown-document-slug',))
     response = client.get(url, follow=True)
     assert response.status_code == 404
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
