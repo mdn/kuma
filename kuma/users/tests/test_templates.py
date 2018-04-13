@@ -10,6 +10,7 @@ from mock import patch
 from pyquery import PyQuery as pq
 from waffle.models import Switch
 
+from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 from kuma.wiki.models import (Document, DocumentDeletionLog,
@@ -70,10 +71,7 @@ class SignupTests(UserTestCase, SocialTestMixin):
 def test_account_email_page_requires_signin(db, client):
     response = client.get(reverse('account_email', locale='en-US'))
     assert response.status_code == 302
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     response = client.get(response['Location'], follow=True)
     assert response.status_code == 200
     assert 'Please sign in' in response.content
@@ -82,10 +80,7 @@ def test_account_email_page_requires_signin(db, client):
 def test_account_email_page_single_email(user_client):
     response = user_client.get(reverse('account_email', locale='en-US'))
     assert response.status_code == 200
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     assert 'is your <em>primary</em> email address' in response.content
     assert 'Make Primary' not in response.content
     assert 'Re-send Confirmation' not in response.content
@@ -97,10 +92,7 @@ def test_account_email_page_multiple_emails(wiki_user, user_client):
                                 verified=True, primary=False)
     response = user_client.get(reverse('account_email', locale='en-US'))
     assert response.status_code == 200
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     assert 'Make Primary' in response.content
     assert 'Re-send Confirmation' in response.content
     assert 'Remove' in response.content
@@ -212,10 +204,7 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         signup_url = reverse('socialaccount_signup', locale=locale)
         response = self.client.post(signup_url, data=data)
         assert response.status_code == 302
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         response = self.client.get(response['Location'], follow=True)
         assert response.status_code == 200
 
@@ -258,10 +247,7 @@ class BanTestCase(UserTestCase):
 
         resp = self.client.get(ban_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         reasons_to_ban_found = page.find('.ban-common-reason')
@@ -285,10 +271,7 @@ class BanTestCase(UserTestCase):
 
         resp = self.client.get(ban_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         reasons_to_ban_found = page.find('.ban-common-reason')
@@ -310,10 +293,7 @@ class BanTestCase(UserTestCase):
 
         resp = self.client.get(ban_url, follow=True)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         reasons_to_ban_found = page.find('.ban-common-reason')
@@ -340,10 +320,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
 
         resp = self.client.get(ban_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         revisions_found = page.find('.dashboard-row')
@@ -366,10 +343,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
 
         resp = self.client.get(ban_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         revisions_found = page.find('.dashboard-row')
@@ -398,10 +372,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
 
         resp = self.client.get(ban_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         revisions_found = page.find('.dashboard-row')
@@ -427,10 +398,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
                           kwargs={'username': self.testuser.username})
         resp = self.client.get(ban_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         revisions_found = page.find('.dashboard-row')
@@ -459,10 +427,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
                           kwargs={'username': self.testuser2.username})
         resp = self.client.get(ban_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         revisions_found = page.find('.dashboard-row')
@@ -497,10 +462,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
 
         resp = self.client.get(ban_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         revisions_found = page.find('.dashboard-row')
@@ -531,10 +493,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
 
         resp = self.client.get(ban_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         revisions_found = page.find('.dashboard-row')
@@ -563,10 +522,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
                           kwargs={'username': self.testuser2.username})
         resp = self.client.get(ban_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         revisions_found = page.find('.dashboard-row')
@@ -588,10 +544,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
                           kwargs={'username': self.testuser.username})
         resp = self.client.post(ban_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         # The "Actions taken" section
@@ -649,10 +602,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-id': [rev.id for rev in revisions_created]}
         resp = self.client.post(ban_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         # The "Actions taken" section
@@ -713,10 +663,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-id': [rev.id for rev in revisions_created]}
         resp = self.client.post(ban_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         # The "Actions taken" section
@@ -766,10 +713,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-id': [rev.id for rev in revisions_created]}
         resp = self.client.post(ban_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         # The "Actions taken" section
@@ -822,10 +766,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-id': []}
         resp = self.client.post(ban_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         # The "Actions taken" section
@@ -885,10 +826,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-already-spam': revisions_created_ids}
         resp = self.client.post(ban_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         # The "Actions taken" section
@@ -967,10 +905,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-id': posted_ids}
         resp = self.client.post(ban_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         # The "Actions taken" section
@@ -1045,10 +980,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-id': [rev_doc1.id], 'revision-already-spam': [rev_doc2.id]}
         resp = self.client.post(ban_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         # TODO: Phase V: The revision done after the reviewing has begun should
@@ -1095,10 +1027,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-already-spam': [revisions_already_spam[0].id]}
         resp = self.client.post(ban_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         delete_url = reverse(
@@ -1157,10 +1086,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-already-spam': [testuser_revisions[0].id]}
         resp = self.client.post(ban_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         delete_url_already_spam = reverse(
@@ -1211,10 +1137,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-id': [rev.id for rev in spam_revisions]}
         resp = self.client.post(ban_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         # 'Actions taken' section
@@ -1279,10 +1202,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-id': [rev.id for rev in spam_revisions]}
         resp = self.client.post(ban_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         # 'Actions taken' section
@@ -1348,10 +1268,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-id': [rev.id for rev in spam_revisions]}
         resp = self.client.post(ban_url, data=data)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         # 'Actions taken' section
@@ -1407,10 +1324,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             resp = self.client.post(ban_url, data=data)
 
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         assert DocumentDeletionLog.objects.count() == 0
@@ -1474,10 +1388,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             resp = self.client.post(ban_url, data=data)
 
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         # 'Actions taken' section
@@ -1541,10 +1452,7 @@ class ProfileDetailTestCase(UserTestCase):
         # The user is not banned, display appropriate links
         resp = self.client.get(profile_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         ban_link = page.find('#ban_link')
@@ -1558,10 +1466,7 @@ class ProfileDetailTestCase(UserTestCase):
                                is_active=True)
         resp = self.client.get(profile_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         ban_link = page.find('#ban_link')
@@ -1577,10 +1482,7 @@ class ProfileDetailTestCase(UserTestCase):
                               kwargs={'username': testuser.username})
         resp = self.client.get(profile_url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
         assert len(page.find('ul.user-links li.github')) == 0
 

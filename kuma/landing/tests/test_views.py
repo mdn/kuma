@@ -3,22 +3,21 @@ import pytest
 from django.utils.six.moves.urllib.parse import urlparse
 from ratelimit.exceptions import Ratelimited
 
+from kuma.core.tests import assert_no_cache_header, assert_shared_cache_header
 from kuma.core.urlresolvers import reverse
 
 
 def test_contribute_json(client, db):
     response = client.get(reverse('contribute_json'))
     assert response.status_code == 200
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     assert response['Content-Type'].startswith('application/json')
 
 
 def test_home(client, db):
     response = client.get(reverse('home'), follow=True)
     assert response.status_code == 200
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
 
 
 @mock.patch('kuma.landing.views.render')
@@ -29,10 +28,7 @@ def test_home_when_rate_limited(mock_render, client, db):
     mock_render.side_effect = Ratelimited()
     response = client.get(reverse('home', locale='en-US'))
     assert response.status_code == 429
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 @pytest.mark.parametrize('mode', ['maintenance', 'normal'])
@@ -48,25 +44,20 @@ def test_maintenance_mode(db, client, settings, mode):
         assert response.status_code == 302
         assert 'Location' in response
         assert urlparse(response['Location']).path == '/'
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 def test_promote_buttons(client, db):
     response = client.get(reverse('promote_buttons'), follow=True)
     assert response.status_code == 200
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
 
 
 def test_robots_not_allowed(client):
     """By default, robots.txt shows that robots are not allowed."""
     response = client.get(reverse('robots_txt'))
     assert response.status_code == 200
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     assert response['Content-Type'] == 'text/plain'
     content = response.content
     assert 'Sitemap: ' not in content
@@ -80,8 +71,7 @@ def test_robots_allowed_main_website(client, settings):
     settings.ALLOW_ROBOTS_WEB_DOMAINS = [host]
     response = client.get(reverse('robots_txt'), HTTP_HOST=host)
     assert response.status_code == 200
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     assert response['Content-Type'] == 'text/plain'
     content = response.content
     assert 'Sitemap: ' in content
@@ -95,8 +85,7 @@ def test_robots_allowed_main_attachment_host(client, settings):
     settings.ALLOW_ROBOTS_DOMAINS = [host]
     response = client.get(reverse('robots_txt'), HTTP_HOST=host)
     assert response.status_code == 200
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     assert response['Content-Type'] == 'text/plain'
     content = response.content
     assert content == ''
@@ -105,6 +94,5 @@ def test_robots_allowed_main_attachment_host(client, settings):
 def test_favicon_ico(client):
     response = client.get('favicon.ico')
     assert response.status_code == 302
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     assert response['Location'].endswith('static/img/favicon.ico')

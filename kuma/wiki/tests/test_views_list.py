@@ -1,6 +1,7 @@
 import pytest
 from pyquery import PyQuery as pq
 
+from kuma.core.tests import assert_shared_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 
@@ -22,8 +23,7 @@ def test_disallowed_methods(db, client, http_method, endpoint):
     url = reverse('wiki.{}'.format(endpoint), locale='en-US', kwargs=kwargs)
     resp = getattr(client, http_method)(url)
     assert resp.status_code == 405
-    assert 'public' in resp['Cache-Control']
-    assert 's-maxage' in resp['Cache-Control']
+    assert_shared_cache_header(resp)
 
 
 def test_revisions(root_doc, client):
@@ -32,8 +32,7 @@ def test_revisions(root_doc, client):
                   locale=root_doc.locale)
     resp = client.get(url)
     assert resp.status_code == 200
-    assert 'public' in resp['Cache-Control']
-    assert 's-maxage' in resp['Cache-Control']
+    assert_shared_cache_header(resp)
 
 
 def test_revisions_of_translated_document(trans_doc, client):
@@ -98,8 +97,7 @@ def test_revisions_all_params_as_anon_user_is_forbidden(root_doc, client):
     all_url = urlparams(url, limit='all')
     resp = client.get(all_url)
     assert resp.status_code == 403
-    assert 'public' in resp['Cache-Control']
-    assert 's-maxage' in resp['Cache-Control']
+    assert_shared_cache_header(resp)
 
 
 def test_revisions_all_params_as_user_is_allowed(root_doc, wiki_user, client):
@@ -152,8 +150,7 @@ def test_list_no_redirects(redirect_doc, doc_hierarchy_with_zones, client):
     url = reverse('wiki.all_documents', locale='en-US')
     resp = client.get(url)
     assert resp.status_code == 200
-    assert 'public' in resp['Cache-Control']
-    assert 's-maxage' in resp['Cache-Control']
+    assert_shared_cache_header(resp)
     assert 'text/html' in resp['Content-Type']
     # There should be 4 documents in the 'en-US' locale from
     # doc_hierarchy_with_zones, plus the root_doc (which is pulled-in by
@@ -171,8 +168,7 @@ def test_tags(root_doc, client):
     assert 'foobar' in resp.content
     assert 'blast' in resp.content
     assert 'wiki/list/tags.html' in [t.name for t in resp.templates]
-    assert 'public' in resp['Cache-Control']
-    assert 's-maxage' in resp['Cache-Control']
+    assert_shared_cache_header(resp)
 
 
 @pytest.mark.tags
@@ -191,8 +187,7 @@ def test_tag_list(root_doc, trans_doc, client, locale_case, tag_case, tag):
     url = reverse('wiki.tag', locale=exp_doc.locale, kwargs={'tag': tag_query})
     resp = client.get(url)
     assert resp.status_code == 200
-    assert 'public' in resp['Cache-Control']
-    assert 's-maxage' in resp['Cache-Control']
+    assert_shared_cache_header(resp)
     dom = pq(resp.content)
     selector = 'ul.document-list li a[href="/{}/docs/{}"]'
     assert len(dom('#document-list ul.document-list li')) == 1
@@ -232,8 +227,7 @@ def test_list_with_errors(redirect_doc, doc_hierarchy_with_zones, client,
     resp = client.get(url)
     dom = pq(resp.content)
     assert resp.status_code == 200
-    assert 'public' in resp['Cache-Control']
-    assert 's-maxage' in resp['Cache-Control']
+    assert_shared_cache_header(resp)
     assert 'text/html' in resp['Content-Type']
     assert len(dom.find('.document-list li')) == len(exp_docs)
     selector = 'ul.document-list li a[href="/{}/docs/{}"]'
@@ -257,8 +251,7 @@ def test_list_without_parent(redirect_doc, root_doc, doc_hierarchy_with_zones,
     resp = client.get(url)
     dom = pq(resp.content)
     assert resp.status_code == 200
-    assert 'public' in resp['Cache-Control']
-    assert 's-maxage' in resp['Cache-Control']
+    assert_shared_cache_header(resp)
     assert 'text/html' in resp['Content-Type']
     assert len(dom.find('.document-list li')) == len(exp_docs)
     selector = 'ul.document-list li a[href="/{}/docs/{}"]'
@@ -278,8 +271,7 @@ def test_list_top_level(redirect_doc, root_doc, doc_hierarchy_with_zones,
     resp = client.get(url)
     dom = pq(resp.content)
     assert resp.status_code == 200
-    assert 'public' in resp['Cache-Control']
-    assert 's-maxage' in resp['Cache-Control']
+    assert_shared_cache_header(resp)
     assert 'text/html' in resp['Content-Type']
     assert len(dom.find('.document-list li')) == len(exp_docs)
     selector = 'ul.document-list li a[href="/{}/docs/{}"]'
@@ -308,8 +300,7 @@ def test_list_with_localization_tag(redirect_doc, doc_hierarchy_with_zones,
     resp = client.get(url)
     dom = pq(resp.content)
     assert resp.status_code == 200
-    assert 'public' in resp['Cache-Control']
-    assert 's-maxage' in resp['Cache-Control']
+    assert_shared_cache_header(resp)
     assert 'text/html' in resp['Content-Type']
     assert len(dom.find('.document-list li')) == len(exp_docs)
     selector = 'ul.document-list li a[href="/{}/docs/{}"]'
@@ -337,8 +328,7 @@ def test_list_with_localization_tags(redirect_doc, doc_hierarchy_with_zones,
     resp = client.get(url)
     dom = pq(resp.content)
     assert resp.status_code == 200
-    assert 'public' in resp['Cache-Control']
-    assert 's-maxage' in resp['Cache-Control']
+    assert_shared_cache_header(resp)
     assert 'text/html' in resp['Content-Type']
     assert len(dom.find('.document-list li')) == len(exp_docs)
     selector = 'ul.document-list li a[href="/{}/docs/{}"]'

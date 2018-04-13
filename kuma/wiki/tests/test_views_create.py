@@ -2,6 +2,7 @@ import pytest
 from django.contrib.auth.models import Permission
 from pyquery import PyQuery as pq
 
+from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 
 from ..models import Document, Revision
@@ -63,20 +64,14 @@ def add_doc_client(editor_client, wiki_user, permission_add_document):
 def test_check_read_only_mode(user_client):
     response = user_client.get(reverse('wiki.create', locale='en-US'))
     assert response.status_code == 403
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 def test_user_add_document_permission(editor_client):
     response = editor_client.get(reverse('wiki.create', locale='en-US'))
     assert response.status_code == 403
     assert response['X-Robots-Tag'] == 'noindex'
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 @pytest.mark.toc
@@ -84,10 +79,7 @@ def test_get(add_doc_client):
     response = add_doc_client.get(reverse('wiki.create', locale='en-US'))
     assert response.status_code == 200
     assert response['X-Robots-Tag'] == 'noindex'
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     page = pq(response.content)
     toc_select = page.find('#id_toc_depth')
     toc_options = toc_select.find('option')
@@ -123,10 +115,7 @@ def test_create_valid(add_doc_client):
     resp = add_doc_client.post(url, data)
     assert resp.status_code == 302
     assert resp['X-Robots-Tag'] == 'noindex'
-    assert 'max-age=0' in resp['Cache-Control']
-    assert 'no-cache' in resp['Cache-Control']
-    assert 'no-store' in resp['Cache-Control']
-    assert 'must-revalidate' in resp['Cache-Control']
+    assert_no_cache_header(resp)
     assert resp['Location'].endswith(
         reverse('wiki.document', locale='en-US', args=(slug,)))
     doc = Document.objects.get(slug=slug, locale='en-US')
@@ -162,10 +151,7 @@ def test_create_invalid(add_doc_client, slug):
     resp = add_doc_client.post(url, data)
     assert resp.status_code == 200
     assert resp['X-Robots-Tag'] == 'noindex'
-    assert 'max-age=0' in resp['Cache-Control']
-    assert 'no-cache' in resp['Cache-Control']
-    assert 'no-store' in resp['Cache-Control']
-    assert 'must-revalidate' in resp['Cache-Control']
+    assert_no_cache_header(resp)
     assert 'The slug provided is not valid.' in resp.content
     with pytest.raises(Document.DoesNotExist):
         Document.objects.get(slug=slug, locale='en-US')
@@ -194,10 +180,7 @@ def test_create_child_valid(root_doc, add_doc_client, slug):
     resp = add_doc_client.post(url, data)
     assert resp.status_code == 302
     assert resp['X-Robots-Tag'] == 'noindex'
-    assert 'max-age=0' in resp['Cache-Control']
-    assert 'no-cache' in resp['Cache-Control']
-    assert 'no-store' in resp['Cache-Control']
-    assert 'must-revalidate' in resp['Cache-Control']
+    assert_no_cache_header(resp)
     assert resp['Location'].endswith(
         reverse('wiki.document', locale='en-US', args=(full_slug,)))
     assert root_doc.children.count() == 1
@@ -238,10 +221,7 @@ def test_create_child_invalid(root_doc, add_doc_client, slug):
     resp = add_doc_client.post(url, data)
     assert resp.status_code == 200
     assert resp['X-Robots-Tag'] == 'noindex'
-    assert 'max-age=0' in resp['Cache-Control']
-    assert 'no-cache' in resp['Cache-Control']
-    assert 'no-store' in resp['Cache-Control']
-    assert 'must-revalidate' in resp['Cache-Control']
+    assert_no_cache_header(resp)
     assert 'The slug provided is not valid.' in resp.content
     with pytest.raises(Document.DoesNotExist):
         Document.objects.get(slug=full_slug, locale='en-US')
@@ -255,10 +235,7 @@ def test_clone_get(root_doc, add_doc_client):
     response = add_doc_client.get(url)
     assert response.status_code == 200
     assert response['X-Robots-Tag'] == 'noindex'
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     page = pq(response.content)
     assert page.find('input[name=slug]')[0].value is None
     assert page.find('input[name=title]')[0].value is None

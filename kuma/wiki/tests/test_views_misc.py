@@ -4,6 +4,7 @@ from urllib import urlencode
 import pytest
 from waffle.models import Switch
 
+from kuma.core.tests import assert_shared_cache_header
 from kuma.core.urlresolvers import reverse
 
 
@@ -16,18 +17,13 @@ def test_disallowed_methods(db, client, http_method, endpoint):
     url = reverse('wiki.{}'.format(endpoint), locale='en-US')
     response = getattr(client, http_method)(url)
     assert response.status_code == 405
-    assert 'Cache-Control' in response
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
 
 
 def test_ckeditor_config(db, client):
     response = client.get(reverse('wiki.ckeditor_config', locale='en-US'))
     assert response.status_code == 200
-    assert 'Cache-Control' in response
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
-    assert 'Content-Type' in response
+    assert_shared_cache_header(response)
     assert response['Content-Type'] == 'application/x-javascript'
     assert 'wiki/ckeditor_config.js' in [t.name for t in response.templates]
 
@@ -71,13 +67,10 @@ def test_autosuggest(client, redirect_doc, doc_hierarchy_with_zones,
         url += '?{}'.format(urlencode(params))
     response = client.get(url)
     assert response.status_code == expected_status_code
-    assert 'Cache-Control' in response
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     assert 'Access-Control-Allow-Origin' in response
     assert response['Access-Control-Allow-Origin'] == '*'
     if expected_status_code == 200:
-        assert 'Content-Type' in response
         assert response['Content-Type'] == 'application/json'
         data = json.loads(response.content)
         assert set(item['title'] for item in data) == expected_titles

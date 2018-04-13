@@ -16,7 +16,8 @@ from django.utils.http import urlquote
 from django.utils.six.moves.urllib.parse import parse_qs, urlparse
 from pyquery import PyQuery as pq
 
-from kuma.core.tests import eq_, ok_
+from kuma.core.tests import (assert_no_cache_header,
+                             assert_shared_cache_header, eq_, ok_)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 from kuma.users.models import User
@@ -129,8 +130,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         url = reverse('wiki.document', args=[d2.slug], locale='fr')
         response = self.client.get(url)
         assert response.status_code == 200
-        assert 'public' in response['Cache-Control']
-        assert 's-maxage' in response['Cache-Control']
+        assert_shared_cache_header(response)
         doc = pq(response.content)
         assert doc('main#content div.document-head h1').text() == d2.title
 
@@ -150,8 +150,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         url = reverse('wiki.document', args=[r.document.slug], locale='fr')
         response = self.client.get(url)
         assert response.status_code == 200
-        assert 'public' in response['Cache-Control']
-        assert 's-maxage' in response['Cache-Control']
+        assert_shared_cache_header(response)
         doc = pq(response.content)
         assert (doc('main#content div.document-head h1').text() ==
                 r.document.title)
@@ -476,8 +475,7 @@ def test_revision_template(root_doc, client):
     response = client.get(url)
     assert response.status_code == 200
     assert response['X-Robots-Tag'] == 'noindex'
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     page = pq(response.content)
     assert page('h1').text() == 'Revision %s of %s' % (rev.id, root_doc.title)
     assert page('#doc-source pre').text() == rev.content
@@ -655,10 +653,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
                                            args=[self.d.slug]))
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         doc = pq(response.content)
         assert len(doc('article#edit-document '
                        'form#wiki-page-edit textarea[name="content"]')) == 1
@@ -679,10 +674,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
                                            args=[self.d.slug, rev.id]))
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         doc = pq(response.content)
         assert doc('#id_content')[0].value.strip() == rev.content.strip()
 
@@ -715,10 +707,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         response = self.client.post(edit_url, data)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         assert self.d.revisions.count() == 2
         new_rev = self.d.revisions.order_by('-id')[0]
         assert self.d.current_revision == new_rev.based_on
@@ -776,10 +765,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
                                     args=[self.d.slug]), data)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         assert self.d.revisions.count() == 2
 
         new_rev = self.d.revisions.order_by('-id')[0]
@@ -805,10 +791,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
                                     data)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         result_tags = list(self.d.tags.names())
         result_tags.sort()
         assert tags == result_tags
@@ -843,10 +826,7 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
                                            args=[self.d.slug]))
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
 
         data = new_document_data()
         new_title = 'A brand new title'
@@ -858,10 +838,7 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
                                     data)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         assert Document.objects.get(pk=self.d.pk).title == new_title
 
     def test_change_slug_case(self):
@@ -875,10 +852,7 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
                                     data)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         assert Document.objects.get(pk=self.d.pk).slug == new_slug
 
     def test_change_title_case(self):
@@ -892,10 +866,7 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
                                     data)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         assert Document.objects.get(pk=self.d.pk).title == new_title
 
 
@@ -910,8 +881,7 @@ def test_compare_revisions(edit_revision, client):
     response = client.get(url)
     assert response.status_code == 200
     assert response['X-Robots-Tag'] == 'noindex'
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     page = pq(response.content)
     assert page('span.diff_sub').text() == u'Getting\xa0started...'
     assert page('span.diff_add').text() == u'The\xa0root\xa0document.'
@@ -953,8 +923,7 @@ def test_compare_first_translation(trans_revision, client):
     response = client.get(url)
     assert response.status_code == 200
     assert response['X-Robots-Tag'] == 'noindex'
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     page = pq(response.content)
     assert page('span.diff_sub').text() == u'Getting\xa0started...'
     assert page('span.diff_add').text() == u'Mise\xa0en\xa0route...'
@@ -1003,10 +972,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         translate_uri = self._translate_uri()
         response = self.client.get(translate_uri)
         assert response.status_code == 302
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         expected_url = '%s?next=%s' % (reverse('account_login', locale='en-US'),
                                        urlquote(translate_uri))
         assert expected_url in response['Location']
@@ -1016,10 +982,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         response = self.client.get(self._translate_uri())
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         doc = pq(response.content)
         assert len(doc('form textarea[name="content"]')) == 1
         # initial translation should include slug input
@@ -1033,10 +996,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         response = self.client.get(self._translate_uri())
         assert response.status_code == 400
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
 
     def test_invalid_document_form(self):
         """Make sure we handle invalid document form without a 500."""
@@ -1046,10 +1006,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         response = self.client.post(translate_uri, data)
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
 
     def test_invalid_revision_form(self):
         """When creating a new translation, an invalid revision form shouldn't
@@ -1060,10 +1017,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         response = self.client.post(translate_uri, data)
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         assert self.d.translations.count() == 0
 
     @mock.patch.object(EditDocumentEvent, 'fire')
@@ -1077,10 +1031,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         response = self.client.post(translate_uri, data)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         new_doc = Document.objects.get(slug=data['slug'])
         assert new_doc.locale == 'es'
         assert new_doc.title == data['title']
@@ -1121,10 +1072,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         response = self.client.get(translate_uri)
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         doc = pq(response.content)
         assert doc('#id_content').text() == rev_es.content
         assert (doc('article.approved .translate-rendered').text() ==
@@ -1136,10 +1084,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         response = self.client.post(translate_uri, data)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         assert (response['location'] ==
                 'http://testserver/es/docs/un-test-articulo?rev_saved=')
         doc = Document.objects.get(slug=data['slug'])
@@ -1155,10 +1100,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         response = self.client.get(translate_uri)
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         doc = pq(response.content)
         assert len(doc('form input[name="slug"]')) == 0
 
@@ -1189,10 +1131,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         response = self.client.post(translate_uri, data)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         assert response['location'].endswith(
             '/es/docs/un-test-articulo$edit?opendescription=1')
         revisions = rev_es.document.revisions.all()
@@ -1214,10 +1153,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         response = self.client.post(translate_uri, data)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         assert response['location'].endswith(
             '/es/docs/un-test-articulo?rev_saved=')
         revisions = rev_es.document.revisions.all()
@@ -1235,10 +1171,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         response = self.client.get(translate_uri)
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         doc = pq(response.content)
         document = Document.objects.filter(locale='es')[0]
         existing_rev = document.revisions.all()[0]
@@ -1261,10 +1194,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         response = self.client.get(uri)
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         doc = pq(response.content)
         assert doc('#id_content')[0].value == base_rev.content
 
@@ -1284,10 +1214,7 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
         uri = reverse(view, locale=locale, args=[doc.slug])
     response = client.get(uri)
     assert response['X-Robots-Tag'] == 'noindex'
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     orig_rev = doc.current_revision
     assert (int(pq(response.content)('input[name=based_on]').attr('value')) ==
             orig_rev.id)
@@ -1304,10 +1231,7 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
                            data=post_data_copy)
     assert response.status_code in (200, 302)
     assert response['X-Robots-Tag'] == 'noindex'
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     fred_rev = Revision.objects.all().order_by('-id')[0]
     assert fred_rev.based_on == orig_rev
 
@@ -1324,20 +1248,14 @@ class ArticlePreviewTests(UserTestCase, WikiTestCase):
         """Preview with HTTP GET results in 405."""
         response = self.client.get(reverse('wiki.preview', locale='en-US'))
         assert response.status_code == 405
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
 
     def test_preview(self):
         """Preview the wiki syntax content."""
         response = self.client.post(reverse('wiki.preview', locale='en-US'),
                                     {'content': '<h1>Test Content</h1>'})
         assert response.status_code == 200
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         doc = pq(response.content)
         assert doc('article#wikiArticle h1').text() == 'Test Content'
 
@@ -1351,10 +1269,7 @@ class ArticlePreviewTests(UserTestCase, WikiTestCase):
         url = reverse('wiki.preview', locale='es')
         response = self.client.post(url, {'content': '[[Test Document]]'})
         assert response.status_code == 200
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         doc = pq(response.content)
         link = doc('#doc-content a')
         assert link.text() == 'Prueba'
@@ -1375,10 +1290,7 @@ class SelectLocaleTests(UserTestCase, WikiTestCase):
                                            locale='en-US',
                                            args=[self.d.slug]))
         assert response.status_code == 200
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         doc = pq(response.content)
         assert (len(doc('#select-locale ul.locales li')) ==
                 len(settings.LANGUAGES) - 1)  # All except for 1 (en-US)

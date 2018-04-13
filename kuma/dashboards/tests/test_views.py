@@ -8,7 +8,8 @@ from django.core.exceptions import ImproperlyConfigured
 from pyquery import PyQuery as pq
 from waffle.models import Flag, Switch
 
-from kuma.core.tests import eq_, ok_
+from kuma.core.tests import (assert_no_cache_header,
+                             assert_shared_cache_header, eq_, ok_)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 from kuma.dashboards.forms import RevisionDashboardForm
@@ -29,8 +30,7 @@ class RevisionsDashTest(UserTestCase):
         assert 'Vary' in response
         assert 'X-Requested-With' in response['Vary']
         assert 'Cache-Control' in response
-        assert 'public' in response['Cache-Control']
-        assert 's-maxage' in response['Cache-Control']
+        assert_shared_cache_header(response)
         assert 'text/html' in response['Content-Type']
         assert ('dashboards/revisions.html' in
                 (template.name for template in response.templates))
@@ -221,11 +221,7 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         response = self.client.get(reverse('dashboards.spam',
                                            locale='en-US'))
         assert response.status_code == 302
-        assert 'Cache-Control' in response
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
 
     def test_permissions(self, mock_analytics_upageviews):
         """A user with correct permissions is able to see the dashboard."""
@@ -256,11 +252,7 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
                                            locale='en-US'))
         # With all correct permissions testuser is able to see the dashboard
         assert response.status_code == 200
-        assert 'Cache-Control' in response
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
         assert 'text/html' in response['Content-Type']
         assert 'dashboards/spam.html' in (template.name for template in response.templates)
 
@@ -573,15 +565,10 @@ def test_disallowed_methods(db, client, http_method, endpoint):
     url = reverse('dashboards.{}'.format(endpoint), locale='en-US')
     response = getattr(client, http_method)(url)
     assert response.status_code == 405
-    assert 'Cache-Control' in response
     if endpoint == 'spam':
-        assert 'max-age=0' in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'no-store' in response['Cache-Control']
-        assert 'must-revalidate' in response['Cache-Control']
+        assert_no_cache_header(response)
     else:
-        assert 'public' in response['Cache-Control']
-        assert 's-maxage' in response['Cache-Control']
+        assert_shared_cache_header(response)
         if endpoint in ('revisions', 'user_lookup', 'topic_lookup'):
             assert 'Vary' in response
             assert 'X-Requested-With' in response['Vary']
@@ -606,11 +593,8 @@ def test_lookup(root_doc, wiki_user_2, wiki_user_3, client, mode, endpoint):
     url = reverse('dashboards.{}'.format(endpoint), locale='en-US') + qs
     response = client.get(url, **headers)
     assert response.status_code == 200
-    assert 'Vary' in response
     assert 'X-Requested-With' in response['Vary']
-    assert 'Cache-Control' in response
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     assert response['Content-Type'] == 'application/json; charset=utf-8'
     assert json.loads(response.content) == expected_content
 
@@ -628,11 +612,8 @@ def test_macros(mock_usage, client, db):
 
     response = client.get(reverse('dashboards.macros'), follow=True)
     assert response.status_code == 200
-    assert 'Vary' in response
     assert 'Cookie' in response['Vary']
-    assert 'Cache-Control' in response
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
     assert "Found 1 active macro." in response.content
     page = pq(response.content)
     assert len(page("table.macros-table")) == 1

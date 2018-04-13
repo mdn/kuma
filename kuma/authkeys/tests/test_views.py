@@ -3,6 +3,7 @@ from django.contrib.auth.models import Permission
 from django.test import TestCase
 from pyquery import PyQuery as pq
 
+from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import user
 
@@ -58,10 +59,7 @@ class KeyViewsTest(RefetchingUserTestCase):
         # Check out the creation page, look for the form.
         resp = self.client.get(url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
         assert page.find('form.key').length == 1
 
@@ -72,10 +70,7 @@ class KeyViewsTest(RefetchingUserTestCase):
         # Okay, create it.
         resp = self.client.post(url, data, follow=False)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         # We have the key now, right?
         keys = Key.objects.filter(description=data['description'])
@@ -99,10 +94,7 @@ class KeyViewsTest(RefetchingUserTestCase):
         url = reverse('authkeys.list', locale='en-US')
         resp = self.client.get(url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         page = pq(resp.content)
 
         for ct, key in ((1, self.key1), (1, self.key2), (0, self.key3)):
@@ -130,10 +122,7 @@ class KeyViewsTest(RefetchingUserTestCase):
                                     locale='en-US'), qs)
             resp = self.client.get(url)
             assert resp.status_code == 200
-            assert 'max-age=0' in resp['Cache-Control']
-            assert 'no-cache' in resp['Cache-Control']
-            assert 'no-store' in resp['Cache-Control']
-            assert 'must-revalidate' in resp['Cache-Control']
+            assert_no_cache_header(resp)
             page = pq(resp.content)
 
             rows = page.find('.item')
@@ -153,36 +142,24 @@ class KeyViewsTest(RefetchingUserTestCase):
                       locale='en-US')
         resp = self.client.get(url)
         assert resp.status_code == 403
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         resp = self.client.post(url, follow=False)
         assert resp.status_code == 403
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         url = reverse('authkeys.delete', args=(self.key1.pk,),
                       locale='en-US')
         resp = self.client.get(url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         page = pq(resp.content)
         assert page.find('.description').text() == self.key1.description
 
         resp = self.client.post(url, follow=False)
         assert resp.status_code == 302
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         assert Key.objects.filter(pk=self.key1.pk).count() == 0
 
@@ -202,10 +179,7 @@ class KeyViewsPermissionTest(RefetchingUserTestCase):
         url = reverse('authkeys.new', locale='en-US')
         resp = self.client.get(url)
         assert resp.status_code == 403
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         perm = Permission.objects.get(codename='add_key')
         self.user.user_permissions.add(perm)
@@ -213,10 +187,7 @@ class KeyViewsPermissionTest(RefetchingUserTestCase):
 
         resp = self.client.get(url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
     def test_delete_key_requires_separate_permission(self):
         self.key1 = Key(user=self.user, description='Test Key 1')
@@ -225,18 +196,12 @@ class KeyViewsPermissionTest(RefetchingUserTestCase):
         url = reverse('authkeys.delete', locale='en-US', args=(self.key1.pk,))
         resp = self.client.get(url)
         assert resp.status_code == 403
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
         self._cache_bust_user_perms()
 
         resp = self.client.get(url)
         assert resp.status_code == 403
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)
 
         perm = Permission.objects.get(codename='delete_key')
         self.user.user_permissions.add(perm)
@@ -244,7 +209,4 @@ class KeyViewsPermissionTest(RefetchingUserTestCase):
 
         resp = self.client.get(url)
         assert resp.status_code == 200
-        assert 'max-age=0' in resp['Cache-Control']
-        assert 'no-cache' in resp['Cache-Control']
-        assert 'no-store' in resp['Cache-Control']
-        assert 'must-revalidate' in resp['Cache-Control']
+        assert_no_cache_header(resp)

@@ -8,6 +8,7 @@ from elasticsearch.exceptions import (ConnectionError as ES_ConnectionError,
                                       NotFoundError)
 from requests.exceptions import ConnectionError as Requests_ConnectionError
 
+from kuma.core.tests import assert_no_cache_header
 from kuma.users.models import User
 
 
@@ -18,10 +19,7 @@ def test_disallowed_methods(client, http_method, endpoint):
     url = reverse('health.{}'.format(endpoint))
     response = getattr(client, http_method)(url)
     assert response.status_code == 405
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 @pytest.mark.parametrize('http_method', ['get', 'head'])
@@ -30,10 +28,7 @@ def test_liveness_and_readiness(db, client, http_method, endpoint):
     url = reverse('health.{}'.format(endpoint))
     response = getattr(client, http_method)(url)
     assert response.status_code == 204
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 @mock.patch('kuma.wiki.models.Document.objects')
@@ -42,10 +37,7 @@ def test_readiness_with_db_error(mock_manager, db, client):
     response = client.get(reverse('health.readiness'))
     assert response.status_code == 503
     assert 'fubar' in response.reason_phrase
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
 
 
 @pytest.fixture
@@ -126,10 +118,7 @@ def test_status(client, settings, mock_status_externals):
     url = reverse('health.status')
     response = client.get(url)
     assert response.status_code == 200
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
+    assert_no_cache_header(response)
     assert response['Content-Type'] == 'application/json'
     data = json.loads(response.content)
     assert sorted(data.keys()) == ['request', 'services', 'settings',

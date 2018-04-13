@@ -2,6 +2,7 @@
 """Tests for kuma.wiki.views.revision."""
 import pytest
 
+from kuma.core.tests import assert_shared_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 
@@ -22,8 +23,7 @@ def test_compare_revisions(edit_revision, client, raw):
     response = client.get(url)
     assert response.status_code == 200
     assert response['X-Robots-Tag'] == 'noindex'
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
 
 
 @pytest.mark.parametrize('raw', [True, False])
@@ -42,8 +42,7 @@ def test_compare_translation(trans_revision, client, raw):
     response = client.get(url)
     assert response.status_code == 200
     assert response['X-Robots-Tag'] == 'noindex'
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert_shared_cache_header(response)
 
 
 @pytest.mark.parametrize('raw', [True, False])
