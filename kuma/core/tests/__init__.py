@@ -18,6 +18,7 @@ def assert_no_cache_header(response):
     assert 'no-cache' in response['Cache-Control']
     assert 'no-store' in response['Cache-Control']
     assert 'must-revalidate' in response['Cache-Control']
+    assert 's-maxage' not in response['Cache-Control']
 
 
 def assert_shared_cache_header(response):
