@@ -2710,6 +2710,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
               <dd>Type: <em>integer</em></dd>
               <dd>Przykłady 例 예제 示例</dd>
             </dl>
+            <p><iframe></iframe></p>
             <div class="noinclude">
               <p>{{ languages( { &quot;ja&quot;: &quot;ja/XUL/Attribute/maxlength&quot; } ) }}</p>
             </div>
@@ -2721,6 +2722,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
               <dd>Type: <em>integer</em></dd>
               <dd>Przykłady 例 예제 示例</dd>
             </dl>
+            <p><iframe></iframe></p>
         """
         resp = self.client.get('%s?raw&include' %
                                reverse('wiki.document', locale='en-US',

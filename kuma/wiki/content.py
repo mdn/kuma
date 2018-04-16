@@ -264,7 +264,12 @@ def filter_out_noinclude(src):
         return ''
     doc = pq(src)
     doc.remove('*[class=noinclude]')
-    return doc.html()
+    # Use "method='html'" to prevent improper closure of some empty HTML
+    # elements, like the "iframe" element for example, which is not allowed
+    # to be closed in the opening tag. For example, without "method='html'"
+    # the output would be "<iframe/>" instead of the correct
+    # "<iframe></iframe>".
+    return doc.html(method='html')
 
 
 class ContentSectionTool(object):
