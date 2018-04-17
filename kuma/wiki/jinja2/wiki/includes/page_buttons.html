@@ -21,17 +21,29 @@
   {% if document %}
   {# No save-and-edit on new pages because slug changes confuse it #}
   <li>
-    <button type="button" class="button positive btn-save-and-edit"><span>{{ _('Publish and Keep Editing') }}</span><i aria-hidden="true" class="icon-pencil"></i></button>
+    <button type="button" class="button positive btn-save-and-edit">
+        {% include 'includes/icons/tools/pencil.svg' %}
+        <span>{{ _('Publish and Keep Editing') }}</span>
+    </button>
   </li>
   {% endif %}
   <li>
-    <button type="submit" class="button positive btn-save">{{ _('Publish') }}<i aria-hidden="true" class="icon-check"></i></button>
+    <button type="submit" class="button positive btn-save">
+        {% include 'includes/icons/general/check-mark.svg' %}
+        {{ _('Publish') }}
+    </button>
   </li>
   <li>
-    <button type="button" class="btn-preview" data-preview-url="{{ url('wiki.preview') }}">{{ _('Preview') }}<i aria-hidden="true" class="icon-play-circle"></i></button>
+    <button type="button" class="btn-preview" data-preview-url="{{ url('wiki.preview') }}">
+        {% include 'includes/icons/tools/play.svg' %}
+        {{ _('Preview') }}
+    </button>
   </li>
   <li>
-    <a href="{{ discard_href }}" class="button negative btn-discard">{{ _('Discard') }}<i aria-hidden="true" class="icon-undo"></i></a>
+    <a href="{{ discard_href }}" class="button negative btn-discard">
+        {% include 'includes/icons/tools/undo.svg' %}
+        {{ _('Discard') }}
+    </a>
   </li>
 </ul>
 

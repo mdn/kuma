@@ -131,32 +131,9 @@
   <!-- Footer -->
     <footer id="nav-footer" class="nav-footer">
       <div class="center">
-          <a href="{{ url('home') }}" class="nav-footer-logo">{{ _('MDN Web Docs') }}</a>
-          <div class="footer-group footer-group-mdn">
-            <h2 class="footer-title">MDN</h2>
-            <ul class="footer-list">
-              <li><a href="{{ wiki_url('Web') }}">{{ _('Web Technologies') }}</a></li>
-              <li><a href="{{ wiki_url('Learn') }}">{{ _('Learn Web Development') }}</a></li>
-              <li><a href="/docs/MDN/About">{{ _('About MDN') }}</a></li>
-              <li><a href="{{ wiki_url('MDN/Feedback') }}">{{ _('Feedback') }}</a></li>
-              <li class="footer-social"><a href="https://twitter.com/mozdevnet" class="only-icon"><i aria-hidden="true" class="icon-twitter"></i> <span>{{ _('Twitter') }}</span></a></li>
-              <li class="footer-social"><a href="https://github.com/mdn/" class="only-icon"><i aria-hidden="true" class="icon-github"></i> <span>{{ _('GitHub') }}</span></a></li>
-            </ul>
-          </div>
+          {% include "includes/footer/mdn-footer.html" %}
 
-          <a href="https://mozilla.org" class="nav-footer-mozilla">{{ _('Mozilla') }}</a>
-          <div class="footer-group footer-group-mozilla">
-            <h2 class="footer-title">Mozilla</h2>
-            <ul class="footer-list">
-              <li><a href="https://www.mozilla.org/about/">{{ _('About') }}</a></li>
-              <li><a href="https://www.mozilla.org/contact/">{{ _('Contact Us') }}</a></li>
-              <li><a href="https://donate.mozilla.org/?utm_source=developer.mozilla.org&utm_medium=referral&utm_content=footer">{{ _('Donate') }}</a></li>
-              <li><a href="https://www.mozilla.org/firefox/?utm_source=developer.mozilla.org&utm_campaign=footer&utm_medium=referral">Firefox</a></li>
-              <li class="footer-social"><a href="https://twitter.com/mozilla" class="only-icon"><i aria-hidden="true" class="icon-twitter"></i> <span>{{ _('Twitter') }}</span></a></li>
-              <li class="footer-social"><a href="https://www.facebook.com/mozilla" class="only-icon"><i aria-hidden="true" class="icon-facebook"></i> <span>{{ _('Facebook') }}</span></a></li>
-              <li class="footer-social"><a href="https://www.instagram.com/mozillagram/" class="only-icon"><i aria-hidden="true" class="icon-instagram"></i> <span>{{ _('Instagram') }}</span></a></li>
-            </ul>
-          </div>
+          {% include "includes/footer/moz-footer.html" %}
 
           {% block lang_switcher %}
             {% include "includes/lang_switcher.html" %}

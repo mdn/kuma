@@ -14,3 +14,160 @@ label #{$selector-icon}:first-child {
         (margin-right, $icon-margin, 0),
     ));
 }
+
+.icon {
+    fill: currentColor;
+}
+
+.icon-arrow,
+.icon-book,
+.icon-caret-down,
+.icon-caret-right,
+.icon-check-mark,
+.icon-close,
+.icon-external-link,
+.icon-eye,
+.icon-file,
+.icon-gear,
+.icon-language,
+.icon-pencil,
+.icon-plain-text,
+.icon-play,
+.icon-tags,
+.icon-undo,
+.search-icon .icon-search {
+    width: 16px;
+    height: 16px;
+}
+
+/* Github icon in login component */
+.login-link .icon {
+    margin-left: 5px;
+    vertical-align: text-bottom;
+}
+
+/* language icon as part of the page tools */
+.icon-language {
+    vertical-align: bottom;
+}
+
+/* tags icon on page create/revise */
+.page-tags .icon-tags {
+    width: 24px;
+    height: 24px;
+    vertical-align: bottom;
+}
+
+/* question mark icon on page create/revise */
+.revision-comment-link .icon-question-mark,
+.page-tags .icon-question-mark,
+.page-attachments .icon-question-mark,
+.page-attachments .icon-paperclip {
+    vertical-align: bottom;
+}
+
+/* tags icon on the bottom of wiki pages */
+.tag-attach-list .icon-tags {
+    vertical-align: middle;
+}
+
+/* community and clock icon size for contributors section */
+.contributors-sub .icon-group,
+.contributors-sub .icon-clock {
+    margin-right: 5px;
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+}
+
+/* clock icon size for contributors section */
+.contributors-sub .icon-clock {
+    width: 16px;
+    height: 16px;
+}
+
+/* check mark on publish button, user profile edit */
+button[type='submit'] .icon-check-mark {
+    vertical-align: bottom;
+}
+
+/* Github icon under My profiles on user edit */
+.site.github .icon-github {
+    margin-right: 5px;
+    vertical-align: bottom;
+}
+
+/* user icons on view profile */
+.user-buttons .icon-pencil {
+    margin-right: 5px;
+    vertical-align: bottom;
+}
+
+.user-buttons .icon-gear {
+    vertical-align: bottom;
+}
+
+/* icons for user links on view profile */
+.user-links .icon-facebook,
+.user-links .icon-github,
+.user-links .icon-group,
+.user-links .icon-linkedin,
+.user-links .icon-stack-overflow,
+.user-links .icon-twitter {
+    margin-right: 5px;
+    width: 21px;
+    height: 21px;
+    vertical-align: inherit;
+}
+
+.user-links .icon-linkedin,
+.user-links .icon-facebook {
+    vertical-align: top;
+}
+
+.user-links .icon-github,
+.user-links .icon-twitter {
+    vertical-align: bottom;
+}
+
+.attachment .icon-paperclip {
+    width: 16px;
+    height: 16px;
+    vertical-align: bottom;
+}
+
+/* filter, checkbox icon on search results */
+.search-results-filters .icon-list,
+.search-results-filters .icon-checkbox {
+    vertical-align: middle;
+}
+
+/* checkbox icon on search results page */
+.search-results-filters .icon-checkbox {
+    margin-bottom: 2px;
+    width: 16px;
+    height: 16px;
+}
+
+/* file icon on search results */
+.search-results-container .icon-file {
+    margin-right: 10px;
+    width: 21px;
+    height: 21px;
+}
+
+/* trash icon on edit email addresses page */
+.email_list .icon-trash {
+    vertical-align: middle;
+}
+
+/* icons inside the dashboard-detail-details container */
+.dashboard-detail-details {
+    .icon-undo,
+    .icon-play,
+    .icon-pencil,
+    .icon-book, {
+        float: left;
+        margin-right: 5px;
+    }
+}
