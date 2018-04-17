@@ -311,7 +311,7 @@
 {% block js %}
 
   {% if waffle.flag('section_edit') %}
-    <script type="text/javascript">
+    <script>
         (function($) {
             $('#wikiArticle').children('h2[id]').each(function() {
                 var id = $(this).attr('id');

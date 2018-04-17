@@ -53,7 +53,7 @@ def test_code_sample(code_sample_doc, constance_config, client, settings):
         ' rel="stylesheet" type="text/css">'
         '<style type="text/css">.some-css { color: red; }</style>'
         'Some HTML'
-        '<script type="text/javascript">window.alert("HI THERE")</script>'
+        '<script>window.alert("HI THERE")</script>'
         % settings.STATIC_URL)
     assert normalized == expected
 

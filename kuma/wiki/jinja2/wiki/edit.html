@@ -212,7 +212,7 @@
     {% include 'attachments/includes/attachment_list.html' %}
 
     <!-- Add information about this document in JSON format for use in CKEditor -->
-    <script type="text/javascript">
+    <script>
       mdn.wiki.document = {{ document.get_json_data()|tojson }};
     </script>
 
@@ -227,7 +227,7 @@
     {% include 'wiki/includes/tag_suggestions.html' %}
 
     {% include 'wiki/includes/ckeditor_scripts.html' %}
-    <script type="text/javascript">
+    <script>
     if(window.waffle.flag_is_active('section_edit')) CKEDITOR.on('instanceReady', function(evt) {
         var hash = window.location.hash.replace('#', '');
         if(!hash) return;
