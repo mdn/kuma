@@ -72,7 +72,7 @@ def section_doc(root_doc, wiki_user):
     The content in this document's current revision contains multiple HTML
     elements with an "id" attribute (or "sections"), and also has a length
     greater than or equal to 200, which meets the compression threshold of
-    the GZipMiddleware.
+    the GZipMiddleware, if used.
     """
     root_doc.current_revision = Revision.objects.create(
         document=root_doc, creator=wiki_user, content=SECTIONS)
@@ -399,9 +399,9 @@ def test_conditional_get(client, section_doc):
     assert 'last-modified' not in response
     assert '"{}"'.format(calculate_etag(response.content)) in response['etag']
 
-    # Get the ETag header value when using gzip to test that GZipMiddleware
-    # plays nicely with ConditionalGetMiddleware when making the following
-    # conditional request.
+    # Get the ETag header value when using gzip to test that GZipMiddleware,
+    # if used, plays nicely with ConditionalGetMiddleware when making the
+    # following conditional request.
     response = client.get(url, HTTP_ACCEPT_ENCODING='gzip')
     assert response.status_code == 200
     assert_shared_cache_header(response)

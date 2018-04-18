@@ -258,8 +258,6 @@ def test_raw_file_requires_attachment_host(client, settings, file_attachment):
     assert 'Cache-Control' in response
     assert 'public' in response['Cache-Control']
     assert 'max-age=900' in response['Cache-Control']
-    assert response['Content-Encoding'] == 'gzip'
-    assert response['Vary'] == 'Accept-Encoding'
 
 
 def test_raw_file_if_modified_since(client, settings, file_attachment):

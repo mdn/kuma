@@ -40,7 +40,6 @@ def test_code_sample(code_sample_doc, constance_config, client, settings):
     )
     assert response.status_code == 200
     assert response['Access-Control-Allow-Origin'] == '*'
-    assert response['Vary'] == 'Accept-Encoding'
     assert 'Last-Modified' not in response
     assert 'ETag' in response
     assert 'public' in response['Cache-Control']
@@ -57,9 +56,9 @@ def test_code_sample(code_sample_doc, constance_config, client, settings):
         % settings.STATIC_URL)
     assert normalized == expected
 
-    # Get the ETag header value when using gzip to test that GZipMiddleware
-    # plays nicely with ConditionalGetMiddleware when making the following
-    # conditional request.
+    # Get the ETag header value when using gzip to test that GZipMiddleware,
+    # if used, plays nicely with ConditionalGetMiddleware when making the
+    # following conditional request.
     response = client.get(
         url,
         HTTP_HOST='testserver',
