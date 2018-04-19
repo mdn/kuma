@@ -20,6 +20,7 @@ from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.tests import (assert_no_cache_header,
                              assert_shared_cache_header, eq_, get_user, ok_)
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import to_html
 from kuma.spam.constants import (
     SPAM_CHECKS_FLAG, SPAM_SUBMISSIONS_FLAG, VERIFY_URL)
 from kuma.users.tests import UserTestCase
@@ -80,7 +81,7 @@ class RedirectTests(UserTestCase, WikiTestCase):
         response = self.client.get(doc.get_absolute_url(), follow=True)
         eq_(200, response.status_code)
         response_html = pq(response.content)
-        article_body = response_html.find('#wikiArticle').html()
+        article_body = to_html(response_html.find('#wikiArticle'))
         self.assertHTMLEqual(html, article_body)
 
 
@@ -300,7 +301,7 @@ class ViewTests(UserTestCase, WikiTestCase):
         """)
         resp = self.client.get(rev.get_absolute_url())
         page = pq(resp.content)
-        ct = page.find('#wikiArticle').html()
+        ct = to_html(page.find('#wikiArticle'))
         ok_('<svg>' not in ct)
         ok_('<a href="#">Hahaha</a>' in ct)
 
@@ -1361,7 +1362,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert_no_cache_header(response)
         content = pq(response.content)
         ok_(content('li.metadata-choose-parent'))
-        ok_(str(parent.id) in content.html())
+        ok_(str(parent.id) in to_html(content))
 
     @pytest.mark.tags
     def test_tags_while_document_update(self):

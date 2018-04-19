@@ -11,7 +11,7 @@ from waffle.models import Flag, Switch
 from kuma.core.tests import (assert_no_cache_header,
                              assert_shared_cache_header, eq_, ok_)
 from kuma.core.urlresolvers import reverse
-from kuma.core.utils import urlparams
+from kuma.core.utils import to_html, urlparams
 from kuma.dashboards.forms import RevisionDashboardForm
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG
 from kuma.users.models import User, UserBan
@@ -116,7 +116,7 @@ class RevisionsDashTest(UserTestCase):
         ok_(len(revisions))
         eq_(1, revisions.length)
 
-        ok_('fr' in pq(revisions[0]).find('.locale').html())
+        ok_('fr' in to_html(pq(revisions[0]).find('.locale')))
 
     def test_creator_filter(self):
         url = urlparams(reverse('dashboards.revisions', locale='en-US'),
@@ -145,7 +145,7 @@ class RevisionsDashTest(UserTestCase):
 
         eq_(revisions.length, 7)
         for revision in revisions:
-            ok_('lorem' not in pq(revision).find('.dashboard-title').html())
+            ok_('lorem' not in to_html(pq(revision).find('.dashboard-title')))
 
     def test_known_authors_lookup(self):
         # Only testuser01 is in the Known Authors group
@@ -158,7 +158,7 @@ class RevisionsDashTest(UserTestCase):
         revisions = page.find('.dashboard-row')
 
         for revision in revisions:
-            author = pq(revision).find('.dashboard-author').html()
+            author = to_html(pq(revision).find('.dashboard-author'))
             ok_('testuser01' in author)
             ok_('testuser2' not in author)
 

@@ -2,6 +2,7 @@ import pytest
 from pyquery import PyQuery as pq
 
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import to_html
 from kuma.wiki.models import Revision
 
 from . import make_test_file
@@ -40,7 +41,7 @@ def test_xss_file_attachment_title(admin_client, constance_config, root_doc,
     doc = pq(response.content)
     text = doc('.page-attachments-table .attachment-name-cell').text()
     assert text == ('%s\nxss' % title)
-    html = doc('.page-attachments-table .attachment-name-cell').html()
+    html = to_html(doc('.page-attachments-table .attachment-name-cell'))
     assert '&gt;&lt;img src=x onerror=prompt(navigator.userAgent);&gt;' in html
     # security bug 1272791
     for script in doc('script'):

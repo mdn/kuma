@@ -19,6 +19,7 @@ from waffle.models import Flag
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import to_html
 from kuma.spam.akismet import Akismet
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
 from kuma.wiki.models import (Document, DocumentDeletionLog, Revision,
@@ -957,7 +958,7 @@ def test_user_edit_websites(wiki_user, wiki_user_github_account, user_client):
     # Github is not an editable field
     github_div = doc.find("#field_github_url div.field-account")
     github_acct = wiki_user.socialaccount_set.get()
-    assert github_div.html().strip() == github_acct.get_profile_url()
+    assert to_html(github_div).strip() == github_acct.get_profile_url()
 
     # Come up with some bad sites, either invalid URL or bad URL prefix
     bad_sites = {

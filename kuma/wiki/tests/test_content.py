@@ -22,6 +22,82 @@ from ..templatetags.jinja_helpers import bugize_text
 
 AL_BASE_URL = 'https://example.com'  # Base URL for annotateLinks tests
 
+EMPTY_IFRAME = '<iframe></iframe>'
+SUMMARY_DOM_MARKUP = (
+    'The <strong>Document Object Model</strong> (<strong>DOM</strong>) is an '
+    'API for <a href="/en-US/docs/HTML" title="en-US/docs/HTML">HTML</a> and '
+    '<a href="/en-US/docs/XML" title="en-US/docs/XML">XML</a> documents. It '
+    'provides a structural representation of the document, enabling you to '
+    'modify its content and visual presentation by using a scripting language '
+    'such as <a href="/en-US/docs/JavaScript" title='
+    '"https://developer.mozilla.org/en-US/docs/JavaScript">JavaScript</a>.'
+)
+SUMMARY_DOM_TEXT = (
+    'The Document Object Model (DOM) is an API for HTML and XML documents. '
+    'It provides a structural representation of the document, enabling you '
+    'to modify its content and visual presentation by using a scripting '
+    'language such as JavaScript.'
+)
+SUMMARIES_SEO_MARKUP_PART1 = (
+    '<strong>Cascading Style Sheets</strong>, most of the time abbreviated '
+    'in <strong>CSS</strong>, is a <a href="/en-US/docs/DOM/stylesheet">'
+    'stylesheet</a> language used to describe the presentation of a document '
+    'written in <a href="/en-US/docs/HTML" '
+    'title="The HyperText Mark-up Language">HTML</a>'
+)
+SUMMARIES_SEO_MARKUP_PART2 = (
+    '. CSS describes how the structured element must be rendered on screen, '
+    'on paper, in speech, or on other media.'
+)
+SUMMARIES_SEO_MARKUP_FORMAT = (
+    '<span class="seoSummary">{0}</span> or <a href="/en-US/docs/XML" '
+    'title="en-US/docs/XML">XML</a> (including various XML languages like '
+    '<a href="/en-US/docs/SVG" title="en-US/docs/SVG">SVG</a> or '
+    '<a href="/en-US/docs/XHTML" title="en-US/docs/XHTML">XHTML</a>)'
+    '<span class="seoSummary">{1}</span>'
+)
+SUMMARIES_SEO_TEXT = (
+    'Cascading Style Sheets, most of the time abbreviated in CSS, is a '
+    'stylesheet language used to describe the presentation of a document '
+    'written in HTML. CSS describes how the structured element must be '
+    'rendered on screen, on paper, in speech, or on other media.'
+)
+SUMMARY_WRAPPERS = {
+    'no_summary_section': '<p>{}</p>',
+    'summary_section': '<h2 id="Summary">Summary</h2><p>{}</p>',
+}
+SUMMARY_PLUS_SEO_WRAPPERS = dict(
+    SUMMARY_WRAPPERS,
+    no_summary_section_plus_seo='<p><span class="seoSummary">{}</span></p>',
+    summary_section_plus_seo=(
+        '<h2 id="Summary">Summary</h2><p>Some other text</p>'
+        '<p><span class="seoSummary">{}</span></p>'
+    ),
+)
+SUMMARY_CONTENT = {
+    'without_empty_iframe': (SUMMARY_DOM_MARKUP, SUMMARY_DOM_TEXT),
+    'with_empty_iframe': (EMPTY_IFRAME + SUMMARY_DOM_MARKUP, SUMMARY_DOM_TEXT),
+}
+SUMMARIES_SEO_CONTENT = {
+    'with_empty_iframe': (
+        SUMMARIES_SEO_MARKUP_FORMAT.format(
+            EMPTY_IFRAME + SUMMARIES_SEO_MARKUP_PART1,
+            EMPTY_IFRAME + SUMMARIES_SEO_MARKUP_PART2
+        ),
+        (EMPTY_IFRAME + SUMMARIES_SEO_MARKUP_PART1 +
+         EMPTY_IFRAME + SUMMARIES_SEO_MARKUP_PART2),
+        SUMMARIES_SEO_TEXT
+    ),
+    'without_empty_iframe': (
+        SUMMARIES_SEO_MARKUP_FORMAT.format(
+            SUMMARIES_SEO_MARKUP_PART1,
+            SUMMARIES_SEO_MARKUP_PART2
+        ),
+        SUMMARIES_SEO_MARKUP_PART1 + SUMMARIES_SEO_MARKUP_PART2,
+        SUMMARIES_SEO_TEXT
+    ),
+}
+
 
 class GetContentSectionsTests(TestCase):
     def test_section_pars_for_empty_docs(self):
@@ -1224,109 +1300,34 @@ def test_extractor_section(root_doc, annotate_links):
     assert normalize_html(result) == normalize_html(expected)
 
 
-class GetSEODescriptionTests(KumaTestCase):
+@pytest.mark.parametrize('wrapper', SUMMARY_PLUS_SEO_WRAPPERS.values(),
+                         ids=SUMMARY_PLUS_SEO_WRAPPERS.keys())
+@pytest.mark.parametrize('markup, text', SUMMARY_CONTENT.values(),
+                         ids=SUMMARY_CONTENT.keys())
+def test_summary_section(markup, text, wrapper):
+    content = wrapper.format(markup)
+    assert get_seo_description(content, 'en-US') == text
+    assert get_seo_description(content, 'en-US', False) == markup
 
-    def test_summary_section(self):
-        content = (
-            '<h2 id="Summary">Summary</h2><p>The <strong>Document Object '
-            'Model'
-            '</strong> (<strong>DOM</strong>) is an API for '
-            '<a href="/en-US/docs/HTML" title="en-US/docs/HTML">HTML</a> and '
-            '<a href="/en-US/docs/XML" title="en-US/docs/XML">XML</a> '
-            'documents. It provides a structural representation of the '
-            'document, enabling you to modify its content and visual '
-            'presentation by using a scripting language such as '
-            '<a href="/en-US/docs/JavaScript" '
-            'title="https://developer.mozilla.org/en-US/docs/JavaScript">'
-            'JavaScript</a>.</span></p>')
-        expected = (
-            'The Document Object Model (DOM) is an API for HTML and '
-            'XML documents. It provides a structural representation of the'
-            ' document, enabling you to modify its content and visual'
-            ' presentation by using a scripting language such as'
-            ' JavaScript.')
-        eq_(expected, get_seo_description(content, 'en-US'))
 
-    def test_keep_markup(self):
-        content = """
-            <h2 id="Summary">Summary</h2>
-            <p>The <strong>Document Object Model </strong>
-            (<strong>DOM</strong>) is an API for <a href="/en-US/docs/HTML"
-            title="en-US/docs/HTML">HTML</a> and <a href="/en-US/docs/XML"
-            title="en-US/docs/XML">XML</a> documents. It provides a structural
-            representation of the document, enabling you to modify its content
-            and visual presentation by using a scripting language such as <a
-            href="/en-US/docs/JavaScript"
-            title="https://developer.mozilla.org/en-US/docs/JavaScript">
-            JavaScript</a>.</span></p>
-         """
-        expected = """
-            The <strong>Document Object Model </strong>
-            (<strong>DOM</strong>) is an API for <a href="/en-US/docs/HTML"
-            title="en-US/docs/HTML">HTML</a> and <a href="/en-US/docs/XML"
-            title="en-US/docs/XML">XML</a> documents. It provides a structural
-            representation of the document, enabling you to modify its content
-            and visual presentation by using a scripting language such as <a
-            href="/en-US/docs/JavaScript"
-            title="https://developer.mozilla.org/en-US/docs/JavaScript">
-            JavaScript</a>.</span>
-        """
-        eq_(normalize_html(expected),
-            normalize_html(get_seo_description(content, 'en-US', False)))
+@pytest.mark.parametrize('wrapper', SUMMARY_WRAPPERS.values(),
+                         ids=SUMMARY_WRAPPERS.keys())
+@pytest.mark.parametrize('markup, expected_markup, text',
+                         SUMMARIES_SEO_CONTENT.values(),
+                         ids=SUMMARIES_SEO_CONTENT.keys())
+def test_multiple_seo_summaries(markup, expected_markup, text, wrapper):
+    content = wrapper.format(markup)
+    assert get_seo_description(content, 'en-US') == text
+    assert get_seo_description(content, 'en-US', False) == expected_markup
 
-    def test_html_elements_spaces(self):
-        # No spaces with html tags
-        content = (
-            u'<p><span class="seoSummary">The <strong>Document Object '
-            'Model'
-            '</strong> (<strong>DOM</strong>) is an API for '
-            '<a href="/en-US/docs/HTML" title="en-US/docs/HTML">HTML</a> and '
-            '<a href="/en-US/docs/XML" title="en-US/docs/XML">XML</a> '
-            'documents. It provides a structural representation of the '
-            'document, enabling you to modify its content and visual '
-            'presentation by using a scripting language such as '
-            '<a href="/en-US/docs/JavaScript" '
-            'title="https://developer.mozilla.org/en-US/docs/JavaScript">'
-            'JavaScript</a>.</span></p>')
-        expected = (
-            'The Document Object Model (DOM) is an API for HTML and '
-            'XML'
-            ' documents. It provides a structural representation of the'
-            ' document, enabling you to modify its content and visual'
-            ' presentation by using a scripting language such as'
-            ' JavaScript.')
-        eq_(expected, get_seo_description(content, 'en-US'))
 
-        content = (u'<p><span class="seoSummary"><strong>Cascading Style '
-                   'Sheets</strong>, most of the time abbreviated in '
-                   '<strong>CSS</strong>, is a '
-                   '<a href="/en-US/docs/DOM/stylesheet">stylesheet</a> '
-                   'language used to describe the presentation of a document '
-                   'written in <a href="/en-US/docs/HTML" title="The '
-                   'HyperText Mark-up Language">HTML</a></span> or <a '
-                   'href="/en-US/docs/XML" title="en-US/docs/XML">XML</a> '
-                   '(including various XML languages like <a '
-                   'href="/en-US/docs/SVG" title="en-US/docs/SVG">SVG</a> or '
-                   '<a href="/en-US/docs/XHTML" '
-                   'title="en-US/docs/XHTML">XHTML</a>)<span '
-                   'class="seoSummary">. CSS describes how the structured '
-                   'element must be rendered on screen, on paper, in speech, '
-                   'or on other media.</span></p>')
-        expected = ('Cascading Style Sheets, most of the time abbreviated in '
-                    'CSS, is a stylesheet language used to describe the '
-                    'presentation of a document written in HTML. CSS '
-                    'describes how the structured element must be rendered on '
-                    'screen, on paper, in speech, or on other media.')
-        eq_(expected, get_seo_description(content, 'en-US'))
-
-    def test_empty_paragraph_content(self):
-        content = u'''<p></p><div class="overheadIndicator draft draftHeader">
-            <strong>DRAFT</strong>
-                <div>This page is not complete.</div>
-                </div><p></p>
-                <p></p><div class="note"><strong>Note:</strong> Please do not
-                translate this page until it is done; it will be much easier at
-                that point. The French translation is a test to be sure that it
-                works well.</div><p></p>'''
-        expected = ('')
-        eq_(expected, get_seo_description(content, 'en-US', False))
+def test_empty_paragraph_content():
+    content = u"""<p></p><div class="overheadIndicator draft draftHeader">
+        <strong>DRAFT</strong>
+        <div>This page is not complete.</div>
+        </div><p></p>
+        <p></p><div class="note"><strong>Note:</strong> Please do not
+        translate this page until it is done; it will be much easier at
+        that point. The French translation is a test to be sure that it
+        works well.</div><p></p>"""
+    assert get_seo_description(content, 'en-US', False) == ''
