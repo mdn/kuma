@@ -1305,6 +1305,7 @@ CELERY_ACCEPT_CONTENT = ['pickle']
 
 CELERY_IMPORTS = (
     'tidings.events',
+    'kuma.search.tasks',
 )
 
 CELERY_ANNOTATIONS = {
