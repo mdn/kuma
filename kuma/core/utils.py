@@ -32,6 +32,19 @@ from .exceptions import DateTimeFormatError
 log = logging.getLogger('kuma.core.utils')
 
 
+def to_html(pq):
+    """
+    Return valid HTML for the given PyQuery instance.
+
+    It uses "method='html'" when calling the "html" method on the given
+    PyQuery instance in order to prevent the improper closure of some empty
+    HTML elements. For example, without "method='html'" the output of an empty
+    "iframe" element would be "<iframe/>", which is illegal in HTML, instead of
+    "<iframe></iframe>".
+    """
+    return pq.html(method='html')
+
+
 def is_untrusted(request):
     return request.get_host() in (
         settings.ATTACHMENT_ORIGIN,

@@ -35,7 +35,7 @@ from kuma.core.decorators import (block_user_agents,
                                   shared_cache_control,
                                   superuser_required)
 from kuma.core.urlresolvers import reverse
-from kuma.core.utils import urlparams
+from kuma.core.utils import to_html, urlparams
 from kuma.search.store import get_search_url_from_referer
 
 from .utils import calculate_etag, split_slug
@@ -855,7 +855,7 @@ def _document_api_PUT(request, document_slug, document_locale):
                     data['title'] = head_title.text()
                 body_content = doc.find('body')
                 if body_content.length > 0:
-                    data['content'] = body_content.html()
+                    data['content'] = to_html(body_content)
             except Exception:
                 pass
 

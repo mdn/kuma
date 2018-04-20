@@ -10,6 +10,7 @@ from pyquery import PyQuery as pq
 
 from kuma.core.tests import assert_no_cache_header, assert_shared_cache_header
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import to_html
 from kuma.users.tests import UserTestCase
 from kuma.wiki.models import DocumentAttachment
 from kuma.wiki.tests import document, revision, WikiTestCase
@@ -228,7 +229,7 @@ def test_edit_attachment_post_with_vacant_file(admin_client, root_doc, tmpdir,
     response = admin_client.post(url, data=post_data)
     assert response.status_code == 200
     doc = pq(response.content)
-    assert doc('ul.errorlist a[href="#id_file"]').html() == expected
+    assert to_html(doc('ul.errorlist a[href="#id_file"]')) == expected
 
 
 def test_raw_file_requires_attachment_host(client, settings, file_attachment):

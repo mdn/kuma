@@ -30,6 +30,7 @@ from ..views.utils import calculate_etag
 
 AuthKey = namedtuple('AuthKey', 'key header')
 
+EMPTY_IFRAME = '<iframe></iframe>'
 SECTION1 = '<h3 id="S1">Section 1</h3><p>This is a page. Deal with it.</p>'
 SECTION2 = '<h3 id="S2">Section 2</h3><p>This is a page. Deal with it.</p>'
 SECTION3 = '<h3 id="S3">Section 3</h3><p>This is a page. Deal with it.</p>'
@@ -268,7 +269,7 @@ def test_api_put_existing(client, section_doc, authkey, section_case,
         comment="I like this document.",
         title="New Sectioned Root Document",
         summary="An edited sectioned root document.",
-        content="<p>This is an edit.</p>",
+        content=EMPTY_IFRAME + '<p>This is an edit.</p>',
         tags="tagA,tagB,tagC",
         review_tags="editorial,technical",
     )
@@ -345,7 +346,7 @@ def test_api_put_new(settings, client, root_doc, authkey, section_case,
         comment="I like this document.",
         title="Foobar, The Document",
         summary="A sectioned document named foobar.",
-        content=SECTIONS,
+        content=EMPTY_IFRAME + SECTIONS,
         tags="tagA,tagB,tagC",
         review_tags="editorial,technical",
     )

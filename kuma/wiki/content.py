@@ -15,6 +15,7 @@ from lxml import etree
 from pyquery import PyQuery as pq
 
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import to_html
 
 from .exceptions import DocumentRenderedContentNotAvailable
 from .utils import locale_and_slug_from_path
@@ -218,7 +219,8 @@ def get_seo_description(content, locale=None, strip_markup=True):
             if strip_markup:
                 seo_summary = summaryClasses.text()
             else:
-                seo_summary = summaryClasses.html()
+                seo_summary = ''.join(
+                    to_html(item) for item in summaryClasses.items())
         else:
             paragraphs = page.find('p')
             if paragraphs.length:
@@ -227,7 +229,7 @@ def get_seo_description(content, locale=None, strip_markup=True):
                     if strip_markup:
                         text = item.text()
                     else:
-                        text = item.html()
+                        text = to_html(item)
                     # Checking for a parent length of 2
                     # because we don't want p's wrapped
                     # in DIVs ("<div class='warning'>") and pyQuery adds
@@ -264,7 +266,7 @@ def filter_out_noinclude(src):
         return ''
     doc = pq(src)
     doc.remove('*[class=noinclude]')
-    return doc.html()
+    return to_html(doc)
 
 
 class ContentSectionTool(object):
