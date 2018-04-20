@@ -3,6 +3,7 @@ import threading
 from django.conf import settings
 from django.core.urlresolvers import reverse as django_reverse
 from django.test.client import RequestFactory
+from django.utils import translation
 from django.utils.translation.trans_real import parse_accept_lang_header
 
 
@@ -35,41 +36,30 @@ def get_url_prefixer():
 
 def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None,
             current_app=None, force_locale=False, locale=None, unprefixed=False):
-    """Wraps Django's reverse to prepend the correct locale.
+    """Wraps Django's reverse to prepend the requested locale.
 
-    force_locale -- Ordinarily, if get_url_prefixer() returns None, we return
-        an unlocalized URL, which will be localized via redirect when visited.
-        Set force_locale to True to force the insertion of a default locale
-        when there is no set prefixer. If you are writing a test and simply
-        wish to avoid LocaleURLMiddleware's initial 301 when passing in an
-        unprefixed URL, it is probably easier to substitute LocalizingClient
-        for any uses of django.test.client.Client and forgo this kwarg.
+    Keyword Arguments:
+    * locale - Use this locale prefix rather than the current active locale.
 
-    locale -- By default, reverse prepends the current locale (if set) or
-        the default locale if force_locale == True. To override this behavior
-        and have it prepend a different locale, pass in the locale parameter
-        with the desired locale. When passing a locale, the force_locale is
-        not used and is implicitly True.
+    Keyword Arguments passed to Django's reverse:
+    * viewname
+    * urlconf
+    * args
+    * kwargs
+    * current_app
 
+    Legacy Keyword Arguments (TODO: remove from callers)
+    * prefix
+    * force_locale
+    * unprefixed
     """
     if locale:
-        prefixer = Prefixer(locale=locale)
+        with translation.override(locale):
+            return django_reverse(viewname, urlconf=urlconf, args=args,
+                                  kwargs=kwargs, current_app=current_app)
     else:
-        prefixer = get_url_prefixer()
-        if unprefixed:
-            prefixer = None
-        elif not prefixer and force_locale:
-            prefixer = Prefixer()
-
-    if prefixer:
-        prefix = prefix or '/'
-    url = django_reverse(viewname, urlconf=urlconf, args=args, kwargs=kwargs,
-                         prefix=prefix, current_app=current_app)
-
-    if prefixer:
-        return prefixer.fix(url)
-    else:
-        return url
+        return django_reverse(viewname, urlconf=urlconf, args=args,
+                              kwargs=kwargs, current_app=current_app)
 
 
 def find_supported(ranked):

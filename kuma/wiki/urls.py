@@ -177,7 +177,7 @@ non_document_patterns = [
         name="attachments.feeds.recent_files"),
 ]
 
-urlpatterns = non_document_patterns + [
+lang_urlpatterns = non_document_patterns + [
     url(r'^(?P<document_path>%s)' % DOCUMENT_PATH_RE.pattern,
         include(document_patterns)),
 ]

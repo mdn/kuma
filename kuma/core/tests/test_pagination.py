@@ -53,4 +53,5 @@ def test_paginator_filter_current_selected():
     pager = paginate(request, range(200), per_page=10)
     html = paginator(pager)
     doc = pyquery.PyQuery(html)
-    eq_(doc('li.selected a').attr('href'), 'http://testserver/search?page=10')
+    eq_(doc('li.selected a').attr('href'),
+        'http://testserver/en-US/search?page=10')

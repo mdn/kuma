@@ -1,5 +1,4 @@
 import contextlib
-import urllib
 from urlparse import urljoin
 
 from django.conf import settings
@@ -8,82 +7,203 @@ from django.core import urlresolvers
 from django.http import (HttpResponseForbidden,
                          HttpResponsePermanentRedirect,
                          HttpResponseRedirect)
+from django.middleware.locale import (
+    LocaleMiddleware as DjangoLocaleMiddleware)
 from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
+from django.utils.six.moves.urllib.parse import (
+    urlencode, urlsplit, urlunsplit)
 from whitenoise.middleware import WhiteNoiseMiddleware
 
 from .decorators import add_shared_cache_control
-from .urlresolvers import Prefixer, set_url_prefixer, split_path
-from .utils import is_untrusted, urlparams
+from .i18n import django_language_code_to_kuma
+from .utils import is_untrusted
 from .views import handler403
 
 
-class LocaleURLMiddleware(object):
+class LangSelectorMiddleware(object):
     """
-    Based on zamboni.amo.middleware.
-    Tried to use localeurl but it choked on 'en-US' with capital letters.
+    Redirect requests with a ?lang= parameter.
 
-    1. Search for the locale.
-    2. Save it in the request.
-    3. Strip them from the URL.
+    This should appear higher than LocaleMiddleware in the middleware list.
     """
 
     def process_request(self, request):
-        prefixer = Prefixer(request)
-        set_url_prefixer(prefixer)
-        full_path = prefixer.fix(prefixer.shortened_path)
-        lang = request.GET.get('lang')
+        """Redirect if ?lang query parameter is valid."""
+        query_lang = request.GET.get('lang')
+        if query_lang not in dict(settings.LANGUAGES):
+            return
 
-        if lang in dict(settings.LANGUAGES):
-            # Blank out the locale so that we can set a new one. Remove lang
-            # from the query params so we don't have an infinite loop.
-            prefixer.locale = ''
-            new_path = prefixer.fix(prefixer.shortened_path)
-            query = dict((smart_str(k), v) for
+        # Check if different language is embedded in URL
+        dj_language = translation.get_language_from_request(
+            request, check_path=True)
+        language = django_language_code_to_kuma(dj_language)
+        if language == query_lang:
+            # Language is already requested language, don't redirect
+            return
+
+        script_prefix = urlresolvers.get_script_prefix()
+        expected_prefix = '%s%s/' % (script_prefix, language)
+        full_path = request.get_full_path()  # Includes querystring
+        old_path = urlsplit(full_path).path
+        if full_path.startswith(expected_prefix):
+            new_prefix = '%s%s/' % (script_prefix, query_lang)
+            new_path = old_path.replace(expected_prefix, new_prefix, 1)
+        else:
+            new_prefix = '%s%s/' % (script_prefix, query_lang)
+            new_path = old_path.replace(script_prefix, new_prefix, 1)
+
+        # Redirect to same path with requested language and without ?lang
+        new_query = dict((smart_str(k), v) for
                          k, v in request.GET.iteritems() if k != 'lang')
-
-            # Never use HttpResponsePermanentRedirect here.
-            # Its a temporary redirect and should return with http 302, not 301
-            response = HttpResponseRedirect(urlparams(new_path, **query))
-            add_shared_cache_control(response)
-            return response
-
-        if full_path != request.path:
-            query_string = request.META.get('QUERY_STRING', '')
-            full_path = urllib.quote(full_path.encode('utf-8'))
-
-            if query_string:
-                full_path = '%s?%s' % (full_path, query_string)
-
-            response = HttpResponseRedirect(full_path)
-
-            # Vary on Accept-Language if we changed the locale
-            old_locale = prefixer.locale
-            new_locale, _ = split_path(full_path)
-            if old_locale != new_locale:
-                response['Vary'] = 'Accept-Language'
-
-            add_shared_cache_control(response)
-            return response
-
-        request.path_info = '/' + prefixer.shortened_path
-        request.LANGUAGE_CODE = prefixer.locale or settings.LANGUAGE_CODE
-        # prefixer.locale can be '', but we need a real locale code to activate
-        # otherwise the request uses the previously handled request's
-        # translations.
-        translation.activate(prefixer.locale or settings.LANGUAGE_CODE)
-
-    def process_response(self, request, response):
-        """Unset the thread-local var we set during `process_request`."""
-        # This makes mistaken tests (that should use LocalizingClient but
-        # use Client instead) fail loudly and reliably. Otherwise, the set
-        # prefixer bleeds from one test to the next, making tests
-        # order-dependent and causing hard-to-track failures.
-        set_url_prefixer(None)
+        new_querystring = urlencode(sorted(new_query.items()))
+        new_url = urlunsplit((
+            request.scheme,
+            request.get_host(),
+            new_path,
+            new_querystring,
+            ''  # Fragment / Anchor
+        ))
+        response = HttpResponseRedirect(new_url)
+        add_shared_cache_control(response)
         return response
 
-    def process_exception(self, request, exception):
-        set_url_prefixer(None)
+
+class LocaleStandardizerMiddleware(object):
+    """
+    Convert 404s with legacy locales to redirects.
+
+    This should appear higher than LocaleMiddleware in the middleware list.
+    """
+
+    def process_response(self, request, response):
+        """
+        Convert 404s with legacy into redirects to language-specific URLs.
+
+        Differences:
+        * Redirected URL uses Kuma language code
+        """
+        if response.status_code != 404:
+            return response
+
+        language_from_path = translation.get_language_from_path(request.path_info)
+        literal_from_path = request.path_info.split('/')[1]
+        fixed_locale = None
+        match = literal_from_path == language_from_path
+        lower_match = literal_from_path.lower() == language_from_path.lower()
+        if lower_match and (language_from_path != literal_from_path):
+            # Language code is a lower-case match for a known locale
+            fixed_locale = language_from_path
+        elif literal_from_path in settings.LOCALE_ALIASES:
+            # Language code is a known general -> specific locale
+            fixed_locale = settings.LOCALE_ALIASES[literal_from_path]
+        elif not match and literal_from_path.startswith(language_from_path):
+            # Language code is a specific locale (fr vs fr-FR)
+            fixed_locale = language_from_path
+
+        if fixed_locale:
+            # Replace the 404 with a redirect to the fixed locale
+            fixed_url = "%s://%s%s" % (
+                request.scheme,
+                request.get_host(),
+                request.get_full_path().replace(literal_from_path,
+                                                fixed_locale,
+                                                1)
+            )
+            redirect_response = HttpResponseRedirect(fixed_url)
+            add_shared_cache_control(redirect_response)
+            return redirect_response
+        else:
+            # No language fixup found, return the 404
+            return response
+
+
+class LocaleMiddleware(DjangoLocaleMiddleware):
+    """
+    Override the base Django LocaleMiddleware with custom processing for Kuma.
+
+    Differences:
+    * Skip locale detection for known non-localized paths
+    * Use Kuma language codes (en-US) instead of Django's (en-us)
+    * Don't include "Vary: Accept-Language" header
+    * Add caching headers to locale redirects
+    """
+
+    def process_request(self, request):
+        """
+        Determine the language code for the request.
+
+        Differences:
+        * Skip language detection (which adds a Vary header) if the path
+          is a known non-localized path.
+        * Use Kuma language codes (en-US) not Django (en-us)
+        """
+        # If the path is a known non-locale path, skip checks
+        if not self.is_locale_path(request):
+            request.LANGUAGE_CODE = settings.LANGUAGE_CODE
+            return
+
+        # Call Django's LocaleMiddleware to detect the language, activate it,
+        # and set request.LANGUAGE_CODE, based on Django's language code
+        response = super(LocaleMiddleware, self).process_request(request)
+
+        # Replace Django's language code w/ Kuma's, if needed
+        dj_language_code = request.LANGUAGE_CODE
+        kuma_language_code = django_language_code_to_kuma(dj_language_code)
+        if dj_language_code != kuma_language_code:
+            translation.activate(kuma_language_code)
+            request.LANGUAGE_CODE = kuma_language_code
+
+        return response
+
+    def is_locale_path(self, request):
+        """Return True if the request path is localized path."""
+        path = request.path_info.lstrip('/')
+        for pattern in settings.LANGUAGE_URL_IGNORED_PATHS:
+            if path.startswith(pattern):
+                return False
+        return True
+
+    def process_response(self, request, response):
+        """
+        Convert 404s into redirects to language-specific URLs.
+
+        Differences:
+        * Use Kuma language code in locale redirect
+        * Add caching headers to locale redirect
+        * Delete Vary: Acceot-Language from headers
+        """
+        was_404 = response.status_code == 404
+
+        # Django's process_response may add language redirect
+        response = super(LocaleMiddleware, self).process_response(request,
+                                                                  response)
+        is_redirect = isinstance(response, self.response_redirect_class)
+
+        # Process language redirects
+        if is_redirect and was_404:
+            # Use Kuma language code, not Django's, in language redirect
+            language_url = response['Location']
+            url_parts = urlsplit(language_url)
+            path = url_parts.path
+            dj_language = url_parts.path.split('/')[1]
+            kuma_language = django_language_code_to_kuma(dj_language)
+            if dj_language != kuma_language:
+                new_path = path.replace(dj_language, kuma_language, 1)
+                new_url = urlunsplit((
+                    url_parts.scheme, url_parts.netloc, new_path,
+                    url_parts.query, url_parts.fragment))
+                response = self.response_redirect_class(new_url)
+
+            # Add caching headers
+            add_shared_cache_control(response)
+
+        # Drop Vary: Accept-Language
+        if (response.has_header('Vary') and
+                response['Vary'] == 'Accept-Language'):
+            del response['Vary']
+
+        return response
 
 
 class Forbidden403Middleware(object):

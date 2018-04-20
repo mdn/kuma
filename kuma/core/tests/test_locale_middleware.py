@@ -21,7 +21,7 @@ REDIRECT_CASES = [case for case in SIMPLE_ACCEPT_CASES if case[0] != case[1]]
 
 
 @pytest.mark.parametrize('accept_language,locale', PICKER_CASES)
-def test_locale_middleware_picker(accept_language, locale, client):
+def test_locale_middleware_picker(accept_language, locale, client, db):
     '''The LocaleMiddleware picks locale from the Accept-Language header.'''
     response = client.get('/', HTTP_ACCEPT_LANGUAGE=accept_language)
     assert response.status_code == 302
@@ -30,7 +30,7 @@ def test_locale_middleware_picker(accept_language, locale, client):
 
 
 @pytest.mark.parametrize('original,fixed', REDIRECT_CASES)
-def test_locale_middleware_fixer(original, fixed, client):
+def test_locale_middleware_fixer(original, fixed, client, db):
     '''The LocaleMiddleware redirects for non-standard locale URLs.'''
     response = client.get('/%s/' % original)
     assert response.status_code == 302
@@ -38,7 +38,7 @@ def test_locale_middleware_fixer(original, fixed, client):
     assert_shared_cache_header(response)
 
 
-def test_locale_middleware_fixer_confusion(client):
+def test_locale_middleware_fixer_confusion(client, db):
     '''The LocaleMiddleware treats unknown locales and 404 en-US docs.'''
     response = client.get('/xx/')
     assert response.status_code == 302
@@ -46,7 +46,7 @@ def test_locale_middleware_fixer_confusion(client):
     assert_shared_cache_header(response)
 
 
-def test_locale_middleware_language_cookie(client):
+def test_locale_middleware_language_cookie(client, db):
     '''The LocaleMiddleware uses the language cookie.'''
     client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
     response = client.get('/')

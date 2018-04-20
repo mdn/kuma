@@ -64,6 +64,11 @@ def mindtouch_to_kuma_redirect(request, path):
     Given a request to a Mindtouch-generated URL, generate a redirect
     to the correct corresponding kuma URL.
     """
+    locale = request.LANGUAGE_CODE
+    if path.startswith('%s/' % locale):
+        # Convert from Django-based LocaleMiddleware path to zamboni/amo style
+        path = path.replace('%s/' % locale, '', 1)
+
     if path.startswith('Template:MindTouch'):
         # MindTouch's default templates. There shouldn't be links to
         # them anywhere in the wild, but just in case we 404 them.
@@ -83,7 +88,7 @@ def mindtouch_to_kuma_redirect(request, path):
     # Last attempt: we try the request locale as the document locale,
     # and see if that matches something.
     try:
-        doc = Document.objects.get(slug=path, locale=request.LANGUAGE_CODE)
+        doc = Document.objects.get(slug=path, locale=locale)
     except Document.DoesNotExist:
         raise Http404
 

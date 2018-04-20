@@ -83,7 +83,7 @@ for provider in providers.registry.get_list():
         users_patterns += prov_urlpatterns
 
 
-urlpatterns = [
+lang_urlpatterns = [
     url(r'^profiles/(?P<username>[^/]+)/?$',
         views.user_detail,
         name='users.user_detail'),

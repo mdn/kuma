@@ -480,15 +480,17 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'kuma.core.middleware.LegacyDomainRedirectsMiddleware',
     'kuma.core.middleware.RestrictedWhiteNoiseMiddleware',
-    # must come before LocaleURLMiddleware
+    # must come before LocaleMiddleware
     'redirect_urls.middleware.RedirectsMiddleware',
-    # LocaleURLMiddleware must be before any middleware that uses
-    # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
     'kuma.core.middleware.SetRemoteAddrFromForwardedFor',
     ('kuma.core.middleware.ForceAnonymousSessionMiddleware'
      if MAINTENANCE_MODE else
      'django.contrib.sessions.middleware.SessionMiddleware'),
-    'kuma.core.middleware.LocaleURLMiddleware',
+    'kuma.core.middleware.LangSelectorMiddleware',
+    'kuma.core.middleware.LocaleStandardizerMiddleware',
+    # LocaleMiddleware must be before any middleware that uses
+    # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
+    'kuma.core.middleware.LocaleMiddleware',
     'kuma.wiki.middleware.DocumentZoneMiddleware',
     'kuma.wiki.middleware.ReadOnlyMiddleware',
     'kuma.core.middleware.Forbidden403Middleware',

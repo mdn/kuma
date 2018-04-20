@@ -1,6 +1,7 @@
 from decorator_include import decorator_include
 from django.conf import settings
 from django.conf.urls import include, url
+# from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
@@ -11,8 +12,15 @@ from django.views.static import serve
 from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
 from kuma.core.decorators import shared_cache_control
-from kuma.search.urls import base_urlpatterns as search_base_urlpatterns
+from kuma.core.i18n import i18n_patterns
+from kuma.dashboards.urls import lang_urlpatterns as dashboards_lang_urlpatterns
+from kuma.landing.urls import lang_urlpatterns as landing_lang_urlpatterns
+from kuma.search.urls import (
+    lang_base_urlpatterns as search_lang_base_urlpatterns,
+    lang_urlpatterns as search_lang_urlpatterns)
+from kuma.users.urls import lang_urlpatterns as users_lang_urlpatterns
 from kuma.wiki.admin import purge_view
+from kuma.wiki.urls import lang_urlpatterns as wiki_lang_urlpatterns
 from kuma.wiki.views.document import as_json as document_as_json
 from kuma.wiki.views.legacy import mindtouch_to_kuma_redirect
 
@@ -33,9 +41,10 @@ handler403 = core_views.handler403
 handler404 = core_views.handler404
 handler500 = core_views.handler500
 
-urlpatterns = [
-    url('', include('kuma.health.urls')),
-    url('', include('kuma.landing.urls')),
+urlpatterns = [url('', include('kuma.health.urls'))]
+urlpatterns += [url('', include('kuma.landing.urls'))]
+urlpatterns += i18n_patterns(url('', include(landing_lang_urlpatterns)))
+urlpatterns += i18n_patterns(
     url(
         r'^events',
         shared_cache_control(RedirectView.as_view(
@@ -44,7 +53,7 @@ urlpatterns = [
         )),
         name='events'
     ),
-]
+)
 
 if settings.MAINTENANCE_MODE:
     urlpatterns.append(
@@ -68,15 +77,19 @@ else:
         url(r'^admin/', include(admin.site.urls)),
     ]
 
-urlpatterns += [
-    url(r'^search', include(search_base_urlpatterns)),
-    url(r'^search/', include('kuma.search.urls')),
-    url(r'^docs.json$', document_as_json, name='wiki.json'),
-    url(r'^docs/', include('kuma.wiki.urls')),
-    url('', include('kuma.attachments.urls')),
-    url('^dashboards/', include('kuma.dashboards.urls')),
-    url('', decorator_include(never_cache, 'kuma.users.urls')),
-]
+urlpatterns += i18n_patterns(url(r'^search/',
+                                 include(search_lang_urlpatterns)))
+urlpatterns += i18n_patterns(url(r'^search',
+                                 include(search_lang_base_urlpatterns)))
+urlpatterns += i18n_patterns(url(r'^docs.json$', document_as_json,
+                                 name='wiki.json'))
+urlpatterns += i18n_patterns(url(r'^docs/', include(wiki_lang_urlpatterns)))
+urlpatterns += [url('', include('kuma.attachments.urls'))]
+urlpatterns += i18n_patterns(url(r'^dashboards/',
+                                 include(dashboards_lang_urlpatterns)))
+urlpatterns += i18n_patterns(url('',
+                                 decorator_include(never_cache,
+                                                   users_lang_urlpatterns)))
 
 if settings.MAINTENANCE_MODE:
     urlpatterns.append(
