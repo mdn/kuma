@@ -40,9 +40,12 @@ Brotli==1.0.1 \
     --hash=sha256:36c5d56f4f20c952ed998b0d2f9839a282081fd1f18e82bc3b3e9348b27fbe6d
 
 # Process tasks in the background
-celery==3.1.20 \
-    --hash=sha256:3071b71ef8c43178ace8435002b11f2ff06db7690f07d960540eab7f4183ddf7 \
-    --hash=sha256:d02f191c3d92a851c9d2028e91baf2a0f2734cd3b659743d3624011d1ef7a6d5
+# Code: https://github.com/celery/celery
+# Changes: http://docs.celeryproject.org/en/latest/history/index.html
+# Docs: http://docs.celeryproject.org/en/latest/index.html
+celery==3.1.25 \
+    --hash=sha256:1954a224805f3835e5b6f5998ec9fe51db3413cc49e59fc720d314c7913427cf \
+    --hash=sha256:6ced63033bc663e60c992564954dbb5c84c43899f7f1a04b739957350f6b55f3
 
 # Provides middleware for preventing Vary: Cookie
 commonware==0.4.3 \
@@ -71,10 +74,15 @@ django-cacheback==1.0 \
     --hash=sha256:2fc21e0ed78ee8e4cc07ac2c5936b27f956c99c81fc4f965e96fb27171180819
 
 # Integrate celery async tasks with Django (deprecated)
-django-celery==3.1.17 \
-    --hash=sha256:254a95b0a4386df1fd949823942f6312c80fba3c88c5efad79cad8648bc5feb5
+# Code: https://github.com/celery/django-celery
+# Changes: https://github.com/celery/django-celery/blob/master/Changelog
+# Docs: http://celery.github.io/django-celery/
+django-celery==3.2.2 \
+    --hash=sha256:1450264db5ec58e45f3f20d8d361e696920352f62481bf56047288cdb38bcc0b \
+    --hash=sha256:aaba492bf7777f231ec6b02c80aa3ea68758c39f4723864dd4164589b99ad703
 
 # Submit async tasks at the end of the Django transaction (deprecated?)
+# Code: https://github.com/bradleyayers/django-celery-transactions
 django-celery-transactions==0.3.6 \
     --hash=sha256:cdf966ec461e9ec736a7bedcf47cb219fc79ea86f2b39191cb258082dd4f4b33
 
