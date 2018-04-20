@@ -13,7 +13,6 @@ import pytest
 import requests_mock
 from django.test.client import BOUNDARY, encode_multipart, MULTIPART_CONTENT
 from django.utils.six.moves.urllib.parse import urlparse
-from django.utils.text import compress_string
 from pyquery import PyQuery as pq
 from waffle.models import Switch
 
@@ -138,7 +137,7 @@ def test_api_safe(client, section_doc, section_case, if_none_match, method):
     if section_id:
         url += '?section={}'.format(section_id)
 
-    headers = dict(HTTP_ACCEPT_ENCODING='gzip')
+    headers = {}
 
     if if_none_match == 'match':
         response = getattr(client, method.lower())(url, **headers)
@@ -163,8 +162,6 @@ def test_api_safe(client, section_doc, section_case, if_none_match, method):
                 str(section_doc.current_revision_id))
 
     if method == 'GET':
-        if response.get('content-encoding') == 'gzip':
-            exp_content = compress_string(exp_content)
         assert response.content == exp_content
 
 
@@ -258,7 +255,7 @@ def test_api_put_existing(client, section_doc, authkey, section_case,
     headers = dict(HTTP_AUTHORIZATION=authkey.header)
 
     if if_match == 'match':
-        response = client.get(url, HTTP_ACCEPT_ENCODING='gzip')
+        response = client.get(url)
         assert 'etag' in response
         headers['HTTP_IF_MATCH'] = response['etag']
     elif if_match == 'mismatch':
@@ -383,37 +380,6 @@ def test_api_put_new(settings, client, root_doc, authkey, section_case,
             assert rev.tags == data['tags']
             assert (set(rev.review_tags.names()) ==
                     set(data['review_tags'].split(',')))
-
-
-def test_conditional_get(client, section_doc):
-    """
-    Test conditional GET to document view (ETag only currently).
-    """
-    url = section_doc.get_absolute_url() + '$api'
-
-    # Ensure the ETag value is based on the entire content of the response.
-    response = client.get(url)
-    assert response.status_code == 200
-    assert_shared_cache_header(response)
-    assert 'etag' in response
-    assert 'last-modified' not in response
-    assert '"{}"'.format(calculate_etag(response.content)) in response['etag']
-
-    # Get the ETag header value when using gzip to test that GZipMiddleware,
-    # if used, plays nicely with ConditionalGetMiddleware when making the
-    # following conditional request.
-    response = client.get(url, HTTP_ACCEPT_ENCODING='gzip')
-    assert response.status_code == 200
-    assert_shared_cache_header(response)
-    assert 'etag' in response
-
-    response = client.get(
-        url,
-        HTTP_ACCEPT_ENCODING='gzip',
-        HTTP_IF_NONE_MATCH=response['etag']
-    )
-
-    assert response.status_code == 304
 
 
 def test_apply_content_experiment_no_experiment(ce_settings, rf):
