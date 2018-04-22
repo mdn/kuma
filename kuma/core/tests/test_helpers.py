@@ -50,7 +50,7 @@ class TestSoapbox(KumaTestCase):
         m = Message(message='Go to http://bit.ly/sample-demo', is_global=True,
                     is_active=True, url='/')
         m.save()
-        ok_('Go to <a href="http://bit.ly/sample-demo">'
+        ok_('Go to <a href="http://bit.ly/sample-demo" rel="noopener">'
             'http://bit.ly/sample-demo</a>' in
             soapbox_messages(get_soapbox_messages('/')))
 

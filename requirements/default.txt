@@ -98,8 +98,12 @@ django-honeypot==0.5.0 \
     --hash=sha256:962304f21055f05c73c41f2506f5a94f5b941e831a203b68e54cb5016bdb8d5e
 
 # Use Jinja2 as the template engine in Django
-django-jinja==2.2.1 \
-    --hash=sha256:04c53ba90cbede97e6543b98291f1eec259e57dfa4e014a5fbf0291afcdae6a9
+# Code: https://github.com/niwinz/django-jinja
+# Changes: https://github.com/niwinz/django-jinja/blob/master/CHANGES.adoc
+# Docs: http://niwinz.github.io/django-jinja/latest/
+django-jinja==2.4.1 \
+    --hash=sha256:8a49d73de616a12075eee14c6d3bbab936261a463457d40348d8b8e2995cfbed \
+    --hash=sha256:ceaa0eeebc4d91a5800967e50f4f087f0b6457503e3c2af85dc199bed8732a9a
 
 # Use consistent hashes despite adding or removing servers
 django-memcached-hashring==0.1.2 \
@@ -219,9 +223,12 @@ importlib==1.0.3 \
     --hash=sha256:65f342a604a2e1028707c5e055266ab2431c26e20fe10780b423320870884dac
 
 # Improved template engine
-Jinja2==2.8 \
-    --hash=sha256:1cc03ef32b64be19e0a5b54578dd790906a34943fe9102cfdae0d4495bd536b4 \
-    --hash=sha256:bc1ff2ff88dbfacefde4ddde471d1417d3b304e8df103a7a9437d47269201bf4
+# Code: https://github.com/pallets/jinja
+# Changes: http://jinja.pocoo.org/docs/2.10/changelog/
+# Docs: http://jinja.pocoo.org/docs/2.10/
+Jinja2==2.10 \
+    --hash=sha256:74c935a1b8bb9a3947c50a54766a969d4846290e1e788ea44c1392163723c3bd \
+    --hash=sha256:f84be1bb0040caca4cea721fcbbbbd61f9be9464ca236387158b0feea01914a4
 
 # Serialize pickleable objects to JSON, used in feed processing
 jsonpickle==0.9.2 \
