@@ -1268,7 +1268,6 @@ CELERY_SEND_TASK_ERROR_EMAILS = True
 CELERY_SEND_EVENTS = True
 CELERY_SEND_TASK_SENT_EVENT = True
 CELERY_TRACK_STARTED = True
-CELERYD_LOG_LEVEL = logging.INFO
 CELERYD_CONCURRENCY = config('CELERYD_CONCURRENCY', default=4, cast=int)
 
 # Maximum tasks run before auto-restart of child process,
