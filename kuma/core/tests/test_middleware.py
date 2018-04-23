@@ -1,13 +1,10 @@
 import pytest
-from django.http import HttpResponse
 from django.test import RequestFactory
 from mock import MagicMock, patch
 
 from . import eq_, KumaTestCase
 from ..middleware import (
-    BrotliMiddleware,
     ForceAnonymousSessionMiddleware,
-    GZipMiddleware,
     LegacyDomainRedirectsMiddleware,
     RestrictedEndpointsMiddleware,
     RestrictedWhiteNoiseMiddleware,
@@ -121,73 +118,3 @@ def test_legacy_domain_redirects_middleware(rf, settings, site_url, host):
         assert response['Location'] == site_url + path
     else:
         assert response is None
-
-
-@pytest.mark.parametrize(
-    'etag_header',
-    (None, '"7ac66c0f148de9519b8bd264312c4d64"')
-)
-def test_gzip_middleware(rf, etag_header):
-    """
-    Test that GZipMiddleware does not modify the ETag header unlike
-    Django's GZipMiddleware.
-
-    TODO: When moving to Django 1.11, this test code and the GZipMiddleware
-          code in kuma.core.middleware can be deleted, and Django's
-          GZipMiddleware should be used instead.
-    """
-    request = rf.get('/foo/bar', HTTP_ACCEPT_ENCODING='gzip')
-    response = HttpResponse(50 * 'yada ')
-    if etag_header:
-        response['etag'] = etag_header
-
-    response_out = GZipMiddleware().process_response(request, response)
-
-    if etag_header:
-        # The ETag header is still there and hasn't been modified.
-        assert 'etag' in response_out
-        assert response_out['etag'] == etag_header
-    else:
-        assert 'etag' not in response
-
-
-def test_gzip_middleware_content_encoding_set(rf):
-    """
-    Test that our GZip middleware doesn't encode already encoded response
-
-    TODO: When moving to Django 1.11, this test code and the GZipMiddleware
-          code in kuma.core.middleware can be deleted, and Django's
-          GZipMiddleware should be used instead.
-    """
-    request = rf.get('/foo/bar', HTTP_ACCEPT_ENCODING='gzip')
-    response = HttpResponse(50 * 'yada ')
-    response['Content-Encoding'] = 'br'
-
-    response_out = GZipMiddleware().process_response(request, response)
-
-    eq_(response, response_out)
-
-
-def test_brotli_middleware(rf):
-    """
-    Test that our brotli middleware returns a brotli encoded response
-    """
-    request = rf.get('/foo/bar', HTTP_ACCEPT_ENCODING='br')
-    response = HttpResponse(50 * 'yada ')
-
-    response_out = BrotliMiddleware().process_response(request, response)
-
-    assert response_out['Content-Encoding'] is 'br'
-
-
-def test_brotli_middleware_content_encoding_set(rf):
-    """
-    Test that our brotli middleware doesn't encode already encoded response
-    """
-    request = rf.get('/foo/bar', HTTP_ACCEPT_ENCODING='br')
-    response = HttpResponse(50 * 'yada ')
-    response['Content-Encoding'] = 'gzip'
-
-    response_out = BrotliMiddleware().process_response(request, response)
-
-    eq_(response, response_out)

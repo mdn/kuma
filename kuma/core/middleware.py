@@ -1,10 +1,7 @@
 import contextlib
-import re
 import urllib
 from urlparse import urljoin
 
-import brotli
-import django.middleware.gzip
 from django.conf import settings
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.core import urlresolvers
@@ -12,7 +9,6 @@ from django.http import (HttpResponseForbidden,
                          HttpResponsePermanentRedirect,
                          HttpResponseRedirect)
 from django.utils import translation
-from django.utils.cache import patch_vary_headers
 from django.utils.encoding import iri_to_uri, smart_str
 from whitenoise.middleware import WhiteNoiseMiddleware
 
@@ -217,65 +213,3 @@ class LegacyDomainRedirectsMiddleware(object):
                 urljoin(settings.SITE_URL, request.get_full_path())
             )
         return None
-
-
-class GZipMiddleware(django.middleware.gzip.GZipMiddleware):
-    """
-    This is identical to Django's GZipMiddleware, except that it will not
-    modify the ETag header.
-
-    TODO: When moving to Django 1.11, this code and its tests can be deleted,
-          and django.middleware.gzip.GZipMiddleware should be used instead.
-    """
-
-    def process_response(self, request, response):
-        original_etag = response.get('etag')
-        response_out = super(GZipMiddleware, self).process_response(
-            request,
-            response
-        )
-        if (original_etag is not None) and response_out.has_header('etag'):
-            response_out['etag'] = original_etag
-        return response_out
-
-
-class BrotliMiddleware(object):
-    """
-    This middleware enables Brotli compression
-
-    This code is inspired by https://github.com/illagrenan/django-brotli
-    """
-
-    MIN_LEN_RESPONSE_TO_PROCESS = 200
-    RE_ACCEPT_ENCODING_BROTLI = re.compile(r'\bbr\b')
-
-    def _accepts_brotli_encoding(self, request):
-        return bool(self.RE_ACCEPT_ENCODING_BROTLI.search(
-            request.META.get('HTTP_ACCEPT_ENCODING', '')))
-
-    def process_response(self, request, response):
-        if (response.streaming or
-                response.has_header('Content-Encoding') or
-                not self._accepts_brotli_encoding(request) or
-                len(response.content) < self.MIN_LEN_RESPONSE_TO_PROCESS):
-            # ---------
-            # 1) Skip streaming content, GZipMiddleware will compress it
-            #    (supported, see https://github.com/google/brotli/issues/191).
-            # 2) Skip if the content is already encoded.
-            # 3) Skip if client didn't request brotli.
-            # 4) Skip if the content is short, compressing isn't worth it
-            #    (same logic as Django's GZipMiddleware).
-            # ---------
-            return response
-
-        compressed_content = brotli.compress(response.content, quality=5)
-
-        # Return the uncompressed content if compression didn't help
-        if len(compressed_content) >= len(response.content):
-            return response
-
-        response.content = compressed_content
-        patch_vary_headers(response, ('Accept-Encoding',))
-        response['Content-Length'] = str(len(compressed_content))
-        response['Content-Encoding'] = 'br'
-        return response
