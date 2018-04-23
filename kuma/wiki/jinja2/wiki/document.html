@@ -69,6 +69,8 @@
   <link rel="alternate" type="application/json" href="{{ url('wiki.json_slug', document.slug) | absolutify }}">
   <link rel="canonical" href="{{ canonical }}" >
 
+  {# Google requires the current page to be referenced as an alternate too for SEO purposes see bug 1449210 #}
+  <link rel="alternate" hreflang="{{ document.locale }}" href="{{ document.get_absolute_url() | absolutify }}" title="{{ document.title }}">
   {% if other_translations %}
     {% for translation in other_translations %}
       <link rel="alternate" hreflang="{{ translation.locale }}" href="{{ translation.get_absolute_url() | absolutify }}" title="{{ translation.title }}">
