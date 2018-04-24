@@ -35,7 +35,8 @@ env:
         - TOXENV=flake8
         - TOXENV=docs
         - TOXENV=locales
-          INSTALL_DOCKER_COMPOSE=1
+          CREATE_DB=kuma
+          INSTALL_PIPELINE=1
         - TOXENV=docker
           INSTALL_DOCKER_COMPOSE=1
           UID=0
