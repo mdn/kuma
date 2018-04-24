@@ -122,7 +122,6 @@ def test_raw_code_sample_file(code_sample_doc, constance_config,
     response = admin_client.get(file_url)
     assert response.status_code == 302
     assert response.url == attachment.get_file_url()
-    assert not response.has_header('Vary')
     assert 'Cache-Control' in response
     assert 'public' in response['Cache-Control']
     assert 'max-age=432000' in response['Cache-Control']

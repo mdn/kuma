@@ -191,7 +191,6 @@ def test_legacy_redirect(client, file_attachment):
     assert response.status_code == 301
     assert_shared_cache_header(response)
     assert response['Location'] == file_attachment['attachment'].get_file_url()
-    assert not response.has_header('Vary')
 
 
 def test_edit_attachment_get(admin_client, root_doc):
@@ -244,7 +243,6 @@ def test_raw_file_requires_attachment_host(client, settings, file_attachment):
     assert 'public' in response['Cache-Control']
     assert 'max-age=900' in response['Cache-Control']
     assert response['Location'] == url
-    assert 'Vary' not in response
 
     response = client.get(url, HTTP_HOST=settings.ATTACHMENT_HOST)
     assert response.status_code == 200

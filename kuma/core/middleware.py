@@ -12,9 +12,10 @@ from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
 from whitenoise.middleware import WhiteNoiseMiddleware
 
+
 from .decorators import add_shared_cache_control
 from .urlresolvers import Prefixer, set_url_prefixer, split_path
-from .utils import is_untrusted, urlparams
+from .utils import is_anonymous_csrf_only_session, is_untrusted, urlparams
 from .views import handler403
 
 
@@ -213,3 +214,23 @@ class LegacyDomainRedirectsMiddleware(object):
                 urljoin(settings.SITE_URL, request.get_full_path())
             )
         return None
+
+
+class SmartSessionMiddleware(SessionMiddleware):
+    """
+    Prevents the creation of a session cookie for anonymous users when using
+    django.middleware.csrf.CsrfViewMiddleware and session-based CSRF tokens
+    (CSRF_USE_SESSIONS=True).
+    """
+
+    def process_response(self, request, response):
+        if is_anonymous_csrf_only_session(request):
+            # This session is for an anonymous user and contains only a CSRF
+            # token, nothing else, so we want to ensure that it's never saved
+            # and that a session cookie is never created. Clearing the session
+            # does this while also preserving the "acccessed" attribute, which
+            # ensures the vary header is patched like all other responses when
+            # using session-based CSRF tokens.
+            request.session.clear()
+        return super(SmartSessionMiddleware, self).process_response(request,
+                                                                    response)
