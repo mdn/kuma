@@ -6,15 +6,13 @@ import pytest
 from django.contrib.auth.models import Permission
 from django.core.exceptions import ImproperlyConfigured
 from pyquery import PyQuery as pq
-from waffle.models import Flag, Switch
+from waffle.models import Switch
 
 from kuma.core.tests import (assert_no_cache_header,
                              assert_shared_cache_header, eq_, ok_)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html, urlparams
 from kuma.dashboards.forms import RevisionDashboardForm
-from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG
-from kuma.users.models import User
 from kuma.users.tests import create_document, SampleRevisionsMixin, UserTestCase
 from kuma.wiki.models import DocumentSpamAttempt, RevisionAkismetSubmission
 
@@ -81,8 +79,6 @@ class RevisionsDashTest(UserTestCase):
         spam_report_button = page.find('.spam-ham-button')
         eq_(spam_report_button, [])
 
-        flag = Flag.objects.create(name=SPAM_SUBMISSIONS_FLAG)
-        flag.users.add(User.objects.get(username='admin'))
         self.client.login(username='admin', password='testpass')
         url = reverse('dashboards.revisions', locale='en-US')
         response = self.client.get(url)
