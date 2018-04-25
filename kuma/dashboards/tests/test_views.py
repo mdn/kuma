@@ -14,7 +14,7 @@ from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html, urlparams
 from kuma.dashboards.forms import RevisionDashboardForm
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG
-from kuma.users.models import User, UserBan
+from kuma.users.models import User
 from kuma.users.tests import create_document, SampleRevisionsMixin, UserTestCase
 from kuma.wiki.models import DocumentSpamAttempt, RevisionAkismetSubmission
 
@@ -34,17 +34,6 @@ class RevisionsDashTest(UserTestCase):
         assert 'text/html' in response['Content-Type']
         assert ('dashboards/revisions.html' in
                 (template.name for template in response.templates))
-
-    def test_main_view_with_banned_user(self):
-        testuser = User.objects.get(username='testuser')
-        admin = User.objects.get(username='admin')
-        ban = UserBan(user=testuser, by=admin, reason='Testing')
-        ban.save()
-
-        self.client.login(username='admin', password='testpass')
-        response = self.client.get(reverse('dashboards.revisions',
-                                           locale='en-US'))
-        eq_(200, response.status_code)
 
     def test_revision_list(self):
         url = reverse('dashboards.revisions', locale='en-US')
