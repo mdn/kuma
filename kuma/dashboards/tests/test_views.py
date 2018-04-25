@@ -1,9 +1,13 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import datetime
 import json
 
 import mock
 import pytest
-from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ImproperlyConfigured
 from pyquery import PyQuery as pq
 from waffle.models import Switch
@@ -14,187 +18,213 @@ from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html, urlparams
 from kuma.dashboards.forms import RevisionDashboardForm
 from kuma.users.tests import create_document, SampleRevisionsMixin, UserTestCase
-from kuma.wiki.models import DocumentSpamAttempt, RevisionAkismetSubmission
+from kuma.wiki.models import (Document, DocumentSpamAttempt, Revision,
+                              RevisionAkismetSubmission)
 
 
-@pytest.mark.dashboards
-class RevisionsDashTest(UserTestCase):
-    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
+REVS_PER_USER = 3  # Number of revisions per user in dashboard_revisions
 
-    def test_main_view(self):
-        response = self.client.get(reverse('dashboards.revisions',
-                                           locale='en-US'))
-        assert response.status_code == 200
-        assert 'Vary' in response
-        assert 'X-Requested-With' in response['Vary']
-        assert 'Cache-Control' in response
-        assert_shared_cache_header(response)
-        assert 'text/html' in response['Content-Type']
-        assert ('dashboards/revisions.html' in
-                (template.name for template in response.templates))
 
-    def test_revision_list(self):
-        url = reverse('dashboards.revisions', locale='en-US')
-        # We only get revisions when requesting via AJAX.
-        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(response.status_code, 200)
+@pytest.fixture
+def dashboard_revisions(wiki_user, wiki_user_2, wiki_user_3):
+    """Revisions, in reverse creation order, for testing the dashboard."""
 
-        page = pq(response.content)
-        revisions = page.find('.dashboard-row')
+    revisions = []
+    day = datetime.datetime(2018, 4, 1)
+    users = wiki_user, wiki_user_2, wiki_user_3
+    languages = {
+        'de': ("%s's Dokument", '<p>Zweiter Schnitt von %s</p>'),
+        'es': ('El Documento de %s', '<p>Segunda edición por %s</p>'),
+        'fr': ('Le Document de %s', '<p>Deuxième édition par %s</p>'),
+    }
+    for user, lang in zip(users, sorted(languages.keys())):
+        en_title = user.username + ' Document'
+        en_doc = Document.objects.create(
+            locale='en-US', slug=user.username + '-doc', title=en_title)
+        first_rev = Revision.objects.create(
+            document=en_doc, creator=user, title=en_title,
+            content='<p>First edit by %s</p>' % user.username,
+            created=day)
+        trans_title, trans_content = (
+            fmt % user.username for fmt in languages[lang])
+        trans_doc = Document.objects.create(
+            locale=lang, slug=user.username + '-doc', title=trans_title)
+        trans_rev = Revision.objects.create(
+            document=trans_doc, creator=user, title=trans_title,
+            content=trans_content,
+            created=day + datetime.timedelta(seconds=2 * 60 * 60))
+        third_rev = Revision.objects.create(
+            document=en_doc, creator=user, title=en_title,
+            content='<p>Third edit by %s</p>' % user.username,
+            created=day + datetime.timedelta(seconds=3 * 60 * 60))
+        revisions.extend((first_rev, trans_rev, third_rev))
+        day += datetime.timedelta(days=1)
 
-        eq_(revisions.length, 11)
+    revisions.reverse()
+    return revisions
 
-        # Most recent revision first.
-        eq_(int(pq(revisions[0]).attr('data-revision-id')), 30)
-        # Second-most-recent revision next.
-        eq_(int(pq(revisions[1]).attr('data-revision-id')), 29)
-        # Oldest revision last.
-        eq_(int(pq(revisions[-1]).attr('data-revision-id')), 19)
 
-    def test_ip_link_on_switch(self):
-        url = reverse('dashboards.revisions', locale='en-US')
-        response = self.client.get(url)
-        eq_(200, response.status_code)
+@pytest.fixture
+def known_author(wiki_user):
+    """Add wiki_user to the Known Users group."""
+    group = Group.objects.create(name='Known Authors')
+    group.user_set.add(wiki_user)
+    return wiki_user
 
-        page = pq(response.content)
-        ip_button = page.find('button#show_ips_btn')
-        eq_([], ip_button)
 
+def test_revisions(root_doc, client):
+    """The revision dashboard works."""
+    response = client.get(reverse('dashboards.revisions', locale='en-US'))
+    assert response.status_code == 200
+    assert 'Vary' in response
+    assert 'X-Requested-With' in response['Vary']
+    assert 'Cache-Control' in response
+    assert_shared_cache_header(response)
+    assert 'text/html' in response['Content-Type']
+    assert ('dashboards/revisions.html' in
+            (template.name for template in response.templates))
+
+
+def test_revisions_list_via_AJAX(dashboard_revisions, client):
+    """The full list of revisions can be returned via AJAX."""
+    response = client.get(reverse('dashboards.revisions', locale='en-US'),
+                          HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    assert response.status_code == 200
+    page = pq(response.content)
+    rev_rows = page.find('.dashboard-row')
+    assert rev_rows.length == len(dashboard_revisions) == 3 * REVS_PER_USER
+
+    # Revisions are in order, most recent first
+    for rev_row, revision in zip(rev_rows, dashboard_revisions):
+        assert int(rev_row.attrib['data-revision-id']) == revision.id
+
+
+@pytest.mark.parametrize('switch', (True, False))
+@pytest.mark.parametrize('is_admin', (True, False))
+def test_revisions_show_ips_button(switch, is_admin, root_doc, user_client,
+                                   admin_client):
+    """Toggle IPs button appears for admins when the switch is active."""
+    if switch:
         Switch.objects.create(name='store_revision_ips', active=True)
-        self.client.login(username='admin', password='testpass')
-        url = reverse('dashboards.revisions', locale='en-US')
-        response = self.client.get(url)
-        eq_(200, response.status_code)
+    client = admin_client if is_admin else user_client
+    response = client.get(reverse('dashboards.revisions', locale='en-US'))
+    assert response.status_code == 200
+    page = pq(response.content)
+    ip_button = page.find('button#show_ips_btn')
+    assert len(ip_button) == (1 if (switch and is_admin) else 0)
 
-        page = pq(response.content)
-        ip_button = page.find('button#show_ips_btn')
-        ok_(len(ip_button) > 0)
 
-    def test_spam_submission_buttons(self):
-        url = reverse('dashboards.revisions', locale='en-US')
-        response = self.client.get(url)
-        eq_(200, response.status_code)
+@pytest.mark.parametrize('has_perm', (True, False))
+def test_revisions_show_spam_submission_button(has_perm, root_doc, wiki_user,
+                                               user_client):
+    """Submit as spam button appears when the user has the permission."""
+    if has_perm:
+        content_type = ContentType.objects.get_for_model(
+            RevisionAkismetSubmission)
+        perm = Permission.objects.get(
+            codename='add_revisionakismetsubmission',
+            content_type=content_type)
+        wiki_user.user_permissions.add(perm)
 
-        page = pq(response.content)
-        spam_report_button = page.find('.spam-ham-button')
-        eq_(spam_report_button, [])
+    response = user_client.get(reverse('dashboards.revisions', locale='en-US'))
+    assert response.status_code == 200
+    page = pq(response.content)
+    spam_report_button = page.find('.spam-ham-button')
+    assert len(spam_report_button) == (1 if has_perm else 0)
 
-        self.client.login(username='admin', password='testpass')
-        url = reverse('dashboards.revisions', locale='en-US')
-        response = self.client.get(url)
-        eq_(200, response.status_code)
 
-        page = pq(response.content)
-        spam_report_button = page.find('.spam-ham-button')
-        # Revisions available, admin has privileges to see this
-        ok_(len(spam_report_button) > 0)
+def test_revisions_locale_filter(dashboard_revisions, client):
+    """Revisions can be filtered by locale."""
+    url = urlparams(reverse('dashboards.revisions', locale='fr'),
+                    locale='fr')
+    response = client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    assert response.status_code == 200
 
-    def test_locale_filter(self):
-        url = urlparams(reverse('dashboards.revisions', locale='fr'),
-                        locale='fr')
-        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(200, response.status_code)
+    page = pq(response.content)
+    revisions = page.find('.dashboard-row')
+    assert revisions.length == 1
+    locale = to_html(revisions.find('.locale'))
+    assert locale == 'fr'
 
-        page = pq(response.content)
-        revisions = page.find('.dashboard-row')
 
-        ok_(len(revisions))
-        eq_(1, revisions.length)
+def test_revisions_creator_filter(dashboard_revisions, client):
+    """Revisions can be filtered by a username."""
+    url = urlparams(reverse('dashboards.revisions', locale='en-US'),
+                    user='wiki_user_2')
+    response = client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    assert response.status_code == 200
 
-        ok_('fr' in to_html(pq(revisions[0]).find('.locale')))
+    page = pq(response.content)
+    revisions = page.find('.dashboard-row')
+    assert revisions.length == REVS_PER_USER
+    authors = revisions.find('.dashboard-author')
+    assert authors.length == REVS_PER_USER
+    for author in authors:
+        assert author.text_content().strip() == 'wiki_user_2'
 
-    def test_creator_filter(self):
-        url = urlparams(reverse('dashboards.revisions', locale='en-US'),
-                        user='testuser01')
-        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(200, response.status_code)
 
-        page = pq(response.content)
-        revisions = page.find('.dashboard-row')
+def test_revisions_topic_filter(dashboard_revisions, client):
+    """Revisions can be filtered by topic (the document slug)."""
+    url = urlparams(reverse('dashboards.revisions', locale='en-US'),
+                    topic='wiki_user_2-doc')
+    response = client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    assert response.status_code == 200
 
-        eq_(2, revisions.length)
+    page = pq(response.content)
+    revisions = page.find('.dashboard-row')
+    assert revisions.length == REVS_PER_USER
+    slugs = revisions.find('.dashboard-slug')
+    assert slugs.length == REVS_PER_USER
+    for slug in slugs:
+        assert slug.text_content() == 'wiki_user_2-doc'
 
-        for revision in revisions:
-            author = pq(revision).find('.dashboard-author').text()
-            ok_('testuser01' in author)
-            ok_('testuser2' not in author)
 
-    def test_topic_filter(self):
-        url = urlparams(reverse('dashboards.revisions', locale='en-US'),
-                        topic='article-with-revisions')
-        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(response.status_code, 200)
+@pytest.mark.parametrize('authors', (RevisionDashboardForm.KNOWN_AUTHORS,
+                                     RevisionDashboardForm.UNKNOWN_AUTHORS,
+                                     RevisionDashboardForm.ALL_AUTHORS))
+def test_revisions_known_authors_filter(authors, dashboard_revisions, client,
+                                        known_author):
+    """Revisions can be filtered by the Known Authors group."""
+    url = urlparams(reverse('dashboards.revisions', locale='en-US'),
+                    authors=authors)
+    response = client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    assert response.status_code == 200
 
-        page = pq(response.content)
-        revisions = page.find('.dashboard-row')
+    page = pq(response.content)
+    revisions = page.find('.dashboard-row')
+    counts = {
+        RevisionDashboardForm.KNOWN_AUTHORS: REVS_PER_USER,
+        RevisionDashboardForm.UNKNOWN_AUTHORS: 2 * REVS_PER_USER,
+        RevisionDashboardForm.ALL_AUTHORS: 3 * REVS_PER_USER}
+    expected_count = counts[authors]
+    assert revisions.length == expected_count
+    author_spans = revisions.find('.dashboard-author')
+    assert author_spans.length == expected_count
+    if authors != RevisionDashboardForm.ALL_AUTHORS:
+        for author_span in author_spans:
+            username = author_span.text_content().strip()
+            if authors == RevisionDashboardForm.KNOWN_AUTHORS:
+                assert username == known_author.username
+            else:
+                assert username != known_author.username
 
-        eq_(revisions.length, 7)
-        for revision in revisions:
-            ok_('lorem' not in to_html(pq(revision).find('.dashboard-title')))
 
-    def test_known_authors_lookup(self):
-        # Only testuser01 is in the Known Authors group
-        url = urlparams(reverse('dashboards.revisions', locale='en-US'),
-                        authors=RevisionDashboardForm.KNOWN_AUTHORS)
-        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(200, response.status_code)
-
-        page = pq(response.content)
-        revisions = page.find('.dashboard-row')
-
-        for revision in revisions:
-            author = to_html(pq(revision).find('.dashboard-author'))
-            ok_('testuser01' in author)
-            ok_('testuser2' not in author)
-
-    def test_known_authors_filter(self):
-        # There are a total of 11 revisions
-        url = urlparams(reverse('dashboards.revisions', locale='en-US'),
-                        authors=RevisionDashboardForm.ALL_AUTHORS)
-        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(response.status_code, 200)
-
-        page = pq(response.content)
-        revisions = page.find('.dashboard-row')
-
-        eq_(11, revisions.length)
-
-        # Only testuser01 is in the Known Authors group, and has 2 revisions
-        url = urlparams(reverse('dashboards.revisions', locale='en-US'),
-                        authors=RevisionDashboardForm.KNOWN_AUTHORS)
-        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(response.status_code, 200)
-
-        page = pq(response.content)
-        revisions = page.find('.dashboard-row')
-
-        eq_(2, revisions.length)
-
-        # Of the 11 revisions, 9 are by users not in the Known Authors group
-        url = urlparams(reverse('dashboards.revisions', locale='en-US'),
-                        authors=RevisionDashboardForm.UNKNOWN_AUTHORS)
-        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(response.status_code, 200)
-
-        page = pq(response.content)
-        revisions = page.find('.dashboard-row')
-
-        eq_(9, revisions.length)
-
-    def test_known_authors_filter_ignored_with_username(self):
-        """When user filters by username, the Known Authors filter is ignored"""
-        # Only testuser01 is in the Known Authors group, and has 2 revisions
-        # Filtering by testuser2 should return testuser2's revisions (5 of them)
-        # and ignore the "Known Authors" filter
-        url = urlparams(reverse('dashboards.revisions', locale='en-US'),
-                        user='testuser2', authors=RevisionDashboardForm.KNOWN_AUTHORS)
-        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(response.status_code, 200)
-
-        page = pq(response.content)
-        revisions = page.find('.dashboard-row')
-
-        eq_(5, revisions.length)
+def test_revisions_creator_overrides_known_authors_filter(
+        dashboard_revisions, client, known_author):
+    """If the creator filter is set, the Known Authors filter is ignored."""
+    url = urlparams(reverse('dashboards.revisions', locale='en-US'),
+                    user='wiki_user_3',
+                    authors=RevisionDashboardForm.KNOWN_AUTHORS)
+    response = client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    assert response.status_code == 200
+    page = pq(response.content)
+    revisions = page.find('.dashboard-row')
+    assert revisions.length == REVS_PER_USER
+    author_spans = revisions.find('.dashboard-author')
+    assert author_spans.length == REVS_PER_USER
+    for author_span in author_spans:
+        username = author_span.text_content().strip()
+        assert username == 'wiki_user_3'
 
 
 @mock.patch('kuma.dashboards.utils.analytics_upageviews')
@@ -599,7 +629,7 @@ def test_macros(mock_usage, client, db):
     assert response.status_code == 200
     assert 'Cookie' in response['Vary']
     assert_shared_cache_header(response)
-    assert "Found 1 active macro." in response.content
+    assert "Found 1 active macro." in response.content.decode('utf8')
     page = pq(response.content)
     assert len(page("table.macros-table")) == 1
     assert len(page("th.stat-header")) == 2
@@ -623,7 +653,7 @@ def test_macros_no_counts(mock_usage, client, db):
 
     response = client.get(reverse('dashboards.macros'), follow=True)
     assert response.status_code == 200
-    assert "Found 2 active macros." in response.content
+    assert "Found 2 active macros." in response.content.decode('utf8')
     page = pq(response.content)
     assert len(page("table.macros-table")) == 1
     assert len(page("th.stat-header")) == 0
