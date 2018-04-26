@@ -18,7 +18,8 @@ from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html, urlparams
 from kuma.dashboards.forms import RevisionDashboardForm
 from kuma.users.tests import create_document, SampleRevisionsMixin, UserTestCase
-from kuma.wiki.models import (Document, DocumentSpamAttempt, Revision,
+from kuma.wiki.models import (Document, DocumentDeletionLog,
+                              DocumentSpamAttempt, Revision,
                               RevisionAkismetSubmission)
 
 
@@ -225,6 +226,25 @@ def test_revisions_creator_overrides_known_authors_filter(
     for author_span in author_spans:
         username = author_span.text_content().strip()
         assert username == 'wiki_user_3'
+
+
+def test_revisions_deleted_document(dashboard_revisions, client, wiki_user):
+    """The revisions dashboard includes deleted documents."""
+    del_doc = dashboard_revisions[0].document
+    DocumentDeletionLog.objects.create(
+        slug=del_doc.slug, locale=del_doc.locale, user=wiki_user,
+        reason='Testing deleted docs.')
+    del_doc.delete()
+
+    response = client.get(reverse('dashboards.revisions', locale='en-US'))
+    assert response.status_code == 200
+    page = pq(response.content)
+    rev_rows = page.find('.dashboard-row')
+    assert rev_rows.length == len(dashboard_revisions) == 3 * REVS_PER_USER
+
+    # Deleted document has a "deleted" tag
+    assert pq(rev_rows[0]).find('span.deleted')
+    assert not pq(rev_rows[1]).find('span.deleted')
 
 
 @mock.patch('kuma.dashboards.utils.analytics_upageviews')
