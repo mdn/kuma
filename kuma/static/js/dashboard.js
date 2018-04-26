@@ -47,7 +47,7 @@
                 pageButtons.appendChild(getListItem({
                     id: 'revert',
                     href: controlURLs.revertURL,
-                    text: gettext(actionsArray[i]),
+                    text: gettext('Revert'),
                     icon: 'undo'
                 }));
             }
@@ -56,7 +56,7 @@
                 pageButtons.appendChild(getListItem({
                     id: 'view',
                     href: controlURLs.viewURL,
-                    text: gettext(actionsArray[i]),
+                    text: gettext('View Page'),
                     icon: 'play'
                 }));
             }
@@ -65,7 +65,7 @@
                 pageButtons.appendChild(getListItem({
                     id: 'edit',
                     href: controlURLs.editURL,
-                    text: gettext(actionsArray[i]),
+                    text: gettext('Edit Page'),
                     icon: 'pencil'
                 }));
             }
@@ -74,7 +74,7 @@
                 pageButtons.appendChild(getListItem({
                     id: 'history',
                     href: controlURLs.editURL,
-                    text: gettext(actionsArray[i]),
+                    text: gettext('History'),
                     icon: 'book'
                 }));
             }
