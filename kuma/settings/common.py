@@ -988,6 +988,7 @@ PIPELINE_JS = {
     'main': {
         'source_filenames': (
             'js/libs/jquery/jquery.js',
+            'js/libs/icons.js',
             'js/components.js',
             'js/analytics.js',
             'js/main.js',

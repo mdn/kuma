@@ -64,24 +64,19 @@ input.newsletter-input-email {
     @include bidi(((padding-right, 2em, padding-left, inherit),));
     text-align: left;
 
-    &:after {
+    .icon-arrow {
         position: absolute;
-        top: 50%;
-        @include bidi((
-            (right, 10px, left, auto),
-            (content, '\f061', '\f060'),
-        ));
-        font-family: fontAwesome;
-        transition: margin .1s ease-in-out;
-        transform: translateY(-50%);
+        top: 30%;
+        right: 10px;
+        transition: right .2s;
     }
 
     &:hover,
     &:focus {
         text-decoration: none;
 
-        &:after {
-            @include bidi(((margin-right, -4px, margin-left, 0),));
+        .icon-arrow {
+            right: 5px;
         }
     }
 }

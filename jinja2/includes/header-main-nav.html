@@ -2,7 +2,7 @@
     <ul>
         <li class="nav-main-item">
             <a href="{{ wiki_url('Web') }}">{{ _('Technologies') }}
-                <i aria-hidden="true" class="icon-caret-down"></i>
+                {% include 'includes/icons/arrows/caret-down.svg' %}
             </a>
             <div class="submenu js-submenu" id="nav-tech-submenu">
                 <div class="submenu-column">
@@ -21,7 +21,7 @@
         </li>
         <li class="nav-main-item">
             <a href="{{ wiki_url('Learn') }}">{{ _('References & Guides') }}
-                <i aria-hidden="true" class="icon-caret-down"></i>
+                {% include 'includes/icons/arrows/caret-down.svg' %}
             </a>
             <div class="submenu js-submenu" id="nav-learn-submenu">
                 <div class="submenu-column">
@@ -39,19 +39,19 @@
         </li>
         <li class="nav-main-item">
             <a href="{{ wiki_url('MDN/Feedback') }}">{{ _('Feedback') }}
-                <i aria-hidden="true" class="icon-caret-down"></i>
+                {% include 'includes/icons/arrows/caret-down.svg' %}
             </a>
             <div class="submenu js-submenu" id="nav-contact-submenu">
               <div class="submenu-column">
                 <ul>
                   <li>
                       <a href="https://support.mozilla.org/">{{ _('Get Firefox help') }}
-                          <i aria-hidden="true" class="icon-external-link"></i>
+                          {% include 'includes/icons/general/external-link.svg' %}
                       </a>
                   </li>
                   <li>
                       <a href="https://stackoverflow.com/">{{ _('Get web development help') }}
-                          <i aria-hidden="true" class="icon-external-link"></i>
+                          {% include 'includes/icons/general/external-link.svg' %}
                       </a>
                   </li>
                 </ul>
@@ -61,12 +61,12 @@
                   </li>
                   <li>
                       <a target="_blank" href="https://bugzilla.mozilla.org/form.doc?bug_file_loc={{ request.build_absolute_uri()|urlencode }}">{{ _('Report a content problem') }}
-                          <i aria-hidden="true" class="icon-external-link"></i>
+                          {% include 'includes/icons/general/external-link.svg' %}
                       </a>
                   </li>
                   <li>
                       <a target="_blank" href="https://bugzilla.mozilla.org/form.mdn">{{ _('Report a bug') }}
-                          <i aria-hidden="true" class="icon-external-link"></i>
+                          {% include 'includes/icons/general/external-link.svg' %}
                       </a>
                   </li>
                 </ul>

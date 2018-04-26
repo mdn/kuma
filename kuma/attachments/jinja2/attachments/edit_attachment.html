@@ -27,7 +27,10 @@
             {{ li_field(form, 'comment') }}
           </ul>
         </fieldset>
-        <button type="submit" class="neutral">{{ _('Upload files') }} <i aria-hidden="true" class="icon-paperclip"></i></button>
+        <button type="submit" class="neutral">
+            {% include 'includes/icons/general/paperclip.svg' %}
+            {{ _('Upload files') }}
+        </button>
       </div>
     </div>
   </form>

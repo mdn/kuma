@@ -1,6 +1,6 @@
 {% if tags %}
   <div class="tag-attach-list contributors-sub">
-    <i aria-hidden="true" class="icon-tags icon-fw"></i>
+    {% include 'includes/icons/general/tags.svg' %}
     <strong>{{_('Tags:')}}</strong>&nbsp;
     <ul class="tags tags-small">
       {% for tag in tags %}

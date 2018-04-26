@@ -1,6 +1,10 @@
 <div class="login">
     {% if user.is_authenticated() %}
-        <a class="user-url" href="{{ user.get_absolute_url() }}"><img src="{{ gravatar_url(user.email, size=50) }}" alt="{{ user_display(user) }}" width="50" height="50" class="login-photo avatar" /><span class="login-name">{{ user_display(user) }}</span> <i aria-hidden="true" class="icon-caret-down"></i></a>
+        <a class="user-url" href="{{ user.get_absolute_url() }}">
+            <img src="{{ gravatar_url(user.email, size=50) }}" alt="{{ user_display(user) }}" width="50" height="50" class="login-photo avatar" />
+            <span class="login-name">{{ user_display(user) }}</span>
+            {% include 'includes/icons/arrows/caret-down.svg' %}
+        </a>
         <div class="submenu js-submenu" id="nav-user-submenu">
             <div class="submenu-column">
                 <ul>
@@ -17,8 +21,7 @@
     {% else %}
         {% set github_url = provider_login_url('github', next=next_url) %}
         <a href="{{ github_url }}" class="login-link js-login-link" data-service="GitHub" rel="nofollow">
-            {{ _('Sign in') }}
-            <i class="icon-github" aria-hidden="true"></i>
+            {{ _('Sign in') }}{% include 'includes/icons/social/github.svg' %}
         </a>
     {% endif %}
 </div>

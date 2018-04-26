@@ -658,23 +658,19 @@ Placeholders
         (text-align, left, right),
     ));
 
-    &:after {
+    .icon-arrow {
         position: absolute;
-        bottom: 10px;
-        @include bidi((
-            (right, 0, left, auto),
-            (content, '\f061', '\f060'),
-        ));
-        font-family: fontAwesome;
-        transition: margin .1s ease-in-out;
+        top: 30%;
+        right: 0;
+        transition: right .2s;
     }
 
     &:hover,
     &:focus {
         text-decoration: none;
 
-        &:after {
-            @include bidi(((margin-right, -4px, margin-left, 0),));
+        .icon-arrow {
+            right: -5px;
         }
     }
 

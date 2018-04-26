@@ -70,7 +70,10 @@
 
       <section id="page-tags" class="page-tags wiki-block">
 
-          <h3><i aria-hidden="true" class="icon-tags"></i>{{ _('Tags') }}</h3>
+          <h3>
+              {% include 'includes/icons/general/tags.svg' %}
+              {{ _('Tags') }}
+          </h3>
 
         <input id="tagit_tags" type="text" name="tags" value="{% for tag in initial_tags %}{{ tag.name }},{% endfor %}" maxlength="255" />
       </section>

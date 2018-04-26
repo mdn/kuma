@@ -75,12 +75,13 @@
                 // Lazy-initialize events that aren't needed until an item is entered.
                 if(!initialized) {
                     initialized = 1;
+                    var closeIcon = window.mdnIcons ? window.mdnIcons.getIcon('close') : '';
 
                     // Add the close
                     var $closeButton = $('<button type="button" class="submenu-close transparent">' +
-                        '<span class="offscreen">' + gettext('Close submenu') + '</span>' +
-                        '<i aria-hidden="true" class="icon-times"></i>' +
-                    '</button>').appendTo($submenu);
+                        '<span class="offscreen">' + gettext('Close submenu') + '</span></button>')
+                    .append(closeIcon)
+                    .appendTo($submenu);
 
                     // Hide the submenu when the main menu is blurred for hideDelay
                     $self.on('mouseleave focusout', function() {
@@ -552,10 +553,13 @@
 
             // Add item's close and click event if needed
             if(options.closable) {
-                $('<button class="close" title="' + gettext('Close notification') + '"><i class="icon-remove" aria-hidden="true"></i></button>').on('click', function(e) {
+                var closeIcon = window.mdnIcons ? window.mdnIcons.getIcon('close') : '';
+
+                $('<button class="close" title="' + gettext('Close notification') + '"></button>')
+                .append(closeIcon)
+                .on('click', function(e) {
                     e.stopPropagation();
                     e.preventDefault();
-
                     closeItem($item, options.onclose);
                 }).appendTo($item);
             }
