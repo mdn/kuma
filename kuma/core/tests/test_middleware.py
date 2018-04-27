@@ -177,6 +177,6 @@ def test_smart_session_middleware(rf, session_case):
         middleware.process_response(request, response)
         assert base.called
         if session:
-            assert request.session.accessed
-            assert (request.session.is_empty() ==
-                    (session_case in ('empty', 'anonymous-csrf')))
+            replaced = (session_case in ('empty', 'anonymous-csrf'))
+            assert request.session.accessed != replaced
+            assert request.session.is_empty() == replaced

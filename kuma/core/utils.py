@@ -36,10 +36,16 @@ from .exceptions import DateTimeFormatError
 log = logging.getLogger('kuma.core.utils')
 
 
-def is_anonymous_csrf_only_session(request):
+def is_anonymous_empty_or_csrf_only_session(request):
+    """
+    Returns True if the request has a session and that session
+    is anonymous (session_key is None) and contains either nothing
+    or just a CSRF_SESSION_KEY.
+    """
     session = getattr(request, 'session', None)
-    return (session and (not session.session_key) and
-            (session.keys() == [CSRF_SESSION_KEY]))
+    return (session and (session.is_empty() or
+                         ((not session.session_key) and
+                          (session.keys() == [CSRF_SESSION_KEY]))))
 
 
 def to_html(pq):
