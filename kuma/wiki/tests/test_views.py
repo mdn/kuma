@@ -633,7 +633,7 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
                                                locale=settings.WIKI_DEFAULT_LANGUAGE))
             page = pq(response.content)
 
-            ok_(page.find('title').text() in aught_titles)
+            ok_(page.find('head > title').text() in aught_titles)
 
         # Test nested document titles
         _make_doc('One', ['One | MDN'], 'one')
