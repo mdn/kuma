@@ -1,5 +1,13 @@
 from django.forms import fields, widgets
 
+# TODO: Remove with Django 1.11
+from . import csrf
+
+
+# TODO: Remove with Django 1.11
+csrf.monkey_patch()
+
+
 # Monkey patch preserves the old values, so we can pick up any changes
 # in CharField.widget_attrs and Field.widget_attrs
 # paulc filed a Django ticket for it, #14884

@@ -8,7 +8,9 @@ from ..middleware import (
     LegacyDomainRedirectsMiddleware,
     RestrictedEndpointsMiddleware,
     RestrictedWhiteNoiseMiddleware,
+    SessionMiddleware,
     SetRemoteAddrFromForwardedFor,
+    SmartSessionMiddleware,
     WhiteNoiseMiddleware,
 )
 
@@ -118,3 +120,63 @@ def test_legacy_domain_redirects_middleware(rf, settings, site_url, host):
         assert response['Location'] == site_url + path
     else:
         assert response is None
+
+
+@pytest.mark.parametrize(
+    'session_case',
+    ['none', 'empty', 'anonymous-csrf', 'login-step', 'authenticated'])
+def test_smart_session_middleware(rf, session_case):
+    middleware = SmartSessionMiddleware()
+
+    if session_case == 'authenticated':
+        session = middleware.SessionStore('r35pvz8qwu0e0f5qtvbxi7rk6x763ty4')
+        session.clear()
+        session.update({
+            '_auth_user_id': '922',
+            'sociallogin_provider': 'github',
+            'sociallogin_next_url': '/en-US/',
+            '_auth_user_backend': 'kuma.users.auth_backends.KumaAuthBackend',
+            '_auth_user_hash': 'e4b7a284fc0c109a5d73d85fb2a0e8b2fc22bfb3',
+            '_csrftoken': ('ss5vqahzP0Ce33sZNfIOPa36npqLET3N'
+                           'CvPySGs762lu20GspCp94yxpghgUdJED'),
+        })
+    elif session_case == 'login-step':
+        session = middleware.SessionStore()
+        session.update({
+            'sociallogin_next_url': '/en-US/',
+            'socialaccount_state': (
+                {
+                    'process': 'login',
+                    'scope': '',
+                    'auth_params': '',
+                    'next': '/en-US/'
+                },
+                'mVUH9aPKwNHi'
+            ),
+        })
+    elif session_case == 'anonymous-csrf':
+        session = middleware.SessionStore()
+        session['_csrftoken'] = ('ss5vqahzP0Ce33sZNfIOPa36npqLET3N'
+                                 'CvPySGs762lu20GspCp94yxpghgUdJED'),
+    elif session_case == 'empty':
+        session = middleware.SessionStore()
+    else:
+        session = None
+
+    response = object()
+
+    request = rf.get('/foo')
+
+    if session:
+        request.session = session
+        # Mimic the CsrfViewMiddleware.process_request call, which
+        # causes the session's "accessed" attribute to be set.
+        request.session.get('_csrftoken')
+
+    with patch.object(SessionMiddleware, 'process_response') as base:
+        middleware.process_response(request, response)
+        assert base.called
+        if session:
+            replaced = (session_case in ('empty', 'anonymous-csrf'))
+            assert request.session.accessed != replaced
+            assert request.session.is_empty() == replaced

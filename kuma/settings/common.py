@@ -454,8 +454,7 @@ _CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'django.core.context_processors.request',
-    # todo: re-enable with Django 1.11
-    # 'django.core.context_processors.csrf',
+    'django.core.context_processors.csrf',
     'django.contrib.messages.context_processors.messages',
 
     'kuma.core.context_processors.global_settings',
@@ -463,7 +462,6 @@ _CONTEXT_PROCESSORS = (
     'kuma.core.context_processors.next_url',
 
     'constance.context_processors.config',
-    'debreach.context_processors.csrf',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -477,7 +475,7 @@ MIDDLEWARE_CLASSES = (
     'kuma.core.middleware.SetRemoteAddrFromForwardedFor',
     ('kuma.core.middleware.ForceAnonymousSessionMiddleware'
      if MAINTENANCE_MODE else
-     'django.contrib.sessions.middleware.SessionMiddleware'),
+     'kuma.core.middleware.SmartSessionMiddleware'),
     'kuma.core.middleware.LocaleURLMiddleware',
     'kuma.wiki.middleware.DocumentZoneMiddleware',
     'kuma.wiki.middleware.ReadOnlyMiddleware',
@@ -493,7 +491,6 @@ if not MAINTENANCE_MODE:
     # We don't want this in maintence mode, as it adds "Cookie"
     # to the Vary header, which in turn, kills caching.
     MIDDLEWARE_CLASSES += (
-        'debreach.middleware.CSRFCryptMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
     )
 
@@ -555,7 +552,6 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
     'soapbox',  # must be before kuma.wiki, or RemovedInDjango19Warning
-    'debreach',
 
     # MDN
     'kuma.core',
@@ -1608,6 +1604,7 @@ LOGGING = {
     },
 }
 
+CSRF_USE_SESSIONS = config('CSRF_USE_SESSIONS', default=True, cast=bool)
 CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=True, cast=bool)
 X_FRAME_OPTIONS = 'DENY'
 

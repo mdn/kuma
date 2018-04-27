@@ -72,7 +72,7 @@ def test_code_sample_host_restriction(code_sample_doc, constance_config,
 
 
 def test_raw_code_sample_file(code_sample_doc, constance_config,
-                              wiki_user, admin_client):
+                              wiki_user, admin_client, client):
 
     # Upload an attachment
     upload_url = reverse('attachments.edit_attachment', locale='en-US',
@@ -109,9 +109,10 @@ def test_raw_code_sample_file(code_sample_doc, constance_config,
     sample_url = reverse('wiki.code_sample', locale='en-US',
                          args=[code_sample_doc.slug, 'sample1'])
 
-    response = admin_client.get(sample_url)
+    response = client.get(sample_url)
     assert response.status_code == 200
     assert url_css in response.content
+    assert not response.has_header('Vary')
     assert 'public' in response['Cache-Control']
     assert 'max-age=86400' in response['Cache-Control']
 
@@ -119,7 +120,7 @@ def test_raw_code_sample_file(code_sample_doc, constance_config,
     file_url = reverse('wiki.raw_code_sample_file', locale='en-US',
                        args=(code_sample_doc.slug, 'sample1', attachment.id,
                              filename))
-    response = admin_client.get(file_url)
+    response = client.get(file_url)
     assert response.status_code == 302
     assert response.url == attachment.get_file_url()
     assert not response.has_header('Vary')

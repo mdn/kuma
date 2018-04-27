@@ -16,6 +16,8 @@ from celery import chain, chord
 from django.conf import settings
 from django.core.paginator import EmptyPage, InvalidPage, Paginator
 from django.http import QueryDict
+# TODO: Uncomment in Django 1.11
+# from django.middleware.csrf import CSRF_SESSION_KEY
 from django.shortcuts import _get_queryset
 from django.utils.cache import patch_cache_control
 from django.utils.encoding import force_unicode, smart_str
@@ -26,10 +28,24 @@ from pytz import timezone
 from taggit.utils import split_strip
 
 from .cache import memcache
+# TODO: Remove in Django 1.11
+from .csrf import CSRF_SESSION_KEY
 from .exceptions import DateTimeFormatError
 
 
 log = logging.getLogger('kuma.core.utils')
+
+
+def is_anonymous_empty_or_csrf_only_session(request):
+    """
+    Returns True if the request has a session and that session
+    is anonymous (session_key is None) and contains either nothing
+    or just a CSRF_SESSION_KEY.
+    """
+    session = getattr(request, 'session', None)
+    return (session and (session.is_empty() or
+                         ((not session.session_key) and
+                          (session.keys() == [CSRF_SESSION_KEY]))))
 
 
 def to_html(pq):

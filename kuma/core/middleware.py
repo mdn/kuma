@@ -12,9 +12,11 @@ from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
 from whitenoise.middleware import WhiteNoiseMiddleware
 
+
 from .decorators import add_shared_cache_control
 from .urlresolvers import Prefixer, set_url_prefixer, split_path
-from .utils import is_untrusted, urlparams
+from .utils import (is_anonymous_empty_or_csrf_only_session, is_untrusted,
+                    urlparams)
 from .views import handler403
 
 
@@ -213,3 +215,24 @@ class LegacyDomainRedirectsMiddleware(object):
                 urljoin(settings.SITE_URL, request.get_full_path())
             )
         return None
+
+
+class SmartSessionMiddleware(SessionMiddleware):
+    """
+    For anonymous users, both prevents the creation of a session cookie as
+    well as the addition of "Cookie" to the "Vary" header, when used with
+    django.middleware.csrf.CsrfViewMiddleware and session-based CSRF tokens
+    (CSRF_USE_SESSIONS=True).
+    """
+
+    def process_response(self, request, response):
+        if is_anonymous_empty_or_csrf_only_session(request):
+            # This session is for an anonymous user and is either empty or
+            # contains only a CSR token, nothing else, so we want to ensure
+            # not only that it's never saved and that a session cookie is never
+            # created, but also that "Cookie" is not added to the "Vary"
+            # header. Replace the current session with one that is empty,
+            # unaccessed, and unmodified.
+            request.session = self.SessionStore()
+        return super(SmartSessionMiddleware, self).process_response(request,
+                                                                    response)
