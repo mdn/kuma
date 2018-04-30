@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.clickjacking import xframe_options_sameorigin
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 from ratelimit.decorators import ratelimit
 
@@ -126,6 +127,7 @@ def compare(request, document_slug, document_locale):
 
 
 @never_cache
+@csrf_exempt
 @login_required
 @require_POST
 @process_document_path

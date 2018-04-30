@@ -5,7 +5,6 @@
       <p>{{ _('This article needs these reviews:') }}</p>
 
       <form method="post" action="{{ url('wiki.quick_review', document.slug) }}">
-        {% csrf_token %}
         <ul>
         {% if document.current_revision.needs_technical_review %}
           <li>
