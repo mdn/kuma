@@ -14,7 +14,7 @@
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint kuma/",
-    "optim:svg": "svgo jinja2/includes/icons/* --disable=removeViewBox --multipass --pretty",
+    "optim:svg": "svgo jinja2/includes/icons/* --disable={removeViewBox,removeTitle} --multipass --pretty",
     "precommit": "npm run lint"
   },
   "devDependencies": {
