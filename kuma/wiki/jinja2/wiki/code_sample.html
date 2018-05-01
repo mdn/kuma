@@ -7,8 +7,11 @@
             {{ css|safe }}
         </style>
         {% endif %}
+        <meta charset="utf-8">
+        <title> {{ document["title"] }} -  - code sample</title>
     </head>
     <body>
+      {{ document['sample_name'] }}
         {% if html %}
             {{ html|safe }}
         {% endif %}
