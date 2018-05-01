@@ -509,6 +509,8 @@ if not MAINTENANCE_MODE:
 
 MIDDLEWARE_CLASSES += (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # TODO: In 1.10, SessionAuth*Middleware does nothing and can be removed
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'waffle.middleware.WaffleMiddleware',
     'kuma.core.middleware.RestrictedEndpointsMiddleware',
