@@ -7,24 +7,24 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^dashboards/revisions$',
+    url(r'^revisions$',
         views.revisions,
         name='dashboards.revisions'),
-    url(r'^dashboards/user_lookup$',
+    url(r'^user_lookup$',
         views.user_lookup,
         name='dashboards.user_lookup'),
-    url(r'^dashboards/topic_lookup$',
+    url(r'^topic_lookup$',
         views.topic_lookup,
         name='dashboards.topic_lookup'),
-    url(r'^dashboards/localization$',
+    url(r'^localization$',
         shared_cache_control(RedirectView.as_view(
             url='/docs/MDN/Doc_status/Overview',
             permanent=True,
         ))),
-    url(r'^dashboards/spam$',
+    url(r'^spam$',
         views.spam,
         name='dashboards.spam'),
-    url(r'^dashboards/macros$',
+    url(r'^macros$',
         views.macros,
         name='dashboards.macros'),
 ]
