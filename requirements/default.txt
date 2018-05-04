@@ -35,8 +35,11 @@ Django==1.8.19 \
     --hash=sha256:33d44a5cf9d333247a9a374ae1478b78b83c9b78eb316fc04adde62053b4c047
 
 # 3rd party logins like Github
-django-allauth==0.33.0 \
-    --hash=sha256:ae64a80b49707c3d4d6aff52424f8e75fd636cebfdce0e88ffdcbf306f9f0a3d
+# Code: https://github.com/pennersr/django-allauth
+# Changes: https://django-allauth.readthedocs.io/en/latest/release-notes.html
+# Docs: https://django-allauth.readthedocs.io/en/latest/
+django-allauth==0.34.0 \
+    --hash=sha256:95a9f7fbebe3e97ce3a541d213fc52492b50dac92f0f91483f58949189e5aa4f
 
 # Refresh stale cache items asynchronously
 # Code: https://github.com/codeinthehole/django-cacheback
