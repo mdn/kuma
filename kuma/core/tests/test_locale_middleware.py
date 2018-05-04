@@ -1,74 +1,65 @@
+import pytest
 from django.conf import settings
 
-from kuma.core.tests import assert_shared_cache_header
+from . import assert_shared_cache_header
+from .test_urlresolvers import WEIGHTED_ACCEPT_CASES
 
-from . import KumaTestCase
+
+# Simple Accept-Language headers, one term
+SIMPLE_ACCEPT_CASES = (
+    ('', 'en-US'),          # No preference gets default en-US
+    ('en', 'en-US'),        # Default en is en-US
+    ('en-US', 'en-US'),     # Exact match for default
+    ('en-us', 'en-US'),     # Case-insensitive match for default
+    ('fr-FR', 'fr'),        # Overly-specified locale gets default
+    ('fr-fr', 'fr'),        # Overly-specified match is case-insensitive
+)
+PICKER_CASES = SIMPLE_ACCEPT_CASES + WEIGHTED_ACCEPT_CASES + (
+    ('xx', 'en-US'),        # Unknown in Accept-Language gets default
+)
+REDIRECT_CASES = [case for case in SIMPLE_ACCEPT_CASES if case[0] != case[1]]
 
 
-class TestLocaleMiddleware(KumaTestCase):
-    def test_default_redirect(self):
-        # User wants en-us, we send en-US
-        response = self.client.get('/', follow=True,
-                                   HTTP_ACCEPT_LANGUAGE='en-us')
-        self.assertRedirects(response, '/en-US/', status_code=302)
-        assert_shared_cache_header(response)
+@pytest.mark.parametrize('accept_language,locale', PICKER_CASES)
+def test_locale_middleware_picker(accept_language, locale, client):
+    '''The LocaleMiddleware picks locale from the Accept-Language header.'''
+    response = client.get('/', HTTP_ACCEPT_LANGUAGE=accept_language)
+    assert response.status_code == 302
+    assert response['Location'] == 'http://testserver/%s/' % locale or 'en_US'
+    assert_shared_cache_header(response)
 
-        # User wants fr-FR, we send fr
-        response = self.client.get('/', follow=True,
-                                   HTTP_ACCEPT_LANGUAGE='fr-fr')
-        self.assertRedirects(response, '/fr/', status_code=302)
-        assert_shared_cache_header(response)
 
-        # User wants xx, we send en-US
-        response = self.client.get('/', follow=True,
-                                   HTTP_ACCEPT_LANGUAGE='xx')
-        self.assertRedirects(response, '/en-US/', status_code=302)
-        assert_shared_cache_header(response)
+@pytest.mark.parametrize('original,fixed', REDIRECT_CASES)
+def test_locale_middleware_fixer(original, fixed, client):
+    '''The LocaleMiddleware redirects for non-standard locale URLs.'''
+    response = client.get('/%s/' % original)
+    assert response.status_code == 302
+    assert response['Location'] == 'http://testserver/%s/' % fixed
+    assert_shared_cache_header(response)
 
-        # User doesn't know what they want, we send en-US
-        response = self.client.get('/', follow=True,
-                                   HTTP_ACCEPT_LANGUAGE='')
-        self.assertRedirects(response, '/en-US/', status_code=302)
-        assert_shared_cache_header(response)
 
-    def test_mixed_case_header(self):
-        """Accept-Language is case insensitive."""
-        response = self.client.get('/', follow=True,
-                                   HTTP_ACCEPT_LANGUAGE='en-US')
-        self.assertRedirects(response, '/en-US/', status_code=302)
-        assert_shared_cache_header(response)
+def test_locale_middleware_fixer_confusion(client):
+    '''The LocaleMiddleware treats unknown locales and 404 en-US docs.'''
+    response = client.get('/xx/')
+    assert response.status_code == 302
+    assert response['Location'] == 'http://testserver/en-US/xx/'
+    assert_shared_cache_header(response)
 
-    def test_specificity(self):
-        """Requests for /fr-FR/ should end up on /fr/"""
-        response = self.client.get('/fr-FR/', follow=True)
-        self.assertRedirects(response, '/fr/', status_code=302)
-        assert_shared_cache_header(response)
 
-    def test_partial_redirect(self):
-        """Ensure that /en/ gets directed to /en-US/."""
-        response = self.client.get('/en/', follow=True)
-        self.assertRedirects(response, '/en-US/', status_code=302)
-        assert_shared_cache_header(response)
+def test_locale_middleware_language_cookie(client):
+    '''The LocaleMiddleware uses the language cookie.'''
+    client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
+    response = client.get('/')
+    assert response.status_code == 302
+    assert response['Location'] == 'http://testserver/bn-BD/'
+    assert_shared_cache_header(response)
 
-    def test_lower_to_upper(self):
-        """/en-us should redirect to /en-US."""
-        response = self.client.get('/en-us/', follow=True)
-        self.assertRedirects(response, '/en-US/', status_code=302)
-        assert_shared_cache_header(response)
 
-    def test_language_cookie_support(self):
-        """Request with language cookie should redirect to the cookie locale"""
-        # Add appropriate language cookie to the client
-        self.client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
-        response = self.client.get('/')
-        self.assertRedirects(response, '/bn-BD/', status_code=302)
-        assert_shared_cache_header(response)
-
-    def test_lang_query_param(self):
-        """Request with lang query param should redirect to that locale"""
-        # Add language cookie and accept-language header as red herrings.
-        self.client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
-        response = self.client.get('/?lang=fr',
-                                   HTTP_ACCEPT_LANGUAGE='en;q=0.9, fr;q=0.8')
-        self.assertRedirects(response, '/fr/', status_code=302)
-        assert_shared_cache_header(response)
+def test_locale_middleware_lang_query_param(client):
+    '''The LocaleMiddleware redirects on the ?lang query first.'''
+    client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
+    response = client.get('/?lang=fr',
+                          HTTP_ACCEPT_LANGUAGE='en;q=0.9, fr;q=0.8')
+    assert response.status_code == 302
+    assert response['Location'] == 'http://testserver/fr/'
+    assert_shared_cache_header(response)
