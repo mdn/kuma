@@ -2,7 +2,6 @@ import pytest
 from django.conf import settings
 
 from . import assert_shared_cache_header
-from .test_urlresolvers import WEIGHTED_ACCEPT_CASES
 
 
 # Simple Accept-Language headers, one term
@@ -13,6 +12,21 @@ SIMPLE_ACCEPT_CASES = (
     ('en-us', 'en-US'),     # Case-insensitive match for default
     ('fr-FR', 'fr'),        # Overly-specified locale gets default
     ('fr-fr', 'fr'),        # Overly-specified match is case-insensitive
+)
+# Real-world Accept-Language headers include quality value weights
+WEIGHTED_ACCEPT_CASES = (
+    ('en, fr;q=0.5', 'en-US'),          # English without region gets en-US
+    ('en-GB, fr-FR;q=0.5', 'en-US'),    # Any English gets en-US
+    ('en-US, en;q=0.5', 'en-US'),       # Request for en-US gets en-US
+    ('fr, en-US;q=0.5', 'fr'),          # Exact match of non-English language
+    ('fr-FR, de-DE;q=0.5', 'fr'),       # Highest locale-specific match wins
+    ('fr-FR, de;q=0.5', 'de'),          # Highest exact match wins
+    ('ga, fr;q=0.5', 'ga-IE'),          # Generic Gaelic matches ga-IE
+    ('pt, fr;q=0.5', 'pt-PT'),          # Generic Portuguese matches pt-PT
+    ('pt-BR, en-US;q=0.5', 'pt-BR'),    # Portuguese-Brazil matches
+    ('qaz-ZZ, fr-FR;q=0.5', 'fr'),      # Respect partial match on prefix
+    ('qaz-ZZ, qaz;q=0.5', False),       # No matches gets default en-US
+    ('zh-Hant, fr;q=0.5', 'zh-TW'),     # Traditional Chinese matches zh-TW
 )
 PICKER_CASES = SIMPLE_ACCEPT_CASES + WEIGHTED_ACCEPT_CASES + (
     ('xx', 'en-US'),        # Unknown in Accept-Language gets default

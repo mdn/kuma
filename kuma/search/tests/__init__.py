@@ -7,7 +7,6 @@ from rest_framework.test import APIRequestFactory
 
 from kuma.core.middleware import LocaleMiddleware
 from kuma.core.tests import LocalizingMixin
-from kuma.core.urlresolvers import reset_url_prefixer
 from kuma.users.tests import UserTestCase
 from kuma.wiki.search import WikiDocumentType
 
@@ -59,7 +58,6 @@ class ElasticTestCase(UserTestCase):
     def tearDown(self):
         super(ElasticTestCase, self).tearDown()
         self.teardown_indexes()
-        reset_url_prefixer()
 
     def refresh(self, index=None):
         index = index or Index.objects.get_current().prefixed_name
