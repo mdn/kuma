@@ -1,12 +1,10 @@
 import os
-from importlib import import_module
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.core.cache import cache
 from django.test import TestCase
-from django.test.client import Client
 from django.utils.translation import trans_real
 
 from ..cache import memcache
@@ -51,36 +49,10 @@ def get_user(username='testuser'):
     return User.objects.get(username=username)
 
 
-class SessionAwareClient(Client):
-    """
-    Just a small override to patch the session property to be able to
-    use the sessions.
-    """
-    @property
-    def session(self):
-        """
-        Obtains the current session variables.
-
-        Backported the else clause from Django 1.7 to make sure there
-        is a session available during tests.
-        """
-        assert 'django.contrib.sessions' in settings.INSTALLED_APPS
-        engine = import_module(settings.SESSION_ENGINE)
-        cookie = self.cookies.get(settings.SESSION_COOKIE_NAME, None)
-        if cookie:
-            return engine.SessionStore(cookie.value)
-        else:
-            session = engine.SessionStore()
-            session.save()
-            self.cookies[settings.SESSION_COOKIE_NAME] = session.session_key
-            return session
-
-
 JINJA_INSTRUMENTED = False
 
 
 class KumaTestMixin(object):
-    client_class = SessionAwareClient
     skipme = False
 
     def _pre_setup(self):
