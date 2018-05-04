@@ -456,15 +456,15 @@ _NEED_DEBREACH = LooseVersion(get_version()) < LooseVersion('1.10')
 if _NEED_DEBREACH:
     _CSRF_CONTEXT_PROCESSOR = 'debreach.context_processors.csrf'
 else:
-    _CSRF_CONTEXT_PROCESSOR = 'django.core.context_processors.csrf',
+    _CSRF_CONTEXT_PROCESSOR = 'django.template.context_processors.csrf'
 
 
 _CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.core.context_processors.request',
+    'django.template.context_processors.debug',
+    'django.template.context_processors.media',
+    'django.template.context_processors.static',
+    'django.template.context_processors.request',
     _CSRF_CONTEXT_PROCESSOR,
     'django.contrib.messages.context_processors.messages',
 
