@@ -39,7 +39,6 @@ from ..views.document import _get_seo_parent_title
 
 class RedirectTests(UserTestCase, WikiTestCase):
     """Tests for the REDIRECT wiki directive"""
-    localizing_client = True
 
     def test_redirect_suppression(self):
         """The document view shouldn't redirect when passed redirect=no."""
@@ -87,7 +86,6 @@ class RedirectTests(UserTestCase, WikiTestCase):
 
 class ViewTests(UserTestCase, WikiTestCase):
     fixtures = UserTestCase.fixtures + ['wiki/documents.json']
-    localizing_client = True
 
     def test_json_view(self):
         """bug 875349"""
@@ -320,7 +318,6 @@ class ViewTests(UserTestCase, WikiTestCase):
 
 class GetDeletedDocumentTests(UserTestCase, WikiTestCase):
     """Tests for conditional GET on document view"""
-    localizing_client = True
 
     def test_deleted_doc_returns_404(self):
         """Requesting a deleted doc returns 404"""
@@ -356,7 +353,6 @@ class GetDeletedDocumentTests(UserTestCase, WikiTestCase):
 class ReadOnlyTests(UserTestCase, WikiTestCase):
     """Tests readonly scenarios"""
     fixtures = UserTestCase.fixtures + ['wiki/documents.json']
-    localizing_client = True
 
     def setUp(self):
         super(ReadOnlyTests, self).setUp()
@@ -401,7 +397,6 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
     Note that these tests really just check whether or not the service was
     used, and are not integration tests meant to exercise the real service.
     """
-    localizing_client = True
 
     def setUp(self):
         super(KumascriptIntegrationTests, self).setUp()
@@ -613,7 +608,6 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
 
 class DocumentSEOTests(UserTestCase, WikiTestCase):
     """Tests for the document seo logic"""
-    localizing_client = True
 
     def test_get_seo_parent_doesnt_throw_404(self):
         """bug 1190212"""
@@ -717,7 +711,6 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
 
 class DocumentEditingTests(UserTestCase, WikiTestCase):
     """Tests for the document-editing view"""
-    localizing_client = True
 
     def test_editor_safety_filter(self):
         """Safety filter should be applied before rendering editor
@@ -826,8 +819,9 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # Move the document to new slug
         root_doc._move_tree(new_slug="moved_doc")
 
-        zoned_child_full_slug = zoned_doc.url_root + "/" + "children_document"
-        response = self.client.get(zoned_child_full_slug)
+        zoned_child_full_path = ('/en-US/' + zoned_doc.url_root + "/" +
+                                 "children_document")
+        response = self.client.get(zoned_child_full_path)
         assert response.status_code == 302
         assert 'public' not in response['Cache-Control']
         assert 'no-cache' in response['Cache-Control']
@@ -2313,7 +2307,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
 
 class SectionEditingResourceTests(UserTestCase, WikiTestCase):
-    localizing_client = True
 
     def test_raw_source(self):
         """The raw source for a document can be requested"""
@@ -2799,7 +2792,6 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
     # out from the ones the legacy MindTouch handling will emit, so
     # instead we just test that A) we did issue a redirect and B) the
     # URL we constructed is enough for the document views to go on.
-    localizing_client = True
 
     server_prefix = 'http://testserver/%s/docs' % settings.WIKI_DEFAULT_LANGUAGE
     namespace_urls = (
@@ -2860,7 +2852,6 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
 @override_config(KUMASCRIPT_TIMEOUT=5.0, KUMASCRIPT_MAX_AGE=600)
 class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
     """Tests for the deferred rendering system and interaction with views"""
-    localizing_client = True
 
     def setUp(self):
         super(DeferredRenderingViewTests, self).setUp()
@@ -2977,7 +2968,6 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
 
 
 class PageMoveTests(UserTestCase, WikiTestCase):
-    localizing_client = True
 
     def setUp(self):
         super(PageMoveTests, self).setUp()

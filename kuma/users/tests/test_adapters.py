@@ -173,7 +173,6 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
 
 
 class KumaAccountAdapterTestCase(UserTestCase):
-    localizing_client = True
     rf = RequestFactory()
     message_template = 'socialaccount/messages/account_connected.txt'
 

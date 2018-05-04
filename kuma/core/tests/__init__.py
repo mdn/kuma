@@ -10,7 +10,6 @@ from django.test.client import Client
 from django.utils.translation import trans_real
 
 from ..cache import memcache
-from ..urlresolvers import split_path
 
 
 def assert_no_cache_header(response):
@@ -77,44 +76,12 @@ class SessionAwareClient(Client):
             return session
 
 
-class LocalizingMixin(object):
-    def request(self, **request):
-        """Make a request, but prepend a locale if there isn't one already."""
-        # Fall back to defaults as in the superclass's implementation:
-        path = request.get('PATH_INFO', self.defaults.get('PATH_INFO', '/'))
-        locale, shortened = split_path(path)
-        if not locale:
-            request['PATH_INFO'] = '/%s/%s' % (settings.LANGUAGE_CODE,
-                                               shortened)
-        return super(LocalizingMixin, self).request(**request)
-
-
-class LocalizingClient(LocalizingMixin, SessionAwareClient):
-    """Client which prepends a locale so test requests can get through
-    LocaleURLMiddleware without resulting in a locale-prefix-adding 301.
-
-    Otherwise, we'd have to hard-code locales into our tests everywhere or
-    {mock out reverse() and make LocaleURLMiddleware not fire}.
-
-    """
-    # If you use this, you might also find the force_locale=True argument to
-    # kuma.core.urlresolvers.reverse() handy, in case you need to force locale
-    # prepending in a one-off case or do it outside a mock request.
-
-
 JINJA_INSTRUMENTED = False
 
 
 class KumaTestMixin(object):
     client_class = SessionAwareClient
-    localizing_client = False
     skipme = False
-
-    @classmethod
-    def setUpClass(cls):
-        if cls.localizing_client:
-            cls.client_class = LocalizingClient
-        super(KumaTestMixin, cls).setUpClass()
 
     def _pre_setup(self):
         super(KumaTestMixin, self)._pre_setup()

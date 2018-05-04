@@ -6,18 +6,13 @@ from elasticsearch_dsl.connections import connections
 from rest_framework.test import APIRequestFactory
 
 from kuma.core.middleware import LocaleMiddleware
-from kuma.core.tests import LocalizingMixin
 from kuma.users.tests import UserTestCase
 from kuma.wiki.search import WikiDocumentType
 
 from ..models import Index
 
 
-class LocalizingAPIRequestFactory(LocalizingMixin, APIRequestFactory):
-    pass
-
-
-factory = LocalizingAPIRequestFactory()
+factory = APIRequestFactory()
 
 
 class ElasticTestCase(UserTestCase):

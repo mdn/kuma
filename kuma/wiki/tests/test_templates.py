@@ -496,7 +496,6 @@ def test_revision_template(root_doc, client):
 
 class NewDocumentTests(UserTestCase, WikiTestCase):
     """Tests for the New Document template"""
-    localizing_client = True
 
     def test_new_document_GET_with_perm(self):
         """HTTP GET to new document URL renders the form."""
@@ -634,7 +633,6 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
 
 class NewRevisionTests(UserTestCase, WikiTestCase):
     """Tests for the New Revision template"""
-    localizing_client = True
 
     def setUp(self):
         super(NewRevisionTests, self).setUp()
@@ -792,7 +790,6 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
 
 class DocumentEditTests(UserTestCase, WikiTestCase):
     """Test the editing of document level fields."""
-    localizing_client = True
 
     def setUp(self):
         super(DocumentEditTests, self).setUp()
@@ -1200,7 +1197,6 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
 
 class ArticlePreviewTests(UserTestCase, WikiTestCase):
     """Tests for preview view and template."""
-    localizing_client = True
 
     def setUp(self):
         super(ArticlePreviewTests, self).setUp()
