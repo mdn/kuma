@@ -381,7 +381,7 @@ class DocumentForm(forms.ModelForm):
             raise forms.ValidationError(SLUG_INVALID)
         # Guard against slugs that match reserved URL patterns.
         for url_pattern in non_document_patterns:
-            if url_pattern.resolve('/' + slug):
+            if url_pattern.resolve(slug):
                 raise forms.ValidationError(SLUG_INVALID)
         return slug
 

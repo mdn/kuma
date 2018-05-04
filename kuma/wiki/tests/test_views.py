@@ -2853,7 +2853,7 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
          /<locale>/<document_slug>"""
         d = document(locale='zh-CN')
         d.save()
-        mt_url = '{locale}/{slug}'.format(locale=d.locale, slug=d.slug)
+        mt_url = '/{locale}/{slug}'.format(locale=d.locale, slug=d.slug)
         resp = self.client.get(mt_url, follow=True)
         assert resp.status_code == 200
 
