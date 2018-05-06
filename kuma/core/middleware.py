@@ -32,6 +32,7 @@ class LangSelectorMiddleware(object):
         """Redirect if ?lang query parameter is valid."""
         query_lang = request.GET.get('lang')
         if query_lang not in dict(settings.LANGUAGES):
+            # Invalid language requested, don't redirect
             return
 
         # Check if different language is embedded in URL
