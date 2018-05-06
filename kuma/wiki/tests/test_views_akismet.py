@@ -50,7 +50,7 @@ def enable_akismet_submissions(constance_config):
     'http_method', ['get', 'put', 'delete', 'options', 'head'])
 def test_disallowed_methods(db, client, http_method):
     """HTTP methods other than POST are not allowed."""
-    url = reverse('wiki.submit_akismet_spam', locale='en-US')
+    url = reverse('wiki.submit_akismet_spam')
     response = getattr(client, http_method)(url)
     assert response.status_code == 405
     assert_no_cache_header(response)
@@ -60,7 +60,7 @@ def test_disallowed_methods(db, client, http_method):
 def test_spam_valid_response(create_revision, akismet_wiki_user, user_client,
                              enable_akismet_submissions,
                              akismet_mock_requests):
-    url = reverse('wiki.submit_akismet_spam', locale='en-US')
+    url = reverse('wiki.submit_akismet_spam')
     response = user_client.post(url, data={'revision': create_revision.id})
     assert response.status_code == 201
     assert_no_cache_header(response)
@@ -96,7 +96,7 @@ def test_spam_with_many_response(create_revision, akismet_wiki_user,
     assert ras.count() == 1
 
     # Create another Akismet revision via the endpoint.
-    url = reverse('wiki.submit_akismet_spam', locale='en-US')
+    url = reverse('wiki.submit_akismet_spam')
     response = user_client.post(url, data={'revision': create_revision.id})
     assert response.status_code == 201
     assert_no_cache_header(response)
@@ -115,7 +115,7 @@ def test_spam_with_many_response(create_revision, akismet_wiki_user,
 @pytest.mark.spam
 def test_spam_no_permission(create_revision, wiki_user, user_client,
                             enable_akismet_submissions, akismet_mock_requests):
-    url = reverse('wiki.submit_akismet_spam', locale='en-US')
+    url = reverse('wiki.submit_akismet_spam')
     response = user_client.post(url, data={'revision': create_revision.id})
     # Redirects to login page when without permission.
     assert response.status_code == 302
@@ -137,7 +137,7 @@ def test_spam_revision_does_not_exist(create_revision, akismet_wiki_user,
     revision_id = create_revision.id
     create_revision.delete()
 
-    url = reverse('wiki.submit_akismet_spam', locale='en-US')
+    url = reverse('wiki.submit_akismet_spam')
     response = user_client.post(url, data={'revision': revision_id})
     assert response.status_code == 400
     assert_no_cache_header(response)

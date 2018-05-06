@@ -34,7 +34,7 @@ def get_search_url_from_referer(request):
     if (referer is None or url is None or
             url.scheme != 'https' or
             url.netloc != current_site.domain or
-            reverse('search', locale=request.LANGUAGE_CODE) != url.path):
+            reverse('search') != url.path):
         return None
     return referer
 

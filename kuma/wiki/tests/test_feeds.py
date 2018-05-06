@@ -167,7 +167,7 @@ def extract_description(feed_item):
 
 def test_recent_revisions(create_revision, edit_revision, client):
     """The revisions feed includes recent revisions."""
-    feed_url = reverse('wiki.feeds.recent_revisions', locale='en-US',
+    feed_url = reverse('wiki.feeds.recent_revisions',
                        kwargs={'format': 'rss'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
@@ -188,7 +188,7 @@ def test_recent_revisions(create_revision, edit_revision, client):
 
 def test_recent_revisions_pages(create_revision, edit_revision, client):
     """The revisions feed can be paginated."""
-    feed_url = reverse('wiki.feeds.recent_revisions', locale='en-US',
+    feed_url = reverse('wiki.feeds.recent_revisions',
                        kwargs={'format': 'rss'})
     resp = client.get(feed_url, {'limit': 1})
     assert resp.status_code == 200
@@ -219,7 +219,7 @@ def test_recent_revisions_limit_0(edit_revision, client):
     TODO: the limit should probably be MAX_FEED_ITEMS instead, and applied
     before the start and finish positions are picked.
     """
-    feed_url = reverse('wiki.feeds.recent_revisions', locale='en-US',
+    feed_url = reverse('wiki.feeds.recent_revisions',
                        kwargs={'format': 'rss'})
     resp = client.get(feed_url, {'limit': 0})
     assert resp.status_code == 200
@@ -231,8 +231,7 @@ def test_recent_revisions_limit_0(edit_revision, client):
 
 def test_recent_revisions_all_locales(trans_edit_revision, client):
     """The ?all_locales parameter returns mixed locales (bug 869301)."""
-    feed_url = reverse('wiki.feeds.recent_revisions', locale='en-US',
-                       kwargs={'format': 'rss'})
+    feed_url = reverse('wiki.feeds.recent_revisions', kwargs={'format': 'rss'})
     resp = client.get(feed_url, {'all_locales': ''},
                       HTTP_HOST='example.com',
                       HTTP_X_FORWARDED_PROTO='https')
@@ -269,8 +268,7 @@ def test_recent_revisions_diff_includes_tags(create_revision, client):
         tags='"NewTag"'
     )
     new_revision.review_tags.add('editorial')
-    feed_url = reverse('wiki.feeds.recent_revisions', locale='en-US',
-                       kwargs={'format': 'rss'})
+    feed_url = reverse('wiki.feeds.recent_revisions', kwargs={'format': 'rss'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
     assert_shared_cache_header(resp)
@@ -290,7 +288,7 @@ def test_recent_revisions_diff_includes_tags(create_revision, client):
 
 def test_recent_revisions_feed_ignores_render(edit_revision, client):
     """Re-rendering a document does not update the feed."""
-    feed_url = reverse('wiki.feeds.recent_documents', locale='en-US',
+    feed_url = reverse('wiki.feeds.recent_documents',
                        args=(), kwargs={'format': 'rss'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
@@ -314,7 +312,7 @@ def test_recent_revisions_feed_ignores_render(edit_revision, client):
 
 def test_recent_revisions_feed_omits_docs_without_rev(edit_revision, client):
     """Documents without a current revision are omitted from the feed."""
-    feed_url = reverse('wiki.feeds.recent_documents', locale='en-US',
+    feed_url = reverse('wiki.feeds.recent_documents',
                        args=(), kwargs={'format': 'rss'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
@@ -365,7 +363,7 @@ def test_recent_documents_feed_filter_by_locale(locale, trans_edit_revision,
 
 def test_recent_documents_atom_feed(root_doc, client):
     """The recent documents feed can be formatted as an Atom feed."""
-    feed_url = reverse('wiki.feeds.recent_documents', locale='en-US',
+    feed_url = reverse('wiki.feeds.recent_documents',
                        kwargs={'format': 'atom'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
@@ -375,7 +373,7 @@ def test_recent_documents_atom_feed(root_doc, client):
 
 def test_recent_documents_as_jsonp(root_doc, client):
     """The recent documents feed can be called with a JSONP wrapper."""
-    feed_url = reverse('wiki.feeds.recent_documents', locale='en-US',
+    feed_url = reverse('wiki.feeds.recent_documents',
                        kwargs={'format': 'json'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
@@ -397,7 +395,7 @@ def test_recent_documents_as_jsonp(root_doc, client):
 
 def test_recent_documents_optional_items(create_revision, client):
     """The recent documents JSON feed includes some items if set."""
-    feed_url = reverse('wiki.feeds.recent_documents', locale='en-US',
+    feed_url = reverse('wiki.feeds.recent_documents',
                        kwargs={'format': 'json'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
@@ -425,7 +423,7 @@ def test_recent_documents_optional_items(create_revision, client):
 
 def test_recent_documents_feed_filter_by_tag(edit_revision, client):
     """The recent documents feed can be filtered by tag."""
-    feed_url = reverse('wiki.feeds.recent_documents', locale='en-US',
+    feed_url = reverse('wiki.feeds.recent_documents',
                        kwargs={'format': 'json', 'tag': 'TheTag'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
@@ -481,7 +479,7 @@ def test_recent_documents_handles_ambiguous_time(root_doc, client):
         content='<p>Happy Daylight Savings Time!</p>',
         title=root_doc.title,
         created=ambiguous)
-    feed_url = reverse('wiki.feeds.recent_documents', locale='en-US',
+    feed_url = reverse('wiki.feeds.recent_documents',
                        kwargs={'format': 'json'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
@@ -492,8 +490,7 @@ def test_recent_documents_handles_ambiguous_time(root_doc, client):
 
 def test_list_review(edit_revision, client):
     """The documents needing review feed shows documents needing any review."""
-    feed_url = reverse('wiki.feeds.list_review', locale='en-US',
-                       kwargs={'format': 'json'})
+    feed_url = reverse('wiki.feeds.list_review', kwargs={'format': 'json'})
     resp = client.get(feed_url)
     assert resp.status_code == 200
     assert_shared_cache_header(resp)
@@ -509,7 +506,7 @@ def test_list_review(edit_revision, client):
 
 def test_list_review_tag(edit_revision, client):
     """The documents needing editorial review feed works."""
-    feed_url = reverse('wiki.feeds.list_review_tag', locale='en-US',
+    feed_url = reverse('wiki.feeds.list_review_tag',
                        kwargs={'format': 'json', 'tag': 'editorial'})
     resp = client.get(feed_url)
     assert resp.status_code == 200

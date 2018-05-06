@@ -4,7 +4,6 @@ import pytest
 from allauth.account.models import EmailAddress
 from constance import config as constance_config
 from constance.test.utils import override_config
-from django.conf import settings
 from django.db import IntegrityError
 from mock import patch
 from pyquery import PyQuery as pq
@@ -68,7 +67,7 @@ class SignupTests(UserTestCase, SocialTestMixin):
 
 
 def test_account_email_page_requires_signin(db, client):
-    response = client.get(reverse('account_email', locale='en-US'))
+    response = client.get(reverse('account_email'))
     assert response.status_code == 302
     assert_no_cache_header(response)
     response = client.get(response['Location'], follow=True)
@@ -77,7 +76,7 @@ def test_account_email_page_requires_signin(db, client):
 
 
 def test_account_email_page_single_email(user_client):
-    response = user_client.get(reverse('account_email', locale='en-US'))
+    response = user_client.get(reverse('account_email'))
     assert response.status_code == 200
     assert_no_cache_header(response)
     assert 'is your <em>primary</em> email address' in response.content
@@ -89,7 +88,7 @@ def test_account_email_page_single_email(user_client):
 def test_account_email_page_multiple_emails(wiki_user, user_client):
     EmailAddress.objects.create(user=wiki_user, email='wiki_user@backup.com',
                                 verified=True, primary=False)
-    response = user_client.get(reverse('account_email', locale='en-US'))
+    response = user_client.get(reverse('account_email'))
     assert response.status_code == 200
     assert_no_cache_header(response)
     assert 'Make Primary' in response.content
@@ -145,12 +144,10 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         response = self.github_login(profile_data=profile_data)
         assert response.status_code == 200
 
-        locale = settings.WIKI_DEFAULT_LANGUAGE
         user_url = reverse('users.user_detail',
-                           kwargs={'username': self.existing_username},
-                           locale=locale)
-        logout_url = reverse('account_logout', locale=locale)
-        home_url = reverse('home', locale=locale)
+                           kwargs={'username': self.existing_username})
+        logout_url = reverse('account_logout')
+        home_url = reverse('home')
         signout_url = urlparams(logout_url)
         parsed = pq(response.content)
 
@@ -174,8 +171,7 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
 
     def test_signin_form_present(self):
         """When not authenticated, the GitHub login link is present."""
-        locale = settings.WIKI_DEFAULT_LANGUAGE
-        all_docs_url = reverse('wiki.all_documents', locale=locale)
+        all_docs_url = reverse('wiki.all_documents')
         response = self.client.get(all_docs_url, follow=True)
         parsed = pq(response.content)
         github_link = parsed.find("a.login-link[data-service='GitHub']")[0]
@@ -199,19 +195,16 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
                 'username': username,
                 'email': email,
                 'terms': True}
-        locale = settings.WIKI_DEFAULT_LANGUAGE
-        signup_url = reverse('socialaccount_signup', locale=locale)
+        signup_url = reverse('socialaccount_signup')
         response = self.client.post(signup_url, data=data)
         assert response.status_code == 302
         assert_no_cache_header(response)
         response = self.client.get(response['Location'], follow=True)
         assert response.status_code == 200
 
-        user_url = reverse('users.user_detail',
-                           kwargs={'username': username},
-                           locale=locale)
-        logout_url = reverse('account_logout', locale=locale)
-        home_url = reverse('home', locale=locale)
+        user_url = reverse('users.user_detail', kwargs={'username': username})
+        logout_url = reverse('account_logout')
+        home_url = reverse('home')
         signout_url = urlparams(logout_url)
         parsed = pq(response.content)
 
@@ -242,7 +235,7 @@ class BanTestCase(UserTestCase):
         testuser = self.user_model.objects.get(username='testuser')
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user', locale='en-US',
+        ban_url = reverse('users.ban_user',
                           kwargs={'username': testuser.username})
 
         resp = self.client.get(ban_url)
@@ -266,7 +259,7 @@ class BanTestCase(UserTestCase):
         testuser = self.user_model.objects.get(username='testuser')
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user', locale='en-US',
+        ban_url = reverse('users.ban_user',
                           kwargs={'username': testuser.username})
 
         resp = self.client.get(ban_url)
@@ -288,7 +281,7 @@ class BanTestCase(UserTestCase):
         testuser = self.user_model.objects.get(username='testuser')
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user', locale='en-US',
+        ban_url = reverse('users.ban_user',
                           kwargs={'username': testuser.username})
 
         resp = self.client.get(ban_url, follow=True)
@@ -315,7 +308,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
             document=self.document)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': self.testuser.username})
 
         resp = self.client.get(ban_url)
@@ -338,7 +331,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
     def test_no_user_revisions_in_one_click_page_template(self):
         """If the user has no revisions, it should be stated in the template."""
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': self.testuser.username})
 
         resp = self.client.get(ban_url)
@@ -367,7 +360,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         # For self.testuser (not banned, and revisions need to be reverted) the
         # button on the form should read "Ban User for Spam & Submit Spam"
         # and there should be a link to ban a user for other reasons
-        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': self.testuser.username})
 
         resp = self.client.get(ban_url)
@@ -394,7 +387,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         # For self.testuser (not banned, no revisions needing to be reverted)
         # the button on the form should read "Ban User for Spam". There should
         # be no link to ban for other reasons
-        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': self.testuser.username})
         resp = self.client.get(ban_url)
         assert resp.status_code == 200
@@ -423,7 +416,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
                 sender=self.testuser2, type="spam")
             )
 
-        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': self.testuser2.username})
         resp = self.client.get(ban_url)
         assert resp.status_code == 200
@@ -457,7 +450,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         # For self.testuser (banned, but revisions need to be reverted) the
         # button on the form should read "Submit Spam". There should
         # be no link to ban for other reasons
-        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': self.testuser.username})
 
         resp = self.client.get(ban_url)
@@ -488,7 +481,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         # For self.testuser2 (banned, has no revisions needing to be reverted)
         # there should be no button on the form and no link to
         # ban for other reasons
-        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': self.testuser2.username})
 
         resp = self.client.get(ban_url)
@@ -518,7 +511,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
                 sender=self.testuser2, type="spam")
             )
 
-        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': self.testuser2.username})
         resp = self.client.get(ban_url)
         assert resp.status_code == 200
@@ -540,7 +533,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
     def test_no_revisions_posted(self):
         """If user has no revisions, it should be stated in summary template."""
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         resp = self.client.post(ban_url)
         assert resp.status_code == 200
@@ -597,7 +590,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-id': [rev.id for rev in revisions_created]}
         resp = self.client.post(ban_url, data=data)
@@ -658,7 +651,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-id': [rev.id for rev in revisions_created]}
         resp = self.client.post(ban_url, data=data)
@@ -708,7 +701,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-id': [rev.id for rev in revisions_created]}
         resp = self.client.post(ban_url, data=data)
@@ -761,7 +754,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-id': []}
         resp = self.client.post(ban_url, data=data)
@@ -816,7 +809,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         revisions_created_ids = [
             rev.id for rev in revisions_created_self_document
@@ -891,7 +884,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         # POST no revisions from self.document, the 1st from doc1,
         # the 1st and 2nd revisions from doc2, and all revisions from doc 3
@@ -975,7 +968,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             save=True)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-id': [rev_doc1.id], 'revision-already-spam': [rev_doc2.id]}
         resp = self.client.post(ban_url, data=data)
@@ -1021,7 +1014,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # begun so it shows up in the "New action by user" section
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-already-spam': [revisions_already_spam[0].id]}
         resp = self.client.post(ban_url, data=data)
@@ -1079,7 +1072,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             save=True)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-already-spam': [testuser_revisions[0].id]}
         resp = self.client.post(ban_url, data=data)
@@ -1128,7 +1121,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.admin)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-id': [rev.id for rev in spam_revisions]}
         resp = self.client.post(ban_url, data=data)
@@ -1193,7 +1186,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         spam_revisions = bottom_spam + top_spam
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-id': [rev.id for rev in spam_revisions]}
         resp = self.client.post(ban_url, data=data)
@@ -1259,7 +1252,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-id': [rev.id for rev in spam_revisions]}
         resp = self.client.post(ban_url, data=data)
@@ -1310,7 +1303,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         with patch.object(DocumentDeletionLog.objects, 'create') as dl_mock:
             # Just raise an IntegrityError to get delete_document to fail
@@ -1374,7 +1367,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             creator=self.testuser)
 
         self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup_summary', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         with patch.object(Document, 'revert') as revert_mock:
             # Just raise an IntegrityError to get revert_document to fail
@@ -1442,7 +1435,7 @@ class ProfileDetailTestCase(UserTestCase):
 
         self.client.login(username='admin', password='testpass')
 
-        profile_url = reverse('users.user_detail', locale='en-US',
+        profile_url = reverse('users.user_detail',
                               kwargs={'username': testuser.username})
 
         # The user is not banned, display appropriate links
@@ -1474,7 +1467,7 @@ class ProfileDetailTestCase(UserTestCase):
         testuser = self.user_model.objects.get(username='testuser')
         assert not testuser.is_github_url_public
 
-        profile_url = reverse('users.user_detail', locale='en-US',
+        profile_url = reverse('users.user_detail',
                               kwargs={'username': testuser.username})
         resp = self.client.get(profile_url)
         assert resp.status_code == 200

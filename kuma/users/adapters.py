@@ -86,8 +86,7 @@ class KumaAccountAdapter(DefaultAccountAdapter):
             # as it would be misleading
             # Bug 1229906#c2 - need from "create new account" page
             user_url = reverse('users.user_edit',
-                               kwargs={'username': request.user.username},
-                               locale=request.LANGUAGE_CODE)
+                               kwargs={'username': request.user.username})
             next_url = request.session.get('sociallogin_next_url', None)
             if next_url != user_url:
                 return
@@ -205,8 +204,7 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         """
         assert request.user.is_authenticated()
         user_url = reverse('users.user_edit',
-                           kwargs={'username': request.user.username},
-                           locale=request.LANGUAGE_CODE)
+                           kwargs={'username': request.user.username})
         return user_url
 
     def save_user(self, request, sociallogin, form):

@@ -115,7 +115,7 @@ def test_disallowed_methods(client, http_method, endpoint):
     kwargs = None
     if endpoint != 'json':
         kwargs = dict(document_path='Web/CSS')
-    url = reverse('wiki.{}'.format(endpoint), locale='en-US', kwargs=kwargs)
+    url = reverse('wiki.{}'.format(endpoint), kwargs=kwargs)
     response = getattr(client, http_method)(url)
     assert response.status_code == 405
     assert_shared_cache_header(response)
@@ -528,7 +528,7 @@ def test_kumascript_error_reporting(admin_client, root_doc, ks_toolbox,
                 **ks_toolbox.macros_response
             )
             response = admin_client.post(
-                reverse('wiki.preview', locale=root_doc.locale),
+                reverse('wiki.preview'),
                 dict(content='anything truthy')
             )
         else:
@@ -624,7 +624,7 @@ def test_json(doc_hierarchy_with_zones, client, params_case):
         expected_status_code = 404
         params = dict(title='nonexistent document title')
 
-    url = reverse('wiki.json', locale='en-US')
+    url = reverse('wiki.json')
     response = client.get(url, params)
 
     assert response.status_code == expected_status_code
@@ -669,7 +669,7 @@ def test_redirect_with_no_slug(db, client):
     'endpoint', ['wiki.subscribe', 'wiki.subscribe_to_tree'])
 def test_watch_405(client, root_doc, endpoint, http_method):
     """Watch document with HTTP non-POST request results in 405."""
-    url = reverse(endpoint, locale=root_doc.locale, args=[root_doc.slug])
+    url = reverse(endpoint, args=[root_doc.slug])
     response = getattr(client, http_method)(url)
     assert response.status_code == 405
     assert_no_cache_header(response)
@@ -679,7 +679,7 @@ def test_watch_405(client, root_doc, endpoint, http_method):
     'endpoint', ['wiki.subscribe', 'wiki.subscribe_to_tree'])
 def test_watch_login_required(client, root_doc, endpoint):
     """User must be logged-in to subscribe to a document."""
-    url = reverse(endpoint, locale=root_doc.locale, args=[root_doc.slug])
+    url = reverse(endpoint, args=[root_doc.slug])
     response = client.post(url)
     assert response.status_code == 302
     assert_no_cache_header(response)
@@ -693,13 +693,13 @@ def test_watch_login_required(client, root_doc, endpoint):
     ids=['subscribe', 'subscribe_to_tree'])
 def test_watch_unwatch(user_client, wiki_user, root_doc, endpoint, event):
     """Watch and unwatch a document."""
-    url = reverse(endpoint, locale=root_doc.locale, args=[root_doc.slug])
+    url = reverse(endpoint, args=[root_doc.slug])
     # Subscribe
     response = user_client.post(url)
     assert response.status_code == 302
     assert_no_cache_header(response)
     assert response['Location'].endswith(
-        reverse('wiki.document', locale=root_doc.locale, args=[root_doc.slug]))
+        reverse('wiki.document', args=[root_doc.slug]))
     assert event.is_notifying(wiki_user, root_doc), 'Watch was not created'
 
     # Unsubscribe
@@ -707,7 +707,7 @@ def test_watch_unwatch(user_client, wiki_user, root_doc, endpoint, event):
     assert response.status_code == 302
     assert_no_cache_header(response)
     assert response['Location'].endswith(
-        reverse('wiki.document', locale=root_doc.locale, args=[root_doc.slug]))
+        reverse('wiki.document', args=[root_doc.slug]))
     assert not event.is_notifying(wiki_user, root_doc), \
         'Watch was not destroyed'
 
@@ -717,20 +717,18 @@ def test_zone_styles(client, doc_hierarchy_with_zones):
     top_doc = doc_hierarchy_with_zones.top
     bottom_doc = doc_hierarchy_with_zones.bottom
 
-    url = reverse('wiki.styles', locale=top_doc.locale, args=(top_doc.slug,))
+    url = reverse('wiki.styles', args=(top_doc.slug,))
     response = client.get(url, follow=False)
     assert response.status_code == 302
     assert_shared_cache_header(response)
     assert response['Location'].endswith('build/styles/zones.css')
 
-    url = reverse('wiki.styles', locale=bottom_doc.locale,
-                  args=(bottom_doc.slug,))
+    url = reverse('wiki.styles', args=(bottom_doc.slug,))
     response = client.get(url, follow=True)
     assert response.status_code == 404
     assert_no_cache_header(response)
 
-    url = reverse('wiki.styles', locale='en-US',
-                  args=('some-unknown-document-slug',))
+    url = reverse('wiki.styles', args=('some-unknown-document-slug',))
     response = client.get(url, follow=True)
     assert response.status_code == 404
     assert_no_cache_header(response)

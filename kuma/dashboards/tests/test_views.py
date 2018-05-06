@@ -75,7 +75,7 @@ def known_author(wiki_user):
 
 def test_revisions(root_doc, client):
     """The revision dashboard works."""
-    response = client.get(reverse('dashboards.revisions', locale='en-US'))
+    response = client.get(reverse('dashboards.revisions'))
     assert response.status_code == 200
     assert 'Vary' in response
     assert 'X-Requested-With' in response['Vary']
@@ -88,7 +88,7 @@ def test_revisions(root_doc, client):
 
 def test_revisions_list_via_AJAX(dashboard_revisions, client):
     """The full list of revisions can be returned via AJAX."""
-    response = client.get(reverse('dashboards.revisions', locale='en-US'),
+    response = client.get(reverse('dashboards.revisions'),
                           HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     assert response.status_code == 200
     page = pq(response.content)
@@ -108,7 +108,7 @@ def test_revisions_show_ips_button(switch, is_admin, root_doc, user_client,
     if switch:
         Switch.objects.create(name='store_revision_ips', active=True)
     client = admin_client if is_admin else user_client
-    response = client.get(reverse('dashboards.revisions', locale='en-US'))
+    response = client.get(reverse('dashboards.revisions'))
     assert response.status_code == 200
     page = pq(response.content)
     ip_button = page.find('button#show_ips_btn')
@@ -127,7 +127,7 @@ def test_revisions_show_spam_submission_button(has_perm, root_doc, wiki_user,
             content_type=content_type)
         wiki_user.user_permissions.add(perm)
 
-    response = user_client.get(reverse('dashboards.revisions', locale='en-US'))
+    response = user_client.get(reverse('dashboards.revisions'))
     assert response.status_code == 200
     page = pq(response.content)
     spam_report_button = page.find('.spam-ham-button')
@@ -150,8 +150,7 @@ def test_revisions_locale_filter(dashboard_revisions, client):
 
 def test_revisions_creator_filter(dashboard_revisions, client):
     """Revisions can be filtered by a username."""
-    url = urlparams(reverse('dashboards.revisions', locale='en-US'),
-                    user='wiki_user_2')
+    url = urlparams(reverse('dashboards.revisions'), user='wiki_user_2')
     response = client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     assert response.status_code == 200
 
@@ -166,8 +165,7 @@ def test_revisions_creator_filter(dashboard_revisions, client):
 
 def test_revisions_topic_filter(dashboard_revisions, client):
     """Revisions can be filtered by topic (the document slug)."""
-    url = urlparams(reverse('dashboards.revisions', locale='en-US'),
-                    topic='wiki_user_2-doc')
+    url = urlparams(reverse('dashboards.revisions'), topic='wiki_user_2-doc')
     response = client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     assert response.status_code == 200
 
@@ -186,8 +184,7 @@ def test_revisions_topic_filter(dashboard_revisions, client):
 def test_revisions_known_authors_filter(authors, dashboard_revisions, client,
                                         known_author):
     """Revisions can be filtered by the Known Authors group."""
-    url = urlparams(reverse('dashboards.revisions', locale='en-US'),
-                    authors=authors)
+    url = urlparams(reverse('dashboards.revisions'), authors=authors)
     response = client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     assert response.status_code == 200
 
@@ -213,7 +210,7 @@ def test_revisions_known_authors_filter(authors, dashboard_revisions, client,
 def test_revisions_creator_overrides_known_authors_filter(
         dashboard_revisions, client, known_author):
     """If the creator filter is set, the Known Authors filter is ignored."""
-    url = urlparams(reverse('dashboards.revisions', locale='en-US'),
+    url = urlparams(reverse('dashboards.revisions'),
                     user='wiki_user_3',
                     authors=RevisionDashboardForm.KNOWN_AUTHORS)
     response = client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
@@ -236,7 +233,7 @@ def test_revisions_deleted_document(dashboard_revisions, client, wiki_user):
         reason='Testing deleted docs.')
     del_doc.delete()
 
-    response = client.get(reverse('dashboards.revisions', locale='en-US'))
+    response = client.get(reverse('dashboards.revisions'))
     assert response.status_code == 200
     page = pq(response.content)
     rev_rows = page.find('.dashboard-row')
@@ -253,8 +250,7 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
 
     def test_not_logged_in(self, mock_analytics_upageviews):
         """A user who is not logged in is not able to see the dashboard."""
-        response = self.client.get(reverse('dashboards.spam',
-                                           locale='en-US'))
+        response = self.client.get(reverse('dashboards.spam'))
         assert response.status_code == 302
         assert_no_cache_header(response)
 
@@ -262,29 +258,25 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         """A user with correct permissions is able to see the dashboard."""
         self.client.login(username='testuser', password='testpass')
         # Attempt to see spam dashboard as a logged-in user without permissions
-        response = self.client.get(reverse('dashboards.spam',
-                                           locale='en-US'))
+        response = self.client.get(reverse('dashboards.spam'))
         assert response.status_code == 403
 
         # Give testuser wiki.add_revisionakismetsubmission permission
         perm_akismet = Permission.objects.get(codename='add_revisionakismetsubmission')
         self.testuser.user_permissions.add(perm_akismet)
-        response = self.client.get(reverse('dashboards.spam',
-                                           locale='en-US'))
+        response = self.client.get(reverse('dashboards.spam'))
         assert response.status_code == 403
 
         # Give testuser wiki.add_documentspamattempt permission
         perm_spam = Permission.objects.get(codename='add_documentspamattempt')
         self.testuser.user_permissions.add(perm_spam)
-        response = self.client.get(reverse('dashboards.spam',
-                                           locale='en-US'))
+        response = self.client.get(reverse('dashboards.spam'))
         assert response.status_code == 403
 
         # Give testuser wiki.add_userban permission
         perm_ban = Permission.objects.get(codename='add_userban')
         self.testuser.user_permissions.add(perm_ban)
-        response = self.client.get(reverse('dashboards.spam',
-                                           locale='en-US'))
+        response = self.client.get(reverse('dashboards.spam'))
         # With all correct permissions testuser is able to see the dashboard
         assert response.status_code == 200
         assert_no_cache_header(response)
@@ -311,10 +303,10 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         # The first response will say that the report is being processed
-        response = self.client.get(reverse('dashboards.spam', locale='en-US'))
+        response = self.client.get(reverse('dashboards.spam'))
         eq_(200, response.status_code)
 
-        response2 = self.client.get(reverse('dashboards.spam', locale='en-US'))
+        response2 = self.client.get(reverse('dashboards.spam'))
 
         self.assertContains(response2, "Oops!", status_code=200)
         page = pq(response2.content)
@@ -356,10 +348,10 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         # The first response will say that the report is being processed
-        response = self.client.get(reverse('dashboards.spam', locale='en-US'))
+        response = self.client.get(reverse('dashboards.spam'))
         eq_(200, response.status_code)
 
-        response2 = self.client.get(reverse('dashboards.spam', locale='en-US'))
+        response2 = self.client.get(reverse('dashboards.spam'))
         page = pq(response2.content)
         table_rows = page.find('.spam-events-table tbody tr')
         table_row_text = ''
@@ -378,10 +370,10 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         """The spam trends table shows up."""
         self.client.login(username='admin', password='testpass')
         # The first response will say that the report is being processed
-        response = self.client.get(reverse('dashboards.spam', locale='en-US'))
+        response = self.client.get(reverse('dashboards.spam'))
         eq_(200, response.status_code)
 
-        response2 = self.client.get(reverse('dashboards.spam', locale='en-US'))
+        response2 = self.client.get(reverse('dashboards.spam'))
         page = pq(response2.content)
         spam_trends_table = page.find('.spam-trends-table')
         eq_(len(spam_trends_table), 1)
@@ -483,10 +475,10 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         # The first response will say that the report is being processed
-        response = self.client.get(reverse('dashboards.spam', locale='en-US'))
+        response = self.client.get(reverse('dashboards.spam'))
         eq_(200, response.status_code)
 
-        response2 = self.client.get(reverse('dashboards.spam', locale='en-US'))
+        response2 = self.client.get(reverse('dashboards.spam'))
         page = pq(response2.content)
 
         row_daily = page.find('.spam-trends-table tbody tr')[0].text_content().replace(' ', '').strip('\n').split('\n')
@@ -597,7 +589,7 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
     'endpoint', ['revisions', 'user_lookup', 'topic_lookup', 'spam', 'macros'])
 def test_disallowed_methods(db, client, http_method, endpoint):
     """HTTP methods other than GET & HEAD are not allowed."""
-    url = reverse('dashboards.{}'.format(endpoint), locale='en-US')
+    url = reverse('dashboards.{}'.format(endpoint))
     response = getattr(client, http_method)(url)
     assert response.status_code == 405
     if endpoint == 'spam':
@@ -625,7 +617,7 @@ def test_lookup(root_doc, wiki_user_2, wiki_user_3, client, mode, endpoint):
         headers.update(HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     else:
         expected_content = []
-    url = reverse('dashboards.{}'.format(endpoint), locale='en-US') + qs
+    url = reverse('dashboards.{}'.format(endpoint)) + qs
     response = client.get(url, **headers)
     assert response.status_code == 200
     assert 'X-Requested-With' in response['Vary']
@@ -645,7 +637,7 @@ def test_macros(mock_usage, client, db):
         }
     }
 
-    response = client.get(reverse('dashboards.macros'), follow=True)
+    response = client.get(reverse('dashboards.macros'))
     assert response.status_code == 200
     assert 'Cookie' in response['Vary']
     assert_shared_cache_header(response)
@@ -671,7 +663,7 @@ def test_macros_no_counts(mock_usage, client, db):
         }
     }
 
-    response = client.get(reverse('dashboards.macros'), follow=True)
+    response = client.get(reverse('dashboards.macros'))
     assert response.status_code == 200
     assert "Found 2 active macros." in response.content.decode('utf8')
     page = pq(response.content)

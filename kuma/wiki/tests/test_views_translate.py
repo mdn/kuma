@@ -22,8 +22,7 @@ def trans_doc_client(editor_client, wiki_user, permission_change_document):
 def test_translate_get(root_doc, trans_doc_client):
     """Test GET on the translate view."""
 
-    url = reverse(
-        'wiki.translate', args=(root_doc.slug,), locale=root_doc.locale)
+    url = reverse('wiki.translate', args=(root_doc.slug,))
     url += '?tolocale=fr'
 
     response = trans_doc_client.get(url)
@@ -45,8 +44,7 @@ def test_translate_post(root_doc, trans_doc_client):
         'toc_depth': 1
     }
 
-    url = reverse(
-        'wiki.translate', args=(root_doc.slug,), locale=root_doc.locale)
+    url = reverse('wiki.translate', args=(root_doc.slug,))
     url += '?tolocale=fr'
 
     response = trans_doc_client.post(url, data)

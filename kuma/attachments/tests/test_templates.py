@@ -17,8 +17,7 @@ def test_xss_file_attachment_title(admin_client, constance_config, root_doc,
     # use view to create new attachment
     file_for_upload = make_test_file()
     files_url = reverse('attachments.edit_attachment',
-                        kwargs={'document_path': root_doc.slug},
-                        locale='en-US')
+                        kwargs={'document_path': root_doc.slug})
     title = '"><img src=x onerror=prompt(navigator.userAgent);>'
     post_data = {
         'title': title,

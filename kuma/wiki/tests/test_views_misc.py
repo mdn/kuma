@@ -14,14 +14,14 @@ from kuma.core.urlresolvers import reverse
     'endpoint', ['ckeditor_config', 'autosuggest_documents'])
 def test_disallowed_methods(db, client, http_method, endpoint):
     """HTTP methods other than GET & HEAD are not allowed."""
-    url = reverse('wiki.{}'.format(endpoint), locale='en-US')
+    url = reverse('wiki.{}'.format(endpoint))
     response = getattr(client, http_method)(url)
     assert response.status_code == 405
     assert_shared_cache_header(response)
 
 
 def test_ckeditor_config(db, client):
-    response = client.get(reverse('wiki.ckeditor_config', locale='en-US'))
+    response = client.get(reverse('wiki.ckeditor_config'))
     assert response.status_code == 200
     assert_shared_cache_header(response)
     assert response['Content-Type'] == 'application/x-javascript'
@@ -62,7 +62,7 @@ def test_autosuggest(client, redirect_doc, doc_hierarchy_with_zones,
                                'Middle-Top Document', 'Middle-Bottom Document',
                                'Bottom Document'))
 
-    url = reverse('wiki.autosuggest_documents', locale='en-US')
+    url = reverse('wiki.autosuggest_documents')
     if params:
         url += '?{}'.format(urlencode(params))
     response = client.get(url)

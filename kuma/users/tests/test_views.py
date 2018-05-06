@@ -66,7 +66,7 @@ class BanTestCase(UserTestCase):
         # testuser doesn't have ban permission, can't ban.
         self.client.login(username='testuser',
                           password='testpass')
-        ban_url = reverse('users.ban_user', locale='en-US',
+        ban_url = reverse('users.ban_user',
                           kwargs={'username': admin.username})
         resp = self.client.get(ban_url)
         assert resp.status_code == 302
@@ -77,7 +77,7 @@ class BanTestCase(UserTestCase):
         # admin has ban permission, can ban.
         self.client.login(username='admin',
                           password='testpass')
-        ban_url = reverse('users.ban_user', locale='en-US',
+        ban_url = reverse('users.ban_user',
                           kwargs={'username': testuser.username})
         resp = self.client.get(ban_url)
         assert resp.status_code == 200
@@ -133,7 +133,7 @@ class BanTestCase(UserTestCase):
 
         self.client.login(username='admin', password='testpass')
 
-        ban_url = reverse('users.ban_user', locale='en-US',
+        ban_url = reverse('users.ban_user',
                           kwargs={'username': testuser.username})
 
         # POST without data kwargs
@@ -160,7 +160,7 @@ class BanTestCase(UserTestCase):
     def test_bug_811751_banned_user(self):
         """A banned user should not be viewable"""
         testuser = self.user_model.objects.get(username='testuser')
-        url = reverse('users.user_detail', locale='en-US',
+        url = reverse('users.user_detail',
                       args=(testuser.username,))
 
         # User viewable if not banned
@@ -220,7 +220,7 @@ class BanAndCleanupTestCase(UserTestCase):
         # testuser doesn't have ban permission, can't ban.
         self.client.login(username='testuser',
                           password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': admin.username})
         resp = self.client.get(ban_url)
         assert resp.status_code == 302
@@ -231,7 +231,7 @@ class BanAndCleanupTestCase(UserTestCase):
         # admin has ban permission, can ban.
         self.client.login(username='admin',
                           password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup', locale='en-US',
+        ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': testuser.username})
         resp = self.client.get(ban_url)
         assert resp.status_code == 200
@@ -785,8 +785,7 @@ def test_user_detail_view(wiki_user, client):
     """A user can be viewed."""
     wiki_user.irc_nickname = 'wooki'
     wiki_user.save()
-    url = reverse('users.user_detail', locale='en-US',
-                  args=(wiki_user.username,))
+    url = reverse('users.user_detail', args=(wiki_user.username,))
     response = client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
@@ -801,7 +800,7 @@ def test_user_detail_view(wiki_user, client):
 
 
 def test_my_user_page(wiki_user, user_client):
-    resp = user_client.get(reverse('users.my_detail_page', locale='en-US'))
+    resp = user_client.get(reverse('users.my_detail_page'))
     assert resp.status_code == 302
     assert_no_cache_header(resp)
     assert resp['Location'].endswith(reverse('users.user_detail',
@@ -810,8 +809,7 @@ def test_my_user_page(wiki_user, user_client):
 
 def test_bug_698971(wiki_user, client):
     """A non-numeric page number should not raise an error."""
-    url = reverse('users.user_detail', locale='en-US',
-                  args=(wiki_user.username,))
+    url = reverse('users.user_detail', args=(wiki_user.username,))
 
     response = client.get(url, dict(page='asdf'))
     assert response.status_code == 200
@@ -819,16 +817,14 @@ def test_bug_698971(wiki_user, client):
 
 
 def test_user_edit(wiki_user, client, user_client):
-    url = reverse('users.user_detail', locale='en-US',
-                  args=(wiki_user.username,))
+    url = reverse('users.user_detail', args=(wiki_user.username,))
     response = client.get(url, follow=True)
     assert response.status_code == 200
     assert_no_cache_header(response)
     doc = pq(response.content)
     assert doc.find('#user-head .edit .button').length == 0
 
-    url = reverse('users.user_detail', locale='en-US',
-                  args=(wiki_user.username,))
+    url = reverse('users.user_detail', args=(wiki_user.username,))
     response = user_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
@@ -878,7 +874,7 @@ def test_user_edit(wiki_user, client, user_client):
 
 
 def test_my_user_edit(wiki_user, user_client):
-    response = user_client.get(reverse('users.my_edit_page', locale='en-US'))
+    response = user_client.get(reverse('users.my_edit_page'))
     assert response.status_code == 302
     assert_no_cache_header(response)
     assert response['Location'].endswith(
@@ -887,8 +883,7 @@ def test_my_user_edit(wiki_user, user_client):
 
 def test_user_edit_beta(wiki_user, wiki_user_github_account,
                         beta_testers_group, user_client):
-    url = reverse('users.user_edit', locale='en-US',
-                  args=(wiki_user.username,))
+    url = reverse('users.user_edit', args=(wiki_user.username,))
     response = user_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
@@ -911,8 +906,7 @@ def test_user_edit_beta(wiki_user, wiki_user_github_account,
 
 
 def test_user_edit_websites(wiki_user, wiki_user_github_account, user_client):
-    url = reverse('users.user_edit', locale='en-US',
-                  args=(wiki_user.username,))
+    url = reverse('users.user_edit', args=(wiki_user.username,))
     response = user_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
@@ -976,8 +970,7 @@ def test_user_edit_websites(wiki_user, wiki_user_github_account, user_client):
 
 
 def test_user_edit_interests(wiki_user, wiki_user_github_account, user_client):
-    url = reverse('users.user_edit', locale='en-US',
-                  args=(wiki_user.username,))
+    url = reverse('users.user_edit', args=(wiki_user.username,))
     response = user_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
@@ -1023,8 +1016,7 @@ def test_user_edit_interests(wiki_user, wiki_user_github_account, user_client):
 
 def test_bug_709938_interests(wiki_user, wiki_user_github_account,
                               user_client):
-    url = reverse('users.user_edit', locale='en-US',
-                  args=(wiki_user.username,))
+    url = reverse('users.user_edit', args=(wiki_user.username,))
     response = user_client.get(url)
     doc = pq(response.content)
 
@@ -1061,8 +1053,7 @@ def test_user_edit_github_is_public(wiki_user, wiki_user_github_account,
                                     user_client):
     """A user can set that they want their GitHub to be public."""
     assert not wiki_user.is_github_url_public
-    url = reverse('users.user_edit', locale='en-US',
-                  args=(wiki_user.username,))
+    url = reverse('users.user_edit', args=(wiki_user.username,))
     response = user_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
@@ -1099,8 +1090,7 @@ def test_404_already_logged_in(user_client):
 class KumaGitHubTests(UserTestCase, SocialTestMixin):
 
     def setUp(self):
-        self.signup_url = reverse('socialaccount_signup',
-                                  locale=settings.WIKI_DEFAULT_LANGUAGE)
+        self.signup_url = reverse('socialaccount_signup')
 
     def test_login(self):
         resp = self.github_login()
@@ -1332,8 +1322,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
 
 def test_missing_user_is_missing(db, client):
     assert not User.objects.filter(username='missing').exists()
-    url = reverse('users.user_delete', locale='en-US',
-                  kwargs={'username': 'missing'})
+    url = reverse('users.user_delete', kwargs={'username': 'missing'})
     response = client.get(url)
     assert response.status_code == 404
     assert_no_cache_header(response)
@@ -1347,8 +1336,7 @@ def test_user_can_delete(wiki_user, wiki_user_2, user_client, user_case):
     else:
         user = wiki_user
         expected_status = 200
-    url = reverse('users.user_delete', locale='en-US',
-                  kwargs={'username': user.username})
+    url = reverse('users.user_delete', kwargs={'username': user.username})
     response = user_client.get(url)
     assert response.status_code == expected_status
     assert_no_cache_header(response)
@@ -1359,7 +1347,7 @@ def test_user_can_delete(wiki_user, wiki_user_2, user_client, user_case):
     [('test@example.com', 302), ('not an email', 400)],
     ids=('good_email', 'bad_email'))
 def test_send_recovery_email(db, client, email, expected_status):
-    url = reverse('users.send_recovery_email', locale='en-US')
+    url = reverse('users.send_recovery_email')
     response = client.post(url, {'email': email})
     assert response.status_code == expected_status
     assert_no_cache_header(response)

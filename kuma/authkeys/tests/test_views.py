@@ -54,7 +54,7 @@ class KeyViewsTest(RefetchingUserTestCase):
 
     def test_new_key(self):
         data = {"description": "This is meant for a test app"}
-        url = reverse('authkeys.new', locale='en-US')
+        url = reverse('authkeys.new')
 
         # Check out the creation page, look for the form.
         resp = self.client.get(url)
@@ -91,7 +91,7 @@ class KeyViewsTest(RefetchingUserTestCase):
 
     def test_list_key(self):
         """The current user's keys should be shown, but only that user's"""
-        url = reverse('authkeys.list', locale='en-US')
+        url = reverse('authkeys.list')
         resp = self.client.get(url)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
@@ -118,8 +118,8 @@ class KeyViewsTest(RefetchingUserTestCase):
 
         # Iterate through 2 expected pages...
         for qs, offset in (('', 0), ('?page=2', ITEMS_PER_PAGE)):
-            url = '%s%s' % (reverse('authkeys.history', args=(self.key1.pk,),
-                                    locale='en-US'), qs)
+            url = '%s%s' % (reverse('authkeys.history', args=(self.key1.pk,)),
+                            qs)
             resp = self.client.get(url)
             assert resp.status_code == 200
             assert_no_cache_header(resp)
@@ -138,8 +138,7 @@ class KeyViewsTest(RefetchingUserTestCase):
 
     def test_delete_key(self):
         """User should be able to delete own keys, but no one else's"""
-        url = reverse('authkeys.delete', args=(self.key3.pk,),
-                      locale='en-US')
+        url = reverse('authkeys.delete', args=(self.key3.pk,))
         resp = self.client.get(url)
         assert resp.status_code == 403
         assert_no_cache_header(resp)
@@ -148,8 +147,7 @@ class KeyViewsTest(RefetchingUserTestCase):
         assert resp.status_code == 403
         assert_no_cache_header(resp)
 
-        url = reverse('authkeys.delete', args=(self.key1.pk,),
-                      locale='en-US')
+        url = reverse('authkeys.delete', args=(self.key1.pk,))
         resp = self.client.get(url)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
@@ -176,7 +174,7 @@ class KeyViewsPermissionTest(RefetchingUserTestCase):
         self.client.login(username=username, password=password)
 
     def test_new_key_requires_permission(self):
-        url = reverse('authkeys.new', locale='en-US')
+        url = reverse('authkeys.new')
         resp = self.client.get(url)
         assert resp.status_code == 403
         assert_no_cache_header(resp)
@@ -193,7 +191,7 @@ class KeyViewsPermissionTest(RefetchingUserTestCase):
         self.key1 = Key(user=self.user, description='Test Key 1')
         self.key1.save()
 
-        url = reverse('authkeys.delete', locale='en-US', args=(self.key1.pk,))
+        url = reverse('authkeys.delete', args=(self.key1.pk,))
         resp = self.client.get(url)
         assert resp.status_code == 403
         assert_no_cache_header(resp)

@@ -2,7 +2,6 @@ import requests_mock
 from allauth.socialaccount.models import SocialApp
 from allauth.socialaccount.providers import registry
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.crypto import get_random_string
 from django.utils.six.moves.urllib_parse import parse_qs, urlparse
@@ -136,8 +135,7 @@ class SocialTestMixin(object):
         email_data - GitHub email data, or None for default
         process - 'login', 'connect', or 'redirect'
         """
-        login_url = reverse('github_login',
-                            locale=settings.WIKI_DEFAULT_LANGUAGE)
+        login_url = reverse('github_login')
         callback_url = reverse('github_callback')
 
         # Ensure GitHub is setup as an auth provider

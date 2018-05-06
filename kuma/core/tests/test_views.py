@@ -219,7 +219,7 @@ def test_sitemaps_405s(client, db, method):
 
 def test_ratelimit_429(client, db):
     '''Custom 429 view is used for Ratelimited exception.'''
-    url = reverse('home', locale='en-US')
+    url = reverse('home')
     with mock.patch('kuma.landing.views.render') as render:
         render.side_effect = Ratelimited()
         response = client.get(url)

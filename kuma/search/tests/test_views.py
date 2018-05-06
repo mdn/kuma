@@ -210,7 +210,7 @@ class ViewTests(ElasticTestCase):
 
     def test_tokenize_camelcase_titles(self):
         for q in ('get', 'element', 'by', 'id'):
-            response = self.client.get('/en-US/search?q=' + q)
+            response = self.client.get('/en-US/search', {'q': q})
             assert response.status_code == 200
             assert 'camel-case-test' in response.content
 

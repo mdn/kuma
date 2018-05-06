@@ -26,14 +26,14 @@ def test_home_when_rate_limited(mock_render, client, db):
     Cloudfront CDN's don't cache 429's, but let's test this anyway.
     """
     mock_render.side_effect = Ratelimited()
-    response = client.get(reverse('home', locale='en-US'))
+    response = client.get(reverse('home'))
     assert response.status_code == 429
     assert_no_cache_header(response)
 
 
 @pytest.mark.parametrize('mode', ['maintenance', 'normal'])
 def test_maintenance_mode(db, client, settings, mode):
-    url = reverse('maintenance_mode', locale='en-US')
+    url = reverse('maintenance_mode')
     settings.MAINTENANCE_MODE = (mode == 'maintenance')
     response = client.get(url)
     if settings.MAINTENANCE_MODE:
