@@ -87,6 +87,7 @@ urlpatterns += i18n_patterns(url(r'^docs/', include(wiki_lang_urlpatterns)))
 urlpatterns += [url('', include('kuma.attachments.urls'))]
 urlpatterns += i18n_patterns(url(r'^dashboards/',
                                  include(dashboards_lang_urlpatterns)))
+urlpatterns += [url('users/', include('kuma.users.urls'))]
 urlpatterns += i18n_patterns(url('',
                                  decorator_include(never_cache,
                                                    users_lang_urlpatterns)))

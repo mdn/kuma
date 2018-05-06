@@ -428,7 +428,7 @@ LANGUAGE_URL_IGNORED_PATHS = (
     '@api',
     '__debug__',
     '.well-known',
-    'users/github/login/callback/',
+    'users/github',  # Must match GitHub OAuth settings
     'favicon.ico',
     '_kuma_status.json',
     # Legacy files, circa 2008, served in AWS
