@@ -49,8 +49,8 @@ def i18n_patterns(*args):
     return [LocaleRegexURLResolver(list(args))]
 
 
-def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None,
-            current_app=None, force_locale=False, locale=None, unprefixed=False):
+def reverse(viewname, urlconf=None, args=None, kwargs=None,
+            current_app=None, locale=None):
     """Wraps Django's reverse to prepend the requested locale.
     Keyword Arguments:
     * locale - Use this locale prefix rather than the current active locale.
@@ -60,10 +60,6 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None,
     * args
     * kwargs
     * current_app
-    Legacy Keyword Arguments (TODO: remove from callers)
-    * prefix
-    * force_locale
-    * unprefixed
     """
     if locale:
         with translation.override(locale):

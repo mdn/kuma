@@ -992,8 +992,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # section under "No actions taken"
         doc2_delete_url = reverse(
             'wiki.delete_document',
-            kwargs={'document_path': doc2.slug},
-            force_locale=True)
+            kwargs={'document_path': doc2.slug})
         doc2_delete_link = page.find('#already-spam a[href="{url}"]'.format(
             url=doc2_delete_url))
 
@@ -1034,8 +1033,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         delete_url = reverse(
             'wiki.delete_document',
-            kwargs={'document_path': self.document.slug},
-            force_locale=True)
+            kwargs={'document_path': self.document.slug})
         # TODO: PhaseV
         # delete_link_new_action_section = page.find('#new-actions-by-user a[href="{url}"]'.format(
         #     url=delete_url))
@@ -1093,12 +1091,10 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         delete_url_already_spam = reverse(
             'wiki.delete_document',
-            kwargs={'document_path': doc1.slug},
-            force_locale=True)
+            kwargs={'document_path': doc1.slug})
         delete_url_reverted = reverse(
             'wiki.delete_document',
-            kwargs={'document_path': doc2.slug},
-            force_locale=True)
+            kwargs={'document_path': doc2.slug})
         # TODO: PhaseV
         # delete_url_new_action
 

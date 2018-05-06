@@ -1756,20 +1756,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         )
 
         spam_message = render_to_string('wiki/includes/spam_error.html')
-        # The spam message is generated without a locale during this test, so we
-        # replace the url with a url with a locale
-        args = ['MDN/Contribute/Does_this_belong']
-        no_locale = reverse('wiki.document', args=args).encode('utf-8')
-        if translate_locale:
-            yes_locale = reverse(
-                'wiki.document', args=args, locale=translate_locale
-            ).encode('utf-8')
-        else:
-            yes_locale = reverse(
-                'wiki.document', args=args, force_locale=True
-            ).encode('utf-8')
-        spam_message = spam_message.replace(no_locale, yes_locale)
-        # Spam message appears in the JsonResponse content
         ok_(spam_message in json.loads(resp.content)['error_message'],
             "Spam message should appear")
 
