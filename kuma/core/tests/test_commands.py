@@ -1,31 +1,24 @@
+import pytest
 from django.core.management import call_command, CommandError
 from django.utils.six import StringIO
 
-from kuma.users.tests import user, UserTestCase
+
+def test_help():
+    with pytest.raises(CommandError) as excinfo:
+        call_command('ihavepower', stdout=StringIO())
+    assert str(excinfo.value) == 'Error: too few arguments'
 
 
-class TestIHavePowerCommand(UserTestCase):
-    def test_help(self):
-        out = StringIO()
-        with self.assertRaises(CommandError) as commanderror_cm:
-            call_command('ihavepower', stdout=out)
+def test_user_doesnt_exist(db):
+    with pytest.raises(CommandError) as excinfo:
+        call_command('ihavepower', 'fordprefect', stdout=StringIO())
+    assert str(excinfo.value) == 'User fordprefect does not exist.'
 
-        commanderror = commanderror_cm.exception
-        assert commanderror.message == 'Error: too few arguments'
 
-    def test_user_doesnt_exist(self):
-        out = StringIO()
-        with self.assertRaises(CommandError) as commanderror_cm:
-            call_command('ihavepower', 'fordprefect', stdout=out)
-
-        commanderror = commanderror_cm.exception
-        assert commanderror.message == 'User fordprefect does not exist.'
-
-    def test_user_exists(self):
-        out = StringIO()
-        user(username='fordprefect', save=True)
-        call_command('ihavepower', 'fordprefect', stdout=out)
-
-        ford = self.user_model.objects.get(username='fordprefect')
-        assert ford.is_staff is True
-        assert ford.is_superuser is True
+def test_user_exists(wiki_user):
+    assert wiki_user.is_staff is False
+    assert wiki_user.is_superuser is False
+    call_command('ihavepower', wiki_user.username, stdout=StringIO())
+    wiki_user.refresh_from_db()
+    assert wiki_user.is_staff is True
+    assert wiki_user.is_superuser is True

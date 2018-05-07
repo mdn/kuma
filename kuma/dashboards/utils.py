@@ -272,7 +272,7 @@ def spam_dashboard_recent_events(start=None, end=None):
         try:
             views = analytics_upageviews(revs, start_date)
         except ImproperlyConfigured as e:
-            data['improperly_configured'] = e.message
+            data['improperly_configured'] = str(e)
             break
 
         for item in chunk:
