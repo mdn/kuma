@@ -172,7 +172,7 @@ def save_entry(feed, entry):
     """Save a new entry or update an existing one."""
     json_entry = jsonpickle.encode(entry)
 
-    max_guid_length = Entry._meta.get_field_by_name('guid')[0].max_length
+    max_guid_length = Entry._meta.get_field('guid').max_length
     if len(entry.guid) <= max_guid_length:
         entry_guid = entry.guid
     else:
