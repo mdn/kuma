@@ -408,7 +408,7 @@ def test_recent_documents_optional_items(create_revision, client):
         'https://secure.gravatar.com/avatar/')
     assert 'summary' not in data[0]
 
-    create_revision.creator.email = None
+    create_revision.creator.email = ''
     create_revision.creator.save()
     resp = client.get(feed_url)
     assert resp.status_code == 200
