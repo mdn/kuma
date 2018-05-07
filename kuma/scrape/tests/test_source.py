@@ -164,7 +164,7 @@ def test_invalid_values(option_type, option, bad_value):
     """Invalid parameter values raise a ValueError."""
     with pytest.raises(ValueError) as err:
         FakeSource('fails', **{option: bad_value})
-    assert option_type in err.value.message
+    assert option_type in str(err.value)
 
 
 @pytest.mark.parametrize(
