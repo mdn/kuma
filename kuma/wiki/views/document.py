@@ -507,6 +507,7 @@ def styles(request, document_slug=None, document_locale=None):
 
 
 @never_cache
+@csrf_exempt
 @block_user_agents
 @require_POST
 @login_required
@@ -532,6 +533,7 @@ def subscribe(request, document_slug, document_locale):
 
 
 @never_cache
+@csrf_exempt
 @block_user_agents
 @require_POST
 @login_required

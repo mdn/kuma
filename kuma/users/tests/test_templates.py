@@ -169,9 +169,10 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         # Check next url is provided as input field
         next_input = form.children("input[name='next']")
         assert next_input.val() == home_url
-        # Check CSRF is added
+        # Ensure CSRF protection has not been added, since it creates problems
+        # when used with a CDN like CloudFront (see bugzilla #1456165).
         csrf_input = form.children("input[name='csrfmiddlewaretoken']")
-        assert csrf_input.val() is not None
+        assert not csrf_input
 
     def test_signin_form_present(self):
         """When not authenticated, the GitHub login link is present."""
@@ -229,9 +230,10 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         # Check next url is provided as input field
         next_input = form.children("input[name='next']")
         assert next_input.val() == home_url
-        # Check CSRF is added
+        # Ensure CSRF protection has not been added, since it creates problems
+        # when used with a CDN like CloudFront (see bugzilla #1456165).
         csrf_input = form.children("input[name='csrfmiddlewaretoken']")
-        assert csrf_input.val() is not None
+        assert not csrf_input
 
 
 @pytest.mark.bans

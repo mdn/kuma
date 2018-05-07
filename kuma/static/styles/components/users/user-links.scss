@@ -1,6 +1,5 @@
 .user-links {
     display: inline-block;
-    @include bidi(((margin-left, ($icon-margin * -1), margin-right, 0),));
 
     li {
         display: inline-block;

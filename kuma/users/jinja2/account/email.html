@@ -29,7 +29,10 @@
                     {% else %}
                       <button class="button" type="submit" name="action_send" >{{ _("Re-send Confirmation") }}</button>
                     {% endif %}
-                    <button class="button transparent only-icon" type="submit" name="action_remove" ><span>{{ _("Remove") }}</span><i aria-hidden="true" class="icon-trash"></i></button>
+                    <button class="button transparent only-icon" type="submit" name="action_remove" >
+                        <span>{{ _("Remove") }}</span>
+                        {% include 'includes/icons/general/trash.svg' %}
+                    </button>
                   </span>
                 </form>
               </li>

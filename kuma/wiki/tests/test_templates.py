@@ -191,13 +191,16 @@ class DocumentTests(UserTestCase, WikiTestCase):
         response = self.client.get(urlparams(d.get_absolute_url()))
         self.assertNotContains(response, 'Redirected from ')
 
-    def test_watch_includes_csrf(self):
-        """The watch/unwatch forms should include the csrf tag."""
+    def test_does_not_include_csrf(self):
+        """
+        The document should not include CSRF tokens, since it causes
+        problems when used with a CDN like CloudFront (see bugzilla #1456165).
+        """
         self.client.login(username='testuser', password='testpass')
         d = document(save=True)
         resp = self.client.get(d.get_absolute_url())
         doc = pq(resp.content)
-        assert doc('.page-watch input[type=hidden]')
+        assert not doc('input[name="csrfmiddlewaretoken"]')
 
     def test_non_localizable_translate_disabled(self):
         """Non localizable document doesn't show tab for 'Localize'."""

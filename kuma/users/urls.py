@@ -3,6 +3,7 @@ import importlib
 from allauth.account import views as account_views
 from allauth.socialaccount import providers, views as socialaccount_views
 from django.conf.urls import include, url
+from django.views.decorators.csrf import csrf_exempt
 
 from kuma.core.decorators import redirect_in_maintenance_mode
 
@@ -44,7 +45,7 @@ users_patterns = [
         redirect_in_maintenance_mode(account_views.login),
         name='account_login'),
     url(r'^signout/?$',
-        redirect_in_maintenance_mode(account_views.logout),
+        redirect_in_maintenance_mode(csrf_exempt(account_views.logout)),
         name='account_logout'),
     url(r'^account/', include(account_patterns)),
     url(r'^ban/(?P<username>[^/]+)$',

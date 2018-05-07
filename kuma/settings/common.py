@@ -4,12 +4,14 @@ import logging
 import os
 import platform
 from collections import namedtuple
+from distutils.version import LooseVersion
 from os.path import dirname
 
 import dj_database_url
 import dj_email_url
 import djcelery
 from decouple import config, Csv
+from django import get_version
 from django.core.urlresolvers import reverse_lazy
 
 _Language = namedtuple(u'Language', u'english native')
@@ -448,14 +450,22 @@ LANGUAGE_URL_IGNORED_PATHS = (
 SECRET_KEY = config('SECRET_KEY',
                     default='#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z')
 
+# Django 1.9 and lower need protection from BREACH attacks
+# Django 1.10 include BREACH protection in CsrfViewMiddleware
+_NEED_DEBREACH = LooseVersion(get_version()) < LooseVersion('1.10')
+if _NEED_DEBREACH:
+    _CSRF_CONTEXT_PROCESSOR = 'debreach.context_processors.csrf'
+else:
+    _CSRF_CONTEXT_PROCESSOR = 'django.template.context_processors.csrf'
+
+
 _CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.core.context_processors.request',
-    # todo: re-enable with Django 1.11
-    # 'django.core.context_processors.csrf',
+    'django.template.context_processors.debug',
+    'django.template.context_processors.media',
+    'django.template.context_processors.static',
+    'django.template.context_processors.request',
+    _CSRF_CONTEXT_PROCESSOR,
     'django.contrib.messages.context_processors.messages',
 
     'kuma.core.context_processors.global_settings',
@@ -463,8 +473,8 @@ _CONTEXT_PROCESSORS = (
     'kuma.core.context_processors.next_url',
 
     'constance.context_processors.config',
-    'debreach.context_processors.csrf',
 )
+
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
@@ -492,13 +502,15 @@ MIDDLEWARE_CLASSES = (
 if not MAINTENANCE_MODE:
     # We don't want this in maintence mode, as it adds "Cookie"
     # to the Vary header, which in turn, kills caching.
-    MIDDLEWARE_CLASSES += (
-        'debreach.middleware.CSRFCryptMiddleware',
-        'django.middleware.csrf.CsrfViewMiddleware',
-    )
+
+    if _NEED_DEBREACH:
+        MIDDLEWARE_CLASSES += ('debreach.middleware.CSRFCryptMiddleware',)
+    MIDDLEWARE_CLASSES += ('django.middleware.csrf.CsrfViewMiddleware',)
 
 MIDDLEWARE_CLASSES += (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # TODO: In 1.10, SessionAuth*Middleware does nothing and can be removed
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'waffle.middleware.WaffleMiddleware',
     'kuma.core.middleware.RestrictedEndpointsMiddleware',
@@ -555,7 +567,12 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
     'soapbox',  # must be before kuma.wiki, or RemovedInDjango19Warning
-    'debreach',
+)
+
+if _NEED_DEBREACH:
+    INSTALLED_APPS += ('debreach',)
+
+INSTALLED_APPS += (
 
     # MDN
     'kuma.core',
@@ -988,6 +1005,7 @@ PIPELINE_JS = {
     'main': {
         'source_filenames': (
             'js/libs/jquery/jquery.js',
+            'js/libs/icons.js',
             'js/components.js',
             'js/analytics.js',
             'js/main.js',
@@ -1263,7 +1281,6 @@ CELERY_SEND_TASK_ERROR_EMAILS = True
 CELERY_SEND_EVENTS = True
 CELERY_SEND_TASK_SENT_EVENT = True
 CELERY_TRACK_STARTED = True
-CELERYD_LOG_LEVEL = logging.INFO
 CELERYD_CONCURRENCY = config('CELERYD_CONCURRENCY', default=4, cast=int)
 
 # Maximum tasks run before auto-restart of child process,

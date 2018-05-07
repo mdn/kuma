@@ -92,7 +92,9 @@
 
           <li id="field_github_url" class="field site github">
             {% if accounts.github %}
-            <label for="{{ user_form.github_url.id_for_label }}"><i class="icon-github" aria-hidden="true"></i>GitHub</label>
+            <label for="{{ user_form.github_url.id_for_label }}">
+                {% include 'includes/icons/social/github.svg' %}GitHub
+            </label>
             <div class="field-account">
               {% for github_account in accounts.github %}{% if github_account.extra_data %}{{ github_account.get_profile_url() }}{% if not loop.last %}, {% endif %}{% endif %}{% endfor %}
             </div>
@@ -104,7 +106,8 @@
               </label>
             </div>
             {% else %}
-            <label for="{{ user_form.github_url.id_for_label }}"><i class="icon-github" aria-hidden="true"></i>GitHub
+            <label for="{{ user_form.github_url.id_for_label }}">
+                {% include 'includes/icons/social/github.svg' %}GitHub
               <a class="field-management" href="{{ provider_login_url('github', process='connect', next=next_url) }}">
                 {{ _('Use your GitHub account to sign in.') }}
               </a>
@@ -125,7 +128,12 @@
 
         </ul>
       </fieldset>
-      <p><button type="submit" class="positive">{{ _('Publish') }}<i aria-hidden="true" class="icon-check"></i></button></p>
+      <p>
+          <button type="submit" class="positive">
+              {% include 'includes/icons/general/check-mark.svg' %}
+              {{ _('Publish') }}
+          </button>
+      </p>
       {% if is_me %}
       <a class="field-management" href="{{ url('users.user_delete', username=request.user.username) }}">{{ _('Delete your account.') }}</a>
       {% endif %}

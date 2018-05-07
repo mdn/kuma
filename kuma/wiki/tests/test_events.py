@@ -6,6 +6,8 @@ from datetime import datetime
 
 import mock
 
+from django.core.urlresolvers import reverse
+
 from ..events import (EditDocumentEvent, first_edit_email,
                       notification_context, spam_attempt_email)
 from ..models import DocumentSpamAttempt
@@ -17,6 +19,7 @@ def test_notification_context_for_create(create_revision):
     utm_campaign = ('?utm_campaign=Wiki+Doc+Edits&utm_medium=email'
                     '&utm_source=developer.mozilla.org')
     url = '/en-US/docs/Root'
+    user_url = reverse('users.user_detail', kwargs={'username': 'wiki_user'})
     expected = {
         'compare_url': '',
         'creator': create_revision.creator,
@@ -25,7 +28,7 @@ def test_notification_context_for_create(create_revision):
         'edit_url': url + '$edit' + utm_campaign,
         'history_url': url + '$history' + utm_campaign,
         'locale': 'en-US',
-        'user_url': '/profiles/wiki_user' + utm_campaign,
+        'user_url': user_url + utm_campaign,
         'view_url': url + utm_campaign
     }
     assert context == expected
@@ -37,6 +40,7 @@ def test_notification_context_for_edit(create_revision, edit_revision):
     utm_campaign = ('?utm_campaign=Wiki+Doc+Edits&utm_medium=email'
                     '&utm_source=developer.mozilla.org')
     url = '/en-US/docs/Root'
+    user_url = reverse('users.user_detail', kwargs={'username': 'wiki_user'})
     compare_url = (url +
                    "$compare?to=%d" % edit_revision.id +
                    "&from=%d" % create_revision.id +
@@ -64,7 +68,7 @@ def test_notification_context_for_edit(create_revision, edit_revision):
         'edit_url': url + '$edit' + utm_campaign,
         'history_url': url + '$history' + utm_campaign,
         'locale': 'en-US',
-        'user_url': '/profiles/wiki_user' + utm_campaign,
+        'user_url': user_url + utm_campaign,
         'view_url': url + utm_campaign
     }
     assert context == expected
@@ -76,6 +80,7 @@ def test_notification_context_for_translation(trans_revision, create_revision):
     utm_campaign = ('?utm_campaign=Wiki+Doc+Edits&utm_medium=email'
                     '&utm_source=developer.mozilla.org')
     url = '/fr/docs/Racine'
+    user_url = reverse('users.user_detail', kwargs={'username': 'wiki_user'})
     compare_url = (url +
                    "$compare?to=%d" % trans_revision.id +
                    "&from=%d" % create_revision.id +
@@ -103,7 +108,7 @@ def test_notification_context_for_translation(trans_revision, create_revision):
         'edit_url': url + '$edit' + utm_campaign,
         'history_url': url + '$history' + utm_campaign,
         'locale': 'fr',
-        'user_url': '/profiles/wiki_user' + utm_campaign,
+        'user_url': user_url + utm_campaign,
         'view_url': url + utm_campaign
     }
     assert context == expected

@@ -35,8 +35,11 @@ Django==1.8.19 \
     --hash=sha256:33d44a5cf9d333247a9a374ae1478b78b83c9b78eb316fc04adde62053b4c047
 
 # 3rd party logins like Github
-django-allauth==0.33.0 \
-    --hash=sha256:ae64a80b49707c3d4d6aff52424f8e75fd636cebfdce0e88ffdcbf306f9f0a3d
+# Code: https://github.com/pennersr/django-allauth
+# Changes: https://django-allauth.readthedocs.io/en/latest/release-notes.html
+# Docs: https://django-allauth.readthedocs.io/en/latest/
+django-allauth==0.34.0 \
+    --hash=sha256:95a9f7fbebe3e97ce3a541d213fc52492b50dac92f0f91483f58949189e5aa4f
 
 # Refresh stale cache items asynchronously
 # Code: https://github.com/codeinthehole/django-cacheback
@@ -67,10 +70,12 @@ django-constance==2.2.0 \
     --hash=sha256:fe601fe384d1629f6f0460175e4ce3d66e8177654525bddd4bdb68025c816adc \
     --hash=sha256:1d74fa615ee6c69512faa214ec7b4962aa039dfe802e967972c3fbdad7852977
 
-# Basic/extra mitigation against the BREACH attack
-django-debreach==1.4.0 \
-    --hash=sha256:bdbf8b87c58b438630038648c5b0e168b59220c04f02e208927e08e11bcddbc4 \
-    --hash=sha256:2474c6e8762b72e12140364f0c869b0b212e0dfc76ca614e02d6a71ad6f3fdfb
+# Basic/extra mitigation against the BREACH attack for Django 1.9 and lower
+# Code: https://github.com/lpomfrey/django-debreach
+django-debreach==1.4.2 \
+    --hash=sha256:1626677c47a6496c40d1794cd7264280dcccc63fc69893a86545bb84af3e0f4b \
+    --hash=sha256:20fef417bd12de35594ae2456c86ecf65870a24cfb604194254befb59a3dbe5c \
+    --hash=sha256:efefdb754fbce983302610ca3ec278fb29f86bb01ae6a7defcc573d4048fc43f
 
 # Include Django URL patterns with decorators.
 # Code: https://github.com/twidi/django-decorator-include
@@ -246,8 +251,10 @@ mysqlclient==1.3.7 \
     --hash=sha256:c74a83b4cb2933d0e43370117eeebdfa03077ae72686d2df43d31879267f1f1b
 
 # Report performance metrics and exceptions to New Relic
-newrelic==2.96.0.80 \
-    --hash=sha256:fc7125f3caed2b678c884468c1416ab87e7150ede0d46c738fca08d88c8bd008
+# Docs: https://docs.newrelic.com/docs/agents/python-agent/
+# Changes: https://docs.newrelic.com/docs/release-notes/agent-release-notes/python-release-notes
+newrelic==3.2.0.91 \
+    --hash=sha256:2d1cf00e105f423c5c5fa9ce3f6179773683e6ee52fb64016441abd225b43bf3
 
 # Compile .po files into .mo files, used in locale/compile-mo.sh
 polib==1.0.7 \
