@@ -48,9 +48,9 @@ def sitemaps(db, settings, tmpdir):
 @override_settings(
     DEBUG=False,
     DEBUG_PROPAGATE_EXCEPTIONS=False,
-    ADMINS=(('admin', 'admin@example.com'),))
+    ADMINS=(('admin', 'admin@example.com'),),
+    ROOT_URLCONF='kuma.core.tests.logging_urls')
 class LoggingTests(KumaTestCase):
-    urls = 'kuma.core.tests.logging_urls'
     logger = logging.getLogger('django.security')
     suspicous_path = '/en-US/suspicious/'
 
