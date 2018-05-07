@@ -83,7 +83,7 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_async_submit,
 @process_document_path
 @check_readonly
 @prevent_indexing
-def edit(request, document_slug, document_locale, revision_id=None):
+def edit(request, document_slug, document_locale):
     """
     Create a new revision of a wiki document, or edit document metadata.
     """
@@ -94,13 +94,10 @@ def edit(request, document_slug, document_locale, revision_id=None):
     # If this document has a parent, then the edit is handled by the
     # translate view. Pass it on.
     if doc.parent and doc.parent.id != doc.id:
-        return translate(request, doc.parent.slug, doc.locale, revision_id,
+        return translate(request, doc.parent.slug, doc.locale,
                          bypass_process_document_path=True)
-    if revision_id:
-        rev = get_object_or_404(Revision, pk=revision_id, document=doc)
-    else:
-        rev = doc.current_revision or doc.revisions.order_by('-created',
-                                                             '-id')[0]
+
+    rev = doc.current_revision or doc.revisions.order_by('-created', '-id')[0]
 
     # Keep hold of the full post slug
     slug_dict = split_slug(document_slug)

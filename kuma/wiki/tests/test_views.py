@@ -1289,22 +1289,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         doc_url = '%s?%s' % (doc_url, urlencode(params))
         self.assertRedirects(response, doc_url)
 
-    def test_localized_based_on(self):
-        """Editing a localized article 'based on' an older revision of the
-        localization is OK."""
-        self.client.login(username='admin', password='testpass')
-        en_r = revision(save=True)
-        fr_d = document(parent=en_r.document, locale='fr', save=True)
-        fr_r = revision(document=fr_d, based_on=en_r, save=True)
-        url = reverse('wiki.new_revision_based_on',
-                      locale='fr', args=(fr_d.slug, fr_r.pk,))
-        response = self.client.get(url)
-        assert response.status_code == 200
-        assert response['X-Robots-Tag'] == 'noindex'
-        assert_no_cache_header(response)
-        input = pq(response.content)('#id_based_on')[0]
-        assert int(input.value) == en_r.pk
-
     def test_restore_translation_source(self):
         """Edit a localized article without an English parent allows user to
         set translation parent."""

@@ -661,26 +661,6 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         assert len(doc('article#edit-document '
                        'form#wiki-page-edit textarea[name="content"]')) == 1
 
-    def test_new_revision_GET_based_on(self):
-        """HTTP GET to new revision URL based on another revision.
-
-        This case should render the form with the fields pre-populated
-        with the based-on revision info.
-
-        """
-        rev = Revision(document=self.d, keywords='ky1, kw2',
-                       summary='the summary',
-                       content='<div>The content here</div>', creator_id=7)
-        rev.save()
-        response = self.client.get(reverse('wiki.new_revision_based_on',
-                                           locale='en-US',
-                                           args=[self.d.slug, rev.id]))
-        assert response.status_code == 200
-        assert response['X-Robots-Tag'] == 'noindex'
-        assert_no_cache_header(response)
-        doc = pq(response.content)
-        assert doc('#id_content')[0].value.strip() == rev.content.strip()
-
     @override_settings(TIDINGS_CONFIRM_ANONYMOUS_WATCHES=False)
     @mock.patch.object(Site.objects, 'get_current')
     def test_new_revision_POST_document_with_current(self, get_current):
@@ -1179,27 +1159,6 @@ class TranslateTests(UserTestCase, WikiTestCase):
         document = Document.objects.filter(locale='es')[0]
         existing_rev = document.revisions.all()[0]
         assert doc('#id_content').text() == existing_rev.content
-
-    @pytest.mark.xfail(reason='Figure out wtf is going on with this test.')
-    def test_translate_based_on(self):
-        """Test translating based on a non-current revision."""
-        # Create the base revision
-        base_rev = self._create_and_approve_first_translation()
-        # Create a new current revision
-        rev = revision(document=base_rev.document, is_approved=True)
-        rev.save()
-        d = Document.objects.get(pk=base_rev.document.id)
-        assert base_rev.document.current_revision == rev
-
-        uri = reverse('wiki.new_revision_based_on',
-                      locale=d.locale,
-                      args=[d.slug, base_rev.id])
-        response = self.client.get(uri)
-        assert response.status_code == 200
-        assert response['X-Robots-Tag'] == 'noindex'
-        assert_no_cache_header(response)
-        doc = pq(response.content)
-        assert doc('#id_content')[0].value == base_rev.content
 
 
 def _test_form_maintains_based_on_rev(client, doc, view, post_data,
