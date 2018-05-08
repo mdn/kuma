@@ -43,7 +43,7 @@ def select_locale(request, document_slug, document_locale):
 @process_document_path
 @check_readonly
 @prevent_indexing
-def translate(request, document_slug, document_locale, revision_id=None):
+def translate(request, document_slug, document_locale):
     """
     Create a new translation of a wiki document.
 
@@ -58,12 +58,10 @@ def translate(request, document_slug, document_locale, revision_id=None):
                                    locale=settings.WIKI_DEFAULT_LANGUAGE,
                                    slug=document_slug)
 
-    if not revision_id:
-        # HACK: Seems weird, but sticking the translate-to locale in a query
-        # param is the best way to avoid the MindTouch-legacy locale
-        # redirection logic.
-        document_locale = request.GET.get('tolocale',
-                                          document_locale)
+    # HACK: Seems weird, but sticking the translate-to locale in a query
+    # param is the best way to avoid the MindTouch-legacy locale
+    # redirection logic.
+    document_locale = request.GET.get('tolocale', document_locale)
 
     # Set a "Discard Changes" page
     discard_href = ''
@@ -78,11 +76,6 @@ def translate(request, document_slug, document_locale, revision_id=None):
         message = _(u'You cannot translate this document.')
         context = {'message': message}
         return render(request, 'handlers/400.html', context, status=400)
-
-    if revision_id:
-        revision = get_object_or_404(Revision, pk=revision_id)
-    else:
-        revision = None
 
     based_on_rev = parent_doc.current_or_latest_revision()
 
@@ -133,9 +126,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
         'localization_tags': ['inprogress'],
     }
     content = None
-    if revision is not None:
-        content = revision.content
-    elif not doc:
+    if not doc:
         content = based_on_rev.content
     if content:
         initial.update(content=kuma.wiki.content.parse(content)

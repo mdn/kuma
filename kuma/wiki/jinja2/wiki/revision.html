@@ -44,11 +44,6 @@
             <mark>{{ _('Comment') }}</mark>
             <span data-name="comment">{{ comment }}</span>
           </li>
-          {#
-          {% if user.is_authenticated() %}
-            <li><a href="{{ url('wiki.new_revision_based_on', document.slug, revision.id) }}">{{ _('Edit article based on this revision') }}</a></li>
-          {% endif %}
-          #}
         </ul>
       </div>
     </details>
