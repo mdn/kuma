@@ -251,13 +251,16 @@
 
                 {% if has_contributors %}
                   <div class="contributors-sub">
-                    <i aria-hidden="true" class="icon-group icon-fw"></i>&nbsp;<strong>{{ _('Contributors to this page:') }}</strong> {{ contributor_links(contributors) }}
+                    {% include 'includes/icons/user/group.svg' %}
+                    <strong>{{ _('Contributors to this page:') }}</strong>
+                    {{ contributor_links(contributors) }}
                   </div>
                 {% endif %}
 
                 {% if current_revision.creator %}
                   <div class="contributors-sub">
-                    <i aria-hidden="true" class="icon-clock-o icon-fw"></i>&nbsp;<strong>{{ _('Last updated by:') }}</strong>
+                    {% include 'includes/icons/general/clock.svg' %}
+                    <strong>{{ _('Last updated by:') }}</strong>
                     <a href="{{ current_revision.creator.get_absolute_url() }}"
                        {%- if not current_revision.creator.is_active %} rel="nofollow"{% endif -%}
                        >{{ current_revision.creator }}</a>,
@@ -318,13 +321,14 @@
             $('#wikiArticle').children('h2[id]').each(function() {
                 var id = $(this).attr('id');
                 var href = '{{ document.get_edit_url() }}#' + id;
+                var pencil = window.mdnIcons ? window.mdnIcons.getIcon('pencil') : '';
 
                 $('<a>').attr({
                     href: href,
                     'class': 'button section-edit only-icon',
                     'rel': 'nofollow, noindex'
                 })
-                .append($('<i aria-hidden="true" class="icon-pencil"></i>'))
+                .append(pencil)
                 .append($('<span>'))
                 .find('span')
                 .text(gettext('Edit'))

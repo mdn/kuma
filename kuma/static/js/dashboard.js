@@ -6,15 +6,102 @@
     var $filterForm = $('#revision-filter');
     var $pageInput = $('#revision-page');
     var currentLocale = $('html').attr('lang');
-    var controlsTemplate = '' +
-    '<div class="action-bar">' +
-        '<ul id="page-buttons">' +
-            '<li><a id="revert" href="$reverturl" class="button">' + gettext('Revert') + '<i aria-hidden="true" class="icon-undo"></i></a></li>' +
-            '<li><a id="view" href="$viewurl" class="button">' + gettext('View Page') + '<i aria-hidden="true" class="icon-circle-arrow-right"></i></a></li>' +
-            '<li class="page-edit"><a id="edit" href="$editurl" class="button">' + gettext('Edit Page') + '<i aria-hidden="true" class="icon-pencil"></i></a></li>' +
-            '<li class="page-history"><a id="history" href="$historyurl" class="button">' + gettext('History') + '<i aria-hidden="true" class="icon-book"></i></a></li>' +
-        '</ul>' +
-    '</div>';
+
+    /**
+     * Builds and returns an individual list item
+     * @param {Object} properties - A properties object with values
+     * for the attibutes of the anchor element
+     * Example
+     * --------
+     * {
+     *   id: 'revert',
+     *   href: controlURLs.revertURL,
+     *   text: gettext(actionsArray[i]),
+     *   icon: 'undo'
+     * }
+     * @returns The list element as a `HTMLElement`
+     */
+    function getListItem(properties) {
+        var listItem = document.createElement('li');
+        var anchor = document.createElement('a');
+        anchor.setAttribute('id', properties.id);
+        anchor.setAttribute('href', properties.href);
+        anchor.classList.add('button');
+        anchor.textContent = properties.text;
+        anchor.append(window.mdnIcons ? window.mdnIcons.getIcon(properties.icon) : '');
+        return listItem.appendChild(anchor);
+    }
+
+    /**
+     * Builds and returns all the action buttons as an unordered list
+     * @param {Object} controlURLs - The url for each action
+     * @returns An unordered list with action buttons as a `HTMLElement`
+     */
+    function getActionButtons(controlURLs) {
+        var actionsArray = ['Revert', 'View Page', 'Edit Page', 'History'];
+        var pageButtons = document.createElement('ul');
+        pageButtons.setAttribute('id', 'page-buttons');
+
+        for (var i = 0, l = actionsArray.length; i < l; i++) {
+            if (actionsArray[i] === 'Revert') {
+                pageButtons.appendChild(getListItem({
+                    id: 'revert',
+                    href: controlURLs.revertURL,
+                    text: gettext('Revert'),
+                    icon: 'undo'
+                }));
+            }
+
+            if (actionsArray[i] === 'View Page') {
+                pageButtons.appendChild(getListItem({
+                    id: 'view',
+                    href: controlURLs.viewURL,
+                    text: gettext('View Page'),
+                    icon: 'play'
+                }));
+            }
+
+            if (actionsArray[i] === 'Edit Page') {
+                pageButtons.appendChild(getListItem({
+                    id: 'edit',
+                    href: controlURLs.editURL,
+                    text: gettext('Edit Page'),
+                    icon: 'pencil'
+                }));
+            }
+
+            if (actionsArray[i] === 'History') {
+                pageButtons.appendChild(getListItem({
+                    id: 'history',
+                    href: controlURLs.editURL,
+                    text: gettext('History'),
+                    icon: 'book'
+                }));
+            }
+        }
+
+        return pageButtons;
+    }
+
+    /**
+     * Builds and returns the actions bar setting urls as specified
+     * in the `controlURLs` object
+     * @param {Object} controlURLs - URLs to set for the various controls
+     * Example
+     * --------
+     * {
+     *   revertURL: 'https://...',
+     *   viewURL: 'https://...',
+     *   editURL: 'https://...',
+     *   historyURL: 'https://...'
+     * }
+     * @returns controls wrapped in a `div` elemtn as a Node
+     */
+    function getActionsBar(controlURLs) {
+        var actionBar = document.createElement('div');
+        actionBar.setAttribute('class', 'action-bar');
+        return actionBar.appendChild(getActionButtons(controlURLs));
+    }
 
     // Create the autocomplete for user
     $('#id_user').mozillaAutocomplete({
@@ -76,13 +163,31 @@
                 url: $this.attr('data-compare-url')
             }).then(function (content) {
                 // Prepend the controls
-                var controls = controlsTemplate
-                              .replace('$reverturl', $this.attr('data-revert-url'))
-                              .replace('$viewurl', $this.attr('data-view-url'))
-                              .replace('$editurl', $this.attr('data-edit-url'))
-                              .replace('$historyurl', $this.attr('data-history-url'));
+                var controls = getActionsBar({
+                    revertURL: $this.attr('data-revert-url'),
+                    viewURL: $this.attr('data-view-url'),
+                    editURL: $this.attr('data-edit-url'),
+                    historyURL: $this.attr('data-history-url')
+                });
 
-                $('<tr class="dashboard-detail"><td colspan="5"><div class="dashboard-detail-details">' + controls + content + '</div></td></tr>').insertAfter($this);
+                var row = document.createElement('tr');
+                row.classList.add('dashboard-detail');
+
+                var column = document.createElement('td');
+                column.setAttribute('colspan', '5');
+
+                var div = document.createElement('div');
+                div.classList.add('dashboard-detail-details');
+
+                div.appendChild(controls);
+                div.appendChild($(content)[0]);
+
+                column.appendChild(div);
+                row.appendChild(column);
+
+                var currentRow = $this[0];
+
+                currentRow.insertAdjacentElement('afterend', row);
 
                 $this.next('.dashboard-detail').find('.dashboard-detail-details').slideToggle();
                 $this.attr('data-loaded', 1);

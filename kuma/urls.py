@@ -11,7 +11,9 @@ from django.views.static import serve
 from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
 from kuma.core.decorators import shared_cache_control
+from kuma.search.urls import base_urlpatterns as search_base_urlpatterns
 from kuma.wiki.admin import purge_view
+from kuma.wiki.views.document import as_json as document_as_json
 from kuma.wiki.views.legacy import mindtouch_to_kuma_redirect
 
 
@@ -67,10 +69,12 @@ else:
     ]
 
 urlpatterns += [
-    url(r'^search', include('kuma.search.urls')),
-    url(r'^docs', include('kuma.wiki.urls')),
+    url(r'^search', include(search_base_urlpatterns)),
+    url(r'^search/', include('kuma.search.urls')),
+    url(r'^docs.json$', document_as_json, name='wiki.json'),
+    url(r'^docs/', include('kuma.wiki.urls')),
     url('', include('kuma.attachments.urls')),
-    url('', include('kuma.dashboards.urls')),
+    url('^dashboards/', include('kuma.dashboards.urls')),
     url('', decorator_include(never_cache, 'kuma.users.urls')),
 ]
 

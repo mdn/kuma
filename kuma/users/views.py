@@ -466,7 +466,7 @@ class SignupView(BaseSignupView):
     """
     form_class = SignupForm
 
-    def get_form(self, form_class):
+    def get_form(self, form_class=None):
         """
         Returns an instance of the form to be used in this view.
         """

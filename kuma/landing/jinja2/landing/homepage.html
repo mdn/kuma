@@ -34,7 +34,7 @@
         <div class="home-search-form search-form">
             <label for="home-q" class="offscreen">{{ _('Search') }}</label>
             <span class="search-icon">
-                <i class="icon-search" aria-hidden="true"></i>
+                {% include 'includes/icons/general/search.svg' %}
             </span>
             <input class="search-input" type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
             <button type="submit" class="offscreen">{{ _('Search') }}</button>
@@ -45,9 +45,21 @@
     </form>
 
     <ul class="home-features">
-      <li><a href="{{ wiki_url('Web') }}" class="cta-link">{{ _('Web Technologies') }}</a></li>
-      <li><a href="{{ wiki_url('Learn') }}" class="cta-link">{{ _('Learn web development') }}</a></li>
-      <li><a href="{{ wiki_url('Tools') }}" class="cta-link">{{ _('Developer Tools') }}</a></li>
+      <li>
+          <a href="{{ wiki_url('Web') }}" class="cta-link">
+              {{ _('Web Technologies') }}{% include 'includes/icons/arrows/arrow.svg' %}
+          </a>
+      </li>
+      <li>
+          <a href="{{ wiki_url('Learn') }}" class="cta-link">
+              {{ _('Learn web development') }}{% include 'includes/icons/arrows/arrow.svg' %}
+          </a>
+      </li>
+      <li>
+          <a href="{{ wiki_url('Tools') }}" class="cta-link">
+              {{ _('Developer Tools') }}{% include 'includes/icons/arrows/arrow.svg' %}
+          </a>
+      </li>
     </ul>
 </div></div>
 
@@ -94,7 +106,15 @@
 <!-- hacks area -->
 <div class="home-hacks"><div class="column-container center">
   <div class="column-hacks" dir="ltr">
-    <h2><i aria-hidden="true" class="icon-star"></i> Hacks Blog<span class="heading-link"><a href="http://hacks.mozilla.org">{{ _('read more at hacks.mozilla.org') }}<i aria-hidden="true" class="icon-arrow-right"></i></a></span></h2>
+    <h2>
+        {% include 'includes/icons/general/star.svg' %} Hacks Blog
+        <span class="heading-link">
+            <a href="http://hacks.mozilla.org">
+                {{ _('read more at hacks.mozilla.org') }}
+                {% include 'includes/icons/arrows/arrow.svg' %}
+            </a>
+        </span>
+    </h2>
     {{ newsfeed(updates) }}
   </div>
   <div class="column-involved">
@@ -115,7 +135,9 @@
 
 <!-- contributions section -->
 <div class="home-contribute"><div class="center">
-  <h2><i aria-hidden="true" class="icon-smile-o"></i> {{ _('Help improve MDN') }}</h2>
+  <h2>
+      {% include 'includes/icons/general/smile.svg' %} {{ _('Help improve MDN') }}
+  </h2>
 
   <div class="column-container">
     <div class="column-half">

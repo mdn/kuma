@@ -633,7 +633,7 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
                                                locale=settings.WIKI_DEFAULT_LANGUAGE))
             page = pq(response.content)
 
-            ok_(page.find('title').text() in aught_titles)
+            ok_(page.find('head > title').text() in aught_titles)
 
         # Test nested document titles
         _make_doc('One', ['One | MDN'], 'one')
@@ -2853,7 +2853,7 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
          /<locale>/<document_slug>"""
         d = document(locale='zh-CN')
         d.save()
-        mt_url = '{locale}/{slug}'.format(locale=d.locale, slug=d.slug)
+        mt_url = '/{locale}/{slug}'.format(locale=d.locale, slug=d.slug)
         resp = self.client.get(mt_url, follow=True)
         assert resp.status_code == 200
 

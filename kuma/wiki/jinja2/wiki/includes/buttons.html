@@ -15,7 +15,11 @@
   {% set watch_menu_items_html = watch_menu_items(document, user) %}
 
   <ul class="page-buttons">
-      <li><button id="languages-menu" class="transparent" aria-haspopup="true" aria-owns="languages-menu-submenu" aria-expanded="false"><span>{{ _('Languages') }}</span><i aria-hidden="true" class="icon-language"></i></button>
+      <li>
+          <button id="languages-menu" class="transparent" aria-haspopup="true" aria-owns="languages-menu-submenu" aria-expanded="false">
+              {% include 'includes/icons/general/language.svg' %}
+              <span>{{ _('Languages') }}</span>
+          </button>
 
         <div class="submenu js-submenu" id="languages-menu-submenu">
           <div class="submenu-column">
@@ -44,37 +48,50 @@
             content_experiment and
             content_experiment.selection_is_valid) %}
       {% if (not is_experiment) %}
-      <li class="page-buttons-edit"><a href="{{ edit_link }}" class="button neutral" id="edit-button" rel="nofollow">{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li>
+      <li class="page-buttons-edit">
+          <a href="{{ edit_link }}" class="button neutral" id="edit-button" rel="nofollow">
+              {% include 'includes/icons/tools/pencil.svg' %}
+              {{ _('Edit') }}
+          </a>
+      </li>
       {% endif %}
 
         {% if user.is_authenticated() and document %}
-        <li><button id="watch-menu" class="only-icon" aria-haspopup="true" aria-owns="watch-menu-submenu" aria-expanded="false"><span>{{ _('Watch') }}</span><i aria-hidden="true" class="icon-eye"></i></button>
-        <div class="submenu js-submenu" id="watch-menu-submenu">
-            <div class="submenu-column">
-                <div class="title">{{ _('Watch') }}</div>
-                {{ watch_menu_items_html }}
+        <li>
+            <button id="watch-menu" class="only-icon" aria-haspopup="true" aria-owns="watch-menu-submenu" aria-expanded="false">
+                {% include 'includes/icons/tools/eye.svg' %}
+                <span>{{ _('Watch') }}</span>
+            </button>
+            <div class="submenu js-submenu" id="watch-menu-submenu">
+                <div class="submenu-column">
+                    <div class="title">{{ _('Watch') }}</div>
+                    {{ watch_menu_items_html }}
+                </div>
             </div>
-        </div>
         </li>
         {% endif %}
 
-        <li class="page-buttons-advanced"><button id="advanced-menu" class="only-icon" aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>{{ _('Advanced') }}</span><i aria-hidden="true" class="icon-cog"></i></button>
-        <div class="submenu js-submenu" id="advanced-menu-submenu">
-          <!-- this page -->
-          <div class="submenu-column">
-            <div class="title">{{ _('Advanced') }}</div>
-            <ul>
-                <li><a href="{{ url('wiki.document_revisions', document.slug) }}" rel="nofollow">{{_('History')}}</a></li>
-                {% if user.is_authenticated() %}
-                  <li><a href="{{ url('wiki.create') }}?parent={{ document.id }}" rel="nofollow">{{ _('New sub-article') }}</a></li>
-                  <li><a href="{{ url('wiki.create') }}?clone={{ document.id }}{% if document.parent_topic %}&amp;parent={{ document.parent_topic.id }}{% endif %}" rel="nofollow">{{ _('Clone this article') }}</a></li>
-                {% endif %}
-                {% if user.is_authenticated() and user.has_perm('wiki.move_tree') %}
-                  <li><a href="{{ url('wiki.move', document.slug, locale=document.locale) }}" rel="nofollow">{{ _('Move this article') }}</a></li>
-                {% endif %}
-                {% if user.is_superuser %}
-                  <li><a href="{{ url('admin:wiki_document_change', document.id) }}" rel="nofollow">{{ _('View in admin') }}</a></li>
-                {% endif %}
+        <li class="page-buttons-advanced">
+            <button id="advanced-menu" class="only-icon" aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false">
+                {% include 'includes/icons/tools/gear.svg' %}
+                <span>{{ _('Advanced') }}</span>
+            </button>
+            <div class="submenu js-submenu" id="advanced-menu-submenu">
+                <!-- this page -->
+                <div class="submenu-column">
+                    <div class="title">{{ _('Advanced') }}</div>
+                    <ul>
+                        <li><a href="{{ url('wiki.document_revisions', document.slug) }}" rel="nofollow">{{_('History')}}</a></li>
+                        {% if user.is_authenticated() %}
+                            <li><a href="{{ url('wiki.create') }}?parent={{ document.id }}" rel="nofollow">{{ _('New sub-article') }}</a></li>
+                            <li><a href="{{ url('wiki.create') }}?clone={{ document.id }}{% if document.parent_topic %}&amp;parent={{ document.parent_topic.id }}{% endif %}" rel="nofollow">{{ _('Clone this article') }}</a></li>
+                        {% endif %}
+                        {% if user.is_authenticated() and user.has_perm('wiki.move_tree') %}
+                            <li><a href="{{ url('wiki.move', document.slug, locale=document.locale) }}" rel="nofollow">{{ _('Move this article') }}</a></li>
+                        {% endif %}
+                        {% if user.is_superuser %}
+                            <li><a href="{{ url('admin:wiki_document_change', document.id) }}" rel="nofollow">{{ _('View in admin') }}</a></li>
+                        {% endif %}
 
 {#
     # HACK: https://bugzil.la/972545 - Don't delete pages that have children

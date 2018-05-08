@@ -2,11 +2,13 @@
   <div class="search-wrap">
     <label for="main-q" class="offscreen">{{ _('Search') }}</label>
     <input type="search" id="main-q" name="q" placeholder="{{ _('Search') }}" data-value="{{ query }}" value="" aria-hidden="true" />
-    <span class="search-trigger"><i aria-hidden="true" class="icon-search"></i></span>
+    <span class="search-trigger">
+        {% include 'includes/icons/general/search.svg' %}
+    </span>
     <button type="submit" class="offscreen">{{ _('Search') }}</button>
     <button type="button" id="close-header-search" class="close-header-search transparent">
         <span class="offscreen">{{ _('Close search') }}</span>
-        <i aria-hidden="true" class="icon-times"></i>
+        {% include 'includes/icons/general/close.svg' %}
     </button>
   </div>
 </form>

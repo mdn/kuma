@@ -27,7 +27,9 @@
                 </label>
             </div>
             <div id="newsletterSubmit" class="newsletter-group-submit">
-                <button id="newsletter-submit" type="submit" class="button neutral newsletter-submit">{{ _('Sign up now') }}</button>
+                <button id="newsletter-submit" type="submit" class="button neutral newsletter-submit">
+                    {{ _('Sign up now') }}{% include 'includes/icons/arrows/arrow.svg' %}
+                </button>
             </div>
         </div>
     </form>
@@ -40,5 +42,8 @@
            {% endtrans %}
         </p>
     </div>
-    <button id="newsletterHide" type="button" class="only-icon newsletter-hide hidden"><span>{{ _('Hide Newsletter Sign-up') }}</span><i aria-hidden="true" class="icon-times"></i></button>
+    <button id="newsletterHide" type="button" class="only-icon newsletter-hide hidden">
+        <span>{{ _('Hide Newsletter Sign-up') }}</span>
+        {% include 'includes/icons/general/close.svg' %}
+    </button>
 </div>

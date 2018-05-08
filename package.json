@@ -14,6 +14,7 @@
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint kuma/",
+    "optim:svg": "svgo jinja2/includes/icons/* --disable={removeViewBox,removeTitle} --multipass --pretty",
     "precommit": "npm run lint"
   },
   "devDependencies": {
@@ -22,6 +23,7 @@
     "gulp-sass": "^3.1.0",
     "gulp-stylelint": "^3.9.0",
     "gulp-watch": "^4.3.6",
-    "husky": "^0.13.3"
+    "husky": "^0.13.3",
+    "svgo": "^1.0.5"
   }
 }

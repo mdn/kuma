@@ -24,7 +24,9 @@
 {% macro doc_block(doc, index) -%}
   <li class="result-{{ index }}">
     <div class="column-container">
-      <div class="column-1"><i aria-hidden="true" class="icon-file-text-alt"></i></div>
+      <div class="column-1">
+          {% include 'includes/icons/file-icons/plain-text.svg' %}
+      </div>
       <div class="column-5 result-list-item">
         <h4><a href="{{ doc.url }}"{% if index == 1 %} tabindex="1"{% endif %}>{{ doc.title }}</a></h4>
         <p>{{ doc.excerpt|safe }}</p>
@@ -49,7 +51,7 @@
     <div class="results-search-form search-form dark">
       <label for="search-q" class="offscreen">{{ _('Search') }}</label>
       <span class="search-icon">
-          <i class="icon-search" aria-hidden="true"></i>
+          {% include 'includes/icons/general/search.svg' %}
       </span>
       <input class="search-input" type="search" name="q" id="search-q" placeholder="{{ _('Search the docs') }}" {% if query %}value="{{ query }}"{% else %}autofocus{% endif %} />
       <button type="submit" class="offscreen">{{ _('Search') }}</button>
@@ -149,7 +151,9 @@
 
         {% if count %}
         <div class="search-pane search-results-container">
-          <h3><i aria-hidden="true" class="icon-copy"></i>{{ _('Docs') }}</h3>
+          <h3>
+              {% include 'includes/icons/file-icons/file.svg' %}{{ _('Docs') }}
+          </h3>
 
           <ul class="result-list">
             {% for doc in documents %}
@@ -185,10 +189,10 @@
 
         <label>
           {% if "none" in selected_filters %}
-            <i aria-hidden="true" class="icon-check"></i>
+            {% include 'includes/icons/general/check-mark.svg' %}
             <input id="no_filter" type="checkbox" class="offscreen" name="none" checked="checked" value="none">
           {% else %}
-            <i aria-hidden="true" class="icon-check-empty"></i>
+            {% include 'includes/icons/forms/checkbox.svg' %}
             <input id="no_filter" type="checkbox" class="offscreen" name="none" value="none">
           {% endif %}
           <span class="filter-name">{{ _('All Topics') }}</span>
@@ -196,11 +200,13 @@
 
         {% for filter_group in filters %}
           <fieldset>
-            <legend><i aria-hidden="true" class="icon-th-list"></i><span class="offscreen">{{ _('Filter by') }} </span>{{ filter_group.name }}</legend>
+            <legend>
+                {% include 'includes/icons/general/list.svg' %}
+                <span class="offscreen">{{ _('Filter by') }} </span>{{ filter_group.name }}</legend>
             {% for filter in filter_group.options %}
               {% if filter.count == 0 %}
               <label class="inactive">
-                <i aria-hidden="true" class="icon-check-empty"></i>
+                {% include 'includes/icons/forms/checkbox.svg' %}
                 <input type="checkbox" class="offscreen" name="{{ filter_group.slug }}" value="{{ filter.slug }}" disabled="disabled">{{ filter.name }}
                 <span class="offscreen"> includes</span>
                 <span class="filter-count">{{ filter.count }}
@@ -209,7 +215,7 @@
               </label>
               {% elif filter.slug in selected_filters %}
               <label class="checked">
-                <i aria-hidden="true" class="icon-check"></i>
+                {% include 'includes/icons/general/check-mark.svg' %}
                 <input type="checkbox" checked="checked" class="offscreen" name="{{ filter_group.slug }}" value="{{ filter.slug }}">
                 <span class="filter-name">{{ filter.name }}</span>
                 <span class="offscreen">includes </span>
@@ -219,7 +225,7 @@
               </label>
               {% else %}
               <label>
-                <i aria-hidden="true" class="icon-check-empty"></i>
+                {% include 'includes/icons/forms/checkbox.svg' %}
                 <input type="checkbox" class="offscreen" name="{{ filter_group.slug }}" value="{{ filter.slug }}">
                 <span class="filter-name">{{ filter.name }}</span>
                 <span class="offscreen">includes </span>
