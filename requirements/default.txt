@@ -25,9 +25,12 @@ commonware==0.4.3 \
     --hash=sha256:a7b02a5f76d89a79f861926fb34e029cc4343c13802525c818542a39fe788cce
 
 # Check localization files for issues
-dennis==0.7 \
-    --hash=sha256:e9e925c0097c6f5eb7716e50ca57155ed1f670f0fa72a661053198c1890a02f5 \
-    --hash=sha256:fde267aeb03a8d49e3341e7f71a228c6748dce43b5c00f65581780d99b70b2d9
+# Code: https://github.com/willkg/dennis
+# Changes: https://github.com/willkg/dennis/blob/master/CHANGELOG
+# Docs: http://dennis.readthedocs.io/en/latest/
+dennis==0.9 \
+    --hash=sha256:8c942dd5da7d03c65daebc069c5ee5c7f1374ac9b0c8c89c627caa66fe822604 \
+    --hash=sha256:f6487392ac91800c5f0684a99b404b7fd0f72ceb48faeb5a0ce4e2c24fb62d3f
 
 # Web framework for Python projects of a certain age
 Django==1.8.19 \

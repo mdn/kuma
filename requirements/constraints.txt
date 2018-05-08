@@ -114,9 +114,14 @@ kombu==3.0.37 \
     --hash=sha256:e064a00c66b4d1058cd2b0523fb8d98c82c18450244177b6c0f7913016642650
 
 # dennis
-click==6.6 \
-    --hash=sha256:fcf697e1fd4b567d817c69dab10a4035937fe6af175c05fd6806b69f74cbc6c4 \
-    --hash=sha256:cc6a19da8ebff6e7074f731447ef7e112bd23adf3de5c597cf9989f2fd8defe9
+#
+# Command line interface creation kit
+# Code: https://github.com/pallets/click
+# Changes: http://click.pocoo.org/dev/changelog/
+# Docs: http://click.pocoo.org/6/
+click==6.7 \
+    --hash=sha256:29f99fc6125fbc931b758dc053b3114e55c77a6e4c6c3a2674a2dc986016381d \
+    --hash=sha256:f15516df478d5a56180fbf80e68f206010e6d160fc39fa508b65e035fd75130b
 
 # django-allauth
 oauthlib==2.0.4 \
