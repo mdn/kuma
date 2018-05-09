@@ -35,6 +35,7 @@ def code_sample(request, document_slug, document_locale, sample_name):
     job = DocumentCodeSampleJob(generation_args=[document.pk])
     data = job.get(document.pk, sample_name)
     data['document'] = document
+    data['sample_name'] = sample_name
     return render(request, 'wiki/code_sample.html', data)
 
 

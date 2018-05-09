@@ -48,9 +48,11 @@ def test_code_sample(code_sample_doc, constance_config, client, settings):
 
     normalized = normalize_html(response.content)
     expected = (
+        '<meta charset="utf-8">'
         '<link href="%sbuild/styles/samples.css"'
         ' rel="stylesheet" type="text/css">'
         '<style type="text/css">.some-css { color: red; }</style>'
+        '<title>Root Document - sample1 - code sample</title>'
         'Some HTML'
         '<script>window.alert("HI THERE")</script>'
         % settings.STATIC_URL)
