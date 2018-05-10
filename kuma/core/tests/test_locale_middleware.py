@@ -39,7 +39,8 @@ def test_locale_middleware_picker(accept_language, locale, client, db):
     '''The LocaleMiddleware picks locale from the Accept-Language header.'''
     response = client.get('/', HTTP_ACCEPT_LANGUAGE=accept_language)
     assert response.status_code == 302
-    assert response['Location'] == 'http://testserver/%s/' % locale or 'en_US'
+    url_locale = locale or 'en-US'
+    assert response['Location'] == 'http://testserver/%s/' % url_locale
     assert_shared_cache_header(response)
 
 
