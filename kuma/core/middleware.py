@@ -35,23 +35,21 @@ class LangSelectorMiddleware(object):
             # Invalid language requested, don't redirect
             return
 
-        # Check if different language is embedded in URL
-        dj_language = translation.get_language_from_request(
+        # Check if the requested language is already embedded in URL
+        language = translation.get_language_from_request(
             request, check_path=True)
-        language = django_language_code_to_kuma(dj_language)
         if language == query_lang:
             # Language is already requested language, don't redirect
             return
 
         script_prefix = urlresolvers.get_script_prefix()
-        expected_prefix = '%s%s/' % (script_prefix, language)
+        lang_prefix = '%s%s/' % (script_prefix, language)
         full_path = request.get_full_path()  # Includes querystring
         old_path = urlsplit(full_path).path
-        if full_path.startswith(expected_prefix):
-            new_prefix = '%s%s/' % (script_prefix, query_lang)
-            new_path = old_path.replace(expected_prefix, new_prefix, 1)
+        new_prefix = '%s%s/' % (script_prefix, query_lang)
+        if full_path.startswith(lang_prefix):
+            new_path = old_path.replace(lang_prefix, new_prefix, 1)
         else:
-            new_prefix = '%s%s/' % (script_prefix, query_lang)
             new_path = old_path.replace(script_prefix, new_prefix, 1)
 
         # Redirect to same path with requested language and without ?lang
