@@ -1,13 +1,70 @@
+import re
 import threading
+import warnings
 
 from django.conf import settings
-from django.core.urlresolvers import reverse as django_reverse
+from django.conf.urls import patterns
+from django.core.urlresolvers import (
+    LocaleRegexURLResolver as DjangoLocaleRegexURLResolver,
+    reverse as django_reverse)
 from django.test.client import RequestFactory
+from django.utils import six
+from django.utils.deprecation import RemovedInDjango110Warning
 from django.utils.translation.trans_real import parse_accept_lang_header
 
+from .i18n import get_language
 
 # Thread-local storage for URL prefixes. Access with (get|set)_url_prefix.
 _locals = threading.local()
+
+
+class LocaleRegexURLResolver(DjangoLocaleRegexURLResolver):
+    """
+    A URL resolver that always matches the active language code as URL prefix.
+
+    Rather than taking a regex argument, we just override the ``regex``
+    function to always return the active language-code as regex.
+
+    Overrides Django 1.8.19's LocaleRegexURLResolver from
+    django/core/urlresolvers/LocaleRegexURLResolver, with changes:
+
+    * None yet
+    """
+
+    @property
+    def regex(self):
+        language_code = get_language()
+        if language_code not in self._regex_dict:
+            regex_compiled = re.compile('^%s/' % language_code, re.UNICODE)
+            self._regex_dict[language_code] = regex_compiled
+        return self._regex_dict[language_code]
+
+
+def i18n_patterns(prefix, *args):
+    """
+    Adds the language code prefix to every URL pattern within this
+    function. This may only be used in the root URLconf, not in an included
+    URLconf.
+
+    Based on Django 1.8.19's i18n_patterns from
+    django/conf/urls/i18n_patterns, with changes:
+
+    * None yet
+    """
+    if isinstance(prefix, six.string_types):
+        warnings.warn(
+            "Calling i18n_patterns() with the `prefix` argument and with tuples "
+            "instead of django.conf.urls.url() instances is deprecated and "
+            "will no longer work in Django 1.10. Use a list of "
+            "django.conf.urls.url() instances instead.",
+            RemovedInDjango110Warning, stacklevel=2
+        )
+        pattern_list = patterns(prefix, *args)
+    else:
+        pattern_list = [prefix] + list(args)
+    if not settings.USE_I18N:
+        return pattern_list
+    return [LocaleRegexURLResolver(pattern_list)]
 
 
 def get_best_language(accept_lang):
