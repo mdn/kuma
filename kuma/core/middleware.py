@@ -121,6 +121,7 @@ class LocaleMiddleware(object):
 
     Based on Django 1.8's LocaleMiddleware, with some differences:
 
+    * Assume that locale prefixes are in use
     * Use Kuma language codes (en-US) instead of Django's (en-us)
     * Use Kuma-prefered locales (zn-CN) instead of Django's (zn-Hans)
     * Don't include "Vary: Accept-Language" header
@@ -133,19 +134,12 @@ class LocaleMiddleware(object):
         Determine the language code for the request.
 
         Differences:
-        * Use Kuma language codes (en-US) not Django (en-us)
+        * Assume that locale prefixes are in use
+        * Use Kuma language codes (en-US) instead of Django's (en-us)
         """
-        check_path = self.is_language_prefix_patterns_used()
-        language = get_language_from_request(request, check_path=check_path)
+        language = get_language_from_request(request)
         translation.activate(language)
-        request.LANGUAGE_CODE = translation.get_language()
-
-        # Replace Django's language code w/ Kuma's, if needed
-        dj_language_code = request.LANGUAGE_CODE
-        kuma_language_code = django_language_code_to_kuma(dj_language_code)
-        if dj_language_code != kuma_language_code:
-            translation.activate(kuma_language_code)
-            request.LANGUAGE_CODE = kuma_language_code
+        request.LANGUAGE_CODE = language
 
     def process_response(self, request, response):
         """
@@ -160,8 +154,7 @@ class LocaleMiddleware(object):
 
         language = translation.get_language()
         language_from_path = get_language_from_path(request.path_info)
-        if (response.status_code == 404 and not language_from_path and
-                self.is_language_prefix_patterns_used()):
+        if response.status_code == 404 and not language_from_path:
             urlconf = getattr(request, 'urlconf', None)
             language_path = '/%s%s' % (language, request.path_info)
             path_valid = django_is_valid_path(language_path, urlconf)
@@ -206,16 +199,6 @@ class LocaleMiddleware(object):
             # Add caching headers
             add_shared_cache_control(response)
         return response
-
-    def is_language_prefix_patterns_used(self):
-        """
-        Returns `True` if the `LocaleRegexURLResolver` is used
-        at root level of the urlpatterns, else it returns `False`.
-
-        Differences:
-        * Always returns True for Kuma
-        """
-        return True
 
 
 class Forbidden403Middleware(object):
