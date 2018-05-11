@@ -31,7 +31,12 @@ WEIGHTED_ACCEPT_CASES = (
 PICKER_CASES = SIMPLE_ACCEPT_CASES + WEIGHTED_ACCEPT_CASES + (
     ('xx', 'en-US'),        # Unknown in Accept-Language gets default
 )
-REDIRECT_CASES = [case for case in SIMPLE_ACCEPT_CASES if case[0] != case[1]]
+REDIRECT_CASES = [
+    ('cn', 'zh-CN'),  # General to locale-specific in different general locale
+    ('pt', 'pt-PT'),  # General to locale-specific
+    ('zh-Hans', 'zh-CN'),  # Django-preferred to Mozilla standard locale
+    ('zh_tw', 'zh-TW'),  # Underscore and capitalization fix
+] + [(orig, new) for (orig, new) in SIMPLE_ACCEPT_CASES if orig != new]
 
 
 @pytest.mark.parametrize('accept_language,locale', PICKER_CASES)
@@ -78,3 +83,25 @@ def test_locale_middleware_lang_query_param(client):
     assert response.status_code == 302
     assert response['Location'] == 'http://testserver/fr/'
     assert_shared_cache_header(response)
+
+
+# Paths that were once valid, but now should 404, rather than get a second
+# chance with a locale prefix.
+# Subset of tests.headless.map_301.LEGACY_URLS
+LEGACY_404S = (
+    '/index.php',
+    '/index.php?title=En/HTML/Canvas&revision=110',
+    '/patches',
+    '/patches/foo',
+    '/web-tech',
+    '/web-tech/feed/atom/',
+    '/css/wiki.css',
+    '/css/base.css',
+)
+
+
+@pytest.mark.parametrize('path', LEGACY_404S)
+def test_locale_middleware_legacy_404s(client, path, db):
+    '''Legacy paths should be 404s, not get a locale prefix.'''
+    response = client.get(path)
+    assert response.status_code == 404
