@@ -17,8 +17,7 @@ from whitenoise.middleware import WhiteNoiseMiddleware
 from .decorators import add_shared_cache_control
 from .i18n import (django_language_code_to_kuma,
                    get_language_from_path,
-                   get_language_from_request,
-                   is_non_locale_path)
+                   get_language_from_request)
 from .utils import is_untrusted
 from .views import handler403
 
@@ -122,7 +121,6 @@ class LocaleMiddleware(object):
 
     Based on Django 1.8's LocaleMiddleware, with some differences:
 
-    * Skip locale detection for known non-localized paths
     * Use Kuma language codes (en-US) instead of Django's (en-us)
     * Use Kuma-prefered locales (zn-CN) instead of Django's (zn-Hans)
     * Don't include "Vary: Accept-Language" header
@@ -135,17 +133,8 @@ class LocaleMiddleware(object):
         Determine the language code for the request.
 
         Differences:
-        * Skip language detection (which adds a Vary header) if the path
-          is a known non-localized path.
         * Use Kuma language codes (en-US) not Django (en-us)
         """
-        # If the path is a known non-locale path, skip checks
-        if is_non_locale_path(request.path_info):
-            request.LANGUAGE_CODE = settings.LANGUAGE_CODE
-            return
-
-        # Pick the language code from the request
-        # Same as Django's process_request, but calls our customized method.
         check_path = self.is_language_prefix_patterns_used()
         language = get_language_from_request(request, check_path=check_path)
         translation.activate(language)

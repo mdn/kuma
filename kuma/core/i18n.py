@@ -13,7 +13,6 @@ from django.core.urlresolvers import (
     LocaleRegexURLResolver as DjangoLocaleRegexURLResolver)
 from django.utils import lru_cache, translation
 from django.utils.six import string_types
-from django.utils.translation import LANGUAGE_SESSION_KEY
 from django.utils.translation.trans_real import (
     check_for_language, get_languages, language_code_prefix_re,
     language_code_re, parse_accept_lang_header)
@@ -113,20 +112,14 @@ def get_language_from_request(request, check_path=False):
     Based on Django 1.8.19's get_language_from_request from
     django/utils/translation/trans_real.py, with some changes:
 
-    * None yet
+    * Assert check_path is True
+    * Don't check session language
     """
     # The (valid) locale in the URL wins
-    if check_path:
-        lang_code = get_language_from_path(request.path_info)
-        if lang_code is not None:
-            return lang_code
-
-    supported_lang_codes = get_languages()
-
-    if hasattr(request, 'session'):
-        lang_code = request.session.get(LANGUAGE_SESSION_KEY)
-        if lang_code in supported_lang_codes and lang_code is not None and check_for_language(lang_code):
-            return lang_code
+    assert check_path
+    lang_code = get_language_from_path(request.path_info)
+    if lang_code is not None:
+        return lang_code
 
     lang_code = request.COOKIES.get(settings.LANGUAGE_COOKIE_NAME)
 
