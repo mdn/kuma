@@ -17,7 +17,8 @@ from whitenoise.middleware import WhiteNoiseMiddleware
 from .decorators import add_shared_cache_control
 from .i18n import (get_language,
                    get_language_from_path,
-                   get_language_from_request)
+                   get_language_from_request,
+                   is_non_locale_path)
 from .utils import is_untrusted
 from .views import handler403
 
@@ -83,6 +84,9 @@ class LocaleStandardizerMiddleware(object):
             return response
 
         language_from_path = get_language_from_path(request.path_info)
+        if not language_from_path:
+            # 404 URLs without locale prefixes should remain 404s
+            return response
 
         literal_from_path = request.path_info.split('/')[1]
         fixed_locale = None
@@ -148,11 +152,13 @@ class LocaleMiddleware(object):
         Differences:
         * Use Kuma language code in locale redirect
         * Add caching headers to locale redirect
+        * Skip locale redirect for known no-locale paths
         * Don't add Vary: Accept-Language to headers
         """
         language = get_language()
         language_from_path = get_language_from_path(request.path_info)
-        if response.status_code == 404 and not language_from_path:
+        if (response.status_code == 404 and not language_from_path and
+                not is_non_locale_path(request.path_info)):
             urlconf = getattr(request, 'urlconf', None)
             language_path = '/%s%s' % (language, request.path_info)
             path_valid = django_is_valid_path(language_path, urlconf)
