@@ -15,7 +15,7 @@ from django.utils.six.moves.urllib.parse import (
 from whitenoise.middleware import WhiteNoiseMiddleware
 
 from .decorators import add_shared_cache_control
-from .i18n import (django_language_code_to_kuma,
+from .i18n import (get_language,
                    get_language_from_path,
                    get_language_from_request)
 from .utils import is_untrusted
@@ -150,9 +150,7 @@ class LocaleMiddleware(object):
         * Add caching headers to locale redirect
         * Don't add Vary: Accept-Language to headers
         """
-        was_404 = response.status_code == 404
-
-        language = translation.get_language()
+        language = get_language()
         language_from_path = get_language_from_path(request.path_info)
         if response.status_code == 404 and not language_from_path:
             urlconf = getattr(request, 'urlconf', None)
@@ -175,29 +173,12 @@ class LocaleMiddleware(object):
                         1
                     )
                 )
-                response = self.response_redirect_class(language_url)
+                redirect = self.response_redirect_class(language_url)
+                add_shared_cache_control(redirect)
+                return redirect
 
         if 'Content-Language' not in response:
             response['Content-Language'] = language
-
-        is_redirect = isinstance(response, self.response_redirect_class)
-        # Process language redirects
-        if is_redirect and was_404:
-            # Use Kuma language code, not Django's, in language redirect
-            language_url = response['Location']
-            url_parts = urlsplit(language_url)
-            path = url_parts.path
-            dj_language = url_parts.path.split('/')[1]
-            kuma_language = django_language_code_to_kuma(dj_language)
-            if dj_language != kuma_language:
-                new_path = path.replace(dj_language, kuma_language, 1)
-                new_url = urlunsplit((
-                    url_parts.scheme, url_parts.netloc, new_path,
-                    url_parts.query, url_parts.fragment))
-                response = self.response_redirect_class(new_url)
-
-            # Add caching headers
-            add_shared_cache_control(response)
         return response
 
 
