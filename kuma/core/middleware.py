@@ -91,9 +91,9 @@ class LocaleStandardizerMiddleware(object):
         if lower_match and (language_from_path != literal_from_path):
             # Language code is a lower-case match for a known locale
             fixed_locale = language_from_path
-        elif literal_from_path in settings.LOCALE_ALIASES:
+        elif literal_from_path.lower() in settings.LOCALE_ALIASES:
             # Language code is a known general -> specific locale
-            fixed_locale = settings.LOCALE_ALIASES[literal_from_path]
+            fixed_locale = settings.LOCALE_ALIASES[literal_from_path.lower()]
         elif not match and literal_from_path.startswith(language_from_path):
             # Language code is a specific locale (fr vs fr-FR)
             fixed_locale = language_from_path

@@ -75,6 +75,10 @@ def get_supported_language_variant(raw_lang_code):
     if raw_lang_code:
         lang_code = kuma_language_code_to_django(raw_lang_code)
 
+        # Check for known override
+        if lang_code in settings.LOCALE_ALIASES:
+            return settings.LOCALE_ALIASES[lang_code]
+
         # If 'fr-ca' is not supported, try special fallback or language-only 'fr'.
         possible_lang_codes = [lang_code]
         try:

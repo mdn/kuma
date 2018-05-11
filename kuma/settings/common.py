@@ -250,7 +250,7 @@ RTL_LANGUAGES = (
 )
 
 # Override generic locale handling with explicit mappings.
-# Keys are the requested locale; values are the delivered locale.
+# Keys are the requested locale (lowercase); values are the delivered locale.
 LOCALE_ALIASES = {
     # Treat "English (United States)" as the canonical "English".
     'en': 'en-US',
@@ -268,8 +268,8 @@ LOCALE_ALIASES = {
     'zh': 'zh-CN',
 
     # Create aliases for locales which use region subtags to assume scripts.
-    'zh-Hans': 'zh-CN',
-    'zh-Hant': 'zh-TW',
+    'zh-hans': 'zh-CN',
+    'zh-hant': 'zh-TW',
 
     # Map locale whose region subtag is separated by `_`(underscore)
     'zh_cn': 'zh-CN',

@@ -13,4 +13,5 @@ def test_rtl_languages(locale):
 def test_locale_aliases(alias, locale):
     """Check that each locale alias matches a supported locale."""
     assert alias not in settings.ENABLED_LOCALES
+    assert alias == alias.lower()
     assert locale in settings.ENABLED_LOCALES
