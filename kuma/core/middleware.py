@@ -3,12 +3,11 @@ from urlparse import urljoin
 
 from django.conf import settings
 from django.contrib.sessions.middleware import SessionMiddleware
-from django.core import urlresolvers
+from django.core.urlresolvers import get_script_prefix, resolve, Resolver404
+from django.core.urlresolvers import is_valid_path as django_is_valid_path
 from django.http import (HttpResponseForbidden,
                          HttpResponsePermanentRedirect,
                          HttpResponseRedirect)
-from django.middleware.locale import (
-    LocaleMiddleware as DjangoLocaleMiddleware)
 from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
 from django.utils.six.moves.urllib.parse import (
@@ -16,7 +15,10 @@ from django.utils.six.moves.urllib.parse import (
 from whitenoise.middleware import WhiteNoiseMiddleware
 
 from .decorators import add_shared_cache_control
-from .i18n import django_language_code_to_kuma
+from .i18n import (django_language_code_to_kuma,
+                   get_language_from_path,
+                   get_language_from_request,
+                   is_non_locale_path)
 from .utils import is_untrusted
 from .views import handler403
 
@@ -42,7 +44,7 @@ class LangSelectorMiddleware(object):
             # Language is already requested language, don't redirect
             return
 
-        script_prefix = urlresolvers.get_script_prefix()
+        script_prefix = get_script_prefix()
         lang_prefix = '%s%s/' % (script_prefix, language)
         full_path = request.get_full_path()  # Includes querystring
         old_path = urlsplit(full_path).path
@@ -76,16 +78,13 @@ class LocaleStandardizerMiddleware(object):
     """
 
     def process_response(self, request, response):
-        """
-        Convert 404s with legacy into redirects to language-specific URLs.
+        """Convert 404s into redirects to language-specific URLs."""
 
-        Differences:
-        * Redirected URL uses Kuma language code
-        """
         if response.status_code != 404:
             return response
 
-        language_from_path = translation.get_language_from_path(request.path_info)
+        language_from_path = get_language_from_path(request.path_info)
+
         literal_from_path = request.path_info.split('/')[1]
         fixed_locale = None
         match = literal_from_path == language_from_path
@@ -117,16 +116,19 @@ class LocaleStandardizerMiddleware(object):
             return response
 
 
-class LocaleMiddleware(DjangoLocaleMiddleware):
+class LocaleMiddleware(object):
     """
-    Override the base Django LocaleMiddleware with custom processing for Kuma.
+    Determine what language to use, and turn some 404s into locale redirects.
 
-    Differences:
+    Based on Django 1.8's LocaleMiddleware, with some differences:
+
     * Skip locale detection for known non-localized paths
     * Use Kuma language codes (en-US) instead of Django's (en-us)
+    * Use Kuma-prefered locales (zn-CN) instead of Django's (zn-Hans)
     * Don't include "Vary: Accept-Language" header
     * Add caching headers to locale redirects
     """
+    response_redirect_class = HttpResponseRedirect
 
     def process_request(self, request):
         """
@@ -138,13 +140,16 @@ class LocaleMiddleware(DjangoLocaleMiddleware):
         * Use Kuma language codes (en-US) not Django (en-us)
         """
         # If the path is a known non-locale path, skip checks
-        if not self.is_locale_path(request):
+        if is_non_locale_path(request.path_info):
             request.LANGUAGE_CODE = settings.LANGUAGE_CODE
             return
 
-        # Call Django's LocaleMiddleware to detect the language, activate it,
-        # and set request.LANGUAGE_CODE, based on Django's language code
-        response = super(LocaleMiddleware, self).process_request(request)
+        # Pick the language code from the request
+        # Same as Django's process_request, but calls our customized method.
+        check_path = self.is_language_prefix_patterns_used()
+        language = get_language_from_request(request, check_path=check_path)
+        translation.activate(language)
+        request.LANGUAGE_CODE = translation.get_language()
 
         # Replace Django's language code w/ Kuma's, if needed
         dj_language_code = request.LANGUAGE_CODE
@@ -153,16 +158,6 @@ class LocaleMiddleware(DjangoLocaleMiddleware):
             translation.activate(kuma_language_code)
             request.LANGUAGE_CODE = kuma_language_code
 
-        return response
-
-    def is_locale_path(self, request):
-        """Return True if the request path is localized path."""
-        path = request.path_info.lstrip('/')
-        for pattern in settings.LANGUAGE_URL_IGNORED_PATHS:
-            if path.startswith(pattern):
-                return False
-        return True
-
     def process_response(self, request, response):
         """
         Convert 404s into redirects to language-specific URLs.
@@ -170,15 +165,40 @@ class LocaleMiddleware(DjangoLocaleMiddleware):
         Differences:
         * Use Kuma language code in locale redirect
         * Add caching headers to locale redirect
-        * Delete Vary: Acceot-Language from headers
+        * Don't add Vary: Accept-Language to headers
         """
         was_404 = response.status_code == 404
 
-        # Django's process_response may add language redirect
-        response = super(LocaleMiddleware, self).process_response(request,
-                                                                  response)
-        is_redirect = isinstance(response, self.response_redirect_class)
+        language = translation.get_language()
+        language_from_path = get_language_from_path(request.path_info)
+        if (response.status_code == 404 and not language_from_path and
+                self.is_language_prefix_patterns_used()):
+            urlconf = getattr(request, 'urlconf', None)
+            language_path = '/%s%s' % (language, request.path_info)
+            path_valid = django_is_valid_path(language_path, urlconf)
+            if (not path_valid and settings.APPEND_SLASH and
+                    not language_path.endswith('/')):
+                path_valid = django_is_valid_path("%s/" % language_path, urlconf)
 
+            if path_valid:
+                script_prefix = get_script_prefix()
+                language_url = "%s://%s%s" % (
+                    request.scheme,
+                    request.get_host(),
+                    # insert language after the script prefix and before the
+                    # rest of the URL
+                    request.get_full_path().replace(
+                        script_prefix,
+                        '%s%s/' % (script_prefix, language),
+                        1
+                    )
+                )
+                response = self.response_redirect_class(language_url)
+
+        if 'Content-Language' not in response:
+            response['Content-Language'] = language
+
+        is_redirect = isinstance(response, self.response_redirect_class)
         # Process language redirects
         if is_redirect and was_404:
             # Use Kuma language code, not Django's, in language redirect
@@ -196,13 +216,17 @@ class LocaleMiddleware(DjangoLocaleMiddleware):
 
             # Add caching headers
             add_shared_cache_control(response)
-
-        # Drop Vary: Accept-Language
-        if (response.has_header('Vary') and
-                response['Vary'] == 'Accept-Language'):
-            del response['Vary']
-
         return response
+
+    def is_language_prefix_patterns_used(self):
+        """
+        Returns `True` if the `LocaleRegexURLResolver` is used
+        at root level of the urlpatterns, else it returns `False`.
+
+        Differences:
+        * Always returns True for Kuma
+        """
+        return True
 
 
 class Forbidden403Middleware(object):
@@ -220,9 +244,9 @@ class Forbidden403Middleware(object):
 def is_valid_path(request, path):
     urlconf = getattr(request, 'urlconf', None)
     try:
-        urlresolvers.resolve(path, urlconf)
+        resolve(path, urlconf)
         return True
-    except urlresolvers.Resolver404:
+    except Resolver404:
         return False
 
 
