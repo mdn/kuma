@@ -12,7 +12,7 @@ from ..middleware import (
 )
 
 
-@pytest.mark.xfail(reason='is_valid_path always returns True')
+@pytest.mark.xfail(reason='LocaleURLMiddleware.process_requests redirects.')
 @pytest.mark.parametrize('path', ('/missing_url', '/missing_url/'))
 def test_remove_slash_middleware_keep_404(client, db, path):
     '''The RemoveSlashMiddleware retains 404s.'''
@@ -20,7 +20,6 @@ def test_remove_slash_middleware_keep_404(client, db, path):
     assert response.status_code == 404
 
 
-@pytest.mark.xfail(reason='is_valid_path always returns True')
 def test_remove_slash_middleware_fixes_url(client, db):
     '''The RemoveSlashMiddleware fixes a URL that shouldn't have a slash.'''
     response = client.get(u'/contribute.json/')
@@ -28,7 +27,6 @@ def test_remove_slash_middleware_fixes_url(client, db):
     assert response['Location'].endswith('/contribute.json')
 
 
-@pytest.mark.xfail(reason='is_valid_path always returns True')
 def test_remove_slash_middleware_retains_querystring(client, db):
     '''The RemoveSlashMiddleware handles encoded querystrings.'''
     response = client.get(u'/contribute.json/?xxx=\xc3')

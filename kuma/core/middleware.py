@@ -4,13 +4,16 @@ from urlparse import urljoin
 
 from django.conf import settings
 from django.contrib.sessions.middleware import SessionMiddleware
-from django.core import urlresolvers
+from django.core.urlresolvers import resolve, Resolver404
 from django.http import (HttpResponseForbidden,
                          HttpResponsePermanentRedirect,
                          HttpResponseRedirect)
 from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
 from whitenoise.middleware import WhiteNoiseMiddleware
+
+from kuma.wiki.views.legacy import (mindtouch_to_kuma_redirect,
+                                    mindtouch_to_kuma_url)
 
 from .decorators import add_shared_cache_control
 from .urlresolvers import Prefixer, set_url_prefixer, split_path
@@ -101,9 +104,18 @@ class Forbidden403Middleware(object):
 def is_valid_path(request, path):
     urlconf = getattr(request, 'urlconf', None)
     try:
-        urlresolvers.resolve(path, urlconf)
-        return True
-    except urlresolvers.Resolver404:
+        match = resolve(path, urlconf)
+        if match.func == mindtouch_to_kuma_redirect:
+            # mindtouch_to_kuma_redirect matches everything.
+            # Check if it would return a redirect or 404.
+            url = mindtouch_to_kuma_url(request.LANGUAGE_CODE,
+                                        match.kwargs['path'])
+            return bool(url)
+        else:
+            return True
+    except Resolver404:
+        # mindtouch_to_kuma_redirect matches everything, so this branch is
+        # not exercised in tests, and possibly not in production.
         return False
 
 
