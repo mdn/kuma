@@ -38,8 +38,7 @@ class LangSelectorMiddleware(object):
             return
 
         # Check if the requested language is already embedded in URL
-        language = translation.get_language_from_request(
-            request, check_path=True)
+        language = get_language_from_request(request)
         if language == query_lang:
             # Language is already requested language, don't redirect
             return
