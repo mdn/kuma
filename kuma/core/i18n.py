@@ -18,15 +18,6 @@ from django.utils.translation.trans_real import (
     language_code_re, parse_accept_lang_header)
 
 
-def is_non_locale_path(path):
-    """Return True if the path should never have a locale prefix."""
-    path = path.lstrip('/')
-    for pattern in settings.LANGUAGE_URL_IGNORED_PATHS:
-        if path.startswith(pattern):
-            return True
-    return False
-
-
 def django_language_code_to_kuma(lang_code):
     """
     Convert Django language code to Kuma language code.

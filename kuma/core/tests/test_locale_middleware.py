@@ -59,11 +59,9 @@ def test_locale_middleware_fixer(original, fixed, client, db):
 
 
 def test_locale_middleware_fixer_confusion(client, db):
-    '''The LocaleMiddleware treats unknown locales and 404 en-US docs.'''
+    '''The LocaleMiddleware treats unknown locales as 404s.'''
     response = client.get('/xx/')
-    assert response.status_code == 302
-    assert response['Location'] == 'http://testserver/en-US/xx/'
-    assert_shared_cache_header(response)
+    assert response.status_code == 404
 
 
 def test_locale_middleware_language_cookie(client, db):

@@ -23,19 +23,22 @@ MINDTOUCH_NAMESPACES = (
 )
 
 
-def mindtouch_namespace_redirect(request, namespace, slug):
+def mindtouch_namespace_to_kuma_url(locale, namespace, slug):
     """
-    For URLs in special namespaces (like Talk:, User:, etc.), redirect
-    if possible to the appropriate new URL in the appropriate
-    locale. If the locale cannot be correctly determined, fall back to
-    en-US.
+    Convert MindTouch namespace URLs to Kuma URLs.
+
+    For special namespaces like Talk:, User:, etc., convert to the
+    approproate new URL, converting MT locales to Kuma locales.
+    If the locale cannot be correctly determined, fall back to en-US
+
+    TODO: It seems like en-US is always used...
     """
     new_locale = new_slug = None
     if namespace in ('Talk', 'Project', 'Project_talk'):
         # These namespaces carry the old locale in their URL, which
         # simplifies figuring out where to send them.
-        locale, _, doc_slug = slug.partition('/')
-        new_locale = settings.MT_TO_KUMA_LOCALE_MAP.get(locale, 'en-US')
+        mt_locale, _, doc_slug = slug.partition('/')
+        new_locale = settings.MT_TO_KUMA_LOCALE_MAP.get(mt_locale, 'en-US')
         new_slug = '%s:%s' % (namespace, doc_slug)
     elif namespace == 'User':
         # For users, we look up the latest revision and get the locale
@@ -54,17 +57,17 @@ def mindtouch_namespace_redirect(request, namespace, slug):
         new_locale = 'en-US'
         new_slug = '%s:%s' % (namespace, slug)
     if new_locale:
-        new_url = '/%s/docs/%s' % (request.LANGUAGE_CODE, new_slug)
-    return redirect(new_url, permanent=True)
+        new_url = '/%s/docs/%s' % (locale, new_slug)
+    return new_url
 
 
-@shared_cache_control(s_maxage=60 * 60 * 24 * 30)
-def mindtouch_to_kuma_redirect(request, path):
+def mindtouch_to_kuma_url(locale, path):
     """
-    Given a request to a Mindtouch-generated URL, generate a redirect
-    to the correct corresponding kuma URL.
+    Convert valid MindTouch namespace URLs to Kuma URLs.
+
+    If there is an appropriate Kuma URL, then it is returned.
+    If there is no appropriate Kuma URL, then None is returned.
     """
-    locale = request.LANGUAGE_CODE
     if path.startswith('%s/' % locale):
         # Convert from Django-based LocaleMiddleware path to zamboni/amo style
         path = path.replace('%s/' % locale, '', 1)
@@ -72,7 +75,7 @@ def mindtouch_to_kuma_redirect(request, path):
     if path.startswith('Template:MindTouch'):
         # MindTouch's default templates. There shouldn't be links to
         # them anywhere in the wild, but just in case we 404 them.
-        raise Http404
+        return None
 
     if path.endswith('/'):
         # If there's a trailing slash, snip it off.
@@ -83,17 +86,30 @@ def mindtouch_to_kuma_redirect(request, path):
         # The namespaces (Talk:, User:, etc.) get their own
         # special-case handling.
         if namespace in MINDTOUCH_NAMESPACES:
-            return mindtouch_namespace_redirect(request, namespace, slug)
+            return mindtouch_namespace_to_kuma_url(locale, namespace, slug)
 
     # Last attempt: we try the request locale as the document locale,
     # and see if that matches something.
     try:
         doc = Document.objects.get(slug=path, locale=locale)
     except Document.DoesNotExist:
-        raise Http404
+        return None
 
     location = doc.get_absolute_url()
-    if 'view' in request.GET:
-        location = '%s$%s' % (location, request.GET['view'])
+    return location
 
-    return redirect(location, permanent=True)
+
+@shared_cache_control(s_maxage=60 * 60 * 24 * 30)
+def mindtouch_to_kuma_redirect(request, path):
+    """
+    Given a request to a Mindtouch-generated URL, generate a redirect
+    to the correct corresponding kuma URL.
+    """
+    locale = request.LANGUAGE_CODE
+    url = mindtouch_to_kuma_url(locale, path)
+    if url:
+        if 'view' in request.GET:
+            url = '%s$%s' % (url, request.GET['view'])
+        return redirect(url, permanent=True)
+    else:
+        raise Http404

@@ -4,7 +4,6 @@ from urlparse import urljoin
 from django.conf import settings
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.core.urlresolvers import get_script_prefix, resolve, Resolver404
-from django.core.urlresolvers import is_valid_path as django_is_valid_path
 from django.http import (HttpResponseForbidden,
                          HttpResponsePermanentRedirect,
                          HttpResponseRedirect)
@@ -14,11 +13,13 @@ from django.utils.six.moves.urllib.parse import (
     urlencode, urlsplit, urlunsplit)
 from whitenoise.middleware import WhiteNoiseMiddleware
 
+from kuma.wiki.views.legacy import (mindtouch_to_kuma_redirect,
+                                    mindtouch_to_kuma_url)
+
 from .decorators import add_shared_cache_control
 from .i18n import (get_language,
                    get_language_from_path,
-                   get_language_from_request,
-                   is_non_locale_path)
+                   get_language_from_request)
 from .utils import is_untrusted
 from .views import handler403
 
@@ -156,14 +157,12 @@ class LocaleMiddleware(object):
         """
         language = get_language()
         language_from_path = get_language_from_path(request.path_info)
-        if (response.status_code == 404 and not language_from_path and
-                not is_non_locale_path(request.path_info)):
-            urlconf = getattr(request, 'urlconf', None)
+        if response.status_code == 404 and not language_from_path:
             language_path = '/%s%s' % (language, request.path_info)
-            path_valid = django_is_valid_path(language_path, urlconf)
+            path_valid = is_valid_path(request, language_path)
             if (not path_valid and settings.APPEND_SLASH and
                     not language_path.endswith('/')):
-                path_valid = django_is_valid_path("%s/" % language_path, urlconf)
+                path_valid = is_valid_path(request, "%s/" % language_path)
 
             if path_valid:
                 script_prefix = get_script_prefix()
@@ -202,8 +201,15 @@ class Forbidden403Middleware(object):
 def is_valid_path(request, path):
     urlconf = getattr(request, 'urlconf', None)
     try:
-        resolve(path, urlconf)
-        return True
+        match = resolve(path, urlconf)
+        if match.func == mindtouch_to_kuma_redirect:
+            # mindtouch_to_kuma_redirect matches everything.
+            # Check if it would return a redirect or 404.
+            url = mindtouch_to_kuma_url(request.LANGUAGE_CODE,
+                                        match.kwargs['path'])
+            return bool(url)
+        else:
+            return True
     except Resolver404:
         return False
 
