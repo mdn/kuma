@@ -10,6 +10,17 @@ from kuma.core.decorators import redirect_in_maintenance_mode
 from . import views
 
 
+urlpatterns = []
+for provider in providers.registry.get_list():
+    try:
+        prov_mod = importlib.import_module(provider.package + '.urls')
+    except ImportError:
+        continue
+    prov_urlpatterns = getattr(prov_mod, 'urlpatterns', None)
+    if prov_urlpatterns:
+        urlpatterns += prov_urlpatterns
+
+
 account_patterns = [
     url(r'^signin/cancelled/?$',
         socialaccount_views.login_cancelled,
@@ -73,17 +84,7 @@ users_patterns = [
 ]
 
 
-for provider in providers.registry.get_list():
-    try:
-        prov_mod = importlib.import_module(provider.package + '.urls')
-    except ImportError:
-        continue
-    prov_urlpatterns = getattr(prov_mod, 'urlpatterns', None)
-    if prov_urlpatterns:
-        users_patterns += prov_urlpatterns
-
-
-urlpatterns = [
+lang_urlpatterns = [
     url(r'^profiles/(?P<username>[^/]+)/?$',
         views.user_detail,
         name='users.user_detail'),

@@ -1,74 +1,119 @@
+import pytest
 from django.conf import settings
 
-from kuma.core.tests import assert_shared_cache_header
-
-from . import KumaTestCase
+from . import assert_shared_cache_header
 
 
-class TestLocaleMiddleware(KumaTestCase):
-    def test_default_redirect(self):
-        # User wants en-us, we send en-US
-        response = self.client.get('/', follow=True,
-                                   HTTP_ACCEPT_LANGUAGE='en-us')
-        self.assertRedirects(response, '/en-US/', status_code=302)
-        assert_shared_cache_header(response)
+# Simple Accept-Language headers, one term
+SIMPLE_ACCEPT_CASES = (
+    ('', 'en-US'),          # No preference gets default en-US
+    ('en', 'en-US'),        # Default en is en-US
+    ('en-US', 'en-US'),     # Exact match for default
+    ('en-us', 'en-US'),     # Case-insensitive match for default
+    ('fr-FR', 'fr'),        # Overly-specified locale gets default
+    ('fr-fr', 'fr'),        # Overly-specified match is case-insensitive
+)
+# Real-world Accept-Language headers include quality value weights
+WEIGHTED_ACCEPT_CASES = (
+    ('en, fr;q=0.5', 'en-US'),          # English without region gets en-US
+    ('en-GB, fr-FR;q=0.5', 'en-US'),    # Any English gets en-US
+    ('en-US, en;q=0.5', 'en-US'),       # Request for en-US gets en-US
+    ('fr, en-US;q=0.5', 'fr'),          # Exact match of non-English language
+    ('fr-FR, de-DE;q=0.5', 'fr'),       # Highest locale-specific match wins
+    ('fr-FR, de;q=0.5', 'fr'),          # First generic match wins
+    ('ga, fr;q=0.5', 'ga-IE'),          # Generic Gaelic matches ga-IE
+    ('pt, fr;q=0.5', 'pt-PT'),          # Generic Portuguese matches pt-PT
+    ('pt-BR, en-US;q=0.5', 'pt-BR'),    # Portuguese-Brazil matches
+    ('qaz-ZZ, fr-FR;q=0.5', 'fr'),      # Respect partial match on prefix
+    ('qaz-ZZ, qaz;q=0.5', False),       # No matches gets default en-US
+    ('zh-Hant, fr;q=0.5', 'zh-TW'),     # Traditional Chinese matches zh-TW
+    ('*', 'en-US'),                     # Any-language case gets default
+)
+PICKER_CASES = SIMPLE_ACCEPT_CASES + WEIGHTED_ACCEPT_CASES + (
+    ('xx', 'en-US'),        # Unknown in Accept-Language gets default
+)
+REDIRECT_CASES = [
+    ('cn', 'zh-CN'),  # General to locale-specific in different general locale
+    ('pt', 'pt-PT'),  # General to locale-specific
+    ('zh-Hans', 'zh-CN'),  # Django-preferred to Mozilla standard locale
+    ('zh_tw', 'zh-TW'),  # Underscore and capitalization fix
+] + [(orig, new) for (orig, new) in SIMPLE_ACCEPT_CASES if orig != new]
 
-        # User wants fr-FR, we send fr
-        response = self.client.get('/', follow=True,
-                                   HTTP_ACCEPT_LANGUAGE='fr-fr')
-        self.assertRedirects(response, '/fr/', status_code=302)
-        assert_shared_cache_header(response)
 
-        # User wants xx, we send en-US
-        response = self.client.get('/', follow=True,
-                                   HTTP_ACCEPT_LANGUAGE='xx')
-        self.assertRedirects(response, '/en-US/', status_code=302)
-        assert_shared_cache_header(response)
+@pytest.mark.parametrize('accept_language,locale', PICKER_CASES)
+def test_locale_middleware_picker(accept_language, locale, client, db):
+    '''The LocaleMiddleware picks locale from the Accept-Language header.'''
+    response = client.get('/', HTTP_ACCEPT_LANGUAGE=accept_language)
+    assert response.status_code == 302
+    url_locale = locale or 'en-US'
+    assert response['Location'] == 'http://testserver/%s/' % url_locale
+    assert_shared_cache_header(response)
 
-        # User doesn't know what they want, we send en-US
-        response = self.client.get('/', follow=True,
-                                   HTTP_ACCEPT_LANGUAGE='')
-        self.assertRedirects(response, '/en-US/', status_code=302)
-        assert_shared_cache_header(response)
 
-    def test_mixed_case_header(self):
-        """Accept-Language is case insensitive."""
-        response = self.client.get('/', follow=True,
-                                   HTTP_ACCEPT_LANGUAGE='en-US')
-        self.assertRedirects(response, '/en-US/', status_code=302)
-        assert_shared_cache_header(response)
+@pytest.mark.parametrize('original,fixed', REDIRECT_CASES)
+def test_locale_middleware_fixer(original, fixed, client, db):
+    '''The LocaleMiddleware redirects for non-standard locale URLs.'''
+    response = client.get('/%s/' % original)
+    assert response.status_code == 302
+    assert response['Location'] == 'http://testserver/%s/' % fixed
+    assert_shared_cache_header(response)
 
-    def test_specificity(self):
-        """Requests for /fr-FR/ should end up on /fr/"""
-        response = self.client.get('/fr-FR/', follow=True)
-        self.assertRedirects(response, '/fr/', status_code=302)
-        assert_shared_cache_header(response)
 
-    def test_partial_redirect(self):
-        """Ensure that /en/ gets directed to /en-US/."""
-        response = self.client.get('/en/', follow=True)
-        self.assertRedirects(response, '/en-US/', status_code=302)
-        assert_shared_cache_header(response)
+def test_locale_middleware_fixer_confusion(client, db):
+    '''The LocaleMiddleware treats unknown locales as 404s.'''
+    response = client.get('/xx/')
+    assert response.status_code == 404
 
-    def test_lower_to_upper(self):
-        """/en-us should redirect to /en-US."""
-        response = self.client.get('/en-us/', follow=True)
-        self.assertRedirects(response, '/en-US/', status_code=302)
-        assert_shared_cache_header(response)
 
-    def test_language_cookie_support(self):
-        """Request with language cookie should redirect to the cookie locale"""
-        # Add appropriate language cookie to the client
-        self.client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
-        response = self.client.get('/')
-        self.assertRedirects(response, '/bn-BD/', status_code=302)
-        assert_shared_cache_header(response)
+def test_locale_middleware_language_cookie(client, db):
+    '''The LocaleMiddleware uses the language cookie.'''
+    client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
+    response = client.get('/')
+    assert response.status_code == 302
+    assert response['Location'] == 'http://testserver/bn-BD/'
+    assert_shared_cache_header(response)
 
-    def test_lang_query_param(self):
-        """Request with lang query param should redirect to that locale"""
-        # Add language cookie and accept-language header as red herrings.
-        self.client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
-        response = self.client.get('/?lang=fr',
-                                   HTTP_ACCEPT_LANGUAGE='en;q=0.9, fr;q=0.8')
-        self.assertRedirects(response, '/fr/', status_code=302)
-        assert_shared_cache_header(response)
+
+@pytest.mark.parametrize('path', ('/', '/en-US/'))
+def test_lang_selector_middleware(path, client):
+    '''The LangSelectorMiddleware redirects on the ?lang query first.'''
+    client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
+    response = client.get('%s?lang=fr' % path,
+                          HTTP_ACCEPT_LANGUAGE='en;q=0.9, fr;q=0.8')
+    assert response.status_code == 302
+    assert response['Location'] == 'http://testserver/fr/'
+    assert_shared_cache_header(response)
+
+
+def test_lang_selector_middleware_no_change(client, db):
+    '''The LangSelectorMiddleware ignores the same ?lang query.'''
+    response = client.get('/fr/?lang=fr')
+    assert response.status_code == 200
+    assert_shared_cache_header(response)
+
+
+# Paths that were once valid, but now should 404, rather than get a second
+# chance with a locale prefix.
+# Subset of tests.headless.map_301.LEGACY_URLS
+LEGACY_404S = (
+    '/index.php',
+    '/index.php?title=En/HTML/Canvas&revision=110',
+    '/patches',
+    '/patches/foo',
+    '/web-tech',
+    '/web-tech/feed/atom/',
+    '/css/wiki.css',
+    '/css/base.css',
+)
+
+
+@pytest.mark.parametrize('path', LEGACY_404S)
+def test_locale_middleware_legacy_404s(client, path, db):
+    '''
+    Legacy paths should be 404s, not get a locale prefix.
+
+    FIXME: Currently broken. When fixed, it may be possible to remove the db
+    fixture, which is needed by the zones middleware.
+    '''
+    response = client.get(path)
+    assert response.status_code == 404

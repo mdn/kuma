@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 
@@ -33,8 +33,16 @@ class DocumentZoneMiddleware(object):
                 ('$subscribe' in request.path or '$files' in request.path)):
             return None
 
+        # Process the request path
+        path = request.path_info
+        request_slug = path.lstrip('/')
+        maybe_lang = request_slug.split(u'/')[0]
+        if maybe_lang in settings.ENABLED_LOCALES:
+            path = u'/' + u'/'.join(request_slug.split(u'/')[1:])
+        else:
+            path = u'/' + request_slug
+
         # Skip slugs that don't have locales, and won't be in a zone
-        request_slug = request.path_info.lstrip('/')
         if any(request_slug.startswith(slug)
                for slug in settings.LANGUAGE_URL_IGNORED_PATHS):
             return None
@@ -43,14 +51,12 @@ class DocumentZoneMiddleware(object):
         for original_path, new_path in remaps:
 
             if (
-                request.path_info == original_path or
-                request.path_info.startswith(u''.join([original_path, '/']))
+                path == original_path or
+                path.startswith(u''.join([original_path, '/']))
             ):
                 # Is this a request for the "original" wiki path? Redirect to
                 # new URL root, if so.
-                new_path = request.path_info.replace(original_path,
-                                                     new_path,
-                                                     1)
+                new_path = path.replace(original_path, new_path, 1)
                 new_path = '/%s%s' % (request.LANGUAGE_CODE, new_path)
 
                 query = request.GET.copy()
@@ -58,16 +64,16 @@ class DocumentZoneMiddleware(object):
 
                 return HttpResponseRedirect(new_path)
 
-            elif request.path_info == u'/docs{}'.format(new_path):
+            elif path == u'/docs{}'.format(new_path):
                 # Is this a request for a DocumentZone, but with /docs/ wedged
                 # in the url path between the language code and the zone's url_root?
                 new_path = u'/{}{}'.format(request.LANGUAGE_CODE, new_path)
                 query = request.GET.copy()
                 new_path = urlparams(new_path, query_dict=query)
 
-                return HttpResponsePermanentRedirect(new_path)
+                return HttpResponseRedirect(new_path)
 
-            elif request.path_info.startswith(new_path):
+            elif path.startswith(new_path):
                 # Is this a request for the relocated wiki path? If so, rewrite
                 # the path as a request for the proper wiki view.
                 request.path_info = request.path_info.replace(new_path,
