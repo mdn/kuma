@@ -27,6 +27,7 @@ WEIGHTED_ACCEPT_CASES = (
     ('qaz-ZZ, fr-FR;q=0.5', 'fr'),      # Respect partial match on prefix
     ('qaz-ZZ, qaz;q=0.5', False),       # No matches gets default en-US
     ('zh-Hant, fr;q=0.5', 'zh-TW'),     # Traditional Chinese matches zh-TW
+    ('*', 'en-US'),                     # Any-language case gets default
 )
 PICKER_CASES = SIMPLE_ACCEPT_CASES + WEIGHTED_ACCEPT_CASES + (
     ('xx', 'en-US'),        # Unknown in Accept-Language gets default

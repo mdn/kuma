@@ -143,7 +143,10 @@ def get_language_from_request(request):
         if accept_lang == '*':
             break
 
-        if not language_code_re.search(accept_lang):
+        if not language_code_re.search(accept_lang):  # pragma: no cover
+            # Check added with a security fix:
+            # https://www.djangoproject.com/weblog/2007/oct/26/security-fix/
+            # It is unclear how to trigger this branch, so skipping coverage.
             continue
 
         try:
@@ -151,10 +154,12 @@ def get_language_from_request(request):
         except LookupError:
             continue
 
-    try:
-        return get_supported_language_variant(settings.LANGUAGE_CODE)
-    except LookupError:
-        return settings.LANGUAGE_CODE
+    # Fallback to default settings.LANGUAGE_CODE.
+    # Django supports a case when LANGUAGE_CODE is not in LANGUAGES
+    # (see https://github.com/django/django/pull/824). but our LANGUAGE_CODE is
+    # always in LANGUAGES.
+    assert settings.LANGUAGE_CODE == settings.LANGUAGES[0][0]
+    return settings.LANGUAGE_CODE
 
 
 class LocaleRegexURLResolver(DjangoLocaleRegexURLResolver):
