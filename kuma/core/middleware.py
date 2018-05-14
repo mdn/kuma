@@ -220,6 +220,9 @@ class RemoveSlashMiddleware(object):
 
     If the response is a 404 because url resolution failed, we'll look for a
     better url without a trailing slash.
+
+    This middleware only processes non-locale URLs. Locale-prefixed URLs are
+    converted to redirects in LocaleMiddleware.
     """
 
     def process_response(self, request, response):

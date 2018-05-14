@@ -12,18 +12,25 @@ from ..middleware import (
 )
 
 
-@pytest.mark.parametrize('path', ('/en-US/ohnoez', '/en-US/ohnoez/'))
+@pytest.mark.parametrize('path', ('/missing_url', '/missing_url/'))
 def test_remove_slash_middleware_keep_404(client, db, path):
     '''The RemoveSlashMiddleware retains 404s.'''
     response = client.get(path)
     assert response.status_code == 404
 
 
+def test_remove_slash_middleware_fixes_url(client, db):
+    '''The RemoveSlashMiddleware fixes a URL that shouldn't have a slash.'''
+    response = client.get(u'/contribute.json/')
+    assert response.status_code == 301
+    assert response['Location'].endswith('/contribute.json')
+
+
 def test_remove_slash_middleware_retains_querystring(client, db):
     '''The RemoveSlashMiddleware handles encoded querystrings.'''
-    response = client.get(u'/en-US/docs/files/?xxx=\xc3')
+    response = client.get(u'/contribute.json/?xxx=\xc3')
     assert response.status_code == 301
-    assert response['Location'].endswith('/en-US/docs/files?xxx=%C3%83')
+    assert response['Location'].endswith('/contribute.json?xxx=%C3%83')
 
 
 @pytest.mark.parametrize(
