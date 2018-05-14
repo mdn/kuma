@@ -75,11 +75,20 @@ def test_locale_middleware_language_cookie(client):
     assert_shared_cache_header(response)
 
 
-def test_locale_middleware_lang_query_param(client):
+@pytest.mark.parametrize('path', ('/', '/en-US/'))
+def test_locale_middleware_lang_query_param(path, client):
     '''The LocaleMiddleware redirects on the ?lang query first.'''
     client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
-    response = client.get('/?lang=fr',
+    response = client.get('%s?lang=fr' % path,
                           HTTP_ACCEPT_LANGUAGE='en;q=0.9, fr;q=0.8')
+    assert response.status_code == 302
+    assert response['Location'] == 'http://testserver/fr/'
+    assert_shared_cache_header(response)
+
+
+def test_locale_middleware_no_change(client, db):
+    '''The LocaleMiddleware redirects on the same ?lang query.'''
+    response = client.get('/fr/?lang=fr')
     assert response.status_code == 302
     assert response['Location'] == 'http://testserver/fr/'
     assert_shared_cache_header(response)
