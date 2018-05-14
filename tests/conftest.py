@@ -95,12 +95,12 @@ def selenium(request, selenium):
 
 
 @pytest.fixture(scope='session')
-def sensitive_url(request, base_url):
-    if not base_url:
-        return False
-    return not any(base_url.startswith(url)
-                   for url in ('http://localhost',
-                               'https://developer-local'))
+def is_local_url(base_url):
+    """
+    Returns True if the system-under-test is the local development
+    instance (localhost).
+    """
+    return base_url and (urlsplit(base_url).hostname == 'localhost')
 
 
 @pytest.fixture(scope='session')
@@ -111,6 +111,12 @@ def kuma_status(base_url):
 @pytest.fixture(scope='session')
 def is_debug(kuma_status):
     return kuma_status['settings']['DEBUG']
+
+
+@pytest.fixture(scope='session')
+def is_searchable(kuma_status):
+    search = kuma_status['services']['search']
+    return search['available'] and search['populated']
 
 
 @pytest.fixture(scope='session')

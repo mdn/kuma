@@ -218,13 +218,13 @@ def test_not_cached_403(base_url, is_behind_cdn, slug):
      '/en-US/docs/Web/HTML$json',
      '/en-US/docs/Web/HTML$history',
      '/en-US/docs/Web/HTML$children',
-     '/en-US/docs/Web/HTML$revision/1293895',
-     '/en-US/docs/Web/HTML$compare?locale=en-US&to=1299417&from=1293895',
+     '/en-US/docs/Web/HTML$revision/1252409',
+     '/en-US/docs/Web/HTML$compare?locale=en-US&to=1287251&from=1252409',
      '/en-US/Firefox$json',
      '/en-US/Firefox$history',
      '/en-US/Firefox$children',
-     '/en-US/docs/Learn/CSS/Styling_text/Fundamentals#Color',
-     '/en-US/docs/Learn/CSS/Styling_text/Fundamentals$toc',
+     '/en-US/docs/Learn/CSS#Modules',
+     '/en-US/docs/Learn/CSS$toc',
      '/fr/docs/feeds/rss/l10n-updates',
      '/fr/docs/localization-tag/inprogress',
      '/en-US/docs/all',
@@ -241,8 +241,14 @@ def test_not_cached_403(base_url, is_behind_cdn, slug):
      '/en-US/docs/top-level',
      '/en-US/docs/with-errors',
      '/en-US/docs/without-parent'])
-def test_cached(base_url, is_behind_cdn, slug):
+def test_cached(base_url, is_behind_cdn, is_local_url, is_searchable, slug):
     """Ensure that these requests that should return 200 are cached."""
+    if is_local_url:
+        if any(slug.startswith(p) for p in ('/diagrams/', '/presentations/')):
+            pytest.xfail('legacy files are typically not served from a '
+                         'local development instance')
+        elif (not is_searchable) and slug.endswith('/dashboards/macros'):
+            pytest.xfail('search is not available and populated')
     assert_cached(base_url + slug, 200, is_behind_cdn)
 
 
@@ -251,8 +257,11 @@ def test_cached(base_url, is_behind_cdn, slug):
     'slug', ['/files/2767/hut.jpg',
              '/@api/deki/files/3613/=hut.jpg',
              '/en-US/dashboards/localization'])
-def test_cached_301(base_url, is_behind_cdn, slug):
+def test_cached_301(base_url, is_behind_cdn, is_local_url, slug):
     """Ensure that these requests that should return 301 are cached."""
+    if is_local_url and any(slug.startswith(p) for p in ('/files/', '/@api/')):
+            pytest.xfail('attachments are typically not served from a '
+                         'local development instance')
     assert_cached(base_url + slug, 301, is_behind_cdn)
 
 
@@ -307,7 +316,8 @@ def test_lookup_dashboards(base_url, is_behind_cdn, slug, params):
 @pytest.mark.parametrize(
     'slug', ['/en-US/docs/Web/HTML',
              '/en-US/Firefox'])
-def test_documents_with_cookie_and_param(base_url, is_behind_cdn, slug):
+def test_documents_with_cookie_and_param(base_url, is_behind_cdn, is_local_url,
+                                         slug):
     """
     Ensure that the "dwf_sg_task_completion" cookie, and query
     parameters are forwarded/cached-on for document requests.
@@ -320,6 +330,9 @@ def test_documents_with_cookie_and_param(base_url, is_behind_cdn, slug):
     response3 = assert_cached(url + '?raw=true', 200, is_behind_cdn)
     assert response3.content != response2.content
     assert response3.content != response1.content
+    if is_local_url:
+        pytest.xfail('the sg_task_completion waffle flag is not '
+                     'enabled by default in the sample database')
     assert response2.content != response1.content
 
 
