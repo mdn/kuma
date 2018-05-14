@@ -181,7 +181,11 @@ class LocaleMiddleware(object):
                 add_shared_cache_control(redirect)
                 return redirect
 
-        if 'Content-Language' not in response:
+        # No views set this header, so the middleware always sets it. The code
+        # could be replaced with an assertion, but that would deviate from
+        # Django's version, and make the code brittle, so using a pragma
+        # instead. And a long comment.
+        if 'Content-Language' not in response:  # pragma: no cover
             response['Content-Language'] = language
         return response
 
