@@ -446,6 +446,12 @@ apipkg==1.4 \
 execnet==1.5.0 \
     --hash=sha256:a7a84d5fa07a089186a329528f127c9d73b9de57f1a1131b82bb5320ee651f6a \
     --hash=sha256:fc155a6b553c66c838d1a22dba1dc9f5f505c43285a878c6f74a79c024750b83
+# Run each test in a forked subprocess
+# Code, Docs: https://github.com/pytest-dev/pytest-forked
+# Release Notes: https://github.com/pytest-dev/pytest-forked/blob/master/CHANGELOG
+pytest-forked==0.2 \
+    --hash=sha256:f275cb48a73fc61a6710726348e1da6d68a978f0ec0c54ece5a5fae5977e5a08 \
+    --hash=sha256:e4500cd0509ec4a26535f7d4112a8cc0f17d3a41c29ffd4eab479d2a55b30805
 
 # raven
 contextlib2==0.5.1 \
