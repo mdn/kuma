@@ -158,9 +158,9 @@ class SelectorContentFindTests(UserTestCase, WikiTestCase):
 
 @pytest.mark.parametrize(
     "path, expected", (
-        ('MDN/Getting_started', '/docs/MDN/Getting_started'),
+        ('MDN/Getting_started', '/en-US/docs/MDN/Getting_started'),
         ('MDN/Getting_started#Option_1_I_like_words',
-         '/docs/MDN/Getting_started#Option_1_I_like_words'),
+         '/en-US/docs/MDN/Getting_started#Option_1_I_like_words'),
     ), ids=('simple', 'fragment'))
 def test_wiki_url(path, expected):
     """Test wiki_url, without client languages."""

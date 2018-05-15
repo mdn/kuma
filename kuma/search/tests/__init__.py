@@ -5,9 +5,8 @@ from elasticsearch.exceptions import ConnectionError
 from elasticsearch_dsl.connections import connections
 from rest_framework.test import APIRequestFactory
 
-from kuma.core.middleware import LocaleURLMiddleware
+from kuma.core.middleware import LocaleMiddleware
 from kuma.core.tests import LocalizingMixin
-from kuma.core.urlresolvers import reset_url_prefixer
 from kuma.users.tests import UserTestCase
 from kuma.wiki.search import WikiDocumentType
 
@@ -59,7 +58,6 @@ class ElasticTestCase(UserTestCase):
     def tearDown(self):
         super(ElasticTestCase, self).tearDown()
         self.teardown_indexes()
-        reset_url_prefixer()
 
     def refresh(self, index=None):
         index = index or Index.objects.get_current().prefixed_name
@@ -82,5 +80,5 @@ class ElasticTestCase(UserTestCase):
     def get_request(self, *args, **kwargs):
         request = factory.get(*args, **kwargs)
         # setting request.LANGUAGE_CODE correctly
-        LocaleURLMiddleware().process_request(request)
+        LocaleMiddleware().process_request(request)
         return request

@@ -12,7 +12,6 @@ from ..middleware import (
 )
 
 
-@pytest.mark.xfail(reason='LocaleURLMiddleware.process_requests redirects.')
 @pytest.mark.parametrize('path', ('/missing_url', '/missing_url/'))
 def test_remove_slash_middleware_keep_404(client, db, path):
     '''The RemoveSlashMiddleware retains 404s.'''

@@ -250,7 +250,7 @@ RTL_LANGUAGES = (
 )
 
 # Override generic locale handling with explicit mappings.
-# Keys are the requested locale; values are the delivered locale.
+# Keys are the requested locale (lowercase); values are the delivered locale.
 LOCALE_ALIASES = {
     # Treat "English (United States)" as the canonical "English".
     'en': 'en-US',
@@ -268,9 +268,8 @@ LOCALE_ALIASES = {
     'zh': 'zh-CN',
 
     # Create aliases for locales which use region subtags to assume scripts.
-    # TODO: Change keys to lower-case for get_supported_language_variant
-    'zh-Hans': 'zh-CN',
-    'zh-Hant': 'zh-TW',
+    'zh-hans': 'zh-CN',
+    'zh-hant': 'zh-TW',
 
     # Map locale whose region subtag is separated by `_`(underscore)
     'zh_cn': 'zh-CN',
@@ -482,15 +481,17 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'kuma.core.middleware.LegacyDomainRedirectsMiddleware',
     'kuma.core.middleware.RestrictedWhiteNoiseMiddleware',
-    # must come before LocaleURLMiddleware
+    # must come before LocaleMiddleware
     'redirect_urls.middleware.RedirectsMiddleware',
-    # LocaleURLMiddleware must be before any middleware that uses
-    # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
     'kuma.core.middleware.SetRemoteAddrFromForwardedFor',
     ('kuma.core.middleware.ForceAnonymousSessionMiddleware'
      if MAINTENANCE_MODE else
      'django.contrib.sessions.middleware.SessionMiddleware'),
-    'kuma.core.middleware.LocaleURLMiddleware',
+    'kuma.core.middleware.LangSelectorMiddleware',
+    'kuma.core.middleware.LocaleStandardizerMiddleware',
+    # LocaleMiddleware must be before any middleware that uses
+    # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
+    'kuma.core.middleware.LocaleMiddleware',
     'kuma.wiki.middleware.DocumentZoneMiddleware',
     'kuma.wiki.middleware.ReadOnlyMiddleware',
     'kuma.core.middleware.Forbidden403Middleware',

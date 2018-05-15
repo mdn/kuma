@@ -6,7 +6,7 @@ from kuma.core.decorators import shared_cache_control
 from . import views
 
 
-urlpatterns = [
+lang_urlpatterns = [
     url(r'^revisions$',
         views.revisions,
         name='dashboards.revisions'),

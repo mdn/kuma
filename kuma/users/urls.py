@@ -73,6 +73,7 @@ users_patterns = [
 ]
 
 
+urlpatterns = []
 for provider in providers.registry.get_list():
     try:
         prov_mod = importlib.import_module(provider.package + '.urls')
@@ -80,10 +81,9 @@ for provider in providers.registry.get_list():
         continue
     prov_urlpatterns = getattr(prov_mod, 'urlpatterns', None)
     if prov_urlpatterns:
-        users_patterns += prov_urlpatterns
+        urlpatterns += prov_urlpatterns
 
-
-urlpatterns = [
+lang_urlpatterns = [
     url(r'^profiles/(?P<username>[^/]+)/?$',
         views.user_detail,
         name='users.user_detail'),

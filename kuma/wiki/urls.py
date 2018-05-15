@@ -29,6 +29,9 @@ document_patterns = [
     url(r'^\$files$',
         edit_attachment,
         name='attachments.edit_attachment'),
+    url(r'^\$edit/(?P<revision_id>\d+)$',
+        views.edit.edit,
+        name='wiki.new_revision_based_on'),
     url(r'^\$compare$',
         views.revision.compare,
         name='wiki.compare_revisions'),
@@ -174,7 +177,7 @@ non_document_patterns = [
         name="attachments.feeds.recent_files"),
 ]
 
-urlpatterns = non_document_patterns + [
+lang_urlpatterns = non_document_patterns + [
     url(r'^(?P<document_path>%s)' % DOCUMENT_PATH_RE.pattern,
         include(document_patterns)),
 ]

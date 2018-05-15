@@ -1,5 +1,4 @@
 import contextlib
-import urllib
 from urlparse import urljoin
 
 from django.conf import settings
@@ -21,77 +20,8 @@ from .decorators import add_shared_cache_control
 from .i18n import (get_language,
                    get_language_from_path,
                    get_language_from_request)
-from .urlresolvers import Prefixer, set_url_prefixer, split_path
-from .utils import is_untrusted, urlparams
+from .utils import is_untrusted
 from .views import handler403
-
-
-class LocaleURLMiddleware(object):
-    """
-    Based on zamboni.amo.middleware.
-    Tried to use localeurl but it choked on 'en-US' with capital letters.
-
-    1. Search for the locale.
-    2. Save it in the request.
-    3. Strip them from the URL.
-    """
-
-    def process_request(self, request):
-        prefixer = Prefixer(request)
-        set_url_prefixer(prefixer)
-        full_path = prefixer.fix(prefixer.shortened_path)
-        lang = request.GET.get('lang')
-
-        if lang in dict(settings.LANGUAGES):
-            # Blank out the locale so that we can set a new one. Remove lang
-            # from the query params so we don't have an infinite loop.
-            prefixer.locale = ''
-            new_path = prefixer.fix(prefixer.shortened_path)
-            query = dict((smart_str(k), v) for
-                         k, v in request.GET.iteritems() if k != 'lang')
-
-            # Never use HttpResponsePermanentRedirect here.
-            # Its a temporary redirect and should return with http 302, not 301
-            response = HttpResponseRedirect(urlparams(new_path, **query))
-            add_shared_cache_control(response)
-            return response
-
-        if full_path != request.path:
-            query_string = request.META.get('QUERY_STRING', '')
-            full_path = urllib.quote(full_path.encode('utf-8'))
-
-            if query_string:
-                full_path = '%s?%s' % (full_path, query_string)
-
-            response = HttpResponseRedirect(full_path)
-
-            # Vary on Accept-Language if we changed the locale
-            old_locale = prefixer.locale
-            new_locale, _ = split_path(full_path)
-            if old_locale != new_locale:
-                response['Vary'] = 'Accept-Language'
-
-            add_shared_cache_control(response)
-            return response
-
-        request.path_info = '/' + prefixer.shortened_path
-        request.LANGUAGE_CODE = prefixer.locale or settings.LANGUAGE_CODE
-        # prefixer.locale can be '', but we need a real locale code to activate
-        # otherwise the request uses the previously handled request's
-        # translations.
-        translation.activate(prefixer.locale or settings.LANGUAGE_CODE)
-
-    def process_response(self, request, response):
-        """Unset the thread-local var we set during `process_request`."""
-        # This makes mistaken tests (that should use LocalizingClient but
-        # use Client instead) fail loudly and reliably. Otherwise, the set
-        # prefixer bleeds from one test to the next, making tests
-        # order-dependent and causing hard-to-track failures.
-        set_url_prefixer(None)
-        return response
-
-    def process_exception(self, request, exception):
-        set_url_prefixer(None)
 
 
 class LangSelectorMiddleware(object):
@@ -272,8 +202,6 @@ def is_valid_path(request, path):
         else:
             return True
     except Resolver404:
-        # mindtouch_to_kuma_redirect matches everything, so this branch is
-        # not exercised in tests, and possibly not in production.
         return False
 
 
