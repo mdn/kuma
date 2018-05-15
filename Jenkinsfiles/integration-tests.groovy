@@ -29,26 +29,18 @@ def functional_test(browser, hub_name, base_dir) {
         cmd += " --maintenance-mode"
       }
       def node_name = "kuma-selenium-node-${browser}-${BUILD_TAG}"
-      def copies = 1
-      if (config.job.selenium_nodes) {
-        copies = config.job.selenium_nodes
-        cmd += " -n ${copies}"
-      }
       def test_name = "kuma-functional-tests-${browser}-${BUILD_TAG}"
 
       try {
         // Create named nodes
-        for (int i=1; i <= copies; i++) {
-          node_name_i = "${node_name}-${i}"
-          dockerRun("selenium/node-${browser}:${config.job.selenium}",
-                    ["docker_args": "-d" +
-                                    " --name ${node_name_i}" +
-                                    " --link ${hub_name}:hub"])
-        }
+        dockerRun("selenium/node-${browser}:${config.job.selenium}",
+                  ["docker_args": "-d" +
+                                  " --name ${node_name}" +
+                                  " --link ${hub_name}:hub"])
 
         try {
-            // Timeout after 5 minutes, if in-container timeout fails
-            timeout(time: 5, unit: 'MINUTES') {
+            // Timeout after 7 minutes, if in-container timeout fails
+            timeout(time: 7, unit: 'MINUTES') {
                 // Run test node
                 dockerRun("kuma-integration-tests:${GIT_COMMIT_SHORT}",
                           ["docker_args": "--link ${hub_name}:hub" +
@@ -61,9 +53,7 @@ def functional_test(browser, hub_name, base_dir) {
             dockerStop(test_name)
         }
       } finally {
-        for (int i=1; i <= copies; i++) {
-          dockerStop("${node_name}-${i}")
-        }
+        dockerStop("${node_name}")
       }
     }
   }
