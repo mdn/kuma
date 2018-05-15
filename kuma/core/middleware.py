@@ -10,6 +10,8 @@ from django.http import (HttpResponseForbidden,
                          HttpResponseRedirect)
 from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
+from django.utils.six.moves.urllib.parse import (urlencode, urlsplit,
+                                                 urlunsplit)
 from whitenoise.middleware import WhiteNoiseMiddleware
 
 from kuma.wiki.views.legacy import (mindtouch_to_kuma_redirect,
@@ -90,6 +92,97 @@ class LocaleURLMiddleware(object):
 
     def process_exception(self, request, exception):
         set_url_prefixer(None)
+
+
+class LangSelectorMiddleware(object):
+    """
+    Redirect requests with a ?lang= parameter.
+
+    This should appear higher than LocaleMiddleware in the middleware list.
+    """
+
+    def process_request(self, request):
+        """Redirect if ?lang query parameter is valid."""
+        query_lang = request.GET.get('lang')
+        if query_lang not in dict(settings.LANGUAGES):
+            # Invalid language requested, don't redirect
+            return
+
+        # Check if the requested language is already embedded in URL
+        language = get_language_from_request(request)
+        script_prefix = get_script_prefix()
+        lang_prefix = '%s%s/' % (script_prefix, language)
+        full_path = request.get_full_path()  # Includes querystring
+        old_path = urlsplit(full_path).path
+        new_prefix = '%s%s/' % (script_prefix, query_lang)
+        if full_path.startswith(lang_prefix):
+            new_path = old_path.replace(lang_prefix, new_prefix, 1)
+        else:
+            new_path = old_path.replace(script_prefix, new_prefix, 1)
+
+        # Redirect to same path with requested language and without ?lang
+        new_query = dict((smart_str(k), v) for
+                         k, v in request.GET.iteritems() if k != 'lang')
+        new_querystring = urlencode(sorted(new_query.items()))
+        new_url = urlunsplit((
+            request.scheme,
+            request.get_host(),
+            new_path,
+            new_querystring,
+            ''  # Fragment / Anchor
+        ))
+        response = HttpResponseRedirect(new_url)
+        add_shared_cache_control(response)
+        return response
+
+
+class LocaleStandardizerMiddleware(object):
+    """
+    Convert 404s with legacy locales to redirects.
+
+    This should appear higher than LocaleMiddleware in the middleware list.
+    """
+
+    def process_response(self, request, response):
+        """Convert 404s into redirects to language-specific URLs."""
+
+        if response.status_code != 404:
+            return response
+
+        language_from_path = get_language_from_path(request.path_info)
+        if not language_from_path:
+            # 404 URLs without locale prefixes should remain 404s
+            return response
+
+        literal_from_path = request.path_info.split('/')[1]
+        fixed_locale = None
+        match = literal_from_path == language_from_path
+        lower_match = literal_from_path.lower() == language_from_path.lower()
+        if lower_match and (language_from_path != literal_from_path):
+            # Language code is a lower-case match for a known locale
+            fixed_locale = language_from_path
+        elif literal_from_path.lower() in settings.LOCALE_ALIASES:
+            # Language code is a known general -> specific locale
+            fixed_locale = settings.LOCALE_ALIASES[literal_from_path.lower()]
+        elif not match and literal_from_path.startswith(language_from_path):
+            # Language code is a specific locale (fr vs fr-FR)
+            fixed_locale = language_from_path
+
+        if fixed_locale:
+            # Replace the 404 with a redirect to the fixed locale
+            fixed_url = "%s://%s%s" % (
+                request.scheme,
+                request.get_host(),
+                request.get_full_path().replace(literal_from_path,
+                                                fixed_locale,
+                                                1)
+            )
+            redirect_response = HttpResponseRedirect(fixed_url)
+            add_shared_cache_control(redirect_response)
+            return redirect_response
+        else:
+            # No language fixup found, return the 404
+            return response
 
 
 class LocaleMiddleware(object):
