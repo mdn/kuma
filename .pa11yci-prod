@@ -1,0 +1,14 @@
+{
+    "defaults": {
+        "timeout": 1500,
+    },
+    "urls": [
+        "https://developer.mozilla.org/",
+        "https://developer.mozilla.org/en-US/docs/Web/HTML",
+        "https://developer.mozilla.org/en-US/docs/Learn",
+        "https://developer.mozilla.org/en-US/docs/Web/Guide",
+        "https://developer.mozilla.org/en-US/docs/MDN/Feedback",
+        "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat"
+    ]
+}

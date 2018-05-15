@@ -15,15 +15,22 @@
   "scripts": {
     "lint": "./node_modules/.bin/eslint kuma/",
     "optim:svg": "svgo jinja2/includes/icons/* --disable={removeViewBox,removeTitle} --multipass --pretty",
-    "precommit": "npm run lint"
+    "precommit": "npm run lint",
+    "test:a11y-dev": "node pa11y-test.js"
   },
   "devDependencies": {
     "eslint": "^3.19.0",
+    "fs-extra": "6.0.0",
     "gulp": "^3.9.1",
     "gulp-sass": "^3.1.0",
     "gulp-stylelint": "^3.9.0",
     "gulp-watch": "^4.3.6",
     "husky": "^0.13.3",
+    "pa11y": "5.0.3",
+    "pa11y-reporter-html": "1.0.0",
     "svgo": "^1.0.5"
+  },
+  "dependencies": {
+    "npm": "6.0.0"
   }
 }

@@ -73,6 +73,7 @@ mdn_sample_db.sql.gz
 node_modules/
 /static/
 /tmp/emails/*.log
+pa11y-results
 
 # Selenium
 geckodriver.log
