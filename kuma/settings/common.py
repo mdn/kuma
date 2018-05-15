@@ -268,6 +268,7 @@ LOCALE_ALIASES = {
     'zh': 'zh-CN',
 
     # Create aliases for locales which use region subtags to assume scripts.
+    # TODO: Change keys to lower-case for get_supported_language_variant
     'zh-Hans': 'zh-CN',
     'zh-Hant': 'zh-TW',
 

@@ -4,13 +4,11 @@ from urlparse import urljoin
 
 from django.conf import settings
 from django.contrib.sessions.middleware import SessionMiddleware
-from django.core.urlresolvers import (get_resolver, get_script_prefix, resolve,
-                                      Resolver404)
+from django.core.urlresolvers import get_script_prefix, resolve, Resolver404
 from django.http import (HttpResponseForbidden,
                          HttpResponsePermanentRedirect,
                          HttpResponseRedirect)
 from django.utils import translation
-from django.utils.cache import patch_vary_headers
 from django.utils.encoding import iri_to_uri, smart_str
 from whitenoise.middleware import WhiteNoiseMiddleware
 
@@ -18,8 +16,10 @@ from kuma.wiki.views.legacy import (mindtouch_to_kuma_redirect,
                                     mindtouch_to_kuma_url)
 
 from .decorators import add_shared_cache_control
-from .urlresolvers import (LocaleRegexURLResolver, Prefixer, set_url_prefixer,
-                           split_path)
+from .i18n import (get_language,
+                   get_language_from_path,
+                   get_language_from_request)
+from .urlresolvers import Prefixer, set_url_prefixer, split_path
 from .utils import is_untrusted, urlparams
 from .views import handler403
 
@@ -103,35 +103,30 @@ class LocaleMiddleware(object):
     Based on Django 1.8.19's LocaleMiddleware from
     django/middleware/locale.py, with changes:
 
-    * None yet
+    * Assume that locale prefixes are in use
+    * Use Kuma language codes (en-US) instead of Django's (en-us)
+    * Use Kuma-prefered locales (zn-CN) instead of Django's (zn-Hans)
+    * Don't include "Vary: Accept-Language" header
+    * Add caching headers to locale redirects
     """
     response_redirect_class = HttpResponseRedirect
 
-    def __init__(self):
-        self._is_language_prefix_patterns_used = False
-        for url_pattern in get_resolver(None).url_patterns:
-            if isinstance(url_pattern, LocaleRegexURLResolver):
-                self._is_language_prefix_patterns_used = True
-                break
-
     def process_request(self, request):
-        check_path = self.is_language_prefix_patterns_used()
-        language = translation.get_language_from_request(
-            request, check_path=check_path)
+        """Activate the language, based on the request."""
+        language = get_language_from_request(request)
         translation.activate(language)
-        request.LANGUAGE_CODE = translation.get_language()
+        request.LANGUAGE_CODE = language
 
     def process_response(self, request, response):
-        language = translation.get_language()
-        language_from_path = translation.get_language_from_path(request.path_info)
-        if (response.status_code == 404 and not language_from_path
-                and self.is_language_prefix_patterns_used()):
-            urlconf = getattr(request, 'urlconf', None)
+        """Add Content-Language, convert some 404s to locale redirects."""
+        language = get_language()
+        language_from_path = get_language_from_path(request.path_info)
+        if response.status_code == 404 and not language_from_path:
             language_path = '/%s%s' % (language, request.path_info)
-            path_valid = is_valid_path(language_path, urlconf)
-            if (not path_valid and settings.APPEND_SLASH
-                    and not language_path.endswith('/')):
-                path_valid = is_valid_path("%s/" % language_path, urlconf)
+            path_valid = is_valid_path(request, language_path)
+            if (not path_valid and settings.APPEND_SLASH and
+                    not language_path.endswith('/')):
+                path_valid = is_valid_path(request, "%s/" % language_path)
 
             if path_valid:
                 script_prefix = get_script_prefix()
@@ -146,21 +141,17 @@ class LocaleMiddleware(object):
                         1
                     )
                 )
-                return self.response_redirect_class(language_url)
+                redirect = self.response_redirect_class(language_url)
+                add_shared_cache_control(redirect)
+                return redirect
 
-        if not (self.is_language_prefix_patterns_used()
-                and language_from_path):
-            patch_vary_headers(response, ('Accept-Language',))
-        if 'Content-Language' not in response:
+        # No views set this header, so the middleware always sets it. The code
+        # could be replaced with an assertion, but that would deviate from
+        # Django's version, and make the code brittle, so using a pragma
+        # instead. And a long comment.
+        if 'Content-Language' not in response:  # pragma: no cover
             response['Content-Language'] = language
         return response
-
-    def is_language_prefix_patterns_used(self):
-        """
-        Returns `True` if the `LocaleRegexURLResolver` is used
-        at root level of the urlpatterns, else it returns `False`.
-        """
-        return self._is_language_prefix_patterns_used
 
 
 class Forbidden403Middleware(object):

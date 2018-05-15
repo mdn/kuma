@@ -1,18 +1,16 @@
 import re
 import threading
-import warnings
 
 from django.conf import settings
-from django.conf.urls import patterns
 from django.core.urlresolvers import (
     LocaleRegexURLResolver as DjangoLocaleRegexURLResolver,
     reverse as django_reverse)
 from django.test.client import RequestFactory
-from django.utils import six
-from django.utils.deprecation import RemovedInDjango110Warning
+from django.utils.six import string_types
 from django.utils.translation.trans_real import parse_accept_lang_header
 
 from .i18n import get_language
+
 
 # Thread-local storage for URL prefixes. Access with (get|set)_url_prefix.
 _locals = threading.local()
@@ -28,7 +26,7 @@ class LocaleRegexURLResolver(DjangoLocaleRegexURLResolver):
     Overrides Django 1.8.19's LocaleRegexURLResolver from
     django/core/urlresolvers/LocaleRegexURLResolver, with changes:
 
-    * None yet
+    * Use Kuma language code in URL pattern.
     """
 
     @property
@@ -40,7 +38,7 @@ class LocaleRegexURLResolver(DjangoLocaleRegexURLResolver):
         return self._regex_dict[language_code]
 
 
-def i18n_patterns(prefix, *args):
+def i18n_patterns(*args):
     """
     Adds the language code prefix to every URL pattern within this
     function. This may only be used in the root URLconf, not in an included
@@ -49,22 +47,12 @@ def i18n_patterns(prefix, *args):
     Based on Django 1.8.19's i18n_patterns from
     django/conf/urls/i18n_patterns, with changes:
 
-    * None yet
+    * Assert that we're not using deprecated prefix parameter.
+    * Assert USE_I18N is set.
     """
-    if isinstance(prefix, six.string_types):
-        warnings.warn(
-            "Calling i18n_patterns() with the `prefix` argument and with tuples "
-            "instead of django.conf.urls.url() instances is deprecated and "
-            "will no longer work in Django 1.10. Use a list of "
-            "django.conf.urls.url() instances instead.",
-            RemovedInDjango110Warning, stacklevel=2
-        )
-        pattern_list = patterns(prefix, *args)
-    else:
-        pattern_list = [prefix] + list(args)
-    if not settings.USE_I18N:
-        return pattern_list
-    return [LocaleRegexURLResolver(pattern_list)]
+    assert args and not isinstance(args[0], string_types)
+    assert settings.USE_I18N
+    return [LocaleRegexURLResolver(list(args))]
 
 
 def get_best_language(accept_lang):

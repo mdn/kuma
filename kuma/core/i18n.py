@@ -8,19 +8,38 @@ from django.apps import apps
 from django.conf import settings
 from django.conf.locale import LANG_INFO
 from django.utils import lru_cache, translation
-from django.utils.translation import LANGUAGE_SESSION_KEY
 from django.utils.translation.trans_real import (
     check_for_language, get_languages, language_code_prefix_re,
     language_code_re, parse_accept_lang_header)
 
 
+def django_language_code_to_kuma(lang_code):
+    """
+    Convert Django language code to Kuma language code.
+
+    Django uses lower-case codes like en-us.
+    Mozilla uses mixed-case codes like en-US.
+    """
+    return settings.LANGUAGE_URL_MAP.get(lang_code, lang_code)
+
+
+def kuma_language_code_to_django(lang_code):
+    """
+    Convert Kuma language code to Django.
+
+    Django uses lower-case codes like en-us.
+    Mozilla uses mixed-case codes like en-US.
+    """
+    return lang_code.lower()
+
+
 def get_language():
-    """Returns the currently selected language."""
-    return translation.get_language()
+    """Returns the currently selected language as a Kuma language code."""
+    return django_language_code_to_kuma(translation.get_language())
 
 
 @lru_cache.lru_cache(maxsize=1000)
-def get_supported_language_variant(lang_code, strict=False):
+def get_supported_language_variant(raw_lang_code):
     """
     Returns the language-code that's listed in supported languages, possibly
     selecting a more generic variant. Raises LookupError if nothing found.
@@ -35,9 +54,17 @@ def get_supported_language_variant(lang_code, strict=False):
     Based on Django 1.8.19's get_supported_language_variant from
     django/utils/translation/trans_real.py, with changes:
 
-    * None yet
+    * Language code can also be a Kuma language code
+    * Return Kuma languge codes
+    * Force strict=False to always allow fuzzy matching (zh-CHS gets zh-CN)
     """
-    if lang_code:
+    if raw_lang_code:
+        lang_code = kuma_language_code_to_django(raw_lang_code)
+
+        # Check for known override
+        if lang_code in settings.LOCALE_ALIASES:
+            return settings.LOCALE_ALIASES[lang_code]
+
         # If 'fr-ca' is not supported, try special fallback or language-only 'fr'.
         possible_lang_codes = [lang_code]
         try:
@@ -46,20 +73,22 @@ def get_supported_language_variant(lang_code, strict=False):
             pass
         generic_lang_code = lang_code.split('-')[0]
         possible_lang_codes.append(generic_lang_code)
-        supported_lang_codes = get_languages()
+        raw_supported_lang_codes = get_languages()
+        supported_lang_codes = [kuma_language_code_to_django(lang)
+                                for lang in raw_supported_lang_codes]
 
+        # Look for exact match
         for code in possible_lang_codes:
             if code in supported_lang_codes and check_for_language(code):
-                return code
-        if not strict:
-            # if fr-fr is not supported, try fr-ca.
-            for supported_code in supported_lang_codes:
-                if supported_code.startswith(generic_lang_code + '-'):
-                    return supported_code
-    raise LookupError(lang_code)
+                return django_language_code_to_kuma(code)
+        # If fr-fr is not supported, try fr-ca.
+        for supported_code in supported_lang_codes:
+            if supported_code.startswith(generic_lang_code + '-'):
+                return django_language_code_to_kuma(supported_code)
+    raise LookupError(raw_lang_code)
 
 
-def get_language_from_path(path, strict=False):
+def get_language_from_path(path):
     """
     Returns the language-code if there is a valid language-code
     found in the `path`.
@@ -70,19 +99,19 @@ def get_language_from_path(path, strict=False):
     Based on Django 1.8.19's get_language_from_path from
     django/utils/translation/trans_real.py, with changes:
 
-    * None yet
+    * Don't accept or pass strict parameter (assume strict=False).
     """
     regex_match = language_code_prefix_re.match(path)
     if not regex_match:
         return None
     lang_code = regex_match.group(1)
     try:
-        return get_supported_language_variant(lang_code, strict=strict)
+        return get_supported_language_variant(lang_code)
     except LookupError:
         return None
 
 
-def get_language_from_request(request, check_path=False):
+def get_language_from_request(request):
     """
     Analyzes the request to find what language the user wants the system to
     show. Only languages listed in settings.LANGUAGES are taken into account.
@@ -95,19 +124,12 @@ def get_language_from_request(request, check_path=False):
     Based on Django 1.8.19's get_language_from_request from
     django/utils/translation/trans_real.py, with changes:
 
-    * None yet
+    * Always check the path (check_path=False)
+    * Don't check session language
     """
-    if check_path:
-        lang_code = get_language_from_path(request.path_info)
-        if lang_code is not None:
-            return lang_code
-
-    supported_lang_codes = get_languages()
-
-    if hasattr(request, 'session'):
-        lang_code = request.session.get(LANGUAGE_SESSION_KEY)
-        if lang_code in supported_lang_codes and lang_code is not None and check_for_language(lang_code):
-            return lang_code
+    lang_code = get_language_from_path(request.path_info)
+    if lang_code is not None:
+        return lang_code
 
     lang_code = request.COOKIES.get(settings.LANGUAGE_COOKIE_NAME)
 
@@ -121,7 +143,10 @@ def get_language_from_request(request, check_path=False):
         if accept_lang == '*':
             break
 
-        if not language_code_re.search(accept_lang):
+        if not language_code_re.search(accept_lang):  # pragma: no cover
+            # Check added with a security fix:
+            # https://www.djangoproject.com/weblog/2007/oct/26/security-fix/
+            # It is unclear how to trigger this branch, so skipping coverage.
             continue
 
         try:
@@ -129,10 +154,12 @@ def get_language_from_request(request, check_path=False):
         except LookupError:
             continue
 
-    try:
-        return get_supported_language_variant(settings.LANGUAGE_CODE)
-    except LookupError:
-        return settings.LANGUAGE_CODE
+    # Fallback to default settings.LANGUAGE_CODE.
+    # Django supports a case when LANGUAGE_CODE is not in LANGUAGES
+    # (see https://github.com/django/django/pull/824). but our LANGUAGE_CODE is
+    # always in LANGUAGES.
+    assert settings.LANGUAGE_CODE == settings.LANGUAGES[0][0]
+    return settings.LANGUAGE_CODE
 
 
 def get_language_mapping():
