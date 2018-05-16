@@ -32,6 +32,15 @@ LOGGING['loggers'].update({
     },
 })
 
+# Use the local memory cache in tests, so that test cacheback jobs
+# will expire at the end of the test.
+CACHEBACK_CACHE_ALIAS = 'default'
+
+# Change the cache key prefix for tests, to avoid overwriting runtime.
+for cache_settings in CACHES.values():
+    current_prefix = cache_settings.get('KEY_PREFIX', '')
+    cache_settings['KEY_PREFIX'] = 'test.' + current_prefix
+
 # Use un-versioned file names, like main.css, instead of versioned
 # filenames requiring hashing, like mdn.1cb62215bf0c.css
 STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
