@@ -1,6 +1,7 @@
+from urllib import quote
+
 import pytest
 import requests
-from urllib import quote
 
 
 DEFAULT_TIMEOUT = 120  # seconds
@@ -337,7 +338,23 @@ def test_documents_with_cookie_and_param(base_url, is_behind_cdn, is_local_url,
     assert response2.content != response1.content
 
 
+# Test value tuple is:
+# - Expected locale prefix
+# - Accept-Language header value
+# - django-language cookie settings (False to omit)
+# - ?lang param value (False to omit)
+LOCALE_SELECTORS = {
+    'en-US': ('en-US', 'en-US', False, False),
+    'es': ('es', 'es', False, False),
+    'fr-cookie': ('fr', 'es', 'fr', False),
+    'de-param': ('de', 'es', 'fr', 'de'),
+}
+
+
 @pytest.mark.nondestructive
+@pytest.mark.parametrize('expected,accept,cookie,param',
+                         LOCALE_SELECTORS.values(),
+                         ids=LOCALE_SELECTORS.keys())
 @pytest.mark.parametrize(
     'slug',
     ['/search',
@@ -385,7 +402,8 @@ def test_documents_with_cookie_and_param(base_url, is_behind_cdn, is_local_url,
      '/dashboards/localization',
      '/dashboards/topic_lookup',
      '/dashboards/user_lookup'])
-def test_locale_selection_cached(base_url, is_behind_cdn, slug):
+def test_locale_selection_cached(base_url, is_behind_cdn, slug,
+                                 expected, accept, cookie, param):
     """
     Ensure that locale selection, which depends on the "lang" query
     parameter, the "django_language" cookie, and the "Accept-Language"
@@ -394,24 +412,28 @@ def test_locale_selection_cached(base_url, is_behind_cdn, slug):
     behaviors that do.
     """
     url = base_url + slug
-    params = {'lang': 'de'}
-    cookies = {'django_language': 'fr'}
-    headers = {'X-Requested-With': 'XMLHttpRequest'}
+    assert expected, "expected must be set to the expected locale prefix."
+    assert accept, "accept must be set to the Accept-Langauge header value."
+    request_kwargs = {
+        'headers': {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept-Language': accept
+        }
+    }
+    if cookie:
+        request_kwargs['cookies'] = {'django_language': cookie}
+    if param:
+        request_kwargs['params'] = {'lang': param}
 
-    def check(locale, **kwargs):
-        response = assert_cached(url, 302, is_behind_cdn, **kwargs)
-        assert response.headers['location'].startswith(
-            base_url + '/' + locale + '/')
-
-    headers['Accept-Language'] = 'en-US'
-    check('en-US', headers=headers)
-    headers['Accept-Language'] = 'es'
-    check('es', headers=headers)
-    check('fr', headers=headers, cookies=cookies)
-    check('de', headers=headers, cookies=cookies, params=params)
+    response = assert_cached(url, 302, is_behind_cdn, **request_kwargs)
+    expected = base_url + '/' + expected + '/'
+    assert response.headers['location'].startswith(expected)
 
 
 @pytest.mark.nondestructive
+@pytest.mark.parametrize('expected,accept,cookie,param',
+                         LOCALE_SELECTORS.values(),
+                         ids=LOCALE_SELECTORS.keys())
 @pytest.mark.parametrize(
     'slug', ['/docs/Web/HTML$edit',
              '/docs/Web/HTML$move',
@@ -433,7 +455,8 @@ def test_locale_selection_cached(base_url, is_behind_cdn, slug):
              '/Firefox$subscribe',
              '/Firefox$subscribe_to_tree',
              '/Firefox$revert/1358677'])
-def test_locale_selection_not_cached(base_url, is_behind_cdn, slug):
+def test_locale_selection_not_cached(base_url, is_behind_cdn, slug,
+                                     expected, accept, cookie, param):
     """
     Ensure that locale selection, which depends on the "lang" query
     parameter, the "django_language" cookie, and the "Accept-Language"
@@ -442,22 +465,24 @@ def test_locale_selection_not_cached(base_url, is_behind_cdn, slug):
     because they fall into behaviors that do not.
     """
     url = base_url + slug
-    params = {'lang': 'de'}
-    cookies = {'django_language': 'fr'}
-    headers = {}
+    assert expected, "expected must be set to the expected locale prefix."
+    assert accept, "accept must be set to the Accept-Langauge header value."
+    request_kwargs = {
+        'headers': {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept-Language': accept
+        }
+    }
 
-    def check(locale, **kwargs):
-        if is_behind_cdn:
-            res = assert_not_cached(url, 302, **kwargs)
-        else:
-            res = request('get', url, **kwargs)
-            assert res.status_code == 302
-        assert res.headers['location'].startswith(
-            base_url + '/' + locale + '/')
+    if cookie:
+        request_kwargs['cookies'] = {'django_language': cookie}
+    if param:
+        request_kwargs['params'] = {'lang': param}
 
-    headers['Accept-Language'] = 'en-US'
-    check('en-US', headers=headers)
-    headers['Accept-Language'] = 'es'
-    check('es', headers=headers)
-    check('fr', headers=headers, cookies=cookies)
-    check('de', headers=headers, cookies=cookies, params=params)
+    if is_behind_cdn:
+        response = assert_not_cached(url, 302, **request_kwargs)
+    else:
+        response = request('get', url, **request_kwargs)
+        assert response.status_code == 302
+    expected = base_url + '/' + expected + '/'
+    assert response.headers['location'].startswith(expected)
