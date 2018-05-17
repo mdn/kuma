@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 
@@ -72,7 +72,7 @@ class DocumentZoneMiddleware(object):
                 query = request.GET.copy()
                 new_path = urlparams(new_path, query_dict=query)
 
-                return HttpResponsePermanentRedirect(new_path)
+                return HttpResponseRedirect(new_path)
 
             elif path.startswith(new_path):
                 # Is this a request for the relocated wiki path? If so, rewrite

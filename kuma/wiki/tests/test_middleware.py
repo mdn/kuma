@@ -211,21 +211,21 @@ class DocumentZoneWithLocaleTestCase(UserTestCase, WikiTestCase):
         url = '/docs/Firefox'
         response = self.client.get(url, follow=True)
         self.assertEqual(response.redirect_chain,
-                         [('http://testserver/en-US/Firefox', 301)])
+                         [('http://testserver/en-US/Firefox', 302)])
 
     def test_docs_zone_with_default_locale(self):
         # This url has a locale and a wiki path, and gets redirected to the
         # zoned url.
         url = '/en-US/docs/Firefox'
         response = self.client.get(url, follow=False)
-        self.assertRedirects(response, '/en-US/Firefox', status_code=301)
+        self.assertRedirects(response, '/en-US/Firefox', status_code=302)
 
     def test_docs_zone_with_non_default_locale(self):
         # This url has a non-default locale and a wiki path, and gets
         # redirected to the correct zoned url.
         url = '/fr/docs/Firefox'
         response = self.client.get(url, follow=False)
-        self.assertRedirects(response, '/fr/Firefox', status_code=301)
+        self.assertRedirects(response, '/fr/Firefox', status_code=302)
 
     def test_docs_zone_with_get_param_locale(self):
         # This url has no locale and a wiki path, and gets redirected first to
@@ -234,7 +234,7 @@ class DocumentZoneWithLocaleTestCase(UserTestCase, WikiTestCase):
         response = self.client.get(url, {'lang': 'fr'}, follow=True)
         self.assertEqual(response.redirect_chain,
                          [('http://testserver/fr/docs/Firefox', 302),
-                          ('http://testserver/fr/Firefox', 301)])
+                          ('http://testserver/fr/Firefox', 302)])
 
     def test_zone_document_with_implied_default_locale(self):
         # This url has no locale and a wiki path, and gets redirected to the
