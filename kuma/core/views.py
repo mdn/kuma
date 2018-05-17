@@ -5,6 +5,8 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
+from .i18n import get_kuma_languages
+
 
 @never_cache
 def _error_page(request, status):
@@ -19,7 +21,7 @@ def set_language(request):
     lang_code = request.POST.get("language")
     response = HttpResponse(status=204)
 
-    if lang_code and lang_code in dict(settings.LANGUAGES):
+    if lang_code and lang_code in get_kuma_languages():
 
         response.set_cookie(key=settings.LANGUAGE_COOKIE_NAME,
                             value=lang_code,

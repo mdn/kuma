@@ -68,6 +68,10 @@ def mindtouch_to_kuma_url(locale, path):
     If there is an appropriate Kuma URL, then it is returned.
     If there is no appropriate Kuma URL, then None is returned.
     """
+    if path.startswith('%s/' % locale):
+        # Convert from Django-based LocaleMiddleware path to zamboni/amo style
+        path = path.replace('%s/' % locale, '', 1)
+
     if path.startswith('Template:MindTouch'):
         # MindTouch's default templates. There shouldn't be links to
         # them anywhere in the wild, but just in case we 404 them.

@@ -158,10 +158,10 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
 
 
 class DocumentZoneWithLocaleTestCase(UserTestCase, WikiTestCase):
-    """bug 1267197 -- Locales and DocumentZones do not always play nicely together,
-    particularly with the middleware that attempts to redirect requests to the
-    right location.
-
+    """
+    Locales and DocumentZones do not always play nicely together, particularly
+    with the middleware that attempts to redirect requests to the right
+    location. See bug 1267197 for some of the past analysis and discussion.
     """
 
     def setUp(self):
@@ -206,35 +206,30 @@ class DocumentZoneWithLocaleTestCase(UserTestCase, WikiTestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_docs_zone_with_implied_default_locale(self):
-        # This url will get two redirects: one to add the missing default
-        # locale, and the other by triggering the new logic that will strip the
-        # /docs/ prefix from a DocumentZone url.
+        # This url has no locale and a wiki path, and gets redirected to the
+        # zoned url with locale in a single redirect.
         url = '/docs/Firefox'
         response = self.client.get(url, follow=True)
         self.assertEqual(response.redirect_chain,
-                         [('http://testserver/en-US/docs/Firefox', 302),
-                          ('http://testserver/en-US/Firefox', 301)])
+                         [('http://testserver/en-US/Firefox', 301)])
 
     def test_docs_zone_with_default_locale(self):
-        # This url which mixes the Document url prefix /docs/ with a locale and
-        # a DocumentZone url will trigger the new logic, and will cause a
-        # permanent redirect to the canonical zone url.
+        # This url has a locale and a wiki path, and gets redirected to the
+        # zoned url.
         url = '/en-US/docs/Firefox'
         response = self.client.get(url, follow=False)
         self.assertRedirects(response, '/en-US/Firefox', status_code=301)
 
     def test_docs_zone_with_non_default_locale(self):
-        # This url which mixes the Document url prefix /docs/ with a locale and
-        # a DocumentZone url will trigger the new logic, and will cause a
-        # permanent redirect to the canonical zone url.
+        # This url has a non-default locale and a wiki path, and gets
+        # redirected to the correct zoned url.
         url = '/fr/docs/Firefox'
         response = self.client.get(url, follow=False)
         self.assertRedirects(response, '/fr/Firefox', status_code=301)
 
     def test_docs_zone_with_get_param_locale(self):
-        # A url with a get parameter locale should redirect to a
-        # version of the url with the locale at the head of the path,
-        # and then proceed from there as if we went to that url originally.
+        # This url has no locale and a wiki path, and gets redirected first to
+        # the zoned url and then as requested by the ?lang parameter.
         url = '/docs/Firefox'
         response = self.client.get(url, {'lang': 'fr'}, follow=True)
         self.assertEqual(response.redirect_chain,
@@ -242,13 +237,12 @@ class DocumentZoneWithLocaleTestCase(UserTestCase, WikiTestCase):
                           ('http://testserver/fr/Firefox', 301)])
 
     def test_zone_document_with_implied_default_locale(self):
-        # This url will get two redirects: one to add the missing default
-        # locale, and the other as a zone remap non-permanent redirect.
+        # This url has no locale and a wiki path, and gets redirected to the
+        # zoned url with locale in a single step.
         url = '/docs/Mozilla/Firefox'
         response = self.client.get(url, follow=True)
         self.assertEqual(response.redirect_chain,
-                         [('http://testserver/en-US/docs/Mozilla/Firefox', 302),
-                          ('http://testserver/en-US/Firefox', 302)])
+                         [('http://testserver/en-US/Firefox', 302)])
 
     def test_zone_document_with_default_locale(self):
         # This url is the canonical one for our English document, so it should

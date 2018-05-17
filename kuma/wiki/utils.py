@@ -8,6 +8,7 @@ from constance import config
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import resolve, Resolver404
+from django.utils import translation
 from httplib2 import Http
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -67,10 +68,10 @@ def get_doc_components_from_url(url, required_locale=None, check_host=True):
     locale, path = split_path(parsed.path)
     if required_locale and locale != required_locale:
         return False
-    path = '/' + path
 
     try:
-        view, view_args, view_kwargs = resolve(path)
+        with translation.override(locale):
+            view, view_args, view_kwargs = resolve(url)
     except Resolver404:
         return False
 
@@ -80,6 +81,7 @@ def get_doc_components_from_url(url, required_locale=None, check_host=True):
     if view != document_view:
         raise NotDocumentView
 
+    path = '/' + path
     return locale, path, view_kwargs['document_path']
 
 

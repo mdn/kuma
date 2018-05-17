@@ -8,7 +8,7 @@
 
     <h1>{{ _('Select a language to translate to:') }}</h1>
     <ul class="locales">
-      {% for code, name in settings.LANGUAGES %}
+      {% for code, name in settings.SORTED_LANGUAGES %}
         {% if code != settings.WIKI_DEFAULT_LANGUAGE %}
           <li><a href="{{ url('wiki.translate', document_path=document.slug)|urlparams(tolocale=code) }}"><bdi>{{ name }} ({{ code }})</bdi></a></li>
         {% endif %}

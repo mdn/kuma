@@ -43,7 +43,7 @@ def test_maintenance_mode(db, client, settings, mode):
     else:
         assert response.status_code == 302
         assert 'Location' in response
-        assert urlparse(response['Location']).path == '/'
+        assert urlparse(response['Location']).path == '/en-US/'
     assert_no_cache_header(response)
 
 
