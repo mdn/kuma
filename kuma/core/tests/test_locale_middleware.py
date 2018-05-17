@@ -66,9 +66,9 @@ def test_locale_middleware_fixer_confusion(client, db):
 
 
 def test_locale_middleware_language_cookie(client, db):
-    '''The LocaleMiddleware uses the language cookie.'''
+    '''The LocaleMiddleware uses the language cookie over the header.'''
     client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
-    response = client.get('/')
+    response = client.get('/', HTTP_ACCEPT_LANGUAGE='fr')
     assert response.status_code == 302
     assert response['Location'] == 'http://testserver/bn-BD/'
     assert_shared_cache_header(response)
