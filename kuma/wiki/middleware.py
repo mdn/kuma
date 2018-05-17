@@ -33,19 +33,19 @@ class DocumentZoneMiddleware(object):
                 ('$subscribe' in request.path or '$files' in request.path)):
             return None
 
-        # Process the request path
+        # Skip slugs that don't have locales, and won't be in a zone
         path = request.path_info
         request_slug = path.lstrip('/')
+        if any(request_slug.startswith(slug)
+               for slug in settings.LANGUAGE_URL_IGNORED_PATHS):
+            return None
+
+        # Convert the request path to zamboni/amo style
         maybe_lang = request_slug.split(u'/')[0]
         if maybe_lang in settings.ENABLED_LOCALES:
             path = u'/' + u'/'.join(request_slug.split(u'/')[1:])
         else:
             path = u'/' + request_slug
-
-        # Skip slugs that don't have locales, and won't be in a zone
-        if any(request_slug.startswith(slug)
-               for slug in settings.LANGUAGE_URL_IGNORED_PATHS):
-            return None
 
         remaps = DocumentZoneURLRemapsJob().get(request.LANGUAGE_CODE)
         for original_path, new_path in remaps:
