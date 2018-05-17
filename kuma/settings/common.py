@@ -156,7 +156,10 @@ TIME_ZONE = 'US/Pacific'
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-US'
 
-# Accepted locales
+# Accepted locales.
+# The order of some codes is important. For example, 'pt-PT' comes before
+# 'pt-BR', so that 'pt-PT' will be selected when the generic 'pt' is requested.
+# Candidate locales should be included here and in CANDIDATE_LOCALES
 ACCEPTED_LOCALES = (
     'en-US',    # English
     'af',       # Akrikaans
@@ -197,8 +200,8 @@ ACCEPTED_LOCALES = (
     'my',       # Burmese
     'nl',       # Dutch
     'pl',       # Polish
-    'pt-BR',    # Portuguese (Brazil)
     'pt-PT',    # Portuguese (Portugal)
+    'pt-BR',    # Portuguese (Brazil)
     'ro',       # Romanian
     'ru',       # Russian
     'son',      # Songhay
@@ -226,22 +229,22 @@ ACCEPTED_LOCALES = (
 # Locales being considered for MDN. This makes the UI strings available for
 # localization in Pontoon, but pages can not be translated into this language.
 # https://developer.mozilla.org/en-US/docs/MDN/Contribute/Localize/Starting_a_localization
+# These should be here and in the ACCEPTED_LOCALES list
 CANDIDATE_LOCALES = (
 )
+# Asserted here to avoid a unit test that is skipped when empty
+for candidate in CANDIDATE_LOCALES:
+    assert candidate in ACCEPTED_LOCALES
 
 ENABLE_CANDIDATE_LANGUAGES = config('ENABLE_CANDIDATE_LANGUAGES',
                                     default=DEBUG,
                                     cast=bool)
 
-FIRST_LOCALE = ACCEPTED_LOCALES[0]
-assert FIRST_LOCALE == LANGUAGE_CODE
 if ENABLE_CANDIDATE_LANGUAGES:
-    ENABLED_LOCALES_TO_SORT = set(ACCEPTED_LOCALES[1:] + CANDIDATE_LOCALES)
+    ENABLED_LOCALES = ACCEPTED_LOCALES[:]
 else:
-    ENABLED_LOCALES_TO_SORT = set(ACCEPTED_LOCALES[1:])
-
-# Ensure en-US is the first entry
-ENABLED_LOCALES = [FIRST_LOCALE] + sorted(ENABLED_LOCALES_TO_SORT)
+    ENABLED_LOCALES = [locale for locale in ACCEPTED_LOCALES
+                       if locale not in CANDIDATE_LOCALES]
 
 RTL_LANGUAGES = (
     'ar',
@@ -252,20 +255,8 @@ RTL_LANGUAGES = (
 # Override generic locale handling with explicit mappings.
 # Keys are the requested locale (lowercase); values are the delivered locale.
 LOCALE_ALIASES = {
-    # Treat "English (United States)" as the canonical "English".
-    'en': 'en-US',
-
     # Create aliases for over-specific locales.
-    'bn': 'bn-BD',
     'cn': 'zh-CN',
-    'fy': 'fy-NL',
-    'ga': 'ga-IE',
-    'hi': 'hi-IN',
-    'sv': 'sv-SE',
-
-    # Map a prefix to one of its multiple specific locales.
-    'pt': 'pt-PT',
-    'zh': 'zh-CN',
 
     # Create aliases for locales which use region subtags to assume scripts.
     'zh-hans': 'zh-CN',
@@ -302,6 +293,9 @@ def _get_locales():
 
 LOCALES = _get_locales()
 LANGUAGES = [(locale, LOCALES[locale].native) for locale in ENABLED_LOCALES]
+
+# Language list sorted for forms (English, then alphabetical by locale code)
+SORTED_LANGUAGES = [LANGUAGES[0]] + sorted(LANGUAGES[1:])
 
 # List of MindTouch locales mapped to Kuma locales.
 #

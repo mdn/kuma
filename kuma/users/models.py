@@ -54,7 +54,7 @@ class User(AbstractUser):
     locale = models.CharField(
         max_length=7,
         default=settings.LANGUAGE_CODE,
-        choices=settings.LANGUAGES,
+        choices=settings.SORTED_LANGUAGES,
         verbose_name=_(u'Language'),
         blank=True,
         db_index=True,

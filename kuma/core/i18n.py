@@ -4,13 +4,15 @@ Customizations of Django i18n functions for Kuma.
 Django language code is lower case, like 'en-us'.
 Kuma language code is mixed case, like 'en-US'.
 """
+from collections import OrderedDict
+
 from django.apps import apps
 from django.conf import settings
 from django.conf.locale import LANG_INFO
 from django.utils import lru_cache, translation
 from django.utils.translation.trans_real import (
-    check_for_language, get_languages, language_code_prefix_re,
-    language_code_re, parse_accept_lang_header)
+    check_for_language, get_languages as _django_get_languages,
+    language_code_prefix_re, language_code_re, parse_accept_lang_header)
 
 
 def django_language_code_to_kuma(lang_code):
@@ -36,6 +38,28 @@ def kuma_language_code_to_django(lang_code):
 def get_language():
     """Returns the currently selected language as a Kuma language code."""
     return django_language_code_to_kuma(translation.get_language())
+
+
+@lru_cache.lru_cache()
+def get_django_languages():
+    """
+    Cache of settings.LANGUAGES, with Django keys, for easy lookups by key.
+
+    This would be the same as Django's get_languages, if we were using Django
+    language codes.
+    """
+    return OrderedDict((kuma_language_code_to_django(locale), name)
+                       for locale, name in settings.LANGUAGES)
+
+
+def get_kuma_languages():
+    """
+    Cache of settings.LANGUAGES, with Kuma keys, for easy lookups by key.
+
+    This is identical to Django's get_languages, but the name makes it
+    clearer that Kuma language codes are used.
+    """
+    return _django_get_languages()
 
 
 @lru_cache.lru_cache(maxsize=1000)
@@ -74,9 +98,7 @@ def get_supported_language_variant(raw_lang_code):
             pass
         generic_lang_code = lang_code.split('-')[0]
         possible_lang_codes.append(generic_lang_code)
-        raw_supported_lang_codes = get_languages()
-        supported_lang_codes = [kuma_language_code_to_django(lang)
-                                for lang in raw_supported_lang_codes]
+        supported_lang_codes = get_django_languages()
 
         # Look for exact match
         for code in possible_lang_codes:
@@ -129,6 +151,8 @@ def get_language_from_request(request):
 
     * Always check the path
     * Don't check session language
+    * Use LANGUAGE_CODE as the fallback language code, instead of passing it
+      through get_supported_language_variant first
     """
     lang_code = get_language_from_path(request.path_info)
     if lang_code is not None:
@@ -163,8 +187,7 @@ def get_language_from_request(request):
     # Fallback to default settings.LANGUAGE_CODE.
     # Django supports a case when LANGUAGE_CODE is not in LANGUAGES
     # (see https://github.com/django/django/pull/824). but our LANGUAGE_CODE is
-    # always in LANGUAGES.
-    assert settings.LANGUAGE_CODE == settings.LANGUAGES[0][0]
+    # always the first entry in LANGUAGES.
     return settings.LANGUAGE_CODE
 
 

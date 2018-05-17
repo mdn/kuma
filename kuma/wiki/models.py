@@ -208,7 +208,7 @@ class Document(NotificationsMixin, models.Model):
 
     locale = models.CharField(
         max_length=7,
-        choices=settings.LANGUAGES,
+        choices=settings.SORTED_LANGUAGES,
         default=settings.WIKI_DEFAULT_LANGUAGE,
         db_index=True,
     )
@@ -1471,7 +1471,7 @@ class DocumentDeletionLog(models.Model):
     # ForeignKey would delete this log when the Document gets purged.
     locale = models.CharField(
         max_length=7,
-        choices=settings.LANGUAGES,
+        choices=settings.SORTED_LANGUAGES,
         default=settings.WIKI_DEFAULT_LANGUAGE,
         db_index=True,
     )

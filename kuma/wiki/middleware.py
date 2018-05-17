@@ -3,6 +3,7 @@ from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 
+from kuma.core.i18n import get_kuma_languages
 from kuma.core.utils import urlparams
 
 from .exceptions import ReadOnlyException
@@ -42,7 +43,7 @@ class DocumentZoneMiddleware(object):
 
         # Convert the request path to zamboni/amo style
         maybe_lang = request_slug.split(u'/')[0]
-        if maybe_lang in settings.ENABLED_LOCALES:
+        if maybe_lang in get_kuma_languages():
             path = u'/' + u'/'.join(request_slug.split(u'/')[1:])
         else:
             path = u'/' + request_slug

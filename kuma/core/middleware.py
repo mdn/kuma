@@ -17,7 +17,8 @@ from kuma.wiki.views.legacy import (mindtouch_to_kuma_redirect,
                                     mindtouch_to_kuma_url)
 
 from .decorators import add_shared_cache_control
-from .i18n import (get_language,
+from .i18n import (get_kuma_languages,
+                   get_language,
                    get_language_from_path,
                    get_language_from_request)
 from .utils import is_untrusted
@@ -34,7 +35,7 @@ class LangSelectorMiddleware(object):
     def process_request(self, request):
         """Redirect if ?lang query parameter is valid."""
         query_lang = request.GET.get('lang')
-        if query_lang not in dict(settings.LANGUAGES):
+        if not (query_lang and query_lang in get_kuma_languages()):
             # Invalid language requested, don't redirect
             return
 
@@ -79,6 +80,7 @@ class LocaleStandardizerMiddleware(object):
         if response.status_code != 404:
             return response
 
+        # Get the language code picked based on the path
         language_from_path = get_language_from_path(request.path_info)
         if not language_from_path:
             # 404 URLs without locale prefixes should remain 404s
@@ -89,13 +91,16 @@ class LocaleStandardizerMiddleware(object):
         match = literal_from_path == language_from_path
         lower_match = literal_from_path.lower() == language_from_path.lower()
         if lower_match and (language_from_path != literal_from_path):
-            # Language code is a lower-case match for a known locale
+            # Convert locale prefix to the preferred case (en-us -> en-US)
             fixed_locale = language_from_path
         elif literal_from_path.lower() in settings.LOCALE_ALIASES:
-            # Language code is a known general -> specific locale
+            # Fix special cases (cn -> zh-CN, zh-Hans -> zh-CN)
             fixed_locale = settings.LOCALE_ALIASES[literal_from_path.lower()]
         elif not match and literal_from_path.startswith(language_from_path):
-            # Language code is a specific locale (fr vs fr-FR)
+            # Convert regional to generic locale prefix (fr-FR -> fr)
+            fixed_locale = language_from_path
+        elif not match and language_from_path.startswith(literal_from_path):
+            # Convert generic to regional locale prefix (pt -> pt-PT)
             fixed_locale = language_from_path
 
         if fixed_locale:

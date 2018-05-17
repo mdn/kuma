@@ -138,8 +138,8 @@ code of the language you are adding.
 #. `Updating the localizable strings in Pontoon`_ as above, so that your
    commit will be limited to the new locale.
 
-#. In ``kuma/settings/common.py``, add the locale to ``CANDIDATE_LOCALES``,
-   and increase ``PUENTE['VERSION']``.
+#. In ``kuma/settings/common.py``, add the locale to ``ACCEPTED_LOCALES`` and
+   ``CANDIDATE_LOCALES``, and increase ``PUENTE['VERSION']``.
 
 #. Download the latest ``languages.json`` from
    https://product-details.mozilla.org/1.0/languages.json
@@ -184,8 +184,8 @@ translations:
 
    This task is done by MDN staff.
 
-#. Move the locale from ``CANDIDATE_LOCALES`` to ``ACCEPTED_LOCALES`` in
-   ``kuma/settings/common.py``.
+#. Remove the locale from ``CANDIDATE_LOCALES`` in
+   ``kuma/settings/common.py``. Ensure it remains in ``ACCEPTED_LOCALES``.
 
 #. Restart the web server and verify that Django loads the new locale without
    errors by visiting the locale's home page, for example
