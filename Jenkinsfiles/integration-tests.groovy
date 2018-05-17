@@ -11,8 +11,8 @@ def functional_test(browser, hub_name, base_dir) {
   return {
     node {
       // Setup the pytest command
-      // Timeout after 4 minutes, due to stalled nodes
-      def cmd = "timeout --preserve-status 4m" +
+      // Timeout after 6 minutes, due to stalled nodes
+      def cmd = "timeout --preserve-status 6m" +
                 " py.test tests/functional" +
                 " --driver Remote" +
                 " --capability browserName ${browser}" +
@@ -114,4 +114,3 @@ stage('Test') {
         dockerStop(hub_name)
     }
 }
-
