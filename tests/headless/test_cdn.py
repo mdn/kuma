@@ -402,7 +402,7 @@ LOCALE_SELECTORS = {
      '/dashboards/localization',
      '/dashboards/topic_lookup',
      '/dashboards/user_lookup'])
-def test_locale_selection_cached(base_url, is_behind_cdn, slug,
+def test_locale_selection_cached(base_url, is_behind_cdn, is_local_url, slug,
                                  expected, accept, cookie, param):
     """
     Ensure that locale selection, which depends on the "lang" query
@@ -414,6 +414,11 @@ def test_locale_selection_cached(base_url, is_behind_cdn, slug,
     url = base_url + slug
     assert expected, "expected must be set to the expected locale prefix."
     assert accept, "accept must be set to the Accept-Langauge header value."
+
+    if (is_local_url and slug.startswith('/Firefox') and
+            expected in ('fr', 'es')):
+        pytest.xfail("/%s/Firefox is not in sample database." % expected)
+
     request_kwargs = {
         'headers': {
             'X-Requested-With': 'XMLHttpRequest',
@@ -455,8 +460,8 @@ def test_locale_selection_cached(base_url, is_behind_cdn, slug,
              '/Firefox$subscribe',
              '/Firefox$subscribe_to_tree',
              '/Firefox$revert/1358677'])
-def test_locale_selection_not_cached(base_url, is_behind_cdn, slug,
-                                     expected, accept, cookie, param):
+def test_locale_selection_not_cached(base_url, is_behind_cdn, is_local_url,
+                                     slug, expected, accept, cookie, param):
     """
     Ensure that locale selection, which depends on the "lang" query
     parameter, the "django_language" cookie, and the "Accept-Language"
@@ -467,6 +472,11 @@ def test_locale_selection_not_cached(base_url, is_behind_cdn, slug,
     url = base_url + slug
     assert expected, "expected must be set to the expected locale prefix."
     assert accept, "accept must be set to the Accept-Langauge header value."
+
+    if (is_local_url and slug.startswith('/Firefox') and
+            expected in ('fr', 'es')):
+        pytest.xfail("/%s/Firefox is not in sample database." % expected)
+
     request_kwargs = {
         'headers': {
             'X-Requested-With': 'XMLHttpRequest',
