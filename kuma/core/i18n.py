@@ -44,8 +44,9 @@ def get_supported_language_variant(raw_lang_code):
     Returns the language-code that's listed in supported languages, possibly
     selecting a more generic variant. Raises LookupError if nothing found.
 
-    If `strict` is False (the default), the function will look for an alternative
-    country-specific variant when the currently checked is not found.
+    The function will look for an alternative country-specific variant when the
+    currently checked language code is not found. In Django, this behaviour can
+    be avoided with the strict=True parameter, removed in this code.
 
     lru_cache should have a maxsize to prevent from memory exhaustion attacks,
     as the provided language codes are taken from the HTTP request. See also
@@ -118,13 +119,15 @@ def get_language_from_request(request):
     If the user requests a sublanguage where we have a main language, we send
     out the main language.
 
-    If check_path is True, the URL path prefix will be checked for a language
-    code, otherwise this is skipped for backwards compatibility.
+    If there is a language code in the URL path prefix, then it is selected as
+    the request language and other methods (language cookie, Accept-Language
+    header) are skipped. In Django, the URL path prefix can be skipped with the
+    check_path=False parameter, removed in this code.
 
     Based on Django 1.8.19's get_language_from_request from
     django/utils/translation/trans_real.py, with changes:
 
-    * Always check the path (check_path=False)
+    * Always check the path
     * Don't check session language
     """
     lang_code = get_language_from_path(request.path_info)
