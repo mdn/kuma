@@ -146,11 +146,14 @@ def get_language_from_request(request):
         if accept_lang == '*':
             break
 
-        if not language_code_re.search(accept_lang):  # pragma: no cover
-            # Check added with a security fix:
-            # https://www.djangoproject.com/weblog/2007/oct/26/security-fix/
-            # It is unclear how to trigger this branch, so skipping coverage.
-            continue
+        # The regex check was added with a security fix:
+        # https://www.djangoproject.com/weblog/2007/oct/26/security-fix/
+        # In the Django version, non-matching accept_lang codes are skipped.
+        # However, it doesn't seem possible for parse_accept_lang_header to
+        # return codes that would fail this check.
+        # The assertion keeps the security aspect, and gives us an opportunity
+        # to add a test case to Kuma and Django.
+        assert language_code_re.search(accept_lang)
 
         try:
             return get_supported_language_variant(accept_lang)
