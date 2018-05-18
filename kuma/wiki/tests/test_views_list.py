@@ -20,7 +20,7 @@ def test_disallowed_methods(db, client, http_method, endpoint):
     kwargs = None
     if endpoint in ('tag', 'list_review_tag', 'list_with_localization_tag'):
         kwargs = dict(tag='tag')
-    url = reverse('wiki.{}'.format(endpoint), locale='en-US', kwargs=kwargs)
+    url = reverse('wiki.{}'.format(endpoint), kwargs=kwargs)
     resp = getattr(client, http_method)(url)
     assert resp.status_code == 405
     assert_shared_cache_header(resp)
@@ -28,8 +28,7 @@ def test_disallowed_methods(db, client, http_method, endpoint):
 
 def test_revisions(root_doc, client):
     """$history of English doc works."""
-    url = reverse('wiki.document_revisions', args=(root_doc.slug,),
-                  locale=root_doc.locale)
+    url = reverse('wiki.document_revisions', args=(root_doc.slug,))
     resp = client.get(url)
     assert resp.status_code == 200
     assert_shared_cache_header(resp)
@@ -75,8 +74,7 @@ def test_revisions_of_translated_doc_with_no_based_on(trans_revision, client):
 
 def test_revisions_bad_slug_is_not_found(db, client):
     """$history of unknown page returns 404."""
-    url = reverse('wiki.document_revisions', args=('not_found',),
-                  locale='en-US')
+    url = reverse('wiki.document_revisions', args=('not_found',))
     resp = client.get(url)
     assert resp.status_code == 404
 
@@ -84,16 +82,14 @@ def test_revisions_bad_slug_is_not_found(db, client):
 def test_revisions_doc_without_revisions_is_not_found(db, client):
     """$history of half-created document returns 404."""
     doc = Document.objects.create(locale='en-US', slug='half_created')
-    url = reverse('wiki.document_revisions', args=(doc.slug,),
-                  locale=doc.locale)
+    url = reverse('wiki.document_revisions', args=(doc.slug,))
     resp = client.get(url)
     assert resp.status_code == 404
 
 
 def test_revisions_all_params_as_anon_user_is_forbidden(root_doc, client):
     """Anonymous users are forbidden to request all revisions."""
-    url = reverse('wiki.document_revisions', args=(root_doc.slug,),
-                  locale=root_doc.locale)
+    url = reverse('wiki.document_revisions', args=(root_doc.slug,))
     all_url = urlparams(url, limit='all')
     resp = client.get(all_url)
     assert resp.status_code == 403
@@ -102,8 +98,7 @@ def test_revisions_all_params_as_anon_user_is_forbidden(root_doc, client):
 
 def test_revisions_all_params_as_user_is_allowed(root_doc, wiki_user, client):
     """Users are allowed to request all revisions."""
-    url = reverse('wiki.document_revisions', args=(root_doc.slug,),
-                  locale=root_doc.locale)
+    url = reverse('wiki.document_revisions', args=(root_doc.slug,))
     all_url = urlparams(url, limit='all')
     wiki_user.set_password('password')
     wiki_user.save()
@@ -116,8 +111,7 @@ def test_revisions_request_tiny_pages(edit_revision, client):
     """$history will paginate the revisions."""
     doc = edit_revision.document
     assert doc.revisions.count() > 1
-    url = reverse('wiki.document_revisions', args=(doc.slug,),
-                  locale=doc.locale)
+    url = reverse('wiki.document_revisions', args=(doc.slug,))
     limit_url = urlparams(url, limit=1)
     resp = client.get(limit_url)
     assert resp.status_code == 200
@@ -128,8 +122,7 @@ def test_revisions_request_tiny_pages(edit_revision, client):
 def test_revisions_request_large_pages(root_doc, client):
     """$history?limit=(more than revisions) works, removes pagination."""
     rev_count = root_doc.revisions.count()
-    url = reverse('wiki.document_revisions', args=(root_doc.slug,),
-                  locale=root_doc.locale)
+    url = reverse('wiki.document_revisions', args=(root_doc.slug,))
     limit_url = urlparams(url, limit=rev_count + 1)
     resp = client.get(limit_url)
     assert resp.status_code == 200
@@ -139,15 +132,14 @@ def test_revisions_request_large_pages(root_doc, client):
 
 def test_revisions_request_invalid_pages(root_doc, client):
     """$history?limit=nonsense uses the default pagination."""
-    url = reverse('wiki.document_revisions', args=(root_doc.slug,),
-                  locale=root_doc.locale)
+    url = reverse('wiki.document_revisions', args=(root_doc.slug,))
     limit_url = urlparams(url, limit='nonsense')
     resp = client.get(limit_url)
     assert resp.status_code == 200
 
 
 def test_list_no_redirects(redirect_doc, doc_hierarchy_with_zones, client):
-    url = reverse('wiki.all_documents', locale='en-US')
+    url = reverse('wiki.all_documents')
     resp = client.get(url)
     assert resp.status_code == 200
     assert_shared_cache_header(resp)
@@ -162,7 +154,7 @@ def test_list_no_redirects(redirect_doc, doc_hierarchy_with_zones, client):
 def test_tags(root_doc, client):
     """Test list of all tags."""
     root_doc.tags.set('foobar', 'blast')
-    url = reverse('wiki.list_tags', locale=root_doc.locale)
+    url = reverse('wiki.list_tags')
     resp = client.get(url)
     assert resp.status_code == 200
     assert 'foobar' in resp.content

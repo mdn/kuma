@@ -17,8 +17,8 @@ def test_compare_revisions(edit_revision, client, raw):
     params = {'from': first_revision.id, 'to': edit_revision.id}
     if raw:
         params['raw'] = '1'
-    url = urlparams(reverse('wiki.compare_revisions', args=[doc.slug],
-                            locale=doc.locale), **params)
+    url = urlparams(reverse('wiki.compare_revisions', args=[doc.slug]),
+                    **params)
 
     response = client.get(url)
     assert response.status_code == 200
@@ -58,8 +58,8 @@ def test_compare_revisions_without_tidied_content(edit_revision, client, raw):
     params = {'from': first_revision.id, 'to': edit_revision.id}
     if raw:
         params['raw'] = '1'
-    url = urlparams(reverse('wiki.compare_revisions', args=[doc.slug],
-                            locale=doc.locale), **params)
+    url = urlparams(reverse('wiki.compare_revisions', args=[doc.slug]),
+                    **params)
 
     response = client.get(url)
     assert response.status_code == 200
@@ -73,8 +73,7 @@ def test_compare_revisions_without_tidied_content(edit_revision, client, raw):
                           ])
 def test_compare_revisions_invalid_ids(root_doc, client, id1, id2):
     """Comparing badly-formed revision parameters return 404, not error."""
-    url = urlparams(reverse('wiki.compare_revisions', args=[root_doc.slug],
-                            locale=root_doc.locale),
+    url = urlparams(reverse('wiki.compare_revisions', args=[root_doc.slug]),
                     **{'from': id1, 'to': id2})
     response = client.get(url)
     assert response.status_code == 404
@@ -84,8 +83,7 @@ def test_compare_revisions_invalid_ids(root_doc, client, id1, id2):
 def test_compare_revisions_only_one_param(create_revision, client, param):
     """If a compare query parameter is missing, a 404 is returned."""
     doc = create_revision.document
-    url = urlparams(reverse('wiki.compare_revisions', args=[doc.slug],
-                            locale=doc.locale),
+    url = urlparams(reverse('wiki.compare_revisions', args=[doc.slug]),
                     **{param: create_revision.id})
     response = client.get(url)
     assert response.status_code == 404
@@ -97,8 +95,7 @@ def test_compare_revisions_wrong_document(edit_revision, client):
     first_revision = doc.revisions.first()
     other_doc = Document.objects.create(locale='en-US', slug='Other',
                                         title='Other Document')
-    url = urlparams(reverse('wiki.compare_revisions', args=[other_doc.slug],
-                            locale=other_doc.locale),
+    url = urlparams(reverse('wiki.compare_revisions', args=[other_doc.slug]),
                     **{'from': first_revision.id, 'to': edit_revision.id})
     response = client.get(url)
     assert response.status_code == 404

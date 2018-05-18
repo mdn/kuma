@@ -213,16 +213,14 @@ class KumaAccountAdapterTestCase(UserTestCase):
     def test_account_connected_message_user_edit(self):
         """Connection message appears if the profile edit is the next page."""
         next_url = reverse('users.user_edit',
-                           kwargs={'username': self.user.username},
-                           locale='en-US')
+                           kwargs={'username': self.user.username})
         messages = self.test_account_connected_message(next_url, True)
         assert messages[0].tags == 'account success'
 
     def test_extra_tags(self):
         """Extra tags can be added to the message."""
         next_url = reverse('users.user_edit',
-                           kwargs={'username': self.user.username},
-                           locale='en-US')
+                           kwargs={'username': self.user.username})
         messages = self.test_account_connected_message(next_url, True,
                                                        extra_tags='congrats')
         assert messages[0].tags == 'congrats account success'

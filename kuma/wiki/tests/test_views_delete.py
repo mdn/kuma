@@ -24,7 +24,7 @@ def test_login(root_doc, client, endpoint):
     args = [root_doc.slug]
     if endpoint == 'revert_document':
         args.append(root_doc.current_revision.id)
-    url = reverse('wiki.{}'.format(endpoint), locale='en-US', args=args)
+    url = reverse('wiki.{}'.format(endpoint), args=args)
     response = client.get(url)
     assert response.status_code == 302
     assert 'en-US/users/signin?' in response['Location']
@@ -41,7 +41,7 @@ def test_permission(root_doc, editor_client, endpoint):
     args = [root_doc.slug]
     if endpoint == 'revert_document':
         args.append(root_doc.current_revision.id)
-    url = reverse('wiki.{}'.format(endpoint), locale='en-US', args=args)
+    url = reverse('wiki.{}'.format(endpoint), args=args)
     response = editor_client.get(url)
     assert response.status_code == 403
     assert_no_cache_header(response)
@@ -53,14 +53,14 @@ def test_read_only_mode(root_doc, user_client, endpoint):
     args = [root_doc.slug]
     if endpoint == 'revert_document':
         args.append(root_doc.current_revision.id)
-    url = reverse('wiki.{}'.format(endpoint), locale='en-US', args=args)
+    url = reverse('wiki.{}'.format(endpoint), args=args)
     response = user_client.get(url)
     assert response.status_code == 403
     assert_no_cache_header(response)
 
 
 def test_delete_get(root_doc, delete_client):
-    url = reverse('wiki.delete_document', locale='en-US', args=[root_doc.slug])
+    url = reverse('wiki.delete_document', args=[root_doc.slug])
     response = delete_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
@@ -70,7 +70,7 @@ def test_delete_get(root_doc, delete_client):
                           ' (see bugzilla 1197390).')
 def test_purge_get(root_doc, delete_client):
     root_doc.delete()
-    url = reverse('wiki.purge_document', locale='en-US', args=[root_doc.slug])
+    url = reverse('wiki.purge_document', args=[root_doc.slug])
     response = delete_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
@@ -80,8 +80,7 @@ def test_restore_get(root_doc, delete_client):
     root_doc.delete()
     with pytest.raises(Document.DoesNotExist):
         Document.objects.get(slug=root_doc.slug, locale=root_doc.locale)
-    url = reverse('wiki.restore_document', locale='en-US',
-                  args=[root_doc.slug])
+    url = reverse('wiki.restore_document', args=[root_doc.slug])
     response = delete_client.get(url)
     assert response.status_code == 302
     assert response['Location'].endswith(root_doc.get_absolute_url())
@@ -90,7 +89,7 @@ def test_restore_get(root_doc, delete_client):
 
 
 def test_revert_get(root_doc, delete_client):
-    url = reverse('wiki.revert_document', locale='en-US',
+    url = reverse('wiki.revert_document',
                   args=[root_doc.slug, root_doc.current_revision.id])
     response = delete_client.get(url)
     assert response.status_code == 200
@@ -98,7 +97,7 @@ def test_revert_get(root_doc, delete_client):
 
 
 def test_delete_post(root_doc, delete_client):
-    url = reverse('wiki.delete_document', locale='en-US', args=[root_doc.slug])
+    url = reverse('wiki.delete_document', args=[root_doc.slug])
     response = delete_client.post(url, data=dict(reason='test'))
     assert response.status_code == 302
     assert response['Location'].endswith(root_doc.get_absolute_url())
@@ -114,7 +113,7 @@ def test_delete_post(root_doc, delete_client):
 
 def test_purge_post(root_doc, delete_client):
     root_doc.delete()
-    url = reverse('wiki.purge_document', locale='en-US', args=[root_doc.slug])
+    url = reverse('wiki.purge_document', args=[root_doc.slug])
     response = delete_client.post(url, data=dict(confirm='true'))
     assert response.status_code == 302
     assert response['Location'].endswith(root_doc.get_absolute_url())
@@ -127,7 +126,7 @@ def test_revert_post(edit_revision, delete_client):
     root_doc = edit_revision.document
     assert len(root_doc.revisions.all()) == 2
     first_revision = root_doc.revisions.first()
-    url = reverse('wiki.revert_document', locale='en-US',
+    url = reverse('wiki.revert_document',
                   args=[root_doc.slug, first_revision.id])
     response = delete_client.post(url, data=dict(comment='test'))
     assert response.status_code == 302

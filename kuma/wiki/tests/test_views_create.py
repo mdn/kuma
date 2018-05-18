@@ -62,13 +62,13 @@ def add_doc_client(editor_client, wiki_user, permission_add_document):
 
 
 def test_check_read_only_mode(user_client):
-    response = user_client.get(reverse('wiki.create', locale='en-US'))
+    response = user_client.get(reverse('wiki.create'))
     assert response.status_code == 403
     assert_no_cache_header(response)
 
 
 def test_user_add_document_permission(editor_client):
-    response = editor_client.get(reverse('wiki.create', locale='en-US'))
+    response = editor_client.get(reverse('wiki.create'))
     assert response.status_code == 403
     assert response['X-Robots-Tag'] == 'noindex'
     assert_no_cache_header(response)
@@ -76,7 +76,7 @@ def test_user_add_document_permission(editor_client):
 
 @pytest.mark.toc
 def test_get(add_doc_client):
-    response = add_doc_client.get(reverse('wiki.create', locale='en-US'))
+    response = add_doc_client.get(reverse('wiki.create'))
     assert response.status_code == 200
     assert response['X-Robots-Tag'] == 'noindex'
     assert_no_cache_header(response)
@@ -91,8 +91,7 @@ def test_get(add_doc_client):
             assert opt_element.attr('value') == str(Revision.TOC_DEPTH_H4)
     assert found_selected, 'No ToC depth initially selected.'
     # Check discard button.
-    assert (page.find('.btn-discard').attr('href') ==
-            reverse('wiki.create', locale='en-US'))
+    assert (page.find('.btn-discard').attr('href') == reverse('wiki.create'))
 
 
 @pytest.mark.tags
@@ -111,14 +110,13 @@ def test_create_valid(add_doc_client):
         comment='This is foobar.',
         toc_depth=1,
     )
-    url = reverse('wiki.create', locale='en-US')
+    url = reverse('wiki.create')
     resp = add_doc_client.post(url, data)
     assert resp.status_code == 302
     assert resp['X-Robots-Tag'] == 'noindex'
     assert_no_cache_header(resp)
-    assert resp['Location'].endswith(
-        reverse('wiki.document', locale='en-US', args=(slug,)))
-    doc = Document.objects.get(slug=slug, locale='en-US')
+    assert resp['Location'].endswith(reverse('wiki.document', args=(slug,)))
+    doc = Document.objects.get(slug=slug)
     for name in (set(data.keys()) - set(('tags', 'review_tags'))):
         assert getattr(doc.current_revision, name) == data[name]
     assert (sorted(doc.tags.all().values_list('name', flat=True)) ==
@@ -147,7 +145,7 @@ def test_create_invalid(add_doc_client, slug):
         comment='This is foobar.',
         toc_depth=1,
     )
-    url = reverse('wiki.create', locale='en-US')
+    url = reverse('wiki.create')
     resp = add_doc_client.post(url, data)
     assert resp.status_code == 200
     assert resp['X-Robots-Tag'] == 'noindex'
@@ -174,7 +172,7 @@ def test_create_child_valid(root_doc, add_doc_client, slug):
         comment='This is foobar.',
         toc_depth=1,
     )
-    url = reverse('wiki.create', locale='en-US')
+    url = reverse('wiki.create')
     url += '?parent={}'.format(root_doc.id)
     full_slug = '{}/{}'.format(root_doc.slug, slug)
     resp = add_doc_client.post(url, data)
@@ -182,7 +180,7 @@ def test_create_child_valid(root_doc, add_doc_client, slug):
     assert resp['X-Robots-Tag'] == 'noindex'
     assert_no_cache_header(resp)
     assert resp['Location'].endswith(
-        reverse('wiki.document', locale='en-US', args=(full_slug,)))
+        reverse('wiki.document', args=(full_slug,)))
     assert root_doc.children.count() == 1
     doc = Document.objects.get(slug=full_slug, locale='en-US')
     skip_keys = set(('tags', 'review_tags', 'parent_topic'))
@@ -215,7 +213,7 @@ def test_create_child_invalid(root_doc, add_doc_client, slug):
         comment='This is foobar.',
         toc_depth=1,
     )
-    url = reverse('wiki.create', locale='en-US')
+    url = reverse('wiki.create')
     url += '?parent={}'.format(root_doc.id)
     full_slug = '{}/{}'.format(root_doc.slug, slug)
     resp = add_doc_client.post(url, data)
@@ -230,7 +228,7 @@ def test_create_child_invalid(root_doc, add_doc_client, slug):
 
 
 def test_clone_get(root_doc, add_doc_client):
-    url = reverse('wiki.create', locale='en-US')
+    url = reverse('wiki.create')
     url += '?clone={}'.format(root_doc.id)
     response = add_doc_client.get(url)
     assert response.status_code == 200

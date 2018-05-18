@@ -474,7 +474,7 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
 def test_revision_template(root_doc, client):
     """Verify the revision template."""
     rev = root_doc.current_revision
-    url = reverse('wiki.revision', args=[root_doc.slug, rev.id], locale=root_doc.locale)
+    url = reverse('wiki.revision', args=[root_doc.slug, rev.id])
     response = client.get(url)
     assert response.status_code == 200
     assert response['X-Robots-Tag'] == 'noindex'
@@ -684,7 +684,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
             'based_on': self.d.current_revision.id,
             'form-type': 'rev',
         }
-        edit_url = reverse('wiki.edit', locale='en-US', args=[self.d.slug])
+        edit_url = reverse('wiki.edit', args=[self.d.slug])
         response = self.client.post(edit_url, data)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
@@ -742,8 +742,8 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         tags = ['tag1', 'tag2', 'tag3']
         data = new_document_data(tags)
         data['form-type'] = 'rev'
-        response = self.client.post(reverse('wiki.edit', locale='en-US',
-                                    args=[self.d.slug]), data)
+        response = self.client.post(reverse('wiki.edit', args=[self.d.slug]),
+                                    data)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -767,8 +767,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         tags = [u'tag1', u'tag4']
         data = new_document_data(tags)
         data['form-type'] = 'rev'
-        response = self.client.post(reverse('wiki.edit', locale='en-US',
-                                            args=[self.d.slug]),
+        response = self.client.post(reverse('wiki.edit', args=[self.d.slug]),
                                     data)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
@@ -802,8 +801,7 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         _create_document(title='Document Prueba', parent=self.d,
                          locale='es')
         # Make sure is_localizable hidden field is rendered
-        response = self.client.get(reverse('wiki.edit', locale='en-US',
-                                           args=[self.d.slug]))
+        response = self.client.get(reverse('wiki.edit', args=[self.d.slug]))
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -813,8 +811,7 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         data.update(title=new_title)
         data['form-type'] = 'doc'
         data.update(is_localizable='True')
-        response = self.client.post(reverse('wiki.edit', locale='en-US',
-                                            args=[self.d.slug]),
+        response = self.client.post(reverse('wiki.edit', args=[self.d.slug]),
                                     data)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
@@ -827,8 +824,7 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         new_slug = 'Test-Document'
         data.update(slug=new_slug)
         data['form-type'] = 'doc'
-        response = self.client.post(reverse('wiki.edit', locale='en-US',
-                                            args=[self.d.slug]),
+        response = self.client.post(reverse('wiki.edit', args=[self.d.slug]),
                                     data)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
@@ -841,8 +837,7 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         new_title = 'TeST DoCuMent'
         data.update(title=new_title)
         data['form-type'] = 'doc'
-        response = self.client.post(reverse('wiki.edit', locale='en-US',
-                                            args=[self.d.slug]),
+        response = self.client.post(reverse('wiki.edit', args=[self.d.slug]),
                                     data)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
@@ -855,8 +850,8 @@ def test_compare_revisions(edit_revision, client):
     doc = edit_revision.document
     first_revision = doc.revisions.first()
     params = {'from': first_revision.id, 'to': edit_revision.id}
-    url = urlparams(reverse('wiki.compare_revisions', args=[doc.slug],
-                            locale=doc.locale), **params)
+    url = urlparams(reverse('wiki.compare_revisions', args=[doc.slug]),
+                    **params)
 
     response = client.get(url)
     assert response.status_code == 200
@@ -870,8 +865,7 @@ def test_compare_revisions(edit_revision, client):
     assert change_link.text() == 'Change Revisions'
     change_href = change_link.attr('href')
     bits = urlparse(change_href)
-    assert bits.path == reverse('wiki.document_revisions', args=[doc.slug],
-                                locale=doc.locale)
+    assert bits.path == reverse('wiki.document_revisions', args=[doc.slug])
     assert parse_qs(bits.query) == {'locale': [doc.locale],
                                     'origin': ['compare']}
 
@@ -879,15 +873,13 @@ def test_compare_revisions(edit_revision, client):
     assert rev_from_link.text() == 'Revision %d:' % first_revision.id
     from_href = rev_from_link.attr('href')
     assert from_href == reverse('wiki.revision',
-                                args=[doc.slug, first_revision.id],
-                                locale=doc.locale)
+                                args=[doc.slug, first_revision.id])
 
     rev_to_link = page('div.rev-to h3 a')
     assert rev_to_link.text() == 'Revision %d:' % edit_revision.id
     to_href = rev_to_link.attr('href')
     assert to_href == reverse('wiki.revision',
-                              args=[doc.slug, edit_revision.id],
-                              locale=doc.locale)
+                              args=[doc.slug, edit_revision.id])
 
 
 def test_compare_first_translation(trans_revision, client):
@@ -941,9 +933,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
 
     def _translate_uri(self):
-        translate_uri = reverse('wiki.translate',
-                                locale='en-US',
-                                args=[self.d.slug])
+        translate_uri = reverse('wiki.translate', args=[self.d.slug])
         return '%s?tolocale=%s' % (translate_uri, 'es')
 
     def test_translate_GET_logged_out(self):
@@ -953,7 +943,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         response = self.client.get(translate_uri)
         assert response.status_code == 302
         assert_no_cache_header(response)
-        expected_url = '%s?next=%s' % (reverse('account_login', locale='en-US'),
+        expected_url = '%s?next=%s' % (reverse('account_login'),
                                        urlquote(translate_uri))
         assert expected_url in response['Location']
 
@@ -1204,13 +1194,13 @@ class ArticlePreviewTests(UserTestCase, WikiTestCase):
 
     def test_preview_GET_405(self):
         """Preview with HTTP GET results in 405."""
-        response = self.client.get(reverse('wiki.preview', locale='en-US'))
+        response = self.client.get(reverse('wiki.preview'))
         assert response.status_code == 405
         assert_no_cache_header(response)
 
     def test_preview(self):
         """Preview the wiki syntax content."""
-        response = self.client.post(reverse('wiki.preview', locale='en-US'),
+        response = self.client.post(reverse('wiki.preview'),
                                     {'content': '<h1>Test Content</h1>'})
         assert response.status_code == 200
         assert_no_cache_header(response)
@@ -1245,7 +1235,6 @@ class SelectLocaleTests(UserTestCase, WikiTestCase):
     def test_page_renders_locales(self):
         """Load the page and verify it contains all the locales for l10n."""
         response = self.client.get(reverse('wiki.select_locale',
-                                           locale='en-US',
                                            args=[self.d.slug]))
         assert response.status_code == 200
         assert_no_cache_header(response)

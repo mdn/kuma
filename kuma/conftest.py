@@ -4,9 +4,15 @@ import pytest
 import requests_mock
 from django.conf import settings
 from django.core.cache import caches
+from django.utils.translation import activate
 from waffle.models import Flag
 
 from kuma.wiki.models import Document, Revision
+
+
+@pytest.fixture(autouse=True)
+def set_default_language():
+    activate('en-US')
 
 
 @pytest.fixture()

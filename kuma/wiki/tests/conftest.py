@@ -110,9 +110,7 @@ def redirect_doc(wiki_user, root_doc):
         document=redirect_doc,
         creator=wiki_user,
         content=REDIRECT_CONTENT % {
-            'href': reverse('wiki.document',
-                            args=(root_doc.slug,),
-                            locale=root_doc.locale),
+            'href': reverse('wiki.document', args=(root_doc.slug,)),
             'title': root_doc.title,
         },
         title='Redirect Document',

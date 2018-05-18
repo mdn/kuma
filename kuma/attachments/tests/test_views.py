@@ -29,8 +29,7 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
         self.revision = revision(save=True)
         self.document = self.revision.document
         self.files_url = reverse('attachments.edit_attachment',
-                                 kwargs={'document_path': self.document.slug},
-                                 locale='en-US')
+                                 kwargs={'document_path': self.document.slug})
 
     @transaction.atomic
     def _post_attachment(self):
@@ -135,8 +134,7 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
             'file': file_for_upload,
         }
         files_url = reverse('attachments.edit_attachment',
-                            kwargs={'document_path': doc.slug},
-                            locale='en-US')
+                            kwargs={'document_path': doc.slug})
         response = self.client.post(files_url, data=post_data)
         assert response.status_code == 302
         assert_no_cache_header(response)
@@ -167,8 +165,8 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
         revision.save()
         revision.make_current()
 
-        feed_url = reverse('attachments.feeds.recent_files', locale='en-US',
-                           args=(), kwargs={'format': 'json'})
+        feed_url = reverse('attachments.feeds.recent_files',
+                           kwargs={'format': 'json'})
         response = self.client.get(feed_url)
         assert_shared_cache_header(response)
         data = json.loads(response.content)
@@ -197,9 +195,7 @@ def test_legacy_redirect(client, file_attachment):
 def test_edit_attachment_get(admin_client, root_doc):
     url = reverse(
         'attachments.edit_attachment',
-        kwargs={'document_path': root_doc.slug},
-        locale='en-US'
-    )
+        kwargs={'document_path': root_doc.slug})
     response = admin_client.get(url)
     assert response.status_code == 302
     assert_no_cache_header(response)
@@ -224,8 +220,7 @@ def test_edit_attachment_post_with_vacant_file(admin_client, root_doc, tmpdir,
         expected = 'This field is required.'
 
     url = reverse('attachments.edit_attachment',
-                  kwargs={'document_path': root_doc.slug},
-                  locale='en-US')
+                  kwargs={'document_path': root_doc.slug})
     response = admin_client.post(url, data=post_data)
     assert response.status_code == 200
     doc = pq(response.content)

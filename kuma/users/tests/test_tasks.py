@@ -127,8 +127,7 @@ class TestWelcomeEmails(UserTestCase):
         self.assertTrue('Confirm' in confirm_email.subject)
 
         # Click on a similar confirm link (HMAC has timestamp, changes)
-        link = reverse('account_confirm_email', locale='en-US',
-                       args=[confirmation.key])
+        link = reverse('account_confirm_email', args=[confirmation.key])
         resp = self.client.get(link)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
@@ -157,8 +156,7 @@ class TestWelcomeEmails(UserTestCase):
         self.assertTrue('Confirm' in confirm_email2.subject)
 
         # Confirm the second email address
-        link2 = reverse('account_confirm_email', locale='en-US',
-                        args=[confirmation2.key])
+        link2 = reverse('account_confirm_email', args=[confirmation2.key])
         resp = self.client.get(link2)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
