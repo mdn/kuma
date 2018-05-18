@@ -1,4 +1,7 @@
+from distutils.version import LooseVersion
+
 from decorator_include import decorator_include
+from django import get_version
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
@@ -65,16 +68,19 @@ if settings.MAINTENANCE_MODE:
         )
     )
 else:
+    # Django admin:
     urlpatterns += [
-        # Django admin:
         url(r'^admin/wiki/document/purge/',
             purge_view,
-            name='wiki.admin_bulk_purge'),
+            name='wiki.admin_bulk_purge')]
+    if LooseVersion(get_version()) >= LooseVersion('1.9'):
         # We don't worry about decorating the views within django.contrib.admin
         # with "never_cache", since most have already been decorated, and the
         # remaining can be safely cached.
-        url(r'^admin/', include(admin.site.urls)),
-    ]
+        urlpatterns += [url(r'^admin/', admin.site.urls)]
+    else:
+        # include needed for 1.8 and earlier
+        urlpatterns += [url(r'^admin/', include(admin.site.urls))]
 
 urlpatterns += i18n_patterns(url(r'^search/',
                                  include(search_lang_urlpatterns)))
