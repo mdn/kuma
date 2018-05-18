@@ -220,6 +220,5 @@ class User(AbstractUser):
         uidb64 = urlsafe_base64_encode(force_bytes(self.pk))
         token = default_token_generator.make_token(self)
         link = reverse('users.recover',
-                       kwargs={'token': token, 'uidb64': uidb64},
-                       force_locale=True)
+                       kwargs={'token': token, 'uidb64': uidb64})
         return link

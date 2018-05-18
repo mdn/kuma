@@ -138,7 +138,7 @@ class SocialTestMixin(object):
         """
         login_url = reverse('github_login',
                             locale=settings.WIKI_DEFAULT_LANGUAGE)
-        callback_url = reverse('github_callback', unprefixed=True)
+        callback_url = reverse('github_callback')
 
         # Ensure GitHub is setup as an auth provider
         self.ensure_github_app()
