@@ -57,7 +57,6 @@ def test_old_profile_url_gone(db, client):
 
 @pytest.mark.bans
 class BanTestCase(UserTestCase):
-    localizing_client = True
 
     def test_ban_permission(self):
         """The ban permission controls access to the ban view."""
@@ -212,7 +211,6 @@ class BanTestCase(UserTestCase):
 
 @pytest.mark.bans
 class BanAndCleanupTestCase(UserTestCase):
-    localizing_client = True
 
     def test_ban_permission(self):
         """The ban permission controls access to the ban and cleanup view."""
@@ -256,7 +254,6 @@ class BanAndCleanupTestCase(UserTestCase):
 
 @pytest.mark.bans
 class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
-    localizing_client = True
 
     def setUp(self):
         super(BanUserAndCleanupSummaryTestCase, self).setUp()
@@ -1100,7 +1097,6 @@ def test_404_already_logged_in(user_client):
 
 
 class KumaGitHubTests(UserTestCase, SocialTestMixin):
-    localizing_client = False
 
     def setUp(self):
         self.signup_url = reverse('socialaccount_signup',

@@ -23,7 +23,6 @@ from ..models import User, UserBan
 
 
 class SignupTests(UserTestCase, SocialTestMixin):
-    localizing_client = False
     profile_create_strings = (
         'Create your MDN profile to continue',
         'choose a username',
@@ -103,7 +102,6 @@ def test_account_email_page_multiple_emails(wiki_user, user_client):
 class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
     existing_email = 'testuser@test.com'
     existing_username = 'testuser'
-    localizing_client = False
 
     def test_auth_failure(self):
         """A failed GitHub auth shows the sign in failure page."""

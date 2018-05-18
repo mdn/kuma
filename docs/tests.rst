@@ -133,10 +133,6 @@ new functionality. All apps have a ``tests`` module where tests should go. They
 will be discovered automatically by the test runner as long as the look like a
 test.
 
-If you're expecting ``reverse`` to return locales in the URL
-(``/en-US/docs/Mozilla`` versus ``/docs/Mozilla``), use ``LocalizingClient``
-instead of the default client for the ``TestCase`` class.
-
 Changing tests
 ==============
 Unless the current behavior, and thus the test that verifies that behavior is
