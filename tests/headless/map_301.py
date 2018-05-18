@@ -346,7 +346,7 @@ LEGACY_URLS = list(flatten((
              '/en-US/docs/Web/CSS/Attribute_selectors', status_code=302),
     url_test('/en/docs/Web/CSS/Attribute_selectors',
              '/en-US/docs/Web/CSS/Attribute_selectors', status_code=302),
-    url_test('/cn/docs/Talk:Kakurady', '/zh-CN/docs/Talk%3AKakurady',
+    url_test('/cn/docs/Talk:Kakurady', '/zh-CN/docs/Talk:Kakurady',
              status_code=302),
     url_test('/zh_cn/docs/Web/API/RTCPeerConnection/addTrack',
              '/zh-CN/docs/Web/API/RTCPeerConnection/addTrack',
