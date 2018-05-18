@@ -95,9 +95,6 @@ RUN adduser --uid 1000 --disabled-password --gecos '' --no-create-home kuma
 WORKDIR /app
 EXPOSE 8000
 
-# bug 1301116
-RUN pip install setuptools==26.1.1
-
 RUN npm install -g \
         fibers@1.0.15 \
         csslint@0.10.0 \
