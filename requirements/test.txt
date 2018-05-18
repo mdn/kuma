@@ -25,9 +25,3 @@ pytest-rerunfailures==2.1.0 \
 pytest-selenium==1.11.4 \
     --hash=sha256:b66651fe7cbeee02b511f7b59f250ca77fcdb6024f193ca10da27d1d91240688 \
     --hash=sha256:9a0c48c434b538387ed6fa9d0c2f0b2e32f4fb71a4c41754df49be0aa4c64ae1
-
-# Test plugin: Run tests in parallel
-pytest-xdist==1.22.2 \
-    --hash=sha256:be2662264b035920ba740ed6efb1c816a83c8a22253df7766d129f6a7bfdbd35 \
-    --hash=sha256:e8f5744acc270b3e7d915bdb4d5f471670f049b6fbd163d4cbd52203b075d30f
-
