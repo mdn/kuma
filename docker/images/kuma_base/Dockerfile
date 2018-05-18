@@ -113,6 +113,10 @@ ENV PIPELINE_CSS_COMPRESSOR=kuma.core.pipeline.cleancss.CleanCSSCompressor \
 COPY ./requirements /app/requirements
 RUN pip install --no-cache-dir -r requirements/dev.txt
 
+# Import issue with configparser 3.5.0
+# https://bitbucket.org/ambv/configparser/issues/20/importwarning-missing-__init__py
+RUN touch /usr/local/lib/python2.7/site-packages/backports/__init__.py
+
 USER kuma
 
 ENV WEB_CONCURRENCY=4
