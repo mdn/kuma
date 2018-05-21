@@ -161,7 +161,7 @@ def revisions(request, document_slug, document_locale):
                  .only('id', 'locale', 'slug', 'title',
                        'current_revision_id',
                        'parent__slug', 'parent__locale')
-                 .select_related('parent__slug', 'parent__locale')
+                 .select_related('parent')
                  .exclude(current_revision__isnull=True)
                  .filter(locale=locale, slug=document_slug))
     document = get_object_or_404(doc_query)
@@ -210,10 +210,7 @@ def revisions(request, document_slug, document_locale):
                           .only('id', 'slug', 'created', 'comment',
                                 'document__slug', 'document__locale',
                                 'creator__username', 'creator__is_active')
-                          .select_related('document__slug',
-                                          'document__locale',
-                                          'creator__is_active',
-                                          'creator__username')
+                          .select_related('document', 'creator')
                           .filter(id__in=selected_revision_ids))
     revisions = {rev.id: rev for rev in selected_revisions}
 
