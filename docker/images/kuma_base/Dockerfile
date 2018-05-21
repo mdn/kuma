@@ -95,9 +95,6 @@ RUN adduser --uid 1000 --disabled-password --gecos '' --no-create-home kuma
 WORKDIR /app
 EXPOSE 8000
 
-# bug 1301116
-RUN pip install setuptools==26.1.1
-
 RUN npm install -g \
         fibers@1.0.15 \
         csslint@0.10.0 \
@@ -115,6 +112,10 @@ ENV PIPELINE_CSS_COMPRESSOR=kuma.core.pipeline.cleancss.CleanCSSCompressor \
 
 COPY ./requirements /app/requirements
 RUN pip install --no-cache-dir -r requirements/dev.txt
+
+# Import issue with configparser 3.5.0
+# https://bitbucket.org/ambv/configparser/issues/20/importwarning-missing-__init__py
+RUN touch /usr/local/lib/python2.7/site-packages/backports/__init__.py
 
 USER kuma
 
