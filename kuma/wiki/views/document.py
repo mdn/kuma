@@ -241,16 +241,18 @@ def _get_doc_and_fallback_reason(document_locale, document_slug):
     doc = None
     fallback_reason = None
 
+    # Optimizing the queryset to fetch the required values only
+    related_fields = ['current_revision', 'current_revision__creator',
+                      'parent', 'parent__current_revision', 'parent__topic']
     current_revision_fields = ['current_revision__{}'.format(field) for field in
                                ('toc_depth', 'created', 'creator__id', 'creator__username', 'creator__is_active')]
     parent_fields = ['parent__{}'.format(field) for field in ('locale', 'slug', 'current_revision__slug')]
     parent_topic_fields = ['parent_topic__{}'.format(field) for field in ('id', 'title', 'slug')]
 
-    related_fields = current_revision_fields + parent_fields + parent_topic_fields
-
-    fields = ['html', 'rendered_html', 'zone_subnav_local_html', 'body_html',
-              'locale', 'slug', 'title', 'is_localizable', 'rendered_errors',
-              'toc_html', 'summary_html', 'summary_text', 'quick_links_html'] + related_fields
+    fields = (['html', 'rendered_html', 'zone_subnav_local_html', 'body_html',
+               'locale', 'slug', 'title', 'is_localizable', 'rendered_errors',
+               'toc_html', 'summary_html', 'summary_text', 'quick_links_html']
+              + current_revision_fields + parent_fields + parent_topic_fields)
 
     try:
         doc = (Document.objects.only(*fields).select_related(*related_fields)
