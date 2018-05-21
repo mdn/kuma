@@ -1,7 +1,9 @@
 """Feeds for documents"""
 import datetime
 import json
+from distutils.version import LooseVersion
 
+from django import get_version
 from django.conf import settings
 from django.contrib.syndication.views import Feed
 from django.db.models import F
@@ -108,7 +110,10 @@ class DocumentsFeed(Feed):
 class DocumentJSONFeedGenerator(SyndicationFeed):
     """JSON feed generator for Documents
     TODO: Someday maybe make this into a JSON Activity Stream?"""
-    mime_type = 'application/json'
+    if LooseVersion(get_version()) >= LooseVersion('1.9'):
+        content_type = 'application/json'
+    else:
+        mime_type = 'application/json'
 
     def _encode_complex(self, obj):
         if isinstance(obj, datetime.datetime):
