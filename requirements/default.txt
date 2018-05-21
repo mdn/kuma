@@ -265,9 +265,12 @@ polib==1.1.0 \
     --hash=sha256:fad87d13696127ffb27ea0882d6182f1a9cf8a5e2b37a587751166c51e5a332a
 
 # String extraction and l10n tools
-puente==0.4.1 \
-    --hash=sha256:bc5ee85521127577d23430832e2f827686efdb7ce95b232f54fbeb5b9166397c \
-    --hash=sha256:84f769c0ea607829c77bd8b3d6d6fbc16589cd7a5d4e5023f717cd3d5de54473
+# Code: https://github.com/mozilla/puente
+# Changes: https://github.com/mozilla/puente/blob/master/HISTORY.rst
+# Docs: https://puente.readthedocs.io/en/latest/
+puente==0.5.0 \
+    --hash=sha256:7ba1d07f9cee9657adf874bd94879b343fea81a783fdfa8e53885520477bf1ea \
+    --hash=sha256:4a17958f7d6a83cb9ff92593c40f34911abafaec6ad959916b754aaa3869f11f
 
 # Translate environment variables into native Python types
 python-decouple==3.0 \
