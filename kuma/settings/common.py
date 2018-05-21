@@ -492,7 +492,7 @@ MIDDLEWARE_CLASSES = (
     'ratelimit.middleware.RatelimitMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'kuma.core.middleware.RemoveSlashMiddleware',
+    'kuma.core.middleware.SlashMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 

@@ -13,21 +13,29 @@ from ..middleware import (
 
 
 @pytest.mark.parametrize('path', ('/missing_url', '/missing_url/'))
-def test_remove_slash_middleware_keep_404(client, db, path):
-    '''The RemoveSlashMiddleware retains 404s.'''
+def test_slash_middleware_keep_404(client, db, path):
+    '''The SlashMiddleware retains 404s.'''
     response = client.get(path)
     assert response.status_code == 404
 
 
-def test_remove_slash_middleware_fixes_url(client, db):
-    '''The RemoveSlashMiddleware fixes a URL that shouldn't have a slash.'''
+def test_slash_middleware_removes_slash(client, db):
+    '''The SlashMiddleware fixes a URL that shouldn't have a trailing slash.'''
     response = client.get(u'/contribute.json/')
     assert response.status_code == 301
     assert response['Location'].endswith('/contribute.json')
 
 
-def test_remove_slash_middleware_retains_querystring(client, db):
-    '''The RemoveSlashMiddleware handles encoded querystrings.'''
+@pytest.mark.parametrize('path', ('/admin', '/en-US'))
+def test_slash_middleware_adds_slash(path, client, db):
+    '''The SlashMiddleware fixes a URL that should have a trailing slash.'''
+    response = client.get(path)
+    assert response.status_code == 301
+    assert response['Location'].endswith(path + '/')
+
+
+def test_slash_middleware_retains_querystring(client, db):
+    '''The SlashMiddleware handles encoded querystrings.'''
     response = client.get(u'/contribute.json/?xxx=\xc3')
     assert response.status_code == 301
     assert response['Location'].endswith('/contribute.json?xxx=%C3%83')
