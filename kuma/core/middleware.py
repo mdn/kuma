@@ -210,28 +210,36 @@ def is_valid_path(request, path):
         return False
 
 
-class RemoveSlashMiddleware(object):
+class SlashMiddleware(object):
     """
-    Middleware that tries to remove a trailing slash if there was a 404.
+    Middleware that adds or removes a trailing slash if there was a 404.
 
-    If the response is a 404 because url resolution failed, we'll look for a
-    better url without a trailing slash.
+    If the response is a 404 because URL resolution failed, we'll look for a
+    better URL with or without a trailing slash.
 
-    This middleware only processes non-locale URLs. Locale-prefixed URLs are
-    converted to redirects in LocaleMiddleware.
+    The LocaleMiddleware turns 404s to redirects if a locale prefix is needed.
+    It will also add a trailing slash to make a valid URL.
+
+    The CommonMiddleware is supposed to handle adding slashes to 404s, but
+    doesn't work because the catch-all mindtouch_to_kuma_redirect function
+    makes it so that Django's is_valid_url returns True for all URLs.
     """
 
     def process_response(self, request, response):
-        if (response.status_code == 404 and
-                request.path_info.endswith('/') and
-                not is_valid_path(request, request.path_info) and
-                is_valid_path(request, request.path_info[:-1])):
-            # Use request.path because we munged app/locale in path_info.
-            newurl = request.path[:-1]
-            if request.GET:
-                with safe_query_string(request):
-                    newurl += '?' + request.META['QUERY_STRING']
-            return HttpResponsePermanentRedirect(newurl)
+        path = request.path_info
+        if response.status_code == 404 and not is_valid_path(request, path):
+            new_path = None
+            if path.endswith('/') and is_valid_path(request, path[:-1]):
+                # Remove the trailing slash for a valid URL
+                new_path = path[:-1]
+            elif not path.endswith('/') and is_valid_path(request, path + u'/'):
+                # Add a trailing slash for a valid URL
+                new_path = path + u'/'
+            if new_path:
+                if request.GET:
+                    with safe_query_string(request):
+                        new_path += '?' + request.META['QUERY_STRING']
+                return HttpResponsePermanentRedirect(new_path)
         return response
 
 
