@@ -1,4 +1,5 @@
 import pytest
+from django.conf import settings
 from waffle.models import Switch
 
 from kuma.attachments.models import Attachment
@@ -59,7 +60,7 @@ def test_code_sample(code_sample_doc, constance_config, client, settings):
     assert normalized == expected
 
 
-def test_code_sample_host_restriction(code_sample_doc, constance_config,
+def test_code_sample_host_not_allowed(code_sample_doc, constance_config,
                                       client):
     """Users are not allowed to view samples on a restricted domain."""
     url = reverse('wiki.code_sample',
@@ -67,6 +68,33 @@ def test_code_sample_host_restriction(code_sample_doc, constance_config,
     constance_config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS = '^.*sampleserver'
     response = client.get(url, HTTP_HOST='testserver')
     assert response.status_code == 403
+
+
+def test_code_sample_host_allowed(code_sample_doc, constance_config, client):
+    """Users are allowed to view samples on an allowed domain."""
+    url = reverse('wiki.code_sample',
+                  args=[code_sample_doc.slug, 'sample1'])
+    constance_config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS = '^.*sampleserver'
+    response = client.get(url, HTTP_HOST='sampleserver')
+    assert response.status_code == 200
+    assert 'public' in response['Cache-Control']
+    assert 'max-age=86400' in response['Cache-Control']
+
+
+# The pytest-django urls marker also resets urlconf caches after the test
+@pytest.mark.urls(settings.ROOT_URLCONF)
+def test_code_sample_host_restricted_host(code_sample_doc, constance_config,
+                                          settings, client):
+    """Users are allowed to view samples on the attachment domain."""
+    # Render the document, which will be a sync operation, before applying
+    # host restrictions.
+    code_sample_doc.get_rendered()
+
+    url = reverse('wiki.code_sample',
+                  args=[code_sample_doc.slug, 'sample1'])
+    constance_config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS = '^.*sampleserver'
+    settings.ATTACHMENT_HOST = 'sampleserver'
+    settings.ENABLE_RESTRICTIONS_BY_HOST = True
     response = client.get(url, HTTP_HOST='sampleserver')
     assert response.status_code == 200
     assert 'public' in response['Cache-Control']

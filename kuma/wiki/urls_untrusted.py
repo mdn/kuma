@@ -14,7 +14,7 @@ document_patterns = [
         name='wiki.code_sample'),
 ]
 
-urlpatterns = [
-    url(r'^/(?P<document_path>%s)' % DOCUMENT_PATH_RE.pattern,
+lang_urlpatterns = [
+    url(r'^(?P<document_path>%s)' % DOCUMENT_PATH_RE.pattern,
         include(document_patterns)),
 ]
