@@ -1,7 +1,4 @@
-from distutils.version import LooseVersion
-
 from decorator_include import decorator_include
-from django import get_version
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
@@ -73,7 +70,7 @@ else:
         url(r'^admin/wiki/document/purge/',
             purge_view,
             name='wiki.admin_bulk_purge')]
-    if LooseVersion(get_version()) >= LooseVersion('1.9'):
+    if settings.DJANGO_1_9:
         # We don't worry about decorating the views within django.contrib.admin
         # with "never_cache", since most have already been decorated, and the
         # remaining can be safely cached.

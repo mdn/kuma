@@ -3,7 +3,7 @@ from django.conf import settings
 from django.test import RequestFactory
 
 from kuma.core.cache import memcache
-from kuma.core.tests import eq_
+from kuma.core.tests import assert_relative_reference, eq_
 from kuma.users.tests import UserTestCase
 
 from . import document, revision, WikiTestCase
@@ -97,8 +97,8 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
         url = '/en-US/docs/%s?raw=1' % self.middle_doc.slug
         response = self.client.get(url, follow=False)
         eq_(302, response.status_code)
-        eq_('http://testserver/en-US/ExtraWiki/Middle?raw=1',
-            response['Location'])
+        assert_relative_reference(response['Location'],
+                                  '/en-US/ExtraWiki/Middle?raw=1')
 
         self.root_zone.url_root = 'NewRoot'
         self.root_zone.save()
@@ -106,8 +106,8 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
         url = '/en-US/docs/%s?raw=1' % self.middle_doc.slug
         response = self.client.get(url, follow=False)
         eq_(302, response.status_code)
-        eq_('http://testserver/en-US/NewRoot/Middle?raw=1',
-            response['Location'])
+        assert_relative_reference(response['Location'],
+                                  '/en-US/NewRoot/Middle?raw=1')
 
     def test_blank_url_root(self):
         """Ensure a blank url_root does not trigger URL remap"""
@@ -210,8 +210,10 @@ class DocumentZoneWithLocaleTestCase(UserTestCase, WikiTestCase):
         # zoned url with locale in a single redirect.
         url = '/docs/Firefox'
         response = self.client.get(url, follow=True)
-        self.assertEqual(response.redirect_chain,
-                         [('http://testserver/en-US/Firefox', 302)])
+        assert len(response.redirect_chain) == 1
+        redirect_url, status_code = response.redirect_chain[0]
+        assert_relative_reference(redirect_url, '/en-US/Firefox')
+        assert status_code == 302
 
     def test_docs_zone_with_default_locale(self):
         # This url has a locale and a wiki path, and gets redirected to the
@@ -232,17 +234,22 @@ class DocumentZoneWithLocaleTestCase(UserTestCase, WikiTestCase):
         # the zoned url and then as requested by the ?lang parameter.
         url = '/docs/Firefox'
         response = self.client.get(url, {'lang': 'fr'}, follow=True)
-        self.assertEqual(response.redirect_chain,
-                         [('http://testserver/fr/docs/Firefox', 302),
-                          ('http://testserver/fr/Firefox', 302)])
+        assert len(response.redirect_chain) == 2
+        url1, status_code_1 = response.redirect_chain[0]
+        url2, status_code_2 = response.redirect_chain[1]
+        assert_relative_reference(url1, '/fr/docs/Firefox')
+        assert_relative_reference(url2, '/fr/Firefox')
+        assert status_code_1 == status_code_2 == 302
 
     def test_zone_document_with_implied_default_locale(self):
         # This url has no locale and a wiki path, and gets redirected to the
         # zoned url with locale in a single step.
         url = '/docs/Mozilla/Firefox'
         response = self.client.get(url, follow=True)
-        self.assertEqual(response.redirect_chain,
-                         [('http://testserver/en-US/Firefox', 302)])
+        assert len(response.redirect_chain) == 1
+        redirect_url, status_code = response.redirect_chain[0]
+        assert_relative_reference(redirect_url, '/en-US/Firefox')
+        assert status_code == 302
 
     def test_zone_document_with_default_locale(self):
         # This url is the canonical one for our English document, so it should

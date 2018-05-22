@@ -31,6 +31,12 @@ class TupleCsv(Csv):
         return tuple((value, value) for value in split_values)
 
 
+# For the Django 1.11 update effort - Are we at least at this version?
+_dj_version = LooseVersion(get_version())
+DJANGO_1_9 = _dj_version >= LooseVersion('1.9')
+DJANGO_1_10 = _dj_version >= LooseVersion('1.10')
+DJANGO_1_11 = _dj_version >= LooseVersion('1.11')
+
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ROOT = dirname(dirname(dirname(os.path.abspath(__file__))))
@@ -447,7 +453,7 @@ SECRET_KEY = config('SECRET_KEY',
 
 # Django 1.9 and lower need protection from BREACH attacks
 # Django 1.10 include BREACH protection in CsrfViewMiddleware
-_NEED_DEBREACH = LooseVersion(get_version()) < LooseVersion('1.10')
+_NEED_DEBREACH = not DJANGO_1_10
 if _NEED_DEBREACH:
     _CSRF_CONTEXT_PROCESSOR = 'debreach.context_processors.csrf'
 else:

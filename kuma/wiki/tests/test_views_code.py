@@ -4,6 +4,7 @@ from waffle.models import Switch
 
 from kuma.attachments.models import Attachment
 from kuma.attachments.tests import make_test_file
+from kuma.core.tests import assert_relative_reference
 from kuma.core.urlresolvers import reverse
 
 from . import normalize_html
@@ -119,7 +120,7 @@ def test_raw_code_sample_file(code_sample_doc, constance_config,
     response = admin_client.post(upload_url, data=post_data)
     assert response.status_code == 302
     edit_url = reverse('wiki.edit', args=(code_sample_doc.slug,))
-    assert response.url == 'http://testserver' + edit_url
+    assert_relative_reference(response.url, edit_url)
 
     # Add a relative reference to the sample content
     attachment = Attachment.objects.get(title='An uploaded file')
