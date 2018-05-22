@@ -9,8 +9,7 @@ from django.http import (HttpResponseForbidden,
                          HttpResponseRedirect)
 from django.utils import translation
 from django.utils.encoding import iri_to_uri, smart_str
-from django.utils.six.moves.urllib.parse import (urlencode, urlsplit,
-                                                 urlunsplit)
+from django.utils.six.moves.urllib.parse import urlsplit
 from whitenoise.middleware import WhiteNoiseMiddleware
 
 from kuma.wiki.views.legacy import (mindtouch_to_kuma_redirect,
@@ -21,7 +20,7 @@ from .i18n import (get_kuma_languages,
                    get_language,
                    get_language_from_path,
                    get_language_from_request)
-from .utils import is_untrusted
+from .utils import is_untrusted, urlparams
 from .views import handler403
 
 
@@ -54,15 +53,9 @@ class LangSelectorMiddleware(object):
         # Redirect to same path with requested language and without ?lang
         new_query = dict((smart_str(k), v) for
                          k, v in request.GET.iteritems() if k != 'lang')
-        new_querystring = urlencode(sorted(new_query.items()))
-        new_url = urlunsplit((
-            request.scheme,
-            request.get_host(),
-            new_path,
-            new_querystring,
-            ''  # Fragment / Anchor
-        ))
-        response = HttpResponseRedirect(new_url)
+        if new_query:
+            new_path = urlparams(new_path, new_query)
+        response = HttpResponseRedirect(new_path)
         add_shared_cache_control(response)
         return response
 
@@ -105,14 +98,9 @@ class LocaleStandardizerMiddleware(object):
 
         if fixed_locale:
             # Replace the 404 with a redirect to the fixed locale
-            fixed_url = "%s://%s%s" % (
-                request.scheme,
-                request.get_host(),
-                request.get_full_path().replace(literal_from_path,
-                                                fixed_locale,
-                                                1)
-            )
-            redirect_response = HttpResponseRedirect(fixed_url)
+            full_path = request.get_full_path()
+            fixed_path = full_path.replace(literal_from_path, fixed_locale, 1)
+            redirect_response = HttpResponseRedirect(fixed_path)
             add_shared_cache_control(redirect_response)
             return redirect_response
         else:
@@ -158,18 +146,12 @@ class LocaleMiddleware(object):
 
             if path_valid:
                 script_prefix = get_script_prefix()
-                language_url = "%s://%s%s" % (
-                    request.scheme,
-                    request.get_host(),
-                    # insert language after the script prefix and before the
-                    # rest of the URL
-                    request.get_full_path().replace(
-                        script_prefix,
-                        '%s%s/' % (script_prefix, language),
-                        1
-                    )
+                language_path = request.get_full_path().replace(
+                    script_prefix,
+                    '%s%s/' % (script_prefix, language),
+                    1
                 )
-                redirect = self.response_redirect_class(language_url)
+                redirect = self.response_redirect_class(language_path)
                 add_shared_cache_control(redirect)
                 return redirect
 

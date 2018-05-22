@@ -1,7 +1,7 @@
 import pytest
 from django.conf import settings
 
-from . import assert_shared_cache_header
+from . import assert_relative_uri, assert_shared_cache_header
 
 
 # Simple Accept-Language headers, one term
@@ -46,7 +46,7 @@ def test_locale_middleware_picker(accept_language, locale, client, db):
     response = client.get('/', HTTP_ACCEPT_LANGUAGE=accept_language)
     assert response.status_code == 302
     url_locale = locale or 'en-US'
-    assert response['Location'] == 'http://testserver/%s/' % url_locale
+    assert_relative_uri(response['Location'], '/%s/' % url_locale)
     assert_shared_cache_header(response)
 
 
@@ -55,7 +55,7 @@ def test_locale_middleware_fixer(original, fixed, client, db):
     '''The LocaleMiddleware redirects for non-standard locale URLs.'''
     response = client.get('/%s/' % original)
     assert response.status_code == 302
-    assert response['Location'] == 'http://testserver/%s/' % fixed
+    assert_relative_uri(response['Location'], '/%s/' % fixed)
     assert_shared_cache_header(response)
 
 
@@ -70,7 +70,7 @@ def test_locale_middleware_language_cookie(client, db):
     client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
     response = client.get('/', HTTP_ACCEPT_LANGUAGE='fr')
     assert response.status_code == 302
-    assert response['Location'] == 'http://testserver/bn-BD/'
+    assert_relative_uri(response['Location'], '/bn-BD/')
     assert_shared_cache_header(response)
 
 
@@ -81,7 +81,7 @@ def test_locale_middleware_lang_query_param(path, client):
     response = client.get('%s?lang=fr' % path,
                           HTTP_ACCEPT_LANGUAGE='en;q=0.9, fr;q=0.8')
     assert response.status_code == 302
-    assert response['Location'] == 'http://testserver/fr/'
+    assert_relative_uri(response['Location'], '/fr/')
     assert_shared_cache_header(response)
 
 
@@ -89,7 +89,7 @@ def test_locale_middleware_no_change(client, db):
     '''The LocaleMiddleware redirects on the same ?lang query.'''
     response = client.get('/fr/?lang=fr')
     assert response.status_code == 302
-    assert response['Location'] == 'http://testserver/fr/'
+    assert_relative_uri(response['Location'], '/fr/')
     assert_shared_cache_header(response)
 
 

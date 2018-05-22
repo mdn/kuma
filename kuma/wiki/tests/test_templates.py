@@ -16,7 +16,7 @@ from django.utils.http import urlquote
 from django.utils.six.moves.urllib.parse import parse_qs, urlparse
 from pyquery import PyQuery as pq
 
-from kuma.core.tests import (assert_no_cache_header,
+from kuma.core.tests import (assert_no_cache_header, assert_relative_uri,
                              assert_shared_cache_header, eq_, ok_)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
@@ -547,8 +547,10 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         response = self.client.post(reverse('wiki.create'), data,
                                     follow=True)
         d = Document.objects.get(title=data['title'])
-        eq_([('http://testserver/en-US/docs/%s' % d.slug, 302)],
-            response.redirect_chain)
+        assert len(response.redirect_chain) == 1
+        redirect_uri, status_code = response.redirect_chain[0]
+        assert_relative_uri(redirect_uri, '/en-US/docs/%s' % d.slug)
+        assert status_code == 302
         eq_(settings.WIKI_DEFAULT_LANGUAGE, d.locale)
         eq_(tags, sorted(t.name for t in d.tags.all()))
         r = d.revisions.all()[0]
@@ -1055,8 +1057,8 @@ class TranslateTests(UserTestCase, WikiTestCase):
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
-        assert (response['location'] ==
-                'http://testserver/es/docs/un-test-articulo?rev_saved=')
+        assert_relative_uri(response['Location'],
+                            '/es/docs/un-test-articulo?rev_saved=')
         doc = Document.objects.get(slug=data['slug'])
         rev = doc.revisions.filter(content=data['content'])[0]
         assert rev.keywords == data['keywords']

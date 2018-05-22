@@ -17,7 +17,7 @@ from waffle.models import Flag, Switch
 from waffle.testutils import override_flag
 
 from kuma.core.templatetags.jinja_helpers import add_utm
-from kuma.core.tests import (assert_no_cache_header,
+from kuma.core.tests import (assert_no_cache_header, assert_relative_uri,
                              assert_shared_cache_header, eq_, get_user, ok_)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html
@@ -2741,7 +2741,7 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
     # instead we just test that A) we did issue a redirect and B) the
     # URL we constructed is enough for the document views to go on.
 
-    server_prefix = 'http://testserver/%s/docs' % settings.WIKI_DEFAULT_LANGUAGE
+    server_prefix = '/%s/docs' % settings.WIKI_DEFAULT_LANGUAGE
     namespace_urls = (
         # One for each namespace.
         {'mindtouch': '/Help:Foo',
@@ -2770,7 +2770,7 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
         for namespace_test in self.namespace_urls:
             resp = self.client.get(namespace_test['mindtouch'], follow=False)
             eq_(301, resp.status_code)
-            eq_(namespace_test['kuma'], resp['Location'])
+            assert_relative_uri(resp['Location'], namespace_test['kuma'])
 
     def test_document_urls(self):
         """Check the url redirect to proper document when the url like
@@ -2782,7 +2782,8 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
         assert resp.status_code == 200
 
         # Check the last redirect chain url is correct document url
-        eq_('http://testserver' + d.get_absolute_url(), resp.redirect_chain[-1][0])
+        last_url = resp.redirect_chain[-1][0]
+        assert_relative_uri(last_url, d.get_absolute_url())
 
     def test_view_param(self):
         d = document()
@@ -2793,8 +2794,8 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
         mt_url = '/en-US/%s?view=edit' % (d.slug,)
         resp = self.client.get(mt_url)
         eq_(301, resp.status_code)
-        expected_url = 'http://testserver%s$edit' % d.get_absolute_url()
-        eq_(expected_url, resp['Location'])
+        expected_url = d.get_absolute_url('wiki.edit')
+        assert_relative_uri(resp['Location'], expected_url)
 
 
 @override_config(KUMASCRIPT_TIMEOUT=5.0, KUMASCRIPT_MAX_AGE=600)
