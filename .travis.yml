@@ -41,12 +41,23 @@ env:
           INSTALL_DOCKER_COMPOSE=1
           UID=0
         - TOXENV=stylelint
-        # TODO: make this default when http://bugzil.la/1127798 is fixed
+        # TODO: make random hash seed the default when http://bugzil.la/1127798 is fixed
         - TOXENV=py27
           CREATE_DB=kuma
           INSTALL_PIPELINE=1
           INSTALL_ELASTICSEARCH=1
-        - TOXENV=next
+        # TODO: remove after Django 1.11 upgrade
+        - TOXENV=django-1.9
+          CREATE_DB=kuma
+          INSTALL_PIPELINE=1
+          INSTALL_ELASTICSEARCH=1
+        # TODO: remove after Django 1.11 upgrade
+        - TOXENV=django-1.10
+          CREATE_DB=kuma
+          INSTALL_PIPELINE=1
+          INSTALL_ELASTICSEARCH=1
+        # TODO: remove after Django 1.11 upgrade
+        - TOXENV=django-1.11
           CREATE_DB=kuma
           INSTALL_PIPELINE=1
           INSTALL_ELASTICSEARCH=1
@@ -54,7 +65,9 @@ env:
 matrix:
     allow_failures:
         - env: TOXENV=py27 CREATE_DB=kuma INSTALL_PIPELINE=1 INSTALL_ELASTICSEARCH=1
-        - env: TOXENV=next CREATE_DB=kuma INSTALL_PIPELINE=1 INSTALL_ELASTICSEARCH=1
+        - env: TOXENV=django-1.9 CREATE_DB=kuma INSTALL_PIPELINE=1 INSTALL_ELASTICSEARCH=1
+        - env: TOXENV=django-1.10 CREATE_DB=kuma INSTALL_PIPELINE=1 INSTALL_ELASTICSEARCH=1
+        - env: TOXENV=django-1.11 CREATE_DB=kuma INSTALL_PIPELINE=1 INSTALL_ELASTICSEARCH=1
 install:
     - nvm install 6
     - nvm use 6
