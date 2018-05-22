@@ -24,29 +24,32 @@ def assert_shared_cache_header(response):
     assert 's-maxage' in response['Cache-Control']
 
 
-def assert_relative_uri(uri, expected_uri):
+def assert_relative_reference(uri, expected_reference):
     """
-    Assert that a URIs absolute portion matches.
+    Assert that the relative reference of a URI matches.
 
     Keyword Arguments:
     uri - a URI like 'http://testserver/rel/path?foo=1'
-    relative_uri - The relative portion, like '/rel/path?foo=1'
+    expected_reference - The relative portion, like '/rel/path?foo=1'
 
     This is a helper assertion for the transition to Django 1.9.
     In Django 1.8 and earlier, redirects use RFC 2616 full URIs.
-    In Django 1.9 and later, redirects use RFC 7231 relative URIs.
+    In Django 1.9 and later, redirects use RFC 7231 relative references.
     After the transition to Django 1.11, these assertions can be
     replaced with simple equality assertions.
 
     See "HTTP redirects no longer forced to absolute URIs" in:
     https://docs.djangoproject.com/en/2.0/releases/1.9/
+
+    "Relative Reference" is defined in RFC 3986 Section 4.2:
+    https://tools.ietf.org/html/rfc3986#section-4.2
     """
     if settings.DJANGO_1_9:
-        assert uri == expected_uri
+        assert uri == expected_reference
     else:
         parts = urlsplit(uri)
         relative_uri = urlunsplit(('', '') + parts[2:])
-        assert relative_uri == expected_uri
+        assert relative_uri == expected_reference
 
 
 def eq_(first, second, msg=None):
