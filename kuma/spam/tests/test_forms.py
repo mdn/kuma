@@ -1,8 +1,7 @@
 import pytest
 from django import forms
-from waffle.models import Flag
 
-from ..constants import CHECK_URL, SPAM_CHECKS_FLAG, VERIFY_URL
+from ..constants import CHECK_URL, VERIFY_URL
 from ..forms import AkismetCheckFormMixin
 
 
@@ -33,7 +32,7 @@ class AkismetContentTestForm(AkismetCheckTestForm):
 
 
 @pytest.fixture
-def spam_request(rf, db):
+def spam_request(spam_check_everyone, rf):
     """Create a spammy request and setup for spam checking."""
     request = rf.get(
         '/',
@@ -41,7 +40,6 @@ def spam_request(rf, db):
         HTTP_USER_AGENT='Mozilla Firefox',
         HTTP_REFERER='https://www.netscape.com/'
     )
-    Flag.objects.filter(name=SPAM_CHECKS_FLAG).update(everyone=True)
     return request
 
 
