@@ -334,9 +334,7 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
             rev.save()
         # Mark each of self.testuser's revisions as spam
         for revision in created_revisions:
-            revision.akismet_submissions.add(RevisionAkismetSubmission(
-                sender=self.admin, type="spam")
-            )
+            revision.akismet_submissions.create(sender=self.admin, type="spam")
         # self.admin creates some revisions on a different document
         self.create_revisions(num=3, creator=self.admin)
 
@@ -427,9 +425,7 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         # All of the spam_revs were published and then marked as spam
         for rev in spam_revs:
             rev.save()
-            rev.akismet_submissions.add(RevisionAkismetSubmission(
-                sender=self.admin, type="spam")
-            )
+            rev.akismet_submissions.create(sender=self.admin, type="spam")
 
         # Summary of self.testuser's ham submissions
         ham_weekly = revs[3:5]
