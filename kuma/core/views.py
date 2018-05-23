@@ -33,9 +33,9 @@ def set_language(request):
     return response
 
 
-handler403 = lambda request: _error_page(request, 403)
-handler404 = lambda request: _error_page(request, 404)
-handler500 = lambda request: _error_page(request, 500)
+handler403 = lambda request, exception=None: _error_page(request, 403)
+handler404 = lambda request, exception=None: _error_page(request, 404)
+handler500 = lambda request, exception=None: _error_page(request, 500)
 
 
 @never_cache
