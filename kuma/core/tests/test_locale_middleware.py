@@ -1,5 +1,6 @@
 import pytest
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 from . import assert_relative_reference, assert_shared_cache_header
 
@@ -75,8 +76,8 @@ def test_locale_middleware_language_cookie(client, db):
 
 
 @pytest.mark.parametrize('path', ('/', '/en-US/'))
-def test_locale_middleware_lang_query_param(path, client):
-    '''The LocaleMiddleware redirects on the ?lang query first.'''
+def test_lang_selector_middleware(path, client):
+    '''The LangSelectorMiddleware redirects on the ?lang query first.'''
     client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
     response = client.get('%s?lang=fr' % path,
                           HTTP_ACCEPT_LANGUAGE='en;q=0.9, fr;q=0.8')
@@ -85,8 +86,19 @@ def test_locale_middleware_lang_query_param(path, client):
     assert_shared_cache_header(response)
 
 
-def test_locale_middleware_no_change(client, db):
-    '''The LocaleMiddleware redirects on the same ?lang query.'''
+def test_lang_selector_middleware_preserves_query(root_doc, client):
+    '''The LangSelectorMiddleware preserves other parameters.'''
+    url = reverse('wiki.json')
+    query = {'lang': root_doc.locale, 'slug': root_doc.slug}
+    response = client.get(url, query)
+    assert response.status_code == 302
+    expected = '%s?slug=%s' % (url, root_doc.slug)
+    assert_relative_reference(response['Location'], expected)
+    assert_shared_cache_header(response)
+
+
+def test_lang_selector_middleware_no_change(client, db):
+    '''The LangSelectorMiddleware redirects on the same ?lang query.'''
     response = client.get('/fr/?lang=fr')
     assert response.status_code == 302
     assert_relative_reference(response['Location'], '/fr/')

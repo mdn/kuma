@@ -54,7 +54,7 @@ class LangSelectorMiddleware(object):
         new_query = dict((smart_str(k), v) for
                          k, v in request.GET.iteritems() if k != 'lang')
         if new_query:
-            new_path = urlparams(new_path, new_query)
+            new_path = urlparams(new_path, **new_query)
         response = HttpResponseRedirect(new_path)
         add_shared_cache_control(response)
         return response
