@@ -186,13 +186,13 @@ Foundation callout
 
 
 /*
-SauceLabs
+Standard callout
 -------------------------------------------------------------- */
 
-$saucelabs-callout-image-width: 129px;
-$saucelabs-callout-image-spacing: 129px + 20px;
+$standard-callout-image-width: 129px;
+$standard-callout-image-spacing: 129px + 20px;
 
-.callout-saucelabs {
+.callout-standard {
     background-color: $accent-light;
 
     a {
@@ -203,10 +203,9 @@ $saucelabs-callout-image-spacing: 129px + 20px;
         &:after {
             display: none;
             @include bidi(((right, 20px, left, auto),));
-            background-image: url($path-to-embedded-images + 'promos/sauce-labs-home.png');
             height: 140px;
             top: 15px;
-            width: $saucelabs-callout-image-width;
+            width: $standard-callout-image-width;
         }
 
         &:before {
@@ -239,36 +238,51 @@ $saucelabs-callout-image-spacing: 129px + 20px;
 }
 
 /*
-larger teaser image gets hidden and shown at a different rate than the usual callouts
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+larger teaser image gets hidden
+- - - - - - - - - - - - - - - - */
 
 @media #{$mq-mobile-only} {
-    .callout-saucelabs {
+    .callout-standard {
         a:after {
             display: block;
         }
 
         span {
-            @include bidi(((padding, $grid-spacing ($saucelabs-callout-image-spacing + $grid-spacing) $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing ($saucelabs-callout-image-spacing + $grid-spacing)),));
+            @include bidi(((padding, $grid-spacing ($standard-callout-image-spacing + $grid-spacing) $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing ($standard-callout-image-spacing + $grid-spacing)),));
         }
     }
 }
 
 @media #{$mq-large-desktop-and-up} {
-    .callout-saucelabs {
+    .callout-standard {
         a:after {
             display: block;
         }
 
         span {
-            @include bidi(((padding, $grid-spacing ($saucelabs-callout-image-spacing + $grid-spacing) $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing ($saucelabs-callout-image-spacing + $grid-spacing)),));
+            @include bidi(((padding, $grid-spacing ($standard-callout-image-spacing + $grid-spacing) $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing ($standard-callout-image-spacing + $grid-spacing)),));
         }
     }
 }
 
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx) {
-    .callout-saucelabs a:after {
-        background-image: url($path-to-embedded-images + 'promos/sauce-labs-home-high-res.png');
+    .callout-standard a:after {
         background-size: 129px 140px;
+    }
+}
+
+/*
+Survey callout background image
+-------------------------------------------------------------- */
+
+.callout-survey {
+    &:after {
+        background-image: url($path-to-embedded-images + 'promos/survey.svg');
+    }
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx) {
+    .callout-survey a:after {
+        background-image: url($path-to-embedded-images + 'promos/survey.svg');
     }
 }
