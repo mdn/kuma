@@ -390,7 +390,7 @@ LOCALE_PATHS = (
 #       needed, and should be deleted. Django's ConditionalGetMiddleware
 #       will take care of both computing/adding the ETag header and handling
 #       conditional requests (both only for GET requests).
-USE_ETAGS = True
+USE_ETAGS = not DJANGO_1_11
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"

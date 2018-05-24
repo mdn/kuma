@@ -12,6 +12,7 @@ import mock
 import pytest
 import requests_mock
 from django.test.client import BOUNDARY, encode_multipart, MULTIPART_CONTENT
+from django.utils.http import quote_etag
 from django.utils.six.moves.urllib.parse import urlparse
 from pyquery import PyQuery as pq
 from waffle.models import Switch
@@ -140,25 +141,29 @@ def test_api_safe(client, section_doc, section_case, if_none_match, method):
 
     headers = {}
 
-    if if_none_match == 'match':
-        response = getattr(client, method.lower())(url, **headers)
-        assert 'etag' in response
-        headers['HTTP_IF_NONE_MATCH'] = response['etag']
-    elif if_none_match == 'mismatch':
-        headers['HTTP_IF_NONE_MATCH'] = 'ABC'
+    if method == 'GET':
+        # Starting with Django 1.11, condition headers will be
+        # considered only for GET requests. The one exception
+        # is a PUT request to the wiki.document_api endpoint,
+        # but that's not relevant here.
+        if if_none_match == 'match':
+            response = getattr(client, method.lower())(url, **headers)
+            assert 'etag' in response
+            headers['HTTP_IF_NONE_MATCH'] = response['etag']
+        elif if_none_match == 'mismatch':
+            headers['HTTP_IF_NONE_MATCH'] = 'ABC'
 
     response = getattr(client, method.lower())(url, **headers)
 
-    if if_none_match == 'match':
+    if (if_none_match == 'match') and (method == 'GET'):
         exp_content = ''
         assert response.status_code == 304
     else:
         assert response.status_code == 200
         assert_shared_cache_header(response)
-        assert 'etag' in response
-        assert 'x-kuma-revision' in response
         assert 'last-modified' not in response
-        assert '"{}"'.format(calculate_etag(exp_content)) in response['etag']
+        if method == 'GET':
+            assert quote_etag(calculate_etag(exp_content)) in response['etag']
         assert (response['x-kuma-revision'] ==
                 str(section_doc.current_revision_id))
 
@@ -239,7 +244,7 @@ def test_api_put_authkey_tracking(client, authkey):
     'section_case',
     ('no-section', 'section', 'another-section', 'non-existent-section')
 )
-def test_api_put_existing(client, section_doc, authkey, section_case,
+def test_api_put_existing(settings, client, section_doc, authkey, section_case,
                           content_case, if_match):
     """
     A PUT to the wiki.document_api endpoint should allow the modification
@@ -254,6 +259,9 @@ def test_api_put_existing(client, section_doc, authkey, section_case,
         url += '?section={}'.format(section_id)
 
     headers = dict(HTTP_AUTHORIZATION=authkey.header)
+
+    if if_match and settings.DJANGO_1_9 and not settings.DJANGO_1_11:
+        pytest.xfail("If-Match for PUT's is broken in Django 1.9 and 1.10")
 
     if if_match == 'match':
         response = client.get(url)
