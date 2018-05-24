@@ -1,4 +1,5 @@
 import mock
+import pytest
 
 from django import forms
 from django.test import RequestFactory
@@ -113,34 +114,21 @@ class TestUserEditForm(KumaTestCase):
                 eq_(expected_valid, result_valid)
 
 
-class AllauthUsernameTests(KumaTestCase):
-    def test_email_username(self):
-        """
-        Trying to use an email address as a username fails, with a
-        message saying an email address can't be used as a username.
-        """
-        bad_usernames = (
-            'testuser@example.com',
-            '@testuser',
-        )
-        adapter = KumaAccountAdapter()
-        for username in bad_usernames:
-            self.assertRaisesMessage(forms.ValidationError,
-                                     USERNAME_EMAIL,
-                                     adapter.clean_username,
-                                     username)
+@pytest.mark.parametrize('username', ('testuser@example.com', '@testuser'))
+def test_adapter_clean_username(username):
+    """Emails can not be usernames, raising a custom error message."""
+    adapter = KumaAccountAdapter()
+    with pytest.raises(forms.ValidationError) as excinfo:
+        adapter.clean_username(username)
+    assert str(USERNAME_EMAIL) in str(excinfo.value)
 
-    def test_bad_username(self):
-        """
-        Illegal usernames fail with our custom error message rather
-        than the misleading allauth one which suggests '@' is a legal
-        character.
-        """
-        adapter = KumaAccountAdapter()
-        self.assertRaisesMessage(forms.ValidationError,
-                                 USERNAME_CHARACTERS,
-                                 adapter.clean_username,
-                                 'dolla$dolla$bill')
+
+def test_adapter_clean_username_invalid_characters():
+    """Some letters can't be in usernames, raising a custom error message."""
+    adapter = KumaAccountAdapter()
+    with pytest.raises(forms.ValidationError) as excinfo:
+        adapter.clean_username('dolla$dolla$bill')
+    assert str(USERNAME_CHARACTERS) in str(excinfo.value)
 
 
 @mock.patch('kuma.users.forms.send_recovery_email')
