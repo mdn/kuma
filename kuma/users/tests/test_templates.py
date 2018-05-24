@@ -12,8 +12,7 @@ from waffle.models import Switch
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
-from kuma.wiki.models import (Document, DocumentDeletionLog,
-                              RevisionAkismetSubmission)
+from kuma.wiki.models import Document, DocumentDeletionLog
 from kuma.wiki.tests import (document as create_document,
                              revision as create_revision)
 
@@ -412,9 +411,8 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
             document=self.document,
             creator=self.testuser2)
         for revision in created_revisions:
-            revision.akismet_submissions.add(RevisionAkismetSubmission(
-                sender=self.testuser2, type="spam")
-            )
+            revision.akismet_submissions.create(sender=self.testuser2,
+                                                type="spam")
 
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': self.testuser2.username})
@@ -507,9 +505,8 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
             document=self.document,
             creator=self.testuser2)
         for revision in created_revisions:
-            revision.akismet_submissions.add(RevisionAkismetSubmission(
-                sender=self.testuser2, type="spam")
-            )
+            revision.akismet_submissions.create(sender=self.testuser2,
+                                                type="spam")
 
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': self.testuser2.username})
