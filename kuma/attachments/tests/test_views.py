@@ -229,12 +229,13 @@ def test_edit_attachment_post_with_vacant_file(admin_client, root_doc, tmpdir,
 
 def test_raw_file_requires_attachment_host(client, settings, file_attachment):
     settings.ATTACHMENT_HOST = 'demos'
+    settings.ALLOWED_HOSTS.append('demos')
     attachment = file_attachment['attachment']
     created = attachment.current_revision.created
     url = attachment.get_file_url()
 
     # Force the HOST header to look like something other than "demos".
-    response = client.get(url, HTTP_HOST='localhost')
+    response = client.get(url, HTTP_HOST='testserver')
     assert response.status_code == 301
     assert 'public' in response['Cache-Control']
     assert 'max-age=900' in response['Cache-Control']
@@ -252,6 +253,7 @@ def test_raw_file_requires_attachment_host(client, settings, file_attachment):
 
 def test_raw_file_if_modified_since(client, settings, file_attachment):
     settings.ATTACHMENT_HOST = 'demos'
+    settings.ALLOWED_HOSTS.append('demos')
     attachment = file_attachment['attachment']
     created = attachment.current_revision.created
     url = attachment.get_file_url()
@@ -262,6 +264,8 @@ def test_raw_file_if_modified_since(client, settings, file_attachment):
         HTTP_IF_MODIFIED_SINCE=convert_to_http_date(created)
     )
     assert response.status_code == 304
+    if (settings.DJANGO_1_9 and not settings.DJANGO_1_11):
+        pytest.xfail("Streaming headers cleared in Django 1.9 and 1.10")
     assert response['Last-Modified'] == convert_to_http_date(created)
     assert 'public' in response['Cache-Control']
     assert 'max-age=900' in response['Cache-Control']
