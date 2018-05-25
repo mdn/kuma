@@ -1,8 +1,31 @@
+# TODO: We should consider deleting this file after moving to Django 1.11,
+#       since there would probably be no further need to confirm Django's
+#       handling of the "required" and "type" attributes when rendering
+#       a field as a widget.
 from django import forms
 from pyquery import PyQuery as pq
+import pytest
 
-from . import eq_, KumaTestCase
 from ..form_fields import StrippedCharField
+
+
+FIELD_TESTS = {
+    'char-required': ('char', 'required', True),
+    'char_optional-required': ('char_optional', 'required', False),
+    'file-required': ('file', 'required', True),
+    'choice-required': ('choice', 'required', True),
+    'stripped_char-maxlength': ('stripped_char', 'maxlength', '10'),
+    'stripped_char-required': ('stripped_char', 'required', True),
+    'bool-required': ('bool', 'required', True),
+    'textarea-rows': ('textarea', 'rows', '10'),
+    'textarea-required': ('textarea', 'required', True),
+    'email-type': ('email', 'type', 'email'),
+    'email-required': ('email', 'required', True),
+    'url-type': ('url', 'type', 'url'),
+    'url-required': ('url', 'required', False),
+    'date-required': ('date', 'required', True),
+    'time-required': ('time', 'required', True),
+}
 
 
 class ExampleForm(forms.Form):
@@ -11,7 +34,7 @@ class ExampleForm(forms.Form):
     char_optional = forms.CharField(required=False,
                                     widget=forms.TextInput())
     file = forms.FileField(max_length=10)
-    choice = forms.ChoiceField(choices=((1, 1), (2, 2)))
+    choice = forms.ChoiceField(choices=(('', ''), (1, 1), (2, 2)))
     stripped_char = StrippedCharField(max_length=10)
     bool = forms.BooleanField()
     textarea = StrippedCharField(widget=forms.Textarea())
@@ -21,54 +44,16 @@ class ExampleForm(forms.Form):
     time = forms.TimeField()
 
 
-class TestFields(KumaTestCase):
-    """We're not breaking CharField when monkey patching in
-    kuma/core/monkeypatch.py."""
-    def setUp(self):
-        self.f = ExampleForm()
-
-    def _attr_eq(self, field, attr, value):
-        doc = pq(str(self.f[field]))
-        eq_(value, doc.attr(attr))
-
-    def test_char_field(self):
-        self._attr_eq('char', 'required', 'required')
-        self._attr_eq('stripped_char', 'maxlength', '10')
-
-    def test_char_optional_field(self):
-        self._attr_eq('char_optional', 'required', None)
-
-    def test_file_field(self):
-        self._attr_eq('file', 'required', 'required')
-        self._attr_eq('stripped_char', 'maxlength', '10')
-
-    def test_choice_field(self):
-        self._attr_eq('choice', 'required', 'required')
-
-    def test_stripped_char_field(self):
-        self._attr_eq('stripped_char', 'required', 'required')
-        self._attr_eq('stripped_char', 'maxlength', '10')
-
-    def test_bool_field(self):
-        self._attr_eq('bool', 'required', 'required')
-
-    def test_textarea_field(self):
-        self._attr_eq('textarea', 'required', 'required')
-        # Make sure we're still calling super to get Django's defaults
-        self._attr_eq('textarea', 'rows', '10')
-
-    def test_email_field(self):
-        self._attr_eq('email', 'type', 'email')
-        self._attr_eq('email', 'required', 'required')
-
-    def test_url_field(self):
-        self._attr_eq('url', 'type', 'url')
-        self._attr_eq('url', 'required', None)
-
-    def test_date_field(self):
-        self._attr_eq('date', 'type', 'date')
-        self._attr_eq('date', 'required', 'required')
-
-    def test_time_field(self):
-        self._attr_eq('time', 'type', 'time')
-        self._attr_eq('time', 'required', 'required')
+@pytest.mark.parametrize('field,attr,expected_val', FIELD_TESTS.values(),
+                         ids=FIELD_TESTS.keys())
+def test_field(field, attr, expected_val):
+    form = ExampleForm()
+    rendered_field = str(form[field])
+    actual_val = pq(rendered_field).attr(attr)
+    if attr == 'required':
+        if expected_val:
+            assert actual_val in ('', 'required')
+        else:
+            assert actual_val is None
+    else:
+        assert actual_val == expected_val
