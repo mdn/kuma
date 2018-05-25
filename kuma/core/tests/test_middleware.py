@@ -73,13 +73,14 @@ def test_force_anonymous_session_middleware(rf, settings):
 def test_restricted_endpoints_middleware(rf, settings):
     settings.ATTACHMENT_HOST = 'demos'
     settings.ENABLE_RESTRICTIONS_BY_HOST = True
+    settings.ALLOWED_HOSTS.append('demos')
     middleware = RestrictedEndpointsMiddleware()
 
     request = rf.get('/foo', HTTP_HOST='demos')
     middleware.process_request(request)
     assert request.urlconf == 'kuma.urls_untrusted'
 
-    request = rf.get('/foo', HTTP_HOST='not-demos')
+    request = rf.get('/foo', HTTP_HOST='testserver')
     middleware.process_request(request)
     assert not hasattr(request, 'urlconf')
 
@@ -92,6 +93,7 @@ def test_restricted_endpoints_middleware(rf, settings):
 def test_restricted_whitenoise_middleware(rf, settings):
     settings.ATTACHMENT_HOST = 'demos'
     settings.ENABLE_RESTRICTIONS_BY_HOST = True
+    settings.ALLOWED_HOSTS.append('demos')
     middleware = RestrictedWhiteNoiseMiddleware()
 
     sentinel = object()
@@ -101,7 +103,7 @@ def test_restricted_whitenoise_middleware(rf, settings):
         request = rf.get('/foo', HTTP_HOST='demos')
         assert middleware.process_request(request) is None
 
-        request = rf.get('/foo', HTTP_HOST='not-demos')
+        request = rf.get('/foo', HTTP_HOST='testserver')
         assert middleware.process_request(request) is sentinel
 
         settings.ENABLE_RESTRICTIONS_BY_HOST = False
@@ -115,6 +117,7 @@ def test_legacy_domain_redirects_middleware(rf, settings, site_url, host):
     path = '/foo/bar?x=3&y=yes'
     settings.SITE_URL = site_url
     settings.LEGACY_HOSTS = ['old1', 'old2', 'old3']
+    settings.ALLOWED_HOSTS.extend(['new'] + settings.LEGACY_HOSTS)
     middleware = LegacyDomainRedirectsMiddleware()
 
     request = rf.get(path, HTTP_HOST=host)

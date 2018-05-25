@@ -69,6 +69,7 @@ def test_robots_allowed_main_website(client, settings):
     """On the main website, allow robots with restrictions."""
     host = 'main.mdn.moz.works'
     settings.ALLOW_ROBOTS_WEB_DOMAINS = [host]
+    settings.ALLOWED_HOSTS.append(host)
     response = client.get(reverse('robots_txt'), HTTP_HOST=host)
     assert response.status_code == 200
     assert_shared_cache_header(response)
@@ -83,6 +84,7 @@ def test_robots_allowed_main_attachment_host(client, settings):
     """On the main attachment host, allow robots without restrictions."""
     host = 'samples.mdn.moz.works'
     settings.ALLOW_ROBOTS_DOMAINS = [host]
+    settings.ALLOWED_HOSTS.append(host)
     response = client.get(reverse('robots_txt'), HTTP_HOST=host)
     assert response.status_code == 200
     assert_shared_cache_header(response)
