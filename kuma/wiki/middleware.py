@@ -1,20 +1,24 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.utils.deprecation import MiddlewareMixin
 from django.views.decorators.cache import never_cache
 
 from kuma.core.i18n import get_kuma_languages
+from kuma.core.middleware import MiddlewareBase
 from kuma.core.utils import urlparams
 
 from .exceptions import ReadOnlyException
 from .jobs import DocumentZoneURLRemapsJob
 
 
-class ReadOnlyMiddleware(MiddlewareMixin):
+class ReadOnlyMiddleware(MiddlewareBase):
     """
     Renders a 403.html page with a flag for a specific message.
     """
+
+    def __call__(self, request):
+        return self.get_response(request)
+
     def process_exception(self, request, exception):
         if isinstance(exception, ReadOnlyException):
             context = {'reason': exception.args[0]}
@@ -23,24 +27,25 @@ class ReadOnlyMiddleware(MiddlewareMixin):
         return None
 
 
-class DocumentZoneMiddleware(MiddlewareMixin):
+class DocumentZoneMiddleware(MiddlewareBase):
     """
     For document zones with specified URL roots, this middleware modifies the
     incoming path_info to point at the internal wiki path
     """
-    def process_request(self, request):
+
+    def __call__(self, request):
         # https://bugzil.la/1189222
         # Don't redirect POST $subscribe requests to GET zone url
         if (request.method == 'POST' and
                 ('$subscribe' in request.path or '$files' in request.path)):
-            return None
+            return self.get_response(request)
 
         # Skip slugs that don't have locales, and won't be in a zone
         path = request.path_info
         request_slug = path.lstrip('/')
         if any(request_slug.startswith(slug)
                for slug in settings.LANGUAGE_URL_IGNORED_PATHS):
-            return None
+            return self.get_response(request)
 
         # Convert the request path to zamboni/amo style
         maybe_lang = request_slug.split(u'/')[0]
@@ -68,7 +73,8 @@ class DocumentZoneMiddleware(MiddlewareMixin):
 
             elif path == u'/docs{}'.format(new_path):
                 # Is this a request for a DocumentZone, but with /docs/ wedged
-                # in the url path between the language code and the zone's url_root?
+                # in the url path between the language code and the zone's
+                # url_root?
                 new_path = u'/{}{}'.format(request.LANGUAGE_CODE, new_path)
                 query = request.GET.copy()
                 new_path = urlparams(new_path, query_dict=query)
@@ -76,9 +82,11 @@ class DocumentZoneMiddleware(MiddlewareMixin):
                 return HttpResponseRedirect(new_path)
 
             elif path.startswith(new_path):
-                # Is this a request for the relocated wiki path? If so, rewrite
-                # the path as a request for the proper wiki view.
+                # Is this a request for the relocated wiki path? If so,
+                # rewrite the path as a request for the proper wiki view.
                 request.path_info = request.path_info.replace(new_path,
                                                               original_path,
                                                               1)
                 break
+
+        return self.get_response(request)
