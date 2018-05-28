@@ -476,12 +476,12 @@ _CONTEXT_PROCESSORS = (
 )
 
 
-MIDDLEWARE_CLASSES = (
+_MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
     'kuma.core.middleware.LegacyDomainRedirectsMiddleware',
     'kuma.core.middleware.RestrictedWhiteNoiseMiddleware',
     # must come before LocaleMiddleware
-    'redirect_urls.middleware.RedirectsMiddleware',
+    'kuma.core.middleware.RedirectsMiddleware',
     'kuma.core.middleware.SetRemoteAddrFromForwardedFor',
     ('kuma.core.middleware.ForceAnonymousSessionMiddleware'
      if MAINTENANCE_MODE else
@@ -506,10 +506,10 @@ if not MAINTENANCE_MODE:
     # to the Vary header, which in turn, kills caching.
 
     if _NEED_DEBREACH:
-        MIDDLEWARE_CLASSES += ('debreach.middleware.CSRFCryptMiddleware',)
-    MIDDLEWARE_CLASSES += ('django.middleware.csrf.CsrfViewMiddleware',)
+        _MIDDLEWARE += ('debreach.middleware.CSRFCryptMiddleware',)
+    _MIDDLEWARE += ('django.middleware.csrf.CsrfViewMiddleware',)
 
-MIDDLEWARE_CLASSES += (
+_MIDDLEWARE += (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     # TODO: In 1.10, SessionAuth*Middleware does nothing and can be removed
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
@@ -517,6 +517,11 @@ MIDDLEWARE_CLASSES += (
     'waffle.middleware.WaffleMiddleware',
     'kuma.core.middleware.RestrictedEndpointsMiddleware',
 )
+
+if DJANGO_1_10:
+    MIDDLEWARE = _MIDDLEWARE
+else:
+    MIDDLEWARE_CLASSES = _MIDDLEWARE
 
 # Auth
 AUTHENTICATION_BACKENDS = (

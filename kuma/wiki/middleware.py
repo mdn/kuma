@@ -1,6 +1,11 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+# TODO: Remove the try-except wrapper after move to Django 1.10+.
+try:
+    from django.utils.deprecation import MiddlewareMixin
+except ImportError:
+    MiddlewareMixin = object
 from django.views.decorators.cache import never_cache
 
 from kuma.core.i18n import get_kuma_languages
@@ -10,7 +15,7 @@ from .exceptions import ReadOnlyException
 from .jobs import DocumentZoneURLRemapsJob
 
 
-class ReadOnlyMiddleware(object):
+class ReadOnlyMiddleware(MiddlewareMixin):
     """
     Renders a 403.html page with a flag for a specific message.
     """
@@ -22,7 +27,7 @@ class ReadOnlyMiddleware(object):
         return None
 
 
-class DocumentZoneMiddleware(object):
+class DocumentZoneMiddleware(MiddlewareMixin):
     """
     For document zones with specified URL roots, this middleware modifies the
     incoming path_info to point at the internal wiki path

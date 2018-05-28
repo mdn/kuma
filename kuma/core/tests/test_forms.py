@@ -2,9 +2,9 @@
 #       since there would probably be no further need to confirm Django's
 #       handling of the "required" and "type" attributes when rendering
 #       a field as a widget.
+import pytest
 from django import forms
 from pyquery import PyQuery as pq
-import pytest
 
 from ..form_fields import StrippedCharField
 

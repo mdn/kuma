@@ -116,17 +116,23 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
         eq_(200, response.status_code)
 
     def test_no_redirect(self):
-        middleware = DocumentZoneMiddleware()
+        if settings.DJANGO_1_10:
+            middleware = DocumentZoneMiddleware(lambda req: None)
+        else:
+            middleware = DocumentZoneMiddleware().process_request
         for endpoint in ['$subscribe', '$files']:
             request = self.rf.post('/en-US/docs/%s%s?raw' %
                                    (self.other_doc.slug, endpoint))
-            self.assertIsNone(middleware.process_request(request))
+            assert middleware(request) is None
 
     def test_skip_no_language_urls(self):
-        middleware = DocumentZoneMiddleware()
+        if settings.DJANGO_1_10:
+            middleware = DocumentZoneMiddleware(lambda req: None)
+        else:
+            middleware = DocumentZoneMiddleware().process_request
         for path in settings.LANGUAGE_URL_IGNORED_PATHS:
             request = self.rf.get('/' + path)
-            self.assertIsNone(middleware.process_request(request))
+            assert middleware(request) is None
 
     def test_zone_url_ends_with_slash(self):
         """Ensure urls only rewrite with a '/' at the end of url_root
