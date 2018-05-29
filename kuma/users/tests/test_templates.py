@@ -7,7 +7,7 @@ from constance.test.utils import override_config
 from django.db import IntegrityError
 from mock import patch
 from pyquery import PyQuery as pq
-from waffle.models import Switch
+from waffle.testutils import override_switch
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
@@ -40,11 +40,8 @@ class SignupTests(UserTestCase, SocialTestMixin):
         self.assertEqual(session['sociallogin_provider'], 'github')
 
     def test_signup_page_disabled(self):
-        registration_disabled = Switch.objects.create(
-            name='registration_disabled',
-            active=True
-        )
-        response = self.github_login()
+        with override_switch('registration_disabled', True):
+            response = self.github_login()
         self.assertNotContains(response, 'Sign In Failure')
         self.assertContains(response, 'Profile Creation Disabled')
         session = response.context['request'].session
@@ -52,9 +49,8 @@ class SignupTests(UserTestCase, SocialTestMixin):
         self.assertNotIn('sociallogin_provider', session)
 
         # re-enable registration
-        registration_disabled.active = False
-        registration_disabled.save()
-        response = self.github_login()
+        with override_switch('registration_disabled', False):
+            response = self.github_login()
         test_strings = ['Create your MDN profile to continue',
                         'choose a username',
                         'having trouble']

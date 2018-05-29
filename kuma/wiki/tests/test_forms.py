@@ -7,7 +7,8 @@ from constance.test import override_config
 from django.contrib.auth.models import Permission
 from django.core import mail
 from django.test import RequestFactory
-from waffle.models import Flag, Switch
+from waffle.models import Flag
+from waffle.testutils import override_flag, override_switch
 
 from kuma.core.urlresolvers import reverse
 from kuma.spam.constants import (CHECK_URL, SPAM_ADMIN_FLAG, SPAM_CHECKS_FLAG,
@@ -253,17 +254,14 @@ class RevisionFormViewTests(UserTestCase):
     def setUp(self):
         super(RevisionFormViewTests, self).setUp()
         self.testuser = self.user_model.objects.get(username='testuser')
-        Flag.objects.update_or_create(
+        self.spam_checks_flag, created = Flag.objects.update_or_create(
             name=SPAM_CHECKS_FLAG,
             defaults={'everyone': True},
         )
 
     def tearDown(self):
         super(RevisionFormViewTests, self).tearDown()
-        Flag.objects.update_or_create(
-            name=SPAM_CHECKS_FLAG,
-            defaults={'everyone': None},
-        )
+        self.spam_checks_flag.delete()
 
 
 class RevisionFormEditTests(RevisionFormViewTests):
@@ -521,8 +519,8 @@ class RevisionFormEditTests(RevisionFormViewTests):
 
     @pytest.mark.spam
     @requests_mock.mock()
+    @override_switch(SPAM_TRAINING_SWITCH, True)
     def test_akismet_spam_training(self, mock_requests):
-        Switch.objects.create(name=SPAM_TRAINING_SWITCH, active=True)
         assert not DocumentSpamAttempt.objects.exists()
         rev_form = self.setup_form(mock_requests, is_spam='true')
         assert rev_form.is_valid()
@@ -533,8 +531,8 @@ class RevisionFormEditTests(RevisionFormViewTests):
 
     @pytest.mark.spam
     @requests_mock.mock()
+    @override_switch(SPAM_TRAINING_SWITCH, True)
     def test_akismet_error_training(self, mock_requests):
-        Switch.objects.create(name=SPAM_TRAINING_SWITCH, active=True)
         assert not DocumentSpamAttempt.objects.exists()
         rev_form = self.setup_form(mock_requests, is_spam='error')
         assert rev_form.is_valid()
@@ -545,9 +543,8 @@ class RevisionFormEditTests(RevisionFormViewTests):
 
     @pytest.mark.spam
     @requests_mock.mock()
+    @override_flag(SPAM_ADMIN_FLAG, True)
     def test_akismet_parameters_admin_flag(self, mock_requests):
-        flag, created = Flag.objects.get_or_create(name=SPAM_ADMIN_FLAG)
-        flag.users.add(self.testuser)
         rev_form = self.setup_form(mock_requests)
         assert rev_form.is_valid()
         parameters = rev_form.akismet_parameters()
@@ -555,9 +552,8 @@ class RevisionFormEditTests(RevisionFormViewTests):
 
     @pytest.mark.spam
     @requests_mock.mock()
+    @override_flag(SPAM_SPAMMER_FLAG, True)
     def test_akismet_parameters_spammer_flag(self, mock_requests):
-        flag, created = Flag.objects.get_or_create(name=SPAM_SPAMMER_FLAG)
-        flag.users.add(self.testuser)
         rev_form = self.setup_form(mock_requests, is_spam='true')
         assert not rev_form.is_valid()
         parameters = rev_form.akismet_parameters()
@@ -565,9 +561,8 @@ class RevisionFormEditTests(RevisionFormViewTests):
 
     @pytest.mark.spam
     @requests_mock.mock()
+    @override_flag(SPAM_TESTING_FLAG, True)
     def test_akismet_parameters_testing_flag(self, mock_requests):
-        flag, created = Flag.objects.get_or_create(name=SPAM_TESTING_FLAG)
-        flag.users.add(self.testuser)
         rev_form = self.setup_form(mock_requests)
         assert rev_form.is_valid()
         parameters = rev_form.akismet_parameters()

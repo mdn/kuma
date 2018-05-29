@@ -2,7 +2,7 @@ import json
 from urllib import urlencode
 
 import pytest
-from waffle.models import Switch
+from waffle.testutils import override_switch
 
 from kuma.core.tests import assert_shared_cache_header
 from kuma.core.urlresolvers import reverse
@@ -35,8 +35,6 @@ def test_ckeditor_config(db, client):
      'non-english-locale', 'exclude-current-locale'])
 def test_autosuggest(client, redirect_doc, doc_hierarchy_with_zones,
                      locale_case, term):
-    Switch.objects.create(name='application_ACAO', active=True)
-
     params = {}
     expected_status_code = 200
     if term:
@@ -65,7 +63,8 @@ def test_autosuggest(client, redirect_doc, doc_hierarchy_with_zones,
     url = reverse('wiki.autosuggest_documents')
     if params:
         url += '?{}'.format(urlencode(params))
-    response = client.get(url)
+    with override_switch('application_ACAO', True):
+        response = client.get(url)
     assert response.status_code == expected_status_code
     assert_shared_cache_header(response)
     assert 'Access-Control-Allow-Origin' in response
