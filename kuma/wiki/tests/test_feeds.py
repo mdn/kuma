@@ -229,11 +229,13 @@ def test_recent_revisions_limit_0(edit_revision, client):
     assert len(items) == 0
 
 
-def test_recent_revisions_all_locales(trans_edit_revision, client):
+def test_recent_revisions_all_locales(trans_edit_revision, client, settings):
     """The ?all_locales parameter returns mixed locales (bug 869301)."""
+    host = 'example.com'
+    settings.ALLOWED_HOSTS.append(host)
     feed_url = reverse('wiki.feeds.recent_revisions', kwargs={'format': 'rss'})
     resp = client.get(feed_url, {'all_locales': ''},
-                      HTTP_HOST='example.com',
+                      HTTP_HOST=host,
                       HTTP_X_FORWARDED_PROTO='https')
     assert resp.status_code == 200
     assert_shared_cache_header(resp)
@@ -244,7 +246,7 @@ def test_recent_revisions_all_locales(trans_edit_revision, client):
     # Test that links use host domain
     actual_links = [pq(item).find('link').text() for item in items]
     actual_domains = [urlparse(link).netloc for link in actual_links]
-    assert actual_domains == ['example.com'] * 4
+    assert actual_domains == [host] * 4
 
     # Test that links are a mix of en-US and translated documents
     trans_doc = trans_edit_revision.document

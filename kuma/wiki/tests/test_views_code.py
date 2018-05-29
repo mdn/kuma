@@ -71,12 +71,15 @@ def test_code_sample_host_not_allowed(code_sample_doc, constance_config,
     assert response.status_code == 403
 
 
-def test_code_sample_host_allowed(code_sample_doc, constance_config, client):
+def test_code_sample_host_allowed(code_sample_doc, constance_config, settings,
+                                  client):
     """Users are allowed to view samples on an allowed domain."""
+    host = 'sampleserver'
     url = reverse('wiki.code_sample',
                   args=[code_sample_doc.slug, 'sample1'])
-    constance_config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS = '^.*sampleserver'
-    response = client.get(url, HTTP_HOST='sampleserver')
+    constance_config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS = '^.*' + host
+    settings.ALLOWED_HOSTS.append(host)
+    response = client.get(url, HTTP_HOST=host)
     assert response.status_code == 200
     assert 'public' in response['Cache-Control']
     assert 'max-age=86400' in response['Cache-Control']
@@ -93,10 +96,12 @@ def test_code_sample_host_restricted_host(code_sample_doc, constance_config,
 
     url = reverse('wiki.code_sample',
                   args=[code_sample_doc.slug, 'sample1'])
-    constance_config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS = '^.*sampleserver'
-    settings.ATTACHMENT_HOST = 'sampleserver'
+    host = 'sampleserver'
+    constance_config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS = '^.*' + host
+    settings.ALLOWED_HOSTS.append(host)
+    settings.ATTACHMENT_HOST = host
     settings.ENABLE_RESTRICTIONS_BY_HOST = True
-    response = client.get(url, HTTP_HOST='sampleserver')
+    response = client.get(url, HTTP_HOST=host)
     assert response.status_code == 200
     assert 'public' in response['Cache-Control']
     assert 'max-age=86400' in response['Cache-Control']

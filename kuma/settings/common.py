@@ -12,7 +12,6 @@ import dj_email_url
 import djcelery
 from decouple import config, Csv
 from django import get_version
-from django.core.urlresolvers import reverse_lazy
 
 _Language = namedtuple(u'Language', u'english native')
 
@@ -1656,9 +1655,8 @@ SECURE_HSTS_SECONDS = config('SECURE_HSTS_SECONDS', default=0, cast=int)
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Auth and permissions related constants
-LOGIN_URL = reverse_lazy('account_login')
-LOGOUT_URL = reverse_lazy('account_logout')
-LOGIN_REDIRECT_URL = reverse_lazy('home')
+LOGIN_URL = 'account_login'
+LOGIN_REDIRECT_URL = 'home'
 
 # django-allauth configuration
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'

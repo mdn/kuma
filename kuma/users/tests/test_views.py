@@ -71,7 +71,7 @@ class BanTestCase(UserTestCase):
         resp = self.client.get(ban_url)
         assert resp.status_code == 302
         assert_no_cache_header(resp)
-        assert str(settings.LOGIN_URL) in resp['Location']
+        assert reverse(settings.LOGIN_URL) in resp['Location']
         self.client.logout()
 
         # admin has ban permission, can ban.
@@ -225,7 +225,7 @@ class BanAndCleanupTestCase(UserTestCase):
         resp = self.client.get(ban_url)
         assert resp.status_code == 302
         assert_no_cache_header(resp)
-        assert str(settings.LOGIN_URL) in resp['Location']
+        assert reverse(settings.LOGIN_URL) in resp['Location']
         self.client.logout()
 
         # admin has ban permission, can ban.
