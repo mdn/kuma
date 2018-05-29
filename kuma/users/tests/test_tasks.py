@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib import messages as django_messages
 from django.core import mail
 from django.test import RequestFactory, TestCase
-from waffle.models import Switch
+from waffle.testutils import override_switch
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
@@ -63,8 +63,8 @@ class TestWelcomeEmails(UserTestCase):
         send_welcome_email(testuser.pk, 'en-NZ')
         self.assertEqual(1, len(mail.outbox))
 
+    @override_switch('welcome_email', True)
     def test_welcome_mail_for_verified_email(self):
-        Switch.objects.get_or_create(name='welcome_email', active=True)
         testuser = user(username='welcome', email='welcome@tester.com',
                         password='welcome', save=True)
         request = self.setup_request_for_messages()
@@ -104,8 +104,8 @@ class TestWelcomeEmails(UserTestCase):
         self.assertEqual(django_messages.SUCCESS, queued_messages[0].level)
         self.assertTrue('getting started' in queued_messages[0].message)
 
+    @override_switch('welcome_email', True)
     def test_welcome_mail_for_unverified_email(self):
-        Switch.objects.get_or_create(name='welcome_email', active=True)
         testuser = user(username='welcome2', email='welcome2@tester.com',
                         password='welcome2', save=True)
         email_address = EmailAddress.objects.create(user=testuser,

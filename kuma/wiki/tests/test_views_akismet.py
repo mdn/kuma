@@ -2,7 +2,7 @@ import json
 
 import pytest
 from django.contrib.auth.models import Permission
-from waffle.models import Flag
+from waffle.testutils import override_flag
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
@@ -41,8 +41,8 @@ def akismet_mock_requests(mock_requests):
 @pytest.fixture
 def enable_akismet_submissions(constance_config):
     constance_config.AKISMET_KEY = 'dashboard'
-    Flag.objects.create(name=SPAM_SUBMISSIONS_FLAG, everyone=True)
-    return constance_config
+    with override_flag(SPAM_SUBMISSIONS_FLAG, True):
+        yield constance_config
 
 
 @pytest.mark.spam

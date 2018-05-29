@@ -6,7 +6,7 @@ from django.contrib.admin import AdminSite
 from django.test import RequestFactory
 from django.utils.six.moves.urllib.parse import parse_qsl
 from pyquery import PyQuery as pq
-from waffle.models import Flag
+from waffle.testutils import override_flag
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
@@ -148,10 +148,9 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
         assert dsa.reviewed is not None
 
     @override_config(AKISMET_KEY='admin')
+    @override_flag(SPAM_SUBMISSIONS_FLAG, True)
     @requests_mock.mock()
     def test_save_false_positive(self, mock_requests):
-        flag, created = Flag.objects.get_or_create(name=SPAM_SUBMISSIONS_FLAG)
-        flag.users.add(self.admin_user)
         dsa = DocumentSpamAttempt(user=self.user,
                                   title='No data',
                                   slug='test/spam',
@@ -169,10 +168,9 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
         assert mock_requests.call_count == 2
 
     @override_config(AKISMET_KEY='')
+    @override_flag(SPAM_SUBMISSIONS_FLAG, True)
     @requests_mock.mock()
     def test_save_false_positive_no_akismet(self, mock_requests):
-        flag, created = Flag.objects.get_or_create(name=SPAM_SUBMISSIONS_FLAG)
-        flag.users.add(self.admin_user)
         dsa = DocumentSpamAttempt(user=self.user,
                                   title='No data',
                                   slug='test/spam',
@@ -233,10 +231,9 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
                 assert type_input.checked
 
     @requests_mock.mock()
+    @override_flag(SPAM_SUBMISSIONS_FLAG, True)
     def test_spam_submission_submitted(self, mock_requests):
         admin = User.objects.get(username='admin')
-        flag, created = Flag.objects.get_or_create(name=SPAM_SUBMISSIONS_FLAG)
-        flag.users.add(admin)
         revision = admin.created_revisions.all()[0]
         url = reverse('admin:wiki_revisionakismetsubmission_add')
 
@@ -289,10 +286,9 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         assert mock_requests.call_count == 2
 
     @requests_mock.mock()
+    @override_flag(SPAM_SUBMISSIONS_FLAG, True)
     def test_spam_submission_tags(self, mock_requests):
         admin = User.objects.get(username='admin')
-        flag, created = Flag.objects.get_or_create(name=SPAM_SUBMISSIONS_FLAG)
-        flag.users.add(admin)
         revision = admin.created_revisions.all()[0]
         revision.tags = '"Banana" "Orange" "Apple"'
         revision.save()
@@ -333,10 +329,9 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(SUBMISSION_NOT_AVAILABLE, response.content)
 
+    @override_flag(SPAM_SUBMISSIONS_FLAG, True)
     def test_view_change_existing(self):
         admin = User.objects.get(username='admin')
-        flag, created = Flag.objects.get_or_create(name=SPAM_SUBMISSIONS_FLAG)
-        flag.users.add(admin)
         revision = admin.created_revisions.all()[0]
         submission = RevisionAkismetSubmission.objects.create(
             sender=admin, revision=revision, type='ham')
@@ -348,10 +343,9 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(SUBMISSION_NOT_AVAILABLE, response.content)
 
+    @override_flag(SPAM_SUBMISSIONS_FLAG, True)
     def test_view_change_with_data(self):
         admin = User.objects.get(username='admin')
-        flag, created = Flag.objects.get_or_create(name=SPAM_SUBMISSIONS_FLAG)
-        flag.users.add(admin)
         revision = admin.created_revisions.all()[0]
         submission = RevisionAkismetSubmission.objects.create(
             sender=admin, revision=revision, type='spam')
@@ -366,10 +360,9 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         self.assertIn('<dt>content</dt><dd>spam</dd>',
                       response.content)
 
+    @override_flag(SPAM_SUBMISSIONS_FLAG, True)
     def test_view_changelist_existing(self):
         admin = User.objects.get(username='admin')
-        flag, created = Flag.objects.get_or_create(name=SPAM_SUBMISSIONS_FLAG)
-        flag.users.add(admin)
         revision = admin.created_revisions.all()[0]
         RevisionAkismetSubmission.objects.create(sender=admin,
                                                  revision=revision,

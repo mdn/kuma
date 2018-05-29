@@ -13,8 +13,7 @@ from django.core import mail
 from django.template.loader import render_to_string
 from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse
 from pyquery import PyQuery as pq
-from waffle.models import Flag, Switch
-from waffle.testutils import override_flag
+from waffle.testutils import override_flag, override_switch
 
 from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.tests import (assert_no_cache_header, assert_relative_reference,
@@ -111,8 +110,8 @@ class ViewTests(UserTestCase, WikiTestCase):
         assert result_review_tags == expected_review_tags
 
         url = reverse('wiki.json_slug', args=('article-title',))
-        Switch.objects.create(name='application_ACAO', active=True)
-        resp = self.client.get(url)
+        with override_switch('application_ACAO', True):
+            resp = self.client.get(url)
         assert resp.status_code == 200
         assert_shared_cache_header(resp)
         assert resp['Access-Control-Allow-Origin'] == '*'
@@ -136,8 +135,8 @@ class ViewTests(UserTestCase, WikiTestCase):
 
         url = reverse('wiki.toc', args=[slug])
 
-        Switch.objects.create(name='application_ACAO', active=True)
-        resp = self.client.get(url)
+        with override_switch('application_ACAO', True):
+            resp = self.client.get(url)
         assert resp.status_code == 200
         assert_shared_cache_header(resp)
         assert resp['Access-Control-Allow-Origin'] == '*'
@@ -145,6 +144,7 @@ class ViewTests(UserTestCase, WikiTestCase):
             '<ol><li><a href="#Head_2" rel="internal">Head 2</a></ol>'
         )
 
+    @override_switch('application_ACAO', True)
     def test_children_view(self):
         """bug 875349"""
         test_content = '<p>Test <a href="http://example.com">Summary</a></p>'
@@ -182,7 +182,6 @@ class ViewTests(UserTestCase, WikiTestCase):
         _make_doc('Child 2', 'Root/Child_2', root_doc)
         _make_doc('Child 3', 'Root/Child_3', root_doc, True)
 
-        Switch.objects.create(name='application_ACAO', active=True)
         for expand in (True, False):
             url = reverse('wiki.children', args=['Root'])
             if expand:
@@ -2041,15 +2040,14 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert_no_cache_header(resp)
         assert RevisionIP.objects.all().count() == 0
 
-        Switch.objects.create(name='store_revision_ips', active=True)
-
         data.update({'content': 'Store the IP address for the revision.',
                      'comment': 'Store the IP address for the revision.'})
 
-        self.client.post(reverse('wiki.edit', args=[doc.slug]),
-                         data,
-                         HTTP_USER_AGENT='Mozilla Firefox',
-                         HTTP_REFERER='http://localhost/')
+        with override_switch('store_revision_ips', True):
+            self.client.post(reverse('wiki.edit', args=[doc.slug]),
+                             data,
+                             HTTP_USER_AGENT='Mozilla Firefox',
+                             HTTP_REFERER='http://localhost/')
         assert RevisionIP.objects.all().count() == 1
         rev = doc.revisions.order_by('-id').all()[0]
         rev_ip = RevisionIP.objects.get(revision=rev)
@@ -2285,11 +2283,11 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             <p>test</p>
             <p>test</p>
         """
-        Switch.objects.create(name='application_ACAO', active=True)
-        response = self.client.get('%s?raw=true' %
-                                   reverse('wiki.document',
-                                           args=[rev.document.slug]),
-                                   HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        with override_switch('application_ACAO', True):
+            response = self.client.get('%s?raw=true' %
+                                       reverse('wiki.document',
+                                               args=[rev.document.slug]),
+                                       HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         assert response.status_code == 200
         # Since the client is logged-in, the response should not be cached.
         assert_no_cache_header(response)
@@ -2917,14 +2915,6 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
 
 class PageMoveTests(UserTestCase, WikiTestCase):
 
-    def setUp(self):
-        super(PageMoveTests, self).setUp()
-        page_move_flag = Flag.objects.create(name='page_move')
-        page_move_flag.users = self.user_model.objects.filter(
-            is_superuser=True
-        )
-        page_move_flag.save()
-
     def test_move_conflict(self):
         parent = revision(title='Test page move views',
                           slug='test-page-move-views',
@@ -2947,9 +2937,10 @@ class PageMoveTests(UserTestCase, WikiTestCase):
 
         data = {'slug': 'moved/test-page-move-views'}
         self.client.login(username='admin', password='testpass')
-        resp = self.client.post(reverse('wiki.move',
-                                        args=(parent_doc.slug,)),
-                                data=data)
+        with override_flag('page_move', True):
+            resp = self.client.post(reverse('wiki.move',
+                                            args=(parent_doc.slug,)),
+                                    data=data)
 
         assert resp.status_code == 200
         assert_no_cache_header(resp)

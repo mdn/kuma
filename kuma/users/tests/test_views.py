@@ -263,10 +263,17 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         self.ban_testuser2_url = reverse('users.ban_user_and_cleanup_summary',
                                          kwargs={'username': self.testuser2.username})
         self.client.login(username='admin', password='testpass')
+        self.submissions_flag = None
+
+    def tearDown(self):
+        super(BanUserAndCleanupSummaryTestCase, self).tearDown()
+        if self.submissions_flag:
+            self.submissions_flag.delete()
 
     def enable_akismet_and_mock_requests(self, mock_requests):
         """Enable Akismet and mock calls to it. Return the mock object."""
-        Flag.objects.create(name=SPAM_SUBMISSIONS_FLAG, everyone=True)
+        self.submissions_flag = Flag.objects.create(
+            name=SPAM_SUBMISSIONS_FLAG, everyone=True)
         mock_requests.post(VERIFY_URL, content='valid')
         mock_requests.post(SPAM_URL, content=Akismet.submission_success)
         return mock_requests

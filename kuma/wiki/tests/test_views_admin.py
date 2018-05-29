@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import pytest
-from waffle.models import Flag
+from waffle.testutils import override_flag
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
@@ -11,8 +11,8 @@ from ..models import Document, Revision
 
 @pytest.fixture
 def purge_client(admin_client):
-    Flag.objects.create(name='kumaediting', everyone=True)
-    return admin_client
+    with override_flag('kumaediting', True):
+        yield admin_client
 
 
 @pytest.fixture

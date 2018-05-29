@@ -20,6 +20,10 @@ class WikiTestCase(KumaTestCase):
         self.kumaediting_flag, created = Flag.objects.get_or_create(
             name='kumaediting', everyone=True)
 
+    def tearDown(self):
+        super(WikiTestCase, self).setUp()
+        self.kumaediting_flag.delete()
+
 
 # Model makers. These make it clearer and more concise to create objects in
 # test cases. They allow the significant attribute values to stand out rather

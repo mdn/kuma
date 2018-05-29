@@ -1,6 +1,6 @@
 import pytest
 from django.conf import settings
-from waffle.models import Switch
+from waffle.testutils import override_switch
 
 from kuma.attachments.models import Attachment
 from kuma.attachments.tests import make_test_file
@@ -31,15 +31,15 @@ def code_sample_doc(root_doc, wiki_user):
 
 def test_code_sample(code_sample_doc, constance_config, client, settings):
     """The raw source for a document can be requested."""
-    Switch.objects.create(name='application_ACAO', active=True)
     url = reverse('wiki.code_sample',
                   args=[code_sample_doc.slug, 'sample1'])
     constance_config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS = '^.*testserver'
-    response = client.get(
-        url,
-        HTTP_HOST='testserver',
-        HTTP_IF_NONE_MATCH='"some-old-etag"'
-    )
+    with override_switch('application_ACAO', True):
+        response = client.get(
+            url,
+            HTTP_HOST='testserver',
+            HTTP_IF_NONE_MATCH='"some-old-etag"'
+        )
     assert response.status_code == 200
     assert response['Access-Control-Allow-Origin'] == '*'
     assert 'Last-Modified' not in response

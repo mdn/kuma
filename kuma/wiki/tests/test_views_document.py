@@ -15,7 +15,7 @@ from django.test.client import BOUNDARY, encode_multipart, MULTIPART_CONTENT
 from django.utils.http import quote_etag
 from django.utils.six.moves.urllib.parse import urlparse
 from pyquery import PyQuery as pq
-from waffle.models import Switch
+from waffle.testutils import override_switch
 
 from kuma.authkeys.models import Key
 from kuma.core.models import IPBan
@@ -111,8 +111,12 @@ def authkey(wiki_user):
     'http_method', ['put', 'post', 'delete', 'options', 'head'])
 @pytest.mark.parametrize(
     'endpoint', ['children', 'toc', 'json', 'json_slug', 'styles'])
-def test_disallowed_methods(client, http_method, endpoint):
-    """HTTP methods other than GET & HEAD are not allowed."""
+def test_disallowed_methods(client, db, http_method, endpoint):
+    """
+    HTTP methods other than GET & HEAD are not allowed.
+
+    TODO: Remove db fixture when bug 1462475 (disable zone URL root) is fixed.
+    """
     kwargs = None
     if endpoint != 'json':
         kwargs = dict(document_path='Web/CSS')
@@ -602,8 +606,6 @@ def test_tags_not_show_while_empty(root_doc, client, wiki_user):
     ['nothing', 'title-only', 'slug-only', 'title-and-slug', 'missing-title'])
 def test_json(doc_hierarchy_with_zones, client, params_case):
     """Test the wiki.json endpoint."""
-    Switch.objects.create(name='application_ACAO', active=True)
-
     top_doc = doc_hierarchy_with_zones.top
     bottom_doc = doc_hierarchy_with_zones.bottom
 
@@ -633,7 +635,8 @@ def test_json(doc_hierarchy_with_zones, client, params_case):
         params = dict(title='nonexistent document title')
 
     url = reverse('wiki.json')
-    response = client.get(url, params)
+    with override_switch('application_ACAO', True):
+        response = client.get(url, params)
 
     assert response.status_code == expected_status_code
     if response.status_code == 404:

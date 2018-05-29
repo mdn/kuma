@@ -10,7 +10,7 @@ from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ImproperlyConfigured
 from pyquery import PyQuery as pq
-from waffle.models import Switch
+from waffle.testutils import override_switch
 
 from kuma.core.tests import (assert_no_cache_header,
                              assert_shared_cache_header, eq_, ok_)
@@ -105,10 +105,9 @@ def test_revisions_list_via_AJAX(dashboard_revisions, client):
 def test_revisions_show_ips_button(switch, is_admin, root_doc, user_client,
                                    admin_client):
     """Toggle IPs button appears for admins when the switch is active."""
-    if switch:
-        Switch.objects.create(name='store_revision_ips', active=True)
     client = admin_client if is_admin else user_client
-    response = client.get(reverse('dashboards.revisions'))
+    with override_switch('store_revision_ips', active=switch):
+        response = client.get(reverse('dashboards.revisions'))
     assert response.status_code == 200
     page = pq(response.content)
     ip_button = page.find('button#show_ips_btn')

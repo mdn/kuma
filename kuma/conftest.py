@@ -5,7 +5,7 @@ import requests_mock
 from django.conf import settings
 from django.core.cache import caches
 from django.utils.translation import activate
-from waffle.models import Flag
+from waffle.testutils import override_flag
 
 from kuma.wiki.models import Document, Revision
 
@@ -86,8 +86,8 @@ def user_client(client, wiki_user):
 
 @pytest.fixture
 def editor_client(user_client):
-    Flag.objects.create(name='kumaediting', everyone=True)
-    return user_client
+    with override_flag('kumaediting', True):
+        yield user_client
 
 
 @pytest.fixture
