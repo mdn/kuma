@@ -189,9 +189,12 @@ django-tidings==2.0.1 \
     --hash=sha256:a144628acdd9ddafdc921cdb70fb8ee297886b1dc38b00fab8fffbbf46163012
 
 # Support segmented user experiences
-django-waffle==0.11 \
-    --hash=sha256:9cd9e3a976849a3cd816830d7811b93543c1dc9da9f3cb1ccc2f9da831b8b025 \
-    --hash=sha256:914b4b874fa6250a0897bc30b67e02034d92a7235ab72a91bf6da49b71751de4
+# Code: https://github.com/jsocol/django-waffle
+# Changes: https://github.com/jsocol/django-waffle/blob/master/CHANGES
+# Docs: https://waffle.readthedocs.io/en/stable/
+django-waffle==0.14.0 \
+    --hash=sha256:f243a56db80bd28601222b1a8a0b1fa4e7e6ac1bbf809952c3725cb4cc0012d9 \
+    --hash=sha256:f3db39cc17d6e388a485230b6029095e5d6fba4ceaff8d4fcc21f95c47fe2e97
 
 # Configure Django DATABASES settings from an environment variable
 dj-database-url==0.4.0 \
