@@ -1,3 +1,4 @@
 {% if request.session.sociallogin_provider == 'github' %}
+    <!-- {{ _('Signed in with GitHub') }} -->{# TODO: Add to SVG as translated title #}
     {% include 'includes/icons/social/github.svg' %}
 {% endif %}
