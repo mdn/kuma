@@ -1,4 +1,5 @@
 import pytest
+from django.conf import settings
 from django.test import RequestFactory
 from mock import MagicMock, patch
 
@@ -49,9 +50,12 @@ def test_slash_middleware_retains_querystring(client, db):
 def test_set_remote_addr_from_forwarded_for(rf, forwarded_for, remote_addr):
     '''SetRemoteAddrFromForwardedFor parses the X-Forwarded-For Header.'''
     rf = RequestFactory()
-    middleware = SetRemoteAddrFromForwardedFor()
+    if settings.DJANGO_1_10:
+        middleware = SetRemoteAddrFromForwardedFor(lambda req: None)
+    else:
+        middleware = SetRemoteAddrFromForwardedFor().process_request
     request = rf.get('/', HTTP_X_FORWARDED_FOR=forwarded_for)
-    middleware.process_request(request)
+    middleware(request)
     assert request.META['REMOTE_ADDR'] == remote_addr
 
 
@@ -59,13 +63,21 @@ def test_force_anonymous_session_middleware(rf, settings):
     request = rf.get('/foo')
     request.COOKIES[settings.SESSION_COOKIE_NAME] = 'totallyfake'
 
-    middleware = ForceAnonymousSessionMiddleware()
-    middleware.process_request(request)
+    mock_response = MagicMock()
+
+    if settings.DJANGO_1_10:
+        middleware = ForceAnonymousSessionMiddleware(lambda req: mock_response)
+    else:
+        middleware = ForceAnonymousSessionMiddleware().process_request
+
+    response = middleware(request)
 
     assert request.session
     assert request.session.session_key is None
 
-    response = middleware.process_response(request, MagicMock())
+    if not settings.DJANGO_1_10:
+        response = ForceAnonymousSessionMiddleware().process_response(
+            request, mock_response)
 
     assert not response.method_calls
 
@@ -74,19 +86,22 @@ def test_restricted_endpoints_middleware(rf, settings):
     settings.ATTACHMENT_HOST = 'demos'
     settings.ENABLE_RESTRICTIONS_BY_HOST = True
     settings.ALLOWED_HOSTS.append('demos')
-    middleware = RestrictedEndpointsMiddleware()
+    if settings.DJANGO_1_10:
+        middleware = RestrictedEndpointsMiddleware(lambda req: None)
+    else:
+        middleware = RestrictedEndpointsMiddleware().process_request
 
     request = rf.get('/foo', HTTP_HOST='demos')
-    middleware.process_request(request)
+    middleware(request)
     assert request.urlconf == 'kuma.urls_untrusted'
 
     request = rf.get('/foo', HTTP_HOST='testserver')
-    middleware.process_request(request)
+    middleware(request)
     assert not hasattr(request, 'urlconf')
 
     settings.ENABLE_RESTRICTIONS_BY_HOST = False
     request = rf.get('/foo', HTTP_HOST='demos')
-    middleware.process_request(request)
+    middleware(request)
     assert not hasattr(request, 'urlconf')
 
 
@@ -94,21 +109,24 @@ def test_restricted_whitenoise_middleware(rf, settings):
     settings.ATTACHMENT_HOST = 'demos'
     settings.ENABLE_RESTRICTIONS_BY_HOST = True
     settings.ALLOWED_HOSTS.append('demos')
-    middleware = RestrictedWhiteNoiseMiddleware()
+    if settings.DJANGO_1_10:
+        middleware = RestrictedWhiteNoiseMiddleware(lambda req: None)
+    else:
+        middleware = RestrictedWhiteNoiseMiddleware().process_request
 
     sentinel = object()
 
     with patch.object(WhiteNoiseMiddleware, 'process_request',
                       return_value=sentinel):
         request = rf.get('/foo', HTTP_HOST='demos')
-        assert middleware.process_request(request) is None
+        assert middleware(request) is None
 
         request = rf.get('/foo', HTTP_HOST='testserver')
-        assert middleware.process_request(request) is sentinel
+        assert middleware(request) is sentinel
 
         settings.ENABLE_RESTRICTIONS_BY_HOST = False
         request = rf.get('/foo', HTTP_HOST='demos')
-        assert middleware.process_request(request) is sentinel
+        assert middleware(request) is sentinel
 
 
 @pytest.mark.parametrize('host', ['old1', 'old2', 'old3', 'new'])
@@ -118,10 +136,13 @@ def test_legacy_domain_redirects_middleware(rf, settings, site_url, host):
     settings.SITE_URL = site_url
     settings.LEGACY_HOSTS = ['old1', 'old2', 'old3']
     settings.ALLOWED_HOSTS.extend(['new'] + settings.LEGACY_HOSTS)
-    middleware = LegacyDomainRedirectsMiddleware()
+    if settings.DJANGO_1_10:
+        middleware = LegacyDomainRedirectsMiddleware(lambda req: None)
+    else:
+        middleware = LegacyDomainRedirectsMiddleware().process_request
 
     request = rf.get(path, HTTP_HOST=host)
-    response = middleware.process_request(request)
+    response = middleware(request)
 
     if host in settings.LEGACY_HOSTS:
         assert response.status_code == 301

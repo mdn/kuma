@@ -8,8 +8,15 @@ from django.http import (HttpResponseForbidden,
                          HttpResponsePermanentRedirect,
                          HttpResponseRedirect)
 from django.utils import translation
+# TODO: Remove the try-except wrapper after move to Django 1.10+.
+try:
+    from django.utils.deprecation import MiddlewareMixin
+except ImportError:
+    MiddlewareMixin = object
 from django.utils.encoding import iri_to_uri, smart_str
 from django.utils.six.moves.urllib.parse import urlsplit
+from redirect_urls.middleware import (
+    RedirectsMiddleware as OriginalRedirectsMiddleware)
 from whitenoise.middleware import WhiteNoiseMiddleware
 
 from kuma.wiki.views.legacy import (mindtouch_to_kuma_redirect,
@@ -24,7 +31,7 @@ from .utils import is_untrusted, urlparams
 from .views import handler403
 
 
-class LangSelectorMiddleware(object):
+class LangSelectorMiddleware(MiddlewareMixin):
     """
     Redirect requests with a ?lang= parameter.
 
@@ -60,7 +67,7 @@ class LangSelectorMiddleware(object):
         return response
 
 
-class LocaleStandardizerMiddleware(object):
+class LocaleStandardizerMiddleware(MiddlewareMixin):
     """
     Convert 404s with legacy locales to redirects.
 
@@ -108,7 +115,7 @@ class LocaleStandardizerMiddleware(object):
             return response
 
 
-class LocaleMiddleware(object):
+class LocaleMiddleware(MiddlewareMixin):
     """
     This is a very simple middleware that parses a request
     and decides what translation object to install in the current
@@ -164,7 +171,7 @@ class LocaleMiddleware(object):
         return response
 
 
-class Forbidden403Middleware(object):
+class Forbidden403Middleware(MiddlewareMixin):
     """
     Renders a 403.html page if response.status_code == 403.
     """
@@ -192,7 +199,7 @@ def is_valid_path(request, path):
         return False
 
 
-class SlashMiddleware(object):
+class SlashMiddleware(MiddlewareMixin):
     """
     Middleware that adds or removes a trailing slash if there was a 404.
 
@@ -241,7 +248,7 @@ def safe_query_string(request):
         request.META['QUERY_STRING'] = qs
 
 
-class SetRemoteAddrFromForwardedFor(object):
+class SetRemoteAddrFromForwardedFor(MiddlewareMixin):
     """
     Middleware that sets REMOTE_ADDR based on HTTP_X_FORWARDED_FOR, if the
     latter is set. This is useful if you're sitting behind a reverse proxy that
@@ -275,7 +282,7 @@ class ForceAnonymousSessionMiddleware(SessionMiddleware):
         return response
 
 
-class RestrictedEndpointsMiddleware(object):
+class RestrictedEndpointsMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
         """
@@ -298,7 +305,7 @@ class RestrictedWhiteNoiseMiddleware(WhiteNoiseMiddleware):
         )
 
 
-class LegacyDomainRedirectsMiddleware(object):
+class LegacyDomainRedirectsMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
         """
@@ -309,3 +316,15 @@ class LegacyDomainRedirectsMiddleware(object):
                 urljoin(settings.SITE_URL, request.get_full_path())
             )
         return None
+
+
+if settings.DJANGO_1_10:
+    class RedirectsMiddleware(MiddlewareMixin, OriginalRedirectsMiddleware):
+        """
+        Enables the redirect_urls middleware to be used with both MIDDLEWARE
+        and MIDDLEWARE_CLASSES until a newer version of django-redirect-urls
+        is available that provides this "out of the box".
+        """
+        pass
+else:
+    RedirectsMiddleware = OriginalRedirectsMiddleware
