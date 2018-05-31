@@ -277,6 +277,10 @@ HTTPS.
 
 Deis Workflow Demo instances
 ============================
+**Note**: Deis workflow demo instances are unused, and
+`Deis Workflow is no longer active`_. These docs and supporting code
+will be removed. See `bug 1465829`_.
+
 You can deploy a hosted demo instance of Kuma by following these steps:
 
 #. Create a new branch, you cannot create a demo from the ``master`` branch.
@@ -304,6 +308,9 @@ to the MySQL instance::
 **Note**: if you copy and paste the code above into a bash terminal and are
 wondering why the commands don't appear in your bash history, it's because there's
 whitespace at the beginning of the line.
+
+.. _`Deis Workflow is no longer active`: https://deis.com/blog/2017/deis-workflow-final-release/
+.. _`bug 1465829`: https://bugzilla.mozilla.org/show_bug.cgi?id=1465829
 
 .. _maintenance-mode:
 
