@@ -54,17 +54,15 @@ def get_content(content_case, data):
     if content_case == 'html-fragment':
         return 'text/html', data['content']
 
-    if content_case == 'html':
-        return 'text/html', """
-            <html>
-                <head>
-                    <title>%(title)s</title>
-                </head>
-                <body>%(content)s</body>
-            </html>
-        """ % data
-
-    raise ValueError('unsupported content case')
+    assert content_case == 'html'
+    return 'text/html', """
+        <html>
+            <head>
+                <title>%(title)s</title>
+            </head>
+            <body>%(content)s</body>
+        </html>
+    """ % data
 
 
 @pytest.fixture

@@ -39,8 +39,6 @@ def test_permission(root_doc, editor_client, endpoint):
     fixture, although logged in, does not have the proper permission.
     """
     args = [root_doc.slug]
-    if endpoint == 'revert_document':
-        args.append(root_doc.current_revision.id)
     url = reverse('wiki.{}'.format(endpoint), args=args)
     response = editor_client.get(url)
     assert response.status_code == 403
