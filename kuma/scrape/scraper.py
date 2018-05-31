@@ -19,7 +19,7 @@ logger = logging.getLogger('kuma.scraper')
 class Requester(object):
     """Request pages from a running MDN instance."""
 
-    MAX_ATTEMPTS = 4
+    MAX_ATTEMPTS = 7
     TIMEOUT = 1.0
 
     def __init__(self, host, ssl):

@@ -1,7 +1,6 @@
 {
   "sources": [
     ["links", "/", {"translations": true, "revisions": 3}],
-    ["links", "/en-US/docs/Experiment:InteractiveEditor", {}],
     ["document", "/en-US/docs/Mozilla/Firefox", {"revisions": 15}],
     ["document", "/en-US/docs/Web/Apps", {"translations": true, "revisions": 3}],
     ["document", "/en-US/docs/MDN_at_ten/History_of_MDN", {}],
@@ -14,6 +13,13 @@
     ["document", "/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach", {}],
     ["document", "/en-US/docs/Web/Guide/CSS/Media_queries", {}],
     ["document", "/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics", {}],
+    ["document", "/en-US/docs/Learn/CSS/Styling_text/Fundamentals", {}],
+    ["document", "/es/docs/Mozilla/Firefox", {"revisions": 3}],
+    ["document", "/fr/docs/Mozilla/Firefox", {"revisions": 3}],
+    ["document", "/de/docs/Mozilla/Firefox", {"revisions": 3}],
+    ["revision", "/en-US/docs/Web/HTML$revision/1299417", {}],
+    ["revision", "/en-US/docs/Web/HTML$revision/1293895", {}],
+    ["revision", "/en-US/docs/Mozilla/Firefox$revision/1284393", {}],
     ["user", "Sheppy", {"social": true, "email": "sheppy@mozilla.com"}],
     ["user", "jwhitlock", {"social": true, "email": "jwhitlock@mozilla.com"}]
   ],

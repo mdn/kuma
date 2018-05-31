@@ -155,7 +155,7 @@ def test_maintenance_mode(base_url, is_behind_cdn, is_maintenance_mode):
              '/en-US/Firefox$delete',
              '/en-US/Firefox$translate',
              '/en-US/Firefox$quick-review',
-             '/en-US/Firefox$revert/1358677'])
+             '/en-US/Firefox$revert/1284393'])
 def test_not_cached_login_required(base_url, is_behind_cdn, slug):
     """Ensure that these endpoints that require login are not cached."""
     url = base_url + slug
@@ -415,10 +415,6 @@ def test_locale_selection_cached(base_url, is_behind_cdn, is_local_url, slug,
     assert expected, "expected must be set to the expected locale prefix."
     assert accept, "accept must be set to the Accept-Langauge header value."
 
-    if (is_local_url and slug.startswith('/Firefox') and
-            expected in ('fr', 'es')):
-        pytest.xfail("/%s/Firefox is not in sample database." % expected)
-
     request_kwargs = {
         'headers': {
             'X-Requested-With': 'XMLHttpRequest',
@@ -459,7 +455,7 @@ def test_locale_selection_cached(base_url, is_behind_cdn, is_local_url, slug,
              '/Firefox$quick-review',
              '/Firefox$subscribe',
              '/Firefox$subscribe_to_tree',
-             '/Firefox$revert/1358677'])
+             '/Firefox$revert/1284393'])
 def test_locale_selection_not_cached(base_url, is_behind_cdn, is_local_url,
                                      slug, expected, accept, cookie, param):
     """
@@ -472,10 +468,6 @@ def test_locale_selection_not_cached(base_url, is_behind_cdn, is_local_url,
     url = base_url + slug
     assert expected, "expected must be set to the expected locale prefix."
     assert accept, "accept must be set to the Accept-Langauge header value."
-
-    if (is_local_url and slug.startswith('/Firefox') and
-            expected in ('fr', 'es')):
-        pytest.xfail("/%s/Firefox is not in sample database." % expected)
 
     request_kwargs = {
         'headers': {

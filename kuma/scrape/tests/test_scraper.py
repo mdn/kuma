@@ -99,24 +99,20 @@ def test_connectionerror_success():
 @mock.patch('kuma.scrape.scraper.time.sleep')
 def test_timeout_failure(mock_sleep):
     """Request fail after too many Timeouts."""
-    assert Requester.MAX_ATTEMPTS == 4
+    attempts = 7
+    assert Requester.MAX_ATTEMPTS == attempts
     requester = Requester('example.com', True)
     mock_session = mock.Mock(spec_set=['get'])
-    mock_session.get.side_effect = [requests.exceptions.Timeout] * 4
+    mock_session.get.side_effect = [requests.exceptions.Timeout] * attempts
     requester._session = mock_session
 
     with pytest.raises(requests.exceptions.Timeout):
         requester.request('/path', raise_for_status=False)
     full_path = 'https://example.com/path'
-    expected_calls = [
-        mock.call(full_path, timeout=1.0),
-        mock.call(full_path, timeout=2.0),
-        mock.call(full_path, timeout=4.0),
-        mock.call(full_path, timeout=8.0),
-    ]
+    times = [2.0 ** attempt for attempt in range(attempts)]  # 1, 2, 4, 8...
+    expected_calls = [mock.call(full_path, timeout=time) for time in times]
     assert mock_session.get.call_args_list == expected_calls
-    expected_sleep_calls = [mock.call(1.0), mock.call(2.0), mock.call(4.0),
-                            mock.call(8.0)]
+    expected_sleep_calls = [mock.call(time) for time in times]
     assert mock_sleep.call_args_list == expected_sleep_calls
 
 
