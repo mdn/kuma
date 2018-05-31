@@ -15,8 +15,8 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('contenttypes', '__latest__'),
-        ('sites', '__latest__'),
+        ('contenttypes', '0002_remove_content_type_name'),
+        ('sites', '0001_initial'),
         ('waffle', '0001_initial'),
         ('attachments', '0001_squashed_0008_attachment_on_delete'),
         ('users', '0001_squashed_0008_update_locales_tz_help'),
