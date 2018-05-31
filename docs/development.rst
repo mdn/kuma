@@ -106,7 +106,7 @@ Database migrations
 ===================
 Apps are migrated using Django's migration system. To run the migrations::
 
-    manage.py migrate
+    ./manage.py migrate
 
 If your changes include schema modifications, see the Django documentation for
 the `migration workflow`_.
@@ -139,9 +139,14 @@ Front-end dependencies are managed by Bower_ and checked into the repository.
 Follow these steps to add or upgrade a dependency:
 
 #. On the host, update ``bower.json``.
-#. (*Docker only*) In the container, install ``git`` (``apt-get install -y git``).
-#. (*Docker only*) In the container, install ``bower-installer`` (``npm install -g bower-installer``).
-#. In the VM or container, install the dependency (``bower-installer``).
+#. Start a root Docker container shell ``docker-compose run -u root web bash``
+#. (*Docker only*) In the root container shell, run::
+
+    apt-get update
+    apt-get install -y git
+    npm install -g bower-installer
+    bower-installer
+
 #. On the host, prepare the dependency to be committed (``git add path/to/dependency``).
 
 Front-end dependencies that are not already managed by Bower should begin using

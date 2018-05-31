@@ -36,7 +36,7 @@ transitioning to Docker containers for deployment as well.
 .. _`quay.io`: https://quay.io/repository/mozmar/kuma_base?tab=tags
 .. _TravisCI: https://travis-ci.org/mozilla/kuma/
 .. _Jenkins: https://ci.us-west.moz.works/view/MDN/job/mdn_multibranch_pipeline/
-.. _discourse: https://discourse.mozilla.org/c/MDN
+.. _discourse: https://discourse.mozilla.org/c/mdn
 
 Docker setup
 ============
@@ -46,14 +46,14 @@ Docker setup
    `Linux distribution`_.  Linux users will also want to install
    `Docker Compose`_ and follow `post-install instructions`_ to confirm that
    the development user can run Docker commmands.
-   
+
    To confirm that Docker is installed correctly, run::
 
         docker run hello-world
-        
+
    If you find any error using docker commands without ``sudo`` visit using 
    `docker as non-root`_ user.
-   
+
 #. Clone the kuma Git repository, if you haven't already::
 
         git clone --recursive https://github.com/mozilla/kuma.git
@@ -163,15 +163,15 @@ A few thousand lines will be printed, like::
     processing language ar
     ...
     ## Compiling (Sass), collecting, and building static files ##
-    Copying '/app/build/locale/jsi18n/af/javascript.js'
-    Copying '/app/build/locale/jsi18n/ar/javascript.js'
-    Copying '/app/build/locale/jsi18n/az/javascript.js'
+    Copying '/app/kuma/static/img/embed/promos/survey.svg'
+    Copying '/app/kuma/static/styles/components/home/column-callout.scss'
+    Copying '/app/build/locale/jsi18n/fy-NL/javascript.js'
     ...
-    Post-processed 'build/styles/wiki.css' as 'build/styles/wiki.css'
-    Post-processed 'build/styles/error-404.css' as 'build/styles/error-404.css'
-    Post-processed 'build/styles/mdn.css' as 'build/styles/mdn.css'
+    Post-processed 'build/styles/editor-locale-ar.css' as 'build/styles/editor-locale-ar.css'
+    Post-processed 'build/styles/locale-ln.css' as 'build/styles/locale-ln.css'
+    Post-processed 'build/styles/editor-locale-pt-BR.css' as 'build/styles/editor-locale-pt-BR.css'
     ....
-    1687 static files copied to '/app/static', 1773 post-processed
+    1870 static files copied to '/app/static', 125 post-processed.
 
 Visit the Homepage
 ==================
