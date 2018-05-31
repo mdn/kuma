@@ -2,7 +2,7 @@
 Docker
 ======
 
-Docker__ is used for development and (soon) for deployment.
+Docker__ is used for development and for deployment.
 
 .. __: https://www.docker.com
 
