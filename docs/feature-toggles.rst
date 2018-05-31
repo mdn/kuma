@@ -20,8 +20,8 @@ Switches
 `Waffle switches`_ are simple booleans - they are either on or off.
 
 * ``application_ACAO`` - Enable Access-Control-Allow-Origin=0 header.
-* ``dumb_doc_urls`` - (deprecated) Disable the render-time changing of /docs/
-  URLs to the equivalent Zone URLs (see `PR 3331`_ for reasoning).
+* ``foundation_callout`` - Show foundation donate homepage tile
+* ``helpful-survey-2`` - Enable 2017 Helpfulness Survey
 * ``registration_disabled`` - Enable/disable new user registration.
 * ``store_revision_ips`` - Save request data, including the IP address, to
   enable marking revisions as spam.
@@ -41,10 +41,10 @@ other advanced criteria.
 * ``section_edit`` - Show section edit buttons.
 * ``sg_task_completion`` - Enable the Survey Gizmo pop-up.
 * ``spam_admin_override`` - Tell Akismet that edits are never spam.
-* ``spam_spammer_override`` - Tell Akismet that edits are always spam.
-* ``spam_testing_mode`` - Tell Akismet that edits are tests, not real content.
 * ``spam_checks_enabled`` - Toggle spam checks site wide.
+* ``spam_spammer_override`` - Tell Akismet that edits are always spam.
 * ``spam_submissions_enabled`` - Toggle Akismet spam/spam submission ability.
+* ``spam_testing_mode`` - Tell Akismet that edits are tests, not real content.
 
 Constance features
 ==================

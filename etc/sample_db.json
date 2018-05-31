@@ -312,14 +312,10 @@
         "created": "2014-01-14"
       }, {
         "name": "page_move",
+        "note": "Enable page move feature",
         "everyone": false,
         "staff": true,
         "created": "2014-01-14"
-      }, {
-        "name": "wiki_samples",
-        "everyone": true,
-        "staff": true,
-        "created": "2015-07-20"
       }, {
         "name": "section_edit",
         "note": "Show section edit buttons to signed-in users when mousing over section headers",
@@ -354,42 +350,44 @@
         "note": "Show Survey Gizmo link to task completion survey.",
         "superusers": false,
         "created": "2016-08-12"
-      }, {
-        "name": "redesign_beta",
-        "note": "Display a beta notice to beta users.",
-        "created": "2017-06-22"
       }
     ],
     "waffle.switch": [
       {
         "name": "welcome_email",
         "active": true,
-        "note": "",
+        "note": "Send welcome email to new user registrations",
         "created": "2014-08-07"
       }, {
         "name": "application_ACAO",
         "active": true,
-        "note": "",
+        "note": "Enable Access-Control-Allow-Origin=0 header",
         "created": "2014-12-23"
       }, {
         "name": "store_revision_ips",
         "active": true,
-        "note": "",
+        "note": "Store the IP addresses and user agents of revision authors, for spam detection purposes",
         "created": "2014-12-26"
-      }, {
-        "name": "dumb_doc_urls",
-        "active": true,
-        "note": "See https://github.com/mozilla/kuma/pull/3331",
-        "created": "2015-07-09"
       }, {
         "name": "registration_disabled",
         "active": false,
+        "note": "Disable new user registration",
         "created": "2015-02-25"
       }, {
         "name": "wiki_spam_training",
         "note": "Do not block page changes when detected as spam",
         "active": false,
         "created": "2016-04-20"
+      }, {
+        "name": "foundation_callout",
+        "note": "Show foundation donate homepage tile?",
+        "active": false,
+        "created": "2016-12-01"
+      }, {
+        "name": "helpful-survey-2",
+        "note": "Enable 2017 Helpfulness Survey",
+        "active": false,
+        "created": "2017-02-14"
       }
     ],
     "search.filtergroup": [
