@@ -4,6 +4,7 @@ import logging
 import os
 import platform
 from collections import namedtuple
+from copy import deepcopy
 from distutils.version import LooseVersion
 from os.path import dirname
 
@@ -12,6 +13,7 @@ import dj_email_url
 import djcelery
 from decouple import config, Csv
 from django import get_version
+from django.utils.log import DEFAULT_LOGGING
 
 _Language = namedtuple(u'Language', u'english native')
 
@@ -1575,61 +1577,36 @@ ES_URLS = config('ES_URLS', default='127.0.0.1:9200', cast=Csv())
 LOG_LEVEL = logging.WARN
 SYSLOG_TAG = 'http_app_kuma'
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse',
-        },
-    },
-    'formatters': {
-        'default': {
-            'format': '{0}: %(asctime)s %(name)s:%(levelname)s %(message)s: '
-                      '%(pathname)s:%(lineno)s'.format(SYSLOG_TAG),
-        }
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'default',
-            'level': LOG_LEVEL,
-        },
-        'mail_admins': {
-            'class': 'django.utils.log.AdminEmailHandler',
-            'filters': ['require_debug_false'],
-            'level': logging.ERROR,
-        },
-    },
-    'loggers': {
-        'kuma': {
-            'handlers': ['console'],
-            'propagate': True,
-            'level': logging.ERROR,
-        },
-        'django.request': {
-            'handlers': ['console'],
-            'propagate': True,
-            'level': logging.ERROR,
-        },
-        'django.security': {
-            'handlers': ['console'],
-            'propagate': False,
-        },
-        'elasticsearch': {
-            'handlers': ['console'],
-            'level': logging.ERROR,
-        },
-        'urllib3': {
-            'handlers': ['console'],
-            'level': logging.ERROR,
-        },
-        'cacheback': {
-            'handlers': ['console'],
-            'level': logging.ERROR,
-        }
-    },
+# Update default logging
+# https://github.com/django/django/blob/stable/1.11.x/django/utils/log.py
+LOGGING = deepcopy(DEFAULT_LOGGING)
+# Add default log format
+LOGGING['formatters']['default'] = {
+    'format': '{0}: %(asctime)s %(name)s:%(levelname)s %(message)s: '
+              '%(pathname)s:%(lineno)s'.format(SYSLOG_TAG),
 }
+# Switch log level
+LOGGING['handlers']['console']['level'] = LOG_LEVEL
+# Add our loggers
+LOGGING['loggers'].update({
+    'kuma': {
+        'handlers': ['console'],
+        'propagate': True,
+        'level': logging.ERROR,
+    },
+    'elasticsearch': {
+        'handlers': ['console'],
+        'level': logging.ERROR,
+    },
+    'urllib3': {
+        'handlers': ['console'],
+        'level': logging.ERROR,
+    },
+    'cacheback': {
+        'handlers': ['console'],
+        'level': logging.ERROR,
+    },
+})
 
 CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=True, cast=bool)
 X_FRAME_OPTIONS = 'DENY'
