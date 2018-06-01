@@ -1,5 +1,4 @@
 import pytest
-from django.conf import settings
 from django.test import RequestFactory
 from mock import MagicMock, patch
 
@@ -50,10 +49,7 @@ def test_slash_middleware_retains_querystring(client, db):
 def test_set_remote_addr_from_forwarded_for(rf, forwarded_for, remote_addr):
     '''SetRemoteAddrFromForwardedFor parses the X-Forwarded-For Header.'''
     rf = RequestFactory()
-    if settings.DJANGO_1_10:
-        middleware = SetRemoteAddrFromForwardedFor(lambda req: None)
-    else:
-        middleware = SetRemoteAddrFromForwardedFor().process_request
+    middleware = SetRemoteAddrFromForwardedFor(lambda req: None)
     request = rf.get('/', HTTP_X_FORWARDED_FOR=forwarded_for)
     middleware(request)
     assert request.META['REMOTE_ADDR'] == remote_addr
@@ -64,21 +60,11 @@ def test_force_anonymous_session_middleware(rf, settings):
     request.COOKIES[settings.SESSION_COOKIE_NAME] = 'totallyfake'
 
     mock_response = MagicMock()
-
-    if settings.DJANGO_1_10:
-        middleware = ForceAnonymousSessionMiddleware(lambda req: mock_response)
-    else:
-        middleware = ForceAnonymousSessionMiddleware().process_request
-
+    middleware = ForceAnonymousSessionMiddleware(lambda req: mock_response)
     response = middleware(request)
 
     assert request.session
     assert request.session.session_key is None
-
-    if not settings.DJANGO_1_10:
-        response = ForceAnonymousSessionMiddleware().process_response(
-            request, mock_response)
-
     assert not response.method_calls
 
 
@@ -86,11 +72,7 @@ def test_restricted_endpoints_middleware(rf, settings):
     settings.ATTACHMENT_HOST = 'demos'
     settings.ENABLE_RESTRICTIONS_BY_HOST = True
     settings.ALLOWED_HOSTS.append('demos')
-    if settings.DJANGO_1_10:
-        middleware = RestrictedEndpointsMiddleware(lambda req: None)
-    else:
-        middleware = RestrictedEndpointsMiddleware().process_request
-
+    middleware = RestrictedEndpointsMiddleware(lambda req: None)
     request = rf.get('/foo', HTTP_HOST='demos')
     middleware(request)
     assert request.urlconf == 'kuma.urls_untrusted'
@@ -109,11 +91,8 @@ def test_restricted_whitenoise_middleware(rf, settings):
     settings.ATTACHMENT_HOST = 'demos'
     settings.ENABLE_RESTRICTIONS_BY_HOST = True
     settings.ALLOWED_HOSTS.append('demos')
-    if settings.DJANGO_1_10:
-        middleware = RestrictedWhiteNoiseMiddleware(lambda req: None)
-    else:
-        middleware = RestrictedWhiteNoiseMiddleware().process_request
 
+    middleware = RestrictedWhiteNoiseMiddleware(lambda req: None)
     sentinel = object()
 
     with patch.object(WhiteNoiseMiddleware, 'process_request',
@@ -136,11 +115,8 @@ def test_legacy_domain_redirects_middleware(rf, settings, site_url, host):
     settings.SITE_URL = site_url
     settings.LEGACY_HOSTS = ['old1', 'old2', 'old3']
     settings.ALLOWED_HOSTS.extend(['new'] + settings.LEGACY_HOSTS)
-    if settings.DJANGO_1_10:
-        middleware = LegacyDomainRedirectsMiddleware(lambda req: None)
-    else:
-        middleware = LegacyDomainRedirectsMiddleware().process_request
 
+    middleware = LegacyDomainRedirectsMiddleware(lambda req: None)
     request = rf.get(path, HTTP_HOST=host)
     response = middleware(request)
 

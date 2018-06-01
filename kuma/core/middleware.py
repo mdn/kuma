@@ -8,11 +8,7 @@ from django.http import (HttpResponseForbidden,
                          HttpResponsePermanentRedirect,
                          HttpResponseRedirect)
 from django.utils import translation
-# TODO: Remove the try-except wrapper after move to Django 1.10+.
-try:
-    from django.utils.deprecation import MiddlewareMixin
-except ImportError:
-    MiddlewareMixin = object
+from django.utils.deprecation import MiddlewareMixin
 from django.utils.encoding import iri_to_uri, smart_str
 from django.utils.six.moves.urllib.parse import urlsplit
 from redirect_urls.middleware import (
@@ -318,13 +314,10 @@ class LegacyDomainRedirectsMiddleware(MiddlewareMixin):
         return None
 
 
-if settings.DJANGO_1_10:
-    class RedirectsMiddleware(MiddlewareMixin, OriginalRedirectsMiddleware):
-        """
-        Enables the redirect_urls middleware to be used with both MIDDLEWARE
-        and MIDDLEWARE_CLASSES until a newer version of django-redirect-urls
-        is available that provides this "out of the box".
-        """
-        pass
-else:
-    RedirectsMiddleware = OriginalRedirectsMiddleware
+class RedirectsMiddleware(MiddlewareMixin, OriginalRedirectsMiddleware):
+    """
+    Enables the redirect_urls middleware to be used with both MIDDLEWARE
+    and MIDDLEWARE_CLASSES until a newer version of django-redirect-urls
+    is available that provides this "out of the box".
+    """
+    pass

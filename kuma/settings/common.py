@@ -381,18 +381,6 @@ LOCALE_PATHS = (
     path('locale'),
 )
 
-# When true, Django's CommonMiddleware will compute and add an ETag header
-# to ALL responses, as well as handle conditional GET requests but based soley
-# on the ETag header (it won't handle conditional GET requests based on the
-# Last-Modified header). Django's ConditionalGetMiddleware, uses both the ETag
-# and Last-Modified headers to handle conditional GET requests.
-#
-# TODO: When moving to Django 1.11, the USE_ETAGS setting is no longer
-#       needed, and should be deleted. Django's ConditionalGetMiddleware
-#       will take care of both computing/adding the ETag header and handling
-#       conditional requests (both only for GET requests).
-USE_ETAGS = not DJANGO_1_11
-
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = config('MEDIA_ROOT', default=path('media'))
@@ -470,7 +458,7 @@ _CONTEXT_PROCESSORS = (
 )
 
 
-_MIDDLEWARE = (
+MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
     'kuma.core.middleware.LegacyDomainRedirectsMiddleware',
     'kuma.core.middleware.RestrictedWhiteNoiseMiddleware',
@@ -498,21 +486,14 @@ _MIDDLEWARE = (
 if not MAINTENANCE_MODE:
     # We don't want this in maintence mode, as it adds "Cookie"
     # to the Vary header, which in turn, kills caching.
-    _MIDDLEWARE += ('django.middleware.csrf.CsrfViewMiddleware',)
+    MIDDLEWARE += ('django.middleware.csrf.CsrfViewMiddleware',)
 
-_MIDDLEWARE += (
+MIDDLEWARE += (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    # TODO: In 1.10, SessionAuth*Middleware does nothing and can be removed
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'waffle.middleware.WaffleMiddleware',
     'kuma.core.middleware.RestrictedEndpointsMiddleware',
 )
-
-if DJANGO_1_10:
-    MIDDLEWARE = _MIDDLEWARE
-else:
-    MIDDLEWARE_CLASSES = _MIDDLEWARE
 
 # Auth
 AUTHENTICATION_BACKENDS = (

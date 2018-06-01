@@ -114,20 +114,14 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
         eq_(200, response.status_code)
 
     def test_no_redirect(self):
-        if settings.DJANGO_1_10:
-            middleware = DocumentZoneMiddleware(lambda req: None)
-        else:
-            middleware = DocumentZoneMiddleware().process_request
+        middleware = DocumentZoneMiddleware(lambda req: None)
         for endpoint in ['$subscribe', '$files']:
             request = self.rf.post('/en-US/docs/%s%s?raw' %
                                    (self.other_doc.slug, endpoint))
             assert middleware(request) is None
 
     def test_skip_no_language_urls(self):
-        if settings.DJANGO_1_10:
-            middleware = DocumentZoneMiddleware(lambda req: None)
-        else:
-            middleware = DocumentZoneMiddleware().process_request
+        middleware = DocumentZoneMiddleware(lambda req: None)
         for path in settings.LANGUAGE_URL_IGNORED_PATHS:
             request = self.rf.get('/' + path)
             assert middleware(request) is None

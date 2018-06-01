@@ -1,11 +1,7 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-# TODO: Remove the try-except wrapper after move to Django 1.10+.
-try:
-    from django.utils.deprecation import MiddlewareMixin
-except ImportError:
-    MiddlewareMixin = object
+from django.utils.deprecation import MiddlewareMixin
 from django.views.decorators.cache import never_cache
 
 from kuma.core.i18n import get_kuma_languages
