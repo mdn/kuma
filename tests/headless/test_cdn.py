@@ -431,7 +431,7 @@ def test_locale_selection_cached(base_url, is_behind_cdn, is_local_url, slug,
         request_kwargs['params'] = {'lang': param}
 
     response = assert_cached(url, 302, is_behind_cdn, **request_kwargs)
-    expected = base_url + '/' + expected + '/'
+    expected = '/' + expected + '/'
     assert response.headers['location'].startswith(expected)
 
 
@@ -494,5 +494,5 @@ def test_locale_selection_not_cached(base_url, is_behind_cdn, is_local_url,
     else:
         response = request('get', url, **request_kwargs)
         assert response.status_code == 302
-    expected = base_url + '/' + expected + '/'
+    expected = '/' + expected + '/'
     assert response.headers['location'].startswith(expected)
