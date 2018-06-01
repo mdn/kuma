@@ -46,24 +46,6 @@ env:
           CREATE_DB=kuma
           INSTALL_PIPELINE=1
           INSTALL_ELASTICSEARCH=1
-        # TODO: remove after Django 1.11 upgrade
-        - TOXENV=django-1.9
-          CREATE_DB=kuma
-          INSTALL_PIPELINE=1
-          INSTALL_ELASTICSEARCH=1
-          PYTHONHASHSEED=0
-        # TODO: remove after Django 1.11 upgrade
-        - TOXENV=django-1.10
-          CREATE_DB=kuma
-          INSTALL_PIPELINE=1
-          INSTALL_ELASTICSEARCH=1
-          PYTHONHASHSEED=0
-        # TODO: remove after Django 1.11 upgrade
-        - TOXENV=django-1.11
-          CREATE_DB=kuma
-          INSTALL_PIPELINE=1
-          INSTALL_ELASTICSEARCH=1
-          PYTHONHASHSEED=0
 
 matrix:
     allow_failures:
