@@ -891,11 +891,9 @@ def _document_api_PUT(request, document_slug, document_locale):
                 expected_etags = parse_etags(if_match)
             except ValueError:
                 expected_etags = []
-            current_etag = calculate_etag(doc.get_html(section_id))
-            if settings.DJANGO_1_11:
-                # Django's parse_etags returns a list of quoted rather than
-                # un-quoted ETags starting with version 1.11.
-                current_etag = quote_etag(current_etag)
+            # Django's parse_etags returns a list of quoted rather than
+            # un-quoted ETags starting with version 1.11.
+            current_etag = quote_etag(calculate_etag(doc.get_html(section_id)))
             if current_etag not in expected_etags:
                 resp = HttpResponse()
                 resp.status_code = 412

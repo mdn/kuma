@@ -16,7 +16,7 @@ from pyquery import PyQuery as pq
 from waffle.testutils import override_flag, override_switch
 
 from kuma.core.templatetags.jinja_helpers import add_utm
-from kuma.core.tests import (assert_no_cache_header, assert_relative_reference,
+from kuma.core.tests import (assert_no_cache_header,
                              assert_shared_cache_header, eq_, get_user, ok_)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html
@@ -2768,7 +2768,7 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
         for namespace_test in self.namespace_urls:
             resp = self.client.get(namespace_test['mindtouch'], follow=False)
             eq_(301, resp.status_code)
-            assert_relative_reference(resp['Location'], namespace_test['kuma'])
+            assert resp['Location'] == namespace_test['kuma']
 
     def test_document_urls(self):
         """Check the url redirect to proper document when the url like
@@ -2781,7 +2781,7 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
 
         # Check the last redirect chain url is correct document url
         last_url = resp.redirect_chain[-1][0]
-        assert_relative_reference(last_url, d.get_absolute_url())
+        assert last_url == d.get_absolute_url()
 
     def test_view_param(self):
         d = document()
@@ -2793,7 +2793,7 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
         resp = self.client.get(mt_url)
         eq_(301, resp.status_code)
         expected_url = d.get_absolute_url('wiki.edit')
-        assert_relative_reference(resp['Location'], expected_url)
+        assert resp['Location'] == expected_url
 
 
 @override_config(KUMASCRIPT_TIMEOUT=5.0, KUMASCRIPT_MAX_AGE=600)

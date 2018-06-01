@@ -2,7 +2,7 @@ import pytest
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
-from . import assert_relative_reference, assert_shared_cache_header
+from . import assert_shared_cache_header
 
 
 # Simple Accept-Language headers, one term
@@ -47,7 +47,7 @@ def test_locale_middleware_picker(accept_language, locale, client, db):
     response = client.get('/', HTTP_ACCEPT_LANGUAGE=accept_language)
     assert response.status_code == 302
     url_locale = locale or 'en-US'
-    assert_relative_reference(response['Location'], '/%s/' % url_locale)
+    assert response['Location'] == ('/%s/' % url_locale)
     assert_shared_cache_header(response)
 
 
@@ -56,7 +56,7 @@ def test_locale_middleware_fixer(original, fixed, client, db):
     '''The LocaleMiddleware redirects for non-standard locale URLs.'''
     response = client.get('/%s/' % original)
     assert response.status_code == 302
-    assert_relative_reference(response['Location'], '/%s/' % fixed)
+    assert response['Location'] == '/%s/' % fixed
     assert_shared_cache_header(response)
 
 
@@ -71,7 +71,7 @@ def test_locale_middleware_language_cookie(client, db):
     client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
     response = client.get('/', HTTP_ACCEPT_LANGUAGE='fr')
     assert response.status_code == 302
-    assert_relative_reference(response['Location'], '/bn-BD/')
+    assert response['Location'] == '/bn-BD/'
     assert_shared_cache_header(response)
 
 
@@ -82,7 +82,7 @@ def test_lang_selector_middleware(path, client):
     response = client.get('%s?lang=fr' % path,
                           HTTP_ACCEPT_LANGUAGE='en;q=0.9, fr;q=0.8')
     assert response.status_code == 302
-    assert_relative_reference(response['Location'], '/fr/')
+    assert response['Location'] == '/fr/'
     assert_shared_cache_header(response)
 
 
@@ -93,7 +93,7 @@ def test_lang_selector_middleware_preserves_query(root_doc, client):
     response = client.get(url, query)
     assert response.status_code == 302
     expected = '%s?slug=%s' % (url, root_doc.slug)
-    assert_relative_reference(response['Location'], expected)
+    assert response['Location'] == expected
     assert_shared_cache_header(response)
 
 
@@ -101,7 +101,7 @@ def test_lang_selector_middleware_no_change(client, db):
     '''The LangSelectorMiddleware redirects on the same ?lang query.'''
     response = client.get('/fr/?lang=fr')
     assert response.status_code == 302
-    assert_relative_reference(response['Location'], '/fr/')
+    assert response['Location'] == '/fr/'
     assert_shared_cache_header(response)
 
 

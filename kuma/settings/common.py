@@ -4,14 +4,14 @@ import logging
 import os
 import platform
 from collections import namedtuple
-from distutils.version import LooseVersion
+from copy import deepcopy
 from os.path import dirname
 
 import dj_database_url
 import dj_email_url
 import djcelery
 from decouple import config, Csv
-from django import get_version
+from django.utils.log import DEFAULT_LOGGING
 
 _Language = namedtuple(u'Language', u'english native')
 
@@ -29,12 +29,6 @@ class TupleCsv(Csv):
         split_values = super(TupleCsv, self).__call__(value)
         return tuple((value, value) for value in split_values)
 
-
-# For the Django 1.11 update effort - Are we at least at this version?
-_dj_version = LooseVersion(get_version())
-DJANGO_1_9 = _dj_version >= LooseVersion('1.9')
-DJANGO_1_10 = _dj_version >= LooseVersion('1.10')
-DJANGO_1_11 = _dj_version >= LooseVersion('1.11')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
@@ -379,18 +373,6 @@ LOCALE_PATHS = (
     path('locale'),
 )
 
-# When true, Django's CommonMiddleware will compute and add an ETag header
-# to ALL responses, as well as handle conditional GET requests but based soley
-# on the ETag header (it won't handle conditional GET requests based on the
-# Last-Modified header). Django's ConditionalGetMiddleware, uses both the ETag
-# and Last-Modified headers to handle conditional GET requests.
-#
-# TODO: When moving to Django 1.11, the USE_ETAGS setting is no longer
-#       needed, and should be deleted. Django's ConditionalGetMiddleware
-#       will take care of both computing/adding the ETag header and handling
-#       conditional requests (both only for GET requests).
-USE_ETAGS = not DJANGO_1_11
-
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = config('MEDIA_ROOT', default=path('media'))
@@ -450,14 +432,6 @@ LANGUAGE_URL_IGNORED_PATHS = (
 SECRET_KEY = config('SECRET_KEY',
                     default='#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z')
 
-# Django 1.9 and lower need protection from BREACH attacks
-# Django 1.10 include BREACH protection in CsrfViewMiddleware
-_NEED_DEBREACH = not DJANGO_1_10
-if _NEED_DEBREACH:
-    _CSRF_CONTEXT_PROCESSOR = 'debreach.context_processors.csrf'
-else:
-    _CSRF_CONTEXT_PROCESSOR = 'django.template.context_processors.csrf'
-
 
 _CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
@@ -465,7 +439,7 @@ _CONTEXT_PROCESSORS = (
     'django.template.context_processors.media',
     'django.template.context_processors.static',
     'django.template.context_processors.request',
-    _CSRF_CONTEXT_PROCESSOR,
+    'django.template.context_processors.csrf',
     'django.contrib.messages.context_processors.messages',
 
     'kuma.core.context_processors.global_settings',
@@ -476,7 +450,7 @@ _CONTEXT_PROCESSORS = (
 )
 
 
-_MIDDLEWARE = (
+MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
     'kuma.core.middleware.LegacyDomainRedirectsMiddleware',
     'kuma.core.middleware.RestrictedWhiteNoiseMiddleware',
@@ -504,24 +478,14 @@ _MIDDLEWARE = (
 if not MAINTENANCE_MODE:
     # We don't want this in maintence mode, as it adds "Cookie"
     # to the Vary header, which in turn, kills caching.
+    MIDDLEWARE += ('django.middleware.csrf.CsrfViewMiddleware',)
 
-    if _NEED_DEBREACH:
-        _MIDDLEWARE += ('debreach.middleware.CSRFCryptMiddleware',)
-    _MIDDLEWARE += ('django.middleware.csrf.CsrfViewMiddleware',)
-
-_MIDDLEWARE += (
+MIDDLEWARE += (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    # TODO: In 1.10, SessionAuth*Middleware does nothing and can be removed
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'waffle.middleware.WaffleMiddleware',
     'kuma.core.middleware.RestrictedEndpointsMiddleware',
 )
-
-if DJANGO_1_10:
-    MIDDLEWARE = _MIDDLEWARE
-else:
-    MIDDLEWARE_CLASSES = _MIDDLEWARE
 
 # Auth
 AUTHENTICATION_BACKENDS = (
@@ -574,12 +538,6 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
     'soapbox',  # must be before kuma.wiki, or RemovedInDjango19Warning
-)
-
-if _NEED_DEBREACH:
-    INSTALLED_APPS += ('debreach',)
-
-INSTALLED_APPS += (
 
     # MDN
     'kuma.core',
@@ -1575,61 +1533,36 @@ ES_URLS = config('ES_URLS', default='127.0.0.1:9200', cast=Csv())
 LOG_LEVEL = logging.WARN
 SYSLOG_TAG = 'http_app_kuma'
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse',
-        },
-    },
-    'formatters': {
-        'default': {
-            'format': '{0}: %(asctime)s %(name)s:%(levelname)s %(message)s: '
-                      '%(pathname)s:%(lineno)s'.format(SYSLOG_TAG),
-        }
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'default',
-            'level': LOG_LEVEL,
-        },
-        'mail_admins': {
-            'class': 'django.utils.log.AdminEmailHandler',
-            'filters': ['require_debug_false'],
-            'level': logging.ERROR,
-        },
-    },
-    'loggers': {
-        'kuma': {
-            'handlers': ['console'],
-            'propagate': True,
-            'level': logging.ERROR,
-        },
-        'django.request': {
-            'handlers': ['console'],
-            'propagate': True,
-            'level': logging.ERROR,
-        },
-        'django.security': {
-            'handlers': ['console'],
-            'propagate': False,
-        },
-        'elasticsearch': {
-            'handlers': ['console'],
-            'level': logging.ERROR,
-        },
-        'urllib3': {
-            'handlers': ['console'],
-            'level': logging.ERROR,
-        },
-        'cacheback': {
-            'handlers': ['console'],
-            'level': logging.ERROR,
-        }
-    },
+# Update default logging
+# https://github.com/django/django/blob/stable/1.11.x/django/utils/log.py
+LOGGING = deepcopy(DEFAULT_LOGGING)
+# Add default log format
+LOGGING['formatters']['default'] = {
+    'format': '{0}: %(asctime)s %(name)s:%(levelname)s %(message)s: '
+              '%(pathname)s:%(lineno)s'.format(SYSLOG_TAG),
 }
+# Switch log level
+LOGGING['handlers']['console']['level'] = LOG_LEVEL
+# Add our loggers
+LOGGING['loggers'].update({
+    'kuma': {
+        'handlers': ['console'],
+        'propagate': True,
+        'level': logging.ERROR,
+    },
+    'elasticsearch': {
+        'handlers': ['console'],
+        'level': logging.ERROR,
+    },
+    'urllib3': {
+        'handlers': ['console'],
+        'level': logging.ERROR,
+    },
+    'cacheback': {
+        'handlers': ['console'],
+        'level': logging.ERROR,
+    },
+})
 
 CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=True, cast=bool)
 X_FRAME_OPTIONS = 'DENY'

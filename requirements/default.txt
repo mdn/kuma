@@ -33,9 +33,9 @@ dennis==0.9 \
     --hash=sha256:f6487392ac91800c5f0684a99b404b7fd0f72ceb48faeb5a0ce4e2c24fb62d3f
 
 # Web framework for Python projects of a certain age
-Django==1.8.19 \
-    --hash=sha256:674c525d3aa90ed683313b64aa27490c31874e16155e6b44772d84e76c83c46c \
-    --hash=sha256:33d44a5cf9d333247a9a374ae1478b78b83c9b78eb316fc04adde62053b4c047
+Django==1.11.13 \
+    --hash=sha256:18986bcffe69653a84eaf1faa1fa5a7eded32cee41cfecc77fdc65a3e046404d \
+    --hash=sha256:46adfe8e0abe4d1f026c1086889970b611aec492784fbdfbdaabc2457360a4a5
 
 # 3rd party logins like Github
 # Code: https://github.com/pennersr/django-allauth
@@ -72,13 +72,6 @@ django-celery-transactions==0.3.6 \
 django-constance==2.2.0 \
     --hash=sha256:fe601fe384d1629f6f0460175e4ce3d66e8177654525bddd4bdb68025c816adc \
     --hash=sha256:1d74fa615ee6c69512faa214ec7b4962aa039dfe802e967972c3fbdad7852977
-
-# Basic/extra mitigation against the BREACH attack for Django 1.9 and lower
-# Code: https://github.com/lpomfrey/django-debreach
-django-debreach==1.4.2 \
-    --hash=sha256:1626677c47a6496c40d1794cd7264280dcccc63fc69893a86545bb84af3e0f4b \
-    --hash=sha256:20fef417bd12de35594ae2456c86ecf65870a24cfb604194254befb59a3dbe5c \
-    --hash=sha256:efefdb754fbce983302610ca3ec278fb29f86bb01ae6a7defcc573d4048fc43f
 
 # Include Django URL patterns with decorators.
 # Code: https://github.com/twidi/django-decorator-include

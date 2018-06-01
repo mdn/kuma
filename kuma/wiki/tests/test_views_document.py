@@ -262,9 +262,6 @@ def test_api_put_existing(settings, client, section_doc, authkey, section_case,
 
     headers = dict(HTTP_AUTHORIZATION=authkey.header)
 
-    if if_match and settings.DJANGO_1_9 and not settings.DJANGO_1_11:
-        pytest.xfail("If-Match for PUT's is broken in Django 1.9 and 1.10")
-
     if if_match == 'match':
         response = client.get(url)
         assert 'etag' in response

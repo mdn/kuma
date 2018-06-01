@@ -1,20 +1,13 @@
-import re
-from urlparse import parse_qs, urlparse
-
 import requests
 from braceexpand import braceexpand
+from six.moves.urllib.parse import parse_qs, urlparse
 
 
 # https://github.com/mozilla/bedrock/blob/master/tests/redirects/base.py
 def get_abs_url(url, base_url):
-    try:
-        if url.pattern.startswith('/'):
-            # url is a compiled regular expression pattern
-            return re.compile(''.join([re.escape(base_url), url.pattern]))
-    except AttributeError:
-        if url.startswith('/'):
-            # urljoin messes with query strings too much
-            return ''.join([base_url, url])
+    if url.startswith('/'):
+        # urljoin messes with query strings too much
+        return ''.join([base_url, url])
     return url
 
 
@@ -69,13 +62,6 @@ def url_test(url, location=None, status_code=requests.codes.moved_permanently,
     if num_urls == 1:
         return test_data
 
-    try:
-        # location is a compiled regular expression pattern
-        location_pattern = location.pattern
-        test_data['location'] = location_pattern
-    except AttributeError:
-        location_pattern = None
-
     new_urls = []
     if location:
         expanded_locations = list(braceexpand(test_data['location']))
@@ -85,11 +71,7 @@ def url_test(url, location=None, status_code=requests.codes.moved_permanently,
         data = test_data.copy()
         data['url'] = url
         if location and num_urls == num_locations:
-            if location_pattern is not None:
-                # recompile the pattern after expansion
-                data['location'] = re.compile(expanded_locations[i])
-            else:
-                data['location'] = expanded_locations[i]
+            data['location'] = expanded_locations[i]
         new_urls.append(data)
 
     return new_urls
@@ -139,12 +121,7 @@ def assert_valid_url(url, location=None, status_code=requests.codes.moved_perman
             # strip off query for further comparison
             resp_location = resp_location.split('?')[0]
 
-        abs_location = get_abs_url(location, base_url)
-        try:
-            # location is a compiled regular expression pattern
-            assert abs_location.match(resp_location) is not None
-        except AttributeError:
-            assert abs_location == resp_location
+        assert location == resp_location
 
     if resp_headers and not follow_redirects:
         for name, value in resp_headers.items():
