@@ -23,7 +23,7 @@ def test_is_not_found_status(base_url, selenium):
 def test_is_not_found_status_in_mm(base_url, selenium, is_debug):
     page = NotFoundPage(selenium, base_url).open()
     if is_debug:
-        assert selenium.title == 'Page not found at /%s' % page.SLUG
+        assert selenium.title == 'Page not found at /en-US/%s' % page.SLUG
     else:
         assert page.is_maintenance_mode_banner_displayed
         assert not page.header.is_signin_displayed
