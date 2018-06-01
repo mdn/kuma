@@ -69,15 +69,12 @@ else:
     urlpatterns += [
         url(r'^admin/wiki/document/purge/',
             purge_view,
-            name='wiki.admin_bulk_purge')]
-    if settings.DJANGO_1_9:
+            name='wiki.admin_bulk_purge'),
         # We don't worry about decorating the views within django.contrib.admin
         # with "never_cache", since most have already been decorated, and the
         # remaining can be safely cached.
-        urlpatterns += [url(r'^admin/', admin.site.urls)]
-    else:
-        # include needed for 1.8 and earlier
-        urlpatterns += [url(r'^admin/', include(admin.site.urls))]
+        url(r'^admin/', admin.site.urls),
+    ]
 
 urlpatterns += i18n_patterns(url(r'^search/',
                                  include(search_lang_urlpatterns)))
