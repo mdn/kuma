@@ -5,14 +5,12 @@ import os
 import platform
 from collections import namedtuple
 from copy import deepcopy
-from distutils.version import LooseVersion
 from os.path import dirname
 
 import dj_database_url
 import dj_email_url
 import djcelery
 from decouple import config, Csv
-from django import get_version
 from django.utils.log import DEFAULT_LOGGING
 
 _Language = namedtuple(u'Language', u'english native')
@@ -31,12 +29,6 @@ class TupleCsv(Csv):
         split_values = super(TupleCsv, self).__call__(value)
         return tuple((value, value) for value in split_values)
 
-
-# For the Django 1.11 update effort - Are we at least at this version?
-_dj_version = LooseVersion(get_version())
-DJANGO_1_9 = _dj_version >= LooseVersion('1.9')
-DJANGO_1_10 = _dj_version >= LooseVersion('1.10')
-DJANGO_1_11 = _dj_version >= LooseVersion('1.11')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
