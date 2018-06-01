@@ -14,11 +14,11 @@ from django.utils.translation import ugettext_lazy as _
 from django_jinja import library
 from pytz import timezone, utc
 from soapbox.models import Message
-from statici18n.templatetags.statici18n import statici18n as lib_statici18n
+from statici18n.templatetags.statici18n import statici18n
 from urlobject import URLObject
 
 from ..urlresolvers import reverse, split_path
-from ..utils import format_date_time, language_to_locale, urlparams
+from ..utils import format_date_time, urlparams
 
 
 htmlparser = HTMLParser.HTMLParser()
@@ -30,19 +30,13 @@ library.filter(defaultfilters.linebreaksbr)
 library.filter(strip_tags)
 library.filter(defaultfilters.truncatewords)
 library.filter(urlparams)
+library.global_function(statici18n)
 
 
 @library.filter
 def paginator(pager):
     """Render list of pages."""
     return Paginator(pager).render()
-
-
-@library.global_function
-def statici18n(language):
-    """Get path to JS i18n file by Kuma langugage code."""
-    locale = language_to_locale(language)
-    return lib_statici18n(locale)
 
 
 @library.global_function
