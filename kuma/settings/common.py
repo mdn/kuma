@@ -452,14 +452,6 @@ LANGUAGE_URL_IGNORED_PATHS = (
 SECRET_KEY = config('SECRET_KEY',
                     default='#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z')
 
-# Django 1.9 and lower need protection from BREACH attacks
-# Django 1.10 include BREACH protection in CsrfViewMiddleware
-_NEED_DEBREACH = not DJANGO_1_10
-if _NEED_DEBREACH:
-    _CSRF_CONTEXT_PROCESSOR = 'debreach.context_processors.csrf'
-else:
-    _CSRF_CONTEXT_PROCESSOR = 'django.template.context_processors.csrf'
-
 
 _CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
@@ -467,7 +459,7 @@ _CONTEXT_PROCESSORS = (
     'django.template.context_processors.media',
     'django.template.context_processors.static',
     'django.template.context_processors.request',
-    _CSRF_CONTEXT_PROCESSOR,
+    'django.template.context_processors.csrf',
     'django.contrib.messages.context_processors.messages',
 
     'kuma.core.context_processors.global_settings',
@@ -506,9 +498,6 @@ _MIDDLEWARE = (
 if not MAINTENANCE_MODE:
     # We don't want this in maintence mode, as it adds "Cookie"
     # to the Vary header, which in turn, kills caching.
-
-    if _NEED_DEBREACH:
-        _MIDDLEWARE += ('debreach.middleware.CSRFCryptMiddleware',)
     _MIDDLEWARE += ('django.middleware.csrf.CsrfViewMiddleware',)
 
 _MIDDLEWARE += (
@@ -576,12 +565,6 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
     'soapbox',  # must be before kuma.wiki, or RemovedInDjango19Warning
-)
-
-if _NEED_DEBREACH:
-    INSTALLED_APPS += ('debreach',)
-
-INSTALLED_APPS += (
 
     # MDN
     'kuma.core',

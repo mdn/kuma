@@ -73,13 +73,6 @@ django-constance==2.2.0 \
     --hash=sha256:fe601fe384d1629f6f0460175e4ce3d66e8177654525bddd4bdb68025c816adc \
     --hash=sha256:1d74fa615ee6c69512faa214ec7b4962aa039dfe802e967972c3fbdad7852977
 
-# Basic/extra mitigation against the BREACH attack for Django 1.9 and lower
-# Code: https://github.com/lpomfrey/django-debreach
-django-debreach==1.4.2 \
-    --hash=sha256:1626677c47a6496c40d1794cd7264280dcccc63fc69893a86545bb84af3e0f4b \
-    --hash=sha256:20fef417bd12de35594ae2456c86ecf65870a24cfb604194254befb59a3dbe5c \
-    --hash=sha256:efefdb754fbce983302610ca3ec278fb29f86bb01ae6a7defcc573d4048fc43f
-
 # Include Django URL patterns with decorators.
 # Code: https://github.com/twidi/django-decorator-include
 # Changes: https://github.com/twidi/django-decorator-include/blob/develop/CHANGELOG.rst#changelog
