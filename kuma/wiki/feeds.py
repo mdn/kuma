@@ -108,10 +108,7 @@ class DocumentsFeed(Feed):
 class DocumentJSONFeedGenerator(SyndicationFeed):
     """JSON feed generator for Documents
     TODO: Someday maybe make this into a JSON Activity Stream?"""
-    if settings.DJANGO_1_9:
-        content_type = 'application/json'
-    else:
-        mime_type = 'application/json'
+    content_type = 'application/json'
 
     def _encode_complex(self, obj):
         if isinstance(obj, datetime.datetime):
