@@ -1543,6 +1543,8 @@ LOGGING['formatters']['default'] = {
 }
 # Switch log level
 LOGGING['handlers']['console']['level'] = LOG_LEVEL
+# Don't email Django errors, we have Sentry
+LOGGING['loggers']['django']['handlers'] = ['console']
 # Add our loggers
 LOGGING['loggers'].update({
     'kuma': {
