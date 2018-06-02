@@ -97,4 +97,4 @@ def test_favicon_ico(client):
     response = client.get('/favicon.ico')
     assert response.status_code == 302
     assert_shared_cache_header(response)
-    assert response['Location'].endswith('static/img/favicon.ico')
+    assert response['Location'] == '/static/img/favicon32-local.png'

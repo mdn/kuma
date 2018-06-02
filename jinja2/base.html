@@ -68,15 +68,7 @@
   <!-- non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
   <link rel="apple-touch-icon-precomposed" href="{{ static('img/favicon57.png') }}">
   <!-- basic favicon -->
-     <!-- basic favicon -->
-  {% if settings.DOMAIN == settings.PRODUCTION_DOMAIN %}
-    {% set favicon_suffix = '' %}
-  {% elif settings.DOMAIN == settings.STAGING_DOMAIN %}
-    {% set favicon_suffix = '-staging' %}
-  {% else %}
-    {% set favicon_suffix = '-local' %}
-  {% endif %}
-  <link rel="shortcut icon" href="{{ static('img/favicon32{}.png'.format(favicon_suffix)) }}">
+  <link rel="shortcut icon" href="{{ favicon_url() }}">
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
   {% javascript 'html5shiv' %}

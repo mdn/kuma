@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.contrib.staticfiles.storage import staticfiles_storage
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import static
@@ -12,6 +11,8 @@ from kuma.core.decorators import shared_cache_control
 from kuma.feeder.models import Bundle
 from kuma.feeder.sections import SECTION_HACKS
 from kuma.search.models import Filter
+
+from .utils import favicon_url
 
 
 @shared_cache_control
@@ -132,9 +133,6 @@ def robots_txt(request):
 
 class FaviconRedirect(RedirectView):
     """Redirect to the favicon in the static img folder (bug 1402497)"""
-    icon = None
-    permanent = False
 
     def get_redirect_url(self, *args, **kwargs):
-        assert self.icon
-        return staticfiles_storage.url('img/%s' % self.icon)
+        return favicon_url()
