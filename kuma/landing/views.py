@@ -119,11 +119,7 @@ Disallow: /
 
 @shared_cache_control
 def robots_txt(request):
-    """
-    Serve robots.txt that allows or forbids robots.
-
-    TODO: After AWS move, try different strategy (WhiteNoise, template)
-    """
+    """Serve robots.txt that allows or forbids robots."""
     host = request.get_host()
     if host in settings.ALLOW_ROBOTS_DOMAINS:
         robots = ""
