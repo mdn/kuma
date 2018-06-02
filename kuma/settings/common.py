@@ -455,7 +455,7 @@ MIDDLEWARE = (
     'kuma.core.middleware.LegacyDomainRedirectsMiddleware',
     'kuma.core.middleware.RestrictedWhiteNoiseMiddleware',
     # must come before LocaleMiddleware
-    'kuma.core.middleware.RedirectsMiddleware',
+    'redirect_urls.middleware.RedirectsMiddleware',
     'kuma.core.middleware.SetRemoteAddrFromForwardedFor',
     ('kuma.core.middleware.ForceAnonymousSessionMiddleware'
      if MAINTENANCE_MODE else

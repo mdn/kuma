@@ -139,9 +139,10 @@ django-recaptcha==1.0.5 \
     --hash=sha256:d4d896dd399a1a0810af8e59a646bb5a1586b2cc8b8f32d16766ade5fba79475
 
 # Implement redirects in Django instead of Apache httpd
-django-redirect-urls==0.1 \
-    --hash=sha256:cd8499424e4920dc929bf1d64c5563349471353143af8e631033336570c42445 \
-    --hash=sha256:267f20cc44de96fc574b5b02e9efcd80f4aab4146539dea1f4228f62f34bb4f5
+# Code, Docs, Changes: https://github.com/pmac/django-redirect-urls
+django-redirect-urls==1.0 \
+    --hash=sha256:c4cd7818b06ccf0a5307656a33f3ecea47ee22f0cceb374ea559eb2d1402d5d8 \
+    --hash=sha256:e5b1dec666758c7d2621ce337458a09e4b3feeb06cb9ec5d43b17d66b87ea97d
 
 # RESTful API framework, used by search
 # Code: https://github.com/encode/django-rest-framework
