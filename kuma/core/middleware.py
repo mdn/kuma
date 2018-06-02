@@ -11,8 +11,6 @@ from django.utils import translation
 from django.utils.deprecation import MiddlewareMixin
 from django.utils.encoding import iri_to_uri, smart_str
 from django.utils.six.moves.urllib.parse import urlsplit
-from redirect_urls.middleware import (
-    RedirectsMiddleware as OriginalRedirectsMiddleware)
 from whitenoise.middleware import WhiteNoiseMiddleware
 
 from kuma.wiki.views.legacy import (mindtouch_to_kuma_redirect,
@@ -312,12 +310,3 @@ class LegacyDomainRedirectsMiddleware(MiddlewareMixin):
                 urljoin(settings.SITE_URL, request.get_full_path())
             )
         return None
-
-
-class RedirectsMiddleware(MiddlewareMixin, OriginalRedirectsMiddleware):
-    """
-    Enables the redirect_urls middleware to be used with both MIDDLEWARE
-    and MIDDLEWARE_CLASSES until a newer version of django-redirect-urls
-    is available that provides this "out of the box".
-    """
-    pass
