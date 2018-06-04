@@ -85,9 +85,9 @@ django-decorator-include==1.3 \
 # Code: https://github.com/django-extensions/django-extensions
 # Changes: https://github.com/django-extensions/django-extensions/blob/master/CHANGELOG.md
 # Docs: http://django-extensions.readthedocs.io/en/latest/
-django-extensions==2.0.6 \
-    --hash=sha256:bc9f2946c117bb2f49e5e0633eba783787790ae810ea112fe7fd82fa64de2ff1 \
-    --hash=sha256:37a543af370ee3b0721ff50442d33c357dd083e6ea06c5b94a199283b6f9e361
+django-extensions==2.0.7 \
+    --hash=sha256:3be3debf53c77ca795bdf713726c923aa3c3f895e1a42e2e31a68c1a562346a4 \
+    --hash=sha256:94bfac99eb262c5ac27e53eda96925e2e53fe0b331af7dde37012d07639a649c
 
 # Modern flat theme for Django admin
 django-flat-theme==1.1.3 \
