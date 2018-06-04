@@ -1,13 +1,16 @@
+import os.path
+
+from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.db import connection
-from manage import path
 
 
 class Command(BaseCommand):
     help = 'Anonymize the database. Will wipe out some data.'
 
     def handle(self, *arg, **kwargs):
-        with open(path('scripts/anonymize.sql')) as fp:
-            sql = fp.read()
-            cursor = connection.cursor()
-            cursor.execute(sql)
+        path = os.path.join(settings.ROOT, 'scripts/anonymize.sql')
+        sql = open(path).read()
+        assert sql
+        cursor = connection.cursor()
+        cursor.execute(sql)
