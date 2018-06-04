@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.contrib.staticfiles.storage import staticfiles_storage
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import static
@@ -12,6 +11,8 @@ from kuma.core.decorators import shared_cache_control
 from kuma.feeder.models import Bundle
 from kuma.feeder.sections import SECTION_HACKS
 from kuma.search.models import Filter
+
+from .utils import favicon_url
 
 
 @shared_cache_control
@@ -119,11 +120,7 @@ Disallow: /
 
 @shared_cache_control
 def robots_txt(request):
-    """
-    Serve robots.txt that allows or forbids robots.
-
-    TODO: After AWS move, try different strategy (WhiteNoise, template)
-    """
+    """Serve robots.txt that allows or forbids robots."""
     host = request.get_host()
     if host in settings.ALLOW_ROBOTS_DOMAINS:
         robots = ""
@@ -136,9 +133,6 @@ def robots_txt(request):
 
 class FaviconRedirect(RedirectView):
     """Redirect to the favicon in the static img folder (bug 1402497)"""
-    icon = None
-    permanent = False
 
     def get_redirect_url(self, *args, **kwargs):
-        assert self.icon
-        return staticfiles_storage.url('img/%s' % self.icon)
+        return favicon_url()
