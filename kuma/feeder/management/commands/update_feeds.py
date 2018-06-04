@@ -1,6 +1,5 @@
 import logging
 import time
-from optparse import make_option
 
 from django.core.management.base import BaseCommand
 
@@ -11,10 +10,11 @@ from kuma.feeder.utils import update_feeds
 class Command(BaseCommand):
     """Update all registered RSS/Atom feeds."""
 
-    option_list = BaseCommand.option_list + (
-        make_option('--force', '-f', dest='force', action='store_true',
-                    default=False, help='Fetch even disabled feeds.'),
-    )
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--force', '-f',
+            help='Fetch even disabled feeds.',
+            action='store_true')
 
     @memcache_lock('kuma_feeder')
     def handle(self, *args, **options):
@@ -22,11 +22,10 @@ class Command(BaseCommand):
         Locked command handler to avoid running this command more than once
         simultaneously.
         """
-        force = options.get('force', False)
+        force = options['force']
         verbosity = int(options['verbosity'])
 
         # Setup logging
-        verbosity = int(options['verbosity'])
         console = logging.StreamHandler(self.stderr)
         level = [logging.WARNING,
                  logging.INFO,

@@ -23,11 +23,15 @@ class Command(ScrapeCommand):
                             action='store_false',
                             default='true',
                             dest='ssl')
+        parser.add_argument('--force',
+                            help='Update existing records',
+                            action='store_true')
 
     def handle(self, *arg, **options):
         self.setup_logging(options['verbosity'])
         host = options['host']
         ssl = options['ssl']
+        force = options['force']
         scraper = self.make_scraper(host=host, ssl=ssl)
         with open(options['spec']) as spec_file:
             data = json.load(spec_file)
@@ -39,6 +43,8 @@ class Command(ScrapeCommand):
         # Scrape data from MDN
         for source_spec in data.get('sources', []):
             source_name, param, source_args = source_spec
+            if force:
+                source_args['force'] = True
             scraper.add_source(source_name, param, **source_args)
         sources = scraper.scrape()
         incomplete = 0

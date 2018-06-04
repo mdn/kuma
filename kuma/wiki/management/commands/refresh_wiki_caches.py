@@ -7,7 +7,6 @@ Kuma and other services like Kumascript.
 import hashlib
 import logging
 import urlparse
-from optparse import make_option
 
 import requests
 
@@ -27,14 +26,14 @@ PAGE_EXISTS_TIMEOUT = getattr(settings, 'wiki_page_exists_timeout',
 class Command(BaseCommand):
 
     help = "Refresh cached wiki data"
-    option_list = BaseCommand.option_list + (
-        make_option('--baseurl', dest="baseurl",
-                    default=False,
-                    help="Base URL to site"),
-    )
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--baseurl',
+            help="Base URL to site",
+            default='')
 
     def handle(self, *args, **options):
-
         to_prefetch = []
         logging.info("Querying all Documents...")
         doc_cnt, doc_total = 0, Document.objects.count()
