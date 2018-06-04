@@ -7,7 +7,6 @@ from __future__ import division
 import datetime
 import logging
 from math import ceil
-from optparse import make_option
 
 from celery import chain
 from django.core.management.base import BaseCommand, CommandError
@@ -26,55 +25,70 @@ log = logging.getLogger('kuma.wiki.management.commands.render_document')
 class Command(BaseCommand):
     args = '<document_path document_path ...>'
     help = 'Render a wiki document'
-    option_list = BaseCommand.option_list + (
-        make_option('--all', dest='all', default=False, action='store_true',
-                    help='Render ALL documents'),
-        make_option('--min-age', dest='min_age', type='int', default=600,
-                    help='Documents rendered less than this many seconds ago '
-                         'will be skipped'),
-        make_option('--baseurl', dest='baseurl', default=False,
-                    help='Base URL to site'),
-        make_option('--force', action='store_true', dest='force',
-                    default=False,
-                    help='Force rendering, first clearing record of any '
-                         'rendering in progress'),
-        make_option('--nocache', action='store_true', dest='nocache',
-                    default=False,
-                    help='Use Cache-Control: no-cache instead of max-age=0'),
-        make_option('--defer', action='store_true', dest='defer',
-                    default=False,
-                    help='Defer rendering by chaining tasks via celery'),
-    )
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            'paths',
+            help='Path to document(s), like /en-US/docs/Web',
+            nargs='*',  # overridden by --all
+            metavar='path')
+        parser.add_argument(
+            '--all',
+            help='Render ALL documents (rather than by path)',
+            action='store_true')
+        parser.add_argument(
+            '--min-age',
+            help='Documents rendered less than this many seconds ago will be'
+                 ' skipped (default 600)',
+            type=int,
+            default=600)
+        parser.add_argument(
+            '--baseurl',
+            help='Base URL to site')
+        parser.add_argument(
+            '--force',
+            help='Force rendering, first clearing record of any rendering in'
+                 ' progress',
+            action='store_true')
+        parser.add_argument(
+            '--nocache',
+            help='Use Cache-Control: no-cache instead of max-age=0',
+            action='store_true')
+        parser.add_argument(
+            '--defer',
+            help='Defer rendering by chaining tasks via celery',
+            action='store_true')
 
     def handle(self, *args, **options):
-        self.options = options
-        self.base_url = options['baseurl'] or absolutify('')
-        if self.options['nocache']:
-            self.cache_control = 'no-cache'
+        base_url = options['baseurl'] or absolutify('')
+        if options['nocache']:
+            cache_control = 'no-cache'
         else:
-            self.cache_control = 'max-age=0'
+            cache_control = 'max-age=0'
+        force = options['force']
 
         if options['all']:
             # Query all documents, excluding those whose `last_rendered_at` is
             # within `min_render_age` or NULL.
             min_render_age = (
                 datetime.datetime.now() -
-                datetime.timedelta(seconds=self.options['min_age']))
+                datetime.timedelta(seconds=options['min_age']))
             docs = Document.objects.filter(
                 Q(last_rendered_at__isnull=True) |
                 Q(last_rendered_at__lt=min_render_age))
             docs = docs.order_by('-modified')
             docs = docs.values_list('id', flat=True)
 
-            self.chain_render_docs(docs)
+            self.chain_render_docs(docs, cache_control, base_url, force)
 
         else:
-            if not len(args) == 1:
+            # Accept page paths from command line, but be liberal
+            # in what we accept, eg: /en-US/docs/CSS (full path);
+            # /en-US/CSS (no /docs); or even en-US/CSS (no leading slash)
+            paths = options['paths']
+            if not paths:
                 raise CommandError('Need at least one document path to render')
-            for path in args:
-                # Accept a single page path from command line, but be liberal
-                # in what we accept, eg: /en-US/docs/CSS (full path);
-                # /en-US/CSS (no /docs); or even en-US/CSS (no leading slash)
+            for path in paths:
                 if path.startswith('/'):
                     path = path[1:]
                 locale, sep, slug = path.partition('/')
@@ -84,14 +98,13 @@ class Command(BaseCommand):
                 doc = Document.objects.get(locale=locale, slug=slug)
                 log.info(u'Rendering %s (%s)' % (doc, doc.get_absolute_url()))
                 try:
-                    render_document(doc.pk, self.cache_control, self.base_url,
-                                    self.options['force'])
+                    render_document(doc.pk, cache_control, base_url, force)
                     log.debug(u'DONE.')
                 except DocumentRenderingInProgress:
                     log.error(
                         u'Rendering is already in progress for this document.')
 
-    def chain_render_docs(self, docs):
+    def chain_render_docs(self, docs, cache_control, base_url, force):
         tasks = []
         count = 0
         total = len(docs)
@@ -101,8 +114,8 @@ class Command(BaseCommand):
         for chunk in chunks:
             count += len(chunk)
             tasks.append(
-                render_document_chunk.si(chunk, self.cache_control,
-                                         self.base_url, self.options['force']))
+                render_document_chunk.si(chunk, cache_control, base_url,
+                                         force))
             percent_complete = int(ceil((count / total) * 100))
             tasks.append(
                 email_render_document_progress.si(percent_complete, total))
