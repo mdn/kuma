@@ -35,7 +35,7 @@ def test_is_not_found_status_in_mm(base_url, selenium, is_debug):
 def test_is_expected_content(base_url, selenium, is_debug):
     page = NotFoundPage(selenium, base_url).open()
     if is_debug:
-        assert selenium.title == 'Page not found at /%s' % page.SLUG
+        assert selenium.title == 'Page not found at /en-US/%s' % page.SLUG
     else:
         assert selenium.title == (ARTICLE_NAME + ARTICLE_TITLE_SUFIX)
         assert page.page_title_text == ARTICLE_NAME
