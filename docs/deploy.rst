@@ -4,17 +4,14 @@ Deploying MDN
 
 MDN is served from `Amazon Web Services`_ in the US West (Oregon)
 datacenters. MDN is deployed as Docker_ containers managed by Kubernetes_. The
-infrastructure is maintained by the
-`Mozilla Marketing Engineering and Operations Group`_ (MozMEAO). MozMEAO openly
-documents their `infrastructure tools`_, including those used to
-`deploy and mantain MDN`_.
+infrastructure is defined within MDN's `infra repository`_, including the tools
+used to `deploy and maintain MDN`_.
 
 .. _`Amazon Web Services`: https://en.wikipedia.org/wiki/Amazon_Web_Services
 .. _Docker: https://www.docker.com/
 .. _Kubernetes: https://kubernetes.io/
-.. _`Mozilla Marketing Engineering and Operations Group`: https://github.com/mozmeao
-.. _`infrastructure tools`: https://github.com/mozmeao/infra
-.. _`deploy and mantain MDN`: https://github.com/mozmeao/infra/tree/master/apps/mdn/mdn-aws
+.. _`infra repository`: https://github.com/mdn/infra
+.. _`deploy and maintain MDN`: https://github.com/mdn/infra/tree/master/apps/mdn/mdn-aws
 
 Deploying new code to AWS takes several steps, and about 60 minutes for the
 full process. The deployer is responsible for emergency issues for the next 24

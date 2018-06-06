@@ -8,9 +8,9 @@ stage("Check Pull") {
 }
 
 stage("Prepare Infra") {
-    // Checkout the "mozmeao/infra" repo's "master" branch into the
+    // Checkout the "mdn/infra" repo's "master" branch into the
     // "infra" sub-directory of the current working directory.
-    utils.checkout_repo('https://github.com/mozmeao/infra', 'master', 'infra')
+    utils.checkout_repo('https://github.com/mdn/infra', 'master', 'infra')
 }
 
 stage('Push') {
