@@ -38,7 +38,7 @@
 
         {% if messages %}
             {% for message in messages %}
-                {% if 'wiki_redirect' not in message.tags or request.user.is_superuser %}
+                {% if 'wiki_redirect' not in message.tags or (request.user and request.user.is_superuser) %}
                     win.mdn.notifications.push({
                         message: "{{ message }}",
                         tags: "{{ message.tags }}",
