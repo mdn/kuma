@@ -13,6 +13,7 @@ from soapbox.models import Message
 from . import (assert_no_cache_header, assert_shared_cache_header, eq_,
                KumaTestCase, ok_)
 from ..urlresolvers import reverse
+from ..views import handler500
 
 
 @pytest.fixture()
@@ -227,3 +228,14 @@ def test_ratelimit_429(client, db):
     assert '429.html' in [t.name for t in response.templates]
     assert response['Retry-After'] == '60'
     assert_no_cache_header(response)
+
+
+def test_error_handler_minimal_request(rf, db):
+    '''Error page renders if middleware hasn't added request members.'''
+    request = rf.get('/en-US/docs/tags/Open Protocol')
+    assert not hasattr(request, 'LANGUAGE_CODE')
+    assert not hasattr(request, 'user')
+    exception = Exception('Something went wrong.')
+    response = handler500(request, exception)
+    assert response.status_code == 500
+    assert 'Internal Server Error' in response.content
