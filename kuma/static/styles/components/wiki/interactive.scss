@@ -35,6 +35,19 @@
     text-align: center;
 }
 
+/* custom sizing classes for the tabbed interactive editor */
+.tabbed-shorter {
+    height: 375px;
+}
+
+.tabbed-standard {
+    height: 445px;
+}
+
+.tabbed-taller {
+    height: 745px;
+}
+
 @media #{$mq-small-desktop-and-up} {
     .interactive {
         height: 390px;
