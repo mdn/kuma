@@ -4,18 +4,6 @@
     // Adding to globally available mdn object
     var analytics = mdn.analytics = {
         /**
-         * Handles postMessage events from the interactive editor, passing of
-         * the data to `trackEvent` if the origin of the message is what we expect.
-         * @param {Object} event - The event Object received from the postMessage
-         */
-        interactiveExamplesEvent: function(event) {
-            var allowedOrigin = win.mdn.interactiveEditor.editorUrl || 'https://interactive-examples.mdn.mozilla.net';
-            if (event.origin !== allowedOrigin) {
-                return false;
-            }
-            mdn.analytics.trackEvent(event.data);
-        },
-        /**
          * Sets the value for a specific dimension.
          * For example setting dimension14 to Yes, means:
          * Saw Survey Gizmo Task Completion survey = Yes
@@ -56,7 +44,7 @@
 
             var ga = win.ga;
             var data = {
-                hitType: 'event',
+                hitType: eventObject.hitType || 'event',
                 eventCategory: eventObject.category || '',    // Required.
                 eventAction: eventObject.action || '',             // Required.
                 eventLabel: eventObject.label || '',
@@ -203,6 +191,4 @@
             });
         }
     };
-    // add event listener for postMessages from the interactive editor
-    win.addEventListener('message', analytics.interactiveExamplesEvent, false);
 })(window, document, jQuery);

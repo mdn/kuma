@@ -7,6 +7,99 @@
         window.mdn.interactiveEditor.editorUrl ||
         'https://interactive-examples.mdn.mozilla.net';
 
+    /**
+     * Handles postMessages from the interactive editor, passing
+     * the data in the relevant format to trackEvent depending on the label.
+     * Also ensures that the origin of the message is what we expect.
+     * @param {Object} event - The event Object received from the postMessage
+     */
+    function interactiveExamplesMsgHandler(event) {
+        var allowedOrigin =
+            window.mdn.interactiveEditor.editorUrl ||
+            'https://interactive-examples.mdn.mozilla.net';
+
+        if (event.origin !== allowedOrigin) {
+            return false;
+        }
+
+        if (event.data.label === 'Performance Events') {
+            mdn.analytics.trackEvent({
+                category: event.data.category,
+                action: event.data.action,
+                label: event.data.label,
+                value: event.data.value - performance.timing.fetchStart,
+                hitType: 'timing'
+            });
+        } else {
+            mdn.analytics.trackEvent(event.data);
+        }
+    }
+
+    /**
+     * Returns the interactive examples iframe performance entry
+     * @param {Array} perfEntries - The array of performance entries
+     */
+    function getInteractiveExamplesPerfEntry(perfEntries) {
+        for (var i = 0, l = perfEntries.length; i < l; i++) {
+            var currentEntry = perfEntries[i];
+            if (
+                currentEntry.initiatorType &&
+                currentEntry.initiatorType === 'iframe' &&
+                currentEntry.name.indexOf(
+                    'interactive-examples.mdn.mozilla.net'
+                ) > -1
+            ) {
+                return perfEntries[i];
+            }
+        }
+    }
+
+    /* Ensure there is an iframe present and that performance is
+       supported before gathering performance metric */
+    if (iframe && performance !== undefined) {
+        document.addEventListener('readystatechange', function(event) {
+            if (event.target.readyState === 'complete') {
+                var interactiveExamplesPerfEntry = {};
+                var perfEntries = performance.getEntriesByType('resource');
+                var mainFetchStart = 0;
+                var iframeFetchStart = 0;
+                var iframeFetchStartSinceUnixEpoch = 0;
+                var timeToIframeFetchStart = 0;
+
+                if (perfEntries === undefined || perfEntries.length <= 0) {
+                    console.info('No performance entries was returned');
+                    return;
+                }
+
+                interactiveExamplesPerfEntry = getInteractiveExamplesPerfEntry(
+                    perfEntries
+                );
+
+                // ensure that the iframe was found in the array of performance entries
+                if (interactiveExamplesPerfEntry !== undefined) {
+                    mainFetchStart = performance.timing.fetchStart;
+                    iframeFetchStart = Math.round(
+                        interactiveExamplesPerfEntry.fetchStart
+                    );
+                    iframeFetchStartSinceUnixEpoch =
+                        mainFetchStart + iframeFetchStart;
+
+                    timeToIframeFetchStart =
+                        new Date(iframeFetchStartSinceUnixEpoch) -
+                        new Date(mainFetchStart);
+
+                    mdn.analytics.trackEvent({
+                        category: 'Interactive Examples',
+                        action: 'Time to iframe fetch start',
+                        label: 'Performance Events',
+                        value: timeToIframeFetchStart,
+                        hitType: 'timing'
+                    });
+                }
+            }
+        });
+    }
+
     /* If there is no `iframe`, or if this is a JS example,
     simply return */
     if (!iframe || iframe.classList.contains('interactive-js')) {
@@ -40,4 +133,7 @@
             postToEditor({ smallViewport: true });
         }
     };
+
+    // add event listener for postMessages from the interactive editor
+    window.addEventListener('message', interactiveExamplesMsgHandler, false);
 })();
