@@ -3,6 +3,7 @@ from urlparse import urljoin
 
 from django.conf import settings
 from django.contrib.sessions.middleware import SessionMiddleware
+from django.core.exceptions import MiddlewareNotUsed
 from django.core.urlresolvers import get_script_prefix, resolve, Resolver404
 from django.http import (HttpResponseForbidden,
                          HttpResponsePermanentRedirect,
@@ -28,7 +29,6 @@ class MiddlewareBase(object):
 
     def __init__(self, get_response):
         self.get_response = get_response
-        super(MiddlewareBase, self).__init__()
 
 
 class LangSelectorMiddleware(MiddlewareBase):
@@ -136,7 +136,7 @@ class LocaleMiddleware(MiddlewareBase):
     """
 
     def __call__(self, request):
-        # Activate the language, based on the request.
+        # Activate the language, and add LANGUAGE_CODE to the request.
         activate_language_from_request(request)
 
         response = self.get_response(request)
@@ -290,18 +290,21 @@ class ForceAnonymousSessionMiddleware(SessionMiddleware):
 class RestrictedEndpointsMiddleware(MiddlewareBase):
     """Restricts the accessible endpoints based on the host."""
 
+    def __init__(self, get_response):
+        if not settings.ENABLE_RESTRICTIONS_BY_HOST:
+            raise MiddlewareNotUsed
+        super(RestrictedEndpointsMiddleware, self).__init__(get_response)
+
     def __call__(self, request):
-        if settings.ENABLE_RESTRICTIONS_BY_HOST and is_untrusted(request):
+        if is_untrusted(request):
             request.urlconf = 'kuma.urls_untrusted'
         return self.get_response(request)
 
 
 class RestrictedWhiteNoiseMiddleware(WhiteNoiseMiddleware):
+    """Restricts the use of WhiteNoiseMiddleware based on the host."""
 
     def process_request(self, request):
-        """
-        Restricts the use of WhiteNoiseMiddleware based on the host.
-        """
         if settings.ENABLE_RESTRICTIONS_BY_HOST and is_untrusted(request):
             return None
         return super(RestrictedWhiteNoiseMiddleware, self).process_request(
