@@ -785,34 +785,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         parameters = parse_qs(urlparse(response['Location']).query)
         assert parameters['parent'][0] == str(doc.id)
 
-    def test_creating_child_of_redirect_zoned_document(self):
-        """
-        While try to create a child of a redirected zone document,
-        the parent of the child should be redirect's parent.
-        """
-        self.client.login(username='admin', password='testpass')
-        rev = revision(is_approved=True, save=True)
-        root_doc = rev.document
-        # Create a zone of the document
-        zoned_doc = DocumentZone(document=root_doc, url_root="zoned_url")
-        zoned_doc.save()
-
-        # Move the document to new slug
-        root_doc._move_tree(new_slug="moved_doc")
-
-        zoned_child_full_path = ('/en-US/' + zoned_doc.url_root + "/" +
-                                 "children_document")
-        response = self.client.get(zoned_child_full_path)
-        assert response.status_code == 302
-        assert 'public' not in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'docs/new' in response['Location']
-        # The parent id of the query should be same because while moving,
-        # a new document is created with old slug and make redirect to the
-        # old document
-        parameters = parse_qs(urlparse(response['Location']).query)
-        assert parameters['parent'][0] == str(root_doc.id)
-
     def test_creating_child_of_redirect_zoned_doc_with_unzoned_doc_slug(self):
         """
         While trying to create a child of a redirected zone document with its
