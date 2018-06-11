@@ -3,12 +3,11 @@ from urlparse import urljoin
 
 from django.conf import settings
 from django.contrib.sessions.middleware import SessionMiddleware
+from django.core.exceptions import MiddlewareNotUsed
 from django.core.urlresolvers import get_script_prefix, resolve, Resolver404
 from django.http import (HttpResponseForbidden,
                          HttpResponsePermanentRedirect,
                          HttpResponseRedirect)
-from django.utils import translation
-from django.utils.deprecation import MiddlewareMixin
 from django.utils.encoding import iri_to_uri, smart_str
 from django.utils.six.moves.urllib.parse import urlsplit
 from whitenoise.middleware import WhiteNoiseMiddleware
@@ -17,7 +16,8 @@ from kuma.wiki.views.legacy import (mindtouch_to_kuma_redirect,
                                     mindtouch_to_kuma_url)
 
 from .decorators import add_shared_cache_control
-from .i18n import (get_kuma_languages,
+from .i18n import (activate_language_from_request,
+                   get_kuma_languages,
                    get_language,
                    get_language_from_path,
                    get_language_from_request)
@@ -25,19 +25,25 @@ from .utils import is_untrusted, urlparams
 from .views import handler403
 
 
-class LangSelectorMiddleware(MiddlewareMixin):
+class MiddlewareBase(object):
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+
+class LangSelectorMiddleware(MiddlewareBase):
     """
     Redirect requests with a ?lang= parameter.
 
     This should appear higher than LocaleMiddleware in the middleware list.
     """
 
-    def process_request(self, request):
+    def __call__(self, request):
         """Redirect if ?lang query parameter is valid."""
         query_lang = request.GET.get('lang')
         if not (query_lang and query_lang in get_kuma_languages()):
-            # Invalid language requested, don't redirect
-            return
+            # Invalid or no language requested, so don't redirect.
+            return self.get_response(request)
 
         # Check if the requested language is already embedded in URL
         language = get_language_from_request(request)
@@ -61,15 +67,17 @@ class LangSelectorMiddleware(MiddlewareMixin):
         return response
 
 
-class LocaleStandardizerMiddleware(MiddlewareMixin):
+class LocaleStandardizerMiddleware(MiddlewareBase):
     """
     Convert 404s with legacy locales to redirects.
 
     This should appear higher than LocaleMiddleware in the middleware list.
     """
 
-    def process_response(self, request, response):
+    def __call__(self, request):
         """Convert 404s into redirects to language-specific URLs."""
+
+        response = self.get_response(request)
 
         if response.status_code != 404:
             return response
@@ -104,12 +112,12 @@ class LocaleStandardizerMiddleware(MiddlewareMixin):
             redirect_response = HttpResponseRedirect(fixed_path)
             add_shared_cache_control(redirect_response)
             return redirect_response
-        else:
-            # No language fixup found, return the 404
-            return response
+
+        # No language fixup found, return the 404
+        return response
 
 
-class LocaleMiddleware(MiddlewareMixin):
+class LocaleMiddleware(MiddlewareBase):
     """
     This is a very simple middleware that parses a request
     and decides what translation object to install in the current
@@ -126,16 +134,14 @@ class LocaleMiddleware(MiddlewareMixin):
     * Don't include "Vary: Accept-Language" header
     * Add caching headers to locale redirects
     """
-    response_redirect_class = HttpResponseRedirect
 
-    def process_request(self, request):
-        """Activate the language, based on the request."""
-        language = get_language_from_request(request)
-        translation.activate(language)
-        request.LANGUAGE_CODE = language
+    def __call__(self, request):
+        # Activate the language, and add LANGUAGE_CODE to the request.
+        activate_language_from_request(request)
 
-    def process_response(self, request, response):
-        """Add Content-Language, convert some 404s to locale redirects."""
+        response = self.get_response(request)
+
+        # Add Content-Language, convert some 404s to locale redirects.
         language = get_language()
         language_from_path = get_language_from_path(request.path_info)
         if response.status_code == 404 and not language_from_path:
@@ -152,7 +158,7 @@ class LocaleMiddleware(MiddlewareMixin):
                     '%s%s/' % (script_prefix, language),
                     1
                 )
-                redirect = self.response_redirect_class(language_path)
+                redirect = HttpResponseRedirect(language_path)
                 add_shared_cache_control(redirect)
                 return redirect
 
@@ -162,15 +168,17 @@ class LocaleMiddleware(MiddlewareMixin):
         # instead. And a long comment.
         if 'Content-Language' not in response:  # pragma: no cover
             response['Content-Language'] = language
+
         return response
 
 
-class Forbidden403Middleware(MiddlewareMixin):
+class Forbidden403Middleware(MiddlewareBase):
     """
     Renders a 403.html page if response.status_code == 403.
     """
 
-    def process_response(self, request, response):
+    def __call__(self, request):
+        response = self.get_response(request)
         if isinstance(response, HttpResponseForbidden):
             return handler403(request)
         # If not 403, return response unmodified
@@ -193,7 +201,7 @@ def is_valid_path(request, path):
         return False
 
 
-class SlashMiddleware(MiddlewareMixin):
+class SlashMiddleware(MiddlewareBase):
     """
     Middleware that adds or removes a trailing slash if there was a 404.
 
@@ -208,7 +216,8 @@ class SlashMiddleware(MiddlewareMixin):
     makes it so that Django's is_valid_url returns True for all URLs.
     """
 
-    def process_response(self, request, response):
+    def __call__(self, request):
+        response = self.get_response(request)
         path = request.path_info
         if response.status_code == 404 and not is_valid_path(request, path):
             new_path = None
@@ -242,14 +251,14 @@ def safe_query_string(request):
         request.META['QUERY_STRING'] = qs
 
 
-class SetRemoteAddrFromForwardedFor(MiddlewareMixin):
+class SetRemoteAddrFromForwardedFor(MiddlewareBase):
     """
     Middleware that sets REMOTE_ADDR based on HTTP_X_FORWARDED_FOR, if the
     latter is set. This is useful if you're sitting behind a reverse proxy that
     causes each request's REMOTE_ADDR to be set to 127.0.0.1.
     """
 
-    def process_request(self, request):
+    def __call__(self, request):
         try:
             forwarded_for = request.META['HTTP_X_FORWARDED_FOR']
         except KeyError:
@@ -259,6 +268,8 @@ class SetRemoteAddrFromForwardedFor(MiddlewareMixin):
             # The client's IP will be the first one.
             forwarded_for = forwarded_for.split(',')[0].strip()
             request.META['REMOTE_ADDR'] = forwarded_for
+
+        return self.get_response(request)
 
 
 class ForceAnonymousSessionMiddleware(SessionMiddleware):
@@ -276,22 +287,24 @@ class ForceAnonymousSessionMiddleware(SessionMiddleware):
         return response
 
 
-class RestrictedEndpointsMiddleware(MiddlewareMixin):
+class RestrictedEndpointsMiddleware(MiddlewareBase):
+    """Restricts the accessible endpoints based on the host."""
 
-    def process_request(self, request):
-        """
-        Restricts the accessible endpoints based on the host.
-        """
-        if settings.ENABLE_RESTRICTIONS_BY_HOST and is_untrusted(request):
+    def __init__(self, get_response):
+        if not settings.ENABLE_RESTRICTIONS_BY_HOST:
+            raise MiddlewareNotUsed
+        super(RestrictedEndpointsMiddleware, self).__init__(get_response)
+
+    def __call__(self, request):
+        if is_untrusted(request):
             request.urlconf = 'kuma.urls_untrusted'
+        return self.get_response(request)
 
 
 class RestrictedWhiteNoiseMiddleware(WhiteNoiseMiddleware):
+    """Restricts the use of WhiteNoiseMiddleware based on the host."""
 
     def process_request(self, request):
-        """
-        Restricts the use of WhiteNoiseMiddleware based on the host.
-        """
         if settings.ENABLE_RESTRICTIONS_BY_HOST and is_untrusted(request):
             return None
         return super(RestrictedWhiteNoiseMiddleware, self).process_request(
@@ -299,14 +312,12 @@ class RestrictedWhiteNoiseMiddleware(WhiteNoiseMiddleware):
         )
 
 
-class LegacyDomainRedirectsMiddleware(MiddlewareMixin):
+class LegacyDomainRedirectsMiddleware(MiddlewareBase):
+    """Permanently redirects all requests from legacy domains."""
 
-    def process_request(self, request):
-        """
-        Permanently redirects all requests from legacy domains.
-        """
+    def __call__(self, request):
         if request.get_host() in settings.LEGACY_HOSTS:
             return HttpResponsePermanentRedirect(
                 urljoin(settings.SITE_URL, request.get_full_path())
             )
-        return None
+        return self.get_response(request)

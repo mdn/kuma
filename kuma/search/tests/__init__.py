@@ -5,7 +5,7 @@ from elasticsearch.exceptions import ConnectionError
 from elasticsearch_dsl.connections import connections
 from rest_framework.test import APIRequestFactory
 
-from kuma.core.middleware import LocaleMiddleware
+from kuma.core.i18n import activate_language_from_request
 from kuma.users.tests import UserTestCase
 from kuma.wiki.search import WikiDocumentType
 
@@ -75,5 +75,5 @@ class ElasticTestCase(UserTestCase):
     def get_request(self, *args, **kwargs):
         request = factory.get(*args, **kwargs)
         # setting request.LANGUAGE_CODE correctly
-        LocaleMiddleware().process_request(request)
+        activate_language_from_request(request)
         return request

@@ -1,4 +1,5 @@
 import pytest
+from django.core.exceptions import MiddlewareNotUsed
 from django.test import RequestFactory
 from mock import MagicMock, patch
 
@@ -81,10 +82,11 @@ def test_restricted_endpoints_middleware(rf, settings):
     middleware(request)
     assert not hasattr(request, 'urlconf')
 
+
+def test_restricted_endpoints_middleware_when_disabled(settings):
     settings.ENABLE_RESTRICTIONS_BY_HOST = False
-    request = rf.get('/foo', HTTP_HOST='demos')
-    middleware(request)
-    assert not hasattr(request, 'urlconf')
+    with pytest.raises(MiddlewareNotUsed):
+        RestrictedEndpointsMiddleware(lambda req: None)
 
 
 def test_restricted_whitenoise_middleware(rf, settings):

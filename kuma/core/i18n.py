@@ -193,3 +193,10 @@ def get_language_from_request(request):
 
 def get_language_mapping():
     return apps.get_app_config('core').language_mapping
+
+
+def activate_language_from_request(request):
+    """Activate the language, based on the request."""
+    language = get_language_from_request(request)
+    translation.activate(language)
+    request.LANGUAGE_CODE = language
