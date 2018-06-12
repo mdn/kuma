@@ -116,11 +116,34 @@ click==6.7 \
     --hash=sha256:f15516df478d5a56180fbf80e68f206010e6d160fc39fa508b65e035fd75130b
 
 # django-allauth
+#
+# Implementation of the OAuth request-signing logic
+# Code: https://github.com/oauthlib/oauthlib
+# Changes: https://github.com/oauthlib/oauthlib/blob/master/CHANGELOG.rst
+# Docs: https://oauthlib.readthedocs.io/en/latest/index.html
 oauthlib==2.0.4 \
     --hash=sha256:514e293cb356dd53d596692207d48d9231b997995c9a4167eefa868583d74d13
+# XML bomb protection for Python stdlib modules
+# Code: https://github.com/tiran/defusedxml
+# Changes: https://github.com/tiran/defusedxml/blob/master/CHANGES.txt
+defusedxml==0.5.0 \
+    --hash=sha256:24d7f2f94f7f3cb6061acb215685e5125fbcdc40a857eff9de22518820b0a4f4 \
+    --hash=sha256:702a91ade2968a82beb0db1e0766a6a273f33d4616a6ce8cde475d8e09853b20
+# OpenID library for Python 2
+# Code: https://github.com/openid/python-openid
 python-openid==2.2.5 \
     --hash=sha256:92c51c3ecec846cbec4aeff11f9ff47303d4a63f93b0e6ac0ec02a091fed70ef \
     --hash=sha256:c2d133e47e0a7705c9272eef00d7a09c174f5bf17a127fed8e2c6499556cc782
+# OpenID library for Python 3
+# Code: https://github.com/necaris/python3-openid
+# Changes: https://github.com/necaris/python3-openid/blob/master/CHANGES.md
+python3-openid==3.1.0 \
+    --hash=sha256:0086da6b6ef3161cfe50fb1ee5cceaf2cda1700019fda03c2c5c440ca6abe4fa \
+    --hash=sha256:628d365d687e12da12d02c6691170f4451db28d6d68d050007e4a40065868502
+# OAuth library support for Requests
+# Code: https://github.com/requests/requests-oauthlib
+# Changes: https://github.com/requests/requests-oauthlib/blob/master/HISTORY.rst
+# Docs: https://requests-oauthlib.readthedocs.io/en/latest/
 requests-oauthlib==0.8.0 \
     --hash=sha256:883ac416757eada6d3d07054ec7092ac21c7f35cb1d2cf82faf205637081f468 \
     --hash=sha256:50a8ae2ce8273e384895972b56193c7409601a66d4975774c60c2aed869639ca
