@@ -1,5 +1,4 @@
 {
-    "insertPragma": true,
-    "requirePragma": true,
-    "singleQuote": true
+    "singleQuote": true,
+    "tabWidth": 4
 }
