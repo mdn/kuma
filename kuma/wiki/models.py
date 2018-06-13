@@ -35,7 +35,7 @@ from .content import parse as parse_content
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, NotDocumentView,
                          PageMoveError, SlugCollision, UniqueCollision)
-from .jobs import DocumentContributorsJob, DocumentNearestZoneJob, DocumentTagsJob
+from .jobs import DocumentContributorsJob, DocumentTagsJob
 from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        DocumentManager, RevisionIPManager,
                        TaggedDocumentManager)
@@ -336,10 +336,6 @@ class Document(NotificationsMixin, models.Model):
     def get_quick_links_html(self, *args, **kwargs):
         return self.get_section_content('Quick_Links', annotate_links=True)
 
-    @cache_with_field('zone_subnav_local_html')
-    def get_zone_subnav_local_html(self, *args, **kwargs):
-        return self.get_section_content('Subnav', annotate_links=True)
-
     @cache_with_field('toc_html')
     def get_toc_html(self, *args, **kwargs):
         if not self.current_revision_id:
@@ -404,21 +400,9 @@ class Document(NotificationsMixin, models.Model):
         # method can iterate?
         self.get_body_html(force_fresh=True)
         self.get_quick_links_html(force_fresh=True)
-        self.get_zone_subnav_local_html(force_fresh=True)
         self.get_toc_html(force_fresh=True)
         self.get_summary_html(force_fresh=True)
         self.get_summary_text(force_fresh=True)
-
-    def get_zone_subnav_html(self):
-        """
-        Search this document and, if nothing is found, the document directly
-        associated with its nearest zone, returning the first zone nav HTML
-        found.
-        """
-        src = self.get_zone_subnav_local_html()
-        if (not src) and self.nearest_zone:
-            src = self.nearest_zone.document.get_zone_subnav_local_html()
-        return src
 
     def get_section_content(self, section_id, ignore_heading=True,
                             annotate_links=False):
@@ -1434,26 +1418,6 @@ Full traceback:
     @cached_property
     def all_tags_name(self):
         return DocumentTagsJob().get(pk=self.pk)
-
-    @cached_property
-    def nearest_zone(self):
-        """
-        The nearest zone for this document, starting from this document and
-        moving upwards via "parent_topic". For a non-default-language document
-        that does not have its own nearest zone, returns the nearest zone of
-        its parent (the document it was translated from).
-        """
-        job = DocumentNearestZoneJob()
-        result = job.get(self.pk)
-        if ((not result) and self.parent and
-                (self.locale != settings.WIKI_DEFAULT_LANGUAGE)):
-            return job.get(self.parent.pk)
-        return result
-
-    @cached_property
-    def is_zone_root(self):
-        zone = self.nearest_zone
-        return bool(zone) and (zone.document_id in (self.id, self.parent_id))
 
     def get_full_url(self):
         return absolutify(self.get_absolute_url())

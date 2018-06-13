@@ -24,7 +24,7 @@ from kuma.spam.akismet import Akismet, AkismetError
 from .decorators import check_readonly
 from .forms import RevisionAkismetSubmissionAdminForm
 from .models import (Document, DocumentDeletionLog, DocumentSpamAttempt,
-                     DocumentTag, DocumentZone, EditorToolbar, Revision,
+                     DocumentTag, EditorToolbar, Revision,
                      RevisionAkismetSubmission, RevisionIP)
 
 
@@ -376,11 +376,6 @@ class DocumentTagAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
     search_fields = ('name',)
     ordering = ('name',)
-
-
-@admin.register(DocumentZone)
-class DocumentZoneAdmin(admin.ModelAdmin):
-    raw_id_fields = ('document',)
 
 
 @admin.register(DocumentSpamAttempt)

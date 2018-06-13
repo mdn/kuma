@@ -17,56 +17,6 @@
     })();
 
     /*
-        Set up the zone subnav accordion
-    */
-    $('.subnav').each(function() {
-        var $subnav = $(this);
-        var $subnavList = $subnav.find(' > ol');
-        var minHeightFn = $('.zone-landing-header-preview-base').length ? setMinHeight : noop;
-
-        if (!$subnavList.length) {
-            return; // Exit if the subnav isn't set up properly
-        }
-
-        // Set the list items as togglers where needed
-        setupTogglers($subnavList.find('li'));
-
-        // Make them toggleable!
-        $subnavList.find('.toggleable').mozTogglers({
-            slideCallback: minHeightFn
-        });
-
-        // Try to find the current page in the list, if found, open it
-        // Need to keep track of the elements we've found so they aren't found twice
-        var used = [];
-        var $selected = $subnavList.find('a[href$="' + doc.location.pathname + '"]');
-        $selected.each(function() {
-            var self = this;
-            var $togglers = $(this).parents('.toggleable').find('.toggler');
-
-            $togglers.each(function() {
-                if ($.contains($(this).parent('li').get(0), self) && used.indexOf(this) === -1) {
-                    $(this).trigger('mdn:click');
-                    used.push(this);
-                }
-            });
-        }).parent().addClass('current');
-
-        // Mark this is an accordion so the togglers open/close properly
-        $subnavList.addClass('accordion');
-
-        function noop(){}
-        function setMinHeight() {
-            if ($('.zone-landing-header-preview-base').css('position') === 'absolute') {
-                $('.wiki-main-content').css('min-height', $subnav.height());
-            }
-        }
-
-        minHeightFn();
-    });
-
-
-    /*
         Subscribe / unsubscribe to an article
     */
     $('.page-watch a').on('click', function(e) {

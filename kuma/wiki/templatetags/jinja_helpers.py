@@ -202,26 +202,6 @@ def tojson(value):
     return jinja2.Markup(result)
 
 
-@library.global_function
-def document_zone_management_links(user, document):
-    links = {'add': None, 'change': None}
-    zone = document.nearest_zone
-
-    # Enable "add" link if there is no zone for this document, or if there's a
-    # zone but the document is not itself the root (ie. to add sub-zones).
-    if ((not zone or zone.document_id != document.id) and
-            user.has_perm('wiki.add_documentzone')):
-        links['add'] = '%s?document=%s' % (
-            reverse('admin:wiki_documentzone_add'), document.id)
-
-    # Enable "change" link if there's a zone, and the user has permission.
-    if zone and user.has_perm('wiki.change_documentzone'):
-        links['change'] = reverse('admin:wiki_documentzone_change',
-                                  args=(zone.id,))
-
-    return links
-
-
 @library.filter
 def absolutify(url, site=None):
     """

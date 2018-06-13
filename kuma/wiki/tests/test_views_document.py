@@ -108,7 +108,7 @@ def authkey(wiki_user):
 @pytest.mark.parametrize(
     'http_method', ['put', 'post', 'delete', 'options', 'head'])
 @pytest.mark.parametrize(
-    'endpoint', ['children', 'toc', 'json', 'json_slug', 'styles'])
+    'endpoint', ['children', 'toc', 'json', 'json_slug'])
 def test_disallowed_methods(client, db, http_method, endpoint):
     """
     HTTP methods other than GET & HEAD are not allowed.
@@ -599,10 +599,10 @@ def test_tags_not_show_while_empty(root_doc, client, wiki_user):
 @pytest.mark.parametrize(
     'params_case',
     ['nothing', 'title-only', 'slug-only', 'title-and-slug', 'missing-title'])
-def test_json(doc_hierarchy_with_zones, client, params_case):
+def test_json(doc_hierarchy, client, params_case):
     """Test the wiki.json endpoint."""
-    top_doc = doc_hierarchy_with_zones.top
-    bottom_doc = doc_hierarchy_with_zones.bottom
+    top_doc = doc_hierarchy.top
+    bottom_doc = doc_hierarchy.bottom
 
     expected_tags = sorted(['foo', 'bar', 'baz'])
     expected_review_tags = sorted(['tech', 'editorial'])
@@ -716,25 +716,3 @@ def test_watch_unwatch(user_client, wiki_user, root_doc, endpoint, event):
         reverse('wiki.document', args=[root_doc.slug]))
     assert not event.is_notifying(wiki_user, root_doc), \
         'Watch was not destroyed'
-
-
-def test_zone_styles(client, doc_hierarchy_with_zones):
-    """Ensure CSS styles for a zone can be fetched."""
-    top_doc = doc_hierarchy_with_zones.top
-    bottom_doc = doc_hierarchy_with_zones.bottom
-
-    url = reverse('wiki.styles', args=(top_doc.slug,))
-    response = client.get(url, follow=False)
-    assert response.status_code == 302
-    assert_shared_cache_header(response)
-    assert response['Location'].endswith('build/styles/zones.css')
-
-    url = reverse('wiki.styles', args=(bottom_doc.slug,))
-    response = client.get(url, follow=True)
-    assert response.status_code == 404
-    assert_no_cache_header(response)
-
-    url = reverse('wiki.styles', args=('some-unknown-document-slug',))
-    response = client.get(url, follow=True)
-    assert response.status_code == 404
-    assert_no_cache_header(response)
