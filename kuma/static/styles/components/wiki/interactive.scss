@@ -36,16 +36,16 @@
 }
 
 /* custom sizing classes for the tabbed interactive editor */
-.tabbed-shorter {
+.interactive.tabbed-shorter {
     height: 375px;
 }
 
-.tabbed-standard {
+.interactive.tabbed-standard {
     height: 445px;
 }
 
-.tabbed-taller {
-    height: 745px;
+.interactive.tabbed-taller {
+    height: 655px;
 }
 
 @media #{$mq-small-desktop-and-up} {
