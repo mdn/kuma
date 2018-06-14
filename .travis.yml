@@ -31,7 +31,6 @@ env:
           CREATE_DB=kuma
           INSTALL_PIPELINE=1
           INSTALL_ELASTICSEARCH=1
-          PYTHONHASHSEED=0
         - TOXENV=flake8
         - TOXENV=docs
         - TOXENV=locales
@@ -41,15 +40,7 @@ env:
           INSTALL_DOCKER_COMPOSE=1
           UID=0
         - TOXENV=stylelint
-        # TODO: make random hash seed the default when http://bugzil.la/1127798 is fixed
-        - TOXENV=py27
-          CREATE_DB=kuma
-          INSTALL_PIPELINE=1
-          INSTALL_ELASTICSEARCH=1
 
-matrix:
-    allow_failures:
-        - env: TOXENV=py27 CREATE_DB=kuma INSTALL_PIPELINE=1 INSTALL_ELASTICSEARCH=1
 install:
     - nvm install 6
     - nvm use 6

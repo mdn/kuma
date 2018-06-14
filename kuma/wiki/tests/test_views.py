@@ -740,7 +740,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert 'public' not in resp['Cache-Control']
         assert 's-maxage' not in resp['Cache-Control']
         assert 'docs/new' in resp['Location']
-        assert ('?slug=%s' % local_slug) in resp['Location']
+        assert ('slug=%s' % local_slug) in resp['Location']
 
         # Ensure real 404 for visit to non-existent page with params common to
         # kumascript and raw content API.
@@ -2322,26 +2322,26 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
-
             <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
-
             <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """)
+
         expected = """
-            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s1" href="/en-US/docs/%(slug)s$edit?section=s1&amp;edit_links=true" title="Edit section">Edit</a>s1</h1>
+            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s1" href="/en-US/docs/%(slug)s$edit?edit_links=true&amp;section=s1" title="Edit section">Edit</a>s1</h1>
             <p>test</p>
             <p>test</p>
-            <h1 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s2" href="/en-US/docs/%(slug)s$edit?section=s2&amp;edit_links=true" title="Edit section">Edit</a>s2</h1>
+            <h1 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s2" href="/en-US/docs/%(slug)s$edit?edit_links=true&amp;section=s2" title="Edit section">Edit</a>s2</h1>
             <p>test</p>
             <p>test</p>
-            <h1 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s3" href="/en-US/docs/%(slug)s$edit?section=s3&amp;edit_links=true" title="Edit section">Edit</a>s3</h1>
+            <h1 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s3" href="/en-US/docs/%(slug)s$edit?edit_links=true&amp;section=s3" title="Edit section">Edit</a>s3</h1>
             <p>test</p>
             <p>test</p>
         """ % {'slug': rev.document.slug}
+
         response = self.client.get('%s?raw=true&edit_links=true' %
                                    reverse('wiki.document',
                                            args=[rev.document.slug]),

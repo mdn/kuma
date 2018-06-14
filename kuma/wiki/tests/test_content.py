@@ -422,13 +422,13 @@ class InjectSectionEditingLinksTests(TestCase):
             <p>test</p>
         """
         expected = """
-            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/some-slug?raw=true&amp;section=s1" href="/en-US/docs/some-slug$edit?section=s1&amp;edit_links=true" title="Edit section">Edit</a>Head 1</h1>
+            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/some-slug?raw=true&amp;section=s1" href="/en-US/docs/some-slug$edit?edit_links=true&amp;section=s1" title="Edit section">Edit</a>Head 1</h1>
             <p>test</p>
             <p>test</p>
-            <h2 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/some-slug?raw=true&amp;section=s2" href="/en-US/docs/some-slug$edit?section=s2&amp;edit_links=true" title="Edit section">Edit</a>Head 2</h2>
+            <h2 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/some-slug?raw=true&amp;section=s2" href="/en-US/docs/some-slug$edit?edit_links=true&amp;section=s2" title="Edit section">Edit</a>Head 2</h2>
             <p>test</p>
             <p>test</p>
-            <h3 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/some-slug?raw=true&amp;section=s3" href="/en-US/docs/some-slug$edit?section=s3&amp;edit_links=true" title="Edit section">Edit</a>Head 3</h3>
+            <h3 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/some-slug?raw=true&amp;section=s3" href="/en-US/docs/some-slug$edit?edit_links=true&amp;section=s3" title="Edit section">Edit</a>Head 3</h3>
             <p>test</p>
             <p>test</p>
         """
@@ -436,7 +436,7 @@ class InjectSectionEditingLinksTests(TestCase):
                   .parse(doc_src)
                   .injectSectionEditingLinks('some-slug', 'en-US')
                   .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
+        assert normalize_html(expected) == normalize_html(result)
 
 
 class CodeSyntaxFilterTests(TestCase):
@@ -1307,7 +1307,7 @@ def test_extractor_section(root_doc, annotate_links):
 def test_summary_section(markup, text, wrapper):
     content = wrapper.format(markup)
     assert get_seo_description(content, 'en-US') == text
-    assert get_seo_description(content, 'en-US', False) == markup
+    assert normalize_html(get_seo_description(content, 'en-US', False)) == normalize_html(markup)
 
 
 @pytest.mark.parametrize('wrapper', SUMMARY_WRAPPERS.values(),
@@ -1318,7 +1318,7 @@ def test_summary_section(markup, text, wrapper):
 def test_multiple_seo_summaries(markup, expected_markup, text, wrapper):
     content = wrapper.format(markup)
     assert get_seo_description(content, 'en-US') == text
-    assert get_seo_description(content, 'en-US', False) == expected_markup
+    assert normalize_html(get_seo_description(content, 'en-US', False)) == normalize_html(expected_markup)
 
 
 def test_empty_paragraph_content():
