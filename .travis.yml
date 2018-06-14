@@ -66,8 +66,8 @@ matrix:
             INSTALL_PIPELINE=1
             INSTALL_ELASTICSEARCH=1
 install:
-    - nvm install 6
-    - nvm use 6
+    - nvm install 8
+    - nvm use 8
     - scripts/travis-install
     - pip install -U pip
     - pip install -r requirements/travis.txt
