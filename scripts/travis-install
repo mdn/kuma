@@ -30,8 +30,9 @@ fi
 if [ ${INSTALL_PIPELINE:-0} -ne 0 ]
 then
     npm install
-    npm install clean-css@3.4.23
-    npm install uglify-js@2.4.13
+    npm install node-sass@4.9.0
+    npm install clean-css@3.4.28
+    npm install uglify-js@2.8.29
 fi
 
 # Install docker-compose

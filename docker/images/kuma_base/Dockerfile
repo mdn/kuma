@@ -90,10 +90,10 @@ WORKDIR /app
 EXPOSE 8000
 
 RUN npm install --unsafe-perm -g \
-        node-sass@4.3.0 \
-        uglify-js@2.4.13 \
-        clean-css@3.4.23 \
-        stylelint@7.10.1
+        node-sass@4.9.2 \
+        uglify-js@2.8.29 \
+        clean-css@3.4.28 \
+        stylelint@9.2.1
 
 COPY ./requirements /app/requirements
 RUN pip install --no-cache-dir -r requirements/dev.txt
