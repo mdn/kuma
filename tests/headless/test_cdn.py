@@ -362,7 +362,6 @@ LOCALE_SELECTORS = {
      '/profile',
      '/promote',
      '/profiles/sheppy',
-     '/users/signin',
      '/unsubscribe/1',
      '/docs.json?slug=Web/HTML',
      '/docs/Web/HTML',
@@ -436,7 +435,8 @@ def test_locale_selection_cached(base_url, is_behind_cdn, is_local_url, slug,
                          LOCALE_SELECTORS.values(),
                          ids=LOCALE_SELECTORS.keys())
 @pytest.mark.parametrize(
-    'slug', ['/docs/Web/HTML$edit',
+    'slug', ['/users/signin',
+             '/docs/Web/HTML$edit',
              '/docs/Web/HTML$move',
              '/docs/Web/HTML$files',
              '/docs/Web/HTML$purge',
