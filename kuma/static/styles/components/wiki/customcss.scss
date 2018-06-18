@@ -578,5 +578,31 @@ pre span.comment {
     display: inline;
 }
 
+/*
+  Zone-related classes kept after the removal of zones.
+  (See https://bugzilla.mozilla.org/show_bug.cgi?id=1469029)
+ */
+
+/*
+  reference-values:
+
+  This gives an extra indent to a dl, when it's embedded inside another dl,
+  which comes up sometimes in the reference pages. The extra indent indicates
+  that the embedded dl is part of an embedded list, not the main list.
+ */
+dd > dl.reference-values {
+    padding-left: 40px;
+}
+
+/*
+  webextension-api-sidebar:
+
+  This applies a background color to the piece of a sidebar containing the
+  api items relevant to the current page. It helps people orient themselves
+  within the sidebar.
+ */
+li.webextension-api-sidebar {
+    background-color: #f4f7f8;
+}
 
 /*end!*/
