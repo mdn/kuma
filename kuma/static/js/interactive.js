@@ -8,6 +8,24 @@
         'https://interactive-examples.mdn.mozilla.net';
 
     /**
+     * Generate and returns a random string thanks to:
+     * https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
+     */
+    function randomString() {
+        var text = '';
+        var possible =
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+        for (var i = 0; i < 5; i++) {
+            text += possible.charAt(
+                Math.floor(Math.random() * possible.length)
+            );
+        }
+
+        return text;
+    }
+
+    /**
      * Handles postMessages from the interactive editor, passing
      * the data in the relevant format to trackEvent depending on the label.
      * Also ensures that the origin of the message is what we expect.
@@ -26,9 +44,8 @@
             mdn.analytics.trackEvent({
                 category: event.data.category,
                 action: event.data.action,
-                label: event.data.label,
-                value: event.data.value - performance.timing.fetchStart,
-                hitType: 'timing'
+                label: new Date().getTime() + '-' + randomString(),
+                value: event.data.value - performance.timing.fetchStart
             });
         } else {
             mdn.analytics.trackEvent(event.data);
@@ -91,9 +108,8 @@
                     mdn.analytics.trackEvent({
                         category: 'Interactive Examples',
                         action: 'Time to iframe fetch start',
-                        label: 'Performance Events',
-                        value: timeToIframeFetchStart,
-                        hitType: 'timing'
+                        label: new Date().getTime() + '-' + randomString(),
+                        value: timeToIframeFetchStart
                     });
                 }
             }
