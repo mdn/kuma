@@ -9,6 +9,7 @@ from constance import config
 from constance.test import override_config
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from six.moves.urllib.parse import urlparse
 
 from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.core.exceptions import ProgrammingError
@@ -104,7 +105,8 @@ def test_document_redirect_allows_valid_url(db, url):
     html = REDIRECT_CONTENT % {'href': url, 'title': title}
     doc = Document.objects.create(locale='en-US', slug='Redirect',
                                   is_redirect=True, html=html)
-    assert doc.get_redirect_url() == url
+    parsed = urlparse(url)
+    assert doc.get_redirect_url() == parsed.path
 
 
 @pytest.mark.parametrize('url',
