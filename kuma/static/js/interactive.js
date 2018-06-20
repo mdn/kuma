@@ -41,10 +41,18 @@
         }
 
         if (event.data.label === 'Performance Events') {
+            // one of hitType: event
             mdn.analytics.trackEvent({
                 category: event.data.category,
                 action: event.data.action,
                 label: new Date().getTime() + '-' + randomString(),
+                value: event.data.value - performance.timing.fetchStart
+            });
+
+            // one of hitType: timing
+            mdn.analytics.trackTiming({
+                category: event.data.category,
+                timingVar: event.data.action,
                 value: event.data.value - performance.timing.fetchStart
             });
         } else {
@@ -105,10 +113,18 @@
                         new Date(iframeFetchStartSinceUnixEpoch) -
                         new Date(mainFetchStart);
 
+                    // one of hitType: event
                     mdn.analytics.trackEvent({
                         category: 'Interactive Examples',
                         action: 'Time to iframe fetch start',
                         label: new Date().getTime() + '-' + randomString(),
+                        value: timeToIframeFetchStart
+                    });
+
+                    // one of hitType: timing
+                    mdn.analytics.trackTiming({
+                        category: 'Interactive Examples',
+                        timingVar: 'Time to iframe fetch start',
                         value: timeToIframeFetchStart
                     });
                 }
