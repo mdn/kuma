@@ -341,10 +341,12 @@ def test_get_doc_components_from_url_correct_required_locale(root_doc):
 
 
 def test_get_doc_components_from_url_check_host_same_domain(root_doc):
-    """get_doc_components_from_url fails on check_host with full local URL."""
+    """get_doc_components_from_url works with check_host and full local URL."""
     url = 'http://' + settings.DOMAIN + root_doc.get_absolute_url()
-    components = get_doc_components_from_url(url, check_host=True)
-    assert components is False
+    locale, path, slug = get_doc_components_from_url(url, check_host=True)
+    assert locale == root_doc.locale
+    assert path == '/docs/Root'
+    assert slug == root_doc.slug
 
 
 def test_get_doc_components_from_url_check_host_diff_domain(root_doc):
