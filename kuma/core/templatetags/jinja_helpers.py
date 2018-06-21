@@ -18,8 +18,7 @@ from statici18n.templatetags.statici18n import statici18n
 from urlobject import URLObject
 
 from ..urlresolvers import reverse, split_path
-from ..utils import format_date_time, urlparams
-
+from ..utils import format_date_time, order_params, urlparams
 
 htmlparser = HTMLParser.HTMLParser()
 
@@ -134,7 +133,7 @@ def add_utm(url_, campaign, source='developer.mozilla.org', medium='email'):
         'utm_campaign': campaign,
         'utm_source': source,
         'utm_medium': medium})
-    return str(url_obj)
+    return order_params(str(url_obj))
 
 
 @library.global_function

@@ -133,7 +133,7 @@ utm_source=developer.mozilla.org">View Page</a>
 utm_source=developer.mozilla.org">Edit Page</a>
     </td>
     <td>
-      <a href="/en-US/docs/Root$compare?to=%(to_id)s&from=%(from_id)s&\
+      <a href="/en-US/docs/Root$compare?from=%(from_id)s&to=%(to_id)s&\
 utm_campaign=feed&utm_medium=rss&utm_source=developer.mozilla.org">
         Show comparison
       </a>

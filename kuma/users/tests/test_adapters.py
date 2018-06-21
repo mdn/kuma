@@ -168,8 +168,9 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         resp = e_info.value.response
         assert 'Banned by unit test.' in resp.content
         assert not resp.has_header('Vary')
-        never_cache = 'no-cache, no-store, must-revalidate, max-age=0'
-        assert resp['Cache-Control'] == never_cache
+
+        never_cache = ['no-cache', 'no-store', 'must-revalidate', 'max-age=0']
+        assert set(resp['Cache-Control'].split(", ")) == set(never_cache)
 
 
 class KumaAccountAdapterTestCase(UserTestCase):

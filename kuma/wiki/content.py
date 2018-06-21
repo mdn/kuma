@@ -15,11 +15,10 @@ from lxml import etree
 from pyquery import PyQuery as pq
 
 from kuma.core.urlresolvers import reverse
-from kuma.core.utils import to_html
+from kuma.core.utils import order_params, to_html
 
 from .exceptions import DocumentRenderedContentNotAvailable
 from .utils import locale_and_slug_from_path
-
 
 # A few regex patterns for various parsing efforts in this file
 MACRO_RE = re.compile(r'\{\{\s*([^\(\} ]+)', re.MULTILINE)
@@ -204,7 +203,7 @@ def get_seo_description(content, locale=None, strip_markup=True):
         # Try constraining the search for summary to an explicit "Summary"
         # section, if any.
         summary_section = (parse(content).extractSection('Summary')
-                                         .serialize())
+                           .serialize())
         if summary_section:
             content = summary_section
 
@@ -235,12 +234,12 @@ def get_seo_description(content, locale=None, strip_markup=True):
                     # in DIVs ("<div class='warning'>") and pyQuery adds
                     # "<html><div>" wrapping to entire document
                     if (text and len(text) and
-                            'Redirect' not in text and
-                            text.find(u'«') == -1 and
-                            text.find('&laquo') == -1 and
+                        'Redirect' not in text and
+                        text.find(u'«') == -1 and
+                        text.find('&laquo') == -1 and
                             item.parents().length == 2):
-                        seo_summary = text.strip()
-                        break
+                                seo_summary = text.strip()
+                                break
 
     if strip_markup:
         # Post-found cleanup
@@ -460,9 +459,9 @@ class LinkAnnotationFilter(html5lib_Filter):
         for locale, slug_hrefs in needs_existence_check.items():
 
             existing_slugs = (Document.objects
-                                      .filter(locale=locale,
-                                              slug__in=slug_hrefs.keys())
-                                      .values_list('slug', flat=True))
+                              .filter(locale=locale,
+                                      slug__in=slug_hrefs.keys())
+                              .values_list('slug', flat=True))
 
             # Remove the slugs that pass existence check.
             check_collation = False
@@ -529,6 +528,7 @@ class SectionIDFilter(html5lib_Filter):
     """
     Filter which ensures section-related elements have unique IDs
     """
+
     def __init__(self, source):
         html5lib_Filter.__init__(self, source)
         self.id_cnt = 0
@@ -680,6 +680,7 @@ class SectionEditLinkFilter(html5lib_Filter):
     """
     Filter which injects editing links for sections with IDs
     """
+
     def __init__(self, source, slug, locale):
         html5lib_Filter.__init__(self, source)
         self.slug = slug
@@ -692,8 +693,7 @@ class SectionEditLinkFilter(html5lib_Filter):
 
             yield token
 
-            if (token['type'] == 'StartTag' and
-                    token['name'] in SECTION_TAGS):
+            if token['type'] == 'StartTag' and token['name'] in SECTION_TAGS:
                 attrs = dict(token['data'])
                 for (namespace, name), value in attrs.items():
                     if name == 'id' and value:
@@ -703,20 +703,20 @@ class SectionEditLinkFilter(html5lib_Filter):
                                    (None, u'title'): ugettext('Edit section'),
                                    (None, u'class'): 'edit-section',
                                    (None, u'data-section-id'): value,
-                                   (None, u'data-section-src-url'): u'%s?%s' % (
+                                   (None, u'data-section-src-url'): order_params(u'%s?%s' % (
                                        reverse('wiki.document',
                                                args=[self.slug],
                                                locale=self.locale),
                                        urlencode({'section': value.encode('utf-8'),
                                                   'raw': 'true'})
-                                   ),
-                                   (None, u'href'): u'%s?%s' % (
+                                   )),
+                                   (None, u'href'): order_params(u'%s?%s' % (
                                        reverse('wiki.edit',
                                                args=[self.slug],
                                                locale=self.locale),
-                                       urlencode({'section': value.encode('utf-8'),
-                                                  'edit_links': 'true'})
-                                   )
+                                       (urlencode({'section': value.encode('utf-8'),
+                                                   'edit_links': 'true'})
+                                        )))
                                }},
                               {'type': 'Characters',
                                'data': ugettext(u'Edit')},
@@ -729,6 +729,7 @@ class SectionTOCFilter(html5lib_Filter):
     """
     Filter which builds a TOC tree of sections with headers
     """
+
     def __init__(self, source):
         html5lib_Filter.__init__(self, source)
         self.level = 2
@@ -743,8 +744,7 @@ class SectionTOCFilter(html5lib_Filter):
         self.skip_header = False
 
         for token in input:
-            if (token['type'] == 'StartTag' and
-                    token['name'] in HEAD_TAGS_TOC):
+            if token['type'] == 'StartTag' and token['name'] in HEAD_TAGS_TOC:
                 level_match = LEVEL_RE.match(token['name'])
                 level = int(level_match.group(1))
                 if level > self.max_level:
@@ -772,7 +772,7 @@ class SectionTOCFilter(html5lib_Filter):
                     diff = self.level - level
                     for i in range(diff):
                         out.extend([{'type': 'EndTag',
-                                    'name': 'ol'},
+                                     'name': 'ol'},
                                     {'type': 'EndTag',
                                      'name': 'li'}])
                         self.open_level -= 1
@@ -795,14 +795,14 @@ class SectionTOCFilter(html5lib_Filter):
                   not self.skip_header):
                 yield token
             elif (token['type'] in ("Characters", "SpaceCharacters") and
-                    self.in_header):
+                  self.in_header):
                 yield token
             elif (token['type'] == 'EndTag' and
                   token['name'] in TAGS_IN_TOC and
                   self.in_header):
                 yield token
             elif (token['type'] == 'EndTag' and
-                    token['name'] in HEAD_TAGS_TOC):
+                  token['name'] in HEAD_TAGS_TOC):
                 level_match = LEVEL_RE.match(token['name'])
                 level = int(level_match.group(1))
                 if level > self.max_level:
@@ -888,7 +888,7 @@ class SectionFilter(html5lib_Filter):
                     # If we encounter a section element that matches the ID,
                     # then we'll want to scoop up all its children as an
                     # explicit section.
-                    if (self.parent_level is None and self._isSection(token)):
+                    if self.parent_level is None and self._isSection(token):
                         self.parent_level = self.open_level
                         # Defer the start of the section, so the section parent
                         # itself isn't included.
@@ -896,7 +896,7 @@ class SectionFilter(html5lib_Filter):
 
                     # If we encounter a heading element that matches the ID, we
                     # start an implicit section.
-                    elif (self.heading is None and self._isHeading(token)):
+                    elif self.heading is None and self._isHeading(token):
                         self.heading = token
                         self.heading_rank = self._getHeadingRank(token)
                         self.parent_level = self.open_level - 1
@@ -904,33 +904,29 @@ class SectionFilter(html5lib_Filter):
 
                 # If started an implicit section, these rules apply to
                 # siblings...
-                elif (self.heading is not None and
-                        self.open_level - 1 == self.parent_level):
+                elif self.heading is not None and self.open_level - 1 == self.parent_level:
 
                     # The implicit section should stop if we hit another
                     # sibling heading whose rank is equal or higher, since that
                     # starts a new implicit section
-                    if (self._isHeading(token) and
-                            self._getHeadingRank(token) <= self.heading_rank):
+                    if self._isHeading(token) and self._getHeadingRank(token) <= self.heading_rank:
                         self.in_section = False
 
                 # If this is the first heading of the section and we want to
                 # omit it, note that we've found it
                 if (self.in_section and
-                        self.ignore_heading and
-                        not self.already_ignored_header and
-                        not self.heading_to_ignore and
+                    self.ignore_heading and
+                    not self.already_ignored_header and
+                    not self.heading_to_ignore and
                         self._isHeading(token)):
-
-                    self.heading_to_ignore = token
+                            self.heading_to_ignore = token
 
             elif token['type'] == 'EndTag':
                 self.open_level -= 1
 
                 # If the parent of the section has ended, end the section.
                 # This applies to both implicit and explicit sections.
-                if (self.parent_level is not None and
-                        self.open_level < self.parent_level):
+                if self.parent_level is not None and self.open_level < self.parent_level:
                     self.in_section = False
 
             # If there's no replacement source, then this is a section
@@ -1040,6 +1036,7 @@ class CodeSyntaxFilter(html5lib_Filter):
     """
     Filter which ensures section-related elements have unique IDs
     """
+
     def __iter__(self):
         for token in html5lib_Filter.__iter__(self):
             if token['type'] == 'StartTag' and token['name'] == 'pre':
@@ -1061,6 +1058,7 @@ class EditorSafetyFilter(html5lib_Filter):
     Minimal filter meant to strip out harmful attributes and elements before
     rendering HTML for use in CKEditor
     """
+
     def __iter__(self):
         for token in html5lib_Filter.__iter__(self):
             if token['type'] == 'StartTag':
@@ -1080,6 +1078,7 @@ class IframeHostFilter(html5lib_Filter):
     it doesn't contain a URL whose host matches a given list of allowed
     hosts. Also strips any markup found within <iframe></iframe>.
     """
+
     def __init__(self, source, hosts):
         html5lib_Filter.__init__(self, source)
         self.hosts = hosts

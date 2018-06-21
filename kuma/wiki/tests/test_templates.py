@@ -703,7 +703,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         # cause notification emails to error
         # and stop being sent.
         time.sleep(1)
-        eq_(2, len(mail.outbox))
+        assert 2 == len(mail.outbox)
         first_edit_email = mail.outbox[0]
         expected_to = [config.EMAIL_LIST_SPAM_WATCH]
         expected_subject = (
@@ -712,20 +712,21 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
              'user': new_rev.creator.username,
              'title': self.d.title}
         )
-        eq_(expected_subject, first_edit_email.subject)
-        eq_(expected_to, first_edit_email.to)
+        assert expected_subject == first_edit_email.subject
+        assert expected_to == first_edit_email.to
 
         edited_email = mail.outbox[1]
         expected_to = [u'sam@example.com']
         expected_subject = (u'[MDN][en-US] Page "%s" changed by %s'
                             % (self.d.title, new_rev.creator))
-        eq_(expected_subject, edited_email.subject)
-        eq_(expected_to, edited_email.to)
-        ok_('%s changed %s.' % (unicode(self.username), unicode(self.d.title))
-            in edited_email.body)
-        ok_(u'https://testserver/en-US/docs/%s$history?utm_campaign=' %
-            self.d.slug
-            in edited_email.body)
+
+        assert expected_subject == edited_email.subject
+        assert expected_to == edited_email.to
+
+        assert '%s changed %s.' % (unicode(self.username), unicode(self.d.title)) in edited_email.body
+
+        assert u'https://testserver/en-US/docs/%s$history' % self.d.slug in edited_email.body
+        assert 'utm_campaign=' in edited_email.body
 
     @mock.patch.object(EditDocumentEvent, 'fire')
     @mock.patch.object(Site.objects, 'get_current')

@@ -8,6 +8,8 @@ import mock
 
 from django.core.urlresolvers import reverse
 
+from kuma.core.utils import order_params
+
 from ..events import (EditDocumentEvent, first_edit_email,
                       notification_context, spam_attempt_email)
 from ..models import DocumentSpamAttempt
@@ -25,13 +27,17 @@ def test_notification_context_for_create(create_revision):
         'creator': create_revision.creator,
         'diff': 'Diff is unavailable.',
         'document_title': 'Root Document',
-        'edit_url': url + '$edit' + utm_campaign,
-        'history_url': url + '$history' + utm_campaign,
-        'locale': 'en-US',
-        'user_url': user_url + utm_campaign,
-        'view_url': url + utm_campaign
+        'locale': 'en-US'
     }
-    assert context == expected
+
+    expected_urls = {
+        'edit_url': order_params(url + '$edit' + utm_campaign),
+        'history_url': order_params(url + '$history' + utm_campaign),
+        'user_url': order_params(user_url + utm_campaign),
+        'view_url': order_params(url + utm_campaign)
+    }
+
+    assert_expectations_url(context, expected, expected_urls)
 
 
 def test_notification_context_for_edit(create_revision, edit_revision):
@@ -60,18 +66,23 @@ def test_notification_context_for_edit(create_revision, edit_revision):
      </p>
    </body>
  </html>""" % (create_revision.id, edit_revision.id)
+
     expected = {
-        'compare_url': compare_url,
         'creator': edit_revision.creator,
         'diff': diff,
         'document_title': 'Root Document',
-        'edit_url': url + '$edit' + utm_campaign,
-        'history_url': url + '$history' + utm_campaign,
-        'locale': 'en-US',
-        'user_url': user_url + utm_campaign,
+        'locale': 'en-US'
+    }
+
+    expected_urls = {
+        'compare_url': order_params(compare_url),
+        'edit_url': order_params(url + '$edit' + utm_campaign),
+        'history_url': order_params(url + '$history' + utm_campaign),
+        'user_url': order_params(user_url + utm_campaign),
         'view_url': url + utm_campaign
     }
-    assert context == expected
+
+    assert_expectations_url(context, expected, expected_urls)
 
 
 def test_notification_context_for_translation(trans_revision, create_revision):
@@ -101,17 +112,21 @@ def test_notification_context_for_translation(trans_revision, create_revision):
    </body>
  </html>""" % (create_revision.id, trans_revision.id)
     expected = {
-        'compare_url': compare_url,
         'creator': trans_revision.creator,
         'diff': diff,
         'document_title': 'Racine du Document',
-        'edit_url': url + '$edit' + utm_campaign,
-        'history_url': url + '$history' + utm_campaign,
-        'locale': 'fr',
-        'user_url': user_url + utm_campaign,
-        'view_url': url + utm_campaign
+        'locale': 'fr'
     }
-    assert context == expected
+
+    expected_urls = {
+        'compare_url': order_params(compare_url),
+        'edit_url': order_params(url + '$edit' + utm_campaign),
+        'history_url': order_params(url + '$history' + utm_campaign),
+        'user_url': order_params(user_url + utm_campaign),
+        'view_url': order_params(url + utm_campaign)
+    }
+
+    assert_expectations_url(context, expected, expected_urls)
 
 
 @mock.patch('tidings.events.EventUnion.fire')
@@ -259,3 +274,10 @@ def test_spam_attempt_email_partial_model(wiki_user):
     assert mail.extra_headers == {
         'X-Kuma-Editor-Username': 'wiki_user',
     }
+
+
+def assert_expectations_url(context, expected, expected_urls):
+    for key in expected.keys():
+        assert context[key] == expected[key]
+    for key in expected_urls.keys():
+        assert order_params(context[key]) == expected_urls[key]

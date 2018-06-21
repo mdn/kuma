@@ -23,6 +23,7 @@ from django.utils.http import urlencode
 from django.utils.translation import ugettext_lazy as _
 from polib import pofile
 from pytz import timezone
+from six.moves.urllib.parse import parse_qsl, urlsplit, urlunsplit
 from taggit.utils import split_strip
 
 from .cache import memcache
@@ -492,3 +493,13 @@ def add_shared_cache_control(response, **kwargs):
     cc_kwargs.update(kwargs)
 
     patch_cache_control(response, **cc_kwargs)
+
+
+def order_params(original_url):
+    """Standardize order of query parameters."""
+    bits = urlsplit(original_url)
+    qs = parse_qsl(bits.query, keep_blank_values=True)
+    qs.sort()
+    new_qs = urlencode(qs)
+    new_url = urlunsplit((bits.scheme, bits.netloc, bits.path, new_qs, bits.fragment))
+    return new_url
