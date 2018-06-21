@@ -11,7 +11,7 @@ from django.core.exceptions import ValidationError
 
 from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.core.exceptions import ProgrammingError
-from kuma.core.tests import eq_, get_user, ok_
+from kuma.core.tests import eq_, get_user
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 
@@ -106,17 +106,17 @@ class DocumentTests(UserTestCase):
         # Check the parent document is in the first index of the list
         eq_(parent.pk, enfant.other_translations[0].pk)
         enfant_translation_pks = [trans.pk for trans in enfant.other_translations]
-        ok_(bambino.pk in enfant_translation_pks)
+        assert bambino.pk in enfant_translation_pks
         eq_(False, enfant.pk in enfant_translation_pks)
 
     def test_topical_parents(self):
         d1, d2 = create_topical_parents_docs()
-        ok_(d2.parents == [d1])
+        assert d2.parents == [d1]
 
         d3 = document(title='Smell accessibility')
         d3.parent_topic = d2
         d3.save()
-        ok_(d3.parents == [d1, d2])
+        assert d3.parents == [d1, d2]
 
     @pytest.mark.redirect
     def test_redirect_url_allows_site_url(self):
@@ -231,7 +231,7 @@ class UserDocumentTests(UserTestCase):
         trans = document(locale='fr', title='le test',
                          parent=orig, save=True)
 
-        ok_(trans.parent_topic)
+        assert trans.parent_topic
         eq_(trans.parent_topic.pk, trans_pt.pk)
 
     def test_default_topic_with_stub_creation(self):
@@ -246,12 +246,12 @@ class UserDocumentTests(UserTestCase):
 
         # There should be a translation topic parent
         trans_pt = trans.parent_topic
-        ok_(trans_pt)
+        assert trans_pt
         # The locale of the topic parent should match the new translation
         eq_(trans.locale, trans_pt.locale)
         # But, the translation's topic parent must *not* be the translation
         # parent's topic parent
-        ok_(trans_pt.pk != orig_pt.pk)
+        assert trans_pt.pk != orig_pt.pk
         # Still, since the topic parent is an autocreated stub, it shares its
         # title with the original.
         eq_(trans_pt.title, orig_pt.title)
@@ -288,21 +288,21 @@ class UserDocumentTests(UserTestCase):
         eq_(parents_5[0].pk, trans_0.pk)
         eq_(parents_5[1].locale, trans_5.locale)
         eq_(parents_5[1].title, docs[1].title)
-        ok_(parents_5[1].current_revision.pk != docs[1].current_revision.pk)
+        assert parents_5[1].current_revision.pk != docs[1].current_revision.pk
         eq_(parents_5[2].pk, trans_2.pk)
         eq_(parents_5[3].locale, trans_5.locale)
         eq_(parents_5[3].title, docs[3].title)
-        ok_(parents_5[3].current_revision.pk != docs[3].current_revision.pk)
+        assert parents_5[3].current_revision.pk != docs[3].current_revision.pk
         eq_(parents_5[4].locale, trans_5.locale)
         eq_(parents_5[4].title, docs[4].title)
-        ok_(parents_5[4].current_revision.pk != docs[4].current_revision.pk)
+        assert parents_5[4].current_revision.pk != docs[4].current_revision.pk
 
         for p in parents_5:
-            ok_(p.current_revision)
+            assert p.current_revision
             if p.pk not in (trans_0.pk, trans_2.pk, trans_5.pk):
-                ok_('NeedsTranslation' in p.current_revision.tags)
-                ok_('TopicStub' in p.current_revision.tags)
-                ok_(p.current_revision.localization_in_progress)
+                assert 'NeedsTranslation' in p.current_revision.tags
+                assert 'TopicStub' in p.current_revision.tags
+                assert p.current_revision.localization_in_progress
 
     def test_repair_breadcrumbs(self):
         english_top = document(locale=settings.WIKI_DEFAULT_LANGUAGE,
@@ -543,9 +543,9 @@ class RevisionTests(UserTestCase):
         rev.save()
 
         reverted = rev.document.revert(rev, rev.creator)
-        ok_('Revert to' in reverted.comment)
-        ok_('Test reverting' == reverted.content)
-        ok_(old_id != reverted.id)
+        assert 'Revert to' in reverted.comment
+        assert 'Test reverting' == reverted.content
+        assert old_id != reverted.id
 
     def test_revert_review_tags(self):
         rev = revision(is_approved=True, save=True,
@@ -562,8 +562,8 @@ class RevisionTests(UserTestCase):
 
         reverted = rev.document.revert(rev, rev.creator)
         reverted_tags = [t.name for t in reverted.review_tags.all()]
-        ok_('technical' in reverted_tags)
-        ok_('editorial' not in reverted_tags)
+        assert 'technical' in reverted_tags
+        assert 'editorial' not in reverted_tags
 
     def test_get_tidied_content_uses_model_field_first(self):
         content = '<h1>  Test get_tidied_content.  </h1>'
@@ -627,10 +627,10 @@ class DeferredRenderingTests(UserTestCase):
     def test_rendering_fields(self):
         """Defaults for model fields related to rendering should work as
         expected"""
-        ok_(not self.d1.rendered_html)
-        ok_(not self.d1.defer_rendering)
-        ok_(not self.d1.is_rendering_scheduled)
-        ok_(not self.d1.is_rendering_in_progress)
+        assert not self.d1.rendered_html
+        assert not self.d1.defer_rendering
+        assert not self.d1.is_rendering_scheduled
+        assert not self.d1.is_rendering_in_progress
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get')
@@ -641,11 +641,11 @@ class DeferredRenderingTests(UserTestCase):
 
         # First, try getting the rendered version of a document. It should
         # trigger a call to kumascript.
-        ok_(not self.d1.rendered_html)
-        ok_(not self.d1.render_started_at)
-        ok_(not self.d1.last_rendered_at)
+        assert not self.d1.rendered_html
+        assert not self.d1.render_started_at
+        assert not self.d1.last_rendered_at
         result_rendered, _ = self.d1.get_rendered(None, 'http://testserver/')
-        ok_(mock_kumascript_get.called)
+        assert mock_kumascript_get.called
         eq_(self.rendered_content, result_rendered)
         eq_(self.rendered_content, self.d1.rendered_html)
 
@@ -654,11 +654,11 @@ class DeferredRenderingTests(UserTestCase):
         # should be in the DB.
         d1_fresh = Document.objects.get(pk=self.d1.pk)
         eq_(self.rendered_content, d1_fresh.rendered_html)
-        ok_(d1_fresh.render_started_at)
-        ok_(d1_fresh.last_rendered_at)
+        assert d1_fresh.render_started_at
+        assert d1_fresh.last_rendered_at
         mock_kumascript_get.called = False
         result_rendered, _ = d1_fresh.get_rendered(None, 'http://testserver/')
-        ok_(not mock_kumascript_get.called)
+        assert not mock_kumascript_get.called
         eq_(self.rendered_content, result_rendered)
 
     @mock.patch('kuma.wiki.models.render_done')
@@ -669,11 +669,11 @@ class DeferredRenderingTests(UserTestCase):
         bug 875349
         """
         self.d1.save()
-        ok_(not mock_render_done.send.called)
+        assert not mock_render_done.send.called
         mock_render_done.reset()
 
         self.d1.render()
-        ok_(mock_render_done.send.called)
+        assert mock_render_done.send.called
 
     @mock.patch('kuma.wiki.kumascript.get')
     @override_config(KUMASCRIPT_TIMEOUT=1.0)
@@ -682,14 +682,14 @@ class DeferredRenderingTests(UserTestCase):
         get_summary() should attempt to use rendered
         """
         mock_kumascript_get.return_value = ('<p>summary!</p>', None)
-        ok_(not self.d1.rendered_html)
+        assert not self.d1.rendered_html
         result_summary = self.d1.get_summary()
-        ok_(not mock_kumascript_get.called)
-        ok_(not self.d1.rendered_html)
+        assert not mock_kumascript_get.called
+        assert not self.d1.rendered_html
 
         self.d1.render()
-        ok_(self.d1.rendered_html)
-        ok_(mock_kumascript_get.called)
+        assert self.d1.rendered_html
+        assert mock_kumascript_get.called
         result_summary = self.d1.get_summary()
         eq_("summary!", result_summary)
 
@@ -730,11 +730,11 @@ class DeferredRenderingTests(UserTestCase):
 
         config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT = 2.0
         self.d1.render('', 'http://testserver/')
-        ok_(not self.d1.defer_rendering)
+        assert not self.d1.defer_rendering
 
         config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT = 0.5
         self.d1.render('', 'http://testserver/')
-        ok_(self.d1.defer_rendering)
+        assert self.d1.defer_rendering
         config.KUMASCRIPT_TIMEOUT = 0.0
 
     @mock.patch('kuma.wiki.kumascript.get')
@@ -745,13 +745,13 @@ class DeferredRenderingTests(UserTestCase):
         # Scheduling for a non-deferred render should happen on the spot.
         self.d1.defer_rendering = False
         self.d1.save()
-        ok_(not self.d1.render_scheduled_at)
-        ok_(not self.d1.last_rendered_at)
+        assert not self.d1.render_scheduled_at
+        assert not self.d1.last_rendered_at
         self.d1.schedule_rendering(None, 'http://testserver/')
-        ok_(self.d1.render_scheduled_at)
-        ok_(self.d1.last_rendered_at)
-        ok_(not mock_render_document_delay.called)
-        ok_(not self.d1.is_rendering_scheduled)
+        assert self.d1.render_scheduled_at
+        assert self.d1.last_rendered_at
+        assert not mock_render_document_delay.called
+        assert not self.d1.is_rendering_scheduled
 
         # Reset the significant fields and try a deferred render.
         self.d1.last_rendered_at = None
@@ -762,15 +762,15 @@ class DeferredRenderingTests(UserTestCase):
 
         # Scheduling for a deferred render should result in a queued task.
         self.d1.schedule_rendering(None, 'http://testserver/')
-        ok_(self.d1.render_scheduled_at)
-        ok_(not self.d1.last_rendered_at)
-        ok_(mock_render_document_delay.called)
+        assert self.d1.render_scheduled_at
+        assert not self.d1.last_rendered_at
+        assert mock_render_document_delay.called
 
         # And, since our mock delay() doesn't actually queue a task, this
         # document should appear to be scheduled for a pending render not yet
         # in progress.
-        ok_(self.d1.is_rendering_scheduled)
-        ok_(not self.d1.is_rendering_in_progress)
+        assert self.d1.is_rendering_scheduled
+        assert not self.d1.is_rendering_in_progress
 
     @mock.patch('kuma.wiki.kumascript.get')
     @mock.patch.object(tasks.render_document, 'delay')
@@ -807,7 +807,7 @@ class DeferredRenderingTests(UserTestCase):
         mock_kumascript_get.return_value = (self.rendered_content, errors)
 
         r_rendered, r_errors = self.d1.get_rendered(None, 'http://testserver/')
-        ok_(errors, r_errors)
+        assert errors, r_errors
 
 
 class RenderExpiresTests(UserTestCase):
@@ -850,8 +850,8 @@ class RenderExpiresTests(UserTestCase):
 
         # HACK: Exact time comparisons suck, because execution time.
         later = now + timedelta(seconds=max_age)
-        ok_(d1.render_expires > later - timedelta(seconds=1))
-        ok_(d1.render_expires < later + timedelta(seconds=1))
+        assert d1.render_expires > later - timedelta(seconds=1)
+        assert d1.render_expires < later + timedelta(seconds=1)
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get')
@@ -864,7 +864,7 @@ class RenderExpiresTests(UserTestCase):
         d1.save()
         d1.render()
 
-        ok_(not d1.render_expires)
+        assert not d1.render_expires
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get')
@@ -884,8 +884,8 @@ class RenderExpiresTests(UserTestCase):
         tasks.render_stale_documents()
 
         d1_fresh = Document.objects.get(pk=d1.pk)
-        ok_(not mock_render_document_delay.called)
-        ok_(d1_fresh.last_rendered_at > earlier)
+        assert not mock_render_document_delay.called
+        assert d1_fresh.last_rendered_at > earlier
 
 
 class PageMoveTests(UserTestCase):
@@ -959,7 +959,7 @@ class PageMoveTests(UserTestCase):
         ggc1.parent_topic = gc3
         ggc1.save()
 
-        ok_([c1, gc1, c2, gc2, gc3, ggc1] == top.get_descendants())
+        assert [c1, gc1, c2, gc2, gc3, ggc1] == top.get_descendants()
 
     @pytest.mark.move
     def test_circular_dependency(self):
@@ -972,7 +972,7 @@ class PageMoveTests(UserTestCase):
         child.parent_topic = parent
         child.save()
 
-        ok_(child.is_child_of(parent))
+        assert child.is_child_of(parent)
 
         # And at two levels removed.
         grandparent = document(title='Grandparent of '
@@ -980,7 +980,7 @@ class PageMoveTests(UserTestCase):
         parent.parent_topic = grandparent
         child.save()
 
-        ok_(child.is_child_of(grandparent))
+        assert child.is_child_of(grandparent)
 
     @pytest.mark.move
     def test_move_tree(self):
@@ -1046,36 +1046,30 @@ class PageMoveTests(UserTestCase):
         moved_top = Document.objects.get(pk=top_doc.id)
         eq_('new-prefix/first-level/parent',
             moved_top.current_revision.slug)
-        ok_(old_top_id != moved_top.current_revision.id)
-        ok_(moved_top.current_revision.slug in
-            Document.objects.get(slug='first-level/parent').get_redirect_url())
+        assert old_top_id != moved_top.current_revision.id
+        assert (moved_top.current_revision.slug in
+                Document.objects.get(slug='first-level/parent').get_redirect_url())
 
         moved_child1 = Document.objects.get(pk=child1_doc.id)
         eq_('new-prefix/first-level/parent/child1',
             moved_child1.current_revision.slug)
-        ok_(old_child1_id != moved_child1.current_revision.id)
-        ok_(moved_child1.current_revision.slug in
-            Document.objects.get(
-                slug='first-level/second-level/child1'
-            ).get_redirect_url())
+        assert old_child1_id != moved_child1.current_revision.id
+        assert moved_child1.current_revision.slug in Document.objects.get(
+            slug='first-level/second-level/child1').get_redirect_url()
 
         moved_child2 = Document.objects.get(pk=child2_doc.id)
         eq_('new-prefix/first-level/parent/child2',
             moved_child2.current_revision.slug)
-        ok_(old_child2_id != moved_child2.current_revision.id)
-        ok_(moved_child2.current_revision.slug in
-            Document.objects.get(
-                slug='first-level/second-level/child2'
-            ).get_redirect_url())
+        assert old_child2_id != moved_child2.current_revision.id
+        assert moved_child2.current_revision.slug in Document.objects.get(
+            slug='first-level/second-level/child2').get_redirect_url()
 
         moved_grandchild = Document.objects.get(pk=grandchild_doc.id)
         eq_('new-prefix/first-level/parent/child2/grandchild',
             moved_grandchild.current_revision.slug)
-        ok_(old_grandchild_id != moved_grandchild.current_revision.id)
-        ok_(moved_grandchild.current_revision.slug in
-            Document.objects.get(
-                slug='first-level/second-level/third-level/grandchild'
-            ).get_redirect_url())
+        assert old_grandchild_id != moved_grandchild.current_revision.id
+        assert moved_grandchild.current_revision.slug in Document.objects.get(
+            slug='first-level/second-level/third-level/grandchild').get_redirect_url()
 
     @pytest.mark.move
     def test_conflicts(self):
@@ -1218,10 +1212,10 @@ class PageMoveTests(UserTestCase):
         # note we have to refetch these to see any DB changes.
         grandma_moved = Document.objects.get(locale=grandma_doc.locale,
                                              slug='grandpa/grandma')
-        ok_(grandma_moved.parent_topic == grandpa_doc)
+        assert grandma_moved.parent_topic == grandpa_doc
         mom_moved = Document.objects.get(locale=mom_doc.locale,
                                          slug='grandpa/grandma/mom')
-        ok_(mom_moved.parent_topic == grandma_moved)
+        assert mom_moved.parent_topic == grandma_moved
 
     @pytest.mark.move
     def test_move_tree_no_new_parent(self):
@@ -1270,13 +1264,13 @@ class PageMoveTests(UserTestCase):
         page_child_doc = Document.objects.get(slug=page_child_slug)
         page_child_moved_doc = Document.objects.get(slug=page_child_moved_slug)
 
-        ok_('REDIRECT' in page_to_move_doc.html)
-        ok_(page_moved_slug in page_to_move_doc.html)
-        ok_(new_title in page_to_move_doc.html)
-        ok_(page_moved_doc)
-        ok_('REDIRECT' in page_child_doc.html)
-        ok_(page_moved_slug in page_child_doc.html)
-        ok_(page_child_moved_doc)
+        assert 'REDIRECT' in page_to_move_doc.html
+        assert page_moved_slug in page_to_move_doc.html
+        assert new_title in page_to_move_doc.html
+        assert page_moved_doc
+        assert 'REDIRECT' in page_child_doc.html
+        assert page_moved_slug in page_child_doc.html
+        assert page_child_moved_doc
         # TODO: Fix this assertion?
         # eq_('admin', page_moved_doc.current_revision.creator.username)
 
@@ -1318,13 +1312,13 @@ class PageMoveTests(UserTestCase):
 
         redirected_child = Document.objects.get(slug=child_slug)
         Document.objects.get(slug=moved_child_slug)
-        ok_('REDIRECT' in redirected_child.html)
-        ok_(moved_child_slug in redirected_child.html)
+        assert 'REDIRECT' in redirected_child.html
+        assert moved_child_slug in redirected_child.html
 
         redirected_grandchild = Document.objects.get(slug=grandchild_doc.slug)
         Document.objects.get(slug=moved_grandchild_slug)
-        ok_('REDIRECT' in redirected_grandchild.html)
-        ok_(moved_grandchild_slug in redirected_grandchild.html)
+        assert 'REDIRECT' in redirected_grandchild.html
+        assert moved_grandchild_slug in redirected_grandchild.html
 
     @pytest.mark.move
     def test_move_special(self):
@@ -1361,11 +1355,11 @@ class PageMoveTests(UserTestCase):
         # Appropriate redirects were left behind.
         root_redirect = Document.objects.get(locale=special_root.locale,
                                              slug=root_slug)
-        ok_(root_redirect.is_redirect)
+        assert root_redirect.is_redirect
         root_redirect_id = root_redirect.id
         child_redirect = Document.objects.get(locale=special_child.locale,
                                               slug=child_slug)
-        ok_(child_redirect.is_redirect)
+        assert child_redirect.is_redirect
         child_redirect_id = child_redirect.id
 
         # Moved documents still have the same IDs.
@@ -1382,18 +1376,18 @@ class PageMoveTests(UserTestCase):
         # Once again we left redirects behind.
         root_second_redirect = Document.objects.get(locale=special_root.locale,
                                                     slug=new_root_slug)
-        ok_(root_second_redirect.is_redirect)
+        assert root_second_redirect.is_redirect
         child_second_redirect = Document.objects.get(locale=special_child.locale,
                                                      slug='%s/child' % new_root_slug)
-        ok_(child_second_redirect.is_redirect)
+        assert child_second_redirect.is_redirect
 
         # The documents at the original URLs aren't redirects anymore.
         rerooted_root = Document.objects.get(locale=special_root.locale,
                                              slug=root_slug)
-        ok_(not rerooted_root.is_redirect)
+        assert not rerooted_root.is_redirect
         rerooted_child = Document.objects.get(locale=special_child.locale,
                                               slug=child_slug)
-        ok_(not rerooted_child.is_redirect)
+        assert not rerooted_child.is_redirect
 
         # The redirects created in the first move no longer exist in the DB.
         self.assertRaises(Document.DoesNotExist,
@@ -1453,7 +1447,7 @@ class PageMoveTests(UserTestCase):
                 'raise Exception("Requested move would overwrite a non-redirect page.")',
             ]
             for s in err_strings:
-                ok_(s in e.args[0])
+                assert s in e.args[0]
 
 
 class RevisionIPTests(UserTestCase):
@@ -1516,18 +1510,18 @@ class AttachmentTests(UserTestCase):
         doc = document(html=html, save=True)
         doc.populate_attachments()
 
-        ok_(doc.attached_files.all().exists())
+        assert doc.attached_files.all().exists()
         eq_(doc.attached_files.all().count(), 1)
         eq_(doc.attached_files.first().file, attachment)
 
     def test_popuplate_kuma_file_url(self):
         attachment, attachment_revision = self.new_attachment()
         doc = document(html=attachment.get_file_url(), save=True)
-        ok_(not doc.attached_files.all().exists())
+        assert not doc.attached_files.all().exists()
 
         populated = doc.populate_attachments()
         eq_(len(populated), 1)
-        ok_(doc.attached_files.all().exists())
+        assert doc.attached_files.all().exists()
         eq_(doc.attached_files.all().count(), 1)
         eq_(doc.attached_files.first().file, attachment)
 
@@ -1540,7 +1534,7 @@ class AttachmentTests(UserTestCase):
         populated = doc.populate_attachments()
         attachments = doc.attached_files.all()
         eq_(len(populated), 2)
-        ok_(attachments.exists())
+        assert attachments.exists()
         eq_(attachments.count(), 2)
         eq_(attachments[0].file, attachment)
         eq_(attachments[1].file, attachment2)

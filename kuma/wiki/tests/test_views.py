@@ -17,7 +17,7 @@ from waffle.testutils import override_flag, override_switch
 
 from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.tests import (assert_no_cache_header,
-                             assert_shared_cache_header, eq_, get_user, ok_)
+                             assert_shared_cache_header, eq_, get_user)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html
 from kuma.spam.constants import (
@@ -293,8 +293,8 @@ class ViewTests(UserTestCase, WikiTestCase):
         resp = self.client.get(rev.get_absolute_url())
         page = pq(resp.content)
         ct = to_html(page.find('#wikiArticle'))
-        ok_('<svg>' not in ct)
-        ok_('<a href="#">Hahaha</a>' in ct)
+        assert '<svg>' not in ct
+        assert '<a href="#">Hahaha</a>' in ct
 
     def test_article_revision_content(self):
         doc = document(title='Testing Article', slug='Article', save=True)
@@ -303,8 +303,8 @@ class ViewTests(UserTestCase, WikiTestCase):
         resp = self.client.get(r.get_absolute_url())
         page = pq(resp.content)
 
-        ok_('Revision Source' in resp.content)
-        ok_('Revision Content' in resp.content)
+        assert 'Revision Source' in resp.content
+        assert 'Revision Content' in resp.content
         eq_(page.find('#wikiArticle').parent().attr('open'), 'open')
         eq_(page.find('#doc-source').parent().attr('open'), None)
 
@@ -417,7 +417,7 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         """When kumascript timeout is non-zero, the service should be used"""
         mock_kumascript_get.return_value = (self.doc.html, None)
         self.client.get(self.url, follow=False)
-        ok_(mock_kumascript_get.called, "kumascript should have been used")
+        assert mock_kumascript_get.called, "kumascript should have been used"
 
     @override_config(KUMASCRIPT_TIMEOUT=0.0)
     @mock.patch('kuma.wiki.kumascript.get')
@@ -425,8 +425,7 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         """When disabled, the kumascript service should not be used"""
         mock_kumascript_get.return_value = (self.doc.html, None)
         self.client.get(self.url, follow=False)
-        ok_(not mock_kumascript_get.called,
-            "kumascript not should have been used")
+        assert not mock_kumascript_get.called, "kumascript should not have been used"
 
     @override_config(KUMASCRIPT_TIMEOUT=0.0)
     @mock.patch('kuma.wiki.kumascript.get')
@@ -435,31 +434,28 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         in rendering"""
         mock_kumascript_get.return_value = (self.doc.html, None)
         self.doc.schedule_rendering('max-age=0')
-        ok_(not mock_kumascript_get.called,
-            "kumascript not should have been used")
+        assert not mock_kumascript_get.called, "kumascript should not have been used"
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get')
     def test_nomacros(self, mock_kumascript_get):
         mock_kumascript_get.return_value = (self.doc.html, None)
         self.client.get('%s?nomacros' % self.url, follow=False)
-        ok_(not mock_kumascript_get.called,
-            "kumascript should not have been used")
+        assert not mock_kumascript_get.called, "kumascript should not have been used"
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get')
     def test_raw(self, mock_kumascript_get):
         mock_kumascript_get.return_value = (self.doc.html, None)
         self.client.get('%s?raw' % self.url, follow=False)
-        ok_(not mock_kumascript_get.called,
-            "kumascript should not have been used")
+        assert not mock_kumascript_get.called, "kumascript should not have been used"
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get')
     def test_raw_macros(self, mock_kumascript_get):
         mock_kumascript_get.return_value = (self.doc.html, None)
         self.client.get('%s?raw&macros' % self.url, follow=False)
-        ok_(mock_kumascript_get.called, "kumascript should have been used")
+        assert mock_kumascript_get.called, "kumascript should have been used"
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=1234)
     @requests_mock.mock()
@@ -563,7 +559,7 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
 
         # Third request to verify content was cached and served on a 304
         response = self.client.get(self.url)
-        ok_(expected_content in response.content)
+        assert expected_content in response.content
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=600)
     @requests_mock.mock()
@@ -618,7 +614,7 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
             response = self.client.get(reverse('wiki.document', args=[slug]))
             page = pq(response.content)
 
-            ok_(page.find('head > title').text() in aught_titles)
+            assert page.find('head > title').text() in aught_titles
 
         # Test nested document titles
         _make_doc('One', ['One | MDN'], 'one')
@@ -719,7 +715,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         for url in urls:
             page = pq(self.client.get(url).content)
             editor_src = page.find('#id_content').text()
-            ok_('onload' not in editor_src)
+            assert 'onload' not in editor_src
 
     def test_create_on_404(self):
         self.client.login(username='admin', password='testpass')
@@ -1176,9 +1172,9 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         new_en_json = json.loads(Document.objects.get(pk=en_doc.pk).json)
 
-        ok_('translations' in new_en_json)
-        ok_(translation_data['title'] in [t['title'] for t in
-                                          new_en_json['translations']])
+        assert 'translations' in new_en_json
+        assert (translation_data['title'] in
+                [t['title'] for t in new_en_json['translations']])
         es_translation_json = [t for t in new_en_json['translations'] if
                                t['title'] == translation_data['title']][0]
         eq_(es_translation_json['last_edit'],
@@ -1309,8 +1305,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
         content = pq(response.content)
-        ok_(content('li.metadata-choose-parent'))
-        ok_(str(parent.id) in to_html(content))
+        assert content('li.metadata-choose-parent')
+        assert str(parent.id) in to_html(content)
 
     @pytest.mark.tags
     def test_tags_while_document_update(self):
@@ -1650,8 +1646,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             location_of_error = HTMLParser.HTMLParser().unescape(
                 resp.content[start_of_error: end_of_error]
             )
-        ok_(midair_collission_error in location_of_error,
-            "Midair collision message should appear")
+        assert midair_collission_error in location_of_error
 
     @pytest.mark.midair
     def test_edit_midair_collisions_ajax(self):
@@ -1720,8 +1715,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         )
 
         spam_message = render_to_string('wiki/includes/spam_error.html')
-        ok_(spam_message in json.loads(resp.content)['error_message'],
-            "Spam message should appear")
+        assert spam_message in json.loads(resp.content)['error_message']
 
     def test_multiple_edits_ajax(self, translate_locale=None):
         """Tests multiple sequential attempted valid edits that occur as Ajax POSTs."""
@@ -1784,7 +1778,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # For Ajax requests the response is a JsonResponse
         for resp in [resp1, resp2]:
             eq_(json.loads(resp.content)['error'], False)
-            ok_('error_message' not in json.loads(resp.content).keys())
+            assert 'error_message' not in json.loads(resp.content).keys()
 
     def test_multiple_translation_edits_ajax(self):
         """Tests multiple sequential valid transalation edits that occur as Ajax POSTs."""
@@ -1810,7 +1804,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         rev = revision(is_approved=True, save=True)
         doc = rev.document
         data = new_document_data()
-        ok_(Document.objects.get(slug=doc.slug, locale=doc.locale).show_toc)
+        assert Document.objects.get(slug=doc.slug, locale=doc.locale).show_toc
         data['form-type'] = 'rev'
         data['toc_depth'] = 0
         data['slug'] = doc.slug
@@ -2623,8 +2617,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             'wiki.document_revisions',
             kwargs={'document_path': rev.document.slug})
         midair_collission_error = (unicode(MIDAIR_COLLISION) % {'url': history_url}).encode('utf-8')
-        ok_(midair_collission_error in json.loads(resp.content)['error_message'],
-            "Midair collision message should appear")
+        assert midair_collission_error in json.loads(resp.content)['error_message']
 
     def test_raw_include_option(self):
         doc_src = u"""
@@ -2686,7 +2679,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
                          {"form-type": "rev", "slug": rev.document.slug, "content": replace},
                          follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         changed = Document.objects.get(pk=rev.document.id).current_revision
-        ok_(rev.id != changed.id)
+        assert rev.id != changed.id
         eq_(1, changed.toc_depth)
 
     def test_section_edit_review_tags(self):
@@ -2719,7 +2712,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
                          {"form-type": "rev", "slug": rev.document.slug, "content": replace},
                          follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         changed = Document.objects.get(pk=rev.document.id).current_revision
-        ok_(rev.id != changed.id)
+        assert rev.id != changed.id
         eq_(set(tags_to_save),
             set([t.name for t in changed.review_tags.all()]))
 
@@ -2823,8 +2816,8 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         resp = self.client.get(self.url, follow=False)
         p = pq(resp.content)
         txt = p.find('#wikiArticle').text()
-        ok_(self.rendered_content in txt)
-        ok_(self.raw_content not in txt)
+        assert self.rendered_content in txt
+        assert self.raw_content not in txt
 
         eq_(0, p.find('#doc-rendering-in-progress').length)
         eq_(0, p.find('#doc-render-raw-fallback').length)
@@ -2840,8 +2833,8 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
 
         # Even though a rendering looks like it's in progress, ensure the
         # last-known render is displayed.
-        ok_(self.rendered_content in txt)
-        ok_(self.raw_content not in txt)
+        assert self.rendered_content in txt
+        assert self.raw_content not in txt
         eq_(0, p.find('#doc-rendering-in-progress').length)
 
         # Only for logged-in users, ensure the render-in-progress warning is
@@ -2868,8 +2861,8 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         resp = self.client.get(self.url, follow=False)
         p = pq(resp.content)
         txt = p.find('#wikiArticle').text()
-        ok_(self.rendered_content not in txt)
-        ok_(self.raw_content in txt)
+        assert self.rendered_content not in txt
+        assert self.raw_content in txt
         eq_(0, p.find('#doc-render-raw-fallback').length)
 
         # Only for logged-in users, ensure that a warning is displayed about
@@ -2896,7 +2889,7 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         edit_url = reverse('wiki.edit', args=[self.doc.slug])
         resp = self.client.post(edit_url, data)
         eq_(302, resp.status_code)
-        ok_(mock_document_schedule_rendering.called)
+        assert mock_document_schedule_rendering.called
 
         mock_document_schedule_rendering.reset_mock()
 

@@ -33,16 +33,6 @@ def eq_(first, second, msg=None):
     assert first == second, msg
 
 
-def ok_(pred, msg=None):
-    """Rough reimplementation of nose.tools.ok_
-
-    Note: This should be removed as soon as we no longer use it.
-
-    """
-    msg = msg or '%r != True' % pred
-    assert pred, msg
-
-
 def get_user(username='testuser'):
     """Return a django user or raise FixtureMissingError"""
     User = get_user_model()

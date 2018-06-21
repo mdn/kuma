@@ -17,7 +17,7 @@ from django.utils.six.moves.urllib.parse import parse_qs, urlparse
 from pyquery import PyQuery as pq
 
 from kuma.core.tests import (assert_no_cache_header,
-                             assert_shared_cache_header, eq_, ok_)
+                             assert_shared_cache_header, eq_)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 from kuma.users.models import User
@@ -114,12 +114,10 @@ class DocumentTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         eq_(d2.title, doc('main#content div.document-head h1').text())
         # HACK: fr doc has different message if locale/ is updated
-        ok_(
-            ("This article doesn't have approved content yet." in
-                doc('article#wikiArticle').text()) or
-            ("Cet article n'a pas encore de contenu" in
-                doc('article#wikiArticle').text())
-        )
+        assert (("This article doesn't have approved content yet." in
+                 doc('article#wikiArticle').text()) or
+                ("Cet article n'a pas encore de contenu" in
+                 doc('article#wikiArticle').text()))
 
     def test_document_fallback_with_translation(self):
         """The document template falls back to English if translation exists
@@ -230,13 +228,13 @@ class DocumentTests(UserTestCase, WikiTestCase):
         r = revision(save=True, content=doc_content, is_approved=True)
         response = self.client.get(r.document.get_absolute_url())
         eq_(200, response.status_code)
-        ok_('<div id="toc"' in response.content)
+        assert '<div id="toc"' in response.content
         new_r = revision(document=r.document, content=r.content,
                          toc_depth=0, is_approved=True)
         new_r.save()
         response = self.client.get(r.document.get_absolute_url())
         eq_(200, response.status_code)
-        ok_('<div class="page-toc">' not in response.content)
+        assert '<div class="page-toc">' not in response.content
 
     def test_lang_switcher_footer(self):
         """Test the language switcher footer"""
@@ -252,15 +250,15 @@ class DocumentTests(UserTestCase, WikiTestCase):
         options = doc(".languages.go select.wiki-l10n option")
 
         # The requeseted document language name should be at first
-        ok_(trans_pt_br.language in options[0].text)
-        ok_(parent.language not in options[0].text)
+        assert trans_pt_br.language in options[0].text
+        assert parent.language not in options[0].text
         # The parent document language should be at at second
-        ok_(parent.language in options[1].text)
-        ok_(trans_ar.language not in options[1].text)
+        assert parent.language in options[1].text
+        assert trans_ar.language not in options[1].text
         # Then should be ar, bn-BD, fr
-        ok_(trans_ar.language in options[2].text)
-        ok_(trans_bn_bd.language in options[3].text)
-        ok_(trans_fr.language in options[4].text)
+        assert trans_ar.language in options[2].text
+        assert trans_bn_bd.language in options[3].text
+        assert trans_fr.language in options[4].text
 
     def test_lang_switcher_button(self):
         parent = document(locale=settings.WIKI_DEFAULT_LANGUAGE, save=True)
@@ -275,13 +273,13 @@ class DocumentTests(UserTestCase, WikiTestCase):
         options = doc("#languages-menu-submenu ul#translations li a")
 
         # The requeseted document language name should not be at button
-        ok_(trans_pt_br.language not in options[0].text)
+        assert trans_pt_br.language not in options[0].text
         # Parent document language name should be at first
-        ok_(parent.language in options[0].text)
+        assert parent.language in options[0].text
         # Then should be ar, bn-BD, fr
-        ok_(trans_ar.language in options[1].text)
-        ok_(trans_bn_bd.language in options[2].text)
-        ok_(trans_fr.language in options[3].text)
+        assert trans_ar.language in options[1].text
+        assert trans_bn_bd.language in options[2].text
+        assert trans_fr.language in options[3].text
 
     def test_experiment_document_view(self):
         slug = EXPERIMENT_TITLE_PREFIX + 'Test'
@@ -518,7 +516,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
 
         # TODO: push test_strings functionality up into a test helper
         for test_string in test_strings:
-            ok_(test_string in response.content)
+            assert test_string in response.content
 
     def test_new_document_preview_button(self):
         """HTTP GET to new document URL shows preview button."""
@@ -526,7 +524,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         response = self.client.get(reverse('wiki.create'))
         eq_(200, response.status_code)
         doc = pq(response.content)
-        ok_(len(doc('.btn-preview')) > 0)
+        assert len(doc('.btn-preview'))
 
     def test_new_document_form_defaults(self):
         """The new document form should have all all 'Relevant to' options
@@ -583,8 +581,8 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
                                     follow=True)
         doc = pq(response.content)
         ul = doc('article ul.errorlist')
-        ok_(len(ul) > 0)
-        ok_('Please provide a title.' in ul('li').text())
+        assert len(ul)
+        assert 'Please provide a title.' in ul('li').text()
 
     def test_new_document_POST_empty_content(self):
         """Trigger required field validation for content."""

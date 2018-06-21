@@ -11,7 +11,7 @@ from ratelimit.exceptions import Ratelimited
 from soapbox.models import Message
 
 from . import (assert_no_cache_header, assert_shared_cache_header, eq_,
-               KumaTestCase, ok_)
+               KumaTestCase)
 from ..urlresolvers import reverse
 from ..views import handler500
 
@@ -74,8 +74,9 @@ class LoggingTests(KumaTestCase):
         response = self.client.get(self.suspicous_path)
         eq_(response.status_code, 400)
         eq_(1, len(mail.outbox))
-        ok_('admin@example.com' in mail.outbox[0].to)
-        ok_(self.suspicous_path in mail.outbox[0].body)
+
+        assert 'admin@example.com' in mail.outbox[0].to
+        assert self.suspicous_path in mail.outbox[0].body
 
 
 class SoapboxViewsTest(KumaTestCase):

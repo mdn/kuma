@@ -1,7 +1,7 @@
 from django.conf import settings
 from elasticsearch_dsl.connections import connections
 
-from kuma.core.tests import eq_, ok_
+from kuma.core.tests import eq_
 from kuma.wiki.models import Document
 from kuma.wiki.search import WikiDocumentType
 
@@ -25,42 +25,42 @@ class TestIndexes(ElasticTestCase):
 
     def test_add_newindex(self):
         index = Index.objects.create()
-        ok_(not index.populated)
+        assert not index.populated
         index.populate()
         index = self._reload(index)
-        ok_(index.populated)
+        assert index.populated
         index.delete()
 
     def test_promote_index(self):
         index = Index.objects.create()
         index.populate()
         index = self._reload(index)
-        ok_(index.populated)
+        assert index.populated
         index.promote()
-        ok_(index.promoted)
+        assert index.promoted
 
         eq_(Index.objects.get_current().prefixed_name, index.prefixed_name)
 
         index.demote()
-        ok_(not index.promoted)
+        assert not index.promoted
 
     def test_there_can_be_only_one(self):
         """Tests that when one index is promoted, all others are demoted."""
         index1 = Index.objects.get_current()
-        ok_(index1.promoted)
+        assert index1.promoted
 
         index2 = Index.objects.create(name='second')
         index2.promote()
         index1 = self._reload(index1)
-        ok_(index2.promoted)
-        ok_(not index1.promoted)
+        assert index2.promoted
+        assert not index1.promoted
 
     def test_outdated(self):
         # first create and populate an index
         main_index = Index.objects.create(name='first')
         main_index.populate()
         main_index = self._reload(main_index)
-        ok_(main_index.populated)
+        assert main_index.populated
         main_index.promote()
         eq_(Index.objects.get_current().prefixed_name,
             main_index.prefixed_name)

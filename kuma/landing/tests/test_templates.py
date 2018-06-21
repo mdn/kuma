@@ -1,7 +1,7 @@
 from constance.test import override_config
 from pyquery import PyQuery as pq
 
-from kuma.core.tests import eq_, KumaTestCase, ok_
+from kuma.core.tests import eq_, KumaTestCase
 from kuma.core.urlresolvers import reverse
 from kuma.search.models import Filter, FilterGroup
 
@@ -13,12 +13,12 @@ class HomeTests(KumaTestCase):
         with override_config(GOOGLE_ANALYTICS_ACCOUNT='0'):
             response = self.client.get(url, follow=True)
             eq_(200, response.status_code)
-            ok_('ga(\'create' not in response.content)
+            assert 'ga(\'create' not in response.content
 
         with override_config(GOOGLE_ANALYTICS_ACCOUNT='UA-99999999-9'):
             response = self.client.get(url, follow=True)
             eq_(200, response.status_code)
-            ok_('ga(\'create' in response.content)
+            assert 'ga(\'create' in response.content
 
     def test_default_search_filters(self):
         url = reverse('home')

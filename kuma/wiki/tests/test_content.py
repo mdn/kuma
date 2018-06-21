@@ -10,7 +10,7 @@ from jinja2 import escape, Markup
 from pyquery import PyQuery as pq
 
 import kuma.wiki.content
-from kuma.core.tests import eq_, KumaTestCase, ok_
+from kuma.core.tests import eq_, KumaTestCase
 
 from . import document, normalize_html
 from ..constants import ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS, ALLOWED_TAGS
@@ -149,13 +149,13 @@ class InjectSectionIDsTests(TestCase):
             eq_(id, result_doc.find('.%s' % cls).attr('id'))
 
         # Then, ensure all elements in need of an ID now all have unique IDs.
-        ok_(len(SECTION_TAGS) > 0)
+        assert len(SECTION_TAGS)
         els = result_doc.find(', '.join(SECTION_TAGS))
         seen_ids = set()
         for i in range(0, len(els)):
             id = els.eq(i).attr('id')
-            ok_(id is not None)
-            ok_(id not in seen_ids)
+            assert id is not None
+            assert id not in seen_ids
             seen_ids.add(id)
 
     def test_incremented_section_ids(self):
@@ -495,7 +495,7 @@ class SectionIDFilterTests(TestCase):
         section_filter = SectionIDFilter('')
 
         for original, slugified in headers:
-            ok_(slugified == section_filter.slugify(original))
+            assert slugified == section_filter.slugify(original)
 
 
 @pytest.mark.toc

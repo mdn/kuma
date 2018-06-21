@@ -1,6 +1,6 @@
 from django.http import QueryDict
 
-from kuma.core.tests import eq_, ok_
+from kuma.core.tests import eq_
 from kuma.wiki.models import Document
 from kuma.wiki.signals import render_done
 
@@ -56,7 +56,7 @@ class FilterTests(ElasticTestCase):
         view = HighlightView.as_view()
         request = self.get_request('/en-US/search?q=article')
         response = view(request)
-        ok_('<mark>article</mark>' in response.data['documents'][0]['excerpt'])
+        assert '<mark>article</mark>' in response.data['documents'][0]['excerpt']
 
     def test_no_highlight_filter(self):
         class HighlightView(SearchView):
@@ -65,7 +65,7 @@ class FilterTests(ElasticTestCase):
         view = HighlightView.as_view()
         request = self.get_request('/en-US/search?q=article&highlight=false')
         response = view(request)
-        ok_('<mark>' not in response.data['documents'][0]['excerpt'])
+        assert '<mark>' not in response.data['documents'][0]['excerpt']
 
     def test_language_filter(self):
         class LanguageView(SearchView):

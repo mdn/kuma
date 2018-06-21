@@ -4,7 +4,7 @@ from django.utils import translation
 from rest_framework import serializers
 from rest_framework.test import APIRequestFactory
 
-from kuma.core.tests import eq_, ok_
+from kuma.core.tests import eq_
 from kuma.wiki.search import WikiDocumentType
 
 from . import ElasticTestCase
@@ -54,12 +54,12 @@ class SerializerTests(ElasticTestCase):
         doc_serializer = DocumentSerializer(result, many=True)
         list_data = doc_serializer.data
         eq_(len(list_data), 7)
-        ok_(isinstance(list_data, list))
-        ok_(1 in [data['id'] for data in list_data])
+        assert isinstance(list_data, list)
+        assert 1 in [data['id'] for data in list_data]
 
         doc_serializer = DocumentSerializer(result[0], many=False)
         dict_data = doc_serializer.data
-        ok_(isinstance(dict_data, dict))
+        assert isinstance(dict_data, dict)
         eq_(dict_data['id'], result[0].id)
 
     def test_excerpt(self):
@@ -97,4 +97,4 @@ class FieldTests(ElasticTestCase):
 
         field = SiteURLField('wiki.document', args=['slug'])
         value = field.to_representation(FakeValue())
-        ok_('/de/docs/Firefox' in value)
+        assert '/de/docs/Firefox' in value

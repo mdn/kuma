@@ -6,7 +6,6 @@ from datetime import datetime
 from django.conf import settings
 
 from kuma.core.cache import memcache
-from kuma.core.tests import ok_
 from kuma.users.models import User
 from kuma.users.tests import user, UserTestCase
 
@@ -71,14 +70,14 @@ class SitemapsTestCase(UserTestCase):
             docs = Document.objects.filter_for_list(locale=locale)
 
             for doc in docs:
-                ok_(doc.modified.strftime('%Y-%m-%d') in sitemap_xml)
-                ok_(doc.slug in sitemap_xml)
+                assert doc.modified.strftime('%Y-%m-%d') in sitemap_xml
+                assert doc.slug in sitemap_xml
 
         sitemap_path = os.path.join(settings.MEDIA_ROOT, 'sitemap.xml')
         with open(sitemap_path, 'r') as sitemap_file:
             index_xml = sitemap_file.read()
         for loc in expected_sitemap_locs:
-            ok_(loc in index_xml)
+            assert loc in index_xml
 
 
 class DeleteOldDocumentSpamAttemptData(UserTestCase):

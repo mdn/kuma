@@ -9,7 +9,7 @@ from django.conf import settings
 from django.test import override_settings, RequestFactory, TestCase
 from soapbox.models import Message
 
-from kuma.core.tests import eq_, KumaTestCase, ok_
+from kuma.core.tests import eq_, KumaTestCase
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 
@@ -50,9 +50,8 @@ class TestSoapbox(KumaTestCase):
         m = Message(message='Go to http://bit.ly/sample-demo', is_global=True,
                     is_active=True, url='/')
         m.save()
-        ok_('Go to <a href="http://bit.ly/sample-demo" rel="noopener">'
-            'http://bit.ly/sample-demo</a>' in
-            soapbox_messages(get_soapbox_messages('/')))
+        assert 'Go to <a href="http://bit.ly/sample-demo" rel="noopener">' \
+               'http://bit.ly/sample-demo</a>' in soapbox_messages(get_soapbox_messages('/'))
 
 
 class TestDateTimeFormat(UserTestCase):
