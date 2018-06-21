@@ -18,46 +18,13 @@
                 win.ga('set', data.dimension, data.value);
             }
         },
-        /*
-            Tracks generic events passed to the method
-        */
-        trackEvent: function(eventObject, callback) {
-            // Submit eventArray to GA and call callback only after tracking has
-            // been sent, or if sending fails.
-            //
-            // callback is optional.
-
-            /*
-                Format:
-
-                    ga('send', {
-                        'eventCategory' : 'Star Trek',
-                        'eventAction'   : 'Fire',
-                        'eventLabel'    : 'Phasers',
-                        'eventValue'    : 100,
-                        'hitCallback'   : function () {
-                            document.location = href;
-                        },
-                        'hitType': 'event'
-                    });
-            */
-
+        /**
+         * Sends a statistic to GA dependant on the status of the win.ga object
+         * @param {object} data - The data to send to GA
+         * @param {function} [callback] - The function to call after sending data
+         */
+        send: function(data, callback) {
             var ga = win.ga;
-            var data = {
-                hitType: eventObject.hitType || 'event',
-                eventCategory: eventObject.category || '',    // Required.
-                eventAction: eventObject.action || '',             // Required.
-                eventLabel: eventObject.label || '',
-                eventValue: eventObject.value || 0,
-                hitCallback: callback || null
-            };
-
-            // task-completion.js sends an additional metric
-            if(eventObject.nonInteraction !== undefined) {
-                // append it to the data object sent to GA
-                data.nonInteraction = eventObject.nonInteraction;
-            }
-
             // If Analytics has loaded, go ahead with tracking
             // Checking for ".create" due to Ghostery mocking of ga
             if(ga && ga.create) {
@@ -81,7 +48,79 @@
                 callback();
             }
         },
+        /*
+            Tracks generic events passed to the method
+        */
+        trackEvent: function(eventObject, callback) {
+            // Submit eventArray to GA and call callback only after tracking has
+            // been sent, or if sending fails.
+            //
+            // callback is optional.
 
+            /*
+                Format:
+
+                    ga('send', {
+                        'eventCategory' : 'Star Trek',
+                        'eventAction'   : 'Fire',
+                        'eventLabel'    : 'Phasers',
+                        'eventValue'    : 100,
+                        'hitCallback'   : function () {
+                            document.location = href;
+                        },
+                        'hitType': 'event'
+                    });
+            */
+            var data = {
+                hitType: eventObject.hitType || 'event',
+                eventCategory: eventObject.category || '',    // Required.
+                eventAction: eventObject.action || '',             // Required.
+                eventLabel: eventObject.label || '',
+                eventValue: eventObject.value || 0,
+                hitCallback: callback || null
+            };
+
+            // task-completion.js sends an additional metric
+            if(eventObject.nonInteraction !== undefined) {
+                // append it to the data object sent to GA
+                data.nonInteraction = eventObject.nonInteraction;
+            }
+            mdn.analytics.send(data, callback);
+        },
+        /**
+         * Sends a timing event to GA
+         * @param {object} timingObject - The timing data to send to GA
+         */
+        trackTiming: function(timingObject) {
+            /*
+                Format:
+                    ga('send', {
+                        'timingCategory' : 'JS Dependencies',
+                        'timingVar'      : 'load',
+                        'timingValue'    : 100,
+                        'timingLabel'    : 'interactive-examples',
+                        'hitCallback'   : function () {
+                            document.location = href;
+                        },
+                        'hitType': 'timing'
+                    });
+            */
+            var data = {
+                hitType: 'timing',
+                timingCategory: timingObject.category || '', // Required.
+                timingVar: timingObject.timingVar || '', // Required.
+                timingValue: timingObject.value || 0,  // Required.
+
+            };
+
+            // if a label has been passed and it is not simply an empty string
+            if (timingObject.label && timingObject.label !== '') {
+                // add to object to be sent to GA
+                data['timingLabel'] = timingObject.label;
+            }
+
+            mdn.analytics.send(data);
+        },
         /*
             Track all outgoing links
         */
