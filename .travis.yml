@@ -8,8 +8,6 @@ cache:
       - node_modules
       - downloads
 language: python
-python:
-    - "2.7"
 services:
     - docker
     - memcached
@@ -26,21 +24,49 @@ env:
         - PIPELINE_JS_COMPRESSOR=pipeline.compressors.uglifyjs.UglifyJSCompressor
         - PIPELINE_SASS_BINARY=$TRAVIS_BUILD_DIR/node_modules/.bin/node-sass
         - PIPELINE_UGLIFYJS_BINARY=$TRAVIS_BUILD_DIR/node_modules/.bin/uglifyjs
-    matrix:
-        - TOXENV=py27
-          CREATE_DB=kuma
-          INSTALL_PIPELINE=1
-          INSTALL_ELASTICSEARCH=1
-        - TOXENV=flake8
-        - TOXENV=docs
-        - TOXENV=locales
-          CREATE_DB=kuma
-          INSTALL_PIPELINE=1
-        - TOXENV=docker
-          INSTALL_DOCKER_COMPOSE=1
-          UID=0
-        - TOXENV=stylelint
 
+matrix:
+    include:
+        - python: "2.7"
+          env:
+            TOXENV=pytest
+            CREATE_DB=kuma
+            INSTALL_PIPELINE=1
+            INSTALL_ELASTICSEARCH=1
+        - python: "2.7"
+          env:
+            TOXENV=flake8
+        - python: "2.7"
+          env:
+            TOXENV=docs
+        - python: "2.7"
+          env:
+            TOXENV=locales
+            CREATE_DB=kuma
+            INSTALL_PIPELINE=1
+        - python: "2.7"
+          env:
+            TOXENV=docker
+            INSTALL_DOCKER_COMPOSE=1
+            UID=0
+        - python: "2.7"
+          env:
+            TOXENV=stylelint
+        - python: "3.6"
+          env:
+            TOXENV=pytest
+            CREATE_DB=kuma
+            INSTALL_PIPELINE=1
+            INSTALL_ELASTICSEARCH=1
+            PYTHONHASHSEED=0
+    allow_failures:
+        - python: "3.6"
+          env:
+            TOXENV=pytest
+            CREATE_DB=kuma
+            INSTALL_PIPELINE=1
+            INSTALL_ELASTICSEARCH=1
+            PYTHONHASHSEED=0
 install:
     - nvm install 6
     - nvm use 6

@@ -221,12 +221,6 @@ gunicorn==19.7.1 \
     --hash=sha256:75af03c99389535f218cc596c7de74df4763803f7b63eb09d77e92b3956b36c6 \
     --hash=sha256:eee1169f0ca667be05db3351a0960765620dad53f53434262ff8901b68a1b622
 
-# String-based Python imports
-importlib==1.0.3 \
-    --hash=sha256:7cbb514a352f821c69b8e8bdaa6b2e59728547a8965503c758652c2826d157b5 \
-    --hash=sha256:01fc0a2a1e01990a97b096615c11328fa4306ced1733c98d884160387760d479 \
-    --hash=sha256:65f342a604a2e1028707c5e055266ab2431c26e20fe10780b423320870884dac
-
 # Improved template engine
 # Code: https://github.com/pallets/jinja
 # Changes: http://jinja.pocoo.org/docs/2.10/changelog/
