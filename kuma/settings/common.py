@@ -20,7 +20,7 @@ djcelery.setup_loader()
 
 
 def path(*parts):
-    return os.path.join(ROOT, *parts)
+    return os.path.join(BASE_DIR, *parts)
 
 
 class TupleCsv(Csv):
@@ -32,7 +32,9 @@ class TupleCsv(Csv):
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ROOT = dirname(dirname(dirname(os.path.abspath(__file__))))
+# BASE_DIR used by django-extensions, such as ./manage.py notes
+# ROOT used by some Kuma application code
+BASE_DIR = ROOT = dirname(dirname(dirname(os.path.abspath(__file__))))
 
 ADMIN_EMAILS = config('ADMIN_EMAILS', default='mdn-dev@mozilla.com',
                       cast=Csv())
@@ -632,7 +634,7 @@ TEMPLATES = [
 
 PUENTE = {
     'VERSION': '2018.09',
-    'BASE_DIR': ROOT,
+    'BASE_DIR': BASE_DIR,
     'TEXT_DOMAIN': 'django',
     # Tells the extract script what files to look for l10n in and what function
     # handles the extraction.
