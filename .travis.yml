@@ -58,7 +58,6 @@ matrix:
             CREATE_DB=kuma
             INSTALL_PIPELINE=1
             INSTALL_ELASTICSEARCH=1
-            PYTHONHASHSEED=0
     allow_failures:
         - python: "3.6"
           env:
@@ -66,7 +65,6 @@ matrix:
             CREATE_DB=kuma
             INSTALL_PIPELINE=1
             INSTALL_ELASTICSEARCH=1
-            PYTHONHASHSEED=0
 install:
     - nvm install 6
     - nvm use 6
@@ -76,11 +74,7 @@ install:
     # Wait for ElasticSearch to be ready
     - if [[ "$INSTALL_ELASTICSEARCH" == "1" ]]; then wget -q --waitretry=1 --retry-connrefused -T 10 -O - http://127.0.0.1:9200; fi;
 script:
-    if [[ "$PYTHONHASHSEED" == "0" ]]; then
-        tox -v --hashseed=noset;
-    else
-        tox -v;
-    fi
+    - tox -v
 after_failure:
     - dmesg | tail
 after_success:
