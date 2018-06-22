@@ -13,7 +13,7 @@ from pyquery import PyQuery as pq
 from waffle.testutils import override_switch
 
 from kuma.core.tests import (assert_no_cache_header,
-                             assert_shared_cache_header, eq_, ok_)
+                             assert_shared_cache_header, eq_)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html, urlparams
 from kuma.dashboards.forms import RevisionDashboardForm
@@ -361,7 +361,7 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
                 'wiki.document',
                 kwargs={'document_path': revision.document.slug}
             )
-            ok_(document_url in table_row_text)
+            assert document_url in table_row_text
 
     def test_spam_trends_show(self, mock_analytics_upageviews):
         """The spam trends table shows up."""

@@ -4,7 +4,7 @@ import pytest
 from django import forms
 from django.test import RequestFactory
 
-from kuma.core.tests import eq_, KumaTestCase, ok_
+from kuma.core.tests import eq_, KumaTestCase
 
 from . import user
 from ..adapters import (KumaAccountAdapter, USERNAME_CHARACTERS,
@@ -31,16 +31,16 @@ class TestUserEditForm(KumaTestCase):
 
     def test_can_keep_legacy_username(self):
         test_user = user(username='legacy@example.com', save=True)
-        ok_(test_user.has_legacy_username)
+        assert test_user.has_legacy_username
         data = {
             'username': 'legacy@example.com'
         }
         form = UserEditForm(data, instance=test_user)
-        ok_(form.is_valid(), repr(form.errors))
+        assert form.is_valid(), repr(form.errors)
 
     def test_cannot_change_legacy_username(self):
         test_user = user(username='legacy@example.com', save=True)
-        ok_(test_user.has_legacy_username)
+        assert test_user.has_legacy_username
         data = {
             'username': 'mr.legacy@example.com'
         }

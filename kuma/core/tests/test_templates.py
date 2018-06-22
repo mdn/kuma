@@ -8,7 +8,7 @@ from django.test import RequestFactory
 from django.utils import translation
 from pyquery import PyQuery as pq
 
-from . import eq_, KumaTestCase, ok_
+from . import eq_, KumaTestCase
 
 
 class MockRequestTests(KumaTestCase):
@@ -49,7 +49,7 @@ class BaseTemplateTests(MockRequestTests):
         doc = pq(html)
         # Check default locale is in the first choice field
         first_field = doc("#language.autosubmit option")[0].text_content()
-        ok_(settings.LANGUAGE_CODE in first_field)
+        assert settings.LANGUAGE_CODE in first_field
 
 
 class ErrorListTests(MockRequestTests):

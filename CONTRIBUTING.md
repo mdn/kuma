@@ -188,7 +188,7 @@ conversion to take a few more years.
 
 We **avoid** old-style tests that use Django's
 [TestCase testing classes][testcase], [fixture files][fixture_files],
-test functions [``eq_``][eq] and [``ok_``][ok], and general-purpose factory
+[``eq_``][eq] test function and general-purpose factory
 functions like [get_user][get_user], [document][document], and
 [revision][revision].
 

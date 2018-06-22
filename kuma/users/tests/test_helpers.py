@@ -3,7 +3,7 @@ from hashlib import md5
 
 from django.conf import settings
 
-from kuma.core.tests import eq_, ok_
+from kuma.core.tests import eq_
 
 from . import UserTestCase
 from ..templatetags.jinja_helpers import gravatar_url, public_email
@@ -17,12 +17,12 @@ class HelperTestCase(UserTestCase):
 
     def test_default_gravatar(self):
         d_param = urllib.urlencode({'d': settings.DEFAULT_AVATAR})
-        ok_(d_param in gravatar_url(self.u.email),
-            "Bad default avatar: %s" % gravatar_url(self.u.email))
+        assert d_param in gravatar_url(self.u.email), \
+            "Bad default avatar: %s" % gravatar_url(self.u.email)
 
     def test_gravatar_url(self):
         self.u.email = 'test@test.com'
-        ok_(md5(self.u.email).hexdigest() in gravatar_url(self.u.email))
+        assert md5(self.u.email).hexdigest() in gravatar_url(self.u.email)
 
     def test_public_email(self):
         eq_('<span class="email">'
