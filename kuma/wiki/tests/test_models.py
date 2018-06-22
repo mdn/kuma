@@ -11,7 +11,7 @@ from django.core.exceptions import ValidationError
 
 from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.core.exceptions import ProgrammingError
-from kuma.core.tests import eq_, get_user
+from kuma.core.tests import get_user
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 
@@ -51,10 +51,10 @@ class DocumentTests(UserTestCase):
         d = document()
         d.save()
         d.tags.add('grape')
-        eq_(1, TaggedDocument.objects.count())
+        assert 1 == TaggedDocument.objects.count()
 
         d.delete()
-        eq_(0, TaggedDocument.objects.count())
+        assert 0 == TaggedDocument.objects.count()
 
     def test_only_localizable_allowed_children(self):
         """You can't have children for a non-localizable document."""
@@ -100,14 +100,14 @@ class DocumentTests(UserTestCase):
         children = (Document.objects.filter(parent=parent)
                                     .order_by('locale')
                                     .values_list('pk', flat=True))
-        eq_(list(children),
-            [trans.pk for trans in parent.other_translations])
+        assert (list(children) ==
+                [trans.pk for trans in parent.other_translations])
 
         # Check the parent document is in the first index of the list
-        eq_(parent.pk, enfant.other_translations[0].pk)
+        assert parent.pk == enfant.other_translations[0].pk
         enfant_translation_pks = [trans.pk for trans in enfant.other_translations]
         assert bambino.pk in enfant_translation_pks
-        eq_(False, enfant.pk in enfant_translation_pks)
+        assert (enfant.pk in enfant_translation_pks) is False
 
     def test_topical_parents(self):
         d1, d2 = create_topical_parents_docs()
@@ -124,7 +124,7 @@ class DocumentTests(UserTestCase):
         title = "Mozilla"
         html = REDIRECT_CONTENT % {'href': href, 'title': title}
         d = document(is_redirect=True, html=html)
-        eq_(href, d.get_redirect_url())
+        assert href == d.get_redirect_url()
 
     @pytest.mark.redirect
     def test_redirect_url_allows_domain_relative_url(self):
@@ -132,7 +132,7 @@ class DocumentTests(UserTestCase):
         title = "Mozilla"
         html = REDIRECT_CONTENT % {'href': href, 'title': title}
         d = document(is_redirect=True, html=html)
-        eq_(href, d.get_redirect_url())
+        assert href == d.get_redirect_url()
 
     @pytest.mark.redirect
     def test_redirect_url_rejects_protocol_relative_url(self):
@@ -140,7 +140,7 @@ class DocumentTests(UserTestCase):
         title = "Mozilla"
         html = REDIRECT_CONTENT % {'href': href, 'title': title}
         d = document(is_redirect=True, html=html)
-        eq_(None, d.get_redirect_url())
+        assert d.get_redirect_url() is None
 
     @pytest.mark.redirect
     def test_redirect_url_works_for_home_path(self):
@@ -149,11 +149,11 @@ class DocumentTests(UserTestCase):
         title = "Mozilla"
         html = REDIRECT_CONTENT % {'href': href, 'title': title}
         d = document(is_redirect=True, html=html)
-        eq_(href, d.get_redirect_url())
+        assert href == d.get_redirect_url()
 
     def test_get_full_url(self):
         doc = document()
-        eq_(doc.get_full_url(), absolutify(doc.get_absolute_url()))
+        assert doc.get_full_url() == absolutify(doc.get_absolute_url())
 
     def test_from_url(self):
         created_doc = document(save=True)
@@ -232,7 +232,7 @@ class UserDocumentTests(UserTestCase):
                          parent=orig, save=True)
 
         assert trans.parent_topic
-        eq_(trans.parent_topic.pk, trans_pt.pk)
+        assert trans_pt.pk == trans.parent_topic.pk
 
     def test_default_topic_with_stub_creation(self):
         orig_pt = document(locale=settings.WIKI_DEFAULT_LANGUAGE,
@@ -248,16 +248,16 @@ class UserDocumentTests(UserTestCase):
         trans_pt = trans.parent_topic
         assert trans_pt
         # The locale of the topic parent should match the new translation
-        eq_(trans.locale, trans_pt.locale)
+        assert trans_pt.locale == trans.locale
         # But, the translation's topic parent must *not* be the translation
         # parent's topic parent
         assert trans_pt.pk != orig_pt.pk
         # Still, since the topic parent is an autocreated stub, it shares its
         # title with the original.
-        eq_(trans_pt.title, orig_pt.title)
+        assert trans_pt.title == orig_pt.title
         # Oh, and it should point to the original parent topic as its
         # translation parent
-        eq_(trans_pt.parent, orig_pt)
+        assert trans_pt.parent == orig_pt
 
     def test_default_topic_with_path_gaps(self):
         # Build a path of docs in en-US
@@ -281,20 +281,20 @@ class UserDocumentTests(UserTestCase):
         revision(document=trans_5, title='le ;eaf', tags="LeTest!", save=True)
 
         # Make sure trans_2 got the right parent
-        eq_(trans_2.parents[0].pk, trans_0.pk)
+        assert trans_2.parents[0].pk == trans_0.pk
 
         # Ensure the translated parents and stubs appear properly in the path
         parents_5 = trans_5.parents
-        eq_(parents_5[0].pk, trans_0.pk)
-        eq_(parents_5[1].locale, trans_5.locale)
-        eq_(parents_5[1].title, docs[1].title)
+        assert parents_5[0].pk == trans_0.pk
+        assert parents_5[1].locale == trans_5.locale
+        assert parents_5[1].title == docs[1].title
         assert parents_5[1].current_revision.pk != docs[1].current_revision.pk
-        eq_(parents_5[2].pk, trans_2.pk)
-        eq_(parents_5[3].locale, trans_5.locale)
-        eq_(parents_5[3].title, docs[3].title)
+        assert parents_5[2].pk == trans_2.pk
+        assert parents_5[3].locale == trans_5.locale
+        assert parents_5[3].title == docs[3].title
         assert parents_5[3].current_revision.pk != docs[3].current_revision.pk
-        eq_(parents_5[4].locale, trans_5.locale)
-        eq_(parents_5[4].title, docs[4].title)
+        assert parents_5[4].locale == trans_5.locale
+        assert parents_5[4].title == docs[4].title
         assert parents_5[4].current_revision.pk != docs[4].current_revision.pk
 
         for p in parents_5:
@@ -333,8 +333,8 @@ class UserDocumentTests(UserTestCase):
         french_bottom.repair_breadcrumbs()
         french_bottom_fixed = Document.objects.get(locale='fr',
                                                    title=french_bottom.title)
-        eq_(french_mid.id, french_bottom_fixed.parent_topic.id)
-        eq_(french_top.id, french_bottom_fixed.parent_topic.parent_topic.id)
+        assert french_mid.id == french_bottom_fixed.parent_topic.id
+        assert french_top.id == french_bottom_fixed.parent_topic.parent_topic.id
 
     def test_code_sample_extraction(self):
         """Make sure sample extraction works from the model.
@@ -354,9 +354,9 @@ class UserDocumentTests(UserTestCase):
 
         rev = revision(is_approved=True, save=True, content=doc_src)
         result = rev.document.extract.code_sample('s2')
-        eq_(sample_html.strip(), result['html'].strip())
-        eq_(sample_css.strip(), result['css'].strip())
-        eq_(sample_js.strip(), result['js'].strip())
+        assert sample_html.strip() == result['html'].strip()
+        assert sample_css.strip() == result['css'].strip()
+        assert sample_js.strip() == result['js'].strip()
 
     def test_tree_is_watched_by(self):
         rev = revision()
@@ -383,22 +383,22 @@ class TaggedDocumentTests(UserTestCase):
         """Change tags on Document by creating Revisions"""
         rev = revision(is_approved=True, save=True, content='Sample document')
 
-        eq_(0, Document.objects.filter(tags__name='foo').count())
-        eq_(0, Document.objects.filter(tags__name='alpha').count())
+        assert 0 == Document.objects.filter(tags__name='foo').count()
+        assert 0 == Document.objects.filter(tags__name='alpha').count()
 
         r = revision(document=rev.document, content='Update to document',
                      is_approved=True, tags="foo, bar, baz")
         r.save()
 
-        eq_(1, Document.objects.filter(tags__name='foo').count())
-        eq_(0, Document.objects.filter(tags__name='alpha').count())
+        assert 1 == Document.objects.filter(tags__name='foo').count()
+        assert 0 == Document.objects.filter(tags__name='alpha').count()
 
         r = revision(document=rev.document, content='Another update',
                      is_approved=True, tags="alpha, beta, gamma")
         r.save()
 
-        eq_(0, Document.objects.filter(tags__name='foo').count())
-        eq_(1, Document.objects.filter(tags__name='alpha').count())
+        assert 0 == Document.objects.filter(tags__name='foo').count()
+        assert 1 == Document.objects.filter(tags__name='alpha').count()
 
     def test_duplicate_tags_with_creation(self):
         rev = revision(
@@ -456,7 +456,7 @@ class RevisionTests(UserTestCase):
         """Revision containing unicode characters is saved successfully."""
         content = u'Firefox informa\xe7\xf5es \u30d8\u30eb'
         rev = revision(is_approved=True, save=True, content=content)
-        eq_(content, rev.content)
+        assert content == rev.content
 
     def test_save_bad_based_on(self):
         """Saving a Revision with a bad based_on value raises an error."""
@@ -470,7 +470,7 @@ class RevisionTests(UserTestCase):
         r = revision()
         r.based_on = revision()  # Revision of some other unrelated Document
         self.assertRaises(ValidationError, r.clean)
-        eq_(None, r.based_on)
+        assert r.based_on is None
 
     def test_correct_based_on_to_current_revision(self):
         """Assure Revision.clean() defaults based_on value to the English
@@ -487,7 +487,7 @@ class RevisionTests(UserTestCase):
         # Set based_on to a de rev to simulate fixing broken translation source
         de_rev.based_on = de_rev
         de_rev.clean()
-        eq_(en_rev.document.current_revision, de_rev.based_on)
+        assert en_rev.document.current_revision == de_rev.based_on
 
     def test_previous(self):
         """Revision.previous should return this revision's document's
@@ -570,18 +570,18 @@ class RevisionTests(UserTestCase):
         fake_tidied = '<h1>  Fake tidied.  </h1>'
         rev = revision(is_approved=True, save=True, content=content,
                        tidied_content=fake_tidied)
-        eq_(fake_tidied, rev.get_tidied_content())
+        assert fake_tidied == rev.get_tidied_content()
 
     def test_get_tidied_content_tidies_in_process_by_default(self):
         content = '<h1>  Test get_tidied_content.  </h1>'
         rev = revision(is_approved=True, save=True, content=content)
         tidied_content, errors = tidy_content(content)
-        eq_(tidied_content, rev.get_tidied_content())
+        assert tidied_content == rev.get_tidied_content()
 
     def test_get_tidied_content_returns_none_on_allow_none(self):
         rev = revision(is_approved=True, save=True,
                        content='Test get_tidied_content can return None.')
-        eq_(None, rev.get_tidied_content(allow_none=True))
+        assert rev.get_tidied_content(allow_none=True) is None
 
 
 class GetCurrentOrLatestRevisionTests(UserTestCase):
@@ -590,20 +590,20 @@ class GetCurrentOrLatestRevisionTests(UserTestCase):
     def test_single_approved(self):
         """Get approved revision."""
         rev = revision(is_approved=True, save=True)
-        eq_(rev, rev.document.current_or_latest_revision())
+        assert rev == rev.document.current_or_latest_revision()
 
     def test_multiple_approved(self):
         """When multiple approved revisions exist, return the most recent."""
         r1 = revision(is_approved=True, save=True)
         r2 = revision(is_approved=True, save=True, document=r1.document)
-        eq_(r2, r2.document.current_or_latest_revision())
+        assert r2 == r2.document.current_or_latest_revision()
 
     def test_latest(self):
         """Return latest revision when no current exists."""
         r1 = revision(is_approved=False, save=True,
                       created=datetime.now() - timedelta(days=1))
         r2 = revision(is_approved=False, save=True, document=r1.document)
-        eq_(r2, r1.document.current_or_latest_revision())
+        assert r2 == r1.document.current_or_latest_revision()
 
 
 @override_config(
@@ -646,20 +646,20 @@ class DeferredRenderingTests(UserTestCase):
         assert not self.d1.last_rendered_at
         result_rendered, _ = self.d1.get_rendered(None, 'http://testserver/')
         assert mock_kumascript_get.called
-        eq_(self.rendered_content, result_rendered)
-        eq_(self.rendered_content, self.d1.rendered_html)
+        assert self.rendered_content == result_rendered
+        assert self.rendered_content == self.d1.rendered_html
 
         # Next, get a fresh copy of the document and try getting a rendering.
         # It should *not* call out to kumascript, because the rendered content
         # should be in the DB.
         d1_fresh = Document.objects.get(pk=self.d1.pk)
-        eq_(self.rendered_content, d1_fresh.rendered_html)
+        assert self.rendered_content == d1_fresh.rendered_html
         assert d1_fresh.render_started_at
         assert d1_fresh.last_rendered_at
         mock_kumascript_get.called = False
         result_rendered, _ = d1_fresh.get_rendered(None, 'http://testserver/')
         assert not mock_kumascript_get.called
-        eq_(self.rendered_content, result_rendered)
+        assert self.rendered_content == result_rendered
 
     @mock.patch('kuma.wiki.models.render_done')
     def test_build_json_on_render(self, mock_render_done):
@@ -691,7 +691,7 @@ class DeferredRenderingTests(UserTestCase):
         assert self.d1.rendered_html
         assert mock_kumascript_get.called
         result_summary = self.d1.get_summary()
-        eq_("summary!", result_summary)
+        assert 'summary!' == result_summary
 
     @mock.patch('kuma.wiki.kumascript.get')
     def test_one_render_at_a_time(self, mock_kumascript_get):
@@ -832,8 +832,8 @@ class RenderExpiresTests(UserTestCase):
         d3.save()
 
         stale_docs = Document.objects.get_by_stale_rendering()
-        eq_(sorted([d2.pk, d3.pk]),
-            sorted([x.pk for x in stale_docs]))
+        assert (sorted([d2.pk, d3.pk]) ==
+                sorted([x.pk for x in stale_docs]))
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get')
@@ -903,7 +903,7 @@ class PageMoveTests(UserTestCase):
         d3.parent_topic = d1
         d3.save()
 
-        eq_([d2, d3], d1.get_descendants())
+        assert [d2, d3] == d1.get_descendants()
 
     def test_get_descendants_limited(self):
         """Tests limiting of descendant levels"""
@@ -921,12 +921,12 @@ class PageMoveTests(UserTestCase):
         _make_doc('Great GrandChild 1', grandchild)
 
         # Test descendant counts
-        eq_(len(parent.get_descendants()), 4)  # All
-        eq_(len(parent.get_descendants(1)), 2)
-        eq_(len(parent.get_descendants(2)), 3)
-        eq_(len(parent.get_descendants(0)), 0)
-        eq_(len(child2.get_descendants(10)), 0)
-        eq_(len(grandchild.get_descendants(4)), 1)
+        assert 4 == len(parent.get_descendants())  # All
+        assert 2 == len(parent.get_descendants(1))
+        assert 3 == len(parent.get_descendants(2))
+        assert 0 == len(parent.get_descendants(0))
+        assert 0 == len(child2.get_descendants(10))
+        assert 1 == len(grandchild.get_descendants(4))
 
     def test_children_complex(self):
         """A slightly more complex tree, with multiple children, some
@@ -1044,29 +1044,29 @@ class PageMoveTests(UserTestCase):
         # 2. A new revision was created when the page moved.
         # 3. A redirect was created.
         moved_top = Document.objects.get(pk=top_doc.id)
-        eq_('new-prefix/first-level/parent',
-            moved_top.current_revision.slug)
+        assert ('new-prefix/first-level/parent' ==
+                moved_top.current_revision.slug)
         assert old_top_id != moved_top.current_revision.id
         assert (moved_top.current_revision.slug in
                 Document.objects.get(slug='first-level/parent').get_redirect_url())
 
         moved_child1 = Document.objects.get(pk=child1_doc.id)
-        eq_('new-prefix/first-level/parent/child1',
-            moved_child1.current_revision.slug)
+        assert ('new-prefix/first-level/parent/child1' ==
+                moved_child1.current_revision.slug)
         assert old_child1_id != moved_child1.current_revision.id
         assert moved_child1.current_revision.slug in Document.objects.get(
             slug='first-level/second-level/child1').get_redirect_url()
 
         moved_child2 = Document.objects.get(pk=child2_doc.id)
-        eq_('new-prefix/first-level/parent/child2',
-            moved_child2.current_revision.slug)
+        assert ('new-prefix/first-level/parent/child2' ==
+                moved_child2.current_revision.slug)
         assert old_child2_id != moved_child2.current_revision.id
         assert moved_child2.current_revision.slug in Document.objects.get(
             slug='first-level/second-level/child2').get_redirect_url()
 
         moved_grandchild = Document.objects.get(pk=grandchild_doc.id)
-        eq_('new-prefix/first-level/parent/child2/grandchild',
-            moved_grandchild.current_revision.slug)
+        assert('new-prefix/first-level/parent/child2/grandchild' ==
+               moved_grandchild.current_revision.slug)
         assert old_grandchild_id != moved_grandchild.current_revision.id
         assert moved_grandchild.current_revision.slug in Document.objects.get(
             slug='first-level/second-level/third-level/grandchild').get_redirect_url()
@@ -1093,8 +1093,8 @@ class PageMoveTests(UserTestCase):
                                 is_approved=True,
                                 save=True)
 
-        eq_([top_conflict.document],
-            top_doc._tree_conflicts('moved/test-move-conflict-detection'))
+        assert([top_conflict.document] ==
+               top_doc._tree_conflicts('moved/test-move-conflict-detection'))
 
         # Or if it will involve a child document.
         child_conflict = revision(title='Conflicting child for move conflict detection',
@@ -1102,8 +1102,8 @@ class PageMoveTests(UserTestCase):
                                   is_approved=True,
                                   save=True)
 
-        eq_([top_conflict.document, child_conflict.document],
-            top_doc._tree_conflicts('moved/test-move-conflict-detection'))
+        assert ([top_conflict.document, child_conflict.document] ==
+                top_doc._tree_conflicts('moved/test-move-conflict-detection'))
 
         # But a redirect should not trigger a conflict.
         revision(title='Conflicting document for move conflict detection',
@@ -1113,8 +1113,8 @@ class PageMoveTests(UserTestCase):
                  is_approved=True,
                  save=True)
 
-        eq_([child_conflict.document],
-            top_doc._tree_conflicts('moved/test-move-conflict-detection'))
+        assert ([child_conflict.document] ==
+                top_doc._tree_conflicts('moved/test-move-conflict-detection'))
 
     @pytest.mark.move
     def test_additional_conflicts(self):
@@ -1139,8 +1139,7 @@ class PageMoveTests(UserTestCase):
         child2_doc = child2.document
         child2_doc.parent_topic = top_doc
         child2_doc.save()
-        eq_([],
-            top_doc._tree_conflicts('NativeRTC'))
+        assert [] == top_doc._tree_conflicts('NativeRTC')
 
     @pytest.mark.move
     def test_preserve_tags(self):
@@ -1163,9 +1162,9 @@ class PageMoveTests(UserTestCase):
 
             moved_doc = Document.objects.get(pk=doc.id)
             new_rev = moved_doc.current_revision
-            eq_(tags, new_rev.tags)
-            eq_(['technical'],
-                [str(tag) for tag in new_rev.review_tags.all()])
+            assert tags == new_rev.tags
+            assert (['technical'] ==
+                    [str(tag) for tag in new_rev.review_tags.all()])
 
     @pytest.mark.move
     def test_move_tree_breadcrumbs(self):
@@ -1272,7 +1271,7 @@ class PageMoveTests(UserTestCase):
         assert page_moved_slug in page_child_doc.html
         assert page_child_moved_doc
         # TODO: Fix this assertion?
-        # eq_('admin', page_moved_doc.current_revision.creator.username)
+        # assert 'admin' == page_moved_doc.current_revision.creator.username)
 
     @pytest.mark.move
     def test_mid_move(self):
@@ -1365,10 +1364,10 @@ class PageMoveTests(UserTestCase):
         # Moved documents still have the same IDs.
         moved_root = Document.objects.get(locale=special_root.locale,
                                           slug=new_root_slug)
-        eq_(original_root_id, moved_root.id)
+        assert original_root_id == moved_root.id
         moved_child = Document.objects.get(locale=special_child.locale,
                                            slug='%s/child' % new_root_slug)
-        eq_(original_child_id, moved_child.id)
+        assert original_child_id == moved_child.id
 
         # Second move, back to original slug.
         moved_root._move_tree(root_slug)
@@ -1455,17 +1454,17 @@ class RevisionIPTests(UserTestCase):
         old_date = date.today() - timedelta(days=31)
         r = revision(created=old_date, save=True)
         RevisionIP.objects.create(revision=r, ip='127.0.0.1').save()
-        eq_(1, RevisionIP.objects.all().count())
+        assert 1 == RevisionIP.objects.all().count()
         RevisionIP.objects.delete_old()
-        eq_(0, RevisionIP.objects.all().count())
+        assert 0 == RevisionIP.objects.all().count()
 
     def test_delete_older_than_days_argument(self):
         rev_date = date.today() - timedelta(days=5)
         r = revision(created=rev_date, save=True)
         RevisionIP.objects.create(revision=r, ip='127.0.0.1').save()
-        eq_(1, RevisionIP.objects.all().count())
+        assert 1 == RevisionIP.objects.all().count()
         RevisionIP.objects.delete_old(days=4)
-        eq_(0, RevisionIP.objects.all().count())
+        assert 0 == RevisionIP.objects.all().count()
 
     def test_delete_older_than_only_deletes_older_than(self):
         oldest_date = date.today() - timedelta(days=31)
@@ -1479,9 +1478,9 @@ class RevisionIPTests(UserTestCase):
         now_date = date.today()
         r2 = revision(created=now_date, save=True)
         RevisionIP.objects.create(revision=r2, ip='127.0.0.1').save()
-        eq_(3, RevisionIP.objects.all().count())
+        assert 3 == RevisionIP.objects.all().count()
         RevisionIP.objects.delete_old()
-        eq_(2, RevisionIP.objects.all().count())
+        assert 2 == RevisionIP.objects.all().count()
 
 
 class AttachmentTests(UserTestCase):
@@ -1511,8 +1510,8 @@ class AttachmentTests(UserTestCase):
         doc.populate_attachments()
 
         assert doc.attached_files.all().exists()
-        eq_(doc.attached_files.all().count(), 1)
-        eq_(doc.attached_files.first().file, attachment)
+        assert 1 == doc.attached_files.all().count()
+        assert attachment == doc.attached_files.first().file
 
     def test_popuplate_kuma_file_url(self):
         attachment, attachment_revision = self.new_attachment()
@@ -1520,10 +1519,10 @@ class AttachmentTests(UserTestCase):
         assert not doc.attached_files.all().exists()
 
         populated = doc.populate_attachments()
-        eq_(len(populated), 1)
+        assert 1 == len(populated)
         assert doc.attached_files.all().exists()
-        eq_(doc.attached_files.all().count(), 1)
-        eq_(doc.attached_files.first().file, attachment)
+        assert 1 == doc.attached_files.all().count()
+        assert attachment == doc.attached_files.first().file
 
     def test_popuplate_multiple_attachments(self):
         attachment, attachment_revision = self.new_attachment()
@@ -1533,8 +1532,8 @@ class AttachmentTests(UserTestCase):
         doc = document(html=html, save=True)
         populated = doc.populate_attachments()
         attachments = doc.attached_files.all()
-        eq_(len(populated), 2)
+        assert 2 == len(populated)
         assert attachments.exists()
-        eq_(attachments.count(), 2)
-        eq_(attachments[0].file, attachment)
-        eq_(attachments[1].file, attachment2)
+        assert 2 == attachments.count()
+        assert attachment == attachments[0].file
+        assert attachment2 == attachments[1].file

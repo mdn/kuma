@@ -3,7 +3,6 @@ from django.conf import settings
 from django.test import RequestFactory
 
 from kuma.core.cache import memcache
-from kuma.core.tests import eq_
 from kuma.users.tests import UserTestCase
 
 from . import document, revision, WikiTestCase
@@ -73,21 +72,21 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
 
         url = '/en-US/%s?raw' % self.zone_root
         response = self.client.get(url, follow=False)
-        eq_(200, response.status_code)
-        eq_(self.zone_root_content, response.content)
+        assert 200 == response.status_code
+        assert self.zone_root_content == response.content
 
         url = '/en-US/%s/Middle/SubPage?raw' % self.zone_root
         response = self.client.get(url, follow=False)
-        eq_(200, response.status_code)
-        eq_(self.sub_doc.html, response.content)
+        assert 200 == response.status_code
+        assert self.sub_doc.html == response.content
 
         self.root_zone.url_root = 'NewRoot'
         self.root_zone.save()
 
         url = '/en-US/%s/Middle/SubPage?raw' % 'NewRoot'
         response = self.client.get(url, follow=False)
-        eq_(200, response.status_code)
-        eq_(self.sub_doc.html, response.content)
+        assert 200 == response.status_code
+        assert self.sub_doc.html == response.content
 
     def test_actual_wiki_url_redirect(self):
         """
@@ -96,7 +95,7 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
         """
         url = '/en-US/docs/%s?raw=1' % self.middle_doc.slug
         response = self.client.get(url, follow=False)
-        eq_(302, response.status_code)
+        assert 302 == response.status_code
         assert response['Location'] == '/en-US/ExtraWiki/Middle?raw=1'
 
         self.root_zone.url_root = 'NewRoot'
@@ -104,14 +103,14 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
 
         url = '/en-US/docs/%s?raw=1' % self.middle_doc.slug
         response = self.client.get(url, follow=False)
-        eq_(302, response.status_code)
+        assert 302 == response.status_code
         assert response['Location'] == '/en-US/NewRoot/Middle?raw=1'
 
     def test_blank_url_root(self):
         """Ensure a blank url_root does not trigger URL remap"""
         url = '/en-US/docs/%s?raw=1' % self.other_doc.slug
         response = self.client.get(url, follow=False)
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
 
     def test_no_redirect(self):
         middleware = DocumentZoneMiddleware(lambda req: None)
@@ -152,7 +151,7 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
 
         url = '/en-US/docs/%s' % non_zone_doc.slug
         response = self.client.get(url, follow=False)
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
 
 
 class DocumentZoneWithLocaleTestCase(UserTestCase, WikiTestCase):

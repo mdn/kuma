@@ -13,7 +13,7 @@ from pyquery import PyQuery as pq
 from waffle.testutils import override_switch
 
 from kuma.core.tests import (assert_no_cache_header,
-                             assert_shared_cache_header, eq_)
+                             assert_shared_cache_header)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html, urlparams
 from kuma.dashboards.forms import RevisionDashboardForm
@@ -303,16 +303,16 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         self.client.login(username='admin', password='testpass')
         # The first response will say that the report is being processed
         response = self.client.get(reverse('dashboards.spam'))
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
 
         response2 = self.client.get(reverse('dashboards.spam'))
 
         self.assertContains(response2, "Oops!", status_code=200)
         page = pq(response2.content)
         spam_trends_table = page.find('.spam-trends-table')
-        eq_(len(spam_trends_table), 1)
+        assert 1 == len(spam_trends_table)
         spam_events_table = page.find('.spam-events-table')
-        eq_(len(spam_events_table), 1)
+        assert 1 == len(spam_events_table)
 
     def test_recent_spam_revisions_show(self, mock_analytics_upageviews):
         """The correct spam revisions should show up."""
@@ -346,7 +346,7 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         self.client.login(username='admin', password='testpass')
         # The first response will say that the report is being processed
         response = self.client.get(reverse('dashboards.spam'))
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
 
         response2 = self.client.get(reverse('dashboards.spam'))
         page = pq(response2.content)
@@ -355,7 +355,7 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         for table_row in table_rows:
             table_row_text += table_row.text_content()
 
-        eq_(len(table_rows), len(created_revisions))
+        assert len(table_rows) == len(created_revisions)
         for revision in created_revisions:
             document_url = reverse(
                 'wiki.document',
@@ -368,12 +368,12 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         self.client.login(username='admin', password='testpass')
         # The first response will say that the report is being processed
         response = self.client.get(reverse('dashboards.spam'))
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
 
         response2 = self.client.get(reverse('dashboards.spam'))
         page = pq(response2.content)
         spam_trends_table = page.find('.spam-trends-table')
-        eq_(len(spam_trends_table), 1)
+        assert 1 == len(spam_trends_table)
 
     def test_spam_trends_stats(self, mock_analytics_upageviews):
         """Test that the correct stats show up on the spam trends dashboard."""
@@ -471,7 +471,7 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         self.client.login(username='admin', password='testpass')
         # The first response will say that the report is being processed
         response = self.client.get(reverse('dashboards.spam'))
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
 
         response2 = self.client.get(reverse('dashboards.spam'))
         page = pq(response2.content)
@@ -494,15 +494,15 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         true_negative_rate = 9
 
         # The periods are identified as 'Daily', 'Weekly', 'Monthly', 'Quarterly'
-        eq_(row_daily[period], 'Daily')
-        eq_(row_weekly[period], 'Weekly')
-        eq_(row_monthly[period], 'Monthly')
-        eq_(row_quarterly[period], 'Quarterly')
+        assert 'Daily' == row_daily[period]
+        assert 'Weekly' == row_weekly[period]
+        assert 'Monthly' == row_monthly[period]
+        assert 'Quarterly' == row_quarterly[period]
         # The start dates for each period are correct
-        eq_(row_daily[start_date], yesterday.strftime('%Y-%m-%d'))
-        eq_(row_weekly[start_date], weekly_start_date.strftime('%Y-%m-%d'))
-        eq_(row_monthly[start_date], monthly_start_date.strftime('%Y-%m-%d'))
-        eq_(row_quarterly[start_date], quarterly_start_date.strftime('%Y-%m-%d'))
+        assert yesterday.strftime('%Y-%m-%d') == row_daily[start_date]
+        assert weekly_start_date.strftime('%Y-%m-%d') == row_weekly[start_date]
+        assert monthly_start_date.strftime('%Y-%m-%d') == row_monthly[start_date]
+        assert quarterly_start_date.strftime('%Y-%m-%d') == row_quarterly[start_date]
         # The page views during the week, month, quarter
         spam_views_week = page_views[spam_rev_3_days_ago.id]
         spam_views_month = spam_views_week + page_views[spam_rev_10_days_ago.id]
@@ -516,38 +516,38 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         monthly_spam_change_percent = '{:.1%}'.format(
             float(spam_views_month - spam_views_quarter_exclude_month) / spam_views_quarter_exclude_month
         )
-        eq_(row_daily[spam_viewers_change_percent], '0.0%')
-        eq_(row_weekly[spam_viewers_change_percent], weekly_spam_change_percent)
-        eq_(row_monthly[spam_viewers_change_percent], monthly_spam_change_percent)
-        eq_(row_quarterly[spam_viewers_change_percent], '0.0%')
+        assert '0.0%' == row_daily[spam_viewers_change_percent]
+        assert weekly_spam_change_percent == row_weekly[spam_viewers_change_percent]
+        assert monthly_spam_change_percent == row_monthly[spam_viewers_change_percent]
+        assert '0.0%' == row_quarterly[spam_viewers_change_percent]
         # The spam viewers
-        eq_(int(row_daily[spam_viewers]), 0)
-        eq_(int(row_weekly[spam_viewers]), spam_views_week)
-        eq_(int(row_monthly[spam_viewers]), spam_views_month)
-        eq_(int(row_quarterly[spam_viewers]), spam_views_quarter)
+        assert 0 == int(row_daily[spam_viewers])
+        assert spam_views_week == int(row_weekly[spam_viewers])
+        assert spam_views_month == int(row_monthly[spam_viewers])
+        assert spam_views_quarter == int(row_quarterly[spam_viewers])
         # The daily average of spam viewers
-        eq_(float(row_daily[daily_average_viewers]), 0.0)
-        eq_(row_weekly[daily_average_viewers],
-            '{:.1f}'.format(float(spam_views_week) / days_in_week))
-        eq_(row_monthly[daily_average_viewers],
-            '{:.1f}'.format(float(spam_views_month) / days_in_month))
-        eq_(row_quarterly[daily_average_viewers],
-            '{:.1f}'.format(float(spam_views_quarter) / days_in_quarter))
+        assert float(row_daily[daily_average_viewers]) == 0.0
+        assert (row_weekly[daily_average_viewers] ==
+                '{:.1f}'.format(float(spam_views_week) / days_in_week))
+        assert (row_monthly[daily_average_viewers] ==
+                '{:.1f}'.format(float(spam_views_month) / days_in_month))
+        assert (row_quarterly[daily_average_viewers] ==
+                '{:.1f}'.format(float(spam_views_quarter) / days_in_quarter))
         # The published spam: 1 this week, 2 this month, 3 this quarter
-        eq_(int(row_daily[published_spam]), len([]))
-        eq_(int(row_weekly[published_spam]), len(spam_weekly))
-        eq_(int(row_monthly[published_spam]), len(spam_monthly))
-        eq_(int(row_quarterly[published_spam]), len(spam_quarterly))
+        assert len([]) == int(row_daily[published_spam])
+        assert len(spam_weekly) == int(row_weekly[published_spam])
+        assert len(spam_monthly) == int(row_monthly[published_spam])
+        assert len(spam_quarterly) == int(row_quarterly[published_spam])
         # The blocked spam: there were 2 correctly blocked spam attempts 3 days ago
-        eq_(int(row_daily[blocked_spam]), 0)
-        eq_(int(row_weekly[blocked_spam]), true_blocked_spam_num)
-        eq_(int(row_monthly[blocked_spam]), true_blocked_spam_num)
-        eq_(int(row_quarterly[blocked_spam]), true_blocked_spam_num)
+        assert 0 == int(row_daily[blocked_spam])
+        assert true_blocked_spam_num == int(row_weekly[blocked_spam])
+        assert true_blocked_spam_num == int(row_monthly[blocked_spam])
+        assert true_blocked_spam_num == int(row_quarterly[blocked_spam])
         # The blocked ham: there was 1 incorrectly blocked spam attempt 3 days ago
-        eq_(int(row_daily[blocked_ham]), 0)
-        eq_(int(row_weekly[blocked_ham]), false_blocked_spam_num)
-        eq_(int(row_monthly[blocked_ham]), false_blocked_spam_num)
-        eq_(int(row_quarterly[blocked_ham]), false_blocked_spam_num)
+        assert 0 == int(row_daily[blocked_ham])
+        assert false_blocked_spam_num == int(row_weekly[blocked_ham])
+        assert false_blocked_spam_num == int(row_monthly[blocked_ham])
+        assert false_blocked_spam_num == int(row_quarterly[blocked_ham])
         # The true positive rate == blocked_spam / total spam
         tpr_weekly = '{:.1%}'.format(
             true_blocked_spam_num / float(true_blocked_spam_num + len(spam_weekly))
@@ -558,10 +558,10 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         tpr_quarterly = '{:.1%}'.format(
             true_blocked_spam_num / float(true_blocked_spam_num + len(spam_quarterly))
         )
-        eq_(row_daily[true_positive_rate], '100.0%')
-        eq_(row_weekly[true_positive_rate], tpr_weekly)
-        eq_(row_monthly[true_positive_rate], tpr_monthly)
-        eq_(row_quarterly[true_positive_rate], tpr_quarterly)
+        assert '100.0%' == row_daily[true_positive_rate]
+        assert tpr_weekly == row_weekly[true_positive_rate]
+        assert tpr_monthly == row_monthly[true_positive_rate]
+        assert tpr_quarterly == row_quarterly[true_positive_rate]
         # The true negative rate == published ham / total ham
         tnr_weekly = '{:.1%}'.format(
             len(ham_weekly) / float(false_blocked_spam_num + len(ham_weekly))
@@ -572,10 +572,10 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         tnr_quarterly = '{:.1%}'.format(
             len(ham_quarterly) / float(false_blocked_spam_num + len(ham_quarterly))
         )
-        eq_(row_daily[true_negative_rate], '100.0%')
-        eq_(row_weekly[true_negative_rate], tnr_weekly)
-        eq_(row_monthly[true_negative_rate], tnr_monthly)
-        eq_(row_quarterly[true_negative_rate], tnr_quarterly)
+        assert '100.0%' == row_daily[true_negative_rate]
+        assert tnr_weekly == row_weekly[true_negative_rate]
+        assert tnr_monthly == row_monthly[true_negative_rate]
+        assert tnr_quarterly == row_quarterly[true_negative_rate]
 
 
 @pytest.mark.parametrize(

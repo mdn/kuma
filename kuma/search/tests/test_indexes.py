@@ -1,7 +1,6 @@
 from django.conf import settings
 from elasticsearch_dsl.connections import connections
 
-from kuma.core.tests import eq_
 from kuma.wiki.models import Document
 from kuma.wiki.search import WikiDocumentType
 
@@ -17,8 +16,8 @@ class TestIndexes(ElasticTestCase):
         Index.objects.all().delete()
 
     def test_get_current(self):
-        eq_(Index.objects.get_current().prefixed_name,
-            '%s-main_index' % settings.ES_INDEX_PREFIX)
+        assert ('%s-main_index' % settings.ES_INDEX_PREFIX ==
+                Index.objects.get_current().prefixed_name)
 
     def _reload(self, index):
         return Index.objects.get(pk=index.pk)
@@ -39,7 +38,7 @@ class TestIndexes(ElasticTestCase):
         index.promote()
         assert index.promoted
 
-        eq_(Index.objects.get_current().prefixed_name, index.prefixed_name)
+        assert index.prefixed_name == Index.objects.get_current().prefixed_name
 
         index.demote()
         assert not index.promoted
@@ -62,8 +61,8 @@ class TestIndexes(ElasticTestCase):
         main_index = self._reload(main_index)
         assert main_index.populated
         main_index.promote()
-        eq_(Index.objects.get_current().prefixed_name,
-            main_index.prefixed_name)
+        assert (main_index.prefixed_name ==
+                Index.objects.get_current().prefixed_name)
 
         # then create a successor and render a document against the old index
         successor_index = Index.objects.create(name='second')
@@ -72,23 +71,22 @@ class TestIndexes(ElasticTestCase):
         doc.slug = 'test-outdated'
         doc.save()
         doc.render()
-        eq_(successor_index.outdated_objects.count(), 1)
+        assert 1 == successor_index.outdated_objects.count()
 
         # .populate() creates the index and populates it.
         successor_index.populate()
 
         S = WikiDocumentType.search
-        eq_(S(index=successor_index.prefixed_name).count(), 7)
-        eq_(S().query('match', title='lorem').execute()[0].slug, 'lorem-ipsum')
+        assert 7 == S(index=successor_index.prefixed_name).count()
+        assert 'lorem-ipsum' == S().query('match', title='lorem').execute()[0].slug
 
         # Promotion reindexes outdated documents. Test that our change is
         # reflected in the index.
         successor_index.promote()
         self.refresh(index=successor_index.prefixed_name)
-        eq_(successor_index.outdated_objects.count(), 0)
-        eq_(S(index=successor_index.prefixed_name)
-            .query('match', title='outdated').execute()[0].slug,
-            'test-outdated')
+        assert 0 == successor_index.outdated_objects.count()
+        assert ('test-outdated' == S(index=successor_index.prefixed_name)
+                .query('match', title='outdated').execute()[0].slug)
 
     def test_delete_index(self):
         # first create and populate the index

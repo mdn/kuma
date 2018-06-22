@@ -4,7 +4,7 @@ import pytest
 from django import forms
 from django.test import RequestFactory
 
-from kuma.core.tests import eq_, KumaTestCase
+from kuma.core.tests import KumaTestCase
 
 from . import user
 from ..adapters import (KumaAccountAdapter, USERNAME_CHARACTERS,
@@ -22,12 +22,12 @@ class TestUserEditForm(KumaTestCase):
             'username': test_user.username,
         }
         form = UserEditForm(data, instance=test_user)
-        eq_(True, form.is_valid())
+        assert form.is_valid()
 
         # let's try this with the username above
         test_user2 = user(save=True)
         form = UserEditForm(data, instance=test_user2)
-        eq_(False, form.is_valid())
+        assert not form.is_valid()
 
     def test_can_keep_legacy_username(self):
         test_user = user(username='legacy@example.com', save=True)
@@ -45,18 +45,18 @@ class TestUserEditForm(KumaTestCase):
             'username': 'mr.legacy@example.com'
         }
         form = UserEditForm(data, instance=test_user)
-        eq_(form.is_valid(), False)
-        eq_(form.errors, {'username': [USERNAME_CHARACTERS]})
+        assert not form.is_valid()
+        assert {'username': [USERNAME_CHARACTERS]} == form.errors
 
     def test_cannot_change_to_legacy_username(self):
         test_user = user(save=True)
-        eq_(test_user.has_legacy_username, False)
+        assert not test_user.has_legacy_username
         data = {
             'username': 'mr.legacy@example.com'
         }
         form = UserEditForm(data, instance=test_user)
-        eq_(form.is_valid(), False)
-        eq_(form.errors, {'username': [USERNAME_CHARACTERS]})
+        assert not form.is_valid(), False
+        assert {'username': [USERNAME_CHARACTERS]} == form.errors
 
     def test_blank_username_invalid(self):
         test_user = user(save=True)
@@ -64,8 +64,8 @@ class TestUserEditForm(KumaTestCase):
             'username': '',
         }
         form = UserEditForm(data, instance=test_user)
-        eq_(form.is_valid(), False)
-        eq_(form.errors, {'username': ['This field cannot be blank.']})
+        assert not form.is_valid()
+        assert {'username': ['This field cannot be blank.']} == form.errors
 
     def test_https_user_urls(self):
         """bug 733610: User URLs should allow https"""
@@ -111,7 +111,7 @@ class TestUserEditForm(KumaTestCase):
                 }
                 form = UserEditForm(data, instance=edit_user)
                 result_valid = form.is_valid()
-                eq_(expected_valid, result_valid)
+                assert expected_valid == result_valid
 
 
 @pytest.mark.parametrize('username', ('testuser@example.com', '@testuser'))

@@ -8,8 +8,6 @@ import pytest
 from elasticsearch import TransportError
 from elasticsearch_dsl.connections import connections
 
-from kuma.core.tests import eq_
-
 from . import WikiTestCase
 from .. import kumascript
 from .. constants import KUMASCRIPT_BASE_URL
@@ -52,8 +50,8 @@ class KumascriptClientTests(WikiTestCase):
 
         # Ensure the env vars intended for kumascript match expected values.
         for n in ('title', 'slug', 'locale', 'path'):
-            eq_(env_vars[n], result_vars[n])
-        eq_(sorted([u'foo', u'bar', u'baz']), sorted(result_vars['tags']))
+            assert env_vars[n] == result_vars[n]
+        assert {u'foo', u'bar', u'baz'} == set(result_vars['tags'])
 
 
 def test_macro_sources(mock_requests):

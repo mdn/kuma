@@ -2,7 +2,6 @@ import pytest
 
 from django.core.exceptions import ValidationError
 
-from kuma.core.tests import eq_
 from kuma.wiki.tests import revision
 
 from . import UserTestCase
@@ -34,7 +33,7 @@ class TestUser(UserTestCase):
         user.save()
         user2 = self.user_model.objects.get(pk=user.pk)
         for name, url in test_sites.items():
-            eq_(getattr(user2, name), url)
+            assert url == getattr(user2, name)
 
     def test_linkedin_urls(self):
         user = self.user_model.objects.get(username='testuser')
@@ -49,7 +48,7 @@ class TestUser(UserTestCase):
             user.linkedin_url = url
             user.save()
             new_user = self.user_model.objects.get(pk=user.pk)
-            eq_(url, new_user.linkedin_url)
+            assert url == new_user.linkedin_url
 
     def test_stackoverflow_urls(self):
         """Bug 1306087: Accept two-letter country-localized stackoverflow
@@ -80,7 +79,7 @@ class TestUser(UserTestCase):
         Make sure it shows up."""
         user = self.user_model.objects.get(username='testuser')
         assert hasattr(user, 'irc_nickname')
-        eq_('testuser', user.irc_nickname)
+        assert 'testuser' == user.irc_nickname
 
     def test_unicode_email_gravatar(self):
         """Bug 689056: Unicode characters in email addresses shouldn't break
@@ -95,7 +94,7 @@ class TestUser(UserTestCase):
         assert hasattr(user, 'locale')
         assert user.locale == 'en-US'
         assert hasattr(user, 'timezone')
-        eq_(user.timezone, 'US/Pacific')
+        assert 'US/Pacific' == user.timezone
 
     def test_wiki_revisions(self):
         user = self.user_model.objects.get(username='testuser')

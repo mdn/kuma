@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from kuma.core.tests import eq_, KumaTestCase
+from kuma.core.tests import KumaTestCase
 from kuma.core.utils import order_params
 
 from ..utils import QueryURLObject
@@ -12,27 +12,27 @@ class URLTests(KumaTestCase):
         original = 'http://example.com/?spam=eggs'
         url = QueryURLObject(original)
 
-        eq_(url.pop_query_param('spam', 'eggs'), 'http://example.com/')
-        eq_(url.pop_query_param('spam', 'spam'), original)
+        assert 'http://example.com/' == url.pop_query_param('spam', 'eggs')
+        assert original, url.pop_query_param('spam', 'spam')
 
         original = 'http://example.com/?spam=eggs&spam=spam'
         url = QueryURLObject(original)
-        eq_(url.pop_query_param('spam', 'eggs'),
-            'http://example.com/?spam=spam')
-        eq_(url.pop_query_param('spam', 'spam'),
-            'http://example.com/?spam=eggs')
+        assert ('http://example.com/?spam=spam' ==
+                url.pop_query_param('spam', 'eggs'))
+        assert ('http://example.com/?spam=eggs' ==
+                url.pop_query_param('spam', 'spam'))
 
         original = 'http://example.com/?spam=eggs&foo='
         url = QueryURLObject(original)
-        eq_(url.pop_query_param('spam', 'eggs'),
-            'http://example.com/?foo=')
+        assert ('http://example.com/?foo=' ==
+                url.pop_query_param('spam', 'eggs'))
 
     def test_merge_query_param(self):
         original = 'http://example.com/?spam=eggs'
         url = QueryURLObject(original)
 
-        eq_(url.merge_query_param('spam', 'eggs'), original)
-        eq_(url.merge_query_param('spam', 'spam'), original + '&spam=spam')
+        assert original == url.merge_query_param('spam', 'eggs')
+        assert original + '&spam=spam' == url.merge_query_param('spam', 'spam')
 
         original = 'http://example.com/?foo=&spam=eggs&foo=bar'
         url = QueryURLObject(original)
@@ -52,4 +52,4 @@ class URLTests(KumaTestCase):
         for url in ['http://example.com/?spam=',
                     'http://example.com/?spam']:
             url_object = QueryURLObject(url)
-            eq_(url_object.clean_params(url_object.query_dict), {})
+            assert {} == url_object.clean_params(url_object.query_dict)

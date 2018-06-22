@@ -187,10 +187,9 @@ seldom-updated code is more likely to have old-style tests. We expect a full
 conversion to take a few more years.
 
 We **avoid** old-style tests that use Django's
-[TestCase testing classes][testcase], [fixture files][fixture_files],
-[``eq_``][eq] test function and general-purpose factory
-functions like [get_user][get_user], [document][document], and
-[revision][revision].
+[TestCase testing classes][testcase], [fixture files][fixture_files] and
+general-purpose factory functions like [get_user][get_user], [document][document],
+and [revision][revision].
 
 We **prefer** test functions, a small number of global
 [pytest fixtures][pytest-fixtures] like [root_doc][root_doc] and

@@ -10,7 +10,7 @@ from pyquery import PyQuery as pq
 from ratelimit.exceptions import Ratelimited
 from soapbox.models import Message
 
-from . import (assert_no_cache_header, assert_shared_cache_header, eq_,
+from . import (assert_no_cache_header, assert_shared_cache_header,
                KumaTestCase)
 from ..urlresolvers import reverse
 from ..views import handler500
@@ -66,14 +66,14 @@ class LoggingTests(KumaTestCase):
     def test_no_mail_handler(self):
         self.logger.handlers = [logging.NullHandler()]
         response = self.client.get(self.suspicous_path)
-        eq_(response.status_code, 400)
-        eq_(0, len(mail.outbox))
+        assert 400 == response.status_code
+        assert 0 == len(mail.outbox)
 
     def test_mail_handler(self):
         self.logger.handlers = [AdminEmailHandler()]
         response = self.client.get(self.suspicous_path)
-        eq_(response.status_code, 400)
-        eq_(1, len(mail.outbox))
+        assert 400 == response.status_code
+        assert 1 == len(mail.outbox)
 
         assert 'admin@example.com' in mail.outbox[0].to
         assert self.suspicous_path in mail.outbox[0].body
@@ -87,10 +87,10 @@ class SoapboxViewsTest(KumaTestCase):
 
         url = reverse('home')
         r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
+        assert 200 == r.status_code
 
         doc = pq(r.content)
-        eq_(m.message, doc.find('div.global-notice').text())
+        assert m.message == doc.find('div.global-notice').text()
 
     def test_subsection(self):
         m = Message(message='Search', is_global=False, is_active=True,
@@ -99,17 +99,17 @@ class SoapboxViewsTest(KumaTestCase):
 
         url = reverse('search')
         r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
+        assert 200 == r.status_code
 
         doc = pq(r.content)
-        eq_(m.message, doc.find('div.global-notice').text())
+        assert m.message == doc.find('div.global-notice').text()
 
         url = reverse('home')
         r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
+        assert 200 == r.status_code
 
         doc = pq(r.content)
-        eq_([], doc.find('div.global-notice'))
+        assert [] == doc.find('div.global-notice')
 
     def test_inactive(self):
         m = Message(message='Search', is_global=False, is_active=False,
@@ -118,10 +118,10 @@ class SoapboxViewsTest(KumaTestCase):
 
         url = reverse('search')
         r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
+        assert 200 == r.status_code
 
         doc = pq(r.content)
-        eq_([], doc.find('div.global-notice'))
+        assert [] == doc.find('div.global-notice')
 
 
 class EventsRedirectTest(KumaTestCase):
@@ -129,8 +129,8 @@ class EventsRedirectTest(KumaTestCase):
     def test_redirect_to_mozilla_org(self):
         url = '/en-US/events'
         response = self.client.get(url)
-        eq_(302, response.status_code)
-        eq_('https://mozilla.org/contribute/events', response['Location'])
+        assert 302 == response.status_code
+        assert 'https://mozilla.org/contribute/events' == response['Location']
 
 
 @pytest.mark.parametrize(
