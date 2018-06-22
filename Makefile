@@ -61,7 +61,7 @@ install:
 	@ pip install $(requirements)
 
 clean:
-	rm -rf .coverage build/
+	rm -rf .coverage build/ tmp/emails/*.log
 	find . \( -name \*.pyc -o -name \*.pyo -o -name __pycache__ \) -delete
 	mkdir -p build/locale
 
