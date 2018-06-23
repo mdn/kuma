@@ -26,7 +26,7 @@ from pytz import timezone
 from six.moves.urllib.parse import parse_qsl, urlsplit, urlunsplit
 from taggit.utils import split_strip
 
-from .cache import memcache
+from .cache import redis
 from .exceptions import DateTimeFormatError
 
 
@@ -132,16 +132,16 @@ def generate_filename_and_delete_previous(ffile, name, before_delete=None):
     return new_filename
 
 
-class MemcacheLockException(Exception):
+class RedisLockException(Exception):
     pass
 
 
-class MemcacheLock(object):
+class RedisLock(object):
     def __init__(self, key, attempts=1, expires=60 * 60 * 3):
         self.key = 'lock_%s' % key
         self.attempts = attempts
         self.expires = expires
-        self.cache = memcache
+        self.cache = redis
 
     def locked(self):
         return bool(self.cache.get(self.key))
@@ -159,13 +159,13 @@ class MemcacheLock(object):
                 logging.debug('Sleeping for %s while trying to acquire key %s',
                               sleep_time, self.key)
                 time.sleep(sleep_time)
-        raise MemcacheLockException('Could not acquire lock for %s' % self.key)
+        raise RedisLockException('Could not acquire lock for %s' % self.key)
 
     def release(self):
         self.cache.delete(self.key)
 
 
-def memcache_lock(prefix, expires=60 * 60):
+def redis_lock(prefix, expires=60 * 60):
     """
     Decorator that only allows one instance of the same command to run
     at a time.
@@ -174,14 +174,14 @@ def memcache_lock(prefix, expires=60 * 60):
         @functools.wraps(func)
         def wrapper(self, *args, **kwargs):
             name = '_'.join((prefix, func.__name__) + args)
-            lock = MemcacheLock(name, expires=expires)
+            lock = RedisLock(name, expires=expires)
             if lock.locked():
                 log.warning('Lock %s locked; ignoring call.' % name)
                 return
             try:
                 # Try to acquire the lock without blocking.
                 lock.acquire()
-            except MemcacheLockException:
+            except RedisLockException:
                 log.warning('Aborting %s; lock acquisition failed.' % name)
                 return
             else:

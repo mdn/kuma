@@ -4,7 +4,7 @@ from django.contrib.sessions.models import Session
 from django.db import connection
 from django.utils import timezone
 
-from .cache import memcache
+from .cache import redis
 from .decorators import skip_in_maintenance_mode
 from .models import IPBan
 
@@ -28,7 +28,7 @@ def clean_sessions():
     logger = clean_sessions.get_logger()
     chunk_size = config.SESSION_CLEANUP_CHUNK_SIZE
 
-    if memcache.add(LOCK_ID, now.strftime('%c'), LOCK_EXPIRE):
+    if redis.add(LOCK_ID, now.strftime('%c'), LOCK_EXPIRE):
         total_count = get_expired_sessions(now).count()
         delete_count = 0
         logger.info('Deleting the %s of %s oldest expired sessions' %
@@ -44,13 +44,13 @@ def clean_sessions():
                 """, [chunk_size])
         finally:
             logger.info('Deleted %s expired sessions' % delete_count)
-            memcache.delete(LOCK_ID)
+            redis.delete(LOCK_ID)
             expired_sessions = get_expired_sessions(now)
             if expired_sessions.exists():
                 clean_sessions.apply_async()
     else:
         logger.error('The clean_sessions task is already running since %s' %
-                     memcache.get(LOCK_ID))
+                     redis.get(LOCK_ID))
 
 
 @task

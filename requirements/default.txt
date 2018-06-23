@@ -106,11 +106,6 @@ django-jinja==2.4.1 \
     --hash=sha256:8a49d73de616a12075eee14c6d3bbab936261a463457d40348d8b8e2995cfbed \
     --hash=sha256:ceaa0eeebc4d91a5800967e50f4f087f0b6457503e3c2af85dc199bed8732a9a
 
-# Use consistent hashes despite adding or removing servers
-django-memcached-hashring==0.1.2 \
-    --hash=sha256:f71f99d60e704cc239bddbbe336dcdc5bb8a487b65a1b0b6c7ce0f4af5848442 \
-    --hash=sha256:14c2dc29bc693feaf114dea8c871f4d25daca72bba8f37b159d552fed4ab6337
-
 # Allow Django to use MySQL-specific features
 django-mysql==1.0.4 \
     --hash=sha256:a90eaaff1b9cfca374e565a873ba98b20209753e774ee136c526d1c4dd641561 \
@@ -143,6 +138,13 @@ django-recaptcha==1.0.5 \
 django-redirect-urls==1.0 \
     --hash=sha256:c4cd7818b06ccf0a5307656a33f3ecea47ee22f0cceb374ea559eb2d1402d5d8 \
     --hash=sha256:e5b1dec666758c7d2621ce337458a09e4b3feeb06cb9ec5d43b17d66b87ea97d
+
+# Provide a caching provider to use Redis as a cache in Django
+# Code: https://github.com/niwinz/django-redis
+# Docs: http://niwinz.github.io/django-redis/latest/
+django-redis==4.9.0 \
+    --hash=sha256:15b47faef6aefaa3f47135a2aeb67372da300e4a4cf06809c66ab392686a2155 \
+    --hash=sha256:a90343c33a816073b735f0bed878eaeec4f83b75fcc0dce2432189b8ea130424
 
 # RESTful API framework, used by search
 # Code: https://github.com/encode/django-rest-framework

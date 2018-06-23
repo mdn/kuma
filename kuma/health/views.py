@@ -19,7 +19,7 @@ def liveness(request):
     """
     A successful response from this endpoint simply proves
     that Django is up and running. It doesn't mean that its
-    supporting services (like MySQL, memcached, Celery) can
+    supporting services (like MySQL, redis, Celery) can
     be successfully used from within this service.
     """
     return HttpResponse(status=204)

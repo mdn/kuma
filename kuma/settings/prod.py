@@ -14,7 +14,7 @@ SERVER_EMAIL = config(
 )
 
 # Cache
-CACHES['memcache']['TIMEOUT'] = 60 * 60 * 24
+CACHES['redis']['TIMEOUT'] = 60 * 60 * 24
 
 MEDIA_URL = config('MEDIA_URL', default='https://developer.cdn.mozilla.net/media/')
 

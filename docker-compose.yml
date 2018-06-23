@@ -7,7 +7,6 @@ services:
     volumes:
       - ./:/app:z
     depends_on:
-      - memcached
       - mysql
       - elasticsearch
       - redis
@@ -28,7 +27,7 @@ services:
       - ES_URLS=elasticsearch:9200
       - INTERACTIVE_EXAMPLES_BASE=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
       - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}
-      - MEMCACHE_SERVERS=memcached:11211
+      - REDIS_CACHE_SERVERS=redis://redis:6379/3
       - PROTOCOL=http://
       - SESSION_COOKIE_SECURE=False
       - SITE_URL=http://localhost:8000
@@ -51,7 +50,6 @@ services:
     <<: *worker
     command: gunicorn -w 4 --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 kuma.wsgi:application
     depends_on:
-      - memcached
       - mysql
       - elasticsearch
       - redis

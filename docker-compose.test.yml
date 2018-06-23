@@ -33,11 +33,11 @@ services:
       - ./:/app
     command: sh -c "urlwait && py.test --nomigrations kuma --ignore=kuma/search"
     depends_on:
-      - memcached
       - mysql
+      - redis
     environment:
       - DATABASE_URL=mysql://root:kuma@mysql:3306/developer_mozilla_org
-      - MEMCACHE_SERVERS=memcached:11211
+      - REDIS_CACHE_SERVERS=redis://redis:6379/3
       - PYTHONDONTWRITEBYTECODE=1
       - URLWAIT_TIMEOUT=300
 
@@ -48,12 +48,12 @@ services:
       - ./:/app
     command: sh -c "urlwait && py.test --nomigrations --junit-xml=/app/test_results/django.xml kuma"
     depends_on:
-      - memcached
+      - redis
       - mysql
       - elasticsearch
     environment:
       - DATABASE_URL=mysql://root:kuma@mysql:3306/developer_mozilla_org
       - ES_URLS=elasticsearch:9200
-      - MEMCACHE_SERVERS=memcached:11211
+      - REDIS_CACHE_SERVERS=redis://redis:6379/3
       - PYTHONDONTWRITEBYTECODE=1
       - URLWAIT_TIMEOUT=300

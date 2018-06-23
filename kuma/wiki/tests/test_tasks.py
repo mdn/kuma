@@ -5,7 +5,7 @@ from datetime import datetime
 
 from django.conf import settings
 
-from kuma.core.cache import memcache
+from kuma.core.cache import redis
 from kuma.users.models import User
 from kuma.users.tests import user, UserTestCase
 
@@ -20,7 +20,7 @@ class UpdateCommunityStatsTests(UserTestCase):
 
     def setUp(self):
         super(UpdateCommunityStatsTests, self).setUp()
-        self.cache = memcache
+        self.cache = redis
 
     def test_empty_community_stats(self):
         update_community_stats()

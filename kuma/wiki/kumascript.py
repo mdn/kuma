@@ -14,7 +14,7 @@ from django.contrib.sites.models import Site
 from elasticsearch import TransportError
 from elasticsearch_dsl import Search
 
-from kuma.core.cache import memcache
+from kuma.core.cache import redis
 
 from .constants import KUMASCRIPT_BASE_URL, KUMASCRIPT_TIMEOUT_ERROR
 
@@ -147,7 +147,7 @@ def get(document, cache_control, base_url, timeout=None):
         add_env_headers(headers, env_vars)
 
         # Set up for conditional GET, if we have the details cached.
-        cached_meta = memcache.get_many([etag_key, modified_key])
+        cached_meta = redis.get_many([etag_key, modified_key])
         if etag_key in cached_meta:
             headers['If-None-Match'] = cached_meta[etag_key]
         if modified_key in cached_meta:
@@ -158,7 +158,7 @@ def get(document, cache_control, base_url, timeout=None):
 
         if response.status_code == 304:
             # Conditional GET was a pass, so use the cached content.
-            result = memcache.get_many([body_key, errors_key])
+            result = redis.get_many([body_key, errors_key])
             body = result.get(body_key, '').decode('utf-8')
             errors = result.get(errors_key, None)
 
@@ -169,11 +169,11 @@ def get(document, cache_control, base_url, timeout=None):
             # Cache the request for conditional GET, but use the max_age for
             # the cache timeout here too.
             headers = response.headers
-            memcache.set(etag_key, headers.get('etag'), timeout=max_age)
-            memcache.set(modified_key, headers.get('last-modified'), timeout=max_age)
-            memcache.set(body_key, body.encode('utf-8'), timeout=max_age)
+            redis.set(etag_key, headers.get('etag'), timeout=max_age)
+            redis.set(modified_key, headers.get('last-modified'), timeout=max_age)
+            redis.set(body_key, body.encode('utf-8'), timeout=max_age)
             if errors:
-                memcache.set(errors_key, errors, timeout=max_age)
+                redis.set(errors_key, errors, timeout=max_age)
 
         elif response.status_code is None:
             errors = KUMASCRIPT_TIMEOUT_ERROR

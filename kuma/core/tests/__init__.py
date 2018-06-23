@@ -7,7 +7,7 @@ from django.core.cache import cache
 from django.test import TestCase
 from django.utils.translation import trans_real
 
-from ..cache import memcache
+from ..cache import redis
 
 
 def assert_no_cache_header(response):
@@ -40,7 +40,7 @@ class KumaTestMixin(object):
 
         # Clean the slate.
         cache.clear()
-        memcache.clear()
+        redis.clear()
 
         trans_real.deactivate()
         trans_real._translations = {}  # Django fails to clear this cache.
