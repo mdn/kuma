@@ -109,7 +109,7 @@
                 hitType: 'timing',
                 timingCategory: timingObject.category || '', // Required.
                 timingVar: timingObject.timingVar || '', // Required.
-                timingValue: timingObject.value || 0,  // Required.
+                timingValue: timingObject.value ? Math.round(timingObject.value) : 0,  // Required.
 
             };
 
