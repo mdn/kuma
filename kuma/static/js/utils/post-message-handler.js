@@ -8,14 +8,14 @@ function handlePerformanceEvents(data) {
         category: data.category,
         action: data.action,
         label: new Date().getTime() + '-' + mdn.utils.randomString(5),
-        value: data.value - performance.timing.fetchStart
+        value: data.value - performance.timing.navigationStart
     });
 
     // one of hitType: timing
     mdn.analytics.trackTiming({
         category: data.category,
         timingVar: data.action,
-        value: data.value - performance.timing.fetchStart
+        value: data.value - performance.timing.navigationStart
     });
 }
 
@@ -51,7 +51,7 @@ function handlePerfMarks(perfData) {
  * Called by `handlePerfMarks` when a `markName` contains the
  * string `ie-load-event-end`. This sets a new mark, and a new
  * measure. It then uses this information to expose the total
- * duration from `fetchStart` of the parent document, until the
+ * duration from `navigationStart` of the parent document, until the
  * interactive example has reached `loadEventEnd`
  * @param {Object} perfData - Object containing performance mark/measure information
  */
@@ -59,8 +59,8 @@ function setLoadEventEnd(perfData) {
     var measureName = perfData.markName + '-measure';
     // set a mark
     window.mdn.perf.setMark(perfData.markName);
-    /* set a performance measure that is the duration from
-       fetchStart until the interactive editor loaded */
+    /* Set a performance measure that is the duration from
+       navigationStart until the interactive editor loaded */
     window.mdn.perf.setMeasure({
         measureName: measureName,
         startMark: 'navigationStart',
