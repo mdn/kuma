@@ -24,8 +24,12 @@ function handlePerformanceEvents(data) {
  * @param {Object} perfData - Object containing performance mark/measure information
  */
 function handlePerfMarks(perfData) {
-    // if there is no `measureName` property, just set a mark
-    if (!perfData.measureName) {
+    /* For perfData with a markName that contains the string
+       `ie-load-event-end` */
+    if (perfData.markName.indexOf('ie-load-event-end') > -1) {
+        setLoadEventEnd(perfData);
+    } else if (!perfData.measureName) {
+        // if there is no `measureName` property, just set a mark
         window.mdn.perf.setMark(perfData.markName);
     } else {
         window.mdn.perf.setMark(perfData.markName);
@@ -41,6 +45,33 @@ function handlePerfMarks(perfData) {
             value: window.mdn.perf.getDuration(perfData.measureName)
         });
     }
+}
+
+/**
+ * Called by `handlePerfMarks` when a `markName` contains the
+ * string `ie-load-event-end`. This sets a new mark, and a new
+ * measure. It then uses this information to expose the total
+ * duration from `fetchStart` of the parent document, until the
+ * interactive example has reached `loadEventEnd`
+ * @param {Object} perfData - Object containing performance mark/measure information
+ */
+function setLoadEventEnd(perfData) {
+    var measureName = perfData.markName + '-measure';
+    // set a mark
+    window.mdn.perf.setMark(perfData.markName);
+    /* set a performance measure that is the duration from
+       fetchStart until the interactive editor loaded */
+    window.mdn.perf.setMeasure({
+        measureName: measureName,
+        startMark: 'navigationStart',
+        endMark: perfData.markName
+    });
+
+    mdn.analytics.trackTiming({
+        category: 'Interactive Examples',
+        timingVar: measureName,
+        value: window.mdn.perf.getDuration(measureName)
+    });
 }
 
 window.mdn.postMessageHandler = {
@@ -61,8 +92,6 @@ window.mdn.postMessageHandler = {
         if (event.origin !== allowedOrigin) {
             return false;
         }
-
-        console.info('====== eventData.label ======', eventData.label);
 
         if (eventData.label === 'Performance Events') {
             handlePerformanceEvents(eventData);
