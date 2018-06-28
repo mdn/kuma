@@ -29,55 +29,51 @@
     /* Ensure there is an iframe present and that performance is
        supported before gathering performance metric */
     if (iframe && performance !== undefined) {
-        document.addEventListener('readystatechange', function(event) {
-            if (event.target.readyState === 'complete') {
-                var interactiveExamplesPerfEntry = {};
-                var perfEntries = performance.getEntriesByType('resource');
-                var mainFetchStart = 0;
-                var iframeFetchStart = 0;
-                var iframeFetchStartSinceUnixEpoch = 0;
-                var timeToIframeFetchStart = 0;
+        window.addEventListener('load', function() {
+            var interactiveExamplesPerfEntry = {};
+            var perfEntries = performance.getEntriesByType('resource');
+            var mainNavigationStart = 0;
+            var iframeFetchStart = 0;
+            var iframeFetchStartSinceUnixEpoch = 0;
+            var timeToIframeFetchStart = 0;
 
-                if (perfEntries === undefined || perfEntries.length <= 0) {
-                    console.info('No performance entries was returned');
-                    return;
-                }
+            if (perfEntries === undefined || perfEntries.length <= 0) {
+                console.info('No performance entries was returned');
+                return;
+            }
 
-                interactiveExamplesPerfEntry = getInteractiveExamplesPerfEntry(
-                    perfEntries
+            interactiveExamplesPerfEntry = getInteractiveExamplesPerfEntry(
+                perfEntries
+            );
+
+            // ensure that the iframe was found in the array of performance entries
+            if (interactiveExamplesPerfEntry !== undefined) {
+                mainNavigationStart = performance.timing.navigationStart;
+                iframeFetchStart = Math.round(
+                    interactiveExamplesPerfEntry.fetchStart
                 );
+                iframeFetchStartSinceUnixEpoch =
+                    mainNavigationStart + iframeFetchStart;
 
-                // ensure that the iframe was found in the array of performance entries
-                if (interactiveExamplesPerfEntry !== undefined) {
-                    mainFetchStart = performance.timing.fetchStart;
-                    iframeFetchStart = Math.round(
-                        interactiveExamplesPerfEntry.fetchStart
-                    );
-                    iframeFetchStartSinceUnixEpoch =
-                        mainFetchStart + iframeFetchStart;
+                timeToIframeFetchStart =
+                    new Date(iframeFetchStartSinceUnixEpoch) -
+                    new Date(mainNavigationStart);
 
-                    timeToIframeFetchStart =
-                        new Date(iframeFetchStartSinceUnixEpoch) -
-                        new Date(mainFetchStart);
+                // one of hitType: event
+                mdn.analytics.trackEvent({
+                    category: 'Interactive Examples',
+                    action: 'Time to iframe fetch start',
+                    label:
+                        new Date().getTime() + '-' + mdn.utils.randomString(5),
+                    value: timeToIframeFetchStart
+                });
 
-                    // one of hitType: event
-                    mdn.analytics.trackEvent({
-                        category: 'Interactive Examples',
-                        action: 'Time to iframe fetch start',
-                        label:
-                            new Date().getTime() +
-                            '-' +
-                            mdn.utils.randomString(5),
-                        value: timeToIframeFetchStart
-                    });
-
-                    // one of hitType: timing
-                    mdn.analytics.trackTiming({
-                        category: 'Interactive Examples',
-                        timingVar: 'Time to iframe fetch start',
-                        value: timeToIframeFetchStart
-                    });
-                }
+                // one of hitType: timing
+                mdn.analytics.trackTiming({
+                    category: 'Interactive Examples',
+                    timingVar: 'Time to iframe fetch start',
+                    value: timeToIframeFetchStart
+                });
             }
         });
     }
