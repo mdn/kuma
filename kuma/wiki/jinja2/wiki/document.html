@@ -11,6 +11,7 @@
   {% set help_link = url('wiki.translate', document_path=document.parent.slug, locale=document.parent.locale)|urlparams(tolocale=request.LANGUAGE_CODE) %}
 {% endif %}
 
+{% set is_archive = (document.slug == 'Archive') or document.slug.startswith('Archive/') %}
 {% set is_logged_in = request.user.is_authenticated() %}
 {% set doc_abs_url = document.get_absolute_url() %}
 {% set canonical = doc_abs_url | absolutify %}
@@ -46,6 +47,9 @@
 
 {% block site_css %}
     {{ super() }}
+    {% if is_archive %}
+      {% stylesheet 'archive' %}
+    {% endif %}
 {% endblock %}
 
 {% block extrahead %}
