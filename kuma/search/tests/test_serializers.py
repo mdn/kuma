@@ -31,7 +31,7 @@ class SerializerTests(ElasticTestCase):
         assert data['shortcut'] is None
         assert 'serializer' == data['slug']
         assert 1 == len(data['tags'])
-        assert u'tag' == data['tags'][0], u'tag'
+        assert u'tag' == data['tags'][0]
 
     @mock.patch('kuma.search.serializers.ugettext')
     def test_filter_serializer_with_translations(self, _mock):

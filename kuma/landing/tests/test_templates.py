@@ -30,6 +30,6 @@ class HomeTests(KumaTestCase):
         response = self.client.get(url, follow=True)
         page = pq(response.content)
         filters = page.find('#home-search-form input[type=hidden]')
-        filter_vals = [p.val() for p in filters.items()]
+
         assert 'topic' == filters.eq(0).attr('name')
-        assert {'css', 'html', 'javascript'} == set(filter_vals)
+        assert set(p.val() for p in filters.items()) == {'css', 'html', 'javascript'}

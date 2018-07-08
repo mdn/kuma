@@ -1097,7 +1097,7 @@ def test_extractor_css_classnames(root_doc, wiki_user):
         document=root_doc, content=content, creator=wiki_user)
     root_doc.render()  # Also saves
     result = root_doc.extract.css_classnames()
-    assert set(result) == set(classes)
+    assert sorted(result) == sorted(classes)
 
 
 def test_extractor_html_attributes(root_doc, wiki_user):
@@ -1116,7 +1116,7 @@ def test_extractor_html_attributes(root_doc, wiki_user):
         document=root_doc, content=content, creator=wiki_user)
     root_doc.render()  # Also saves
     result = root_doc.extract.html_attributes()
-    assert set(result) == set(attributes)
+    assert sorted(result) == sorted(attributes)
 
 
 def test_extractor_macro_names(root_doc, wiki_user):
@@ -1131,7 +1131,7 @@ def test_extractor_macro_names(root_doc, wiki_user):
     root_doc.current_revision = Revision.objects.create(
         document=root_doc, content=content, creator=wiki_user)
     result = root_doc.extract.macro_names()
-    assert set(result) == set(macros)
+    assert sorted(result) == sorted(macros)
 
 
 @pytest.mark.parametrize('is_rendered', (True, False))

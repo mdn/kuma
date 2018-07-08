@@ -109,7 +109,7 @@ class SoapboxViewsTest(KumaTestCase):
         assert 200 == r.status_code
 
         doc = pq(r.content)
-        assert [] == doc.find('div.global-notice')
+        assert not doc.find('div.global-notice')
 
     def test_inactive(self):
         m = Message(message='Search', is_global=False, is_active=False,
@@ -121,7 +121,7 @@ class SoapboxViewsTest(KumaTestCase):
         assert 200 == r.status_code
 
         doc = pq(r.content)
-        assert [] == doc.find('div.global-notice')
+        assert not doc.find('div.global-notice')
 
 
 class EventsRedirectTest(KumaTestCase):

@@ -1777,7 +1777,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # For Ajax requests the response is a JsonResponse
         for resp in [resp1, resp2]:
-            assert json.loads(resp.content)['error'] is False
+            assert not json.loads(resp.content)['error']
             assert 'error_message' not in json.loads(resp.content).keys()
 
     def test_multiple_translation_edits_ajax(self):
@@ -1953,7 +1953,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                                            locale=foreign_doc.locale))
         assert (pq(response.content).find('.btn-discard').attr('href') ==
                 reverse('wiki.document', args=[foreign_doc.slug],
-                locale=foreign_doc.locale))
+                        locale=foreign_doc.locale))
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get',
@@ -2600,7 +2600,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         resp = self.client.post('%s?section=s2&raw=true' %
                                 reverse('wiki.edit', args=[rev.document.slug]),
                                 data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        assert json.loads(resp.content)['error'] is False
+        assert not json.loads(resp.content)['error']
 
         # Edit #1 submits, but since it's the same section, there's a collision
         data.update({
@@ -2713,8 +2713,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
                          follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         changed = Document.objects.get(pk=rev.document.id).current_revision
         assert rev.id != changed.id
-        assert (set(tags_to_save) ==
-                set([t.name for t in changed.review_tags.all()]))
+        assert set(tags_to_save) == set(t.name for t in changed.review_tags.all())
 
 
 class MindTouchRedirectTests(UserTestCase, WikiTestCase):
@@ -2870,7 +2869,7 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         self.client.login(username='testuser', password='testpass')
         resp = self.client.get(self.url, follow=False)
         p = pq(resp.content)
-        assert 1, p.find('#doc-render-raw-fallback').length
+        assert 1 == p.find('#doc-render-raw-fallback').length
 
     @mock.patch.object(Document, 'schedule_rendering')
     @mock.patch('kuma.wiki.kumascript.get')

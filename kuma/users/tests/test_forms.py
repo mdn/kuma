@@ -55,7 +55,7 @@ class TestUserEditForm(KumaTestCase):
             'username': 'mr.legacy@example.com'
         }
         form = UserEditForm(data, instance=test_user)
-        assert not form.is_valid(), False
+        assert not form.is_valid()
         assert {'username': [USERNAME_CHARACTERS]} == form.errors
 
     def test_blank_username_invalid(self):

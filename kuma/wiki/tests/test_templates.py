@@ -245,7 +245,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         trans_fr = document(parent=parent, locale="fr", save=True)
 
         response = self.client.get(trans_pt_br.get_absolute_url())
-        assert 200, response.status_code
+        assert 200 == response.status_code
         doc = pq(response.content)
         options = doc(".languages.go select.wiki-l10n option")
 

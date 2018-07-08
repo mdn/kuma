@@ -20,7 +20,7 @@ class TestLiveIndexing(ElasticTestCase):
         r.document.render()
 
         self.refresh()
-        assert count_before + 1, S().count()
+        assert count_before + 1 == S().count()
 
         r.document.delete()
         self.refresh()

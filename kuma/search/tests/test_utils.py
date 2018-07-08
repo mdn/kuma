@@ -13,7 +13,7 @@ class URLTests(KumaTestCase):
         url = QueryURLObject(original)
 
         assert 'http://example.com/' == url.pop_query_param('spam', 'eggs')
-        assert original, url.pop_query_param('spam', 'spam')
+        assert original == url.pop_query_param('spam', 'spam')
 
         original = 'http://example.com/?spam=eggs&spam=spam'
         url = QueryURLObject(original)
@@ -52,4 +52,4 @@ class URLTests(KumaTestCase):
         for url in ['http://example.com/?spam=',
                     'http://example.com/?spam']:
             url_object = QueryURLObject(url)
-            assert {} == url_object.clean_params(url_object.query_dict)
+            assert not url_object.clean_params(url_object.query_dict)

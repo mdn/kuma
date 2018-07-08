@@ -107,7 +107,7 @@ class DocumentTests(UserTestCase):
         assert parent.pk == enfant.other_translations[0].pk
         enfant_translation_pks = [trans.pk for trans in enfant.other_translations]
         assert bambino.pk in enfant_translation_pks
-        assert (enfant.pk in enfant_translation_pks) is False
+        assert enfant.pk not in enfant_translation_pks
 
     def test_topical_parents(self):
         d1, d2 = create_topical_parents_docs()
@@ -1139,7 +1139,7 @@ class PageMoveTests(UserTestCase):
         child2_doc = child2.document
         child2_doc.parent_topic = top_doc
         child2_doc.save()
-        assert [] == top_doc._tree_conflicts('NativeRTC')
+        assert not top_doc._tree_conflicts('NativeRTC')
 
     @pytest.mark.move
     def test_preserve_tags(self):

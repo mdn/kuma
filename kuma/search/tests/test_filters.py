@@ -22,8 +22,7 @@ class FilterTests(ElasticTestCase):
         view = SearchQueryView.as_view()
         request = self.get_request('/en-US/search?q=article')
         response = view(request)
-        assert 4 == response.data['count']
-        assert 4 == len(response.data['documents'])
+        assert len(response.data['documents']) == response.data['count'] == 4
         assert 'CSS/article-title-3' == response.data['documents'][0]['slug']
         assert 'en-US' == response.data['documents'][0]['locale']
 
@@ -43,8 +42,7 @@ class FilterTests(ElasticTestCase):
         view = View.as_view()
         request = self.get_request('/en-US/search?css_classnames=eval')
         response = view(request)
-        assert 1 == response.data['count']
-        assert 1 == len(response.data['documents'])
+        assert len(response.data['documents']) == response.data['count'] == 1
         assert doc.slug == response.data['documents'][0]['slug']
         assert doc.locale == response.data['documents'][0]['locale']
 
@@ -75,15 +73,13 @@ class FilterTests(ElasticTestCase):
         assert 'fr' == request.LANGUAGE_CODE
         response = view(request)
 
-        assert 7 == response.data['count']
-        assert 7 == len(response.data['documents'])
+        assert len(response.data['documents']) == response.data['count'] == 7
         assert 'fr' == response.data['documents'][0]['locale']
 
         request = self.get_request('/en-US/search?q=article')
         assert 'en-US' == request.LANGUAGE_CODE
         response = view(request)
-        assert 6 == response.data['count']
-        assert 6 == len(response.data['documents'])
+        assert len(response.data['documents']) == response.data['count'] == 6
         assert 'en-US' == response.data['documents'][0]['locale']
 
     def test_language_filter_override(self):
@@ -96,15 +92,13 @@ class FilterTests(ElasticTestCase):
         assert 'en-US' == request.LANGUAGE_CODE
         response = view(request)
 
-        assert 1 == response.data['count']
-        assert 1 == len(response.data['documents'])
+        assert len(response.data['documents']) == response.data['count'] == 1
         assert 'fr' == response.data['documents'][0]['locale']
 
         request = self.get_request('/en-US/search?q=pipe')
         assert 'en-US' == request.LANGUAGE_CODE
         response = view(request)
-        assert 0 == response.data['count']
-        assert 0 == len(response.data['documents'])
+        assert len(response.data['documents']) == response.data['count'] == 0
 
     def test_database_filter(self):
         class DatabaseFilterView(SearchView):
@@ -113,8 +107,7 @@ class FilterTests(ElasticTestCase):
         view = DatabaseFilterView.as_view()
         request = self.get_request('/en-US/search?group=tagged')
         response = view(request)
-        assert 2 == response.data['count']
-        assert 2 == len(response.data['documents'])
+        assert len(response.data['documents']) == response.data['count'] == 2
         assert 'article-title' == response.data['documents'][0]['slug']
         assert [{
                 'name': 'Group',
@@ -134,8 +127,7 @@ class FilterTests(ElasticTestCase):
 
         request = self.get_request('/fr/search?group=non-existent')
         response = view(request)
-        assert 7 == response.data['count']
-        assert 7 == len(response.data['documents'])
+        assert len(response.data['documents']) == response.data['count'] == 7
 
     def test_get_filters(self):
         FilterGroup.objects.create(

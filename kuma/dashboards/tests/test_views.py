@@ -534,7 +534,7 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         assert (row_quarterly[daily_average_viewers] ==
                 '{:.1f}'.format(float(spam_views_quarter) / days_in_quarter))
         # The published spam: 1 this week, 2 this month, 3 this quarter
-        assert len([]) == int(row_daily[published_spam])
+        assert not int(row_daily[published_spam])
         assert len(spam_weekly) == int(row_weekly[published_spam])
         assert len(spam_monthly) == int(row_monthly[published_spam])
         assert len(spam_quarterly) == int(row_quarterly[published_spam])
