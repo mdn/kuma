@@ -17,7 +17,7 @@ from django.utils.six.moves.urllib.parse import parse_qs, urlparse
 from pyquery import PyQuery as pq
 
 from kuma.core.tests import (assert_no_cache_header,
-                             assert_shared_cache_header, eq_)
+                             assert_shared_cache_header)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 from kuma.users.models import User
@@ -50,25 +50,25 @@ class DocumentTests(UserTestCase, WikiTestCase):
         """Load the document view page and verify the title and content."""
         r = revision(save=True, content='Some text.', is_approved=True)
         response = self.client.get(r.document.get_absolute_url())
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
         doc = pq(response.content)
-        eq_(r.document.title, doc('main#content div.document-head h1').text())
-        eq_(r.document.html, doc('article#wikiArticle').text())
+        assert doc('main#content div.document-head h1').text() == r.document.title
+        assert doc('article#wikiArticle').text() == r.document.html
 
     @pytest.mark.breadcrumbs
     def test_document_no_breadcrumbs(self):
         """Create docs with topical parent/child rel, verify no breadcrumbs."""
         d1, d2 = create_topical_parents_docs()
         response = self.client.get(d1.get_absolute_url())
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
         doc = pq(response.content)
-        eq_(d1.title, doc('main#content div.document-head h1').text())
+        assert doc('main#content div.document-head h1').text() == d1.title
         assert len(doc('nav.crumbs')) == 0
 
         response = self.client.get(d2.get_absolute_url())
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
         doc = pq(response.content)
-        eq_(d2.title, doc('main#content div.document-head h1').text())
+        assert doc('main#content div.document-head h1').text() == d2.title
         assert len(doc('nav.crumbs')) == 0
 
     @pytest.mark.breadcrumbs
@@ -97,11 +97,11 @@ class DocumentTests(UserTestCase, WikiTestCase):
         """Load an English document with no approved content."""
         r = revision(save=True, content='Some text.', is_approved=False)
         response = self.client.get(r.document.get_absolute_url())
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
         doc = pq(response.content)
-        eq_(r.document.title, doc('main#content div.document-head h1').text())
-        eq_("This article doesn't have approved content yet.",
-            doc('article#wikiArticle').text())
+        assert doc('main#content div.document-head h1').text() == r.document.title
+        assert ("This article doesn't have approved content yet." ==
+                doc('article#wikiArticle').text())
 
     def test_translation_document_no_approved_content(self):
         """Load a non-English document with no approved content, with a parent
@@ -110,9 +110,9 @@ class DocumentTests(UserTestCase, WikiTestCase):
         d2 = document(parent=r.document, locale='fr', slug='french', save=True)
         revision(document=d2, save=True, content='Moartext', is_approved=False)
         response = self.client.get(d2.get_absolute_url())
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
         doc = pq(response.content)
-        eq_(d2.title, doc('main#content div.document-head h1').text())
+        assert doc('main#content div.document-head h1').text() == d2.title
         # HACK: fr doc has different message if locale/ is updated
         assert (("This article doesn't have approved content yet." in
                  doc('article#wikiArticle').text()) or
@@ -227,13 +227,13 @@ class DocumentTests(UserTestCase, WikiTestCase):
         """
         r = revision(save=True, content=doc_content, is_approved=True)
         response = self.client.get(r.document.get_absolute_url())
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
         assert '<div id="toc"' in response.content
         new_r = revision(document=r.document, content=r.content,
                          toc_depth=0, is_approved=True)
         new_r.save()
         response = self.client.get(r.document.get_absolute_url())
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
         assert '<div class="page-toc">' not in response.content
 
     def test_lang_switcher_footer(self):
@@ -245,7 +245,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         trans_fr = document(parent=parent, locale="fr", save=True)
 
         response = self.client.get(trans_pt_br.get_absolute_url())
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
         doc = pq(response.content)
         options = doc(".languages.go select.wiki-l10n option")
 
@@ -268,7 +268,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         trans_fr = document(parent=parent, locale="fr", save=True)
 
         response = self.client.get(trans_pt_br.get_absolute_url())
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
         doc = pq(response.content)
         options = doc("#languages-menu-submenu ul#translations li a")
 
@@ -499,9 +499,9 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         """HTTP GET to new document URL renders the form."""
         self.client.login(username='admin', password='testpass')
         response = self.client.get(reverse('wiki.create'))
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
         doc = pq(response.content)
-        eq_(1, len(doc('form#wiki-page-edit input[name="title"]')))
+        assert 1 == len(doc('form#wiki-page-edit input[name="title"]'))
 
     def test_new_document_includes_review_block(self):
         """
@@ -512,7 +512,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         response = self.client.get(reverse('wiki.create'))
 
         test_strings = ['Review needed?', 'Technical', 'Editorial']
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
 
         # TODO: push test_strings functionality up into a test helper
         for test_string in test_strings:
@@ -522,7 +522,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         """HTTP GET to new document URL shows preview button."""
         self.client.login(username='admin', password='testpass')
         response = self.client.get(reverse('wiki.create'))
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
         doc = pq(response.content)
         assert len(doc('.btn-preview'))
 
@@ -532,7 +532,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
         response = self.client.get(reverse('wiki.create'))
         doc = pq(response.content)
-        eq_("Name Your Article", doc('input#id_title').attr('placeholder'))
+        assert "Name Your Article" == doc('input#id_title').attr('placeholder')
 
     @mock.patch.object(Site.objects, 'get_current')
     def test_new_document_POST(self, get_current):
@@ -549,12 +549,12 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         redirect_uri, status_code = response.redirect_chain[0]
         assert redirect_uri == ('/en-US/docs/%s' % d.slug)
         assert status_code == 302
-        eq_(settings.WIKI_DEFAULT_LANGUAGE, d.locale)
-        eq_(tags, sorted(t.name for t in d.tags.all()))
+        assert settings.WIKI_DEFAULT_LANGUAGE == d.locale
+        assert tags == sorted(t.name for t in d.tags.all())
         r = d.revisions.all()[0]
-        eq_(data['keywords'], r.keywords)
-        eq_(data['summary'], r.summary)
-        eq_(data['content'], r.content)
+        assert data['keywords'] == r.keywords
+        assert data['summary'] == r.summary
+        assert data['content'] == r.content
 
     @mock.patch.object(Site.objects, 'get_current')
     def test_new_document_other_locale(self, get_current):
@@ -570,7 +570,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         self.client.post(reverse('wiki.create', locale=locale),
                          data, follow=True)
         d = Document.objects.get(title=data['title'])
-        eq_(locale, d.locale)
+        assert locale == d.locale
 
     def test_new_document_POST_empty_title(self):
         """Trigger required field validation for title."""
@@ -593,8 +593,8 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
                                     follow=True)
         doc = pq(response.content)
         ul = doc('article ul.errorlist')
-        eq_(1, len(ul))
-        eq_('Please provide content.', ul('li').text())
+        assert 1 == len(ul)
+        assert 'Please provide content.' == ul('li').text()
 
     def test_slug_collision_validation(self):
         """Trying to create document with existing locale/slug should
@@ -604,12 +604,12 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         data = new_document_data()
         data['slug'] = d.slug
         response = self.client.post(reverse('wiki.create'), data)
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
         doc = pq(response.content)
         ul = doc('article ul.errorlist')
-        eq_(1, len(ul))
-        eq_('Document with this Slug and Locale already exists.',
-            ul('li').text())
+        assert 1 == len(ul)
+        assert ('Document with this Slug and Locale already exists.' ==
+                ul('li').text())
 
     def test_title_no_collision(self):
         """Only slugs and not titles are required to be unique per
@@ -619,7 +619,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         data = new_document_data()
         data['slug'] = '%s-once-more-with-feeling' % d.slug
         response = self.client.post(reverse('wiki.create'), data)
-        eq_(302, response.status_code)
+        assert 302 == response.status_code
 
     def test_slug_3_chars(self):
         """Make sure we can create a slug with only 3 characters."""
@@ -627,8 +627,8 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         data = new_document_data()
         data['slug'] = 'ask'
         response = self.client.post(reverse('wiki.create'), data)
-        eq_(302, response.status_code)
-        eq_('ask', Document.objects.all()[0].slug)
+        assert 302 == response.status_code
+        assert 'ask' == Document.objects.all()[0].slug
 
 
 class NewRevisionTests(UserTestCase, WikiTestCase):
@@ -764,7 +764,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         self.d.tags.add(*tags)
         result_tags = list(self.d.tags.names())
         result_tags.sort()
-        eq_(tags, result_tags)
+        assert tags == result_tags
         tags = [u'tag1', u'tag4']
         data = new_document_data(tags)
         data['form-type'] = 'rev'
@@ -1221,7 +1221,7 @@ class ArticlePreviewTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         link = doc('#doc-content a')
         assert link.text() == 'Prueba'
-        eq_('/es/docs/prueba', link[0].attrib['href'])
+        assert '/es/docs/prueba' == link[0].attrib['href']
 
 
 class SelectLocaleTests(UserTestCase, WikiTestCase):

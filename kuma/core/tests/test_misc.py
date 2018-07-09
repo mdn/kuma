@@ -1,6 +1,6 @@
 from django.test import RequestFactory
 
-from . import eq_, KumaTestCase
+from . import KumaTestCase
 from ..context_processors import next_url
 
 
@@ -14,9 +14,9 @@ class TestNextUrl(KumaTestCase):
     def test_basic(self):
         path = '/one/two'
         request = self.rf.get(path)
-        eq_(next_url(request)['next_url'], path)
+        assert path == next_url(request)['next_url']
 
     def test_querystring(self):
         path = '/one/two?something'
         request = self.rf.get(path)
-        eq_(next_url(request)['next_url'], path)
+        assert path == next_url(request)['next_url']

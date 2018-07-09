@@ -17,7 +17,7 @@ from waffle.testutils import override_flag, override_switch
 
 from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.tests import (assert_no_cache_header,
-                             assert_shared_cache_header, eq_, get_user)
+                             assert_shared_cache_header, get_user)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html
 from kuma.spam.constants import (
@@ -77,7 +77,7 @@ class RedirectTests(UserTestCase, WikiTestCase):
         revision(document=doc, content=html, is_approved=True, save=True)
 
         response = self.client.get(doc.get_absolute_url(), follow=True)
-        eq_(200, response.status_code)
+        assert 200 == response.status_code
         response_html = pq(response.content)
         article_body = to_html(response_html.find('#wikiArticle'))
         self.assertHTMLEqual(html, article_body)
@@ -305,8 +305,8 @@ class ViewTests(UserTestCase, WikiTestCase):
 
         assert 'Revision Source' in resp.content
         assert 'Revision Content' in resp.content
-        eq_(page.find('#wikiArticle').parent().attr('open'), 'open')
-        eq_(page.find('#doc-source').parent().attr('open'), None)
+        assert 'open' == page.find('#wikiArticle').parent().attr('open')
+        assert page.find('#doc-source').parent().attr('open') is None
 
 
 class GetDeletedDocumentTests(UserTestCase, WikiTestCase):
@@ -322,7 +322,7 @@ class GetDeletedDocumentTests(UserTestCase, WikiTestCase):
                                            reason="test")
         response = self.client.get(rev.document.get_absolute_url(),
                                    follow=False)
-        eq_(404, response.status_code)
+        assert 404 == response.status_code
         assert 'Reason for Deletion' not in response.content
 
     def test_deleted_doc_returns_404_and_content(self):
@@ -339,7 +339,7 @@ class GetDeletedDocumentTests(UserTestCase, WikiTestCase):
         DocumentDeletionLog.objects.create(locale=doc.locale, slug=doc.slug,
                                            user=rev.creator, reason="test")
         response = self.client.get(doc.get_absolute_url(), follow=False)
-        eq_(404, response.status_code)
+        assert 404 == response.status_code
         assert 'Reason for Deletion' in response.content
 
 
@@ -472,14 +472,14 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         )
 
         self.client.get(self.url, follow=False, HTTP_CACHE_CONTROL='no-cache')
-        eq_(mock_requests.request_history[0].headers['Cache-Control'],
-            'max-age=1234')
+        assert ('max-age=1234' ==
+                mock_requests.request_history[0].headers['Cache-Control'])
 
         self.client.login(username='admin', password='testpass')
         self.client.get(self.url, follow=False,
                         HTTP_CACHE_CONTROL='no-cache')
-        eq_(mock_requests.request_history[1].headers['Cache-Control'],
-            'no-cache')
+        assert ('no-cache' ==
+                mock_requests.request_history[1].headers['Cache-Control'])
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=1234)
     @requests_mock.mock()
@@ -496,13 +496,13 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         )
 
         self.client.get(self.url, follow=False, HTTP_CACHE_CONTROL='no-cache')
-        eq_(mock_requests.request_history[0].headers['Cache-Control'],
-            'max-age=1234')
+        assert ('max-age=1234' ==
+                mock_requests.request_history[0].headers['Cache-Control'])
 
         self.client.login(username='admin', password='testpass')
         self.client.get(self.url, follow=False, HTTP_CACHE_CONTROL='no-cache')
-        eq_(mock_requests.request_history[1].headers['Cache-Control'],
-            'no-cache')
+        assert ('no-cache' ==
+                mock_requests.request_history[1].headers['Cache-Control'])
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=1234)
     @requests_mock.mock()
@@ -552,10 +552,10 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
 
         # Second request to verify the view sends them back
         response = self.client.get(self.url)
-        eq_(expected_etag,
-            mock_requests.request_history[1].headers['If-None-Match'])
-        eq_(expected_modified,
-            mock_requests.request_history[1].headers['If-Modified-Since'])
+        assert (expected_etag ==
+                mock_requests.request_history[1].headers['If-None-Match'])
+        assert (expected_modified ==
+                mock_requests.request_history[1].headers['If-Modified-Since'])
 
         # Third request to verify content was cached and served on a 304
         response = self.client.get(self.url)
@@ -643,14 +643,14 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
             data = new_document_data()
             data.update({'title': 'blah', 'slug': slug, 'content': content})
             response = self.client.post(reverse('wiki.create'), data)
-            eq_(302, response.status_code)
+            assert 302 == response.status_code
 
             # Connect to newly created page
             response = self.client.get(reverse('wiki.document', args=[slug]))
             page = pq(response.content)
             meta_content = page.find('meta[name=description]').attr('content')
-            eq_(str(meta_content).decode('utf-8'),
-                str(aught_preview).decode('utf-8'))
+            assert (str(meta_content).decode('utf-8') ==
+                    str(aught_preview).decode('utf-8'))
 
         # Test pages - very basic
         good = 'This is the content which should be chosen, man.'
@@ -1050,7 +1050,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         translate_url = reverse('wiki.document', args=[child_data['slug']])
         response = self.client.post(translate_url + '$translate?tolocale=es',
                                     child_data)
-        eq_(302, response.status_code)
+        assert 302 == response.status_code
         url = reverse('wiki.document', args=[child_data['slug']], locale='es')
         params = {'rev_saved': ''}
         url = '%s?%s' % (url, urlencode(params))
@@ -1059,7 +1059,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         translate_url = reverse('wiki.document', args=['length/length'])
         response = self.client.post(translate_url + '$translate?tolocale=es',
                                     child_data)
-        eq_(302, response.status_code)
+        assert 302 == response.status_code
         slug = 'length/' + child_data['slug']
         url = reverse('wiki.document', args=[slug], locale='es')
         params = {'rev_saved': ''}
@@ -1097,9 +1097,9 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert_no_cache_header(response)
 
         de_child_doc = Document.objects.get(locale='de', slug='de-child')
-        eq_(en_child_doc, de_child_doc.parent)
-        eq_(de_doc, de_child_doc.parent_topic)
-        eq_('New translation', de_child_doc.current_revision.content)
+        assert en_child_doc == de_child_doc.parent
+        assert de_doc == de_child_doc.parent_topic
+        assert 'New translation' == de_child_doc.current_revision.content
 
     def test_translate_keeps_toc_depth(self):
         self.client.login(username='admin', password='testpass')
@@ -1132,7 +1132,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         self.assertRedirects(response, doc_url)
 
         es_d = Document.objects.get(locale=foreign_locale, slug=foreign_slug)
-        eq_(r.toc_depth, es_d.current_revision.toc_depth)
+        assert r.toc_depth == es_d.current_revision.toc_depth
 
     def test_translate_rebuilds_source_json(self):
         self.client.login(username='admin', password='testpass')
@@ -1177,8 +1177,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                 [t['title'] for t in new_en_json['translations']])
         es_translation_json = [t for t in new_en_json['translations'] if
                                t['title'] == translation_data['title']][0]
-        eq_(es_translation_json['last_edit'],
-            es_doc.current_revision.created.isoformat())
+        assert (es_translation_json['last_edit'] ==
+                es_doc.current_revision.created.isoformat())
 
     def test_slug_translate(self):
         """Editing a translated doc keeps the correct slug"""
@@ -1219,7 +1219,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                                            args=[foreign_slug],
                                            locale=foreign_locale))
         page = pq(response.content)
-        eq_(page.find('input[name=slug]')[0].value, foreign_slug)
+        assert page.find('input[name=slug]')[0].value == foreign_slug
 
         # Create an English child now
         en_doc = document(title='Child Eng Doc',
@@ -1777,7 +1777,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # For Ajax requests the response is a JsonResponse
         for resp in [resp1, resp2]:
-            eq_(json.loads(resp.content)['error'], False)
+            assert not json.loads(resp.content)['error']
             assert 'error_message' not in json.loads(resp.content).keys()
 
     def test_multiple_translation_edits_ajax(self):
@@ -1935,15 +1935,15 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # Test that the 'discard' button on an edit goes to the original page
         doc = _create_doc('testdiscarddoc', settings.WIKI_DEFAULT_LANGUAGE)
         response = self.client.get(reverse('wiki.edit', args=[doc.slug]))
-        eq_(pq(response.content).find('.btn-discard').attr('href'),
-            reverse('wiki.document', args=[doc.slug]))
+        assert (pq(response.content).find('.btn-discard').attr('href') ==
+                reverse('wiki.document', args=[doc.slug]))
 
         # Test that the 'discard button on a new translation goes
         # to the en-US page'
         response = self.client.get(reverse('wiki.translate', args=[doc.slug]),
                                    {'tolocale': 'es'})
-        eq_(pq(response.content).find('.btn-discard').attr('href'),
-            reverse('wiki.document', args=[doc.slug]))
+        assert (pq(response.content).find('.btn-discard').attr('href') ==
+                reverse('wiki.document', args=[doc.slug]))
 
         # Test that the 'discard' button on an existing translation goes
         # to the 'es' page
@@ -1951,9 +1951,9 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         response = self.client.get(reverse('wiki.edit',
                                            args=[foreign_doc.slug],
                                            locale=foreign_doc.locale))
-        eq_(pq(response.content).find('.btn-discard').attr('href'),
-            reverse('wiki.document', args=[foreign_doc.slug],
-                    locale=foreign_doc.locale))
+        assert (pq(response.content).find('.btn-discard').attr('href') ==
+                reverse('wiki.document', args=[foreign_doc.slug],
+                        locale=foreign_doc.locale))
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get',
@@ -2600,7 +2600,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         resp = self.client.post('%s?section=s2&raw=true' %
                                 reverse('wiki.edit', args=[rev.document.slug]),
                                 data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(False, json.loads(resp.content)['error'])
+        assert not json.loads(resp.content)['error']
 
         # Edit #1 submits, but since it's the same section, there's a collision
         data.update({
@@ -2611,7 +2611,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         resp = self.client.post('%s?section=s2&raw=true' %
                                 reverse('wiki.edit', args=[rev.document.slug]),
                                 data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(200, resp.status_code)
+        assert 200 == resp.status_code
         # We receive the midair collission message
         history_url = reverse(
             'wiki.document_revisions',
@@ -2680,7 +2680,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
                          follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         changed = Document.objects.get(pk=rev.document.id).current_revision
         assert rev.id != changed.id
-        eq_(1, changed.toc_depth)
+        assert 1 == changed.toc_depth
 
     def test_section_edit_review_tags(self):
         """review tags are preserved in section editing."""
@@ -2713,8 +2713,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
                          follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         changed = Document.objects.get(pk=rev.document.id).current_revision
         assert rev.id != changed.id
-        eq_(set(tags_to_save),
-            set([t.name for t in changed.review_tags.all()]))
+        assert set(tags_to_save) == set(t.name for t in changed.review_tags.all())
 
 
 class MindTouchRedirectTests(UserTestCase, WikiTestCase):
@@ -2760,7 +2759,7 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
         new_doc.save()
         for namespace_test in self.namespace_urls:
             resp = self.client.get(namespace_test['mindtouch'], follow=False)
-            eq_(301, resp.status_code)
+            assert 301 == resp.status_code
             assert resp['Location'] == namespace_test['kuma']
 
     def test_document_urls(self):
@@ -2784,7 +2783,7 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
         d.save()
         mt_url = '/en-US/%s?view=edit' % (d.slug,)
         resp = self.client.get(mt_url)
-        eq_(301, resp.status_code)
+        assert 301 == resp.status_code
         expected_url = d.get_absolute_url('wiki.edit')
         assert resp['Location'] == expected_url
 
@@ -2819,8 +2818,8 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         assert self.rendered_content in txt
         assert self.raw_content not in txt
 
-        eq_(0, p.find('#doc-rendering-in-progress').length)
-        eq_(0, p.find('#doc-render-raw-fallback').length)
+        assert 0 == p.find('#doc-rendering-in-progress').length
+        assert 0 == p.find('#doc-render-raw-fallback').length
 
     def test_rendering_in_progress_warning(self):
         # Make the document look like there's a rendering in progress.
@@ -2835,14 +2834,14 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         # last-known render is displayed.
         assert self.rendered_content in txt
         assert self.raw_content not in txt
-        eq_(0, p.find('#doc-rendering-in-progress').length)
+        assert 0 == p.find('#doc-rendering-in-progress').length
 
         # Only for logged-in users, ensure the render-in-progress warning is
         # displayed.
         self.client.login(username='testuser', password='testpass')
         resp = self.client.get(self.url, follow=False)
         p = pq(resp.content)
-        eq_(1, p.find('#doc-rendering-in-progress').length)
+        assert 1 == p.find('#doc-rendering-in-progress').length
 
     @mock.patch('kuma.wiki.kumascript.get')
     def test_raw_content_during_initial_render(self, mock_kumascript_get):
@@ -2863,14 +2862,14 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         txt = p.find('#wikiArticle').text()
         assert self.rendered_content not in txt
         assert self.raw_content in txt
-        eq_(0, p.find('#doc-render-raw-fallback').length)
+        assert 0 == p.find('#doc-render-raw-fallback').length
 
         # Only for logged-in users, ensure that a warning is displayed about
         # the fallback
         self.client.login(username='testuser', password='testpass')
         resp = self.client.get(self.url, follow=False)
         p = pq(resp.content)
-        eq_(1, p.find('#doc-render-raw-fallback').length)
+        assert 1 == p.find('#doc-render-raw-fallback').length
 
     @mock.patch.object(Document, 'schedule_rendering')
     @mock.patch('kuma.wiki.kumascript.get')
@@ -2888,7 +2887,7 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
 
         edit_url = reverse('wiki.edit', args=[self.doc.slug])
         resp = self.client.post(edit_url, data)
-        eq_(302, resp.status_code)
+        assert 302 == resp.status_code
         assert mock_document_schedule_rendering.called
 
         mock_document_schedule_rendering.reset_mock()

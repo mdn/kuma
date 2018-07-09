@@ -9,7 +9,7 @@ from django.conf import settings
 from django.test import override_settings, RequestFactory, TestCase
 from soapbox.models import Message
 
-from kuma.core.tests import eq_, KumaTestCase
+from kuma.core.tests import KumaTestCase
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 
@@ -22,10 +22,10 @@ from ..templatetags.jinja_helpers import (datetimeformat, get_soapbox_messages,
 class TestYesNo(KumaTestCase):
 
     def test_yesno(self):
-        eq_('Yes', yesno(True))
-        eq_('No', yesno(False))
-        eq_('Yes', yesno(1))
-        eq_('No', yesno(0))
+        assert 'Yes' == yesno(True)
+        assert 'No' == yesno(False)
+        assert 'Yes' == yesno(1)
+        assert 'No' == yesno(0)
 
 
 class TestSoapbox(KumaTestCase):
@@ -33,18 +33,18 @@ class TestSoapbox(KumaTestCase):
     def test_global_message(self):
         m = Message(message='Global', is_global=True, is_active=True, url='/')
         m.save()
-        eq_(m.message, get_soapbox_messages('/')[0].message)
-        eq_(m.message, get_soapbox_messages('/en-US/')[0].message)
+        assert m.message == get_soapbox_messages('/')[0].message
+        assert m.message == get_soapbox_messages('/en-US/')[0].message
 
     def test_subsection_message(self):
         m = Message(message='Search down', is_global=False, is_active=True,
                     url='/search')
         m.save()
-        eq_(0, len(get_soapbox_messages('/')))
-        eq_(0, len(get_soapbox_messages('/docs')))
-        eq_(0, len(get_soapbox_messages('/en-US/docs')))
-        eq_(m.message, get_soapbox_messages('/en-US/search')[0].message)
-        eq_(m.message, get_soapbox_messages('/de/search')[0].message)
+        assert 0 == len(get_soapbox_messages('/'))
+        assert 0 == len(get_soapbox_messages('/docs'))
+        assert 0 == len(get_soapbox_messages('/en-US/docs'))
+        assert m.message == get_soapbox_messages('/en-US/search')[0].message
+        assert m.message == get_soapbox_messages('/de/search')[0].message
 
     def test_message_with_url_is_link(self):
         m = Message(message='Go to http://bit.ly/sample-demo', is_global=True,
@@ -70,7 +70,7 @@ class TestDateTimeFormat(UserTestCase):
                                                      locale=u'en_US')
         value_returned = datetimeformat(self.context, date_today,
                                         output='json')
-        eq_(value_returned, value_expected)
+        assert value_expected == value_returned
 
     def test_locale(self):
         """Expects shortdatetime in French."""
@@ -80,7 +80,7 @@ class TestDateTimeFormat(UserTestCase):
                                          locale=u'fr')
         value_returned = datetimeformat(self.context, value_test,
                                         output='json')
-        eq_(value_returned, value_expected)
+        assert value_expected == value_returned
 
     def test_default(self):
         """Expects shortdatetime."""
@@ -89,7 +89,7 @@ class TestDateTimeFormat(UserTestCase):
                                          locale=u'en_US')
         value_returned = datetimeformat(self.context, value_test,
                                         output='json')
-        eq_(value_returned, value_expected)
+        assert value_expected == value_returned
 
     def test_longdatetime(self):
         """Expects long format."""
@@ -100,7 +100,7 @@ class TestDateTimeFormat(UserTestCase):
         value_returned = datetimeformat(self.context, value_test,
                                         format='longdatetime',
                                         output='json')
-        eq_(value_returned, value_expected)
+        assert value_expected == value_returned
 
     def test_date(self):
         """Expects date format."""
@@ -109,7 +109,7 @@ class TestDateTimeFormat(UserTestCase):
         value_returned = datetimeformat(self.context, value_test,
                                         format='date',
                                         output='json')
-        eq_(value_returned, value_expected)
+        assert value_expected == value_returned
 
     def test_time(self):
         """Expects time format."""
@@ -118,7 +118,7 @@ class TestDateTimeFormat(UserTestCase):
         value_returned = datetimeformat(self.context, value_test,
                                         format='time',
                                         output='json')
-        eq_(value_returned, value_expected)
+        assert value_expected == value_returned
 
     def test_datetime(self):
         """Expects datetime format."""
@@ -127,7 +127,7 @@ class TestDateTimeFormat(UserTestCase):
         value_returned = datetimeformat(self.context, value_test,
                                         format='datetime',
                                         output='json')
-        eq_(value_returned, value_expected)
+        assert value_expected == value_returned
 
     def test_unknown_format(self):
         """Unknown format raises DateTimeFormatError."""
@@ -149,7 +149,7 @@ class TestDateTimeFormat(UserTestCase):
         value_returned = datetimeformat(self.context, value_test,
                                         format='datetime',
                                         output='json')
-        eq_(value_returned, value_english)
+        assert value_english == value_returned
 
     def test_invalid_value(self):
         """Passing invalid value raises ValueError."""
@@ -157,8 +157,8 @@ class TestDateTimeFormat(UserTestCase):
             datetimeformat(self.context, 'invalid')
 
     def test_json_helper(self):
-        eq_('false', jsonencode(False))
-        eq_('{"foo": "bar"}', jsonencode({'foo': 'bar'}))
+        assert 'false' == jsonencode(False)
+        assert '{"foo": "bar"}' == jsonencode({'foo': 'bar'})
 
     def test_user_timezone(self):
         """Shows time in user timezone."""
@@ -178,7 +178,7 @@ class TestDateTimeFormat(UserTestCase):
         value_returned = datetimeformat(self.context, value_test,
                                         format='longdatetime',
                                         output='json')
-        eq_(value_returned, value_expected)
+        assert value_expected == value_returned
 
 
 class TestInUtc(KumaTestCase):

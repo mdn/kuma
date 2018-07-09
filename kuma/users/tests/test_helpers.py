@@ -3,8 +3,6 @@ from hashlib import md5
 
 from django.conf import settings
 
-from kuma.core.tests import eq_
-
 from . import UserTestCase
 from ..templatetags.jinja_helpers import gravatar_url, public_email
 
@@ -25,9 +23,9 @@ class HelperTestCase(UserTestCase):
         assert md5(self.u.email).hexdigest() in gravatar_url(self.u.email)
 
     def test_public_email(self):
-        eq_('<span class="email">'
-            '&#109;&#101;&#64;&#100;&#111;&#109;&#97;&#105;&#110;&#46;&#99;'
-            '&#111;&#109;</span>', public_email('me@domain.com'))
-        eq_('<span class="email">'
-            '&#110;&#111;&#116;&#46;&#97;&#110;&#46;&#101;&#109;&#97;&#105;'
-            '&#108;</span>', public_email('not.an.email'))
+        assert ('<span class="email">'
+                '&#109;&#101;&#64;&#100;&#111;&#109;&#97;&#105;&#110;&#46;&#99;'
+                '&#111;&#109;</span>' == public_email('me@domain.com'))
+        assert ('<span class="email">'
+                '&#110;&#111;&#116;&#46;&#97;&#110;&#46;&#101;&#109;&#97;&#105;'
+                '&#108;</span>' == public_email('not.an.email'))

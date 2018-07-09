@@ -5,7 +5,6 @@ from django.contrib import messages as django_messages
 from django.contrib.auth.models import AnonymousUser
 from django.test import RequestFactory
 
-from kuma.core.tests import eq_
 from kuma.core.urlresolvers import reverse
 from kuma.users.adapters import KumaAccountAdapter, KumaSocialAccountAdapter
 from kuma.users.models import User, UserBan
@@ -42,10 +41,7 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         # Verify the social_login receiver over-writes the provider
         # stored in the session
         self.adapter.pre_social_login(request, sociallogin)
-        eq_(account.provider,
-            request.session['sociallogin_provider'],
-            "receiver should have over-written sociallogin_provider "
-            "session variable")
+        assert account.provider == request.session['sociallogin_provider']
 
     def test_pre_social_login_error_for_unmatched_login(self):
         """
@@ -74,8 +70,8 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         self.assertRaises(ImmediateHttpResponse,
                           self.adapter.pre_social_login, request, other_login)
         queued_messages = list(messages)
-        eq_(len(queued_messages), 1)
-        eq_(django_messages.ERROR, queued_messages[0].level)
+        assert len(queued_messages) == 1
+        assert queued_messages[0].level == django_messages.ERROR
 
     def test_pre_social_login_matched_login(self):
         """
@@ -111,7 +107,7 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         # stored in the session
         self.adapter.pre_social_login(request, github_login)
         session = request.session
-        eq_(session['sociallogin_provider'], 'github')
+        assert 'github' == session['sociallogin_provider']
 
     def test_pre_social_login_same_provider(self):
         """
@@ -140,7 +136,7 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         github2_login = SocialLogin(account=github2_account)
 
         self.adapter.pre_social_login(request, github2_login)
-        eq_(request.session['sociallogin_provider'], 'github')
+        assert 'github' == request.session['sociallogin_provider']
 
     def test_pre_social_login_banned_user(self):
         """A banned user is not allowed to login."""

@@ -3,26 +3,24 @@ from django.test import TestCase
 
 from kuma.core.utils import order_params, smart_int
 
-from . import eq_
-
 
 class SmartIntTestCase(TestCase):
     def test_sanity(self):
-        eq_(10, smart_int('10'))
-        eq_(10, smart_int('10.5'))
+        assert 10 == smart_int('10')
+        assert 10 == smart_int('10.5')
 
     def test_int(self):
-        eq_(10, smart_int(10))
+        assert 10 == smart_int(10)
 
     def test_invalid_string(self):
-        eq_(0, smart_int('invalid'))
+        assert 0 == smart_int('invalid')
 
     def test_empty_string(self):
-        eq_(0, smart_int(''))
+        assert 0 == smart_int('')
 
     def test_wrong_type(self):
-        eq_(0, smart_int(None))
-        eq_(10, smart_int([], 10))
+        assert 0 == smart_int(None)
+        assert 10 == smart_int([], 10)
 
 
 @pytest.mark.parametrize(

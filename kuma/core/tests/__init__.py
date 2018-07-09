@@ -23,16 +23,6 @@ def assert_shared_cache_header(response):
     assert 's-maxage' in response['Cache-Control']
 
 
-def eq_(first, second, msg=None):
-    """Rough reimplementation of nose.tools.eq_
-
-    Note: This should be removed as soon as we no longer use it.
-
-    """
-    msg = msg or '%r != %r' % (first, second)
-    assert first == second, msg
-
-
 def get_user(username='testuser'):
     """Return a django user or raise FixtureMissingError"""
     User = get_user_model()

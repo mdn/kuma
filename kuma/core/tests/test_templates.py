@@ -8,7 +8,7 @@ from django.test import RequestFactory
 from django.utils import translation
 from pyquery import PyQuery as pq
 
-from . import eq_, KumaTestCase
+from . import KumaTestCase
 
 
 class MockRequestTests(KumaTestCase):
@@ -34,14 +34,14 @@ class BaseTemplateTests(MockRequestTests):
         html = render_to_string(self.template, request=self.request)
         doc = pq(html)
         dir_attr = doc('html').attr['dir']
-        eq_('ltr', dir_attr)
+        assert 'ltr' == dir_attr
 
     def test_rtl_dir_attribute(self):
         translation.activate('ar')
         html = render_to_string(self.template, request=self.request)
         doc = pq(html)
         dir_attr = doc('html').attr['dir']
-        eq_('rtl', dir_attr)
+        assert 'rtl' == dir_attr
 
     def test_lang_switcher(self):
         translation.activate("bn-BD")

@@ -4,7 +4,6 @@ from django.utils import translation
 from rest_framework import serializers
 from rest_framework.test import APIRequestFactory
 
-from kuma.core.tests import eq_
 from kuma.wiki.search import WikiDocumentType
 
 from . import ElasticTestCase
@@ -25,17 +24,14 @@ class SerializerTests(ElasticTestCase):
         filter_.tags.add('tag')
         filter_serializer = FilterWithGroupSerializer(filter_)
         data = filter_serializer.data
-        eq_(data['group'], {
-            'order': 1L,
-            'name': u'Group',
-            'slug': u'group',
-        })
-        eq_(data['name'], u'Serializer')
-        eq_(data['operator'], 'OR')
-        eq_(data['shortcut'], None)
-        eq_(data['slug'], 'serializer')
-        eq_(len(data['tags']), 1)
-        eq_(data['tags'][0], u'tag')
+        assert ({'order': 1L, 'name': u'Group', 'slug': u'group'} ==
+                data['group'])
+        assert u'Serializer' == data['name']
+        assert 'OR' == data['operator']
+        assert data['shortcut'] is None
+        assert 'serializer' == data['slug']
+        assert 1 == len(data['tags'])
+        assert u'tag' == data['tags'][0]
 
     @mock.patch('kuma.search.serializers.ugettext')
     def test_filter_serializer_with_translations(self, _mock):
@@ -43,24 +39,25 @@ class SerializerTests(ElasticTestCase):
         translation.activate('es')
         filter_ = Filter(name='Games', slug='games')
         serializer = FilterSerializer(filter_)
-        eq_(serializer.data, {
+        assert {
             'name': u'Juegos',
             'slug': u'games',
-            'shortcut': None})
+            'shortcut': None
+        } == serializer.data
 
     def test_document_serializer(self):
         search = WikiDocumentType.search()
         result = search.execute()
         doc_serializer = DocumentSerializer(result, many=True)
         list_data = doc_serializer.data
-        eq_(len(list_data), 7)
+        assert 7 == len(list_data)
         assert isinstance(list_data, list)
         assert 1 in [data['id'] for data in list_data]
 
         doc_serializer = DocumentSerializer(result[0], many=False)
         dict_data = doc_serializer.data
         assert isinstance(dict_data, dict)
-        eq_(dict_data['id'], result[0].id)
+        assert dict_data['id'] == result[0].id
 
     def test_excerpt(self):
         search = WikiDocumentType.search()
@@ -68,7 +65,7 @@ class SerializerTests(ElasticTestCase):
         search = search.highlight(*WikiDocumentType.excerpt_fields)
         result = search.execute()
         serializer = DocumentSerializer(result, many=True)
-        eq_(serializer.data[0]['excerpt'], u'A <em>CSS</em> article')
+        assert u'A <em>CSS</em> article' == serializer.data[0]['excerpt']
 
 
 class SearchQueryFieldSerializer(serializers.Serializer):
@@ -88,7 +85,7 @@ class FieldTests(ElasticTestCase):
             context={'request': request},
         )
         serializer.is_valid()
-        eq_(serializer.data, {'q': 'test'})
+        assert {'q': 'test'} == serializer.data
 
     def test_SiteURLField(self):
         class FakeValue(object):

@@ -1,4 +1,3 @@
-from kuma.core.tests import eq_
 from kuma.wiki.search import WikiDocumentType
 from kuma.wiki.tests import revision
 
@@ -21,10 +20,10 @@ class TestLiveIndexing(ElasticTestCase):
         r.document.render()
 
         self.refresh()
-        eq_(count_before + 1, S().count())
+        assert count_before + 1 == S().count()
 
         r.document.delete()
         self.refresh()
         # TODO: Investigate this test failure. The ES debug output appears to
         # be doing the correct thing but the ES delete call is returning a 404.
-        eq_(count_before, S().count())
+        assert count_before == S().count()

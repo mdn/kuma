@@ -10,7 +10,7 @@ from jinja2 import escape, Markup
 from pyquery import PyQuery as pq
 
 import kuma.wiki.content
-from kuma.core.tests import eq_, KumaTestCase
+from kuma.core.tests import KumaTestCase
 
 from . import document, normalize_html
 from ..constants import ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS, ALLOWED_TAGS
@@ -104,7 +104,7 @@ class GetContentSectionsTests(TestCase):
         doc = document(title='Doc', locale=u'fr', slug=u'doc', save=True,
                        html='<!-- -->')
         res = get_content_sections(doc.html)
-        eq_(type(res).__name__, 'list')
+        assert 'list' == type(res).__name__
 
 
 class InjectSectionIDsTests(TestCase):
@@ -146,7 +146,7 @@ class InjectSectionIDsTests(TestCase):
             ('Quick_Links', 'Quick_Links'),
         )
         for cls, id in expected:
-            eq_(id, result_doc.find('.%s' % cls).attr('id'))
+            assert id == result_doc.find('.%s' % cls).attr('id')
 
         # Then, ensure all elements in need of an ID now all have unique IDs.
         assert len(SECTION_TAGS)
@@ -352,7 +352,7 @@ class ReplaceSectionTests(TestCase):
                   .parse(doc_src)
                   .replaceSection(id="s2", replace_src=replace_src)
                   .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
+        assert normalize_html(expected) == normalize_html(result)
 
     def test_ignore_heading_section_replace(self):
         doc_src = """
@@ -385,7 +385,7 @@ class ReplaceSectionTests(TestCase):
                                   replace_src=replace_src,
                                   ignore_heading=True)
                   .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
+        assert normalize_html(expected) == normalize_html(result)
 
 
 class RemoveSectionTests(TestCase):
@@ -405,7 +405,7 @@ class RemoveSectionTests(TestCase):
                   .parse(doc_src)
                   .removeSection('here')
                   .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
+        assert normalize_html(expected) == normalize_html(result)
 
 
 class InjectSectionEditingLinksTests(TestCase):
@@ -468,7 +468,7 @@ class CodeSyntaxFilterTests(TestCase):
         result = (kuma.wiki.content
                   .parse(doc_src)
                   .filter(CodeSyntaxFilter).serialize())
-        eq_(normalize_html(expected), normalize_html(result))
+        assert normalize_html(expected) == normalize_html(result)
 
 
 class SectionIDFilterTests(TestCase):
@@ -547,7 +547,7 @@ class TOCFilterTests(TestCase):
         result = (kuma.wiki.content
                   .parse(doc_src)
                   .filter(SectionTOCFilter).serialize())
-        eq_(normalize_html(expected), normalize_html(result))
+        assert normalize_html(expected) == normalize_html(result)
 
     def test_generate_toc_h2(self):
         doc_src = """
@@ -574,7 +574,7 @@ class TOCFilterTests(TestCase):
         result = (kuma.wiki.content
                   .parse(doc_src)
                   .filter(H2TOCFilter).serialize())
-        eq_(normalize_html(expected), normalize_html(result))
+        assert normalize_html(expected) == normalize_html(result)
 
     def test_generate_toc_h3(self):
         doc_src = """
@@ -612,7 +612,7 @@ class TOCFilterTests(TestCase):
         result = (kuma.wiki.content
                   .parse(doc_src)
                   .filter(H3TOCFilter).serialize())
-        eq_(normalize_html(expected), normalize_html(result))
+        assert normalize_html(expected) == normalize_html(result)
 
     def test_bug_925043(self):
         '''Bug 925043 - Redesign TOC has a bunch of empty <code> tags in markup'''
@@ -628,7 +628,7 @@ class TOCFilterTests(TestCase):
         result = (kuma.wiki.content
                   .parse(doc_src)
                   .filter(SectionTOCFilter).serialize())
-        eq_(normalize_html(expected), normalize_html(result))
+        assert normalize_html(expected) == normalize_html(result)
 
 
 class FilterOutNoIncludeTests(TestCase):
@@ -652,7 +652,7 @@ class FilterOutNoIncludeTests(TestCase):
             </dl>
         """
         result = (kuma.wiki.content.filter_out_noinclude(doc_src))
-        eq_(normalize_html(expected), normalize_html(result))
+        assert normalize_html(expected) == normalize_html(result)
 
     def test_noinclude_empty_content(self):
         """Bug 777475: The noinclude filter and pyquery seems to really dislike
@@ -666,11 +666,11 @@ class BugizeTests(TestCase):
     def test_bugize_text(self):
         bad = 'Fixing bug #12345 again. <img src="http://davidwalsh.name" /> <a href="">javascript></a>'
         good = 'Fixing <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=12345" target="_blank">bug 12345</a> again. &lt;img src=&#34;http://davidwalsh.name&#34; /&gt; &lt;a href=&#34;&#34;&gt;javascript&gt;&lt;/a&gt;'
-        eq_(bugize_text(bad), Markup(good))
+        assert bugize_text(bad) == Markup(good)
 
         bad_upper = 'Fixing Bug #12345 again.'
         good_upper = 'Fixing <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=12345" target="_blank">Bug 12345</a> again.'
-        eq_(bugize_text(bad_upper), Markup(good_upper))
+        assert bugize_text(bad_upper) == Markup(good_upper)
 
 
 def test_filteriframe():
@@ -976,7 +976,7 @@ class FilterEditorSafetyTests(TestCase):
         result_src = (kuma.wiki.content.parse(doc_src)
                       .filterEditorSafety()
                       .serialize())
-        eq_(normalize_html(expected_src), normalize_html(result_src))
+        assert normalize_html(expected_src) == normalize_html(result_src)
 
 
 class AllowedHTMLTests(KumaTestCase):
@@ -1011,17 +1011,17 @@ class AllowedHTMLTests(KumaTestCase):
     def test_allowed_tags(self):
         for tag in self.simple_tags:
             html_str = '<%(tag)s></%(tag)s>' % {'tag': tag}
-            eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
-                                       tags=ALLOWED_TAGS))
+            assert html_str == bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
+                                            tags=ALLOWED_TAGS)
 
         for tag in self.unclose_tags:
             html_str = '<%s>' % tag
-            eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
-                                       tags=ALLOWED_TAGS))
+            assert html_str == bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
+                                            tags=ALLOWED_TAGS)
 
         for html_str in self.special_tags:
-            eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
-                                       tags=ALLOWED_TAGS))
+            assert html_str == bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
+                                            tags=ALLOWED_TAGS)
 
     def test_allowed_attributes(self):
         for tag in ('div', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code',
@@ -1030,12 +1030,12 @@ class AllowedHTMLTests(KumaTestCase):
                     'time', 'meter', 'output', 'progress', 'audio', 'details',
                     'datagrid', 'datalist', 'address'):
             html_str = '<%(tag)s id="foo"></%(tag)s>' % {'tag': tag}
-            eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
-                                       tags=ALLOWED_TAGS))
+            assert html_str == bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
+                                            tags=ALLOWED_TAGS)
 
         for html_str in self.special_attributes:
-            eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
-                                       tags=ALLOWED_TAGS))
+            assert html_str == bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
+                                            tags=ALLOWED_TAGS)
 
     def test_stripped_ie_comment(self):
         """bug 801046: strip IE conditional comments"""
@@ -1050,7 +1050,7 @@ class AllowedHTMLTests(KumaTestCase):
             <p>Goodbye</p>
         """
         result = Document.objects.clean_content(content)
-        eq_(normalize_html(expected), normalize_html(result))
+        assert normalize_html(expected) == normalize_html(result)
 
     def test_iframe_in_script(self):
         """iframe in script should be filtered"""
@@ -1059,7 +1059,7 @@ class AllowedHTMLTests(KumaTestCase):
         expected = ('&lt;script&gt;&lt;iframe src="data:text/plain,foo"&gt;'
                     '&lt;/iframe&gt;&lt;/script&gt;')
         result = Document.objects.clean_content(content)
-        eq_(normalize_html(expected), normalize_html(result))
+        assert normalize_html(expected) == normalize_html(result)
 
     def test_iframe_in_style(self):
         """iframe in style should be filtered"""
@@ -1068,7 +1068,7 @@ class AllowedHTMLTests(KumaTestCase):
         expected = ('&lt;style&gt;&lt;iframe src="data:text/plain,foo"&gt;'
                     '&lt;/iframe&gt;&lt;/style&gt;')
         result = Document.objects.clean_content(content)
-        eq_(normalize_html(expected), normalize_html(result))
+        assert normalize_html(expected) == normalize_html(result)
 
     def test_iframe_in_textarea(self):
         """
@@ -1081,7 +1081,7 @@ class AllowedHTMLTests(KumaTestCase):
             <textarea><iframe src="data:text/plain,foo"></iframe></textarea>
         """
         result = Document.objects.clean_content(content)
-        eq_(normalize_html(expected), normalize_html(result))
+        assert normalize_html(expected) == normalize_html(result)
 
 
 def test_extractor_css_classnames(root_doc, wiki_user):

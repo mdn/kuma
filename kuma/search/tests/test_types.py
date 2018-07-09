@@ -1,6 +1,5 @@
 from elasticsearch_dsl import query
 
-from kuma.core.tests import eq_
 from kuma.wiki.search import WikiDocumentType
 
 from . import ElasticTestCase
@@ -25,7 +24,7 @@ class WikiDocumentTypeTests(ElasticTestCase):
                                           query.Match(content='article'))
                                    .filter('term', locale='en-US'))
         for doc in results.execute():
-            eq_('en-US', doc.locale)
+            assert 'en-US' == doc.locale
 
     def test_get_excerpt_uses_summary(self):
         self.refresh()

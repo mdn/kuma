@@ -5,7 +5,6 @@ import pytest
 from django.contrib.sites.models import Site
 
 from kuma.core.cache import memcache
-from kuma.core.tests import eq_
 from kuma.users.tests import UserTestCase
 
 from . import document, revision, WikiTestCase
@@ -20,25 +19,25 @@ from ..templatetags.jinja_helpers import (absolutify,
 class HelpTests(WikiTestCase):
 
     def test_tojson(self):
-        eq_(tojson({'title': '<script>alert("Hi!")</script>'}),
-            '{"title": "&lt;script&gt;alert(&quot;Hi!&quot;)&lt;/script&gt;"}')
+        assert (tojson({'title': '<script>alert("Hi!")</script>'}) ==
+                '{"title": "&lt;script&gt;alert(&quot;Hi!&quot;)&lt;/script&gt;"}')
 
     @mock.patch.object(Site.objects, 'get_current')
     def test_absolutify(self, get_current):
         get_current.return_value.domain = 'testserver'
 
-        eq_(absolutify(''), 'https://testserver/')
-        eq_(absolutify('/'), 'https://testserver/')
-        eq_(absolutify('//'), 'https://testserver/')
-        eq_(absolutify('/foo/bar'), 'https://testserver/foo/bar')
-        eq_(absolutify('http://domain.com'), 'http://domain.com')
+        assert absolutify('') == 'https://testserver/'
+        assert absolutify('/') == 'https://testserver/'
+        assert absolutify('//') == 'https://testserver/'
+        assert absolutify('/foo/bar') == 'https://testserver/foo/bar'
+        assert absolutify('http://domain.com') == 'http://domain.com'
 
         site = Site(domain='otherserver')
-        eq_(absolutify('/woo', site), 'https://otherserver/woo')
+        assert absolutify('/woo', site) == 'https://otherserver/woo'
 
-        eq_(absolutify('/woo?var=value'), 'https://testserver/woo?var=value')
-        eq_(absolutify('/woo?var=value#fragment'),
-            'https://testserver/woo?var=value#fragment')
+        assert absolutify('/woo?var=value') == 'https://testserver/woo?var=value'
+        assert (absolutify('/woo?var=value#fragment') ==
+                'https://testserver/woo?var=value#fragment')
 
 
 class RevisionsUnifiedDiffTests(UserTestCase, WikiTestCase):
@@ -132,8 +131,8 @@ class DocumentZoneTests(UserTestCase, WikiTestCase):
         ]
         for (user, doc, add, change) in cases:
             result_links = document_zone_management_links(user, doc)
-            eq_(add, result_links['add'] is not None, (user, doc))
-            eq_(change, result_links['change'] is not None)
+            assert add == (result_links['add'] is not None)
+            assert change == (result_links['change'] is not None)
 
 
 class SelectorContentFindTests(UserTestCase, WikiTestCase):
