@@ -3,7 +3,7 @@ import mock
 import pytest
 
 from django.contrib.sites.models import Site
-from jinja2 import TemplateNotFound
+from django.template import TemplateDoesNotExist
 from pyquery import PyQuery as pq
 
 from kuma.core.cache import memcache
@@ -45,7 +45,7 @@ class HelpTests(WikiTestCase):
 
 def test_include_svg_invalid_path():
     """An invalid SVG path raises an exception."""
-    with pytest.raises(TemplateNotFound):
+    with pytest.raises(TemplateDoesNotExist):
         include_svg('invalid.svg')
 
 

@@ -9,10 +9,11 @@ from constance import config
 from cssselect.parser import SelectorSyntaxError
 from django.contrib.sites.models import Site
 from django.core.serializers.json import DjangoJSONEncoder
+from django.template import loader
+from django.utils import lru_cache
 from django.utils.html import conditional_escape
 from django.utils.translation import ugettext
 from django_jinja import library
-from lxml import etree
 from pyquery import PyQuery as pq
 
 from kuma.core.urlresolvers import reverse
@@ -266,31 +267,15 @@ def wiki_url(path):
     return new_path
 
 
-def get_bare_tag(elem):
-    """
-    Returns the tag without the leading namespace
-    """
-    return elem.tag.rsplit('}', 1)[-1]
-
-
 @library.global_function
+@lru_cache.lru_cache()
 def include_svg(path, title=None):
-    """
-    Load SVG from file system. If a title was passed, replace the value of
-    the current title tag with the new title. Return the SVG element
-    """
-    env = jinja2.Environment(loader=jinja2.FileSystemLoader('./jinja2'))
-    tmplString = env.get_template(path).render()
-
+    """Embded an SVG file by path, optionally changing the title."""
+    svg = loader.get_template(path).render()
     if (title):
-        svgElem = etree.XML(tmplString)
-
-        for element in svgElem.iter():
-            if get_bare_tag(element) == 'title':
-                element.text = title
-
-        svgMarkup = jinja2.Markup(etree.tostring(svgElem))
+        svg_parsed = pq(svg, namespaces={'svg': 'http://www.w3.org/2000/svg'})
+        svg_parsed('svg|title')[0].text = title
+        svg_out = svg_parsed.outerHtml()
     else:
-        svgMarkup = jinja2.Markup(pq(tmplString).outerHtml())
-
-    return svgMarkup
+        svg_out = svg
+    return jinja2.Markup(svg_out)
