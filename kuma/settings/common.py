@@ -1687,4 +1687,4 @@ RATELIMIT_VIEW = 'kuma.core.views.rate_limited'
 
 # Caching constants for the Cache-Control header.
 CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE = config(
-    'CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE', default=60 * 5, cast=int)
+    'CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE', default=60 * 60 * 48, cast=int)
