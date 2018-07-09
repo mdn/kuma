@@ -3,6 +3,8 @@ import mock
 import pytest
 
 from django.contrib.sites.models import Site
+from jinja2 import TemplateNotFound
+from pyquery import PyQuery as pq
 
 from kuma.core.cache import memcache
 from kuma.users.tests import UserTestCase
@@ -11,6 +13,7 @@ from . import document, revision, WikiTestCase
 from ..models import DocumentZone
 from ..templatetags.jinja_helpers import (absolutify,
                                           document_zone_management_links,
+                                          include_svg,
                                           revisions_unified_diff,
                                           selector_content_find, tojson,
                                           wiki_url)
@@ -38,6 +41,29 @@ class HelpTests(WikiTestCase):
         assert absolutify('/woo?var=value') == 'https://testserver/woo?var=value'
         assert (absolutify('/woo?var=value#fragment') ==
                 'https://testserver/woo?var=value#fragment')
+
+
+def test_include_svg_invalid_path():
+    """An invalid SVG path raises an exception."""
+    with pytest.raises(TemplateNotFound):
+        include_svg('invalid.svg')
+
+
+def test_include_svg_no_title():
+    """If the title is not given, the SVG title is not changed."""
+    no_title = include_svg('includes/icons/social/twitter.svg')
+    svg = pq(no_title, namespaces={'svg': 'http://www.w3.org/2000/svg'})
+    svg_title = svg('svg|title')
+    assert svg_title.text() == 'Twitter'
+
+
+@pytest.mark.parametrize('title', ('New Title', u'Nuevo Título'))
+def test_include_svg_replace_title(title):
+    """The SVG title can be replaced."""
+    new_title = include_svg('includes/icons/social/twitter.svg', title)
+    svg = pq(new_title, namespaces={'svg': 'http://www.w3.org/2000/svg'})
+    svg_title = svg('svg|title')
+    assert svg_title.text() == title
 
 
 class RevisionsUnifiedDiffTests(UserTestCase, WikiTestCase):
