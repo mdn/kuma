@@ -9,6 +9,8 @@ from constance import config
 from cssselect.parser import SelectorSyntaxError
 from django.contrib.sites.models import Site
 from django.core.serializers.json import DjangoJSONEncoder
+from django.template import loader
+from django.utils import lru_cache
 from django.utils.html import conditional_escape
 from django.utils.translation import ugettext
 from django_jinja import library
@@ -263,3 +265,17 @@ def wiki_url(path):
     if fragment:
         new_path += '#' + fragment
     return new_path
+
+
+@library.global_function
+@lru_cache.lru_cache()
+def include_svg(path, title=None):
+    """Embded an SVG file by path, optionally changing the title."""
+    svg = loader.get_template(path).render()
+    if (title):
+        svg_parsed = pq(svg, namespaces={'svg': 'http://www.w3.org/2000/svg'})
+        svg_parsed('svg|title')[0].text = title
+        svg_out = svg_parsed.outerHtml()
+    else:
+        svg_out = svg
+    return jinja2.Markup(svg_out)
