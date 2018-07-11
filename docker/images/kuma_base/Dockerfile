@@ -83,25 +83,37 @@ RUN ARCH=  && dpkgArch="$(dpkg --print-architecture)" \
     && ln -s /usr/local/bin/node /usr/local/bin/nodejs
 # ----------------------------------------------------------------------------
 
-# add non-priviledged user
-RUN adduser --uid 1000 --disabled-password --gecos '' --no-create-home kuma
+# add non-privileged user
+RUN useradd --uid 1000 --shell /bin/bash --create-home kuma \
+    && mkdir -p app \
+    && chown kuma:kuma /app \
+    && chmod 775 /app
 
+# install Python libraries
 WORKDIR /app
-EXPOSE 8000
-
-RUN npm install --unsafe-perm -g \
-        node-sass@4.9.2 \
-        uglify-js@2.8.29 \
-        clean-css@3.4.28 \
-        stylelint@9.2.1
-
-COPY ./requirements /app/requirements
+COPY --chown=kuma:kuma ./requirements /app/requirements
 RUN pip install --no-cache-dir -r requirements/dev.txt
 
-# Import issue with configparser 3.5.0
+# fix import issue with configparser 3.5.0
 # https://bitbucket.org/ambv/configparser/issues/20/importwarning-missing-__init__py
 RUN touch /usr/local/lib/python2.7/site-packages/backports/__init__.py
 
+# install Node.js tools
+# config files are symlinks to make updating easier
+COPY --chown=kuma:kuma ./package.json ./package-lock.json /app/
+RUN mkdir /tools \
+    && chown kuma:kuma /tools \
+    && chmod 775 /tools
+WORKDIR /tools
 USER kuma
+RUN ln -s /app/package.json /tools \
+    && ln -s /app/package-lock.json /tools \
+    && npm install --production
+USER root
+RUN find /tools/node_modules/.bin/ -executable -type f -o -type l -exec ln -s {} /usr/local/bin/ \;
 
+# setup default run parameters
+USER kuma
+WORKDIR /app
+EXPOSE 8000
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--timeout=120", "--worker-class=meinheld.gmeinheld.MeinheldWorker", "kuma.wsgi:application"]
