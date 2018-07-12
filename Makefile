@@ -17,6 +17,7 @@ KUMASCRIPT_IMAGE_NAME ?= kumascript
 REGISTRY ?= quay.io/
 IMAGE_PREFIX ?= mozmar
 BASE_IMAGE ?= ${REGISTRY}${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:${VERSION}
+BASE_IMAGE_PY3 ?= ${REGISTRY}${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:py3
 BASE_IMAGE_LATEST ?= ${REGISTRY}${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:latest
 IMAGE ?= $(BASE_IMAGE_LATEST)
 KUMA_IMAGE ?= ${REGISTRY}${IMAGE_PREFIX}/${KUMA_IMAGE_NAME}\:${VERSION}
@@ -101,6 +102,9 @@ pull-latest: pull-base-latest pull-kuma-latest
 
 build-base:
 	docker build -f docker/images/kuma_base/Dockerfile -t ${BASE_IMAGE} .
+
+build-base-py3:
+	docker build -f docker/images/kuma_base/Dockerfile-py3 -t ${BASE_IMAGE_PY3} .
 
 build-kuma:
 	docker build --build-arg REVISION_HASH=${KUMA_REVISION_HASH} \
