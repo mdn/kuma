@@ -248,4 +248,3 @@ def test_error_handler_minimal_request(rf, db, constance_config):
     response = handler500(request, exception)
     assert response.status_code == 500
     assert 'Internal Server Error' in response.content
-    open('test.html', 'w').write(response.content)
