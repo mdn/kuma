@@ -1,6 +1,0 @@
-FROM quay.io/mozmar/kuma_base:latest
-
-USER root
-RUN pip install "Django>1.9,<1.10"
-ENV PYTHONWARNINGS=all
-USER kuma
