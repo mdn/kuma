@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth.models import AnonymousUser
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
@@ -10,7 +11,16 @@ from .i18n import get_kuma_languages
 
 @never_cache
 def _error_page(request, status):
-    """Render error pages with jinja2."""
+    """
+    Render error pages with jinja2.
+
+    Sometimes, an error is raised by a middleware, and the request is not
+    fully populated with a user or language code. Add in good defaults.
+    """
+    if not hasattr(request, 'user'):
+        request.user = AnonymousUser()
+    if not hasattr(request, 'LANGUAGE_CODE'):
+        request.LANGUAGE_CODE = 'en-US'
     return render(request, '%d.html' % status, status=status)
 
 
