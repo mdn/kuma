@@ -963,12 +963,6 @@ for locale, slug in LOCALE_CSS.items():
 
 
 PIPELINE_JS = {
-    'dnt-helper': {
-        'source_filenames': (
-            'js/libs/mozilla.dnthelper.js',
-        ),
-        'output_filename': 'build/js/mozilla-dnthelper.js',
-    },
     'main': {
         'source_filenames': (
             'js/libs/jquery/jquery.js',
