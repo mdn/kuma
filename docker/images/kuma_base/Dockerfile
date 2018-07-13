@@ -1,4 +1,4 @@
-FROM python:2.7-slim-stretch
+FROM python:2.7-slim
 
 # Set the environment variables
 ENV NODE_VERSION=6.14.2 \

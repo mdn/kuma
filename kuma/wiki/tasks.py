@@ -19,7 +19,7 @@ from lxml import etree
 
 from kuma.core.cache import redis
 from kuma.core.decorators import skip_in_maintenance_mode
-from kuma.core.utils import chord_flow, chunked, RedisLock
+from kuma.core.utils import CacheLock, chord_flow, chunked
 from kuma.search.models import Index
 
 from .events import first_edit_email
@@ -31,7 +31,7 @@ from .utils import tidy_content
 
 
 log = logging.getLogger('kuma.wiki.tasks')
-render_lock = RedisLock('render-stale-documents-lock', expires=60 * 60)
+render_lock = CacheLock('render-stale-documents-lock', expires=60 * 60)
 
 
 @task(rate_limit='60/m')

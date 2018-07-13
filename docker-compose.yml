@@ -27,7 +27,7 @@ services:
       - ES_URLS=elasticsearch:9200
       - INTERACTIVE_EXAMPLES_BASE=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
       - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}
-      - REDIS_CACHE_SERVERS=redis://redis:6379/3
+      - REDIS_CACHE_SERVER=redis://redis:6379/3
       - PROTOCOL=http://
       - SESSION_COOKIE_SECURE=False
       - SITE_URL=http://localhost:8000

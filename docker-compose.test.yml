@@ -37,7 +37,7 @@ services:
       - redis
     environment:
       - DATABASE_URL=mysql://root:kuma@mysql:3306/developer_mozilla_org
-      - REDIS_CACHE_SERVERS=redis://redis:6379/3
+      - REDIS_CACHE_SERVER=redis://redis:6379/3
       - PYTHONDONTWRITEBYTECODE=1
       - URLWAIT_TIMEOUT=300
 
@@ -54,6 +54,6 @@ services:
     environment:
       - DATABASE_URL=mysql://root:kuma@mysql:3306/developer_mozilla_org
       - ES_URLS=elasticsearch:9200
-      - REDIS_CACHE_SERVERS=redis://redis:6379/3
+      - REDIS_CACHE_SERVER=redis://redis:6379/3
       - PYTHONDONTWRITEBYTECODE=1
       - URLWAIT_TIMEOUT=300
