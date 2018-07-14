@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.cache import cache
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import static
@@ -6,7 +7,6 @@ from django.views.decorators.cache import never_cache
 from django.views.generic import RedirectView
 from ratelimit.decorators import ratelimit
 
-from kuma.core.cache import redis
 from kuma.core.decorators import shared_cache_control
 from kuma.feeder.models import Bundle
 from kuma.feeder.sections import SECTION_HACKS
@@ -27,7 +27,7 @@ def home(request):
     """Home page."""
     updates = list(Bundle.objects.recent_entries(SECTION_HACKS.updates)[:5])
 
-    community_stats = redis.get('community_stats')
+    community_stats = cache.get('community_stats')
 
     if not community_stats:
         community_stats = {'contributors': 5453, 'locales': 36}

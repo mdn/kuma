@@ -14,6 +14,7 @@ from itertools import islice
 from babel import dates, localedata
 from celery import chain, chord
 from django.conf import settings
+from django.core.cache import cache
 from django.core.paginator import EmptyPage, InvalidPage, Paginator
 from django.http import QueryDict
 from django.shortcuts import _get_queryset
@@ -26,7 +27,6 @@ from pytz import timezone
 from six.moves.urllib.parse import parse_qsl, urlsplit, urlunsplit
 from taggit.utils import split_strip
 
-from .cache import redis
 from .exceptions import DateTimeFormatError
 
 
@@ -141,7 +141,7 @@ class CacheLock(object):
         self.key = 'lock_%s' % key
         self.attempts = attempts
         self.expires = expires
-        self.cache = redis
+        self.cache = cache
 
     def locked(self):
         return bool(self.cache.get(self.key))

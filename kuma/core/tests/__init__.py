@@ -7,8 +7,6 @@ from django.core.cache import cache
 from django.test import TestCase
 from django.utils.translation import trans_real
 
-from ..cache import redis
-
 
 def assert_no_cache_header(response):
     assert 'max-age=0' in response['Cache-Control']
@@ -40,7 +38,6 @@ class KumaTestMixin(object):
 
         # Clean the slate.
         cache.clear()
-        redis.clear()
 
         trans_real.deactivate()
         trans_real._translations = {}  # Django fails to clear this cache.

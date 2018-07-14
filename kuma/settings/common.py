@@ -110,11 +110,6 @@ CACHE_COUNT_TIMEOUT = 60  # in seconds
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'TIMEOUT': CACHE_COUNT_TIMEOUT,
-        'KEY_PREFIX': CACHE_PREFIX,
-    },
-    'redis': {
         'BACKEND': 'django_redis.cache.RedisCache',
         'TIMEOUT': CACHE_COUNT_TIMEOUT * 60,
         'KEY_PREFIX': CACHE_PREFIX,
@@ -123,7 +118,7 @@ CACHES = {
     }
 }
 
-CACHEBACK_CACHE_ALIAS = 'redis'
+CACHEBACK_CACHE_ALIAS = 'default'
 
 # Email
 vars().update(config('EMAIL_URL',
@@ -1336,7 +1331,7 @@ CONSTANCE_BACKEND = ('kuma.core.backends.ReadOnlyConstanceDatabaseBackend'
                      if MAINTENANCE_MODE else
                      'constance.backends.database.DatabaseBackend')
 # must be an entry in the CACHES setting!
-CONSTANCE_DATABASE_CACHE_BACKEND = 'redis'
+CONSTANCE_DATABASE_CACHE_BACKEND = 'default'
 
 # Settings and defaults controllable by Constance in admin
 CONSTANCE_CONFIG = dict(
@@ -1620,7 +1615,7 @@ with open(ce_path, 'r') as ce_file:
 
 # django-ratelimit
 RATELIMIT_ENABLE = config('RATELIMIT_ENABLE', default=True, cast=bool)
-RATELIMIT_USE_CACHE = config('RATELIMIT_USE_CACHE', default='redis')
+RATELIMIT_USE_CACHE = config('RATELIMIT_USE_CACHE', default='default')
 RATELIMIT_VIEW = 'kuma.core.views.rate_limited'
 
 # Caching constants for the Cache-Control header.

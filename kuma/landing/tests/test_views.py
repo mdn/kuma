@@ -1,18 +1,18 @@
 import mock
 import pytest
+from django.core.cache import cache
 from django.utils.six.moves.urllib.parse import urlparse
 from ratelimit.exceptions import Ratelimited
 
-from kuma.core.cache import redis
 from kuma.core.tests import assert_no_cache_header, assert_shared_cache_header
 from kuma.core.urlresolvers import reverse
 
 
 @pytest.fixture()
-def cleared_redis_cache():
-    redis.clear()
-    yield redis
-    redis.clear()
+def cleared_cache():
+    cache.clear()
+    yield cache
+    cache.clear()
 
 
 def test_contribute_json(client, db):
@@ -28,12 +28,12 @@ def test_home(client, db):
     assert_shared_cache_header(response)
 
 
-def test_home_community_stats(client, db, cleared_redis_cache):
+def test_home_community_stats(client, db, cleared_cache):
     stats = {
         'contributors': 'so many, like more than 10,000',
         'locales': 'lots, maybe fifty'
     }
-    redis.set('community_stats', stats)
+    cache.set('community_stats', stats)
     response = client.get(reverse('home'), follow=True)
     assert response.status_code == 200
     assert_shared_cache_header(response)
