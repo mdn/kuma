@@ -1,10 +1,13 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+/* eslint-env node, es6 */
 
 const gulp = require('gulp');
 const sass = require('gulp-sass');
 const stylelint = require('gulp-stylelint');
+const postcss = require('gulp-postcss');
+const postcssSelectorMatches = require('postcss-selector-matches');
 const watch = require('gulp-watch');
 
 // compiles top-level .scss files
@@ -12,11 +15,17 @@ gulp.task('styles', () => {
     // Process files in /styles root
     gulp.src('./kuma/static/styles/*.scss')
         .pipe(sass().on('error', sass.logError))
+        .pipe(postcss([
+            postcssSelectorMatches({lineBreak: true})
+        ]))
         // send compiled files to where expected by Django Pipeline
         .pipe(gulp.dest('./static/styles'));
     // Process files in /styles/locales
     gulp.src('./kuma/static/styles/locales/*.scss')
         .pipe(sass().on('error', sass.logError))
+        .pipe(postcss([
+            postcssSelectorMatches({lineBreak: true})
+        ]))
         // send compiled files to where expected by Django Pipeline
         .pipe(gulp.dest('./static/styles/locales'));
 });

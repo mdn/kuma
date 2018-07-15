@@ -20,10 +20,12 @@
   "devDependencies": {
     "eslint": "^3.19.0",
     "gulp": "^3.9.1",
+    "gulp-postcss": "^7.0.1",
     "gulp-sass": "^3.1.0",
     "gulp-stylelint": "^3.9.0",
     "gulp-watch": "^4.3.6",
     "husky": "^0.13.3",
+    "postcss-selector-matches": "^3.0.1",
     "svgo": "^1.0.5"
   }
 }

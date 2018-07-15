@@ -43,10 +43,8 @@ block indicators aka banners
 /* If there are 2 indicators in close proximity, snug them up.
    Too many combinations to do them all but this
    should take care of most common combinations */
-.warning + .warning,
-.warning + .overheadIndicator,
-.overheadIndicator + .overheadIndicator,
-.note + .note {
+:matches(.warning, .overheadIndicator, .note) + :matches(.warning, .overheadIndicator, .note),
+:matches(.warning, .overheadIndicator, .note) + p:empty + :matches(.warning, .overheadIndicator, .note) {
     margin-top: ($grid-spacing * -1) + 5px;
 }
 
