@@ -9,6 +9,7 @@ from django.utils.log import AdminEmailHandler
 from pyquery import PyQuery as pq
 from ratelimit.exceptions import Ratelimited
 from soapbox.models import Message
+from waffle.models import Flag
 
 from . import (assert_no_cache_header, assert_shared_cache_header,
                KumaTestCase)
@@ -231,11 +232,18 @@ def test_ratelimit_429(client, db):
     assert_no_cache_header(response)
 
 
-def test_error_handler_minimal_request(rf, db):
+def test_error_handler_minimal_request(rf, db, constance_config):
     '''Error page renders if middleware hasn't added request members.'''
+    # Setup conditions for adding analytics with a flag check
+    constance_config.GOOGLE_ANALYTICS_ACCOUNT = 'UA-00000000-0'
+    Flag.objects.create(name='section_edit', authenticated=True)
+
+    # Create minimal request
     request = rf.get('/en-US/docs/tags/Open Protocol')
     assert not hasattr(request, 'LANGUAGE_CODE')
     assert not hasattr(request, 'user')
+
+    # Generate the 500 page
     exception = Exception('Something went wrong.')
     response = handler500(request, exception)
     assert response.status_code == 500
