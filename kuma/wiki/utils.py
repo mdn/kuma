@@ -1,6 +1,5 @@
 import datetime
 import json
-from urlparse import urlparse
 
 import tidylib
 from apiclient.discovery import build
@@ -11,6 +10,7 @@ from django.core.urlresolvers import resolve, Resolver404
 from django.utils import translation
 from httplib2 import Http
 from oauth2client.service_account import ServiceAccountCredentials
+from six.moves.urllib.parse import urlparse
 
 from kuma.core.urlresolvers import split_path
 
@@ -64,14 +64,17 @@ def get_doc_components_from_url(url, required_locale=None, check_host=True):
     # Extract locale and path from URL:
     parsed = urlparse(url)  # Never has errors AFAICT
     if check_host and parsed.netloc:
-        return False
+        # Only allow redirects on our domain
+        if parsed.netloc != settings.DOMAIN:
+            return False
+
     locale, path = split_path(parsed.path)
     if required_locale and locale != required_locale:
         return False
 
     try:
         with translation.override(locale):
-            view, view_args, view_kwargs = resolve(url)
+            view, view_args, view_kwargs = resolve(parsed.path)
     except Resolver404:
         return False
 

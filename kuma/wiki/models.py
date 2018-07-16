@@ -16,6 +16,7 @@ from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext, ugettext_lazy as _
 from pyquery import PyQuery
+from six.moves.urllib.parse import urlparse
 from taggit.managers import TaggableManager
 from taggit.models import ItemBase, TagBase
 from taggit.utils import edit_string_for_tags, parse_tags
@@ -1292,7 +1293,9 @@ Full traceback:
                 # i.e allow "https://developer...." and "/en-US/docs/blah"
                 if len(url) > 1:
                     if url.startswith(settings.SITE_URL):
-                        return url
+                        parsed = urlparse(url)
+                        # Always return relative path instead of full url
+                        return parsed.path
                     elif url[0] == '/' and url[1] != '/':
                         return url
                 elif len(url) == 1 and url[0] == '/':

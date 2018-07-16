@@ -5,6 +5,7 @@ import os.path
 import mock
 import pytest
 from constance.test import override_config
+from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from googleapiclient.errors import HttpError
 from googleapiclient.http import HttpMockSequence
@@ -312,50 +313,51 @@ class AnalyticsUpageviewsByRevisionsTests(UserTestCase):
                                                min(self.rev1.created, self.rev2.created))
 
 
-class DocComponentsFromURLTests(UserTestCase):
-    def setUp(self):
-        self.rev = revision(save=True)
-        self.doc = self.rev.document
+def test_get_doc_components_from_url_absolute_url(root_doc):
+    """get_doc_components_from_url works with an absolute URL (path)."""
+    url = root_doc.get_absolute_url()
+    locale, path, slug = get_doc_components_from_url(url)
+    assert locale == root_doc.locale
+    assert path == '/docs/Root'
+    assert slug == root_doc.slug
 
-    def test_with_url(self):
-        url = self.doc.get_absolute_url()
-        locale, path, slug = get_doc_components_from_url(url)
 
-        # Check slug is same
-        assert slug == self.doc.slug
-        # Check locale is also same
-        assert locale == self.doc.locale
+def test_get_doc_components_from_url_wrong_required_locale(root_doc):
+    """get_doc_components_from_url returns False for wrong required_locale."""
+    url = root_doc.get_absolute_url()
+    assert root_doc.locale != 'de'
+    components = get_doc_components_from_url(url, required_locale='de')
+    assert components is False
 
-    def test_required_locale(self):
-        self.doc.locale = 'bn-BD'
-        self.doc.save()
 
-        url = self.doc.get_absolute_url()
+def test_get_doc_components_from_url_correct_required_locale(root_doc):
+    """get_doc_components_from_url works for correct required_locale."""
+    url = root_doc.get_absolute_url()
+    locale, path, slug = get_doc_components_from_url(
+        url, required_locale=root_doc.locale)
+    assert locale == root_doc.locale
+    assert path == '/docs/Root'
+    assert slug == root_doc.slug
 
-        # Pass a wrong locale to the required_locale parameter
-        components = get_doc_components_from_url(url, required_locale='de')
 
-        # The return value should be False
-        assert components is False
+def test_get_doc_components_from_url_check_host_same_domain(root_doc):
+    """get_doc_components_from_url works with check_host and full local URL."""
+    url = 'http://' + settings.DOMAIN + root_doc.get_absolute_url()
+    locale, path, slug = get_doc_components_from_url(url, check_host=True)
+    assert locale == root_doc.locale
+    assert path == '/docs/Root'
+    assert slug == root_doc.slug
 
-        # Passing correct locale code should work
-        components = get_doc_components_from_url(url, required_locale='bn-BD')
 
-        assert components is not False
+def test_get_doc_components_from_url_check_host_diff_domain(root_doc):
+    """get_doc_components_from_url fails on check_host with remote URL."""
+    url = 'http://example.com' + root_doc.get_absolute_url()
+    components = get_doc_components_from_url(url, check_host=True)
+    assert components is False
 
-    def test_check_host(self):
-        url = "http://testserver" + self.doc.get_absolute_url()
 
-        # Passing url starting with http:// + hostname will return False if
-        # set `check_host` parameter to True
-        components = get_doc_components_from_url(url, check_host=True)
-
-        # The return value should be False
-        assert components is False
-
-    def test_exception_raise_if_not_document(self):
-        rev_url = self.rev.get_absolute_url()
-
-        # Check NotDocumentView Exception is raises because we passed revision url
-        with pytest.raises(NotDocumentView):
-            get_doc_components_from_url(rev_url)
+def test_get_doc_components_from_url_raises_on_non_doc_url(create_revision):
+    """get_doc_components_from_url raises on a non-document URL."""
+    url = create_revision.get_absolute_url()
+    with pytest.raises(NotDocumentView):
+        get_doc_components_from_url(url)

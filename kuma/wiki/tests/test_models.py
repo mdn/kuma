@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import time
 from datetime import date, datetime, timedelta
 from xml.sax.saxutils import escape
@@ -8,6 +9,7 @@ from constance import config
 from constance.test import override_config
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from six.moves.urllib.parse import urlparse
 
 from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.core.exceptions import ProgrammingError
@@ -15,8 +17,7 @@ from kuma.core.tests import get_user
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 
-from . import (create_document_tree, create_topical_parents_docs, document,
-               revision)
+from . import create_document_tree, document, revision
 from .. import tasks
 from ..constants import EXPERIMENT_TITLE_PREFIX, REDIRECT_CONTENT
 from ..events import EditDocumentInTreeEvent
@@ -24,194 +25,148 @@ from ..exceptions import (DocumentRenderedContentNotAvailable,
                           DocumentRenderingInProgress, PageMoveError)
 from ..models import (Document, DocumentTag, Revision, RevisionIP,
                       TaggedDocument)
-from ..templatetags.jinja_helpers import absolutify
 from ..utils import tidy_content
 
 
-class DocumentTests(UserTestCase):
-    """Tests for the Document model"""
+def test_document_is_not_experiment():
+    """A document without the experiment prefix is not an experiment."""
+    doc = Document(slug='test')
+    assert not doc.is_experiment
 
-    def test_document_is_experiment(self):
-        d = document(title='test', save=True)
-        assert not d.is_experiment
 
-        d.slug = EXPERIMENT_TITLE_PREFIX + "test"
-        d.save()
-        assert d.is_experiment
+def test_document_is_experiment():
+    """A document with the experiment prefix is an experiment."""
+    doc = Document(slug=EXPERIMENT_TITLE_PREFIX + 'test')
+    assert doc.is_experiment
 
-        d.slug = 'back-to-document'
-        d.save()
-        assert not d.is_experiment
 
-    def test_delete_tagged_document(self):
-        """Make sure deleting a tagged doc deletes its tag relationships."""
-        # TODO: Move to wherever the tests for TaggableMixin are.
-        # This works because Django's delete() sees the `tags` many-to-many
-        # field (actually a manager) and follows the reference.
-        d = document()
-        d.save()
-        d.tags.add('grape')
-        assert 1 == TaggedDocument.objects.count()
+def test_document_delete_removes_tag_relationsip(root_doc):
+    """Deleting a tagged document also deletes the tag relationship."""
+    root_doc.tags.add('grape')
+    assert TaggedDocument.objects.count() == 1
+    root_doc.delete()
+    assert TaggedDocument.objects.count() == 0
 
-        d.delete()
-        assert 0 == TaggedDocument.objects.count()
 
-    def test_only_localizable_allowed_children(self):
-        """You can't have children for a non-localizable document."""
-        # Make English rev:
-        en_doc = document(is_localizable=False)
-        en_doc.save()
-
-        # Make Deutsch translation:
-        de_doc = document(parent=en_doc, locale='de')
-        self.assertRaises(ValidationError, de_doc.save)
-
-    def test_cannot_make_non_localizable_if_children(self):
-        """You can't make a document non-localizable if it has children."""
-        # Make English rev:
-        en_doc = document(is_localizable=True)
-        en_doc.save()
-
-        # Make Deutsch translation:
-        de_doc = document(parent=en_doc, locale='de')
+def test_document_raises_error_when_translating_non_localizable(root_doc):
+    """Adding a translation of a non-localizable document raises an error."""
+    root_doc.is_localizable = False
+    root_doc.save()
+    de_doc = Document(parent=root_doc, slug=u'Rübe', locale='de')
+    with pytest.raises(ValidationError):
         de_doc.save()
-        en_doc.is_localizable = False
-        self.assertRaises(ValidationError, en_doc.save)
 
-    def test_non_english_implies_nonlocalizable(self):
-        d = document(is_localizable=True, locale='de')
-        d.save()
-        assert not d.is_localizable
 
-    def test_other_translations(self):
-        """
-        parent doc should list all docs for which it is parent
+def test_document_raises_error_setting_non_loc_for_trans_doc(trans_doc):
+    """Setting is_localizable for a translated document raises an error."""
+    en_doc = trans_doc.parent
+    en_doc.is_localizable = False
+    with pytest.raises(ValidationError):
+        en_doc.save()
 
-        A child doc should list all its parent's docs, excluding itself, and
-        including its parent
-        """
-        parent = document(locale=settings.WIKI_DEFAULT_LANGUAGE, title='test',
-                          save=True)
-        enfant = document(locale='fr', title='le test', parent=parent,
-                          save=True)
-        bambino = document(locale='es', title='el test', parent=parent,
-                           save=True)
 
-        children = (Document.objects.filter(parent=parent)
-                                    .order_by('locale')
-                                    .values_list('pk', flat=True))
-        assert (list(children) ==
-                [trans.pk for trans in parent.other_translations])
+def test_document_non_english_implies_non_localizable(db):
+    """All non-English documents are set non-localizable."""
+    es_doc = Document.objects.create(locale='es', slug=u'Tubérculos')
+    assert not es_doc.is_localizable
 
-        # Check the parent document is in the first index of the list
-        assert parent.pk == enfant.other_translations[0].pk
-        enfant_translation_pks = [trans.pk for trans in enfant.other_translations]
-        assert bambino.pk in enfant_translation_pks
-        assert enfant.pk not in enfant_translation_pks
 
-    def test_topical_parents(self):
-        d1, d2 = create_topical_parents_docs()
-        assert d2.parents == [d1]
+def test_document_translations(trans_doc):
+    """other_translations lists other translations, English first."""
+    en_doc = trans_doc.parent
+    ar_doc = Document.objects.create(locale='ar', slug=u'جذور الخضروات',
+                                     parent=en_doc)
+    # Translations are returned English first, then ordered, and omit self
+    assert ar_doc.locale < en_doc.locale < trans_doc.locale
+    assert en_doc.other_translations == [ar_doc, trans_doc]
+    assert trans_doc.other_translations == [en_doc, ar_doc]
+    assert ar_doc.other_translations == [en_doc, trans_doc]
 
-        d3 = document(title='Smell accessibility')
-        d3.parent_topic = d2
-        d3.save()
-        assert d3.parents == [d1, d2]
 
-    @pytest.mark.redirect
-    def test_redirect_url_allows_site_url(self):
-        href = "%s/en-US/Mozilla" % settings.SITE_URL
-        title = "Mozilla"
-        html = REDIRECT_CONTENT % {'href': href, 'title': title}
-        d = document(is_redirect=True, html=html)
-        assert href == d.get_redirect_url()
+def test_document_parents(root_doc):
+    """Document.parents gives the document hierarchy."""
+    assert root_doc.parents == []
+    child_doc = Document.objects.create(parent_topic=root_doc,
+                                        slug=root_doc.slug + '/Child')
+    assert child_doc.parents == [root_doc]
+    gchild_doc = Document.objects.create(parent_topic=child_doc,
+                                         slug=child_doc.slug + '/GrandChild')
+    assert gchild_doc.parents == [root_doc, child_doc]
 
-    @pytest.mark.redirect
-    def test_redirect_url_allows_domain_relative_url(self):
-        href = "/en-US/Mozilla"
-        title = "Mozilla"
-        html = REDIRECT_CONTENT % {'href': href, 'title': title}
-        d = document(is_redirect=True, html=html)
-        assert href == d.get_redirect_url()
 
-    @pytest.mark.redirect
-    def test_redirect_url_rejects_protocol_relative_url(self):
-        href = "//evilsite.com"
-        title = "Mozilla"
-        html = REDIRECT_CONTENT % {'href': href, 'title': title}
-        d = document(is_redirect=True, html=html)
-        assert d.get_redirect_url() is None
+@pytest.mark.parametrize('url',
+                         (settings.SITE_URL + '/en-US/Mozilla',
+                          '/en-US/Mozilla',
+                          '/',
+                          ))
+def test_document_redirect_allows_valid_url(db, url):
+    """get_redirect_url returns valid URLs."""
+    title = 'Mozilla'
+    html = REDIRECT_CONTENT % {'href': url, 'title': title}
+    doc = Document.objects.create(locale='en-US', slug='Redirect',
+                                  is_redirect=True, html=html)
+    parsed = urlparse(url)
+    assert doc.get_redirect_url() == parsed.path
 
-    @pytest.mark.redirect
-    def test_redirect_url_works_for_home_path(self):
-        """bug 1082034"""
-        href = "/"
-        title = "Mozilla"
-        html = REDIRECT_CONTENT % {'href': href, 'title': title}
-        d = document(is_redirect=True, html=html)
-        assert href == d.get_redirect_url()
 
-    def test_get_full_url(self):
-        doc = document()
-        assert doc.get_full_url() == absolutify(doc.get_absolute_url())
+@pytest.mark.parametrize('url',
+                         ('//evilsite.com',
+                          'https://example.com/foriegn_url',
+                          ))
+def test_document_redirect_rejects_invalid_url(db, url):
+    """get_redirect_url returns None for invalid URLs."""
+    html = REDIRECT_CONTENT % {'href': url, 'title': 'Invalid URL'}
+    doc = Document.objects.create(locale='en-US', slug='Redirect',
+                                  is_redirect=True, html=html)
+    assert doc.get_redirect_url() is None
 
-    def test_from_url(self):
-        created_doc = document(save=True)
-        doc_url = created_doc.get_absolute_url()
 
-        get_doc = Document.from_url(doc_url)
-        assert get_doc.id == created_doc.id
+def test_document_get_full_url(root_doc):
+    """get_full_url returns full URLs."""
+    assert root_doc.get_full_url() == 'https://example.com/en-US/docs/Root'
 
-    def test_from_url_with_default_locale_slug(self):
-        """It should be possible to get the localized document
-           even though the url of default locale document is passed"""
 
-        en_doc = document(save=True, locale=settings.WIKI_DEFAULT_LANGUAGE)
-        bn_doc = document(parent=en_doc, locale='bn-BD', save=True)
+def test_document_from_url(root_doc):
+    """from_url returns the document for an absolute URL."""
+    doc = Document.from_url(root_doc.get_absolute_url())
+    assert doc == root_doc
 
-        # Generate a url with `bn-BD` locale, but default locale document slug
-        url = reverse('wiki.document', locale=bn_doc.locale, args=[en_doc.slug])
 
-        get_doc = Document.from_url(url)
-        assert get_doc.id == bn_doc.id
+def test_document_from_url_locale_matches_translation(trans_doc):
+    """from_url matches translation with locale plus English slug."""
+    en_doc = trans_doc.parent
+    url = reverse('wiki.document', locale=trans_doc.locale, args=[en_doc.slug])
+    doc = Document.from_url(url)
+    assert doc == trans_doc
 
-        # passing wrong default locale document slug should return None
-        # Generate a url with bad default locale document slug
-        url = reverse('wiki.document', locale=bn_doc.locale, args=[en_doc.slug + 'bad_slug'])
-        get_doc = Document.from_url(url)
-        assert get_doc is None
 
-    def test_from_url_with_wrong_url(self):
-        """If wrong url is passed to the ``from_url``, It should return None"""
-        rev = revision(save=True)
-        # Generate a url of revision
-        url = rev.get_absolute_url()
+def test_document_from_url_bad_slug_returns_none(trans_doc):
+    """from_url returns None for an invalid slug."""
+    en_doc = trans_doc.parent
+    url = reverse('wiki.document', locale=trans_doc.locale,
+                  args=[en_doc.slug + '_bad_slug'])
+    doc = Document.from_url(url)
+    assert doc is None
 
-        # Passing url of revision should return None as its not documen
-        get_doc = Document.from_url(url)
-        assert get_doc is None
 
-    def test_from_url_with_full_url(self):
-        """If url with host is passed, the from_url should return None"""
-        doc = document(save=True)
-        full_url = doc.get_full_url()
+def test_document_from_url_revision_url_returns_none(create_revision):
+    """from_url returns None for a revision URL."""
+    doc = Document.from_url(create_revision.get_absolute_url())
+    assert doc is None
 
-        # Passing the full_url to get_doc
-        get_doc = Document.from_url(full_url)
 
-        assert get_doc is None
+def test_document_from_url_full_url_returns_none(root_doc):
+    """from_url returns None for a full URL."""
+    doc = Document.from_url(root_doc.get_full_url())
+    assert doc is None
 
-    def test_get_redirect_document(self):
-        rev = revision(save=True)
-        doc = rev.document
-        doc_first_slug = doc.slug
 
-        # Move the document to new slug
-        doc._move_tree(new_slug="moved_doc")
-
-        old_slug_document = Document.objects.get(slug=doc_first_slug)
-
-        assert old_slug_document.get_redirect_document().id == doc.id
+def test_document_get_redirect_document(root_doc):
+    """get_redirect_document returns the destination document."""
+    old_slug = root_doc.slug
+    root_doc._move_tree(new_slug='Moved')
+    old_doc = Document.objects.get(slug=old_slug)
+    assert old_doc.get_redirect_document() == root_doc
 
 
 class UserDocumentTests(UserTestCase):
