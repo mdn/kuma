@@ -128,13 +128,14 @@ There is an evolving style guide at https://mdn.github.io/mdn-fiori/, sourced
 from https://github.com/mdn/mdn-fiori. Some of the style guidelines are
 enforced by linters.
 
-To run stylelint_ on all ``.scss`` files, on the host system::
+To run stylelint_ on all ``.scss`` files::
 
-    gulp css:lint
+    npm run stylelint
+    gulp css:lint  # Alternate on the host system
 
-To run eslint_ on ``.js`` files, on the host system::
+To run eslint_ on ``.js`` files::
 
-    npm lint
+    npm run eslint
 
 .. _stylelint: https://stylelint.io/
 .. _eslint: https://eslint.org/

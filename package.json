@@ -14,18 +14,18 @@
   },
   "scripts": {
     "stylelint": "./node_modules/.bin/stylelint \"kuma/static/styles/**/*.scss\"",
-    "lint": "./node_modules/.bin/eslint kuma/",
+    "eslint": "./node_modules/.bin/eslint kuma/",
     "optim:svg": "svgo jinja2/includes/icons/* --disable={removeViewBox,removeTitle} --multipass --pretty",
-    "precommit": "npm run lint"
+    "precommit": "npm run eslint && npm run stylelint"
   },
   "dependencies": {
     "clean-css": "3.4.28",
     "node-sass": "4.9.2",
     "stylelint": "9.2.1",
+    "eslint": "3.19.0",
     "uglify-js": "2.8.29"
   },
   "devDependencies": {
-    "eslint": "^3.19.0",
     "gulp": "^3.9.1",
     "gulp-sass": "^3.1.0",
     "gulp-stylelint": "^3.9.0",
