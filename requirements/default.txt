@@ -152,9 +152,10 @@ djangorestframework==3.6.4 \
     --hash=sha256:0f9bfbac702f3376dfb2db4971ad8af4e066bfa35393b1b85e085f7e8b91189a \
     --hash=sha256:de8ac68b3cf6dd41b98e01dcc92dc0022a5958f096eafc181a17fa975d18ca42
 
-# Add site-wide announcements in the database
-django-soapbox==1.3 \
-    --hash=sha256:69ccf5eb9200f294f400864c9f11990a8bdcd75ed8965cd984b7d6d3d243cf49
+# Publish site-wide announcements without deployments
+django-soapbox==1.5 \
+    --hash=sha256:9f330db2b4098d24d7a2c4c9de63b0cc4d5579c69c2a904621914371f8039200 \
+    --hash=sha256:a65810a406416e3a945feb6c834a58fac341f506e7d1ea1b8abc488df5562f7e
 
 # Generate localization catalogs for JavaScript
 # Code: https://github.com/zyegfryed/django-statici18n
