@@ -95,7 +95,7 @@ command accordingly, or force the ``kuma`` name with::
 
 .. _provision-the-database:
 
-Load the Sample Database
+Load the sample database
 ========================
 Download and load the sample database::
 
@@ -173,19 +173,19 @@ A few thousand lines will be printed, like::
     ....
     1870 static files copied to '/app/static', 125 post-processed.
 
-Visit the Homepage
+Visit the homepage
 ==================
 Open the homepage at http://localhost:8000 . You've installed Kuma!
 
 .. _frontend-development:
 
-Prepare for Front-end Development
-=================================
+Prepare for front-end development (optional)
+============================================
 When doing front-end development on your local machine, you'll probably
 want to run ``gulp``, to rebuild front-end assets as they edited, rather than
 running ``make build-static`` after each change.
 
-First, install Node.js v6, using the `install instructions for your OS`_.
+First, install Node.js v8, using the `install instructions for your OS`_.
 
 Next, from the root directory of your Kuma repository, install ``gulp`` and
 dependencies::
@@ -233,8 +233,8 @@ http://localhost:8000/admin/login/
 
 .. _enable-github-auth:
 
-Enable GitHub Auth (optional)
-=============================
+Enable GitHub authentication (optional)
+=======================================
 To enable GitHub authentication, you'll need to
 `register an OAuth application on GitHub`_, with settings like:
 

@@ -53,54 +53,91 @@ Kumascript tests
 If you're changing Kumascript, be sure to run its tests too.
 See https://github.com/mdn/kumascript.
 
-Front-end Development and Compiling Sass files
-==============================================
-Sass files need to be compiled for changes to take effect, but don’t worry,
-with DEBUG=True (which is the default for local development), the compilation
-can be done automatically by Gulp.
+Front-end development
+=====================
+Assets are processed in several steps by Django and django-pipeline_:
 
-When doing front-end development on your local machine, run the following in its
-own shell from the root directory of your local Kuma repository::
+* Front-end localization libraries and string catalogs are generated based on
+  ``gettext`` calls in Javascript files.
+* Sass_ source files are compiled to plain CSS with node-sass_.
+* Assets are collected to the ``static/`` folder.
+* CSS, JS, and image assets are included in templates using the
+  ``{% stylesheet %}``, ``{% javascript %}``, and ``{% static %}`` Jinja2
+  macros.
 
-    gulp
+In production mode (``DEBUG=False``), there is additional processing. See
+:ref:`generating-production-assets` for more information.
+
+To rebuild the front-end localization libraries::
+
+    make compilejsi18n
+
+To rebuild CSS, JS, and image assets::
+
+    make collectstatic
+
+To do both::
+
+    make build-static
+
+.. _ManifestStaticFilesStorage: https://docs.djangoproject.com/en/1.11/ref/contrib/staticfiles/#django.contrib.staticfiles.storage.ManifestStaticFilesStorage
+.. _Sass: https://sass-lang.com/
+.. _UglifyJS: https://github.com/mishoo/UglifyJS2
+.. _cleancss: https://github.com/jakubpawlowicz/clean-css
+.. _django-pipeline: https://github.com/jazzband/django-pipeline
+.. _node-sass: https://github.com/sass/node-sass
+
+Compiling on the host system with gulp
+--------------------------------------
+``make build-static`` is how assets are built for production. It is also
+slow for iterative front-end development. With ``DEBUG=True`` (the default for
+local development), Gulp can be used to rebuild as files are changed, using a
+parallel workflow.
+
+If you haven't already installed `Node.js`_  and `gulp`_ on
+your local machine, see :ref:`frontend-development`.
+
+.. _gulp: http://gulpjs.com/
+.. _`Node.js`: https://nodejs.org/
+
+On your local (host) machine, open a new shell and run from the root of the
+Kuma repository::
+
+    ./node_modules/.bin/gulp
+    gulp  # If installed with --global
 
 This ``gulp`` command will do two things. First, it will watch *all* files
 under ``./kuma/static``, and any changed file that is *not* a Sass file
-(``.scss`` or ``.sass``) under ``./kuma/static/styles``, will be copied to
+(``.scss`` or ``.sass``) under ``./kuma/static/styles`` will be copied to
 ``./static`` as is (no compilation will be done).
 
 Second, it will watch *all* files with a ``.scss`` extension under
 ``./kuma/static/styles``, and any change will trigger a ``stylelint``
 of the changed file, as well as a recompile of *all* top-level ``.scss`` files.
 All of the resulting compiled files will then be copied to ``./static``, and
-immediately available to your local server.
+immediately available to your local server.  This is still faster than the
+full ``make build-static`` build.
 
-.. note::
+When running in production mode (``DEBUG=False``), assets are only read when
+the webserver starts, so assets processed by ``gulp`` will not appear. See
+:ref:`generating-production-assets` for more information.
 
-  It is currently faster for local development to compile Sass using
-  ``gulp-sass`` instead of Django Pipeline. This may change in the future.
+Style guide and linters
+-----------------------
+There is an evolving style guide at https://mdn.github.io/mdn-fiori/, sourced
+from https://github.com/mdn/mdn-fiori. Some of the style guidelines are
+enforced by linters.
 
-If you'd like to manually run ``stylelint`` locally on all ``.scss`` files under
-``./kuma/static/styles``, do this::
+To run stylelint_ on all ``.scss`` files, on the host system::
 
     gulp css:lint
 
-If you haven't already installed `Node.js`_  and `gulp`_ on
-your local machine, see :ref:`frontend-development`.
+To run eslint_ on ``.js`` files, on the host system::
 
-By default ``DEBUG=True`` in ``docker-compose.yml``, and in that mode, as
-mentioned above, source files are compiled on-demand. If for some reason you
-want to run with ``DEBUG = False``, just remember that source files will no
-longer be compiled on-demand. Instead, after every change to one or more source
-files, you'll have to do the following::
+    npm lint
 
-    docker-compose exec web ./manage.py collectstatic
-    docker-compose restart web
-
-in order for your changes to be visible.
-
-.. _gulp: http://gulpjs.com/
-.. _`Node.js`: https://nodejs.org/
+.. _stylelint: https://stylelint.io/
+.. _eslint: https://eslint.org/
 
 Database migrations
 ===================
@@ -133,8 +170,8 @@ Kuma tracks its Python dependencies with pip_.  See the
 .. _pip: https://pip.pypa.io/
 .. _README in the requirements folder: https://github.com/mozilla/kuma/tree/master/requirements
 
-Front-end dependencies
-----------------------
+Front-end asset dependencies
+----------------------------
 Front-end dependencies are managed by Bower_ and checked into the repository.
 Follow these steps to add or upgrade a dependency:
 
@@ -154,7 +191,18 @@ this approach the next time they're upgraded.
 
 .. _Bower: http://bower.io
 
-Customizing with Environment Variables
+Front-end toolchain dependencies
+--------------------------------
+The Front-end toolchain dependencies are managed by npm_, but not checked in to
+the repository. Follow these steps to add or upgrade a dependency:
+
+#. On the host, update ``package.json``.
+#. In the web container, install the new dependencies with ``make npmrefresh``
+#. On the host, commit the new ``package.json`` and ``package-lock.json``.
+
+.. _npm: https://www.npmjs.com/
+
+Customizing with environment variables
 ======================================
 `Environment variables`_ are used to change the way different components work.
 There are a few ways to change an environment variables:
@@ -183,7 +231,7 @@ around 4 seconds to page load time.
 
 .. _advanced_config_docker:
 
-Customizing the Docker Environment
+Customizing the Docker environment
 ==================================
 Running docker-compose_ will create and run several containers, and each
 container's environment and settings are configured in ``docker-compose.yml``.
@@ -229,7 +277,7 @@ documentation for more ideas on customizing the Docker environment.
 .. _pdb: https://docs.python.org/2/library/pdb.html
 .. _runserver_plus: http://django-extensions.readthedocs.io/en/latest/runserver_plus.html
 
-Customizing The database
+Customizing the database
 ========================
 The database connection is defined by the environment variable
 ``DATABASE_URL``, with this default::
@@ -251,20 +299,31 @@ To connect to the database specified in ``DATABASE_URL``, use::
 
 .. _dj-database-url: https://github.com/kennethreitz/dj-database-url
 
-Generating Production Assets
-============================
-Kuma will automatically run in debug mode, with the ``DEBUG`` setting turned to
-``True``. Setting ``DEBUG=False`` will put you in production mode and
-generate/use minified (compressed) and versioned (hashed) assets. To
-emulate production, and test compressed and hashed assets locally:
+.. _generating-production-assets:
 
-#. Set the environment variable ``DEBUG=false``.
+Generating production assets
+============================
+Setting ``DEBUG=False`` will put you in production mode, which adds aditional
+asset processing:
+
+* Javascript modules are combined into single JS files.
+* CSS and JS files are minifed and post-processed by cleancss_ and UglifyJS_.
+* Assets are renamed to include a hash of contents by a variant of Django's ManifestStaticFilesStorage_.
+
+In production mode, assets and their hashes are read once when the server
+starts, for efficiency. Any changes to assets require rebuilding with
+``make build-static`` and restarting the web process. The ``gulp`` workflow
+is not compatible with production mode.
+
+To emulate production, and test compressed and hashed assets locally:
+
+#. Set the environment variable ``DEBUG=False``
 #. Start (``docker-compose up -d``) or restart (``docker-compose restart``)
    your Docker services.
-#. Run ``docker-compose exec web make build-static``.
+#. Run ``docker exec -e DJANGO_SETTINGS_MODULE=kuma.settings.prod kuma_web_1 make build-static``.
 #. Restart the web process using ``docker-compose restart web``.
 
-Using Secure cookies
+Using secure cookies
 ====================
 To prevent error messages like "``Forbidden (CSRF cookie not set.):``", set the
 environment variable::
@@ -314,7 +373,7 @@ whitespace at the beginning of the line.
 
 .. _maintenance-mode:
 
-Maintenance Mode
+Maintenance mode
 ================
 Maintenance mode is a special configuration for running Kuma in read-only mode,
 where all operations that would write to the database are blocked. As the name
