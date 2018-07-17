@@ -90,7 +90,7 @@
         var $title = $(this);
         var text = $title.text();
         // split on . - : ( or capital letter, only if followed by 2 letters
-        var split = text.split(/(?=[\.:\-\(A-Z][\.:\-\(A-Z]{0,}[a-zA-Z]{3})/g);
+        var split = text.split(/(?=[.:\-(A-Z][.:\-(A-Z]{0,}[a-zA-Z]{3})/g);
         // empty h1
         $title.empty();
         // put array back into h1 seperated by <wbr> tags

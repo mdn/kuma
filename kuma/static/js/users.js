@@ -119,8 +119,8 @@
         // checkboxes sync'd to interests
         var expertise = $('#id_user-expertise').val();
         $('#id_user-expertise').hide()
-        .val(expertise)
-        .after('<ul id="tags-expertise" class="tags"></ul>');
+            .val(expertise)
+            .after('<ul id="tags-expertise" class="tags"></ul>');
 
         $('#tags-expertise').click(updateFieldFromTaglist);
         rebuildExpertiseTaglist();
