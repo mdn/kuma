@@ -573,6 +573,9 @@ def _document_redirect_to_create(document_slug, document_locale, slug_dict):
                                        slug=slug_dict['parent'])
         if parent_doc.is_redirect:
             parent_doc = parent_doc.get_redirect_document(id_only=True)
+            if parent_doc is None:
+                # Redirect is not to a Document, can't create subpage
+                raise Http404()
 
         url = urlparams(url, parent=parent_doc.id,
                         slug=slug_dict['specific'])
