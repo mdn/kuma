@@ -840,6 +840,25 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         parameters = parse_qs(response.request['QUERY_STRING'])
         assert parameters['parent'][0] == str(root_doc.id)
 
+    def test_child_of_redirect_to_non_document(self):
+        """Return a 404 when accessing the child of a non-document redirect."""
+        self.client.login(username='admin', password='testpass')
+        content = '<p>REDIRECT <a class="redirect" href="/">MDN</a></p>'
+        rev = revision(content=content, is_approved=True, save=True)
+        doc = rev.document
+        assert doc.is_redirect
+        assert doc.get_redirect_url() == '/'
+        assert doc.get_redirect_document() is None
+
+        doc_url = doc.get_absolute_url()
+        response = self.client.get(doc_url)
+        assert response.status_code == 301
+        assert response['Location'] == '/'
+
+        subpage_url = doc_url + '/SubPage'
+        response = self.client.get(subpage_url)
+        assert response.status_code == 404
+
     @pytest.mark.retitle
     def test_retitling_solo_doc(self):
         """ Editing just title of non-parent doc:
