@@ -3,7 +3,19 @@
     var neverShowNoticeKey = 'never-show-locale-notice';
     var neverShowNotice = getNeverShowNotice();
     function storeLocaleChange(code, name) {
-        sessionStorage.setItem(sessionStorageKey, JSON.stringify({code: code, name: name}));
+        if (!isExistingLocaleCookieExist(code)){
+            sessionStorage.setItem(sessionStorageKey, JSON.stringify({code: code, name: name}));
+        }
+    }
+
+    function getCookie(name) {
+	    var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+	    return v ? v[2] : null;
+	}
+
+    function isExistingLocaleCookieExist(code) {
+        var cookieName = document.querySelector('meta[name="lang-cookie"]').content;
+        return getCookie(cookieName) === code;
     }
 
     function removeLocaleChange() {
