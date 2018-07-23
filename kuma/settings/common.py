@@ -589,7 +589,7 @@ TEMPLATES = [
     {
         'NAME': 'jinja2',
         'BACKEND': 'django_jinja.backend.Jinja2',
-        'DIRS': [path('jinja2')],
+        'DIRS': [path('jinja2'), path('static')],
         'APP_DIRS': True,
         'OPTIONS': {
             # Use jinja2/ for jinja templates
