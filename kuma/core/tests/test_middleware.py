@@ -128,3 +128,45 @@ def test_legacy_domain_redirects_middleware(rf, settings, site_url, host):
         assert response['Location'] == site_url + path
     else:
         assert response is None
+
+
+@pytest.mark.parametrize('dest_path',
+                         ('//example.com/test',
+                          '////example.com/test',
+                          'http://example.com/test',
+                          'https://example.com/test'))
+@pytest.mark.parametrize('site_url', ('http://new', 'https://new'))
+def test_legacy_domain_redirects_middleware_rejects_url_paths(
+        rf, settings, dest_path, site_url):
+    '''The middleware rejects paths formated with full URLs.'''
+    settings.SITE_URL = site_url
+    settings.LEGACY_HOSTS = ['old']
+    settings.ALLOWED_HOSTS.extend(['new', 'old'])
+
+    middleware = LegacyDomainRedirectsMiddleware(lambda req: None)
+    request = rf.get(dest_path, HTTP_HOST='old')
+    response = middleware(request)
+
+    assert response.status_code == 301
+    assert response['Location'] == site_url + '/test'
+
+
+@pytest.mark.parametrize('site_url', ('http://new', 'https://new'))
+def test_legacy_domain_redirects_middleware_double_url_path(
+        rf, settings, site_url):
+    '''
+    The middleware doesn't fully reject double-encoded URLs.
+
+    This results in a 404 on developer.mozilla.org, not a redirect.
+    '''
+    settings.SITE_URL = site_url
+    settings.LEGACY_HOSTS = ['old']
+    settings.ALLOWED_HOSTS.extend(['new', 'old'])
+
+    path = 'http://example.com//http://example.com/test'
+    middleware = LegacyDomainRedirectsMiddleware(lambda req: None)
+    request = rf.get(path, HTTP_HOST='old')
+    response = middleware(request)
+
+    assert response.status_code == 301
+    assert response['Location'] == site_url + '//example.com/test'
