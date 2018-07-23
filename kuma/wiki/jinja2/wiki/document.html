@@ -1,7 +1,7 @@
 {% extends "wiki/base.html" %}
 {% block title %}{{ page_title(document.title + seo_parent_title) }}{% endblock %}
 
-{% from "wiki/includes/document_macros.html" import build_document_crumbs, get_document_quick_links, get_document_subnav, document_watch, contributor_links with context %}
+{% from "wiki/includes/document_macros.html" import build_document_crumbs, get_document_quick_links, document_watch, contributor_links with context %}
 {% from "wiki/includes/buttons.html" import get_document_buttons with context %}
 {% from "wiki/includes/approvals.html" import get_approvals_html with context %}
 
@@ -11,6 +11,7 @@
   {% set help_link = url('wiki.translate', document_path=document.parent.slug, locale=document.parent.locale)|urlparams(tolocale=request.LANGUAGE_CODE) %}
 {% endif %}
 
+{% set is_archive = (document.slug == 'Archive') or document.slug.startswith('Archive/') %}
 {% set is_logged_in = request.user.is_authenticated() %}
 {% set doc_abs_url = document.get_absolute_url() %}
 {% set canonical = doc_abs_url | absolutify %}
@@ -20,11 +21,7 @@
   {% set approvals_html = get_approvals_html(document, request.user) %}
 {% endif %}
 
-{% set nearest_zone = document.nearest_zone %}
-{% set is_zone = nearest_zone %}
-{% set is_zone_root = document.is_zone_root %}
-
-{% set show_left = zone_subnav_html or quick_links_html or approvals_html %}
+{% set show_left = quick_links_html or approvals_html %}
 
 {% set buttons = get_document_buttons(document, help_link, other_translations) %}
 {% set crumbs = build_document_crumbs(document) %}
@@ -43,19 +40,15 @@
   {%- endif -%}
 {% endblock %}
 
-{% block bodyclass %}document {% if is_zone %}zone{% endif %} {% if is_zone_root %}zone-landing{% endif %}{% endblock %}
+{% block bodyclass %}document{% endblock %}
 {% block body_attributes %}data-slug="{{ document.slug }}" contextmenu="edit-history-menu" data-search-url="{{ search_url }}"{% endblock body_attributes %}
 
 {% block main_content_id %}document-main{% endblock %}
 
 {% block site_css %}
     {{ super() }}
-    {% if nearest_zone %}
-      {% if nearest_zone.css_slug %}
-        {% stylesheet 'zone-' + nearest_zone.css_slug %}
-      {% else %}
-        {% stylesheet 'zones' %}
-      {% endif %}
+    {% if is_archive %}
+      {% stylesheet 'archive' %}
     {% endif %}
 {% endblock %}
 
@@ -115,14 +108,6 @@
       </div>
 
       <div class="document-title">
-        {% if is_zone_root %}
-          <!-- zone image -->
-          <span class="zone-parent"></span>
-        {% elif is_zone %}
-          <!-- zone image, link to zone root -->
-          <a class="zone-parent" href="{{ nearest_zone.document.get_absolute_url() }}">{{ nearest_zone.document.title }}</a>
-        {% endif %}
-
         <h1>{{ document.title }}</h1>
       </div>
     </div>
@@ -141,7 +126,7 @@
 
 {% block content %}
 
-    <div class="wiki-main-content" {% if not is_zone %}id="document-main"{% endif %}><div class="center">
+    <div class="wiki-main-content" id="document-main"><div class="center">
       <!-- start the main content container -->
         <div id="wiki-column-container" class="{% if show_left %}wiki-left-present{% else %}wiki-left-closed wiki-left-none{% endif %}">
 
@@ -268,18 +253,11 @@
             </div>
 
             {% if show_left %}
-              <!-- quick links and zone subnav strip -->
+              <!-- quick links and approvals strip -->
               <div id="wiki-left" class="column-strip wiki-column">
 
-                {% if not is_zone_root %}
-                  <!-- crumbs -->
-                  {{ crumbs }}
-                {% endif %}
-
-                {% if zone_subnav_html %}
-                  <!-- zone subnav -->
-                  {{ get_document_subnav(zone_subnav_html) }}
-                {% endif %}
+                <!-- crumbs -->
+                {{ crumbs }}
 
                 {% if quick_links_html %}
                   <!-- quick links -->

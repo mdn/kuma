@@ -102,10 +102,7 @@ def test_zone_root_doc(zone_root_doc, client):
     resources = source.gather(requester, storage)
     assert resources == []
     assert source.state == source.STATE_DONE
-    context = {
-        'redirect_to': 'Zone',
-        'is_zone_root': True,
-        'zone_css_slug': 'special'}
+    context = {'redirect_to': 'Zone'}
     storage.save_document_rendered.assert_called_once_with(
         'en-US', 'Root/Zone', context)
 

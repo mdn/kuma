@@ -1268,48 +1268,6 @@ def _translation_data():
     }
 
 
-@pytest.mark.parametrize('doc_name', ['root', 'bottom', 'de', 'fr', 'it'])
-def test_zone_styles(client, doc_hierarchy_with_zones, root_doc, doc_name):
-    """
-    Check document page for zone-style-related features.
-    """
-    zone_title = 'a.zone-parent'
-    css_link = 'link[type="text/css"][href$="build/styles/{}.css"]'
-
-    if doc_name == 'root':
-        doc = root_doc
-    elif doc_name == 'bottom':
-        doc = doc_hierarchy_with_zones.bottom
-        zone_title = 'a.zone-parent[href="{}"]'.format(
-            doc_hierarchy_with_zones.middle_top.get_absolute_url()
-        )
-    else:
-        doc = doc_hierarchy_with_zones.top.translations.get(locale=doc_name)
-
-    url = reverse('wiki.document', args=(doc.slug,), locale=doc.locale)
-    response = client.get(url, follow=True)
-    assert response.status_code == 200
-    response_html = pq(response.content)
-
-    def count(selector):
-        return len(response_html.find(selector))
-
-    def one_if(*args):
-        return 1 if any(arg == doc_name for arg in args) else 0
-
-    assert count('body.zone') == one_if('bottom', 'de', 'fr', 'it')
-    assert count('body.zone-landing') == one_if('de', 'fr', 'it')
-    assert count('span.zone-parent') == one_if('de', 'fr', 'it')
-    assert (count('.document-title') ==
-            one_if('root', 'bottom', 'de', 'fr', 'it'))
-    assert count(zone_title) == one_if('bottom')
-    assert count('.crumbs') == one_if('bottom')
-    assert count(css_link.format('zones')) == one_if('it')
-    assert count(css_link.format('zone-bobby')) == one_if('bottom')
-    assert count(css_link.format('zone-berlin')) == one_if('de')
-    assert count(css_link.format('zone-lindsey')) == one_if('fr')
-
-
 @pytest.mark.parametrize("elem_num,has_prev,is_english,has_revert", [
     (0, True, False, False),
     (1, True, False, True),

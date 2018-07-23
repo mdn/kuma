@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import requests
 
 from utils.urls import flatten, url_test
@@ -353,6 +354,81 @@ LEGACY_URLS = list(flatten((
              status_code=302),
     url_test('/zh_tw/docs/AJAX', '/zh-TW/docs/AJAX', status_code=302),
 )))
+
+zone_redirects = (
+    (u'Add-ons', u'Mozilla/Add-ons', 'WebExtensions', ('af', 'ar', 'bn-BD',
+                                                       'bn-IN', 'ca', 'cs',
+                                                       'de', 'en-US', 'es',
+                                                       'fa', 'fr', 'hu',
+                                                       'id', 'it', 'ja',
+                                                       'ms', 'nl', 'pl',
+                                                       'pt-BR', 'pt-PT', 'ro',
+                                                       'ru', 'sv-SE', 'th',
+                                                       'uk', 'vi', 'zh-CN',
+                                                       'zh-TW', None)),
+    (u'Add-ons', u'Mozilla/Πρόσθετα', 'WebExtensions', ('el',)),
+    (u'Add-ons', u'Mozilla/애드온들', 'WebExtensions', ('ko',)),
+    (u'Add-ons', u'Mozilla/Eklentiler', 'WebExtensions', ('tr',)),
+    (u'Firefox', u'Mozilla/Firefox', 'Privacy', ('af', 'ar', 'az', 'bm',
+                                                 'bn-IN', 'ca', 'cs', 'de',
+                                                 'ee', 'el', 'en-US', 'es',
+                                                 'ff', 'fi', 'fr', 'fy-NL',
+                                                 'ga-IE', 'ha', 'he', 'hi-IN',
+                                                 'hr', 'hu', 'id', 'ig',
+                                                 'it', 'ja', 'ka', 'ko',
+                                                 'ln', 'ml', 'ms', 'my',
+                                                 'nl', 'pl', 'pt-BR', 'pt-PT',
+                                                 'ro', 'ru', 'son', 'sq',
+                                                 'sv-SE', 'sw', 'ta', 'th',
+                                                 'tl', 'tr', 'vi', 'wo',
+                                                 'xh', 'yo', 'zh-CN', 'zh-TW',
+                                                 'zu', None)),
+    (u'Firefox', u'Mozilla/ফায়ারফক্স', 'Privacy', ('bn-BD',)),
+    (u'Apps', u'Web/Apps', 'Tutorials', ('en-US', 'fa', 'fr', 'ja', 'ta', 'th',
+                                         'zh-CN', 'zh-TW', None)),
+    (u'Apps', u'Web/Aplicaciones', 'Tutorials', ('es',)),
+    (u'Apps', u'Apps', 'Tutorials', ('bn-BD', 'de', 'it', 'ko', 'pt-BR',
+                                     'ru')),
+    (u'Learn', u'Learn', 'JavaScript', ('ca', 'de', None)),
+    (u'Apprendre', u'Apprendre', 'JavaScript', ('fr',)),
+    (u'Marketplace', u'Mozilla/Marketplace', 'APIs', ('de', 'en-US', 'es',
+                                                      'fr', 'it', 'ja',
+                                                      'zh-CN', None)),
+    (u'Marketplace', u'Mozilla/بازار', 'APIs', ('fa',)),
+)
+
+zone_url_test_kwargs = {
+    'status_code': 302,
+    'resp_headers': {
+        'cache-control': 'max-age=0, public, s-maxage=604800'
+    }
+}
+
+ZONE_REDIRECT_URLS = []
+for zone_root, wiki_slug, child_path, locales in zone_redirects:
+    for locale in locales:
+        prefix = (u'/' + locale) if locale else ''
+        redirect_path = prefix + u'/docs/' + wiki_slug
+        paths = [prefix + u'/' + zone_root]
+        # Test with a "docs" based path as well if it makes sense.
+        if zone_root != wiki_slug:
+            paths.append(prefix + u'/docs/' + zone_root)
+        for path in paths:
+            # The zone root without a trailing slash.
+            ZONE_REDIRECT_URLS.append(
+                url_test(path, redirect_path, **zone_url_test_kwargs))
+            # The zone root with a trailing slash.
+            ZONE_REDIRECT_URLS.append(
+                url_test(path + u'/', redirect_path, **zone_url_test_kwargs))
+            # A zone child page with query parameters.
+            ZONE_REDIRECT_URLS.append(
+                url_test(path + u'/' + child_path + '?raw&macros',
+                         redirect_path + u'/' + child_path + '?raw&macros',
+                         **zone_url_test_kwargs))
+            # The zone root with $edit.
+            ZONE_REDIRECT_URLS.append(
+                url_test(path + u'$edit', redirect_path + u'$edit',
+                         **zone_url_test_kwargs))
 
 # Redirects added after 2017 AWS move
 REDIRECT_URLS = list(flatten((

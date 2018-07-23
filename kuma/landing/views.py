@@ -87,7 +87,6 @@ Disallow: /*$flag
 Disallow: /*$translate
 Disallow: /*$locales
 Disallow: /*$json
-Disallow: /*$styles
 Disallow: /*$toc
 Disallow: /*$move
 Disallow: /*$quick-review

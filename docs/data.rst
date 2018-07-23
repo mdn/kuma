@@ -80,7 +80,6 @@ following, using the desired URL::
 Scraping a document includes:
 
 - The parent documents (such as ``Web`` and ``Web/CSS`` for ``Web/CSS/display``)
-- The zone, if needed
 - A revision for each document, and the author for each revision
 - The English variant, if a translation is requested
 - Redirects, if a page move is detected

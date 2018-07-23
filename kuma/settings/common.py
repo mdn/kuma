@@ -467,7 +467,6 @@ MIDDLEWARE = (
     # LocaleMiddleware must be before any middleware that uses
     # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
     'kuma.core.middleware.LocaleMiddleware',
-    'kuma.wiki.middleware.DocumentZoneMiddleware',
     'kuma.wiki.middleware.ReadOnlyMiddleware',
     'kuma.core.middleware.Forbidden403Middleware',
     'ratelimit.middleware.RatelimitMiddleware',
@@ -750,72 +749,6 @@ PIPELINE_CSS = {
         'output_filename': 'build/styles/wiki-compat-tables.css',
         'template_name': 'pipeline/javascript-array.jinja',
     },
-    'zone-addons': {
-        'source_filenames': (
-            'styles/zone-addons.scss',
-        ),
-        'output_filename': 'build/styles/zone-addons.css',
-    },
-    'zone-apps': {
-        'source_filenames': (
-            'styles/zone-apps.scss',
-        ),
-        'output_filename': 'build/styles/zone-apps.css',
-    },
-    'zone-archive': {
-        'source_filenames': (
-            'styles/zone-archive.scss',
-        ),
-        'output_filename': 'build/styles/zone-archive.css',
-    },
-    'zone-b2g': {
-        'source_filenames': (
-            'styles/zone-b2g.scss',
-        ),
-        'output_filename': 'build/styles/zone-b2g.css',
-    },
-    'zone-connect': {
-        'source_filenames': (
-            'styles/zone-connect.scss',
-        ),
-        'output_filename': 'build/styles/zone-connect.css',
-    },
-    'zone-firefox': {
-        'source_filenames': (
-            'styles/zone-firefox.scss',
-        ),
-        'output_filename': 'build/styles/zone-firefox.css',
-    },
-    'zone-games': {
-        'source_filenames': (
-            'styles/zone-games.scss',
-        ),
-        'output_filename': 'build/styles/zone-games.css',
-    },
-    'zone-learn': {
-        'source_filenames': (
-            'styles/zone-learn.scss',
-        ),
-        'output_filename': 'build/styles/zone-learn.css',
-    },
-    'zone-marketplace': {
-        'source_filenames': (
-            'styles/zone-marketplace.scss',
-        ),
-        'output_filename': 'build/styles/zone-marketplace.css',
-    },
-    'zone-ten': {
-        'source_filenames': (
-            'styles/zone-ten.scss',
-        ),
-        'output_filename': 'build/styles/zone-ten.css',
-    },
-    'zones': {
-        'source_filenames': (
-            'styles/zones.scss',
-        ),
-        'output_filename': 'build/styles/zones.css',
-    },
     'users': {
         'source_filenames': (
             'styles/users.scss',
@@ -903,6 +836,13 @@ PIPELINE_CSS = {
             'styles/samples.scss',
         ),
         'output_filename': 'build/styles/samples.css',
+    },
+    # special styling for archived pages
+    'archive': {
+        'source_filenames': (
+            'styles/archive.scss',
+        ),
+        'output_filename': 'build/styles/archive.css',
     },
 }
 

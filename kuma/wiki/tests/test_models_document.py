@@ -29,13 +29,6 @@ def doc_with_sections(root_doc, wiki_user):
       </ol>
     </section>
 
-    <h3 id="Subnav">Subnav</h3>
-    <p>Subnav:</p>
-    <ul>
-      <li><a href="%(root_url)s">Existing link</a></li>
-      <li><a href="/en-US/docs/NewPage">New link</a></li>
-    </ul>
-
     <h2>Second</h2>
     <p>Another section, with an
       <a href="%(root_url)s">existing link</a> and a
@@ -280,62 +273,6 @@ def test_build_json_data_uses_rendered_html(root_doc):
     assert json_data['sections'] == expected_sections
 
 
-def test_nearest_zone(doc_hierarchy_with_zones, cleared_cacheback_cache):
-    """
-    Test the nearest zone property of English and non-English documents.
-    """
-    top_doc = doc_hierarchy_with_zones.top
-    top_zone = top_doc.zone
-
-    fr_top_doc = top_doc.translations.get(locale='fr')
-    de_top_doc = top_doc.translations.get(locale='de')
-
-    assert fr_top_doc.parent == top_doc
-    assert de_top_doc.parent == top_doc
-    assert top_doc.nearest_zone == top_zone
-    # The French translation of the top doc doesn't have its own locale-
-    # specific nearest zone, so it'll return the nearest zone of its parent.
-    assert fr_top_doc.nearest_zone == top_doc.nearest_zone
-    # The German translation of the top doc does have its own
-    # locale-specific nearest zone.
-    assert de_top_doc.nearest_zone == de_top_doc.zone
-
-
-def test_nearest_zone_when_no_parent(doc_hierarchy_with_zones,
-                                     cleared_cacheback_cache):
-    """
-    Silly end-case test of the nearest-zone property of a non-English document
-    without a parent.
-    """
-    top_doc = doc_hierarchy_with_zones.top
-    fr_top_doc = top_doc.translations.get(locale='fr')
-    fr_top_doc.parent = None
-    fr_top_doc.save()
-
-    assert not fr_top_doc.nearest_zone
-
-
-@pytest.mark.parametrize('doc_name,expected_result', [
-    ('top', True),
-    ('bottom', False),
-    ('de', True),
-    ('fr', True),
-    ('root', False),
-])
-def test_is_zone_root(doc_hierarchy_with_zones, root_doc,
-                      cleared_cacheback_cache, doc_name, expected_result):
-    """
-    Test is_zone_root.
-    """
-    if doc_name == 'root':
-        doc = root_doc
-    elif doc_name in ('de', 'fr'):
-        doc = doc_hierarchy_with_zones.top.translations.get(locale=doc_name)
-    else:
-        doc = getattr(doc_hierarchy_with_zones, doc_name)
-    assert doc.is_zone_root is expected_result
-
-
 def test_get_section_content(doc_with_sections):
     """A section can be extracted by ID."""
     result = doc_with_sections.get_section_content('Short')
@@ -344,7 +281,7 @@ def test_get_section_content(doc_with_sections):
 
 
 def test_get_body_html(doc_with_sections):
-    """The quick_links and subnav are removed from the body HTML."""
+    """The quick_links are removed from the body HTML."""
     result = doc_with_sections.get_body_html()
     expected = """
     <h2 id="First">First</h2>
@@ -368,18 +305,5 @@ def test_get_quick_links_html(doc_with_sections):
       <li><a href="/en-US/docs/Root">Existing link</a></li>
       <li><a class="new" rel="nofollow" href="/en-US/docs/NewPage">New link</a></li>
     </ol>
-    """
-    assert normalize_html(result) == normalize_html(expected)
-
-
-def test_get_zone_subnav_local_html(doc_with_sections):
-    """The zone subnav local HTML can be extracted from the revision."""
-    result = doc_with_sections.get_zone_subnav_local_html()
-    expected = """
-    <p>Subnav:</p>
-    <ul>
-      <li><a href="/en-US/docs/Root">Existing link</a></li>
-      <li><a class="new" rel="nofollow" href="/en-US/docs/NewPage">New link</a></li>
-    </ul>
     """
     assert normalize_html(result) == normalize_html(expected)

@@ -101,13 +101,6 @@
                   <li><a href="{{ url('wiki.delete_document', document.slug) }}" rel="nofollow">{{ _('Delete this article') }}</a></li>
                 {% endif %}
 
-                {% set zone_links = document_zone_management_links(request.user, document) %}
-                {% if zone_links['change'] %}
-                  <li><a target="_blank" href="{{ zone_links['change'] }}" rel="nofollow">{{ _('Manage content zone') }}</a></li>
-                {% endif %}
-                {% if zone_links['add'] %}
-                  <li><a target="_blank" href="{{ zone_links['add'] }}" rel="nofollow">{{ _('Convert to content zone') }}</a></li>
-                {% endif %}
                 <li class="page-print"><a href="#" onclick="return window.print();">{{ _('Print this article') }}</a></li>
             </ul>
           </div>

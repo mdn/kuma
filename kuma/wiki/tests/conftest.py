@@ -10,7 +10,7 @@ import pytest
 from kuma.core.urlresolvers import reverse
 
 from ..constants import REDIRECT_CONTENT
-from ..models import Document, DocumentZone, Revision
+from ..models import Document, Revision
 
 
 BannedUser = namedtuple('BannedUser', 'user ban')
@@ -119,7 +119,7 @@ def redirect_doc(wiki_user, root_doc):
 
 
 @pytest.fixture
-def doc_hierarchy_with_zones(settings, wiki_user, wiki_user_2, wiki_user_3):
+def doc_hierarchy(wiki_user, wiki_user_2, wiki_user_3):
     top_doc = Document.objects.create(
         locale='en-US',
         slug='top',
@@ -217,51 +217,6 @@ def doc_hierarchy_with_zones(settings, wiki_user, wiki_user_2, wiki_user_3):
         title='Bottom Document',
         created=datetime(2017, 4, 24, 13, 52)
     )
-    DocumentZone.objects.create(
-        document=top_doc,
-        css_slug='lindsey',
-        url_root='fleetwood-mac'
-    )
-    DocumentZone.objects.create(
-        document=middle_top_doc,
-        css_slug='bobby',
-        url_root='spinners'
-    )
-    DocumentZone.objects.create(
-        document=top_de_doc,
-        css_slug='berlin',
-        url_root='berlin'
-    )
-    DocumentZone.objects.create(
-        document=top_it_doc,
-        url_root='florence'
-    )
-    settings.PIPELINE_CSS.update({
-        'zone-lindsey': {
-            'source_filenames': (
-                'styles/zone-lindsey.scss',
-            ),
-            'output_filename': 'build/styles/zone-lindsey.css',
-        },
-        'zone-bobby': {
-            'source_filenames': (
-                'styles/zone-bobby.scss',
-            ),
-            'output_filename': 'build/styles/zone-bobby.css',
-        },
-        'zone-berlin': {
-            'source_filenames': (
-                'styles/zone-berlin.scss',
-            ),
-            'output_filename': 'build/styles/zone-berlin.css',
-        },
-        'zones': {
-            'source_filenames': (
-                'styles/zones.scss',
-            ),
-            'output_filename': 'build/styles/zones.css',
-        }
-    })
     return DocHierarchy(
         top=top_doc,
         middle_top=middle_top_doc,

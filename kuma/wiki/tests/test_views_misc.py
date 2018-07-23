@@ -33,8 +33,7 @@ def test_ckeditor_config(db, client):
     'locale_case',
     ['all-locales', 'current-locale',
      'non-english-locale', 'exclude-current-locale'])
-def test_autosuggest(client, redirect_doc, doc_hierarchy_with_zones,
-                     locale_case, term):
+def test_autosuggest(client, redirect_doc, doc_hierarchy, locale_case, term):
     params = {}
     expected_status_code = 200
     if term:

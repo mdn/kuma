@@ -5,7 +5,7 @@ import pytest
 from utils.urls import assert_valid_url
 
 from .map_301 import (GITHUB_IO_URLS, LEGACY_URLS, MOZILLADEMOS_URLS,
-                      REDIRECT_URLS, SCL3_REDIRECT_URLS)
+                      REDIRECT_URLS, SCL3_REDIRECT_URLS, ZONE_REDIRECT_URLS)
 
 # while these test methods are similar, they're each testing a
 # subset of redirects, and it was easier to work with them separately.
@@ -52,5 +52,14 @@ def test_legacy_urls(url, base_url):
 @pytest.mark.parametrize('url', SCL3_REDIRECT_URLS,
                          ids=[item['url'] for item in SCL3_REDIRECT_URLS])
 def test_slc3_redirects(url, base_url):
+    url['base_url'] = base_url
+    assert_valid_url(**url)
+
+
+@pytest.mark.headless
+@pytest.mark.nondestructive
+@pytest.mark.parametrize('url', ZONE_REDIRECT_URLS,
+                         ids=[item['url'] for item in ZONE_REDIRECT_URLS])
+def test_zone_redirects(url, base_url):
     url['base_url'] = base_url
     assert_valid_url(**url)

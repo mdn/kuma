@@ -8,11 +8,9 @@ import json
 import newrelic.agent
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.exceptions import PermissionDenied
 from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
-                         HttpResponsePermanentRedirect, HttpResponseRedirect,
-                         JsonResponse)
+                         HttpResponsePermanentRedirect, JsonResponse)
 from django.http.multipartparser import MultiPartParser
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.cache import add_never_cache_headers, patch_vary_headers
@@ -46,7 +44,7 @@ from ..decorators import (allow_CORS_GET, check_readonly, prevent_indexing,
 from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import TreeMoveForm
 from ..models import (Document, DocumentDeletionLog,
-                      DocumentRenderedContentNotAvailable, DocumentZone)
+                      DocumentRenderedContentNotAvailable)
 from ..tasks import move_page
 
 
@@ -486,29 +484,6 @@ def as_json(request, document_slug=None, document_locale=None):
     return JsonResponse(data)
 
 
-@shared_cache_control(s_maxage=60 * 60 * 24)
-@block_user_agents
-@require_GET
-@allow_CORS_GET
-@process_document_path
-@prevent_indexing
-def styles(request, document_slug=None, document_locale=None):
-    """
-    This is deprecated, and only exists temporarily to serve old
-    document pages that request zone CSS via this endpoint.
-    """
-    # These queries are here simply to make sure the document
-    # exists and might have had some legacy custom zone CSS.
-    document = get_object_or_404(
-        Document,
-        slug=document_slug,
-        locale=document_locale
-    )
-    get_object_or_404(DocumentZone, document=document)
-    # All of the legacy custom zone CSS has been rolled into "zones.css".
-    return HttpResponseRedirect(static('build/styles/zones.css'))
-
-
 @never_cache
 @csrf_exempt
 @block_user_agents
@@ -735,7 +710,6 @@ def document(request, document_slug, document_locale):
 
         # Retrieve pre-parsed content hunks
         quick_links_html = doc.get_quick_links_html()
-        zone_subnav_html = doc.get_zone_subnav_html()
         body_html = doc.get_body_html()
 
         # Record the English slug in Google Analytics,
@@ -763,7 +737,6 @@ def document(request, document_slug, document_locale):
             'document_html': doc_html,
             'toc_html': toc_html,
             'quick_links_html': quick_links_html,
-            'zone_subnav_html': zone_subnav_html,
             'body_html': body_html,
             'contributors': contributors,
             'contributors_count': contributors_count,
