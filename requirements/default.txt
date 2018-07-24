@@ -112,9 +112,12 @@ django-memcached-hashring==0.1.2 \
     --hash=sha256:14c2dc29bc693feaf114dea8c871f4d25daca72bba8f37b159d552fed4ab6337
 
 # Allow Django to use MySQL-specific features
-django-mysql==1.0.4 \
-    --hash=sha256:a90eaaff1b9cfca374e565a873ba98b20209753e774ee136c526d1c4dd641561 \
-    --hash=sha256:0ced44721f0b36b618c7eb4c3813f57a5a7df71b959dc97ddf94e2281813a971
+# Code: https://github.com/adamchainz/django-mysql
+# Docs: https://django-mysql.readthedocs.io/en/latest/index.html
+# Changes: https://github.com/adamchainz/django-mysql/blob/master/HISTORY.rst
+django-mysql==2.3.1 \
+    --hash=sha256:53bf05dfa8e98db371adbd5b6c669a904e9f556f4ce7e3552cd42796c5f44841 \
+    --hash=sha256:7c13e453535f20e12b01c2b8f452d67e9973721f30ffd296ae6f0e5af0b475fb
 
 # Serialize objects with Python's pickle
 # Required by django-constance with database backend
