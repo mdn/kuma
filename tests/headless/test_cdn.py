@@ -251,15 +251,7 @@ def test_cached_301(base_url, is_behind_cdn, is_local_url, slug):
              '/en-US/Firefox',
              '/en-US/Firefox$json',
              '/en-US/Firefox$history',
-             '/en-US/Firefox$children',
-             '/en-US/Firefox$edit',
-             '/en-US/Firefox$move',
-             '/en-US/Firefox$files',
-             '/en-US/Firefox$purge',
-             '/en-US/Firefox$delete',
-             '/en-US/Firefox$translate',
-             '/en-US/Firefox$quick-review',
-             '/en-US/Firefox$revert/1284393'])
+             '/en-US/Firefox$children'])
 def test_cached_302(base_url, is_behind_cdn, slug):
     """Ensure that these requests that should return 302 are cached."""
     assert_cached(base_url + slug, 302, is_behind_cdn)
@@ -272,17 +264,7 @@ def test_cached_302(base_url, is_behind_cdn, slug):
     'slug', ['/{}',
              '/{}$json',
              '/{}$history',
-             '/{}$children',
-             '/{}$edit',
-             '/{}$move',
-             '/{}$files',
-             '/{}$purge',
-             '/{}$delete',
-             '/{}$translate',
-             '/{}$quick-review',
-             '/{}$subscribe',
-             '/{}$subscribe_to_tree',
-             '/{}$revert/1284393'])
+             '/{}$children'])
 def test_no_locale_cached_302(base_url, is_behind_cdn, slug, zone):
     """
     Ensure that these zone requests without a locale that should return
@@ -290,18 +272,6 @@ def test_no_locale_cached_302(base_url, is_behind_cdn, slug, zone):
     """
     response = assert_cached(base_url + slug.format(zone), 302, is_behind_cdn)
     assert response.headers['location'].startswith('/docs/')
-
-
-@pytest.mark.nondestructive
-@pytest.mark.parametrize(
-    'slug', ['/en-US/Firefox$subscribe',
-             '/en-US/Firefox$subscribe_to_tree'])
-def test_cached_302_post(base_url, is_behind_cdn, slug):
-    """
-    Ensure that POST's to these endpoints that should return 403's are not
-    cached.
-    """
-    assert_cached(base_url + slug, 302, is_behind_cdn, method='post')
 
 
 @pytest.mark.nondestructive
@@ -501,3 +471,52 @@ def test_locale_selection_not_cached(base_url, is_behind_cdn, is_local_url,
         assert response.status_code == 302
     expected = '/' + expected + '/'
     assert response.headers['location'].startswith(expected)
+
+
+@pytest.mark.nondestructive
+@pytest.mark.parametrize('locale', [None, '/de'])
+@pytest.mark.parametrize(
+    'zone', ['Add-ons', 'Apps', 'Firefox', 'Learn', 'Marketplace'])
+@pytest.mark.parametrize(
+    'slug', ['{}/{}$edit',
+             '{}/{}$move',
+             '{}/{}$files',
+             '{}/{}$purge',
+             '{}/{}$delete',
+             '{}/{}$translate',
+             '{}/{}$quick-review',
+             '{}/{}$revert/1284393'])
+def test_former_vanity_302(base_url, is_behind_cdn, slug, zone, locale):
+    """
+    Ensure that these former zone vanity URL's that should return 302 are
+    cached (based on Cache-Control header) when not behind a CDN, and not
+    cached (based on a special CDN header) when behind a CDN. They are not
+    cached when behind a CDN simply because they fall into into a CDN behavior
+    that prevents caching, not because they shouldn't be cached.
+    """
+    locale = locale or ''
+    url = base_url + slug.format(locale, zone)
+    assert_caching = assert_not_cached if is_behind_cdn else assert_cached
+    response = assert_caching(url, 302, is_behind_cdn)
+    assert response.headers['location'].startswith('{}/docs/'.format(locale))
+    assert response.headers['location'].endswith(slug.format('', zone))
+
+
+@pytest.mark.nondestructive
+@pytest.mark.parametrize('locale', [None, '/de'])
+@pytest.mark.parametrize(
+    'zone', ['Add-ons', 'Apps', 'Firefox', 'Learn', 'Marketplace'])
+@pytest.mark.parametrize(
+    'slug', ['{}/{}$subscribe',
+             '{}/{}$subscribe_to_tree'])
+def test_former_vanity_302_post(base_url, is_behind_cdn, slug, zone, locale):
+    """
+    Ensure that POST's to these former zone vanity URL's that should return
+    302 are cached (based on Cache-Control header) when not behind a CDN, and
+    not cached (based on a special CDN header) when behind a CDN. They are not
+    cached when behind a CDN simply because they fall into a CDN behavior that
+    prevents caching, not because they shouldn't be cached.
+    """
+    url = base_url + slug.format(locale or '', zone)
+    assert_caching = assert_not_cached if is_behind_cdn else assert_cached
+    assert_caching(url, 302, is_behind_cdn, method='post')
