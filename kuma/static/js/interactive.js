@@ -64,7 +64,7 @@
                     category: 'Interactive Examples',
                     action: 'Time to iframe fetch start',
                     label:
-                        new Date().getTime() + '-' + mdn.utils.randomString(5),
+                        mdn.utils.randomString(5) + '-' + new Date().getTime(),
                     value: timeToIframeFetchStart
                 });
 

@@ -7,7 +7,7 @@ function handlePerformanceEvents(data) {
     mdn.analytics.trackEvent({
         category: data.category,
         action: data.action,
-        label: new Date().getTime() + '-' + mdn.utils.randomString(5),
+        label: mdn.utils.randomString(5) + '-' + new Date().getTime(),
         value: data.value - performance.timing.navigationStart
     });
 
