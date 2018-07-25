@@ -145,10 +145,10 @@ class AdvancedSearchQueryBackend(BaseFilterBackend):
                 continue
 
             queries.append(
-                Q('match', **{field: {'query': search_param,
+                Q('match', **{field: {'query': search_param.lower(),
                                       'boost': 10.0}}))
             queries.append(
-                Q('prefix', **{field: {'value': search_param,
+                Q('prefix', **{field: {'value': search_param.lower(),
                                        'boost': 5.0}}))
 
         if queries:

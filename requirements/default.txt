@@ -209,9 +209,9 @@ dj-email-url==0.0.4 \
 # Code: https://github.com/elastic/elasticsearch-dsl-py
 # Changes: https://elasticsearch-dsl.readthedocs.io/en/latest/Changelog.html
 # Docs: https://elasticsearch-dsl.readthedocs.io/en/latest/
-elasticsearch-dsl==2.2.0 \
-    --hash=sha256:99bbb4dcbcfb5db4f57499237f24acf1397543e895e99994a09af2a6fbef93bc \
-    --hash=sha256:c8132c6e1bdfc5c345999d3949dd53a53b59ea73e2ee005f695de78be0552ceb
+elasticsearch-dsl==5.4.0 \
+    --hash=sha256:197246ddd556b4b7d2738dfa9e4831068c9b5cb21706f6aca035136d42849109 \
+    --hash=sha256:cbef6467085d7debc870bc450d996c7ba5b8822eb86a6033bba09134ffb01ba8
 
 # Parse external RSS / Atom feeds
 feedparser==5.2.1 \
