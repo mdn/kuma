@@ -588,7 +588,7 @@ TEMPLATES = [
     {
         'NAME': 'jinja2',
         'BACKEND': 'django_jinja.backend.Jinja2',
-        'DIRS': [path('jinja2')],
+        'DIRS': [path('jinja2'), path('static')],
         'APP_DIRS': True,
         'OPTIONS': {
             # Use jinja2/ for jinja templates
@@ -903,12 +903,6 @@ for locale, slug in LOCALE_CSS.items():
 
 
 PIPELINE_JS = {
-    'dnt-helper': {
-        'source_filenames': (
-            'js/libs/mozilla.dnthelper.js',
-        ),
-        'output_filename': 'build/js/mozilla-dnthelper.js',
-    },
     'main': {
         'source_filenames': (
             'js/libs/jquery/jquery.js',

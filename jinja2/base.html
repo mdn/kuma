@@ -42,7 +42,9 @@
   {% stylesheet 'locale-%s' % LANG %}
 
   {% block site_analytics %}
-    {% javascript 'dnt-helper' %}
+    <script>
+      {% include "js/libs/mozilla.dnthelper.min.js" %}
+    </script>
     {% include "includes/google_analytics.html" %}
   {% endblock %}
 
