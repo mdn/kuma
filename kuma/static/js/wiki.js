@@ -104,7 +104,7 @@
          * IF followed by [ . : ( OR capital letter
          * IF followed by 3 letters or [ @ . : (
          */
-        var split = text.split(/([a-z]{3})(?=[\[\.:\(A-Z][@\.:\(A-Z]{0,}[a-zA-Z]{3})/g);
+        var split = text.split(/([a-z]{3})(?=[[.:(A-Z][@.:(A-Z]{0,}[a-zA-Z]{3})/g);
         // empty wrapper
         $wrapper.empty();
         // put split string back into wrapper

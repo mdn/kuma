@@ -148,5 +148,10 @@ shell_plus: up
 lint:
 	flake8 kuma docs tests
 
+npmrefresh:
+	cd /tools
+	echo '{"lockfileVersion": 1}' > package-lock.json
+	npm install
+
 # Those tasks don't have file targets
-.PHONY: test coveragetest locust clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh
+.PHONY: test coveragetest locust clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh npmrefresh

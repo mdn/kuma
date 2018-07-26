@@ -249,11 +249,11 @@
         $tdObject.append('<strong class="submit"><br>' + gettext('Submitting...') + '</strong>');
 
         $.post(url, {'revision': revisionId, 'type': type})
-          .done( function(data) {
-              var $dl = $('<dl></dl>');
+            .done( function(data) {
+                var $dl = $('<dl></dl>');
 
-              $.each(data, function(index, value) {
-                  var subMessage = '<dt class="submission-' + value.type + '">' +
+                $.each(data, function(index, value) {
+                    var subMessage = '<dt class="submission-' + value.type + '">' +
                   interpolate(gettext('Submitted as %(submissionType)s'), {
                       submissionType: value.type
                   }, true) + '</dt><dd>' +
@@ -261,19 +261,19 @@
                       sentDate: value.sent, user: value.sender
                   }, true);
 
-                  $dl.append(subMessage);
-              });
+                    $dl.append(subMessage);
+                });
 
-              $tdObject.html($dl);
+                $tdObject.html($dl);
 
-          })
-          .fail( function() {
-              $this.prop('disabled', false);
-              var errorMessage = '<strong class="error"><br>' + interpolate(gettext('Error submitting as %(type)s'), {type: type}, true) + '</strong>';
+            })
+            .fail( function() {
+                $this.prop('disabled', false);
+                var errorMessage = '<strong class="error"><br>' + interpolate(gettext('Error submitting as %(type)s'), {type: type}, true) + '</strong>';
 
-              $tdObject.find('.error , .submit').remove();
-              $tdObject.append(errorMessage);
-          });
+                $tdObject.find('.error , .submit').remove();
+                $tdObject.append(errorMessage);
+            });
 
     });
 

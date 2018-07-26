@@ -137,7 +137,7 @@
         });
     })();
 
-  /*
+    /*
     Plugin for prepopulating the slug fields
   */
     $.fn.prepopulate = function(dependencies, maxLength) {
@@ -181,7 +181,7 @@
         });
     };
 
-  /*
+    /*
     Functionality to set up the new, edit, and translate pages
   */
     var $form = $('#wiki-page-edit');
@@ -224,8 +224,8 @@
         $.each(fields, function(i, field) {
             $(field.id).addClass('prepopulated_field');
             $(field.id).data('dependencyList', field.dependencyList)
-                   .prepopulate($(field.dependencyIds.join(',')),
-                                field.maxLength);
+                .prepopulate($(field.dependencyIds.join(',')),
+                    field.maxLength);
         });
     }
 
@@ -420,7 +420,7 @@
                     $form.attr('disabled', false);
                 }
             });
-/*
+            /*
                 //$form.find('input[name=current_rev]').val(
 
                 //ir.attr('data-current-revision'));
@@ -555,14 +555,14 @@
         // Three custom events are used to track changes throughout the page
         // Dirtiness is marked by the class `dirty`, cleanliness by `clean`
         $form.on('mdn:save-success', resetDirty)
-        .on('mdn:dirty', onDirty)
-        .on('mdn:clean', function() { // Gets triggered when a section is clean, others may still be dirty
-            if (!$('.dirty').length) {
-                onClean();
-            }
-        });
+            .on('mdn:dirty', onDirty)
+            .on('mdn:clean', function() { // Gets triggered when a section is clean, others may still be dirty
+                if (!$('.dirty').length) {
+                    onClean();
+                }
+            });
 
-      // Keep track of editor dirtiness
+        // Keep track of editor dirtiness
         function checkEditorDirtiness() {
             var editorDirty = editor.checkDirty();
 
