@@ -119,7 +119,7 @@
                     });
 
                     // Close button should close the submenu
-                    $closeButton.on('click', function(){
+                    $closeButton.on('click touchend', function(){
                         closeSubmenu($submenu || $(this).parent());
                     });
                 }
