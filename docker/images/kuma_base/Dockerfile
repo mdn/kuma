@@ -86,9 +86,6 @@ WORKDIR /app
 EXPOSE 8000
 
 RUN npm install -g \
-        fibers@1.0.15 \
-        csslint@0.10.0 \
-        jshint@2.7.0 \
         node-sass@4.3.0 \
         uglify-js@2.4.13 \
         clean-css@3.4.23 \
