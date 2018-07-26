@@ -1202,12 +1202,8 @@ if MAINTENANCE_MODE:
     # loader (see djcelery.setup_loader() above) so we, among other things,
     # acquire the Celery settings from among Django's settings.
     CELERYBEAT_SCHEDULER = 'celery.beat.PersistentScheduler'
-    DEFAULT_CELERY_RESULT_BACKEND = (
-        'redis://' + ';'.join(
-            config('REDIS_CACHE_SERVER',
-                   default='127.0.0.1:6379')
-        )
-    )
+    DEFAULT_CELERY_RESULT_BACKEND = config('REDIS_CACHE_SERVER')
+
 else:
     CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
     DEFAULT_CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
