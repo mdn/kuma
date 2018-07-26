@@ -1,17 +1,14 @@
 # Django settings for kuma project.
 import json
-import logging
 import os
 import platform
 from collections import namedtuple
-from copy import deepcopy
 from os.path import dirname
 
 import dj_database_url
 import dj_email_url
 import djcelery
 from decouple import config, Csv
-from django.utils.log import DEFAULT_LOGGING
 
 _Language = namedtuple(u'Language', u'english native')
 
@@ -1469,41 +1466,64 @@ ES_INDEXING_TIMEOUT = 30
 ES_LIVE_INDEX = config('ES_LIVE_INDEX', default=False, cast=bool)
 ES_URLS = config('ES_URLS', default='127.0.0.1:9200', cast=Csv())
 
-LOG_LEVEL = logging.WARN
-SYSLOG_TAG = 'http_app_kuma'
 
-# Update default logging
+# Logging is merged with the default logging
 # https://github.com/django/django/blob/stable/1.11.x/django/utils/log.py
-LOGGING = deepcopy(DEFAULT_LOGGING)
-# Add default log format
-LOGGING['formatters']['default'] = {
-    'format': '{0}: %(asctime)s %(name)s:%(levelname)s %(message)s: '
-              '%(pathname)s:%(lineno)s'.format(SYSLOG_TAG),
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        }
+    },
+    'formatters': {
+        'simple': {
+            'format': '%(name)s:%(levelname)s %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        },
+        'console-simple': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],  # Drop mail_admins
+            'level': 'INFO',
+        },
+        'kuma': {
+            'handlers': ['console-simple'],
+            'propagate': True,
+            'level': 'ERROR',
+        },
+        'elasticsearch': {
+            'handlers': ['console-simple'],
+            'level': config('ES_LOG_LEVEL', default='ERROR'),
+        },
+        'elasticsearch.trace': {
+            'handlers': ['console-simple'],
+            'level': config('ES_TRACE_LOG_LEVEL', default='ERROR'),
+            'propagate': False,
+        },
+        'urllib3': {
+            'handlers': ['console-simple'],
+            'level': 'ERROR',
+        },
+        'cacheback': {
+            'handlers': ['console-simple'],
+            'level': 'ERROR',
+        },
+    }
 }
-# Switch log level
-LOGGING['handlers']['console']['level'] = LOG_LEVEL
-# Don't email Django errors, we have Sentry
-LOGGING['loggers']['django']['handlers'] = ['console']
-# Add our loggers
-LOGGING['loggers'].update({
-    'kuma': {
-        'handlers': ['console'],
-        'propagate': True,
-        'level': logging.ERROR,
-    },
-    'elasticsearch': {
-        'handlers': ['console'],
-        'level': logging.ERROR,
-    },
-    'urllib3': {
-        'handlers': ['console'],
-        'level': logging.ERROR,
-    },
-    'cacheback': {
-        'handlers': ['console'],
-        'level': logging.ERROR,
-    },
-})
 
 CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=True, cast=bool)
 X_FRAME_OPTIONS = 'DENY'
