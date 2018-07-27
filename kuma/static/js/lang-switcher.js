@@ -3,19 +3,18 @@
     var neverShowNoticeKey = 'never-show-locale-notice';
     var neverShowNotice = getNeverShowNotice();
     function storeLocaleChange(code, name) {
-        if (!isExistingLocaleCookieExist(code)){
+        if (!isLocalePreference(code)){
             sessionStorage.setItem(sessionStorageKey, JSON.stringify({code: code, name: name}));
         }
     }
 
     function getCookie(name) {
-	    var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-	    return v ? v[2] : null;
+	    var match = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+	    return match ? match[2] : null;
 	}
 
-    function isExistingLocaleCookieExist(code) {
-        var cookieName = document.querySelector('meta[name="lang-cookie"]').content;
-        return getCookie(cookieName) === code;
+    function isLocalePreference(code) {
+        return getCookie(win.mdn.langCookieName) === code;
     }
 
     function removeLocaleChange() {
@@ -74,10 +73,15 @@
 
             // Add event listener to the buttons
             $('#locale-permanent-yes').on('click', function() {
-                $.post('/i18n/setlang/', {language: this.dataset.locale})
+                var locale = this.dataset.locale;
+                $.post('/i18n/setlang/', {language: locale})
                     .success(function() {
                         notification.close();
                     });
+                // Track in GA
+                if (win.ga) {
+                    win.ga('set', 'locale-permanent-yes', locale);
+                }
             });
 
             $('#locale-permanent-no').on('click', function() {
