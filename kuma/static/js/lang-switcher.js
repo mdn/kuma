@@ -9,9 +9,9 @@
     }
 
     function getCookie(name) {
-	    var match = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-	    return match ? match[2] : null;
-	}
+        var match = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+        return match ? match[2] : null;
+    }
 
     function isLocalePreference(code) {
         return getCookie(win.mdn.langCookieName) === code;
