@@ -2,7 +2,6 @@
 import difflib
 import json
 import re
-import urlparse
 
 import jinja2
 from constance import config
@@ -12,6 +11,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.template import loader
 from django.utils import lru_cache
 from django.utils.html import conditional_escape
+from django.utils.six.moves.urllib.parse import urlsplit, urlunparse
 from django.utils.translation import ugettext
 from django_jinja import library
 from pyquery import PyQuery as pq
@@ -216,7 +216,7 @@ def absolutify(url, site=None):
     if not site:
         site = Site.objects.get_current()
 
-    parts = urlparse.urlsplit(url)
+    parts = urlsplit(url)
 
     scheme = 'https'
     netloc = site.domain
@@ -227,7 +227,7 @@ def absolutify(url, site=None):
     if path == '':
         path = '/'
 
-    return urlparse.urlunparse([scheme, netloc, path, None, query, fragment])
+    return urlunparse([scheme, netloc, path, None, query, fragment])
 
 
 @library.global_function

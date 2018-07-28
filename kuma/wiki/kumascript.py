@@ -5,13 +5,13 @@ import time
 import unicodedata
 from collections import defaultdict
 from functools import partial
-from urlparse import urljoin
 
 import requests
 from constance import config
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.cache import cache
+from django.utils.six.moves.urllib.parse import urljoin
 from elasticsearch import TransportError
 
 from .constants import KUMASCRIPT_BASE_URL, KUMASCRIPT_TIMEOUT_ERROR

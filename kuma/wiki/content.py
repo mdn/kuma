@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 import re
-import urllib
 from collections import defaultdict
-from urllib import urlencode
-from urlparse import urlparse
 from xml.sax.saxutils import quoteattr
 
 import html5lib
 import newrelic.agent
 from django.conf import settings
+from django.utils.six.moves.urllib.parse import urlencode, urlparse
 from django.utils.translation import ugettext
 from html5lib.filters.base import Filter as html5lib_Filter
 from lxml import etree

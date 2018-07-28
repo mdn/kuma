@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
-from urllib import urlencode
-
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.safestring import mark_safe
+from django.utils.six.moves.urllib.parse import urlencode
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
 

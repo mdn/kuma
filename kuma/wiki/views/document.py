@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-try:
-    from cStringIO import cStringIO as StringIO
-except ImportError:
-    from StringIO import StringIO
 import json
 
 import newrelic.agent
@@ -16,6 +12,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.cache import add_never_cache_headers, patch_vary_headers
 from django.utils.http import parse_etags, quote_etag
 from django.utils.safestring import mark_safe
+from django.utils.six import StringIO
 from django.utils.translation import ugettext
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt

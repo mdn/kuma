@@ -1,8 +1,4 @@
 import datetime
-try:
-    import urlparse
-except ImportError:
-    import urllib.parse as urlparse
 import functools
 import hashlib
 import logging
@@ -19,12 +15,12 @@ from django.core.paginator import EmptyPage, InvalidPage, Paginator
 from django.http import QueryDict
 from django.shortcuts import _get_queryset
 from django.utils.cache import patch_cache_control
-from django.utils.encoding import force_unicode, smart_str
+from django.utils.encoding import force_text, smart_bytes
 from django.utils.http import urlencode
 from django.utils.translation import ugettext_lazy as _
 from polib import pofile
 from pytz import timezone
-from six.moves.urllib.parse import parse_qsl, urlsplit, urlunsplit
+from six.moves.urllib.parse import parse_qsl, urlparse, urlsplit, urlunsplit
 from taggit.utils import split_strip
 
 from .exceptions import DateTimeFormatError
@@ -220,7 +216,7 @@ def parse_tags(tagstring, sorted=True):
     if not tagstring:
         return []
 
-    tagstring = force_unicode(tagstring)
+    tagstring = force_text(tagstring)
 
     # Special case - if there are no commas or double quotes in the
     # input, we don't *do* a recall... I mean, we know we only need to
@@ -361,7 +357,7 @@ def urlparams(url_, fragment=None, query_dict=None, **query):
     fragment = fragment if fragment is not None else url_.fragment
 
     q = url_.query
-    new_query_dict = (QueryDict(smart_str(q), mutable=True) if
+    new_query_dict = (QueryDict(smart_bytes(q), mutable=True) if
                       q else QueryDict('', mutable=True))
     if query_dict:
         for k, l in query_dict.lists():
