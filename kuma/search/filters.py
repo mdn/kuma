@@ -175,6 +175,9 @@ class DatabaseFilterBackend(BaseFilterBackend):
 
         for serialized_filter in view.serialized_filters:
             filter_tags = serialized_filter['tags']
+            if not filter_tags:
+                # Incomplete filter has no tags, skip it
+                continue
             filter_operator = Filter.OPERATORS[serialized_filter['operator']]
             if serialized_filter['slug'] in view.selected_filters:
                 if len(filter_tags) > 1:
@@ -188,10 +191,8 @@ class DatabaseFilterBackend(BaseFilterBackend):
             if len(filter_tags) > 1:
                 facet_params = F('terms', tags=list(filter_tags))
             else:
-                if filter_tags:
-                    facet_params = F('term', tags=filter_tags[0])
-            if len(filter_tags):
-                active_facets.append((serialized_filter['slug'], facet_params))
+                facet_params = F('term', tags=filter_tags[0])
+            active_facets.append((serialized_filter['slug'], facet_params))
 
         if active_filters:
             if len(active_filters) == 1:
