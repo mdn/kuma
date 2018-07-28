@@ -352,10 +352,8 @@ def test_database_filter_backend_multiple_groups(rf, mock_search):
         'query': {'match_all': {}},
         'post_filter': {'or': {'filters': [
             {'term': {'tags': 'CSS'}},
-            {'or': {'filters': [
-                {'term': {'tags': 'Add-ons'}},
-                {'term': {'tags': 'Extensions'}}
-            ]}}
+            {'term': {'tags': 'Add-ons'}},
+            {'term': {'tags': 'Extensions'}}
         ]}},
         'aggs': {
             'addons': {'filter': {'terms': {'tags': ['Add-ons',
