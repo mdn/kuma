@@ -20,7 +20,7 @@ from django.utils.http import urlencode
 from django.utils.translation import ugettext_lazy as _
 from polib import pofile
 from pytz import timezone
-from six.moves.urllib.parse import parse_qsl, urlparse, urlsplit, urlunsplit
+from six.moves.urllib.parse import parse_qsl, ParseResult, urlparse, urlsplit, urlunsplit
 from taggit.utils import split_strip
 
 from .exceptions import DateTimeFormatError
@@ -353,7 +353,7 @@ def urlparams(url_, fragment=None, query_dict=None, **query):
     New query params will be appended to exising parameters, except duplicate
     names, which will be replaced.
     """
-    url_ = urlparse.urlparse(url_)
+    url_ = urlparse(url_)
     fragment = fragment if fragment is not None else url_.fragment
 
     q = url_.query
@@ -374,8 +374,7 @@ def urlparams(url_, fragment=None, query_dict=None, **query):
 
     query_string = urlencode([(k, v) for k, l in new_query_dict.lists() for
                               v in l if v is not None])
-    new = urlparse.ParseResult(url_.scheme, url_.netloc, url_.path,
-                               url_.params, query_string, fragment)
+    new = ParseResult(url_.scheme, url_.netloc, url_.path, url_.params, query_string, fragment)
     return new.geturl()
 
 

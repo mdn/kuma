@@ -52,7 +52,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         response = self.client.get(r.document.get_absolute_url())
         assert 200 == response.status_code
         doc = pq(response.content)
-        assert doc('main#content div.document-head h1').text() == r.document.title
+        assert doc('main#content div.document-head h1').text() == str(r.document.title)
         assert doc('article#wikiArticle').text() == r.document.html
 
     @pytest.mark.breadcrumbs
@@ -99,7 +99,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         response = self.client.get(r.document.get_absolute_url())
         assert 200 == response.status_code
         doc = pq(response.content)
-        assert doc('main#content div.document-head h1').text() == r.document.title
+        assert doc('main#content div.document-head h1').text() == str(r.document.title)
         assert ("This article doesn't have approved content yet." ==
                 doc('article#wikiArticle').text())
 
@@ -112,7 +112,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         response = self.client.get(d2.get_absolute_url())
         assert 200 == response.status_code
         doc = pq(response.content)
-        assert doc('main#content div.document-head h1').text() == d2.title
+        assert doc('main#content div.document-head h1').text() == str(d2.title)
         # HACK: fr doc has different message if locale/ is updated
         assert (("This article doesn't have approved content yet." in
                  doc('article#wikiArticle').text()) or
@@ -130,7 +130,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         assert response.status_code == 200
         assert_shared_cache_header(response)
         doc = pq(response.content)
-        assert doc('main#content div.document-head h1').text() == d2.title
+        assert doc('main#content div.document-head h1').text() == str(d2.title)
 
         # Fallback message is shown.
         assert len(doc('#doc-pending-fallback')) == 1
@@ -151,7 +151,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         assert_shared_cache_header(response)
         doc = pq(response.content)
         assert (doc('main#content div.document-head h1').text() ==
-                r.document.title)
+                str(r.document.title))
 
         # Fallback message is shown.
         assert len(doc('#doc-pending-fallback')) == 1
@@ -290,7 +290,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         assert response.status_code == 200
         doc = pq(response.content)
         doc_title = doc('main#content div.document-head h1').text()
-        assert doc_title == r.document.title
+        assert doc_title == str(r.document.title)
         assert doc('article#wikiArticle').text() == r.document.html
         metas = doc("meta[name='robots']")
         assert len(metas) == 1

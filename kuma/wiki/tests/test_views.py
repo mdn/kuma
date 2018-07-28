@@ -2120,7 +2120,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         self.assertEquals(1, len(mail.outbox))
         message = mail.outbox[0]
         assert testuser2.email in message.to
-        assert rev.document.title in message.body
+        assert str(rev.document.title) in message.body
         assert 'sub-articles' not in message.body
         # Test that the compare URL points to the right revisions
         rev = Document.objects.get(pk=rev.document_id).current_revision
