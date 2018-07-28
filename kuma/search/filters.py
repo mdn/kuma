@@ -1,7 +1,7 @@
 import collections
 
 from django.conf import settings
-from elasticsearch_dsl import F, Q, query
+from elasticsearch_dsl import Q, query
 from rest_framework.filters import BaseFilterBackend
 
 from kuma.wiki.search import WikiDocumentType
@@ -183,21 +183,21 @@ class DatabaseFilterBackend(BaseFilterBackend):
                 # User selected this filter - filter on the associated tags
                 tag_filters = []
                 for filter_tag in filter_tags:
-                    tag_filters.append(F('term', tags=filter_tag))
+                    tag_filters.append(Q('term', tags=filter_tag))
 
                 filter_operator = Filter.OPERATORS[serialized_filter['operator']]
                 if len(tag_filters) > 1 and filter_operator == 'and':
                     # Add an AND filter as a subclause
-                    active_filters.append(F('and', tag_filters))
+                    active_filters.append(Q('bool', must=tag_filters))
                 else:
                     # Extend list of tags for the OR clause
                     active_filters.extend(tag_filters)
 
             # Aggregate counts for active filters for sidebar
             if len(filter_tags) > 1:
-                facet_params = F('terms', tags=list(filter_tags))
+                facet_params = Q('terms', tags=list(filter_tags))
             else:
-                facet_params = F('term', tags=filter_tags[0])
+                facet_params = Q('term', tags=filter_tags[0])
             active_facets.append((serialized_filter['slug'], facet_params))
 
         # Count documents across all tags
@@ -210,7 +210,7 @@ class DatabaseFilterBackend(BaseFilterBackend):
             if len(active_filters) == 1:
                 queryset = queryset.post_filter(active_filters[0])
             else:
-                queryset = queryset.post_filter(F('or', active_filters))
+                queryset = queryset.post_filter(Q('bool', should=active_filters))
 
         return queryset
 

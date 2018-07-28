@@ -148,9 +148,8 @@ def test_macro_page_count_en(db, mock_es_client):
 
     es_json = {
         'size': 0,
-        'query': {'filtered': {
-            'filter': {'term': {'locale': 'en-US'}},
-            'query': {'match_all': {}}
+        'query': {'bool': {
+            'filter': [{'term': {'locale': 'en-US'}}],
         }},
         'aggs': {'usage': {'terms': {
             'field': 'kumascript_macros',

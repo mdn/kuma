@@ -310,7 +310,7 @@ def test_database_filter_backend_multiple_tags_or_operator(rf, mock_search):
     search = backend.filter_queryset(request, mock_search, view)
     expected = {
         'query': {'match_all': {}},
-        'post_filter': {'or': {'filters': [
+        'post_filter': {'bool': {'should': [
             {'term': {'tags': 'Add-ons'}},
             {'term': {'tags': 'Extensions'}}]}},
         'aggs': {
@@ -330,7 +330,7 @@ def test_database_filter_backend_multiple_tags_and_operator(rf, mock_search):
     search = backend.filter_queryset(request, mock_search, view)
     expected = {
         'query': {'match_all': {}},
-        'post_filter': {'and': {'filters': [
+        'post_filter': {'bool': {'must': [
             {'term': {'tags': 'Brown'}},
             {'term': {'tags': 'Dog'}}]}},
         'aggs': {
@@ -350,7 +350,7 @@ def test_database_filter_backend_multiple_groups(rf, mock_search):
     search = backend.filter_queryset(request, mock_search, view)
     expected = {
         'query': {'match_all': {}},
-        'post_filter': {'or': {'filters': [
+        'post_filter': {'bool': {'should': [
             {'term': {'tags': 'CSS'}},
             {'term': {'tags': 'Add-ons'}},
             {'term': {'tags': 'Extensions'}}
