@@ -168,7 +168,7 @@ STATUS_SETTINGS_CASES = {
 
 @pytest.mark.parametrize('name,new_value',
                          STATUS_SETTINGS_CASES.items(),
-                         ids=STATUS_SETTINGS_CASES.keys())
+                         ids=list(STATUS_SETTINGS_CASES))
 def test_status_settings_change(name, new_value, client, settings,
                                 mock_status_externals):
     """The status JSON reflects the current Django settings."""

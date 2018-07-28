@@ -1,7 +1,7 @@
 import json
-from urllib import urlencode
 
 import pytest
+from django.utils.six.moves.urllib.parse import urlencode
 from waffle.testutils import override_switch
 
 from kuma.core.tests import assert_shared_cache_header

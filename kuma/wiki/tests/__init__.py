@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from datetime import datetime
 
 from django.contrib.auth import get_user_model
@@ -33,11 +35,11 @@ class WikiTestCase(KumaTestCase):
 def document(save=False, **kwargs):
     """Return an empty document with enough stuff filled out that it can be
     saved."""
-    defaults = {'title': unicode(datetime.now()),
+    defaults = {'title': datetime.now(),
                 'is_redirect': 0}
     defaults.update(kwargs)
     if 'slug' not in kwargs:
-        defaults['slug'] = slugify(unicode(defaults['title']))
+        defaults['slug'] = slugify(defaults['title'])
     d = Document(**defaults)
     if save:
         d.save()
@@ -121,7 +123,7 @@ def normalize_html(html):
     equivalence in tests
     """
     return (kuma.wiki.content
-            .parse(unicode(html))
+            .parse(html)
             .filter(WhitespaceRemovalFilter)
             .serialize(alphabetical_attributes=True))
 

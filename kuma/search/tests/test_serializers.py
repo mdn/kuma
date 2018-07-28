@@ -24,7 +24,7 @@ class SerializerTests(ElasticTestCase):
         filter_.tags.add('tag')
         filter_serializer = FilterWithGroupSerializer(filter_)
         data = filter_serializer.data
-        assert ({'order': 1L, 'name': u'Group', 'slug': u'group'} ==
+        assert ({'order': 1, 'name': u'Group', 'slug': u'group'} ==
                 data['group'])
         assert u'Serializer' == data['name']
         assert 'OR' == data['operator']
