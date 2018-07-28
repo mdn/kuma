@@ -110,6 +110,19 @@ def sh_with_notify(cmd, display, notify_on_success=false) {
     }
 }
 
+def get_revision_hash() {
+    def region = get_region()
+    def target = get_target_script()
+    def repo_name = get_repo_name()
+    return sh(
+        returnStdout: true,
+        script: """
+            . regions/${region}/${target}.sh >/dev/null
+            make k8s-get-${repo_name}-revision-hash
+        """
+    ).trim()
+}
+
 def ensure_pull() {
     /*
      * This can be used to avoid deploying images to Kubernetes that don't
@@ -175,6 +188,14 @@ def monitor_rollout() {
      */
     def repo = get_repo_name()
     make("k8s-${repo}-rollout-status", 'Check Rollout Status')
+}
+
+def record_rollout() {
+    /*
+     * Record the rollout in external services like New Relic and SpeedCurve.
+     */
+    def repo = get_repo_name()
+    make("k8s-${repo}-record-deployment-job", 'Record Rollout')
 }
 
 def announce_push() {
