@@ -23,4 +23,17 @@ article {
             color: $error;
         }
     }
+
+    .local-anchor {
+        display: inline-block;
+        background: transparent url($path-to-images+'icons/link.svg') 0 0
+            no-repeat;
+        margin-right: ($grid-spacing / 2);
+        width: 20px;
+        height: 20px;
+
+        span {
+            @include visually-hidden;
+        }
+    }
 }
