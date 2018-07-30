@@ -88,6 +88,7 @@ input[type='button'] {
     }
 
     &.positive {
+        min-height: 32px;
         border-color: $green;
         color: $green-dark;
     }
