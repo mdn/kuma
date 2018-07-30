@@ -56,14 +56,14 @@ matrix:
             INSTALL_NPM_TOOLS=1
         - python: "3.6"
           env:
-            TOXENV=pytest
+            TOXENV=pytest3
             CREATE_DB=kuma
             INSTALL_ELASTICSEARCH=1
             INSTALL_NPM_TOOLS=1
     allow_failures:
         - python: "3.6"
           env:
-            TOXENV=pytest
+            TOXENV=pytest3
             CREATE_DB=kuma
             INSTALL_ELASTICSEARCH=1
             INSTALL_NPM_TOOLS=1
