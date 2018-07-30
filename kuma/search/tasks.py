@@ -65,7 +65,7 @@ def finalize_index(index_pk):
     index = Index.objects.get(pk=index_pk)
 
     # Optimize.
-    es.indices.optimize(index=index.prefixed_name)
+    es.indices.forcemerge(index=index.prefixed_name)
 
     # Update the settings.
     index_settings = {
