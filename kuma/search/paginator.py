@@ -1,4 +1,5 @@
 from django.core.paginator import EmptyPage, Page, PageNotAnInteger, Paginator
+from django.utils.functional import cached_property
 
 
 class SearchPaginator(Paginator):
@@ -9,6 +10,11 @@ class SearchPaginator(Paginator):
     results contain the total number of results, we can take an optimistic
     slice and then adjust the count.
     """
+
+    def __init__(self, *args, **kwargs):
+        super(SearchPaginator, self).__init__(*args, **kwargs)
+        self._result_total = None
+
     def validate_number(self, number):
         """
         Validates the given 1-based page number.
@@ -39,8 +45,8 @@ class SearchPaginator(Paginator):
         # directly fetch the count from hits.
         result = self.object_list[bottom:top].execute()
         page = Page(result.hits, number, self)
-        # Update the `_count`.
-        self._count = page.object_list.total
+        # Set the count to the results after post_filter
+        self._result_total = result.hits.total
         # Also store the aggregations, if any.
         page.aggregations = getattr(result, 'aggregations', None)
 
@@ -52,3 +58,17 @@ class SearchPaginator(Paginator):
             else:
                 raise EmptyPage('That page contains no results')
         return page
+
+    @cached_property
+    def count(self):
+        """
+        Returns the total number of results.
+
+        Paginator's count property will call .count() on the search object,
+        which returns results before the pre_filter. This will result in a
+        count that is too high. Instead, use 'total' from the results,
+        executing if needed.
+        """
+        if self._result_total is not None:
+            return self._result_total
+        return self.object_list.execute().hits.total
