@@ -160,9 +160,9 @@ def test_language_filter_backend_fr(rf, mock_search):
                 },
                 'negative_boost': 0.5,
                 'positive': {
-                    'filtered': {
-                        'filter': {'terms': {'locale': ['fr', 'en-US']}},
-                        'query': {'match_all': {}}
+                    'bool': {
+                        'filter': [{'terms': {'locale': ['fr', 'en-US']}}],
+                        'must': [{'match_all': {}}]
                     }
                 }
             }
@@ -185,9 +185,9 @@ def test_language_filter_backend_en_US(rf, mock_search):
                 },
                 'negative_boost': 0.5,
                 'positive': {
-                    'filtered': {
-                        'filter': {'terms': {'locale': ['en-US']}},
-                        'query': {'match_all': {}}
+                    'bool': {
+                        'filter': [{'terms': {'locale': ['en-US']}}],
+                        'must': [{'match_all': {}}]
                     }
                 }
             }

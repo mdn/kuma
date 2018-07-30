@@ -68,8 +68,8 @@ class LanguageFilterBackend(BaseFilterBackend):
             locales = [request.LANGUAGE_CODE, settings.LANGUAGE_CODE]
 
         positive_sq = {
-            'filtered': {
-                'query': sq,
+            'bool': {
+                'must': sq,
                 'filter': {'terms': {'locale': locales}}
             }
         }
