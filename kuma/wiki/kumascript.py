@@ -306,7 +306,7 @@ def macro_page_count(locale='*'):
     """
     search = WikiDocumentType.search().extra(size=0)  # Return no documents
     search.aggs.bucket('usage', 'terms', field='kumascript_macros',
-                       size=0)  # Return unpaginated count of macro usage
+                       size=2000)  # Set to larger than number of macros
     if locale != '*':
         search = search.filter("term", locale=locale)
     result = search.execute()  # Could raise TransportError

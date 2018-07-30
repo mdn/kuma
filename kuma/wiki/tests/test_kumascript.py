@@ -104,11 +104,14 @@ def test_macro_sources_error(mock_requests):
 def test_macro_page_count(db, mock_es_client):
     """macro_page_count returns macro usage across all locales by default."""
     mock_es_client.search.return_value = {
-        '_shards': {u'failed': 0, u'successful': 2, u'total': 2},
-        'aggregations': {'usage': {'buckets': [
-            {'key': 'a11yrolequicklinks', 'doc_count': 200},
-            {'key': 'othermacro', 'doc_count': 50},
-        ]}},
+        '_shards': {'failed': 0, 'skiped': 0, 'successful': 2, 'total': 2},
+        'aggregations': {'usage': {
+            'doc_count_error_upper_bound': 0,
+            'sum_other_doc_count': 0,
+            'buckets': [
+                {'key': 'a11yrolequicklinks', 'doc_count': 200},
+                {'key': 'othermacro', 'doc_count': 50},
+            ]}},
         'hits': {'hits': [], 'max_score': 0.0, 'total': 45556},
         'timed_out': False,
         'took': 18
@@ -121,7 +124,7 @@ def test_macro_page_count(db, mock_es_client):
         'query': {'match_all': {}},
         'aggs': {'usage': {'terms': {
             'field': 'kumascript_macros',
-            'size': 0}
+            'size': 2000}
         }}
     }
     mock_es_client.search.assert_called_once_with(
@@ -134,11 +137,14 @@ def test_macro_page_count(db, mock_es_client):
 def test_macro_page_count_en(db, mock_es_client):
     """macro_page_count('en-US') returns macro usage in the en-US locale."""
     mock_es_client.search.return_value = {
-        '_shards': {u'failed': 0, u'successful': 2, u'total': 2},
-        'aggregations': {'usage': {'buckets': [
-            {'key': 'a11yrolequicklinks', 'doc_count': 100},
-            {'key': 'othermacro', 'doc_count': 30},
-        ]}},
+        '_shards': {'failed': 0, 'skipped': 0, 'successful': 2, u'total': 2},
+        'aggregations': {'usage': {
+            'doc_count_error_upper_bound': 0,
+            'sum_other_doc_count': 0,
+            'buckets': [
+                {'key': 'a11yrolequicklinks', 'doc_count': 100},
+                {'key': 'othermacro', 'doc_count': 30},
+            ]}},
         'hits': {'hits': [], 'max_score': 0.0, 'total': 45556},
         'timed_out': False,
         'took': 18
@@ -153,7 +159,7 @@ def test_macro_page_count_en(db, mock_es_client):
         }},
         'aggs': {'usage': {'terms': {
             'field': 'kumascript_macros',
-            'size': 0}
+            'size': 2000}
         }},
     }
     mock_es_client.search.assert_called_once_with(
