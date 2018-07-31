@@ -99,15 +99,24 @@
                 var $betaMenuTrigger = $('<a />', { text: gettext('New compatibility tables are in beta '), href: '/docs/New_Compatibility_Tables_Beta' }).append($('<i />', { class: 'icon-caret-down', 'aria-hidden': 'true' }));
                 var $betaSubmenu = $('<ul />', { 'class': 'submenu js-submenu' });
                 var betaSubmenuItems = [];
+                var betaInfoUrl = '/docs/New_Compatibility_Tables_Beta';
+                var surveyUrl = 'https://www.surveygizmo.com/s3/2342437/0b5ff6b6b8f6';
+                var siteUrl = window.mdn.siteUrl;
 
-                var $betaLink = $('<a />', { text: gettext('More about the beta.'), href: '/docs/New_Compatibility_Tables_Beta' });
+                var $betaLink = $('<a />', { text: gettext('More about the beta.'), href: betaInfoUrl });
+                $betaLink.on('touchend', function() {
+                    document.location = siteUrl + betaInfoUrl;
+                });
                 betaSubmenuItems.push($betaLink);
 
-                var $betaSurvey = $('<a />', { text: gettext('Take the survey'), href: 'https://www.surveygizmo.com/s3/2342437/0b5ff6b6b8f6', 'class': 'external external-icon' });
+                var $betaSurvey = $('<a />', { text: gettext('Take the survey'), href: surveyUrl, 'class': 'external external-icon' });
+                $betaSurvey.on('touchend', function() {
+                    window.open(surveyUrl);
+                });
                 betaSubmenuItems.push($betaSurvey);
 
                 var $betaError = $('<button />', { text: gettext('Report an error.'), 'class': 'button bc-error' });
-                $betaError.on('click', function() {
+                $betaError.on('click touchend', function() {
                     mdn.analytics.trackEvent({
                         category: 'Compat Tables Error',
                         action: location.pathname
@@ -117,7 +126,7 @@
                 betaSubmenuItems.push($betaError);
 
                 var $betaShowOld = $('<button />', { text: gettext('Show old table.'), 'class': 'button bc-old' });
-                $betaShowOld.on('click', function() {
+                $betaShowOld.on('click touchend', function() {
                     $('.bc-old').toggle();
                     mdn.analytics.trackEvent({
                         category: 'Compat Tables Show Old',
