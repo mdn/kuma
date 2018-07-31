@@ -261,7 +261,7 @@ def test_search_query_backend_as_admin(rf, mock_search, admin_user):
                           'css_classnames',
                           'html_attributes',))
 def test_advanced_search_query(rf, mock_search, param):
-    '''The AdvancedSearchQueryBackend searches additional indexes.'''
+    '''The AdvancedSearchQueryBackend searches keywords.'''
     backend = AdvancedSearchQueryBackend()
     request = rf.get('/en-US/search?%s=test' % param)
     search = backend.filter_queryset(request, mock_search, fake_view(request))
@@ -269,10 +269,30 @@ def test_advanced_search_query(rf, mock_search, param):
         'query': {
             'bool': {
                 'should': [
-                    {'match': {
-                        param: {'boost': 10.0, 'query': 'test'}}},
-                    {'prefix': {
-                        param: {'boost': 5.0, 'value': 'test'}}}]}}}
+                    {'term': {
+                        param: {'boost': 10.0, 'value': 'test'}}}
+                ]}}}
+    assert search.to_dict() == expected
+
+
+@pytest.mark.parametrize('param',
+                         ('kumascript_macros',
+                          'css_classnames',
+                          'html_attributes',))
+def test_advanced_search_query_wildcard(rf, mock_search, param):
+    '''The AdvancedSearchQueryBackend can add wildcard searches.'''
+    backend = AdvancedSearchQueryBackend()
+    request = rf.get('/en-US/search?%s=test*' % param)
+    search = backend.filter_queryset(request, mock_search, fake_view(request))
+    expected = {
+        'query': {
+            'bool': {
+                'should': [
+                    {'term': {
+                        param: {'boost': 10.0, 'value': 'test'}}},
+                    {'wildcard': {
+                        param: {'boost': 5.0, 'value': 'test*'}}}
+                ]}}}
     assert search.to_dict() == expected
 
 

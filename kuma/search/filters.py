@@ -140,17 +140,21 @@ class AdvancedSearchQueryBackend(BaseFilterBackend):
         queries = []
 
         for field in self.fields:
-            search_param = view.query_params.get(field)
+            raw_search_param = view.query_params.get(field, '').lower()
+            wildcard = '*' in raw_search_param or '?' in raw_search_param
+            search_param = raw_search_param.replace('*', '').replace('?', '')
             if not search_param:
+                # Skip if not given, or just wildcard
                 continue
 
+            # Exact match of sanitized value
             queries.append(
-                Q('match', **{field: {'query': search_param.lower(),
-                                      'boost': 10.0}}))
-            queries.append(
-                Q('prefix', **{field: {'value': search_param.lower(),
-                                       'boost': 5.0}}))
-
+                Q('term', **{field: {'value': search_param, 'boost': 10.0}}))
+            if wildcard:
+                # Wildcard search of value as passed
+                queries.append(
+                    Q('wildcard', **{field: {'value': raw_search_param,
+                                             'boost': 5.0}}))
         if queries:
             queryset = queryset.query(query.Bool(should=queries))
 
