@@ -12,11 +12,11 @@ from constance import config
 from django.conf import settings
 from django.contrib.sites.models import Site
 from elasticsearch import TransportError
-from elasticsearch_dsl import Search
 
 from kuma.core.cache import memcache
 
 from .constants import KUMASCRIPT_BASE_URL, KUMASCRIPT_TIMEOUT_ERROR
+from .search import WikiDocumentType
 
 
 def should_use_rendered(doc, params, html=None):
@@ -304,7 +304,7 @@ def macro_page_count(locale='*'):
     Keyword Arguments:
     locale - Filter by this locale (default no locale filter)
     """
-    search = Search().from_dict({'size': 0})  # Return no documents
+    search = WikiDocumentType.search().extra(size=0)  # Return no documents
     search.aggs.bucket('usage', 'terms', field='kumascript_macros',
                        size=0)  # Return unpaginated count of macro usage
     if locale != '*':
