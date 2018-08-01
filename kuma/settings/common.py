@@ -985,6 +985,7 @@ PIPELINE_JS = {
             'js/interactive.js',
             'js/wiki-samples.js',
             'js/wiki-toc.js',
+            'js/components/local-anchor.js',
         ),
         'output_filename': 'build/js/wiki.js',
         'extra_context': {
