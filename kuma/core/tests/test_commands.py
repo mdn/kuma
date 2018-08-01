@@ -6,7 +6,7 @@ from django.utils.six import StringIO
 def test_help():
     with pytest.raises(CommandError) as excinfo:
         call_command('ihavepower', stdout=StringIO())
-    assert str(excinfo.value) == 'Error: too few arguments'
+    assert 'Error: the following arguments are required: username' == str(excinfo.value)
 
 
 def test_user_doesnt_exist(db):
