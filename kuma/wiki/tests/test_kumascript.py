@@ -101,7 +101,7 @@ def test_macro_sources_error(mock_requests):
     assert macros == {}
 
 
-def test_macro_page_count(mock_es_client):
+def test_macro_page_count(db, mock_es_client):
     """macro_page_count returns macro usage across all locales by default."""
     mock_es_client.search.return_value = {
         '_shards': {u'failed': 0, u'successful': 2, u'total': 2},
@@ -124,12 +124,14 @@ def test_macro_page_count(mock_es_client):
             'size': 0}
         }}
     }
-    mock_es_client.search.assert_called_once_with(body=es_json, doc_type=[],
-                                                  index=None)
+    mock_es_client.search.assert_called_once_with(
+        body=es_json,
+        doc_type=['wiki_document'],
+        index=['mdn-main_index'])
     assert macros == {'a11yrolequicklinks': 200, 'othermacro': 50}
 
 
-def test_macro_page_count_en(mock_es_client):
+def test_macro_page_count_en(db, mock_es_client):
     """macro_page_count('en-US') returns macro usage in the en-US locale."""
     mock_es_client.search.return_value = {
         '_shards': {u'failed': 0, u'successful': 2, u'total': 2},
@@ -155,8 +157,10 @@ def test_macro_page_count_en(mock_es_client):
             'size': 0}
         }},
     }
-    mock_es_client.search.assert_called_once_with(body=es_json, doc_type=[],
-                                                  index=None)
+    mock_es_client.search.assert_called_once_with(
+        body=es_json,
+        doc_type=['wiki_document'],
+        index=['mdn-main_index'])
     assert macros == {'a11yrolequicklinks': 100, 'othermacro': 30}
 
 

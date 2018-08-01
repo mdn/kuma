@@ -175,33 +175,42 @@ class DatabaseFilterBackend(BaseFilterBackend):
 
         for serialized_filter in view.serialized_filters:
             filter_tags = serialized_filter['tags']
-            filter_operator = Filter.OPERATORS[serialized_filter['operator']]
-            if serialized_filter['slug'] in view.selected_filters:
-                if len(filter_tags) > 1:
-                    tag_filters = []
-                    for filter_tag in filter_tags:
-                        tag_filters.append(F('term', tags=filter_tag))
-                    active_filters.append(F(filter_operator, tag_filters))
-                else:
-                    active_filters.append(F('term', tags=filter_tags[0]))
+            if not filter_tags:
+                # Incomplete filter has no tags, skip it
+                continue
 
+            if serialized_filter['slug'] in view.selected_filters:
+                # User selected this filter - filter on the associated tags
+                tag_filters = []
+                for filter_tag in filter_tags:
+                    tag_filters.append(F('term', tags=filter_tag))
+
+                filter_operator = Filter.OPERATORS[serialized_filter['operator']]
+                if len(tag_filters) > 1 and filter_operator == 'and':
+                    # Add an AND filter as a subclause
+                    active_filters.append(F('and', tag_filters))
+                else:
+                    # Extend list of tags for the OR clause
+                    active_filters.extend(tag_filters)
+
+            # Aggregate counts for active filters for sidebar
             if len(filter_tags) > 1:
                 facet_params = F('terms', tags=list(filter_tags))
             else:
-                if filter_tags:
-                    facet_params = F('term', tags=filter_tags[0])
-            if len(filter_tags):
-                active_facets.append((serialized_filter['slug'], facet_params))
+                facet_params = F('term', tags=filter_tags[0])
+            active_facets.append((serialized_filter['slug'], facet_params))
 
+        # Count documents across all tags
+        for facet_slug, facet_params in active_facets:
+            queryset.aggs.bucket(facet_slug, 'filter',
+                                 **facet_params.to_dict())
+
+        # Filter by tag only after counting documents across all tags
         if active_filters:
             if len(active_filters) == 1:
                 queryset = queryset.post_filter(active_filters[0])
             else:
                 queryset = queryset.post_filter(F('or', active_filters))
-
-        for facet_slug, facet_params in active_facets:
-            queryset.aggs.bucket(facet_slug, 'filter',
-                                 **facet_params.to_dict())
 
         return queryset
 

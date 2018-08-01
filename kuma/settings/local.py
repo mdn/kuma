@@ -1,4 +1,3 @@
-import logging
 from .common import *  # noqa
 
 # Settings for Docker Development
@@ -18,7 +17,6 @@ PIPELINE['PIPELINE_COLLECTOR_ENABLED'] = config('PIPELINE_COLLECTOR_ENABLED',
                                                 not DEBUG, cast=bool)
 TEMPLATES[1]['OPTIONS']['debug'] = DEBUG
 
-LOG_LEVEL = logging.ERROR
 PROTOCOL = config('PROTOCOL', default='https://')
 DOMAIN = config('DOMAIN', default='developer-local.allizom.org')
 SITE_URL = config('SITE_URL', default=PROTOCOL + DOMAIN)
