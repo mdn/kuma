@@ -27,7 +27,6 @@ $callout-min-height: 170px;
             @include bidi(((right, $grid-spacing, left, auto),));
             height: $callout-icon-width;
             width: $callout-icon-width;
-            background-image: url($path-to-embedded-images + 'promo-sprite.png');
         }
 
         &:before {
@@ -275,7 +274,7 @@ larger teaser image gets hidden
 Survey callout background image
 -------------------------------------------------------------- */
 
-.callout-survey {
+.callout-survey a {
     &:after {
         background-image: url($path-to-embedded-images + 'promos/survey.svg');
     }
