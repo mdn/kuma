@@ -11,6 +11,7 @@ class BundleManager(models.Manager):
         """Most recent entries."""
         return Entry.objects.filter(feed__bundles__shortname=bundle)
 
+
 @python_2_unicode_compatible
 class Bundle(models.Model):
     """A bundle of several feeds. A feed can be in several (or no) bundles."""
@@ -24,6 +25,7 @@ class Bundle(models.Model):
 
     def __str__(self):
         return self.shortname
+
 
 @python_2_unicode_compatible
 class Feed(models.Model):
@@ -66,6 +68,7 @@ class Feed(models.Model):
             # to keep exactly `n` entries around, as LIMIT is invalid in a
             # DELETE statement.
             item.delete()
+
 
 @python_2_unicode_compatible
 class Entry(models.Model):
