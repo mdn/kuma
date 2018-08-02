@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import logging
 import socket
 from datetime import datetime
@@ -176,7 +178,7 @@ def save_entry(feed, entry):
     if len(entry.guid) <= max_guid_length:
         entry_guid = entry.guid
     else:
-        entry_guid = md5(smart_str(entry.guid)).hexdigest()
+        entry_guid = md5(smart_str(entry.guid).encode('utf-8')).hexdigest()
 
     last_published = datetime.fromtimestamp(mktime(entry.published_parsed))
 

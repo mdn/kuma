@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from constance.test import override_config
 from pyquery import PyQuery as pq
 
@@ -13,12 +15,12 @@ class HomeTests(KumaTestCase):
         with override_config(GOOGLE_ANALYTICS_ACCOUNT='0'):
             response = self.client.get(url, follow=True)
             assert 200 == response.status_code
-            assert 'ga(\'create' not in response.content
+            assert b'ga(\'create' not in response.content
 
         with override_config(GOOGLE_ANALYTICS_ACCOUNT='UA-99999999-9'):
             response = self.client.get(url, follow=True)
             assert 200 == response.status_code
-            assert 'ga(\'create' in response.content
+            assert b'ga(\'create' in response.content
 
     def test_default_search_filters(self):
         url = reverse('home')
