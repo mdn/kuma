@@ -28,19 +28,6 @@ def test_home(client, db):
     assert_shared_cache_header(response)
 
 
-def test_home_community_stats(client, db, cleared_cache):
-    stats = {
-        'contributors': 'so many, like more than 10,000',
-        'locales': 'lots, maybe fifty'
-    }
-    cache.set('community_stats', stats)
-    response = client.get(reverse('home'), follow=True)
-    assert response.status_code == 200
-    assert_shared_cache_header(response)
-    assert stats['contributors'] in response.content
-    assert stats['locales'] in response.content
-
-
 @mock.patch('kuma.landing.views.render')
 def test_home_when_rate_limited(mock_render, client, db):
     """

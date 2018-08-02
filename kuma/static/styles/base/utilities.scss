@@ -83,19 +83,6 @@ Utility classes
     padding: $grid-spacing;
 }
 
-.heading-link {
-    font-style: italic;
-    @include set-font-size($body-font-size);
-    font-weight: normal;
-    display: inline-block;
-    margin: 0 ($grid-spacing * 2);
-
-    @media #{$mq-mobile-and-down} {
-        margin: 8px 0 0 0;
-        display: block;
-    }
-}
-
 .fixed {
     position: fixed;
     top: 0;
