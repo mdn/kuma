@@ -33,6 +33,11 @@ export DJANGO_SETTINGS_MODULE ?= kuma.settings.testing
 test:
 	py.test $(target)
 
+# Short test should stop after the first failure, it allows to fix test one by one for heavy test breaking
+# process such as the Python 2 to Python 3 migration
+shorttest:
+	py.test --maxfail=2 ${target}
+
 coveragetest: clean
 	py.test --cov=$(target) $(target)
 

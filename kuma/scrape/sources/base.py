@@ -148,7 +148,7 @@ class Source(object):
             bhref = href
         else:
             bhref = href.encode('utf-8')
-        decoded = unquote(bhref, 'utf-8')
+        decoded = unquote(bhref)
         assert isinstance(decoded, binary_type)
         decoded = decoded.decode('utf8')
         return decoded
