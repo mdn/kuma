@@ -6,7 +6,7 @@ services:
     user: ${UID:-0}
     volumes:
       - ./:/app
-    command: py.test --nomigrations --junit-xml=/app/test_results/smoke.xml kuma/humans kuma/spam
+    command: py.test --nomigrations --junit-xml=/app/test_results/smoke.xml kuma/humans kuma/health
     environment:
       - DATABASE_URL=sqlite:///
       - PYTHONDONTWRITEBYTECODE=1
