@@ -41,7 +41,7 @@
             };
 
             if (locale) {
-                data.label = locale
+                data.label = locale;
             }
             mdn.analytics.trackEvent(data);
         }
