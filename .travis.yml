@@ -12,6 +12,7 @@ services:
     - docker
     - memcached
     - mysql
+    - redis
 env:
     global:
         - DATABASE_URL=mysql://root:@127.0.0.1:3306/kuma

@@ -10,6 +10,7 @@ from celery import chord, task
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sitemaps import GenericSitemap
+from django.core.cache import cache
 from django.core.mail import mail_admins, send_mail
 from django.db import connection, transaction
 from django.template.loader import render_to_string
@@ -17,9 +18,8 @@ from django.utils.encoding import smart_str
 from djcelery_transactions import task as transaction_task
 from lxml import etree
 
-from kuma.core.cache import memcache
 from kuma.core.decorators import skip_in_maintenance_mode
-from kuma.core.utils import chord_flow, chunked, MemcacheLock
+from kuma.core.utils import CacheLock, chord_flow, chunked
 from kuma.search.models import Index
 
 from .events import first_edit_email
@@ -31,7 +31,7 @@ from .utils import tidy_content
 
 
 log = logging.getLogger('kuma.wiki.tasks')
-render_lock = MemcacheLock('render-stale-documents-lock', expires=60 * 60)
+render_lock = CacheLock('render-stale-documents-lock', expires=60 * 60)
 
 
 @task(rate_limit='60/m')
@@ -296,7 +296,7 @@ def update_community_stats():
     if 0 in community_stats.values():
         community_stats = None
 
-    memcache.set('community_stats', community_stats, 86400)
+    cache.set('community_stats', community_stats, 86400)
 
 
 @task

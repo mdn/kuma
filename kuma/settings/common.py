@@ -107,21 +107,15 @@ CACHE_COUNT_TIMEOUT = 60  # in seconds
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'TIMEOUT': CACHE_COUNT_TIMEOUT,
-        'KEY_PREFIX': CACHE_PREFIX,
-    },
-    'memcache': {
-        'BACKEND': 'memcached_hashring.backend.MemcachedHashRingCache',
+        'BACKEND': 'django_redis.cache.RedisCache',
         'TIMEOUT': CACHE_COUNT_TIMEOUT * 60,
         'KEY_PREFIX': CACHE_PREFIX,
-        'LOCATION': config('MEMCACHE_SERVERS',
-                           default='127.0.0.1:11211',
-                           cast=Csv()),
-    },
+        'LOCATION': config('REDIS_CACHE_SERVER',
+                           default='127.0.0.1:6379'),
+    }
 }
 
-CACHEBACK_CACHE_ALIAS = 'memcache'
+CACHEBACK_CACHE_ALIAS = 'default'
 
 # Email
 vars().update(config('EMAIL_URL',
@@ -1195,18 +1189,13 @@ CELERYD_MAX_TASKS_PER_CHILD = config(
 
 if MAINTENANCE_MODE:
     # In maintenance mode, we're going to avoid using the database, and
-    # use Celery's default beat-scheduler as well as memcached for storing
+    # use Celery's default beat-scheduler as well as Redis for storing
     # any results. In both normal and maintenance mode we use djcelery's
     # loader (see djcelery.setup_loader() above) so we, among other things,
     # acquire the Celery settings from among Django's settings.
     CELERYBEAT_SCHEDULER = 'celery.beat.PersistentScheduler'
-    DEFAULT_CELERY_RESULT_BACKEND = (
-        'cache+memcached://' + ';'.join(
-            config('MEMCACHE_SERVERS',
-                   default='127.0.0.1:11211',
-                   cast=Csv())
-        )
-    )
+    DEFAULT_CELERY_RESULT_BACKEND = CACHES['default']['LOCATION']
+
 else:
     CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
     DEFAULT_CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
@@ -1330,7 +1319,7 @@ CONSTANCE_BACKEND = ('kuma.core.backends.ReadOnlyConstanceDatabaseBackend'
                      if MAINTENANCE_MODE else
                      'constance.backends.database.DatabaseBackend')
 # must be an entry in the CACHES setting!
-CONSTANCE_DATABASE_CACHE_BACKEND = 'memcache'
+CONSTANCE_DATABASE_CACHE_BACKEND = 'default'
 
 # Settings and defaults controllable by Constance in admin
 CONSTANCE_CONFIG = dict(
@@ -1637,7 +1626,7 @@ with open(ce_path, 'r') as ce_file:
 
 # django-ratelimit
 RATELIMIT_ENABLE = config('RATELIMIT_ENABLE', default=True, cast=bool)
-RATELIMIT_USE_CACHE = config('RATELIMIT_USE_CACHE', default='memcache')
+RATELIMIT_USE_CACHE = config('RATELIMIT_USE_CACHE', default='default')
 RATELIMIT_VIEW = 'kuma.core.views.rate_limited'
 
 # Caching constants for the Cache-Control header.
