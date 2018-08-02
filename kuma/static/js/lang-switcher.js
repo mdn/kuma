@@ -33,6 +33,20 @@
         return localStorage.getItem(neverShowNoticeKey) || false;
     }
 
+    function trackGAEvent(action, locale) {
+        if (win.ga) {
+            var data = {
+                category: 'Remember Language',
+                action: action
+            };
+
+            if (locale) {
+                data.label = locale
+            }
+            mdn.analytics.trackEvent(data);
+        }
+    }
+
     if(win.sessionStorage && win.mdn.features.localStorage && !neverShowNotice) {
         var langSwitcherSelector = document.getElementById('language');
         var langSwitcherButton = document.getElementById('translations');
@@ -78,19 +92,23 @@
                     .success(function() {
                         notification.close();
                     });
+
                 // Track in GA
-                if (win.ga) {
-                    win.ga('set', 'locale-permanent-yes', locale);
-                }
+                // `locale` is actually locale code
+                trackGAEvent('yes', locale);
             });
 
             $('#locale-permanent-no').on('click', function() {
                 notification.close();
+                // locale is a object. Track the locale code only
+                trackGAEvent('no', locale.code);
             });
 
             $('#locale-permanent-never').on('click', function() {
                 storeNeverShowNotice();
                 notification.close();
+                // locale is a object. Track the locale code only
+                trackGAEvent('never', locale.code);
             });
         }
     }
