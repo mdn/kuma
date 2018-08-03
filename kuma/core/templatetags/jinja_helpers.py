@@ -1,5 +1,4 @@
 import datetime
-import HTMLParser
 import json
 
 import jinja2
@@ -10,6 +9,7 @@ from django.template import defaultfilters
 from django.template.loader import get_template
 from django.utils.encoding import force_text
 from django.utils.html import strip_tags
+from django.utils.six.moves import html_parser
 from django.utils.translation import ugettext_lazy as _
 from django_jinja import library
 from pytz import timezone, utc
@@ -20,7 +20,7 @@ from urlobject import URLObject
 from ..urlresolvers import reverse, split_path
 from ..utils import format_date_time, order_params, urlparams
 
-htmlparser = HTMLParser.HTMLParser()
+htmlparser = html_parser.HTMLParser()
 
 
 # Yanking filters from Django.

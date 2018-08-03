@@ -1,9 +1,9 @@
 import sys
-import urlparse
 
 import newrelic.agent
 from constance import config
 from django.conf import settings
+from django.utils.six.moves.urllib.parse import urljoin
 from requests import Session
 from requests.adapters import HTTPAdapter
 from requests.exceptions import RequestException
@@ -84,7 +84,7 @@ class Akismet(object):
         if 'blog' not in payload:
             scheme = 'https' if self.ssl else 'http'
             payload['blog'] = u'%s://%s/' % (scheme, self.domain)
-        url = urlparse.urljoin(self.url, method)
+        url = urljoin(self.url, method)
         return self.session.post(url, data=payload)
 
     def handle_exception(self, payload):

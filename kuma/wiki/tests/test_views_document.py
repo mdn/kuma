@@ -6,14 +6,13 @@ Legacy tests are in test_views.py.
 import base64
 import json
 from collections import namedtuple
-from urllib import quote
 
 import mock
 import pytest
 import requests_mock
 from django.test.client import BOUNDARY, encode_multipart, MULTIPART_CONTENT
 from django.utils.http import quote_etag
-from django.utils.six.moves.urllib.parse import urlparse
+from django.utils.six.moves.urllib.parse import quote, urlparse
 from pyquery import PyQuery as pq
 from waffle.testutils import override_switch
 

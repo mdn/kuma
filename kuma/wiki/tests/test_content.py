@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from base64 import b64encode
-from urlparse import urljoin
 
 import bleach
 import pytest
 from django.conf import settings
 from django.test import TestCase
+from django.utils.six.moves.urllib.parse import urljoin
 from jinja2 import escape, Markup
 from pyquery import PyQuery as pq
 
@@ -748,8 +748,8 @@ FILTERIFRAME_REJECTED = {
 }
 
 
-@pytest.mark.parametrize('url', FILTERIFRAME_ACCEPTED.values(),
-                         ids=FILTERIFRAME_ACCEPTED.keys())
+@pytest.mark.parametrize('url', list(FILTERIFRAME_ACCEPTED.values()),
+                         ids=list(FILTERIFRAME_ACCEPTED))
 def test_filteriframe_default_accepted(url):
     doc_src = '<iframe id="test" src="%s"></iframe>' % url
     pattern = settings.CONSTANCE_CONFIG['KUMA_WIKI_IFRAME_ALLOWED_HOSTS'][0]
@@ -758,8 +758,8 @@ def test_filteriframe_default_accepted(url):
     assert page('#test').attr('src') == url
 
 
-@pytest.mark.parametrize('url', FILTERIFRAME_REJECTED.values(),
-                         ids=FILTERIFRAME_REJECTED.keys())
+@pytest.mark.parametrize('url', list(FILTERIFRAME_REJECTED.values()),
+                         ids=list(FILTERIFRAME_REJECTED))
 def test_filteriframe_default_rejected(url):
     doc_src = '<iframe id="test" src="%s"></iframe>' % url
     pattern = settings.CONSTANCE_CONFIG['KUMA_WIKI_IFRAME_ALLOWED_HOSTS'][0]
@@ -770,10 +770,9 @@ def test_filteriframe_default_rejected(url):
 
 BLEACH_INVALID_HREFS = {
     'b64_script1': ('data:text/html;base64,' +
-                    b64encode('<script>alert("document.cookie:" +'
-                              ' document.cookie);')),
+                    b64encode(b'<script>alert("document.cookie:" + document.cookie);').decode('utf-8')),
     'b64_script2': ('data:text/html;base64,' +
-                    b64encode('<script>alert(document.domain)</script>')),
+                    b64encode(b'<script>alert(document.domain)</script>').decode('utf-8')),
     'javascript': 'javascript:alert(1)',
     'js_htmlref1': 'javas&#x09;cript:alert(1)',
     'js_htmlref2': '&#14;javascript:alert(1)',
@@ -786,8 +785,8 @@ BLEACH_VALID_HREFS = {
 }
 
 
-@pytest.mark.parametrize('href', BLEACH_INVALID_HREFS.values(),
-                         ids=BLEACH_INVALID_HREFS.keys())
+@pytest.mark.parametrize('href', list(BLEACH_INVALID_HREFS.values()),
+                         ids=list(BLEACH_INVALID_HREFS))
 def test_bleach_clean_removes_invalid_hrefs(href):
     """Bleach removes invalid hrefs."""
     html = '<p><a id="test" href="%s">click me</a></p>' % href
@@ -799,8 +798,8 @@ def test_bleach_clean_removes_invalid_hrefs(href):
     assert link.attr('href') is None
 
 
-@pytest.mark.parametrize('href', BLEACH_VALID_HREFS.values(),
-                         ids=BLEACH_VALID_HREFS.keys())
+@pytest.mark.parametrize('href', list(BLEACH_VALID_HREFS.values()),
+                         ids=list(BLEACH_VALID_HREFS))
 def test_bleach_clean_hrefs(href):
     """Bleach retains valid hrefs."""
     html = '<p><a id="test" href="%s">click me</a></p>' % href
@@ -1300,21 +1299,21 @@ def test_extractor_section(root_doc, annotate_links):
     assert normalize_html(result) == normalize_html(expected)
 
 
-@pytest.mark.parametrize('wrapper', SUMMARY_PLUS_SEO_WRAPPERS.values(),
-                         ids=SUMMARY_PLUS_SEO_WRAPPERS.keys())
-@pytest.mark.parametrize('markup, text', SUMMARY_CONTENT.values(),
-                         ids=SUMMARY_CONTENT.keys())
+@pytest.mark.parametrize('wrapper', list(SUMMARY_PLUS_SEO_WRAPPERS.values()),
+                         ids=list(SUMMARY_PLUS_SEO_WRAPPERS))
+@pytest.mark.parametrize('markup, text', list(SUMMARY_CONTENT.values()),
+                         ids=list(SUMMARY_CONTENT))
 def test_summary_section(markup, text, wrapper):
     content = wrapper.format(markup)
     assert get_seo_description(content, 'en-US') == text
     assert normalize_html(get_seo_description(content, 'en-US', False)) == normalize_html(markup)
 
 
-@pytest.mark.parametrize('wrapper', SUMMARY_WRAPPERS.values(),
-                         ids=SUMMARY_WRAPPERS.keys())
+@pytest.mark.parametrize('wrapper', list(SUMMARY_WRAPPERS.values()),
+                         ids=list(SUMMARY_WRAPPERS))
 @pytest.mark.parametrize('markup, expected_markup, text',
-                         SUMMARIES_SEO_CONTENT.values(),
-                         ids=SUMMARIES_SEO_CONTENT.keys())
+                         list(SUMMARIES_SEO_CONTENT.values()),
+                         ids=list(SUMMARIES_SEO_CONTENT))
 def test_multiple_seo_summaries(markup, expected_markup, text, wrapper):
     content = wrapper.format(markup)
     assert get_seo_description(content, 'en-US') == text

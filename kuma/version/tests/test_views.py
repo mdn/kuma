@@ -1,6 +1,6 @@
-from urlparse import urljoin
-
 import pytest
+
+from django.utils.six.moves.urllib.parse import urljoin
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse

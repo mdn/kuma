@@ -174,10 +174,8 @@ class AnalyticsUpageviewsTests(KumaTestCase):
         ])
         mock_creds.authorize.return_value = sequence
 
-        results = analytics_upageviews([1068728L, 1074760L], self.start_date)
+        results = analytics_upageviews([1068728, 1074760], self.start_date)
 
-        # Check that the last request's parameters contain a
-        # representation of the ids as ints, not longs (i.e. without the L)
         args, kwargs = sequence.request_calls[-1]
         self.assertIn('["1068728", "1074760"]', kwargs['body'])
 

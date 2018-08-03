@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import datetime
-import HTMLParser
 import json
 
 import mock
@@ -11,6 +10,7 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.template.loader import render_to_string
+from django.utils.six.moves import html_parser
 from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse
 from pyquery import PyQuery as pq
 from waffle.testutils import override_flag, override_switch
@@ -1634,7 +1634,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             # Add an some extra characters to the end, since the unescaped length
             # is a little less than the escaped length
             end_of_error = start_of_error + len(midair_collission_error) + 20
-            location_of_error = HTMLParser.HTMLParser().unescape(
+            location_of_error = html_parser.HTMLParser().unescape(
                 resp.content[start_of_error: end_of_error]
             )
         assert midair_collission_error in location_of_error
@@ -2120,7 +2120,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         self.assertEquals(1, len(mail.outbox))
         message = mail.outbox[0]
         assert testuser2.email in message.to
-        assert rev.document.title in message.body
+        assert str(rev.document.title) in message.body
         assert 'sub-articles' not in message.body
         # Test that the compare URL points to the right revisions
         rev = Document.objects.get(pk=rev.document_id).current_revision

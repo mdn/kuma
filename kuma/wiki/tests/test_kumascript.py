@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import base64
 import json
-from urlparse import urljoin
 
 import mock
 import pytest
+from django.utils.six.moves.urllib.parse import urljoin
 from elasticsearch import TransportError
 from elasticsearch_dsl.connections import connections
 
