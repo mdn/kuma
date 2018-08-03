@@ -27,7 +27,7 @@ can ask:
 
 [get-involved]: https://wiki.mozilla.org/Webdev/GetInvolved/developer.mozilla.org#Mentored_Bugs
 [irc-howto]: https://wiki.mozilla.org/Irc
-[MDN projects]: https://github.com/mdn
+[mdn-projects]: https://github.com/mdn
 
 How to submit code
 ==================
