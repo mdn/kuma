@@ -59,7 +59,6 @@ SET FOREIGN_KEY_CHECKS=0;
 -- wiki_document
 -- wiki_documentdeletionlog
 -- wiki_documenttag
--- wiki_documentzone
 -- wiki_editortoolbar
 -- wiki_localizationtag
 -- wiki_localizationtaggedrevision
@@ -90,6 +89,9 @@ TRUNCATE socialaccount_socialapp_sites;
 TRUNCATE socialaccount_socialtoken;
 TRUNCATE tidings_watch;
 TRUNCATE tidings_watchfilter;
+
+-- Old tables
+DROP TABLE IF EXISTS wiki_documentzone;
 
 UPDATE account_emailaddress SET
     email = CONCAT(MD5(CONCAT(email, @common_hash_secret)), '@example.com');
