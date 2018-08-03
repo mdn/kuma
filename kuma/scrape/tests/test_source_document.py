@@ -201,7 +201,7 @@ def test_gather_standard_doc_no_uuid():
     storage.save_document.assert_called_once_with(expected)
 
 
-def test_gather_normalized_path_moved_page_needed():
+def test_gather_redirect_moved_page_needed():
     """If a document is a redirect, request the target page."""
     source = DocumentSource('/en-US/docs/Origin', force=True)
     storage = mock_storage(spec=['get_document', 'get_document_redirect'])
@@ -214,7 +214,7 @@ def test_gather_normalized_path_moved_page_needed():
     assert source.state == source.STATE_PREREQ
 
 
-def test_gather_normalized_path_moved_page_followed():
+def test_gather_redirect_moved_page_followed():
     """If a document is a redirect to a normal page, create a redirect."""
     source = DocumentSource('/en-US/docs/Origin', force=True)
     storage = mock_storage(spec=[

@@ -224,7 +224,6 @@ class DocumentBaseSource(Source):
         if path != unquote(path):
             raise ValueError('URL-encoded path "%s"' % path)
         self.locale, self.slug = self.locale_and_slug(path)
-        self.normalized_path = path
 
     def locale_and_slug(self, path):
         """Extract a document locale and slug from a path."""

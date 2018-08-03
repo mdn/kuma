@@ -10,7 +10,6 @@ def test_top_level_doc():
     assert source.path == '/locale/docs/slug'
     assert source.locale == 'locale'
     assert source.slug == 'slug'
-    assert source.normalized_path == '/locale/docs/slug'
     assert source.parent_slug is None
     assert source.parent_path is None
 
@@ -21,7 +20,6 @@ def test_child_doc():
     assert source.path == '/locale/docs/parent/child'
     assert source.locale == 'locale'
     assert source.slug == 'parent/child'
-    assert source.normalized_path == '/locale/docs/parent/child'
     assert source.parent_slug == 'parent'
     assert source.parent_path == '/locale/docs/parent'
 

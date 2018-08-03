@@ -20,8 +20,7 @@ class DocumentSource(DocumentBaseSource):
 
         just_this_doc = (not self.translations and
                          self.depth == 0 and
-                         self.revisions == 1 and
-                         self.normalized_path)
+                         self.revisions == 1)
         if not self.force and just_this_doc:
             document = storage.get_document(self.locale, self.slug)
             if document:
@@ -33,7 +32,6 @@ class DocumentSource(DocumentBaseSource):
         data = {'needs': []}
 
         # Load data, gathering further source needs
-        assert self.normalized_path
         self.load_prereq_parent_topic(storage, data)
         self.load_prereq_redirect_check(storage, data)
         if data.get('has_redirect_check'):
@@ -48,7 +46,6 @@ class DocumentSource(DocumentBaseSource):
 
     def load_prereq_parent_topic(self, storage, data):
         """Load the parent topic, if a child page."""
-        assert self.normalized_path
         if not self.parent_slug:
             return  # No parent to load
 
@@ -60,18 +57,15 @@ class DocumentSource(DocumentBaseSource):
 
     def load_prereq_redirect_check(self, storage, data):
         """Check the URL for redirects."""
-        assert self.normalized_path
         redirect = storage.get_document_redirect(self.locale, self.slug)
         if redirect is None:
-            data['needs'].append(
-                ('document_redirect', self.normalized_path, {}))
+            data['needs'].append(('document_redirect', self.path, {}))
         else:
             data['has_redirect_check'] = True
             data['redirect_to'] = redirect.get('redirect_to')
 
     def load_prereq_redirect(self, storage, data):
         """Load the destination of a redirect."""
-        assert self.normalized_path
         data['is_standard_page'] = data.get('has_redirect_check')
         redirect_to = data.get('redirect_to')
         if not redirect_to:
@@ -86,14 +80,12 @@ class DocumentSource(DocumentBaseSource):
 
     def load_prereq_metadata(self, storage, data):
         """Load the document metadata."""
-        assert self.normalized_path
         meta = storage.get_document_metadata(self.locale, self.slug)
         if meta is None:
-            data['needs'].append(('document_meta', self.normalized_path,
+            data['needs'].append(('document_meta', self.path,
                                  self.current_options()))
         elif 'error' in meta:
-            raise self.SourceError('Error getting metadata for %s',
-                                   self.normalized_path)
+            raise self.SourceError('Error getting metadata for %s', self.path)
         elif meta:
             data['id'] = meta['id']
             data['locale'] = meta['locale']
@@ -138,11 +130,11 @@ class DocumentSource(DocumentBaseSource):
         """Load the revision history."""
         history = storage.get_document_history(self.locale, self.slug)
         if history is None:
-            data['needs'].append(('document_history', self.normalized_path,
+            data['needs'].append(('document_history', self.path,
                                  {"revisions": self.revisions}))
         elif len(history) == 0:
             raise self.SourceError('Empty history for document "%s"',
-                                   self.normalized_path)
+                                   self.path)
 
     def load_prereq_children(self, storage, data):
         """Load the document children."""
@@ -151,8 +143,7 @@ class DocumentSource(DocumentBaseSource):
         children = storage.get_document_children(self.locale, self.slug)
         if children is None:
             options = self.current_options()
-            data['needs'].append(('document_children', self.normalized_path,
-                                  options))
+            data['needs'].append(('document_children', self.path, options))
 
     def save_data(self, storage, data):
         """Save the document as a redirect or full document."""
@@ -192,5 +183,5 @@ class DocumentSource(DocumentBaseSource):
                     doc_data['locale'], self.path)
                 doc_data['locale'] = self.locale
         storage.save_document(doc_data)
-        return [('document_current', self.normalized_path,
+        return [('document_current', self.path,
                  {'revisions': self.revisions})]
