@@ -1,7 +1,7 @@
-import urllib
 from hashlib import md5
 
 from django.conf import settings
+from django.utils.six.moves.urllib.parse import urlencode
 
 from . import UserTestCase
 from ..templatetags.jinja_helpers import gravatar_url, public_email
@@ -14,7 +14,7 @@ class HelperTestCase(UserTestCase):
         self.u = self.user_model.objects.get(username=u'testuser')
 
     def test_default_gravatar(self):
-        d_param = urllib.urlencode({'d': settings.DEFAULT_AVATAR})
+        d_param = urlencode({'d': settings.DEFAULT_AVATAR})
         assert d_param in gravatar_url(self.u.email), \
             "Bad default avatar: %s" % gravatar_url(self.u.email)
 

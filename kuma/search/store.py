@@ -63,6 +63,6 @@ def ref_from_url(url):
     locale = translation.get_language()
 
     for value in [query, page, locale] + filters:
-        md5.update(smart_str(value))
+        md5.update(smart_str(value).encode('utf-8'))
 
     return md5.hexdigest()[:16]

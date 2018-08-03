@@ -10,7 +10,7 @@ class NamespacedTaggableManagerTest(TestCase):
     food_model = Food
 
     def assert_tags_equal(self, qs, tags, attr="name"):
-        got = map(lambda tag: getattr(tag, attr), qs)
+        got = list(map(lambda tag: getattr(tag, attr), qs))
         got.sort()
         tags.sort()
         self.assertEqual(got, tags)
@@ -32,9 +32,9 @@ class NamespacedTaggableManagerTest(TestCase):
 
         ns_tags = apple.tags.all_ns()
 
-        expected_ns = expected_tags.keys()
+        expected_ns = list(expected_tags)
         expected_ns.sort()
-        result_ns = ns_tags.keys()
+        result_ns = list(ns_tags)
         result_ns.sort()
         self.assertEqual(expected_ns, result_ns)
 

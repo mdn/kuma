@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import logging
 
 import mock
@@ -247,4 +249,4 @@ def test_error_handler_minimal_request(rf, db, constance_config):
     exception = Exception('Something went wrong.')
     response = handler500(request, exception)
     assert response.status_code == 500
-    assert 'Internal Server Error' in response.content
+    assert b'Internal Server Error' in response.content
