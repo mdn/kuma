@@ -5,22 +5,23 @@
 # Multiple packages
 #
 #
-# django-babel, puente, sphinx
+# Used by django-babel, puente, sphinx
 Babel==2.2.0 \
     --hash=sha256:fed07cbcdcb3de79b53a8220eebed21c93f8dbb3dbce1d9c6b1c4b09e8aecf2b \
     --hash=sha256:d8cb4c0e78148aee89560f9fe21587aa57739c975bb89ff66b1e842cc697428f
-# pytest, tox
+# Used by pytest, tox
 py==1.4.33 \
     --hash=sha256:81b5e37db3cc1052de438375605fb5d3b3e97f950f415f9143f04697c684d7eb \
     --hash=sha256:1f9a981438f2acc20470b301a07a496375641f902320f70e31916fe3377385a9
-# pytest plugins
+# Testing framework that supports small tests and scales to complex tests
+# Used by pytest plugins
 # Code: https://github.com/pytest-dev/pytest
 # Changes: https://docs.pytest.org/en/latest/changelog.html
 # Docs: https://docs.pytest.org/en/latest/
 pytest==3.1.3 \
     --hash=sha256:2a4f483468954621fcc8f74784f3b42531e5b5008d49fc609b37bc4dbc6dead1 \
     --hash=sha256:095e1832f7e424563c95daf4d8d3c865052b80e139cdd2f9610a986ee8526206
-# babel, celery, django-sundial
+# Used by babel, celery, django-sundial
 pytz==2017.3 \
     --hash=sha256:80af0f3008046b9975242012a985f04c5df1f01eed4ec1633d56cc47a75a6a48 \
     --hash=sha256:feb2365914948b8620347784b6b6da356f31c9d03560259070b2f30cff3d469d \
@@ -31,18 +32,18 @@ pytz==2017.3 \
     --hash=sha256:dd2e4ca6ce3785c8dd342d1853dd9052b19290d5bf66060846e5dc6b8d6667f7 \
     --hash=sha256:699d18a2a56f19ee5698ab1123bbcc1d269d061996aeb1eda6d89248d3542b82 \
     --hash=sha256:fae4cffc040921b8a2d60c6cf0b5d662c1190fe54d718271db4eb17d44a185b7
-# cryptography, django-honeypot
+# Used by cryptography, django-honeypot
 setuptools==26.1.1 \
     --hash=sha256:226c9ce65e76c6069e805982b036f36dc4b227b37dd87fc219aef721ec8604ae \
     --hash=sha256:475ce28993d7cb75335942525b9fac79f7431a7f6e8a0079c0f2680641379481 \
     --hash=sha256:02a06e1a547b16c25143d2bb898008286a3cbd600a7dbe47234ce57dc51abbf6
-# cryptography, flake8
+# Used by cryptography, flake8
 enum34==1.1.6 \
     --hash=sha256:6bd0f6ad48ec2aa117d3d141940d484deccda84d4fcd884f5c3d93c23ecd8c79 \
     --hash=sha256:644837f692e5f550741432dd3f223bbb9852018674981b1664e5dc339387588a \
     --hash=sha256:8ad8c4783bf61ded74527bffb48ed9b54166685e4230386a9ed9b1279e2df5b1 \
     --hash=sha256:2d81cbbe0e73112bdfe6ef8576f2238f2ba27dd0d55752a776c41d38b7da2850
-# cryptography, google-api-python-client
+# Used by cryptography, google-api-python-client
 pyasn1==0.1.9 \
     --hash=sha256:61f9d99e3cef65feb1bfe3a2eef7a93eb93819d345bf54bcd42f4e63d5204dae \
     --hash=sha256:1802a6dd32045e472a419db1441aecab469d33e0d2749e192abdec52101724af \
@@ -55,6 +56,15 @@ pyasn1==0.1.9 \
     --hash=sha256:5191ff6b9126d2c039dd87f8ff025bed274baf07fa78afa46f556b1ad7265d6e \
     --hash=sha256:8323e03637b2d072cc7041300bac6ec448c3c28950ab40376036788e9a1af629 \
     --hash=sha256:853cacd96d1f701ddd67aa03ecc05f51890135b7262e922710112f12a2ed2a7f
+# Python HTTP library with thread-safe connection pooling, file POST, sanity
+# Used by elasticsearch, requests
+# Code: https://github.com/urllib3/urllib3
+# Changes: https://github.com/urllib3/urllib3/blob/master/CHANGES.rst
+# Docs: https://urllib3.readthedocs.io/en/latest/
+urllib3==1.22 \
+    --hash=sha256:06330f386d6e4b195fbfc736b297f58c5a892e4440e54d294d7004e3a9bbea1b \
+    --hash=sha256:cc44da8e1145637334317feebd728bd869a35285b93cbb4cca2577da7e62db4f
+
 
 # bleach
 #
@@ -175,15 +185,21 @@ futures==3.0.5 \
     --hash=sha256:0542525145d5afc984c88f914a0c85c77527f65946617edb5274f72406f981df
 
 # elasticsearch-dsl
-elasticsearch==1.9.0 \
-    --hash=sha256:cbee23c29f9947b1b78be5c0f741c1f8b504d3c53163b1355ea08f69cbd0fc0c \
-    --hash=sha256:eb0d4b5b20a4ccf9e49bd20498b6215d5e960d8a63a0eae44cd4431e3f303a24
-python-dateutil==2.4.2 \
-    --hash=sha256:3e95445c1db500a344079a47b171c45ef18f57d188dffdb0e4165c71bea8eb3d \
-    --hash=sha256:2ae63cf475f0bd049b722fac20813d62aedc14957dd5a3bf00d120d2b5404460
-urllib3==1.22 \
-    --hash=sha256:06330f386d6e4b195fbfc736b297f58c5a892e4440e54d294d7004e3a9bbea1b \
-    --hash=sha256:cc44da8e1145637334317feebd728bd869a35285b93cbb4cca2577da7e62db4f
+#
+# Official low-level client for ElasticSearch
+# Code: https://github.com/elastic/elasticsearch-py
+# Changes: https://elasticsearch-py.readthedocs.io/en/master/Changelog.html
+# Docs: https://elasticsearch-py.readthedocs.io/en/master/
+elasticsearch==2.4.1 \
+    --hash=sha256:bb8f9a365ba6650d599428538c8aed42033264661d8f7d353da59d5892305f72 \
+    --hash=sha256:fead47ebfcaabd1c53dbfc21403eb99ac207eef76de8002fe11a1c8ec9589ce2
+# Extensions to datetime module
+# Code: https://github.com/dateutil/dateutil/
+# Changes: https://dateutil.readthedocs.io/en/stable/changelog.html
+# Docs: https://dateutil.readthedocs.io/en/stable/
+python-dateutil==2.7.3 \
+    --hash=sha256:1adb80e7a782c12e52ef9a8182bebeb73f1d7e24e374397af06fb4956c8dc5c0 \
+    --hash=sha256:e27001de32f627c22380a688bcc43ce83504a7bc5da472209b4c70f02829f0b8
 
 # flake8
 configparser==3.5.0 \
