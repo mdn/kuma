@@ -7,7 +7,7 @@ from .document_children import DocumentChildrenSource
 from .document_current import DocumentCurrentSource
 from .document_history import DocumentHistorySource
 from .document_meta import DocumentMetaSource
-from .document_rendered import DocumentRedirectSource
+from .document_redirect import DocumentRedirectSource
 from .links import LinksSource
 from .revision import RevisionSource
 from .user import UserSource
