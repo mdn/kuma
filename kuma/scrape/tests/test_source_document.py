@@ -41,9 +41,9 @@ doc_data = {
 def test_gather_root_no_prereqs():
     doc_path = '/en-US/docs/RootDoc'
     source = DocumentSource(doc_path)
-    storage = mock_storage(spec=['get_document', 'get_document_rendered'])
+    storage = mock_storage(spec=['get_document', 'get_document_redirect'])
     resources = source.gather(None, storage)
-    assert resources == [('document_rendered', doc_path, {})]
+    assert resources == [('document_redirect', doc_path, {})]
     assert source.state == source.STATE_PREREQ
     assert source.freshness == source.FRESH_UNKNOWN
 
@@ -63,10 +63,10 @@ def test_gather_forced():
     """Resources are fetched if force=True."""
     doc_path = '/en-US/docs/RootDoc'
     source = DocumentSource(doc_path, force=True)
-    storage = mock_storage(spec=['get_document', 'get_document_rendered'])
+    storage = mock_storage(spec=['get_document', 'get_document_redirect'])
     storage.get_document.return_value = "existing document"
     resources = source.gather(None, storage)
-    assert resources == [('document_rendered', doc_path, {})]
+    assert resources == [('document_redirect', doc_path, {})]
     assert source.state == source.STATE_PREREQ
     assert source.freshness == source.FRESH_UNKNOWN
 
@@ -76,11 +76,11 @@ def test_gather_child_doc():
     parent_path = '/en-US/docs/Root'
     child_path = parent_path + '/Child'
     source = DocumentSource(child_path)
-    storage = mock_storage(spec=['get_document', 'get_document_rendered'])
+    storage = mock_storage(spec=['get_document', 'get_document_redirect'])
     resources = source.gather(None, storage)
     assert resources == [
         ('document', parent_path, {}),
-        ('document_rendered', child_path, {})]
+        ('document_redirect', child_path, {})]
     assert source.state == source.STATE_PREREQ
 
 
@@ -89,10 +89,10 @@ def test_gather_child_doc_parent_in_storage():
     parent_path = '/en-US/docs/Root'
     child_path = parent_path + '/Child'
     source = DocumentSource(child_path, force=True)
-    storage = mock_storage(spec=['get_document', 'get_document_rendered'])
+    storage = mock_storage(spec=['get_document', 'get_document_redirect'])
     storage.get_document.return_value = 'parent document'
     resources = source.gather(None, storage)
-    assert resources == [('document_rendered', child_path, {})]
+    assert resources == [('document_redirect', child_path, {})]
     storage.get_document.assert_called_once_with('en-US', 'Root')
     assert source.state == source.STATE_PREREQ
 
@@ -102,9 +102,9 @@ def test_gather_standard_doc():
     path = '/en-US/docs/RootDoc'
     source = DocumentSource(path, force=True)
     storage = mock_storage(spec=[
-        'get_document_rendered', 'get_document_metadata',
+        'get_document_redirect', 'get_document_metadata',
         'get_document_history'])
-    storage.get_document_rendered.return_value = {}
+    storage.get_document_redirect.return_value = {}
     resources = source.gather(None, storage)
     assert resources == [
         ('document_meta', path, {'force': True}),
@@ -118,9 +118,9 @@ def test_gather_standard_doc_empty_history_is_error():
     path = '/en-US/docs/RootDoc'
     source = DocumentSource(path, force=True)
     storage = mock_storage(spec=[
-        'get_document_rendered', 'get_document_metadata',
+        'get_document_redirect', 'get_document_metadata',
         'get_document_history'])
-    storage.get_document_rendered.return_value = {}  # Standard doc
+    storage.get_document_redirect.return_value = {}  # Standard doc
     storage.get_document_metadata.return_value = {}  # Empty for now
     storage.get_document_history.return_value = []   # No history
     resources = source.gather(None, storage)
@@ -132,9 +132,9 @@ def test_gather_standard_doc_all_prereqs():
     path = '/en-US/docs/Test'
     source = DocumentSource(path, force=True)
     storage = mock_storage(spec=[
-        'get_document_rendered', 'get_document_metadata',
+        'get_document_redirect', 'get_document_metadata',
         'get_document_history', 'save_document'])
-    storage.get_document_rendered.return_value = {}  # Standard doc
+    storage.get_document_redirect.return_value = {}  # Standard doc
     storage.get_document_metadata.return_value = doc_metadata
     storage.get_document_history.return_value = [
         ('revisions', path + '$revision/2016', {})]
@@ -149,9 +149,9 @@ def test_gather_standard_doc_metdata_loses():
     path = '/en-US/docs/Test'
     source = DocumentSource(path, force=True)
     storage = mock_storage(spec=[
-        'get_document_rendered', 'get_document_metadata',
+        'get_document_redirect', 'get_document_metadata',
         'get_document_history', 'save_document'])
-    storage.get_document_rendered.return_value = {}  # Standard doc
+    storage.get_document_redirect.return_value = {}  # Standard doc
     metadata = doc_metadata.copy()
     metadata['locale'] = 'EN-US'
     metadata['slug'] = 'TEST'
@@ -169,9 +169,9 @@ def test_gather_standard_doc_bad_metadata():
     path = '/en-US/docs/Test'
     source = DocumentSource(path, force=True)
     storage = mock_storage(spec=[
-        'get_document_rendered', 'get_document_metadata',
+        'get_document_redirect', 'get_document_metadata',
         'get_document_history'])
-    storage.get_document_rendered.return_value = {}  # Standard doc
+    storage.get_document_redirect.return_value = {}  # Standard doc
     metadata = doc_metadata.copy()
     metadata['error'] = True
     storage.get_document_metadata.return_value = metadata
@@ -186,9 +186,9 @@ def test_gather_standard_doc_no_uuid():
     path = '/en-US/docs/Test'
     source = DocumentSource(path, force=True)
     storage = mock_storage(spec=[
-        'get_document_rendered', 'get_document_metadata',
+        'get_document_redirect', 'get_document_metadata',
         'get_document_history', 'save_document'])
-    storage.get_document_rendered.return_value = {}  # Standard doc
+    storage.get_document_redirect.return_value = {}  # Standard doc
     metadata = doc_metadata.copy()
     del metadata['uuid']
     storage.get_document_metadata.return_value = metadata
@@ -232,13 +232,13 @@ def test_gather_zoned_doc_is_normalized():
     assert not source.locale
     assert not source.slug
     storage = mock_storage(spec=[
-        'get_zone_root', 'get_document', 'get_document_rendered'])
+        'get_zone_root', 'get_document', 'get_document_redirect'])
     storage.get_zone_root.return_value = {
         'zone_path': path, 'doc_path': '/en-US/docs/Root/Zone'}
     resources = source.gather(None, storage)
     assert resources == [
         ('document', '/en-US/docs/Root', {}),
-        ('document_rendered', '/en-US/docs/Root/Zone', {})]
+        ('document_redirect', '/en-US/docs/Root/Zone', {})]
     assert source.state == source.STATE_PREREQ
     assert source.normalized_path == '/en-US/docs/Root/Zone'
     assert source.locale == 'en-US'
@@ -248,8 +248,8 @@ def test_gather_zoned_doc_is_normalized():
 def test_gather_normalized_path_moved_page_needed():
     """If a document is a redirect, request the target page."""
     source = DocumentSource('/en-US/docs/Origin', force=True)
-    storage = mock_storage(spec=['get_document', 'get_document_rendered'])
-    storage.get_document_rendered.return_value = {
+    storage = mock_storage(spec=['get_document', 'get_document_redirect'])
+    storage.get_document_redirect.return_value = {
         'redirect_to': '/en-US/docs/NewLocation'}
     resources = source.gather(None, storage)
     assert resources == [
@@ -262,8 +262,8 @@ def test_gather_normalized_path_moved_page_followed():
     """If a document is a redirect to a normal page, create a redirect."""
     source = DocumentSource('/en-US/docs/Origin', force=True)
     storage = mock_storage(spec=[
-        'get_document', 'get_document_rendered', 'save_document'])
-    storage.get_document_rendered.return_value = {
+        'get_document', 'get_document_redirect', 'save_document'])
+    storage.get_document_redirect.return_value = {
         'redirect_to': '/en-US/docs/NewLocation'}
     storage.get_document.return_value = "Redirect Document"
     resources = source.gather(None, storage)
@@ -285,9 +285,9 @@ def test_gather_redirect_to_zone_page_first_pass():
     zone_path = '/en-US/Zone'
     source = DocumentSource(path, force=True)
     storage = mock_storage(spec=[
-        'get_document', 'get_document_rendered', 'get_zone_root',
+        'get_document', 'get_document_redirect', 'get_zone_root',
         'get_document_metadata', 'get_document_history'])
-    storage.get_document_rendered.return_value = {'redirect_to': zone_path}
+    storage.get_document_redirect.return_value = {'redirect_to': zone_path}
     resources = source.gather(None, storage)
     assert resources == [
         ('document', parent_path, {}),
@@ -304,9 +304,9 @@ def test_gather_redirect_to_errored_zone_page_is_error():
     zone_path = '/en-US/Zone'
     source = DocumentSource(path, force=True)
     storage = mock_storage(spec=[
-        'get_document', 'get_document_rendered', 'get_zone_root',
+        'get_document', 'get_document_redirect', 'get_zone_root',
         'get_document_metadata', 'get_document_history'])
-    storage.get_document_rendered.return_value = {'redirect_to': zone_path}
+    storage.get_document_redirect.return_value = {'redirect_to': zone_path}
     storage.get_zone_root.return_value = {'errors': 'bad zone'}
     source.gather(None, storage)
     assert source.state == source.STATE_ERROR
@@ -319,10 +319,10 @@ def test_gather_redirect_to_zone_page_complete():
     zone_path = '/en-US/Zone'
     source = DocumentSource(path, force=True)
     storage = mock_storage(spec=[
-        'get_document', 'get_document_rendered', 'get_zone_root',
+        'get_document', 'get_document_redirect', 'get_zone_root',
         'get_document_metadata', 'get_document_history', 'save_document'])
     storage.get_document.return_value = 'Root doc'
-    storage.get_document_rendered.return_value = {'redirect_to': zone_path}
+    storage.get_document_redirect.return_value = {'redirect_to': zone_path}
     storage.get_zone_root.return_value = {
         'doc_path': path,
         'zone_path': zone_path}
@@ -350,9 +350,9 @@ def test_gather_redirect_to_zone_subpage():
     zone_path = zone_root_path + '/Child'
     source = DocumentSource(path, force=True)
     storage = mock_storage(spec=[
-        'get_document', 'get_document_rendered', 'get_zone_root',
+        'get_document', 'get_document_redirect', 'get_zone_root',
         'get_document_metadata', 'get_document_history', 'save_document'])
-    storage.get_document_rendered.return_value = {'redirect_to': zone_path}
+    storage.get_document_redirect.return_value = {'redirect_to': zone_path}
     storage.get_zone_root.return_value = {
         'doc_path': parent_path, 'zone_path': zone_root_path}
     resources = source.gather(None, storage)
@@ -373,10 +373,10 @@ def test_gather_redirect_to_zone_subpage_complete():
     zone_path = zone_root_path + '/Child'
     source = DocumentSource(path, force=True)
     storage = mock_storage(spec=[
-        'get_document', 'get_document_rendered', 'get_zone_root',
+        'get_document', 'get_document_redirect', 'get_zone_root',
         'get_document_metadata', 'get_document_history', 'save_document'])
     storage.get_document.return_value = 'Root doc'
-    storage.get_document_rendered.return_value = {'redirect_to': zone_path}
+    storage.get_document_redirect.return_value = {'redirect_to': zone_path}
     storage.get_zone_root.return_value = {
         'doc_path': parent_path, 'zone_path': '/en-US/Zone'}
     metadata = doc_metadata.copy()
@@ -400,9 +400,9 @@ def test_gather_localized_doc_without_metadata():
     path = '/fr/docs/Racine'
     source = DocumentSource(path, force=True)
     storage = mock_storage(spec=[
-        'get_document_rendered', 'get_document_metadata',
+        'get_document_redirect', 'get_document_metadata',
         'get_document_history', 'save_document'])
-    storage.get_document_rendered.return_value = {}
+    storage.get_document_redirect.return_value = {}
     storage.get_document_history.return_value = [
         ('revisions', path + '$revision/2020', {})]
     resources = source.gather(None, storage)
@@ -415,9 +415,9 @@ def test_gather_localized_doc_with_metadata():
     path = '/fr/docs/Racine'
     source = DocumentSource(path, force=True)
     storage = mock_storage(spec=[
-        'get_document', 'get_document_rendered', 'get_document_metadata',
+        'get_document', 'get_document_redirect', 'get_document_metadata',
         'get_document_history', 'save_document'])
-    storage.get_document_rendered.return_value = {}
+    storage.get_document_redirect.return_value = {}
     metadata = doc_metadata.copy()
     metadata['locale'] = 'fr'
     metadata['slug'] = 'Racine'
@@ -439,9 +439,9 @@ def test_gather_localized_doc_invalid_english():
     path = '/fr/docs/Racine'
     source = DocumentSource(path, force=True)
     storage = mock_storage(spec=[
-        'get_document_rendered', 'get_document_metadata',
+        'get_document_redirect', 'get_document_metadata',
         'get_document_history'])
-    storage.get_document_rendered.return_value = {}
+    storage.get_document_redirect.return_value = {}
     metadata = doc_metadata.copy()
     metadata['locale'] = 'fr'
     metadata['slug'] = 'Racine'
@@ -462,9 +462,9 @@ def test_gather_localized_doc_sets_parent():
     path = '/fr/docs/Racine'
     source = DocumentSource(path, force=True)
     storage = mock_storage(spec=[
-        'get_document', 'get_document_rendered', 'get_document_metadata',
+        'get_document', 'get_document_redirect', 'get_document_metadata',
         'get_document_history', 'save_document'])
-    storage.get_document_rendered.return_value = {}
+    storage.get_document_redirect.return_value = {}
     metadata = doc_metadata.copy()
     metadata['locale'] = 'fr'
     metadata['slug'] = 'Racine'
@@ -493,9 +493,9 @@ def test_gather_document_children():
     doc_path = '/en-US/docs/RootDoc'
     source = DocumentSource(doc_path, depth=1, force=True)
     storage = mock_storage(spec=[
-        'get_document_rendered', 'get_document_metadata',
+        'get_document_redirect', 'get_document_metadata',
         'get_document_history', 'get_document_children', 'save_document'])
-    storage.get_document_rendered.return_value = {}  # Standard doc
+    storage.get_document_redirect.return_value = {}  # Standard doc
     storage.get_document_metadata.return_value = doc_metadata
     storage.get_document_history.return_value = [
         ('revisions', doc_path + '$revision/2016', {})]
@@ -511,9 +511,9 @@ def test_gather_document_children_loaded():
     doc_path = '/en-US/docs/RootDoc'
     source = DocumentSource(doc_path, depth='all', force=True)
     storage = mock_storage(spec=[
-        'get_document_rendered', 'get_document_metadata',
+        'get_document_redirect', 'get_document_metadata',
         'get_document_history', 'get_document_children', 'save_document'])
-    storage.get_document_rendered.return_value = {}  # Standard doc
+    storage.get_document_redirect.return_value = {}  # Standard doc
     storage.get_document_metadata.return_value = doc_metadata
     storage.get_document_history.return_value = [
         ('revisions', doc_path + '$revision/2016', {})]

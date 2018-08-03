@@ -7,7 +7,7 @@ from .document_children import DocumentChildrenSource
 from .document_current import DocumentCurrentSource
 from .document_history import DocumentHistorySource
 from .document_meta import DocumentMetaSource
-from .document_rendered import DocumentRenderedSource
+from .document_rendered import DocumentRedirectSource
 from .links import LinksSource
 from .revision import RevisionSource
 from .user import UserSource
@@ -19,7 +19,7 @@ __all__ = [
     DocumentCurrentSource,
     DocumentHistorySource,
     DocumentMetaSource,
-    DocumentRenderedSource,
+    DocumentRedirectSource,
     DocumentSource,
     LinksSource,
     RevisionSource,

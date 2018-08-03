@@ -21,7 +21,7 @@ class Storage(object):
             'document_children': {},
             'document_history': {},
             'document_metadata': {},
-            'document_rendered': {},
+            'document_redirect': {},
             'revision_html': {},
             'zone_root': {},
         }
@@ -134,11 +134,11 @@ class Storage(object):
     def save_document_history(self, locale, slug, data):
         self.local['document_history'][(locale, slug)] = data
 
-    def get_document_rendered(self, locale, slug):
-        return self.local['document_rendered'].get((locale, slug), None)
+    def get_document_redirect(self, locale, slug):
+        return self.local['document_redirect'].get((locale, slug), None)
 
-    def save_document_rendered(self, locale, slug, data):
-        self.local['document_rendered'][(locale, slug)] = data
+    def save_document_redirect(self, locale, slug, data):
+        self.local['document_redirect'][(locale, slug)] = data
 
     def get_document_children(self, locale, slug):
         return self.local['document_children'].get((locale, slug), None)

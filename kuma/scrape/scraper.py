@@ -9,7 +9,7 @@ import requests
 
 from .sources import (
     DocumentChildrenSource, DocumentCurrentSource, DocumentHistorySource,
-    DocumentMetaSource, DocumentRenderedSource, DocumentSource, LinksSource,
+    DocumentMetaSource, DocumentRedirectSource, DocumentSource, LinksSource,
     RevisionSource, Source, UserSource, ZoneRootSource)
 from .storage import Storage
 
@@ -91,7 +91,7 @@ class Scraper(object):
         'document_current': DocumentCurrentSource,
         'document_history': DocumentHistorySource,
         'document_meta': DocumentMetaSource,
-        'document_rendered': DocumentRenderedSource,
+        'document_redirect': DocumentRedirectSource,
         'links': LinksSource,
         'revision': RevisionSource,
         'user': UserSource,

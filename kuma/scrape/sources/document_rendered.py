@@ -1,4 +1,4 @@
-"""DocumentRenderedSource requests MDN wiki documents."""
+"""DocumentRedirectSource checks if a MDN wiki document is a redirect."""
 from __future__ import absolute_import, unicode_literals
 
 from django.utils.six.moves.urllib.parse import urlparse
@@ -6,7 +6,7 @@ from django.utils.six.moves.urllib.parse import urlparse
 from .base import DocumentBaseSource
 
 
-class DocumentRenderedSource(DocumentBaseSource):
+class DocumentRedirectSource(DocumentBaseSource):
     """Request the rendered document, to detect redirects."""
 
     def source_path(self):
@@ -32,5 +32,5 @@ class DocumentRenderedSource(DocumentBaseSource):
 
     def save_data(self, storage, data):
         """Save the rendered document data."""
-        storage.save_document_rendered(self.locale, self.slug, data)
+        storage.save_document_redirect(self.locale, self.slug, data)
         return []

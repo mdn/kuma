@@ -80,10 +80,10 @@ class DocumentSource(DocumentBaseSource):
     def load_prereq_rendered(self, storage, data):
         """Load the rendered page, to detect redirects and zones."""
         assert self.normalized_path
-        rendered = storage.get_document_rendered(self.locale, self.slug)
+        rendered = storage.get_document_redirect(self.locale, self.slug)
         if rendered is None:
             data['needs'].append(
-                ('document_rendered', self.normalized_path, {}))
+                ('document_redirect', self.normalized_path, {}))
         else:
             data['has_rendered'] = True
             data['redirect_to'] = rendered.get('redirect_to')

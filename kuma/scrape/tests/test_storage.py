@@ -18,11 +18,11 @@ from ..storage import Storage
         ('document_children', ('locale', 'slug')),
         ('document_metadata', ('locale', 'slug')),
         ('document_history', ('locale', 'slug')),
-        ('document_rendered', ('locale', 'slug')),
+        ('document_redirect', ('locale', 'slug')),
         ('revision_html', ('path',)),
         ('zone_root', ('path',)),
     ), ids=['document_children', 'document_metadata', 'document_history',
-            'document_rendered', 'revision_html', 'zone_root'])
+            'document_redirect', 'revision_html', 'zone_root'])
 def test_local_storage(data_name, param_list):
     """Local storage objects are None when unset, return the saved value."""
     storage = Storage()
