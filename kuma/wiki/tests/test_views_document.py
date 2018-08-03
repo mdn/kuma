@@ -108,12 +108,8 @@ def authkey(wiki_user):
     'http_method', ['put', 'post', 'delete', 'options', 'head'])
 @pytest.mark.parametrize(
     'endpoint', ['children', 'toc', 'json', 'json_slug'])
-def test_disallowed_methods(client, db, http_method, endpoint):
-    """
-    HTTP methods other than GET & HEAD are not allowed.
-
-    TODO: Remove db fixture when bug 1462475 (disable zone URL root) is fixed.
-    """
+def test_disallowed_methods(client, http_method, endpoint):
+    """HTTP methods other than GET & HEAD are not allowed."""
     kwargs = None
     if endpoint != 'json':
         kwargs = dict(document_path='Web/CSS')
