@@ -11,7 +11,6 @@ from .document_redirect import DocumentRedirectSource
 from .links import LinksSource
 from .revision import RevisionSource
 from .user import UserSource
-from .zone_root import ZoneRootSource
 
 __all__ = [
     DocumentBaseSource,
@@ -25,5 +24,4 @@ __all__ = [
     RevisionSource,
     Source,
     UserSource,
-    ZoneRootSource,
 ]

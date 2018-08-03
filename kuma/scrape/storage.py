@@ -7,8 +7,8 @@ from taggit.models import Tag
 
 from kuma.users.models import User, UserBan
 from kuma.wiki.constants import REDIRECT_CONTENT
-from kuma.wiki.models import (Document, DocumentTag, DocumentZone,
-                              LocalizationTag, ReviewTag, Revision)
+from kuma.wiki.models import (Document, DocumentTag, LocalizationTag,
+                              ReviewTag, Revision)
 
 logger = logging.getLogger('kuma.scraper')
 
@@ -23,7 +23,6 @@ class Storage(object):
             'document_metadata': {},
             'document_redirect': {},
             'revision_html': {},
-            'zone_root': {},
         }
 
     def sorted_tags(self, tags):
@@ -73,9 +72,6 @@ class Storage(object):
         doc_id = doc_data.pop('id', None)
         tags = doc_data.pop('tags', [])
         redirect_to = doc_data.pop('redirect_to', None)
-        zone_redirect_path = doc_data.pop('zone_redirect_path', None)
-        zone_css_slug = doc_data.pop('zone_css_slug', '')
-        is_zone_root = doc_data.pop('is_zone_root', False)
 
         attempt = 0
         document = None
@@ -108,17 +104,6 @@ class Storage(object):
                 document.save()
         assert document is not None
         self.safe_add_tags(tags, DocumentTag, document.tags)
-
-        if is_zone_root:
-            try:
-                dz = DocumentZone.objects.get(document=document)
-            except DocumentZone.DoesNotExist:
-                dz = DocumentZone.objects.create(document=document)
-            dz.css_slug = zone_css_slug
-            if zone_redirect_path:
-                url_root = zone_redirect_path.split('/')[-1]
-                dz.url_root = url_root
-            dz.save()
 
         Document.objects.filter(pk=document.pk).update(json=None)
 
@@ -233,9 +218,3 @@ class Storage(object):
             ban, ban_created = UserBan.objects.get_or_create(
                 user=user,
                 defaults={'by': user, 'reason': 'Ban detected by scraper'})
-
-    def get_zone_root(self, path):
-        return self.local['zone_root'].get(path, None)
-
-    def save_zone_root(self, path, data):
-        self.local['zone_root'][path] = data
