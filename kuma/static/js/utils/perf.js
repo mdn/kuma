@@ -9,7 +9,7 @@ window.mdn.perf = {
 
         if (performance.getEntriesByName === undefined) {
             console.error(
-                'performance.getEntriesByName is not supported by your user-agant'
+                'performance.getEntriesByName is not supported by your user-agent'
             );
             return;
         }
@@ -21,7 +21,7 @@ window.mdn.perf = {
 
         if (performance.mark === undefined) {
             console.error(
-                'performance.mark is not supported by your user-agant'
+                'performance.mark is not supported by your user-agent'
             );
             return;
         }
@@ -40,7 +40,7 @@ window.mdn.perf = {
 
         if (performance.measure === undefined) {
             console.error(
-                'performance.measure is not supported by your user-agant'
+                'performance.measure is not supported by your user-agent'
             );
             return;
         }
