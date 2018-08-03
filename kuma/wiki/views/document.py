@@ -244,7 +244,7 @@ def _get_doc_and_fallback_reason(document_locale, document_slug):
     parent_fields = ['parent__{}'.format(field) for field in ('locale', 'slug', 'current_revision__slug')]
     parent_topic_fields = ['parent_topic__{}'.format(field) for field in ('id', 'title', 'slug')]
 
-    document_fields = ['html', 'rendered_html', 'zone_subnav_local_html', 'body_html',
+    document_fields = ['html', 'rendered_html', 'body_html',
                        'locale', 'slug', 'title', 'is_localizable', 'rendered_errors',
                        'toc_html', 'summary_html', 'summary_text', 'quick_links_html']
 
