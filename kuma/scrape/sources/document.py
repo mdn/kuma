@@ -33,37 +33,18 @@ class DocumentSource(DocumentBaseSource):
         data = {'needs': []}
 
         # Load data, gathering further source needs
-        self.load_prereq_normalized_path(storage, data)
-        if self.normalized_path:
-            self.load_prereq_parent_topic(storage, data)
-            self.load_prereq_rendered(storage, data)
-            if data.get('has_rendered'):
-                self.load_prereq_redirect(storage, data)
-            if data.get('is_standard_page'):
-                self.load_prereq_metadata(storage, data)
-                self.load_prereq_english_parent(storage, data)
-                self.load_prereq_history(storage, data)
-                self.load_prereq_children(storage, data)
+        assert self.normalized_path
+        self.load_prereq_parent_topic(storage, data)
+        self.load_prereq_redirect_check(storage, data)
+        if data.get('has_redirect_check'):
+            self.load_prereq_redirect(storage, data)
+        if data.get('is_standard_page'):
+            self.load_prereq_metadata(storage, data)
+            self.load_prereq_english_parent(storage, data)
+            self.load_prereq_history(storage, data)
+            self.load_prereq_children(storage, data)
 
         return not data['needs'], data
-
-    def load_prereq_normalized_path(self, storage, data):
-        """Load zone data to normalize path, if needed."""
-        if self.normalized_path:
-            return  # Already normalized, done
-
-        # Determine the standard path associated with the zone
-        zone_data = storage.get_zone_root(self.path)
-        if zone_data is None:
-            data['needs'].append(('zone_root', self.path, {}))
-        elif zone_data.get('errors'):
-            raise self.SourceError(
-                'Unable to load zone root for %s', self.path)
-        else:
-            self.normalized_path = self.path.replace(
-                zone_data['zone_path'], zone_data['doc_path'])
-            self.locale, self.slug = self.locale_and_slug(
-                self.normalized_path)
 
     def load_prereq_parent_topic(self, storage, data):
         """Load the parent topic, if a child page."""
@@ -77,52 +58,31 @@ class DocumentSource(DocumentBaseSource):
         else:
             data['parent_topic'] = parent_topic
 
-    def load_prereq_rendered(self, storage, data):
-        """Load the rendered page, to detect redirects and zones."""
+    def load_prereq_redirect_check(self, storage, data):
+        """Check the URL for redirects."""
         assert self.normalized_path
-        rendered = storage.get_document_redirect(self.locale, self.slug)
-        if rendered is None:
+        redirect = storage.get_document_redirect(self.locale, self.slug)
+        if redirect is None:
             data['needs'].append(
                 ('document_redirect', self.normalized_path, {}))
         else:
-            data['has_rendered'] = True
-            data['redirect_to'] = rendered.get('redirect_to')
-            data['is_zone_root'] = rendered.get('is_zone_root', False)
-            data['zone_css_slug'] = rendered.get('zone_css_slug', '')
+            data['has_redirect_check'] = True
+            data['redirect_to'] = redirect.get('redirect_to')
 
     def load_prereq_redirect(self, storage, data):
-        """Load the zone or standard redirect."""
+        """Load the destination of a redirect."""
         assert self.normalized_path
-        data['is_standard_page'] = data.get('has_rendered')
+        data['is_standard_page'] = data.get('has_redirect_check')
         redirect_to = data.get('redirect_to')
         if not redirect_to:
             return  # Not a redirect, don't follow
 
-        # Is it a zoned URL or a moved page?
-        try:
-            rd_locale, rd_slug = self.locale_and_slug(redirect_to)
-        except ValueError:
-            # Zoned URL
-            zone_redirect = storage.get_zone_root(redirect_to)
-            if zone_redirect is None:
-                data['needs'].append(('zone_root', redirect_to, {}))
-            elif zone_redirect.get('errors'):
-                raise self.SourceError('Unable to get zone_root "%s"',
-                                       redirect_to)
-            else:
-                data['zone_redirect_path'] = zone_redirect['zone_path']
-                z_path = zone_redirect['doc_path']
-                if z_path != self.path:
-                    z_locale, z_slug = self.locale_and_slug(z_path)
-                    zone_root_doc = storage.get_document(z_locale, z_slug)
-                    if zone_root_doc is None:
-                        data['needs'].append(('document', z_path, {}))
-        else:
-            # Moved Page
-            redirect = storage.get_document(rd_locale, rd_slug)
-            data['is_standard_page'] = False
-            if redirect is None:
-                data['needs'].append(('document', redirect_to, {}))
+        # Load the destination page
+        rd_locale, rd_slug = self.locale_and_slug(redirect_to)
+        redirect = storage.get_document(rd_locale, rd_slug)
+        data['is_standard_page'] = False
+        if redirect is None:
+            data['needs'].append(('document', redirect_to, {}))
 
     def load_prereq_metadata(self, storage, data):
         """Load the document metadata."""
@@ -197,7 +157,7 @@ class DocumentSource(DocumentBaseSource):
     def save_data(self, storage, data):
         """Save the document as a redirect or full document."""
         redirect_to = data.get('redirect_to')
-        if redirect_to and not data.get('zone_redirect_path'):
+        if redirect_to:
             # Prepare data for a redirect document
             doc_data = {
                 'locale': self.locale,
@@ -208,7 +168,6 @@ class DocumentSource(DocumentBaseSource):
             # Prepare data for a full document
             keys = (
                 'id',
-                'is_zone_root',
                 'locale',
                 'modified',
                 'parent',
@@ -217,8 +176,6 @@ class DocumentSource(DocumentBaseSource):
                 'tags',
                 'title',
                 'uuid',
-                'zone_css_slug',
-                'zone_redirect_path',
             )
             doc_data = {}
             for key in keys:

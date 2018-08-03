@@ -26,17 +26,6 @@ def test_child_doc():
     assert source.parent_path == '/locale/docs/parent'
 
 
-def test_zone_doc():
-    """A DocumentBaseSource with a zone slug starts un-normalized."""
-    source = DocumentBaseSource('/locale/zone')
-    assert source.path == '/locale/zone'
-    assert source.locale is None
-    assert source.slug is None
-    assert source.normalized_path is None
-    assert source.parent_slug is None
-    assert source.parent_path is None
-
-
 def test_url_escaped_raises():
     """Initializing with a URL-encoded path raises an exception."""
     with pytest.raises(ValueError):
