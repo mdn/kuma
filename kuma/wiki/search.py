@@ -38,7 +38,7 @@ class WikiDocumentType(document.DocType):
     kumascript_macros = field.Keyword()
     locale = field.Keyword()
     modified = field.Date()
-    parent = field.Nested(properties={
+    parent = field.Object(properties={
         'id': field.Long(),
         'title': field.Text(analyzer='kuma_title'),
         'slug': field.Keyword(),
