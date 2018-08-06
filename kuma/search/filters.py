@@ -124,11 +124,11 @@ class SearchQueryBackend(BaseFilterBackend):
         return queryset
 
 
-class AdvancedSearchQueryBackend(BaseFilterBackend):
+class KeywordQueryBackend(BaseFilterBackend):
     """
     A django-rest-framework filter backend that filters the given queryset
-    based on additional query parameters that correspond to advanced search
-    indexes.
+    based on additional query parameters that correspond to case-insensitive
+    keywords.
     """
     fields = (
         'kumascript_macros',
@@ -161,10 +161,10 @@ class AdvancedSearchQueryBackend(BaseFilterBackend):
         return queryset
 
 
-class DatabaseFilterBackend(BaseFilterBackend):
+class TagGroupFilterBackend(BaseFilterBackend):
     """
     A django-rest-framework filter backend that filters the given
-    queryset based on the filters stored in the database.
+    queryset based on named tag groups.
 
     If there are more than one tag attached to the filter it will
     use the filter's operator to determine which logical operation to
