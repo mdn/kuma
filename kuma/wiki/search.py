@@ -49,7 +49,7 @@ class WikiDocumentType(document.DocType):
     summary = field.Text(analyzer='kuma_content',
                          term_vector='with_positions_offsets')
     tags = field.Keyword()
-    title = field.Text(analyzer='kuma_title', boost=1.2)
+    title = field.Text(analyzer='kuma_title')
 
     class Meta(object):
         mapping = Mapping('wiki_document')

@@ -219,13 +219,13 @@ def test_search_query_backend(rf, mock_search):
                     'bool': {
                         'should': [
                             {'match': {'title': {
-                                'boost': 6.0, 'query': 'article'}}},
+                                'boost': 7.2, 'query': 'article'}}},
                             {'match': {'summary': {
                                 'boost': 2.0, 'query': 'article'}}},
                             {'match': {'content': {
                                 'boost': 1.0, 'query': 'article'}}},
                             {'match_phrase': {'title': {
-                                'boost': 10.0, 'query': 'article'}}},
+                                'boost': 12.0, 'query': 'article'}}},
                             {'match_phrase': {'content': {
                                 'boost': 8.0, 'query': 'article'}}},
                         ]

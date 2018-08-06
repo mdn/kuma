@@ -96,10 +96,10 @@ class SearchQueryBackend(BaseFilterBackend):
     """
     search_operations = [
         # (<query type>, <field>, <boost factor>)
-        ('match', 'title', 6.0),
+        ('match', 'title', 7.2),
         ('match', 'summary', 2.0),
         ('match', 'content', 1.0),
-        ('match_phrase', 'title', 10.0),
+        ('match_phrase', 'title', 12.0),
         ('match_phrase', 'content', 8.0),
     ]
 
