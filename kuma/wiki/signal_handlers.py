@@ -14,8 +14,6 @@ def on_document_save(sender, instance, **kwargs):
     """
     A signal handler to be called after saving a document. Does:
 
-    - trigger the cache invalidation of both the zone URLs and stack
-        cache for the given document
     - trigger the cache invalidation of the contributor bar for the given
         document
     - trigger the renewal of the code sample job generation

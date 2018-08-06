@@ -36,12 +36,12 @@ class SmokeBehavior(TaskSet):
         self.client.get('/en-US/docs/Web/Guide/CSS/Media_queries')
 
     @task(weight=49)
-    def learn_zone_js_basics(self):
-        self.client.get('/en-US/Learn/Getting_started_with_the_web/JavaScript_basics')
+    def learn_js_basics(self):
+        self.client.get('/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics')
 
     @task(weight=30)
-    def learn_zone_home(self):
-        self.client.get('/en-US/Learn')
+    def learn_home(self):
+        self.client.get('/en-US/docs/Learn')
 
     @task(weight=34)
     def ru_home(self):
