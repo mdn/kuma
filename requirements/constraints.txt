@@ -190,10 +190,10 @@ futures==3.0.5 \
 # Code: https://github.com/elastic/elasticsearch-py
 # Changes: https://elasticsearch-py.readthedocs.io/en/master/Changelog.html
 # Docs: https://elasticsearch-py.readthedocs.io/en/master/
-elasticsearch==2.4.1 \
-    --hash=sha256:bb8f9a365ba6650d599428538c8aed42033264661d8f7d353da59d5892305f72 \
-    --hash=sha256:fead47ebfcaabd1c53dbfc21403eb99ac207eef76de8002fe11a1c8ec9589ce2
 # Extensions to datetime module
+elasticsearch==5.5.0 \
+    --hash=sha256:a9d1dabc18c2b593b1be5c85b697af2bbfb094a7d9cca21c48ac323257e3e7a0 \
+    --hash=sha256:d03379ef519dde70b3b842deb0df576520a7a4735abe1d5ec3f32f8e66899be2
 # Code: https://github.com/dateutil/dateutil/
 # Changes: https://dateutil.readthedocs.io/en/stable/changelog.html
 # Docs: https://dateutil.readthedocs.io/en/stable/

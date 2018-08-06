@@ -96,10 +96,10 @@ class SearchQueryBackend(BaseFilterBackend):
     """
     search_operations = [
         # (<query type>, <field>, <boost factor>)
-        ('match', 'title', 6.0),
+        ('match', 'title', 7.2),
         ('match', 'summary', 2.0),
         ('match', 'content', 1.0),
-        ('match_phrase', 'title', 10.0),
+        ('match_phrase', 'title', 12.0),
         ('match_phrase', 'content', 8.0),
     ]
 
@@ -124,11 +124,11 @@ class SearchQueryBackend(BaseFilterBackend):
         return queryset
 
 
-class AdvancedSearchQueryBackend(BaseFilterBackend):
+class KeywordQueryBackend(BaseFilterBackend):
     """
     A django-rest-framework filter backend that filters the given queryset
-    based on additional query parameters that correspond to advanced search
-    indexes.
+    based on additional query parameters that correspond to case-insensitive
+    keywords.
     """
     fields = (
         'kumascript_macros',
@@ -140,27 +140,31 @@ class AdvancedSearchQueryBackend(BaseFilterBackend):
         queries = []
 
         for field in self.fields:
-            search_param = view.query_params.get(field)
+            raw_search_param = view.query_params.get(field, '').lower()
+            wildcard = '*' in raw_search_param or '?' in raw_search_param
+            search_param = raw_search_param.replace('*', '').replace('?', '')
             if not search_param:
+                # Skip if not given, or just wildcard
                 continue
 
+            # Exact match of sanitized value
             queries.append(
-                Q('match', **{field: {'query': search_param,
-                                      'boost': 10.0}}))
-            queries.append(
-                Q('prefix', **{field: {'value': search_param,
-                                       'boost': 5.0}}))
-
+                Q('term', **{field: {'value': search_param, 'boost': 10.0}}))
+            if wildcard:
+                # Wildcard search of value as passed
+                queries.append(
+                    Q('wildcard', **{field: {'value': raw_search_param,
+                                             'boost': 5.0}}))
         if queries:
             queryset = queryset.query(query.Bool(should=queries))
 
         return queryset
 
 
-class DatabaseFilterBackend(BaseFilterBackend):
+class TagGroupFilterBackend(BaseFilterBackend):
     """
     A django-rest-framework filter backend that filters the given
-    queryset based on the filters stored in the database.
+    queryset based on named tag groups.
 
     If there are more than one tag attached to the filter it will
     use the filter's operator to determine which logical operation to

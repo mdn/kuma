@@ -10,9 +10,9 @@ from kuma.wiki.search import WikiDocumentType
 from kuma.wiki.signals import render_done
 
 from . import ElasticTestCase
-from ..filters import (AdvancedSearchQueryBackend, DatabaseFilterBackend,
-                       get_filters, HighlightFilterBackend,
-                       LanguageFilterBackend, SearchQueryBackend)
+from ..filters import (get_filters, HighlightFilterBackend,
+                       KeywordQueryBackend, LanguageFilterBackend,
+                       SearchQueryBackend, TagGroupFilterBackend)
 from ..models import FilterGroup
 from ..views import SearchView
 
@@ -119,7 +119,7 @@ def fake_view(request, selected_filters=None):
     view = mock.Mock()
     view.query_params = request.GET
     if selected_filters is not None:
-        # DatabaseFilterBackend tests require these
+        # TagGroupFilterBackend tests require these
         view.serialized_filters = SERIALIZED_FILTERS
         view.selected_filters = selected_filters
     return view
@@ -219,13 +219,13 @@ def test_search_query_backend(rf, mock_search):
                     'bool': {
                         'should': [
                             {'match': {'title': {
-                                'boost': 6.0, 'query': 'article'}}},
+                                'boost': 7.2, 'query': 'article'}}},
                             {'match': {'summary': {
                                 'boost': 2.0, 'query': 'article'}}},
                             {'match': {'content': {
                                 'boost': 1.0, 'query': 'article'}}},
                             {'match_phrase': {'title': {
-                                'boost': 10.0, 'query': 'article'}}},
+                                'boost': 12.0, 'query': 'article'}}},
                             {'match_phrase': {'content': {
                                 'boost': 8.0, 'query': 'article'}}},
                         ]
@@ -260,33 +260,53 @@ def test_search_query_backend_as_admin(rf, mock_search, admin_user):
                          ('kumascript_macros',
                           'css_classnames',
                           'html_attributes',))
-def test_advanced_search_query(rf, mock_search, param):
-    '''The AdvancedSearchQueryBackend searches additional indexes.'''
-    backend = AdvancedSearchQueryBackend()
+def test_keyword_query(rf, mock_search, param):
+    '''The KeywordQueryBackend searches keywords.'''
+    backend = KeywordQueryBackend()
     request = rf.get('/en-US/search?%s=test' % param)
     search = backend.filter_queryset(request, mock_search, fake_view(request))
     expected = {
         'query': {
             'bool': {
                 'should': [
-                    {'match': {
-                        param: {'boost': 10.0, 'query': 'test'}}},
-                    {'prefix': {
-                        param: {'boost': 5.0, 'value': 'test'}}}]}}}
+                    {'term': {
+                        param: {'boost': 10.0, 'value': 'test'}}}
+                ]}}}
     assert search.to_dict() == expected
 
 
-def test_advanced_search_query_ignores_unknown_index(rf, mock_search):
-    '''The AdvancedSearchQueryBackend ignores an unknown parameter.'''
-    backend = AdvancedSearchQueryBackend()
+@pytest.mark.parametrize('param',
+                         ('kumascript_macros',
+                          'css_classnames',
+                          'html_attributes',))
+def test_keyword_query_wildcard(rf, mock_search, param):
+    '''The KeywordQueryBackend can add wildcard searches.'''
+    backend = KeywordQueryBackend()
+    request = rf.get('/en-US/search?%s=test*' % param)
+    search = backend.filter_queryset(request, mock_search, fake_view(request))
+    expected = {
+        'query': {
+            'bool': {
+                'should': [
+                    {'term': {
+                        param: {'boost': 10.0, 'value': 'test'}}},
+                    {'wildcard': {
+                        param: {'boost': 5.0, 'value': 'test*'}}}
+                ]}}}
+    assert search.to_dict() == expected
+
+
+def test_keyword_query_ignores_unknown_index(rf, mock_search):
+    '''The KeywordQueryBackend ignores an unknown parameter.'''
+    backend = KeywordQueryBackend()
     request = rf.get('/en-US/search?topic=test')
     search = backend.filter_queryset(request, mock_search, fake_view(request))
     assert search.to_dict() == {'query': {'match_all': {}}}
 
 
-def test_database_filter_backend(rf, mock_search):
-    '''The DatabaseFilterBackend matches requests to database filter groups.'''
-    backend = DatabaseFilterBackend()
+def test_tag_group_filter_backend(rf, mock_search):
+    '''The TagGroupFilterBackend filters and aggregates by groups of tags.'''
+    backend = TagGroupFilterBackend()
     request = rf.get('/en-US/search?group=tagged')
     view = fake_view(request, selected_filters=['tagged'])
     search = backend.filter_queryset(request, mock_search, view)
@@ -302,9 +322,9 @@ def test_database_filter_backend(rf, mock_search):
     assert search.to_dict() == expected
 
 
-def test_database_filter_backend_multiple_tags_or_operator(rf, mock_search):
-    '''The DatabaseFilterBackend searches for any tag in the group.'''
-    backend = DatabaseFilterBackend()
+def test_tag_group_filter_backend_multiple_tags_or_operator(rf, mock_search):
+    '''The TagGroupFilterBackend searches for any tag in an OR group.'''
+    backend = TagGroupFilterBackend()
     request = rf.get('/en-US/search?topic=addons')
     view = fake_view(request, selected_filters=['addons'])
     search = backend.filter_queryset(request, mock_search, view)
@@ -322,9 +342,9 @@ def test_database_filter_backend_multiple_tags_or_operator(rf, mock_search):
     assert search.to_dict() == expected
 
 
-def test_database_filter_backend_multiple_tags_and_operator(rf, mock_search):
-    '''The DatabaseFilterBackend searches for all tags in the group.'''
-    backend = DatabaseFilterBackend()
+def test_tag_group_filter_backend_multiple_tags_and_operator(rf, mock_search):
+    '''The TagGroupFilterBackend searches for all tags in an AND group.'''
+    backend = TagGroupFilterBackend()
     request = rf.get('/en-US/search?dogs=brown-dogs')
     view = fake_view(request, selected_filters=['brown-dogs'])
     search = backend.filter_queryset(request, mock_search, view)
@@ -342,9 +362,9 @@ def test_database_filter_backend_multiple_tags_and_operator(rf, mock_search):
     assert search.to_dict() == expected
 
 
-def test_database_filter_backend_multiple_groups(rf, mock_search):
-    '''The DatabaseFilterBackend searches for multiple groups.'''
-    backend = DatabaseFilterBackend()
+def test_tag_group_filter_backend_multiple_groups(rf, mock_search):
+    '''The TagGroupFilterBackend searches for multiple groups.'''
+    backend = TagGroupFilterBackend()
     request = rf.get('/en-US/search?topic=addons,css')
     view = fake_view(request, selected_filters=['addons', 'css'])
     search = backend.filter_queryset(request, mock_search, view)
@@ -364,9 +384,9 @@ def test_database_filter_backend_multiple_groups(rf, mock_search):
     assert search.to_dict() == expected
 
 
-def test_database_filter_backend_no_groups(rf, mock_search):
-    '''The DatabaseFilterBackend still counts if no groups are selected.'''
-    backend = DatabaseFilterBackend()
+def test_tag_group_filter_backend_no_groups(rf, mock_search):
+    '''The TagGroupFilterBackend still counts if no groups are selected.'''
+    backend = TagGroupFilterBackend()
     request = rf.get('/en-US/search')
     view = fake_view(request, selected_filters=[])
     search = backend.filter_queryset(request, mock_search, view)
@@ -419,8 +439,8 @@ class FilterTexts(ElasticTestCase):
         assert 'CSS/article-title-3' == response.data['documents'][0]['slug']
         assert 'en-US' == response.data['documents'][0]['locale']
 
-    def test_advanced_search_query(self):
-        """Test advanced search query filter."""
+    def test_keyword_query(self):
+        """Test keyword query filter."""
         # Update a document so that it has a `css_classname` and trigger a
         # reindex via `render_done`.
         doc = Document.objects.get(pk=1)
@@ -430,7 +450,7 @@ class FilterTexts(ElasticTestCase):
         self.refresh()
 
         class View(SearchView):
-            filter_backends = (AdvancedSearchQueryBackend,)
+            filter_backends = (KeywordQueryBackend,)
 
         view = View.as_view()
         request = self.get_request('/en-US/search?css_classnames=eval')
@@ -493,11 +513,11 @@ class FilterTexts(ElasticTestCase):
         response = view(request)
         assert len(response.data['documents']) == response.data['count'] == 0
 
-    def test_database_filter(self):
-        class DatabaseFilterView(SearchView):
-            filter_backends = (DatabaseFilterBackend,)
+    def test_tag_group_filter(self):
+        class TagGroupFilterView(SearchView):
+            filter_backends = (TagGroupFilterBackend,)
 
-        view = DatabaseFilterView.as_view()
+        view = TagGroupFilterView.as_view()
         request = self.get_request('/en-US/search?group=tagged')
         response = view(request)
         assert len(response.data['documents']) == response.data['count'] == 2

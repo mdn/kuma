@@ -7,7 +7,6 @@ from math import ceil
 
 from celery import chain
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
@@ -31,25 +30,25 @@ class WikiDocumentType(document.DocType):
                      'Project_talk:', EXPERIMENT_TITLE_PREFIX]
 
     boost = field.Float(null_value=1.0)
-    content = field.String(analyzer='kuma_content',
-                           term_vector='with_positions_offsets')
-    css_classnames = field.String(analyzer='case_insensitive_keyword')
-    html_attributes = field.String(analyzer='case_insensitive_keyword')
+    content = field.Text(analyzer='kuma_content',
+                         term_vector='with_positions_offsets')
+    css_classnames = field.Keyword()
+    html_attributes = field.Keyword()
     id = field.Long()
-    kumascript_macros = field.String(analyzer='case_insensitive_keyword')
-    locale = field.String(index='not_analyzed')
+    kumascript_macros = field.Keyword()
+    locale = field.Keyword()
     modified = field.Date()
-    parent = field.Nested(properties={
+    parent = field.Object(properties={
         'id': field.Long(),
-        'title': field.String(analyzer='kuma_title'),
-        'slug': field.String(index='not_analyzed'),
-        'locale': field.String(index='not_analyzed'),
+        'title': field.Text(analyzer='kuma_title'),
+        'slug': field.Keyword(),
+        'locale': field.Keyword(),
     })
-    slug = field.String(index='not_analyzed')
-    summary = field.String(analyzer='kuma_content',
-                           term_vector='with_positions_offsets')
-    tags = field.String(analyzer='case_sensitive')
-    title = field.String(analyzer='kuma_title', boost=1.2)
+    slug = field.Keyword()
+    summary = field.Text(analyzer='kuma_content',
+                         term_vector='with_positions_offsets')
+    tags = field.Keyword()
+    title = field.Text(analyzer='kuma_title')
 
     class Meta(object):
         mapping = Mapping('wiki_document')
@@ -64,9 +63,16 @@ class WikiDocumentType(document.DocType):
         return cls._doc_type.name
 
     @classmethod
+    def case_insensitive_keywords(cls, keywords):
+        '''Create a unique list of lowercased keywords.'''
+        return sorted(set([keyword.lower() for keyword in keywords]))
+
+    @classmethod
     def from_django(cls, obj):
+        is_root_document = (obj.slug.count('/') == 1)
         doc = {
             'id': obj.id,
+            'boost': 4.0 if is_root_document else 1.0,
             'title': obj.title,
             'slug': obj.slug,
             'summary': obj.get_summary_text(),
@@ -74,25 +80,14 @@ class WikiDocumentType(document.DocType):
             'modified': obj.modified,
             'content': strip_tags(obj.rendered_html or ''),
             'tags': list(obj.tags.names()),
-            'kumascript_macros': obj.extract.macro_names(),
-            'css_classnames': obj.extract.css_classnames(),
-            'html_attributes': obj.extract.html_attributes(),
+            'kumascript_macros': cls.case_insensitive_keywords(
+                obj.extract.macro_names()),
+            'css_classnames': cls.case_insensitive_keywords(
+                obj.extract.css_classnames()),
+            'html_attributes': cls.case_insensitive_keywords(
+                obj.extract.html_attributes()),
         }
 
-        # Check if the document has a document zone attached
-        try:
-            is_zone = bool(obj.zone)
-        except ObjectDoesNotExist:
-            is_zone = False
-
-        if is_zone:
-            # boost all documents that are a zone
-            doc['boost'] = 8.0
-        elif obj.slug.count('/') == 1:
-            # a little boost if no zone but still first level
-            doc['boost'] = 4.0
-        else:
-            doc['boost'] = 1.0
         if obj.parent:
             doc['parent'] = {
                 'id': obj.parent.id,
@@ -153,15 +148,6 @@ class WikiDocumentType(document.DocType):
                         'snowball',
                     ],
                 },
-                'case_sensitive': {
-                    'type': 'custom',
-                    'tokenizer': 'keyword'
-                },
-                'case_insensitive_keyword': {
-                    'type': 'custom',
-                    'tokenizer': 'keyword',
-                    'filter': 'lowercase'
-                }
             },
         }
 
