@@ -10,7 +10,6 @@ def test_top_level_doc():
     assert source.path == '/locale/docs/slug'
     assert source.locale == 'locale'
     assert source.slug == 'slug'
-    assert source.normalized_path == '/locale/docs/slug'
     assert source.parent_slug is None
     assert source.parent_path is None
 
@@ -21,20 +20,8 @@ def test_child_doc():
     assert source.path == '/locale/docs/parent/child'
     assert source.locale == 'locale'
     assert source.slug == 'parent/child'
-    assert source.normalized_path == '/locale/docs/parent/child'
     assert source.parent_slug == 'parent'
     assert source.parent_path == '/locale/docs/parent'
-
-
-def test_zone_doc():
-    """A DocumentBaseSource with a zone slug starts un-normalized."""
-    source = DocumentBaseSource('/locale/zone')
-    assert source.path == '/locale/zone'
-    assert source.locale is None
-    assert source.slug is None
-    assert source.normalized_path is None
-    assert source.parent_slug is None
-    assert source.parent_path is None
 
 
 def test_url_escaped_raises():

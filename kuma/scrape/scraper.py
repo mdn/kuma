@@ -9,8 +9,8 @@ import requests
 
 from .sources import (
     DocumentChildrenSource, DocumentCurrentSource, DocumentHistorySource,
-    DocumentMetaSource, DocumentRenderedSource, DocumentSource, LinksSource,
-    RevisionSource, Source, UserSource, ZoneRootSource)
+    DocumentMetaSource, DocumentRedirectSource, DocumentSource, LinksSource,
+    RevisionSource, Source, UserSource)
 from .storage import Storage
 
 logger = logging.getLogger('kuma.scraper')
@@ -35,9 +35,9 @@ class Requester(object):
             self._session = requests.Session()
         return self._session
 
-    def request(self, path, raise_for_status=True):
+    def request(self, path, raise_for_status=True, method='GET'):
         url = self.base_url + path
-        logger.debug("GET %s", url)
+        logger.debug("%s %s", method, url)
         attempts = 0
         response = None
         retry = True
@@ -46,8 +46,9 @@ class Requester(object):
             attempts += 1
             err = None
             retry = False
+            request_function = getattr(self.session, method.lower())
             try:
-                response = self.session.get(url, timeout=timeout)
+                response = request_function(url, timeout=timeout)
             except requests.exceptions.Timeout as err:
                 logger.warn("Timeout on request %d for %s", attempts, url)
                 time.sleep(timeout)
@@ -90,11 +91,10 @@ class Scraper(object):
         'document_current': DocumentCurrentSource,
         'document_history': DocumentHistorySource,
         'document_meta': DocumentMetaSource,
-        'document_rendered': DocumentRenderedSource,
+        'document_redirect': DocumentRedirectSource,
         'links': LinksSource,
         'revision': RevisionSource,
         'user': UserSource,
-        'zone_root': ZoneRootSource,
     }
 
     def __init__(self, host='developer.mozilla.org', ssl=True):

@@ -8,7 +8,7 @@ from django.db import IntegrityError
 from taggit.models import Tag
 
 from kuma.wiki.constants import REDIRECT_CONTENT
-from kuma.wiki.models import Document, DocumentTag, DocumentZone, Revision
+from kuma.wiki.models import Document, DocumentTag, Revision
 
 from ..storage import Storage
 
@@ -18,11 +18,10 @@ from ..storage import Storage
         ('document_children', ('locale', 'slug')),
         ('document_metadata', ('locale', 'slug')),
         ('document_history', ('locale', 'slug')),
-        ('document_rendered', ('locale', 'slug')),
+        ('document_redirect', ('locale', 'slug')),
         ('revision_html', ('path',)),
-        ('zone_root', ('path',)),
     ), ids=['document_children', 'document_metadata', 'document_history',
-            'document_rendered', 'revision_html', 'zone_root'])
+            'document_redirect', 'revision_html'])
 def test_local_storage(data_name, param_list):
     """Local storage objects are None when unset, return the saved value."""
     storage = Storage()
@@ -198,54 +197,6 @@ def test_save_document_integrity_error():
     ca_doc = Document.objects.get(locale='ca', slug='Project:Quant_a')
     assert ca_doc.title == 'Quant a'
     assert ca_doc.parent == en_doc
-
-
-def test_save_document_create_zone_with_redirect(simple_doc):
-    """A document with a vanity URL creates the associated DocumentZone."""
-    data = {
-        'parent_topic': simple_doc,
-        'locale': 'en-US',
-        'slug': 'Root/Zone',
-        'zone_redirect_path': '/en-US/Zone',
-        'is_zone_root': True,
-        'zone_css_slug': 'other-slug',
-    }
-    Storage().save_document(data)
-    doc = Document.objects.get(locale='en-US', slug='Root/Zone')
-    assert doc.zone
-    assert doc.zone.css_slug == data['zone_css_slug']
-    assert doc.zone.url_root == 'Zone'
-
-
-def test_save_document_create_simple_zone(simple_doc):
-    """A document with a plain zone creates the associated DocumentZone."""
-    data = {
-        'parent_topic': simple_doc,
-        'locale': 'en-US',
-        'slug': 'Root/Zone',
-        'is_zone_root': True,
-    }
-    Storage().save_document(data)
-    doc = Document.objects.get(locale='en-US', slug='Root/Zone')
-    assert doc.zone
-    assert doc.zone.css_slug == ''
-    assert doc.zone.url_root is None
-
-
-def test_save_document_zone_child(simple_doc):
-    """A zone child document does not create a DocumentZone."""
-    data = {
-        'parent_topic': simple_doc,
-        'locale': 'en-US',
-        'slug': 'Root/ZoneChild',
-        'is_zone_root': False,
-        'zone_redirect_path': '/en-US/Root/ZoneChild',
-        'zone_css_slug': 'other-slug',
-    }
-    Storage().save_document(data)
-    doc = Document.objects.get(locale='en-US', slug='Root/ZoneChild')
-    with pytest.raises(DocumentZone.DoesNotExist):
-        doc.zone
 
 
 def test_get_revision_existing(root_doc):
