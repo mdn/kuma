@@ -319,8 +319,7 @@ is not compatible with production mode.
 To emulate production, and test compressed and hashed assets locally:
 
 #. Set the environment variable ``DEBUG=False``
-#. Start (``docker-compose up -d``) or restart (``docker-compose restart``)
-   your Docker services.
+#. Start (``docker-compose up -d``) your Docker services.
 #. Run ``docker exec -e DJANGO_SETTINGS_MODULE=kuma.settings.prod kuma_web_1 make build-static``.
 #. Restart the web process using ``docker-compose restart web``.
 
