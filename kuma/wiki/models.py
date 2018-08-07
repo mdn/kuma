@@ -291,9 +291,6 @@ class Document(NotificationsMixin, models.Model):
 
     quick_links_html = models.TextField(editable=False, blank=True, null=True)
 
-    zone_subnav_local_html = models.TextField(editable=False,
-                                              blank=True, null=True)
-
     toc_html = models.TextField(editable=False, blank=True, null=True)
 
     summary_html = models.TextField(editable=False, blank=True, null=True)
@@ -1456,26 +1453,6 @@ class DocumentDeletionLog(models.Model):
             'slug': self.slug,
             'user': self.user
         }
-
-
-class DocumentZone(models.Model):
-    """
-    Model object declaring a content zone root at a given Document, provides
-    attributes inherited by the topic hierarchy beneath it.
-    """
-    document = models.OneToOneField(Document, related_name='zone',
-                                    on_delete=models.PROTECT)
-    css_slug = models.CharField(
-        max_length=100, blank=True,
-        help_text='name of an alternative pipeline CSS group for documents '
-                  'under this zone (note that "zone-" will be prepended)')
-    url_root = models.CharField(
-        max_length=255, null=True, blank=True, db_index=True,
-        help_text="alternative URL path root for documents under this zone")
-
-    def __unicode__(self):
-        return u'DocumentZone %s (%s)' % (self.document.get_absolute_url(),
-                                          self.document.title)
 
 
 class ReviewTag(TagBase):
