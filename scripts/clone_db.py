@@ -9,13 +9,13 @@ This script performs all the steps needed to produce an anonymized DB dump:
     * Drop the temporary DB
     * Delete the dump of the original DB
 """
-from datetime import datetime
 import os
 import os.path
 import subprocess
 import sys
-from textwrap import dedent
+from datetime import datetime
 from optparse import OptionParser
+from textwrap import dedent
 
 opts = None
 args = None
@@ -98,7 +98,6 @@ TABLES_TO_DUMP = [x.strip() for x in """
     wiki_documentdeletionlog
     wiki_documentspamattempt
     wiki_documenttag
-    wiki_documentzone
     wiki_editortoolbar
     wiki_localizationtag
     wiki_localizationtaggedrevision
