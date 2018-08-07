@@ -33,17 +33,21 @@ function handlePerfMarks(perfData) {
         window.mdn.perf.setMark(perfData.markName);
     } else {
         window.mdn.perf.setMark(perfData.markName);
-        window.mdn.perf.setMeasure({
-            measureName: perfData.measureName,
-            startMark: perfData.startMark,
-            endMark: perfData.endMark
-        });
 
-        mdn.analytics.trackTiming({
-            category: 'RUM - Interactive Examples',
-            timingVar: perfData.measureName,
-            value: window.mdn.perf.getDuration(perfData.measureName)
-        });
+        // Ensure startMark exists before trying to measure and beacon
+        if (performance.getEntriesByName(perfData.startMark).length > 0) {
+            window.mdn.perf.setMeasure({
+                measureName: perfData.measureName,
+                startMark: perfData.startMark,
+                endMark: perfData.endMark
+            });
+
+            mdn.analytics.trackTiming({
+                category: 'RUM - Interactive Examples',
+                timingVar: perfData.measureName,
+                value: window.mdn.perf.getDuration(perfData.measureName)
+            });
+        }
     }
 }
 
