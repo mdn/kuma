@@ -13,7 +13,7 @@
 {% else %}
   {% set title = _('All articles in need of review') %}
 {% endif %}
-{% block title %}{{ page_title(title) }}{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 {% set crumbs = [(None, title)] %}
 
 {% block content %}

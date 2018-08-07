@@ -617,22 +617,22 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
             assert page.find('head > title').text() in aught_titles
 
         # Test nested document titles
-        _make_doc('One', ['One | MDN'], 'one')
-        _make_doc('Two', ['Two - One | MDN'], 'one/two')
-        _make_doc('Three', ['Three - One | MDN'], 'one/two/three')
+        _make_doc('One', ['One'], 'one')
+        _make_doc('Two', ['Two - One'], 'one/two')
+        _make_doc('Three', ['Three - One'], 'one/two/three')
         _make_doc(u'Special Φ Char',
-                  [u'Special \u03a6 Char - One | MDN',
-                   u'Special \xce\xa6 Char - One | MDN'],
+                  [u'Special \u03a6 Char - One',
+                   u'Special \xce\xa6 Char - One'],
                   'one/two/special_char')
 
         # Additional tests for /Web/*  changes
-        _make_doc('Firefox OS', ['Firefox OS | MDN'], 'firefox_os')
-        _make_doc('Email App', ['Email App - Firefox OS | MDN'],
+        _make_doc('Firefox OS', ['Firefox OS'], 'firefox_os')
+        _make_doc('Email App', ['Email App - Firefox OS'],
                   'firefox_os/email_app')
-        _make_doc('Web', ['Web | MDN'], 'Web')
-        _make_doc('HTML', ['HTML | MDN'], 'Web/html')
-        _make_doc('Fieldset', ['Fieldset - HTML | MDN'], 'Web/html/fieldset')
-        _make_doc('Legend', ['Legend - HTML | MDN'],
+        _make_doc('Web', ['Web'], 'Web')
+        _make_doc('HTML', ['HTML'], 'Web/html')
+        _make_doc('Fieldset', ['Fieldset - HTML'], 'Web/html/fieldset')
+        _make_doc('Legend', ['Legend - HTML'],
                   'Web/html/fieldset/legend')
 
     def test_seo_script(self):

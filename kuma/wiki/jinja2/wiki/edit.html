@@ -2,7 +2,7 @@
 {% from "includes/error_list.html" import errorlist %}
 {% from 'wiki/includes/page_buttons.html' import page_buttons %}
 
-{% block title %}{{ page_title(_('%(title)s | Edit Article', title=document.title)) }}{% endblock %}
+{% block title %}{{ _('%(title)s | Edit Article', title=document.title) }}{% endblock %}
 {% block robots_value %}noindex, nofollow{% endblock %}
 
 {% set classes = 'edit' %}

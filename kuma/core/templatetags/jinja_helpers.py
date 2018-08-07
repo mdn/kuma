@@ -92,11 +92,6 @@ def entity_decode(str):
     return htmlparser.unescape(str)
 
 
-@library.global_function
-def page_title(title):
-    return jinja2.Markup(u'%s | MDN' % jinja2.escape(title))
-
-
 @library.filter
 def level_tag(message):
     return jinja2.Markup(force_text(LEVEL_TAGS.get(message.level, ''),

@@ -2,7 +2,7 @@
 
 {% block bodyclass %}error{% endblock %}
 
-{% block title %}{{ page_title(_('Permission Denied')) }}{% endblock %}
+{% block title %}{{ _('Permission Denied') }}{% endblock %}
 
 {% block site_css %}
     {{ super() }}
@@ -16,7 +16,7 @@
 
   <section id="content-main" class="full" role="main">
 
-    <h1 class="page-title">{% block page_title %}{{ _('Permission Denied') }}{% endblock %}</h1>
+    <h1 class="page-title">{{ _('Permission Denied') }}</h1>
     {% block reason -%}
 
     {% if reason == 'kumaediting' %}
