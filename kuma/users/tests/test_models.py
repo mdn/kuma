@@ -22,7 +22,8 @@ class TestUser(UserTestCase):
             'github_url': 'http://github.com/lmorchard',
             'stackoverflow_url': 'http://stackoverflow.com/users/lmorchard',
             'mozillians_url': 'https://mozillians.org/u/testuser',
-            'facebook_url': 'https://www.facebook.com/test.user'
+            'facebook_url': 'https://www.facebook.com/test.user',
+            'discourse_url': 'https://discourse.mozilla.org/u/',
         }
 
         # Try a mix of assignment cases for the websites property
