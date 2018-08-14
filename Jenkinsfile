@@ -34,8 +34,7 @@ node {
     sh 'git submodule update --init --recursive'
     setGitEnvironmentVariables()
     // Set UID to jenkins
-    jenkins_uid = sh returnStdout: true, script: 'id -u jenkins'
-    env['UID'] = jenkins_uid.trim()
+    env['UID'] = sh(returnStdout: true, script: 'id -u jenkins').trim()
     // Prepare for junit test results
     sh "mkdir -p test_results"
     sh "rm -f test_results/*.xml"
