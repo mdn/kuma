@@ -64,14 +64,21 @@ def test_delete_get(root_doc, delete_client):
     assert_no_cache_header(response)
 
 
-@pytest.mark.xfail(reason='The "wiki/confirm_purge.html" template is missing'
-                          ' (see bugzilla 1197390).')
-def test_purge_get(root_doc, delete_client):
-    root_doc.delete()
-    url = reverse('wiki.purge_document', args=[root_doc.slug])
+def test_purge_get(deleted_doc, delete_client):
+    url = reverse('wiki.purge_document', args=[deleted_doc.slug])
     response = delete_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
+    assert 'This document was deleted by' in response.content
+
+
+def test_purge_get_no_log(deleted_doc, delete_client):
+    url = reverse('wiki.purge_document', args=[deleted_doc.slug])
+    DocumentDeletionLog.objects.all().delete()
+    response = delete_client.get(url)
+    assert response.status_code == 200
+    assert_no_cache_header(response)
+    assert 'deleted, for unknown reasons' in response.content
 
 
 def test_restore_get(root_doc, delete_client):
