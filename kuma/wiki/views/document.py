@@ -614,7 +614,7 @@ def document(request, document_slug, document_locale):
             slug=document_slug
         )
         if deletion_log_entries.exists():
-            # Show deletion log and restore option for soft-deleted docs
+            # Show deletion log and restore / purge for soft-deleted docs
             deleted_doc = Document.deleted_objects.filter(
                 locale=document_locale, slug=document_slug)
             if deleted_doc.exists():
