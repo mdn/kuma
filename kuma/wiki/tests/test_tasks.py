@@ -8,8 +8,10 @@ from django.conf import settings
 from kuma.users.models import User
 from kuma.users.tests import UserTestCase
 
-from ..models import Document, DocumentSpamAttempt
-from ..tasks import build_sitemaps, delete_old_documentspamattempt_data
+from ..models import Document, DocumentDeletionLog, DocumentSpamAttempt
+from ..tasks import (build_sitemaps,
+                     delete_logs_for_purged_documents,
+                     delete_old_documentspamattempt_data)
 
 
 class SitemapsTestCase(UserTestCase):
@@ -77,3 +79,14 @@ class DeleteOldDocumentSpamAttemptData(UserTestCase):
         assert old_unreviewed_dsa.data is None
         assert old_unreviewed_dsa.review == (
             DocumentSpamAttempt.REVIEW_UNAVAILABLE)
+
+
+def test_delete_logs_for_purged_documents(root_doc, wiki_user):
+    ddl1 = DocumentDeletionLog.objects.create(
+        locale=root_doc.locale, slug=root_doc.slug, user=wiki_user,
+        reason='Doomed.')
+    root_doc.delete()  # Soft-delete it
+    DocumentDeletionLog.objects.create(
+        locale='en-US', slug='HardDeleted', user=wiki_user, reason='Purged.')
+    delete_logs_for_purged_documents()
+    assert list(DocumentDeletionLog.objects.all()) == [ddl1]
