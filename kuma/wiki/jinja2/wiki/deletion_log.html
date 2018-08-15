@@ -6,17 +6,23 @@
 
     <h1>{{ _('Document Deleted') }}</h1>
     <p>
-    {% trans url=deletion_log.user.get_absolute_url(), username=deletion_log.user, when=datetimeformat(deletion_log.timestamp, format='longdatetime')  %}
-      This document was deleted on {{ when }}.
-    {% endtrans %}
+      {% if user.has_perm('wiki.restore_document') -%}
+        {% trans url=deletion_log.user.get_absolute_url(), username=deletion_log.user, when=datetimeformat(deletion_log.timestamp, format='longdatetime')  -%}
+          This document was deleted by <a href="{{ url }}">{{ username }}</a> on {{ when }}.
+        {% endtrans -%}
+      {% else -%}
+        {% trans when=datetimeformat(deletion_log.timestamp, format='longdatetime')  -%}
+          This document was deleted on {{ when }}.
+        {% endtrans -%}
+      {% endif -%}
     </p>
 
     <h2>{{ _('Reason for Deletion') }}</h2>
     <p>{{ deletion_log.reason }}</p>
 
-    {% if user.has_perm('wiki.restore_document') %}
+    {% if user.has_perm('wiki.restore_document') -%}
     <p><a href="{{ url('wiki.restore_document', deletion_log.slug) }}" class="button">{{ _('Restore this document') }}</a></p>
-    {% endif %}
+    {% endif -%}
 
   </article>
 
