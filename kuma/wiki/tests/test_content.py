@@ -3,6 +3,7 @@ from base64 import b64encode
 
 import bleach
 import pytest
+from django.conf import settings
 from django.test import TestCase
 from django.utils.six.moves.urllib.parse import urljoin
 from jinja2 import escape, Markup
@@ -716,7 +717,6 @@ def test_filteriframe_empty_contents():
 
 
 FILTERIFRAME_ACCEPTED = {
-    'docker': 'http://localhost:8000/de/docs/Test$samples/test?revision=678',
     'youtube_ssl': ('https://www.youtube.com/embed/'
                     'iaNoBlae5Qw/?feature=player_detailpage'),
     'prod': ('https://mdn.mozillademos.org/'
@@ -727,6 +727,10 @@ FILTERIFRAME_ACCEPTED = {
                   'tutorial/sample6/index.html'),
     'ie_moz_net': ('https://interactive-examples.mdn.mozilla.net/'
                    'pages/js/array-push.html'),
+    'code_sample': (settings.PROTOCOL + settings.ATTACHMENT_HOST +
+                    '/de/docs/Test$samples/test?revision=678'),
+    'interactive': (settings.INTERACTIVE_EXAMPLES_BASE +
+                    '/pages/http/headers.html')
 }
 
 FILTERIFRAME_REJECTED = {
