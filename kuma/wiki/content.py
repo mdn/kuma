@@ -6,7 +6,8 @@ from xml.sax.saxutils import quoteattr
 import html5lib
 import newrelic.agent
 from django.conf import settings
-from django.utils.six.moves.urllib.parse import unquote, urlencode, urlparse
+from django.utils.six.moves.urllib.parse import (unquote, urlencode, urlparse,
+                                                 urlsplit)
 from django.utils.translation import ugettext
 from html5lib.filters.base import Filter as html5lib_Filter
 from lxml import etree
@@ -335,8 +336,8 @@ class ContentSectionTool(object):
         return self
 
     @newrelic.agent.function_trace()
-    def filterIframeHosts(self, hosts):
-        self.stream = IframeHostFilter(self.stream, hosts)
+    def filterIframeHosts(self, patterns):
+        self.stream = IframeHostFilter(self.stream, patterns)
         return self
 
     @newrelic.agent.function_trace()
@@ -1074,12 +1075,12 @@ class IframeHostFilter(html5lib_Filter):
     """
     Filter which scans through <iframe> tags and strips the src attribute if
     it doesn't contain a URL whose host matches a given list of allowed
-    hosts. Also strips any markup found within <iframe></iframe>.
+    host patterns. Also strips any markup found within <iframe></iframe>.
     """
 
-    def __init__(self, source, hosts):
+    def __init__(self, source, patterns):
         html5lib_Filter.__init__(self, source)
-        self.hosts = hosts
+        self.allowed_src_patterns = patterns
 
     def __iter__(self):
         in_iframe = False
@@ -1089,7 +1090,7 @@ class IframeHostFilter(html5lib_Filter):
                 attrs = dict(token['data'])
                 for (namespace, name), value in attrs.items():
                     if name == 'src' and value:
-                        if not re.search(self.hosts, value):
+                        if not self.validate_src(value):
                             attrs[(namespace, 'src')] = ''
                     token['data'] = attrs
                 yield token
@@ -1097,3 +1098,18 @@ class IframeHostFilter(html5lib_Filter):
                 in_iframe = False
             if not in_iframe:
                 yield token
+
+    def validate_src(self, src):
+        """Validate an iframe src against the allowed patterns."""
+        parts = urlsplit(src)
+        for scheme, netloc, path in self.allowed_src_patterns:
+            if parts.netloc != netloc or parts.scheme != scheme:
+                continue
+            if isinstance(path, re._pattern_type):
+                if not path.match(parts.path):
+                    continue
+            elif path:
+                if not parts.path.startswith(path):
+                    continue
+            return True
+        return False

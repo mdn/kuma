@@ -2,6 +2,7 @@
 import json
 import os
 import platform
+import re
 from collections import namedtuple
 from os.path import dirname
 
@@ -9,6 +10,7 @@ import dj_database_url
 import dj_email_url
 import djcelery
 from decouple import config, Csv
+from six.moves.urllib.parse import urlsplit
 
 _Language = namedtuple(u'Language', u'english native')
 
@@ -1150,6 +1152,56 @@ ALLOW_ROBOTS_DOMAINS = set(
     config('ALLOW_ROBOTS_DOMAINS',
            default=','.join((_PROD_ATTACHMENT_HOST, _PROD_ATTACHMENT_ORIGIN)),
            cast=Csv()))
+
+
+# Allowed iframe URL patterns
+# The format is a three-element tuple:
+#  Protocol: Required, must match
+#  Domain: Required, must match
+#  Path: An optional path prefix or matching regex
+
+def parse_iframe_url(url):
+    '''
+    Parse an iframe URL into an allowed iframe pattern
+
+    A URL with a '*' in the path is treated as a regex.
+    '''
+    parts = urlsplit(url)
+    assert parts.scheme in ('http', 'https')
+    path = ''
+    if parts.path.strip('/') != '':
+        if '*' in parts.path:
+            path = re.compile(parts.path)
+        else:
+            path = parts.path
+    return (parts.scheme, parts.netloc, path)
+
+
+# Default allowed iframe URL patterns, roughly ordered by expected frequency
+ALLOWED_IFRAME_PATTERNS = [
+    # Live sample host
+    # https://developer.mozilla.org/en-US/docs/Web/CSS/filter
+    parse_iframe_url('https://' + _PROD_ATTACHMENT_HOST),
+    # Interactive Examples host
+    # On https://developer.mozilla.org/en-US/docs/Web/CSS/filter
+    parse_iframe_url(_PROD_INTERACTIVE_EXAMPLES),
+    # Samples, https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL
+    parse_iframe_url('https://mdn.github.io/'),
+    # Videos, https://developer.mozilla.org/en-US/docs/Tools/Web_Console
+    parse_iframe_url('https://www.youtube.com/embed/'),
+    # Samples, https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
+    parse_iframe_url('https://jsfiddle.net/.*/embedded/.*'),
+    # Charts, https://developer.mozilla.org/en-US/docs/MDN/Kuma/Server_charts
+    parse_iframe_url('https://rpm.newrelic.com/public/charts/'),
+]
+
+# Add the overridden attachment / live sample host
+if ATTACHMENT_HOST != _PROD_ATTACHMENT_HOST:
+    ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(PROTOCOL + ATTACHMENT_HOST))
+
+# Add the overridden interactive examples service
+if INTERACTIVE_EXAMPLES_BASE != _PROD_INTERACTIVE_EXAMPLES:
+    ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(INTERACTIVE_EXAMPLES_BASE))
 
 # Video settings, hard coded here for now.
 # TODO: figure out a way that doesn't need these values

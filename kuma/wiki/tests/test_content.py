@@ -3,7 +3,6 @@ from base64 import b64encode
 
 import bleach
 import pytest
-from django.conf import settings
 from django.test import TestCase
 from django.utils.six.moves.urllib.parse import urljoin
 from jinja2 import escape, Markup
@@ -687,8 +686,11 @@ def test_filteriframe():
         <p>test</p>
         """ % dict(embed_url=embed_url)
 
-    pattern = r'^https?\:\/\/(sample|test)server'
-    result_src = parse(doc_src).filterIframeHosts(pattern).serialize()
+    patterns = [
+        ('https', 'sampleserver', ''),
+        ('https', 'testserver', ''),
+    ]
+    result_src = parse(doc_src).filterIframeHosts(patterns).serialize()
     page = pq(result_src)
     assert page('#if1').attr('src') == embed_url
     assert page('#if2').attr('src') == 'https://testserver'
@@ -708,19 +710,14 @@ def test_filteriframe_empty_contents():
         <iframe>
         </iframe>
     """
-    pattern = r'https?\:\/\/sampleserver'
-    result_src = parse(doc_src).filterIframeHosts(pattern).serialize()
+    patterns = [('https', 'sampleserver', '')]
+    result_src = parse(doc_src).filterIframeHosts(patterns).serialize()
     assert normalize_html(expected_src) == normalize_html(result_src)
 
 
 FILTERIFRAME_ACCEPTED = {
-    'stage': ('https://stage-files.mdn.moz.works/'
-              'fr/docs/Test$samples/sample2?revision=234'),
-    'test': 'http://testserver/en-US/docs/Test$samples/test?revision=567',
     'docker': 'http://localhost:8000/de/docs/Test$samples/test?revision=678',
-    'youtube_http': ('http://www.youtube.com/embed/'
-                     'iaNoBlae5Qw/?feature=player_detailpage'),
-    'youtube_ssl': ('https://youtube.com/embed/'
+    'youtube_ssl': ('https://www.youtube.com/embed/'
                     'iaNoBlae5Qw/?feature=player_detailpage'),
     'prod': ('https://mdn.mozillademos.org/'
              'en-US/docs/Web/CSS/text-align$samples/alignment?revision=456'),
@@ -745,25 +742,34 @@ FILTERIFRAME_REJECTED = {
     'vagrant_2': ('http://developer-local:81/'
                   'en-US/docs/Test$samples/sample1?revision=123'),
     'cdn': ('https://developer.cdn.mozilla.net/is/this/valid?'),
+    'stage': ('https://stage-files.mdn.moz.works/'
+              'fr/docs/Test$samples/sample2?revision=234'),
+    'test': 'http://testserver/en-US/docs/Test$samples/test?revision=567',
+    'youtube_no_www': ('https://youtube.com/embed/'
+                       'iaNoBlae5Qw/?feature=player_detailpage'),
+    'youtube_http': ('http://www.youtube.com/embed/'
+                     'iaNoBlae5Qw/?feature=player_detailpage'),
+    'youtube_other2': 'https://www.youtube.com/sembed/',
+    'jsfiddle_other': 'https://jsfiddle.net/about',
 }
 
 
 @pytest.mark.parametrize('url', list(FILTERIFRAME_ACCEPTED.values()),
                          ids=list(FILTERIFRAME_ACCEPTED))
-def test_filteriframe_default_accepted(url):
+def test_filteriframe_default_accepted(url, settings):
     doc_src = '<iframe id="test" src="%s"></iframe>' % url
-    pattern = settings.CONSTANCE_CONFIG['KUMA_WIKI_IFRAME_ALLOWED_HOSTS'][0]
-    result_src = parse(doc_src).filterIframeHosts(pattern).serialize()
+    patterns = settings.ALLOWED_IFRAME_PATTERNS
+    result_src = parse(doc_src).filterIframeHosts(patterns).serialize()
     page = pq(result_src)
     assert page('#test').attr('src') == url
 
 
 @pytest.mark.parametrize('url', list(FILTERIFRAME_REJECTED.values()),
                          ids=list(FILTERIFRAME_REJECTED))
-def test_filteriframe_default_rejected(url):
+def test_filteriframe_default_rejected(url, settings):
     doc_src = '<iframe id="test" src="%s"></iframe>' % url
-    pattern = settings.CONSTANCE_CONFIG['KUMA_WIKI_IFRAME_ALLOWED_HOSTS'][0]
-    result_src = parse(doc_src).filterIframeHosts(pattern).serialize()
+    patterns = settings.ALLOWED_IFRAME_PATTERNS
+    result_src = parse(doc_src).filterIframeHosts(patterns).serialize()
     page = pq(result_src)
     assert page('#test').attr('src') == ''
 
