@@ -48,7 +48,7 @@ STAGING_DOMAIN = 'developer.allizom.org'
 STAGING_URL = PROTOCOL + STAGING_DOMAIN
 
 INTERACTIVE_EXAMPLES_BASE = config(
-    'https://interactive-examples.mdn.mozilla.net',
+    'INTERACTIVE_EXAMPLES_BASE',
     default='https://interactive-examples.mdn.mozilla.net')
 
 MAINTENANCE_MODE = config('MAINTENANCE_MODE', default=False, cast=bool)
