@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block perfhead %}
+    {% include "wiki/includes/perf.html" %}
+{% endblock %}
+
 {% block experiment_js %}
     {%- if not request.user.is_authenticated() and
            content_experiment and

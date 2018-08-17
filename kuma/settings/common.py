@@ -972,10 +972,9 @@ PIPELINE_JS = {
     },
     'wiki': {
         'source_filenames': (
-            'js/wiki.js',
             'js/utils/utils.js',
             'js/utils/post-message-handler.js',
-            'js/utils/perf.js',
+            'js/wiki.js',
             'js/interactive.js',
             'js/wiki-samples.js',
             'js/wiki-toc.js',

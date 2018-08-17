@@ -1,4 +1,6 @@
-window.mdn.perf = {
+var mdn = window.mdn || {};
+
+mdn.perf = {
     /**
      * Get and return the duration of the specified performance measure
      * @param {String} measureName - Name of the performance measure
