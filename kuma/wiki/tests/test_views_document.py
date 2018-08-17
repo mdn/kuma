@@ -101,7 +101,8 @@ def authkey(wiki_user):
     secret = key.generate_secret()
     key.save()
     auth = '%s:%s' % (key.key, secret)
-    header = 'Basic %s' % base64.encodestring(auth)
+    # TODO: Once Python 2/3 is gone, replace encodestring by encodebytes
+    header = 'Basic %s' % base64.encodestring(auth.encode('utf-8')).decode('utf-8')
     return AuthKey(key=key, header=header)
 
 
@@ -718,33 +719,36 @@ def test_deleted_doc_anon(deleted_doc, client):
     """Requesting a deleted doc returns 404"""
     response = client.get(deleted_doc.get_absolute_url())
     assert response.status_code == 404
-    assert "This document was deleted" not in response.content
-    assert 'Reason for Deletion' not in response.content
+    content = response.content.decode(response.charset)
+    assert "This document was deleted" not in content
+    assert 'Reason for Deletion' not in content
 
 
 def test_deleted_doc_user(deleted_doc, user_client):
     """Requesting a deleted doc returns 404, deletion message"""
     response = user_client.get(deleted_doc.get_absolute_url())
     assert response.status_code == 404
-    assert "This document was deleted" not in response.content
-    assert 'Reason for Deletion' not in response.content
-    assert 'Restore this document' not in response.content
-    assert 'Purge this document' not in response.content
+    content = response.content.decode(response.charset)
+    assert "This document was deleted" not in content
+    assert 'Reason for Deletion' not in content
+    assert 'Restore this document' not in content
+    assert 'Purge this document' not in content
 
 
 def test_deleted_doc_moderator(deleted_doc, moderator_client):
     """Requesting deleted doc as moderator returns 404 with action buttons."""
     response = moderator_client.get(deleted_doc.get_absolute_url())
     assert response.status_code == 404
-    assert 'Reason for Deletion' in response.content
+    content = response.content.decode(response.charset)
+    assert 'Reason for Deletion' in content
     full_description = (
         'This document was deleted by'
         ' <a href="/en-US/profiles/moderator">moderator</a>'
         ' on <time datetime="2018-08-21T17:22:00-07:00">'
         'August 21, 2018 at 5:22:00 PM PDT</time>.')
-    assert full_description in response.content
-    assert 'Restore this document' in response.content
-    assert 'Purge this document' in response.content
+    assert full_description in content
+    assert 'Restore this document' in content
+    assert 'Purge this document' in content
 
 
 def test_deleted_doc_no_purge_permdeleted(deleted_doc, wiki_moderator,
@@ -754,12 +758,13 @@ def test_deleted_doc_no_purge_permdeleted(deleted_doc, wiki_moderator,
         Permission.objects.get(codename='purge_document'))
     response = moderator_client.get(deleted_doc.get_absolute_url())
     assert response.status_code == 404
-    assert 'Reason for Deletion' in response.content
+    content = response.content.decode(response.charset)
+    assert 'Reason for Deletion' in content
     full_description = (
         'This document was deleted by'
         ' <a href="/en-US/profiles/moderator">moderator</a>'
         ' on <time datetime="2018-08-21T17:22:00-07:00">'
         'August 21, 2018 at 5:22:00 PM PDT</time>.')
-    assert full_description in response.content
-    assert 'Restore this document' in response.content
-    assert 'Purge this document' not in response.content
+    assert full_description in content
+    assert 'Restore this document' in content
+    assert 'Purge this document' not in content

@@ -327,7 +327,7 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         self.client.login(username='admin', password='testpass')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertIn(SUBMISSION_NOT_AVAILABLE, response.content)
+        self.assertIn(SUBMISSION_NOT_AVAILABLE, response.content.decode('utf-8'))
 
     @override_flag(SPAM_SUBMISSIONS_FLAG, True)
     def test_view_change_existing(self):
@@ -341,7 +341,7 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
                       args=(submission.id,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertIn(SUBMISSION_NOT_AVAILABLE, response.content)
+        self.assertIn(SUBMISSION_NOT_AVAILABLE, response.content.decode('utf-8'))
 
     @override_flag(SPAM_SUBMISSIONS_FLAG, True)
     def test_view_change_with_data(self):
@@ -357,7 +357,7 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
                       args=(submission.id,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertIn('<dt>content</dt><dd>spam</dd>',
+        self.assertIn(b'<dt>content</dt><dd>spam</dd>',
                       response.content)
 
     @override_flag(SPAM_SUBMISSIONS_FLAG, True)
@@ -375,5 +375,5 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         revision_url = revision.get_absolute_url()
-        self.assertIn(revision_url, response.content)
+        self.assertIn(revision_url.encode('utf-8'), response.content)
         self.assertIn('None', response.content)

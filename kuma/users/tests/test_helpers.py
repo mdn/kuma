@@ -20,7 +20,7 @@ class HelperTestCase(UserTestCase):
 
     def test_gravatar_url(self):
         self.u.email = 'test@test.com'
-        assert md5(self.u.email).hexdigest() in gravatar_url(self.u.email)
+        assert md5(self.u.email.encode('utf-8')).hexdigest() in gravatar_url(self.u.email)
 
     def test_public_email(self):
         assert ('<span class="email">'

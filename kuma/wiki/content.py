@@ -460,9 +460,9 @@ class LinkAnnotationFilter(html5lib_Filter):
                     href_path, _, _ = href_path.partition('#')
 
                 # Handle any URL-encoded UTF-8 characters in the path
-                href_path = href_path.encode('utf-8', 'ignore')
+                # href_path = href_path.encode('utf-8', 'ignore')
                 href_path = unquote(href_path)
-                href_path = href_path.decode('utf-8', 'ignore')
+                # href_path = href_path.decode('utf-8', 'ignore')
 
                 # Try to sort out the locale and slug through some of our
                 # redirection logic.
@@ -514,7 +514,7 @@ class LinkAnnotationFilter(html5lib_Filter):
             if token['type'] == 'StartTag' and token['name'] == 'a':
                 attrs = dict(token['data'])
                 names = [name for (namespace, name) in attrs.keys()]
-                for (namespace, name), value in attrs.items():
+                for (namespace, name), value in attrs.copy().items():
                     if name == 'href':
                         href = value
                         href_parsed = urlparse(value)
@@ -1060,7 +1060,7 @@ class CodeSyntaxFilter(html5lib_Filter):
         for token in html5lib_Filter.__iter__(self):
             if token['type'] == 'StartTag' and token['name'] == 'pre':
                 attrs = dict(token['data'])
-                for (namespace, name), value in attrs.items():
+                for (namespace, name), value in attrs.copy().items():
                     if name == 'function' and value:
                         m = MT_SYNTAX_RE.match(value)
                         if m:

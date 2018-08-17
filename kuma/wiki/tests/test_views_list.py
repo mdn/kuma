@@ -150,7 +150,7 @@ def test_list_no_redirects(redirect_doc, doc_hierarchy, client):
     # doc_hierarchy, plus the root_doc (which is pulled-in by
     # the redirect_doc), but the redirect_doc should not be one of them.
     assert len(pq(resp.content).find('.document-list li')) == 5
-    assert redirect_doc.slug not in resp.content
+    assert redirect_doc.slug.encode('utf-8') not in resp.content
 
 
 def test_tags(root_doc, client):
@@ -196,8 +196,8 @@ def test_tag_list(root_doc, trans_doc, client, locale_case, tag_case, tag):
     assert resp.status_code == 200
     dom = pq(resp.content)
     assert len(dom('#document-list ul.document-list li')) == 0
-    assert root_doc.slug not in resp.content
-    assert trans_doc.slug not in resp.content
+    assert root_doc.slug not in resp.content.decode('utf-8')
+    assert trans_doc.slug not in resp.content.decode('utf-8')
 
 
 @pytest.mark.parametrize('locale', ['en-US', 'de', 'fr'])

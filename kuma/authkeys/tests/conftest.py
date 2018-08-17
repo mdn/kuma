@@ -2,12 +2,14 @@ import pytest
 
 from kuma.users.tests import user
 
+from django.utils.six import iteritems
+
 from ..models import Key
 
 
 class Object(object):
     def __init__(self, **kwargs):
-        for k, v in kwargs.iteritems():
+        for k, v in iteritems(kwargs):
             setattr(self, k, v)
 
 

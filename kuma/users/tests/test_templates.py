@@ -107,9 +107,9 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         assert response.status_code == 200
         content = response.content
         assert b'Account Sign In Failure' in content
-        error = ('An error occurred while attempting to sign in with your'
-                 ' account.')
-        assert bytes(error) in content
+        error = (b'An error occurred while attempting to sign in with your'
+                 b' account.')
+        assert error in content
         assert b'Thanks for signing in to MDN' not in content
 
     def test_auth_success_username_available(self):

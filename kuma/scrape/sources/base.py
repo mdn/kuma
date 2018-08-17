@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 
 import re
 
-from django.utils.six import (binary_type,
+from django.utils.six import (binary_type, PY3,
                               python_2_unicode_compatible,
                               text_type)
 from django.utils.six.moves.urllib.parse import unquote
@@ -144,13 +144,25 @@ class Source(object):
 
     def decode_href(self, href):
         """Convert URL-escaped href attributes to unicode."""
-        if isinstance(href, binary_type):
-            bhref = href
+        if PY3:  # pragma: no cover
+            # TODO: Remove the PY3 condition once we don't run Python 2 anymore
+            # In Python 3, unquote returns unicode
+            # decoded = unquote(href.decode('ascii'))
+            if isinstance(href, binary_type):
+                uhref = href.decode('ascii')
+            else:
+                uhref = href
+            decoded = unquote(uhref)
+            assert isinstance(decoded, text_type)
         else:
-            bhref = href.encode('utf-8')
-        decoded = unquote(bhref)
-        assert isinstance(decoded, binary_type)
-        decoded = decoded.decode('utf8')
+            # In Python 2, unquote takes and returns binary
+            if isinstance(href, binary_type):
+                bhref = href
+            else:
+                bhref = href.encode('utf-8')
+            decoded = unquote(bhref)
+            assert isinstance(decoded, binary_type)
+            decoded = decoded.decode('utf8')
         return decoded
 
     def gather(self, requester, storage):
