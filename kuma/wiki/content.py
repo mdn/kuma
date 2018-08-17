@@ -460,9 +460,9 @@ class LinkAnnotationFilter(html5lib_Filter):
                     href_path, _, _ = href_path.partition('#')
 
                 # Handle any URL-encoded UTF-8 characters in the path
-                # href_path = href_path.encode('utf-8', 'ignore')
+                href_path = href_path.encode('utf-8', 'ignore')
                 href_path = unquote(href_path)
-                # href_path = href_path.decode('utf-8', 'ignore')
+                href_path = href_path.decode('utf-8', 'ignore')
 
                 # Try to sort out the locale and slug through some of our
                 # redirection logic.
