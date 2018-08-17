@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-import re
-
-from constance import config
+from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.cache import cache_control
@@ -26,8 +24,8 @@ def code_sample(request, document_slug, document_locale, sample_name):
     HTML document
     """
     # Restrict rendering of live code samples to specified hosts
-    if not re.search(config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS,
-                     request.build_absolute_uri()):
+    if request.get_host() not in (settings.ATTACHMENT_HOST,
+                                  settings.ATTACHMENT_ORIGIN):
         raise PermissionDenied
 
     document = get_object_or_404(Document, slug=document_slug,
