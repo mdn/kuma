@@ -157,7 +157,7 @@ def ensure_pull() {
     )
 }
 
-def make(cmd, display) {
+def make(cmd, display, notify_on_success=false) {
     def target = get_target_script()
     def region = get_region()
     def tag = get_commit_tag()
@@ -166,7 +166,7 @@ def make(cmd, display) {
         . regions/${region}/${target}.sh
         make ${cmd} ${repo_upper}_IMAGE_TAG=${tag}
     """
-    sh_with_notify(cmds, display, true)
+    sh_with_notify(cmds, display, notify_on_success)
 }
 
 def is_read_only_db() {
@@ -205,7 +205,7 @@ def monitor_rollout() {
      * Monitor the rolling update until it succeeds or fails.
      */
     def repo = get_repo_name()
-    make("k8s-${repo}-rollout-status", 'Check Rollout Status')
+    make("k8s-${repo}-rollout-status", 'Check Rollout Status', true)
 }
 
 def record_rollout() {
@@ -213,7 +213,7 @@ def record_rollout() {
      * Record the rollout in external services like New Relic and SpeedCurve.
      */
     def repo = get_repo_name()
-    make("k8s-${repo}-record-deployment-job", 'Record Rollout')
+    make("k8s-${repo}-record-deployment-job", 'Record Rollout', true)
 }
 
 def announce_push() {
