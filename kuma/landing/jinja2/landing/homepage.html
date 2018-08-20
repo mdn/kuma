@@ -107,65 +107,35 @@
 </div>
 
 <!-- hacks area -->
-<div class="home-hacks"><div class="column-container center">
-  <div class="column-hacks" dir="ltr">
-    <h2>
-        {% include 'includes/icons/general/star.svg' %} Hacks Blog
-        <span class="heading-link">
-            <a href="http://hacks.mozilla.org">
+<div class="home-hacks">
+  <div class="column-container center">
+    <div class="column-hacks" dir="ltr">
+      <h2>
+          {% include 'includes/icons/general/star.svg' %} Hacks Blog
+          <span class="heading-link">
+              <a href="http://hacks.mozilla.org">
                 {{ _('read more at hacks.mozilla.org') }}
                 {% include 'includes/icons/arrows/arrow.svg' %}
-            </a>
-        </span>
-    </h2>
-    {{ newsfeed(updates) }}
-  </div>
-  <div class="column-involved">
-    <div class="home-involved-card"><a href="{{ wiki_url('MDN/Contribute') }}">
-      <h2 class="title">{{ _('Get Involved') }}</h2>
-
-      {% trans contributors=stats.contributors, locales=stats.locales %}
-      <p class="numbers">
-         <span class="row1">Join <span class="number">{{ contributors }}</span> contributors</span>
-         <span class="row2">in <span class="number">{{ locales }}</span> languages and locales</span>
-         <span class="row3">around the world.</span>
-      </p>
-      {% endtrans %}
-      <p><span class="button">{{ _('Help improve MDN') }}</span></p>
-    </a></div>
-  </div>
-</div></div>
-
-<!-- contributions section -->
-<div class="home-contribute"><div class="center">
-  <h2>
-      {% include 'includes/icons/general/smile.svg' %} {{ _('Help improve MDN') }}
-  </h2>
-
-  <div class="column-container">
-    <div class="column-half">
+              </a>
+          </span>
+      </h2>
+      {{ newsfeed(updates) }}
+    </div>
+    <div class="column-involved">
+      <!-- contributions section -->
+      <h2>{% include 'includes/icons/general/smile.svg' %} {{ _('Help improve MDN') }}</h2>
       <p>{{ _('All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:') }}</p>
-    </div>
-    <div class="column-half">
-      <div class="column-container">
-        <div class="column-half">
-          <ul>
-            <li><a href="{{ wiki_url('MDN/Getting_started') }}">{{ _('Getting started') }}</a></li>
-            <li><a href="{{ wiki_url('MDN/Contribute/Howto/Do_an_editorial_review') }}">{{ _('Editorial review') }}</a></li>
-            <li><a href="{{ wiki_url('MDN/Contribute/Howto/Do_a_technical_review') }}">{{ _('Technical review') }}</a></li>
-          </ul>
-        </div>
-        <div class="column-half">
-          <ul>
-            <li><a href="{{ wiki_url('MDN/Contribute/Localize/Translating_pages') }}">{{ _('Translating') }}</a></li>
-            <li><a href="{{ wiki_url('MDN/Promote') }}">{{ _('Promoting MDN') }}</a></li>
-            <li><a href="https://github.com/mozilla/kuma#readme">{{ _('Contributing to the MDN codebase') }}</a></li>
-          </ul>
-        </div>
-      </div>
+      <ul>
+        <li><a href="{{ wiki_url('MDN/Getting_started') }}">{{ _('Getting started') }}</a></li>
+        <li><a href="{{ wiki_url('MDN/Contribute/Howto/Do_an_editorial_review') }}">{{ _('Editorial review') }}</a></li>
+        <li><a href="{{ wiki_url('MDN/Contribute/Howto/Do_a_technical_review') }}">{{ _('Technical review') }}</a></li>
+        <li><a href="{{ wiki_url('MDN/Contribute/Localize/Translating_pages') }}">{{ _('Translating') }}</a></li>
+        <li><a href="{{ wiki_url('MDN/Promote') }}">{{ _('Promoting MDN') }}</a></li>
+        <li><a href="https://github.com/mozilla/kuma#readme">{{ _('Contributing to the MDN codebase') }}</a></li>
+      </ul>
     </div>
   </div>
-</div></div>
+</div>
 {% endblock %}
 
 {% block js %}

@@ -171,3 +171,17 @@ button[type='submit'] .icon-check-mark {
         margin-right: 5px;
     }
 }
+
+/* icons inside the hacks section on homepage */
+.column-hacks .icon-arrow {
+    vertical-align: text-bottom;
+}
+
+/* specific styling for icons on mobile */
+@media #{$mq-mobile-and-down} {
+    .column-hacks .icon-star,
+    .column-involved .icon-smile {
+        width: 16px;
+        height: 16px;
+    }
+}
