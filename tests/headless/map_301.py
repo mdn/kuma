@@ -429,6 +429,10 @@ for zone_root, wiki_slug, child_path, locales in zone_redirects:
             ZONE_REDIRECT_URLS.append(
                 url_test(path + u'$edit', redirect_path + u'$edit',
                          **zone_url_test_kwargs))
+            # A zone path with curly braces {}
+            ZONE_REDIRECT_URLS.append(
+                url_test(path + u'/{test}', redirect_path + '/{test}',
+                         **zone_url_test_kwargs))
 
 # Redirects added after 2017 AWS move
 REDIRECT_URLS = list(flatten((
