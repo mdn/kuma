@@ -1,20 +1,9 @@
 import pytest
-from django.contrib.auth.models import Permission
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 
 from ..models import Document, DocumentDeletionLog
-
-
-@pytest.fixture
-def delete_client(editor_client, wiki_user):
-    wiki_user.user_permissions.add(
-        Permission.objects.get(codename='purge_document'),
-        Permission.objects.get(codename='delete_document'),
-        Permission.objects.get(codename='restore_document')
-    )
-    return editor_client
 
 
 @pytest.mark.parametrize('endpoint', ['revert_document', 'delete_document',
@@ -57,53 +46,53 @@ def test_read_only_mode(root_doc, user_client, endpoint):
     assert_no_cache_header(response)
 
 
-def test_delete_get(root_doc, delete_client):
+def test_delete_get(root_doc, moderator_client):
     url = reverse('wiki.delete_document', args=[root_doc.slug])
-    response = delete_client.get(url)
+    response = moderator_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
 
 
-def test_purge_get(deleted_doc, delete_client):
+def test_purge_get(deleted_doc, moderator_client):
     url = reverse('wiki.purge_document', args=[deleted_doc.slug])
-    response = delete_client.get(url)
+    response = moderator_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
     assert 'This document was deleted by' in response.content
 
 
-def test_purge_get_no_log(deleted_doc, delete_client):
+def test_purge_get_no_log(deleted_doc, moderator_client):
     url = reverse('wiki.purge_document', args=[deleted_doc.slug])
     DocumentDeletionLog.objects.all().delete()
-    response = delete_client.get(url)
+    response = moderator_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
     assert 'deleted, for unknown reasons' in response.content
 
 
-def test_restore_get(root_doc, delete_client):
+def test_restore_get(root_doc, moderator_client):
     root_doc.delete()
     with pytest.raises(Document.DoesNotExist):
         Document.objects.get(slug=root_doc.slug, locale=root_doc.locale)
     url = reverse('wiki.restore_document', args=[root_doc.slug])
-    response = delete_client.get(url)
+    response = moderator_client.get(url)
     assert response.status_code == 302
     assert response['Location'].endswith(root_doc.get_absolute_url())
     assert_no_cache_header(response)
     assert Document.objects.get(slug=root_doc.slug, locale=root_doc.locale)
 
 
-def test_revert_get(root_doc, delete_client):
+def test_revert_get(root_doc, moderator_client):
     url = reverse('wiki.revert_document',
                   args=[root_doc.slug, root_doc.current_revision.id])
-    response = delete_client.get(url)
+    response = moderator_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
 
 
-def test_delete_post(root_doc, delete_client):
+def test_delete_post(root_doc, moderator_client):
     url = reverse('wiki.delete_document', args=[root_doc.slug])
-    response = delete_client.post(url, data=dict(reason='test'))
+    response = moderator_client.post(url, data=dict(reason='test'))
     assert response.status_code == 302
     assert response['Location'].endswith(root_doc.get_absolute_url())
     assert_no_cache_header(response)
@@ -116,10 +105,10 @@ def test_delete_post(root_doc, delete_client):
                                                   reason='test')) == 1
 
 
-def test_purge_post(root_doc, delete_client):
+def test_purge_post(root_doc, moderator_client):
     root_doc.delete()
     url = reverse('wiki.purge_document', args=[root_doc.slug])
-    response = delete_client.post(url, data=dict(confirm='true'))
+    response = moderator_client.post(url, data=dict(confirm='true'))
     assert response.status_code == 302
     assert response['Location'].endswith(root_doc.get_absolute_url())
     assert_no_cache_header(response)
@@ -127,13 +116,13 @@ def test_purge_post(root_doc, delete_client):
         Document.admin_objects.get(slug=root_doc.slug, locale=root_doc.locale)
 
 
-def test_revert_post(edit_revision, delete_client):
+def test_revert_post(edit_revision, moderator_client):
     root_doc = edit_revision.document
     assert len(root_doc.revisions.all()) == 2
     first_revision = root_doc.revisions.first()
     url = reverse('wiki.revert_document',
                   args=[root_doc.slug, first_revision.id])
-    response = delete_client.post(url, data=dict(comment='test'))
+    response = moderator_client.post(url, data=dict(comment='test'))
     assert response.status_code == 302
     assert response['Location'].endswith(reverse('wiki.document_revisions',
                                                  args=[root_doc.slug]))

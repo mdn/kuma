@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 
 from datetime import datetime
 
-from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
 from django.utils.text import slugify
 from html5lib.filters.base import Filter as html5lib_Filter
@@ -137,19 +136,6 @@ def create_document_editor_group():
     group.permissions = perms
     group.save()
     return group
-
-
-def create_document_editor_user():
-    """Get or create a user empowered with document editing."""
-    User = get_user_model()
-    user = User.objects.create(username='conantheeditor',
-                               email='conantheeditor@example.com',
-                               is_active=True, is_staff=False,
-                               is_superuser=False)
-    user.set_password('testpass')
-    user.groups = [create_document_editor_group()]
-    user.save()
-    return user
 
 
 def create_topical_parents_docs():
