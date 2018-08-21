@@ -8,12 +8,6 @@ shared_cache_control_for_zones = shared_cache_control(
     s_maxage=60 * 60 * 24 * 7)
 
 
-def get_sub_path_handler(root_path):
-    def get_path(request, sub_path):
-        return root_path + (sub_path or '')
-    return get_path
-
-
 def redirect(pattern, to, **kwargs):
     """
     Return a url matcher suited for urlpatterns
@@ -808,7 +802,7 @@ zone_redirects = (
 )
 
 zone_pattern_fmt = r'^{prefix}{zone_root_pattern}(?:/?|(?P<sub_path>[/$].+))$'
-sub_path_fmt = u'/{prefix}docs/{wiki_slug}'
+sub_path_fmt = u'/{prefix}docs/{wiki_slug}{{sub_path}}'
 
 zone_redirectpatterns = []
 for zone_root, wiki_slug, locales in zone_redirects:
@@ -826,7 +820,7 @@ for zone_root, wiki_slug, locales in zone_redirects:
         sub_path = sub_path_fmt.format(prefix=prefix, wiki_slug=wiki_slug)
         zone_redirectpatterns.append(redirect(
             pattern,
-            get_sub_path_handler(sub_path),
+            sub_path,
             permanent=False,
             decorators=shared_cache_control_for_zones))
 
