@@ -1,8 +1,8 @@
 import pytest
 
-from kuma.users.tests import user
-
 from django.utils.six import iteritems
+
+from kuma.users.tests import user
 
 from ..models import Key
 

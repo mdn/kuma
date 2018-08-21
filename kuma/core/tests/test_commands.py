@@ -1,6 +1,6 @@
 import pytest
 from django.core.management import call_command, CommandError
-from django.utils.six import StringIO, PY2
+from django.utils.six import PY2, StringIO
 
 
 def test_help():

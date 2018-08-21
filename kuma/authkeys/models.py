@@ -9,7 +9,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.crypto import constant_time_compare
-from django.utils.six import binary_type, int2byte
+from django.utils.six import int2byte
 from django.utils.translation import ugettext_lazy as _
 
 
