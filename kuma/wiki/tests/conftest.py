@@ -48,14 +48,18 @@ def banned_wiki_user(db, django_user_model, wiki_user):
 
 
 @pytest.fixture
-def wiki_moderator(wiki_user):
-    """Upgrade wiki_user to a moderator."""
-    wiki_user.user_permissions.add(
+def wiki_moderator(db, django_user_model):
+    """A user with moderator permissions."""
+    moderator = django_user_model.objects.create(
+        username='moderator',
+        email='moderator@example.com',
+        date_joined=datetime(2018, 8, 21, 18, 19))
+    moderator.user_permissions.add(
         Permission.objects.get(codename='purge_document'),
         Permission.objects.get(codename='delete_document'),
         Permission.objects.get(codename='restore_document')
     )
-    return wiki_user
+    return moderator
 
 
 @pytest.fixture

@@ -14,9 +14,26 @@ from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 
 from ..exceptions import DateTimeFormatError
-from ..templatetags.jinja_helpers import (datetimeformat, get_soapbox_messages,
-                                          in_utc, jsonencode, page_title,
+from ..templatetags.jinja_helpers import (assert_function, datetimeformat,
+                                          get_soapbox_messages, in_utc,
+                                          jsonencode, page_title,
                                           soapbox_messages, yesno)
+
+
+def test_assert_function():
+    with pytest.raises(RuntimeError) as exc:
+        assert_function(False, 'Message')
+    assert str(exc.value) == 'Failed assertion: Message'
+
+
+def test_assert_function_no_message():
+    with pytest.raises(RuntimeError) as exc:
+        assert_function(False)
+    assert str(exc.value) == 'Failed assertion'
+
+
+def test_assert_function_passes():
+    assert assert_function(True, 'Message') == ''
 
 
 class TestYesNo(KumaTestCase):
