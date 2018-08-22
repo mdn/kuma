@@ -1,7 +1,7 @@
 from datetime import date, datetime, timedelta
 
 import bleach
-from constance import config
+from django.conf import settings
 from django.db import models
 from django_mysql.models import QuerySet
 
@@ -20,13 +20,13 @@ class BaseDocumentManager(models.Manager):
         attributes = ALLOWED_ATTRIBUTES
         styles = ALLOWED_STYLES
         protocols = ALLOWED_PROTOCOLS
-        allowed_hosts = config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS
+        allowed_iframe_patterns = settings.ALLOWED_IFRAME_PATTERNS
 
         bleached_content = bleach.clean(content_in, attributes=attributes,
                                         tags=tags, styles=styles,
                                         protocols=protocols)
         filtered_content = (parse_content(bleached_content)
-                            .filterIframeHosts(allowed_hosts)
+                            .filterIframeHosts(allowed_iframe_patterns)
                             .serialize())
         return filtered_content
 

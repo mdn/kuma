@@ -2,6 +2,7 @@
 import json
 import os
 import platform
+import re
 from collections import namedtuple
 from os.path import dirname
 
@@ -9,6 +10,7 @@ import dj_database_url
 import dj_email_url
 import djcelery
 from decouple import config, Csv
+from six.moves.urllib.parse import urlsplit
 
 _Language = namedtuple(u'Language', u'english native')
 
@@ -47,9 +49,9 @@ PRODUCTION_DOMAIN = 'developer.mozilla.org'
 STAGING_DOMAIN = 'developer.allizom.org'
 STAGING_URL = PROTOCOL + STAGING_DOMAIN
 
+_PROD_INTERACTIVE_EXAMPLES = 'https://interactive-examples.mdn.mozilla.net'
 INTERACTIVE_EXAMPLES_BASE = config(
-    'INTERACTIVE_EXAMPLES_BASE',
-    default='https://interactive-examples.mdn.mozilla.net')
+    'INTERACTIVE_EXAMPLES_BASE', default=_PROD_INTERACTIVE_EXAMPLES)
 
 MAINTENANCE_MODE = config('MAINTENANCE_MODE', default=False, cast=bool)
 REVISION_HASH = config('REVISION_HASH', default='undefined')
@@ -1124,8 +1126,10 @@ LEGACY_HOSTS = config('LEGACY_HOSTS', default='', cast=Csv())
 MAX_FILENAME_LENGTH = 200
 MAX_FILEPATH_LENGTH = 250
 
-ATTACHMENT_HOST = config('ATTACHMENT_HOST', default='mdn.mozillademos.org')
-ATTACHMENT_ORIGIN = config('ATTACHMENT_ORIGIN', default=ATTACHMENT_HOST)
+_PROD_ATTACHMENT_HOST = 'mdn.mozillademos.org'
+ATTACHMENT_HOST = config('ATTACHMENT_HOST', default=_PROD_ATTACHMENT_HOST)
+_PROD_ATTACHMENT_ORIGIN = 'mdn-demos-origin.moz.works'
+ATTACHMENT_ORIGIN = config('ATTACHMENT_ORIGIN', default=_PROD_ATTACHMENT_ORIGIN)
 
 # This should never be false for the production and stage deployments.
 ENABLE_RESTRICTIONS_BY_HOST = config(
@@ -1145,8 +1149,58 @@ ALLOW_ROBOTS_WEB_DOMAINS = set(
 # If the domain is a CDN, the CDN origin should be included.
 ALLOW_ROBOTS_DOMAINS = set(
     config('ALLOW_ROBOTS_DOMAINS',
-           default='mdn.mozillademos.org,mdn-demos-origin.moz.works',
+           default=','.join((_PROD_ATTACHMENT_HOST, _PROD_ATTACHMENT_ORIGIN)),
            cast=Csv()))
+
+
+# Allowed iframe URL patterns
+# The format is a three-element tuple:
+#  Protocol: Required, must match
+#  Domain: Required, must match
+#  Path: An optional path prefix or matching regex
+
+def parse_iframe_url(url):
+    '''
+    Parse an iframe URL into an allowed iframe pattern
+
+    A URL with a '*' in the path is treated as a regex.
+    '''
+    parts = urlsplit(url)
+    assert parts.scheme in ('http', 'https')
+    path = ''
+    if parts.path.strip('/') != '':
+        if '*' in parts.path:
+            path = re.compile(parts.path)
+        else:
+            path = parts.path
+    return (parts.scheme, parts.netloc, path)
+
+
+# Default allowed iframe URL patterns, roughly ordered by expected frequency
+ALLOWED_IFRAME_PATTERNS = [
+    # Live sample host
+    # https://developer.mozilla.org/en-US/docs/Web/CSS/filter
+    parse_iframe_url('https://' + _PROD_ATTACHMENT_HOST),
+    # Interactive Examples host
+    # On https://developer.mozilla.org/en-US/docs/Web/CSS/filter
+    parse_iframe_url(_PROD_INTERACTIVE_EXAMPLES),
+    # Samples, https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL
+    parse_iframe_url('https://mdn.github.io/'),
+    # Videos, https://developer.mozilla.org/en-US/docs/Tools/Web_Console
+    parse_iframe_url('https://www.youtube.com/embed/'),
+    # Samples, https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
+    parse_iframe_url('https://jsfiddle.net/.*/embedded/.*'),
+    # Charts, https://developer.mozilla.org/en-US/docs/MDN/Kuma/Server_charts
+    parse_iframe_url('https://rpm.newrelic.com/public/charts/'),
+]
+
+# Add the overridden attachment / live sample host
+if ATTACHMENT_HOST != _PROD_ATTACHMENT_HOST:
+    ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(PROTOCOL + ATTACHMENT_HOST))
+
+# Add the overridden interactive examples service
+if INTERACTIVE_EXAMPLES_BASE != _PROD_INTERACTIVE_EXAMPLES:
+    ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(INTERACTIVE_EXAMPLES_BASE))
 
 # Video settings, hard coded here for now.
 # TODO: figure out a way that doesn't need these values
