@@ -1105,10 +1105,12 @@ class IframeHostFilter(html5lib_Filter):
         for scheme, netloc, path in self.allowed_src_patterns:
             if parts.netloc != netloc or parts.scheme != scheme:
                 continue
-            if isinstance(path, re._pattern_type):
+            if hasattr(path, 'match'):
+                # path must match a compiled regex
                 if not path.match(parts.path):
                     continue
             elif path:
+                # path must start with this prefix
                 if not parts.path.startswith(path):
                     continue
             return True
