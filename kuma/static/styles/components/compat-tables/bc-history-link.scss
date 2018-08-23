@@ -54,14 +54,15 @@ td[tabindex]:focus .bc-history-link {
     }
 }
 
-
 /*
 mobile adjustments
 ====================================================================== */
 
 @media #{$mq-mobile-and-down} {
     .bc-history-link {
-        width: calc(100% - 50px); /* falls back to 100% on non supporting browsers */
+        width: calc(
+            100% - 219px
+        ); /* falls back to 100% on non supporting browsers */
         height: 20px;
         margin-top: -20px;
         @include set-font-size(16px);

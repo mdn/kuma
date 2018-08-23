@@ -4,7 +4,8 @@ Table layout
 - requires .bc-table-{$num} modifier to display columns correctly
 ********************************************************************** */
 
-.text-content table.bc-table { /* specificity to over-ride .text-content styles */
+.text-content table.bc-table {
+    /* specificity to over-ride .text-content styles */
     width: 100%;
     table-layout: fixed;
     border: none; /* to over-ride .text-content styles */
@@ -80,7 +81,6 @@ Table layout
     }
 }
 
-
 /* th
 ====================================================================== */
 
@@ -119,7 +119,6 @@ Table layout
     }
 }
 
-
 /* td
 ====================================================================== */
 
@@ -145,7 +144,6 @@ Table layout
     padding-bottom: 12px;
 }
 
-
 /* abbr
 ====================================================================== */
 
@@ -158,7 +156,6 @@ tablet display
 - declarataions are a mixin
 - mixin is included in media queries below the mixin definition
 ====================================================================== */
-
 
 @mixin bc-table-tablet-display-grid() {
     /* convert rows into grids */
@@ -185,10 +182,9 @@ tablet display
         z-index: 1; /* increase z-index for js to detect tablet display */
     }
 
-
     /* make platforms span correct number of columns, max 7 */
     @for $num from 2 through 7 {
-        th[class^=bc-platform][colspan='#{$num}'] {
+        th[class^='bc-platform'][colspan='#{$num}'] {
             grid-column-end: span #{$num};
         }
     }
@@ -207,7 +203,6 @@ tablet display
 }
 
 @supports (display: grid) {
-
     /* tablet */
     @media #{$mq-tablet-only} {
         @include bc-table-tablet-display-grid();
@@ -251,10 +246,10 @@ mobile display
         max-width: 100%;
         display: block;
         box-sizing: border-box;
-        box-shadow: inset 50px 0 0 0 #eaeff2;
+        box-shadow: inset 220px 0 0 0 #eaeff2;
         border-top: $bc-border-width-thin solid $bc-border-color;
         border-left: 0;
-        padding-left: 60px;
+        padding-left: 250px;
         padding-right: $bc-grid-spacing;
         text-align: left;
     }

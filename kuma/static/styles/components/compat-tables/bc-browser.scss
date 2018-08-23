@@ -1,86 +1,20 @@
+.bc-browser-name {
+    display: none;
+}
+
 /*
-Icons in mobile view
+Hide icons and show browser name in mobile view
 ********************************************************************** */
 
 @media #{$mq-mobile-and-down} {
-    [class*='bc-browser-']:before {
+    .bc-browser-name {
+        display: block;
         position: absolute;
         top: 8px;
         left: 0;
+        padding-left: 6px;
         height: 25px;
-        width: $bc-mobile-icon-width;
-        font-family: compat-icons;
-        speak: none;
+        width: 200px;
         color: $text-color;
-        font-style: normal;
-        font-weight: normal;
-        font-variant: normal;
-        line-height: 1;
-        text-align: center;
-        text-transform: none;
-    }
-
-    /*
-    vendor icons
-    ====================================================================== */
-
-    .bc-browser-webview_android:before {
-        content: '\f17b\0020\f17b';
-    }
-
-    .bc-browser-chrome:before {
-        content: '\e956\0020\eae5';
-    }
-    .bc-browser-chrome_android:before {
-        content: '\f17b\0020\eae5';
-    }
-
-    .bc-browser-firefox:before {
-        content: '\e956\0020\e901';
-    }
-
-    .bc-browser-firefox_android:before {
-        content: '\f17b\0020\e901';
-    }
-
-    .bc-browser-edge:before {
-        content: '\e956\0020\e605';
-    }
-
-    .bc-browser-edge_mobile:before {
-        content: '\f108\0020\e605';
-    }
-
-    .bc-browser-ie:before {
-        content: '\e956\0020\eae6';
-    }
-
-    .bc-browser-ie_mobile:before {
-        content: '\f108\0020\eae6';
-    }
-
-    .bc-browser-nodejs:before {
-        content: '\e900';
-    }
-
-    .bc-browser-opera:before {
-        content: '\e956\0020\eae8';
-    }
-    .bc-browser-opera_android:before {
-        content: '\f17b\0020\eae8';
-    }
-    .bc-browser-opera_mini:before {
-        content: '\f10b\0020\eae8';
-    }
-
-    .bc-browser-safari:before {
-        content: '\e956\0020\e94a';
-    }
-    .bc-browser-safari_ios:before {
-        content: '\f108\0020\e94a';
-    }
-
-    .bc-browser-samsunginternet_android:before {
-        content: '\f17b\0020\e902';
     }
 }
