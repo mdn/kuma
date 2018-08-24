@@ -356,7 +356,7 @@ MT_TO_KUMA_LOCALE_MAP = {
 # The number of seconds we are keeping the language preference cookie. (1 year)
 LANGUAGE_COOKIE_AGE = 365 * 24 * 60 * 60
 
-SITE_ID = 1
+SITE_ID = config('SITE_ID', default=1, cast=int)
 
 MDC_PAGES_DIR = path('..', 'mdc_pages')
 
