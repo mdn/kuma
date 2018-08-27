@@ -12,8 +12,7 @@ from pyquery import PyQuery as pq
 import kuma.wiki.content
 
 from . import document, normalize_html
-from ..constants import (ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS,
-                         ALLOWED_STYLES, ALLOWED_TAGS)
+from ..constants import ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS, ALLOWED_TAGS
 from ..content import (clean_content, CodeSyntaxFilter, get_content_sections,
                        get_seo_description, H2TOCFilter, H3TOCFilter, parse,
                        SECTION_TAGS, SectionIDFilter, SectionTOCFilter)
@@ -988,61 +987,46 @@ class FilterEditorSafetyTests(TestCase):
         assert normalize_html(expected_src) == normalize_html(result_src)
 
 
-# Sample of tags from ALLOWED_TAGS
-SIMPLE_TAGS = (
-    'address',
-    'article',
-    'code',
-    'datagrid',
-    'details',
-    'dt',
-    'figure',
-    'h5',
-    'mark',
-    'output',
-    'pre',
-    'progress',
-)
+@pytest.mark.parametrize(
+    'tag',
+    # Sample of tags from ALLOWED_TAGS
+    ('address',
+     'article',
+     'code',
+     'datagrid',
+     'details',
+     'dt',
+     'figure',
+     'h5',
+     'mark',
+     'output',
+     'pre',
+     'progress',
+     ))
+def test_clean_content_allows_simple_tag(tag):
+    """clean_content allows simple tags, id attribute."""
+    html = '<%(tag)s id="foo"></%(tag)s>' % {'tag': tag}
+    assert clean_content(html) == html
 
 
-SELF_CLOSED_TAGS = (
-    'br',
-    'command',
-    'img',
-    'input',
-)
-
-
-@pytest.mark.parametrize('tag', SIMPLE_TAGS)
-def test_bleach_allowed_simple_tag(tag):
-    """bleach.clean allows simple tags."""
-    html = '<%(tag)s></%(tag)s>' % {'tag': tag}
-    out = bleach.clean(html, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS)
-    assert out == html
-
-
-@pytest.mark.parametrize('tag', SELF_CLOSED_TAGS)
-def test_bleach_allowed_self_closed_tags(tag):
-    """bleach.clean allows self-closed tags."""
+@pytest.mark.parametrize(
+    'tag',
+    ('br',
+     'command',
+     'img',
+     'input',
+     ))
+def test_clean_content_allows_self_closed_tags(tag):
+    """clean_content allows self-closed tags."""
     html = '<%s>' % tag
-    out = bleach.clean(html, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS)
-    assert out == html
+    assert clean_content(html) == html
 
 
-def test_bleach_allows_table():
-    """bleach.clean allows an HTML table."""
+def test_clean_content_preserves_whitespace():
+    """clean_content allows an HTML table."""
     html = ('<table><thead><tr><th>foo</th></tr></thead>'
             '<tbody><tr><td>foo</td></tr></tbody></table>')
-    out = bleach.clean(html, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS)
-    assert out == html
-
-
-@pytest.mark.parametrize('tag', SIMPLE_TAGS)
-def test_bleach_allows_id_attr(tag):
-    """bleach.clean allows the attribute id."""
-    html = '<%(tag)s id="foo"></%(tag)s>' % {'tag': tag}
-    out = bleach.clean(html, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS)
-    assert out == html
+    assert clean_content(html) == html
 
 
 @pytest.mark.parametrize(
@@ -1053,18 +1037,15 @@ def test_bleach_allows_id_attr(tag):
      '<div class="foo">foo</div>',
      '<video class="movie" controls id="some-movie" lang="en-US" src="some-movie.mpg">Fallback</video>',
      ))
-def test_bleach_allows_some_attributes(html):
-    """bleach.clean allows some attributes."""
-    out = bleach.clean(html, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS)
-    assert out == html
+def test_clean_content_allows_some_attributes(html):
+    """clean_content allows attributes, but doesn't preserve order."""
+    assert normalize_html(clean_content(html)) == html
 
 
-def test_bleach_allows_some_styles():
-    """bleach.clean allow some style values."""
+def test_clean_content_allows_some_styles():
+    """clean_content allows some style values."""
     html = '<span style="font-size: 24px; rotate: 90deg"></span>'
-    out = bleach.clean(html, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS,
-                       styles=ALLOWED_STYLES)
-    assert out == '<span style="font-size: 24px;"></span>'
+    assert clean_content(html) == '<span style="font-size: 24px;"></span>'
 
 
 def test_clean_content_stripped_ie_comment():
