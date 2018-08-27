@@ -10,10 +10,10 @@ from jinja2 import escape, Markup
 from pyquery import PyQuery as pq
 
 import kuma.wiki.content
-from kuma.core.tests import KumaTestCase
 
 from . import document, normalize_html
-from ..constants import ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS, ALLOWED_TAGS
+from ..constants import (ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS,
+                         ALLOWED_STYLES, ALLOWED_TAGS)
 from ..content import (CodeSyntaxFilter, get_content_sections,
                        get_seo_description, H2TOCFilter, H3TOCFilter, parse,
                        SECTION_TAGS, SectionIDFilter, SectionTOCFilter)
@@ -988,109 +988,133 @@ class FilterEditorSafetyTests(TestCase):
         assert normalize_html(expected_src) == normalize_html(result_src)
 
 
-class AllowedHTMLTests(KumaTestCase):
-    simple_tags = (
-        'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre',
-        'code', 'dl', 'dt', 'dd', 'table',
-        'section', 'header', 'footer',
-        'nav', 'article', 'aside', 'figure', 'dialog', 'hgroup',
-        'mark', 'time', 'meter', 'output', 'progress',
-        'audio', 'details', 'datagrid', 'datalist', 'table',
-        'address'
-    )
+# Sample of tags from ALLOWED_TAGS
+SIMPLE_TAGS = (
+    'address',
+    'article',
+    'code',
+    'datagrid',
+    'details',
+    'dt',
+    'figure',
+    'h5',
+    'mark',
+    'output',
+    'pre',
+    'progress',
+)
 
-    unclose_tags = ('img', 'input', 'br', 'command')
 
-    special_tags = (
-        "<table><thead><tr><th>foo</th></tr></thead><tbody><tr><td>foo</td></tr></tbody></table>",
-    )
+SELF_CLOSED_TAGS = (
+    'br',
+    'command',
+    'img',
+    'input',
+)
 
-    special_attributes = (
-        '<command id="foo">',
-        '<img align="left" alt="picture of foo" class="foo" dir="rtl" id="foo" src="foo" title="foo">',
-        '<a class="foo" href="foo" id="foo" title="foo">foo</a>',
-        '<div class="foo">foo</div>',
-        '<video class="movie" controls id="some-movie" lang="en-US" src="some-movie.mpg">Fallback</video>'
-        # TODO: Styles have to be cleaned on a case-by-case basis. We
-        # need to enumerate the styles we're going to allow, then feed
-        # them to bleach.
-        # '<span style="font-size: 24px"></span>',
-    )
 
-    def test_allowed_tags(self):
-        for tag in self.simple_tags:
-            html_str = '<%(tag)s></%(tag)s>' % {'tag': tag}
-            assert html_str == bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
-                                            tags=ALLOWED_TAGS)
+@pytest.mark.parametrize('tag', SIMPLE_TAGS)
+def test_bleach_allowed_simple_tag(tag):
+    """bleach.clean allows simple tags."""
+    html = '<%(tag)s></%(tag)s>' % {'tag': tag}
+    out = bleach.clean(html, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS)
+    assert out == html
 
-        for tag in self.unclose_tags:
-            html_str = '<%s>' % tag
-            assert html_str == bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
-                                            tags=ALLOWED_TAGS)
 
-        for html_str in self.special_tags:
-            assert html_str == bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
-                                            tags=ALLOWED_TAGS)
+@pytest.mark.parametrize('tag', SELF_CLOSED_TAGS)
+def test_bleach_allowed_self_closed_tags(tag):
+    """bleach.clean allows self-closed tags."""
+    html = '<%s>' % tag
+    out = bleach.clean(html, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS)
+    assert out == html
 
-    def test_allowed_attributes(self):
-        for tag in ('div', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code',
-                    'dl', 'dt', 'dd', 'section', 'header', 'footer', 'nav',
-                    'article', 'aside', 'figure', 'dialog', 'hgroup', 'mark',
-                    'time', 'meter', 'output', 'progress', 'audio', 'details',
-                    'datagrid', 'datalist', 'address'):
-            html_str = '<%(tag)s id="foo"></%(tag)s>' % {'tag': tag}
-            assert html_str == bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
-                                            tags=ALLOWED_TAGS)
 
-        for html_str in self.special_attributes:
-            assert html_str == bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
-                                            tags=ALLOWED_TAGS)
+def test_bleach_allows_table():
+    """bleach.clean allows an HTML table."""
+    html = ('<table><thead><tr><th>foo</th></tr></thead>'
+            '<tbody><tr><td>foo</td></tr></tbody></table>')
+    out = bleach.clean(html, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS)
+    assert out == html
 
-    def test_stripped_ie_comment(self):
-        """bug 801046: strip IE conditional comments"""
-        content = """
-            <p>Hi there.</p>
-            <!--[if]><script>alert(1)</script -->
-            <!--[if<img src=x onerror=alert(2)//]> -->
-            <p>Goodbye</p>
-        """
-        expected = """
-            <p>Hi there.</p>
-            <p>Goodbye</p>
-        """
-        result = Document.objects.clean_content(content)
-        assert normalize_html(expected) == normalize_html(result)
 
-    def test_iframe_in_script(self):
-        """iframe in script should be filtered"""
-        content = ('<script><iframe src="data:text/plain,foo">'
-                   '</iframe></script>')
-        expected = ('&lt;script&gt;&lt;iframe src="data:text/plain,foo"&gt;'
-                    '&lt;/iframe&gt;&lt;/script&gt;')
-        result = Document.objects.clean_content(content)
-        assert normalize_html(expected) == normalize_html(result)
+@pytest.mark.parametrize('tag', SIMPLE_TAGS)
+def test_bleach_allows_id_attr(tag):
+    """bleach.clean allows the attribute id."""
+    html = '<%(tag)s id="foo"></%(tag)s>' % {'tag': tag}
+    out = bleach.clean(html, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS)
+    assert out == html
 
-    def test_iframe_in_style(self):
-        """iframe in style should be filtered"""
-        content = ('<style><iframe src="data:text/plain,foo">'
-                   '</iframe></style>')
-        expected = ('&lt;style&gt;&lt;iframe src="data:text/plain,foo"&gt;'
-                    '&lt;/iframe&gt;&lt;/style&gt;')
-        result = Document.objects.clean_content(content)
-        assert normalize_html(expected) == normalize_html(result)
 
-    def test_iframe_in_textarea(self):
-        """
-        iframe in textarea should not be filtered since it's not parsed as tag
-        """
-        content = """
-            <textarea><iframe src="data:text/plain,foo"></iframe></textarea>
-        """
-        expected = """
-            <textarea><iframe src="data:text/plain,foo"></iframe></textarea>
-        """
-        result = Document.objects.clean_content(content)
-        assert normalize_html(expected) == normalize_html(result)
+@pytest.mark.parametrize(
+    'html',
+    ('<command id="foo">',
+     '<img align="left" alt="picture of foo" class="foo" dir="rtl" id="foo" src="foo" title="foo">',
+     '<a class="foo" href="foo" id="foo" title="foo">foo</a>',
+     '<div class="foo">foo</div>',
+     '<video class="movie" controls id="some-movie" lang="en-US" src="some-movie.mpg">Fallback</video>',
+     ))
+def test_bleach_allows_some_attributes(html):
+    """bleach.clean allows some attributes."""
+    out = bleach.clean(html, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS)
+    assert out == html
+
+
+def test_bleach_allows_some_styles():
+    """bleach.clean allow some style values."""
+    html = '<span style="font-size: 24px; rotate: 90deg"></span>'
+    out = bleach.clean(html, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS,
+                       styles=ALLOWED_STYLES)
+    assert out == '<span style="font-size: 24px;"></span>'
+
+
+def test_clean_content_stripped_ie_comment():
+    """bug 801046: strip IE conditional comments"""
+    content = """
+        <p>Hi there.</p>
+        <!--[if]><script>alert(1)</script -->
+        <!--[if<img src=x onerror=alert(2)//]> -->
+        <p>Goodbye</p>
+    """
+    expected = """
+        <p>Hi there.</p>
+        <p>Goodbye</p>
+    """
+    result = Document.objects.clean_content(content)
+    assert normalize_html(expected) == normalize_html(result)
+
+
+def test_clean_content_iframe_in_script():
+    """iframe in script should be filtered"""
+    content = ('<script><iframe src="data:text/plain,foo">'
+               '</iframe></script>')
+    expected = ('&lt;script&gt;&lt;iframe src="data:text/plain,foo"&gt;'
+                '&lt;/iframe&gt;&lt;/script&gt;')
+    result = Document.objects.clean_content(content)
+    assert normalize_html(expected) == normalize_html(result)
+
+
+def test_clean_content_iframe_in_style():
+    """iframe in style should be filtered"""
+    content = ('<style><iframe src="data:text/plain,foo">'
+               '</iframe></style>')
+    expected = ('&lt;style&gt;&lt;iframe src="data:text/plain,foo"&gt;'
+                '&lt;/iframe&gt;&lt;/style&gt;')
+    result = Document.objects.clean_content(content)
+    assert normalize_html(expected) == normalize_html(result)
+
+
+def test_clean_content_iframe_in_textarea():
+    """
+    iframe in textarea should not be filtered since it's not parsed as tag
+    """
+    content = """
+        <textarea><iframe src="data:text/plain,foo"></iframe></textarea>
+    """
+    expected = """
+        <textarea><iframe src="data:text/plain,foo"></iframe></textarea>
+    """
+    result = Document.objects.clean_content(content)
+    assert normalize_html(expected) == normalize_html(result)
 
 
 def test_extractor_css_classnames(root_doc, wiki_user):
