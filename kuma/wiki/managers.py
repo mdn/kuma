@@ -1,34 +1,13 @@
 from datetime import date, datetime, timedelta
 
-import bleach
-from django.conf import settings
 from django.db import models
 from django_mysql.models import QuerySet
-
-from .constants import (ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS,
-                        ALLOWED_STYLES, ALLOWED_TAGS)
-from .content import parse as parse_content
 
 
 class BaseDocumentManager(models.Manager):
     """Manager for Documents, assists for queries"""
     def get_queryset(self):
         return QuerySet(self.model)
-
-    def clean_content(self, content_in):
-        tags = ALLOWED_TAGS
-        attributes = ALLOWED_ATTRIBUTES
-        styles = ALLOWED_STYLES
-        protocols = ALLOWED_PROTOCOLS
-        allowed_iframe_patterns = settings.ALLOWED_IFRAME_PATTERNS
-
-        bleached_content = bleach.clean(content_in, attributes=attributes,
-                                        tags=tags, styles=styles,
-                                        protocols=protocols)
-        filtered_content = (parse_content(bleached_content)
-                            .filterIframeHosts(allowed_iframe_patterns)
-                            .serialize())
-        return filtered_content
 
     def get_by_natural_key(self, locale, slug):
         return self.get(locale=locale, slug=slug)

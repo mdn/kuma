@@ -30,8 +30,9 @@ from kuma.spam.models import AkismetSubmission, SpamAttempt
 from . import kumascript
 from .constants import (DEKI_FILE_URL, EXPERIMENT_TITLE_PREFIX, KUMA_FILE_URL,
                         REDIRECT_CONTENT, REDIRECT_HTML)
-from .content import (Extractor, get_content_sections, get_seo_description,
-                      H2TOCFilter, H3TOCFilter, SectionTOCFilter)
+from .content import (clean_content, Extractor, get_content_sections,
+                      get_seo_description, H2TOCFilter, H3TOCFilter,
+                      SectionTOCFilter)
 from .content import parse as parse_content
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, NotDocumentView,
@@ -1701,7 +1702,7 @@ class Revision(models.Model):
 
     @property
     def content_cleaned(self):
-        return Document.objects.clean_content(self.content)
+        return clean_content(self.content)
 
     @cached_property
     def previous(self):

@@ -14,7 +14,7 @@ import kuma.wiki.content
 from . import document, normalize_html
 from ..constants import (ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS,
                          ALLOWED_STYLES, ALLOWED_TAGS)
-from ..content import (CodeSyntaxFilter, get_content_sections,
+from ..content import (clean_content, CodeSyntaxFilter, get_content_sections,
                        get_seo_description, H2TOCFilter, H3TOCFilter, parse,
                        SECTION_TAGS, SectionIDFilter, SectionTOCFilter)
 from ..models import Document, Revision
@@ -1079,7 +1079,7 @@ def test_clean_content_stripped_ie_comment():
         <p>Hi there.</p>
         <p>Goodbye</p>
     """
-    result = Document.objects.clean_content(content)
+    result = clean_content(content)
     assert normalize_html(expected) == normalize_html(result)
 
 
@@ -1089,7 +1089,7 @@ def test_clean_content_iframe_in_script():
                '</iframe></script>')
     expected = ('&lt;script&gt;&lt;iframe src="data:text/plain,foo"&gt;'
                 '&lt;/iframe&gt;&lt;/script&gt;')
-    result = Document.objects.clean_content(content)
+    result = clean_content(content)
     assert normalize_html(expected) == normalize_html(result)
 
 
@@ -1099,7 +1099,7 @@ def test_clean_content_iframe_in_style():
                '</iframe></style>')
     expected = ('&lt;style&gt;&lt;iframe src="data:text/plain,foo"&gt;'
                 '&lt;/iframe&gt;&lt;/style&gt;')
-    result = Document.objects.clean_content(content)
+    result = clean_content(content)
     assert normalize_html(expected) == normalize_html(result)
 
 
@@ -1113,7 +1113,7 @@ def test_clean_content_iframe_in_textarea():
     expected = """
         <textarea><iframe src="data:text/plain,foo"></iframe></textarea>
     """
-    result = Document.objects.clean_content(content)
+    result = clean_content(content)
     assert normalize_html(expected) == normalize_html(result)
 
 
