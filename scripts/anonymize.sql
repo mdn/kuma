@@ -125,6 +125,9 @@ UPDATE auth_user SET
     facebook_url = CONCAT("https://facebook.com/", MD5(CONCAT(facebook_url, @common_hash_secret)))
     WHERE facebook_url != "";
 UPDATE auth_user SET
+    discourse_url = CONCAT("https://discourse.mozilla.org/u/", MD5(CONCAT(discourse_url, @common_hash_secret)))
+    WHERE discourse_url != "";
+UPDATE auth_user SET
     github_url = CONCAT("https://github.com/", MD5(CONCAT(github_url, @common_hash_secret)))
     WHERE github_url != "";
 UPDATE auth_user SET

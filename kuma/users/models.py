@@ -135,6 +135,11 @@ class User(AbstractUser):
             r'^https?://www\.facebook\.com/',
             _('Enter a valid Facebook URL.'),
             'invalid',
+        ),
+        'discourse': validators.RegexValidator(
+            r'^https://discourse\.mozilla\.org/u/',
+            _('Enter a valid Discourse URL.'),
+            'invalid',
         )
     }
 
@@ -177,6 +182,11 @@ class User(AbstractUser):
         _(u'Stack Overflow'),
         blank=True,
         validators=[WEBSITE_VALIDATORS['stackoverflow']],
+    )
+    discourse_url = models.TextField(
+        _(u'Discourse'),
+        blank=True,
+        validators=[WEBSITE_VALIDATORS['discourse']],
     )
 
     class Meta:

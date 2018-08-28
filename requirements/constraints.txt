@@ -21,17 +21,14 @@ py==1.4.33 \
 pytest==3.1.3 \
     --hash=sha256:2a4f483468954621fcc8f74784f3b42531e5b5008d49fc609b37bc4dbc6dead1 \
     --hash=sha256:095e1832f7e424563c95daf4d8d3c865052b80e139cdd2f9610a986ee8526206
+# World timezone definitions for Python
+# Code: https://launchpad.net/pytz
+# Docs: http://pytz.sourceforge.net/
+# Changes: https://launchpad.net/pytz/+announcements
 # Used by babel, celery, django-sundial
-pytz==2017.3 \
-    --hash=sha256:80af0f3008046b9975242012a985f04c5df1f01eed4ec1633d56cc47a75a6a48 \
-    --hash=sha256:feb2365914948b8620347784b6b6da356f31c9d03560259070b2f30cff3d469d \
-    --hash=sha256:59707844a9825589878236ff2f4e0dc9958511b7ffaae94dc615da07d4a68d33 \
-    --hash=sha256:d0ef5ef55ed3d37854320d4926b04a4cb42a2e88f71da9ddfdacfde8e364f027 \
-    --hash=sha256:c41c62827ce9cafacd6f2f7018e4f83a6f1986e87bfd000b8cfbd4ab5da95f1a \
-    --hash=sha256:8cc90340159b5d7ced6f2ba77694d946fc975b09f1a51d93f3ce3bb399396f94 \
-    --hash=sha256:dd2e4ca6ce3785c8dd342d1853dd9052b19290d5bf66060846e5dc6b8d6667f7 \
-    --hash=sha256:699d18a2a56f19ee5698ab1123bbcc1d269d061996aeb1eda6d89248d3542b82 \
-    --hash=sha256:fae4cffc040921b8a2d60c6cf0b5d662c1190fe54d718271db4eb17d44a185b7
+pytz==2018.5 \
+    --hash=sha256:a061aa0a9e06881eb8b3b2b43f05b9439d6583c206d0a6c340ff72a7b6669053 \
+    --hash=sha256:ffb9ef1de172603304d9d2819af6f5ece76f2e85ec10692a524dd876e72bf277
 # Used by cryptography, django-honeypot
 setuptools==26.1.1 \
     --hash=sha256:226c9ce65e76c6069e805982b036f36dc4b227b37dd87fc219aef721ec8604ae \
