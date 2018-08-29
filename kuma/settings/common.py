@@ -1,17 +1,16 @@
 # Django settings for kuma project.
 import json
-import logging
 import os
 import platform
+import re
 from collections import namedtuple
-from copy import deepcopy
 from os.path import dirname
 
 import dj_database_url
 import dj_email_url
 import djcelery
 from decouple import config, Csv
-from django.utils.log import DEFAULT_LOGGING
+from six.moves.urllib.parse import urlsplit
 
 _Language = namedtuple(u'Language', u'english native')
 
@@ -50,9 +49,9 @@ PRODUCTION_DOMAIN = 'developer.mozilla.org'
 STAGING_DOMAIN = 'developer.allizom.org'
 STAGING_URL = PROTOCOL + STAGING_DOMAIN
 
+_PROD_INTERACTIVE_EXAMPLES = 'https://interactive-examples.mdn.mozilla.net'
 INTERACTIVE_EXAMPLES_BASE = config(
-    'https://interactive-examples.mdn.mozilla.net',
-    default='https://interactive-examples.mdn.mozilla.net')
+    'INTERACTIVE_EXAMPLES_BASE', default=_PROD_INTERACTIVE_EXAMPLES)
 
 MAINTENANCE_MODE = config('MAINTENANCE_MODE', default=False, cast=bool)
 REVISION_HASH = config('REVISION_HASH', default='undefined')
@@ -110,21 +109,15 @@ CACHE_COUNT_TIMEOUT = 60  # in seconds
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'TIMEOUT': CACHE_COUNT_TIMEOUT,
-        'KEY_PREFIX': CACHE_PREFIX,
-    },
-    'memcache': {
-        'BACKEND': 'memcached_hashring.backend.MemcachedHashRingCache',
+        'BACKEND': 'django_redis.cache.RedisCache',
         'TIMEOUT': CACHE_COUNT_TIMEOUT * 60,
         'KEY_PREFIX': CACHE_PREFIX,
-        'LOCATION': config('MEMCACHE_SERVERS',
-                           default='127.0.0.1:11211',
-                           cast=Csv()),
-    },
+        'LOCATION': config('REDIS_CACHE_SERVER',
+                           default='127.0.0.1:6379'),
+    }
 }
 
-CACHEBACK_CACHE_ALIAS = 'memcache'
+CACHEBACK_CACHE_ALIAS = 'default'
 
 # Email
 vars().update(config('EMAIL_URL',
@@ -467,7 +460,6 @@ MIDDLEWARE = (
     # LocaleMiddleware must be before any middleware that uses
     # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
     'kuma.core.middleware.LocaleMiddleware',
-    'kuma.wiki.middleware.DocumentZoneMiddleware',
     'kuma.wiki.middleware.ReadOnlyMiddleware',
     'kuma.core.middleware.Forbidden403Middleware',
     'ratelimit.middleware.RatelimitMiddleware',
@@ -589,7 +581,7 @@ TEMPLATES = [
     {
         'NAME': 'jinja2',
         'BACKEND': 'django_jinja.backend.Jinja2',
-        'DIRS': [path('jinja2')],
+        'DIRS': [path('jinja2'), path('static')],
         'APP_DIRS': True,
         'OPTIONS': {
             # Use jinja2/ for jinja templates
@@ -633,7 +625,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    'VERSION': '2018.09',
+    'VERSION': '2018.10',
     'BASE_DIR': BASE_DIR,
     'TEXT_DOMAIN': 'django',
     # Tells the extract script what files to look for l10n in and what function
@@ -750,72 +742,6 @@ PIPELINE_CSS = {
         'output_filename': 'build/styles/wiki-compat-tables.css',
         'template_name': 'pipeline/javascript-array.jinja',
     },
-    'zone-addons': {
-        'source_filenames': (
-            'styles/zone-addons.scss',
-        ),
-        'output_filename': 'build/styles/zone-addons.css',
-    },
-    'zone-apps': {
-        'source_filenames': (
-            'styles/zone-apps.scss',
-        ),
-        'output_filename': 'build/styles/zone-apps.css',
-    },
-    'zone-archive': {
-        'source_filenames': (
-            'styles/zone-archive.scss',
-        ),
-        'output_filename': 'build/styles/zone-archive.css',
-    },
-    'zone-b2g': {
-        'source_filenames': (
-            'styles/zone-b2g.scss',
-        ),
-        'output_filename': 'build/styles/zone-b2g.css',
-    },
-    'zone-connect': {
-        'source_filenames': (
-            'styles/zone-connect.scss',
-        ),
-        'output_filename': 'build/styles/zone-connect.css',
-    },
-    'zone-firefox': {
-        'source_filenames': (
-            'styles/zone-firefox.scss',
-        ),
-        'output_filename': 'build/styles/zone-firefox.css',
-    },
-    'zone-games': {
-        'source_filenames': (
-            'styles/zone-games.scss',
-        ),
-        'output_filename': 'build/styles/zone-games.css',
-    },
-    'zone-learn': {
-        'source_filenames': (
-            'styles/zone-learn.scss',
-        ),
-        'output_filename': 'build/styles/zone-learn.css',
-    },
-    'zone-marketplace': {
-        'source_filenames': (
-            'styles/zone-marketplace.scss',
-        ),
-        'output_filename': 'build/styles/zone-marketplace.css',
-    },
-    'zone-ten': {
-        'source_filenames': (
-            'styles/zone-ten.scss',
-        ),
-        'output_filename': 'build/styles/zone-ten.css',
-    },
-    'zones': {
-        'source_filenames': (
-            'styles/zones.scss',
-        ),
-        'output_filename': 'build/styles/zones.css',
-    },
     'users': {
         'source_filenames': (
             'styles/users.scss',
@@ -904,6 +830,13 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/samples.css',
     },
+    # special styling for archived pages
+    'archive': {
+        'source_filenames': (
+            'styles/archive.scss',
+        ),
+        'output_filename': 'build/styles/archive.css',
+    },
 }
 
 # Locales with locale-specific fonts
@@ -963,12 +896,6 @@ for locale, slug in LOCALE_CSS.items():
 
 
 PIPELINE_JS = {
-    'dnt-helper': {
-        'source_filenames': (
-            'js/libs/mozilla.dnthelper.js',
-        ),
-        'output_filename': 'build/js/mozilla-dnthelper.js',
-    },
     'main': {
         'source_filenames': (
             'js/libs/jquery/jquery.js',
@@ -1047,13 +974,13 @@ PIPELINE_JS = {
     },
     'wiki': {
         'source_filenames': (
-            'js/wiki.js',
             'js/utils/utils.js',
             'js/utils/post-message-handler.js',
-            'js/utils/perf.js',
+            'js/wiki.js',
             'js/interactive.js',
             'js/wiki-samples.js',
             'js/wiki-toc.js',
+            'js/components/local-anchor.js',
         ),
         'output_filename': 'build/js/wiki.js',
         'extra_context': {
@@ -1199,8 +1126,10 @@ LEGACY_HOSTS = config('LEGACY_HOSTS', default='', cast=Csv())
 MAX_FILENAME_LENGTH = 200
 MAX_FILEPATH_LENGTH = 250
 
-ATTACHMENT_HOST = config('ATTACHMENT_HOST', default='mdn.mozillademos.org')
-ATTACHMENT_ORIGIN = config('ATTACHMENT_ORIGIN', default=ATTACHMENT_HOST)
+_PROD_ATTACHMENT_HOST = 'mdn.mozillademos.org'
+ATTACHMENT_HOST = config('ATTACHMENT_HOST', default=_PROD_ATTACHMENT_HOST)
+_PROD_ATTACHMENT_ORIGIN = 'mdn-demos-origin.moz.works'
+ATTACHMENT_ORIGIN = config('ATTACHMENT_ORIGIN', default=_PROD_ATTACHMENT_ORIGIN)
 
 # This should never be false for the production and stage deployments.
 ENABLE_RESTRICTIONS_BY_HOST = config(
@@ -1220,8 +1149,58 @@ ALLOW_ROBOTS_WEB_DOMAINS = set(
 # If the domain is a CDN, the CDN origin should be included.
 ALLOW_ROBOTS_DOMAINS = set(
     config('ALLOW_ROBOTS_DOMAINS',
-           default='mdn.mozillademos.org,mdn-demos-origin.moz.works',
+           default=','.join((_PROD_ATTACHMENT_HOST, _PROD_ATTACHMENT_ORIGIN)),
            cast=Csv()))
+
+
+# Allowed iframe URL patterns
+# The format is a three-element tuple:
+#  Protocol: Required, must match
+#  Domain: Required, must match
+#  Path: An optional path prefix or matching regex
+
+def parse_iframe_url(url):
+    '''
+    Parse an iframe URL into an allowed iframe pattern
+
+    A URL with a '*' in the path is treated as a regex.
+    '''
+    parts = urlsplit(url)
+    assert parts.scheme in ('http', 'https')
+    path = ''
+    if parts.path.strip('/') != '':
+        if '*' in parts.path:
+            path = re.compile(parts.path)
+        else:
+            path = parts.path
+    return (parts.scheme, parts.netloc, path)
+
+
+# Default allowed iframe URL patterns, roughly ordered by expected frequency
+ALLOWED_IFRAME_PATTERNS = [
+    # Live sample host
+    # https://developer.mozilla.org/en-US/docs/Web/CSS/filter
+    parse_iframe_url('https://' + _PROD_ATTACHMENT_HOST),
+    # Interactive Examples host
+    # On https://developer.mozilla.org/en-US/docs/Web/CSS/filter
+    parse_iframe_url(_PROD_INTERACTIVE_EXAMPLES),
+    # Samples, https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL
+    parse_iframe_url('https://mdn.github.io/'),
+    # Videos, https://developer.mozilla.org/en-US/docs/Tools/Web_Console
+    parse_iframe_url('https://www.youtube.com/embed/'),
+    # Samples, https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
+    parse_iframe_url('https://jsfiddle.net/.*/embedded/.*'),
+    # Charts, https://developer.mozilla.org/en-US/docs/MDN/Kuma/Server_charts
+    parse_iframe_url('https://rpm.newrelic.com/public/charts/'),
+]
+
+# Add the overridden attachment / live sample host
+if ATTACHMENT_HOST != _PROD_ATTACHMENT_HOST:
+    ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(PROTOCOL + ATTACHMENT_HOST))
+
+# Add the overridden interactive examples service
+if INTERACTIVE_EXAMPLES_BASE != _PROD_INTERACTIVE_EXAMPLES:
+    ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(INTERACTIVE_EXAMPLES_BASE))
 
 # Video settings, hard coded here for now.
 # TODO: figure out a way that doesn't need these values
@@ -1263,18 +1242,13 @@ CELERYD_MAX_TASKS_PER_CHILD = config(
 
 if MAINTENANCE_MODE:
     # In maintenance mode, we're going to avoid using the database, and
-    # use Celery's default beat-scheduler as well as memcached for storing
+    # use Celery's default beat-scheduler as well as Redis for storing
     # any results. In both normal and maintenance mode we use djcelery's
     # loader (see djcelery.setup_loader() above) so we, among other things,
     # acquire the Celery settings from among Django's settings.
     CELERYBEAT_SCHEDULER = 'celery.beat.PersistentScheduler'
-    DEFAULT_CELERY_RESULT_BACKEND = (
-        'cache+memcached://' + ';'.join(
-            config('MEMCACHE_SERVERS',
-                   default='127.0.0.1:11211',
-                   cast=Csv())
-        )
-    )
+    DEFAULT_CELERY_RESULT_BACKEND = CACHES['default']['LOCATION']
+
 else:
     CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
     DEFAULT_CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
@@ -1322,9 +1296,6 @@ CELERY_ROUTES = {
         'queue': 'mdn_purgeable'
     },
     'kuma.wiki.tasks.tidy_revision_content': {
-        'queue': 'mdn_purgeable'
-    },
-    'kuma.wiki.tasks.update_community_stats': {
         'queue': 'mdn_purgeable'
     },
     'kuma.search.tasks.prepare_index': {
@@ -1398,7 +1369,7 @@ CONSTANCE_BACKEND = ('kuma.core.backends.ReadOnlyConstanceDatabaseBackend'
                      if MAINTENANCE_MODE else
                      'constance.backends.database.DatabaseBackend')
 # must be an entry in the CACHES setting!
-CONSTANCE_DATABASE_CACHE_BACKEND = 'memcache'
+CONSTANCE_DATABASE_CACHE_BACKEND = 'default'
 
 # Settings and defaults controllable by Constance in admin
 CONSTANCE_CONFIG = dict(
@@ -1535,41 +1506,64 @@ ES_INDEXING_TIMEOUT = 30
 ES_LIVE_INDEX = config('ES_LIVE_INDEX', default=False, cast=bool)
 ES_URLS = config('ES_URLS', default='127.0.0.1:9200', cast=Csv())
 
-LOG_LEVEL = logging.WARN
-SYSLOG_TAG = 'http_app_kuma'
 
-# Update default logging
+# Logging is merged with the default logging
 # https://github.com/django/django/blob/stable/1.11.x/django/utils/log.py
-LOGGING = deepcopy(DEFAULT_LOGGING)
-# Add default log format
-LOGGING['formatters']['default'] = {
-    'format': '{0}: %(asctime)s %(name)s:%(levelname)s %(message)s: '
-              '%(pathname)s:%(lineno)s'.format(SYSLOG_TAG),
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        }
+    },
+    'formatters': {
+        'simple': {
+            'format': '%(name)s:%(levelname)s %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        },
+        'console-simple': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],  # Drop mail_admins
+            'level': 'INFO',
+        },
+        'kuma': {
+            'handlers': ['console-simple'],
+            'propagate': True,
+            'level': 'ERROR',
+        },
+        'elasticsearch': {
+            'handlers': ['console-simple'],
+            'level': config('ES_LOG_LEVEL', default='ERROR'),
+        },
+        'elasticsearch.trace': {
+            'handlers': ['console-simple'],
+            'level': config('ES_TRACE_LOG_LEVEL', default='ERROR'),
+            'propagate': False,
+        },
+        'urllib3': {
+            'handlers': ['console-simple'],
+            'level': 'ERROR',
+        },
+        'cacheback': {
+            'handlers': ['console-simple'],
+            'level': 'ERROR',
+        },
+    }
 }
-# Switch log level
-LOGGING['handlers']['console']['level'] = LOG_LEVEL
-# Don't email Django errors, we have Sentry
-LOGGING['loggers']['django']['handlers'] = ['console']
-# Add our loggers
-LOGGING['loggers'].update({
-    'kuma': {
-        'handlers': ['console'],
-        'propagate': True,
-        'level': logging.ERROR,
-    },
-    'elasticsearch': {
-        'handlers': ['console'],
-        'level': logging.ERROR,
-    },
-    'urllib3': {
-        'handlers': ['console'],
-        'level': logging.ERROR,
-    },
-    'cacheback': {
-        'handlers': ['console'],
-        'level': logging.ERROR,
-    },
-})
 
 CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=True, cast=bool)
 X_FRAME_OPTIONS = 'DENY'
@@ -1682,9 +1676,9 @@ with open(ce_path, 'r') as ce_file:
 
 # django-ratelimit
 RATELIMIT_ENABLE = config('RATELIMIT_ENABLE', default=True, cast=bool)
-RATELIMIT_USE_CACHE = config('RATELIMIT_USE_CACHE', default='memcache')
+RATELIMIT_USE_CACHE = config('RATELIMIT_USE_CACHE', default='default')
 RATELIMIT_VIEW = 'kuma.core.views.rate_limited'
 
 # Caching constants for the Cache-Control header.
 CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE = config(
-    'CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE', default=60 * 60 * 48, cast=int)
+    'CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE', default=60 * 5, cast=int)

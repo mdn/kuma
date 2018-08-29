@@ -200,7 +200,7 @@
                 // Set the selection
                 var selection = self.selection = ui.item;
                 if(selection.value !== undefined) {
-                        // Call the select method if present
+                    // Call the select method if present
                     if(select) {
                         select.call(self, event, ui);
                     }
@@ -273,10 +273,10 @@
             else if(self.options._renderItemAsLink) {
                 self._renderItem = function(list, item) {
                     return $('<li></li>')
-                            .data('item.autocomplete', item)
-                            .attr('title', item.url)
-                            .append($('<a></a>').text(item.label))
-                            .appendTo(list);
+                        .data('item.autocomplete', item)
+                        .attr('title', item.url)
+                        .append($('<a></a>').text(item.label))
+                        .appendTo(list);
                 };
             }
         },

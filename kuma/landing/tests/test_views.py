@@ -1,18 +1,18 @@
 import mock
 import pytest
+from django.core.cache import cache
 from django.utils.six.moves.urllib.parse import urlparse
 from ratelimit.exceptions import Ratelimited
 
-from kuma.core.cache import memcache
 from kuma.core.tests import assert_no_cache_header, assert_shared_cache_header
 from kuma.core.urlresolvers import reverse
 
 
 @pytest.fixture()
-def cleared_memcache():
-    memcache.clear()
-    yield memcache
-    memcache.clear()
+def cleared_cache():
+    cache.clear()
+    yield cache
+    cache.clear()
 
 
 def test_contribute_json(client, db):
@@ -26,19 +26,6 @@ def test_home(client, db):
     response = client.get(reverse('home'), follow=True)
     assert response.status_code == 200
     assert_shared_cache_header(response)
-
-
-def test_home_community_stats(client, db, cleared_memcache):
-    stats = {
-        'contributors': 'so many, like more than 10,000',
-        'locales': 'lots, maybe fifty'
-    }
-    memcache.set('community_stats', stats)
-    response = client.get(reverse('home'), follow=True)
-    assert response.status_code == 200
-    assert_shared_cache_header(response)
-    assert stats['contributors'] in response.content
-    assert stats['locales'] in response.content
 
 
 @mock.patch('kuma.landing.views.render')

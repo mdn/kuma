@@ -6,7 +6,7 @@ from .regions.column_container import ColumnContainer
 
 
 class ArticlePage(BasePage):
-    """A non-zone MDN wiki page."""
+    """An MDN wiki page."""
 
     URL_TEMPLATE = '/{locale}/docs/{slug}'
     DEFAULT_LOCALE = 'en-US'

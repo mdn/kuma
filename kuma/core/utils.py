@@ -1,8 +1,4 @@
 import datetime
-try:
-    import urlparse
-except ImportError:
-    import urllib.parse as urlparse
 import functools
 import hashlib
 import logging
@@ -14,19 +10,19 @@ from itertools import islice
 from babel import dates, localedata
 from celery import chain, chord
 from django.conf import settings
+from django.core.cache import cache
 from django.core.paginator import EmptyPage, InvalidPage, Paginator
 from django.http import QueryDict
 from django.shortcuts import _get_queryset
 from django.utils.cache import patch_cache_control
-from django.utils.encoding import force_unicode, smart_str
+from django.utils.encoding import force_text, smart_bytes
 from django.utils.http import urlencode
 from django.utils.translation import ugettext_lazy as _
 from polib import pofile
 from pytz import timezone
-from six.moves.urllib.parse import parse_qsl, urlsplit, urlunsplit
+from six.moves.urllib.parse import parse_qsl, ParseResult, urlparse, urlsplit, urlunsplit
 from taggit.utils import split_strip
 
-from .cache import memcache
 from .exceptions import DateTimeFormatError
 
 
@@ -132,16 +128,16 @@ def generate_filename_and_delete_previous(ffile, name, before_delete=None):
     return new_filename
 
 
-class MemcacheLockException(Exception):
+class CacheLockException(Exception):
     pass
 
 
-class MemcacheLock(object):
+class CacheLock(object):
     def __init__(self, key, attempts=1, expires=60 * 60 * 3):
         self.key = 'lock_%s' % key
         self.attempts = attempts
         self.expires = expires
-        self.cache = memcache
+        self.cache = cache
 
     def locked(self):
         return bool(self.cache.get(self.key))
@@ -159,13 +155,13 @@ class MemcacheLock(object):
                 logging.debug('Sleeping for %s while trying to acquire key %s',
                               sleep_time, self.key)
                 time.sleep(sleep_time)
-        raise MemcacheLockException('Could not acquire lock for %s' % self.key)
+        raise CacheLockException('Could not acquire lock for %s' % self.key)
 
     def release(self):
         self.cache.delete(self.key)
 
 
-def memcache_lock(prefix, expires=60 * 60):
+def cache_lock(prefix, expires=60 * 60):
     """
     Decorator that only allows one instance of the same command to run
     at a time.
@@ -174,14 +170,14 @@ def memcache_lock(prefix, expires=60 * 60):
         @functools.wraps(func)
         def wrapper(self, *args, **kwargs):
             name = '_'.join((prefix, func.__name__) + args)
-            lock = MemcacheLock(name, expires=expires)
+            lock = CacheLock(name, expires=expires)
             if lock.locked():
                 log.warning('Lock %s locked; ignoring call.' % name)
                 return
             try:
                 # Try to acquire the lock without blocking.
                 lock.acquire()
-            except MemcacheLockException:
+            except CacheLockException:
                 log.warning('Aborting %s; lock acquisition failed.' % name)
                 return
             else:
@@ -220,7 +216,7 @@ def parse_tags(tagstring, sorted=True):
     if not tagstring:
         return []
 
-    tagstring = force_unicode(tagstring)
+    tagstring = force_text(tagstring)
 
     # Special case - if there are no commas or double quotes in the
     # input, we don't *do* a recall... I mean, we know we only need to
@@ -357,11 +353,11 @@ def urlparams(url_, fragment=None, query_dict=None, **query):
     New query params will be appended to exising parameters, except duplicate
     names, which will be replaced.
     """
-    url_ = urlparse.urlparse(url_)
+    url_ = urlparse(url_)
     fragment = fragment if fragment is not None else url_.fragment
 
     q = url_.query
-    new_query_dict = (QueryDict(smart_str(q), mutable=True) if
+    new_query_dict = (QueryDict(smart_bytes(q), mutable=True) if
                       q else QueryDict('', mutable=True))
     if query_dict:
         for k, l in query_dict.lists():
@@ -378,8 +374,7 @@ def urlparams(url_, fragment=None, query_dict=None, **query):
 
     query_string = urlencode([(k, v) for k, l in new_query_dict.lists() for
                               v in l if v is not None])
-    new = urlparse.ParseResult(url_.scheme, url_.netloc, url_.path,
-                               url_.params, query_string, fragment)
+    new = ParseResult(url_.scheme, url_.netloc, url_.path, url_.params, query_string, fragment)
     return new.geturl()
 
 

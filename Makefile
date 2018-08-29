@@ -14,18 +14,15 @@ endif
 BASE_IMAGE_NAME ?= kuma_base
 KUMA_IMAGE_NAME ?= kuma
 KUMASCRIPT_IMAGE_NAME ?= kumascript
-REGISTRY ?= quay.io/
-IMAGE_PREFIX ?= mozmar
-BASE_IMAGE ?= ${REGISTRY}${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:${VERSION}
-BASE_IMAGE_1_9 ?= ${REGISTRY}${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:django-1.9
-BASE_IMAGE_1_10 ?= ${REGISTRY}${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:django-1.10
-BASE_IMAGE_1_11 ?= ${REGISTRY}${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:django-1.11
-BASE_IMAGE_LATEST ?= ${REGISTRY}${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:latest
+IMAGE_PREFIX ?= quay.io/mozmar
+BASE_IMAGE ?= ${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:${VERSION}
+BASE_IMAGE_PY3 ?= ${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:py3
+BASE_IMAGE_LATEST ?= ${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:latest
 IMAGE ?= $(BASE_IMAGE_LATEST)
-KUMA_IMAGE ?= ${REGISTRY}${IMAGE_PREFIX}/${KUMA_IMAGE_NAME}\:${VERSION}
-KUMA_IMAGE_LATEST ?= ${REGISTRY}${IMAGE_PREFIX}/${KUMA_IMAGE_NAME}\:latest
-KUMASCRIPT_IMAGE ?= ${REGISTRY}${IMAGE_PREFIX}/${KUMASCRIPT_IMAGE_NAME}\:${KS_VERSION}
-KUMASCRIPT_IMAGE_LATEST ?= ${REGISTRY}${IMAGE_PREFIX}/${KUMASCRIPT_IMAGE_NAME}\:latest
+KUMA_IMAGE ?= ${IMAGE_PREFIX}/${KUMA_IMAGE_NAME}\:${VERSION}
+KUMA_IMAGE_LATEST ?= ${IMAGE_PREFIX}/${KUMA_IMAGE_NAME}\:latest
+KUMASCRIPT_IMAGE ?= ${IMAGE_PREFIX}/${KUMASCRIPT_IMAGE_NAME}\:${KS_VERSION}
+KUMASCRIPT_IMAGE_LATEST ?= ${IMAGE_PREFIX}/${KUMASCRIPT_IMAGE_NAME}\:latest
 
 target = kuma
 requirements = -r requirements/local.txt
@@ -105,14 +102,8 @@ pull-latest: pull-base-latest pull-kuma-latest
 build-base:
 	docker build -f docker/images/kuma_base/Dockerfile -t ${BASE_IMAGE} .
 
-build-base-1.9:
-	docker build -f docker/images/kuma_base/Dockerfile-1.9 -t ${BASE_IMAGE_1_9} .
-
-build-base-1.10:
-	docker build -f docker/images/kuma_base/Dockerfile-1.10 -t ${BASE_IMAGE_1_10} .
-
-build-base-1.11:
-	docker build -f docker/images/kuma_base/Dockerfile-1.11 -t ${BASE_IMAGE_1_11} .
+build-base-py3:
+	docker build -f docker/images/kuma_base/Dockerfile-py3 -t ${BASE_IMAGE_PY3} .
 
 build-kuma:
 	docker build --build-arg REVISION_HASH=${KUMA_REVISION_HASH} \
@@ -156,5 +147,10 @@ shell_plus: up
 lint:
 	flake8 kuma docs tests
 
+npmrefresh:
+	cd /tools
+	echo '{"lockfileVersion": 1}' > package-lock.json
+	npm install
+
 # Those tasks don't have file targets
-.PHONY: test coveragetest locust clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh
+.PHONY: test coveragetest locust clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh npmrefresh

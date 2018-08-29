@@ -5,7 +5,7 @@
 Babel==2.2.0
 Jinja2==2.8
 MarkupSafe==0.23
-pytz==2015.7
+pytz==2018.5
 six==1.11.0
 
 # These requirements are unique to docs

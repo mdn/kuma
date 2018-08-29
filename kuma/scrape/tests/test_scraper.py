@@ -126,7 +126,7 @@ rate_limit_tests = {
 @mock.patch('kuma.scrape.scraper.time.sleep')
 @pytest.mark.parametrize('retry_after,sleep_time',
                          rate_limit_tests.values(),
-                         ids=rate_limit_tests.keys())
+                         ids=list(rate_limit_tests))
 def test_request_429_is_retried(mock_sleep, retry_after, sleep_time):
     """Requests are retried after a 429 Too Many Requests status."""
     requester = Requester('example.com', True)

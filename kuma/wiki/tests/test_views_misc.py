@@ -1,7 +1,7 @@
 import json
-from urllib import urlencode
 
 import pytest
+from django.utils.six.moves.urllib.parse import urlencode
 from waffle.testutils import override_switch
 
 from kuma.core.tests import assert_shared_cache_header
@@ -33,8 +33,7 @@ def test_ckeditor_config(db, client):
     'locale_case',
     ['all-locales', 'current-locale',
      'non-english-locale', 'exclude-current-locale'])
-def test_autosuggest(client, redirect_doc, doc_hierarchy_with_zones,
-                     locale_case, term):
+def test_autosuggest(client, redirect_doc, doc_hierarchy, locale_case, term):
     params = {}
     expected_status_code = 200
     if term:

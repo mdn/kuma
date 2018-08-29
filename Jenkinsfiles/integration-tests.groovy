@@ -46,7 +46,7 @@ def functional_test(browser, hub_name, base_dir) {
                           ["docker_args": "--link ${hub_name}:hub" +
                                           " --name ${test_name}" +
                                           " --volume ${base_dir}/test_results:/test_results" +
-                                          " --user 1000",
+                                          " --user ${UID}",
                            "cmd": cmd])
             }
         } finally {
@@ -67,7 +67,7 @@ def headless_test(base_dir) {
       dockerRun("kuma-integration-tests:${GIT_COMMIT_SHORT}",
                   ["docker_args": "--volume ${base_dir}/test_results:/test_results" +
                                   " --name ${test_name}" +
-                                  " --user 1000",
+                                  " --user ${UID}",
                   "cmd": "py.test tests/headless" +
                           " --base-url='${config.job.base_url}'" +
                           " --junit-xml=/test_results/headless.xml" +

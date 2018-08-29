@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from base64 import b64encode
-from urlparse import urljoin
 
 import bleach
 import pytest
 from django.conf import settings
 from django.test import TestCase
+from django.utils.six.moves.urllib.parse import urljoin
 from jinja2 import escape, Markup
 from pyquery import PyQuery as pq
 
@@ -687,8 +687,11 @@ def test_filteriframe():
         <p>test</p>
         """ % dict(embed_url=embed_url)
 
-    pattern = r'^https?\:\/\/(sample|test)server'
-    result_src = parse(doc_src).filterIframeHosts(pattern).serialize()
+    patterns = [
+        ('https', 'sampleserver', ''),
+        ('https', 'testserver', ''),
+    ]
+    result_src = parse(doc_src).filterIframeHosts(patterns).serialize()
     page = pq(result_src)
     assert page('#if1').attr('src') == embed_url
     assert page('#if2').attr('src') == 'https://testserver'
@@ -708,19 +711,13 @@ def test_filteriframe_empty_contents():
         <iframe>
         </iframe>
     """
-    pattern = r'https?\:\/\/sampleserver'
-    result_src = parse(doc_src).filterIframeHosts(pattern).serialize()
+    patterns = [('https', 'sampleserver', '')]
+    result_src = parse(doc_src).filterIframeHosts(patterns).serialize()
     assert normalize_html(expected_src) == normalize_html(result_src)
 
 
 FILTERIFRAME_ACCEPTED = {
-    'stage': ('https://stage-files.mdn.moz.works/'
-              'fr/docs/Test$samples/sample2?revision=234'),
-    'test': 'http://testserver/en-US/docs/Test$samples/test?revision=567',
-    'docker': 'http://localhost:8000/de/docs/Test$samples/test?revision=678',
-    'youtube_http': ('http://www.youtube.com/embed/'
-                     'iaNoBlae5Qw/?feature=player_detailpage'),
-    'youtube_ssl': ('https://youtube.com/embed/'
+    'youtube_ssl': ('https://www.youtube.com/embed/'
                     'iaNoBlae5Qw/?feature=player_detailpage'),
     'prod': ('https://mdn.mozillademos.org/'
              'en-US/docs/Web/CSS/text-align$samples/alignment?revision=456'),
@@ -730,6 +727,10 @@ FILTERIFRAME_ACCEPTED = {
                   'tutorial/sample6/index.html'),
     'ie_moz_net': ('https://interactive-examples.mdn.mozilla.net/'
                    'pages/js/array-push.html'),
+    'code_sample': (settings.PROTOCOL + settings.ATTACHMENT_HOST +
+                    '/de/docs/Test$samples/test?revision=678'),
+    'interactive': (settings.INTERACTIVE_EXAMPLES_BASE +
+                    '/pages/http/headers.html')
 }
 
 FILTERIFRAME_REJECTED = {
@@ -745,35 +746,43 @@ FILTERIFRAME_REJECTED = {
     'vagrant_2': ('http://developer-local:81/'
                   'en-US/docs/Test$samples/sample1?revision=123'),
     'cdn': ('https://developer.cdn.mozilla.net/is/this/valid?'),
+    'stage': ('https://stage-files.mdn.moz.works/'
+              'fr/docs/Test$samples/sample2?revision=234'),
+    'test': 'http://testserver/en-US/docs/Test$samples/test?revision=567',
+    'youtube_no_www': ('https://youtube.com/embed/'
+                       'iaNoBlae5Qw/?feature=player_detailpage'),
+    'youtube_http': ('http://www.youtube.com/embed/'
+                     'iaNoBlae5Qw/?feature=player_detailpage'),
+    'youtube_other2': 'https://www.youtube.com/sembed/',
+    'jsfiddle_other': 'https://jsfiddle.net/about',
 }
 
 
-@pytest.mark.parametrize('url', FILTERIFRAME_ACCEPTED.values(),
-                         ids=FILTERIFRAME_ACCEPTED.keys())
-def test_filteriframe_default_accepted(url):
+@pytest.mark.parametrize('url', list(FILTERIFRAME_ACCEPTED.values()),
+                         ids=list(FILTERIFRAME_ACCEPTED))
+def test_filteriframe_default_accepted(url, settings):
     doc_src = '<iframe id="test" src="%s"></iframe>' % url
-    pattern = settings.CONSTANCE_CONFIG['KUMA_WIKI_IFRAME_ALLOWED_HOSTS'][0]
-    result_src = parse(doc_src).filterIframeHosts(pattern).serialize()
+    patterns = settings.ALLOWED_IFRAME_PATTERNS
+    result_src = parse(doc_src).filterIframeHosts(patterns).serialize()
     page = pq(result_src)
     assert page('#test').attr('src') == url
 
 
-@pytest.mark.parametrize('url', FILTERIFRAME_REJECTED.values(),
-                         ids=FILTERIFRAME_REJECTED.keys())
-def test_filteriframe_default_rejected(url):
+@pytest.mark.parametrize('url', list(FILTERIFRAME_REJECTED.values()),
+                         ids=list(FILTERIFRAME_REJECTED))
+def test_filteriframe_default_rejected(url, settings):
     doc_src = '<iframe id="test" src="%s"></iframe>' % url
-    pattern = settings.CONSTANCE_CONFIG['KUMA_WIKI_IFRAME_ALLOWED_HOSTS'][0]
-    result_src = parse(doc_src).filterIframeHosts(pattern).serialize()
+    patterns = settings.ALLOWED_IFRAME_PATTERNS
+    result_src = parse(doc_src).filterIframeHosts(patterns).serialize()
     page = pq(result_src)
     assert page('#test').attr('src') == ''
 
 
 BLEACH_INVALID_HREFS = {
     'b64_script1': ('data:text/html;base64,' +
-                    b64encode('<script>alert("document.cookie:" +'
-                              ' document.cookie);')),
+                    b64encode(b'<script>alert("document.cookie:" + document.cookie);').decode('utf-8')),
     'b64_script2': ('data:text/html;base64,' +
-                    b64encode('<script>alert(document.domain)</script>')),
+                    b64encode(b'<script>alert(document.domain)</script>').decode('utf-8')),
     'javascript': 'javascript:alert(1)',
     'js_htmlref1': 'javas&#x09;cript:alert(1)',
     'js_htmlref2': '&#14;javascript:alert(1)',
@@ -786,8 +795,8 @@ BLEACH_VALID_HREFS = {
 }
 
 
-@pytest.mark.parametrize('href', BLEACH_INVALID_HREFS.values(),
-                         ids=BLEACH_INVALID_HREFS.keys())
+@pytest.mark.parametrize('href', list(BLEACH_INVALID_HREFS.values()),
+                         ids=list(BLEACH_INVALID_HREFS))
 def test_bleach_clean_removes_invalid_hrefs(href):
     """Bleach removes invalid hrefs."""
     html = '<p><a id="test" href="%s">click me</a></p>' % href
@@ -799,8 +808,8 @@ def test_bleach_clean_removes_invalid_hrefs(href):
     assert link.attr('href') is None
 
 
-@pytest.mark.parametrize('href', BLEACH_VALID_HREFS.values(),
-                         ids=BLEACH_VALID_HREFS.keys())
+@pytest.mark.parametrize('href', list(BLEACH_VALID_HREFS.values()),
+                         ids=list(BLEACH_VALID_HREFS))
 def test_bleach_clean_hrefs(href):
     """Bleach retains valid hrefs."""
     html = '<p><a id="test" href="%s">click me</a></p>' % href
@@ -1300,21 +1309,21 @@ def test_extractor_section(root_doc, annotate_links):
     assert normalize_html(result) == normalize_html(expected)
 
 
-@pytest.mark.parametrize('wrapper', SUMMARY_PLUS_SEO_WRAPPERS.values(),
-                         ids=SUMMARY_PLUS_SEO_WRAPPERS.keys())
-@pytest.mark.parametrize('markup, text', SUMMARY_CONTENT.values(),
-                         ids=SUMMARY_CONTENT.keys())
+@pytest.mark.parametrize('wrapper', list(SUMMARY_PLUS_SEO_WRAPPERS.values()),
+                         ids=list(SUMMARY_PLUS_SEO_WRAPPERS))
+@pytest.mark.parametrize('markup, text', list(SUMMARY_CONTENT.values()),
+                         ids=list(SUMMARY_CONTENT))
 def test_summary_section(markup, text, wrapper):
     content = wrapper.format(markup)
     assert get_seo_description(content, 'en-US') == text
     assert normalize_html(get_seo_description(content, 'en-US', False)) == normalize_html(markup)
 
 
-@pytest.mark.parametrize('wrapper', SUMMARY_WRAPPERS.values(),
-                         ids=SUMMARY_WRAPPERS.keys())
+@pytest.mark.parametrize('wrapper', list(SUMMARY_WRAPPERS.values()),
+                         ids=list(SUMMARY_WRAPPERS))
 @pytest.mark.parametrize('markup, expected_markup, text',
-                         SUMMARIES_SEO_CONTENT.values(),
-                         ids=SUMMARIES_SEO_CONTENT.keys())
+                         list(SUMMARIES_SEO_CONTENT.values()),
+                         ids=list(SUMMARIES_SEO_CONTENT))
 def test_multiple_seo_summaries(markup, expected_markup, text, wrapper):
     content = wrapper.format(markup)
     assert get_seo_description(content, 'en-US') == text

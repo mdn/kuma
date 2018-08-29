@@ -2,7 +2,6 @@
 import difflib
 import json
 import re
-import urlparse
 
 import jinja2
 from constance import config
@@ -12,6 +11,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.template import loader
 from django.utils import lru_cache
 from django.utils.html import conditional_escape
+from django.utils.six.moves.urllib.parse import urlsplit, urlunparse
 from django.utils.translation import ugettext
 from django_jinja import library
 from pyquery import PyQuery as pq
@@ -202,26 +202,6 @@ def tojson(value):
     return jinja2.Markup(result)
 
 
-@library.global_function
-def document_zone_management_links(user, document):
-    links = {'add': None, 'change': None}
-    zone = document.nearest_zone
-
-    # Enable "add" link if there is no zone for this document, or if there's a
-    # zone but the document is not itself the root (ie. to add sub-zones).
-    if ((not zone or zone.document_id != document.id) and
-            user.has_perm('wiki.add_documentzone')):
-        links['add'] = '%s?document=%s' % (
-            reverse('admin:wiki_documentzone_add'), document.id)
-
-    # Enable "change" link if there's a zone, and the user has permission.
-    if zone and user.has_perm('wiki.change_documentzone'):
-        links['change'] = reverse('admin:wiki_documentzone_change',
-                                  args=(zone.id,))
-
-    return links
-
-
 @library.filter
 def absolutify(url, site=None):
     """
@@ -236,7 +216,7 @@ def absolutify(url, site=None):
     if not site:
         site = Site.objects.get_current()
 
-    parts = urlparse.urlsplit(url)
+    parts = urlsplit(url)
 
     scheme = 'https'
     netloc = site.domain
@@ -247,7 +227,7 @@ def absolutify(url, site=None):
     if path == '':
         path = '/'
 
-    return urlparse.urlunparse([scheme, netloc, path, None, query, fragment])
+    return urlunparse([scheme, netloc, path, None, query, fragment])
 
 
 @library.global_function

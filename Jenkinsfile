@@ -7,8 +7,7 @@ def loadBranch(String branch) {
   if (fileExists("./Jenkinsfiles/${branch}.yml")) {
     config = readYaml file: "./Jenkinsfiles/${branch}.yml"
     println "config ==> ${config}"
-  }
-  else {
+  } else {
     config = []
   }
 
@@ -16,13 +15,17 @@ def loadBranch(String branch) {
     println "Pipeline disabled."
   }
   else {
-    if (config && config.pipeline && config.pipeline.script) {
-      println "Loading ./Jenkinsfiles/${config.pipeline.script}.groovy"
-      load "./Jenkinsfiles/${config.pipeline.script}.groovy"
-    }
-    else {
-      println "Loading ./Jenkinsfiles/${branch}.groovy"
-      load "./Jenkinsfiles/${branch}.groovy"
+    // TODO: After cutover to IT-owned cluster, make "mdnwebdocs" the default
+    //       value for IMAGE_PREFIX in the Makefile, and remove this code.
+    def image_prefix = utils.is_mozmeao_pipeline() ? 'quay.io/mozmar' : 'mdnwebdocs'
+    withEnv(["IMAGE_PREFIX=${image_prefix}"]) {
+      if (config && config.pipeline && config.pipeline.script) {
+        println "Loading ./Jenkinsfiles/${config.pipeline.script}.groovy"
+        load "./Jenkinsfiles/${config.pipeline.script}.groovy"
+      } else {
+        println "Loading ./Jenkinsfiles/${branch}.groovy"
+        load "./Jenkinsfiles/${branch}.groovy"
+      }
     }
   }
 }
@@ -34,7 +37,7 @@ node {
     sh 'git submodule update --init --recursive'
     setGitEnvironmentVariables()
     // Set UID to jenkins
-    env['UID'] = 1000
+    env['UID'] = sh(returnStdout: true, script: 'id -u jenkins').trim()
     // Prepare for junit test results
     sh "mkdir -p test_results"
     sh "rm -f test_results/*.xml"
@@ -44,8 +47,7 @@ node {
     try {
       if (fileExists("./Jenkinsfiles/${env.BRANCH_NAME}.groovy") || fileExists("./Jenkinsfiles/${env.BRANCH_NAME}.yml")) {
         loadBranch(env.BRANCH_NAME)
-      }
-      else {
+      } else {
         loadBranch("default")
       }
     }

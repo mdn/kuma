@@ -13,6 +13,7 @@
         // Site configuration
         win.mdn.ckeditor = {};
         win.mdn.features = {};
+        win.mdn.siteUrl = '{{ SITE_URL }}';
         win.mdn.staticPath = '{{ STATIC_URL }}';
         win.mdn.wiki = {
             {%- if not untrusted %}
@@ -53,6 +54,7 @@
             siteUrl: "{{ settings.SITE_URL }}",
             editorUrl: "{{ settings.INTERACTIVE_EXAMPLES_BASE }}"
         };
+        win.mdn.langCookieName = "{{ settings.LANGUAGE_COOKIE_NAME }}";
 
     })(this);
 </script>

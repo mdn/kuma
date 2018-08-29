@@ -27,7 +27,6 @@ $callout-min-height: 170px;
             @include bidi(((right, $grid-spacing, left, auto),));
             height: $callout-icon-width;
             width: $callout-icon-width;
-            background-image: url($path-to-embedded-images + 'promo-sprite.png');
         }
 
         &:before {
@@ -222,6 +221,10 @@ $standard-callout-image-spacing: 129px + 20px;
         margin-bottom: 0;
     }
 
+    .callout-subtext {
+        @include set-font-size($body-font-size);
+    }
+
     button {
         @include bidi(((text-align, left, text-align, right),));
         background: #fff;
@@ -275,7 +278,7 @@ larger teaser image gets hidden
 Survey callout background image
 -------------------------------------------------------------- */
 
-.callout-survey {
+.callout-survey a {
     &:after {
         background-image: url($path-to-embedded-images + 'promos/survey.svg');
     }
@@ -284,5 +287,81 @@ Survey callout background image
 @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx) {
     .callout-survey a:after {
         background-image: url($path-to-embedded-images + 'promos/survey.svg');
+    }
+}
+
+/*
+Fx-dev callout
+-------------------------------------------------------------- */
+
+.callout-fx-dev {
+    box-sizing: border-box;
+    background: #1bccdb url($path-to-images + 'embed/promos/fx-dev-background.svg') 0 0 no-repeat;
+    background-size: cover;
+
+    span {
+        position: relative;
+        padding: 0;
+    }
+
+    a {
+        padding: $gutter-width;
+        min-height: 150px;
+
+        @media #{$mq-small-desktop-and-up} {
+            padding: 10px $gutter-width;
+        }
+
+        @media #{$mq-tablet-only} {
+            padding: 18px $gutter-width;
+            min-height: 130px;
+        }
+
+        &:hover,
+        &:visited,
+        &:focus,
+        &:active {
+            text-decoration: none;
+        }
+    }
+
+    .main-copy {
+        color: #fff;
+        margin-left: 5px;
+        @include set-font-size(2rem);
+        line-height: 1.2;
+
+        @media #{$mq-small-desktop-and-up} {
+            @include set-font-size(1.7rem);
+        }
+
+        @media #{$mq-tablet-only} {
+            @include set-font-size(1.5rem);
+        }
+    }
+
+    .callout-subtext {
+        display: block;
+        color: #fff;
+        margin-top: 5px;
+        font-weight: normal;
+    }
+
+    button {
+        padding: 5px 15px 3px;
+        border-radius: 3rem;
+        border: 0;
+        min-width: 170px;
+
+        &:before {
+            content: '';
+            display: inline-block;
+            background: transparent url($path-to-images + 'embed/promos/fx-dev-logo.png') 0 0 no-repeat;
+            background-size: 32px 33px;
+            margin-right: 5px;
+            width: 36px;
+            height: 36px;
+            vertical-align: middle;
+        }
     }
 }

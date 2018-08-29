@@ -1,23 +1,18 @@
 # -*- coding: utf-8 -*-
-try:
-    from cStringIO import cStringIO as StringIO
-except ImportError:
-    from StringIO import StringIO
 import json
 
 import newrelic.agent
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.exceptions import PermissionDenied
 from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
-                         HttpResponsePermanentRedirect, HttpResponseRedirect,
-                         JsonResponse)
+                         HttpResponsePermanentRedirect, JsonResponse)
 from django.http.multipartparser import MultiPartParser
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.cache import add_never_cache_headers, patch_vary_headers
 from django.utils.http import parse_etags, quote_etag
 from django.utils.safestring import mark_safe
+from django.utils.six import StringIO
 from django.utils.translation import ugettext
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
@@ -46,7 +41,7 @@ from ..decorators import (allow_CORS_GET, check_readonly, prevent_indexing,
 from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import TreeMoveForm
 from ..models import (Document, DocumentDeletionLog,
-                      DocumentRenderedContentNotAvailable, DocumentZone)
+                      DocumentRenderedContentNotAvailable)
 from ..tasks import move_page
 
 
@@ -249,7 +244,7 @@ def _get_doc_and_fallback_reason(document_locale, document_slug):
     parent_fields = ['parent__{}'.format(field) for field in ('locale', 'slug', 'current_revision__slug')]
     parent_topic_fields = ['parent_topic__{}'.format(field) for field in ('id', 'title', 'slug')]
 
-    document_fields = ['html', 'rendered_html', 'zone_subnav_local_html', 'body_html',
+    document_fields = ['html', 'rendered_html', 'body_html',
                        'locale', 'slug', 'title', 'is_localizable', 'rendered_errors',
                        'toc_html', 'summary_html', 'summary_text', 'quick_links_html']
 
@@ -486,29 +481,6 @@ def as_json(request, document_slug=None, document_locale=None):
     return JsonResponse(data)
 
 
-@shared_cache_control(s_maxage=60 * 60 * 24)
-@block_user_agents
-@require_GET
-@allow_CORS_GET
-@process_document_path
-@prevent_indexing
-def styles(request, document_slug=None, document_locale=None):
-    """
-    This is deprecated, and only exists temporarily to serve old
-    document pages that request zone CSS via this endpoint.
-    """
-    # These queries are here simply to make sure the document
-    # exists and might have had some legacy custom zone CSS.
-    document = get_object_or_404(
-        Document,
-        slug=document_slug,
-        locale=document_locale
-    )
-    get_object_or_404(DocumentZone, document=document)
-    # All of the legacy custom zone CSS has been rolled into "zones.css".
-    return HttpResponseRedirect(static('build/styles/zones.css'))
-
-
 @never_cache
 @csrf_exempt
 @block_user_agents
@@ -573,6 +545,9 @@ def _document_redirect_to_create(document_slug, document_locale, slug_dict):
                                        slug=slug_dict['parent'])
         if parent_doc.is_redirect:
             parent_doc = parent_doc.get_redirect_document(id_only=True)
+            if parent_doc is None:
+                # Redirect is not to a Document, can't create subpage
+                raise Http404()
 
         url = urlparams(url, parent=parent_doc.id,
                         slug=slug_dict['specific'])
@@ -732,7 +707,6 @@ def document(request, document_slug, document_locale):
 
         # Retrieve pre-parsed content hunks
         quick_links_html = doc.get_quick_links_html()
-        zone_subnav_html = doc.get_zone_subnav_html()
         body_html = doc.get_body_html()
 
         # Record the English slug in Google Analytics,
@@ -760,7 +734,6 @@ def document(request, document_slug, document_locale):
             'document_html': doc_html,
             'toc_html': toc_html,
             'quick_links_html': quick_links_html,
-            'zone_subnav_html': zone_subnav_html,
             'body_html': body_html,
             'contributors': contributors,
             'contributors_count': contributors_count,

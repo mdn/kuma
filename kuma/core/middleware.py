@@ -1,5 +1,4 @@
 import contextlib
-from urlparse import urljoin
 
 from django.conf import settings
 from django.contrib.sessions.middleware import SessionMiddleware
@@ -9,7 +8,7 @@ from django.http import (HttpResponseForbidden,
                          HttpResponsePermanentRedirect,
                          HttpResponseRedirect)
 from django.utils.encoding import iri_to_uri, smart_str
-from django.utils.six.moves.urllib.parse import urlsplit
+from django.utils.six.moves.urllib.parse import urlsplit, urlunsplit
 from whitenoise.middleware import WhiteNoiseMiddleware
 
 from kuma.wiki.views.legacy import (mindtouch_to_kuma_redirect,
@@ -317,7 +316,11 @@ class LegacyDomainRedirectsMiddleware(MiddlewareBase):
 
     def __call__(self, request):
         if request.get_host() in settings.LEGACY_HOSTS:
-            return HttpResponsePermanentRedirect(
-                urljoin(settings.SITE_URL, request.get_full_path())
-            )
+            site_parts = urlsplit(settings.SITE_URL)
+            legacy_parts = urlsplit(request.get_full_path())
+
+            # Construct the destination URL with the scheme and domain from the
+            # SITE_URL, and the path, querystring, etc from the legacy URL.
+            dest_url = urlunsplit(site_parts[:2] + legacy_parts[2:])
+            return HttpResponsePermanentRedirect(dest_url)
         return self.get_response(request)

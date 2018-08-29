@@ -13,19 +13,26 @@
     "url": "https://bugzilla.mozilla.org/"
   },
   "scripts": {
-    "lint": "./node_modules/.bin/eslint kuma/",
+    "stylelint": "./node_modules/.bin/stylelint \"kuma/static/styles/**/*.scss\"",
+    "eslint": "./node_modules/.bin/eslint kuma/",
     "optim:svg": "svgo jinja2/includes/icons/* --disable={removeViewBox,removeTitle} --multipass --pretty",
-    "precommit": "npm run lint"
+    "precommit": "npm run eslint && npm run stylelint"
+  },
+  "dependencies": {
+    "clean-css": "3.4.28",
+    "node-sass": "4.9.2",
+    "stylelint": "9.3.0",
+    "eslint": "5.1.0",
+    "uglify-js": "2.8.29"
   },
   "devDependencies": {
-    "eslint": "^3.19.0",
-    "gulp": "^3.9.1",
-    "gulp-postcss": "^7.0.1",
-    "gulp-sass": "^3.1.0",
-    "gulp-stylelint": "^3.9.0",
-    "gulp-watch": "^4.3.6",
-    "husky": "^0.13.3",
-    "postcss-selector-matches": "^3.0.1",
-    "svgo": "^1.0.5"
+    "gulp": "3.9.1",
+    "gulp-postcss": "7.0.1",
+    "gulp-sass": "4.0.1",
+    "gulp-stylelint": "7.0.0",
+    "gulp-watch": "5.0.0",
+    "husky": "0.14.3",
+    "postcss-selector-matches": "3.0.1",
+    "svgo": "1.0.5"
   }
 }

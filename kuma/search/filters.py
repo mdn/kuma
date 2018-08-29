@@ -1,7 +1,7 @@
 import collections
 
 from django.conf import settings
-from elasticsearch_dsl import F, Q, query
+from elasticsearch_dsl import Q, query
 from rest_framework.filters import BaseFilterBackend
 
 from kuma.wiki.search import WikiDocumentType
@@ -68,8 +68,8 @@ class LanguageFilterBackend(BaseFilterBackend):
             locales = [request.LANGUAGE_CODE, settings.LANGUAGE_CODE]
 
         positive_sq = {
-            'filtered': {
-                'query': sq,
+            'bool': {
+                'must': sq,
                 'filter': {'terms': {'locale': locales}}
             }
         }
@@ -96,10 +96,10 @@ class SearchQueryBackend(BaseFilterBackend):
     """
     search_operations = [
         # (<query type>, <field>, <boost factor>)
-        ('match', 'title', 6.0),
+        ('match', 'title', 7.2),
         ('match', 'summary', 2.0),
         ('match', 'content', 1.0),
-        ('match_phrase', 'title', 10.0),
+        ('match_phrase', 'title', 12.0),
         ('match_phrase', 'content', 8.0),
     ]
 
@@ -124,11 +124,11 @@ class SearchQueryBackend(BaseFilterBackend):
         return queryset
 
 
-class AdvancedSearchQueryBackend(BaseFilterBackend):
+class KeywordQueryBackend(BaseFilterBackend):
     """
     A django-rest-framework filter backend that filters the given queryset
-    based on additional query parameters that correspond to advanced search
-    indexes.
+    based on additional query parameters that correspond to case-insensitive
+    keywords.
     """
     fields = (
         'kumascript_macros',
@@ -140,27 +140,31 @@ class AdvancedSearchQueryBackend(BaseFilterBackend):
         queries = []
 
         for field in self.fields:
-            search_param = view.query_params.get(field)
+            raw_search_param = view.query_params.get(field, '').lower()
+            wildcard = '*' in raw_search_param or '?' in raw_search_param
+            search_param = raw_search_param.replace('*', '').replace('?', '')
             if not search_param:
+                # Skip if not given, or just wildcard
                 continue
 
+            # Exact match of sanitized value
             queries.append(
-                Q('match', **{field: {'query': search_param,
-                                      'boost': 10.0}}))
-            queries.append(
-                Q('prefix', **{field: {'value': search_param,
-                                       'boost': 5.0}}))
-
+                Q('term', **{field: {'value': search_param, 'boost': 10.0}}))
+            if wildcard:
+                # Wildcard search of value as passed
+                queries.append(
+                    Q('wildcard', **{field: {'value': raw_search_param,
+                                             'boost': 5.0}}))
         if queries:
             queryset = queryset.query(query.Bool(should=queries))
 
         return queryset
 
 
-class DatabaseFilterBackend(BaseFilterBackend):
+class TagGroupFilterBackend(BaseFilterBackend):
     """
     A django-rest-framework filter backend that filters the given
-    queryset based on the filters stored in the database.
+    queryset based on named tag groups.
 
     If there are more than one tag attached to the filter it will
     use the filter's operator to determine which logical operation to
@@ -175,33 +179,42 @@ class DatabaseFilterBackend(BaseFilterBackend):
 
         for serialized_filter in view.serialized_filters:
             filter_tags = serialized_filter['tags']
-            filter_operator = Filter.OPERATORS[serialized_filter['operator']]
+            if not filter_tags:
+                # Incomplete filter has no tags, skip it
+                continue
+
             if serialized_filter['slug'] in view.selected_filters:
-                if len(filter_tags) > 1:
-                    tag_filters = []
-                    for filter_tag in filter_tags:
-                        tag_filters.append(F('term', tags=filter_tag))
-                    active_filters.append(F(filter_operator, tag_filters))
+                # User selected this filter - filter on the associated tags
+                tag_filters = []
+                for filter_tag in filter_tags:
+                    tag_filters.append(Q('term', tags=filter_tag))
+
+                filter_operator = Filter.OPERATORS[serialized_filter['operator']]
+                if len(tag_filters) > 1 and filter_operator == 'and':
+                    # Add an AND filter as a subclause
+                    active_filters.append(Q('bool', must=tag_filters))
                 else:
-                    active_filters.append(F('term', tags=filter_tags[0]))
+                    # Extend list of tags for the OR clause
+                    active_filters.extend(tag_filters)
 
+            # Aggregate counts for active filters for sidebar
             if len(filter_tags) > 1:
-                facet_params = F('terms', tags=list(filter_tags))
+                facet_params = Q('terms', tags=list(filter_tags))
             else:
-                if filter_tags:
-                    facet_params = F('term', tags=filter_tags[0])
-            if len(filter_tags):
-                active_facets.append((serialized_filter['slug'], facet_params))
+                facet_params = Q('term', tags=filter_tags[0])
+            active_facets.append((serialized_filter['slug'], facet_params))
 
+        # Count documents across all tags
+        for facet_slug, facet_params in active_facets:
+            queryset.aggs.bucket(facet_slug, 'filter',
+                                 **facet_params.to_dict())
+
+        # Filter by tag only after counting documents across all tags
         if active_filters:
             if len(active_filters) == 1:
                 queryset = queryset.post_filter(active_filters[0])
             else:
-                queryset = queryset.post_filter(F('or', active_filters))
-
-        for facet_slug, facet_params in active_facets:
-            queryset.aggs.bucket(facet_slug, 'filter',
-                                 **facet_params.to_dict())
+                queryset = queryset.post_filter(Q('bool', should=active_filters))
 
         return queryset
 

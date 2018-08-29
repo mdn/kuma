@@ -11,15 +11,14 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sitemaps import GenericSitemap
 from django.core.mail import mail_admins, send_mail
-from django.db import connection, transaction
+from django.db import transaction
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 from djcelery_transactions import task as transaction_task
 from lxml import etree
 
-from kuma.core.cache import memcache
 from kuma.core.decorators import skip_in_maintenance_mode
-from kuma.core.utils import chord_flow, chunked, MemcacheLock
+from kuma.core.utils import CacheLock, chord_flow, chunked
 from kuma.search.models import Index
 
 from .events import first_edit_email
@@ -31,7 +30,7 @@ from .utils import tidy_content
 
 
 log = logging.getLogger('kuma.wiki.tasks')
-render_lock = MemcacheLock('render-stale-documents-lock', expires=60 * 60)
+render_lock = CacheLock('render-stale-documents-lock', expires=60 * 60)
 
 
 @task(rate_limit='60/m')
@@ -254,49 +253,6 @@ def move_page(locale, slug, new_slug, user_id):
               message,
               settings.DEFAULT_FROM_EMAIL,
               [user.email])
-
-
-@task
-@skip_in_maintenance_mode
-def update_community_stats():
-    cursor = connection.cursor()
-    try:
-        cursor.execute("""
-            SELECT count(creator_id)
-            FROM
-              (SELECT DISTINCT creator_id
-               FROM wiki_revision
-               WHERE created >= DATE_SUB(NOW(), INTERVAL 1 YEAR)) AS contributors
-            """)
-        contributors = cursor.fetchone()
-
-        cursor.execute("""
-            SELECT count(locale)
-            FROM
-              (SELECT DISTINCT wd.locale
-               FROM wiki_document wd,
-                                  wiki_revision wr
-               WHERE wd.id = wr.document_id
-                 AND wr.created >= DATE_SUB(NOW(), INTERVAL 1 YEAR)) AS locales
-            """)
-        locales = cursor.fetchone()
-    finally:
-        cursor.close()
-
-    community_stats = {}
-
-    try:
-        community_stats['contributors'] = contributors[0]
-        community_stats['locales'] = locales[0]
-    except IndexError:
-        community_stats = None
-
-    # storing a None value in cache allows a better check for
-    # emptiness in the view
-    if 0 in community_stats.values():
-        community_stats = None
-
-    memcache.set('community_stats', community_stats, 86400)
 
 
 @task

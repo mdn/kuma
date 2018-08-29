@@ -26,12 +26,10 @@ then
     mysql -e "CREATE DATABASE IF NOT EXISTS ${CREATE_DB};";
 fi
 
-# Install pipeline toolchain
-if [ ${INSTALL_PIPELINE:-0} -ne 0 ]
+# Install asset tools with npm
+if [ ${INSTALL_NPM_TOOLS:-0} -ne 0 ]
 then
-    npm install
-    npm install clean-css@3.4.23
-    npm install uglify-js@2.4.13
+    npm install --production
 fi
 
 # Install docker-compose

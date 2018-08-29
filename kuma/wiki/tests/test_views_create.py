@@ -130,8 +130,8 @@ def test_create_valid(add_doc_client):
 @pytest.mark.review_tags
 @pytest.mark.parametrize(
     'slug',
-    SLUG_SIMPLE_CASES.values() + SLUG_RESERVED_CASES.values(),
-    ids=SLUG_SIMPLE_CASES.keys() + SLUG_RESERVED_CASES.keys())
+    list(SLUG_SIMPLE_CASES.values()) + list(SLUG_RESERVED_CASES.values()),
+    ids=list(SLUG_SIMPLE_CASES) + list(SLUG_RESERVED_CASES))
 def test_create_invalid(add_doc_client, slug):
     """Test creating a new document with valid and invalid slugs."""
     data = dict(
@@ -198,8 +198,8 @@ def test_create_child_valid(root_doc, add_doc_client, slug):
 @pytest.mark.review_tags
 @pytest.mark.parametrize(
     'slug',
-    SLUG_SIMPLE_CASES.values(),
-    ids=SLUG_SIMPLE_CASES.keys())
+    list(SLUG_SIMPLE_CASES.values()),
+    ids=list(SLUG_SIMPLE_CASES))
 def test_create_child_invalid(root_doc, add_doc_client, slug):
     """Test creating a new child document with valid and invalid slugs."""
     data = dict(

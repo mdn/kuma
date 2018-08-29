@@ -17,9 +17,7 @@
             if (
                 currentEntry.initiatorType &&
                 currentEntry.initiatorType === 'iframe' &&
-                currentEntry.name.indexOf(
-                    'interactive-examples.mdn.mozilla.net'
-                ) > -1
+                currentEntry.name.indexOf(targetOrigin) > -1
             ) {
                 return perfEntries[i];
             }
@@ -64,7 +62,7 @@
                     category: 'Interactive Examples',
                     action: 'Time to iframe fetch start',
                     label:
-                        new Date().getTime() + '-' + mdn.utils.randomString(5),
+                        mdn.utils.randomString(5) + '-' + new Date().getTime(),
                     value: timeToIframeFetchStart
                 });
 

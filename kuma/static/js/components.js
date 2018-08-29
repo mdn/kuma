@@ -80,8 +80,8 @@
                     // Add the close
                     var $closeButton = $('<button type="button" class="submenu-close transparent">' +
                         '<span class="offscreen">' + gettext('Close submenu') + '</span></button>')
-                    .append(closeIcon)
-                    .appendTo($submenu);
+                        .append(closeIcon)
+                        .appendTo($submenu);
 
                     // Hide the submenu when the main menu is blurred for hideDelay
                     $self.on('mouseleave focusout', function() {
@@ -119,7 +119,7 @@
                     });
 
                     // Close button should close the submenu
-                    $closeButton.on('click', function(){
+                    $closeButton.on('click touchend', function(){
                         closeSubmenu($submenu || $(this).parent());
                     });
                 }
@@ -180,11 +180,11 @@
                 // Set the z-index to one less so another menu would get top spot if overlapping and opening
                 if($sub) {
                     $sub.css('z-index', 99998)
-                            .removeClass('open')
-                            .attr('aria-hidden', 'true')
-                            .fadeOut($sub.settings.fadeOutSpeed, function() {
-                                $sub.settings.onClose();
-                            });
+                        .removeClass('open')
+                        .attr('aria-hidden', 'true')
+                        .fadeOut($sub.settings.fadeOutSpeed, function() {
+                            $sub.settings.onClose();
+                        });
                 }
             }, $sub.settings.hideDelay);
         }
@@ -424,7 +424,7 @@
                 var currentMessage = $self.text();
                 var alternateMessage = $self.attr('data-alternate-message');
                 $self.attr('data-alternate-message', currentMessage)
-                       .html(alternateMessage);
+                    .html(alternateMessage);
                 settings.toggleCallback();
             });
         });
@@ -449,7 +449,7 @@
         },
         // Used within the wiki new/move pages
         slugifyString: function(str, allowSlash, allowMultipleUnderscores) {
-            var regex = new RegExp('[?&\"\'#*$' + (allowSlash ? '' : '\/') + ' +?]', 'g');
+            var regex = new RegExp('[?&"\'#*$' + (allowSlash ? '' : '/') + ' +?]', 'g');
 
             // Remove anything from the slug that could cause big problems
             // "$" is used for verb delimiter in URLs
@@ -556,12 +556,12 @@
                 var closeIcon = window.mdnIcons ? window.mdnIcons.getIcon('close') : '';
 
                 $('<button class="close" title="' + gettext('Close notification') + '"></button>')
-                .append(closeIcon)
-                .on('click', function(e) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    closeItem($item, options.onclose);
-                }).appendTo($item);
+                    .append(closeIcon)
+                    .on('click', function(e) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        closeItem($item, options.onclose);
+                    }).appendTo($item);
             }
 
             // Click event for notifications

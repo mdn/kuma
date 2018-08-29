@@ -42,9 +42,10 @@
   {% stylesheet 'locale-%s' % LANG %}
 
   {% block site_analytics %}
-    {% javascript 'dnt-helper' %}
     {% include "includes/google_analytics.html" %}
   {% endblock %}
+
+  {% block perfhead %}{% endblock %}
 
   {%- if not untrusted %}
     <!-- common social tags -->
@@ -58,7 +59,6 @@
     <meta name="twitter:creator" content="@MozDevNet">
     <link rel="search" type="application/opensearchdescription+xml" href="{{ settings.SITE_URL }}/{{ request.LANGUAGE_CODE }}/search/xml" title="{{ _('MDN Web Docs') }}">
   {% endif %}
-
   <!-- third-generation iPad with high-resolution Retina display: -->
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ static('img/favicon144.png') }}">
   <!-- iPhone with high-resolution Retina display: -->
@@ -154,7 +154,7 @@
     <!--[if lte IE 8]>{% javascript 'selectivizr' %}<![endif]-->
 
     {{ providers_media_js() }}
-    <script src="{{ statici18n(request.LANGUAGE_CODE or 'en-US') }}"></script>
+    <script src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
     {% javascript 'main' %}
     <script>
     if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();

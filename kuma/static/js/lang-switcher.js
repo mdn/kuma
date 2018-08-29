@@ -3,7 +3,18 @@
     var neverShowNoticeKey = 'never-show-locale-notice';
     var neverShowNotice = getNeverShowNotice();
     function storeLocaleChange(code, name) {
-        sessionStorage.setItem(sessionStorageKey, JSON.stringify({code: code, name: name}));
+        if (!isLocalePreference(code)){
+            sessionStorage.setItem(sessionStorageKey, JSON.stringify({code: code, name: name}));
+        }
+    }
+
+    function getCookie(name) {
+        var match = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+        return match ? match[2] : null;
+    }
+
+    function isLocalePreference(code) {
+        return getCookie(win.mdn.langCookieName) === code;
     }
 
     function removeLocaleChange() {
@@ -20,6 +31,20 @@
 
     function getNeverShowNotice() {
         return localStorage.getItem(neverShowNoticeKey) || false;
+    }
+
+    function trackGAEvent(action, locale) {
+        if (win.ga) {
+            var data = {
+                category: 'Remember Language',
+                action: action
+            };
+
+            if (locale) {
+                data.label = locale;
+            }
+            mdn.analytics.trackEvent(data);
+        }
     }
 
     if(win.sessionStorage && win.mdn.features.localStorage && !neverShowNotice) {
@@ -62,19 +87,28 @@
 
             // Add event listener to the buttons
             $('#locale-permanent-yes').on('click', function() {
-                $.post('/i18n/setlang/', {language: this.dataset.locale})
+                var locale = this.dataset.locale;
+                $.post('/i18n/setlang/', {language: locale})
                     .success(function() {
                         notification.close();
                     });
+
+                // Track in GA
+                // `locale` is actually locale code
+                trackGAEvent('yes', locale);
             });
 
             $('#locale-permanent-no').on('click', function() {
                 notification.close();
+                // locale is a object. Track the locale code only
+                trackGAEvent('no', locale.code);
             });
 
             $('#locale-permanent-never').on('click', function() {
                 storeNeverShowNotice();
                 notification.close();
+                // locale is a object. Track the locale code only
+                trackGAEvent('never', locale.code);
             });
         }
     }

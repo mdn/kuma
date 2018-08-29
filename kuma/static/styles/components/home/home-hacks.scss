@@ -1,19 +1,18 @@
 /*
-hacks blog row, wrapper, entries, and get involved teaser
+hacks blog row, wrapper, entries, and get involved
 ********************************************************************** */
-
-$home-involved-background-y: 50px;
 
 .home-hacks {
     padding: $first-content-top-padding 0;
     background: #fff;
 
     li {
+        margin-right: $grid-spacing;
         padding-top: $grid-spacing;
         border-bottom: 1px solid #ececec;
 
-        &:last-child {
-            border-bottom: 0;
+        &:first-child {
+            padding-top: 10px;
         }
     }
 
@@ -27,64 +26,38 @@ $home-involved-background-y: 50px;
             text-decoration: underline;
         }
     }
-}
 
-.column-hacks {
-    @include column-main();
-}
-
-.column-involved {
-    @include column-strip();
-}
-
-.home-involved-card {
-    background: url($path-to-images + 'home-globe.jpg') -90px $home-involved-background-y no-repeat $light-background-color;
-
-    h2 {
-        @include set-larger-font-size();
-        padding: $grid-spacing $grid-spacing 12px;
-        border-bottom: 1px solid #e0e2e4;
-        margin: 0 0 110px;
-        font-weight: bold;
-    }
-
-    p {
-        margin: 0;
-        padding: 0;
-        text-align: center;
-    }
-
-    a {
-        color: #fff;
-        text-decoration: none;
-        padding: 0 0 $grid-spacing;
+    .heading-link {
         display: block;
-    }
+        margin: 10px 0 0;
+        font-style: italic;
+        @include set-font-size($body-font-size);
+        font-weight: normal;
 
-    .numbers {
-        padding-bottom: 40px;
-        line-height: 40px;
-
-        .row1,
-        .row2,
-        .row3 {
+        @media #{$mq-mobile-and-down} {
+            margin: 8px 0 0 0;
             display: block;
         }
     }
+}
 
-    .number {
-        @include set-font-size(30px);
-        font-weight: bold;
+.column-hacks {
+    li:last-child {
+        border-bottom: 0;
     }
 }
 
-@media #{$mq-mobile-and-down} {
+.column-hacks,
+.column-involved {
+    width: auto;
+}
+
+@media #{$mq-small-desktop-and-up} {
     .column-hacks {
-        float: none;
-        width: auto;
+        @include column-8();
     }
 
     .column-involved {
-        display: none;
+        @include column-third();
     }
 }

@@ -27,7 +27,7 @@ Development
 ===========
 
 :Code:          https://github.com/mozilla/kuma
-:Issues:        `P1 Bugs`_ (to be fixed in 90 days)
+:Issues:        `P1 Bugs`_ (to be fixed in current or next sprint_)
 
                 `P2 Bugs`_ (to be fixed in 180 days)
 
@@ -49,8 +49,9 @@ Development
 .. _`P1 Bugs`: https://mzl.la/2BGZy44
 .. _`P2 Bugs`: https://mzl.la/2oniZa3
 .. _`All developer.mozilla.org bugs`: https://mzl.la/2onLvZ8
-.. _`Pull Request Queues`: http://prs.mozilla.io/mozilla:kuma,kuma-lib,kumascript,mozhacks
+.. _`Pull Request Queues`: http://prs.mozilla.io/mozilla:kuma%3Bmdn:kumascript,infra,mdn-fiori
 .. _`What's Deployed on MDN?`: https://whatsdeployed.io/s-HC0
+.. _sprint: https://wiki.mozilla.org/Engagement/MDN_Durable_Team/Processes#Planning_Sprints
 
 
 Getting started

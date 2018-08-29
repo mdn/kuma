@@ -8,9 +8,9 @@
 # Code: https://github.com/mozilla/bleach
 # Changes: https://bleach.readthedocs.io/en/latest/changes.html
 # Docs: https://bleach.readthedocs.io/en/latest/
-bleach==2.1.3 \
-    --hash=sha256:eb7386f632349d10d9ce9d4a838b134d4731571851149f9cc2c05a9a837a9a44 \
-    --hash=sha256:b8fa79e91f96c2c2cd9fd1f9eda906efb1b88b483048978ba62fef680e962b34
+bleach==2.1.4 \
+    --hash=sha256:0ee95f6167129859c5dce9b1ca291ebdb5d8cd7e382ca0e237dfd0dad63f63d8 \
+    --hash=sha256:24754b9a7d530bf30ce7cbc805bc6cce785660b4a10ff3a43633728438c105ab
 
 # Process tasks in the background
 # Code: https://github.com/celery/celery
@@ -33,9 +33,9 @@ dennis==0.9 \
     --hash=sha256:f6487392ac91800c5f0684a99b404b7fd0f72ceb48faeb5a0ce4e2c24fb62d3f
 
 # Web framework for Python projects of a certain age
-Django==1.11.13 \
-    --hash=sha256:18986bcffe69653a84eaf1faa1fa5a7eded32cee41cfecc77fdc65a3e046404d \
-    --hash=sha256:46adfe8e0abe4d1f026c1086889970b611aec492784fbdfbdaabc2457360a4a5
+Django==1.11.15 \
+    --hash=sha256:8176ac7985fe6737ce3d6b2531b4a2453cb7c3377c9db00bacb2b3320f4a1311 \
+    --hash=sha256:b18235d82426f09733d2de9910cee975cf52ff05e5f836681eb957d105a05a40
 
 # 3rd party logins like Github
 # Code: https://github.com/pennersr/django-allauth
@@ -106,15 +106,13 @@ django-jinja==2.4.1 \
     --hash=sha256:8a49d73de616a12075eee14c6d3bbab936261a463457d40348d8b8e2995cfbed \
     --hash=sha256:ceaa0eeebc4d91a5800967e50f4f087f0b6457503e3c2af85dc199bed8732a9a
 
-# Use consistent hashes despite adding or removing servers
-django-memcached-hashring==0.1.2 \
-    --hash=sha256:f71f99d60e704cc239bddbbe336dcdc5bb8a487b65a1b0b6c7ce0f4af5848442 \
-    --hash=sha256:14c2dc29bc693feaf114dea8c871f4d25daca72bba8f37b159d552fed4ab6337
-
 # Allow Django to use MySQL-specific features
-django-mysql==1.0.4 \
-    --hash=sha256:a90eaaff1b9cfca374e565a873ba98b20209753e774ee136c526d1c4dd641561 \
-    --hash=sha256:0ced44721f0b36b618c7eb4c3813f57a5a7df71b959dc97ddf94e2281813a971
+# Code: https://github.com/adamchainz/django-mysql
+# Docs: https://django-mysql.readthedocs.io/en/latest/index.html
+# Changes: https://github.com/adamchainz/django-mysql/blob/master/HISTORY.rst
+django-mysql==2.3.1 \
+    --hash=sha256:53bf05dfa8e98db371adbd5b6c669a904e9f556f4ce7e3552cd42796c5f44841 \
+    --hash=sha256:7c13e453535f20e12b01c2b8f452d67e9973721f30ffd296ae6f0e5af0b475fb
 
 # Serialize objects with Python's pickle
 # Required by django-constance with database backend
@@ -144,6 +142,13 @@ django-redirect-urls==1.0 \
     --hash=sha256:c4cd7818b06ccf0a5307656a33f3ecea47ee22f0cceb374ea559eb2d1402d5d8 \
     --hash=sha256:e5b1dec666758c7d2621ce337458a09e4b3feeb06cb9ec5d43b17d66b87ea97d
 
+# Provide a caching provider to use Redis as a cache in Django
+# Code: https://github.com/niwinz/django-redis
+# Docs: http://niwinz.github.io/django-redis/latest/
+django-redis==4.9.0 \
+    --hash=sha256:15b47faef6aefaa3f47135a2aeb67372da300e4a4cf06809c66ab392686a2155 \
+    --hash=sha256:a90343c33a816073b735f0bed878eaeec4f83b75fcc0dce2432189b8ea130424
+
 # RESTful API framework, used by search
 # Code: https://github.com/encode/django-rest-framework
 # Changes: http://www.django-rest-framework.org/topics/release-notes/
@@ -152,9 +157,10 @@ djangorestframework==3.6.4 \
     --hash=sha256:0f9bfbac702f3376dfb2db4971ad8af4e066bfa35393b1b85e085f7e8b91189a \
     --hash=sha256:de8ac68b3cf6dd41b98e01dcc92dc0022a5958f096eafc181a17fa975d18ca42
 
-# Add site-wide announcements in the database
-django-soapbox==1.3 \
-    --hash=sha256:69ccf5eb9200f294f400864c9f11990a8bdcd75ed8965cd984b7d6d3d243cf49
+# Publish site-wide announcements without deployments
+django-soapbox==1.5 \
+    --hash=sha256:9f330db2b4098d24d7a2c4c9de63b0cc4d5579c69c2a904621914371f8039200 \
+    --hash=sha256:a65810a406416e3a945feb6c834a58fac341f506e7d1ea1b8abc488df5562f7e
 
 # Generate localization catalogs for JavaScript
 # Code: https://github.com/zyegfryed/django-statici18n
@@ -200,9 +206,12 @@ dj-email-url==0.0.4 \
     --hash=sha256:c4a62a75499183cc645f060785760946dd422000dffbcaa264953b1abd6e5255
 
 # Index and search MDN content
-elasticsearch-dsl==0.0.9 \
-    --hash=sha256:72c108f794a79b154c32cf594a1185459338d6aaec337051f03b2034a16eacbd \
-    --hash=sha256:9b5404180d2747fa2e43c2e5cd78d39241cb80d041f492cccdd2a2e6272b0bda
+# Code: https://github.com/elastic/elasticsearch-dsl-py
+# Changes: https://elasticsearch-dsl.readthedocs.io/en/latest/Changelog.html
+# Docs: https://elasticsearch-dsl.readthedocs.io/en/latest/
+elasticsearch-dsl==5.4.0 \
+    --hash=sha256:197246ddd556b4b7d2738dfa9e4831068c9b5cb21706f6aca035136d42849109 \
+    --hash=sha256:cbef6467085d7debc870bc450d996c7ba5b8822eb86a6033bba09134ffb01ba8
 
 # Parse external RSS / Atom feeds
 feedparser==5.2.1 \
@@ -239,10 +248,11 @@ meinheld==0.6.1 \
     --hash=sha256:293eff4983b7fcbd9134b47706b22189883fe354993bd10163c65869d141e565
 
 # MySQL driver with Python 3 support
-mysqlclient==1.3.7 \
-    --hash=sha256:c54e3045e883fa7cfd20be61f112835d4f9fae07f8db057f6c0fa6816fe52a93 \
-    --hash=sha256:835faf2f26a2329c392ac20b14fc41ab0105b47b8b7126ed7058e8c56bfe05f4 \
-    --hash=sha256:c74a83b4cb2933d0e43370117eeebdfa03077ae72686d2df43d31879267f1f1b
+# Code: https://github.com/PyMySQL/mysqlclient-python
+# Changes: https://github.com/PyMySQL/mysqlclient-python/blob/master/HISTORY.rst
+# Docs: https://mysqlclient.readthedocs.io/
+mysqlclient==1.3.13 \
+    --hash=sha256:ff8ee1be84215e6c30a746b728c41eb0701a46ca76e343af445b35ce6250644f
 
 # Report performance metrics and exceptions to New Relic
 # Docs: https://docs.newrelic.com/docs/agents/python-agent/

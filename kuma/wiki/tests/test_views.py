@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import datetime
-import HTMLParser
 import json
 
 import mock
@@ -11,6 +10,7 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.template.loader import render_to_string
+from django.utils.six.moves import html_parser
 from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse
 from pyquery import PyQuery as pq
 from waffle.testutils import override_flag, override_switch
@@ -31,7 +31,7 @@ from .conftest import ks_toolbox
 from ..content import get_seo_description
 from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import MIDAIR_COLLISION
-from ..models import Document, DocumentDeletionLog, DocumentZone, RevisionIP
+from ..models import Document, DocumentDeletionLog, RevisionIP
 from ..templatetags.jinja_helpers import get_compare_url
 from ..views.document import _get_seo_parent_title
 
@@ -785,60 +785,24 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         parameters = parse_qs(urlparse(response['Location']).query)
         assert parameters['parent'][0] == str(doc.id)
 
-    def test_creating_child_of_redirect_zoned_document(self):
-        """
-        While try to create a child of a redirected zone document,
-        the parent of the child should be redirect's parent.
-        """
+    def test_child_of_redirect_to_non_document(self):
+        """Return a 404 when accessing the child of a non-document redirect."""
         self.client.login(username='admin', password='testpass')
-        rev = revision(is_approved=True, save=True)
-        root_doc = rev.document
-        # Create a zone of the document
-        zoned_doc = DocumentZone(document=root_doc, url_root="zoned_url")
-        zoned_doc.save()
+        content = '<p>REDIRECT <a class="redirect" href="/">MDN</a></p>'
+        rev = revision(content=content, is_approved=True, save=True)
+        doc = rev.document
+        assert doc.is_redirect
+        assert doc.get_redirect_url() == '/'
+        assert doc.get_redirect_document() is None
 
-        # Move the document to new slug
-        root_doc._move_tree(new_slug="moved_doc")
+        doc_url = doc.get_absolute_url()
+        response = self.client.get(doc_url)
+        assert response.status_code == 301
+        assert response['Location'] == '/'
 
-        zoned_child_full_path = ('/en-US/' + zoned_doc.url_root + "/" +
-                                 "children_document")
-        response = self.client.get(zoned_child_full_path)
-        assert response.status_code == 302
-        assert 'public' not in response['Cache-Control']
-        assert 'no-cache' in response['Cache-Control']
-        assert 'docs/new' in response['Location']
-        # The parent id of the query should be same because while moving,
-        # a new document is created with old slug and make redirect to the
-        # old document
-        parameters = parse_qs(urlparse(response['Location']).query)
-        assert parameters['parent'][0] == str(root_doc.id)
-
-    def test_creating_child_of_redirect_zoned_doc_with_unzoned_doc_slug(self):
-        """
-        While trying to create a child of a redirected zone document with its
-        unzoned document slug, the parent of the child should be redirect's
-        parent.
-        """
-        self.client.login(username='admin', password='testpass')
-        rev = revision(is_approved=True, save=True)
-        root_doc = rev.document
-        # Create a zone of the document
-        zoned_doc = DocumentZone(document=root_doc, url_root="zoned_url")
-        zoned_doc.save()
-
-        # Move the document to new slug
-        root_doc._move_tree(new_slug="moved_doc")
-
-        # Try to create a child doc with root document slug
-        unzoned_doc_child_full_slug = root_doc.slug + "/children_document"
-        url = reverse('wiki.document', args=[unzoned_doc_child_full_slug])
-        response = self.client.get(url, follow=True)
-        assert response.status_code == 200
-        # The parent id of the query should be same because while moving,
-        # a new document is created with old slug and make redirect to the
-        # old document
-        parameters = parse_qs(response.request['QUERY_STRING'])
-        assert parameters['parent'][0] == str(root_doc.id)
+        subpage_url = doc_url + '/SubPage'
+        response = self.client.get(subpage_url)
+        assert response.status_code == 404
 
     @pytest.mark.retitle
     def test_retitling_solo_doc(self):
@@ -1643,7 +1607,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             # Add an some extra characters to the end, since the unescaped length
             # is a little less than the escaped length
             end_of_error = start_of_error + len(midair_collission_error) + 20
-            location_of_error = HTMLParser.HTMLParser().unescape(
+            location_of_error = html_parser.HTMLParser().unescape(
                 resp.content[start_of_error: end_of_error]
             )
         assert midair_collission_error in location_of_error
@@ -2129,7 +2093,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         self.assertEquals(1, len(mail.outbox))
         message = mail.outbox[0]
         assert testuser2.email in message.to
-        assert rev.document.title in message.body
+        assert str(rev.document.title) in message.body
         assert 'sub-articles' not in message.body
         # Test that the compare URL points to the right revisions
         rev = Document.objects.get(pk=rev.document_id).current_revision

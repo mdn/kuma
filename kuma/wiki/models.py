@@ -16,6 +16,7 @@ from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext, ugettext_lazy as _
 from pyquery import PyQuery
+from six.moves.urllib.parse import urlparse
 from taggit.managers import TaggableManager
 from taggit.models import ItemBase, TagBase
 from taggit.utils import edit_string_for_tags, parse_tags
@@ -35,7 +36,7 @@ from .content import parse as parse_content
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, NotDocumentView,
                          PageMoveError, SlugCollision, UniqueCollision)
-from .jobs import DocumentContributorsJob, DocumentNearestZoneJob, DocumentTagsJob
+from .jobs import DocumentContributorsJob, DocumentTagsJob
 from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        DocumentManager, RevisionIPManager,
                        TaggedDocumentManager)
@@ -290,9 +291,6 @@ class Document(NotificationsMixin, models.Model):
 
     quick_links_html = models.TextField(editable=False, blank=True, null=True)
 
-    zone_subnav_local_html = models.TextField(editable=False,
-                                              blank=True, null=True)
-
     toc_html = models.TextField(editable=False, blank=True, null=True)
 
     summary_html = models.TextField(editable=False, blank=True, null=True)
@@ -335,10 +333,6 @@ class Document(NotificationsMixin, models.Model):
     @cache_with_field('quick_links_html')
     def get_quick_links_html(self, *args, **kwargs):
         return self.get_section_content('Quick_Links', annotate_links=True)
-
-    @cache_with_field('zone_subnav_local_html')
-    def get_zone_subnav_local_html(self, *args, **kwargs):
-        return self.get_section_content('Subnav', annotate_links=True)
 
     @cache_with_field('toc_html')
     def get_toc_html(self, *args, **kwargs):
@@ -404,21 +398,9 @@ class Document(NotificationsMixin, models.Model):
         # method can iterate?
         self.get_body_html(force_fresh=True)
         self.get_quick_links_html(force_fresh=True)
-        self.get_zone_subnav_local_html(force_fresh=True)
         self.get_toc_html(force_fresh=True)
         self.get_summary_html(force_fresh=True)
         self.get_summary_text(force_fresh=True)
-
-    def get_zone_subnav_html(self):
-        """
-        Search this document and, if nothing is found, the document directly
-        associated with its nearest zone, returning the first zone nav HTML
-        found.
-        """
-        src = self.get_zone_subnav_local_html()
-        if (not src) and self.nearest_zone:
-            src = self.nearest_zone.document.get_zone_subnav_local_html()
-        return src
 
     def get_section_content(self, section_id, ignore_heading=True,
                             annotate_links=False):
@@ -1292,7 +1274,9 @@ Full traceback:
                 # i.e allow "https://developer...." and "/en-US/docs/blah"
                 if len(url) > 1:
                     if url.startswith(settings.SITE_URL):
-                        return url
+                        parsed = urlparse(url)
+                        # Always return relative path instead of full url
+                        return parsed.path
                     elif url[0] == '/' and url[1] != '/':
                         return url
                 elif len(url) == 1 and url[0] == '/':
@@ -1435,26 +1419,6 @@ Full traceback:
     def all_tags_name(self):
         return DocumentTagsJob().get(pk=self.pk)
 
-    @cached_property
-    def nearest_zone(self):
-        """
-        The nearest zone for this document, starting from this document and
-        moving upwards via "parent_topic". For a non-default-language document
-        that does not have its own nearest zone, returns the nearest zone of
-        its parent (the document it was translated from).
-        """
-        job = DocumentNearestZoneJob()
-        result = job.get(self.pk)
-        if ((not result) and self.parent and
-                (self.locale != settings.WIKI_DEFAULT_LANGUAGE)):
-            return job.get(self.parent.pk)
-        return result
-
-    @cached_property
-    def is_zone_root(self):
-        zone = self.nearest_zone
-        return bool(zone) and (zone.document_id in (self.id, self.parent_id))
-
     def get_full_url(self):
         return absolutify(self.get_absolute_url())
 
@@ -1489,26 +1453,6 @@ class DocumentDeletionLog(models.Model):
             'slug': self.slug,
             'user': self.user
         }
-
-
-class DocumentZone(models.Model):
-    """
-    Model object declaring a content zone root at a given Document, provides
-    attributes inherited by the topic hierarchy beneath it.
-    """
-    document = models.OneToOneField(Document, related_name='zone',
-                                    on_delete=models.PROTECT)
-    css_slug = models.CharField(
-        max_length=100, blank=True,
-        help_text='name of an alternative pipeline CSS group for documents '
-                  'under this zone (note that "zone-" will be prepended)')
-    url_root = models.CharField(
-        max_length=255, null=True, blank=True, db_index=True,
-        help_text="alternative URL path root for documents under this zone")
-
-    def __unicode__(self):
-        return u'DocumentZone %s (%s)' % (self.document.get_absolute_url(),
-                                          self.document.title)
 
 
 class ReviewTag(TagBase):

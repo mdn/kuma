@@ -18,14 +18,6 @@
   {% endif %}
 {%- endmacro %}
 
-{% macro get_document_subnav(html) %}
-  <nav class="zone-subnav-container" role="navigation">
-    <div class="subnav" id="Subnav">
-      {{ html|safe }}
-    </div>
-  </nav>&nbsp;
-{%- endmacro %}
-
 {% macro get_document_quick_links(html) %}
   <div class="quick-links" id="quick-links">
     <div class="quick-links-head">{{ _('Related Topics') }}</div>

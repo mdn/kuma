@@ -1,4 +1,11 @@
+# -*- coding: utf-8 -*-
 from redirect_urls import redirect as lib_redirect
+
+from kuma.core.decorators import shared_cache_control
+
+
+shared_cache_control_for_zones = shared_cache_control(
+    s_maxage=60 * 60 * 24 * 7)
 
 
 def redirect(pattern, to, **kwargs):
@@ -762,7 +769,62 @@ scl3_redirectpatterns = [
              permanent=False),
 ]
 
-redirectpatterns = scl3_redirectpatterns + [
+zone_redirects = (
+    (u'Add-ons', u'Mozilla/Add-ons', ('af', 'ar', 'bn-BD', 'bn-IN', 'ca',
+                                      'cs', 'de', 'en-US', 'es', 'fa',
+                                      'fr', 'hu', 'id', 'it', 'ja',
+                                      'ms', 'nl', 'pl', 'pt-BR', 'pt-PT',
+                                      'ro', 'ru', 'sv-SE', 'th', 'uk',
+                                      'vi', 'zh-CN', 'zh-TW', None)),
+    (u'Add-ons', u'Mozilla/Πρόσθετα', ('el',)),
+    (u'Add-ons', u'Mozilla/애드온들', ('ko',)),
+    (u'Add-ons', u'Mozilla/Eklentiler', ('tr',)),
+    (u'Firefox', u'Mozilla/Firefox', ('af', 'ar', 'az', 'bm', 'bn-IN', 'ca',
+                                      'cs', 'de', 'ee', 'el', 'en-US', 'es',
+                                      'ff', 'fi', 'fr', 'fy-NL', 'ga-IE', 'ha',
+                                      'he', 'hi-IN', 'hr', 'hu', 'id', 'ig',
+                                      'it', 'ja', 'ka', 'ko', 'ln', 'ml',
+                                      'ms', 'my', 'nl', 'pl', 'pt-BR', 'pt-PT',
+                                      'ro', 'ru', 'son', 'sq', 'sv-SE', 'sw',
+                                      'ta', 'th', 'tl', 'tr', 'vi', 'wo',
+                                      'xh', 'yo', 'zh-CN', 'zh-TW', 'zu',
+                                      None)),
+    (u'Firefox', u'Mozilla/ফায়ারফক্স', ('bn-BD',)),
+    (u'Apps', u'Web/Apps', ('en-US', 'fa', 'fr', 'ja', 'ta', 'th', 'zh-CN',
+                            'zh-TW', None)),
+    (u'Apps', u'Web/Aplicaciones', ('es',)),
+    (u'Apps', u'Apps', ('bn-BD', 'de', 'it', 'ko', 'pt-BR', 'ru')),
+    (u'Learn', u'Learn', ('ca', 'de', None)),
+    (u'Apprendre', u'Apprendre', ('fr',)),
+    (u'Marketplace', u'Mozilla/Marketplace', ('de', 'en-US', 'es', 'fr', 'it',
+                                              'ja', 'zh-CN', None)),
+    (u'Marketplace', u'Mozilla/بازار', ('fa',)),
+)
+
+zone_pattern_fmt = r'^{prefix}{zone_root_pattern}(?:/?|(?P<sub_path>[/$].+))$'
+sub_path_fmt = u'/{prefix}docs/{wiki_slug}{{sub_path}}'
+
+zone_redirectpatterns = []
+for zone_root, wiki_slug, locales in zone_redirects:
+    for locale in locales:
+        zone_root_pattern = zone_root
+        if zone_root != wiki_slug:
+            zone_root_pattern = '(?:docs/)?' + zone_root_pattern
+        # NOTE: The redirect for the case when there is no locale for a zone
+        # must be handled here, because if we let LocaleMiddleware handle the
+        # 404 response and redirect to the proper locale, the path would be
+        # considered invalid.
+        prefix = (locale + '/') if locale else ''
+        pattern = zone_pattern_fmt.format(prefix=prefix,
+                                          zone_root_pattern=zone_root_pattern)
+        sub_path = sub_path_fmt.format(prefix=prefix, wiki_slug=wiki_slug)
+        zone_redirectpatterns.append(redirect(
+            pattern,
+            sub_path,
+            permanent=False,
+            decorators=shared_cache_control_for_zones))
+
+redirectpatterns = scl3_redirectpatterns + zone_redirectpatterns + [
     locale_redirect(
         r'^fellowship',
         '/docs/Archive/2015_MDN_Fellowship_Program',

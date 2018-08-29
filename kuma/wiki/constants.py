@@ -1,8 +1,8 @@
 import re
-from urlparse import urlparse, urlunparse
 
 import bleach
 from django.conf import settings
+from django.utils.six.moves.urllib.parse import urlparse, urlunparse
 from django.utils.translation import ugettext_lazy as _
 
 

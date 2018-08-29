@@ -127,6 +127,13 @@
     </li>
   {% endif %}
 
+  {% if detail_user.discourse_url %}
+    <li class="discourse">
+        {% include 'includes/icons/social/discourse.svg' %}
+        <a href="{{ detail_user.discourse_url }}" rel="me external" class="url">{{ _("Discourse") }}</a>
+    </li>
+  {% endif %}
+
 </ul>
 
 <div class="user-since">{% trans date_joined=datetimeformat(detail_user.date_joined, format='date') %}Member since {{ date_joined }}{% endtrans %}</div>

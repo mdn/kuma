@@ -114,6 +114,15 @@ class UserEditForm(forms.ModelForm):
             'data-fa-icon': 'icon-facebook',
         }),
     )
+    discourse_url = forms.CharField(
+        label=_('Discourse'),
+        required=False,
+        validators=[User.WEBSITE_VALIDATORS['discourse']],
+        widget=forms.TextInput(attrs={
+            'placeholder': 'https://discourse.mozilla.org/u/',
+            'data-fa-icon': 'icon-discourse',
+        }),
+    )
 
     class Meta:
         model = User
@@ -121,7 +130,7 @@ class UserEditForm(forms.ModelForm):
                   'locale', 'timezone', 'irc_nickname', 'interests',
                   'twitter_url', 'github_url', 'is_github_url_public',
                   'stackoverflow_url', 'linkedin_url', 'mozillians_url',
-                  'facebook_url', 'username')
+                  'facebook_url', 'discourse_url', 'username')
 
     def __init__(self, *args, **kwargs):
         super(UserEditForm, self).__init__(*args, **kwargs)

@@ -578,5 +578,40 @@ pre span.comment {
     display: inline;
 }
 
+/*
+  Zone-related classes kept after the removal of zones.
+  (See https://bugzilla.mozilla.org/show_bug.cgi?id=1469029)
+ */
+
+/*
+  reference-values:
+
+  NOTE: This has been DEPRECATED. New work should use the utility
+        class "bump-left-padding" instead of "reference-values",
+        and this rule should be removed when it is no longer used
+        on any document pages.
+
+  This gives an extra indent to a dl, when it's embedded inside another dl,
+  which comes up sometimes in the reference pages. The extra indent indicates
+  that the embedded dl is part of an embedded list, not the main list.
+ */
+dd > dl.reference-values {
+    padding-left: $grid-spacing * 2;
+}
+
+/*
+  webextension-api-sidebar:
+
+  TODO: Replace the use of "webextension-api-sidebar" with the utility class
+        "light-grey-background" within the "WebExtAPISidebar.ejs" Kumascript
+        macro and then remove this rule.
+
+  This applies a background color to the piece of a sidebar containing the
+  api items relevant to the current page. It helps people orient themselves
+  within the sidebar.
+ */
+li.webextension-api-sidebar {
+    background-color: $grey-light;
+}
 
 /*end!*/

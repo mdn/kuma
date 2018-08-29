@@ -1,63 +1,11 @@
 import collections
 import random
-import time
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
 
 from kuma.core.jobs import GenerationJob, KumaJob
 from kuma.users.templatetags.jinja_helpers import gravatar_url
-
-
-class DocumentNearestZoneJob(KumaJob):
-    # Allow up to three minutes to refresh the cache before assuming
-    # the task has failed and allowing another to be enqueued.
-    refresh_timeout = 180
-
-    def expiry(self, *args, **kwargs):
-        # Spread the cache expiration times across a random
-        # number of days from 1 to 10 (in units of seconds).
-        seconds_per_day = 24 * 60 * 60
-        return time.time() + random.randint(1 * seconds_per_day,
-                                            10 * seconds_per_day)
-
-    def fetch(self, pk):
-        """
-        Find the nearest DocumentZone, if there is one, starting from this
-        document and going upwards via topic parents.
-        """
-        from .models import Document, DocumentZone
-
-        # Using "admin_objects" here to get around the
-        # filter that excludes deleted documents.
-        get_parent_id = (Document.admin_objects
-                                 .values_list('parent_topic', flat=True)
-                                 .get)
-        while pk:
-            try:
-                return DocumentZone.objects.select_related('document').get(document=pk)
-            except DocumentZone.DoesNotExist:
-                pk = get_parent_id(pk=pk)
-
-        return self.empty()
-
-
-class DocumentZoneURLRemapsJob(KumaJob):
-    lifetime = 60 * 60 * 3
-    refresh_timeout = 60
-
-    def fetch(self, locale):
-        from .models import DocumentZone
-        zones = (DocumentZone.objects.filter(document__locale=locale,
-                                             url_root__isnull=False)
-                                     .exclude(url_root=''))
-        remaps = [('/docs/%s' % zone.document.slug, '/%s' % zone.url_root)
-                  for zone in zones]
-        return remaps
-
-    def empty(self):
-        # the empty result needs to be an empty list instead of None
-        return []
 
 
 class DocumentContributorsJob(KumaJob):

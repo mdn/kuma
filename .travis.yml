@@ -12,13 +12,14 @@ services:
     - docker
     - memcached
     - mysql
+    - redis
 env:
     global:
         - DATABASE_URL=mysql://root:@127.0.0.1:3306/kuma
         - DJANGO_SETTINGS_MODULE=kuma.settings.travis
         - DOCKER_COMPOSE_VERSION=1.9.0
-        - ES_VERSION=2.4.5
-        - ES_DOWNLOAD_URL=https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.4.5/elasticsearch-2.4.5.tar.gz
+        - ES_VERSION=5.6.10
+        - ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.10.tar.gz
         - PIPELINE_CLEANCSS_BINARY=$TRAVIS_BUILD_DIR/node_modules/.bin/cleancss
         - PIPELINE_CSS_COMPRESSOR=kuma.core.pipeline.cleancss.CleanCSSCompressor
         - PIPELINE_JS_COMPRESSOR=pipeline.compressors.uglifyjs.UglifyJSCompressor
@@ -31,8 +32,8 @@ matrix:
           env:
             TOXENV=pytest
             CREATE_DB=kuma
-            INSTALL_PIPELINE=1
             INSTALL_ELASTICSEARCH=1
+            INSTALL_NPM_TOOLS=1
         - python: "2.7"
           env:
             TOXENV=flake8
@@ -43,7 +44,7 @@ matrix:
           env:
             TOXENV=locales
             CREATE_DB=kuma
-            INSTALL_PIPELINE=1
+            INSTALL_NPM_TOOLS=1
         - python: "2.7"
           env:
             TOXENV=docker
@@ -51,23 +52,24 @@ matrix:
             UID=0
         - python: "2.7"
           env:
-            TOXENV=stylelint
+            TOXENV=assetlint
+            INSTALL_NPM_TOOLS=1
         - python: "3.6"
           env:
-            TOXENV=pytest
+            TOXENV=pytest3
             CREATE_DB=kuma
-            INSTALL_PIPELINE=1
             INSTALL_ELASTICSEARCH=1
+            INSTALL_NPM_TOOLS=1
     allow_failures:
         - python: "3.6"
           env:
-            TOXENV=pytest
+            TOXENV=pytest3
             CREATE_DB=kuma
-            INSTALL_PIPELINE=1
             INSTALL_ELASTICSEARCH=1
+            INSTALL_NPM_TOOLS=1
 install:
-    - nvm install 6
-    - nvm use 6
+    - nvm install 8
+    - nvm use 8
     - scripts/travis-install
     - pip install -U pip
     - pip install -r requirements/travis.txt

@@ -52,7 +52,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         response = self.client.get(r.document.get_absolute_url())
         assert 200 == response.status_code
         doc = pq(response.content)
-        assert doc('main#content div.document-head h1').text() == r.document.title
+        assert doc('main#content div.document-head h1').text() == str(r.document.title)
         assert doc('article#wikiArticle').text() == r.document.html
 
     @pytest.mark.breadcrumbs
@@ -99,7 +99,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         response = self.client.get(r.document.get_absolute_url())
         assert 200 == response.status_code
         doc = pq(response.content)
-        assert doc('main#content div.document-head h1').text() == r.document.title
+        assert doc('main#content div.document-head h1').text() == str(r.document.title)
         assert ("This article doesn't have approved content yet." ==
                 doc('article#wikiArticle').text())
 
@@ -112,7 +112,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         response = self.client.get(d2.get_absolute_url())
         assert 200 == response.status_code
         doc = pq(response.content)
-        assert doc('main#content div.document-head h1').text() == d2.title
+        assert doc('main#content div.document-head h1').text() == str(d2.title)
         # HACK: fr doc has different message if locale/ is updated
         assert (("This article doesn't have approved content yet." in
                  doc('article#wikiArticle').text()) or
@@ -130,7 +130,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         assert response.status_code == 200
         assert_shared_cache_header(response)
         doc = pq(response.content)
-        assert doc('main#content div.document-head h1').text() == d2.title
+        assert doc('main#content div.document-head h1').text() == str(d2.title)
 
         # Fallback message is shown.
         assert len(doc('#doc-pending-fallback')) == 1
@@ -151,7 +151,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         assert_shared_cache_header(response)
         doc = pq(response.content)
         assert (doc('main#content div.document-head h1').text() ==
-                r.document.title)
+                str(r.document.title))
 
         # Fallback message is shown.
         assert len(doc('#doc-pending-fallback')) == 1
@@ -290,7 +290,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         assert response.status_code == 200
         doc = pq(response.content)
         doc_title = doc('main#content div.document-head h1').text()
-        assert doc_title == r.document.title
+        assert doc_title == str(r.document.title)
         assert doc('article#wikiArticle').text() == r.document.html
         metas = doc("meta[name='robots']")
         assert len(metas) == 1
@@ -1266,48 +1266,6 @@ def _translation_data():
         'content': 'loremo ipsumo doloro sito ameto',
         'toc_depth': Revision.TOC_DEPTH_H4,
     }
-
-
-@pytest.mark.parametrize('doc_name', ['root', 'bottom', 'de', 'fr', 'it'])
-def test_zone_styles(client, doc_hierarchy_with_zones, root_doc, doc_name):
-    """
-    Check document page for zone-style-related features.
-    """
-    zone_title = 'a.zone-parent'
-    css_link = 'link[type="text/css"][href$="build/styles/{}.css"]'
-
-    if doc_name == 'root':
-        doc = root_doc
-    elif doc_name == 'bottom':
-        doc = doc_hierarchy_with_zones.bottom
-        zone_title = 'a.zone-parent[href="{}"]'.format(
-            doc_hierarchy_with_zones.middle_top.get_absolute_url()
-        )
-    else:
-        doc = doc_hierarchy_with_zones.top.translations.get(locale=doc_name)
-
-    url = reverse('wiki.document', args=(doc.slug,), locale=doc.locale)
-    response = client.get(url, follow=True)
-    assert response.status_code == 200
-    response_html = pq(response.content)
-
-    def count(selector):
-        return len(response_html.find(selector))
-
-    def one_if(*args):
-        return 1 if any(arg == doc_name for arg in args) else 0
-
-    assert count('body.zone') == one_if('bottom', 'de', 'fr', 'it')
-    assert count('body.zone-landing') == one_if('de', 'fr', 'it')
-    assert count('span.zone-parent') == one_if('de', 'fr', 'it')
-    assert (count('.document-title') ==
-            one_if('root', 'bottom', 'de', 'fr', 'it'))
-    assert count(zone_title) == one_if('bottom')
-    assert count('.crumbs') == one_if('bottom')
-    assert count(css_link.format('zones')) == one_if('it')
-    assert count(css_link.format('zone-bobby')) == one_if('bottom')
-    assert count(css_link.format('zone-berlin')) == one_if('de')
-    assert count(css_link.format('zone-lindsey')) == one_if('fr')
 
 
 @pytest.mark.parametrize("elem_num,has_prev,is_english,has_revert", [
