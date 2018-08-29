@@ -40,11 +40,66 @@ block indicators aka banners
     @extend %indicator-block-heading;
 }
 
+/* Expand out the following for browsers which don’t support `:matches(…)`
+   TODO: Use postcss-matches-selectro once https://bugzil.la/1366868 is resolved. */
+.warning + .warning,
+.overheadIndicator + .warning,
+.note + .warning,
+.notice + .warning,
+pre + .warning,
+.warning + .overheadIndicator,
+.overheadIndicator + .overheadIndicator,
+.note + .overheadIndicator,
+.notice + .overheadIndicator,
+pre + .overheadIndicator,
+.warning + .note,
+.overheadIndicator + .note,
+.note + .note,
+.notice + .note,
+pre + .note,
+.warning + .notice,
+.overheadIndicator + .notice,
+.note + .notice,
+.notice + .notice,
+pre + .notice,
+.warning + pre,
+.overheadIndicator + pre,
+.note + pre,
+.notice + pre,
+pre + pre,
+.warning + p:empty + .warning,
+.overheadIndicator + p:empty + .warning,
+.note + p:empty + .warning,
+.notice + p:empty + .warning,
+pre + p:empty + .warning,
+.warning + p:empty + .overheadIndicator,
+.overheadIndicator + p:empty + .overheadIndicator,
+.note + p:empty + .overheadIndicator,
+.notice + p:empty + .overheadIndicator,
+pre + p:empty + .overheadIndicator,
+.warning + p:empty + .note,
+.overheadIndicator + p:empty + .note,
+.note + p:empty + .note,
+.notice + p:empty + .note,
+pre + p:empty + .note,
+.warning + p:empty + .notice,
+.overheadIndicator + p:empty + .notice,
+.note + p:empty + .notice,
+.notice + p:empty + .notice,
+pre + p:empty + .notice,
+.warning + p:empty + pre,
+.overheadIndicator + p:empty + pre,
+.note + p:empty + pre,
+.notice + p:empty + pre,
+pre + p:empty + pre {
+    margin-top: ($grid-spacing * -1) + 5px;
+}
+
 /* If there are 2 indicators in close proximity, snug them up.
    Too many combinations to do them all but this
    should take care of most common combinations */
-:matches(.warning, .overheadIndicator, .note) + :matches(.warning, .overheadIndicator, .note),
-:matches(.warning, .overheadIndicator, .note) + p:empty + :matches(.warning, .overheadIndicator, .note) {
+:matches(.warning, .overheadIndicator, .note, .notice, pre) + :matches(.warning, .overheadIndicator, .note, .notice, pre),
+:matches(.warning, .overheadIndicator, .note, .notice, pre) + p:empty + :matches(.warning, .overheadIndicator, .note, .notice, pre) {
     margin-top: ($grid-spacing * -1) + 5px;
 }
 
