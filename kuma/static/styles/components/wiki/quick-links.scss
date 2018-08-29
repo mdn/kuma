@@ -40,7 +40,7 @@
     }
 
     /* toggles */
-    .toggleable {
+    .toggle {
         margin-top: $grid-spacing * -1 + 5px;
 
         /* not if it's first in the quicklinks menu */
@@ -48,33 +48,18 @@
             margin-top: 0;
         }
 
-        > a {
-            @include bidi(((padding-left, $grid-spacing, padding-right, 0),));
+        summary {
             color: $text-color;
-            display: inline-block;
-
-            #{$selector-icon} {
-                @include bidi(((left, 0, right, auto),));
-                @include set-font-size($body-font-size);
-                color: $link-color;
-                position: absolute;
-                top: 1px;
-            }
         }
     }
-
-    /* toggled closed by default, not all get the default-state identifier though  */
-    > ol > li > ol {
-        display: none;
-
-        .no-js & {
-            display: block;
+    details {
+        margin-bottom: 0;
+        li {
+            padding-left: 0;
         }
-    }
-
-    /* these will be open once JS runs  */
-    > ol > li[data-default-state='open'] > ol {
-        display: block;
+        summary:before {
+            font-size: .6em;
+        }
     }
 
     /* sidebar icons - deprecated, obsolete, experiemental, etc */
