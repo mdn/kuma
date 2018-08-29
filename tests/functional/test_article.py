@@ -7,16 +7,13 @@ from utils.decorators import (
 )
 
 ARTICLE_NAME = 'User:anonymous:uitest'
-ARTICLE_TITLE_SUFIX = " | MDN"
 
 
 @pytest.mark.smoke
 @pytest.mark.nondestructive
 def test_title(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
-    assert (ARTICLE_NAME + ARTICLE_TITLE_SUFIX) == selenium.title
-    assert page.article_title_text == ARTICLE_NAME
-    assert page.article_title_text in selenium.title
+    assert page.article_title_text == selenium.title == ARTICLE_NAME
 
 
 # layout

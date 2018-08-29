@@ -5,7 +5,7 @@
 {% from "wiki/includes/document_macros.html" import revision_diff with context %}
 
 {% set title = _('Translate Article | %(document)s', document=parent.title) %}
-{% block title %}{{ page_title(title) }}{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 {% block robots_value %}noindex, nofollow{% endblock %}
 {% block bodyclass%}translate{% endblock %}
 

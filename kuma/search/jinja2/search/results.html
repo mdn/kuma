@@ -11,9 +11,9 @@
 
 {% block title %}
   {% if query %}
-    {{ page_title(_('Search Results for "%(query)s"', query=query)) }}
+    {{ _('Search Results for "%(query)s"', query=query) }}
   {% else %}
-    {{ page_title(_('Search')) }}
+    {{ _('Search') }}
   {% endif %}
 {% endblock %}
 

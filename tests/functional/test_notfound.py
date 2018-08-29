@@ -6,7 +6,6 @@ from utils.decorators import skip_if_not_maintenance_mode
 from utils.urls import assert_valid_url
 
 ARTICLE_NAME = 'Not Found'
-ARTICLE_TITLE_SUFIX = " | MDN"
 
 
 # page headers
@@ -37,7 +36,5 @@ def test_is_expected_content(base_url, selenium, is_debug):
     if is_debug:
         assert selenium.title == 'Page not found at /en-US/%s' % page.SLUG
     else:
-        assert selenium.title == (ARTICLE_NAME + ARTICLE_TITLE_SUFIX)
-        assert page.page_title_text == ARTICLE_NAME
-        assert page.page_title_text in selenium.title
+        assert selenium.title == page.page_title_text == ARTICLE_NAME
         assert page.is_report_link_displayed

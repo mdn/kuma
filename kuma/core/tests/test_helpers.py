@@ -6,7 +6,7 @@ import pytest
 import pytz
 from babel.dates import format_date, format_datetime, format_time
 from django.conf import settings
-from django.test import override_settings, RequestFactory, TestCase
+from django.test import override_settings, RequestFactory
 from soapbox.models import Message
 
 from kuma.core.tests import KumaTestCase
@@ -15,8 +15,7 @@ from kuma.users.tests import UserTestCase
 
 from ..exceptions import DateTimeFormatError
 from ..templatetags.jinja_helpers import (datetimeformat, get_soapbox_messages,
-                                          in_utc, jsonencode, page_title,
-                                          soapbox_messages, yesno)
+                                          in_utc, jsonencode, soapbox_messages, yesno)
 
 
 class TestYesNo(KumaTestCase):
@@ -204,12 +203,3 @@ class TestInUtc(KumaTestCase):
         dt = datetime(2016, 3, 10, hour, 8)
         out = in_utc(dt)
         assert out == datetime(2016, 3, 10, hour + 8, 8, tzinfo=pytz.utc)
-
-
-class TestPageTitle(TestCase):
-    def test_ascii(self):
-        assert page_title('title') == 'title | MDN'
-
-    def test_xss(self):
-        pt = page_title('</title><Img src=x onerror=alert(1)>')
-        assert pt == '&lt;/title&gt;&lt;Img src=x onerror=alert(1)&gt; | MDN'
