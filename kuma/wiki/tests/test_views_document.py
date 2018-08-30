@@ -10,6 +10,7 @@ from collections import namedtuple
 import mock
 import pytest
 import requests_mock
+from django.contrib.auth.models import Permission
 from django.test.client import BOUNDARY, encode_multipart, MULTIPART_CONTENT
 from django.utils.http import quote_etag
 from django.utils.six.moves.urllib.parse import quote, urlparse
@@ -711,3 +712,54 @@ def test_watch_unwatch(user_client, wiki_user, root_doc, endpoint, event):
         reverse('wiki.document', args=[root_doc.slug]))
     assert not event.is_notifying(wiki_user, root_doc), \
         'Watch was not destroyed'
+
+
+def test_deleted_doc_anon(deleted_doc, client):
+    """Requesting a deleted doc returns 404"""
+    response = client.get(deleted_doc.get_absolute_url())
+    assert response.status_code == 404
+    assert "This document was deleted" not in response.content
+    assert 'Reason for Deletion' not in response.content
+
+
+def test_deleted_doc_user(deleted_doc, user_client):
+    """Requesting a deleted doc returns 404, deletion message"""
+    response = user_client.get(deleted_doc.get_absolute_url())
+    assert response.status_code == 404
+    assert "This document was deleted" not in response.content
+    assert 'Reason for Deletion' not in response.content
+    assert 'Restore this document' not in response.content
+    assert 'Purge this document' not in response.content
+
+
+def test_deleted_doc_moderator(deleted_doc, moderator_client):
+    """Requesting deleted doc as moderator returns 404 with action buttons."""
+    response = moderator_client.get(deleted_doc.get_absolute_url())
+    assert response.status_code == 404
+    assert 'Reason for Deletion' in response.content
+    full_description = (
+        'This document was deleted by'
+        ' <a href="/en-US/profiles/moderator">moderator</a>'
+        ' on <time datetime="2018-08-21T17:22:00-07:00">'
+        'August 21, 2018 at 5:22:00 PM PDT</time>.')
+    assert full_description in response.content
+    assert 'Restore this document' in response.content
+    assert 'Purge this document' in response.content
+
+
+def test_deleted_doc_no_purge_permdeleted(deleted_doc, wiki_moderator,
+                                          moderator_client):
+    """Requesting deleted doc without purge perm removes purge button."""
+    wiki_moderator.user_permissions.remove(
+        Permission.objects.get(codename='purge_document'))
+    response = moderator_client.get(deleted_doc.get_absolute_url())
+    assert response.status_code == 404
+    assert 'Reason for Deletion' in response.content
+    full_description = (
+        'This document was deleted by'
+        ' <a href="/en-US/profiles/moderator">moderator</a>'
+        ' on <time datetime="2018-08-21T17:22:00-07:00">'
+        'August 21, 2018 at 5:22:00 PM PDT</time>.')
+    assert full_description in response.content
+    assert 'Restore this document' in response.content
+    assert 'Purge this document' not in response.content

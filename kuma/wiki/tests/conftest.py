@@ -6,11 +6,13 @@ from collections import namedtuple
 from datetime import datetime
 
 import pytest
+from django.contrib.auth.models import Permission
+from waffle.testutils import override_flag
 
 from kuma.core.urlresolvers import reverse
 
 from ..constants import REDIRECT_CONTENT
-from ..models import Document, Revision
+from ..models import Document, DocumentDeletionLog, Revision
 
 
 BannedUser = namedtuple('BannedUser', 'user ban')
@@ -43,6 +45,31 @@ def banned_wiki_user(db, django_user_model, wiki_user):
     )
     ban = user.bans.create(by=wiki_user, reason='because')
     return BannedUser(user=user, ban=ban)
+
+
+@pytest.fixture
+def wiki_moderator(db, django_user_model):
+    """A user with moderator permissions."""
+    moderator = django_user_model.objects.create(
+        username='moderator',
+        email='moderator@example.com',
+        date_joined=datetime(2018, 8, 21, 18, 19))
+    moderator.user_permissions.add(
+        Permission.objects.get(codename='purge_document'),
+        Permission.objects.get(codename='delete_document'),
+        Permission.objects.get(codename='restore_document')
+    )
+    return moderator
+
+
+@pytest.fixture
+def moderator_client(client, wiki_moderator):
+    """A test client with wiki_moderator logged in."""
+    wiki_moderator.set_password('password')
+    wiki_moderator.save()
+    client.login(username=wiki_moderator.username, password='password')
+    with override_flag('kumaediting', True):
+        yield client
 
 
 @pytest.fixture
@@ -116,6 +143,28 @@ def redirect_doc(wiki_user, root_doc):
         title='Redirect Document',
         created=datetime(2017, 4, 17, 12, 15))
     return redirect_doc
+
+
+@pytest.fixture
+def deleted_doc(wiki_moderator):
+    """A recently deleted but unpurged document."""
+    deleted_doc = Document.objects.create(
+        locale='en-US', slug='Doomed', title='Doomed Document')
+    Revision.objects.create(
+        document=deleted_doc,
+        creator=wiki_moderator,
+        content='<p>This document is doomed...</p>',
+        title='Doomed Document',
+        created=datetime(2018, 8, 21, 17, 3))
+    deleted_doc.delete()
+    DocumentDeletionLog.objects.create(
+        user=wiki_moderator,
+        reason="Deleted doomed document",
+        locale='en-US',
+        slug='Doomed')
+    DocumentDeletionLog.objects.filter(user=wiki_moderator).update(
+        timestamp=datetime(2018, 8, 21, 17, 22))
+    return deleted_doc
 
 
 @pytest.fixture

@@ -78,6 +78,7 @@ def wiki_user_3(db, django_user_model):
 
 @pytest.fixture
 def user_client(client, wiki_user):
+    """A test client with wiki_user logged in."""
     wiki_user.set_password('password')
     wiki_user.save()
     client.login(username=wiki_user.username, password='password')
@@ -86,6 +87,7 @@ def user_client(client, wiki_user):
 
 @pytest.fixture
 def editor_client(user_client):
+    """A test client with wiki_user logged in for editing."""
     with override_flag('kumaediting', True):
         yield user_client
 

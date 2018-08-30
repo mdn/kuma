@@ -7,9 +7,10 @@ import pytest
 from constance import config
 from constance.test import override_config
 from django.conf import settings
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import AnonymousUser, Group
 from django.contrib.sites.models import Site
 from django.core import mail
+from django.shortcuts import render
 from django.test.utils import override_settings
 from django.utils import translation
 from django.utils.http import urlquote
@@ -41,6 +42,17 @@ link, or paste it into your browser's location bar:
 
 https://testserver/en-US/docs/%s$history
 """
+
+
+def test_deletion_log_assert(db, rf):
+    """deletion_log.html doesn't render for non-moderators."""
+    user = AnonymousUser()
+    request = rf.get('/en-US/docs/DeletedDoc')
+    request.user = user
+    with pytest.raises(RuntimeError) as exc:
+        render(request, 'wiki/deletion_log.html')
+    assert str(exc.value) == ('Failed assertion: Deletion log details are only'
+                              ' for moderators.')
 
 
 class DocumentTests(UserTestCase, WikiTestCase):

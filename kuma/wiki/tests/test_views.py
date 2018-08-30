@@ -24,14 +24,13 @@ from kuma.spam.constants import (
     SPAM_CHECKS_FLAG, SPAM_SUBMISSIONS_FLAG, VERIFY_URL)
 from kuma.users.tests import UserTestCase
 
-from . import (create_document_editor_user, create_document_tree,
-               document, make_translation, new_document_data, normalize_html,
-               revision, WikiTestCase)
+from . import (create_document_tree, document, make_translation,
+               new_document_data, normalize_html, revision, WikiTestCase)
 from .conftest import ks_toolbox
 from ..content import get_seo_description
 from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import MIDAIR_COLLISION
-from ..models import Document, DocumentDeletionLog, RevisionIP
+from ..models import Document, RevisionIP
 from ..templatetags.jinja_helpers import get_compare_url
 from ..views.document import _get_seo_parent_title
 
@@ -307,40 +306,6 @@ class ViewTests(UserTestCase, WikiTestCase):
         assert 'Revision Content' in resp.content
         assert 'open' == page.find('#wikiArticle').parent().attr('open')
         assert page.find('#doc-source').parent().attr('open') is None
-
-
-class GetDeletedDocumentTests(UserTestCase, WikiTestCase):
-    """Tests for conditional GET on document view"""
-
-    def test_deleted_doc_returns_404(self):
-        """Requesting a deleted doc returns 404"""
-        rev = revision(is_approved=True, save=True)
-        rev.document.delete()
-        DocumentDeletionLog.objects.create(locale=rev.document.locale,
-                                           slug=rev.document.slug,
-                                           user=rev.creator,
-                                           reason="test")
-        response = self.client.get(rev.document.get_absolute_url(),
-                                   follow=False)
-        assert 404 == response.status_code
-        assert 'Reason for Deletion' not in response.content
-
-    def test_deleted_doc_returns_404_and_content(self):
-        """Requesting deleted doc as superuser returns 404 with restore button
-
-        """
-        # Create a user in a group with the wiki.delete_document permission.
-        user = create_document_editor_user()
-        self.client.login(username=user.username, password='testpass')
-
-        rev = revision(is_approved=True, save=True)
-        doc = rev.document
-        doc.delete()
-        DocumentDeletionLog.objects.create(locale=doc.locale, slug=doc.slug,
-                                           user=rev.creator, reason="test")
-        response = self.client.get(doc.get_absolute_url(), follow=False)
-        assert 404 == response.status_code
-        assert 'Reason for Deletion' in response.content
 
 
 class ReadOnlyTests(UserTestCase, WikiTestCase):
