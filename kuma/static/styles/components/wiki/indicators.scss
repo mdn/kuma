@@ -41,7 +41,8 @@ block indicators aka banners
 }
 
 /* Expand out the following for browsers which don’t support `:matches(…)`
-   TODO: Use postcss-matches-selectro once https://bugzil.la/1366868 is resolved. */
+   TODO: Use postcss-selector-matches once https://bugzil.la/1366868 is resolved.
+   See https://github.com/mozilla/kuma/pull/4884 */
 .warning + .warning,
 .overheadIndicator + .warning,
 .note + .warning,
