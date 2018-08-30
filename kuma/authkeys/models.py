@@ -20,7 +20,7 @@ def generate_key():
     random_hash = hashlib.sha256(random_bytes).digest()
     replacements = [b'rA', b'aZ', b'gQ', b'hH', b'hG', b'aR', b'DD']
     random_repl = random.choice(replacements)
-    return base64.b64encode(random_hash, random_repl).rstrip(b'=')
+    return base64.b64encode(random_hash, random_repl).rstrip(b'=').decode('utf-8')
 
 
 def hash_secret(secret):
@@ -44,8 +44,8 @@ class Key(models.Model):
         return '<Key %s %s>' % (self.user, self.key)
 
     def generate_secret(self):
-        self.key = generate_key().decode('utf-8')
-        secret = generate_key().decode('utf-8')
+        self.key = generate_key()
+        secret = generate_key()
         self.hashed_secret = hash_secret(secret)
         return secret
 

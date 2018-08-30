@@ -102,7 +102,7 @@ def authkey(wiki_user):
     key.save()
     auth = '%s:%s' % (key.key, secret)
     # TODO: Once Python 2/3 is gone, replace encodestring by encodebytes
-    header = 'Basic %s' % base64.encodestring(auth.encode('utf-8')).decode('utf-8')
+    header = 'Basic %s' % base64.b64encode(auth.encode('utf-8')).decode('utf-8')
     return AuthKey(key=key, header=header)
 
 

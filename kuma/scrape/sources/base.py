@@ -146,7 +146,6 @@ class Source(object):
         if PY3:  # pragma: no cover
             # TODO: Remove the PY3 condition once we don't run Python 2 anymore
             # In Python 3, unquote returns unicode
-            # decoded = unquote(href.decode('ascii'))
             if isinstance(href, binary_type):
                 uhref = href.decode('ascii')
             else:

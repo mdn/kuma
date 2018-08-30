@@ -69,7 +69,4 @@ class HumansTest(TestCase):
             ""
         ))
 
-        print(output)
-        print('---------')
-        print(expected)
         assert output == expected

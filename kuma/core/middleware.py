@@ -8,7 +8,6 @@ from django.http import (HttpResponseForbidden,
                          HttpResponsePermanentRedirect,
                          HttpResponseRedirect)
 from django.utils.encoding import iri_to_uri, smart_str
-from django.utils.six import iteritems
 from django.utils.six.moves.urllib.parse import urlsplit, urlunsplit
 from whitenoise.middleware import WhiteNoiseMiddleware
 
@@ -59,7 +58,7 @@ class LangSelectorMiddleware(MiddlewareBase):
 
         # Redirect to same path with requested language and without ?lang
         new_query = dict((smart_str(k), v) for
-                         k, v in iteritems(request.GET) if k != 'lang')
+                         k, v in request.GET.items() if k != 'lang')
         if new_query:
             new_path = urlparams(new_path, **new_query)
         response = HttpResponseRedirect(new_path)

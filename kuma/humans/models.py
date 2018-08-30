@@ -29,8 +29,7 @@ class HumansTXT(object):
     def write_to_file(self, humans, target, message, role):
         target.write("%s \n" % message)
         for h in humans:
-            target.write("%s: %s \n" %
-                         (role, h.name))
+            target.write("%s: %s \n" % (role, h.name))
             if h.website is not None:
                 target.write("Website: %s \n" % h.website)
                 target.write('\n')

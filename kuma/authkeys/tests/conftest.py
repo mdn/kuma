@@ -1,7 +1,5 @@
 import pytest
 
-from django.utils.six import iteritems
-
 from kuma.users.tests import user
 
 from ..models import Key
@@ -9,7 +7,7 @@ from ..models import Key
 
 class Object(object):
     def __init__(self, **kwargs):
-        for k, v in iteritems(kwargs):
+        for k, v in kwargs.items():
             setattr(self, k, v)
 
 

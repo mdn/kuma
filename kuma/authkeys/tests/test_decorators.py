@@ -5,7 +5,6 @@ import base64
 import pytest
 from django.contrib.auth.models import AnonymousUser
 from django.http import HttpRequest
-from django.utils.six import binary_type
 
 from kuma.authkeys.decorators import accepts_auth_key
 
@@ -32,7 +31,7 @@ def test_auth_key_decorator(user_auth_key, settings, use_valid_key,
         user_auth_key.secret if use_valid_secret else 'FAKE'
     )
 
-    b64_auth = base64.encodestring(binary_type(auth)).decode('utf-8')
+    b64_auth = base64.encodestring(auth.encode('utf-8')).decode('utf-8')
     request.META['HTTP_AUTHORIZATION'] = 'Basic %s' % b64_auth
 
     settings.MAINTENANCE_MODE = maintenance_mode

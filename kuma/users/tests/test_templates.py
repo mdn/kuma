@@ -74,10 +74,11 @@ def test_account_email_page_single_email(user_client):
     response = user_client.get(reverse('account_email'))
     assert response.status_code == 200
     assert_no_cache_header(response)
-    assert b'is your <em>primary</em> email address' in response.content
-    assert b'Make Primary' not in response.content
-    assert b'Re-send Confirmation' not in response.content
-    assert b'Remove' not in response.content
+    content = response.content.decode(response.charset)
+    assert 'is your <em>primary</em> email address' in content
+    assert 'Make Primary' not in content
+    assert 'Re-send Confirmation' not in content
+    assert 'Remove' not in content
 
 
 def test_account_email_page_multiple_emails(wiki_user, user_client):
@@ -86,11 +87,12 @@ def test_account_email_page_multiple_emails(wiki_user, user_client):
     response = user_client.get(reverse('account_email'))
     assert response.status_code == 200
     assert_no_cache_header(response)
-    assert b'Make Primary' in response.content
-    assert b'Re-send Confirmation' in response.content
-    assert b'Remove' in response.content
-    assert b'Add Email' in response.content
-    assert b'Edit profile' in response.content
+    content = response.content.decode(response.charset)
+    assert 'Make Primary' in content
+    assert 'Re-send Confirmation' in content
+    assert 'Remove' in content
+    assert 'Add Email' in content
+    assert 'Edit profile' in content
 
 
 class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
