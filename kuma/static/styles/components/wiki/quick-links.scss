@@ -58,7 +58,7 @@
             padding-left: 0;
         }
         summary:before {
-            font-size: .6em;
+            @include set-font-size(.6rem);
         }
     }
 
