@@ -1,0 +1,40 @@
+@import 'includes/vars';
+
+.contribution-form {
+
+    .row {
+        display: flex;
+
+        .column {
+            flex: 50%;
+            padding: 20px;
+            &:first-of-type {
+                border-right: 1px solid #000;
+            }
+        }
+    }
+
+    form {
+        .form-group {
+            label[for=name],
+            label[for=email] {
+                min-width: 50px;
+                margin-right: 10px;
+            }
+            label.choice {
+                padding: 10px;
+                border: 1px solid $grey-light;
+                border-radius: 50px;
+            }
+
+            input[type=radio] {
+                display: none;
+                &:checked {
+                    + label.choice {
+                        background: $grey-light;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,18 @@
+{% extends "landing/base_promote.html" %}
+
+{% block body_attributes %}id="contribute"{% endblock %}
+
+{% block title %}{{ page_title(_('Contribute')) }}{% endblock %}
+
+{% block content %}
+
+{% block site_js %}
+{{ super() }}
+<script src="https://checkout.stripe.com/checkout.js"></script>
+{% javascript 'contribute' %}
+
+{% endblock %}
+
+{% include "landing/includes/contribution-form.html" %}
+
+{% endblock %}

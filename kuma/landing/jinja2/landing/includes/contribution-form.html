@@ -1,0 +1,37 @@
+<div class="contribution-form">
+    <div class="row">
+        <div class="column">
+            <h2>{{ _('Help Support MDN for as little as')}} <b>$2</b></h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <a href="#">Learn More</a>
+            <a href="#">Feedback</a>
+        </div>
+        <div class="column">
+            <form id="contribute-form" method="post" action="">
+                <div class="form-group">
+                    <label for="name">{{_('Name')}}</label>
+                    <input id="name" name="name" type="text" maxlength="255" value="">
+                </div>
+                <div class="form-group">
+                    <label for="email">{{_('Email')}}</label>
+                    <input id="email" name="email" type="email" maxlength="255" value="">
+                </div>
+                <div class="form-group">
+                    <span>
+                        <input id="amount-selector-option-2" name="amount-selector" class="element radio" type="radio" value="16">
+                        <label class="choice" for="amount-selector-option-2">$16</label>
+                        <input id="amount-selector-option-3" name="amount-selector" class="element radio" type="radio" value="32" checked="checked">
+                        <label class="choice" for="amount-selector-option-3">$32</label>
+                        <input id="amount-selector-option-4" name="amount-selector" class="element radio" type="radio" value="64">
+                        <label class="choice" for="amount-selector-option-4">$64</label>
+                        <input id="amount-selector-option-5" name="amount-selector" class="element radio" type="radio" value="128">
+                        <label class="choice" for="amount-selector-option-5">$128</label>
+                    </span>
+                    <label for="custom-amount">$</label>
+                    <input id="custom-amount" name="custom-amount" type="number" maxlength="255" value="" placeholder="Other Amount">
+                </div>
+                <input type="submit" value="{{_('Contribute')}}">
+            </form>
+        </div>
+    </div>
+</div>
