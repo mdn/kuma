@@ -15,6 +15,7 @@ from django.utils.six.moves.urllib.parse import urljoin
 from elasticsearch import TransportError
 
 from .constants import KUMASCRIPT_BASE_URL, KUMASCRIPT_TIMEOUT_ERROR
+from .content import clean_content
 from .search import WikiDocumentType
 
 
@@ -213,8 +214,7 @@ def process_body(response):
     # We defer bleach sanitation of kumascript content all the way
     # through editing, source display, and raw output. But, we still
     # want sanitation, so it finally gets picked up here.
-    from kuma.wiki.models import Document
-    return Document.objects.clean_content(response.text)
+    return clean_content(response.text)
 
 
 def process_errors(response):

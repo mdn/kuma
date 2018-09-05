@@ -20,6 +20,7 @@ from kuma.core.urlresolvers import reverse
 from kuma.core.utils import order_params, urlparams
 
 from ..constants import DIFF_WRAP_COLUMN
+from ..content import clean_content
 from ..utils import tidy_content
 
 
@@ -142,8 +143,7 @@ def colorize_diff(diff):
 
 @library.filter
 def wiki_bleach(val):
-    from kuma.wiki.models import Document
-    return jinja2.Markup(Document.objects.clean_content(val))
+    return jinja2.Markup(clean_content(val))
 
 
 @library.filter
