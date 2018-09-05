@@ -49,6 +49,11 @@ def promote_buttons(request):
     return render(request, 'landing/promote_buttons.html')
 
 
+@shared_cache_control
+def contribute(request):
+    return render(request, 'landing/contribute.html')
+
+
 ROBOTS_ALLOWED_TXT = '''\
 User-agent: *
 Sitemap: https://developer.mozilla.org/sitemap.xml
