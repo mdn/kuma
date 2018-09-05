@@ -18,6 +18,10 @@ lang_urlpatterns = [
     url(r'^promote/buttons/?$',
         views.promote_buttons,
         name='promote_buttons'),
+    url(r'^contribute/?$',
+        views.contribute,
+        name='contribute'),
+
 ]
 
 urlpatterns = [
