@@ -1,0 +1,52 @@
+{% extends "landing/base_promote.html" %}
+
+{% block body_attributes %}id="contribure"{% endblock %}
+
+{% block title %}{{ page_title(_('Contribute')) }}{% endblock %}
+
+
+
+{% block content %}
+
+{% block site_js %}
+{{ super() }}
+<script src="https://checkout.stripe.com/checkout.js"></script>
+
+{% javascript 'contribute' %}
+{% endblock %}
+
+<div>
+    <form id="contribute-form" method="post" action="">
+        <h2>Contribute Form</h2>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" maxlength="255" value="">
+        </div>
+
+        <div class="form-group">
+            <label for="email">email</label>
+            <input id="email" name="email" type="email" maxlength="255" value="">
+        </div>
+
+        <div class="form-group">
+            <label for="amount-selector">Contrribution Amount </label>
+            <span>
+                <input id="amount-selector-option-2" name="amount-selector" class="element radio" type="radio" value="16">
+                <label class="choice" for="amount-selector-option-2">$16</label>
+                <input id="amount-selector-option-3" name="amount-selector" class="element radio" type="radio" value="32" checked="checked">
+                <label class="choice" for="amount-selector-option-3">$32</label>
+                <input id="amount-selector-option-4" name="amount-selector" class="element radio" type="radio" value="64">
+                <label class="choice" for="amount-selector-option-4">$64</label>
+                <input id="amount-selector-option-5" name="amount-selector" class="element radio" type="radio" value="128">
+                <label class="choice" for="amount-selector-option-5">$128</label>
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="custom-amount">Or enter another amount </label>
+            <input id="custom-amount" name="custom-amount" type="number" maxlength="255" value="">
+        </div>
+        <input type="submit" value="Pay">
+    </form>
+</div>
+{% endblock %}
