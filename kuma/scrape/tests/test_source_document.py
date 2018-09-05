@@ -126,6 +126,17 @@ def test_gather_standard_doc_empty_history_is_error():
     assert source.state == source.STATE_ERROR
 
 
+def test_gather_document_zone_url_is_error():
+    """Old vanity zone URLs are not loaded."""
+    doc_path = "/en-US/Firefox/Releases/22"
+    source = DocumentSource(doc_path)
+    storage = mock_storage(spec=[])  # Storage is skipped
+    resources = source.gather(None, storage)
+    assert resources == []
+    assert source.state == source.STATE_ERROR
+    assert source.freshness == source.FRESH_UNKNOWN
+
+
 def test_gather_standard_doc_all_prereqs():
     path = '/en-US/docs/Test'
     source = DocumentSource(path, force=True)
