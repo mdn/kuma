@@ -11,7 +11,7 @@
 
   var handler = StripeCheckout.configure({
     key: '{{ KEY GOES HERE }}',
-    locale: 'auto',
+    locale: 'en',
     name: 'Sand Castles United',
     description: 'One-time donation',
     token: function(token) {
