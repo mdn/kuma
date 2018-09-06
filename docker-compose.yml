@@ -97,6 +97,7 @@ services:
       - memcached
     environment:
       - interactive_examples__base_url=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
+      - live_samples__base_url=http://${ATTACHMENT_HOST:-localhost:8000}
       - log__console=true
       - log__file=
       - server__template_root_dir=macros
