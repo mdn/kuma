@@ -6,7 +6,7 @@
         defaultAmount = form.find('input[type="radio"]:checked');
 
     var handler = win.StripeCheckout.configure({
-        key: 'pk_test_S0ni2QKeP3juzhgCGdnvDJNF',
+        key: '',
         locale: 'en',
         name: 'Sand Castles United',
         description: 'One-time donation',
