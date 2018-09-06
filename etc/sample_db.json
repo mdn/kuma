@@ -265,6 +265,10 @@
         "id": 1,
         "name": "localhost:8000",
         "domain": "localhost:8000"
+      }, {
+        "id": 2,
+        "name": "developer.127.0.0.1.nip.io",
+        "domain": "developer.127.0.0.1.nip.io"
       }
     ],
     "users.user": [
