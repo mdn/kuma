@@ -947,6 +947,12 @@ PIPELINE_JS = {
             'async': True,
         },
     },
+    'contribute': {
+        'source_filenames': (
+            'js/contribution-handler.js',
+        ),
+        'output_filename': 'build/js/contribute.js',
+    },
     'framebuster': {
         'source_filenames': (
             'js/framebuster.js',
