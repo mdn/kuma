@@ -1098,6 +1098,20 @@ def test_clean_content_iframe_in_textarea():
     assert normalize_html(expected) == normalize_html(result)
 
 
+def test_clean_content_filter_iframe(settings):
+    """iframe src is filtered by default."""
+    settings.ALLOW_ALL_IFRAMES = False
+    html = '<iframe src="http://hacks.example.com"></iframe>'
+    assert clean_content(html) == '<iframe src=""></iframe>'
+
+
+def test_clean_content_allow_all_iframes(settings):
+    """iframe src is filtered by default."""
+    settings.ALLOW_ALL_IFRAMES = True
+    html = '<iframe src="http://hacks.example.com"></iframe>'
+    assert clean_content(html) == html
+
+
 def test_extractor_css_classnames(root_doc, wiki_user):
     """The Extractor can return the CSS class names in use."""
     classes = ('foobar', 'barfoo', 'bazquux')

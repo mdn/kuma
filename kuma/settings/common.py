@@ -1202,6 +1202,15 @@ if ATTACHMENT_HOST != _PROD_ATTACHMENT_HOST:
 if INTERACTIVE_EXAMPLES_BASE != _PROD_INTERACTIVE_EXAMPLES:
     ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(INTERACTIVE_EXAMPLES_BASE))
 
+# Add more iframe patterns from the environment
+_ALLOWED_IFRAME_PATTERNS = config('ALLOWED_IFRAME_PATTERNS', default='', cast=Csv())
+for pattern in _ALLOWED_IFRAME_PATTERNS:
+    ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(pattern))
+
+# Allow all iframe sources (for debugging)
+ALLOW_ALL_IFRAMES = config('ALLOW_ALL_IFRAMES', default=False, cast=bool)
+
+
 # Video settings, hard coded here for now.
 # TODO: figure out a way that doesn't need these values
 WIKI_VIDEO_WIDTH = 640

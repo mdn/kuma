@@ -178,8 +178,11 @@ def clean_content(content):
                             styles=ALLOWED_STYLES,
                             protocols=ALLOWED_PROTOCOLS)
     parsed = parse(bleached)
-    allowed_iframe_patterns = settings.ALLOWED_IFRAME_PATTERNS
-    filtered = parsed.filterIframeHosts(allowed_iframe_patterns)
+    if settings.ALLOW_ALL_IFRAMES:
+        filtered = parsed
+    else:
+        allowed_iframe_patterns = settings.ALLOWED_IFRAME_PATTERNS
+        filtered = parsed.filterIframeHosts(allowed_iframe_patterns)
     content_out = filtered.serialize()
     return content_out
 
