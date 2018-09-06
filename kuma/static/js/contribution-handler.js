@@ -1,6 +1,5 @@
 (function(win, doc, $, StripeCheckout) {
   'use strict';
-
   var form = $("#contribute-form"),
   nameInput = form.find("#name"),
   emailInput = form.find("#email"),
@@ -10,7 +9,7 @@
   stripeScript = $("#stripe-intergration");
 
   var handler = StripeCheckout.configure({
-    key: '{{ KEY GOES HERE }}',
+    key: 'pk_test_S0ni2QKeP3juzhgCGdnvDJNF',
     locale: 'en',
     name: 'Sand Castles United',
     description: 'One-time donation',
