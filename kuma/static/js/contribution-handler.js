@@ -1,23 +1,26 @@
 (function(win, doc, $, StripeCheckout) {
   'use strict';
-  var form = $("#contribute-form"),
-  nameInput = form.find("#name"),
-  emailInput = form.find("#email"),
-  amountRadio = form.find("input[name=amount-selector]"),
+  var form = $("#contribute-form-2"),
+  nameInput = form.find("#id_name"),
+  emailInput = form.find("#id_email"),
+  amountRadio = form.find("input[name=donation_choices]"),
   defaultAmount = form.find("input[type='radio']:checked"),
-  customAmountInput = form.find("#custom-amount"),
-  stripeScript = $("#stripe-intergration");
+  customAmountInput = form.find("#id_donation_amount"),
+  stripeScript = $("#stripe-intergration"),
+  stripe_public_key = form.find("#id_stripe_public_key");
 
-  var handler = StripeCheckout.configure({
-    key: '',
-    locale: 'en',
-    name: 'Sand Castles United',
-    description: 'One-time donation',
-    token: function(token) {
-      $('input#stripeToken').val(token.id);
-      $('form').submit();
-    }
-  });
+  console.log(stripe_public_key.val());
+
+    var handler = StripeCheckout.configure({
+        key: stripe_public_key.val(),
+        locale: 'en',
+        name: 'Sand Castles United',
+        description: 'One-time donation',
+        token: function(token) {
+            $('input#stripeToken').val(token.id);
+            $('form').submit();
+        }
+    });
 
   var selectedAmount = defaultAmount.length ? defaultAmount[0].value * 100 : 0;
 
@@ -41,7 +44,7 @@
 
   // Register event handlers
   amountRadio.change(onAmountSelect);
-  form.submit(onSubmit);
+  $('#stripe_submit').click(onSubmit);
 
   // Destroy event handlers
 })(window, document, jQuery, StripeCheckout);

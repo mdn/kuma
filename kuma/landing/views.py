@@ -10,6 +10,7 @@ from kuma.core.decorators import shared_cache_control
 from kuma.feeder.models import Bundle
 from kuma.feeder.sections import SECTION_HACKS
 from kuma.search.models import Filter
+from kuma.landing.forms import ContributionForm
 
 from .utils import favicon_url
 
@@ -49,9 +50,33 @@ def promote_buttons(request):
     return render(request, 'landing/promote_buttons.html')
 
 
-@shared_cache_control
+# @shared_cache_control
 def contribute(request):
-    return render(request, 'landing/contribute.html')
+
+    print '*'*33
+    # print settings.STRIPE_PUBLIC_KEY
+    # print settings.STRIPE_SECRET_KEY
+    # print request.user
+    print request.POST
+
+    if request.POST:
+        print 'IN FORM POST'
+        print request.POST
+        form = ContributionForm(request.POST)
+        if form.is_valid():
+            print 'HAH HAHA'
+
+        form = ContributionForm(request.POST)
+    else:
+        form = ContributionForm()
+
+    context = {
+        'form': form,
+    }
+    # print '  CONTEXT  '*5
+    # print context
+    return render(request, 'landing/contribute.html', context)
+
 
 
 ROBOTS_ALLOWED_TXT = '''\

@@ -1688,3 +1688,8 @@ RATELIMIT_VIEW = 'kuma.core.views.rate_limited'
 # Caching constants for the Cache-Control header.
 CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE = config(
     'CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE', default=60 * 5, cast=int)
+
+# Stripe API KEY settings
+STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY', default='')
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
+CONTRIBUTION_FORM_CHOICES = [16, 32, 64, 128]
