@@ -31,6 +31,7 @@ class ContributionForm(forms.Form):
         required=False,
         label=u''
     )
+    stripe_token = forms.CharField(required=False, widget=forms.HiddenInput(), max_length=255)
     stripe_public_key = forms.CharField(required=False, widget=forms.HiddenInput(), max_length=255)
 
     def clean(self):
