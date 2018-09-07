@@ -1,0 +1,27 @@
+{% extends "landing/base_promote.html" %}
+
+{% block body_attributes %}id="contribure"{% endblock %}
+
+{% block title %}{{ page_title(_('Contribute')) }}{% endblock %}
+
+{% block content %}
+
+    {% block site_js %}
+        {{ super() }}
+
+    {% endblock %}
+
+    <div>
+        {% if stripe_response.id and stripe_response.status == 'succeeded' %}
+            <h1>Thank you for your contribution !</h1>
+        {% else %}
+            <h1>Ooops something went wrong</h1>
+        {% endif %}
+
+        <div>
+            {{ stripe_response }}
+        </div>
+
+    </div>
+
+{% endblock %}
