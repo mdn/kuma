@@ -13,6 +13,8 @@
 
 {% endblock %}
 
-{% include "landing/includes/contribution-form.html" %}
+    {% with form=form %}
+        {% include "landing/includes/contribution-form.html" %}
+    {% endwith %}
 
 {% endblock %}

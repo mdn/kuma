@@ -9,6 +9,7 @@ from ratelimit.decorators import ratelimit
 from kuma.core.decorators import shared_cache_control
 from kuma.feeder.models import Bundle
 from kuma.feeder.sections import SECTION_HACKS
+from kuma.landing.forms import ContributionForm
 from kuma.search.models import Filter
 
 from .utils import favicon_url
@@ -51,7 +52,17 @@ def promote_buttons(request):
 
 @shared_cache_control
 def contribute(request):
-    return render(request, 'landing/contribute.html')
+    if request.POST:
+        form = ContributionForm(request.POST)
+        if form.is_valid():
+            pass  # TODO: handle contribution
+    else:
+        form = ContributionForm()
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'landing/contribute.html', context)
 
 
 ROBOTS_ALLOWED_TXT = '''\
