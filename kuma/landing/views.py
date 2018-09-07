@@ -53,18 +53,13 @@ def promote_buttons(request):
 # @shared_cache_control
 def contribute(request):
 
-    print '*'*33
-    # print settings.STRIPE_PUBLIC_KEY
-    # print settings.STRIPE_SECRET_KEY
-    # print request.user
-    print request.POST
-
     if request.POST:
-        print 'IN FORM POST'
-        print request.POST
         form = ContributionForm(request.POST)
         if form.is_valid():
-            print 'HAH HAHA'
+            context = {
+                'stripe_response': form.make_charge()
+            }
+            return render(request, 'landing/contribute_thankyou.html', context)
 
         form = ContributionForm(request.POST)
     else:
@@ -73,8 +68,6 @@ def contribute(request):
     context = {
         'form': form,
     }
-    # print '  CONTEXT  '*5
-    # print context
     return render(request, 'landing/contribute.html', context)
 
 
