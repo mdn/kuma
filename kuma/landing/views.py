@@ -55,7 +55,10 @@ def contribute(request):
     if request.POST:
         form = ContributionForm(request.POST)
         if form.is_valid():
-            pass  # TODO: handle contribution
+            context = {
+                'stripe_response': form.make_charge()
+            }
+            return render(request, 'landing/contribute_thankyou.html', context)
     else:
         form = ContributionForm()
 
