@@ -1,9 +1,10 @@
 (function(win, doc, $, StripeCheckout) {
     'use strict';
-    var form = $('#contribute-form'),
-        amountRadio = form.find('input[name=amount-selector]'),
-        defaultAmount = form.find('input[type="radio"]:checked'),
-        stripePublicKey = form.find('#id_stripe_public_key');
+    var form = $('#contribute-form-2'),
+        amountRadio = form.find('input[name=donation_choices]'),
+        defaultAmount = form.find('input[type=\'radio\']:checked'),
+        stripePublicKey = form.find('#id_stripe_public_key'),
+        stripeToken = form.find('#id_stripe_token');
 
     var handler = StripeCheckout.configure({
         key: stripePublicKey.val(),
@@ -11,8 +12,8 @@
         name: 'Sand Castles United',
         description: 'One-time donation',
         token: function(token) {
-            $('input#stripeToken').val(token.id);
-            $('form').submit();
+            stripeToken.val(token.id);
+            form.submit();
         }
     });
 
@@ -22,8 +23,7 @@
         selectedAmount = ev.target.value * 100;
     }
 
-    function onSubmit(ev) {
-        ev.preventDefault();
+    function onSubmit() {
         handler.open({
             image: 'https://avatars1.githubusercontent.com/u/7565578?s=280&v=4',
             name: 'MDN Web Docs',
@@ -40,5 +40,5 @@
     amountRadio.change(onAmountSelect);
     $('#stripe_submit').click(onSubmit);
 
-    // Destroy event handlers
-})(window, document, jQuery, null /*StripeCheckout*/);
+// TODO Ensure StripeCheckout is declared globally
+})(window, document, jQuery, null /* StripeCheckout */);
