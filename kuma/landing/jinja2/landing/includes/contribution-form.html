@@ -6,47 +6,13 @@
             <a href="#">Learn More</a>
             <a href="#">Feedback</a>
         </div>
-{#        <div class="column">#}
-{#            <form id="contribute-form" method="post" action="">#}
-{#                <div class="form-group">#}
-{#                    <label for="name">{{_('Name')}}</label>#}
-{#                    <input id="name" name="name" type="text" maxlength="255" value="">#}
-{#                </div>#}
-{#        #}
-{#                <div class="form-group">#}
-{#                    <label for="email">{{_('Email')}}</label>#}
-{#                    <input id="email" name="email" type="email" maxlength="255" value="">#}
-{#                </div>#}
-{#        #}
-{#                <div class="form-group">#}
-{#                    <span>#}
-{#                        <input id="amount-selector-option-2" name="amount-selector" class="element radio" type="radio" value="16">#}
-{#                        <label class="choice" for="amount-selector-option-2">$16</label>#}
-{#                        <input id="amount-selector-option-3" name="amount-selector" class="element radio" type="radio" value="32" checked="checked">#}
-{#                        <label class="choice" for="amount-selector-option-3">$32</label>#}
-{#                        <input id="amount-selector-option-4" name="amount-selector" class="element radio" type="radio" value="64">#}
-{#                        <label class="choice" for="amount-selector-option-4">$64</label>#}
-{#                        <input id="amount-selector-option-5" name="amount-selector" class="element radio" type="radio" value="128">#}
-{#                        <label class="choice" for="amount-selector-option-5">$128</label>#}
-{#                    </span>#}
-{#                    <label for="custom-amount">$</label>#}
-{#                    <input id="custom-amount" name="custom-amount" type="number" maxlength="255" value="" placeholder="Other Amount">#}
-{#                </div>#}
-{#                <input type="submit" value="{{_('Contribute')}}">#}
-{#            </form>#}
-{##}
-{#        </div>#}
-
-
         <div class="column">
-
             <form id="contribute-form-2" method="post" action="">
                 {% csrf_token %}
                 <div class="form-group">
                     {{ form.as_p() }}
-
                 </div>
-                 <input type="submit" id="stripe_submit" value="Submit">
+                 <button type="button" id="stripe_submit">Submit</button>
             </form>
         </div>
 

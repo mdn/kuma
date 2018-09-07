@@ -1,50 +1,44 @@
 (function(win, doc, $, StripeCheckout) {
-  'use strict';
-  var form = $("#contribute-form-2"),
-  nameInput = form.find("#id_name"),
-  emailInput = form.find("#id_email"),
-  amountRadio = form.find("input[name=donation_choices]"),
-  defaultAmount = form.find("input[type='radio']:checked"),
-  customAmountInput = form.find("#id_donation_amount"),
-  stripeScript = $("#stripe-intergration"),
-  stripe_public_key = form.find("#id_stripe_public_key");
-
-  console.log(stripe_public_key.val());
+    'use strict';
+    var form = $('#contribute-form-2'),
+        amountRadio = form.find('input[name=donation_choices]'),
+        defaultAmount = form.find('input[type=\'radio\']:checked'),
+        stripePublicKey = form.find('#id_stripe_public_key'),
+        stripeToken = form.find('#id_stripe_token');
 
     var handler = StripeCheckout.configure({
-        key: stripe_public_key.val(),
+        key: stripePublicKey.val(),
         locale: 'en',
         name: 'Sand Castles United',
         description: 'One-time donation',
         token: function(token) {
-            $('input#stripeToken').val(token.id);
-            $('form').submit();
+            stripeToken.val(token.id);
+            form.submit();
         }
     });
 
-  var selectedAmount = defaultAmount.length ? defaultAmount[0].value * 100 : 0;
+    var selectedAmount = defaultAmount.length ? defaultAmount[0].value * 100 : 0;
 
-  function onAmountSelect(ev) {
-    selectedAmount = ev.target.value * 100;
-  }
+    function onAmountSelect(ev) {
+        selectedAmount = ev.target.value * 100;
+    }
 
-  function onSubmit(ev) {
-    ev.preventDefault();
-    handler.open({
-      image: 'https://avatars1.githubusercontent.com/u/7565578?s=280&v=4',
-      name: 'MDN Web Docs',
-      description: 'Contrubute to MDN Web Docs',
-      zipCode: true,
-      amount: selectedAmount,
-      closed: function(ev) {
-        form.removeClass('disabled');
-      }
-    });
-  }
+    function onSubmit() {
+        handler.open({
+            image: 'https://avatars1.githubusercontent.com/u/7565578?s=280&v=4',
+            name: 'MDN Web Docs',
+            description: 'Contrubute to MDN Web Docs',
+            zipCode: true,
+            amount: selectedAmount,
+            closed: function() {
+                form.removeClass('disabled');
+            }
+        });
+    }
 
-  // Register event handlers
-  amountRadio.change(onAmountSelect);
-  $('#stripe_submit').click(onSubmit);
+    // Register event handlers
+    amountRadio.change(onAmountSelect);
+    $('#stripe_submit').click(onSubmit);
 
-  // Destroy event handlers
-})(window, document, jQuery, StripeCheckout);
+// TODO Ensure StripeCheckout is declared globally
+})(window, document, jQuery, StripeCheckout); // eslint-disable-line 
