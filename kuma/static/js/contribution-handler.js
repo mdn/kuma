@@ -1,12 +1,13 @@
 (function(win, doc, $) {
     'use strict';
 
-    var form = $('#contribute-form'),
+    var form = $('#contribute-form-2'),
         amountRadio = form.find('input[name=amount-selector]'),
-        defaultAmount = form.find('input[type="radio"]:checked');
+        defaultAmount = form.find('input[type="radio"]:checked'),
+        stripePublicKey = form.find('#id_stripe_public_key');
 
     var handler = win.StripeCheckout.configure({
-        key: '',
+        key: stripePublicKey.val(),
         locale: 'en',
         name: 'Sand Castles United',
         description: 'One-time donation',
@@ -38,7 +39,7 @@
 
     // Register event handlers
     amountRadio.change(onAmountSelect);
-    form.submit(onSubmit);
+    $('#stripe_submit').click(onSubmit);
 
     // Destroy event handlers
 })(window, document, jQuery);
