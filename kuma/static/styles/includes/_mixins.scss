@@ -41,6 +41,7 @@ Provides main mixins for use within the MDN theme.
 
 @mixin set-site-font-family() {
     font-family: $site-font-family;
+    letter-spacing: -0.05px;
 }
 
 
@@ -485,7 +486,7 @@ These are not dynamic but serve as mixins
 
 @mixin callout() {
     @include restrict-line-length();
-    @include set-font-size(20px);
+    @include set-font-size(19px);
     border: $section-border-width solid $accent-light;
     border-width: $section-border-width 0;
     padding: $grid-spacing 0;
