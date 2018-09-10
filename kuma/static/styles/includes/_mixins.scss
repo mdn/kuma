@@ -41,7 +41,7 @@ Provides main mixins for use within the MDN theme.
 
 @mixin set-site-font-family() {
     font-family: $site-font-family;
-    letter-spacing: -0.05px;
+    letter-spacing: -.05px;
 }
 
 
