@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.conf.urls import url
 
 from kuma.core.decorators import shared_cache_control
@@ -18,11 +19,14 @@ lang_urlpatterns = [
     url(r'^promote/buttons/?$',
         views.promote_buttons,
         name='promote_buttons'),
-    url(r'^contribute/?$',
-        views.contribute,
-        name='contribute'),
-
 ]
+
+if settings.MDN_CONTRIBUTION:
+    lang_urlpatterns.append(
+        url(r'^contribute/?$',
+            views.contribute,
+            name='contribute')
+    )
 
 urlpatterns = [
     url(r'^contribute\.json$',
