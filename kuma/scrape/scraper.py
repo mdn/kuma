@@ -72,7 +72,7 @@ class Requester(object):
                 time.sleep(pause)
             elif response.status_code == 504:
                 retry = True
-                logger.warn("Gateway timeout (504) returned for $s.", url)
+                logger.warn("Gateway timeout (504) returned for %s.", url)
                 time.sleep(timeout)
                 timeout *= 2
 
