@@ -1,6 +1,7 @@
 import stripe
 from django import forms
 from django.conf import settings
+from django.core.validators import MinValueValidator
 from django.utils.translation import ugettext_lazy as _
 
 from kuma.core.form_fields import StrippedCharField
@@ -18,11 +19,25 @@ DONATION_CHOICES = [
 
 class ContributionForm(forms.Form):
     name = StrippedCharField(
-        min_length=1, max_length=255,
-        label=_(u'Name:')
+        min_length=1,
+        max_length=255,
+        label=u'',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': _('Your full name'),
+                'data-error-message': _('Required')
+            }
+        )
     )
     email = forms.EmailField(
-        label=_(u'Email:')
+        label=u'',
+        widget=forms.EmailInput(
+            attrs={
+                'placeholder': _('you@example.com'),
+                'data-error-message': _('Must be a valid email'),
+                'title': _('Why do you need my email address? This is so we can send you a receipt of your contribution. This is handy if you would like a refund.')
+            }
+        )
     )
     donation_choices = forms.TypedChoiceField(
         required=False,
@@ -30,11 +45,21 @@ class ContributionForm(forms.Form):
         widget=forms.RadioSelect(),
         label=u'',
         empty_value=0,
-        coerce=int
+        coerce=int,
+        initial=DONATION_CHOICES[1][0]
     )
     donation_amount = forms.DecimalField(
         required=False,
-        label=u''
+        label=u'',
+        max_digits=10,
+        decimal_places=2,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': _('Other amount'),
+                'data-error-message': _('Must be more than $1')
+            }
+        ),
+        validators=[MinValueValidator(1)]
     )
     stripe_token = forms.CharField(
         required=False,
