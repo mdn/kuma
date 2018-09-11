@@ -1,40 +1,156 @@
 @import 'includes/vars';
 
+// Styles for the contribution form
+// Form cta background
+$background-colors: #83cff3,#42f593;
+$background-gradient: linear-gradient(to right, nth($background-colors, 1) , nth($background-colors, 2));
+
+// Form Varibles
+$input-height: 64px;
+$input-spacing: 18px;
+$button-color: #3143e2;
+
 .contribution-form {
+    background-image: $background-gradient;
 
     .row {
         display: flex;
 
+        @media #{$mq-mobile-and-down} {
+            display: block;
+
+            .column {
+                width: 100%;
+                max-width: none;
+                margin-bottom: 2em;
+            }
+        }
         .column {
             flex: 50%;
             padding: 20px;
+            box-sizing: border-box;
             &:first-of-type {
-                border-right: 1px solid #000;
+                .container {
+                    max-width: 700px;
+                    float: right;
+                    @media #{$mq-mobile-and-down} {
+                        float: none;
+                    }
+                }
+            }
+
+            @media #{$mq-tablet-and-down} {
+                padding: 10px;
+            }
+
+            .container {
+                max-width: 500px;
+                margin: 0 auto;
+                @media #{$mq-mobile-and-down} {
+                    max-width: 100%;
+                }
+                .body {
+                    @include set-font-size($larger-font-size);
+                    line-height: 1.75;
+                    font-family: $heading-font-family;
+                }
+
+                h4 {
+                    margin: 15px 0;
+                    font-size: 28px;
+                }
+
+                .button-group a {
+                    color: $text-color;
+                    margin-right: 20px;
+                    min-width: 150px;
+                }
             }
         }
     }
 
     form {
+        button {
+            height: $input-height;
+            border: none;
+            border-radius: $input-height;
+            line-height: $input-height;
+            background: $button-color;
+            font-weight: normal;
+            color: #fff;
+            padding: 0 3em;
+            float: right;
+        }
+
         .form-group {
-            label[for=name],
-            label[for=email] {
-                min-width: 50px;
-                margin-right: 10px;
-            }
-            label.choice {
-                padding: 10px;
-                border: 1px solid $grey-light;
-                border-radius: 50px;
+            .errorlist {
+                display: block;
+                text-align: right;
             }
 
-            input[type=radio] {
-                display: none;
-                &:checked {
-                    + label.choice {
-                        background: $grey-light;
+            input {
+                width: 100%;
+                display: block;
+                line-height: 3;
+                box-sizing: border-box;
+                font-weight: normal;
+                padding-left: 12px;
+                border-color: $text-color;
+                margin-top: $input-spacing;
+                &.error {
+                    border-color: $error;
+                    color: $error;
+                }
+            }
+
+            #id_donation_amount,
+            #id_donation_choices {
+                width: 49%;
+                display: inline-block;
+                vertical-align: middle;
+                margin: 0;
+                margin-top: $input-spacing;
+                border-radius: $input-height;
+                @media #{$mq-tablet-and-down} {
+                    display: block;
+                    width: 100%;
+                }
+            }
+        }
+
+        #id_donation_choices {
+            text-align: center;
+
+            li {
+                display: inline-block;
+                position: relative;
+                width: 32%;
+
+                input[type=radio] {
+                    position: absolute;
+                    opacity: 0;
+                }
+
+                label {
+                    min-width: $input-height;
+                    height: $input-height;
+                    border: 2px solid $text-color;
+                    border-radius: $input-height;
+                    background-color: #fff;
+                    text-align: center;
+                    line-height: $input-height;
+                    display: inline-block;
+
+                    &.active {
+                        background: $text-color;
+                        color: #fff;
                     }
                 }
             }
+        }
+        .payment-details {
+            display: inline-block;
+            padding: 1em 0;
         }
     }
 }

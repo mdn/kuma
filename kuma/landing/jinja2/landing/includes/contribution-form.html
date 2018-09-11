@@ -1,16 +1,35 @@
 <div class="contribution-form">
     <div class="row">
         <div class="column">
-            <h2>{{ _('Help Support MDN for as little as')}} <b>$2</b></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <a href="#">Learn More</a>
-            <a href="#">Feedback</a>
+            <div class="container">
+                <h2 class="highlight highlight-spanned">
+                    <span class="highlight-span">{{ _('Help Support MDN for as little as')}} <b>$2</b></span>
+                </h2>
+                <h4>{{_('We need your help to grow to the next stage.')}}</h4>
+                <p class="body">{{_('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.')}}</p>
+                <div class="button-group">
+                    <a href="#" class="cta-link">
+                        {{_('Learn More')}} {% include 'includes/icons/arrows/arrow.svg' %}
+                    </a>
+                    <a href="#" class="cta-link">
+                        {{_('Feedback')}} {% include 'includes/icons/arrows/arrow.svg' %}
+                    </a>
+                </div>
+            </div>
         </div>
         <div class="column">
-            <form id="contribute-form-2" method="post" action="">
+            <form id="contribute-form-2" class="container" method="post" action="">
                 {% csrf_token %}
                 <div class="form-group">
-                    {{ form.as_p() }}
+                    {% for field in form %}
+                        {{ field }}
+                        {{ field.errors }}
+                    {% endfor %}
+                </div>
+                <div class="payment-details">
+                    <img src="{{ static('img/mc-logo.png') }}" alt="mastercard">
+                    <img src="{{ static('img/visa-logo.png') }}" alt="visa">
+                    <img src="{{ static('img/ae-logo.png.png') }}" alt="american express">
                 </div>
                 <button type="button" id="stripe_submit">Submit</button>
             </form>

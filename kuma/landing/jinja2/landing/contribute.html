@@ -1,20 +1,27 @@
-{% extends "landing/base_promote.html" %}
+{% extends "base.html" %}
+
 
 {% block body_attributes %}id="contribute"{% endblock %}
 
 {% block title %}{{ page_title(_('Contribute')) }}{% endblock %}
 
-{% block content %}
-
-{% block site_js %}
-{{ super() }}
-<script src="https://checkout.stripe.com/checkout.js"></script>
-{% javascript 'contribute' %}
-
+{% block site_css %}
+    {{ super() }}
+    {% stylesheet 'jquery-ui' %}
 {% endblock %}
 
+{% block site_js %}
+    {{ super() }}
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    {% javascript 'jquery-ui' %}
+    {% javascript 'contribute' %}
+{% endblock %}
+
+{% block document_head %}
     {% with form=form %}
         {% include "landing/includes/contribution-form.html" %}
     {% endwith %}
+{% endblock %}
+{% block content %}
 
 {% endblock %}

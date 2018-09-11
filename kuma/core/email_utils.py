@@ -121,4 +121,3 @@ def emails_with_users_and_watches(subject,
             locale = default_locale
 
         yield _make_mail(locale, user, watch)
-

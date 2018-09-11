@@ -1,5 +1,5 @@
-from django.conf.urls import url
 from django.conf import settings
+from django.conf.urls import url
 
 from kuma.core.decorators import shared_cache_control
 
