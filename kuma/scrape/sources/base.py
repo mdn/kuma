@@ -144,7 +144,11 @@ class Source(object):
 
     def decode_href(self, href):
         """Convert URL-escaped href attributes to unicode."""
-        decoded = unquote(binary_type(href))
+        if isinstance(href, binary_type):
+            bhref = href
+        else:
+            bhref = href.encode('utf-8')
+        decoded = unquote(bhref)
         assert isinstance(decoded, binary_type)
         decoded = decoded.decode('utf8')
         return decoded
