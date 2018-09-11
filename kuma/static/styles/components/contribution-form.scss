@@ -85,11 +85,14 @@ $button-color: #3143e2;
             border: none;
             border-radius: $input-height;
             line-height: $input-height;
-            background: $button-color;
+            background-color: $button-color;
             font-weight: normal;
             color: #fff;
             padding: 0 3em;
             float: right;
+            &:hover {
+                background-color: darken($button-color, 5%);
+            }
         }
 
         .form-group {
@@ -160,6 +163,10 @@ $button-color: #3143e2;
                     text-align: center;
                     line-height: $input-height;
                     display: inline-block;
+
+                    &:hover {
+                        background: darken(#fff, 3%);
+                    }
 
                     &.active {
                         background: $text-color;
