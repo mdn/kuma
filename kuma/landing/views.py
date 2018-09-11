@@ -52,10 +52,10 @@ def promote_buttons(request):
     return render(request, 'landing/promote_buttons.html')
 
 
-# @shared_cache_control
+@never_cache
 def contribute(request):
     initial_data = {}
-    if request.user and request.user.email:
+    if request.user and request.user.is_authenticated() and request.user.email:
         initial_data = {'email': request.user.email}
 
     if request.POST:
