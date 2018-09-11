@@ -1,4 +1,4 @@
-# import stripe
+import stripe
 from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
@@ -6,7 +6,7 @@ from django.core.validators import MinValueValidator
 
 from kuma.core.form_fields import StrippedCharField
 
-# stripe.api_key = settings.STRIPE_SECRET_KEY
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 CURRENCY = {
     u'USD': u'$'
@@ -95,11 +95,11 @@ class ContributionForm(forms.Form):
         amount = self.cleaned_data['donation_amount'] or self.cleaned_data['donation_choices']
         amount = amount * 100
         token = self.cleaned_data.get('stripe_token', '')
-        # if token and amount:
-        #     charge = stripe.Charge.create(
-        #         amount=amount,
-        #         currency='usd',
-        #         source=token,
-        #         description="Contrubute to MDN Web Docs"
-        #     )
-        # return charge
+        if token and amount:
+            charge = stripe.Charge.create(
+                amount=amount,
+                currency='usd',
+                source=token,
+                description="Contrubute to MDN Web Docs"
+            )
+        return charge
