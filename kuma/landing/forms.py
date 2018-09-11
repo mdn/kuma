@@ -95,7 +95,7 @@ class ContributionForm(forms.Form):
         amount = self.cleaned_data['donation_amount'] or self.cleaned_data['donation_choices']
         amount = amount * 100
         token = self.cleaned_data.get('stripe_token', '')
-        if False and token and amount:
+        if token and amount:
             charge = stripe.Charge.create(
                 amount=amount,
                 currency='usd',
