@@ -5,12 +5,14 @@ from django.views import static
 from django.views.decorators.cache import never_cache
 from django.views.generic import RedirectView
 from ratelimit.decorators import ratelimit
+from django.utils.translation import ugettext_lazy as _
 
 from kuma.core.decorators import shared_cache_control
 from kuma.feeder.models import Bundle
 from kuma.feeder.sections import SECTION_HACKS
 from kuma.search.models import Filter
 from kuma.landing.forms import ContributionForm
+from kuma.landing.tasks import contribute_thank_you_email
 
 from .utils import favicon_url
 
@@ -52,18 +54,27 @@ def promote_buttons(request):
 
 # @shared_cache_control
 def contribute(request):
+    initial_data = {}
+    if request.user and request.user.email:
+        initial_data = {'email': request.user.email}
 
     if request.POST:
         form = ContributionForm(request.POST)
         if form.is_valid():
+            charge = form.make_charge()
             context = {
-                'stripe_response': form.make_charge()
+                'stripe_response': charge
             }
+            if charge and charge.id and charge.status == 'succeeded':
+                contribute_thank_you_email.delay(
+                    form.cleaned_data['name'],
+                    form.cleaned_data['email']
+                )
             return render(request, 'landing/contribute_thankyou.html', context)
 
         form = ContributionForm(request.POST)
     else:
-        form = ContributionForm()
+        form = ContributionForm(initial=initial_data)
 
     context = {
         'form': form,
