@@ -30,7 +30,7 @@
 {% endblock %}
 
 {% block document_head %}
-    {% with form=form %}
+    {% with form=form, is_cta=False %}
         {% include "landing/includes/contribution-form.html" %}
     {% endwith %}
 {% endblock %}
