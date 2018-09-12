@@ -53,6 +53,7 @@
         // Validate against minimum value
         // TODO: set minimum as a env varible
         if (ev.target.value < 1 || isNaN(ev.target.value)) {
+            defaultAmount.prop('checked', true);
             setFieldError(customAmountInput);
         }
 
@@ -60,6 +61,9 @@
         if (ev.target.type === 'radio') {
             customAmountInput.val('');
             $(ev.target).parent().addClass('active');
+        } else {
+            // reset radio when selecting custom amount
+            form.find('input[type=\'radio\']:checked').prop('checked', false);
         }
 
         
