@@ -226,7 +226,7 @@ IE 11 converts hex to rgb, so target that as well.
 .draft,
 .warning.warning-review,
 .translationInProgress {
-    @include indicator-icon('\f044'); /* edit icon */
+    @include indicator-icon('\f040'); /* edit icon */
 }
 
 .note {

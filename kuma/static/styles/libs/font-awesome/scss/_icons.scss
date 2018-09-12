@@ -13,6 +13,11 @@
     content: $fa-var-arrow-up;
 }
 
+.#{$fa-css-prefix}-flask:before,
+.#{$fa-css-prefix}-beaker:before {
+    content: $fa-var-beaker;
+}
+
 .#{$fa-css-prefix}-caret-down:before {
     content: $fa-var-caret-down;
 }
@@ -47,6 +52,7 @@
 }
 
 .#{$fa-css-prefix}-warning:before,
+.#{$fa-css-prefix}-warning-sign:before,
 .#{$fa-css-prefix}-exclamation-triangle:before {
     content: $fa-var-exclamation-triangle;
 }
@@ -118,6 +124,10 @@
 
 .#{$fa-css-prefix}-question-circle:before {
     content: $fa-var-question-circle;
+}
+
+.#{$fa-css-prefix}-trash:before {
+    content: $fa-var-trash;
 }
 
 .#{$fa-css-prefix}-search:before {
