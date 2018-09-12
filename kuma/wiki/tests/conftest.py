@@ -361,7 +361,7 @@ def ks_toolbox():
     }
 
     d_json = json.dumps(errors)
-    d_b64 = base64.encodestring(d_json)
+    d_b64 = base64.encodestring(d_json.encode('utf-8'))
     d_lines = [x for x in d_b64.split("\n") if x]
 
     # Headers are case-insensitive, so let's drive that point home.

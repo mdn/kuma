@@ -2,7 +2,7 @@
 {% set default_language = settings.LOCALES[default_locale].native %}
 <form class="languages go" method="get" action="#">
   <label for="language">{{ _('Other languages:') }}</label>
-  {% for name, value in request.GET.iteritems() %}
+  {% for name, value in request.GET.items() %}
     {% if name != 'lang' %}
     <input type="hidden" name="{{ name }}" value="{{ value }}">
     {% endif %}

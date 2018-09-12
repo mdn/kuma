@@ -260,7 +260,7 @@ class ViewTests(UserTestCase, WikiTestCase):
                                rev.document.get_absolute_url())
         assert resp.status_code == 200
         assert_shared_cache_header(resp)
-        assert resp.content == 'Foo bar <a href="http://example.com">baz</a>'
+        assert resp.content == b'Foo bar <a href="http://example.com">baz</a>'
 
     @mock.patch('waffle.flag_is_active', return_value=True)
     @mock.patch('kuma.wiki.jobs.DocumentContributorsJob.get', return_value=[
@@ -302,8 +302,8 @@ class ViewTests(UserTestCase, WikiTestCase):
         resp = self.client.get(r.get_absolute_url())
         page = pq(resp.content)
 
-        assert 'Revision Source' in resp.content
-        assert 'Revision Content' in resp.content
+        assert b'Revision Source' in resp.content
+        assert b'Revision Content' in resp.content
         assert 'open' == page.find('#wikiArticle').parent().attr('open')
         assert page.find('#doc-source').parent().attr('open') is None
 
@@ -337,7 +337,7 @@ class ReadOnlyTests(UserTestCase, WikiTestCase):
         self.client.login(username='testuser', password='testpass')
         resp = self.client.get(self.edit_url)
         assert resp.status_code == 403
-        assert 'The wiki is in read-only mode.' in resp.content
+        assert b'The wiki is in read-only mode.' in resp.content
         assert_no_cache_header(resp)
         self.client.logout()
 
@@ -614,8 +614,7 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
             response = self.client.get(reverse('wiki.document', args=[slug]))
             page = pq(response.content)
             meta_content = page.find('meta[name=description]').attr('content')
-            assert (str(meta_content).decode('utf-8') ==
-                    str(aught_preview).decode('utf-8'))
+            assert str(meta_content) == str(aught_preview)
 
         # Test pages - very basic
         good = 'This is the content which should be chosen, man.'
@@ -1358,13 +1357,13 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # HACK: Too lazy to parse the XML. Lazy lazy.
         response = self.client.get(reverse('wiki.feeds.list_review',
                                            args=('atom',)))
-        assert doc_entry in response.content
+        assert doc_entry.encode('utf-8') in response.content
         response = self.client.get(reverse('wiki.feeds.list_review_tag',
                                            args=('atom', 'technical', )))
-        assert doc_entry in response.content
+        assert doc_entry.encode('utf-8') in response.content
         response = self.client.get(reverse('wiki.feeds.list_review_tag',
                                            args=('atom', 'editorial', )))
-        assert doc_entry in response.content
+        assert doc_entry.encode('utf-8') in response.content
 
         # Post an edit that removes the technical review tag.
         data.update({
@@ -1938,7 +1937,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         assert resp.status_code == 200
         assert_no_cache_header(resp)
-        assert "cannot revert a document that has been moved" in resp.content
+        assert b'cannot revert a document that has been moved' in resp.content
 
     def test_store_revision_ip(self):
         self.client.login(username='testuser', password='testpass')
@@ -2234,8 +2233,8 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         assert response.status_code == 200
         # Since the client is logged-in, the response should not be cached.
         assert_no_cache_header(response)
-        assert '<p onload=' not in response.content
-        assert '<circle onload=' not in response.content
+        assert b'<p onload=' not in response.content
+        assert b'<circle onload=' not in response.content
 
     def test_raw_with_editing_links_source(self):
         """The raw source for a document can be requested, with section editing

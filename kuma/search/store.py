@@ -2,7 +2,7 @@ import hashlib
 
 from django.contrib.sites.models import Site
 from django.utils import translation
-from django.utils.encoding import smart_str
+from django.utils.encoding import smart_bytes
 from urlobject import URLObject as URL
 
 from kuma.core.urlresolvers import reverse
@@ -63,6 +63,6 @@ def ref_from_url(url):
     locale = translation.get_language()
 
     for value in [query, page, locale] + filters:
-        md5.update(smart_str(value))
+        md5.update(smart_bytes(value))
 
     return md5.hexdigest()[:16]

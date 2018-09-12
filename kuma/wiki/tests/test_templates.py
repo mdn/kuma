@@ -240,13 +240,13 @@ class DocumentTests(UserTestCase, WikiTestCase):
         r = revision(save=True, content=doc_content, is_approved=True)
         response = self.client.get(r.document.get_absolute_url())
         assert 200 == response.status_code
-        assert '<div id="toc"' in response.content
+        assert b'<div id="toc"' in response.content
         new_r = revision(document=r.document, content=r.content,
                          toc_depth=0, is_approved=True)
         new_r.save()
         response = self.client.get(r.document.get_absolute_url())
         assert 200 == response.status_code
-        assert '<div class="page-toc">' not in response.content
+        assert b'<div class="page-toc">' not in response.content
 
     def test_lang_switcher_footer(self):
         """Test the language switcher footer"""
@@ -349,9 +349,9 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
                        slug='Original')
         response = self.client.get(rev.document.get_absolute_url())
         assert response.status_code == 200
-        assert 'Original Content.' in response.content
-        assert 'dimension15' not in response.content
-        assert self.script_src in response.content
+        assert b'Original Content.' in response.content
+        assert b'dimension15' not in response.content
+        assert self.script_src.encode('utf-8') in response.content
 
     def test_user_no_variant_selected(self):
         """Users get original page without the experiment script."""
@@ -360,7 +360,7 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
         self.client.login(username='testuser', password='testpass')
         response = self.client.get(rev.document.get_absolute_url())
         assert response.status_code == 200
-        assert self.script_src not in response.content
+        assert self.script_src.encode('utf-8') not in response.content
 
     def test_anon_valid_variant_selected(self):
         """Anon users are in the Google Analytics cohort on the variant."""
@@ -371,11 +371,11 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
         response = self.client.get(rev.document.get_absolute_url(),
                                    {'v': 'test'})
         assert response.status_code == 200
-        assert 'Original Content.' not in response.content
-        assert 'Variant Content.' in response.content
-        assert self.expected_15 in response.content
-        assert self.expected_16 in response.content
-        assert self.script_src not in response.content
+        assert b'Original Content.' not in response.content
+        assert b'Variant Content.' in response.content
+        assert self.expected_15.encode('utf-8') in response.content
+        assert self.expected_16.encode('utf-8') in response.content
+        assert self.script_src.encode('utf-8') not in response.content
         doc = pq(response.content)
         assert not doc('#edit-button')
 

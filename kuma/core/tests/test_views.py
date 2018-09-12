@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import logging
 
 import mock
@@ -175,7 +177,9 @@ def test_sitemap(client, settings, sitemaps, db, method):
     assert_shared_cache_header(response)
     assert response['Content-Type'] == 'application/xml'
     if method == 'get':
-        assert ''.join(response.streaming_content) == sitemaps['index']
+        assert ''.join(
+            [chunk.decode('utf-8') for chunk in response.streaming_content]
+        ) == sitemaps['index']
 
 
 @pytest.mark.parametrize(
@@ -201,7 +205,7 @@ def test_sitemaps(client, settings, sitemaps, db, method):
     assert_shared_cache_header(response)
     assert response['Content-Type'] == 'application/xml'
     if method == 'get':
-        assert (''.join(response.streaming_content) ==
+        assert (''.join([chunk.decode('utf-8') for chunk in response.streaming_content]) ==
                 sitemaps['locales']['en-US'])
 
 
@@ -247,4 +251,4 @@ def test_error_handler_minimal_request(rf, db, constance_config):
     exception = Exception('Something went wrong.')
     response = handler500(request, exception)
     assert response.status_code == 500
-    assert 'Internal Server Error' in response.content
+    assert b'Internal Server Error' in response.content

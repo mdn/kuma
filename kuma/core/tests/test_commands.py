@@ -1,17 +1,22 @@
 import pytest
 from django.core.management import call_command, CommandError
-from django.utils.six import StringIO
+from django.utils.six import PY2, StringIO
 
 
 def test_help():
     with pytest.raises(CommandError) as excinfo:
         call_command('ihavepower', stdout=StringIO())
-    assert str(excinfo.value) == 'Error: too few arguments'
+
+    if PY2:
+        assert str(excinfo.value) == 'Error: too few arguments'
+    else:
+        assert str(excinfo.value) == 'Error: the following arguments are required: username'
 
 
 def test_user_doesnt_exist(db):
     with pytest.raises(CommandError) as excinfo:
         call_command('ihavepower', 'fordprefect', stdout=StringIO())
+
     assert str(excinfo.value) == 'User fordprefect does not exist.'
 
 
