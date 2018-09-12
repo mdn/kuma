@@ -11,8 +11,9 @@
 
     {% endblock %}
 
-    <div class="contribution-form align-center">
+    <div class="contribution-banner align-center">
         <div class="row">
+            <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="">
             <div class="column">
                 {% if stripe_response.id and stripe_response.status == 'succeeded' %}
                 <h2 class="highlight highlight-spanned">
