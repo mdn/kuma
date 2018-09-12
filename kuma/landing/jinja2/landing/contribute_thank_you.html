@@ -9,7 +9,7 @@
         <div class="row">
             <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="">
             <div class="column">
-                {% if stripe_response.id and stripe_response.status == 'succeeded' %}
+                {% if status == 'succeeded' %}
                 <h2 class="highlight highlight-spanned">
                     <span class="highlight-span">{{_('Thanks for supporting MDN')}}</span>
                 </h2>
