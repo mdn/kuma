@@ -17,10 +17,12 @@
         defaultAmount = form.find('input[type=\'radio\']:checked'),
         amountRadio = form.find('input[name=donation_choices]'),
         customAmountInput = form.find('#id_donation_amount'),
-        submitButton = form.find('#stripe_submit'),
         // Hidden fields
         stripePublicKey = form.find('#id_stripe_public_key'),
-        stripeToken = form.find('#id_stripe_token');
+        stripeToken = form.find('#id_stripe_token'),
+        // Other
+        submitButton = form.find('#stripe_submit'),
+        amount = submitButton.find('#amount');
 
     // init stripeCheckout handler
     var handler = StripeCheckout.configure({
@@ -36,7 +38,7 @@
 
     // Set initial radio state
     defaultAmount.parent().addClass('active');
-    var selectedAmount = defaultAmount.length ? defaultAmount[0].value * 100 : 0;
+    var selectedAmount = defaultAmount.length ? defaultAmount[0].value : 0;
 
     // Set errors
     form.find('.errorlist').prev().addClass('error');
@@ -59,7 +61,12 @@
             $(ev.target).parent().addClass('active');
         }
 
-        selectedAmount = ev.target.value * 100;
+        
+        selectedAmount = (Math.floor(ev.target.value * 100) / 100);
+        var newValue = selectedAmount < 1 ? '' : '$' + selectedAmount;
+
+
+        amount.html(newValue);
     }
 
     // Set the error message for any required field
@@ -99,7 +106,7 @@
             name: 'MDN Web Docs',
             description: 'Contrubute to MDN Web Docs',
             zipCode: true,
-            amount: selectedAmount,
+            amount: (selectedAmount * 100),
             closed: function() {
                 form.removeClass('disabled');
             }

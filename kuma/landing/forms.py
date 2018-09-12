@@ -50,7 +50,7 @@ class ContributionForm(forms.Form):
     )
     donation_amount = forms.DecimalField(
         required=False,
-        label=u'',
+        label=u'$',
         max_digits=10,
         decimal_places=2,
         widget=forms.TextInput(
@@ -62,11 +62,13 @@ class ContributionForm(forms.Form):
         validators=[MinValueValidator(1)]
     )
     stripe_token = forms.CharField(
+        label=u'',
         required=False,
         widget=forms.HiddenInput(),
         max_length=255
     )
     stripe_public_key = forms.CharField(
+        label=u'',
         required=False,
         widget=forms.HiddenInput(),
         max_length=255

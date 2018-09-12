@@ -1,6 +1,6 @@
 // Styles for the contribution form
 // Form cta background
-$background-colors: #83cff3,#42f593;
+$background-colors: #83cff3,#ebf8e1;
 $background-gradient: linear-gradient(to right, nth($background-colors, 1) , nth($background-colors, 2));
 
 // Form Varibles
@@ -8,20 +8,72 @@ $input-height: 64px;
 $input-spacing: 18px;
 $button-color: #3143e2;
 
-.contribution-form {
+// Gradient background for the contribution flow
+.contribution-banner {
     background-image: $background-gradient;
+    position: relative;
+    overflow: hidden;
+
+    .row {
+        max-width: 1300px;
+        margin: 0 auto;
+    }
+
+    .column {
+        padding: 20px;
+        position: relative;
+    }
+
+    .backdrop-image {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
+    .button-tab-group {
+        background: #fff;
+        padding: 1em;
+        border-radius: 50px;
+        display: inline-block;
+        box-shadow: 0 3px 10px 0 rgba(0, 0, 0, .5);
+
+        button,
+        .button {
+            background-color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50px;
+            line-height: 50px;
+            border: 2px solid $text-color;
+            margin: 0 3px;
+            padding: 5px 0 0 0;
+            box-sizing: border-box;
+            &:hover {
+                background-color: darken(#fff, 3%);
+            }
+        }
+    }
+
+    .subtext {
+        max-width: 600px;
+        margin: 2em auto;
+    }
+}
+
+.contribution-form {
+    .backdrop-image {
+        position: absolute;
+        right: 0;
+        bottom: -150px;
+        left: auto;
+    }
 
     .row {
         display: flex;
 
         @media #{$mq-mobile-and-down} {
             display: block;
-
-            .column {
-                width: 100%;
-                max-width: none;
-                margin-bottom: 2em;
-            }
         }
         .column {
             flex: 50%;
@@ -32,11 +84,21 @@ $button-color: #3143e2;
                     max-width: 700px;
                     float: right;
                     @media #{$mq-mobile-and-down} {
+                        padding-bottom: 10px;
                         float: none;
+                        max-width: none;
+                        margin-bottom: 2em;
                     }
                 }
             }
 
+            .form-footer {
+                position: absolute;
+                padding: 10px;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
             @media #{$mq-tablet-and-down} {
                 padding: 10px;
             }
@@ -44,6 +106,11 @@ $button-color: #3143e2;
             .container {
                 max-width: 500px;
                 margin: 0 auto;
+                position: relative;
+                padding-bottom: 150px;
+                box-sizing: border-box;
+                height: 100%;
+
                 @media #{$mq-mobile-and-down} {
                     max-width: 100%;
                 }
@@ -73,11 +140,29 @@ $button-color: #3143e2;
             border: none;
             border-radius: $input-height;
             line-height: $input-height;
-            background: $button-color;
+            background-color: $button-color;
             font-weight: normal;
             color: #fff;
             padding: 0 3em;
             float: right;
+            @media #{$mq-mobile-and-down} {
+                width: 100%;
+            }
+
+            &:hover {
+                background-color: darken($button-color, 5%);
+            }
+
+            .payment-details {
+                display: none;
+                vertical-align: top;
+                line-height: 0;
+                padding: 10px;
+
+                @media #{$mq-mobile-and-down} {
+                    display: inline-block;
+                }
+            }
         }
 
         .form-group {
@@ -99,6 +184,16 @@ $button-color: #3143e2;
                     border-color: $error;
                     color: $error;
                 }
+            }
+
+            #id_donation_amount {
+                padding-left: 35px;
+            }
+
+            .label {
+                position: absolute;
+                margin-left: 20px;
+                margin-top: 40px;
             }
 
             #id_donation_amount,
@@ -123,6 +218,10 @@ $button-color: #3143e2;
                 display: inline-block;
                 position: relative;
                 width: 32%;
+                @media #{$mq-tablet-and-down} {
+                    margin-right: 1em;
+                    width: auto;
+                }
 
                 input[type=radio] {
                     position: absolute;
@@ -139,6 +238,10 @@ $button-color: #3143e2;
                     line-height: $input-height;
                     display: inline-block;
 
+                    &:hover {
+                        background: darken(#fff, 3%);
+                    }
+
                     &.active {
                         background: $text-color;
                         color: #fff;
@@ -148,7 +251,10 @@ $button-color: #3143e2;
         }
         .payment-details {
             display: inline-block;
-            padding: 1em 0;
+            padding: 15px 0;
+            @media #{$mq-mobile-and-down} {
+                display: none;
+            }
         }
     }
 }

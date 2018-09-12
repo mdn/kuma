@@ -1,13 +1,15 @@
-<div class="contribution-form">
+<div class="contribution-form contribution-banner">
     <div class="row">
+        <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="">
         <div class="column">
             <div class="container">
                 <h2 class="highlight highlight-spanned">
-                    <span class="highlight-span">{{ _('Help Support MDN for as little as')}} <b>$2</b></span>
+                    <span class="highlight-span">{{ _('Help Support MDN for as little as $2')}}</span>
                 </h2>
                 <h4>{{_('We need your help to grow to the next stage.')}}</h4>
                 <p class="body">{{_('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.')}}</p>
-                <div class="button-group">
+                {% if is_cta %}
+                <div class="button-group form-footer">
                     <a href="#" class="cta-link">
                         {{_('Learn More')}} {% include 'includes/icons/arrows/arrow.svg' %}
                     </a>
@@ -15,6 +17,7 @@
                         {{_('Feedback')}} {% include 'includes/icons/arrows/arrow.svg' %}
                     </a>
                 </div>
+                {% endif %}
             </div>
         </div>
         <div class="column">
@@ -22,18 +25,28 @@
                 {% csrf_token %}
                 <div class="form-group">
                     {% for field in form %}
+                        {% if field.label and not field.hidden %}
+                            <span class="label"> {{field.label}} </span>
+                        {% endif %}
                         {{ field }}
                         {{ field.errors }}
                     {% endfor %}
                 </div>
-                <div class="payment-details">
-                    <img src="{{ static('img/mc-logo.png') }}" alt="mastercard">
-                    <img src="{{ static('img/visa-logo.png') }}" alt="visa">
-                    <img src="{{ static('img/ae-logo.png.png') }}" alt="american express">
+                <div class="form-footer">
+                    <div class="payment-details">
+                        <img src="{{ static('img/mc-logo.png') }}" alt="mastercard">
+                        <img src="{{ static('img/visa-logo.png') }}" alt="visa">
+                        <img src="{{ static('img/ae-logo.png.png') }}" alt="american express">
+                    </div>
+                    <button type="button" id="stripe_submit">
+                        <div class="payment-details">
+                            <img src="{{ static('img/mc-logo.png') }}" alt="mastercard">
+                            <img src="{{ static('img/visa-logo.png') }}" alt="visa">
+                            <img src="{{ static('img/ae-logo.png.png') }}" alt="american express">
+                        </div>
+                        Pay <span id="amount">$64</span></button>
                 </div>
-                <button type="button" id="stripe_submit">Submit</button>
             </form>
         </div>
-
     </div>
 </div>
