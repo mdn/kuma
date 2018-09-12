@@ -39,6 +39,7 @@
     // Set initial radio state
     defaultAmount.parent().addClass('active');
     var selectedAmount = defaultAmount.length ? defaultAmount[0].value : 0;
+    customAmountInput.val('');
 
     // Set errors
     form.find('.errorlist').prev().addClass('error');
@@ -51,7 +52,8 @@
 
         // Validate against minimum value
         // TODO: set minimum as a env varible
-        if (ev.target.value < 1) {
+        if (ev.target.value < 1 || isNaN(ev.target.value)) {
+            defaultAmount.prop('checked', true);
             setFieldError(customAmountInput);
         }
 
@@ -59,11 +61,14 @@
         if (ev.target.type === 'radio') {
             customAmountInput.val('');
             $(ev.target).parent().addClass('active');
+        } else {
+            // reset radio when selecting custom amount
+            form.find('input[type=\'radio\']:checked').prop('checked', false);
         }
 
         
         selectedAmount = (Math.floor(ev.target.value * 100) / 100);
-        var newValue = selectedAmount < 1 ? '' : '$' + selectedAmount;
+        var newValue = (selectedAmount < 1 || isNaN(selectedAmount)) ? '' : '$' + selectedAmount;
 
 
         amount.html(newValue);
@@ -93,7 +98,7 @@
     function onSubmit() {
         // FE form validation
         var valid = form[0].checkValidity();
-        if (!valid || selectedAmount < 1) {
+        if (!valid || (selectedAmount < 1 || isNaN(selectedAmount))) {
             emailField[0].checkValidity() ?  clearFieldError(emailField[0]) : setFieldError(emailField[0]);
             nameField[0].checkValidity() ? clearFieldError(nameField[0]) : setFieldError(nameField[0]);
             selectedAmount >= 1 ? clearFieldError(customAmountInput) : setFieldError(customAmountInput);
@@ -116,6 +121,7 @@
     // Register event handlers
     submitButton.click(onSubmit);
     amountRadio.change(onAmountSelect);
+    customAmountInput.on('input', onAmountSelect);
     customAmountInput.change(onAmountSelect);
     emailField.blur(onChange);
     nameField.blur(onChange);

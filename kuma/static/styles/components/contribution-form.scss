@@ -86,10 +86,9 @@ $button-color: #3143e2;
                     max-width: 700px;
                     float: right;
                     @media #{$mq-mobile-and-down} {
-                        padding-bottom: 10px;
+                        padding-bottom: 0;
                         float: none;
                         max-width: none;
-                        margin-bottom: 2em;
                     }
                 }
             }
