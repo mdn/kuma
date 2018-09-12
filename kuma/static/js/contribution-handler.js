@@ -106,7 +106,7 @@
             name: 'MDN Web Docs',
             description: 'Contrubute to MDN Web Docs',
             zipCode: true,
-            amount: selectedAmount,
+            amount: (selectedAmount * 100),
             closed: function() {
                 form.removeClass('disabled');
             }
