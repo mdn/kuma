@@ -81,7 +81,7 @@ class ContributionForm(forms.Form):
         donation_choices = d.get('donation_choices', False)
         donation_amount = d.get('donation_amount', False)
 
-        if not donation_amount and not donation_choices:
+        if not donation_amount and not donation_choices or donation_amount and donation_choices:
             raise forms.ValidationError('Please select donation amount or'
                                         ' choose from pre-selected choices')
         return d

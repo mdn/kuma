@@ -108,3 +108,10 @@ def test_favicon_ico(client):
     assert response.status_code == 302
     assert_shared_cache_header(response)
     assert response['Location'] == '/static/img/favicon32-local.png'
+
+
+@pytest.mark.django_db
+def test_mdn_contribute_view(client):
+    response = client.get(reverse('contribute'))
+    assert_no_cache_header(response)
+    assert response.status_code == 200
