@@ -1,0 +1,40 @@
+{% extends "landing/base_promote.html" %}
+
+{% block body_attributes %}id="contribure"{% endblock %}
+
+{% block title %}{{ page_title(_('Thank You')) }}{% endblock %}
+
+{% block document_head %}
+
+    {% block site_js %}
+        {{ super() }}
+
+    {% endblock %}
+
+    <div class="contribution-banner align-center">
+        <div class="row">
+            <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="">
+            <div class="column">
+                {% if status == 'succeeded' %}
+                <h2 class="highlight highlight-spanned">
+                    <span class="highlight-span">{{_('Thanks for supporting MDN')}}</span>
+                </h2>
+                <p class="subtext">{{_('Take a moment to recognise how awesome you are by sharing your contribution on your channels:')}}</p>
+                {# TODO: Implement copy for the share functionality #}
+                <div class="button-tab-group">
+                    <a href="https://twitter.com/intent/tweet?text=Hello%20world%20{{amount}}" class="button" target="_blank">{% include 'includes/icons/social/twitter.svg' %}</a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdeveloper.mozilla.org%2Fen-US%2Fcontribute" class="button" target="_blank">{% include 'includes/icons/social/facebook.svg' %}</a>
+                </div>
+                {% else %}
+                <h2 class="highlight highlight-spanned">
+                    <span class="highlight-span">{{_('Ooops something went wrong')}}</span>
+                    <p>
+                        <a href=".">{{_('Click here to go back')}}</a>
+                    </p>
+                </h2>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

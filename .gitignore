@@ -28,6 +28,9 @@ coverage.xml
 # Atom
 .ropeproject
 
+# PyCharm
+.idea
+
 # Sphinx documentation
 /docs/_build/
 
