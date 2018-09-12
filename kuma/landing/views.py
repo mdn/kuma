@@ -62,16 +62,14 @@ def contribute(request):
         form = ContributionForm(request.POST)
         if form.is_valid():
             charge = form.make_charge()
-            context = {
-                'stripe_response': charge
-            }
-            if settings.MDN_CONTRIBUTION_CONFIRMATION_EMAIL:
-                if charge and charge.id and charge.status == 'succeeded':
+            if charge and charge.id and charge.status == 'succeeded':
+                if settings.MDN_CONTRIBUTION_CONFIRMATION_EMAIL:
                     contribute_thank_you_email.delay(
                         form.cleaned_data['name'],
                         form.cleaned_data['email']
                     )
-            return render(request, 'landing/contribute_thank_you.html', context)
+                return redirect('contribute_confirmation_succeeded')
+            return redirect('contribute_confirmation_error')
 
         form = ContributionForm(request.POST)
     else:
@@ -82,6 +80,11 @@ def contribute(request):
     }
     return render(request, 'landing/contribute.html', context)
 
+
+@never_cache
+def contribute_confirmation(request, status):
+    context = {'status': status}
+    return render(request, 'landing/contribute_thank_you.html', context)
 
 
 ROBOTS_ALLOWED_TXT = '''\
