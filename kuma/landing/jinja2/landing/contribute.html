@@ -17,6 +17,18 @@
     {% javascript 'contribute' %}
 {% endblock %}
 
+{% block extrahead %}
+  {# TODO: Implement copy & design for the share functionality #}
+  {% set seo_description = _('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.') %}
+  {% set social_title = _('Support MDN') %}
+  <meta property="og:description" content="{{ seo_description }}">
+  <meta name="description" content="{{ seo_description }}">
+  <meta name="twitter:description" content="{{ seo_description }}">
+  <meta name="twitter:title" content="{{ social_title }}">
+  <meta property="og:title" content="{{ social_title }}">
+
+{% endblock %}
+
 {% block document_head %}
     {% with form=form %}
         {% include "landing/includes/contribution-form.html" %}
