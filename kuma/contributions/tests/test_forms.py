@@ -1,5 +1,5 @@
+from kuma.contributions.forms import ContributionForm, DONATION_CHOICES
 from kuma.core.tests import KumaTestCase
-from kuma.landing.forms import ContributionForm, DONATION_CHOICES
 
 
 class TestContributionForm(KumaTestCase):

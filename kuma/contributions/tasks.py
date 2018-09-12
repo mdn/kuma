@@ -9,7 +9,7 @@ from kuma.core.decorators import skip_in_maintenance_mode
 from kuma.core.email_utils import render_email
 
 
-log = logging.getLogger('kuma.landing.tasks')
+log = logging.getLogger('kuma.contributions.tasks')
 
 
 @task
@@ -26,15 +26,15 @@ def contribute_thank_you_email(username, user_email):
 
     with translation.override(locale):
         subject = render_email(
-            'landing/email/contribution_thank_you_subject.ltxt',
+            'contributions/email/thank_you/subject.ltxt',
             message_context
         )
         content_plain = render_email(
-            'landing/email/contribution_thank_you_message.ltxt',
+            'contributions/email/thank_you/plain.ltxt',
             message_context
         )
         content_html = render_email(
-            'landing/email/contribution_thank_you_message_html.ltxt',
+            'contributions/email/thank_you/html.ltxt',
             message_context
         )
 
