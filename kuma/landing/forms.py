@@ -79,7 +79,7 @@ class ContributionForm(forms.Form):
         donation_choices = d.get('donation_choices', False)
         donation_amount = d.get('donation_amount', False)
 
-        if not donation_amount and not donation_choices:
+        if not donation_amount and not donation_choices or donation_amount and donation_choices:
             raise forms.ValidationError(u'Please select donation amount or choose from pre-selected choices')
         return d
 
@@ -100,6 +100,6 @@ class ContributionForm(forms.Form):
                 amount=amount,
                 currency='usd',
                 source=token,
-                description="Contrubute to MDN Web Docs"
+                description="Contribute to MDN Web Docs"
             )
         return charge

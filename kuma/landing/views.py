@@ -64,12 +64,13 @@ def contribute(request):
             context = {
                 'stripe_response': charge
             }
-            if charge and charge.id and charge.status == 'succeeded':
-                contribute_thank_you_email.delay(
-                    form.cleaned_data['name'],
-                    form.cleaned_data['email']
-                )
-            return render(request, 'landing/contribute_thankyou.html', context)
+            if settings.MDN_CONTRIBUTION_CONFIRMATION_EMAIL:
+                if charge and charge.id and charge.status == 'succeeded':
+                    contribute_thank_you_email.delay(
+                        form.cleaned_data['name'],
+                        form.cleaned_data['email']
+                    )
+            return render(request, 'landing/contribute_thank_you.html', context)
 
         form = ContributionForm(request.POST)
     else:
