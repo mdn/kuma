@@ -1,8 +1,8 @@
 import logging
+from celery.task import task
 from django.conf import settings
 from django.utils import translation
 from django.core.mail import EmailMultiAlternatives
-from djcelery_transactions import task as transaction_task
 
 from kuma.core.decorators import skip_in_maintenance_mode
 from kuma.core.email_utils import render_email
@@ -11,7 +11,7 @@ from kuma.core.email_utils import render_email
 log = logging.getLogger('kuma.landing.tasks')
 
 
-@transaction_task
+@task
 @skip_in_maintenance_mode
 def contribute_thank_you_email(username, user_email):
     """Create a notification email for new contributor."""
