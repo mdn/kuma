@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 
-{% block body_attributes %}id="contribure"{% endblock %}
+{% block body_attributes %}id="contribute"{% endblock %}
 
 {% block title %}{{ page_title(_('Contribute')) }}{% endblock %}
 
@@ -12,7 +12,7 @@
 
 {% block site_js %}
     {{ super() }}
-        <script src="https://checkout.stripe.com/checkout.js"></script>
+    <script src="https://checkout.stripe.com/checkout.js"></script>
     {% javascript 'jquery-ui' %}
     {% javascript 'contribute' %}
 {% endblock %}
@@ -26,14 +26,10 @@
   <meta name="twitter:description" content="{{ seo_description }}">
   <meta name="twitter:title" content="{{ social_title }}">
   <meta property="og:title" content="{{ social_title }}">
-
 {% endblock %}
 
 {% block document_head %}
     {% with form=form, is_cta=False %}
         {% include "landing/includes/contribution-form.html" %}
     {% endwith %}
-{% endblock %}
-{% block content %}
-
 {% endblock %}
