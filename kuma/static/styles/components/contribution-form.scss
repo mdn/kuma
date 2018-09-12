@@ -74,6 +74,7 @@ $button-color: #3143e2;
 
     .row {
         display: flex;
+        position: relative;
 
         @media #{$mq-mobile-and-down} {
             display: block;
