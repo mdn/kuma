@@ -1,6 +1,7 @@
 (function(win, doc, $, StripeCheckout) {
     'use strict';
 
+    // TODO: handle this better
     var isMobile = $('main').width() < 800;
 
     $('#id_email').tooltip({
@@ -52,7 +53,7 @@
 
         // Validate against minimum value
         // TODO: set minimum as a env varible
-        if (ev.target.value < 1 || isNaN(ev.target.value)) {
+        if (parseInt(ev.target.value) < 1 || isNaN(ev.target.value)) {
             defaultAmount.prop('checked', true);
             setFieldError(customAmountInput);
         }
