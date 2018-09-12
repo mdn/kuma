@@ -1,6 +1,7 @@
 @import 'includes/vars';
 
 // Styles for the contribution form
+// TODO: cleanup this file
 // Form cta background
 $background-colors: #83cff3,#ebf8e1;
 $background-gradient: linear-gradient(to right, nth($background-colors, 1) , nth($background-colors, 2));
@@ -187,7 +188,7 @@ $button-color: #3143e2;
                 }
             }
 
-            #id_donation_amount {
+            input[name=donation_amount] {
                 padding-left: 35px;
             }
 
@@ -197,7 +198,7 @@ $button-color: #3143e2;
                 margin-top: 40px;
             }
 
-            #id_donation_amount,
+            input[name=donation_amount],
             #id_donation_choices {
                 width: 49%;
                 display: inline-block;
@@ -258,4 +259,13 @@ $button-color: #3143e2;
             }
         }
     }
+}
+
+// JQUI overwrite
+.ui-tooltip.ui-widget.ui-widget-content {
+    border: 2px solid $text-color;
+    border-radius: 0;
+    background-image: none;
+    background-color: #fff;
+    padding: 14px;
 }
