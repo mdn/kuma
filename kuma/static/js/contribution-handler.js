@@ -38,7 +38,7 @@
 
     // Set initial radio state
     defaultAmount.parent().addClass('active');
-    var selectedAmount = defaultAmount.length ? defaultAmount[0].value * 100 : 0;
+    var selectedAmount = defaultAmount.length ? defaultAmount[0].value : 0;
 
     // Set errors
     form.find('.errorlist').prev().addClass('error');
