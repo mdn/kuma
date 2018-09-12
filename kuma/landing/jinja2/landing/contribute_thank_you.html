@@ -4,17 +4,29 @@
 
 {% block title %}{{ page_title(_('Contribute')) }}{% endblock %}
 
-{% block content %}
-    <div>
-        {% if stripe_response.id and stripe_response.status == 'succeeded' %}
-            <h1>Thank you for your contribution !</h1>
-        {% else %}
-            <h1>Ooops something went wrong</h1>
-        {% endif %}
-
-        <div>
-            {{ stripe_response }}
+{% block document_head %}
+    <div class="contribution-form align-center">
+        <div class="row">
+            <div class="column">
+                {% if stripe_response.id and stripe_response.status == 'succeeded' %}
+                <h2 class="highlight highlight-spanned">
+                    <span class="highlight-span">{{_('Thanks for supporting MDN')}}</span>
+                </h2>
+                <p class="subtext">{{_('Take a moment to recognise how awesome you are by sharing your contribution on your channels:')}}</p>
+                {# TODO: Implement copy for the share functionality #}
+                <div class="button-tab-group">
+                    <a href="https://twitter.com/intent/tweet?text=Hello%20world%20{{amount}}" class="button" target="_blank">{% include 'includes/icons/social/twitter.svg' %}</a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdeveloper.mozilla.org%2Fen-US%2Fcontribute" class="button" target="_blank">{% include 'includes/icons/social/facebook.svg' %}</a>
+                </div>
+                {% else %}
+                <h2 class="highlight highlight-spanned">
+                    <span class="highlight-span">{{_('Ooops something went wrong')}}</span>
+                    <p>
+                        <a href=".">{{_('Click here to go back')}}</a>
+                    </p>
+                </h2>
+                {% endif %}
+            </div>
         </div>
-
     </div>
 {% endblock %}

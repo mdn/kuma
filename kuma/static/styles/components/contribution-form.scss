@@ -182,4 +182,32 @@ $button-color: #3143e2;
             padding: 7px 0;
         }
     }
+
+    .button-tab-group {
+        background: #fff;
+        padding: 1em;
+        border-radius: 50px;
+        display: inline-block;
+        box-shadow: 0 3px 10px 0 rgba(0, 0, 0, .5);
+        button,
+        .button {
+            background-color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50px;
+            line-height: 50px;
+            border: 2px solid $text-color;
+            margin: 0 3px;
+            padding: 5px 0 0 0;
+            box-sizing: border-box;
+            &:hover {
+                background-color: darken(#fff, 3%);
+            }
+        }
+    }
+
+    .subtext {
+        max-width: 600px;
+        margin: 2em auto;
+    }
 }
