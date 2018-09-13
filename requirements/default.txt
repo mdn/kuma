@@ -308,6 +308,14 @@ sqlparse==0.2.3 \
     --hash=sha256:740a023ef38ce11bbb99a9d143856f56ef4ec5b0d7a853f58c02c65b035114c4 \
     --hash=sha256:becd7cc7cebbdf311de8ceedfcf2bd2403297024418801947f8c953025beeff8
 
+# A Python library for Stripe’s API.
+# Code: https://github.com/stripe/stripe-python
+# Changes: https://github.com/stripe/stripe-python/blob/master/CHANGELOG.md
+# Docs: https://stripe.com/docs/api/python#intro
+stripe==2.8.1 \
+    --hash=sha256:8f556bb9af0b0714753567b1ec8e31649bc9af96980333bffc903155db276c7f \
+    --hash=sha256:984b45d3c56242f23a1f3ad5a43cdaf07353b924193dd97bf8bc30203d4f541b
+
 # Utility class for manipulating URLs, used in util functions
 URLObject==2.4.0 \
     --hash=sha256:f51272b12846db98af530b0a64f6593d2b1e8405f0aa580285b37ce8009b8d9c
