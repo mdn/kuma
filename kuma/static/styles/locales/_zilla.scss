@@ -17,12 +17,3 @@
     font-weight: bold;
     font-style: normal;
 }
-
-@font-face {
-    font-family: zillaslab;
-    font-display: 'fallback';
-    src: url('#{$path-to-locale-fonts}#{"ZillaSlab-Italic.woff2"}') format('woff2'),
-         url('#{$path-to-locale-fonts}#{"ZillaSlab-Italic.woff"}') format('woff');
-    font-weight: normal;
-    font-style: italic;
-}
