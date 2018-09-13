@@ -33,9 +33,9 @@ class ContributionForm(forms.Form):
         label=u'',
         widget=forms.EmailInput(
             attrs={
-            'placeholder': _('you@example.com'),
-            'data-error-message': _('Must be a valid email'),
-            'title': _('Why do you need my email address? This is so we can send you a receipt of your contribution. This is handy if you would like a refund.')
+                'placeholder': _('you@example.com'),
+                'data-error-message': _('Must be a valid email'),
+                'title': _('Why do you need my email address? This is so we can send you a receipt of your contribution. This is handy if you would like a refund.')
             }
         )
     )

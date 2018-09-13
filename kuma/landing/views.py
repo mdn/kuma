@@ -5,7 +5,6 @@ from django.views import static
 from django.views.decorators.cache import never_cache
 from django.views.generic import RedirectView
 from ratelimit.decorators import ratelimit
-from django.utils.translation import ugettext_lazy as _
 
 from kuma.core.decorators import shared_cache_control
 from kuma.feeder.models import Bundle
