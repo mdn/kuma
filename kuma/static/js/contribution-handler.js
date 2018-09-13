@@ -1,4 +1,4 @@
-(function(win, doc, $, StripeCheckout) {
+(function(win, $) {
     'use strict';
 
     // TODO: handle this better
@@ -26,7 +26,7 @@
         amount = submitButton.find('#amount');
 
     // init stripeCheckout handler
-    var handler = StripeCheckout.configure({
+    var handler = win.StripeCheckout.configure({
         key: stripePublicKey.val(),
         locale: 'en',
         name: 'Sand Castles United',
@@ -127,5 +127,4 @@
     emailField.blur(onChange);
     nameField.blur(onChange);
 
-// TODO: Ensure StripeCheckout is declared globally
-})(window, document, jQuery, StripeCheckout); // eslint-disable-line 
+})(window, jQuery);
