@@ -534,6 +534,7 @@ INSTALLED_APPS = (
     'soapbox',  # must be before kuma.wiki, or RemovedInDjango19Warning
 
     # MDN
+    'kuma.contributions.apps.ContributionsConfig',
     'kuma.core',
     'kuma.feeder',
     'kuma.landing',

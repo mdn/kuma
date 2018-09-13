@@ -11,7 +11,7 @@
         }
     });
 
-    var form = $('#contribute-form-2'),
+    var form = $('#contribute-form'),
         // Inputs
         emailField = form.find('#id_email'),
         nameField = form.find('#id_name'),
@@ -29,7 +29,7 @@
     var handler = win.StripeCheckout.configure({
         key: stripePublicKey.val(),
         locale: 'en',
-        name: 'Sand Castles United',
+        name: 'MDN Web Docs',
         description: 'One-time donation',
         token: function(token) {
             stripeToken.val(token.id);
@@ -110,7 +110,7 @@
         handler.open({
             image: 'https://avatars1.githubusercontent.com/u/7565578?s=280&v=4',
             name: 'MDN Web Docs',
-            description: 'Contrubute to MDN Web Docs',
+            description: 'Contribute to MDN Web Docs',
             zipCode: true,
             amount: (selectedAmount * 100),
             closed: function() {
