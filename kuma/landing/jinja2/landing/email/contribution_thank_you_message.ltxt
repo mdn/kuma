@@ -1,0 +1,3 @@
+{% trans %}
+Thank you {{ username }} [{{ user_email }}] for your contribution to the MDN Web Docs!
+{% endtrans %}

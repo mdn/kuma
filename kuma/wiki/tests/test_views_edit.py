@@ -24,4 +24,4 @@ def test_edit_banned_ip_not_allowed(method, editor_client, root_doc,
     response = caller(url, REMOTE_ADDR=ip)
     assert response.status_code == 403
     assert_no_cache_header(response)
-    assert 'Your IP address has been banned.' in response.content
+    assert b'Your IP address has been banned.' in response.content

@@ -150,7 +150,7 @@ def test_create_invalid(add_doc_client, slug):
     assert resp.status_code == 200
     assert resp['X-Robots-Tag'] == 'noindex'
     assert_no_cache_header(resp)
-    assert 'The slug provided is not valid.' in resp.content
+    assert b'The slug provided is not valid.' in resp.content
     with pytest.raises(Document.DoesNotExist):
         Document.objects.get(slug=slug, locale='en-US')
     assert pq(resp.content).find('input[name=slug]')[0].value == slug
@@ -220,7 +220,7 @@ def test_create_child_invalid(root_doc, add_doc_client, slug):
     assert resp.status_code == 200
     assert resp['X-Robots-Tag'] == 'noindex'
     assert_no_cache_header(resp)
-    assert 'The slug provided is not valid.' in resp.content
+    assert b'The slug provided is not valid.' in resp.content
     with pytest.raises(Document.DoesNotExist):
         Document.objects.get(slug=full_slug, locale='en-US')
     page = pq(resp.content)

@@ -460,7 +460,7 @@ def test_feeds_update_after_doc_tag_change(client, wiki_user, root_doc):
         response = client.get(reverse('wiki.feeds.recent_documents',
                                       args=['atom', tag]), follow=True)
         assert response.status_code == 200
-        assert root_doc.title in response.content
+        assert root_doc.title.encode('utf-8') in response.content
 
     # Check document is not in the previous tags feed
     for tag in tags1:

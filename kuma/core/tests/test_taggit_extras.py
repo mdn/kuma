@@ -10,10 +10,8 @@ class NamespacedTaggableManagerTest(TestCase):
     food_model = Food
 
     def assert_tags_equal(self, qs, tags, attr="name"):
-        got = map(lambda tag: getattr(tag, attr), qs)
-        got.sort()
-        tags.sort()
-        self.assertEqual(got, tags)
+        got = sorted(map(lambda tag: getattr(tag, attr), qs))
+        self.assertEqual(got, sorted(tags))
 
     def test_all_ns(self):
         """Tags can be collated or fetched by namespace"""
@@ -32,10 +30,8 @@ class NamespacedTaggableManagerTest(TestCase):
 
         ns_tags = apple.tags.all_ns()
 
-        expected_ns = expected_tags.keys()
-        expected_ns.sort()
-        result_ns = ns_tags.keys()
-        result_ns.sort()
+        expected_ns = sorted(expected_tags)
+        result_ns = sorted(ns_tags)
         self.assertEqual(expected_ns, result_ns)
 
         for ns in expected_ns:

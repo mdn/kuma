@@ -63,7 +63,7 @@ def test_compare_revisions_without_tidied_content(edit_revision, client, raw):
 
     response = client.get(url)
     assert response.status_code == 200
-    assert 'Please refresh this page in a few minutes.' in response.content
+    assert b'Please refresh this page in a few minutes.' in response.content
 
 
 @pytest.mark.parametrize("id1,id2",

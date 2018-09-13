@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import json
 from os.path import dirname
 
@@ -66,4 +68,5 @@ class HumansTest(TestCase):
             "",
             ""
         ))
+
         assert output == expected

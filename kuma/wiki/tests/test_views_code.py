@@ -46,7 +46,7 @@ def test_code_sample(code_sample_doc, client, settings, domain):
     assert 'ETag' in response
     assert 'public' in response['Cache-Control']
     assert 'max-age=86400' in response['Cache-Control']
-    assert response.content.startswith('<!DOCTYPE html>')
+    assert response.content.startswith(b'<!DOCTYPE html>')
 
     normalized = normalize_html(response.content)
     expected = (
@@ -144,7 +144,7 @@ def test_raw_code_sample_file(code_sample_doc, constance_config,
     settings.ATTACHMENT_HOST = 'testserver'
     response = admin_client.get(sample_url)
     assert response.status_code == 200
-    assert url_css in response.content
+    assert url_css.encode('utf-8') in response.content
     assert 'public' in response['Cache-Control']
     assert 'max-age=86400' in response['Cache-Control']
 

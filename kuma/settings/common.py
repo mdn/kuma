@@ -534,6 +534,7 @@ INSTALLED_APPS = (
     'soapbox',  # must be before kuma.wiki, or RemovedInDjango19Warning
 
     # MDN
+    'kuma.contributions.apps.ContributionsConfig',
     'kuma.core',
     'kuma.feeder',
     'kuma.landing',
@@ -946,6 +947,12 @@ PIPELINE_JS = {
         'extra_context': {
             'async': True,
         },
+    },
+    'contribute': {
+        'source_filenames': (
+            'js/contribution-handler.js',
+        ),
+        'output_filename': 'build/js/contribute.js',
     },
     'framebuster': {
         'source_filenames': (
@@ -1691,3 +1698,10 @@ RATELIMIT_VIEW = 'kuma.core.views.rate_limited'
 # Caching constants for the Cache-Control header.
 CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE = config(
     'CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE', default=60 * 5, cast=int)
+
+# Stripe API KEY settings
+STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY', default='')
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
+MDN_CONTRIBUTION = config('MDN_CONTRIBUTION', False, cast=bool)
+MDN_CONTRIBUTION_CONFIRMATION_EMAIL = config('MDN_CONTRIBUTION_CONFIRMATION_EMAIL', False, cast=bool)
+CONTRIBUTION_FORM_CHOICES = [32, 64, 128]
