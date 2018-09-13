@@ -17,11 +17,10 @@ class DocumentSource(DocumentBaseSource):
 
     def load_and_validate_existing(self, storage):
         """Load the document from storage in simple cases."""
-
         just_this_doc = (not self.translations and
                          self.depth == 0 and
                          self.revisions == 1)
-        if not self.force and just_this_doc:
+        if not self.force and just_this_doc and self.locale and self.slug:
             document = storage.get_document(self.locale, self.slug)
             if document:
                 return True, []
@@ -30,6 +29,9 @@ class DocumentSource(DocumentBaseSource):
     def load_prereqs(self, requester, storage):
         """Load the data needed for a document."""
         data = {'needs': []}
+
+        if self.locale is None and self.slug is None:
+            raise self.SourceError('Not a document path "%s"', self.path)
 
         # Load data, gathering further source needs
         self.load_prereq_parent_topic(storage, data)

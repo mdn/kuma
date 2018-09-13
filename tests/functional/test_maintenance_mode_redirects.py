@@ -20,8 +20,6 @@ from utils.decorators import skip_if_not_maintenance_mode
     ('post', 'admin/password_change'),
     ('get', '{locale}/docs/User:anonymous:uitest$edit'),
     ('post', '{locale}/docs/User:anonymous:uitest$edit'),
-    ('get', '{locale}/docs/User:anonymous:uitest$edit/1'),
-    ('post', '{locale}/docs/User:anonymous:uitest$edit/1'),
     ('get', '{locale}/docs/User:anonymous:uitest$files'),
     ('post', '{locale}/docs/User:anonymous:uitest$files'),
     ('put', '{locale}/docs/User:anonymous:uitest$files'),

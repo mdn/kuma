@@ -356,7 +356,7 @@ MT_TO_KUMA_LOCALE_MAP = {
 # The number of seconds we are keeping the language preference cookie. (1 year)
 LANGUAGE_COOKIE_AGE = 365 * 24 * 60 * 60
 
-SITE_ID = 1
+SITE_ID = config('SITE_ID', default=1, cast=int)
 
 MDC_PAGES_DIR = path('..', 'mdc_pages')
 
@@ -1207,6 +1207,15 @@ if ATTACHMENT_HOST != _PROD_ATTACHMENT_HOST:
 # Add the overridden interactive examples service
 if INTERACTIVE_EXAMPLES_BASE != _PROD_INTERACTIVE_EXAMPLES:
     ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(INTERACTIVE_EXAMPLES_BASE))
+
+# Add more iframe patterns from the environment
+_ALLOWED_IFRAME_PATTERNS = config('ALLOWED_IFRAME_PATTERNS', default='', cast=Csv())
+for pattern in _ALLOWED_IFRAME_PATTERNS:
+    ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(pattern))
+
+# Allow all iframe sources (for debugging)
+ALLOW_ALL_IFRAMES = config('ALLOW_ALL_IFRAMES', default=False, cast=bool)
+
 
 # Video settings, hard coded here for now.
 # TODO: figure out a way that doesn't need these values

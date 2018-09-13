@@ -229,7 +229,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='document',
             name='files',
-            field=models.ManyToManyField(to=b'attachments.Attachment', through='wiki.DocumentAttachment'),
+            field=models.ManyToManyField(to='attachments.Attachment', through='wiki.DocumentAttachment'),
         ),
         migrations.AddField(
             model_name='document',

@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import pytest
 from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.models import SocialAccount, SocialLogin
@@ -162,7 +164,7 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         with pytest.raises(ImmediateHttpResponse) as e_info:
             self.adapter.pre_social_login(request, github_login)
         resp = e_info.value.response
-        assert 'Banned by unit test.' in resp.content
+        assert b'Banned by unit test.' in resp.content
         assert not resp.has_header('Vary')
 
         never_cache = ['no-cache', 'no-store', 'must-revalidate', 'max-age=0']

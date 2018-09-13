@@ -67,17 +67,18 @@ def test_account_email_page_requires_signin(db, client):
     assert_no_cache_header(response)
     response = client.get(response['Location'], follow=True)
     assert response.status_code == 200
-    assert 'Please sign in' in response.content
+    assert b'Please sign in' in response.content
 
 
 def test_account_email_page_single_email(user_client):
     response = user_client.get(reverse('account_email'))
     assert response.status_code == 200
     assert_no_cache_header(response)
-    assert 'is your <em>primary</em> email address' in response.content
-    assert 'Make Primary' not in response.content
-    assert 'Re-send Confirmation' not in response.content
-    assert 'Remove' not in response.content
+    content = response.content.decode(response.charset)
+    assert 'is your <em>primary</em> email address' in content
+    assert 'Make Primary' not in content
+    assert 'Re-send Confirmation' not in content
+    assert 'Remove' not in content
 
 
 def test_account_email_page_multiple_emails(wiki_user, user_client):
@@ -86,11 +87,12 @@ def test_account_email_page_multiple_emails(wiki_user, user_client):
     response = user_client.get(reverse('account_email'))
     assert response.status_code == 200
     assert_no_cache_header(response)
-    assert 'Make Primary' in response.content
-    assert 'Re-send Confirmation' in response.content
-    assert 'Remove' in response.content
-    assert 'Add Email' in response.content
-    assert 'Edit profile' in response.content
+    content = response.content.decode(response.charset)
+    assert 'Make Primary' in content
+    assert 'Re-send Confirmation' in content
+    assert 'Remove' in content
+    assert 'Add Email' in content
+    assert 'Edit profile' in content
 
 
 class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
@@ -106,19 +108,19 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         response = self.github_login(token_data=token_data)
         assert response.status_code == 200
         content = response.content
-        assert 'Account Sign In Failure' in content
-        error = ('An error occurred while attempting to sign in with your'
-                 ' account.')
+        assert b'Account Sign In Failure' in content
+        error = (b'An error occurred while attempting to sign in with your'
+                 b' account.')
         assert error in content
-        assert 'Thanks for signing in to MDN' not in content
+        assert b'Thanks for signing in to MDN' not in content
 
     def test_auth_success_username_available(self):
         """Successful auth shows profile creation with GitHub details."""
         response = self.github_login()
         assert response.status_code == 200
         content = response.content
-        assert 'Thanks for signing in to MDN with GitHub.' in content
-        assert 'Account Sign In Failure' not in content
+        assert b'Thanks for signing in to MDN with GitHub.' in content
+        assert b'Account Sign In Failure' not in content
 
         parsed = pq(response.content)
         username = parsed('#id_username')[0]

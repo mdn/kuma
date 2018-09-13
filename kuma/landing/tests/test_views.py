@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import mock
 import pytest
 from django.core.cache import cache
@@ -68,9 +70,9 @@ def test_robots_not_allowed(client):
     assert_shared_cache_header(response)
     assert response['Content-Type'] == 'text/plain'
     content = response.content
-    assert 'Sitemap: ' not in content
-    assert 'Disallow: /\n' in content
-    assert 'Disallow: /admin/\n' not in content
+    assert b'Sitemap: ' not in content
+    assert b'Disallow: /\n' in content
+    assert b'Disallow: /admin/\n' not in content
 
 
 def test_robots_allowed_main_website(client, settings):
@@ -83,9 +85,9 @@ def test_robots_allowed_main_website(client, settings):
     assert_shared_cache_header(response)
     assert response['Content-Type'] == 'text/plain'
     content = response.content
-    assert 'Sitemap: ' in content
-    assert 'Disallow: /\n' not in content
-    assert 'Disallow: /admin/\n' in content
+    assert b'Sitemap: ' in content
+    assert b'Disallow: /\n' not in content
+    assert b'Disallow: /admin/\n' in content
 
 
 def test_robots_allowed_main_attachment_host(client, settings):
@@ -98,7 +100,7 @@ def test_robots_allowed_main_attachment_host(client, settings):
     assert_shared_cache_header(response)
     assert response['Content-Type'] == 'text/plain'
     content = response.content
-    assert content == ''
+    assert content == b''
 
 
 def test_favicon_ico(client):

@@ -49,9 +49,9 @@ class Migration(migrations.Migration):
                 ('linkedin_url', models.TextField(blank=True, verbose_name='LinkedIn', validators=[django.core.validators.RegexValidator(b'^https?://((www|\\w\\w)\\.)?linkedin.com/((in/[^/]+/?)|(pub/[^/]+/((\\w|\\d)+/?){3}))$', 'Enter a valid LinkedIn URL.', b'invalid')])),
                 ('facebook_url', models.TextField(blank=True, verbose_name='Facebook', validators=[django.core.validators.RegexValidator(b'^https?://www\\.facebook\\.com/', 'Enter a valid Facebook URL.', b'invalid')])),
                 ('stackoverflow_url', models.TextField(blank=True, verbose_name='Stack Overflow', validators=[django.core.validators.RegexValidator(b'^https?://stackoverflow\\.com/users/', 'Enter a valid Stack Overflow URL.', b'invalid')])),
-                ('groups', models.ManyToManyField(related_query_name='user', related_name='user_set', to=b'auth.Group', blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of his/her group.', verbose_name='groups')),
+                ('groups', models.ManyToManyField(related_query_name='user', related_name='user_set', to='auth.Group', blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of his/her group.', verbose_name='groups')),
                 ('tags', kuma.core.managers.NamespacedTaggableManager(to='taggit.Tag', through='taggit.TaggedItem', blank=True, help_text='A comma-separated list of tags.', verbose_name='Tags')),
-                ('user_permissions', models.ManyToManyField(related_query_name='user', related_name='user_set', to=b'auth.Permission', blank=True, help_text='Specific permissions for this user.', verbose_name='user permissions')),
+                ('user_permissions', models.ManyToManyField(related_query_name='user', related_name='user_set', to='auth.Permission', blank=True, help_text='Specific permissions for this user.', verbose_name='user permissions')),
             ],
             options={
                 'db_table': 'auth_user',
@@ -82,7 +82,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='groups',
-            field=models.ManyToManyField(related_query_name='user', related_name='user_set', to=b'auth.Group', blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', verbose_name='groups'),
+            field=models.ManyToManyField(related_query_name='user', related_name='user_set', to='auth.Group', blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', verbose_name='groups'),
         ),
         migrations.AlterField(
             model_name='user',

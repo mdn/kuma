@@ -3,6 +3,7 @@ import re
 from collections import defaultdict
 from xml.sax.saxutils import quoteattr
 
+import bleach
 import html5lib
 import newrelic.agent
 from django.conf import settings
@@ -16,6 +17,8 @@ from pyquery import PyQuery as pq
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import order_params, to_html
 
+from .constants import (ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS,
+                        ALLOWED_STYLES, ALLOWED_TAGS)
 from .exceptions import DocumentRenderedContentNotAvailable
 from .utils import locale_and_slug_from_path
 
@@ -165,6 +168,23 @@ class Extractor(object):
                 data[part] = src
 
         return data
+
+
+def clean_content(content):
+    """Clean content with standard bleaching and filtering."""
+    bleached = bleach.clean(content,
+                            attributes=ALLOWED_ATTRIBUTES,
+                            tags=ALLOWED_TAGS,
+                            styles=ALLOWED_STYLES,
+                            protocols=ALLOWED_PROTOCOLS)
+    parsed = parse(bleached)
+    if settings.ALLOW_ALL_IFRAMES:
+        filtered = parsed
+    else:
+        allowed_iframe_patterns = settings.ALLOWED_IFRAME_PATTERNS
+        filtered = parsed.filterIframeHosts(allowed_iframe_patterns)
+    content_out = filtered.serialize()
+    return content_out
 
 
 @newrelic.agent.function_trace()
@@ -494,7 +514,7 @@ class LinkAnnotationFilter(html5lib_Filter):
             if token['type'] == 'StartTag' and token['name'] == 'a':
                 attrs = dict(token['data'])
                 names = [name for (namespace, name) in attrs.keys()]
-                for (namespace, name), value in attrs.items():
+                for (namespace, name), value in attrs.copy().items():
                     if name == 'href':
                         href = value
                         href_parsed = urlparse(value)
@@ -1040,7 +1060,7 @@ class CodeSyntaxFilter(html5lib_Filter):
         for token in html5lib_Filter.__iter__(self):
             if token['type'] == 'StartTag' and token['name'] == 'pre':
                 attrs = dict(token['data'])
-                for (namespace, name), value in attrs.items():
+                for (namespace, name), value in attrs.copy().items():
                     if name == 'function' and value:
                         m = MT_SYNTAX_RE.match(value)
                         if m:

@@ -249,7 +249,7 @@ As an admin user, `add a django-allauth social app`_ for GitHub:
 * Name: MDN Development.
 * Client id: <*your GitHub App Client ID*>.
 * Secret key: <*your GitHub App Client Secret*>.
-* Sites: Move ``example.com`` from "Available sites" to "Chosen sites".
+* Sites: Move ``locahost:8000`` from "Available sites" to "Chosen sites".
 
 Now you can sign in with GitHub.
 
