@@ -2,6 +2,7 @@ sudo: required
 branches:
     only:
         - master
+        - potato-1490727
 cache:
     pip: True
     directories:
