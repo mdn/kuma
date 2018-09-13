@@ -1,4 +1,4 @@
-(function(win, doc, $) {
+(function(win, $) {
     'use strict';
 
     // TODO: handle this better
@@ -127,4 +127,4 @@
     emailField.blur(onChange);
     nameField.blur(onChange);
 
-})(window, document, jQuery);
+})(window, jQuery);
