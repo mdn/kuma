@@ -10,5 +10,5 @@ html {
 body {
     line-height: 1.6;
     @include set-site-font-family();
-    @include set-font-size(15px);
+    @include set-font-size($body-font-size);
 }
