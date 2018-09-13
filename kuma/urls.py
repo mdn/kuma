@@ -9,6 +9,9 @@ from django.views.generic import RedirectView
 from django.views.static import serve
 
 from kuma.attachments import views as attachment_views
+from kuma.contributions import views as contribution_views
+from kuma.contributions.urls import (
+    lang_urlpatterns as contributions_lang_urlpatterns)
 from kuma.core import views as core_views
 from kuma.core.decorators import shared_cache_control
 from kuma.core.urlresolvers import i18n_patterns
@@ -87,6 +90,10 @@ urlpatterns += [url('', include('kuma.attachments.urls'))]
 urlpatterns += i18n_patterns(url(r'^dashboards/',
                                  include(dashboards_lang_urlpatterns)))
 urlpatterns += [url('users/', include('kuma.users.urls'))]
+urlpatterns += [url(r'contribute/?$', contribution_views.contribute,
+                    name='contribute')]
+urlpatterns += i18n_patterns(url(r'^contribute/',
+                                 include(contributions_lang_urlpatterns)))
 urlpatterns += i18n_patterns(url('',
                                  decorator_include(never_cache,
                                                    users_lang_urlpatterns)))
