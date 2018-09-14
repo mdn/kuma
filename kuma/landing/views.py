@@ -10,8 +10,6 @@ from kuma.core.decorators import shared_cache_control
 from kuma.feeder.models import Bundle
 from kuma.feeder.sections import SECTION_HACKS
 from kuma.search.models import Filter
-from kuma.landing.forms import ContributionForm
-from kuma.landing.tasks import contribute_thank_you_email
 
 from .utils import favicon_url
 
@@ -49,41 +47,6 @@ def maintenance_mode(request):
 def promote_buttons(request):
     """Bug 646192: MDN affiliate buttons"""
     return render(request, 'landing/promote_buttons.html')
-
-
-@never_cache
-def contribute(request):
-    initial_data = {}
-    if request.user and request.user.is_authenticated() and request.user.email:
-        initial_data = {'email': request.user.email}
-
-    if request.POST:
-        form = ContributionForm(request.POST)
-        if form.is_valid():
-            charge = form.make_charge()
-            if charge and charge.id and charge.status == 'succeeded':
-                if settings.MDN_CONTRIBUTION_CONFIRMATION_EMAIL:
-                    contribute_thank_you_email.delay(
-                        form.cleaned_data['name'],
-                        form.cleaned_data['email']
-                    )
-                return redirect('contribute_confirmation_succeeded')
-            return redirect('contribute_confirmation_error')
-
-        form = ContributionForm(request.POST)
-    else:
-        form = ContributionForm(initial=initial_data)
-
-    context = {
-        'form': form,
-    }
-    return render(request, 'landing/contribute.html', context)
-
-
-@never_cache
-def contribute_confirmation(request, status):
-    context = {'status': status}
-    return render(request, 'landing/contribute_thank_you.html', context)
 
 
 ROBOTS_ALLOWED_TXT = '''\
