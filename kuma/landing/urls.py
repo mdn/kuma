@@ -1,5 +1,4 @@
 from django.conf.urls import url
-from django.conf import settings
 
 from kuma.core.decorators import shared_cache_control
 
@@ -20,19 +19,6 @@ lang_urlpatterns = [
         views.promote_buttons,
         name='promote_buttons'),
 ]
-
-if settings.MDN_CONTRIBUTION:
-    lang_urlpatterns.extend((
-        url(r'^contribute/?$',
-            views.contribute,
-            name='contribute'),
-        url(r'^contribute/confirmation/success/?$',
-            views.contribute_confirmation, {'status': 'succeeded'},
-            name='contribute_confirmation_succeeded'),
-        url(r'^contribute/confirmation/error/?$',
-            views.contribute_confirmation, {'status': 'error'},
-            name='contribute_confirmation_error')
-    ))
 
 urlpatterns = [
     url(r'^contribute\.json$',
