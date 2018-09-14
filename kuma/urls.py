@@ -90,8 +90,11 @@ urlpatterns += [url('', include('kuma.attachments.urls'))]
 urlpatterns += i18n_patterns(url(r'^dashboards/',
                                  include(dashboards_lang_urlpatterns)))
 urlpatterns += [url('users/', include('kuma.users.urls'))]
-urlpatterns += [url(r'contribute/?$', contribution_views.contribute,
-                    name='contribute')]
+urlpatterns += i18n_patterns(
+    url(r'contribute/?$',
+        contribution_views.contribute,
+        name='contribute'),
+)
 urlpatterns += i18n_patterns(url(r'^contribute/',
                                  include(contributions_lang_urlpatterns)))
 urlpatterns += i18n_patterns(url('',
