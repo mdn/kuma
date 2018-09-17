@@ -56,7 +56,6 @@ def home(request):
     context = {
         'updates': updates,
         'default_filters': default_filters,
-        'form': form,
     }
     if settings.MDN_CONTRIBUTION:
         context['form'] = form    
