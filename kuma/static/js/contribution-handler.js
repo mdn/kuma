@@ -55,9 +55,22 @@
     var isCta = $('.contribution-form').hasClass('cta');
     if (isCta) {
         var cta = $('.contribution-form'),
-            collapseButton = cta.find('#collapse');
-        var ctaCollapsedHeight = cta.height(),
+            collapseButton = cta.find('#collapse'),
+            closeButton = cta.find('#close-cta'),
+            ctaCollapsedHeight = cta.height(),
             ctaHeight = 400;
+
+        if(win.mdn.features.localStorage) {
+            try {
+                var hideCta = localStorage.getItem('hideCTA');
+                if (hideCta) {
+                    cta.addClass('hidden');
+                }
+            }
+            catch (e) {
+                // Browser doesn't support Local Storage
+            }
+        }
     }
 
     // Set initial radio state
@@ -180,6 +193,19 @@
         });
     }
 
+    function removeCta() {
+        if(win.mdn.features.localStorage) {
+            try {
+                cta.addClass('hidden');
+                localStorage.setItem('hideCTA', true);
+            }
+            catch (e) {
+                // Browser doesn't support Local Storage
+            }
+
+        }
+    }
+
     // Register event handlers
     formButton.click(onFormButtonClick);
     amountRadio.change(onAmountSelect);
@@ -188,7 +214,7 @@
     emailField.blur(onChange);
     nameField.blur(onChange);
     if (isCta) {
-        // close button   
+        closeButton.click(removeCta);
     }
 
 })(window, jQuery);
