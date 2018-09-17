@@ -101,11 +101,9 @@
             // reset radio when selecting custom amount
             form.find('input[type=\'radio\']:checked').prop('checked', false);
         }
-
         
         selectedAmount = (Math.floor(ev.target.value * 100) / 100);
         var newValue = (selectedAmount < 1 || isNaN(selectedAmount)) ? '' : '$' + selectedAmount;
-
 
         amount.html(newValue);
     }
