@@ -1,0 +1,79 @@
+// Gradient background for the contribution flow
+// Form cta background
+$background-colors: #83cff3,#ebf8e1;
+$background-gradient: linear-gradient(to right, nth($background-colors, 1) , nth($background-colors, 2));
+
+.contribution-banner {
+    background-image: $background-gradient;
+    position: relative;
+    overflow: hidden;
+
+    .actions {
+        text-align: right;
+        position: absolute;
+        width: 100%;
+        z-index: 99;
+
+        button {
+            border: none;
+            background: none;
+            margin-right: 10px;
+        }
+    }
+
+    h2 {
+        margin-top: 0;
+    }
+
+    .row {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 20px;
+        max-height: 100%;
+        box-sizing: border-box;
+
+        @media #{$mq-tablet-and-down} {
+            padding: 10px;
+        }
+    }
+
+    .column {
+        position: relative;
+    }
+
+    .backdrop-image {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
+    .subtext {
+        max-width: 600px;
+        margin: 2em auto;
+    }
+}
+
+.button-tab-group {
+    background: #fff;
+    padding: 1em;
+    border-radius: 50px;
+    display: inline-block;
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, .5);
+
+    button,
+    .button {
+        background-color: #fff;
+        width: 50px;
+        height: 50px;
+        border-radius: 50px;
+        line-height: 50px;
+        border: 2px solid $text-color;
+        margin: 0 3px;
+        padding: 5px 0 0 0;
+        box-sizing: border-box;
+        &:hover {
+            background-color: darken(#fff, 3%);
+        }
+    }
+}

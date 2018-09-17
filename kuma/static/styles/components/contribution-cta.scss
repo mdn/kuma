@@ -1,0 +1,75 @@
+// Overwrites for contribution-form to enable it to be used as a CTA
+.contribution-form.cta {
+    position: fixed;
+    z-index: 99;
+    bottom: 0;
+    width: 100%;
+
+    // extra height for close/hide buttons
+    .row {
+        padding-top: 2.5em;
+    }
+
+    h4,
+    .body,
+    .cta-link,
+    .form-group {
+        animation-name: fadeIn;
+        animation-duration: .6s;
+    }
+
+    &.collapsed {
+        // Hide all unessesary content on the collapsed CTA.
+        h4,
+        .body,
+        .cta-link,
+        .form-group {
+            display: none;
+            opacity: 0;
+        }
+
+        .cta-min-text {
+            display: inline;
+        }
+
+        .cta-max-text {
+            display: none;
+        }
+    }
+
+    &.collapsing {
+        h4,
+        .body,
+        .cta-link,
+        .form-group {
+            animation-name: fadeOut;
+            animation-duration: .6s;
+        }
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+

@@ -2,67 +2,11 @@
 
 // Styles for the contribution form
 // TODO: cleanup this file
-// Form cta background
-$background-colors: #83cff3,#ebf8e1;
-$background-gradient: linear-gradient(to right, nth($background-colors, 1) , nth($background-colors, 2));
 
 // Form Varibles
 $input-height: 64px;
 $input-spacing: 18px;
 $button-color: #3143e2;
-
-// Gradient background for the contribution flow
-.contribution-banner {
-    background-image: $background-gradient;
-    position: relative;
-    overflow: hidden;
-
-    .row {
-        max-width: 1300px;
-        margin: 0 auto;
-    }
-
-    .column {
-        padding: 20px;
-        position: relative;
-    }
-
-    .backdrop-image {
-        position: absolute;
-        left: 0;
-        right: 0;
-        margin: auto;
-    }
-
-    .button-tab-group {
-        background: #fff;
-        padding: 1em;
-        border-radius: 50px;
-        display: inline-block;
-        box-shadow: 0 3px 10px 0 rgba(0, 0, 0, .5);
-
-        button,
-        .button {
-            background-color: #fff;
-            width: 50px;
-            height: 50px;
-            border-radius: 50px;
-            line-height: 50px;
-            border: 2px solid $text-color;
-            margin: 0 3px;
-            padding: 5px 0 0 0;
-            box-sizing: border-box;
-            &:hover {
-                background-color: darken(#fff, 3%);
-            }
-        }
-    }
-
-    .subtext {
-        max-width: 600px;
-        margin: 2em auto;
-    }
-}
 
 .contribution-form {
     .backdrop-image {
@@ -79,9 +23,9 @@ $button-color: #3143e2;
         @media #{$mq-mobile-and-down} {
             display: block;
         }
+
         .column {
             flex: 50%;
-            padding: 20px;
             box-sizing: border-box;
             &:first-of-type {
                 .container {
@@ -95,27 +39,32 @@ $button-color: #3143e2;
                 }
             }
 
+            @media #{$mq-mobile-and-down} {
+                display: block;
+                width: 100%;
+            }
+
             .form-footer {
                 position: absolute;
-                padding: 10px;
                 bottom: 0;
                 left: 0;
                 right: 0;
-            }
-            @media #{$mq-tablet-and-down} {
-                padding: 10px;
+                text-align: right;
+                @media #{$mq-mobile-and-down} {
+                    position: relative;
+                }
             }
 
             .container {
                 max-width: 500px;
                 margin: 0 auto;
                 position: relative;
-                padding-bottom: 150px;
                 box-sizing: border-box;
                 height: 100%;
 
                 @media #{$mq-mobile-and-down} {
                     max-width: 100%;
+                    padding-bottom: 0;
                 }
                 .body {
                     @include set-font-size($larger-font-size);
@@ -138,8 +87,9 @@ $button-color: #3143e2;
     }
 
     form {
-        button {
+        .form-footer button {
             height: $input-height;
+            min-width: 190px;
             border: none;
             border-radius: $input-height;
             line-height: $input-height;
@@ -147,7 +97,6 @@ $button-color: #3143e2;
             font-weight: normal;
             color: #fff;
             padding: 0 3em;
-            float: right;
             @media #{$mq-mobile-and-down} {
                 width: 100%;
             }
@@ -164,14 +113,25 @@ $button-color: #3143e2;
 
                 @media #{$mq-mobile-and-down} {
                     display: inline-block;
+                    padding: 0;
+                    vertical-align: middle;
+
+                    > img {
+                        max-height: 20px;
+                    }
                 }
             }
         }
 
         .form-group {
+            padding-bottom: 100px;
+
             .errorlist {
                 display: block;
                 text-align: right;
+            }
+            > input:first-of-type {
+                margin-top: 0;
             }
 
             input {
@@ -254,19 +214,40 @@ $button-color: #3143e2;
         }
         .payment-details {
             display: inline-block;
-            padding: 15px 0;
+            vertical-align: middle;
+            margin-right: 1em;
             @media #{$mq-mobile-and-down} {
                 display: none;
             }
         }
     }
+    .cta-min-text {
+        display: none;
+    }
+
+    .cta-max-text {
+        display: inline;
+    }
+
+    .email-input-container {
+        display: relative;
+    }
+
+    .tooltip-button {
+        background: none;
+        border: none;
+        position: absolute;
+        right: 10px;
+        top: 13px;
+    }
+
+    // JQUI overwrite
+    .ui-tooltip.ui-widget.ui-widget-content {
+        border: 2px solid $text-color;
+        border-radius: 0;
+        background-image: none;
+        background-color: #fff;
+        padding: 14px;
+    }
 }
 
-// JQUI overwrite
-.ui-tooltip.ui-widget.ui-widget-content {
-    border: 2px solid $text-color;
-    border-radius: 0;
-    background-image: none;
-    background-color: #fff;
-    padding: 14px;
-}
