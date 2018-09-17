@@ -1,6 +1,7 @@
 @import 'includes/vars';
 // Overwrites for contribution-form to enable it to be used as a CTA
 .contribution-form.cta {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, .25);
     position: fixed;
     z-index: 99;
     bottom: 0;
@@ -27,7 +28,7 @@
     }
 
     // extra height for close/hide buttons
-    .row {
+    .column-container {
         padding-top: 2.5em;
     }
 

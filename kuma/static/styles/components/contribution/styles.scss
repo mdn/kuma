@@ -39,7 +39,7 @@ $background-gradient: linear-gradient(to right, nth($background-colors, 1) , nth
         margin-top: 0;
     }
 
-    .row {
+    .column-container {
         max-width: 1320px;
         margin: 0 auto;
         padding: 20px;
