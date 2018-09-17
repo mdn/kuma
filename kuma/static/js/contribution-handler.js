@@ -5,22 +5,23 @@
     var isMobile = $('main').width() < 800;
 
     if ($().tooltip) {
-        var tooltipButton = $('#email-tooltip');
+        var tooltipButton = $('#email-tooltip'),
+            tooltipCloseButton = $('.tooltip-close');
         tooltipButton.tooltip({
             items: '#email-tooltip',
-            content: tooltipButton.prev().attr('title'),
+            content: '<button class="tooltip-close"></button> <span>' + tooltipButton.prev().attr('title') + '</span>',
             position: {
                 my: isMobile ? 'center bottom' : 'right right',
                 at: isMobile ? 'right top' : 'left left'
             }
         });
-        tooltipButton.on({
-            'click': function() {
-                $(this).tooltip('open');
-            },
-            'mouseout': function() {  
-                $(this).tooltip('disable');   
-            }
+        $(tooltipButton).tooltip().unbind();
+        tooltipButton.click(function() {
+            $(this).tooltip('open');
+            $(tooltipButton).tooltip().unbind('mouseleave');
+        });
+        tooltipCloseButton.click(function() {
+            $(this).tooltip('close');
         });
     }
 
