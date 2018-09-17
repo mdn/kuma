@@ -13,7 +13,7 @@
     .mobile-link {
         display: none;
     }
-    
+
     // Show the link on mobile but not desktop
     @media #{$mq-mobile-and-down} {
         .form-footer button {
@@ -48,7 +48,7 @@
             display: none;
             opacity: 0;
         }
-    
+
         .hide-expand {
             display: initial;
         }
@@ -75,7 +75,7 @@
             opacity: 1;
         }
     }
-    
+
     @keyframes fadeOut {
         0% {
             opacity: 1;
@@ -88,6 +88,3 @@
         }
     }
 }
-
-
-
