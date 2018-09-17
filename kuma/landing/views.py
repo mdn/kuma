@@ -27,7 +27,6 @@ def home(request):
     updates = list(Bundle.objects.recent_entries(SECTION_HACKS.updates)[:5])
 
     default_filters = Filter.objects.default_filters()
-
     context = {
         'updates': updates,
         'default_filters': default_filters,

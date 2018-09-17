@@ -1,7 +1,7 @@
 <div class="contribution-form contribution-banner {% if is_cta %}cta collapsed{% endif %}">
     {% if is_cta %}
     <div class="actions">
-        <button id="collapse" type="button"> {% include 'includes/icons/arrows/chevron-down.svg' %} </button>
+        <button id="collapse" class="hide-collapse" type="button"> {% include 'includes/icons/arrows/chevron-down.svg' %} </button>
         <button id="close-cta" type="button"> {% include 'includes/icons/general/close.svg' %} </button>
     </div>
     {% endif %}
@@ -32,7 +32,7 @@
                 <div class="form-group">
                     {{form.name}}
                     {{form.name.errors}}
-                    <div>
+                    <div class="email-input-container">
                         {{form.email}}
                         {{form.email.errors}}
                         <button type="button" class="tooltip-button" id="email-tooltip"> {% include 'includes/icons/punctuation/question-mark.svg' %} </button>
@@ -56,15 +56,19 @@
                             <img src="{{ static('img/visa-logo.png') }}" alt="visa">
                             <img src="{{ static('img/ae-logo.png') }}" alt="american express">
                         </div>
-                        
-                        <span class="cta-min-text">Contribute {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
-                        
-                        <span class="cta-max-text">
-                            Pay <span id="amount">$64</span>
+                        <span class="hide-expand">{{_('Contribute')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
+                        <span class="hide-collapse">
+                            {{_('Pay')}} <span id="amount">$64</span>
                         </span>
-                    
                     </button>
-                        
+                    <a class="button mobile-link" href="{{ url('contribute') }}">
+                        <div class="payment-details">
+                            <img src="{{ static('img/mc-logo.png') }}" alt="mastercard">
+                            <img src="{{ static('img/visa-logo.png') }}" alt="visa">
+                            <img src="{{ static('img/ae-logo.png') }}" alt="american express">
+                        </div>
+                        {{_('Contribute')}}
+                    </a>
                 </div>
             </form>
         </div>
