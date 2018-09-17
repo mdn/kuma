@@ -442,6 +442,7 @@ _CONTEXT_PROCESSORS = (
     'kuma.core.context_processors.next_url',
 
     'constance.context_processors.config',
+    'kuma.contributions.context_processors.global_contribution_form',
 )
 
 

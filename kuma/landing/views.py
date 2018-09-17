@@ -6,8 +6,6 @@ from django.views.decorators.cache import never_cache
 from django.views.generic import RedirectView
 from ratelimit.decorators import ratelimit
 
-from kuma.contributions.forms import ContributionForm
-from kuma.contributions.tasks import contribute_thank_you_email
 from kuma.core.decorators import shared_cache_control
 from kuma.feeder.models import Bundle
 from kuma.feeder.sections import SECTION_HACKS
@@ -30,35 +28,10 @@ def home(request):
 
     default_filters = Filter.objects.default_filters()
 
-    # Handle contribute form TODO: fix this
-    if settings.MDN_CONTRIBUTION:
-        initial_data = {}
-        if request.user.is_authenticated and request.user.email:
-            initial_data = {'email': request.user.email}
-
-        if request.POST:
-            form = ContributionForm(request.POST)
-            if form.is_valid():
-                charge = form.make_charge()
-                if charge and charge.id and charge.status == 'succeeded':
-                    if settings.MDN_CONTRIBUTION_CONFIRMATION_EMAIL:
-                        contribute_thank_you_email.delay(
-                            form.cleaned_data['name'],
-                            form.cleaned_data['email']
-                        )
-                    return redirect('contribute_confirmation_succeeded')
-                return redirect('contribute_confirmation_error')
-
-            form = ContributionForm(request.POST)
-        else:
-            form = ContributionForm(initial=initial_data)
-
     context = {
         'updates': updates,
         'default_filters': default_filters,
     }
-    if settings.MDN_CONTRIBUTION:
-        context['form'] = form
 
     return render(request, 'landing/homepage.html', context)
 

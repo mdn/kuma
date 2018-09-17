@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="column">
-            <form id="contribute-form" class="container" method="post" action="">
+            <form id="contribute-form" class="container" method="post" action="{{ url('contribute') }}">
                 {% csrf_token %}
                 <div class="form-group">
                     {{form.name}}
