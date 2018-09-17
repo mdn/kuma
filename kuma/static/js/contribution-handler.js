@@ -1,4 +1,4 @@
-(function(win, $) {
+(function(doc, win, $) {
     'use strict';
 
     // TODO: handle this better
@@ -173,6 +173,11 @@
             cta.css('height', 'auto');
             // listen to minimise button clicks
             collapseButton.click(collapseCta);
+            $(doc).keyup(function(e) {
+                if (e.keyCode === 27) { // escape key maps to keycode `27`
+                    collapseCta();
+                }
+            });
         });
     }
 
@@ -217,4 +222,4 @@
         closeButton.click(removeCta);
     }
 
-})(window, jQuery);
+})(document, window, jQuery);

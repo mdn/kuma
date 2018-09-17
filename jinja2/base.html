@@ -38,6 +38,10 @@
     {% stylesheet 'maintenance-mode-global' %}
   {%- endif %}
 
+  {% if settings.MDN_CONTRIBUTION %}
+    {% stylesheet 'jquery-ui' %}
+  {% endif %}
+
   {#- If the stylesheet exists, include it. Otherwise, does nothing. #}
   {% stylesheet 'locale-%s' % LANG %}
 
@@ -163,15 +167,15 @@
     <script src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
     {% javascript 'main' %}
     <script>
-      if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
-      </script>
+    if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
+  </script>
     {% for script in scripts %}
-    {% javascript script %}
+      {% javascript script %}
     {% endfor %}
     {% if settings.MDN_CONTRIBUTION %}
+    {% javascript 'jquery-ui' %}
     <script src="https://checkout.stripe.com/checkout.js"></script>
     {% javascript 'contribute' %}
-    <script> window.mdn.features.mdn_contributions = true; </script>
     {% endif %}
     
   {% endblock %}

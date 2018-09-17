@@ -14,6 +14,7 @@ from kuma.search.models import Filter
 from .utils import favicon_url
 
 from kuma.contributions.forms import ContributionForm
+from kuma.contributions.views import contribute
 from kuma.contributions.tasks import contribute_thank_you_email
 
 @shared_cache_control
@@ -29,7 +30,6 @@ def home(request):
     updates = list(Bundle.objects.recent_entries(SECTION_HACKS.updates)[:5])
 
     default_filters = Filter.objects.default_filters()
-
     context = {
         'updates': updates,
         'default_filters': default_filters,

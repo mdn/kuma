@@ -5,6 +5,26 @@
     bottom: 0;
     width: 100%;
 
+    .hide-collapsed {
+        display: initial;
+    }
+
+    .hide-expand,
+    .mobile-link {
+        display: none;
+    }
+    
+    // Show the link on mobile but not desktop
+    @media #{$mq-mobile-and-down} {
+        .form-footer button {
+            display: none;
+        }
+
+        .form-footer .mobile-link {
+            display: block;
+        }
+    }
+
     // extra height for close/hide buttons
     .row {
         padding-top: 2.5em;
@@ -23,17 +43,14 @@
         h4,
         .body,
         .cta-link,
+        .hide-collapse,
         .form-group {
             display: none;
             opacity: 0;
         }
-
-        .cta-min-text {
-            display: inline;
-        }
-
-        .cta-max-text {
-            display: none;
+    
+        .hide-expand {
+            display: initial;
         }
     }
 
@@ -46,30 +63,31 @@
             animation-duration: .6s;
         }
     }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    
+    @keyframes fadeOut {
+        0% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
 }
 
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    50% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeOut {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 0;
-    }
-}
 
 

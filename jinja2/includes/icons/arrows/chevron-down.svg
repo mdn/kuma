@@ -1,3 +1,15 @@
-<svg class="icon icon-chevron-down" xmlns="http://www.w3.org/2000/svg" width="9" height="28" viewBox="0 0 9 28" aria-hidden="true">
-    <path d="M1683 808l-742 741q-19 19-45 19t-45-19l-742-741q-19-19-19-45.5t19-45.5l166-165q19-19 45-19t45 19l531 531 531-531q19-19 45-19t45 19l166 165q19 19 19 45.5t-19 45.5z"/>
+<svg class="icon icon-chevron-down" width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+
+    <g id="✏️-working" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="02_Banner_open_b--incomplete" transform="translate(-1208.000000, -326.000000)" fill-rule="nonzero">
+            <g id="Group-2" transform="translate(0.000000, 312.000000)">
+                <g id="Group" transform="translate(1208.000000, 14.000000)">
+                    <circle id="Oval" fill="#222222" cx="13" cy="13" r="13"></circle>
+                    <g id="Icons/General/chevron/white" transform="translate(12.833333, 13.000000) scale(1, -1) translate(-12.833333, -13.000000) translate(4.500000, 8.000000)" fill="#FFFFFF">
+                        <path d="M9.04406765,0.689460006 L15.2746289,6.84952486 C15.5751237,7.14661962 15.5751237,7.62828526 15.2746289,7.92534833 L14.5479337,8.64382129 C14.2479519,8.9404089 13.7617679,8.94097944 13.4610808,8.64508916 L8.49998397,3.76313721 L3.53891922,8.64512086 C3.23823212,8.94101114 2.75204809,8.9404406 2.4520663,8.64385298 L1.72537106,7.92538003 C1.42487631,7.62828526 1.42487631,7.14661962 1.72537106,6.84955655 L7.95593235,0.689491702 C8.25639503,0.392396938 8.74357291,0.392396938 9.04406765,0.689460006 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
 </svg>

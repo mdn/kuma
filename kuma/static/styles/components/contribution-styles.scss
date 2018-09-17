@@ -13,6 +13,21 @@ $background-gradient: linear-gradient(to right, nth($background-colors, 1) , nth
         position: absolute;
         width: 100%;
         z-index: 99;
+        button {
+            padding: 0;
+            vertical-align: middle;
+            padding-top: 3px;
+
+            > svg {
+                width: 30px;
+                height: 30px;
+            }
+            &:last-of-type > svg { 
+                width: 20px;
+                height: 20px;
+            }
+            
+        }
 
         button {
             border: none;
