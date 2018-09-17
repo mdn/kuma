@@ -119,6 +119,10 @@
       </div>
   </main>
 
+  {% if settings.MDN_CONTRIBUTION and not '/contribute' in request.path %}
+  {% include "includes/footer/contribution-cta.html" %}
+  {% endif %}
+  
   {%- if not untrusted %}
   <!-- Footer -->
     <footer id="nav-footer" class="nav-footer">
@@ -157,12 +161,17 @@
     <script src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
     {% javascript 'main' %}
     <script>
-    if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
-</script>
+      if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
+      </script>
     {% for script in scripts %}
-      {% javascript script %}
+    {% javascript script %}
     {% endfor %}
-
+    {% if settings.MDN_CONTRIBUTION %}
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    {% javascript 'contribute' %}
+    <script> window.mdn.features.mdn_contributions = true; </script>
+    {% endif %}
+    
   {% endblock %}
 
   {% block js %}{% endblock %}

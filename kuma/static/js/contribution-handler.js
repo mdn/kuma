@@ -4,12 +4,26 @@
     // TODO: handle this better
     var isMobile = $('main').width() < 800;
 
-    $('#id_email').tooltip({
-        position: {
-            my: isMobile ? 'center bottom' : 'right right',
-            at: isMobile ? 'right top' : 'left left'
-        }
-    });
+    
+    if ($().tooltip) {
+        var tooltipButton = $('#email-tooltip');
+        tooltipButton.tooltip({
+            items: '#email-tooltip',
+            content: tooltipButton.prev().attr('title'),
+            position: {
+                my: isMobile ? 'center bottom' : 'right right',
+                at: isMobile ? 'right top' : 'left left'
+            }
+        });
+        tooltipButton.on({
+            'click': function() {
+                $(this).tooltip('open');
+            },
+            'mouseout': function() {  
+                $(this).tooltip('disable');   
+            }
+        });
+    }
 
     var form = $('#contribute-form'),
         // Inputs
@@ -22,8 +36,8 @@
         stripePublicKey = form.find('#id_stripe_public_key'),
         stripeToken = form.find('#id_stripe_token'),
         // Other
-        submitButton = form.find('#stripe_submit'),
-        amount = submitButton.find('#amount');
+        formButton = form.find('#stripe_submit'),
+        amount = formButton.find('#amount');
 
     // init stripeCheckout handler
     var handler = win.StripeCheckout.configure({
@@ -36,6 +50,15 @@
             form.submit();
         }
     });
+
+    // Is CTA? 
+    var isCta = $('.contribution-form').hasClass('cta');
+    if (isCta) {
+        var cta = $('.contribution-form'),
+            collapseButton = cta.find('#collapse');
+        var ctaCollapsedHeight = cta.height(),
+            ctaHeight = 400;
+    }
 
     // Set initial radio state
     defaultAmount.parent().addClass('active');
@@ -113,18 +136,59 @@
             description: 'Contribute to MDN Web Docs',
             zipCode: true,
             amount: (selectedAmount * 100),
+            email: $(emailField).val(),
             closed: function() {
                 form.removeClass('disabled');
             }
         });
     }
 
+    function onFormButtonClick() {
+        // Calculate the role of the submit button
+        isCta && cta.hasClass('collapsed') ? expandCta() : onSubmit();
+    }
+
+    function expandCta() {
+        // Force style="height: <CTA HEIGHT>"
+        cta.height(ctaCollapsedHeight);
+
+        //  Remove collapsed state
+        cta.removeClass('collapsed');
+
+        // Expand CTA
+        cta.animate({height: ctaHeight}, 500, function() {
+            cta.css('height', 'auto');
+            // listen to minimise button clicks
+            collapseButton.click(collapseCta);
+        });
+    }
+
+    function collapseCta() {
+        // ignore clicks while collapsing
+        collapseButton.off();
+        // Force style="height: <CTA HEIGHT>"
+        ctaHeight = cta.height();
+        cta.height(ctaHeight);
+        // Add Transitional class for opacity animation
+        cta.addClass('collapsing');
+
+        // Minimise CTA
+        cta.animate({height: ctaCollapsedHeight}, 500, function() {
+            cta.addClass('collapsed');
+            cta.css('height', 'auto');
+            cta.removeClass('collapsing');
+        });
+    }
+
     // Register event handlers
-    submitButton.click(onSubmit);
+    formButton.click(onFormButtonClick);
     amountRadio.change(onAmountSelect);
     customAmountInput.on('input', onAmountSelect);
     customAmountInput.change(onAmountSelect);
     emailField.blur(onChange);
     nameField.blur(onChange);
+    if (isCta) {
+        // close button   
+    }
 
 })(window, jQuery);

@@ -1,4 +1,10 @@
-<div class="contribution-form contribution-banner">
+<div class="contribution-form contribution-banner {% if is_cta %}cta collapsed{% endif %}">
+    {% if is_cta %}
+    <div class="actions">
+        <button id="collapse" type="button"> {% include 'includes/icons/arrows/chevron-down.svg' %} </button>
+        <button type="button"> {% include 'includes/icons/general/close.svg' %} </button>
+    </div>
+    {% endif %}
     <div class="row">
         <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="">
         <div class="column">
@@ -9,11 +15,11 @@
                 <h4>{{_('We need your help to grow to the next stage.')}}</h4>
                 <p class="body">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p>
                 {% if is_cta %}
-                <div class="button-group form-footer">
-                    <a href="#" class="cta-link">
+                <div class="button-group">
+                    <a href="{{url('contribute')}}" class="cta-link">
                         {{_('Learn More')}} {% include 'includes/icons/arrows/arrow.svg' %}
                     </a>
-                    <a href="#" class="cta-link">
+                    <a href="{{url('contribute')}}" class="cta-link">
                         {{_('Feedback')}} {% include 'includes/icons/arrows/arrow.svg' %}
                     </a>
                 </div>
@@ -24,13 +30,19 @@
             <form id="contribute-form" class="container" method="post" action="">
                 {% csrf_token %}
                 <div class="form-group">
-                    {% for field in form %}
-                        {% if field.label and not field.hidden %}
-                            <span class="label"> {{field.label}} </span>
-                        {% endif %}
-                        {{ field }}
-                        {{ field.errors }}
-                    {% endfor %}
+                    {{form.name}}
+                    {{form.name.errors}}
+                    <div>
+                        {{form.email}}
+                        {{form.email.errors}}
+                        <button type="button" class="tooltip-button" id="email-tooltip"> {% include 'includes/icons/punctuation/question-mark.svg' %} </button>
+                    </div>
+                    {{form.donation_choices}}
+                    <span class="label"> {{form.donation_amount.label}} </span>
+                    {{form.donation_amount}}
+                    {{form.donation_amount.errors}}
+                    {{form.stripe_token}}
+                    {{form.stripe_public_key}}
                 </div>
                 <div class="form-footer">
                     <div class="payment-details">
@@ -44,7 +56,15 @@
                             <img src="{{ static('img/visa-logo.png') }}" alt="visa">
                             <img src="{{ static('img/ae-logo.png') }}" alt="american express">
                         </div>
-                        Pay <span id="amount">$64</span></button>
+                        
+                        <span class="cta-min-text">Contribute {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
+                        
+                        <span class="cta-max-text">
+                            Pay <span id="amount">$64</span>
+                        </span>
+                    
+                    </button>
+                        
                 </div>
             </form>
         </div>
