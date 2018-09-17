@@ -20,7 +20,7 @@ $button-color: #3143e2;
         display: none;
     }
 
-    .row {
+    .column-container {
         display: flex;
         position: relative;
 
@@ -28,66 +28,70 @@ $button-color: #3143e2;
             display: block;
         }
 
-        .column {
-            flex: 50%;
-            box-sizing: border-box;
-            &:first-of-type {
-                .container {
-                    max-width: 700px;
-                    float: right;
-                    @media #{$mq-mobile-and-down} {
-                        padding-bottom: 0;
-                        float: none;
-                        max-width: none;
-                    }
-                }
-            }
-
-            @media #{$mq-mobile-and-down} {
-                display: block;
-                width: 100%;
-            }
-
-            .form-footer {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                text-align: right;
-                @media #{$mq-mobile-and-down} {
-                    position: relative;
-                }
-            }
-
-            .container {
-                max-width: 500px;
-                margin: 0 auto;
-                position: relative;
-                box-sizing: border-box;
-                height: 100%;
-
-                @media #{$mq-mobile-and-down} {
-                    max-width: 100%;
-                    padding-bottom: 0;
-                }
-                .body {
-                    @include set-font-size($larger-font-size);
-                    line-height: 1.75;
-                    font-family: $heading-font-family;
-                }
-
-                h4 {
-                    margin: 15px 0;
-                    font-size: 28px;
-                }
-
-                .button-group a {
-                    color: $text-color;
-                    margin-right: 20px;
-                    min-width: 150px;
-                }
-            }
+        .column-half {
+            z-index: 99;
+            position: relative;
         }
+        // .column {
+        //     // flex: 50%;
+        //     // box-sizing: border-box;
+        //     // &:first-of-type {
+        //     //     .container {
+        //     //         max-width: 700px;
+        //     //         float: right;
+        //     //         @media #{$mq-mobile-and-down} {
+        //     //             padding-bottom: 0;
+        //     //             float: none;
+        //     //             max-width: none;
+        //     //         }
+        //     //     }
+        //     // }
+
+        //     @media #{$mq-mobile-and-down} {
+        //         display: block;
+        //         width: 100%;
+        //     }
+
+        //     .form-footer {
+        //         position: absolute;
+        //         bottom: 0;
+        //         left: 0;
+        //         right: 0;
+        //         text-align: right;
+        //         @media #{$mq-mobile-and-down} {
+        //             position: relative;
+        //         }
+        //     }
+
+        //     .container {
+        //         max-width: 500px;
+        //         margin: 0 auto;
+        //         position: relative;
+        //         box-sizing: border-box;
+        //         height: 100%;
+
+        //         @media #{$mq-mobile-and-down} {
+        //             max-width: 100%;
+        //             padding-bottom: 0;
+        //         }
+        //         .body {
+        //             @include set-font-size($larger-font-size);
+        //             line-height: 1.75;
+        //             font-family: $heading-font-family;
+        //         }
+
+        //         h4 {
+        //             margin: 15px 0;
+        //             font-size: 28px;
+        //         }
+
+        //         .button-group a {
+        //             color: $text-color;
+        //             margin-right: 20px;
+        //             min-width: 150px;
+        //         }
+        //     }
+        // }
     }
 
     form {

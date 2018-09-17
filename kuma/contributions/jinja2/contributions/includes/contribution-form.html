@@ -5,9 +5,9 @@
         <button id="close-cta" type="button"> {% include 'includes/icons/general/close.svg' %} </button>
     </div>
     {% endif %}
-    <div class="row">
+    <div class="column-container">
         <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="">
-        <div class="column">
+        <div class="column-half">
             <div class="container">
                 <h2 class="highlight highlight-spanned">
                     <span class="highlight-span">{{ _('Help Support MDN for as little as $2')}}</span>
@@ -26,7 +26,7 @@
                 {% endif %}
             </div>
         </div>
-        <div class="column">
+        <div class="column-half">
             <form id="contribute-form" class="container" method="post" action="{{ url('contribute') }}">
                 {% csrf_token %}
                 <div class="form-group">
