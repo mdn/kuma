@@ -208,14 +208,58 @@ $button-color: #3143e2;
         position: absolute;
         right: 10px;
         top: 13px;
+        color: #222;
     }
 }
 
 // JQUI overwrite
 .ui-tooltip.ui-widget.ui-widget-content {
     border: 2px solid $text-color;
+    position: relative;
     border-radius: 0;
     background-image: none;
     background-color: #fff;
-    padding: 14px;
+    padding: 2em;
+
+    .tooltip-close {
+        top: .5em;
+        right: .5em;
+        position: absolute;
+        border: none;
+        &:before {
+            content: '\f00d';
+            font-family: FontAwesome;
+        }
+    }
+
+    &:after {
+        content: '';
+        position: absolute;
+        left: 20px;
+        border-style: solid;
+        display: block;
+        width: 0;
+        margin-top: -13px;
+        top: 50%;
+        bottom: auto;
+        left: auto;
+        right: -15px;
+        border-width: 15px 0 15px 20px;
+        border-color: transparent #fff;
+    }
+    &:before {
+        content: '';
+        position: absolute;
+        left: 20px;
+        border-style: solid;
+        display: block;
+        width: 0;
+        margin-top: -13px;
+        top: 50%;
+        bottom: auto;
+        left: auto;
+        right: -20px;
+        border-width: 15px 0 15px 20px;
+        border-color: transparent $text-color;
+    }
 }
