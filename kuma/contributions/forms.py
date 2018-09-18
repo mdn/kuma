@@ -1,7 +1,8 @@
 from __future__ import unicode_literals
 
-import stripe
 from decimal import Decimal
+
+import stripe
 from django import forms
 from django.conf import settings
 from django.core.validators import MinValueValidator
