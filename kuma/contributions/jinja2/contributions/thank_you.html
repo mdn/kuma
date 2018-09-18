@@ -29,4 +29,22 @@
             </div>
         </div>
     </div>
-{% endblock %}
+    {% endblock %}
+    
+    {% block content %}
+    <div id="contributions-page" class="conributions-page">
+        <div class="section">
+            <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="" role="presentation">
+            <div class="index">
+                <h2>{{_('Feedback')}}</h2>
+            </div>
+            <div class="faqs clear feedback">
+                <form id="faq-feedback" class="faq-feedback">
+                    <h3>{{_('Is there anything else you’d like to know more about?')}}</h3>
+                    <textarea placeholder="{{_('Your feedback goes here')}}" name="faq3" id="faq3" cols="30" rows="2"></textarea>
+                    <button type="submit"> {{_('Send')}} {% include 'includes/icons/arrows/arrow.svg' %}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

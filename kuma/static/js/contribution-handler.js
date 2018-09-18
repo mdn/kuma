@@ -63,7 +63,7 @@
             collapseButton = cta.find('#collapse'),
             closeButton = cta.find('#close-cta'),
             ctaCollapsedHeight = cta.height(),
-            ctaHeight = 430;
+            ctaHeight = 550;
 
         if (win.mdn.features.localStorage) {
             var hideCta = localStorage.getItem('hideCTA');
