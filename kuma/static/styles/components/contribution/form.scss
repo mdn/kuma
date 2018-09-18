@@ -88,9 +88,15 @@
 
         p.legal-copy {
             margin: 2em 0 1em 0;
+            font-size: 14px;
+            a {
+                color: $contribution-form-button-color;
+                text-decoration: underline;
+            }
         }
 
         .form-group {
+            max-width: 540px;
             padding-bottom: 60px;
 
             .errorlist {
@@ -148,7 +154,7 @@
             li {
                 display: inline-block;
                 position: relative;
-                width: 32%;
+                margin-right: 11px;
 
                 @media #{$mq-tablet-and-down} {
                     margin-right: 1em;
