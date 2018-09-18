@@ -1,10 +1,7 @@
-// Gradient background for the contribution flow
-// Form cta background
-$background-colors: #83cff3,#ebf8e1;
-$background-gradient: linear-gradient(to right, nth($background-colors, 1) , nth($background-colors, 2));
+@import './vars';
 
 .contribution-banner {
-    background-image: $background-gradient;
+    background-image: $contribution-background-gradient;
     position: relative;
     overflow: hidden;
 
@@ -13,6 +10,7 @@ $background-gradient: linear-gradient(to right, nth($background-colors, 1) , nth
         position: absolute;
         width: 100%;
         z-index: 99;
+
         button {
             padding: 0;
             vertical-align: middle;
@@ -87,6 +85,7 @@ $background-gradient: linear-gradient(to right, nth($background-colors, 1) , nth
         margin: 0 3px;
         padding: 5px 0 0 0;
         box-sizing: border-box;
+
         &:hover {
             background-color: darken(#fff, 3%);
         }

@@ -1,12 +1,5 @@
 @import 'includes/vars';
-
-// Styles for the contribution form
-// TODO: cleanup this file
-
-// Form Varibles
-$input-height: 64px;
-$input-spacing: 18px;
-$button-color: #3143e2;
+@import './vars';
 
 .contribution-form {
     .backdrop-image {
@@ -31,6 +24,7 @@ $button-color: #3143e2;
         .column-half {
             z-index: 99;
             position: relative;
+
             @media #{$mq-mobile-and-down} {
                 padding-bottom: 30px;
             }
@@ -50,12 +44,12 @@ $button-color: #3143e2;
 
         .form-footer button,
         .form-footer .button {
-            height: $input-height;
+            height: $contribution-form-input-height;
             min-width: 190px;
             border: none;
-            border-radius: $input-height;
-            line-height: $input-height;
-            background-color: $button-color;
+            border-radius: $contribution-form-input-height;
+            line-height: $contribution-form-input-height;
+            background-color: $contribution-form-button-color;
             font-weight: normal;
             color: #fff;
             padding: 0;
@@ -66,7 +60,7 @@ $button-color: #3143e2;
             }
 
             &:hover {
-                background-color: darken($button-color, 5%);
+                background-color: darken($contribution-form-button-color, 5%);
             }
 
             svg {
@@ -111,7 +105,7 @@ $button-color: #3143e2;
                 font-weight: normal;
                 padding-left: 12px;
                 border-color: $text-color;
-                margin-top: $input-spacing;
+                margin-top: $contribution-form-input-spacing;
                 &.error {
                     border-color: $error;
                     color: $error;
@@ -134,8 +128,9 @@ $button-color: #3143e2;
                 display: inline-block;
                 vertical-align: middle;
                 margin: 0;
-                margin-top: $input-spacing;
-                border-radius: $input-height;
+                border-radius: $contribution-form-input-height;
+                margin-top: $contribution-form-input-spacing;
+
                 @media #{$mq-tablet-and-down} {
                     display: block;
                     width: 100%;
@@ -150,6 +145,7 @@ $button-color: #3143e2;
                 display: inline-block;
                 position: relative;
                 width: 32%;
+
                 @media #{$mq-tablet-and-down} {
                     margin-right: 1em;
                     width: auto;
@@ -161,13 +157,13 @@ $button-color: #3143e2;
                 }
 
                 label {
-                    min-width: $input-height;
-                    height: $input-height;
+                    min-width: $contribution-form-input-height;
+                    height: $contribution-form-input-height;
                     border: 2px solid $text-color;
-                    border-radius: $input-height;
+                    border-radius: $contribution-form-input-height;
                     background-color: #fff;
                     text-align: center;
-                    line-height: $input-height;
+                    line-height: $contribution-form-input-height;
                     display: inline-block;
 
                     &:hover {
@@ -185,6 +181,7 @@ $button-color: #3143e2;
             display: inline-block;
             vertical-align: middle;
             margin-left: 1em;
+
             @media #{$mq-mobile-and-down} {
                 display: none;
             }
@@ -226,6 +223,7 @@ $button-color: #3143e2;
         right: .5em;
         position: absolute;
         border: none;
+
         &:before {
             content: '\f00d';
             font-family: FontAwesome;
@@ -247,6 +245,7 @@ $button-color: #3143e2;
         border-width: 15px 0 15px 20px;
         border-color: transparent #fff;
     }
+
     &:before {
         content: '';
         position: absolute;

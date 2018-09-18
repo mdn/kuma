@@ -1,6 +1,11 @@
 (function(doc, win, $) {
     'use strict';
 
+    // Quit here if contributions are disabled.
+    if (!win.mdn.contributions) {
+        return;
+    }
+
     // TODO: handle this better
     var isMobile = $('main').width() < 800;
 
@@ -51,7 +56,7 @@
         }
     });
 
-    // Is CTA? 
+    // Is CTA?
     var isCta = $('.contribution-form').hasClass('contribution-popover');
     if (isCta) {
         var cta = $('.contribution-form'),
@@ -60,15 +65,11 @@
             ctaCollapsedHeight = cta.height(),
             ctaHeight = 400;
 
-        if(win.mdn.features.localStorage) {
-            try {
-                var hideCta = localStorage.getItem('hideCTA');
-                if (hideCta) {
-                    cta.addClass('hidden');
-                }
-            }
-            catch (e) {
-                // Browser doesn't support Local Storage
+        if (win.mdn.features.localStorage) {
+            var hideCta = localStorage.getItem('hideCTA');
+
+            if (hideCta) {
+                cta.addClass('hidden');
             }
         }
     }
@@ -102,7 +103,7 @@
             // reset radio when selecting custom amount
             form.find('input[type=\'radio\']:checked').prop('checked', false);
         }
-        
+
         selectedAmount = (Math.floor(ev.target.value * 100) / 100);
         var newValue = (selectedAmount < 1 || isNaN(selectedAmount)) ? '' : '$' + selectedAmount;
 
@@ -165,6 +166,7 @@
 
         //  Remove collapsed state
         cta.removeClass('collapsed');
+        cta.attr('aria-expanded', true);
 
         // Expand CTA
         cta.animate({height: ctaHeight}, 500, function() {
@@ -187,6 +189,7 @@
         cta.height(ctaHeight);
         // Add Transitional class for opacity animation
         cta.addClass('collapsing');
+        cta.attr('aria-expanded', false);
 
         // Minimise CTA
         cta.animate({height: ctaCollapsedHeight}, 500, function() {
@@ -197,15 +200,11 @@
     }
 
     function removeCta() {
-        if(win.mdn.features.localStorage) {
-            try {
-                cta.addClass('hidden');
-                localStorage.setItem('hideCTA', true);
-            }
-            catch (e) {
-                // Browser doesn't support Local Storage
-            }
+        cta.addClass('hidden');
+        cta.attr('aria-hidden', true);
 
+        if (win.mdn.features.localStorage) {
+            localStorage.setItem('hideCTA', true);
         }
     }
 
