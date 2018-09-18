@@ -4,6 +4,8 @@
 
 {% block title %}{{ page_title(_('Thank You')) }}{% endblock %}
 
+{% block contrib_popup %}{% endblock %}
+
 {% block document_head %}
     <div class="contribution-banner align-center">
         <div class="column-container">
@@ -33,9 +35,9 @@
             </div>
         </div>
     </div>
-    {% endblock %}
-    
-    {% block content %}
+{% endblock %}
+
+{% block content %}
     <div id="contributions-page" class="conributions-page">
         <div class="section">
             <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="" role="presentation">
@@ -51,4 +53,4 @@
             </div>
         </div>
     </div>
-    {% endblock %}
+{% endblock %}
