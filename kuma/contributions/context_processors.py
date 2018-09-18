@@ -10,5 +10,3 @@ def global_contribution_form(request):
             'hide_cta': True
         }
     return {}
-
-

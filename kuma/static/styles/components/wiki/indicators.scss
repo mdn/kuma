@@ -99,10 +99,12 @@ pre + p:empty + pre {
 /* If there are 2 indicators in close proximity, snug them up.
    Too many combinations to do them all but this
    should take care of most common combinations */
+/* Commented out because of https://bugzil.la/1487656
 :matches(.warning, .overheadIndicator, .note, .notice, pre) + :matches(.warning, .overheadIndicator, .note, .notice, pre),
 :matches(.warning, .overheadIndicator, .note, .notice, pre) + p:empty + :matches(.warning, .overheadIndicator, .note, .notice, pre) {
     margin-top: ($grid-spacing * -1) + 5px;
 }
+*/
 
 /* code block looks funny without it's padding,
    only appears in kumascript error boxes AFIK */

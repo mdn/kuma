@@ -73,7 +73,7 @@
             if (actionsArray[i] === 'History') {
                 pageButtons.appendChild(getListItem({
                     id: 'history',
-                    href: controlURLs.editURL,
+                    href: controlURLs.historyURL,
                     text: gettext('History'),
                     icon: 'book'
                 }));

@@ -312,9 +312,10 @@ sqlparse==0.2.3 \
 # Code: https://github.com/stripe/stripe-python
 # Changes: https://github.com/stripe/stripe-python/blob/master/CHANGELOG.md
 # Docs: https://stripe.com/docs/api/python#intro
-stripe==2.8.0 \
-    --hash=sha256:7593897620492a3154f9f74f5d18850a87f690068cc36552ee16a7e9d6f7d458 \
-    --hash=sha256:c48e5fbbe3f68ef86c1a5fa04a2c31914ac7aa8b771c38c23d812c6bdc3e947a
+
+stripe==2.8.1 \
+    --hash=sha256:8f556bb9af0b0714753567b1ec8e31649bc9af96980333bffc903155db276c7f \
+    --hash=sha256:984b45d3c56242f23a1f3ad5a43cdaf07353b924193dd97bf8bc30203d4f541b
 
 # Utility class for manipulating URLs, used in util functions
 URLObject==2.4.0 \
