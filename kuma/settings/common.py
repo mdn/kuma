@@ -909,7 +909,7 @@ PIPELINE_JS = {
             'js/auth.js',
             'js/highlight.js',
             'js/wiki-compat-trigger.js',
-            'js/lang-switcher.js'
+            'js/lang-switcher.js',
         ),
         'output_filename': 'build/js/main.js',
     },
@@ -952,6 +952,7 @@ PIPELINE_JS = {
     'contribute': {
         'source_filenames': (
             'js/contribution-handler.js',
+            'js/contribution-faq.js',
         ),
         'output_filename': 'build/js/contribute.js',
     },

@@ -1,0 +1,115 @@
+
+.conributions-page {
+    .section {
+        display: flex;
+        position: relative;
+        @media #{$mq-mobile-and-down} {
+            display: block;
+            h2,
+            .faqs {
+                display: block;
+                .faq,
+                .faq-feedback {
+                    margin: 2em 0;
+                }
+            }
+        }
+    }
+
+    .backdrop-image {
+        width: auto;
+        height: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .index {
+        flex: 30%;
+        z-index: 99;
+        h2 {
+            border-bottom: 2px solid $text-color;
+        }
+    }
+
+    .faq-feedback {
+        margin: 2em;
+        position: relative;
+
+        textarea {
+            display: block;
+            width: 100%;
+            border-color: #333;
+            margin: 0;
+            box-sizing: border-box;
+            min-height: 200px;
+            padding-bottom: 2em;
+        }
+
+        button[type=submit] {
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+            border: none;
+        }
+    }
+
+    .faqs {
+        flex: 60%;
+        .faq {
+            background-color: #fff;
+            border: 2px solid $text-color;
+            padding: 2em;
+            margin: 2em;
+            position: relative;
+
+            .faq-number {
+                text-align: center;
+                position: absolute;
+                top: 30px;
+                left: -22px;
+                background: #333;
+                color: #fff;
+                padding: 0;
+                box-sizing: border-box;
+                width: 40px;
+                height: 40px;
+                line-height: 40px;
+            }
+
+            .small {
+                display: block;
+            }
+
+            .feedback {
+                border: none;
+            }
+
+            button {
+                background: #fff;
+                padding: 1em;
+                border-radius: 50px;
+                border-color: $text-color;
+                display: inline-block;
+                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .3);
+                margin: 1em .5em 0 0;
+                width: 60px;
+                height: 60px;
+
+                &.active {
+                    background: #3143e2;
+                    border-color: #3143e2;
+                }
+
+                .icon {
+                    pointer-events: none;
+                }
+            }
+        }
+        h3 {
+            margin-top: 0;
+            font-weight: normal;
+            font-size: 1.8em;
+        }
+    }
+}
