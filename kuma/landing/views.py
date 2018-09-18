@@ -13,10 +13,6 @@ from kuma.search.models import Filter
 
 from .utils import favicon_url
 
-from kuma.contributions.forms import ContributionForm
-from kuma.contributions.views import contribute
-from kuma.contributions.tasks import contribute_thank_you_email
-
 @shared_cache_control
 def contribute_json(request):
     return static.serve(request, 'contribute.json',
@@ -37,10 +33,12 @@ def home(request):
 
     return render(request, 'landing/homepage.html', context)
 
+
 @never_cache
 def contribute_confirmation(request, status):
     context = {'status': status}
     return render(request, 'contributions/thank_you.html', context)
+
 
 @never_cache
 def maintenance_mode(request):
