@@ -92,9 +92,6 @@
     .cta-link {
         color: $text-color;
         display: block;
-        > svg {
-            display: none;
-        }
         &:first-of-type {
             margin-bottom: 1em;
         }
