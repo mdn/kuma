@@ -49,6 +49,7 @@ def contribute(request):
 
     context = {
         'form': form,
+        'hide_cta': True,
     }
     return render(request, 'contributions/contribute.html', context)
 

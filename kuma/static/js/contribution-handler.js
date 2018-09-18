@@ -1,15 +1,34 @@
-(function(win, $) {
+(function(doc, win, $) {
     'use strict';
+
+    // Quit here if contributions are disabled.
+    if (!win.mdn.contributions) {
+        return;
+    }
 
     // TODO: handle this better
     var isMobile = $('main').width() < 800;
 
-    $('#id_email').tooltip({
-        position: {
-            my: isMobile ? 'center bottom' : 'right right',
-            at: isMobile ? 'right top' : 'left left'
-        }
-    });
+    if ($().tooltip) {
+        var tooltipButton = $('#email-tooltip'),
+            tooltipCloseButton = $('.tooltip-close');
+        tooltipButton.tooltip({
+            items: '#email-tooltip',
+            content: '<button class="tooltip-close"></button> <span>' + tooltipButton.prev().attr('title') + '</span>',
+            position: {
+                my: isMobile ? 'center bottom' : 'right right',
+                at: isMobile ? 'right top' : 'left left'
+            }
+        });
+        $(tooltipButton).tooltip().unbind();
+        tooltipButton.click(function() {
+            $(this).tooltip('open');
+            $(tooltipButton).tooltip().unbind('mouseleave');
+        });
+        tooltipCloseButton.click(function() {
+            $(this).tooltip('close');
+        });
+    }
 
     var form = $('#contribute-form'),
         // Inputs
@@ -22,8 +41,8 @@
         stripePublicKey = form.find('#id_stripe_public_key'),
         stripeToken = form.find('#id_stripe_token'),
         // Other
-        submitButton = form.find('#stripe_submit'),
-        amount = submitButton.find('#amount');
+        formButton = form.find('#stripe_submit'),
+        amount = formButton.find('#amount');
 
     // init stripeCheckout handler
     var handler = win.StripeCheckout.configure({
@@ -36,6 +55,24 @@
             form.submit();
         }
     });
+
+    // Is CTA?
+    var isCta = $('.contribution-form').hasClass('contribution-popover');
+    if (isCta) {
+        var cta = $('.contribution-form'),
+            collapseButton = cta.find('#collapse'),
+            closeButton = cta.find('#close-cta'),
+            ctaCollapsedHeight = cta.height(),
+            ctaHeight = 550;
+
+        if (win.mdn.features.localStorage) {
+            var hideCta = localStorage.getItem('hideCTA');
+
+            if (hideCta) {
+                cta.addClass('hidden');
+            }
+        }
+    }
 
     // Set initial radio state
     defaultAmount.parent().addClass('active');
@@ -67,10 +104,8 @@
             form.find('input[type=\'radio\']:checked').prop('checked', false);
         }
 
-        
         selectedAmount = (Math.floor(ev.target.value * 100) / 100);
         var newValue = (selectedAmount < 1 || isNaN(selectedAmount)) ? '' : '$' + selectedAmount;
-
 
         amount.html(newValue);
     }
@@ -113,18 +148,75 @@
             description: 'Contribute to MDN Web Docs',
             zipCode: true,
             amount: (selectedAmount * 100),
+            email: $(emailField).val(),
             closed: function() {
                 form.removeClass('disabled');
             }
         });
     }
 
+    function onFormButtonClick() {
+        // Calculate the role of the submit button
+        isCta && cta.hasClass('collapsed') ? expandCta() : onSubmit();
+    }
+
+    function expandCta() {
+        // Force style="height: <CTA HEIGHT>"
+        cta.height(ctaCollapsedHeight);
+
+        //  Remove collapsed state
+        cta.removeClass('collapsed');
+        cta.attr('aria-expanded', true);
+
+        // Expand CTA
+        cta.animate({height: ctaHeight}, 500, function() {
+            cta.css('height', 'auto');
+            // listen to minimise button clicks
+            collapseButton.click(collapseCta);
+            $(doc).keyup(function(e) {
+                if (e.keyCode === 27) { // escape key maps to keycode `27`
+                    collapseCta();
+                }
+            });
+        });
+    }
+
+    function collapseCta() {
+        // ignore clicks while collapsing
+        collapseButton.off();
+        // Force style="height: <CTA HEIGHT>"
+        ctaHeight = cta.height();
+        cta.height(ctaHeight);
+        // Add Transitional class for opacity animation
+        cta.addClass('collapsing');
+        cta.attr('aria-expanded', false);
+
+        // Minimise CTA
+        cta.animate({height: ctaCollapsedHeight}, 500, function() {
+            cta.addClass('collapsed');
+            cta.css('height', 'auto');
+            cta.removeClass('collapsing');
+        });
+    }
+
+    function removeCta() {
+        cta.addClass('hidden');
+        cta.attr('aria-hidden', true);
+
+        if (win.mdn.features.localStorage) {
+            localStorage.setItem('hideCTA', true);
+        }
+    }
+
     // Register event handlers
-    submitButton.click(onSubmit);
+    formButton.click(onFormButtonClick);
     amountRadio.change(onAmountSelect);
     customAmountInput.on('input', onAmountSelect);
     customAmountInput.change(onAmountSelect);
     emailField.blur(onChange);
     nameField.blur(onChange);
+    if (isCta) {
+        closeButton.click(removeCta);
+    }
 
-})(window, jQuery);
+})(document, window, jQuery);

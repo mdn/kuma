@@ -38,6 +38,10 @@
     {% stylesheet 'maintenance-mode-global' %}
   {%- endif %}
 
+  {% if settings.MDN_CONTRIBUTION %}
+    {% stylesheet 'jquery-ui' %}
+  {% endif %}
+
   {#- If the stylesheet exists, include it. Otherwise, does nothing. #}
   {% stylesheet 'locale-%s' % LANG %}
 
@@ -119,6 +123,12 @@
       </div>
   </main>
 
+  {% if settings.MDN_CONTRIBUTION and not '/contribute' in request.path %}
+      {% with form=contribution_form, is_popover=True %}
+          {% include "contributions/includes/contribution-form.html" %}
+      {% endwith %}
+  {% endif %}
+
   {%- if not untrusted %}
   <!-- Footer -->
     <footer id="nav-footer" class="nav-footer">
@@ -158,10 +168,15 @@
     {% javascript 'main' %}
     <script>
     if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
-</script>
+  </script>
     {% for script in scripts %}
       {% javascript script %}
     {% endfor %}
+    {% if settings.MDN_CONTRIBUTION %}
+    {% javascript 'jquery-ui' %}
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    {% javascript 'contribute' %}
+    {% endif %}
 
   {% endblock %}
 
