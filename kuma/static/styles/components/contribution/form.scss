@@ -38,7 +38,7 @@
 
         .form-footer {
             position: absolute;
-            bottom: 10px;
+            bottom: -3px;
             width: 100%;
         }
 
@@ -98,7 +98,7 @@
 
         .form-group {
             max-width: 540px;
-            padding-bottom: 60px;
+            padding-bottom: 40px;
 
             .errorlist {
                 display: block;
@@ -109,6 +109,7 @@
             }
 
             input {
+                height: $contribution-form-input-height;
                 width: 100%;
                 display: block;
                 line-height: 3;
@@ -130,7 +131,7 @@
             .label {
                 position: absolute;
                 margin-left: 20px;
-                margin-top: 40px;
+                margin-top: 33px;
             }
 
             input[name=donation_amount],
@@ -165,6 +166,7 @@
                 input[type=radio] {
                     position: absolute;
                     opacity: 0;
+                    cursor: pointer;
                 }
 
                 label {
@@ -215,7 +217,7 @@
         border: none;
         position: absolute;
         right: 10px;
-        top: 13px;
+        top: 10px;
         color: #222;
     }
 }
