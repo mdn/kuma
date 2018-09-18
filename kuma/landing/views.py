@@ -13,6 +13,7 @@ from kuma.search.models import Filter
 
 from .utils import favicon_url
 
+
 @shared_cache_control
 def contribute_json(request):
     return static.serve(request, 'contribute.json',
