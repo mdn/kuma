@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 import stripe
+from decimal import Decimal
 from django import forms
 from django.conf import settings
 from django.core.validators import MinValueValidator
@@ -98,7 +99,11 @@ class ContributionForm(forms.Form):
             'status': ''
         }
         amount = self.cleaned_data['donation_amount'] or self.cleaned_data['donation_choices']
-        amount = amount * 100
+        if isinstance(amount, Decimal):
+            amount = amount * Decimal('100')
+            amount = amount.quantize(Decimal('0'))
+        else:
+            amount = amount * 100
         token = self.cleaned_data.get('stripe_token', '')
         if token and amount:
             charge = stripe.Charge.create(
