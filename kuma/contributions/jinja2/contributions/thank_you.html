@@ -11,9 +11,13 @@
             <div class="column">
                 {% if status == 'succeeded' %}
                     <h1 class="highlight highlight-spanned">
-                        <span class="highlight-span">{{_('Thanks for supporting MDN')}}</span>
+                        <span class="highlight-span">{{_('Thanks for joining MDN.')}}</span>
                     </h1>
-                    <p class="subtext">{{_('Take a moment to recognise how awesome you are by sharing your contribution on your channels:')}}</p>
+                    <p class="subtext">{{_('To build the commons, we depend on uncommon boosters like you. What you’ve given to MDN will stay here to build more of the tools and information we use every day. And it helps us expand MDN to devs everywhere.')}}</p>
+                    <p class="subtext">{{_('We are committed to providing the best source of free information about the internet to our community of devs around the world. Support us, and it will all come back around. It already has. And it will again.')}}</p>
+                    <p class="subtext">{{_('Thank you again,')}}</p>
+                    <p class="subtext">{{_('The MDN Team')}}</p>
+                    
                     <div class="button-tab-group">
                         <a href="https://twitter.com/intent/tweet?text=Hello%20world%20{{amount}}" class="button" target="_blank" rel="noopener" aria-label="{{_('Share your support on Twitter')}}">{% include 'includes/icons/social/twitter.svg' %}</a>
                         <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdeveloper.mozilla.org%2Fen-US%2Fcontribute" class="button" target="_blank" rel="noopener" aria-label="{{_('Share your support on Facebook')}}">{% include 'includes/icons/social/facebook.svg' %}</a>
