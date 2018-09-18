@@ -1,12 +1,12 @@
-<div class="contribution-form contribution-banner {% if is_cta %}contribution-popover collapsed{% endif %}">
-    {% if is_cta %}
-    <div class="actions">
-        <button id="collapse" class="hide-collapse" type="button"> {% include 'includes/icons/arrows/chevron-down.svg' %} </button>
-        <button id="close-cta" type="button"> {% include 'includes/icons/general/close.svg' %} </button>
-    </div>
+<div class="contribution-form contribution-banner {% if is_popover %}contribution-popover collapsed{% endif %}"{% if is_popover %} aria-expanded="false" aria-hidden="false"{% endif %}>
+    {% if is_popover %}
+        <div class="actions">
+            <button id="collapse" class="hide-collapse" aria-label="{{ _('Collapse pop over window') }}">{% include 'includes/icons/arrows/chevron-down.svg' %}</button>
+            <button id="close-cta" aria-label="{{ _('Close pop over window') }}">{% include 'includes/icons/general/close.svg' %}</button>
+        </div>
     {% endif %}
     <div class="column-container">
-        <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="" role="background">
+        <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="" role="presentation">
         <div class="column-half">
             <div class="container">
                 <h2 class="highlight highlight-spanned">
@@ -14,15 +14,15 @@
                 </h2>
                 <h4>{{_('We need your help to grow to the next stage.')}}</h4>
                 <p class="body">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p>
-                {% if is_cta %}
-                <div class="button-group">
-                    <a href="{{url('contribute')}}" class="cta-link">
-                        {{_('Learn More')}} {% include 'includes/icons/arrows/arrow.svg' %}
-                    </a>
-                    <a href="{{url('contribute')}}" class="cta-link">
-                        {{_('Feedback')}} {% include 'includes/icons/arrows/arrow.svg' %}
-                    </a>
-                </div>
+                {% if is_popover %}
+                    <div class="button-group">
+                        <a href="{{url('contribute')}}" class="cta-link">
+                            {{_('Learn More')}} {% include 'includes/icons/arrows/arrow.svg' %}
+                        </a>
+                        <a href="{{url('contribute')}}" class="cta-link">
+                            {{_('Feedback')}} {% include 'includes/icons/arrows/arrow.svg' %}
+                        </a>
+                    </div>
                 {% endif %}
             </div>
         </div>
@@ -35,10 +35,10 @@
                     <div class="email-input-container">
                         {{form.email}}
                         {{form.email.errors}}
-                        <button type="button" class="tooltip-button" id="email-tooltip"> {% include 'includes/icons/punctuation/question-mark.svg' %} </button>
+                        <button type="button" class="tooltip-button" id="email-tooltip">{% include 'includes/icons/punctuation/question-mark.svg' %}</button>
                     </div>
                     {{form.donation_choices}}
-                    <span class="label"> {{form.donation_amount.label}} </span>
+                    <span class="label">{{form.donation_amount.label}}</span>
                     {{form.donation_amount}}
                     {{form.donation_amount.errors}}
                     {{form.stripe_token}}

@@ -36,6 +36,9 @@
         };
 
         win.mdn.notifications = [];
+        win.mdn.contributions = {
+            enabled: {% if settings.MDN_CONTRIBUTION %}true{% else %}false{% endif %}
+        };
 
         {% if messages %}
             {% for message in messages %}

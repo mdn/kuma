@@ -124,11 +124,11 @@
   </main>
 
   {% if settings.MDN_CONTRIBUTION and not '/contribute' in request.path %}
-      {% with form=contribution_form %}
-          {% include "includes/footer/contribution-cta.html" %}
+      {% with form=contribution_form, is_popover=True %}
+          {% include "contributions/includes/contribution-form.html" %}
       {% endwith %}
   {% endif %}
-  
+
   {%- if not untrusted %}
   <!-- Footer -->
     <footer id="nav-footer" class="nav-footer">
@@ -177,7 +177,7 @@
     <script src="https://checkout.stripe.com/checkout.js"></script>
     {% javascript 'contribute' %}
     {% endif %}
-    
+
   {% endblock %}
 
   {% block js %}{% endblock %}
