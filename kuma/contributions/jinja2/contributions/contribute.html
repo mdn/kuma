@@ -34,6 +34,8 @@
     {% endwith %}
 {% endblock %}
 
+{% block contrib_popup %}{% endblock %}
+
 {% block content %}
 
 <div id="contributions-page" class="conributions-page">
@@ -46,8 +48,30 @@
             <li class="faq">
                 <h3>{{_('Why is MDN asking me for money?')}}</h3>
                 <span class="faq-number">1</span>
-                <p>{{_('In 2017, MDN established a <a href="https://hacks.mozilla.org/2018/01/introducing-the-mdn-product-advisory-board/">Product Advisory Board</a> and added documentation from several other developer programs to begin to create a truly world-wide, web-wide developer resource. Having this broader readership contribute directly to MDN creates a tighter, healthier loop between our audience (you), our content (written for you), and our financial supporters (also, you, again, if you can help by putting a price on a priceless resource!).')}}</p>
-                <p>{{_('MDN <a href="https://developer.mozilla.org/en-US/docs/MDN/About#Copyrights_and_licenses#History_of_MDN_Web_Docs">originally began as the Mozilla Developer Network</a> and was used almost exclusively for Firefox internal documentation. But we have outgrown that. And your needs have outgrown that. We’ve now broadened our coverage to web standards beyond Firefox, and our funding should match that reality. ')}}</p>
+                <p>
+                    {% trans url="https://hacks.mozilla.org/2018/01/introducing-the-mdn-product-advisory-board/" %}
+                        In 2017, MDN established a
+                        <a href="{{ url }}">Product Advisory Board</a> and
+                        added documentation from several other developer
+                        programs to begin to create a truly world-wide,
+                        web-wide developer resource. Having this broader
+                        readership contribute directly to MDN creates a
+                        tighter, healthier loop between our audience (you), our
+                        content (written for you), and our financial supporters
+                        (also, you, again, if you can help by putting a price
+                        on a priceless resource!).
+                    {% endtrans %}
+                </p>
+                <p>
+                    {% trans url="https://developer.mozilla.org/docs/MDN/About#History_of_MDN_Web_Docs" %}
+                        MDN <a href="{{ url }}">originally began as the Mozilla Developer Network</a>
+                        and was used almost exclusively for Firefox internal
+                        documentation. But we have outgrown that. And your needs
+                        have outgrown that.  We’ve now broadened our coverage to
+                        web standards beyond Firefox, and our funding should match
+                        that reality.
+                    {% endtrans %}
+                </p>
                 <span class="small">{{_('Did this answer your question?')}}</span>
                 <div class="vote-button-group">
                     <button class="thumbs-up" data-faq="1">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
@@ -57,7 +81,15 @@
             <li class="faq">
                 <h3>{{_('If I just donate to the Mozilla Foundation, will that help MDN?')}}</h3>
                 <span class="faq-number">2</span>
-                <p>{{_('Not as likely and not as much. Donations to Mozilla Foundation go to support Mozilla public programs in one general fund, but what you give to MDN stays with MDN and has a direct effect on how much we are able to expand MDN further.')}}</p>
+                <p>
+                    {% trans %}
+                        Not as likely and not as much. Donations to Mozilla
+                        Foundation go to support Mozilla public programs in one
+                        general fund, but what you give to MDN stays with MDN
+                        and has a direct effect on how much we are able to
+                        expand MDN further.
+                    {% endtrans %}
+                </p>
                 <span class="small">{{_('Did this answer your question?')}}</span>
                 <div class="vote-button-group">
                     <button class="thumbs-up" data-faq="2">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
@@ -67,7 +99,17 @@
             <li class="faq">
                 <h3>{{_('Is support of MDN tax-deductible? ')}}</h3>
                 <span class="faq-number">3</span>
-                <p>{{_('No. Gifts to Mozilla are charity that benefit the public as a whole. MDN is for developers. Thus, donations to the Mozilla Foundation are tax-deductible, but support for MDN is not tax-deductible. MDN is experimenting with seeking direct support from our users in order to maintain these tools <i>for those of us who actually use them.</i>')}}</p>
+                <p>
+                    {% trans %}
+                        No. Gifts to Mozilla are charity that benefit the
+                        public as a whole. MDN is for developers. Thus,
+                        donations to the Mozilla Foundation are tax-deductible,
+                        but support for MDN is not tax-deductible. MDN is
+                        experimenting with seeking direct support from our
+                        users in order to maintain these tools <em>for those of
+                        us who actually use them</em>.
+                    {% endtrans %}
+                </p>
                 <span class="small">{{_('Did this answer your question?')}}</span>
                 <div class="vote-button-group">
                     <button class="thumbs-up" data-faq="3">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
@@ -77,7 +119,12 @@
             <li class="faq">
                 <h3>{{_('What does MDN funding cover?')}}</h3>
                 <span class="faq-number">4</span>
-                <p>{{_('Operations, overhead and specific projects, with our ultimate goal being innovations like:')}}</p>
+                <p>
+                    {% trans %}
+                        Operations, overhead and specific projects, with our
+                        ultimate goal being innovations like:
+                    {% endtrans %}
+                </p>
                 <ul>
                     <li>{{_('Offline access to MDN')}}</li>
                     <li>{{_('Machine-readable formats for more content and deeper integrations with popular developer tools')}}</li>
@@ -97,7 +144,14 @@
             <li class="faq">
                 <h3>{{_('Why can’t you just open a Crowdsourcing campaign?')}}</h3>
                 <span class="faq-number">5</span>
-                <p>{{_('Because we aren’t looking for a lump sum. Our goal is to create a broad base of contributions that support ongoing work from the people who benefit from that work.')}}</p>
+                <p>
+                    {% trans %}
+                        Because we aren’t looking for a lump sum. Our goal is
+                        to create a broad base of contributions that support
+                        ongoing work from the people who benefit from that
+                        work.
+                    {% endtrans %}
+                </p>
                 <span class="small">{{_('Did this answer your question?')}}</span>
                 <div class="vote-button-group">
                     <button class="thumbs-up" data-faq="5">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
@@ -107,7 +161,12 @@
             <li class="faq">
                 <h3>{{_('How has MDN been funded to date?')}}</h3>
                 <span class="faq-number">6</span>
-                <p>{{_('When Mozilla launched MDN in 2005, it was funded out of Mozilla’s general budget.')}}</p>
+                <p>
+                    {% trans %}
+                        When Mozilla launched MDN in 2005, it was funded out of
+                        Mozilla’s general budget.
+                    {% endtrans %}
+                </p>
                 <span class="small">{{_('Did this answer your question?')}}</span>
                 <div class="vote-button-group">
                     <button class="thumbs-up" data-faq="6">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
@@ -117,7 +176,17 @@
             <li class="faq">
                 <h3>{{_('How does Mozilla make money?')}}</h3>
                 <span class="faq-number">7</span>
-                <p>{{_('Revenue sharing with search providers on Firefox’s search bar and start page (i.e. Google and others). Mozilla’s revenue mix also includes e-commerce affiliate revenue from online retailers (i.e. Amazon and others). As a nonprofit, we report these revenues publicly every trailing year, as in our most recent <a href="https://www.mozilla.org/en-US/foundation/annualreport/2016/">2016 Mozilla Annual Report</a>.')}}</p>
+                <p>
+                    {% trans url="https://www.mozilla.org/en-US/foundation/annualreport/2016/" %}
+                        Revenue sharing with search providers on Firefox’s
+                        search bar and start page (i.e. Google and others).
+                        Mozilla’s revenue mix also includes e-commerce
+                        affiliate revenue from online retailers (i.e. Amazon
+                        and others). As a nonprofit, we report these revenues
+                        publicly every trailing year, as in our most recent
+                        <a href="{{ url }}">2016 Mozilla Annual Report</a>.
+                    {% endtrans %}
+                </p>
                 <span class="small">{{_('Did this answer your question?')}}</span>
                 <div class="vote-button-group">
                     <button class="thumbs-up" data-faq="7">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
@@ -127,7 +196,13 @@
             <li class="faq">
                 <h3>{{_('Why is money so important and can we one day untether ourselves from our financial overlords?')}}</h3>
                 <span class="faq-number">8</span>
-                <p>{{_('You ask a lot of good questions, and we like your attitude. The tragedy of the commons requires an uncommon vigilance from people like us, online and off.')}}</p>
+                <p>
+                    {% trans %}
+                        You ask a lot of good questions, and we like your
+                        attitude.  The tragedy of the commons requires an
+                        uncommon vigilance from people like us, online and off.
+                    {% endtrans %}
+                </p>
                 <span class="small">{{_('Did this answer your question?')}}</span>
                 <div class="vote-button-group">
                     <button class="thumbs-up" data-faq="8">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>

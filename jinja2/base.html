@@ -123,11 +123,13 @@
       </div>
   </main>
 
-  {% if settings.MDN_CONTRIBUTION and not '/contribute' in request.path %}
-      {% with form=contribution_form, is_popover=True %}
-          {% include "contributions/includes/contribution-form.html" %}
-      {% endwith %}
-  {% endif %}
+  {% block contrib_popup %}
+    {% if settings.MDN_CONTRIBUTION %}
+        {% with form=contribution_form, is_popover=True %}
+            {% include "contributions/includes/contribution-form.html" %}
+        {% endwith %}
+    {% endif %}
+  {% endblock -%}
 
   {%- if not untrusted %}
   <!-- Footer -->

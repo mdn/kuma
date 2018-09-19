@@ -1,11 +1,1 @@
-<svg class="icon icon-chevron-up" xmlns="http://www.w3.org/2000/svg" width="14px" height="9px" viewBox="0 0 14 9" aria-hidden="true">
-    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Forms/Buttons/primary/contribute--inactive" transform="translate(-130.000000, -22.000000)" fill="#FFFFFF" fill-rule="nonzero">
-            <g id="Group" transform="translate(29.000000, 14.000000)">
-                <g id="Icons/General/chevron/white" transform="translate(101.000000, 8.000000)">
-                    <path d="M7.54406765,0.222793339 L13.7746289,6.38285819 C14.0751237,6.67995295 14.0751237,7.16161859 13.7746289,7.45868166 L13.0479337,8.17715462 C12.7479519,8.47374223 12.2617679,8.47431278 11.9610808,8.17842249 L6.99998397,3.29647054 L2.03891922,8.17845419 C1.73823212,8.47434447 1.25204809,8.47377393 0.952066299,8.17718632 L0.225371061,7.45871336 C-0.0751236871,7.16161859 -0.0751236871,6.67995295 0.225371061,6.38288989 L6.45593235,0.222825036 C6.75639503,-0.0742697289 7.24357291,-0.0742697289 7.54406765,0.222793339 Z" id="Shape"></path>
-                </g>
-            </g>
-        </g>
-    </g>
-</svg>
+<svg class="icon icon-chevron-up" xmlns="http://www.w3.org/2000/svg" width="14" height="9" aria-hidden="true"><path d="M7.544.223l6.23 6.16c.301.297.301.779 0 1.076l-.726.718a.776.776 0 0 1-1.087.001L7 3.296 2.039 8.178a.776.776 0 0 1-1.087 0l-.727-.72a.755.755 0 0 1 0-1.075l6.23-6.16a.776.776 0 0 1 1.09 0z" fill="#FFF" fill-rule="nonzero"/></svg>
