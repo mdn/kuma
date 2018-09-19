@@ -18,7 +18,8 @@ def contribute_thank_you_email(username, user_email):
     """Create a notification email for new contributor."""
     message_context = {
         'user_email': user_email,
-        'username': username
+        'username': username,
+        'site': settings.SITE_URL
     }
 
     locale = settings.WIKI_DEFAULT_LANGUAGE
@@ -34,7 +35,7 @@ def contribute_thank_you_email(username, user_email):
             message_context
         )
         content_html = render_email(
-            'contributions/email/thank_you/html.ltxt',
+            'contributions/email/thank_you/email.html',
             message_context
         )
 
