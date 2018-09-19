@@ -1278,8 +1278,9 @@ CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND',
 CELERY_ACCEPT_CONTENT = ['pickle']
 
 CELERY_IMPORTS = (
-    'tidings.events',
+    'kuma.contributions.tasks',
     'kuma.search.tasks',
+    'tidings.events',
 )
 
 CELERY_ANNOTATIONS = {
@@ -1332,6 +1333,9 @@ CELERY_ROUTES = {
         'queue': 'mdn_emails'
     },
     'kuma.users.tasks.email_render_document_progress': {
+        'queue': 'mdn_emails'
+    },
+    'kuma.contributions.tasks.contribute_thank_you_email': {
         'queue': 'mdn_emails'
     },
     'kuma.wiki.tasks.send_first_edit_email': {

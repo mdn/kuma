@@ -6,12 +6,10 @@
     overflow: hidden;
 
     .actions {
-        text-align: right;
         position: absolute;
-        width: 100%;
+        text-align: right;
         z-index: 99;
-        right: 10px;
-        top: 10px;
+        width: 100%;
 
         button {
             padding: 0;
@@ -37,7 +35,7 @@
     }
 
     h2 {
-        margin-top: 0;
+        margin: 0;
     }
 
     .column-container {

@@ -38,7 +38,7 @@
 
         .form-footer {
             position: absolute;
-            bottom: 10px;
+            bottom: -3px;
             width: 100%;
         }
 
@@ -47,6 +47,7 @@
             height: $contribution-form-input-height;
             min-width: 190px;
             border: none;
+            font-weight: bold;
             border-radius: $contribution-form-input-height;
             line-height: $contribution-form-input-height;
             background-color: $contribution-form-button-color;
@@ -88,10 +89,16 @@
 
         p.legal-copy {
             margin: 2em 0 1em 0;
+            font-size: 14px;
+            a {
+                color: $contribution-form-button-color;
+                text-decoration: underline;
+            }
         }
 
         .form-group {
-            padding-bottom: 60px;
+            max-width: 540px;
+            padding-bottom: 40px;
 
             .errorlist {
                 display: block;
@@ -102,6 +109,7 @@
             }
 
             input {
+                height: $contribution-form-input-height;
                 width: 100%;
                 display: block;
                 line-height: 3;
@@ -123,7 +131,7 @@
             .label {
                 position: absolute;
                 margin-left: 20px;
-                margin-top: 40px;
+                margin-top: 33px;
             }
 
             input[name=donation_amount],
@@ -148,7 +156,7 @@
             li {
                 display: inline-block;
                 position: relative;
-                width: 32%;
+                margin-right: 11px;
 
                 @media #{$mq-tablet-and-down} {
                     margin-right: 1em;
@@ -158,6 +166,7 @@
                 input[type=radio] {
                     position: absolute;
                     opacity: 0;
+                    cursor: pointer;
                 }
 
                 label {
@@ -208,7 +217,7 @@
         border: none;
         position: absolute;
         right: 10px;
-        top: 13px;
+        top: 10px;
         color: #222;
     }
 }

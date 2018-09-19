@@ -10,10 +10,17 @@
         <div class="column-half">
             <div class="container">
                 <h2 class="highlight highlight-spanned">
-                    <span class="highlight-span">{{ _('Support MDN for as little as $2')}}</span>
+                    <span class="highlight-span">{{ _('Give Back to MDN')}}</span>
                 </h2>
-                <h4>{{_('We need your help to grow to the next stage.')}}</h4>
-                <p class="body">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p>
+                <h4>{{_('Support MDN, and it comes back to you.')}}</h4>
+                <p class="body">
+                    {% trans %}
+                        You’ve turned to MDN for information and assurance. Now
+                        we turn to you, for support. What you give to MDN,
+                        stays here in MDN to give you more of the tools and
+                        information you use when your work has to work.
+                    {% endtrans %}
+                </p>
                 {% if is_popover %}
                     <div class="button-group">
                         <a href="{{url('contribute')}}" class="cta-link">
@@ -44,10 +51,21 @@
                     {{form.stripe_token}}
                     {{form.stripe_public_key}}
                     <p class="legal-copy">
-                        These contributions not tax deductible. Your payment details will be processed by <a href="">Stripe</a>. Mozilla will keep record of your contribution in accordance with it <a href="">Privacy Notice</a>, and does not receive your payment details.
+                        These contributions are not tax deductible. Your
+                        payment details will be processed by
+                        <a href="">Stripe</a>.
+                        Mozilla will keep record of your contribution in
+                        accordance with its
+                        <a href="">Privacy Notice</a>,
+                        and does not receive your payment details.
                     </p>
                 </div>
                 <div class="form-footer">
+                    <div class="payment-details">
+                        <img src="{{ static('img/mc-logo.png') }}" alt="mastercard">
+                        <img src="{{ static('img/visa-logo.png') }}" alt="visa">
+                        <img src="{{ static('img/ae-logo.png') }}" alt="american express">
+                    </div>
                     <button type="button" id="stripe_submit">
                         <div class="payment-details">
                             <img src="{{ static('img/mc-logo.png') }}" alt="mastercard">
@@ -56,14 +74,9 @@
                         </div>
                         <span class="hide-expand">{{_('Contribute')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
                         <span class="hide-collapse">
-                            {{_('Pay')}} <span id="amount">$64</span>
+                            {{_('Pay <span id="%(span_id)s">%(amount)s</span>', span_id="amount", amount="$64") }}
                         </span>
                     </button>
-                    <div class="payment-details">
-                            <img src="{{ static('img/mc-logo.png') }}" alt="mastercard">
-                            <img src="{{ static('img/visa-logo.png') }}" alt="visa">
-                            <img src="{{ static('img/ae-logo.png') }}" alt="american express">
-                        </div>
                     <a class="button mobile-link" href="{{ url('contribute') }}">
                         <div class="payment-details">
                             <img src="{{ static('img/mc-logo.png') }}" alt="mastercard">
