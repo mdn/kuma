@@ -222,56 +222,95 @@
     }
 }
 
-// JQUI overwrite
-.ui-tooltip.ui-widget.ui-widget-content {
-    border: 2px solid $text-color;
-    position: relative;
-    border-radius: 0;
-    background-image: none;
+.tooltip {
     background-color: #fff;
-    padding: 2em;
+    background-image: none;
+    border-radius: 0;
+    border: 2px solid $text-color;
+    display: none;
+    font-size: $body-font-size;
+    left: 0;
+    max-width: 300px;
+    padding: 24px 14px;
+    position: absolute;
+    top: 0;
+    z-index: 100;
 
-    .tooltip-close {
-        top: .5em;
-        right: .5em;
+    > p:last-child {
+        margin-bottom: 0;
+    }
+
+    // CSS triangle to handle tooltip right arrow.
+    &:after,
+    &:before {
+        border-style: solid;
+        border-width: 10px 0 10px 10px;
+        bottom: auto;
+        content: '';
+        left: auto;
+        margin-top: -10px;
         position: absolute;
-        border: none;
-
-        &:before {
-            content: '\f00d';
-            font-family: FontAwesome;
-        }
+        top: 50%;
+        width: 0;
     }
 
     &:after {
-        content: '';
-        position: absolute;
-        left: 20px;
-        border-style: solid;
-        display: block;
-        width: 0;
-        margin-top: -13px;
-        top: 50%;
-        bottom: auto;
-        left: auto;
-        right: -15px;
-        border-width: 15px 0 15px 20px;
         border-color: transparent #fff;
+        right: -7px;
     }
 
     &:before {
-        content: '';
-        position: absolute;
-        left: 20px;
-        border-style: solid;
-        display: block;
-        width: 0;
-        margin-top: -13px;
-        top: 50%;
-        bottom: auto;
-        left: auto;
-        right: -20px;
-        border-width: 15px 0 15px 20px;
         border-color: transparent $text-color;
+        right: -10px;
+    }
+
+    &.is-open {
+        display: block;
+        visibility: visible;
+    }
+
+    &.is-opening {
+        display: block;
+        pointer-events: none;
+        visibility: hidden;
+    }
+
+    &.has-arrow-top {
+        // CSS triangle to handle tooltip top arrow.
+        &:after,
+        &:before {
+            border-style: solid;
+            border-width: 0 10px 10px 10px;
+            content: '';
+            left: auto;
+            margin-top: 0;
+            position: absolute;
+            right: 14px;
+            width: 0;
+        }
+
+        &:after {
+            border-color: #fff transparent;
+            top: -7px;
+        }
+
+        &:before {
+            border-color: $text-color transparent;
+            top: -10px;
+        }
+    }
+}
+
+.tooltip-close {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    right: 2px;
+    top: 4px;
+
+    // Sets X icon.
+    &:before {
+        content: '\f00d';
+        font-family: FontAwesome;
     }
 }
