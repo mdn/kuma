@@ -4,6 +4,8 @@
 
 {% block title %}{{ page_title(_('Thank You')) }}{% endblock %}
 
+{% block contrib_popup %}{% endblock %}
+
 {% block document_head %}
     <div class="contribution-banner align-center">
         <div class="column-container">
@@ -13,11 +15,27 @@
                     <h1 class="highlight highlight-spanned">
                         <span class="highlight-span">{{_('Thanks for joining MDN.')}}</span>
                     </h1>
-                    <p class="subtext">{{_('To build the commons, we depend on uncommon boosters like you. What you’ve given to MDN will stay here to build more of the tools and information we use every day. And it helps us expand MDN to devs everywhere.')}}</p>
-                    <p class="subtext">{{_('We are committed to providing the best source of free information about the internet to our community of devs around the world. Support us, and it will all come back around. It already has. And it will again.')}}</p>
+                    <p class="subtext">
+                        {% trans %}
+                            To build the commons, we depend on uncommon
+                            boosters like you. What you’ve given to MDN will
+                            stay here to build more of the tools and
+                            information we use every day. And it helps us
+                            expand MDN to devs everywhere.
+                        {% endtrans %}
+                    </p>
+                    <p class="subtext">
+                        {% trans %}
+                            We are committed to providing the best source of
+                            free information about the internet to our
+                            community of devs around the world. Support us, and
+                            it will all come back around. It already has. And
+                            it will again.
+                        {% endtrans %}
+                    </p>
                     <p class="subtext">{{_('Thank you again,')}}</p>
                     <p class="subtext">{{_('The MDN Team')}}</p>
-                    
+
                     <div class="button-tab-group">
                         <a href="https://twitter.com/intent/tweet?text=I%27ve%20contributed%20to%20help%20make%20MDN%20sustainable,%20you%20can%20too%20here:%20developer.mozilla.com/en-US/contribute/" class="button" target="_blank" rel="noopener" aria-label="{{_('Share your support on Twitter')}}">{% include 'includes/icons/social/twitter.svg' %}</a>
                         <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdeveloper.mozilla.org%2Fen-US%2Fcontribute" class="button" target="_blank" rel="noopener" aria-label="{{_('Share your support on Facebook')}}">{% include 'includes/icons/social/facebook.svg' %}</a>
@@ -33,9 +51,9 @@
             </div>
         </div>
     </div>
-    {% endblock %}
-    
-    {% block content %}
+{% endblock %}
+
+{% block content %}
     <div id="contributions-page" class="conributions-page">
         <div class="section">
             <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="" role="presentation">
@@ -51,4 +69,4 @@
             </div>
         </div>
     </div>
-    {% endblock %}
+{% endblock %}
