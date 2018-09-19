@@ -27,12 +27,18 @@ def home(request):
     updates = list(Bundle.objects.recent_entries(SECTION_HACKS.updates)[:5])
 
     default_filters = Filter.objects.default_filters()
-
     context = {
         'updates': updates,
         'default_filters': default_filters,
     }
+
     return render(request, 'landing/homepage.html', context)
+
+
+@never_cache
+def contribute_confirmation(request, status):
+    context = {'status': status}
+    return render(request, 'contributions/thank_you.html', context)
 
 
 @never_cache

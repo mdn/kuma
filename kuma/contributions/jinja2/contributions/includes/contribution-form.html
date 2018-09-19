@@ -1,0 +1,79 @@
+<div class="contribution-form contribution-banner {% if is_popover %}contribution-popover collapsed{% endif %}"{% if is_popover %} aria-expanded="false" aria-hidden="false"{% endif %}>
+    {% if is_popover %}
+        <div class="actions">
+            <button id="collapse" class="hide-collapse" aria-label="{{ _('Collapse pop over window') }}">{% include 'includes/icons/arrows/chevron-down.svg' %}</button>
+            <button id="close-cta" aria-label="{{ _('Close pop over window') }}">{% include 'includes/icons/general/close.svg' %}</button>
+        </div>
+    {% endif %}
+    <div class="column-container">
+        <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="" role="presentation">
+        <div class="column-half">
+            <div class="container">
+                <h2 class="highlight highlight-spanned">
+                    <span class="highlight-span">{{ _('Give Back to MDN')}}</span>
+                </h2>
+                <h4>{{_('Support MDN, and it comes back to you.')}}</h4>
+                <p class="body">{{_('You’ve turned to MDN for information and assurance. Now we turn to you, for support. What you give to MDN, stays here in MDN to give you more of the tools and information you use when your work has to work.')}}</p>
+                {% if is_popover %}
+                    <div class="button-group">
+                        <a href="{{url('contribute')}}" class="cta-link">
+                            {{_('Learn more about our contribution program')}} {% include 'includes/icons/arrows/arrow.svg' %}
+                        </a>
+                        <a href="{{url('contribute')}}" class="cta-link">
+                            {{_('Provide feedback on our contribution program')}} {% include 'includes/icons/arrows/arrow.svg' %}
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="column-half">
+            <form id="contribute-form" class="container" method="post" action="{{ url('contribute') }}" novalidate>
+                {% csrf_token %}
+                <div class="form-group">
+                    {{form.name}}
+                    {{form.name.errors}}
+                    <div class="email-input-container">
+                        {{form.email}}
+                        {{form.email.errors}}
+                        <button type="button" class="tooltip-button" id="email-tooltip">{% include 'includes/icons/punctuation/question-mark.svg' %}</button>
+                    </div>
+                    {{form.donation_choices}}
+                    <span class="label">{{form.donation_amount.label}}</span>
+                    {{form.donation_amount}}
+                    {{form.donation_amount.errors}}
+                    {{form.stripe_token}}
+                    {{form.stripe_public_key}}
+                    <p class="legal-copy">
+                        These contributions are not tax deductible. Your payment details will be processed by <a href="">Stripe</a>. Mozilla will keep record of your contribution in accordance with it <a href="">Privacy Notice</a>, and does not receive your payment details.
+                    </p>
+                </div>
+                <div class="form-footer">
+                    <div class="payment-details">
+                        <img src="{{ static('img/mc-logo.png') }}" alt="mastercard">
+                        <img src="{{ static('img/visa-logo.png') }}" alt="visa">
+                        <img src="{{ static('img/ae-logo.png') }}" alt="american express">
+                    </div>
+                    <button type="button" id="stripe_submit">
+                        <div class="payment-details">
+                            <img src="{{ static('img/mc-logo.png') }}" alt="mastercard">
+                            <img src="{{ static('img/visa-logo.png') }}" alt="visa">
+                            <img src="{{ static('img/ae-logo.png') }}" alt="american express">
+                        </div>
+                        <span class="hide-expand">{{_('Contribute')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
+                        <span class="hide-collapse">
+                            {{_('Pay')}} <span id="amount">$64</span>
+                        </span>
+                    </button>
+                    <a class="button mobile-link" href="{{ url('contribute') }}">
+                        <div class="payment-details">
+                            <img src="{{ static('img/mc-logo.png') }}" alt="mastercard">
+                            <img src="{{ static('img/visa-logo.png') }}" alt="visa">
+                            <img src="{{ static('img/ae-logo.png') }}" alt="american express">
+                        </div>
+                        {{_('Contribute')}}
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

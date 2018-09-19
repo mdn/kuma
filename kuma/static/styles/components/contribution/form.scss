@@ -1,0 +1,277 @@
+@import 'includes/vars';
+@import './vars';
+
+.contribution-form {
+    .backdrop-image {
+        position: absolute;
+        right: 0;
+        bottom: -150px;
+        left: auto;
+    }
+
+    .hide-expand {
+        display: none;
+    }
+
+    .column-container {
+        display: flex;
+        position: relative;
+
+        @media #{$mq-mobile-and-down} {
+            display: block;
+        }
+
+        .column-half {
+            z-index: 99;
+            position: relative;
+
+            @media #{$mq-mobile-and-down} {
+                padding-bottom: 30px;
+            }
+        }
+    }
+
+    form {
+        .mobile-link {
+            display: none;
+        }
+
+        .form-footer {
+            position: absolute;
+            bottom: -3px;
+            width: 100%;
+        }
+
+        .form-footer button,
+        .form-footer .button {
+            height: $contribution-form-input-height;
+            min-width: 190px;
+            border: none;
+            font-weight: bold;
+            border-radius: $contribution-form-input-height;
+            line-height: $contribution-form-input-height;
+            background-color: $contribution-form-button-color;
+            font-weight: normal;
+            color: #fff;
+            padding: 0;
+            text-align: center;
+
+            @media #{$mq-mobile-and-down} {
+                width: 100%;
+            }
+
+            &:hover {
+                background-color: darken($contribution-form-button-color, 5%);
+            }
+
+            svg {
+                margin-left: 1em;
+                vertical-align: middle;
+            }
+
+            .payment-details {
+                display: none;
+                vertical-align: top;
+                line-height: 0;
+                padding: 10px;
+
+                @media #{$mq-mobile-and-down} {
+                    display: inline-block;
+                    padding: 0;
+                    vertical-align: middle;
+
+                    > img {
+                        max-height: 30px;
+                    }
+                }
+            }
+        }
+
+        p.legal-copy {
+            margin: 2em 0 1em 0;
+            font-size: 14px;
+            a {
+                color: $contribution-form-button-color;
+                text-decoration: underline;
+            }
+        }
+
+        .form-group {
+            max-width: 540px;
+            padding-bottom: 40px;
+
+            .errorlist {
+                display: block;
+                text-align: right;
+            }
+            > input:first-of-type {
+                margin-top: 0;
+            }
+
+            input {
+                height: $contribution-form-input-height;
+                width: 100%;
+                display: block;
+                line-height: 3;
+                box-sizing: border-box;
+                font-weight: normal;
+                padding-left: 12px;
+                border-color: $text-color;
+                margin-top: $contribution-form-input-spacing;
+                &.error {
+                    border-color: $error;
+                    color: $error;
+                }
+            }
+
+            input[name=donation_amount] {
+                padding-left: 35px;
+            }
+
+            .label {
+                position: absolute;
+                margin-left: 20px;
+                margin-top: 33px;
+            }
+
+            input[name=donation_amount],
+            #id_donation_choices {
+                width: 49%;
+                display: inline-block;
+                vertical-align: middle;
+                margin: 0;
+                border-radius: $contribution-form-input-height;
+                margin-top: $contribution-form-input-spacing;
+
+                @media #{$mq-tablet-and-down} {
+                    display: block;
+                    width: 100%;
+                }
+            }
+        }
+
+        #id_donation_choices {
+            text-align: center;
+
+            li {
+                display: inline-block;
+                position: relative;
+                margin-right: 11px;
+
+                @media #{$mq-tablet-and-down} {
+                    margin-right: 1em;
+                    width: auto;
+                }
+
+                input[type=radio] {
+                    position: absolute;
+                    opacity: 0;
+                    cursor: pointer;
+                }
+
+                label {
+                    min-width: $contribution-form-input-height;
+                    height: $contribution-form-input-height;
+                    border: 2px solid $text-color;
+                    border-radius: $contribution-form-input-height;
+                    background-color: #fff;
+                    text-align: center;
+                    line-height: $contribution-form-input-height;
+                    display: inline-block;
+
+                    &:hover {
+                        background: darken(#fff, 3%);
+                    }
+
+                    &.active {
+                        background: $text-color;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+        .payment-details {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 1em;
+
+            @media #{$mq-mobile-and-down} {
+                display: none;
+            }
+        }
+    }
+    .cta-min-text {
+        display: none;
+    }
+
+    .cta-max-text {
+        display: inline;
+    }
+
+    .email-input-container {
+        position: relative;
+    }
+
+    .tooltip-button {
+        background: none;
+        border: none;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        color: #222;
+    }
+}
+
+// JQUI overwrite
+.ui-tooltip.ui-widget.ui-widget-content {
+    border: 2px solid $text-color;
+    position: relative;
+    border-radius: 0;
+    background-image: none;
+    background-color: #fff;
+    padding: 2em;
+
+    .tooltip-close {
+        top: .5em;
+        right: .5em;
+        position: absolute;
+        border: none;
+
+        &:before {
+            content: '\f00d';
+            font-family: FontAwesome;
+        }
+    }
+
+    &:after {
+        content: '';
+        position: absolute;
+        left: 20px;
+        border-style: solid;
+        display: block;
+        width: 0;
+        margin-top: -13px;
+        top: 50%;
+        bottom: auto;
+        left: auto;
+        right: -15px;
+        border-width: 15px 0 15px 20px;
+        border-color: transparent #fff;
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        left: 20px;
+        border-style: solid;
+        display: block;
+        width: 0;
+        margin-top: -13px;
+        top: 50%;
+        bottom: auto;
+        left: auto;
+        right: -20px;
+        border-width: 15px 0 15px 20px;
+        border-color: transparent $text-color;
+    }
+}
