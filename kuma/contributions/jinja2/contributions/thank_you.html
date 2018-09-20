@@ -1,4 +1,4 @@
-{% extends "landing/base_promote.html" %}
+{% extends 'landing/base_promote.html' %}
 
 {% block body_attributes %}id="contribute"{% endblock %}
 
@@ -9,7 +9,7 @@
 {% block document_head %}
     <div class="contribution-banner align-center">
         <div class="column-container">
-            <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="" role="presentation">
+            <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="" role="presentation" />
             <div class="column">
                 {% if status == 'succeeded' %}
                     <h1 class="highlight highlight-spanned">
@@ -54,9 +54,9 @@
 {% endblock %}
 
 {% block content %}
-    <div id="contributions-page" class="conributions-page">
-        <div class="section">
-            <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="" role="presentation">
+    <main id="contributions-page" class="conributions-page">
+        <section class="section">
+            <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="" role="presentation" />
             <div class="index">
                 <h2>{{_('Feedback')}}</h2>
             </div>
@@ -67,6 +67,6 @@
                     <button type="submit"> {{_('Send')}} {% include 'includes/icons/arrows/arrow.svg' %}</button>
                 </form>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 {% endblock %}
