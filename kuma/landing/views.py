@@ -36,12 +36,6 @@ def home(request):
 
 
 @never_cache
-def contribute_confirmation(request, status):
-    context = {'status': status}
-    return render(request, 'contributions/thank_you.html', context)
-
-
-@never_cache
 def maintenance_mode(request):
     if settings.MAINTENANCE_MODE:
         return render(request, 'landing/maintenance-mode.html')
