@@ -11,7 +11,7 @@
      * after it's been disabled by clicking the close button.
      * @const
      */
-    var CONTROBUTIONS_DISABLED_EXPIRATION =  5 * 24 * 60 * 60 * 1000; // 5 days.
+    var CONTRIBUTIONS_DISABLED_EXPIRATION =  5 * 24 * 60 * 60 * 1000; // 5 days.
 
     /**
      * Handles setting up and binding events for tooltips.
@@ -154,7 +154,7 @@
                 disabledStorageItem = JSON.parse(disabledStorageItem);
 
                 if (disabledStorageItem.value) {
-                    if (disabledStorageItem.timestamp + CONTROBUTIONS_DISABLED_EXPIRATION > date) {
+                    if (disabledStorageItem.timestamp + CONTRIBUTIONS_DISABLED_EXPIRATION > date) {
                         // Keep the popover hidden if we aren't passed the expiration date yet.
                         popoverBanner.addClass('hidden');
                         popoverBanner.attr('aria-hidden', true);
