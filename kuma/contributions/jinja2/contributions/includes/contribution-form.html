@@ -37,9 +37,11 @@
             <form id="contribute-form" class="container" method="post" action="{{ url('contribute') }}" novalidate>
                 {% csrf_token %}
                 <div class="form-group">
+                    <label class="visually-hidden" for="id_{{form.name.name}}">{{form.name.label}}</label>
                     {{form.name}}
                     {{form.name.errors}}
                     <div class="email-input-container">
+                        <label class="visually-hidden" for="id_{{form.email.name}}">{{form.email.label}}</label>
                         {{form.email}}
                         {{form.email.errors}}
                         <button class="tooltip-button" id="tooltip-email-button" aria-controls="tooltip-email" aria-label="{{_('Open tooltip for further email field information') }}">
@@ -51,8 +53,9 @@
                             <p>{{_('This is so we can send you a receipt of your contribution. This is handy if you’d like a refund.') }}</p>
                         </div>
                     </div>
+                    <label class="visually-hidden" for="id_{{form.donation_choices.name}}">{{form.donation_choices.label}}</label>
                     {{form.donation_choices}}
-                    <span class="label">{{form.donation_amount.label}}</span>
+                    <label class="label" aria-label="{{ _('Other contribution amount') }}" for="id_{{form.donation_amount.name}}">{{form.donation_amount.label}}</label>
                     {{form.donation_amount}}
                     {{form.donation_amount.errors}}
                     {{form.stripe_token}}
