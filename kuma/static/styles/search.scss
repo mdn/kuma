@@ -172,8 +172,15 @@ input.filter-button {
             display: none;
         }
 
+        .column-1 > svg {
+            vertical-align: middle;
+        }
+
         .result-list-item {
             @include column-11();
+            h4 {
+                margin-top: 0;
+            }
         }
     }
 }
