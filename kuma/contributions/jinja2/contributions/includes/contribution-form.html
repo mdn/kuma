@@ -1,12 +1,12 @@
-<div class="contribution-form contribution-banner {% if is_popover %}contribution-popover collapsed{% endif %}"{% if is_popover %} aria-expanded="false" aria-hidden="false"{% endif %}>
+<div class="contribution-banner {% if is_popover %}contribution-popover is-collapsed{% endif %}"{% if is_popover %} aria-expanded="false" aria-hidden="false"{% endif %}>
     {% if is_popover %}
-        <div class="actions">
-            <button id="collapse" class="hide-collapse" aria-label="{{ _('Collapse pop over window') }}">{% include 'includes/icons/arrows/chevron-down.svg' %}</button>
-            <button id="close-cta" aria-label="{{ _('Close pop over window') }}">{% include 'includes/icons/general/close.svg' %}</button>
+        <div class="contribution-popover-actions">
+            <button id="collapse-popover-button" class="hide-collapse" aria-label="{{ _('Collapse pop over window') }}">{% include 'includes/icons/arrows/chevron-down.svg' %}</button>
+            <button id="close-popover-button" aria-label="{{ _('Close pop over window') }}">{% include 'includes/icons/general/close.svg' %}</button>
         </div>
     {% endif %}
     <div class="column-container">
-        <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="" role="presentation">
+        <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="" role="presentation" />
         <div class="column-half">
             <div class="container">
                 <h2 class="highlight highlight-spanned">
@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="column-half">
-            <form id="contribute-form" class="container" method="post" action="{{ url('contribute') }}" novalidate>
+            <form id="contribute-form" class="contribution-form" method="post" action="{{ url('contribute') }}" novalidate>
                 {% csrf_token %}
                 <div class="form-group">
                     <label class="visually-hidden" for="id_{{form.name.name}}">{{form.name.label}}</label>
@@ -63,35 +63,31 @@
                     <p class="legal-copy">
                         These contributions are not tax deductible. Your
                         payment details will be processed by
-                        <a href="https://stripe.com/privacy/">Stripe</a>.
+                        <a href="https://stripe.com/" rel="noopener">Stripe</a>.
                         Mozilla will keep record of your contribution in
                         accordance with its
-                        <a href="https://www.mozilla.org/en-US/privacy/websites/">Privacy Notice</a>,
+                        <a href="https://www.mozilla.org/en-US/privacy/websites">Privacy Notice</a>,
                         and does not receive your payment details.
                     </p>
                 </div>
                 <div class="form-footer">
-                    <div class="payment-details">
-                        <img src="{{ static('img/mc-logo.png') }}" alt="mastercard">
-                        <img src="{{ static('img/visa-logo.png') }}" alt="visa">
-                        <img src="{{ static('img/ae-logo.png') }}" alt="american express">
-                    </div>
                     <button type="button" id="stripe_submit">
-                        <div class="payment-details">
-                            <img src="{{ static('img/mc-logo.png') }}" alt="mastercard">
-                            <img src="{{ static('img/visa-logo.png') }}" alt="visa">
-                            <img src="{{ static('img/ae-logo.png') }}" alt="american express">
-                        </div>
                         <span class="hide-expand">{{_('Contribute')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
                         <span class="hide-collapse">
                             {{_('Pay <span id="%(span_id)s">%(amount)s</span>', span_id="amount", amount="$64") }}
                         </span>
                     </button>
+                    <div class="payment-details">
+                        <img src="{{ static('img/payment-type-mastercard-1x.png') }}" srcset="{{ static('img/payment-type-mastercard-1x.png') }}, {{ static('img/payment-type-mastercard-2x.png') }} 2x" alt="{{ _('We accept Mastercard payments') }}" title="{{ _('We accept Mastercard payments') }}">
+                        <img src="{{ static('img/payment-type-visa-1x.png') }}" srcset="{{ static('img/payment-type-visa-1x.png') }}, {{ static('img/payment-type-visa-2x.png') }} 2x" alt="{{ _('We accept Visa payments') }}" title="{{ _('We accept Visa payments') }}">
+                        <img src="{{ static('img/payment-type-american-express-1x.png') }}" srcset="{{ static('img/payment-type-american-express-1x.png') }}, {{ static('img/payment-type-american-express-2x.png') }} 2x" alt="{{ _('We accept American Express payments') }}" title="{{ _('We accept American Express payments') }}">
+                    </div>
+
                     <a class="button mobile-link" href="{{ url('contribute') }}">
                         <div class="payment-details">
-                            <img src="{{ static('img/mc-logo.png') }}" alt="mastercard">
-                            <img src="{{ static('img/visa-logo.png') }}" alt="visa">
-                            <img src="{{ static('img/ae-logo.png') }}" alt="american express">
+                            <img src="{{ static('img/payment-type-mastercard-1x.png') }}" srcset="{{ static('img/payment-type-mastercard-1x.png') }}, {{ static('img/payment-type-mastercard-2x.png') }} 2x" alt="{{ _('We accept Mastercard payments') }}">
+                            <img src="{{ static('img/payment-type-visa-1x.png') }}" srcset="{{ static('img/payment-type-visa-1x.png') }}, {{ static('img/payment-type-visa-2x.png') }} 2x" alt="{{ _('We accept Visa payments') }}">
+                            <img src="{{ static('img/payment-type-american-express-1x.png') }}" srcset="{{ static('img/payment-type-american-express-1x.png') }}, {{ static('img/payment-type-american-express-2x.png') }} 2x" alt="{{ _('We accept American Express payments') }}">
                         </div>
                         {{_('Contribute')}}
                     </a>

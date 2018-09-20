@@ -2,204 +2,204 @@
 @import './vars';
 
 .contribution-form {
-    .backdrop-image {
-        position: absolute;
-        right: 0;
-        bottom: -150px;
-        left: auto;
+    // Allows room for the button and payment icons that must remain fixed to the bottom.
+    padding-bottom: 76px;
+    position: relative;
+
+    @media #{$mq-mobile-and-down} {
+        margin-top: 20px;
     }
 
-    .hide-expand {
+    .contribution-popover.is-collapsed & {
+        padding-bottom: 56px;
+    }
+
+    .mobile-link {
         display: none;
     }
 
-    .column-container {
-        display: flex;
-        position: relative;
-
-        @media #{$mq-mobile-and-down} {
-            display: block;
-        }
-
-        .column-half {
-            z-index: 99;
-            position: relative;
-
-            @media #{$mq-mobile-and-down} {
-                padding-bottom: 30px;
-            }
-        }
+    .form-footer {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        white-space: nowrap;
     }
 
-    form {
-        .mobile-link {
+    // Show the link on mobile but not desktop
+    @media #{$mq-mobile-and-down} {
+        .form-footer button {
             display: none;
         }
 
-        .form-footer {
-            position: absolute;
-            bottom: -3px;
+        .form-footer .mobile-link {
+            display: block;
+        }
+    }
+
+    .form-footer button,
+    .form-footer .button {
+        background-color: $contribution-form-button-color;
+        border-radius: $contribution-form-input-height;
+        border: none;
+        color: #fff;
+        font-weight: bold;
+        font-weight: normal;
+        height: $contribution-form-input-height;
+        line-height: $contribution-form-input-height;
+        min-width: 190px;
+        padding: 0;
+        text-align: center;
+        white-space: nowrap;
+
+        @media #{$mq-mobile-and-down} {
             width: 100%;
         }
 
-        .form-footer button,
-        .form-footer .button {
-            height: $contribution-form-input-height;
-            min-width: 190px;
-            border: none;
-            font-weight: bold;
-            border-radius: $contribution-form-input-height;
-            line-height: $contribution-form-input-height;
-            background-color: $contribution-form-button-color;
-            font-weight: normal;
-            color: #fff;
-            padding: 0;
-            text-align: center;
-
-            @media #{$mq-mobile-and-down} {
-                width: 100%;
-            }
-
-            &:hover {
-                background-color: darken($contribution-form-button-color, 5%);
-            }
-
-            svg {
-                margin-left: 1em;
-                vertical-align: middle;
-            }
-
-            .payment-details {
-                display: none;
-                vertical-align: top;
-                line-height: 0;
-                padding: 10px;
-
-                @media #{$mq-mobile-and-down} {
-                    display: inline-block;
-                    padding: 0;
-                    vertical-align: middle;
-
-                    > img {
-                        max-height: 30px;
-                    }
-                }
-            }
+        &:hover {
+            background-color: darken($contribution-form-button-color, 5%);
         }
 
-        p.legal-copy {
-            margin: 2em 0 1em 0;
-            font-size: 14px;
-            a {
-                color: $contribution-form-button-color;
-                text-decoration: underline;
-            }
-        }
-
-        .form-group {
-            max-width: 540px;
-            padding-bottom: 40px;
-
-            .errorlist {
-                display: block;
-                text-align: right;
-            }
-            > input:first-of-type {
-                margin-top: 0;
-            }
-
-            input {
-                height: $contribution-form-input-height;
-                width: 100%;
-                display: block;
-                line-height: 3;
-                box-sizing: border-box;
-                font-weight: normal;
-                padding-left: 12px;
-                border-color: $text-color;
-                margin-top: $contribution-form-input-spacing;
-                &.error {
-                    border-color: $error;
-                    color: $error;
-                }
-            }
-
-            input[name=donation_amount] {
-                padding-left: 35px;
-            }
-
-            .label {
-                position: absolute;
-                margin-left: 20px;
-                margin-top: 33px;
-            }
-
-            input[name=donation_amount],
-            #id_donation_choices {
-                width: 49%;
-                display: inline-block;
-                vertical-align: middle;
-                margin: 0;
-                border-radius: $contribution-form-input-height;
-                margin-top: $contribution-form-input-spacing;
-
-                @media #{$mq-tablet-and-down} {
-                    display: block;
-                    width: 100%;
-                }
-            }
-        }
-
-        #id_donation_choices {
-            text-align: center;
-
-            li {
-                display: inline-block;
-                position: relative;
-                margin-right: 11px;
-
-                @media #{$mq-tablet-and-down} {
-                    margin-right: 1em;
-                    width: auto;
-                }
-
-                input[type=radio] {
-                    position: absolute;
-                    opacity: 0;
-                    cursor: pointer;
-                }
-
-                label {
-                    min-width: $contribution-form-input-height;
-                    height: $contribution-form-input-height;
-                    border: 2px solid $text-color;
-                    border-radius: $contribution-form-input-height;
-                    background-color: #fff;
-                    text-align: center;
-                    line-height: $contribution-form-input-height;
-                    display: inline-block;
-
-                    &:hover {
-                        background: darken(#fff, 3%);
-                    }
-
-                    &.active {
-                        background: $text-color;
-                        color: #fff;
-                    }
-                }
-            }
-        }
-        .payment-details {
-            display: inline-block;
-            vertical-align: middle;
+        svg {
             margin-left: 1em;
+            vertical-align: middle;
+        }
+
+        .payment-details {
+            display: none;
+            line-height: 0;
+            padding: 10px;
+            vertical-align: top;
 
             @media #{$mq-mobile-and-down} {
-                display: none;
+                display: inline-block;
+                margin-top: -4px;
+                padding: 0;
+                position: relative;
+                vertical-align: middle;
+
+                > img {
+                    max-height: 24px;
+                }
             }
         }
     }
+
+    p.legal-copy {
+        font-size: 14px;
+        margin: 2em 0 0;
+
+        a {
+            color: $contribution-form-button-color;
+            text-decoration: underline;
+        }
+    }
+
+    .form-group {
+        margin-top: 12px;
+        margin-bottom: 0;
+        max-width: 540px;
+
+        .errorlist {
+            display: block;
+            text-align: right;
+        }
+
+        > input:first-of-type {
+            margin-top: 0;
+        }
+
+        input {
+            border-color: $text-color;
+            box-sizing: border-box;
+            display: block;
+            font-weight: normal;
+            height: $contribution-form-input-height;
+            line-height: 3;
+            margin-top: $contribution-form-input-spacing;
+            padding-left: 12px;
+            width: 100%;
+
+            &.error {
+                border-color: $error;
+                color: $error;
+            }
+        }
+
+        .form-input-amount {
+            padding-left: 35px;
+        }
+
+        .label {
+            margin-left: 20px;
+            margin-top: 33px;
+            position: absolute;
+        }
+
+        .form-input-amount,
+        .form-radios-donation-choices {
+            border-radius: $contribution-form-input-height;
+            display: inline-block;
+            margin: $contribution-form-input-spacing 0 0;
+            vertical-align: middle;
+            width: 49%;
+
+            @media #{$mq-tablet-and-down} {
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+
+    .form-radios-donation-choices {
+        li {
+            display: inline-block;
+            margin-right: 11px;
+            position: relative;
+
+            @media #{$mq-tablet-and-down} {
+                margin-right: 1em;
+                width: auto;
+            }
+
+            input[type='radio'] {
+                cursor: pointer;
+                opacity: 0;
+                position: absolute;
+            }
+
+            label {
+                background-color: #fff;
+                border-radius: $contribution-form-input-height;
+                border: 2px solid $text-color;
+                display: inline-block;
+                height: $contribution-form-input-height;
+                line-height: $contribution-form-input-height;
+                min-width: $contribution-form-input-height;
+                text-align: center;
+
+                &:hover {
+                    background: darken(#fff, 3%);
+                }
+
+                &.active {
+                    background: $text-color;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    .payment-details {
+        display: inline-block;
+        margin: 0 10px;
+        vertical-align: middle;
+
+        @media #{$mq-mobile-and-down} {
+            display: none;
+        }
+    }
+
     .cta-min-text {
         display: none;
     }
@@ -215,10 +215,10 @@
     .tooltip-button {
         background: none;
         border: none;
+        color: #222;
         position: absolute;
         right: 10px;
         top: 10px;
-        color: #222;
     }
 }
 

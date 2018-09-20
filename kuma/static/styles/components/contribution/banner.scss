@@ -1,10 +1,127 @@
-// Overwrites for contribution-form to enable it to be used as a CTA
-.contribution-form.contribution-popover {
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, .25);
-    position: fixed;
-    z-index: 99;
-    bottom: 0;
-    width: 100%;
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.contribution-banner {
+    background-image: $contribution-background-gradient;
+    min-width: 320px;
+    overflow: hidden;
+    position: relative;
+
+    // Additional styling for when the banner acts a popover and is fixed to the
+    // bottom of the viewport.
+    &.contribution-popover {
+        bottom: 0;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, .25);
+        position: fixed;
+        width: 100%;
+        z-index: 99;
+
+        &.is-collapsing,
+        &.is-expanding {
+            // Locks position of Pay button and payment options while the
+            // popover animates up and down.
+            .contribution-form {
+                position: static;
+            }
+
+            .form-footer {
+                left: auto;
+                bottom: 54px;
+                width: 48.5%;
+            }
+        }
+
+        @media #{$mq-mobile-and-down} {
+            // Make sure the banner popover never shows on mobile.
+            display: none;
+        }
+    }
+
+    .contribution-popover-actions {
+        position: absolute;
+        right: 10px;
+        text-align: right;
+        top: 10px;
+        z-index: 10;
+
+        button {
+            background: none;
+            border: none;
+            margin-right: 10px;
+            padding: 0;
+            vertical-align: middle;
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            > svg {
+                height: 30px;
+                width: 30px;
+            }
+
+            &:last-of-type > svg {
+                height: 20px;
+                width: 20px;
+            }
+        }
+    }
+
+    h2 {
+        margin: 0;
+    }
+
+    .column-container {
+        box-sizing: border-box;
+        margin: 0 auto;
+        max-height: 100%;
+        max-width: 1320px;
+        padding: 28px;
+        position: relative;
+
+        @media #{$mq-mobile-and-down} {
+            padding: 20px;
+        }
+    }
+
+    .column {
+        position: relative;
+    }
+
+    .subtext {
+        margin: 2em auto;
+        max-width: 600px;
+    }
+
+    // Mozilla dino background image.
+    .backdrop-image {
+        bottom: -150px;
+        left: auto;
+        position: absolute;
+        right: 0;
+        z-index: 0;
+    }
 
     .hide-collapsed {
         display: initial;
@@ -15,31 +132,15 @@
         display: none;
     }
 
-    // Show the link on mobile but not desktop
-    @media #{$mq-mobile-and-down} {
-        .form-footer button {
-            display: none;
-        }
-
-        .form-footer .mobile-link {
-            display: block;
-        }
-    }
-
-    // extra height for close/hide buttons
-    .column-container {
-        padding: 46px;
-    }
-
     h4,
     .body,
     .cta-link,
     .form-group {
-        animation-name: fadeIn;
         animation-duration: .6s;
+        animation-name: fadeIn;
     }
 
-    &.collapsed {
+    &.is-collapsed {
         // Hide all unessesary content on the collapsed CTA.
         h4,
         .body,
@@ -55,42 +156,21 @@
         }
     }
 
-    &.collapsing {
+    &.is-collapsing {
         h4,
         .body,
         .cta-link,
+        .hide-collapse,
         .form-group {
-            animation-name: fadeOut;
             animation-duration: .6s;
+            animation-name: fadeOut;
         }
     }
 
-    @keyframes fadeIn {
-        0% {
-            opacity: 0;
-        }
-        50% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
-        }
-    }
-
-    @keyframes fadeOut {
-        0% {
-            opacity: 1;
-        }
-        50% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 0;
-        }
-    }
     .cta-link {
         color: $text-color;
         display: block;
+
         &:first-of-type {
             margin-bottom: 1em;
         }
