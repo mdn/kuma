@@ -1,4 +1,5 @@
 from django.conf import settings
+
 from kuma.contributions.forms import ContributionForm
 
 

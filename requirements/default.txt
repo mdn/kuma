@@ -312,7 +312,6 @@ sqlparse==0.2.3 \
 # Code: https://github.com/stripe/stripe-python
 # Changes: https://github.com/stripe/stripe-python/blob/master/CHANGELOG.md
 # Docs: https://stripe.com/docs/api/python#intro
-
 stripe==2.8.1 \
     --hash=sha256:8f556bb9af0b0714753567b1ec8e31649bc9af96980333bffc903155db276c7f \
     --hash=sha256:984b45d3c56242f23a1f3ad5a43cdaf07353b924193dd97bf8bc30203d4f541b
