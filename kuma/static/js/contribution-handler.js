@@ -43,6 +43,13 @@
             $(win).on('resize.tooltipHandler', function() {
                 closeTooltip(tooltip);
             });
+
+            // Send GA Event.
+            mdn.analytics.trackEvent({
+                category: 'Contribution popover',
+                action: 'Tooltip Opened',
+                value: 1
+            });
         }
 
         /**
@@ -59,6 +66,13 @@
 
             $(doc).off('click.tooltipHandler');
             $(win).off('resize.tooltipHandler');
+
+            // Send GA Event.
+            mdn.analytics.trackEvent({
+                category: 'Contribution popover',
+                action: 'Tooltip Closed',
+                value: 1
+            });
         }
 
         /**
@@ -179,6 +193,12 @@
         }
     });
 
+    // Ensure we only show the form if js is enabled
+    if (win.StripeCheckout) {
+        $('#contribution-popover-container').removeClass('hidden');
+    }
+
+
     var isPopoverBanner = $('.contribution-banner').hasClass('contribution-popover');
 
     if (isPopoverBanner) {
@@ -219,7 +239,16 @@
         // Reset custom amount input when selecting radio.
         if (event.target.type === 'radio') {
             customAmountInput.val('');
+
+            // Send GA Event.
+            mdn.analytics.trackEvent({
+                category: 'Contribution popover',
+                action: 'Amount radio selected',
+                value: event.target.value
+            });
+
             $(event.target).parent().addClass('active');
+
         } else {
             // Reset radio when selecting custom amount.
             form.find('input[type=\'radio\']:checked').prop('checked', false);
@@ -243,6 +272,14 @@
         var error = $(field).attr('data-error-message');
 
         $('<ul class="errorlist"><li>' + error + '</li></ul>').insertAfter($(field));
+
+        if ($(field).is('#id_donation_amount')) {
+            mdn.analytics.trackEvent({
+                category: 'Contribution popover',
+                action: 'Invalid amount selected',
+                value: 1
+            });
+        }
     }
 
     /**
@@ -298,6 +335,13 @@
 
             return;
         }
+
+        // Send GA Event.
+        mdn.analytics.trackEvent({
+            category: 'Contribution submission',
+            action: isPopoverBanner ? 'On Popover' : 'On Page',
+            value: 1
+        });
 
         // On success open Stripe Checkout modal.
         stripeHandler.open({
@@ -365,6 +409,13 @@
         // Add transitional class for opacity animation.
         popoverBanner.addClass('is-collapsing');
         popoverBanner.attr('aria-expanded', false);
+      
+        // Send GA Event.
+        mdn.analytics.trackEvent({
+            category: 'Contribution popover',
+            action: 'collapse',
+            value: 1
+        });
 
         // Collapse popover.
         popoverBanner.animate({ height: popoverCollapsedHeight }, 500, function() {
@@ -383,6 +434,13 @@
         popoverBanner.addClass('hidden');
         popoverBanner.attr('aria-hidden', true);
 
+        // Send GA Event.
+        mdn.analytics.trackEvent({
+            category: 'Contribution popover',
+            action: 'close',
+            value: 1
+        });
+
         if (win.mdn.features.localStorage) {
             var item = JSON.stringify({
                 value: true,
@@ -398,13 +456,28 @@
     formButton.click(onFormButtonClick);
     amountRadio.change(onAmountSelect);
     customAmountInput.on('input', onAmountSelect);
-    customAmountInput.change(onAmountSelect);
     emailField.blur(onChange);
     nameField.blur(onChange);
+    customAmountInput.blur(function(event) {
+        // Send GA Event.
+        mdn.analytics.trackEvent({
+            category: 'Contribution popover',
+            action: 'Amount manually selected',
+            value: event.target.value
+        });
+    });
 
     if (isPopoverBanner) {
         closeButton.click(disablePopover);
     }
 
     setupTooltips();
+
+    // Send GA Event.
+    mdn.analytics.trackEvent({
+        category: 'Contribution banner',
+        action: 'shown',
+        value: 1
+    });
+
 })(document, window, jQuery);
