@@ -2,27 +2,13 @@
 @import './vars';
 
 .contribution-form {
-    // Allows room for the button and payment icons that must remain fixed to the bottom.
-    padding-bottom: 76px;
     position: relative;
-
-    @media #{$mq-mobile-and-down} {
-        margin-top: 20px;
-    }
-
-    .contribution-popover.is-collapsed & {
-        padding-bottom: 56px;
-    }
 
     .mobile-link {
         display: none;
     }
 
     .form-footer {
-        bottom: 0;
-        left: 0;
-        position: absolute;
-        right: 0;
         white-space: nowrap;
     }
 
