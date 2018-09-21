@@ -4,22 +4,13 @@
 .contribution-form {
     position: relative;
 
-    .mobile-link {
-        display: none;
-    }
-
     .form-footer {
         white-space: nowrap;
     }
 
-    // Show the link on mobile but not desktop
     @media #{$mq-mobile-and-down} {
         .form-footer button {
             display: none;
-        }
-
-        .form-footer .mobile-link {
-            display: block;
         }
     }
 
