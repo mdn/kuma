@@ -202,6 +202,7 @@
     var isPopoverBanner = $('.contribution-banner').hasClass('contribution-popover');
 
     if (isPopoverBanner) {
+        var activeElement = null;
         var popoverBanner = $('.contribution-banner');
         var collapseButton = popoverBanner.find('#collapse-popover-button');
         var closeButton = popoverBanner.find('#close-popover-button');
@@ -372,6 +373,7 @@
      * Expands the popover to show the full contents.
      */
     function expandCta() {
+        var secondaryHeader = popoverBanner[0].querySelector('h4');
         // Add transitional class for opacity animation.
         popoverBanner.addClass('expanded is-expanding');
         popoverBanner.removeClass('is-collapsed');
@@ -379,6 +381,11 @@
         popoverBanner.on('transitionend', function() {
             popoverBanner.removeClass('is-expanding');
             popoverBanner.attr('aria-expanded', true);
+
+            // store the current activeElement
+            activeElement = document.activeElement;
+            // move focus to the secondary header text
+            secondaryHeader.focus();
 
             // remove the event listener
             popoverBanner.off('transitionend');
@@ -410,6 +417,8 @@
             popoverBanner.removeClass('is-collapsing');
             // remove the event listener
             popoverBanner.off('transitionend');
+            // move focus back to the previous activeElement
+            activeElement.focus();
         });
 
         // Send GA Event.
