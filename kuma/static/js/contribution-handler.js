@@ -205,8 +205,6 @@
         var popoverBanner = $('.contribution-banner');
         var collapseButton = popoverBanner.find('#collapse-popover-button');
         var closeButton = popoverBanner.find('#close-popover-button');
-        var popoverCollapsedHeight = popoverBanner.height();
-        var popoverHeight = 480;
 
         checkPopoverDisabled();
     }
@@ -374,19 +372,16 @@
      * Expands the popover to show the full contents.
      */
     function expandCta() {
-        popoverBanner.height(popoverCollapsedHeight);
-
         // Add transitional class for opacity animation.
-        popoverBanner.addClass('is-expanding');
-
-        // Remove collapsed state.
+        popoverBanner.addClass('expanded is-expanding');
         popoverBanner.removeClass('is-collapsed');
-        popoverBanner.attr('aria-expanded', true);
 
-        // Expand popover.
-        popoverBanner.animate({ height: popoverHeight }, 500, function() {
-            popoverBanner.css('height', 'auto');
+        popoverBanner.on('transitionend', function() {
             popoverBanner.removeClass('is-expanding');
+            popoverBanner.attr('aria-expanded', true);
+
+            // remove the event listener
+            popoverBanner.off('transitionend');
 
             // listen to minimise button clicks.
             collapseButton.click(collapseCta);
@@ -404,24 +399,24 @@
      */
     function collapseCta() {
         collapseButton.off();
-        popoverHeight = popoverBanner.height();
-        popoverBanner.height(popoverHeight);
+
         // Add transitional class for opacity animation.
         popoverBanner.addClass('is-collapsing');
+        popoverBanner.removeClass('expanded');
         popoverBanner.attr('aria-expanded', false);
+
+        popoverBanner.on('transitionend', function() {
+            popoverBanner.addClass('is-collapsed');
+            popoverBanner.removeClass('is-collapsing');
+            // remove the event listener
+            popoverBanner.off('transitionend');
+        });
 
         // Send GA Event.
         mdn.analytics.trackEvent({
             category: 'Contribution popover',
             action: 'collapse',
             value: 1
-        });
-
-        // Collapse popover.
-        popoverBanner.animate({ height: popoverCollapsedHeight }, 500, function() {
-            popoverBanner.addClass('is-collapsed');
-            popoverBanner.css('height', 'auto');
-            popoverBanner.removeClass('is-collapsing');
         });
 
         $(doc).off('keydown.popoverCloseHandler');

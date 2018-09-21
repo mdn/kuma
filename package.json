@@ -13,6 +13,7 @@
     "url": "https://bugzilla.mozilla.org/"
   },
   "scripts": {
+    "build-watch": "gulp",
     "stylelint": "./node_modules/.bin/stylelint \"kuma/static/styles/**/*.scss\"",
     "eslint": "./node_modules/.bin/eslint kuma/",
     "optim:svg": "svgo jinja2/includes/icons/* --disable={removeViewBox,removeTitle} --multipass --pretty",

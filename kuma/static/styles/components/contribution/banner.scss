@@ -35,10 +35,13 @@
         box-shadow: 0 0 5px 0 rgba(0, 0, 0, .25);
         position: fixed;
         width: 100%;
+        height: 110px;
+        transition: height .5s;
         z-index: 99;
 
-        &.is-collapsing,
-        &.is-expanding {
+        &.expanded {
+            height: 480px;
+
             // Locks position of Pay button and payment options while the
             // popover animates up and down.
             .contribution-form {
@@ -46,9 +49,17 @@
             }
 
             .form-footer {
-                left: auto;
-                bottom: 54px;
-                width: 48.5%;
+                margin-top: $grid-spacing;
+            }
+        }
+
+        &.is-expanding {
+            h4,
+            .body,
+            .cta-link,
+            .form-group {
+                animation-duration: .6s;
+                animation-name: fadeIn;
             }
         }
 
@@ -130,14 +141,6 @@
     .hide-expand,
     .mobile-link {
         display: none;
-    }
-
-    h4,
-    .body,
-    .cta-link,
-    .form-group {
-        animation-duration: .6s;
-        animation-name: fadeIn;
     }
 
     &.is-collapsed {
