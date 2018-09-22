@@ -1,0 +1,5 @@
+.bc-github-link {
+    position: relative;
+    display: inline-block;
+    @include bidi(((float, right, left),));
+}
