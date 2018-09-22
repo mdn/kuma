@@ -108,13 +108,18 @@
                 width: 60px;
 
                 &.active {
-                    background: #3143e2;
-                    border-color: #3143e2;
+                    background: #333;
+                    border-color: #333;
+                    color: #fff;
                 }
 
                 .icon {
                     pointer-events: none;
                 }
+            }
+
+            .icon-thumbs-down {
+                transform: scaleX(-1);
             }
         }
 
