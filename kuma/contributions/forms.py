@@ -88,13 +88,16 @@ class ContributionForm(forms.Form):
     )
 
     def clean(self):
+        """Validate that either an amount or set choice was made."""
         d = self.cleaned_data
-        donation_choices = d.get('donation_choices', False)
+        donation_choice = d.get('donation_choices', False)
         donation_amount = d.get('donation_amount', False)
 
-        if not donation_amount and not donation_choices or donation_amount and donation_choices:
-            raise forms.ValidationError('Please select donation amount or'
-                                        ' choose from pre-selected choices')
+        no_selection = not (donation_amount or donation_choice)
+        both_selections = donation_amount and donation_choice
+        if no_selection or both_selections:
+            raise forms.ValidationError(_('Please select donation amount or'
+                                          ' choose from pre-selected choices'))
         return d
 
     def __init__(self, *args, **kwargs):
@@ -102,6 +105,7 @@ class ContributionForm(forms.Form):
         self.fields['stripe_public_key'].initial = settings.STRIPE_PUBLIC_KEY
 
     def make_charge(self):
+        """Make a charge using the Stripe API and validated form."""
         charge = {
             'id': '',
             'status': ''
@@ -114,6 +118,8 @@ class ContributionForm(forms.Form):
             amount = amount * 100
         token = self.cleaned_data.get('stripe_token', '')
         if token and amount:
+            # TODO: Handle API errors
+            # See https://stripe.com/docs/api/python, "Handling Errors"
             charge = stripe.Charge.create(
                 amount=amount,
                 currency='usd',
