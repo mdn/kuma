@@ -5,12 +5,12 @@
     position: relative;
 
     .form-footer {
+        margin-top: $grid-spacing;
         white-space: nowrap;
-    }
+        text-align: center;
 
-    @media #{$mq-mobile-and-down} {
-        .form-footer button {
-            display: none;
+        @media #{$mq-tablet-and-up} {
+            text-align: left;
         }
     }
 
@@ -28,10 +28,6 @@
         padding: 0;
         text-align: center;
         white-space: nowrap;
-
-        @media #{$mq-mobile-and-down} {
-            width: 100%;
-        }
 
         &:hover {
             background-color: darken($contribution-form-button-color, 5%);
@@ -63,8 +59,13 @@
     }
 
     p.legal-copy {
-        font-size: 14px;
         margin: 2em 0 0;
+        font-size: 14px;
+        text-align: center;
+
+        @media #{$mq-tablet-and-up} {
+            text-align: left;
+        }
 
         a {
             color: $contribution-form-button-color;
@@ -121,7 +122,7 @@
             vertical-align: middle;
             width: 49%;
 
-            @media #{$mq-tablet-and-down} {
+            @media #{$mq-small-desktop-and-down} {
                 display: block;
                 width: 100%;
             }
@@ -129,6 +130,12 @@
     }
 
     .form-radios-donation-choices {
+        text-align: center;
+
+        @media #{$mq-large-desktop-and-up} {
+            text-align: left;
+        }
+
         li {
             display: inline-block;
             margin-right: 11px;
@@ -168,12 +175,13 @@
     }
 
     .payment-details {
-        display: inline-block;
-        margin: 0 10px;
-        vertical-align: middle;
+        display: block;
+        margin-top: $grid-spacing;
 
-        @media #{$mq-mobile-and-down} {
-            display: none;
+        @media #{$mq-mobile-and-up} {
+            display: inline-block;
+            margin: 0 10px;
+            vertical-align: middle;
         }
     }
 
@@ -289,5 +297,22 @@
     &:before {
         content: '\f00d';
         font-family: FontAwesome;
+    }
+}
+
+/* specific style for pop-over */
+.contribution-banner.contribution-popover {
+    .form-input-amount,
+    .form-radios-donation-choices {
+        border-radius: $contribution-form-input-height;
+        display: inline-block;
+        margin: $contribution-form-input-spacing 0 0;
+        vertical-align: middle;
+        width: 49%;
+
+        @media #{$mq-tablet-and-down} {
+            display: block;
+            width: 100%;
+        }
     }
 }

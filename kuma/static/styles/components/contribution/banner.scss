@@ -39,9 +39,20 @@
         transition: height .5s;
         z-index: 99;
 
+        .form-footer {
+            margin-top: 0;
+        }
+
         &.expanded {
             height: 480px;
+        }
 
+        &.expanded-extend {
+            height: 580px;
+        }
+
+        &.expanded,
+        &.expanded-extend {
             // Locks position of Pay button and payment options while the
             // popover animates up and down.
             .contribution-form {
@@ -131,7 +142,7 @@
         left: auto;
         position: absolute;
         right: 0;
-        z-index: 0;
+        z-index: -1;
     }
 
     .hide-collapsed {
@@ -175,6 +186,20 @@
 
         &:first-of-type {
             margin-bottom: 1em;
+        }
+    }
+}
+
+@media #{$mq-mobile-and-down} {
+    .contribution-banner {
+
+        .contribute-lead-in {
+            text-align: center;
+        }
+
+        .contribution-form {
+            margin: 0 auto;
+            width: 80%;
         }
     }
 }
