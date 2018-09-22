@@ -16,7 +16,7 @@ $red: #e66465;
 $orange: #f69d3c;
 $yellow: #f6b73c;
 $green: #4d9f0c;
-$blue: #3f87a6;
+$blue: #3d7e9a;
 $purple: #9198e5;
 $grey: #696969;
 
@@ -84,7 +84,7 @@ $neutral: $blue;
 $default: $grey;
 
 $text-color: #333;
-$link-color: #3f87a6;
+$link-color: #3d7e9a;
 $menu-link-color: $text-color;
 $blue-background-text-color: #fff;
 $light-background-color: #{map-get( map-get($colors-lookup, 'default'), 'light')};
