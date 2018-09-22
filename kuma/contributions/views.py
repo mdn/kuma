@@ -10,15 +10,16 @@ from django.views.decorators.cache import never_cache
 
 from .forms import ContributionForm
 from .tasks import contribute_thank_you_email
+from .utils import enabled
 
 
 def skip_if_disabled(func):
-    """If not MDN_CONTRIBUTIONS, then 404."""
+    """If contributions are not enabled, then 404."""
     @wraps(func)
     def wrapped(*args, **kwargs):
-        if not settings.MDN_CONTRIBUTION:
-            raise Http404
-        return func(*args, **kwargs)
+        if enabled():
+            return func(*args, **kwargs)
+        raise Http404
 
     return wrapped
 

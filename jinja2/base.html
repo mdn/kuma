@@ -120,7 +120,7 @@
   </main>
 
   {% block contrib_popup %}
-    {% if settings.MDN_CONTRIBUTION %}
+    {% if contribution_enabled %}
         {% with form=contribution_form, is_popover=True %}
             {% include "contributions/includes/contribution-form.html" %}
         {% endwith %}
@@ -170,7 +170,7 @@
     {% for script in scripts %}
       {% javascript script %}
     {% endfor %}
-    {% if settings.MDN_CONTRIBUTION %}
+    {% if contribution_enabled %}
     <script src="https://checkout.stripe.com/checkout.js"></script>
     {% javascript 'contribute' %}
     {% endif %}

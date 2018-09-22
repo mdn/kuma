@@ -1,13 +1,13 @@
-from django.conf import settings
-
-from kuma.contributions.forms import ContributionForm
+from .forms import ContributionForm
+from .utils import enabled
 
 
 def global_contribution_form(request):
     """Adds contribution form to the context."""
-    if settings.MDN_CONTRIBUTION:
+    if enabled():
         return {
+            'contribution_enabled': True,
             'contribution_form': ContributionForm(),
-            'hide_cta': True
+            'hide_cta': True,
         }
-    return {}
+    return {'contribution_enabled': False}
