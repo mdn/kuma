@@ -40,8 +40,8 @@ def contribute(request):
                         form.cleaned_data['name'],
                         form.cleaned_data['email']
                     )
-                return redirect('contribute_confirmation_succeeded')
-            return redirect('contribute_confirmation_error')
+                return redirect('contribute_succeeded')
+            return redirect('contribute_error')
 
         form = ContributionForm(request.POST)
     else:
@@ -56,6 +56,6 @@ def contribute(request):
 
 @skip_if_disabled
 @never_cache
-def contribute_confirmation(request, status):
+def confirmation(request, status):
     context = {'status': status}
     return render(request, 'contributions/thank_you.html', context)
