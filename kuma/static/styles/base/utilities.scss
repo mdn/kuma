@@ -2,6 +2,7 @@
 Utility classes
 ********************************************************************** */
 
+/* Visually hidden but still read out by screen readers. */
 .offscreen {
     @extend %offscreen-placeholder;
 }
@@ -177,15 +178,4 @@ Utility classes
 
 .light-grey-background {
     background-color: $grey-light;
-}
-
-/* Visually hidden but still read out by screen readers. */
-.visually-hidden {
-    border: 0;
-    clip: rect(1px, 1px, 1px, 1px);
-    height: 1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
 }
