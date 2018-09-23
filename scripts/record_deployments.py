@@ -71,7 +71,7 @@ def deploy_all(app, nr_api_key=None, nr_app_ids=None, sc_api_key=None,
             passed = False
         if verbose:
             safer_id = '%s_APP_ID_%d' % (app.upper(), app_num)
-            content = response.content.replace(app_id, safer_id)
+            content = response.text.replace(app_id, safer_id)
             print("%s (%s): Deployment to New Relic application %s %d: %s"
                   % (success, response.status_code, app, app_num, content))
 
@@ -79,15 +79,20 @@ def deploy_all(app, nr_api_key=None, nr_app_ids=None, sc_api_key=None,
     if sc_api_key and sc_site_id and app == 'kuma':
         response = deploy_speedcurve(sc_site_id, sc_api_key, revision,
                                      description)
+        in_progress = 'Deploy already in progress'
         if response.status_code == 200:
             success = 'SUCCESS'
+            count += 1
+        elif response.status_code == 403 and in_progress in response.text:
+            # Ignore this error
+            success = 'IN PROGRESS'
             count += 1
         else:
             success = 'FAILURE'
             passed = False
         if verbose:
             safer_id = 'SITE_ID_0'
-            content = response.content.replace(sc_site_id, safer_id)
+            content = response.text.replace(sc_site_id, safer_id)
             print("%s (%s): Deployment to SpeedCurve site ID %s: %s"
                   % (success, response.status_code, sc_site_id, content))
 
