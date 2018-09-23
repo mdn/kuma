@@ -36,6 +36,7 @@ Flags
 `Waffle flags`_ control behavior by specific users, groups, percentages, and
 other advanced criteria.
 
+* ``contrib_beta`` - Enable/disable the contributions popup and pages
 * ``kumaediting`` - Enable/disable wiki editing.
 * ``page_move`` - (deprecated) enable/disable page move feature.
 * ``section_edit`` - Show section edit buttons.

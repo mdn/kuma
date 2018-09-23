@@ -288,6 +288,14 @@
   </menu>
 {% endblock %}
 
+{% block contrib_popup %}
+    {%- if contribution_enabled %}
+        {%- with form=contribution_form, is_popover=True %}
+            {%- include "contributions/includes/contribution-form.html" %}
+        {%- endwith %}
+    {%- endif %}
+{% endblock %}
+
 {% block js %}
 
   {% if waffle.flag('section_edit') %}
@@ -331,5 +339,10 @@
   {% if settings.NEWSLETTER and settings.NEWSLETTER_ARTICLE %}
     {% javascript 'newsletter' %}
   {% endif %}
+
+  {%- if contribution_enabled %}
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    {% javascript 'contribute' %}
+  {%- endif %}
 
 {% endblock %}

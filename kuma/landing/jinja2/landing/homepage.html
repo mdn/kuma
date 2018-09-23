@@ -139,9 +139,21 @@
 </div>
 {% endblock %}
 
+{% block contrib_popup %}
+    {%- if contribution_enabled %}
+        {%- with form=contribution_form, is_popover=True %}
+            {%- include "contributions/includes/contribution-form.html" %}
+        {%- endwith %}
+    {%- endif %}
+{% endblock %}
+
 {% block js %}
   {{ super() }}
   {% if settings.NEWSLETTER %}
     {% javascript 'newsletter' %}
   {% endif %}
+  {%- if contribution_enabled %}
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    {% javascript 'contribute' %}
+  {%- endif %}
 {% endblock %}
