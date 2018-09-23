@@ -76,7 +76,7 @@ def deploy_all(app, nr_api_key=None, nr_app_ids=None, sc_api_key=None,
                   % (success, response.status_code, app, app_num, content))
 
     # Send SpeedCurve deployments
-    if sc_api_key and sc_site_id:
+    if sc_api_key and sc_site_id and app == 'kuma':
         response = deploy_speedcurve(sc_site_id, sc_api_key, revision,
                                      description)
         if response.status_code == 200:
