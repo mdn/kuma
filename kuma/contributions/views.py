@@ -16,9 +16,9 @@ from .utils import enabled
 def skip_if_disabled(func):
     """If contributions are not enabled, then 404."""
     @wraps(func)
-    def wrapped(*args, **kwargs):
-        if enabled():
-            return func(*args, **kwargs)
+    def wrapped(request, *args, **kwargs):
+        if enabled(request):
+            return func(request, *args, **kwargs)
         raise Http404
 
     return wrapped
