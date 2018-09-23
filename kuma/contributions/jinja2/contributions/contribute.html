@@ -10,7 +10,8 @@
     {% javascript 'contribute' %}
 {% endblock %}
 
-{% block extrahead %}
+{% block site_meta %}
+    {{ super() }}
     {% set seo_description = _('Contribute to MDN Web Docs') %}
     {% set social_title = _('Support MDN') %}
     <meta property="og:description" content="{{ seo_description }}">
