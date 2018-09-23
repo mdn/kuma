@@ -1,11 +1,6 @@
 (function(win, doc, $) {
     'use strict';
 
-    // hide old table
-    $('.bc-old').addClass('hidden');
-    // show new table
-    $('.bc-data').removeClass('hidden');
-
     // Private var to assign IDs to history for accessibility purposes
     var historyCount = 0;
 
@@ -26,9 +21,6 @@
         return $(this).each(function() {
 
             var $table = $(this);
-
-            // add beta notice & menu
-            addBetaNotice($table);
 
             // Keep track of what may be open within this table
             var $openCell;
@@ -92,60 +84,6 @@
                     ev.preventDefault();
                 }
             });
-
-            /** add beta notice & associated functonality */
-            function addBetaNotice($table) {
-                var $betaMenuWrapper = $('<div />', { 'class': 'bc-beta-menu' });
-                var $betaMenuTrigger = $('<a />', { text: gettext('New compatibility tables are in beta '), href: '/docs/New_Compatibility_Tables_Beta' }).append($('<i />', { class: 'icon-caret-down', 'aria-hidden': 'true' }));
-                var $betaSubmenu = $('<ul />', { 'class': 'submenu js-submenu' });
-                var betaSubmenuItems = [];
-                var betaInfoUrl = '/docs/New_Compatibility_Tables_Beta';
-                var surveyUrl = 'https://www.surveygizmo.com/s3/2342437/0b5ff6b6b8f6';
-                var siteUrl = window.mdn.siteUrl;
-
-                var $betaLink = $('<a />', { text: gettext('More about the beta.'), href: betaInfoUrl });
-                $betaLink.on('touchend', function() {
-                    document.location = siteUrl + betaInfoUrl;
-                });
-                betaSubmenuItems.push($betaLink);
-
-                var $betaSurvey = $('<a />', { text: gettext('Take the survey'), href: surveyUrl, 'class': 'external external-icon' });
-                $betaSurvey.on('touchend', function() {
-                    window.open(surveyUrl);
-                });
-                betaSubmenuItems.push($betaSurvey);
-
-                var $betaError = $('<button />', { text: gettext('Report an error.'), 'class': 'button bc-error' });
-                $betaError.on('click touchend', function() {
-                    mdn.analytics.trackEvent({
-                        category: 'Compat Tables Error',
-                        action: location.pathname
-                    });
-                    mdn.Notifier.growl(gettext('Reported. Thanks!'), { duration: 2000, closable: true }).success();
-                });
-                betaSubmenuItems.push($betaError);
-
-                var $betaShowOld = $('<button />', { text: gettext('Show old table.'), 'class': 'button bc-old' });
-                $betaShowOld.on('click touchend', function() {
-                    $('.bc-old').toggle();
-                    mdn.analytics.trackEvent({
-                        category: 'Compat Tables Show Old',
-                        action: location.pathname
-                    });
-                });
-                betaSubmenuItems.push($betaShowOld);
-
-                $(betaSubmenuItems).each(function() {
-                    var $newItem = $('<li />');
-                    $newItem.append(this);
-                    $newItem.appendTo($betaSubmenu);
-                });
-
-                $betaMenuWrapper.append($betaMenuTrigger).append($betaSubmenu);
-                $betaMenuWrapper.insertBefore($table);
-
-                $betaMenuWrapper.mozMenu().mozKeyboardNav();
-            }
 
             /** Function which closes any open history items, then opens the target history item
                 Acts as the "router" for open and close directives */
