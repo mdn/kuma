@@ -16,7 +16,8 @@ stage("Prepare Infra") {
 stage('Push') {
     dir('infra/apps/mdn/mdn-aws/k8s') {
         def current_revision_hash = utils.get_revision_hash()
-        withEnv(["FROM_REVISION_HASH=${current_revision_hash}"]) {
+        withEnv(["TO_REVISION_HASH=${env.GIT_COMMIT}",
+                 "FROM_REVISION_HASH=${current_revision_hash}"]) {
             // Run the database migrations.
             utils.migrate_db()
             // Start a rolling update of the Kuma-based deployments.
