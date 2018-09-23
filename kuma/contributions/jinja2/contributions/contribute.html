@@ -27,8 +27,6 @@
     {% endwith %}
 {% endblock %}
 
-{% block contrib_popup %}{% endblock %}
-
 {% block content %}
 
 <main id="contributions-page" class="contributions-page" role="main">
@@ -217,4 +215,11 @@
         </div>
     </section>
 </main>
+{% endblock %}
+
+{% block js %}
+  {%- if contribution_enabled %}
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    {% javascript 'contribute' %}
+  {%- endif %}
 {% endblock %}
