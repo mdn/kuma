@@ -22,6 +22,7 @@ def contribute_thank_you_email(username, user_email):
         'site': settings.SITE_URL
     }
 
+    # TODO: Remove when we ship translations, get legal approval
     locale = settings.WIKI_DEFAULT_LANGUAGE
     log.debug('Using the locale %s to send the contribution thank you email', locale)
 
