@@ -23,7 +23,8 @@ from kuma.search.models import Index
 
 from .events import first_edit_email
 from .exceptions import PageMoveError, StaleDocumentsRenderingInProgress
-from .models import (Document, DocumentDeletionLog, DocumentSpamAttempt,
+from .models import (Document, DocumentDeletionLog,
+                     DocumentRenderingInProgress, DocumentSpamAttempt,
                      Revision, RevisionIP)
 from .search import WikiDocumentType
 from .templatetags.jinja_helpers import absolutify
@@ -44,9 +45,11 @@ def render_document(pk, cache_control, base_url, force=False):
 
     try:
         document.render(cache_control, base_url)
+    except DocumentRenderingInProgress:
+        pass
     except Exception as e:
         subject = 'Exception while rendering document %s' % document.pk
-        mail_admins(subject=subject, message=e)
+        mail_admins(subject=subject, message=str(e))
     return document.rendered_errors
 
 
