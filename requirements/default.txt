@@ -289,9 +289,12 @@ pytidylib==0.2.4 \
     --hash=sha256:0af07bd8ebd256af70ca925ada9337faf16d85b3072624f975136a5134150ab6
 
 # Send tracebacks to Sentry instead of emailing admins
-raven==6.2.1 \
-    --hash=sha256:f58ead6842c02d427617e827f4c0a97cfd3f8b648a52e53ef12182002a8663cb \
-    --hash=sha256:c0a30bcc3e3206059f79656d80362ce080b1c991c95d867edce559a7294570fe
+# Code: https://github.com/getsentry/raven-python
+# Changes: https://github.com/getsentry/raven-python/blob/master/CHANGELOG.md
+# Docs: https://docs.sentry.io/hosted/clients/python/
+raven==6.9.0 \
+    --hash=sha256:3fd787d19ebb49919268f06f19310e8112d619ef364f7989246fc8753d469888 \
+    --hash=sha256:95f44f3ea2c1b176d5450df4becdb96c15bf2632888f9ab193e9dd22300ce46a
 
 # Modern caching server, to replace memcached in AWS
 redis==2.10.5 \
