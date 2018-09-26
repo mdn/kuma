@@ -341,7 +341,7 @@
   {% endif %}
 
   {%- if contribution_enabled %}
-    <script src="https://checkout.stripe.com/checkout.js"></script>
+    <script src="https://checkout.stripe.com/checkout.js" defer async></script>
     {% javascript 'contribute' %}
   {%- endif %}
 

@@ -177,29 +177,43 @@
     // Hidden fields.
     var stripePublicKey = form.find('#id_stripe_public_key');
     var stripeToken = form.find('#id_stripe_token');
+    var stripeHandler = null;
     // Other.
     var formButton = form.find('#stripe_submit');
     var amount = formButton.find('#amount');
 
-    // init stripeCheckout handler.
-    var stripeHandler = win.StripeCheckout.configure({
-        key: stripePublicKey.val(),
-        locale: 'en',
-        name: 'MDN Web Docs',
-        description: 'One-time donation',
-        token: function(token) {
-            stripeToken.val(token.id);
-            form.submit();
-        }
-    });
+    /**
+     * Initialise the stripeCheckout handler.
+     */
+    function initStripeHandler() {
+        return win.StripeCheckout.configure({
+            key: stripePublicKey.val(),
+            locale: 'en',
+            name: 'MDN Web Docs',
+            description: 'One-time donation',
+            token: function(token) {
+                stripeToken.val(token.id);
+                form.submit();
+            }
+        });
+    }
 
     // Ensure we only show the form if js is enabled
     if (win.StripeCheckout) {
         $('#contribution-popover-container').removeClass('hidden');
     }
 
-
     var isPopoverBanner = $('.contribution-banner').hasClass('contribution-popover');
+
+    /* If `isPopoverBanner` is false, then this is the
+       contribute page. Init the handler immediately */
+    if (!isPopoverBanner) {
+        // if not already initialised
+        if (stripeHandler === null) {
+            // initialise handler
+            stripeHandler = initStripeHandler();
+        }
+    }
 
     if (isPopoverBanner) {
         var activeElement = null;
@@ -394,6 +408,12 @@
 
         mediaQueryList = window.matchMedia(smallDesktop);
         var initialExpandedClass = mediaQueryList.matches ? 'expanded-extend' : 'expanded';
+
+        // if not already initialised
+        if (stripeHandler === null) {
+            // initialise handler
+            stripeHandler = initStripeHandler();
+        }
 
         popoverBanner.addClass(initialExpandedClass + ' is-expanding');
         popoverBanner.removeClass('is-collapsed');

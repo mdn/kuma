@@ -4,12 +4,6 @@
 
 {% block title %}{{ page_title(_('Contribute')) }}{% endblock %}
 
-{% block site_js %}
-    {{ super() }}
-    <script src="https://checkout.stripe.com/checkout.js"></script>
-    {% javascript 'contribute' %}
-{% endblock %}
-
 {% block site_meta %}
     {{ super() }}
     {% set seo_description = _('Contribute to MDN Web Docs') %}
