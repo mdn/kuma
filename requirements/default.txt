@@ -274,8 +274,10 @@ puente==0.5.0 \
     --hash=sha256:4a17958f7d6a83cb9ff92593c40f34911abafaec6ad959916b754aaa3869f11f
 
 # Translate environment variables into native Python types
-python-decouple==3.0 \
-    --hash=sha256:99834c9ff7ce5c5b2f4a18bc0880753e54ea3aaabc3cfb16961a92d5046665df
+# Code: https://github.com/henriquebastos/python-decouple/
+# Changes: https://github.com/henriquebastos/python-decouple/blob/master/CHANGELOG.md
+python-decouple==3.1 \
+    --hash=sha256:1317df14b43efee4337a4aa02914bf004f010cd56d6c4bd894e6474ec8c4fe2d
 
 # Use libmagic to identify uploaded attachments
 python-magic==0.4.10 \
@@ -305,6 +307,14 @@ requests-mock==0.7.0 \
 sqlparse==0.2.3 \
     --hash=sha256:740a023ef38ce11bbb99a9d143856f56ef4ec5b0d7a853f58c02c65b035114c4 \
     --hash=sha256:becd7cc7cebbdf311de8ceedfcf2bd2403297024418801947f8c953025beeff8
+
+# A Python library for Stripe’s API.
+# Code: https://github.com/stripe/stripe-python
+# Changes: https://github.com/stripe/stripe-python/blob/master/CHANGELOG.md
+# Docs: https://stripe.com/docs/api/python#intro
+stripe==2.8.1 \
+    --hash=sha256:8f556bb9af0b0714753567b1ec8e31649bc9af96980333bffc903155db276c7f \
+    --hash=sha256:984b45d3c56242f23a1f3ad5a43cdaf07353b924193dd97bf8bc30203d4f541b
 
 # Utility class for manipulating URLs, used in util functions
 URLObject==2.4.0 \

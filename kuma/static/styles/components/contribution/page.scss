@@ -1,0 +1,132 @@
+.contributions-page {
+    .section {
+        display: flex;
+        position: relative;
+
+        @media #{$mq-mobile-and-down} {
+            display: block;
+            h2,
+            .faqs {
+                display: block;
+
+                .faq,
+                .faq-feedback {
+                    margin: 2em 0;
+                }
+            }
+        }
+    }
+
+    .backdrop-image {
+        height: auto;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: auto;
+    }
+
+    .index {
+        flex: 30%;
+        z-index: 99;
+
+        h2 {
+            border-bottom: 2px solid $text-color;
+        }
+    }
+
+    .faq-feedback {
+        margin: 2em;
+        position: relative;
+
+        textarea {
+            border-color: #333;
+            box-sizing: border-box;
+            display: block;
+            margin: 0;
+            min-height: 200px;
+            padding-bottom: 2em;
+            width: 100%;
+        }
+
+        button[type='submit'] {
+            border: none;
+            bottom: 5px;
+            position: absolute;
+            right: 5px;
+        }
+    }
+
+    .faqs {
+        flex: 60%;
+
+        .faq {
+            background-color: #fff;
+            border: 2px solid $text-color;
+            margin: 2em;
+            padding: 48px;
+            position: relative;
+
+            ul {
+                list-style-type: initial;
+                padding-left: 1em;
+            }
+
+            .faq-number {
+                background: #333;
+                box-sizing: border-box;
+                color: #fff;
+                font-family: $heading-font-family;
+                font-size: 36px;
+                font-weight: 500;
+                height: 45px;
+                left: -22px;
+                line-height: 40px;
+                padding: 0;
+                position: absolute;
+                text-align: center;
+                top: 42px;
+                width: 45px;
+            }
+
+            .small {
+                display: block;
+            }
+
+            .feedback {
+                border: none;
+            }
+
+            button {
+                background: #fff;
+                border-color: $text-color;
+                border-radius: 50px;
+                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .3);
+                display: inline-block;
+                height: 60px;
+                margin: 1em .5em 0 0;
+                padding: 1em;
+                width: 60px;
+
+                &.active {
+                    background: #333;
+                    border-color: #333;
+                    color: #fff;
+                }
+
+                .icon {
+                    pointer-events: none;
+                }
+            }
+
+            .icon-thumbs-down {
+                transform: scaleX(-1);
+            }
+        }
+
+        h3 {
+            font-size: 1.8em;
+            font-weight: normal;
+            margin-top: 0;
+        }
+    }
+}

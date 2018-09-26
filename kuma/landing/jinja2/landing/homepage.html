@@ -132,11 +132,19 @@
         <li><a href="{{ wiki_url('MDN/Contribute/Localize/Translating_pages') }}">{{ _('Translating') }}</a></li>
         <li><a href="{{ wiki_url('MDN/Promote') }}">{{ _('Promoting MDN') }}</a></li>
         <li><a href="https://github.com/mozilla/kuma#readme">{{ _('Contributing to the MDN codebase') }}</a></li>
-        <li><a href="https://github.com/mdn/browser-compat-data">{{ _('Updating browser compat data') }}</a></li>
+        <li><a href="https://github.com/mdn/browser-compat-data">{{ _('Updating browser compatibility data') }}</a></li>
       </ul>
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block contrib_popup %}
+    {%- if contribution_enabled %}
+        {%- with form=contribution_form, is_popover=True %}
+            {%- include "contributions/includes/contribution-form.html" %}
+        {%- endwith %}
+    {%- endif %}
 {% endblock %}
 
 {% block js %}
@@ -144,4 +152,8 @@
   {% if settings.NEWSLETTER %}
     {% javascript 'newsletter' %}
   {% endif %}
+  {%- if contribution_enabled %}
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    {% javascript 'contribute' %}
+  {%- endif %}
 {% endblock %}

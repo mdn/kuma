@@ -247,7 +247,7 @@ def test_scrape(scraper):
     """The scraper will loop through sources until complete."""
     scraper.add_source('fake', 'loop', length=2, depth=2)
     sources = scraper.scrape()
-    assert sources.keys() == ['fake:loop', 'fake:loop2', 'fake:loop21']
+    assert set(sources.keys()) == {'fake:loop', 'fake:loop2', 'fake:loop21'}
 
 
 def test_scrape_error(scraper):

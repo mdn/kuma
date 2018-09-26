@@ -14,6 +14,7 @@ services:
     environment:
       # Django settings overrides:
       - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
+      - ALLOW_ALL_IFRAMES=${ALLOW_ALL_IFRAMES:-False}
       - ALLOWED_HOSTS=*
       - ATTACHMENT_HOST=${ATTACHMENT_HOST:-localhost:8000}
       - BROKER_URL=redis://redis:6379/0
@@ -97,6 +98,7 @@ services:
       - memcached
     environment:
       - interactive_examples__base_url=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
+      - live_samples__base_url=http://${ATTACHMENT_HOST:-localhost:8000}
       - log__console=true
       - log__file=
       - server__template_root_dir=macros

@@ -1,0 +1,318 @@
+@import 'includes/vars';
+@import './vars';
+
+.contribution-form {
+    position: relative;
+
+    .form-footer {
+        margin-top: $grid-spacing;
+        white-space: nowrap;
+        text-align: center;
+
+        @media #{$mq-tablet-and-up} {
+            text-align: left;
+        }
+    }
+
+    .form-footer button,
+    .form-footer .button {
+        background-color: $contribution-form-button-color;
+        border-radius: $contribution-form-input-height;
+        border: none;
+        color: #fff;
+        font-weight: bold;
+        font-weight: normal;
+        height: $contribution-form-input-height;
+        line-height: $contribution-form-input-height;
+        min-width: 190px;
+        padding: 0;
+        text-align: center;
+        white-space: nowrap;
+
+        &:hover {
+            background-color: darken($contribution-form-button-color, 5%);
+        }
+
+        svg {
+            margin-left: 1em;
+            vertical-align: middle;
+        }
+
+        .payment-details {
+            display: none;
+            line-height: 0;
+            padding: 10px;
+            vertical-align: top;
+
+            @media #{$mq-mobile-and-down} {
+                display: inline-block;
+                margin-top: -4px;
+                padding: 0;
+                position: relative;
+                vertical-align: middle;
+
+                > img {
+                    max-height: 24px;
+                }
+            }
+        }
+    }
+
+    p.legal-copy {
+        margin: 2em 0 0;
+        font-size: 14px;
+        text-align: center;
+
+        @media #{$mq-tablet-and-up} {
+            text-align: left;
+        }
+
+        a {
+            color: $contribution-form-button-color;
+            text-decoration: underline;
+        }
+    }
+
+    .form-group {
+        margin-top: 12px;
+        margin-bottom: 0;
+        max-width: 540px;
+
+        .errorlist {
+            display: block;
+            text-align: right;
+        }
+
+        > input:first-of-type {
+            margin-top: 0;
+        }
+
+        input {
+            border-color: $text-color;
+            box-sizing: border-box;
+            display: block;
+            font-weight: normal;
+            height: $contribution-form-input-height;
+            line-height: 3;
+            margin-top: $contribution-form-input-spacing;
+            padding-left: 12px;
+            width: 100%;
+
+            &.error {
+                border-color: $error;
+                color: $error;
+            }
+        }
+
+        .form-input-amount {
+            padding-left: 35px;
+        }
+
+        .label {
+            margin-left: 20px;
+            margin-top: 33px;
+            position: absolute;
+        }
+
+        .form-input-amount,
+        .form-radios-donation-choices {
+            border-radius: $contribution-form-input-height;
+            display: inline-block;
+            margin: $contribution-form-input-spacing 0 0;
+            vertical-align: middle;
+            width: 49%;
+
+            @media #{$mq-small-desktop-and-down} {
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+
+    .form-radios-donation-choices {
+        text-align: center;
+
+        @media #{$mq-large-desktop-and-up} {
+            text-align: left;
+        }
+
+        li {
+            display: inline-block;
+            margin-right: 11px;
+            position: relative;
+
+            @media #{$mq-tablet-and-down} {
+                margin-right: 1em;
+                width: auto;
+            }
+
+            input[type='radio'] {
+                cursor: pointer;
+                opacity: 0;
+                position: absolute;
+            }
+
+            label {
+                background-color: #fff;
+                border-radius: $contribution-form-input-height;
+                border: 2px solid $text-color;
+                display: inline-block;
+                height: $contribution-form-input-height;
+                line-height: $contribution-form-input-height;
+                min-width: $contribution-form-input-height;
+                text-align: center;
+
+                &:hover {
+                    background: darken(#fff, 3%);
+                }
+
+                &.active {
+                    background: $text-color;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    .payment-details {
+        display: block;
+        margin-top: $grid-spacing;
+
+        @media #{$mq-mobile-and-up} {
+            display: inline-block;
+            margin: 0 10px;
+            vertical-align: middle;
+        }
+    }
+
+    .cta-min-text {
+        display: none;
+    }
+
+    .cta-max-text {
+        display: inline;
+    }
+
+    .email-input-container {
+        position: relative;
+    }
+
+    .tooltip-button {
+        background: none;
+        border: none;
+        color: #222;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+}
+
+.tooltip {
+    background-color: #fff;
+    background-image: none;
+    border-radius: 0;
+    border: 2px solid $text-color;
+    display: none;
+    font-size: $body-font-size;
+    left: 0;
+    max-width: 300px;
+    padding: 24px 14px;
+    position: absolute;
+    top: 0;
+    z-index: 100;
+
+    > p:last-child {
+        margin-bottom: 0;
+    }
+
+    // CSS triangle to handle tooltip right arrow.
+    &:after,
+    &:before {
+        border-style: solid;
+        border-width: 10px 0 10px 10px;
+        bottom: auto;
+        content: '';
+        left: auto;
+        margin-top: -10px;
+        position: absolute;
+        top: 50%;
+        width: 0;
+    }
+
+    &:after {
+        border-color: transparent #fff;
+        right: -7px;
+    }
+
+    &:before {
+        border-color: transparent $text-color;
+        right: -10px;
+    }
+
+    &.is-open {
+        display: block;
+        visibility: visible;
+    }
+
+    &.is-opening {
+        display: block;
+        pointer-events: none;
+        visibility: hidden;
+    }
+
+    &.has-arrow-top {
+        // CSS triangle to handle tooltip top arrow.
+        &:after,
+        &:before {
+            border-style: solid;
+            border-width: 0 10px 10px 10px;
+            content: '';
+            left: auto;
+            margin-top: 0;
+            position: absolute;
+            right: 14px;
+            width: 0;
+        }
+
+        &:after {
+            border-color: #fff transparent;
+            top: -7px;
+        }
+
+        &:before {
+            border-color: $text-color transparent;
+            top: -10px;
+        }
+    }
+}
+
+.tooltip-close {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    right: 2px;
+    top: 4px;
+
+    // Sets X icon.
+    &:before {
+        content: '\f00d';
+        font-family: FontAwesome;
+    }
+}
+
+/* specific style for pop-over */
+.contribution-banner.contribution-popover {
+    .form-input-amount,
+    .form-radios-donation-choices {
+        border-radius: $contribution-form-input-height;
+        display: inline-block;
+        margin: $contribution-form-input-spacing 0 0;
+        vertical-align: middle;
+        width: 49%;
+
+        @media #{$mq-tablet-and-down} {
+            display: block;
+            width: 100%;
+        }
+    }
+}

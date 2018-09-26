@@ -23,7 +23,8 @@ from kuma.search.models import Index
 
 from .events import first_edit_email
 from .exceptions import PageMoveError, StaleDocumentsRenderingInProgress
-from .models import Document, DocumentSpamAttempt, Revision, RevisionIP
+from .models import (Document, DocumentDeletionLog, DocumentSpamAttempt,
+                     Revision, RevisionIP)
 from .search import WikiDocumentType
 from .templatetags.jinja_helpers import absolutify
 from .utils import tidy_content
@@ -453,3 +454,13 @@ def delete_old_documentspamattempt_data(days=30):
     dsas_reviewed.update(data=None)
     dsas_unreviewed.update(
         data=None, review=DocumentSpamAttempt.REVIEW_UNAVAILABLE)
+
+
+@task
+@skip_in_maintenance_mode
+def delete_logs_for_purged_documents():
+    """Delete DocumentDeletionLogs for purged documents."""
+    for ddl in DocumentDeletionLog.objects.all():
+        doc = Document.admin_objects.filter(locale=ddl.locale, slug=ddl.slug)
+        if not doc.exists():
+            ddl.delete()

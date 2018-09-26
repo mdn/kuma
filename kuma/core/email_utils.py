@@ -55,7 +55,7 @@ def render_email(template, context):
         Because of safe_translation decorator, if this fails,
         the function will be run again in English.
         """
-        req = RequestFactory()
+        req = RequestFactory().get('/')
         req.META = {}
         req.LANGUAGE_CODE = locale
 

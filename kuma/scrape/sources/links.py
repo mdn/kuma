@@ -34,6 +34,7 @@ class LinksSource(Source):
         'profiles',
         'search',
         'users/signin',
+        'docs/tag/',
     ))
 
     def __init__(self, path=None, **options):

@@ -1378,7 +1378,7 @@ def test_invalid_token_fails(wiki_user, client):
     bad_last_char = '2' if recover_url[-1] == '3' else '3'
     bad_recover_url = recover_url[:-1] + bad_last_char
     response = client.get(bad_recover_url)
-    assert 'This link is no longer valid.' in response.content
+    assert b'This link is no longer valid.' in response.content
 
 
 def test_invalid_uid_fails(wiki_user, client):
@@ -1388,4 +1388,4 @@ def test_invalid_uid_fails(wiki_user, client):
     response = client.get(bad_recover_url)
     assert response.status_code == 200
     assert_no_cache_header(response)
-    assert 'This link is no longer valid.' in response.content
+    assert b'This link is no longer valid.' in response.content

@@ -37,7 +37,8 @@ ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
 ALLOWED_ATTRIBUTES['*'] = ['lang']
 # Note: <iframe> is allowed, but src="" is pre-filtered before bleach
 ALLOWED_ATTRIBUTES['iframe'] = ['id', 'src', 'sandbox', 'seamless',
-                                'frameborder', 'width', 'height', 'class']
+                                'frameborder', 'width', 'height', 'class',
+                                'allow']
 ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align', 'lang', 'dir']
 ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'id', 'title', 'lang', 'dir']
 ALLOWED_ATTRIBUTES['abbr'] = ['style', 'class', 'id', 'title', 'lang', 'dir']
@@ -54,7 +55,6 @@ ALLOWED_ATTRIBUTES['th'] = ['style', 'id', 'class', 'colspan', 'rowspan',
 ALLOWED_ATTRIBUTES['video'] = ['style', 'id', 'class', 'lang', 'src',
                                'controls', 'dir']
 ALLOWED_ATTRIBUTES['font'] = ['color', 'face', 'size', 'dir']
-ALLOWED_ATTRIBUTES['details'] = ['open']
 ALLOWED_ATTRIBUTES['select'] = ['name', 'dir']
 ALLOWED_ATTRIBUTES['option'] = ['value', 'selected', 'dir']
 ALLOWED_ATTRIBUTES['ol'] = ['style', 'class', 'id', 'lang', 'start', 'dir']
@@ -79,6 +79,7 @@ ALLOWED_ATTRIBUTES['ins'] = ['datetime']
 ALLOWED_ATTRIBUTES['del'] = ['datetime']
 ALLOWED_ATTRIBUTES['meter'] += ['max', 'min', 'value', 'low', 'high', 'optimum',
                                 'form']
+ALLOWED_ATTRIBUTES['details'] += ['open']
 # MathML
 ALLOWED_ATTRIBUTES.update(dict((x, ['encoding', 'src']) for x in (
     'annotation', 'annotation-xml')))

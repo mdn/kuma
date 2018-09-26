@@ -2,6 +2,7 @@
 Utility classes
 ********************************************************************** */
 
+/* Visually hidden but still read out by screen readers. */
 .offscreen {
     @extend %offscreen-placeholder;
 }

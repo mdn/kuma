@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import mock
 import pytest
 import requests
@@ -16,7 +18,7 @@ def test_verify_empty_key(spam_check_everyone, constance_config):
 def test_verify_valid_key(spam_check_everyone, constance_config,
                           mock_requests):
     constance_config.AKISMET_KEY = 'api-key'
-    mock_requests.post(VERIFY_URL, content='valid')
+    mock_requests.post(VERIFY_URL, content=b'valid')
     client = Akismet()
     assert not mock_requests.called
     assert client.ready
@@ -27,7 +29,7 @@ def test_verify_valid_key(spam_check_everyone, constance_config,
 def test_verify_invalid_key(spam_check_everyone, constance_config,
                             mock_requests):
     constance_config.AKISMET_KEY = 'api-key'
-    mock_requests.post(VERIFY_URL, content='invalid')
+    mock_requests.post(VERIFY_URL, content=b'invalid')
     client = Akismet()
     assert not mock_requests.called
     assert not client.ready
@@ -38,7 +40,7 @@ def test_verify_invalid_key(spam_check_everyone, constance_config,
 def test_verify_invalid_key_wrong_response(spam_check_everyone,
                                            constance_config, mock_requests):
     constance_config.AKISMET_KEY = 'api-key'
-    mock_requests.post(VERIFY_URL, content='fail')
+    mock_requests.post(VERIFY_URL, content=b'fail')
     client = Akismet()
     assert not client.ready
     assert client.key == 'api-key'
@@ -64,7 +66,7 @@ def test_exception_attributes(spam_check_everyone, constance_config,
     constance_config.AKISMET_KEY = 'comment'
     mock_requests.post(
         VERIFY_URL,
-        content='uh uh',
+        content=b'uh uh',
         headers={'X-Akismet-Debug-Help': 'err0r!'},
     )
 
@@ -75,11 +77,11 @@ def test_exception_attributes(spam_check_everyone, constance_config,
 def test_check_comment_ham(spam_check_everyone, constance_config,
                            mock_requests):
     constance_config.AKISMET_KEY = 'comment'
-    mock_requests.post(VERIFY_URL, content='valid')
+    mock_requests.post(VERIFY_URL, content=b'valid')
     client = Akismet()
     assert client.ready
 
-    mock_requests.post(CHECK_URL, content='true')
+    mock_requests.post(CHECK_URL, content=b'true')
     valid = client.check_comment('0.0.0.0', 'Mozilla',
                                  comment_content='yada yada')
     assert valid
@@ -92,8 +94,8 @@ def test_check_comment_ham(spam_check_everyone, constance_config,
 def test_check_comment_spam(spam_check_everyone, constance_config,
                             mock_requests):
     constance_config.AKISMET_KEY = 'comment'
-    mock_requests.post(VERIFY_URL, content='valid')
-    mock_requests.post(CHECK_URL, content='false')
+    mock_requests.post(VERIFY_URL, content=b'valid')
+    mock_requests.post(CHECK_URL, content=b'false')
     client = Akismet()
     valid = client.check_comment('0.0.0.0', 'Mozilla',
                                  comment_content='yada yada')
@@ -103,9 +105,9 @@ def test_check_comment_spam(spam_check_everyone, constance_config,
 def test_check_comment_wrong_response(spam_check_everyone, constance_config,
                                       mock_requests):
     constance_config.AKISMET_KEY = 'comment'
-    mock_requests.post(VERIFY_URL, content='valid')
+    mock_requests.post(VERIFY_URL, content=b'valid')
     client = Akismet()
-    mock_requests.post(CHECK_URL, content='wat', status_code=202)
+    mock_requests.post(CHECK_URL, content=b'wat', status_code=202)
     with pytest.raises(AkismetError) as excinfo:
         client.check_comment('0.0.0.0', 'Mozilla',
                              comment_content='yada yada')
@@ -118,7 +120,7 @@ def test_check_comment_wrong_response(spam_check_everyone, constance_config,
 def test_submit_spam_success(spam_check_everyone, constance_config,
                              mock_requests):
     constance_config.AKISMET_KEY = 'spam'
-    mock_requests.post(VERIFY_URL, content='valid')
+    mock_requests.post(VERIFY_URL, content=b'valid')
     client = Akismet()
     mock_requests.post(SPAM_URL, content=client.submission_success)
     result = client.submit_spam('0.0.0.0', 'Mozilla',
@@ -129,9 +131,9 @@ def test_submit_spam_success(spam_check_everyone, constance_config,
 def test_submit_spam_failure(spam_check_everyone, constance_config,
                              mock_requests):
     constance_config.AKISMET_KEY = 'spam'
-    mock_requests.post(VERIFY_URL, content='valid')
+    mock_requests.post(VERIFY_URL, content=b'valid')
     client = Akismet()
-    mock_requests.post(SPAM_URL, content='something completely different')
+    mock_requests.post(SPAM_URL, content=b'something completely different')
     with pytest.raises(AkismetError) as excinfo:
         client.submit_spam('0.0.0.0', 'Mozilla',
                            comment_content='spam. eggs.')
@@ -144,7 +146,7 @@ def test_submit_spam_failure(spam_check_everyone, constance_config,
 def test_submit_ham_success(spam_check_everyone, constance_config,
                             mock_requests):
     constance_config.AKISMET_KEY = 'spam'
-    mock_requests.post(VERIFY_URL, content='valid')
+    mock_requests.post(VERIFY_URL, content=b'valid')
     client = Akismet()
     mock_requests.post(HAM_URL, content=client.submission_success)
     result = client.submit_ham('0.0.0.0', 'Mozilla',
@@ -155,9 +157,9 @@ def test_submit_ham_success(spam_check_everyone, constance_config,
 def test_submit_ham_failure(spam_check_everyone, constance_config,
                             mock_requests):
     constance_config.AKISMET_KEY = 'spam'
-    mock_requests.post(VERIFY_URL, content='valid')
+    mock_requests.post(VERIFY_URL, content=b'valid')
     client = Akismet()
-    mock_requests.post(HAM_URL, content='something completely different')
+    mock_requests.post(HAM_URL, content=b'something completely different')
     with pytest.raises(AkismetError) as excinfo:
         client.submit_ham('0.0.0.0', 'Mozilla',
                           comment_content='eggs with ham. ham with eggs.')

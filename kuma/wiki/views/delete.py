@@ -132,6 +132,15 @@ def purge_document(request, document_slug, document_locale):
     document = get_object_or_404(Document.deleted_objects.all(),
                                  slug=document_slug,
                                  locale=document_locale)
+    deletion_log_entries = DocumentDeletionLog.objects.filter(
+        locale=document_locale,
+        slug=document_slug
+    )
+    if deletion_log_entries.exists():
+        deletion_log = deletion_log_entries.order_by('-pk')[0]
+    else:
+        deletion_log = {}
+
     if request.method == 'POST' and 'confirm' in request.POST:
         document.purge()
         return redirect(reverse('wiki.document',
@@ -140,4 +149,6 @@ def purge_document(request, document_slug, document_locale):
     else:
         return render(request,
                       'wiki/confirm_purge.html',
-                      {'document': document})
+                      {'document': document,
+                       'deletion_log': deletion_log,
+                       })

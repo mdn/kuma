@@ -13,6 +13,7 @@ from django.core.exceptions import ValidationError
 from django.db import models, transaction
 from django.db.models import signals
 from django.utils.decorators import available_attrs
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext, ugettext_lazy as _
 from pyquery import PyQuery
@@ -30,8 +31,9 @@ from kuma.spam.models import AkismetSubmission, SpamAttempt
 from . import kumascript
 from .constants import (DEKI_FILE_URL, EXPERIMENT_TITLE_PREFIX, KUMA_FILE_URL,
                         REDIRECT_CONTENT, REDIRECT_HTML)
-from .content import (Extractor, get_content_sections, get_seo_description,
-                      H2TOCFilter, H3TOCFilter, SectionTOCFilter)
+from .content import (clean_content, Extractor, get_content_sections,
+                      get_seo_description, H2TOCFilter, H3TOCFilter,
+                      SectionTOCFilter)
 from .content import parse as parse_content
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, NotDocumentView,
@@ -176,6 +178,7 @@ class DocumentAttachment(models.Model):
             )
 
 
+@python_2_unicode_compatible
 class Document(NotificationsMixin, models.Model):
     """A localized knowledgebase document, not revision-specific."""
     TOC_FILTERS = {
@@ -315,8 +318,8 @@ class Document(NotificationsMixin, models.Model):
     deleted_objects = DeletedDocumentManager()
     admin_objects = DocumentAdminManager()
 
-    def __unicode__(self):
-        return u'%s (%s)' % (self.get_absolute_url(), self.title)
+    def __str__(self):
+        return '%s (%s)' % (self.get_absolute_url(), self.title)
 
     @cache_with_field('body_html')
     def get_body_html(self, *args, **kwargs):
@@ -1701,7 +1704,7 @@ class Revision(models.Model):
 
     @property
     def content_cleaned(self):
-        return Document.objects.clean_content(self.content)
+        return clean_content(self.content)
 
     @cached_property
     def previous(self):

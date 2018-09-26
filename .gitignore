@@ -28,6 +28,9 @@ coverage.xml
 # Atom
 .ropeproject
 
+# PyCharm
+.idea
+
 # Sphinx documentation
 /docs/_build/
 
@@ -59,6 +62,8 @@ build.py
 developer.mozilla.org.tar.gz
 docker-compose.dev.yml
 docker-compose.locust.yml
+etc/nginx/ssl/developer.127.0.0.1.nip.io.crt
+etc/nginx/ssl/developer.127.0.0.1.nip.io.key
 humans.txt
 james.ini
 kuma/static/js/libs/ckeditor/source/ckbuilder/

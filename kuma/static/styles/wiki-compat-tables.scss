@@ -38,6 +38,18 @@ Footnotes & Legend
 
 
 /*
-Beta menu
+GitHub link
 ====================================================================== */
-@import 'components/compat-tables/bc-beta';
+@import 'components/compat-tables/bc-github-link';
+
+/*
+Hack to support rollout of new compat tables, remove after pages re-generated
+====================================================================== */
+
+.bc-old {
+    display: none;
+}
+
+.bc-data.hidden {
+    display: block;
+}

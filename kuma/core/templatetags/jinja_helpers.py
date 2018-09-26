@@ -32,6 +32,17 @@ library.filter(urlparams)
 library.global_function(statici18n)
 
 
+@library.global_function(name='assert')
+def assert_function(statement, message=None):
+    """Add runtime assertions to Jinja2 templates."""
+    if not statement:
+        if message:
+            raise RuntimeError('Failed assertion: {}'.format(message))
+        else:
+            raise RuntimeError('Failed assertion')
+    return ''
+
+
 @library.filter
 def paginator(pager):
     """Render list of pages."""

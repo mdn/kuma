@@ -3,8 +3,7 @@ from __future__ import absolute_import, unicode_literals
 
 import re
 
-from django.utils.six import (binary_type,
-                              python_2_unicode_compatible,
+from django.utils.six import (binary_type, PY3, python_2_unicode_compatible,
                               text_type)
 from django.utils.six.moves.urllib.parse import unquote
 
@@ -144,9 +143,24 @@ class Source(object):
 
     def decode_href(self, href):
         """Convert URL-escaped href attributes to unicode."""
-        decoded = unquote(binary_type(href))
-        assert isinstance(decoded, binary_type)
-        decoded = decoded.decode('utf8')
+        if PY3:  # pragma: no cover
+            # TODO: Remove the PY3 condition once we don't run Python 2 anymore
+            # In Python 3, unquote returns unicode
+            if isinstance(href, binary_type):
+                uhref = href.decode('ascii')
+            else:
+                uhref = href
+            decoded = unquote(uhref)
+            assert isinstance(decoded, text_type)
+        else:
+            # In Python 2, unquote takes and returns binary
+            if isinstance(href, binary_type):
+                bhref = href
+            else:
+                bhref = href.encode('utf-8')
+            decoded = unquote(bhref)
+            assert isinstance(decoded, binary_type)
+            decoded = decoded.decode('utf8')
         return decoded
 
     def gather(self, requester, storage):
@@ -223,7 +237,10 @@ class DocumentBaseSource(Source):
         super(DocumentBaseSource, self).__init__(path, **options)
         if path != unquote(path):
             raise ValueError('URL-encoded path "%s"' % path)
-        self.locale, self.slug = self.locale_and_slug(path)
+        try:
+            self.locale, self.slug = self.locale_and_slug(path)
+        except ValueError:
+            self.locale, self.slug = None, None
 
     def locale_and_slug(self, path):
         """Extract a document locale and slug from a path."""

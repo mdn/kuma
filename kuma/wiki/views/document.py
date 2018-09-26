@@ -614,7 +614,11 @@ def document(request, document_slug, document_locale):
             slug=document_slug
         )
         if deletion_log_entries.exists():
-            return _document_deleted(request, deletion_log_entries)
+            # Show deletion log and restore / purge for soft-deleted docs
+            deleted_doc = Document.deleted_objects.filter(
+                locale=document_locale, slug=document_slug)
+            if deleted_doc.exists():
+                return _document_deleted(request, deletion_log_entries)
 
         # We can throw a 404 immediately if the request type is HEAD.
         # TODO: take a shortcut if the document was found?

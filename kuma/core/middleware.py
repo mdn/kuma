@@ -58,7 +58,7 @@ class LangSelectorMiddleware(MiddlewareBase):
 
         # Redirect to same path with requested language and without ?lang
         new_query = dict((smart_str(k), v) for
-                         k, v in request.GET.iteritems() if k != 'lang')
+                         k, v in request.GET.items() if k != 'lang')
         if new_query:
             new_path = urlparams(new_path, **new_query)
         response = HttpResponseRedirect(new_path)
