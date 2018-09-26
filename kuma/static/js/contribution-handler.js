@@ -153,18 +153,26 @@
                 // Parses the stringified storage item
                 disabledStorageItem = JSON.parse(disabledStorageItem);
 
-                if (disabledStorageItem.value) {
-                    if (disabledStorageItem.timestamp + CONTRIBUTIONS_DISABLED_EXPIRATION > date) {
-                        // Keep the popover hidden if we aren't passed the expiration date yet.
-                        popoverBanner.addClass('hidden');
-                        popoverBanner.attr('aria-hidden', true);
-                    } else {
-                        // Remove the item if it has expired.
-                        localStorage.removeItem('contributionsPopoverDisabled');
-                    }
+                if (disabledStorageItem.value 
+                    && disabledStorageItem.timestamp + CONTRIBUTIONS_DISABLED_EXPIRATION < date) {
+                    // Remove the item if it has expired.
+                    localStorage.removeItem('contributionsPopoverDisabled');
+                    showPopover();
                 }
+            } else {
+                // Show if LS does not exist
+                showPopover();
             }
+        } else {
+            // Show if LS does not exist
+            showPopover();
         }
+    }
+
+    // Removes 'hidden' class from popover
+    function showPopover() {
+        popoverBanner.removeClass('hidden');
+        popoverBanner.attr('aria-hidden', false);
     }
 
     var form = $('#contribute-form');
@@ -192,12 +200,6 @@
             form.submit();
         }
     });
-
-    // Ensure we only show the form if js is enabled
-    if (win.StripeCheckout) {
-        $('#contribution-popover-container').removeClass('hidden');
-    }
-
 
     var isPopoverBanner = $('.contribution-banner').hasClass('contribution-popover');
 
