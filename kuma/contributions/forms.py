@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+import logging
 from decimal import Decimal
 
 import stripe
@@ -9,6 +10,9 @@ from django.core.validators import MinValueValidator
 from django.utils.translation import ugettext_lazy as _
 
 from kuma.core.form_fields import StrippedCharField
+
+log = logging.getLogger('kuma.contributions.forms')
+
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -106,10 +110,6 @@ class ContributionForm(forms.Form):
 
     def make_charge(self):
         """Make a charge using the Stripe API and validated form."""
-        charge = {
-            'id': '',
-            'status': ''
-        }
         amount = self.cleaned_data['donation_amount'] or self.cleaned_data['donation_choices']
         if isinstance(amount, Decimal):
             amount = amount * Decimal('100')
@@ -118,12 +118,20 @@ class ContributionForm(forms.Form):
             amount = amount * 100
         token = self.cleaned_data.get('stripe_token', '')
         if token and amount:
-            # TODO: Handle API errors
-            # See https://stripe.com/docs/api/python, "Handling Errors"
-            charge = stripe.Charge.create(
-                amount=amount,
-                currency='usd',
-                source=token,
-                description="Contribute to MDN Web Docs"
-            )
-        return charge
+            try:
+                stripe.Charge.create(
+                    amount=amount,
+                    currency='usd',
+                    source=token,
+                    description="Contribute to MDN Web Docs"
+                )
+                return True
+            except Exception as e:
+                log.error(
+                    'Stripe charge, something went wrong: {} [{}] {}'.format(
+                        self.cleaned_data['name'],
+                        self.cleaned_data['email'],
+                        e
+                    )
+                )
+        return False
