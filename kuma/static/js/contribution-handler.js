@@ -504,7 +504,7 @@
     setupTooltips();
 
     // Send to GA if popover is displayed.
-    if (!popoverBanner.is(':hidden')){
+    if (popoverBanner.is(':visible')) {
         mdn.analytics.trackEvent({
             category: 'Contribution banner',
             action: 'shown',
