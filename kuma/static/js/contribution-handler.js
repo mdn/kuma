@@ -154,7 +154,7 @@
                 disabledStorageItem = JSON.parse(disabledStorageItem);
 
                 if (disabledStorageItem.value 
-                    && disabledStorageItem.timestamp + CONTRIBUTIONS_DISABLED_EXPIRATION < date) {
+                        && disabledStorageItem.timestamp + CONTRIBUTIONS_DISABLED_EXPIRATION < date) {
                     // Remove the item if it has expired.
                     localStorage.removeItem('contributionsPopoverDisabled');
                     showPopover();
