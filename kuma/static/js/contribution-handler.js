@@ -190,6 +190,7 @@
     var stripeHandler = null;
     // Other.
     var formButton = form.find('#stripe_submit');
+    var formErrorMessage = form.find('#contribution-error-message');
     var amount = formButton.find('#amount');
 
     /**
@@ -366,18 +367,20 @@
             value: 1
         });
 
-        // On success open Stripe Checkout modal.
-        stripeHandler.open({
-            image: 'https://avatars1.githubusercontent.com/u/7565578?s=280&v=4',
-            name: 'MDN Web Docs',
-            description: 'Contribute to MDN Web Docs',
-            zipCode: true,
-            amount: (selectedAmount * 100),
-            email: $(emailField).val(),
-            closed: function() {
-                form.removeClass('disabled');
-            }
-        });
+        if (stripeHandler !== null) {
+            // On success open Stripe Checkout modal.
+            stripeHandler.open({
+                image: 'https://avatars1.githubusercontent.com/u/7565578?s=280&v=4',
+                name: 'MDN Web Docs',
+                description: 'Contribute to MDN Web Docs',
+                zipCode: true,
+                amount: (selectedAmount * 100),
+                email: $(emailField).val(),
+                closed: function() {
+                    form.removeClass('disabled');
+                }
+            });
+        }
     }
 
     /**
@@ -387,7 +390,7 @@
     function onFormButtonClick() {
         // Calculate the role of the submit button
         if (isPopoverBanner && popoverBanner.hasClass('is-collapsed')) {
-            expandCta();
+            expandPopover();
         } else {
             onSubmit();
         }
@@ -410,9 +413,44 @@
     }
 
     /**
+     * Gets and executes stripe's checkout.js script to be used when submitting
+     * also handles errors when getting the resource
+     */
+    function getStripeCheckoutScript() {
+        $.getScript('https://checkout.stripe.com/checkout.js')
+            .done(function() {
+                // init stripeCheckout handler.
+                stripeHandler = win.StripeCheckout.configure({
+                    key: stripePublicKey.val(),
+                    locale: 'en',
+                    name: 'MDN Web Docs',
+                    description: 'One-time donation',
+                    token: function(token) {
+                        stripeToken.val(token.id);
+                        form.submit();
+                    }
+                });
+            })
+            .fail(function(error) {
+                console.error('Failed to load stripe checkout library', error);
+                toggleScriptError();
+            });
+    }
+
+    /**
+     * Displays a visual error if we cannot load the checkout script
+     * also disables the submission button
+     */
+    function toggleScriptError() {
+        formButton.attr('disabled') ? formButton.removeAttr('disabled') : formButton.attr('disabled', 'true');
+        formErrorMessage.toggle();
+    }
+
+    /**
      * Expands the popover to show the full contents.
      */
-    function expandCta() {
+    function expandPopover() {
+        getStripeCheckoutScript();
         var secondaryHeader = popoverBanner[0].querySelector('h4');
         var smallDesktop = '(max-width: 1092px)';
 
@@ -459,6 +497,11 @@
      */
     function collapseCta() {
         collapseButton.off();
+
+        // Remove error if it exists
+        if (formButton.hasClass('disabled')){
+            toggleScriptError();
+        }
 
         // Add transitional class for opacity animation.
         popoverBanner.addClass('is-collapsing');
