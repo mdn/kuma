@@ -201,11 +201,13 @@ class DocumentTests(UserTestCase, WikiTestCase):
         response = self.client.get(urlparams(d.get_absolute_url()))
         self.assertNotContains(response, 'Redirected from ')
 
-    def test_does_not_include_csrf(self):
+    @mock.patch('kuma.contributions.context_processors.enabled')
+    def test_does_not_include_csrf(self, mock_enabled):
         """
         The document should not include CSRF tokens, since it causes
         problems when used with a CDN like CloudFront (see bugzilla #1456165).
         """
+        mock_enabled.return_value = True
         self.client.login(username='testuser', password='testpass')
         d = document(save=True)
         resp = self.client.get(d.get_absolute_url())

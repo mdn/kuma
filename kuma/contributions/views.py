@@ -7,6 +7,7 @@ from django.conf import settings
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
 
 from .forms import ContributionForm
 from .tasks import contribute_thank_you_email
@@ -26,6 +27,7 @@ def skip_if_disabled(func):
 
 @skip_if_disabled
 @never_cache
+@csrf_exempt
 def contribute(request):
     initial_data = {}
     if request.user.is_authenticated and request.user.email:

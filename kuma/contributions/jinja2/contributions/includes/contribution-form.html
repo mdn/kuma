@@ -35,7 +35,6 @@
         </div>
         <div class="column-half">
             <form id="contribute-form" class="contribution-form" method="post" action="{{ url('contribute') }}" novalidate>
-                {% csrf_token %}
                 <div class="form-group">
                     <label class="offscreen" for="id_{{form.name.name}}">{{form.name.label}}</label>
                     {{form.name}}
