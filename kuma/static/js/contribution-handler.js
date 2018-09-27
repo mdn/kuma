@@ -432,7 +432,6 @@
      * also disables the submission button
      */
     function toggleScriptError() {
-        formButton.toggleClass('disabled');
         formButton.attr('disabled') ? formButton.removeAttr('disabled') : formButton.attr('disabled', 'true');
         formErrorMessage.toggle();
     }
