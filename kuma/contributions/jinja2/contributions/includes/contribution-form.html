@@ -70,6 +70,9 @@
                         and does not receive your payment details.
                     </p>
                 </div>
+                <ul class="errorlist hidden" id="contribution-error-message">
+                    <li>{{_('There has been an issue, please try again later.')}}</li>
+                </ul>
                 <div class="form-footer">
                     <button type="button" id="stripe_submit">
                         <span class="hide-expand">{{_('Contribute')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
