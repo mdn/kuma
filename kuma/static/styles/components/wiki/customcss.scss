@@ -610,8 +610,11 @@ dd > dl.reference-values {
   api items relevant to the current page. It helps people orient themselves
   within the sidebar.
  */
-li.webextension-api-sidebar {
+.quick-links li.webextension-api-sidebar {
     background-color: $grey-light;
+    padding-left: $grid-spacing;
+    position: relative;
+    left: $grid-spacing * -1;
 }
 
 /*end!*/

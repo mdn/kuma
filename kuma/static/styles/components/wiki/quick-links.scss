@@ -38,6 +38,10 @@
         &:first-child {
             padding-top: $grid-spacing / 2;
         }
+
+        ol {
+            padding-bottom: $grid-spacing / 2;
+        }
     }
 
     /* toggles */
@@ -55,8 +59,14 @@
     }
     details {
         margin-bottom: 10px;
+        margin-left: 0;
+        padding-left: $grid-spacing;
         li {
             padding-left: 0;
+
+            li {
+                padding-left: $grid-spacing;
+            }
         }
         summary:before {
             @include set-font-size(.6rem);
