@@ -401,7 +401,7 @@
     }
 
     function getStripeCheckoutScript() {
-        $.getScript('https://checksout.stripe.com/checkout.js')
+        $.getScript('https://checkout.stripe.com/checkout.js')
             .done(function() {
                 // init stripeCheckout handler.
                 stripeHandler = win.StripeCheckout.configure({
