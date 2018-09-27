@@ -30,7 +30,7 @@ CONTRIBUTION_FORM_SUCCESS = {
 def test_valid_data(data, amount):
     """Valid data can be charged."""
     form_data = data.copy()
-    form_data['stripe_token'] = 'pk_test_token'
+    form_data['stripe_token'] = u'pk_test_token'
     form = ContributionForm(data=form_data)
     assert form.is_valid()
 
@@ -42,8 +42,10 @@ def test_valid_data(data, amount):
     assert charge == fake_return
     mock_create.assert_called_once_with(
         amount=amount,
-        currency='usd',
-        description='Contribute to MDN Web Docs',
+        currency=u'usd',
+        description=u'Contribute to MDN Web Docs',
+        metadata={u'name': u'John Doe'},
+        receipt_email=u'John@example.com',
         source=form_data['stripe_token'])
 
 
@@ -57,7 +59,7 @@ def test_no_charge_without_token():
                     '.stripe.Charge.create') as mock_create:
         mock_create.side_effect = Exception('Not Called')
         charge = form.make_charge()
-    assert charge == False
+    assert charge is False
 
 
 CONTRIBUTION_FORM_INVALID = {
