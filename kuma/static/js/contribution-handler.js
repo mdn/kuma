@@ -218,12 +218,8 @@
 
     /* If `isPopoverBanner` is false, then this is the
        contribute page. Init the handler immediately */
-    if (!isPopoverBanner) {
-        // if not already initialised
-        if (stripeHandler === null) {
-            // initialise handler
-            stripeHandler = initStripeHandler();
-        }
+    if (!isPopoverBanner && win.StripeCheckout) {
+        stripeHandler = initStripeHandler();
     }
 
     if (isPopoverBanner) {
@@ -420,16 +416,7 @@
         $.getScript('https://checkout.stripe.com/checkout.js')
             .done(function() {
                 // init stripeCheckout handler.
-                stripeHandler = win.StripeCheckout.configure({
-                    key: stripePublicKey.val(),
-                    locale: 'en',
-                    name: 'MDN Web Docs',
-                    description: 'One-time donation',
-                    token: function(token) {
-                        stripeToken.val(token.id);
-                        form.submit();
-                    }
-                });
+                stripeHandler = initStripeHandler();
             })
             .fail(function(error) {
                 console.error('Failed to load stripe checkout library', error);
@@ -460,7 +447,7 @@
         // if not already initialised
         if (stripeHandler === null) {
             // initialise handler
-            stripeHandler = initStripeHandler();
+            // stripeHandler = initStripeHandler();
         }
 
         popoverBanner.addClass(initialExpandedClass + ' is-expanding');
