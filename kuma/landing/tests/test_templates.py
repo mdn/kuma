@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+import mock
+
 from pyquery import PyQuery as pq
 
 from kuma.core.urlresolvers import reverse
@@ -34,11 +36,13 @@ def test_default_search_filters(db, client):
     assert set(p.val() for p in filters.items()) == {'css', 'html', 'javascript'}
 
 
-def test_does_not_include_csrf(user_client):
+@mock.patch('kuma.contributions.context_processors.enabled')
+def test_does_not_include_csrf(mock_enabled, db, user_client):
     """
     The document should not include CSRF tokens, since it causes
     problems when used with a CDN like CloudFront (see bugzilla #1456165).
     """
+    mock_enabled.return_value = True
     resp = user_client.get(reverse('home'))
     doc = pq(resp.content)
     assert not doc('input[name="csrfmiddlewaretoken"]')
