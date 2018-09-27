@@ -214,8 +214,16 @@ def process_body(response):
     # We defer bleach sanitation of kumascript content all the way
     # through editing, source display, and raw output. But, we still
     # want sanitation, so it finally gets picked up here.
-    return clean_content(response.text)
+    clean_response = clean_content(response.text)
+    # After sanitization perform a final pass to substitute any inlined
+    # interactive example macros
+    return process_inlined_examples(clean_response)
 
+def process_inlined_examples(body):
+    """
+    Manually expand @IExMacro@ declarations
+    """
+    return body.replace("@AlertHelloWorld@", "<script>alert('hello world!');</script>")
 
 def process_errors(response):
     """
