@@ -95,4 +95,9 @@
             vertical-align: top;
         }
     }
+    li.webextension-api-sidebar {
+        padding-left: $grid-spacing;
+        position: relative;
+        left: $grid-spacing * -1;
+    }
 }
