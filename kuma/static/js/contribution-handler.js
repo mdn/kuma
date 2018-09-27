@@ -169,9 +169,11 @@
         }
     }
 
-    // Removes 'hidden' class from popover
+    /**
+     * Removes 'is-hidden' class and sets the aria-hidden attribute from popover
+     */
     function showPopover() {
-        popoverBanner.removeClass('hidden');
+        popoverBanner.removeClass('is-hidden');
         popoverBanner.attr('aria-hidden', false);
     }
 
@@ -463,7 +465,7 @@
      * Removes the popover from the page and stores the hidden state in local storge.
      */
     function disablePopover() {
-        popoverBanner.addClass('hidden');
+        popoverBanner.addClass('is-hidden');
         popoverBanner.attr('aria-hidden', true);
 
         // Send GA Event.

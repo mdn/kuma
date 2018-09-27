@@ -1,4 +1,4 @@
-<div id="contribution-popover-container" class="contribution-banner {% if is_popover %}contribution-popover is-collapsed hidden{% endif %}"{% if is_popover %} aria-expanded="false" aria-hidden="true"{% endif %}>
+<div id="contribution-popover-container" class="contribution-banner {% if is_popover %}contribution-popover is-collapsed is-hidden{% endif %}"{% if is_popover %} aria-expanded="false" aria-hidden="true"{% endif %}>
     {% if is_popover %}
         <div class="contribution-popover-actions">
             <button id="collapse-popover-button" class="hide-collapse" aria-label="{{ _('Collapse pop over window') }}">{% include 'includes/icons/arrows/chevron-down.svg' %}</button>
