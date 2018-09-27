@@ -523,11 +523,13 @@
 
     setupTooltips();
 
-    // Send GA Event.
-    mdn.analytics.trackEvent({
-        category: 'Contribution banner',
-        action: 'shown',
-        value: 1
-    });
+    // Send to GA if popover is displayed.
+    if (popoverBanner.is(':visible')) {
+        mdn.analytics.trackEvent({
+            category: 'Contribution banner',
+            action: 'shown',
+            value: 1
+        });
+    }
 
 })(document, window, jQuery);
