@@ -153,18 +153,28 @@
                 // Parses the stringified storage item
                 disabledStorageItem = JSON.parse(disabledStorageItem);
 
-                if (disabledStorageItem.value) {
-                    if (disabledStorageItem.timestamp + CONTRIBUTIONS_DISABLED_EXPIRATION > date) {
-                        // Keep the popover hidden if we aren't passed the expiration date yet.
-                        popoverBanner.addClass('hidden');
-                        popoverBanner.attr('aria-hidden', true);
-                    } else {
-                        // Remove the item if it has expired.
-                        localStorage.removeItem('contributionsPopoverDisabled');
-                    }
+                if (disabledStorageItem.value 
+                        && disabledStorageItem.timestamp + CONTRIBUTIONS_DISABLED_EXPIRATION < date) {
+                    // Remove the item if it has expired.
+                    localStorage.removeItem('contributionsPopoverDisabled');
+                    showPopover();
                 }
+            } else {
+                // Show if LS does not exist
+                showPopover();
             }
+        } else {
+            // Show if LS does not exist
+            showPopover();
         }
+    }
+
+    /**
+     * Removes 'is-hidden' class and sets the aria-hidden attribute from popover
+     */
+    function showPopover() {
+        popoverBanner.removeClass('is-hidden');
+        popoverBanner.attr('aria-hidden', false);
     }
 
     var form = $('#contribute-form');
@@ -200,7 +210,7 @@
 
     // Ensure we only show the form if js is enabled
     if (win.StripeCheckout) {
-        $('#contribution-popover-container').removeClass('hidden');
+        $('#contribution-popover-container').removeClass('is-hidden');
     }
 
     var isPopoverBanner = $('.contribution-banner').hasClass('contribution-popover');
@@ -481,7 +491,7 @@
      * Removes the popover from the page and stores the hidden state in local storge.
      */
     function disablePopover() {
-        popoverBanner.addClass('hidden');
+        popoverBanner.addClass('is-hidden');
         popoverBanner.attr('aria-hidden', true);
 
         // Send GA Event.
