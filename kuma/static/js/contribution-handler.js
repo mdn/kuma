@@ -357,18 +357,20 @@
             value: 1
         });
 
-        // On success open Stripe Checkout modal.
-        stripeHandler.open({
-            image: 'https://avatars1.githubusercontent.com/u/7565578?s=280&v=4',
-            name: 'MDN Web Docs',
-            description: 'Contribute to MDN Web Docs',
-            zipCode: true,
-            amount: (selectedAmount * 100),
-            email: $(emailField).val(),
-            closed: function() {
-                form.removeClass('disabled');
-            }
-        });
+        if (stripeHandler !== null) {
+            // On success open Stripe Checkout modal.
+            stripeHandler.open({
+                image: 'https://avatars1.githubusercontent.com/u/7565578?s=280&v=4',
+                name: 'MDN Web Docs',
+                description: 'Contribute to MDN Web Docs',
+                zipCode: true,
+                amount: (selectedAmount * 100),
+                email: $(emailField).val(),
+                closed: function() {
+                    form.removeClass('disabled');
+                }
+            });
+        }
     }
 
     /**
@@ -400,6 +402,10 @@
         }
     }
 
+    /**
+     * Gets and executes stripe's checkout.js script to be used when submitting
+     * also handles errors when getting the resource
+     */
     function getStripeCheckoutScript() {
         $.getScript('https://checkout.stripe.com/checkout.js')
             .done(function() {
@@ -427,6 +433,7 @@
      */
     function toggleScriptError() {
         formButton.toggleClass('disabled');
+        formButton.attr('disabled') ? formButton.removeAttr('disabled') : formButton.attr('disabled', 'true');
         formErrorMessage.toggle();
     }
 
