@@ -27,9 +27,12 @@
                     <p class="subtext">{{_('Thank you again,')}}</p>
                     <p class="subtext">{{_('The MDN Team')}}</p>
 
+                    {%- set share_url = 'https://developer.mozilla.org' + url('contribute') %}
+                    {%- set tweet_phrase = _("I support MDN, and you can too: %(url)s", url=share_url) %}
+                    {%- set tweet_text = tweet_phrase|urlencode %}
                     <div class="button-tab-group">
-                        <a href="https://twitter.com/intent/tweet?text=I%20am%20a%20supporter%20of%20MDN,%20and%20you%20can%20too:%20https://developer.mozilla.com/en-US/contribute/" class="button" target="_blank" rel="noopener" aria-label="{{_('Share your support on Twitter')}}">{% include 'includes/icons/social/twitter.svg' %}</a>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdeveloper.mozilla.org%2Fen-US%2Fcontribute" class="button" target="_blank" rel="noopener" aria-label="{{_('Share your support on Facebook')}}">{% include 'includes/icons/social/facebook.svg' %}</a>
+                        <a href="https://twitter.com/intent/tweet?text={{ tweet_text }}" class="button" target="_blank" rel="noopener" aria-label="{{_('Share your support on Twitter')}}">{% include 'includes/icons/social/twitter.svg' %}</a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | urlencode }}" class="button" target="_blank" rel="noopener" aria-label="{{_('Share your support on Facebook')}}">{% include 'includes/icons/social/facebook.svg' %}</a>
                     </div>
                 {% else %}
                     <h2 class="highlight highlight-spanned">
