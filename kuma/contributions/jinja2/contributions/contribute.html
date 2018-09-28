@@ -21,6 +21,25 @@
     {% endwith %}
 {% endblock %}
 
+{% macro faq_entry(number, title) %}
+    <li class="faq">
+        <h3>{{ title }}</h3>
+        <span class="faq-number">{{ number }}</span>
+            {{ caller() }}
+        <span class="small">{{_('Did this answer your question?')}}</span>
+        <div class="vote-button-group">
+            <button class="thumbs-up" data-faq="{{ number}}"
+                    aria-label="{{ _('Yes, this answered my question') }}">
+                {% include 'includes/icons/emojis/thumbs-up.svg' %}
+            </button>
+            <button class="thumbs-down" data-faq="{{ number }}"
+                    aria-label="{{ _('No, this did not answer my question') }}">
+                {% include 'includes/icons/emojis/thumbs-down.svg' %}
+            </button>
+        </div>
+    </li>
+{%- endmacro %}
+
 {% block content %}
 
 <main id="contributions-page" class="contributions-page" role="main">
@@ -30,9 +49,7 @@
             <h2>{{_('FAQs')}}</h2>
         </div>
         <ol class="faqs clear">
-            <li class="faq">
-                <h3>{{_('Why is MDN asking me for money?')}}</h3>
-                <span class="faq-number">1</span>
+            {% call faq_entry(1, _("Why is MDN asking me for money?")) %}
                 <p>
                     {% trans %}
                         MDN is experimenting with seeking direct support from
@@ -54,15 +71,8 @@
                         those improvements.
                     {% endtrans %}
                 </p>
-                <span class="small">{{_('Did this answer your question?')}}</span>
-                <div class="vote-button-group">
-                    <button class="thumbs-up" data-faq="1" aria-label="{{ _('Yes, this answered my question') }}">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
-                    <button class="thumbs-down" data-faq="1" aria-label="{{ _('No, this did not answer my question') }}">{% include 'includes/icons/emojis/thumbs-down.svg' %}</button>
-                </div>
-            </li>
-            <li class="faq">
-                <h3>{{_('How is my payment handled? Is it secure?')}}</h3>
-                <span class="faq-number">2</span>
+            {% endcall %}
+            {%- call faq_entry(2, _("How is my payment handled? Is it secure?")) %}
                 <p>
                     {% trans url="https://stripe.com/" %}
                         All payment information goes through payment processor
@@ -71,15 +81,8 @@
                         receive or store your credit card number.
                     {% endtrans %}
                 </p>
-                <span class="small">{{_('Did this answer your question?')}}</span>
-                <div class="vote-button-group">
-                    <button class="thumbs-up" data-faq="2" aria-label="{{ _('Yes, this answered my question') }}">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
-                    <button class="thumbs-down" data-faq="2" aria-label="{{ _('No, this did not answer my question') }}">{% include 'includes/icons/emojis/thumbs-down.svg' %}</button>
-                </div>
-            </li>
-            <li class="faq">
-                <h3>{{_('What data is Mozilla collecting about me?')}}</h3>
-                <span class="faq-number">3</span>
+            {% endcall %}
+            {%- call faq_entry(3, _("What data is Mozilla collecting about me?")) %}
                 <p>
                     {% trans url="https://stripe.com/" %}
                         Mozilla will collect and store your name and email,
@@ -88,15 +91,8 @@
                         credit card number.
                     {% endtrans %}
                 </p>
-                <span class="small">{{_('Did this answer your question?')}}</span>
-                <div class="vote-button-group">
-                    <button class="thumbs-up" data-faq="3" aria-label="{{ _('Yes, this answered my question') }}">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
-                    <button class="thumbs-down" data-faq="3" aria-label="{{ _('No, this did not answer my question') }}">{% include 'includes/icons/emojis/thumbs-down.svg' %}</button>
-                </div>
-            </li>
-            <li class="faq">
-                <h3>{{_('What does the money go towards?')}}</h3>
-                <span class="faq-number">4</span>
+            {% endcall %}
+            {%- call faq_entry(4, _("What does money go towards?")) %}
                 <p>
                     {% trans url="https://stripe.com/" %}
                         The money collected through MDN (minus processing fees,
@@ -105,15 +101,8 @@
                         work was completed.
                     {% endtrans %}
                 </p>
-                <span class="small">{{_('Did this answer your question?')}}</span>
-                <div class="vote-button-group">
-                    <button class="thumbs-up" data-faq="4" aria-label="{{ _('Yes, this answered my question') }}">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
-                    <button class="thumbs-down" data-faq="4" aria-label="{{ _('No, this did not answer my question') }}">{% include 'includes/icons/emojis/thumbs-down.svg' %}</button>
-                </div>
-            </li>
-            <li class="faq">
-                <h3>{{_('If I just donate to the Mozilla Foundation, will that help MDN?')}}</h3>
-                <span class="faq-number">5</span>
+            {% endcall %}
+            {%- call faq_entry(5, _("If I just donate to the Mozilla Foundation, will that help MDN?")) %}
                 <p>
                     {% trans foundation_url="https://www.mozilla.org/foundation/",
                              corporation_url="https://www.mozilla.org/en-US/foundation/moco/" %}
@@ -128,15 +117,8 @@
                         content, tools, and platform.
                     {% endtrans %}
                 </p>
-                <span class="small">{{_('Did this answer your question?')}}</span>
-                <div class="vote-button-group">
-                    <button class="thumbs-up" data-faq="5" aria-label="{{ _('Yes, this answered my question') }}">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
-                    <button class="thumbs-down" data-faq="5" aria-label="{{ _('No, this did not answer my question') }}">{% include 'includes/icons/emojis/thumbs-down.svg' %}</button>
-                </div>
-            </li>
-            <li class="faq">
-                <h3>{{_('Is support of MDN tax-deductible? ')}}</h3>
-                <span class="faq-number">6</span>
+            {% endcall %}
+            {%- call faq_entry(6, _("Is support of MDN tax-deductible?")) %}
                 <p>
                     {% trans %}
                         No. Payments to Mozilla Corporation in support of MDN
@@ -144,15 +126,8 @@
                         countries.
                     {% endtrans %}
                 </p>
-                <span class="small">{{_('Did this answer your question?')}}</span>
-                <div class="vote-button-group">
-                    <button class="thumbs-up" data-faq="6" aria-label="{{ _('Yes, this answered my question') }}">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
-                    <button class="thumbs-down" data-faq="6" aria-label="{{ _('No, this did not answer my question') }}">{% include 'includes/icons/emojis/thumbs-down.svg' %}</button>
-                </div>
-            </li>
-            <li class="faq">
-                <h3>{{_('What will MDN user funding pay for?')}}</h3>
-                <span class="faq-number">7</span>
+            {% endcall %}
+            {%- call faq_entry(7, _("What will MDN user funding pay for?")) %}
                 <p>
                     {% trans %}
                         Currently, Mozilla pays for site operations and
@@ -170,15 +145,8 @@
                     <li>{{_('More tutorials and guides')}}</li>
                     <li>{{_('Training and webinars')}}</li>
                 </ul>
-                <span class="small">{{_('Did this answer your question?')}}</span>
-                <div class="vote-button-group">
-                    <button class="thumbs-up" data-faq="7" aria-label="{{ _('Yes, this answered my question') }}">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
-                    <button class="thumbs-down" data-faq="7" aria-label="{{ _('No, this did not answer my question') }}">{% include 'includes/icons/emojis/thumbs-down.svg' %}</button>
-                </div>
-            </li>
-            <li class="faq">
-                <h3>{{_('Why can’t you just open a Crowdsourcing campaign?')}}</h3>
-                <span class="faq-number">8</span>
+            {% endcall %}
+            {%- call faq_entry(8, _("Why can’t you just open a Crowdsourcing campaign?")) %}
                 <p>
                     {% trans %}
                         Because we aren’t looking for a lump sum. Our goal is
@@ -186,15 +154,8 @@
                         people who benefit from the work of MDN.
                     {% endtrans %}
                 </p>
-                <span class="small">{{_('Did this answer your question?')}}</span>
-                <div class="vote-button-group">
-                    <button class="thumbs-up" data-faq="8" aria-label="{{ _('Yes, this answered my question') }}">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
-                    <button class="thumbs-down" data-faq="8" aria-label="{{ _('No, this did not answer my question') }}">{% include 'includes/icons/emojis/thumbs-down.svg' %}</button>
-                </div>
-            </li>
-            <li class="faq">
-                <h3>{{_('How has MDN been funded to date?')}}</h3>
-                <span class="faq-number">9</span>
+            {% endcall %}
+            {%- call faq_entry(9, _("How has MDN been funded to date?")) %}
                 <p>
                     {% trans %}
                         MDN is funded out of the Mozilla Corporation general
@@ -205,15 +166,8 @@
                         do more things with you and for you!
                     {% endtrans %}
                 </p>
-                <span class="small">{{_('Did this answer your question?')}}</span>
-                <div class="vote-button-group">
-                    <button class="thumbs-up" data-faq="9" aria-label="{{ _('Yes, this answered my question') }}">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
-                    <button class="thumbs-down" data-faq="9" aria-label="{{ _('No, this did not answer my question') }}">{% include 'includes/icons/emojis/thumbs-down.svg' %}</button>
-                </div>
-            </li>
-            <li class="faq">
-                <h3>{{_('How does Mozilla make money?')}}</h3>
-                <span class="faq-number">10</span>
+            {% endcall %}
+            {%- call faq_entry(10, _("How does Mozilla make money?")) %}
                 <p>
                     {% trans %}
                         The Mozilla Corporation, which funds MDN, makes money
@@ -232,12 +186,7 @@
                         <a href="{{ url }}">2016 Mozilla Annual Report</a>.
                     {% endtrans %}
                 </p>
-                <span class="small">{{_('Did this answer your question?')}}</span>
-                <div class="vote-button-group">
-                    <button class="thumbs-up" data-faq="10" aria-label="{{ _('Yes, this answered my question') }}">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
-                    <button class="thumbs-down" data-faq="10" aria-label="{{ _('No, this did not answer my question') }}">{% include 'includes/icons/emojis/thumbs-down.svg' %}</button>
-                </div>
-            </li>
+            {% endcall %}
         </ol>
     </section>
     <section class="section">
