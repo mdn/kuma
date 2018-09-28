@@ -153,18 +153,28 @@
                 // Parses the stringified storage item
                 disabledStorageItem = JSON.parse(disabledStorageItem);
 
-                if (disabledStorageItem.value) {
-                    if (disabledStorageItem.timestamp + CONTRIBUTIONS_DISABLED_EXPIRATION > date) {
-                        // Keep the popover hidden if we aren't passed the expiration date yet.
-                        popoverBanner.addClass('hidden');
-                        popoverBanner.attr('aria-hidden', true);
-                    } else {
-                        // Remove the item if it has expired.
-                        localStorage.removeItem('contributionsPopoverDisabled');
-                    }
+                if (disabledStorageItem.value 
+                        && disabledStorageItem.timestamp + CONTRIBUTIONS_DISABLED_EXPIRATION < date) {
+                    // Remove the item if it has expired.
+                    localStorage.removeItem('contributionsPopoverDisabled');
+                    showPopover();
                 }
+            } else {
+                // Show if LS does not exist
+                showPopover();
             }
+        } else {
+            // Show if LS does not exist
+            showPopover();
         }
+    }
+
+    /**
+     * Removes 'is-hidden' class and sets the aria-hidden attribute from popover
+     */
+    function showPopover() {
+        popoverBanner.removeClass('is-hidden');
+        popoverBanner.attr('aria-hidden', false);
     }
 
     var form = $('#contribute-form');
@@ -180,6 +190,7 @@
     var stripeHandler = null;
     // Other.
     var formButton = form.find('#stripe_submit');
+    var formErrorMessage = form.find('#contribution-error-message');
     var amount = formButton.find('#amount');
 
     /**
@@ -200,19 +211,15 @@
 
     // Ensure we only show the form if js is enabled
     if (win.StripeCheckout) {
-        $('#contribution-popover-container').removeClass('hidden');
+        $('#contribution-popover-container').removeClass('is-hidden');
     }
 
     var isPopoverBanner = $('.contribution-banner').hasClass('contribution-popover');
 
     /* If `isPopoverBanner` is false, then this is the
        contribute page. Init the handler immediately */
-    if (!isPopoverBanner) {
-        // if not already initialised
-        if (stripeHandler === null) {
-            // initialise handler
-            stripeHandler = initStripeHandler();
-        }
+    if (!isPopoverBanner && win.StripeCheckout) {
+        stripeHandler = initStripeHandler();
     }
 
     if (isPopoverBanner) {
@@ -356,18 +363,20 @@
             value: 1
         });
 
-        // On success open Stripe Checkout modal.
-        stripeHandler.open({
-            image: 'https://avatars1.githubusercontent.com/u/7565578?s=280&v=4',
-            name: 'MDN Web Docs',
-            description: 'Contribute to MDN Web Docs',
-            zipCode: true,
-            amount: (selectedAmount * 100),
-            email: $(emailField).val(),
-            closed: function() {
-                form.removeClass('disabled');
-            }
-        });
+        if (stripeHandler !== null) {
+            // On success open Stripe Checkout modal.
+            stripeHandler.open({
+                image: 'https://avatars1.githubusercontent.com/u/7565578?s=280&v=4',
+                name: 'MDN Web Docs',
+                description: 'Contribute to MDN Web Docs',
+                zipCode: true,
+                amount: (selectedAmount * 100),
+                email: $(emailField).val(),
+                closed: function() {
+                    form.removeClass('disabled');
+                }
+            });
+        }
     }
 
     /**
@@ -377,7 +386,7 @@
     function onFormButtonClick() {
         // Calculate the role of the submit button
         if (isPopoverBanner && popoverBanner.hasClass('is-collapsed')) {
-            expandCta();
+            expandPopover();
         } else {
             onSubmit();
         }
@@ -400,9 +409,35 @@
     }
 
     /**
+     * Gets and executes stripe's checkout.js script to be used when submitting
+     * also handles errors when getting the resource
+     */
+    function getStripeCheckoutScript() {
+        $.getScript('https://checkout.stripe.com/checkout.js')
+            .done(function() {
+                // init stripeCheckout handler.
+                stripeHandler = initStripeHandler();
+            })
+            .fail(function(error) {
+                console.error('Failed to load stripe checkout library', error);
+                toggleScriptError();
+            });
+    }
+
+    /**
+     * Displays a visual error if we cannot load the checkout script
+     * also disables the submission button
+     */
+    function toggleScriptError() {
+        formButton.attr('disabled') ? formButton.removeAttr('disabled') : formButton.attr('disabled', 'true');
+        formErrorMessage.toggle();
+    }
+
+    /**
      * Expands the popover to show the full contents.
      */
-    function expandCta() {
+    function expandPopover() {
+        getStripeCheckoutScript();
         var secondaryHeader = popoverBanner[0].querySelector('h4');
         var smallDesktop = '(max-width: 1092px)';
 
@@ -412,7 +447,7 @@
         // if not already initialised
         if (stripeHandler === null) {
             // initialise handler
-            stripeHandler = initStripeHandler();
+            // stripeHandler = initStripeHandler();
         }
 
         popoverBanner.addClass(initialExpandedClass + ' is-expanding');
@@ -450,6 +485,11 @@
     function collapseCta() {
         collapseButton.off();
 
+        // Remove error if it exists
+        if (formButton.hasClass('disabled')){
+            toggleScriptError();
+        }
+
         // Add transitional class for opacity animation.
         popoverBanner.addClass('is-collapsing');
         popoverBanner.removeClass('expanded expanded-extend');
@@ -481,7 +521,7 @@
      * Removes the popover from the page and stores the hidden state in local storge.
      */
     function disablePopover() {
-        popoverBanner.addClass('hidden');
+        popoverBanner.addClass('is-hidden');
         popoverBanner.attr('aria-hidden', true);
 
         // Send GA Event.
@@ -523,11 +563,13 @@
 
     setupTooltips();
 
-    // Send GA Event.
-    mdn.analytics.trackEvent({
-        category: 'Contribution banner',
-        action: 'shown',
-        value: 1
-    });
+    // Send to GA if popover is displayed.
+    if (popoverBanner.is(':visible')) {
+        mdn.analytics.trackEvent({
+            category: 'Contribution banner',
+            action: 'shown',
+            value: 1
+        });
+    }
 
 })(document, window, jQuery);
