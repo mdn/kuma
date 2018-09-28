@@ -30,9 +30,20 @@
                     {%- set share_url = 'https://developer.mozilla.org' + url('contribute') %}
                     {%- set tweet_phrase = _("I support MDN, and you can too: %(url)s", url=share_url) %}
                     {%- set tweet_text = tweet_phrase|urlencode %}
+                    {%- set twitter_cta = _("Share your support for MDN on Twitter") %}
+                    {%- set facebook_cta = _("Share your support for MDN on Facebook") -%}
+
                     <div class="button-tab-group">
-                        <a href="https://twitter.com/intent/tweet?text={{ tweet_text }}" class="button" target="_blank" rel="noopener" aria-label="{{_('Share your support on Twitter')}}">{% include 'includes/icons/social/twitter.svg' %}</a>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | urlencode }}" class="button" target="_blank" rel="noopener" aria-label="{{_('Share your support on Facebook')}}">{% include 'includes/icons/social/facebook.svg' %}</a>
+                        <a href="https://twitter.com/intent/tweet?text={{ tweet_text }}"
+                           class="button" target="_blank" rel="noopener"
+                           aria-label="{{ twitter_cta }}">
+                            {{ include_svg('includes/icons/social/twitter.svg', twitter_cta) }}
+                        </a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | urlencode }}"
+                           class="button" target="_blank" rel="noopener"
+                           aria-label="{{ facebook_cta }}">
+                            {{ include_svg('includes/icons/social/facebook.svg', facebook_cta) }}
+                        </a>
                     </div>
                 {% else %}
                     <h2 class="highlight highlight-spanned">
