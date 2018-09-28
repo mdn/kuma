@@ -36,8 +36,10 @@
                         <span class="highlight-span">{{_('Ooops, something went wrong')}}</span>
                     </h2>
                     <p>
-                        {% trans %}
-                        Please contact <a href="mailto:support@mozilla.com">support@mozilla.com</a>  for more information on this problem.
+                        {% trans mailto='mailto:%s' % settings.CONTRIBUTION_SUPPORT_EMAIL,
+                                 email=settings.CONTRIBUTION_SUPPORT_EMAIL %}
+                            Please contact <a href="{{ mailto }}">{{ email }}</a>
+                            for more information on this problem.
                         {% endtrans %}
                     </p>
                     <p>
