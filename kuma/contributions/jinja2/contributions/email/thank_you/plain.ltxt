@@ -4,11 +4,7 @@ Thank you {{ username }} [{{ user_email }}] for supporting MDN.
 {%- endtrans %}
 
 {% trans -%}
-We are committed to providing the best source of information about web standards. Your support enables MDN to build more of the content and tools you use every day, and helps us make sure MDN can be available to everyone, everywhere.
-{%- endtrans %}
-
-{% trans url = site + url('contribute') + "#contribute-faqs" -%}
-If you didn’t get a chance to, <a href="{{ url }}">read more</a> about why MDN are asking for contributions.
+We are committed to providing the best source of information about web standards. Your support enables MDN to move even faster as we build more of the content and tools you use every day, and helps us make sure MDN can be available to everyone, everywhere.
 {%- endtrans %}
 
 {{_('Thank you again,')}}
