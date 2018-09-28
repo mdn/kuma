@@ -2,7 +2,7 @@
 <html lang="en-US" dir="ltr">
     <head>
         <meta charset="utf-8" />
-        <title>{{ _('Thank you for contributing!') }}</title>
+        <title>{{ _('Thank you for supporting MDN.') }}</title>
     </head>
   <body>
     <table width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#e1e1e1">
@@ -54,7 +54,7 @@
                                                       <tbody>
                                                         <tr>
                                                           <td width="360" align="center" style="font-family:Geneva,Tahoma,Verdana,sans-serif;font-size:22px;color:#464646">
-                                                            <a style="text-decoration:none;color:#464646" target="_blank">{{_('Thanks for joining MDN.')}}</a>
+                                                            {{ _('Thank you for supporting MDN.') }}
                                                           </td>
                                                         </tr>
                                                       </tbody>
@@ -80,7 +80,7 @@
                                                         <tbody>
                                                           <tr>
                                                             <td align="left" style="font-family:Geneva,Tahoma,Verdana,sans-serif;font-size:14px;line-height:22px;color:#555555;padding-top:16px">
-                                                              {% trans %}   
+                                                              {% trans %}
                                                               We are committed to providing the best source of information about web standards. Your support enables MDN to build more of the content and tools you use every day, and helps us make sure MDN can be available to everyone, everywhere.
                                                               {% endtrans %}
                                                             </td>
@@ -95,9 +95,9 @@
                                                         <tbody>
                                                           <tr>
                                                             <td align="left" style="font-family:Geneva,Tahoma,Verdana,sans-serif;font-size:14px;line-height:22px;color:#555555;padding-top:16px">
-                                                                {% block trans %}
-                                                                If you didn’t get a chance to, <a href="{{ site }}{{url('contribute')}}#contribute-faqs">read more</a> about why MDN are asking for contributions.
-                                                                {% endblock %}
+                                                                {% trans url = site + url('contribute') + "#contribute-faqs" %}
+                                                                If you didn’t get a chance to, <a href="{{ url }}">read more</a> about why MDN are asking for contributions.
+                                                                {% endtrans %}
                                                             </td>
                                                           </tr>
                                                         </tbody>
