@@ -25,12 +25,12 @@ article {
     }
 
     .local-anchor {
-        display: inline-block;
-        background: transparent url($path-to-images+'icons/link.svg') 0 0
-            no-repeat;
-        margin-right: ($grid-spacing / 2);
-        width: 20px;
-        height: 20px;
+        .icon {
+            color: $link-color;
+            width: 16px;
+            height: 16px;
+            @include bidi(((margin-left, ($grid-spacing / 2 ), margin-right, 0),));
+        }
 
         span {
             @include visually-hidden;

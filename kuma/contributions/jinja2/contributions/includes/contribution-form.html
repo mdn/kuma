@@ -1,4 +1,4 @@
-<div id="contribution-popover-container" class="contribution-banner {% if is_popover %}contribution-popover is-collapsed{% endif %}"{% if is_popover %} aria-expanded="false" aria-hidden="false"{% endif %}>
+<div id="contribution-popover-container" class="contribution-banner {% if is_popover %}contribution-popover is-collapsed is-hidden{% endif %}"{% if is_popover %} aria-expanded="false" aria-hidden="true"{% endif %}>
     {% if is_popover %}
         <div class="contribution-popover-actions">
             <button id="collapse-popover-button" class="hide-collapse" aria-label="{{ _('Collapse pop over window') }}">{% include 'includes/icons/arrows/chevron-down.svg' %}</button>
@@ -16,9 +16,9 @@
                 <p class="body">
                     {% trans %}
                         You’ve turned to MDN for information and assurance. Now
-                        we turn to you, for support. What you give to MDN,
-                        stays here in MDN to give you more of the tools and
-                        information you use when your work has to work.
+                        we turn to you, for support. Help MDN and get back more
+                        of the information and tools you rely on for when your
+                        work has to work.
                     {% endtrans %}
                 </p>
                 {% if is_popover %}
@@ -35,7 +35,6 @@
         </div>
         <div class="column-half">
             <form id="contribute-form" class="contribution-form" method="post" action="{{ url('contribute') }}" novalidate>
-                {% csrf_token %}
                 <div class="form-group">
                     <label class="offscreen" for="id_{{form.name.name}}">{{form.name.label}}</label>
                     {{form.name}}
@@ -70,6 +69,9 @@
                         and does not receive your payment details.
                     </p>
                 </div>
+                <ul class="errorlist hidden" id="contribution-error-message">
+                    <li>{{_('There has been an issue, please try again later.')}}</li>
+                </ul>
                 <div class="form-footer">
                     <button type="button" id="stripe_submit">
                         <span class="hide-expand">{{_('Contribute')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>

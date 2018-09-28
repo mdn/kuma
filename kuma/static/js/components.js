@@ -81,7 +81,7 @@
                     var $closeButton = $('<button type="button" class="submenu-close transparent">' +
                         '<span class="offscreen">' + gettext('Close submenu') + '</span></button>')
                         .append(closeIcon)
-                        .appendTo($submenu);
+                        .prependTo($submenu);
 
                     // Hide the submenu when the main menu is blurred for hideDelay
                     $self.on('mouseleave focusout', function() {

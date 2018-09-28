@@ -102,13 +102,13 @@
   <!-- heading -->
   <div id="wiki-document-head" class="document-head">
     <div class="center">
+      <div class="document-title">
+        <h1>{{ document.title }}</h1>
+      </div>
+
       <!-- action buttons -->
       <div class="document-actions">
         {{ buttons }}
-      </div>
-
-      <div class="document-title">
-        <h1>{{ document.title }}</h1>
       </div>
     </div>
   </div>
@@ -341,7 +341,6 @@
   {% endif %}
 
   {%- if contribution_enabled %}
-    <script src="https://checkout.stripe.com/checkout.js"></script>
     {% javascript 'contribute' %}
   {%- endif %}
 

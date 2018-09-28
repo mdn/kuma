@@ -34,7 +34,7 @@ def test_valid_data(data, amount):
     form = ContributionForm(data=form_data)
     assert form.is_valid()
 
-    fake_return = {'status': 'pretty_good'}
+    fake_return = True
     with mock.patch('kuma.contributions.forms'
                     '.stripe.Charge.create') as mock_create:
         mock_create.return_value = fake_return
@@ -43,7 +43,9 @@ def test_valid_data(data, amount):
     mock_create.assert_called_once_with(
         amount=amount,
         currency='usd',
-        description='Contribute to MDN Web Docs',
+        description=u'Contribute to MDN Web Docs',
+        metadata={'name': form_data['name']},
+        receipt_email=form_data['email'],
         source=form_data['stripe_token'])
 
 
@@ -57,7 +59,7 @@ def test_no_charge_without_token():
                     '.stripe.Charge.create') as mock_create:
         mock_create.side_effect = Exception('Not Called')
         charge = form.make_charge()
-    assert charge == {'id': '', 'status': ''}
+    assert charge is False
 
 
 CONTRIBUTION_FORM_INVALID = {
