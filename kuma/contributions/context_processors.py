@@ -1,5 +1,5 @@
 from .forms import ContributionForm
-from .utils import enabled
+from .utils import enabled, popup_enabled
 
 
 def global_contribution_form(request):
@@ -7,6 +7,7 @@ def global_contribution_form(request):
     if enabled(request):
         return {
             'contribution_enabled': True,
+            'contribution_popup': popup_enabled(request),
             'contribution_form': ContributionForm(),
             'hide_cta': True,
         }

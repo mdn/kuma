@@ -140,7 +140,7 @@
 {% endblock %}
 
 {% block contrib_popup %}
-    {%- if contribution_enabled %}
+    {%- if contribution_popup %}
         {%- with form=contribution_form, is_popover=True %}
             {%- include "contributions/includes/contribution-form.html" %}
         {%- endwith %}
@@ -152,7 +152,7 @@
   {% if settings.NEWSLETTER %}
     {% javascript 'newsletter' %}
   {% endif %}
-  {%- if contribution_enabled %}
+  {%- if contribution_popup %}
     {% javascript 'contribute' %}
   {%- endif %}
 {% endblock %}

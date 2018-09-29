@@ -43,7 +43,7 @@ def test_valid_data(data, amount):
     mock_create.assert_called_once_with(
         amount=amount,
         currency='usd',
-        description=u'Contribute to MDN Web Docs',
+        description='Support MDN Web Docs',
         metadata={'name': form_data['name']},
         receipt_email=form_data['email'],
         source=form_data['stripe_token'])
