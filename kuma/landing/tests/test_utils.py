@@ -14,5 +14,6 @@ from ..utils import favicon_url
 def test_favicon_url(settings, domain, expected):
     settings.DOMAIN = domain
     settings.ALLOWED_HOSTS.append(domain)
+    settings.STATIC_URL = '/static/'
     url = favicon_url()
     assert url == expected
