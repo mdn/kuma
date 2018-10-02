@@ -370,6 +370,7 @@
                 name: 'MDN Web Docs',
                 description: 'Contribute to MDN Web Docs',
                 zipCode: true,
+                allowRememberMe: false,
                 amount: (selectedAmount * 100),
                 email: $(emailField).val(),
                 closed: function() {
