@@ -156,7 +156,7 @@
                 if (disabledStorageItem.value 
                         && disabledStorageItem.timestamp + CONTRIBUTIONS_DISABLED_EXPIRATION < date) {
                     // Remove the item if it has expired.
-                    localStorage.removeItem('contributionsPopoverDisabled');
+                    removeDisabledLocaleStorageItem();
                     showPopover();
                 }
             } else {
@@ -204,6 +204,7 @@
             description: 'One-time donation',
             token: function(token) {
                 stripeToken.val(token.id);
+                addDisabledLocaleStorageItem();
                 form.submit();
             }
         });
@@ -519,7 +520,7 @@
     }
 
     /**
-     * Removes the popover from the page and stores the hidden state in local storge.
+     * Removes the popover from the page
      */
     function disablePopover() {
         popoverBanner.addClass('is-hidden');
@@ -531,15 +532,29 @@
             action: 'close',
             value: 1
         });
+        addDisabledLocaleStorageItem();
+    }
 
+    /**
+     * Stores popover hidden state in local storge.
+     */
+    function addDisabledLocaleStorageItem() {
         if (win.mdn.features.localStorage) {
             var item = JSON.stringify({
                 value: true,
                 // Sets the timestamp to today so we can check its expiration subsequent each page load.
                 timestamp: new Date().getTime()
             });
-
             localStorage.setItem('contributionsPopoverDisabled', item);
+        }
+    }
+
+    /**
+     * Removed popover hidden state in local storge.
+     */
+    function removeDisabledLocaleStorageItem() {
+        if (win.mdn.features.localStorage) {
+            localStorage.removeItem('contributionsPopoverDisabled');
         }
     }
 
