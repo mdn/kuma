@@ -24,10 +24,10 @@
                 {% if is_popover %}
                     <div class="button-group">
                         <a href="{{url('contribute')}}#contribute-faqs" class="cta-link">
-                            {{_('Learn more about our contribution program')}} {% include 'includes/icons/arrows/arrow.svg' %}
+                            {{_('Learn more about payments to MDN')}} {% include 'includes/icons/arrows/arrow.svg' %}
                         </a>
                         <a href="{{url('contribute')}}#contribute-feedback" class="cta-link">
-                            {{_('Provide feedback on our contribution program')}} {% include 'includes/icons/arrows/arrow.svg' %}
+                            {{_('Provide feedback')}} {% include 'includes/icons/arrows/arrow.svg' %}
                         </a>
                     </div>
                 {% endif %}
@@ -49,7 +49,7 @@
                         <div class="tooltip" aria-hidden="true" id="tooltip-email">
                             <button class="tooltip-close" aria-controls="tooltip-email" aria-label="{{_('Close this tooltip') }}"></button>
                             <p>{{_('Why do you need my email address?') }}</p>
-                            <p>{{_('This is so we can send you a receipt of your contribution. This is handy if you’d like a refund.') }}</p>
+                            <p>{{_('This is so we can send you a receipt. This is handy if you’d like a refund.') }}</p>
                         </div>
                     </div>
                     <label class="offscreen" for="id_{{form.donation_choices.name}}">{{form.donation_choices.label}}</label>
@@ -60,8 +60,7 @@
                     {{form.stripe_token}}
                     {{form.stripe_public_key}}
                     <p class="legal-copy">
-                        These contributions are not tax deductible. Your
-                        payment details will be processed by
+                        Payments are not tax deductible. Your payment details will be processed by
                         <a href="https://stripe.com/" rel="noopener">Stripe</a>.
                         Mozilla will keep record of your contribution in
                         accordance with its
