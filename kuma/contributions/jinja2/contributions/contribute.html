@@ -26,7 +26,7 @@
         <h3>{{ title }}</h3>
         <span class="faq-number">{{ number }}</span>
             {{ caller() }}
-        <span class="small">{{_('Did this answer your question?')}}</span>
+        <span class="small">{{_('Was this useful?')}}</span>
         <div class="vote-button-group">
             <button class="thumbs-up" data-faq="{{ number}}"
                     aria-label="{{ _('Yes, this answered my question') }}">
@@ -48,7 +48,7 @@
         <div class="index">
             <h2>{{_('FAQs')}}</h2>
         </div>
-        <ol class="faqs clear">
+        <ol id="contribute-faqs" class="faqs clear">
             {% call faq_entry(1, _("Why is MDN asking me for money?")) %}
                 <p>
                     {% trans %}
