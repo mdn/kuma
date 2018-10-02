@@ -10,9 +10,12 @@ django-babel==0.6.2 \
     --hash=sha256:1e621b198e1f98ae4f93e43463cf78cbedbace475eb6e0853ba1e2567f3b8119
 
 # Analyze Django performance during request
-django-debug-toolbar==1.8 \
-    --hash=sha256:e9f08b94f9423ac76cfc287151182bbaddbe7521ae32bef9f9863e2ac58018d3 \
-    --hash=sha256:0b4d2b1ac49a8bc5604518e8e20f56c1c08c0c4873336107e7c773c42537876b
+# Code: https://github.com/jazzband/django-debug-toolbar
+# Changes: https://django-debug-toolbar.readthedocs.io/en/latest/changes.html
+# Docs: https://django-debug-toolbar.readthedocs.io/en/latest/
+django-debug-toolbar==1.10.1 \
+    --hash=sha256:08e0e43f6c1fd9820af4cbdcd54b5fb80bf83a2e08b2cc952547a671174999b8 \
+    --hash=sha256:1dcae28d430522debafde2602b3450eb784410b78e16c29a00448032df2a4c90
 
 # Code quality checker
 # Code: https://github.com/PyCQA/flake8
