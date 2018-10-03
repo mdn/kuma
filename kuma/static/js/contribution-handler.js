@@ -226,8 +226,8 @@
 
     var isPopoverBanner = $('.contribution-banner').hasClass('contribution-popover');
 
-    // If `isPopoverBanner` is false then this is the contribute page.
-    // Init the handler immediately
+    /* If `isPopoverBanner` is false then this is the contribute page.
+     Init the handler immediately */
     if (!isPopoverBanner && win.StripeCheckout) {
         stripeHandler = initStripeHandler();
     }
@@ -275,7 +275,7 @@
                 category: 'payments',
                 action: 'banner',
                 label: 'Amount radio selected',
-                value: event.target.value
+                value: event.target.value * 100
             });
 
             $(event.target).parent().addClass('active');
