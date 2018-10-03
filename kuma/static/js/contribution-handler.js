@@ -212,7 +212,8 @@
                 mdn.analytics.trackEvent({
                     category: 'payments',
                     action: 'submission',
-                    label: 'completed'
+                    label: 'completed',
+                    value: selectedAmount * 100
                 });
                 form.submit();
             }
