@@ -153,7 +153,7 @@
                 // Parses the stringified storage item
                 disabledStorageItem = JSON.parse(disabledStorageItem);
 
-                if (disabledStorageItem.value 
+                if (disabledStorageItem.value
                         && disabledStorageItem.timestamp + CONTRIBUTIONS_DISABLED_EXPIRATION < date) {
                     // Remove the item if it has expired.
                     removeDisabledLocaleStorageItem();
@@ -217,8 +217,8 @@
 
     var isPopoverBanner = $('.contribution-banner').hasClass('contribution-popover');
 
-    /* If `isPopoverBanner` is false, then this is the
-       contribute page. Init the handler immediately */
+    // If `isPopoverBanner` is false then this is the contribute page.
+    // Init the handler immediately
     if (!isPopoverBanner && win.StripeCheckout) {
         stripeHandler = initStripeHandler();
     }
@@ -415,15 +415,21 @@
      * also handles errors when getting the resource
      */
     function getStripeCheckoutScript() {
-        $.getScript('https://checkout.stripe.com/checkout.js')
-            .done(function() {
-                // init stripeCheckout handler.
-                stripeHandler = initStripeHandler();
-            })
-            .fail(function(error) {
-                console.error('Failed to load stripe checkout library', error);
-                toggleScriptError();
-            });
+        if (stripeHandler) {
+            return;
+        }
+
+        $.ajax({
+            url: 'https://checkout.stripe.com/checkout.js',
+            dataType: 'script',
+            cache: true
+        }).done(function() {
+            // Init stripeCheckout handler.
+            stripeHandler = initStripeHandler();
+        }).fail(function(error) {
+            console.error('Failed to load stripe checkout library', error);
+            toggleScriptError();
+        });
     }
 
     /**
@@ -445,12 +451,6 @@
 
         mediaQueryList = window.matchMedia(smallDesktop);
         var initialExpandedClass = mediaQueryList.matches ? 'expanded-extend' : 'expanded';
-
-        // if not already initialised
-        if (stripeHandler === null) {
-            // initialise handler
-            // stripeHandler = initStripeHandler();
-        }
 
         popoverBanner.addClass(initialExpandedClass + ' is-expanding');
         popoverBanner.removeClass('is-collapsed');
@@ -479,6 +479,12 @@
                 }
             });
         });
+
+        mdn.analytics.trackEvent({
+            category: 'Contribution popover',
+            action: 'expand',
+            value: 1
+        });
     }
 
     /**
@@ -488,7 +494,7 @@
         collapseButton.off();
 
         // Remove error if it exists
-        if (formButton.hasClass('disabled')){
+        if (formButton.hasClass('disabled')) {
             toggleScriptError();
         }
 
