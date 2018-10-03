@@ -19,7 +19,6 @@ def contribute_thank_you_email(username, user_email):
     message_context = {
         'user_email': user_email,
         'username': username,
-        'site': settings.SITE_URL
     }
 
     # TODO: Remove when we ship translations, get legal approval
