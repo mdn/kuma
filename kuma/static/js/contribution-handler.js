@@ -365,7 +365,7 @@
             category: 'payments',
             action: 'submission',
             label: isPopoverBanner ? 'On pop over' : 'On FAQ page',
-            value: selectedAmount
+            value: selectedAmount * 100
         });
 
         if (stripeHandler !== null) {
