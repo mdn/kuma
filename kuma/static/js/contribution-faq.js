@@ -9,7 +9,7 @@
 
     function sendAnalyticsVoteEvent(action, label ,value) {
         var event = {
-            category: 'FAQ Feedback',
+            category: 'payments',
             action: action,
             value: value,
         };
@@ -27,7 +27,7 @@
         $(event.target).next().removeClass('active');
         $(event.target).addClass('active');
 
-        sendAnalyticsVoteEvent('question_' + questionNumber, null, 1);
+        sendAnalyticsVoteEvent('FAQ vote', 'question_' + questionNumber, 1);
     }
 
     function onThumbsDown(event) {
@@ -36,20 +36,21 @@
         $(event.target).prev().removeClass('active');
         $(event.target).addClass('active');
 
-        sendAnalyticsVoteEvent('question_' + questionNumber, null, 0);
+        sendAnalyticsVoteEvent('FAQ vote', 'question_' + questionNumber, 0);
     }
 
 
     function onFeedback(event) {
         event.preventDefault();
 
-        var feedback = $(this).find('textarea').val() || '';
-        var action = $(this).find('textarea').attr('data-action') || '';
-        mdn.analytics.trackEvent({
-            category: 'Contribution feedback',
-            action: action,
-            label: feedback,
-        });
+        var feedback = $(this).find('textarea').val();
+        if (feedback) {
+            mdn.analytics.trackEvent({
+                category: 'payments',
+                action: 'FAQ - Any other questions',
+                label: feedback,
+            });
+        }
     }
 
     thumbsUp.click(onThumbsUp);
