@@ -193,6 +193,8 @@
     var formErrorMessage = form.find('#contribution-error-message');
     var amount = formButton.find('#amount');
 
+    var submitted = false;
+
     /**
      * Initialise the stripeCheckout handler.
      */
@@ -203,8 +205,15 @@
             name: 'MDN Web Docs',
             description: 'One-time donation',
             token: function(token) {
+                submitted = true;
                 stripeToken.val(token.id);
                 addDisabledLocaleStorageItem();
+                // Send GA Event.
+                mdn.analytics.trackEvent({
+                    category: 'payments',
+                    action: 'submission',
+                    label: 'completed'
+                });
                 form.submit();
             }
         });
@@ -295,13 +304,6 @@
 
         $('<ul class="errorlist"><li>' + error + '</li></ul>').insertAfter($(field));
 
-        if ($(field).is('#id_donation_amount')) {
-            mdn.analytics.trackEvent({
-                category: 'payments',
-                action: 'banner',
-                label: 'Invalid amount selected',
-            });
-        }
     }
 
     /**
@@ -377,6 +379,14 @@
                 amount: (selectedAmount * 100),
                 email: $(emailField).val(),
                 closed: function() {
+                    // Send GA Event.
+                    if (!submitted) {
+                        mdn.analytics.trackEvent({
+                            category: 'payments',
+                            action: 'submission',
+                            label: 'canceled'
+                        });
+                    }
                     form.removeClass('disabled');
                 }
             });
@@ -483,9 +493,9 @@
         });
 
         mdn.analytics.trackEvent({
-            category: 'Contribution popover',
-            action: 'expand',
-            value: 1
+            category: 'payments',
+            action: 'banner',
+            label: 'expand'
         });
     }
 
@@ -573,13 +583,22 @@
     emailField.blur(onChange);
     nameField.blur(onChange);
     customAmountInput.blur(function(event) {
-        // Send GA Event.
-        mdn.analytics.trackEvent({
-            category: 'payments',
-            action: 'banner',
-            label: 'custom amount',
-            value: event.target.value
-        });
+        var value = parseFloat(event.target.value);
+        if (!isNaN(value) && value >= 1) {
+            // Send GA Event.
+            mdn.analytics.trackEvent({
+                category: 'payments',
+                action: 'banner',
+                label: 'custom amount',
+                value: Math.floor(value * 100)
+            });
+        } else {
+            mdn.analytics.trackEvent({
+                category: 'payments',
+                action: 'banner',
+                label: 'Invalid amount selected',
+            });
+        }
     });
 
     if (isPopoverBanner) {

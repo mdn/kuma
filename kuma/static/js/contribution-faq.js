@@ -43,7 +43,7 @@
     function onFeedback(event) {
         event.preventDefault();
 
-        var feedback = $(this).find('textarea').val();
+        var feedback = document.getElementById('contribution-feedback').value;
         if (feedback) {
             mdn.analytics.trackEvent({
                 category: 'payments',
