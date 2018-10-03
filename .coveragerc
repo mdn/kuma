@@ -1,6 +1,6 @@
-[run]
+[Run]
 source = kuma
 branch = 1
 
-[report]
+[Report]
 omit = *migrations*,*/management/commands/*
