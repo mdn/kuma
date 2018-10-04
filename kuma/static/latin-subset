@@ -1,0 +1,17 @@
+# Basic Latin
+U+0020-007F
+
+# Latin-1 Supplement
+U+00A0-00FF
+
+# Latin Extended-A
+U+0100-017F
+
+# Latin Extended-B
+U+0180-024F
+
+# General Punctuation
+U+2000-206F
+
+# Currency Symbols
+U+20A0-20CF
