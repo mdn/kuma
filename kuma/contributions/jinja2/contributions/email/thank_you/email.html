@@ -2,7 +2,7 @@
 <html lang="en-US" dir="ltr">
     <head>
         <meta charset="utf-8" />
-        <title>{{ _('Thank you for contributing!') }}</title>
+        <title>{{ _('Thank you for supporting MDN.') }}</title>
     </head>
   <body>
     <table width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#e1e1e1">
@@ -25,7 +25,7 @@
                               <tbody>
                                 <tr>
                                   <td align="left" style="padding:16px 0px">
-                                    <img src="{{ site }}{{ static('img/mdn-web-docs-email-logo.png') }}" width="219" height="45" alt="Mozilla" style="display:block;border:0">
+                                    <img src="{{ static('img/mdn-web-docs-email-logo.png')|absolutify }}" width="219" height="45" alt="Mozilla" style="display:block;border:0">
                                   </td>
                                 </tr>
                               </tbody>
@@ -54,7 +54,7 @@
                                                       <tbody>
                                                         <tr>
                                                           <td width="360" align="center" style="font-family:Geneva,Tahoma,Verdana,sans-serif;font-size:22px;color:#464646">
-                                                            <a style="text-decoration:none;color:#464646" target="_blank">{{_('Thanks for joining MDN.')}}</a>
+                                                            {{ _('Thank you for supporting MDN.') }}
                                                           </td>
                                                         </tr>
                                                       </tbody>
@@ -80,24 +80,9 @@
                                                         <tbody>
                                                           <tr>
                                                             <td align="left" style="font-family:Geneva,Tahoma,Verdana,sans-serif;font-size:14px;line-height:22px;color:#555555;padding-top:16px">
-                                                              {% trans %}   
-                                                              We are committed to providing the best source of information about web standards. Your support enables MDN to build more of the content and tools you use every day, and helps us make sure MDN can be available to everyone, everywhere.
+                                                              {% trans %}
+                                                              We are committed to providing the best source of information about web standards. Your support enables MDN to move even faster as we build more of the content and tools you use every day, and helps us make sure MDN can be available to everyone, everywhere.
                                                               {% endtrans %}
-                                                            </td>
-                                                          </tr>
-                                                        </tbody>
-                                                      </table>
-                                                    </td>
-                                                  </tr>
-                                                  <tr>
-                                                    <td width="640" align="left" style="background:#fff">
-                                                      <table cellspacing="0" cellpadding="0">
-                                                        <tbody>
-                                                          <tr>
-                                                            <td align="left" style="font-family:Geneva,Tahoma,Verdana,sans-serif;font-size:14px;line-height:22px;color:#555555;padding-top:16px">
-                                                                {% block trans %}
-                                                                If you didn’t get a chance to, <a href="{{ site }}{{url('contribute')}}#contribute-faqs">read more</a> about why MDN are asking for contributions.
-                                                                {% endblock %}
                                                             </td>
                                                           </tr>
                                                         </tbody>
@@ -152,13 +137,13 @@
                       <tbody>
                         <tr>
                           <td align="center" style="font-family:Geneva,Tahoma,Verdana,sans-serif;font-size:14px;line-height:18px;color:#738597;padding:0 20px 40px">
-                            <a href="{{ site }}" target="_blank">
-                              <img src="{{ site }}{{ static('img/favicon144.png') }}" height="50" width="50" alt="Mozilla" style="display:block;border:0">
+                            <a href="{{ url('home')|absolutify }}" target="_blank">
+                              <img src="{{ static('img/favicon144.png')|absolutify }}" height="50" width="50" alt="Mozilla" style="display:block;border:0">
                             </a>
                             <br>
                             <span>
                               <font color="#888888">{{_('Mozilla')}}<br>
-                                <a href="https://www.google.com/maps/place/331+E+Evelyn+Ave,+Mountain+View,+CA+94041,+USA/@37.3873074,-122.0623627,17z/data=!3m1!4b1!4m5!3m4!1s0x808fb71f6f496cbd:0x112f2322399b2fcc!8m2!3d37.3873074!4d-122.060174">{{_('331 E. Evelyn Avenue Mountain View CA 94041')}}</a> 
+                                <a href="https://www.google.com/maps/place/331+E+Evelyn+Ave,+Mountain+View,+CA+94041,+USA/@37.3873074,-122.0623627,17z/data=!3m1!4b1!4m5!3m4!1s0x808fb71f6f496cbd:0x112f2322399b2fcc!8m2!3d37.3873074!4d-122.060174">{{_('331 E. Evelyn Avenue Mountain View CA 94041')}}</a>
                                 <br>
                                 <a href="https://www.mozilla.org/en-US/about/legal/terms/mozilla/">{{_('Legal')}}</a> • <a href="https://www.mozilla.org/en-US/privacy/websites/">{{_('Privacy')}}</a>
                               </font>

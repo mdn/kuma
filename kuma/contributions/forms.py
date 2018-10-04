@@ -123,7 +123,7 @@ class ContributionForm(forms.Form):
                     amount=amount,
                     currency='usd',
                     source=token,
-                    description='Contribute to MDN Web Docs',
+                    description='Support MDN Web Docs',
                     receipt_email=self.cleaned_data['email'],
                     metadata={'name': self.cleaned_data['name']}
                 )

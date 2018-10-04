@@ -46,9 +46,9 @@
 
             // Send GA Event.
             mdn.analytics.trackEvent({
-                category: 'Contribution popover',
-                action: 'Tooltip Opened',
-                value: 1
+                category: 'payments',
+                action: 'banner',
+                label: 'Tooltip Opened',
             });
         }
 
@@ -69,9 +69,9 @@
 
             // Send GA Event.
             mdn.analytics.trackEvent({
-                category: 'Contribution popover',
-                action: 'Tooltip Closed',
-                value: 1
+                category: 'payments',
+                action: 'banner',
+                label: 'Tooltip Closed',
             });
         }
 
@@ -153,10 +153,10 @@
                 // Parses the stringified storage item
                 disabledStorageItem = JSON.parse(disabledStorageItem);
 
-                if (disabledStorageItem.value 
+                if (disabledStorageItem.value
                         && disabledStorageItem.timestamp + CONTRIBUTIONS_DISABLED_EXPIRATION < date) {
                     // Remove the item if it has expired.
-                    localStorage.removeItem('contributionsPopoverDisabled');
+                    removeDisabledLocaleStorageItem();
                     showPopover();
                 }
             } else {
@@ -193,6 +193,8 @@
     var formErrorMessage = form.find('#contribution-error-message');
     var amount = formButton.find('#amount');
 
+    var submitted = false;
+
     /**
      * Initialise the stripeCheckout handler.
      */
@@ -203,7 +205,16 @@
             name: 'MDN Web Docs',
             description: 'One-time donation',
             token: function(token) {
+                submitted = true;
                 stripeToken.val(token.id);
+                addDisabledLocaleStorageItem();
+                // Send GA Event.
+                mdn.analytics.trackEvent({
+                    category: 'payments',
+                    action: 'submission',
+                    label: 'completed',
+                    value: selectedAmount * 100
+                });
                 form.submit();
             }
         });
@@ -216,8 +227,8 @@
 
     var isPopoverBanner = $('.contribution-banner').hasClass('contribution-popover');
 
-    /* If `isPopoverBanner` is false, then this is the
-       contribute page. Init the handler immediately */
+    /* If `isPopoverBanner` is false then this is the contribute page.
+     Init the handler immediately */
     if (!isPopoverBanner && win.StripeCheckout) {
         stripeHandler = initStripeHandler();
     }
@@ -262,9 +273,10 @@
 
             // Send GA Event.
             mdn.analytics.trackEvent({
-                category: 'Contribution popover',
-                action: 'Amount radio selected',
-                value: event.target.value
+                category: 'payments',
+                action: 'banner',
+                label: 'Amount radio selected',
+                value: event.target.value * 100
             });
 
             $(event.target).parent().addClass('active');
@@ -293,13 +305,6 @@
 
         $('<ul class="errorlist"><li>' + error + '</li></ul>').insertAfter($(field));
 
-        if ($(field).is('#id_donation_amount')) {
-            mdn.analytics.trackEvent({
-                category: 'Contribution popover',
-                action: 'Invalid amount selected',
-                value: 1
-            });
-        }
     }
 
     /**
@@ -358,9 +363,10 @@
 
         // Send GA Event.
         mdn.analytics.trackEvent({
-            category: 'Contribution submission',
-            action: isPopoverBanner ? 'On Popover' : 'On Page',
-            value: 1
+            category: 'payments',
+            action: 'submission',
+            label: isPopoverBanner ? 'On pop over' : 'On FAQ page',
+            value: selectedAmount * 100
         });
 
         if (stripeHandler !== null) {
@@ -370,9 +376,18 @@
                 name: 'MDN Web Docs',
                 description: 'Contribute to MDN Web Docs',
                 zipCode: true,
+                allowRememberMe: false,
                 amount: (selectedAmount * 100),
                 email: $(emailField).val(),
                 closed: function() {
+                    // Send GA Event.
+                    if (!submitted) {
+                        mdn.analytics.trackEvent({
+                            category: 'payments',
+                            action: 'submission',
+                            label: 'canceled'
+                        });
+                    }
                     form.removeClass('disabled');
                 }
             });
@@ -413,15 +428,21 @@
      * also handles errors when getting the resource
      */
     function getStripeCheckoutScript() {
-        $.getScript('https://checkout.stripe.com/checkout.js')
-            .done(function() {
-                // init stripeCheckout handler.
-                stripeHandler = initStripeHandler();
-            })
-            .fail(function(error) {
-                console.error('Failed to load stripe checkout library', error);
-                toggleScriptError();
-            });
+        if (stripeHandler) {
+            return;
+        }
+
+        $.ajax({
+            url: 'https://checkout.stripe.com/checkout.js',
+            dataType: 'script',
+            cache: true
+        }).done(function() {
+            // Init stripeCheckout handler.
+            stripeHandler = initStripeHandler();
+        }).fail(function(error) {
+            console.error('Failed to load stripe checkout library', error);
+            toggleScriptError();
+        });
     }
 
     /**
@@ -443,12 +464,6 @@
 
         mediaQueryList = window.matchMedia(smallDesktop);
         var initialExpandedClass = mediaQueryList.matches ? 'expanded-extend' : 'expanded';
-
-        // if not already initialised
-        if (stripeHandler === null) {
-            // initialise handler
-            // stripeHandler = initStripeHandler();
-        }
 
         popoverBanner.addClass(initialExpandedClass + ' is-expanding');
         popoverBanner.removeClass('is-collapsed');
@@ -477,6 +492,12 @@
                 }
             });
         });
+
+        mdn.analytics.trackEvent({
+            category: 'payments',
+            action: 'banner',
+            label: 'expand'
+        });
     }
 
     /**
@@ -486,7 +507,7 @@
         collapseButton.off();
 
         // Remove error if it exists
-        if (formButton.hasClass('disabled')){
+        if (formButton.hasClass('disabled')) {
             toggleScriptError();
         }
 
@@ -509,16 +530,16 @@
 
         // Send GA Event.
         mdn.analytics.trackEvent({
-            category: 'Contribution popover',
-            action: 'collapse',
-            value: 1
+            category: 'payments',
+            action: 'banner',
+            label: 'collapse',
         });
 
         $(doc).off('keydown.popoverCloseHandler');
     }
 
     /**
-     * Removes the popover from the page and stores the hidden state in local storge.
+     * Removes the popover from the page
      */
     function disablePopover() {
         popoverBanner.addClass('is-hidden');
@@ -526,19 +547,33 @@
 
         // Send GA Event.
         mdn.analytics.trackEvent({
-            category: 'Contribution popover',
-            action: 'close',
-            value: 1
+            category: 'payments',
+            action: 'banner',
+            label: 'close',
         });
+        addDisabledLocaleStorageItem();
+    }
 
+    /**
+     * Stores popover hidden state in local storge.
+     */
+    function addDisabledLocaleStorageItem() {
         if (win.mdn.features.localStorage) {
             var item = JSON.stringify({
                 value: true,
                 // Sets the timestamp to today so we can check its expiration subsequent each page load.
                 timestamp: new Date().getTime()
             });
-
             localStorage.setItem('contributionsPopoverDisabled', item);
+        }
+    }
+
+    /**
+     * Removed popover hidden state in local storge.
+     */
+    function removeDisabledLocaleStorageItem() {
+        if (win.mdn.features.localStorage) {
+            localStorage.removeItem('contributionsPopoverDisabled');
         }
     }
 
@@ -549,12 +584,22 @@
     emailField.blur(onChange);
     nameField.blur(onChange);
     customAmountInput.blur(function(event) {
-        // Send GA Event.
-        mdn.analytics.trackEvent({
-            category: 'Contribution popover',
-            action: 'Amount manually selected',
-            value: event.target.value
-        });
+        var value = parseFloat(event.target.value);
+        if (!isNaN(value) && value >= 1) {
+            // Send GA Event.
+            mdn.analytics.trackEvent({
+                category: 'payments',
+                action: 'banner',
+                label: 'custom amount',
+                value: Math.floor(value * 100)
+            });
+        } else {
+            mdn.analytics.trackEvent({
+                category: 'payments',
+                action: 'banner',
+                label: 'Invalid amount selected',
+            });
+        }
     });
 
     if (isPopoverBanner) {
@@ -564,11 +609,11 @@
     setupTooltips();
 
     // Send to GA if popover is displayed.
-    if (popoverBanner.is(':visible')) {
+    if (popoverBanner && popoverBanner.is(':visible')) {
         mdn.analytics.trackEvent({
-            category: 'Contribution banner',
-            action: 'shown',
-            value: 1
+            category: 'payments',
+            action: 'banner',
+            label: 'shown',
         });
     }
 

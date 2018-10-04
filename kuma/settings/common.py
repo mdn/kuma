@@ -1711,3 +1711,5 @@ STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
 MDN_CONTRIBUTION = config('MDN_CONTRIBUTION', False, cast=bool)
 MDN_CONTRIBUTION_CONFIRMATION_EMAIL = config('MDN_CONTRIBUTION_CONFIRMATION_EMAIL', False, cast=bool)
 CONTRIBUTION_FORM_CHOICES = [32, 64, 128]
+CONTRIBUTION_SUPPORT_EMAIL = config('CONTRIBUTION_SUPPORT_EMAIL',
+                                    default='mdn-support@mozilla.com')

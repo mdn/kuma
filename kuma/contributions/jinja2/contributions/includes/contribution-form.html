@@ -15,19 +15,19 @@
                 <h4 tabindex="-1">{{_('Support MDN, and it comes back to you.')}}</h4>
                 <p class="body">
                     {% trans %}
-                        You’ve turned to MDN for information and assurance. Now
-                        we turn to you, for support. Help MDN and get back more
-                        of the information and tools you rely on for when your
-                        work has to work.
+                        You come to MDN for information and assistance. Be a
+                        part of making MDN even better. You’ll get back more of
+                        the knowledge and tools you rely on for when your work
+                        has to work.
                     {% endtrans %}
                 </p>
                 {% if is_popover %}
                     <div class="button-group">
                         <a href="{{url('contribute')}}#contribute-faqs" class="cta-link">
-                            {{_('Learn more about our contribution program')}} {% include 'includes/icons/arrows/arrow.svg' %}
+                            {{_('Learn more about payments to MDN')}} {% include 'includes/icons/arrows/arrow.svg' %}
                         </a>
                         <a href="{{url('contribute')}}#contribute-feedback" class="cta-link">
-                            {{_('Provide feedback on our contribution program')}} {% include 'includes/icons/arrows/arrow.svg' %}
+                            {{_('Provide feedback')}} {% include 'includes/icons/arrows/arrow.svg' %}
                         </a>
                     </div>
                 {% endif %}
@@ -49,7 +49,7 @@
                         <div class="tooltip" aria-hidden="true" id="tooltip-email">
                             <button class="tooltip-close" aria-controls="tooltip-email" aria-label="{{_('Close this tooltip') }}"></button>
                             <p>{{_('Why do you need my email address?') }}</p>
-                            <p>{{_('This is so we can send you a receipt of your contribution. This is handy if you’d like a refund.') }}</p>
+                            <p>{{_('This is so we can send you a receipt. This is handy if you’d like a refund.') }}</p>
                         </div>
                     </div>
                     <label class="offscreen" for="id_{{form.donation_choices.name}}">{{form.donation_choices.label}}</label>
@@ -60,10 +60,9 @@
                     {{form.stripe_token}}
                     {{form.stripe_public_key}}
                     <p class="legal-copy">
-                        These contributions are not tax deductible. Your
-                        payment details will be processed by
+                        Payments are not tax deductible. Your payment details will be processed by
                         <a href="https://stripe.com/" rel="noopener">Stripe</a>.
-                        Mozilla will keep record of your contribution in
+                        Mozilla will keep record of your payment in
                         accordance with its
                         <a href="https://www.mozilla.org/en-US/privacy/websites">Privacy Notice</a>,
                         and does not receive your payment details.
@@ -74,7 +73,7 @@
                 </ul>
                 <div class="form-footer">
                     <button type="button" id="stripe_submit">
-                        <span class="hide-expand">{{_('Contribute')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
+                        <span class="hide-expand">{{_('Support MDN')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
                         <span class="hide-collapse">
                             {{_('Pay <span id="%(span_id)s">%(amount)s</span>', span_id="amount", amount="$64") }}
                         </span>

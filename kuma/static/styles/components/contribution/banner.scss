@@ -146,7 +146,7 @@
     }
 
     .hide-collapsed {
-        display: initial;
+        display: inherit;
     }
 
     .hide-expand {
@@ -165,7 +165,7 @@
         }
 
         .hide-expand {
-            display: initial;
+            display: inherit;
         }
     }
 

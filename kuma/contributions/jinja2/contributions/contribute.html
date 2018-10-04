@@ -21,6 +21,25 @@
     {% endwith %}
 {% endblock %}
 
+{% macro faq_entry(number, title) %}
+    <li class="faq">
+        <h3>{{ title }}</h3>
+        <span class="faq-number">{{ number }}</span>
+            {{ caller() }}
+        <span class="small">{{_('Was this useful?')}}</span>
+        <div class="vote-button-group">
+            <button class="thumbs-up" data-faq="{{ number}}"
+                    aria-label="{{ _('Yes, this answered my question') }}">
+                {% include 'includes/icons/emojis/thumbs-up.svg' %}
+            </button>
+            <button class="thumbs-down" data-faq="{{ number }}"
+                    aria-label="{{ _('No, this did not answer my question') }}">
+                {% include 'includes/icons/emojis/thumbs-down.svg' %}
+            </button>
+        </div>
+    </li>
+{%- endmacro %}
+
 {% block content %}
 
 <main id="contributions-page" class="contributions-page" role="main">
@@ -29,171 +48,145 @@
         <div class="index">
             <h2>{{_('FAQs')}}</h2>
         </div>
-        <ol class="faqs clear">
-            <li class="faq">
-                <h3>{{_('Why is MDN asking me for money?')}}</h3>
-                <span class="faq-number">1</span>
-                <p>
-                    {% trans url="https://hacks.mozilla.org/2018/01/introducing-the-mdn-product-advisory-board/" %}
-                        In 2017, MDN established a
-                        <a href="{{ url }}">Product Advisory Board</a> and
-                        added documentation from several other developer
-                        programs to begin to create a truly world-wide,
-                        web-wide developer resource. Having this broader
-                        readership contribute directly to MDN creates a
-                        tighter, healthier loop between our audience (you), our
-                        content (written for you), and our financial supporters
-                        (also, you, again, if you can help by putting a price
-                        on a priceless resource!).
-                    {% endtrans %}
-                </p>
-                <p>
-                    {% trans url="https://developer.mozilla.org/docs/MDN/About#History_of_MDN_Web_Docs" %}
-                        MDN <a href="{{ url }}">originally began as the Mozilla Developer Network</a>
-                        and was used almost exclusively for Firefox internal
-                        documentation. But we have outgrown that. And your needs
-                        have outgrown that.  We’ve now broadened our coverage to
-                        web standards beyond Firefox, and our funding should match
-                        that reality.
-                    {% endtrans %}
-                </p>
-                <span class="small">{{_('Did this answer your question?')}}</span>
-                <div class="vote-button-group">
-                    <button class="thumbs-up" data-faq="1" aria-label="{{ _('Yes, this answered my question') }}">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
-                    <button class="thumbs-down" data-faq="1" aria-label="{{ _('No, this did not answer my question') }}">{% include 'includes/icons/emojis/thumbs-down.svg' %}</button>
-                </div>
-            </li>
-            <li class="faq">
-                <h3>{{_('If I just donate to the Mozilla Foundation, will that help MDN?')}}</h3>
-                <span class="faq-number">2</span>
+        <ol id="contribute-faqs" class="faqs clear">
+            {% call faq_entry(1, _("Why is MDN asking me for money?")) %}
                 <p>
                     {% trans %}
-                        Not as likely and not as much. Donations to the Mozilla
-                        Foundation go to support Mozilla public programs in one
-                        general fund, but what you give to MDN stays with MDN
-                        and has a direct effect on how much we are able to
-                        expand MDN further.
+                        MDN is experimenting with seeking direct support from
+                        our users in order to accelerate growing and
+                        maintaining our content and platform, with assistance
+                        from those who use it.
                     {% endtrans %}
                 </p>
-                <span class="small">{{_('Did this answer your question?')}}</span>
-                <div class="vote-button-group">
-                    <button class="thumbs-up" data-faq="2" aria-label="{{ _('Yes, this answered my question') }}">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
-                    <button class="thumbs-down" data-faq="2" aria-label="{{ _('No, this did not answer my question') }}">{% include 'includes/icons/emojis/thumbs-down.svg' %}</button>
-                </div>
-            </li>
-            <li class="faq">
-                <h3>{{_('Is support of MDN tax-deductible? ')}}</h3>
-                <span class="faq-number">3</span>
                 <p>
                     {% trans %}
-                        No. Gifts to Mozilla are charity that benefit the
-                        public as a whole. MDN is for developers. Thus,
-                        donations to the Mozilla Foundation are tax-deductible,
-                        but support for MDN is not tax-deductible. MDN is
-                        experimenting with seeking direct support from our
-                        users in order to maintain these tools <em>for those of
-                        us who actually use them</em>.
+                        Our user base has grown exponentially in the last few
+                        years (with corresponding costs of maintaining the
+                        platform) and we have a large list of improvements we’d
+                        like to make. While MDN is currently wholly funded by
+                        Mozilla, and has been since its inception, we are
+                        looking to create a tighter, healthier loop between our
+                        audience (you), our content (written for you), and our
+                        supporters (also, you, again) that lets us accelerate
+                        those improvements.
                     {% endtrans %}
                 </p>
-                <span class="small">{{_('Did this answer your question?')}}</span>
-                <div class="vote-button-group">
-                    <button class="thumbs-up" data-faq="3" aria-label="{{ _('Yes, this answered my question') }}">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
-                    <button class="thumbs-down" data-faq="3" aria-label="{{ _('No, this did not answer my question') }}">{% include 'includes/icons/emojis/thumbs-down.svg' %}</button>
-                </div>
-            </li>
-            <li class="faq">
-                <h3>{{_('What does MDN funding cover?')}}</h3>
-                <span class="faq-number">4</span>
+            {% endcall %}
+            {%- call faq_entry(2, _("How is my payment handled? Is it secure?")) %}
+                <p>
+                    {% trans url="https://stripe.com/" %}
+                        All payment information goes through payment processor
+                        <a href="{{ url }}">Stripe</a>, and a record of your
+                        payment will be stored by Mozilla. Mozilla does not
+                        receive or store your credit card number.
+                    {% endtrans %}
+                </p>
+            {% endcall %}
+            {%- call faq_entry(3, _("What data is Mozilla collecting about me?")) %}
+                <p>
+                    {% trans url="https://stripe.com/" %}
+                        Mozilla will collect and store your name and email,
+                        which will be used to send transactional emails (e.g.
+                        receipt). Mozilla will not have access to or store your
+                        credit card number.
+                    {% endtrans %}
+                </p>
+            {% endcall %}
+            {%- call faq_entry(4, _("What does money go towards?")) %}
+                <p>
+                    {% trans url="https://stripe.com/" %}
+                        The money collected through MDN (minus processing fees,
+                        taxes, etc.) will be reinvested back into MDN. We will
+                        publish a monthly report on MDN Web Docs showing what
+                        work was completed.
+                    {% endtrans %}
+                </p>
+            {% endcall %}
+            {%- call faq_entry(5, _("If I just donate to the Mozilla Foundation, will that help MDN?")) %}
+                <p>
+                    {% trans foundation_url="https://www.mozilla.org/foundation/",
+                             corporation_url="https://www.mozilla.org/foundation/moco/" %}
+                        The <a href="{{ foundation_url }}">Mozilla Foundation</a>
+                        and MDN are separate organizations and programs.
+                        Donations to the Mozilla Foundation are tax-deductible
+                        and go to support Mozilla public and charitable
+                        programs in one general fund. MDN is part of
+                        <a href="{{ corporation_url }}">Mozilla Corporation</a>
+                        and payments to MDN are not used in Mozilla’s
+                        charitable programs but are reinvested into MDN’s
+                        content, tools, and platform.
+                    {% endtrans %}
+                </p>
+            {% endcall %}
+            {%- call faq_entry(6, _("Is support of MDN tax-deductible?")) %}
                 <p>
                     {% trans %}
-                        Operations, overhead and specific projects, with our
-                        ultimate goal being innovations like:
+                        No. Payments to Mozilla Corporation in support of MDN
+                        are not tax deductible in the United States or other
+                        countries.
+                    {% endtrans %}
+                </p>
+            {% endcall %}
+            {%- call faq_entry(7, _("What will MDN user funding pay for?")) %}
+                <p>
+                    {% trans %}
+                        Currently, Mozilla pays for site operations and
+                        overhead (including writers and web developers). MDN
+                        user payments will fund accelerating current projects
+                        or launching new ones, including:
                     {% endtrans %}
                 </p>
                 <ul>
-                    <li>{{_('Offline access to MDN')}}</li>
-                    <li>{{_('Machine-readable formats for more content and deeper integrations with popular developer tools')}}</li>
+                    <li>{{_('Adding more content, and updating current content')}}</li>
+                    <li>{{_('Improving performance of the site')}}</li>
+                    <li>{{_('Modernizing the MDN platform')}}</li>
+                    <li>{{_('Adding offline access to MDN')}}</li>
+                    <li>{{_('Supporting integrations with popular developer tools')}}</li>
                     <li>{{_('More tutorials and guides')}}</li>
                     <li>{{_('Training and webinars')}}</li>
-                    <li>{{_('Video content')}}</li>
-                    <li>{{_('Enhanced MDN accounts ')}}</li>
-                    <li>{{_('Improved communications tools for volunteer contributors')}}</li>
-                    <li>{{_('Discussion forums')}}</li>
                 </ul>
-                <span class="small">{{_('Did this answer your question?')}}</span>
-                <div class="vote-button-group">
-                    <button class="thumbs-up" data-faq="4" aria-label="{{ _('Yes, this answered my question') }}">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
-                    <button class="thumbs-down" data-faq="4" aria-label="{{ _('No, this did not answer my question') }}">{% include 'includes/icons/emojis/thumbs-down.svg' %}</button>
-                </div>
-            </li>
-            <li class="faq">
-                <h3>{{_('Why can’t you just open a Crowdsourcing campaign?')}}</h3>
-                <span class="faq-number">5</span>
+            {% endcall %}
+            {%- call faq_entry(8, _("Why can’t you just open a Crowdsourcing campaign?")) %}
                 <p>
                     {% trans %}
                         Because we aren’t looking for a lump sum. Our goal is
-                        to create a broad base of contributions that support
-                        ongoing work from the people who benefit from that
-                        work.
+                        to create a broad base of financial support from the
+                        people who benefit from the work of MDN.
                     {% endtrans %}
                 </p>
-                <span class="small">{{_('Did this answer your question?')}}</span>
-                <div class="vote-button-group">
-                    <button class="thumbs-up" data-faq="5" aria-label="{{ _('Yes, this answered my question') }}">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
-                    <button class="thumbs-down" data-faq="5" aria-label="{{ _('No, this did not answer my question') }}">{% include 'includes/icons/emojis/thumbs-down.svg' %}</button>
-                </div>
-            </li>
-            <li class="faq">
-                <h3>{{_('How has MDN been funded to date?')}}</h3>
-                <span class="faq-number">6</span>
+            {% endcall %}
+            {%- call faq_entry(9, _("How has MDN been funded to date?")) %}
                 <p>
                     {% trans %}
-                        When Mozilla launched MDN in 2005, it was funded out of
-                        Mozilla’s general budget.
+                        MDN is funded out of the Mozilla Corporation general
+                        budget (and has been since it was founded in 2005).
+                        Mozilla Corporation intends to continue to financially
+                        support MDN into the future, even as we broaden and
+                        diversify the sources of MDN funding. We just want to
+                        do more things with you and for you!
                     {% endtrans %}
                 </p>
-                <span class="small">{{_('Did this answer your question?')}}</span>
-                <div class="vote-button-group">
-                    <button class="thumbs-up" data-faq="6" aria-label="{{ _('Yes, this answered my question') }}">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
-                    <button class="thumbs-down" data-faq="6" aria-label="{{ _('No, this did not answer my question') }}">{% include 'includes/icons/emojis/thumbs-down.svg' %}</button>
-                </div>
-            </li>
-            <li class="faq">
-                <h3>{{_('How does Mozilla make money?')}}</h3>
-                <span class="faq-number">7</span>
+            {% endcall %}
+            {%- call faq_entry(10, _("How does Mozilla make money?")) %}
+                <p>
+                    {% trans %}
+                        The Mozilla Corporation, which funds MDN, makes money
+                        primarily from royalties from search providers on
+                        Firefox (such as Google, Amazon, Duck Duck Go, and
+                        others).
+                    {% endtrans %}
+                </p>
                 <p>
                     {% trans url="https://www.mozilla.org/en-US/foundation/annualreport/2016/" %}
-                        Revenue sharing with search providers on Firefox’s
-                        search bar and start page (i.e. Google and others).
-                        Mozilla’s revenue mix also includes e-commerce
-                        affiliate revenue from online retailers (i.e. Amazon
-                        and others). As a nonprofit, we report these revenues
-                        publicly every trailing year, as in our most recent
+                        Separately, the Mozilla Foundation is a not-for-profit,
+                        making its money primarily from donations and royalties
+                        from Mozilla Corporation. As a not-for-profit, the
+                        Mozilla Foundation reports these revenues publicly
+                        every trailing year, as in our most recent
                         <a href="{{ url }}">2016 Mozilla Annual Report</a>.
                     {% endtrans %}
                 </p>
-                <span class="small">{{_('Did this answer your question?')}}</span>
-                <div class="vote-button-group">
-                    <button class="thumbs-up" data-faq="7" aria-label="{{ _('Yes, this answered my question') }}">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
-                    <button class="thumbs-down" data-faq="7" aria-label="{{ _('No, this did not answer my question') }}">{% include 'includes/icons/emojis/thumbs-down.svg' %}</button>
-                </div>
-            </li>
-            <li class="faq">
-                <h3>{{_('Why is money so important and can we one day untether ourselves from our financial overlords?')}}</h3>
-                <span class="faq-number">8</span>
-                <p>
-                    {% trans %}
-                        You ask a lot of good questions, and we like your
-                        attitude.  The tragedy of the commons requires an
-                        uncommon vigilance from people like us, online and off.
-                    {% endtrans %}
-                </p>
-                <span class="small">{{_('Did this answer your question?')}}</span>
-                <div class="vote-button-group">
-                    <button class="thumbs-up" data-faq="8" aria-label="{{ _('Yes, this answered my question') }}">{% include 'includes/icons/emojis/thumbs-up.svg' %}</button>
-                    <button class="thumbs-down" data-faq="8" aria-label="{{ _('No, this did not answer my question') }}">{% include 'includes/icons/emojis/thumbs-down.svg' %}</button>
-                </div>
-            </li>
+            {% endcall %}
         </ol>
     </section>
     <section class="section">
@@ -202,8 +195,7 @@
         </div>
         <div id="contribute-feedback" class="faqs clear feedback">
             <form id="faq-feedback" class="faq-feedback">
-                <h3><label for="faq3">{{_('Is there anything else you’d like to know more about?')}}</label></h3>
-                <textarea data-action="FAQ Any other questions" placeholder="{{_('Your feedback goes here')}}" name="faq3" id="faq3" cols="30" rows="2"></textarea>
+                <textarea data-action="FAQ Any other questions" placeholder="{{_('Your feedback goes here')}}" name="faq-feedback" id="contribution-feedback" cols="30" rows="2"></textarea>
                 <button type="submit"> {{_('Send')}} {% include 'includes/icons/arrows/arrow.svg' %}</button>
             </form>
         </div>

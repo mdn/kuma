@@ -1,3 +1,11 @@
-{% trans %}
-Thank you {{ username }} [{{ user_email }}] for your contribution to the MDN Web Docs!
-{% endtrans %}
+{# This is an email. Whitespace matters. #}
+{%- trans -%}
+Thank you {{ username }} [{{ user_email }}] for supporting MDN.
+{%- endtrans %}
+
+{% trans -%}
+We are committed to providing the best source of information about web standards. Your support enables MDN to move even faster as we build more of the content and tools you use every day, and helps us make sure MDN can be available to everyone, everywhere.
+{%- endtrans %}
+
+{{_('Thank you again,')}}
+{{_('The MDN Team')}}

@@ -18,26 +18,42 @@
                     <p class="subtext">
                         {% trans %}
                             We are committed to providing the best source of
-                            information about web standards. Your support enables
-                            MDN to build more of the content and tools you use every
-                            day, and helps us make sure MDN can be available to
-                            everyone, everywhere.
+                            information about web standards. Your support enables MDN
+                            to move even faster as we build more of the content and
+                            tools you use every day, and helps us make sure MDN can
+                            be available to everyone, everywhere.
                         {% endtrans %}
                     </p>
                     <p class="subtext">{{_('Thank you again,')}}</p>
                     <p class="subtext">{{_('The MDN Team')}}</p>
 
+                    {%- set share_url = 'https://developer.mozilla.org' + url('contribute') %}
+                    {%- set tweet_phrase = _("I support MDN, and you can too: %(url)s", url=share_url) %}
+                    {%- set tweet_text = tweet_phrase|urlencode %}
+                    {%- set twitter_cta = _("Share your support for MDN on Twitter") %}
+                    {%- set facebook_cta = _("Share your support for MDN on Facebook") -%}
+
                     <div class="button-tab-group">
-                        <a href="https://twitter.com/intent/tweet?text=I%20am%20a%20supporter%20of%20MDN,%20and%20you%20can%20too:%20https://developer.mozilla.com/en-US/contribute/" class="button" target="_blank" rel="noopener" aria-label="{{_('Share your support on Twitter')}}">{% include 'includes/icons/social/twitter.svg' %}</a>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdeveloper.mozilla.org%2Fen-US%2Fcontribute" class="button" target="_blank" rel="noopener" aria-label="{{_('Share your support on Facebook')}}">{% include 'includes/icons/social/facebook.svg' %}</a>
+                        <a href="https://twitter.com/intent/tweet?text={{ tweet_text }}"
+                           class="button" target="_blank" rel="noopener"
+                           aria-label="{{ twitter_cta }}">
+                            {{ include_svg('includes/icons/social/twitter.svg', twitter_cta) }}
+                        </a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | urlencode }}"
+                           class="button" target="_blank" rel="noopener"
+                           aria-label="{{ facebook_cta }}">
+                            {{ include_svg('includes/icons/social/facebook.svg', facebook_cta) }}
+                        </a>
                     </div>
                 {% else %}
                     <h2 class="highlight highlight-spanned">
                         <span class="highlight-span">{{_('Ooops, something went wrong')}}</span>
                     </h2>
                     <p>
-                        {% trans %}
-                        Please contact <a href="mailto:support@mozilla.com">support@mozilla.com</a>  for more information on this problem.
+                        {% trans mailto='mailto:%s' % settings.CONTRIBUTION_SUPPORT_EMAIL,
+                                 email=settings.CONTRIBUTION_SUPPORT_EMAIL %}
+                            Please contact <a href="{{ mailto }}">{{ email }}</a>
+                            for more information on this problem.
                         {% endtrans %}
                     </p>
                     <p>
@@ -59,10 +75,16 @@
             <div class="faqs clear feedback">
                 <form id="faq-feedback" class="faq-feedback">
                     <h3>{{_('Is there anything else you’d like to know more about?')}}</h3>
-                    <textarea data-action="Thank you Feedback" placeholder="{{_('Your feedback goes here')}}" name="faq3" id="faq3" cols="30" rows="2"></textarea>
+                    <textarea data-action="Thank you Feedback" placeholder="{{_('Your feedback goes here')}}" name="thank-you-feedback" id="contribution-feedback" cols="30" rows="2"></textarea>
                     <button type="submit"> {{_('Send')}} {% include 'includes/icons/arrows/arrow.svg' %}</button>
                 </form>
             </div>
         </section>
     </main>
+{% endblock %}
+
+{% block js %}
+  {%- if contribution_enabled %}
+    {% javascript 'contribute' %}
+  {%- endif %}
 {% endblock %}

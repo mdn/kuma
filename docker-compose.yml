@@ -32,7 +32,7 @@ services:
       - PROTOCOL=http://
       - SESSION_COOKIE_SECURE=False
       - SITE_URL=http://localhost:8000
-      - STATIC_URL=${STATIC_URL:-/static/}
+      - STATIC_URL=${STATIC_URL:-http://localhost:8000/static/}
       # Other environment overrides
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=True

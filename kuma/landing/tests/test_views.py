@@ -103,7 +103,8 @@ def test_robots_allowed_main_attachment_host(client, settings):
     assert content == b''
 
 
-def test_favicon_ico(client):
+def test_favicon_ico(client, settings):
+    settings.STATIC_URL = '/static/'
     response = client.get('/favicon.ico')
     assert response.status_code == 302
     assert_shared_cache_header(response)
