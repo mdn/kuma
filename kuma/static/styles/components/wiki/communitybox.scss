@@ -12,7 +12,7 @@ $communitybox-spacing: 13px;
     padding: $communitybox-spacing;
     background-color: $blue-light;
     @include bidi(((border, 0, 0),));
-    @include set-font-size($body-font-size);
+    @include set-font-size($base-font-size);
 
     strong {
         @include set-larger-font-size();

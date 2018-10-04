@@ -10,7 +10,7 @@
 
 .originaldocinfo {
     h2 {
-        @include set-font-size($body-font-size);
+        @include set-font-size($base-font-size);
         margin-top: 0;
     }
 }

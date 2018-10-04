@@ -20,7 +20,7 @@ hacks blog row, wrapper, entries, and get involved
         letter-spacing: 0;
         line-height: normal;
         margin-bottom: 0;
-        @include set-font-size($body-font-size);
+        @include set-font-size($larger-font-size);
 
         a {
             text-decoration: underline;
@@ -31,7 +31,7 @@ hacks blog row, wrapper, entries, and get involved
         display: block;
         margin: 10px 0 0;
         font-style: italic;
-        @include set-font-size($body-font-size);
+        @include set-font-size($base-font-size);
         font-weight: normal;
 
         @media #{$mq-mobile-and-down} {

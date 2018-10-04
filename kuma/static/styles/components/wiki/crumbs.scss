@@ -7,7 +7,7 @@ wiki article bread crumbs
     border-width: 1px 0;
     margin: $grid-spacing 0;
     padding: $grid-spacing 0;
-    @include set-font-size($left-nav-font-size);
+    @include set-font-size($base-font-size);
 
     li {
         display: inline;

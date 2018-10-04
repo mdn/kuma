@@ -68,7 +68,7 @@
 }
 
 .footer-tos {
-    @include set-font-size($tiny-font-size);
+    @include set-font-size($base-bump-font-size);
     margin-bottom: $mobile-center-spacing;
 
     li {
@@ -135,7 +135,7 @@
 
     .footer-title {
         display: block;
-        @include set-font-size($body-font-size);
+        @include set-font-size($small-bump-font-size);
         @include set-site-font-family();
     }
 

@@ -28,7 +28,7 @@ a.github-button {
         text-decoration: none;
         display: block;
         float: left;
-        @include set-font-size($body-font-size);
+        @include set-font-size($base-font-size);
         line-height: 24px;
         color: #fff;
         padding: 0 10px 0 20px;
