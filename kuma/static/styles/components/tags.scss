@@ -34,6 +34,10 @@ ul.tags li {
     label {
         margin-bottom: 0; /* for tag lists of expertise on user edit page */
     }
+
+    a {
+        color: $blue-dark;
+    }
 }
 
 /*

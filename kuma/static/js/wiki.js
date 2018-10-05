@@ -7,16 +7,6 @@
     $('.toggleable').mozTogglers();
 
     /*
-        Toggle for quick links with nested lists
-    */
-    (function() {
-        // Set up the quick links with the toggler
-        var $quickLinks = $('#quick-links');
-        setupTogglers($quickLinks.find('> ul > li, > ol > li'));
-        $quickLinks.find('.toggleable').mozTogglers();
-    })();
-
-    /*
         Subscribe / unsubscribe to an article
     */
     $('.page-watch a').on('click', function(e) {
@@ -58,20 +48,6 @@
             $link.removeClass('disabled');
         });
     });
-
-    // Utility method for the togglers
-    function setupTogglers($elements) {
-        $elements.each(function() {
-            var $li = $(this);
-            var $sublist = $li.find('> ul, > ol');
-
-            if ($sublist.length) {
-                $li.addClass('toggleable closed');
-                $li.find('> a').addClass('toggler').prepend('<i aria-hidden="true" class="icon-caret-up"></i>');
-                $sublist.addClass('toggle-container');
-            }
-        });
-    }
 
     /*
         Add icons to external links if they don't have images

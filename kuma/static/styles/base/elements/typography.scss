@@ -132,6 +132,10 @@ mono space elements (pre, code, kbd)
         background-color: transparent;
         padding: 0;
     }
+
+    a {
+        color: $blue-dark;
+    }
 }
 
 @media #{$mq-mobile-and-down} {
