@@ -10,7 +10,7 @@
     var defaultBrush = 'html';
 
     // Treat and highlight PRE elements!
-    $('article pre:not(.twopartsyntaxbox):not(.syntaxbox)').each(function() {
+    $('article pre:not(.twopartsyntaxbox):not(.syntaxbox):not(.CodeMirror-line)').each(function() {
         var $pre = $(this);
         var klass = $.trim($pre.attr('class'));
 

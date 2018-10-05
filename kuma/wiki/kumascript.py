@@ -223,7 +223,45 @@ def process_inlined_examples(body):
     """
     Manually expand @IExMacro@ declarations
     """
-    return body.replace("@AlertHelloWorld@", "<script>alert('hello world!');</script>")
+    return body.replace("@InlineArrayForEach@", """
+<div class="iex interactive interactive-js">
+<link href="/static/styles/interactive-examples/codemirror-5-31-0.css" rel="stylesheet" />
+<link href="/static/styles/interactive-examples/editor-js.css" rel="stylesheet" />
+
+<script>"use strict";function postToKuma(e){window.parent.postMessage(e,"https://developer.mozilla.org")}postToKuma({markName:"interactive-editor-loading"}),document.addEventListener("readystatechange",function(e){switch(e.target.readyState){case"interactive":postToKuma({markName:"interactive-editor-interactive",measureName:"ie-time-to-interactive",startMark:"interactive-editor-loading",endMark:"interactive-editor-interactive"});break;case"complete":postToKuma({markName:"interactive-editor-complete",measureName:"ie-time-to-complete",startMark:"interactive-editor-loading",endMark:"interactive-editor-complete"})}});</script>
+<section id="static">
+  <pre>
+<code id="static-js">var array1 = ['a', 'b', 'c'];
+
+array1.forEach(function(element) {
+  console.log(element);
+});
+
+// expected output: "a"
+// expected output: "b"
+// expected output: "c"
+</code>
+</pre>
+
+</section>
+
+<section id="live" class="live hidden">
+  <header><h4>JavaScript Demo: Array.forEach()</h4></header>
+  <div id="editor" class="editor"></div>
+
+  <div class="output-container">
+      <div class="buttons-container">
+          <button id="execute" class="button run" type="button">Run &rsaquo;</button>
+          <button id="reset" type="button" class="button">Reset</button>
+      </div>
+      <div id="output" class="output"><code></code></div>
+  </div>
+</section>
+
+<script src="/static/js/interactive-examples/codemirror-5-31-0.js"></script>
+<script src="/static/js/interactive-examples/editor-js.js"></script>
+</div>
+""")
 
 def process_errors(response):
     """

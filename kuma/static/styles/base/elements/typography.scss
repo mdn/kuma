@@ -154,7 +154,7 @@ mono space elements (pre, code, kbd)
 /* pre is a block element so it gets a bit more fancy styling.
    Needs extra specificity because Sass puts the mixins at the top of the file and the
    resets will over-ride the mixin without the specificity. Thank you Sass. */
-.text-content pre {
+.text-content pre:not(.CodeMirror-line) {
     @extend %code-block;
 }
 
