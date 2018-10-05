@@ -1,3 +1,10 @@
+# This file is used to create the latin subset of any given font
+# Any characters from the ranges below are included in the subset
+# Unicode characters can be added as ranges, or as individual characters
+# The subset is generated using https://github.com/fonttools/fonttools
+# To generate the subset with this file run the following command:
+# pyftsubset <<myfont.ttf>> --unicodes-file=latin-characters --flavor=woff2
+
 # Basic Latin
 U+0020-007F
 
