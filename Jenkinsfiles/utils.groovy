@@ -44,7 +44,7 @@ def get_target_name() {
 def get_target_script() {
     if (env.BRANCH_NAME == PROD_BRANCH_NAME) {
         // TODO: After cutover to IT-owned services, just use 'prod'.
-        return is_mozmeao_pipeline() ? 'prod' : 'prod.mm.test'
+        return is_mozmeao_pipeline() ? 'prod' : 'prod.mm'
     }
     if (env.BRANCH_NAME == STAGE_BRANCH_NAME) {
         return 'stage'
