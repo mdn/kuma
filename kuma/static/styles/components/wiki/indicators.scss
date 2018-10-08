@@ -228,14 +228,9 @@ icons for both types of indicators
     @include indicator-icon('\f017'); /* clock */
 }
 
+.esHarmony,
 .experimental,
-.experimentalBadge,
-/* es7 and harmony macros  */
-.overheadIndicator[style='background: #9CF49C;'],
-/*
-IE 11 converts hex to rgb, so target that as well.
-*/
-.overheadIndicator[style='background: rgb(156, 244, 156);'] {
+.experimentalBadge {
     @include indicator-icon('\f0c3'); /* flask */
 }
 
@@ -282,6 +277,7 @@ IE 11 converts hex to rgb, so target that as well.
 .secureContexts {
     @include indicator-icon('\f023'); /* lock */
 }
+
 
 /*
 Colours for both types
@@ -341,6 +337,24 @@ Colours for both types
     @extend %indicator-info;
 }
 
+/*
+Indicator colour overrides
+-------------------------------------------------------------- */
+.indicator-info {
+    @extend %indicator-info;
+}
+
+.indicator-version {
+    @extend %indicator-version;
+}
+
+.indicator-warning {
+    @extend %indicator-warning;
+}
+
+.indicator-danger {
+    @extend %indicator-danger;
+}
 
 /*
 Special snowflakes
@@ -378,13 +392,15 @@ Special snowflakes
     @extend %indicator-link-invert;
 }
 
-/* harmony */
-.overheadIndicator[style='background: #9CF49C;'],
-.overheadIndicator[style='background: rgb(156, 244, 156);'] {
-    border-color: #{map-get( map-get($colors-lookup, 'positive'), 'medium')} !important; /* stylelint-disable-line declaration-no-important */
-    background: #{map-get( map-get($colors-lookup, 'positive'), 'light')} !important; /* stylelint-disable-line declaration-no-important */
+.template-jsOverrides {
+    border-color: #d1d1ff;
+    background: #f5f5ff;
 }
 
+/* es7 and harmony macros */
+.esHarmony {
+    @include box-theme('positive');
+}
 
 /* heading that goes in with geckoVersionNote */
 .geckoVersionHeading {
