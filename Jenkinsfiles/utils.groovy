@@ -67,7 +67,7 @@ def get_region() {
         return is_mozmeao_pipeline() ? 'portland' : 'oregon'
     }
     if (env.BRANCH_NAME == STANDBY_BRANCH_NAME) {
-        return 'frankfurt'
+        return is_mozmeao_pipeline() ? 'frankfurt' : 'germany'
     }
     throw new Exception(
         'Unable to determine the region from the branch name.'
