@@ -143,12 +143,14 @@ class LocaleMiddleware(MiddlewareBase):
         # Add Content-Language, convert some 404s to locale redirects.
         language = get_language()
         language_from_path = get_language_from_path(request.path_info)
+        urlconf = getattr(request, 'urlconf', settings.ROOT_URLCONF)
         if response.status_code == 404 and not language_from_path:
             language_path = '/%s%s' % (language, request.path_info)
-            path_valid = is_valid_path(request, language_path)
+            path_valid = is_valid_path(language_path, language, urlconf)
             if (not path_valid and settings.APPEND_SLASH and
                     not language_path.endswith('/')):
-                path_valid = is_valid_path(request, "%s/" % language_path)
+                path_valid = is_valid_path("%s/" % language_path, language,
+                                           urlconf)
 
             if path_valid:
                 script_prefix = get_script_prefix()
@@ -184,14 +186,24 @@ class Forbidden403Middleware(MiddlewareBase):
         return response
 
 
-def is_valid_path(request, path):
-    urlconf = getattr(request, 'urlconf', None)
+def is_valid_path(path, language_code, urlconf=None):
+    """
+    Return True if the given path resolves against the default URL resolver,
+    False otherwise. This is a convenience method to make working with "is
+    this a match?" cases easier, avoiding try...except blocks.
+
+    Based on Django 1.11.16's is_valid_path from django.urls.is_valid_path,
+    with changes:
+    * If the catch-all mindtouch_to_kuma_redirect was the match, check if it
+      would return a 404.
+    * Adds a required language_code parameter, for mindtouch_to_kuma_url
+    """
     try:
         match = resolve(path, urlconf)
         if match.func == mindtouch_to_kuma_redirect:
             # mindtouch_to_kuma_redirect matches everything.
             # Check if it would return a redirect or 404.
-            url = mindtouch_to_kuma_url(request.LANGUAGE_CODE,
+            url = mindtouch_to_kuma_url(language_code,
                                         match.kwargs['path'])
             return bool(url)
         else:
@@ -218,12 +230,13 @@ class SlashMiddleware(MiddlewareBase):
     def __call__(self, request):
         response = self.get_response(request)
         path = request.path_info
-        if response.status_code == 404 and not is_valid_path(request, path):
+        language = getattr(request, 'LANGUAGE_CODE') or settings.LANGUAGE_CODE
+        if response.status_code == 404 and not is_valid_path(path, language):
             new_path = None
-            if path.endswith('/') and is_valid_path(request, path[:-1]):
+            if path.endswith('/') and is_valid_path(path[:-1], language):
                 # Remove the trailing slash for a valid URL
                 new_path = path[:-1]
-            elif not path.endswith('/') and is_valid_path(request, path + u'/'):
+            elif not path.endswith('/') and is_valid_path(path + u'/', language):
                 # Add a trailing slash for a valid URL
                 new_path = path + u'/'
             if new_path:
