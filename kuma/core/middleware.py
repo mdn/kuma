@@ -135,12 +135,21 @@ class LocaleMiddleware(MiddlewareBase):
     """
 
     def __call__(self, request):
+        """
+        Execute the middleware.
+
+        A more generic version is provided by MiddlewareMixin in Django.
+        """
         # Activate the language, and add LANGUAGE_CODE to the request.
+        # In Django, this is self.process_request()
         activate_language_from_request(request)
 
         response = self.get_response(request)
+        response = self.process_response(request, response)
+        return response
 
-        # Add Content-Language, convert some 404s to locale redirects.
+    def process_response(self, request, response):
+        """Add Content-Language, convert some 404s to locale redirects."""
         language = get_language()
         language_from_path = get_language_from_path(request.path_info)
         urlconf = getattr(request, 'urlconf', settings.ROOT_URLCONF)

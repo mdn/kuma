@@ -196,7 +196,19 @@ def get_language_mapping():
 
 
 def activate_language_from_request(request):
-    """Activate the language, based on the request."""
+    """
+    Activate the language, based on the request.
+
+    Based on Django 1.8.19's LocaleMiddleware.process_request from
+    django/middleware/locale, with these changes:
+
+    * Assume language prefix patterns are used.
+    * Use Kuma's language selection via our get_language_from_request.
+    * Set request.LANGUAGE_CODE to Kuma language code.
+
+    This is in its own function so it can be called from the
+    kuma.search tests to set the request language.
+    """
     language = get_language_from_request(request)
     translation.activate(language)
     request.LANGUAGE_CODE = language
