@@ -124,14 +124,20 @@ class LocaleMiddleware(MiddlewareBase):
     translated to the language the user desires (if the language
     is available, of course).
 
-    Based on Django 1.8.19's LocaleMiddleware from
+    Based on Django 1.11.16's LocaleMiddleware from
     django/middleware/locale.py, with changes:
 
-    * Assume that locale prefixes are in use
-    * Use Kuma language codes (en-US) instead of Django's (en-us)
+    * Use MiddlewareBase, don't support old-style middleware
+    * Assume that locale prefixes, and no implied default locale, are in use
+    * Use Kuma language codes (en-US) instead of Django's (en-us),
+      via our get_language()
     * Use Kuma-prefered locales (zn-CN) instead of Django's (zn-Hans)
     * Don't include "Vary: Accept-Language" header
     * Add caching headers to locale redirects
+
+    The process_request logic, modified for Kuma language codes, is in
+    kuma.core.i18n.activate_language_from_request, so it can be called from
+    kuma.search tests.
     """
 
     def __call__(self, request):
@@ -153,25 +159,41 @@ class LocaleMiddleware(MiddlewareBase):
         language = get_language()
         language_from_path = get_language_from_path(request.path_info)
         urlconf = getattr(request, 'urlconf', settings.ROOT_URLCONF)
+
+        # Kuma: assume locale-prefix patterns, including default language
         if response.status_code == 404 and not language_from_path:
+            # Maybe the language code is missing in the URL? Try adding the
+            # language prefix and redirecting to that URL.
             language_path = '/%s%s' % (language, request.path_info)
             path_valid = is_valid_path(language_path, language, urlconf)
-            if (not path_valid and settings.APPEND_SLASH and
-                    not language_path.endswith('/')):
-                path_valid = is_valid_path("%s/" % language_path, language,
-                                           urlconf)
-
-            if path_valid:
-                script_prefix = get_script_prefix()
-                language_path = request.get_full_path().replace(
-                    script_prefix,
-                    '%s%s/' % (script_prefix, language),
-                    1
+            path_needs_slash = (
+                not path_valid and (
+                    settings.APPEND_SLASH and not language_path.endswith('/') and
+                    is_valid_path('%s/' % language_path, language, urlconf)
                 )
-                redirect = HttpResponseRedirect(language_path)
+            )
+
+            if path_valid or path_needs_slash:
+                script_prefix = get_script_prefix()
+                # Insert language after the script prefix and before the
+                # rest of the URL
+                language_url = (
+                    request.get_full_path(force_append_slash=path_needs_slash)
+                    .replace(
+                        script_prefix,
+                        '%s%s/' % (script_prefix, language),
+                        1
+                    ))
+                # Kuma: Add caching headers to redirect
+                redirect = HttpResponseRedirect(language_url)
                 add_shared_cache_control(redirect)
                 return redirect
 
+        # Kuma: Do not add 'Accept-Language' to Vary header
+        # if not (i18n_patterns_used and language_from_path):
+        #    patch_vary_headers(response, ('Accept-Language',))
+
+        # Kuma: Add a pragma, since never skipped
         # No views set this header, so the middleware always sets it. The code
         # could be replaced with an assertion, but that would deviate from
         # Django's version, and make the code brittle, so using a pragma

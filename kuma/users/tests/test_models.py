@@ -119,15 +119,14 @@ class TestUser(UserTestCase):
     @pytest.mark.bug(1477016)
     def test_get_recovery_url_no_active_translation(self):
         """
-        When no translation is active, the locale is None.
+        When no translation is active, the locale is /en-US/.
 
-        This should default to /en-US/.
         This happens in management commands, such as the Django shell.
         """
         user = self.user_model.objects.get(username='testuser')
         deactivate_all()
         url = user.get_recovery_url()
-        assert url.startswith('/None/users/account/recover/')
+        assert url.startswith('/en-US/users/account/recover/')
 
 
 class BanTestCase(UserTestCase):
