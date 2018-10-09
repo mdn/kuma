@@ -745,7 +745,7 @@ FILTERIFRAME_REJECTED = {
     'vagrant_2': ('http://developer-local:81/'
                   'en-US/docs/Test$samples/sample1?revision=123'),
     'cdn': ('https://developer.cdn.mozilla.net/is/this/valid?'),
-    'stage': ('https://stage-files.mdn.moz.works/'
+    'stage': ('https://files-stage.mdn.mozit.cloud/'
               'fr/docs/Test$samples/sample2?revision=234'),
     'test': 'http://testserver/en-US/docs/Test$samples/test?revision=567',
     'youtube_no_www': ('https://youtube.com/embed/'

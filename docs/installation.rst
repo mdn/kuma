@@ -21,7 +21,7 @@ transitioning to Docker containers for deployment as well.
   environment. For example, we don't have a documented configuration for
   running with an SSL connection.
 * When the master branch is updated, the ``kuma_base`` image is refreshed and
-  published to `quay.io`_. This image contains system packages and
+  published to `DockerHub`_. This image contains system packages and
   third-party libraries.
 * Our TravisCI_ builds include a target that build Docker containers and runs
   the tests inside.
@@ -33,9 +33,9 @@ transitioning to Docker containers for deployment as well.
 
 .. _`Docker for Mac`: https://docs.docker.com/docker-for-mac/
 .. _`Docker's Ubuntu packages`: https://docs.docker.com/engine/installation/linux/ubuntulinux/
-.. _`quay.io`: https://quay.io/repository/mozmar/kuma_base?tab=tags
+.. _`DockerHub`: https://hub.docker.com/r/mdnwebdocs/kuma_base/tags/
 .. _TravisCI: https://travis-ci.org/mozilla/kuma/
-.. _Jenkins: https://ci.us-west.moz.works/view/MDN/job/mdn_multibranch_pipeline/
+.. _Jenkins: https://ci.us-west-2.mdn.mozit.cloud/blue/organizations/jenkins/kuma/activity
 .. _discourse: https://discourse.mozilla.org/c/mdn
 
 Docker setup
@@ -51,7 +51,7 @@ Docker setup
 
         docker run hello-world
 
-   If you find any error using docker commands without ``sudo`` visit using 
+   If you find any error using docker commands without ``sudo`` visit using
    `docker as non-root`_ user.
 
 #. Clone the kuma Git repository, if you haven't already::
@@ -83,7 +83,7 @@ Docker setup
 .. _Linux distribution: https://docs.docker.com/engine/installation/linux/
 .. _Docker Compose: https://docs.docker.com/compose/install/
 .. _post-install instructions: https://docs.docker.com/engine/installation/linux/linux-postinstall/
-.. _docker as non-root: https://docs.docker.com/engine/installation/linux/linux-postinstall/ 
+.. _docker as non-root: https://docs.docker.com/engine/installation/linux/linux-postinstall/
 
 The following instructions assume that you are running from a folder named
 ``kuma``, so that the containers created are named ``kuma_web_1``,

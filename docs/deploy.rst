@@ -136,23 +136,23 @@ Before deploying, a staff member should:
 
 * Check the latest images from master are built by Jenkins_
   (`Kuma master build`_, `KumaScript master build`_, both private to staff),
-  and uploaded to the quay.io_ (pronounced "Key dot I O") repositories
+  and uploaded to the DockerHub_ repositories
   (`Kuma images`_, `KumaScript images`_).
 
 .. _Dennis: https://github.com/willkg/dennis
-.. _Jenkins: https://ci.us-west.moz.works
+.. _Jenkins: https://ci.us-west-2.mdn.mozit.cloud
 .. _Kuma: https://travis-ci.org/mozilla/kuma/
 .. _KumaScript: https://travis-ci.org/mdn/kumascript
 .. _Pontoon: https://pontoon.mozilla.org/projects/mdn/
-.. _`Kuma images`: https://quay.io/repository/mozmar/kuma?tab=tags
-.. _`Kuma master build`: https://ci.us-west.moz.works/blue/organizations/jenkins/mdn_multibranch_pipeline/activity?branch=master
-.. _`KumaScript images`: https://quay.io/repository/mozmar/kumascript?tab=tags
-.. _`KumaScript master build`: https://ci.us-west.moz.works/blue/organizations/jenkins/kumascript_multibranch_pipeline/activity?branch=master
+.. _`Kuma images`: https://hub.docker.com/r/mdnwebdocs/kuma/tags/
+.. _`Kuma master build`: https://ci.us-west-2.mdn.mozit.cloud/blue/organizations/jenkins/kuma/activity/?branch=master
+.. _`KumaScript images`: https://hub.docker.com/r/mdnwebdocs/kumascript/tags/
+.. _`KumaScript master build`: https://ci.us-west-2.mdn.mozit.cloud/blue/organizations/jenkins/kumascript/activity?branch=master
 .. _`master build`: https://travis-ci.org/mozilla/kuma
 .. _`mdn-browser-compat-data`: https://www.npmjs.com/package/mdn-browser-compat-data
 .. _`open a pull request`: https://github.com/mozilla/kuma
 .. _mdn-l10n: https://github.com/mozilla-l10n/mdn-l10n
-.. _quay.io: https://quay.io
+.. _DockerHub: https://hub.docker.com/
 
 
 Deploy to Staging
@@ -202,11 +202,10 @@ pushing to production.
 
 * Announce in IRC that staging looks good, and you are pushing to production.
 
-.. _Jenkins: https://ci.us-west.moz.works
+.. _Jenkins: https://ci.us-west-2.mdn.mozit.cloud
 .. _`What's Deployed on KumaScript`: https://whatsdeployed.io/s-SWJ
 .. _`What's Deployed on Kuma`: https://whatsdeployed.io/s-HC0
-.. _`functional tests`: https://ci.us-west.moz.works/blue/organizations/jenkins/mdn_multibranch_pipeline/branches/
-
+.. _`functional tests`: https://ci.us-west-2.mdn.mozit.cloud/blue/organizations/jenkins/kuma/branches
 
 Deploy to Production
 --------------------
