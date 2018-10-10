@@ -188,12 +188,6 @@
             // underline current section
             countDownToUnderline();
         });
-
-        if(window.location.hash) {
-            var thisHash = window.location.hash;
-            var headingId = thisHash.replace(/^#/, '');
-            mdn.utils.scrollToHeading(headingId);
-        }
     }
 
     if(win.matchMedia(breakpoint).matches === true) {

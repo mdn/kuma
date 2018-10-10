@@ -46,19 +46,26 @@
 
         mainDocument.addEventListener('click', function(event) {
             var target = event.target;
-            /* getting the attribute value as apposed to the target property
-               to ensure we get the actual text value of the attribute */
-            var hrefAttrValue = target.getAttribute('href');
-            var isInDocumentLink = hrefAttrValue.startsWith('#');
 
-            var headingId = isInDocumentLink
-                ? hrefAttrValue.substr(1)
-                : target.dataset.headingId;
-            /* only handle clicks on in document links or, that originated from
-               a `local-anchor` */
-            if (target.classList.contains('local-anchor') || isInDocumentLink) {
-                event.preventDefault();
-                mdn.utils.scrollToHeading(headingId);
+            // only handle clicks on anchor elements
+            if (target.tagName === 'A') {
+                /* getting the attribute value as apposed to the target property
+                   to ensure we get the actual text value of the attribute */
+                var hrefAttrValue = target.getAttribute('href');
+                var isInDocumentLink = hrefAttrValue.startsWith('#');
+
+                var headingId = isInDocumentLink
+                    ? hrefAttrValue.substr(1)
+                    : target.dataset.headingId;
+                /* only handle clicks on in document links or, that originated from
+                   a `local-anchor` */
+                if (
+                    target.classList.contains('local-anchor') ||
+                    isInDocumentLink
+                ) {
+                    event.preventDefault();
+                    mdn.utils.scrollToHeading(headingId);
+                }
             }
         });
     }

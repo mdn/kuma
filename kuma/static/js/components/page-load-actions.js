@@ -11,7 +11,12 @@ window.addEventListener('load', function() {
         var id = hash.substr(1);
         var elem = document.getElementById(id);
         if (elem) {
-            mdn.utils.scrollToHeading(id);
+            /* Firefox ignores whatever value is passed to
+               `scroll` if called immediately on `load`, so,
+               wait for 60ms before calling the function */
+            setTimeout(function() {
+                mdn.utils.scrollToHeading(id);
+            }, 60);
         }
     }
 });

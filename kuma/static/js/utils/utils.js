@@ -1,4 +1,6 @@
 window.mdn.utils = {
+    isTocSticky: false,
+    tocHeight: 0,
     /**
      * From the jQuery source:
      * Get document-relative position by adding viewport scroll
@@ -12,7 +14,9 @@ window.mdn.utils = {
         /* Get the window object associated with the
            top-level document object for this node */
         var elemDocumentWindow = elem.ownerDocument.defaultView;
-        return boundingClientRect.top + elemDocumentWindow.pageYOffset;
+        var top = boundingClientRect.top;
+        var yOffset = parseInt(elemDocumentWindow.pageYOffset, 10);
+        return top + yOffset;
     },
     /**
      * Generate and returns a random string thanks to:
@@ -43,15 +47,30 @@ window.mdn.utils = {
      */
     scrollToHeading: function(id) {
         'use strict';
+        var toc = document.getElementById('toc');
+
+        // if page has a TOC,
+        if (toc !== undefined) {
+            // get and store the `offsetHeight`
+            this.tocHeight = toc.offsetHeight;
+            // and its sticky status
+            this.isTocSticky = getComputedStyle(toc).position === 'sticky';
+        }
+
         var heading = document.getElementById(id);
         var headingTop = mdn.utils.getOffsetTop(heading);
-        var toc = document.getElementById('toc');
-        var tocHeight = toc.offsetHeight;
-        var scrollY = headingTop - tocHeight;
+        var scrollY = 0;
+
+        // if the toc is sticky
+        if (toc && this.isTocSticky) {
+            scrollY = headingTop - this.tocHeight;
+        } else {
+            scrollY = headingTop;
+        }
 
         // update hash
         window.location.hash = id;
         // scroll to heading
-        window.scroll(0, scrollY);
+        window.scroll(0, parseInt(scrollY, 10));
     }
 };
