@@ -9,6 +9,7 @@ import pytest
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ImproperlyConfigured
+from django.utils.translation import override
 from pyquery import PyQuery as pq
 from waffle.testutils import override_switch
 
@@ -664,3 +665,40 @@ def test_macros_no_counts(mock_usage, client, db):
     page = pq(response.content)
     assert len(page("table.macros-table")) == 1
     assert len(page("th.stat-header")) == 0
+
+
+def test_index(client, db):
+    """The dashboard index can be loaded."""
+    response = client.get(reverse('dashboards.index'))
+    assert response.status_code == 200
+    content = response.content.decode(response.charset)
+    assert reverse('dashboards.macros') in content
+    assert reverse('dashboards.spam') not in content
+    l10n_url = reverse('wiki.list_with_localization_tag',
+                       kwargs={'tag': 'inprogress'})
+    assert l10n_url not in content
+
+
+def test_index_non_english_sees_translations(client, db):
+    """Non-English users see the in-progress translations dashboard."""
+    with override('fr'):
+        response = client.get(reverse('dashboards.index'))
+        assert response.status_code == 200
+        content = response.content.decode(response.charset)
+        assert reverse('dashboards.macros') in content
+        assert reverse('dashboards.spam') not in content
+        l10n_url = reverse('wiki.list_with_localization_tag',
+                           kwargs={'tag': 'inprogress'})
+        assert l10n_url in content
+
+
+def test_index_admin_sees_spam_dashboard(admin_client):
+    """A moderator can see the spam dashboard in the list."""
+    response = admin_client.get(reverse('dashboards.index'))
+    assert response.status_code == 200
+    content = response.content.decode(response.charset)
+    assert reverse('dashboards.macros') in content
+    assert reverse('dashboards.spam') in content
+    l10n_url = reverse('wiki.list_with_localization_tag',
+                       kwargs={'tag': 'inprogress'})
+    assert l10n_url not in content
