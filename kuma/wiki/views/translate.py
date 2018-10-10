@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from csp.decorators import csp_update
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
@@ -39,6 +40,7 @@ def select_locale(request, document_slug, document_locale):
 @never_cache
 @block_user_agents
 @login_required
+@csp_update(SCRIPT_SRC="'unsafe-eval'")  # Required until CKEditor 4.7
 @process_document_path
 @check_readonly
 @prevent_indexing

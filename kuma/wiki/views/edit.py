@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import newrelic.agent
+from csp.decorators import csp_update
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, JsonResponse
@@ -80,6 +81,7 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_async_submit,
 @login_required  # TODO: Stop repeating this knowledge here and in Document.allows_editing_by.
 @ratelimit(key='user', rate='60/m', block=True)
 @block_banned_ips
+@csp_update(SCRIPT_SRC="'unsafe-eval'")  # Required until CKEditor 4.7
 @process_document_path
 @check_readonly
 @prevent_indexing
