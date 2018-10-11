@@ -5,6 +5,7 @@ Styles for overall document.  Minimally styles the canvas.
 html {
     background: #fff;
     color: $text-color;
+    scroll-behavior: smooth;
 }
 
 body {
