@@ -1143,7 +1143,9 @@ MAX_FILENAME_LENGTH = 200
 MAX_FILEPATH_LENGTH = 250
 
 _PROD_ATTACHMENT_HOST = 'mdn.mozillademos.org'
+_PROD_ATTACHMENT_SITE_URL = 'https://' + _PROD_ATTACHMENT_HOST
 ATTACHMENT_HOST = config('ATTACHMENT_HOST', default=_PROD_ATTACHMENT_HOST)
+ATTACHMENT_SITE_URL = PROTOCOL + ATTACHMENT_HOST
 _PROD_ATTACHMENT_ORIGIN = 'mdn-demos-origin.moz.works'
 ATTACHMENT_ORIGIN = config('ATTACHMENT_ORIGIN', default=_PROD_ATTACHMENT_ORIGIN)
 
@@ -1196,7 +1198,7 @@ def parse_iframe_url(url):
 ALLOWED_IFRAME_PATTERNS = [
     # Live sample host
     # https://developer.mozilla.org/en-US/docs/Web/CSS/filter
-    parse_iframe_url('https://' + _PROD_ATTACHMENT_HOST),
+    parse_iframe_url(_PROD_ATTACHMENT_SITE_URL),
     # Interactive Examples host
     # On https://developer.mozilla.org/en-US/docs/Web/CSS/filter
     parse_iframe_url(_PROD_INTERACTIVE_EXAMPLES),
@@ -1211,8 +1213,8 @@ ALLOWED_IFRAME_PATTERNS = [
 ]
 
 # Add the overridden attachment / live sample host
-if ATTACHMENT_HOST != _PROD_ATTACHMENT_HOST:
-    ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(PROTOCOL + ATTACHMENT_HOST))
+if ATTACHMENT_SITE_URL != _PROD_ATTACHMENT_SITE_URL:
+    ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(ATTACHMENT_SITE_URL))
 
 # Add the overridden interactive examples service
 if INTERACTIVE_EXAMPLES_BASE != _PROD_INTERACTIVE_EXAMPLES:
@@ -1258,12 +1260,17 @@ CSP_FONT_SRC = [
 CSP_FRAME_SRC = [
     urlunsplit((scheme, netloc, '', '', ''))
     for scheme, netloc, ignored_path in ALLOWED_IFRAME_PATTERNS]
+
 CSP_IMG_SRC = [
     "'self'",
     "data:",
     "https://secure.gravatar.com",
     "https://www.google-analytics.com",
+    _PROD_ATTACHMENT_SITE_URL
 ]
+if ATTACHMENT_SITE_URL not in (_PROD_ATTACHMENT_SITE_URL, SITE_URL):
+    CSP_IMG_SRC.append(ATTACHMENT_SITE_URL)
+
 CSP_SCRIPT_SRC = [
     "'self'",
     "www.google-analytics.com",
