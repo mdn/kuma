@@ -949,10 +949,10 @@ PIPELINE_JS = {
             'async': True,
         },
     },
-    'contribute': {
+    'payments': {
         'source_filenames': (
-            'js/contribution-handler.js',
-            'js/contribution-faq.js',
+            'js/payments-handler.js',
+            'js/payments-faq.js',
         ),
         'output_filename': 'build/js/contribute.js',
     },
