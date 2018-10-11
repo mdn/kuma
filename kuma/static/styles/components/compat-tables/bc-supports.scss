@@ -79,10 +79,10 @@ Supports colouring
 @media #{$mq-mobile-and-down} {
     /* centers the background accounting for space icons take on the left */
     td.bc-supports-partial {
-        background-position: calc(50% + #{$bc-mobile-icon-width / 2})  50%;
+        background-position: calc(50% + #{$bc-mobile-browser-width / 2})  50%;
     }
 
     td.bc-supports-no {
-        background-position: calc(50% + #{$bc-mobile-icon-width / 2})  50%, calc(50% + #{$bc-mobile-icon-width / 2})  50%;
+        background-position: calc(50% + #{$bc-mobile-browser-width / 2})  50%, calc(50% + #{$bc-mobile-browser-width / 2})  50%;
     }
 }

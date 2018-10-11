@@ -246,10 +246,10 @@ mobile display
         max-width: 100%;
         display: block;
         box-sizing: border-box;
-        box-shadow: inset 220px 0 0 0 #eaeff2;
+        box-shadow: inset $bc-mobile-browser-width 0 0 0 #eaeff2;
         border-top: $bc-border-width-thin solid $bc-border-color;
         border-left: 0;
-        padding-left: 250px;
+        padding-left: $bc-mobile-browser-width + 30px;
         padding-right: $bc-grid-spacing;
         text-align: left;
     }
