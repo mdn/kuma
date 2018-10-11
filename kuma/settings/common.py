@@ -698,12 +698,6 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/jquery-ui.css',
     },
-    'gaia': {
-        'source_filenames': (
-            'styles/gaia.scss',
-        ),
-        'output_filename': 'build/styles/gaia.css',
-    },
     'home': {
         'source_filenames': (
             'styles/home.scss',
