@@ -76,7 +76,7 @@ def get_supported_language_variant(raw_lang_code):
     as the provided language codes are taken from the HTTP request. See also
     <https://www.djangoproject.com/weblog/2007/oct/26/security-fix/>.
 
-    Based on Django 1.8.19's get_supported_language_variant from
+    Based on Django 1.11.16's get_supported_language_variant from
     django/utils/translation/trans_real.py, with changes:
 
     * Language code can also be a Kuma language code
@@ -84,9 +84,10 @@ def get_supported_language_variant(raw_lang_code):
     * Force strict=False to always allow fuzzy matching (zh-CHS gets zh-CN)
     """
     if raw_lang_code:
+        # Kuma: Convert Kuma to Django language code
         lang_code = kuma_language_code_to_django(raw_lang_code)
 
-        # Check for known override
+        # Kuma: Check for known override
         if lang_code in settings.LOCALE_ALIASES:
             return settings.LOCALE_ALIASES[lang_code]
 
@@ -103,10 +104,12 @@ def get_supported_language_variant(raw_lang_code):
         # Look for exact match
         for code in possible_lang_codes:
             if code in supported_lang_codes and check_for_language(code):
+                # Kuma: Convert to Kuma language code
                 return django_language_code_to_kuma(code)
         # If fr-fr is not supported, try fr-ca.
         for supported_code in supported_lang_codes:
             if supported_code.startswith(generic_lang_code + '-'):
+                # Kuma: Convert to Kuma language code
                 return django_language_code_to_kuma(supported_code)
     raise LookupError(raw_lang_code)
 
@@ -116,13 +119,11 @@ def get_language_from_path(path):
     Returns the language-code if there is a valid language-code
     found in the `path`.
 
-    If `strict` is False (the default), the function will look for an alternative
-    country-specific variant when the currently checked is not found.
-
-    Based on Django 1.8.19's get_language_from_path from
+    Based on Django 1.11.16's get_language_from_path from
     django/utils/translation/trans_real.py, with changes:
 
     * Don't accept or pass strict parameter (assume strict=False).
+    * Use our customized get_supported_language_variant().
     """
     regex_match = language_code_prefix_re.match(path)
     if not regex_match:
@@ -146,18 +147,22 @@ def get_language_from_request(request):
     header) are skipped. In Django, the URL path prefix can be skipped with the
     check_path=False parameter, removed in this code.
 
-    Based on Django 1.8.19's get_language_from_request from
+    Based on Django 1.11.16's get_language_from_request from
     django/utils/translation/trans_real.py, with changes:
 
-    * Always check the path
-    * Don't check session language
+    * Always check the path.
+    * Don't check session language.
     * Use LANGUAGE_CODE as the fallback language code, instead of passing it
-      through get_supported_language_variant first
+      through get_supported_language_variant first.
     """
+    # Kuma: Always use the URL's langauge (force check_path=True)
     lang_code = get_language_from_path(request.path_info)
     if lang_code is not None:
         return lang_code
 
+    # Kuma: Skip checking the session-stored language via LANGUAGE_SESSION_KEY
+
+    # Use the (valid) language cookie override
     lang_code = request.COOKIES.get(settings.LANGUAGE_COOKIE_NAME)
 
     try:
@@ -165,11 +170,13 @@ def get_language_from_request(request):
     except LookupError:
         pass
 
+    # Pick the closest langauge based on the Accept Language header
     accept = request.META.get('HTTP_ACCEPT_LANGUAGE', '')
     for accept_lang, unused in parse_accept_lang_header(accept):
         if accept_lang == '*':
             break
 
+        # Kuma: Assert accept_lang fits the language code pattern
         # The regex check was added with a security fix:
         # https://www.djangoproject.com/weblog/2007/oct/26/security-fix/
         # In the Django version, non-matching accept_lang codes are skipped.
@@ -184,7 +191,7 @@ def get_language_from_request(request):
         except LookupError:
             continue
 
-    # Fallback to default settings.LANGUAGE_CODE.
+    # Kuma: Fallback to default settings.LANGUAGE_CODE.
     # Django supports a case when LANGUAGE_CODE is not in LANGUAGES
     # (see https://github.com/django/django/pull/824). but our LANGUAGE_CODE is
     # always the first entry in LANGUAGES.
@@ -196,7 +203,22 @@ def get_language_mapping():
 
 
 def activate_language_from_request(request):
-    """Activate the language, based on the request."""
+    """
+    Activate the language, based on the request.
+
+    Based on Django 1.11.16's LocaleMiddleware.process_request from
+    django/middleware/locale, with these changes:
+
+    * Assume language prefix patterns are used, with no implied default
+      language (prefix_default_language=True)
+    * Use Kuma's language selection via our get_language_from_request.
+    * Skip get_language_from_path, since used to determine if implied
+      default language is used.
+    * Set request.LANGUAGE_CODE to Kuma language code via get_language.
+
+    This is in its own function so it can be called from the
+    kuma.search tests to set the request language.
+    """
     language = get_language_from_request(request)
     translation.activate(language)
-    request.LANGUAGE_CODE = language
+    request.LANGUAGE_CODE = get_language()
