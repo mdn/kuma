@@ -442,7 +442,7 @@ _CONTEXT_PROCESSORS = (
     'kuma.core.context_processors.next_url',
 
     'constance.context_processors.config',
-    'kuma.contributions.context_processors.global_contribution_form',
+    'kuma.payments.context_processors.global_contribution_form',
 )
 
 
@@ -535,7 +535,7 @@ INSTALLED_APPS = (
     'soapbox',  # must be before kuma.wiki, or RemovedInDjango19Warning
 
     # MDN
-    'kuma.contributions.apps.ContributionsConfig',
+    'kuma.payments.apps.ContributionsConfig',
     'kuma.core',
     'kuma.feeder',
     'kuma.landing',
@@ -1278,7 +1278,7 @@ CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND',
 CELERY_ACCEPT_CONTENT = ['pickle']
 
 CELERY_IMPORTS = (
-    'kuma.contributions.tasks',
+    'kuma.payments.tasks',
     'kuma.search.tasks',
     'tidings.events',
 )
@@ -1335,7 +1335,7 @@ CELERY_ROUTES = {
     'kuma.users.tasks.email_render_document_progress': {
         'queue': 'mdn_emails'
     },
-    'kuma.contributions.tasks.contribute_thank_you_email': {
+    'kuma.payments.tasks.contribute_thank_you_email': {
         'queue': 'mdn_emails'
     },
     'kuma.wiki.tasks.send_first_edit_email': {

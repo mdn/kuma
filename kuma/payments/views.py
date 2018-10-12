@@ -53,11 +53,11 @@ def contribute(request):
         'form': form,
         'hide_cta': True,
     }
-    return render(request, 'contributions/contribute.html', context)
+    return render(request, 'payments/payments.html', context)
 
 
 @skip_if_disabled
 @never_cache
 def confirmation(request, status):
     context = {'status': status}
-    return render(request, 'contributions/thank_you.html', context)
+    return render(request, 'payments/thank_you.html', context)

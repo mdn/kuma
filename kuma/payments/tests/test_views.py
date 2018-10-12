@@ -6,7 +6,7 @@ from kuma.core.urlresolvers import reverse
 
 
 @pytest.mark.django_db
-@mock.patch('kuma.contributions.views.enabled')
+@mock.patch('kuma.payments.views.enabled')
 def test_contribute_view(mock_enabled, client, settings):
     """If enabled, contribution page is returned."""
     mock_enabled.return_value = True
@@ -16,7 +16,7 @@ def test_contribute_view(mock_enabled, client, settings):
 
 
 @pytest.mark.django_db
-@mock.patch('kuma.contributions.views.enabled')
+@mock.patch('kuma.payments.views.enabled')
 def test_thanks_view(mock_enabled, client, settings):
     """If enabled, contribution thank you page is returned."""
     mock_enabled.return_value = True
@@ -26,7 +26,7 @@ def test_thanks_view(mock_enabled, client, settings):
 
 
 @pytest.mark.django_db
-@mock.patch('kuma.contributions.views.enabled')
+@mock.patch('kuma.payments.views.enabled')
 def test_error_view(mock_enabled, client, settings):
     """If enabled, contribution error page is returned."""
     mock_enabled.return_value = True
@@ -39,7 +39,7 @@ def test_error_view(mock_enabled, client, settings):
 @pytest.mark.parametrize('view', ('contribute',
                                   'contribute_succeeded',
                                   'contribute_error'))
-@mock.patch('kuma.contributions.views.enabled')
+@mock.patch('kuma.payments.views.enabled')
 def test_views_404(mock_enabled, view, client, settings):
     """If disabled, contribution pages are 404."""
     mock_enabled.return_value = False

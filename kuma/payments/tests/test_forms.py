@@ -5,7 +5,7 @@ import pytest
 
 from django.forms.forms import NON_FIELD_ERRORS
 
-from kuma.contributions.forms import ContributionForm, DONATION_CHOICES
+from kuma.payments.forms import ContributionForm, DONATION_CHOICES
 
 
 CONTRIBUTION_FORM_SUCCESS = {
@@ -35,7 +35,7 @@ def test_valid_data(data, amount):
     assert form.is_valid()
 
     fake_return = True
-    with mock.patch('kuma.contributions.forms'
+    with mock.patch('kuma.payments.forms'
                     '.stripe.Charge.create') as mock_create:
         mock_create.return_value = fake_return
         charge = form.make_charge()
@@ -55,7 +55,7 @@ def test_no_charge_without_token():
     form = ContributionForm(data=data)
     assert form.is_valid()
 
-    with mock.patch('kuma.contributions.forms'
+    with mock.patch('kuma.payments.forms'
                     '.stripe.Charge.create') as mock_create:
         mock_create.side_effect = Exception('Not Called')
         charge = form.make_charge()

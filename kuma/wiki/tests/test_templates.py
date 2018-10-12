@@ -201,7 +201,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         response = self.client.get(urlparams(d.get_absolute_url()))
         self.assertNotContains(response, 'Redirected from ')
 
-    @mock.patch('kuma.contributions.context_processors.enabled')
+    @mock.patch('kuma.payments.context_processors.enabled')
     def test_does_not_include_csrf(self, mock_enabled):
         """
         The document should not include CSRF tokens, since it causes

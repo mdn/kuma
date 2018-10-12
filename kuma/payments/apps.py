@@ -5,4 +5,4 @@ from django.apps import AppConfig
 
 
 class ContributionsConfig(AppConfig):
-    name = 'kuma.contributions'
+    name = 'kuma.payments'

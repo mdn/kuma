@@ -23,10 +23,10 @@
                 </p>
                 {% if is_popover %}
                     <div class="button-group">
-                        <a href="{{url('contribute')}}#contribute-faqs" class="cta-link">
+                        <a href="{{url('payments')}}#contribute-faqs" class="cta-link">
                             {{_('Learn more about payments to MDN')}} {% include 'includes/icons/arrows/arrow.svg' %}
                         </a>
-                        <a href="{{url('contribute')}}#contribute-feedback" class="cta-link">
+                        <a href="{{url('payments')}}#contribute-feedback" class="cta-link">
                             {{_('Provide feedback')}} {% include 'includes/icons/arrows/arrow.svg' %}
                         </a>
                     </div>
@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="column-half">
-            <form id="contribute-form" class="contribution-form" method="post" action="{{ url('contribute') }}" novalidate>
+            <form id="contribute-form" class="contribution-form" method="post" action="{{ url('payments') }}" novalidate>
                 <div class="form-group">
                     <label class="offscreen" for="id_{{form.name.name}}">{{form.name.label}}</label>
                     {{form.name}}
