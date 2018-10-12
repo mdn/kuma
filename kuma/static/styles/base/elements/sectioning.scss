@@ -54,7 +54,7 @@ summary {
 
     /* add marker back in way we control */
     &:before {
-        @include bidi(((content, '\25B6', '\25C0'),));
+        @include bidi(((content, '\25B6\FE0E', '\25C0\FE0E'),));
         display: inline-block;
         width: $grid-spacing; /* fixed width avoids content jog when marker swapped for narrower one */
         color: $blue;
@@ -65,7 +65,7 @@ summary {
         margin-bottom: ($grid-spacing / 2);
 
         &:before {
-            content: '\25BC';
+            content: '\25BC\FE0E';
         }
     }
 }
