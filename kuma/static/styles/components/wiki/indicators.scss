@@ -269,7 +269,6 @@ icons for both types of indicators
     @include indicator-icon('\f017'); /* clock */
 }
 
-.esHarmony,
 .experimental,
 .experimentalBadge {
     @include indicator-icon('\f0c3'); /* flask */
@@ -436,11 +435,6 @@ Special snowflakes
 .template-jsOverrides {
     border-color: #d1d1ff;
     background: #f5f5ff;
-}
-
-/* es7 and harmony macros */
-.esHarmony {
-    @include box-theme('positive');
 }
 
 /* heading that goes in with geckoVersionNote */
