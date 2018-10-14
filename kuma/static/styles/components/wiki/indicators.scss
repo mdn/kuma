@@ -373,6 +373,7 @@ Colours for both types
 }
 
 /* you might like to know */
+.template-jsOverrides,
 .optional {
     @extend %indicator-info;
 }
@@ -430,11 +431,6 @@ Special snowflakes
     background: #595959;
     @extend %indicator-text-invert;
     @extend %indicator-link-invert;
-}
-
-.template-jsOverrides {
-    border-color: #d1d1ff;
-    background: #f5f5ff;
 }
 
 /* heading that goes in with geckoVersionNote */
