@@ -208,22 +208,8 @@
                 submitted = true;
                 stripeToken.val(token.id);
                 addDisabledLocaleStorageItem();
-
-                var analyticsTimeout = setTimeout(function() {
-                    console.error('Analytics `payments : submission : completed` timeout');
-                    form.submit();
-                }, 5000);
-
-                // Send GA Event.
-                mdn.analytics.trackEvent({
-                    category: 'payments',
-                    action: 'submission',
-                    label: 'completed',
-                    value: selectedAmount * 100
-                }, function() {
-                    clearTimeout(analyticsTimeout);
-                    form.submit();
-                });
+                sessionStorage.setItem('amountSubmitted', selectedAmount * 100);
+                form.submit();
             }
         });
     }

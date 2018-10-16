@@ -1,25 +1,28 @@
 (function(win) {
     'use strict';
 
+    var sessionStoreKey = 'amountSubmitted';
+    var amountSubmitted = sessionStorage.getItem(sessionStoreKey);
     var path = win.location.pathname;
     if (path.includes('/contribute/success')) {
         // Only create one event per session to solve multiple events
         // being fired due to refreshing or reopening sessions
-        var sessionStoreKey = 'hasSubmittedConfirmation';
-        var hasSubmitted = sessionStorage.getItem(sessionStoreKey);
 
-        if (hasSubmitted === null) {
+        if (amountSubmitted) {
             mdn.analytics.trackEvent({
                 category: 'payments',
                 action: 'submission',
-                label: 'confirmation',
+                label: 'completed',
+                value: amountSubmitted
             }, function() {
-                sessionStorage.setItem(sessionStoreKey, true);
+                sessionStorage.removeItem(sessionStoreKey);
             });
         }
 
     } else if (path.includes('/contribute/error')) {
-        mdn.analytics.trackError('Payment error', 'Payment failed');
+        if (amountSubmitted) {
+            mdn.analytics.trackError('Payment error', 'Payment failed');
+        }
     }
 
 })(window);
