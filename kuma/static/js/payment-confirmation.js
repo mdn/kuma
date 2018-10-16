@@ -1,13 +1,12 @@
 (function(win) {
     'use strict';
 
+    // Fire analytic events only if the user has followed payment
+    // flow denoted by `amountSubmitted` session varible.
     var sessionStoreKey = 'amountSubmitted';
     var amountSubmitted = sessionStorage.getItem(sessionStoreKey);
     var path = win.location.pathname;
-    if (path.includes('/contribute/success')) {
-        // Only create one event per session to solve multiple events
-        // being fired due to refreshing or reopening sessions
-
+    if (path.includes('/payments/success')) {
         if (amountSubmitted) {
             mdn.analytics.trackEvent({
                 category: 'payments',
@@ -19,7 +18,7 @@
             });
         }
 
-    } else if (path.includes('/contribute/error')) {
+    } else if (path.includes('/payments/error')) {
         if (amountSubmitted) {
             mdn.analytics.trackError('Payment error', 'Payment failed');
         }
