@@ -42,8 +42,8 @@ def contribute(request):
                         form.cleaned_data['name'],
                         form.cleaned_data['email']
                     )
-                return redirect('contribute_succeeded')
-            return redirect('contribute_error')
+                return redirect('payment_succeeded')
+            return redirect('payment_error')
 
         form = ContributionForm(request.POST)
     else:
