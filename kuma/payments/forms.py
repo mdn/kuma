@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from kuma.core.form_fields import StrippedCharField
 
-log = logging.getLogger('kuma.contributions.forms')
+log = logging.getLogger('kuma.payments.forms')
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY

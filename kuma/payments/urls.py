@@ -5,8 +5,8 @@ from . import views
 lang_urlpatterns = [
     url(r'^success/?$',
         views.confirmation, {'status': 'succeeded'},
-        name='contribute_succeeded'),
+        name='payment_succeeded'),
     url(r'^error/?$',
         views.confirmation, {'status': 'error'},
-        name='contribute_error')
+        name='payment_error')
 ]

@@ -36,7 +36,7 @@ def test_default_search_filters(db, client):
     assert set(p.val() for p in filters.items()) == {'css', 'html', 'javascript'}
 
 
-@mock.patch('kuma.contributions.context_processors.enabled')
+@mock.patch('kuma.payments.context_processors.enabled')
 def test_does_not_include_csrf(mock_enabled, db, user_client):
     """
     The document should not include CSRF tokens, since it causes

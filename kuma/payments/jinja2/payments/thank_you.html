@@ -27,7 +27,7 @@
                     <p class="subtext">{{_('Thank you again,')}}</p>
                     <p class="subtext">{{_('The MDN Team')}}</p>
 
-                    {%- set share_url = 'https://developer.mozilla.org' + url('contribute') %}
+                    {%- set share_url = 'https://developer.mozilla.org' + url('payments') %}
                     {%- set tweet_phrase = _("I support MDN, and you can too: %(url)s", url=share_url) %}
                     {%- set tweet_text = tweet_phrase|urlencode %}
                     {%- set twitter_cta = _("Share your support for MDN on Twitter") %}
@@ -57,7 +57,7 @@
                         {% endtrans %}
                     </p>
                     <p>
-                        <a href="{{ url('contribute') }}">{{_('Click here to go back')}}</a>
+                        <a href="{{ url('payments') }}">{{_('Click here to go back')}}</a>
                     </p>
                 {% endif %}
             </div>

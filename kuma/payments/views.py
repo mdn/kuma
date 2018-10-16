@@ -42,8 +42,8 @@ def contribute(request):
                         form.cleaned_data['name'],
                         form.cleaned_data['email']
                     )
-                return redirect('contribute_succeeded')
-            return redirect('contribute_error')
+                return redirect('payment_succeeded')
+            return redirect('payment_error')
 
         form = ContributionForm(request.POST)
     else:
@@ -53,11 +53,11 @@ def contribute(request):
         'form': form,
         'hide_cta': True,
     }
-    return render(request, 'contributions/contribute.html', context)
+    return render(request, 'payments/payments.html', context)
 
 
 @skip_if_disabled
 @never_cache
 def confirmation(request, status):
     context = {'status': status}
-    return render(request, 'contributions/thank_you.html', context)
+    return render(request, 'payments/thank_you.html', context)
