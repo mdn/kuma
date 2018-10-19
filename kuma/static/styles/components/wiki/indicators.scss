@@ -17,7 +17,6 @@ block indicators aka banners
 .blockIndicator,
 .overheadIndicator,
 .standardNoteBlock,
-.banner,
 .inheritsbox,
 .notice,
 .note,
@@ -212,8 +211,7 @@ inline indicators aka badges
 ====================================================================== */
 
 .inlineIndicator,
-.indicatorInHeadline,
-.badge {
+.indicatorInHeadline {
     @extend %indicator-inline;
     @extend %indicator-inline-icon;
 }
