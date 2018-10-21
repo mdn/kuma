@@ -20,7 +20,7 @@
     "precommit": "npm run eslint && npm run stylelint"
   },
   "dependencies": {
-    "clean-css": "3.4.28",
+    "clean-css-cli": "4.2.1",
     "node-sass": "4.9.2",
     "stylelint": "9.3.0",
     "eslint": "5.1.0",
