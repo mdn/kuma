@@ -3,20 +3,25 @@
 
     // Fire analytic events only if the user has followed payment
     // flow denoted by `amountSubmitted` session varible.
-    var amountSubmittedStoreKey = 'amountSubmitted';
-    var amountSubmitted = sessionStorage.getItem(amountSubmittedStoreKey);
+    var amountSubmittedStoreKey = 'submissionDetails';
+    var submissionDetails = JSON.parse(sessionStorage.getItem(amountSubmittedStoreKey));
+
+    // Default to no data
+    var amountSubmitted = submissionDetails.amount || 0;
+    var submissionPage = submissionDetails.page || '';
+
     var path = win.location.pathname;
-    if (path.includes('/payments/success') && amountSubmitted) {
+    if (path.includes('/payments/success') && submissionDetails) {
         mdn.analytics.trackEvent({
             category: 'payments',
-            action: 'submission',
-            label: 'completed',
+            action: 'success',
+            label: submissionPage,
             value: amountSubmitted
         }, function() {
             sessionStorage.removeItem(amountSubmittedStoreKey);
         });
 
-    } else if (path.includes('/payments/error') && amountSubmitted) {
+    } else if (path.includes('/payments/error') && submissionDetails) {
         mdn.analytics.trackEvent({
             category: 'Payment error',
             action: 'Payment failed'
