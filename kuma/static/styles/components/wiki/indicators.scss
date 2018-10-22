@@ -26,7 +26,7 @@ block indicators aka banners
     @extend %indicator-block;
 
     code {
-        @include set-font-size($body-font-size);
+        @include set-font-size($base-font-size);
     }
 
     /* heading */

@@ -46,7 +46,7 @@ $padding-horizontal: 30px;
         position: relative;
         color: $accent-light;
         display: inline-block;
-        @include set-font-size(17px);
+        @include set-font-size($base-font-size);
         letter-spacing: .02em;
         @include bidi(((padding, $padding-vertical $padding-horizontal $padding-vertical 0, $padding-vertical 0 $padding-vertical $padding-horizontal),));
         white-space: nowrap;
