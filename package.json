@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "clean-css": "3.4.28",
-    "node-sass": "4.9.2",
+    "node-sass": "4.9.4",
     "stylelint": "9.3.0",
     "eslint": "5.1.0",
     "uglify-js": "2.8.29"
