@@ -10,7 +10,7 @@ import dj_database_url
 import dj_email_url
 import djcelery
 from decouple import config, Csv
-from six.moves.urllib.parse import urlsplit
+from six.moves.urllib.parse import urlsplit, urlunsplit
 
 _Language = namedtuple(u'Language', u'english native')
 
@@ -482,6 +482,13 @@ MIDDLEWARE += (
     'kuma.core.middleware.RestrictedEndpointsMiddleware',
 )
 
+CSP_ENABLE_MIDDLEWARE = config('CSP_ENABLE_MIDDLEWARE',
+                               default=False, cast=bool)
+if CSP_ENABLE_MIDDLEWARE:
+    # For more config, see "Content Security Policy (CSP)" below
+    MIDDLEWARE += ('csp.middleware.CSPMiddleware',)
+
+
 # Auth
 AUTHENTICATION_BACKENDS = (
     'kuma.users.auth_backends.KumaAuthBackend',  # Handles User Bans
@@ -627,7 +634,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    'VERSION': '2018.11',
+    'VERSION': '2018.12',
     'BASE_DIR': BASE_DIR,
     'TEXT_DOMAIN': 'django',
     # Tells the extract script what files to look for l10n in and what function
@@ -690,12 +697,6 @@ PIPELINE_CSS = {
             'css/jquery-ui-customizations.scss',
         ),
         'output_filename': 'build/styles/jquery-ui.css',
-    },
-    'gaia': {
-        'source_filenames': (
-            'styles/gaia.scss',
-        ),
-        'output_filename': 'build/styles/gaia.css',
     },
     'home': {
         'source_filenames': (
@@ -990,6 +991,7 @@ PIPELINE_JS = {
             'js/wiki-samples.js',
             'js/wiki-toc.js',
             'js/components/local-anchor.js',
+            'js/components/page-load-actions.js',
         ),
         'output_filename': 'build/js/wiki.js',
         'extra_context': {
@@ -1136,7 +1138,9 @@ MAX_FILENAME_LENGTH = 200
 MAX_FILEPATH_LENGTH = 250
 
 _PROD_ATTACHMENT_HOST = 'mdn.mozillademos.org'
+_PROD_ATTACHMENT_SITE_URL = 'https://' + _PROD_ATTACHMENT_HOST
 ATTACHMENT_HOST = config('ATTACHMENT_HOST', default=_PROD_ATTACHMENT_HOST)
+ATTACHMENT_SITE_URL = PROTOCOL + ATTACHMENT_HOST
 _PROD_ATTACHMENT_ORIGIN = 'mdn-demos-origin.moz.works'
 ATTACHMENT_ORIGIN = config('ATTACHMENT_ORIGIN', default=_PROD_ATTACHMENT_ORIGIN)
 
@@ -1189,7 +1193,7 @@ def parse_iframe_url(url):
 ALLOWED_IFRAME_PATTERNS = [
     # Live sample host
     # https://developer.mozilla.org/en-US/docs/Web/CSS/filter
-    parse_iframe_url('https://' + _PROD_ATTACHMENT_HOST),
+    parse_iframe_url(_PROD_ATTACHMENT_SITE_URL),
     # Interactive Examples host
     # On https://developer.mozilla.org/en-US/docs/Web/CSS/filter
     parse_iframe_url(_PROD_INTERACTIVE_EXAMPLES),
@@ -1204,8 +1208,8 @@ ALLOWED_IFRAME_PATTERNS = [
 ]
 
 # Add the overridden attachment / live sample host
-if ATTACHMENT_HOST != _PROD_ATTACHMENT_HOST:
-    ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(PROTOCOL + ATTACHMENT_HOST))
+if ATTACHMENT_SITE_URL != _PROD_ATTACHMENT_SITE_URL:
+    ALLOWED_IFRAME_PATTERNS.append(parse_iframe_url(ATTACHMENT_SITE_URL))
 
 # Add the overridden interactive examples service
 if INTERACTIVE_EXAMPLES_BASE != _PROD_INTERACTIVE_EXAMPLES:
@@ -1240,6 +1244,45 @@ EMAIL_BACKEND = config(
 )
 EMAIL_FILE_PATH = '/app/tmp/emails'
 
+# Content Security Policy (CSP)
+CSP_DEFAULT_SRC = ("'none'",)
+CSP_CONNECT_SRC = [
+    "'self'",
+]
+CSP_FONT_SRC = [
+    "'self'",
+]
+CSP_FRAME_SRC = [
+    urlunsplit((scheme, netloc, '', '', ''))
+    for scheme, netloc, ignored_path in ALLOWED_IFRAME_PATTERNS]
+
+CSP_IMG_SRC = [
+    "'self'",
+    "data:",
+    "https://secure.gravatar.com",
+    "https://www.google-analytics.com",
+    _PROD_ATTACHMENT_SITE_URL
+]
+if ATTACHMENT_SITE_URL not in (_PROD_ATTACHMENT_SITE_URL, SITE_URL):
+    CSP_IMG_SRC.append(ATTACHMENT_SITE_URL)
+
+CSP_SCRIPT_SRC = [
+    "'self'",
+    "www.google-analytics.com",
+    # TODO fix things so that we don't need this
+    "'unsafe-inline'",
+]
+CSP_STYLE_SRC = [
+    "'self'",
+    # TODO fix things so that we don't need this
+    "'unsafe-inline'",
+]
+CSP_REPORT_ONLY = config('CSP_REPORT_ONLY', default=False, cast=bool)
+CSP_REPORT_ENABLE = config('CSP_REPORT_ENABLE', default=False, cast=bool)
+if CSP_REPORT_ENABLE:
+    CSP_REPORT_URI = config('CSP_REPORT_URI', default='/csp-violation-capture')
+
+# Celery (asynchronous tasks)
 BROKER_URL = config('BROKER_URL',
                     default='amqp://kuma:kuma@developer-local:5672/kuma')
 
@@ -1713,3 +1756,8 @@ MDN_CONTRIBUTION_CONFIRMATION_EMAIL = config('MDN_CONTRIBUTION_CONFIRMATION_EMAI
 CONTRIBUTION_FORM_CHOICES = [32, 64, 128]
 CONTRIBUTION_SUPPORT_EMAIL = config('CONTRIBUTION_SUPPORT_EMAIL',
                                     default='mdn-support@mozilla.com')
+if MDN_CONTRIBUTION:
+    CSP_CONNECT_SRC.append('https://checkout.stripe.com')
+    CSP_FRAME_SRC.append('https://checkout.stripe.com')
+    CSP_IMG_SRC.append('https://*.stripe.com')
+    CSP_SCRIPT_SRC.append('https://checkout.stripe.com')

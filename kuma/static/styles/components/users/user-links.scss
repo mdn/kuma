@@ -9,6 +9,6 @@
 
     i {
         @include right-icons();
-        @include set-font-size($body-font-size);
+        @include set-font-size($base-font-size);
     }
 }

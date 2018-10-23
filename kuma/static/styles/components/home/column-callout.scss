@@ -222,7 +222,7 @@ $standard-callout-image-spacing: 129px + 20px;
     }
 
     .callout-subtext {
-        @include set-font-size($body-font-size);
+        @include set-font-size($base-font-size);
     }
 
     button {

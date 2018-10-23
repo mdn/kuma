@@ -16,7 +16,7 @@ block indicators aka banners
 
     background-color: $light-background-color;
     @include set-heading-font-family();
-    @include set-font-size($note-font-size);
+    @include set-font-size($base-font-size);
 
     &:before {
         display: inline-block;

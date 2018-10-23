@@ -39,7 +39,7 @@ h5 {
 
 h6 {
     margin: ($grid-spacing / 2) 0;
-    @include set-font-size($body-font-size);
+    @include set-font-size($base-font-size);
     @include set-heading-font-family();
     line-height: $heading-line-height;
 }

@@ -18,6 +18,7 @@ from kuma.core import views as core_views
 from kuma.core.decorators import shared_cache_control
 from kuma.core.urlresolvers import i18n_patterns
 from kuma.dashboards.urls import lang_urlpatterns as dashboards_lang_urlpatterns
+from kuma.dashboards.views import index as dashboards_index
 from kuma.landing.urls import lang_urlpatterns as landing_lang_urlpatterns
 from kuma.search.urls import (
     lang_base_urlpatterns as search_lang_base_urlpatterns,
@@ -89,6 +90,9 @@ urlpatterns += i18n_patterns(url(r'^docs.json$', document_as_json,
                                  name='wiki.json'))
 urlpatterns += i18n_patterns(url(r'^docs/', include(wiki_lang_urlpatterns)))
 urlpatterns += [url('', include('kuma.attachments.urls'))]
+urlpatterns += i18n_patterns(
+    url(r'dashboards/?$', dashboards_index, name='dashboards.index'),
+)
 urlpatterns += i18n_patterns(url(r'^dashboards/',
                                  include(dashboards_lang_urlpatterns)))
 urlpatterns += [url('users/', include('kuma.users.urls'))]

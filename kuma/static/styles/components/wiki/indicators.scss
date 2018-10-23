@@ -26,7 +26,7 @@ block indicators aka banners
     @extend %indicator-block;
 
     code {
-        @include set-font-size($body-font-size);
+        @include set-font-size($base-font-size);
     }
 
     /* heading */
@@ -43,70 +43,133 @@ block indicators aka banners
 /* Expand out the following for browsers which don’t support `:matches(…)`
    TODO: Use postcss-selector-matches once https://bugzil.la/1366868 is resolved.
    See https://github.com/mozilla/kuma/pull/4884 */
-.warning + .warning,
-.overheadIndicator + .warning,
-.note + .warning,
-.notice + .warning,
-pre + .warning,
-.warning + .overheadIndicator,
+.blockIndicator + .blockIndicator,
+.overheadIndicator + .blockIndicator,
+.note + .blockIndicator,
+.notice + .blockIndicator,
+.properties + .blockIndicator,
+.warning + .blockIndicator,
+pre + .blockIndicator,
+.blockIndicator + .overheadIndicator,
 .overheadIndicator + .overheadIndicator,
 .note + .overheadIndicator,
 .notice + .overheadIndicator,
+.properties + .overheadIndicator,
+.warning + .overheadIndicator,
 pre + .overheadIndicator,
-.warning + .note,
+.blockIndicator + .note,
 .overheadIndicator + .note,
 .note + .note,
 .notice + .note,
+.properties + .note,
+.warning + .note,
 pre + .note,
-.warning + .notice,
+.blockIndicator + .notice,
 .overheadIndicator + .notice,
 .note + .notice,
 .notice + .notice,
+.properties + .notice,
+.warning + .notice,
 pre + .notice,
-.warning + pre,
-.overheadIndicator + pre,
-.note + pre,
-.notice + pre,
-pre + pre,
-.warning + p:empty + .warning,
-.overheadIndicator + p:empty + .warning,
-.note + p:empty + .warning,
-.notice + p:empty + .warning,
-pre + p:empty + .warning,
-.warning + p:empty + .overheadIndicator,
+.blockIndicator + .properties,
+.overheadIndicator + .properties,
+.note + .properties,
+.notice + .properties,
+.properties + .properties,
+.warning + .properties,
+pre + .properties,
+.blockIndicator + .warning,
+.overheadIndicator + .warning,
+.note + .warning,
+.notice + .warning,
+.properties + .warning,
+.warning + .warning,
+pre + .warning,
+.blockIndicator + p:empty + .blockIndicator,
+.overheadIndicator + p:empty + .blockIndicator,
+.note + p:empty + .blockIndicator,
+.notice + p:empty + .blockIndicator,
+.properties + p:empty + .blockIndicator,
+.warning + p:empty + .blockIndicator,
+pre + p:empty + .blockIndicator,
+.blockIndicator + p:empty + .overheadIndicator,
 .overheadIndicator + p:empty + .overheadIndicator,
 .note + p:empty + .overheadIndicator,
 .notice + p:empty + .overheadIndicator,
+.properties + p:empty + .overheadIndicator,
+.warning + p:empty + .overheadIndicator,
 pre + p:empty + .overheadIndicator,
-.warning + p:empty + .note,
+.blockIndicator + p:empty + .note,
 .overheadIndicator + p:empty + .note,
 .note + p:empty + .note,
 .notice + p:empty + .note,
+.properties + p:empty + .note,
+.warning + p:empty + .note,
 pre + p:empty + .note,
-.warning + p:empty + .notice,
+.blockIndicator + p:empty + .notice,
 .overheadIndicator + p:empty + .notice,
 .note + p:empty + .notice,
 .notice + p:empty + .notice,
+.properties + p:empty + .notice,
+.warning + p:empty + .notice,
 pre + p:empty + .notice,
-.warning + p:empty + pre,
+.blockIndicator + p:empty + .properties,
+.overheadIndicator + p:empty + .properties,
+.note + p:empty + .properties,
+.notice + p:empty + .properties,
+.properties + p:empty + .properties,
+.warning + p:empty + .properties,
+pre + p:empty + .properties,
+.blockIndicator + p:empty + .warning,
+.overheadIndicator + p:empty + .warning,
+.note + p:empty + .warning,
+.notice + p:empty + .warning,
+.properties + p:empty + .warning,
+.warning + p:empty + .warning,
+pre + p:empty + .warning {
+    margin-top: ($grid-spacing * -1) + 5px;
+}
+
+/* This is needed because `<pre>` blocks with syntax highlighting have
+   multiple rules with higher specificity, which set the top margin
+   to `0` and can't be overriden without the use of `!important`
+   or increasing the selector specificity, the latter of which
+   would overcomplicate this selector even more.
+   --------------------------------------------------------------
+   Example: https://developer.mozilla.org/docs/Sandbox/Indicators */
+.blockIndicator + pre,
+.overheadIndicator + pre,
+.note + pre,
+.notice + pre,
+.properties + pre,
+.warning + pre,
+pre + pre,
+.blockIndicator + p:empty + pre,
 .overheadIndicator + p:empty + pre,
 .note + p:empty + pre,
 .notice + p:empty + pre,
+.properties + p:empty + pre,
+.warning + p:empty + pre,
 pre + p:empty + pre {
-    margin-top: ($grid-spacing * -1) + 5px;
+    margin-top: ($grid-spacing * -1) + 5px !important; /* stylelint-disable-line declaration-no-important */
 }
 
 /* If there are 2 indicators in close proximity, snug them up.
    Too many combinations to do them all but this
    should take care of most common combinations */
 /* Commented out because of https://bugzil.la/1487656
-:matches(.warning, .overheadIndicator, .note, .notice, pre) + :matches(.warning, .overheadIndicator, .note, .notice, pre),
-:matches(.warning, .overheadIndicator, .note, .notice, pre) + p:empty + :matches(.warning, .overheadIndicator, .note, .notice, pre) {
+:matches(.blockIndicator, .overheadIndicator, .note, .notice, .properties, .warning, pre) + :matches(.blockIndicator, .overheadIndicator, .note, .notice, .properties, .warning),
+:matches(.blockIndicator, .overheadIndicator, .note, .notice, .properties, .warning, pre) + p:empty + :matches(.blockIndicator, .overheadIndicator, .note, .notice, .properties, .warning) {
     margin-top: ($grid-spacing * -1) + 5px;
+}
+
+:matches(.blockIndicator, .overheadIndicator, .note, .notice, .properties, .warning, pre) + pre,
+:matches(.blockIndicator, .overheadIndicator, .note, .notice, .properties, .warning, pre) + p:empty + pre {
+    margin-top: ($grid-spacing * -1) + 5px !important;
 }
 */
 
-/* code block looks funny without it's padding,
+/* code block looks funny without its padding,
    only appears in kumascript error boxes AFIK */
 .warning pre:last-child {
     padding-bottom: $code-block-padding;
@@ -207,13 +270,7 @@ icons for both types of indicators
 }
 
 .experimental,
-.experimentalBadge,
-/* es7 and harmony macros  */
-.overheadIndicator[style='background: #9CF49C;'],
-/*
-IE 11 converts hex to rgb, so target that as well.
-*/
-.overheadIndicator[style='background: rgb(156, 244, 156);'] {
+.experimentalBadge {
     @include indicator-icon('\f0c3'); /* flask */
 }
 
@@ -260,6 +317,7 @@ IE 11 converts hex to rgb, so target that as well.
 .secureContexts {
     @include indicator-icon('\f023'); /* lock */
 }
+
 
 /*
 Colours for both types
@@ -315,10 +373,29 @@ Colours for both types
 }
 
 /* you might like to know */
+.template-jsOverrides,
 .optional {
     @extend %indicator-info;
 }
 
+/*
+Indicator colour overrides
+-------------------------------------------------------------- */
+.indicator-info {
+    @extend %indicator-info;
+}
+
+.indicator-version {
+    @extend %indicator-version;
+}
+
+.indicator-warning {
+    @extend %indicator-warning;
+}
+
+.indicator-danger {
+    @extend %indicator-danger;
+}
 
 /*
 Special snowflakes
@@ -355,14 +432,6 @@ Special snowflakes
     @extend %indicator-text-invert;
     @extend %indicator-link-invert;
 }
-
-/* harmony */
-.overheadIndicator[style='background: #9CF49C;'],
-.overheadIndicator[style='background: rgb(156, 244, 156);'] {
-    border-color: #{map-get( map-get($colors-lookup, 'positive'), 'medium')} !important; /* stylelint-disable-line declaration-no-important */
-    background: #{map-get( map-get($colors-lookup, 'positive'), 'light')} !important; /* stylelint-disable-line declaration-no-important */
-}
-
 
 /* heading that goes in with geckoVersionNote */
 .geckoVersionHeading {

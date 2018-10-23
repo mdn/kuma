@@ -43,8 +43,7 @@ def get_target_name() {
 
 def get_target_script() {
     if (env.BRANCH_NAME == PROD_BRANCH_NAME) {
-        // TODO: After cutover to IT-owned services, just use 'prod'.
-        return is_mozmeao_pipeline() ? 'prod' : 'prod.mm.test'
+        return 'prod'
     }
     if (env.BRANCH_NAME == STAGE_BRANCH_NAME) {
         return 'stage'
@@ -67,7 +66,7 @@ def get_region() {
         return is_mozmeao_pipeline() ? 'portland' : 'oregon'
     }
     if (env.BRANCH_NAME == STANDBY_BRANCH_NAME) {
-        return 'frankfurt'
+        return is_mozmeao_pipeline() ? 'frankfurt' : 'germany'
     }
     throw new Exception(
         'Unable to determine the region from the branch name.'
