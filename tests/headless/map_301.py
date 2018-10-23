@@ -439,3 +439,37 @@ REDIRECT_URLS = list(flatten((
     url_test('/en-US/fellowship',
              '/en-US/docs/Archive/2015_MDN_Fellowship_Program'),
 )))
+
+marionette_client_docs_url = (
+    'https://marionette-client.readthedocs.io/en/latest/')
+marionette_docs_root_url = (
+    'https://firefox-source-docs.mozilla.org/testing/marionette/marionette/')
+marionette_locales = '{/en-US,/fr,/ja,/pl,/pt-BR,/ru,/zh-CN,}'
+marionette_base = marionette_locales + '/docs/Mozilla/QA/Marionette'
+marionette_multi_base = marionette_locales + '/docs/{Mozilla/QA/,}Marionette'
+marionette_python_tests = (
+    '{MarionetteTestCase,Marionette_Python_Tests,Running_Tests,Tests}')
+
+MARIONETTE_URLS = list(flatten((
+    url_test(marionette_multi_base, marionette_docs_root_url + 'index.html'),
+    url_test(marionette_multi_base + '/Builds',
+             marionette_docs_root_url + 'Building.html'),
+    url_test(marionette_multi_base + '/Client', marionette_client_docs_url),
+    url_test(marionette_multi_base + '/Developer_setup',
+             marionette_docs_root_url + 'Contributing.html'),
+    url_test(marionette_multi_base + '/' + marionette_python_tests,
+             marionette_docs_root_url + 'PythonTests.html'),
+    url_test(marionette_locales + '/docs/Marionette_Test_Runner',
+             marionette_docs_root_url + 'PythonTests.html'),
+    url_test(marionette_base + '/Marionette_Test_Runner',
+             marionette_docs_root_url + 'PythonTests.html'),
+    url_test(marionette_base + '/Protocol',
+             marionette_docs_root_url + 'Protocol.html'),
+    url_test(marionette_base + '/Python_Client',
+             marionette_client_docs_url),
+    url_test(marionette_base + '/WebDriver/status',
+             'https://bugzilla.mozilla.org'
+             '/showdependencytree.cgi?id=721859&hide_resolved=1'),
+    url_test(marionette_locales + '/docs/Marionette/Debugging',
+             marionette_docs_root_url + 'Debugging.html'),
+)))

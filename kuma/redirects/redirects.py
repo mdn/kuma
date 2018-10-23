@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from functools import partial
+
 from redirect_urls import redirect as lib_redirect
 
 from kuma.core.decorators import shared_cache_control
@@ -824,9 +826,48 @@ for zone_root, wiki_slug, locales in zone_redirects:
             permanent=False,
             decorators=shared_cache_control_for_zones))
 
-redirectpatterns = scl3_redirectpatterns + zone_redirectpatterns + [
-    locale_redirect(
-        r'^fellowship',
-        '/docs/Archive/2015_MDN_Fellowship_Program',
-        permanent=True),
+marionette_client_docs_url = (
+    'https://marionette-client.readthedocs.io/en/latest/')
+marionette_docs_root_url = (
+    'https://firefox-source-docs.mozilla.org/testing/marionette/marionette/')
+marionette_redirect = partial(locale_redirect, re_flags='i',
+                              prepend_locale=False, permanent=True)
+
+marionette_redirectpatterns = [
+    marionette_redirect(r'docs/(?:Mozilla/QA/)?Marionette$',
+                        marionette_docs_root_url + 'index.html'),
+    marionette_redirect(r'docs/(?:Mozilla/QA/)?Marionette/Builds$',
+                        marionette_docs_root_url + 'Building.html'),
+    marionette_redirect(r'docs/(?:Mozilla/QA/)?Marionette/Client$',
+                        marionette_client_docs_url),
+    marionette_redirect(r'docs/Mozilla/QA/Marionette/Python_Client$',
+                        marionette_client_docs_url),
+    marionette_redirect(r'docs/(?:Mozilla/QA/)?Marionette/Developer_setup$',
+                        marionette_docs_root_url + 'Contributing.html'),
+    marionette_redirect(r'docs/Marionette_Test_Runner$',
+                        marionette_docs_root_url + 'PythonTests.html'),
+    marionette_redirect(r'docs/Mozilla/QA/Marionette/Marionette_Test_Runner$',
+                        marionette_docs_root_url + 'PythonTests.html'),
+    marionette_redirect(r'docs/(?:Mozilla/QA/)?Marionette/(?:MarionetteTestCase'
+                        r'|Marionette_Python_Tests|Running_Tests|Tests)$',
+                        marionette_docs_root_url + 'PythonTests.html'),
+    marionette_redirect(r'docs/Mozilla/QA/Marionette/Protocol$',
+                        marionette_docs_root_url + 'Protocol.html'),
+    marionette_redirect(r'docs/Mozilla/QA/Marionette/WebDriver/status$',
+                        'https://bugzilla.mozilla.org'
+                        '/showdependencytree.cgi?id=721859&hide_resolved=1'),
+    marionette_redirect(r'docs/Marionette/Debugging$',
+                        marionette_docs_root_url + 'Debugging.html'),
 ]
+
+redirectpatterns = (
+    scl3_redirectpatterns +
+    zone_redirectpatterns +
+    marionette_redirectpatterns +
+    [
+        locale_redirect(
+            r'^fellowship',
+            '/docs/Archive/2015_MDN_Fellowship_Program',
+            permanent=True),
+    ]
+)
