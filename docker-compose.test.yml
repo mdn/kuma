@@ -2,7 +2,7 @@ version: '2.1'
 services:
   noext:
     #run tests with no external dependencies
-    image: quay.io/mozmar/kuma_base
+    image: mdnwebdocs/kuma_base
     user: ${UID:-0}
     volumes:
       - ./:/app
@@ -14,7 +14,7 @@ services:
   sqlite_memcached:
     #memcached only external dependency
     #many tests currently fail due to dependency on mysql specific behavior
-    image: quay.io/mozmar/kuma_base
+    image: mdnwebdocs/kuma_base
     user: ${UID:-0}
     volumes:
       - ./:/app
@@ -27,7 +27,7 @@ services:
       - PYTHONDONTWRITEBYTECODE=1
 
   nosearch:
-    image: quay.io/mozmar/kuma_base
+    image: mdnwebdocs/kuma_base
     user: ${UID:-0}
     volumes:
       - ./:/app
@@ -42,7 +42,7 @@ services:
       - URLWAIT_TIMEOUT=300
 
   test:
-    image: quay.io/mozmar/kuma_base
+    image: mdnwebdocs/kuma_base
     user: ${UID:-0}
     volumes:
       - ./:/app

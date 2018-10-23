@@ -13,19 +13,13 @@ def loadBranch(String branch) {
 
   if (config && config.pipeline && config.pipeline.enabled == false) {
     println "Pipeline disabled."
-  }
-  else {
-    // TODO: After cutover to IT-owned cluster, make "mdnwebdocs" the default
-    //       value for IMAGE_PREFIX in the Makefile, and remove this code.
-    def image_prefix = utils.is_mozmeao_pipeline() ? 'quay.io/mozmar' : 'mdnwebdocs'
-    withEnv(["IMAGE_PREFIX=${image_prefix}"]) {
-      if (config && config.pipeline && config.pipeline.script) {
-        println "Loading ./Jenkinsfiles/${config.pipeline.script}.groovy"
-        load "./Jenkinsfiles/${config.pipeline.script}.groovy"
-      } else {
-        println "Loading ./Jenkinsfiles/${branch}.groovy"
-        load "./Jenkinsfiles/${branch}.groovy"
-      }
+  } else {
+    if (config && config.pipeline && config.pipeline.script) {
+      println "Loading ./Jenkinsfiles/${config.pipeline.script}.groovy"
+      load "./Jenkinsfiles/${config.pipeline.script}.groovy"
+    } else {
+      println "Loading ./Jenkinsfiles/${branch}.groovy"
+      load "./Jenkinsfiles/${branch}.groovy"
     }
   }
 }

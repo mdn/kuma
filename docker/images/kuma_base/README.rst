@@ -9,7 +9,7 @@ The image can be recreated locally with ``make build-base``.
 The image tagged ``latest`` is used by default for development. It can be
 created localled with ``make build-base VERSION=latest``. The official
 latest image is created from the master branch in Jenkins__ and published to
-quay.io__
+DockerHub__
 
-.. __: https://ci.us-west.moz.works/blue/organizations/jenkins/mdn_multibranch_pipeline/branches/
-.. __: https://quay.io/repository/mozmar/kuma_base
+.. __: https://ci.us-west-2.mdn.mozit.cloud/blue/organizations/jenkins/kuma/branches/
+.. __: https://hub.docker.com/r/mdnwebdocs/kuma_base/

@@ -158,7 +158,7 @@ test runs at `MDN's Jenkins-based multi-branch pipeline`_.
 
 .. _`mozilla/kuma GitHub repository`: https://github.com/mozilla/kuma
 .. _`mozilla/kuma@stage-integration-tests`: https://github.com/mozilla/kuma/tree/stage-integration-tests
-.. _`MDN's Jenkins-based multi-branch pipeline`: https://ci.us-west.moz.works/blue/organizations/jenkins/mdn_multibranch_pipeline/branches/
+.. _`MDN's Jenkins-based multi-branch pipeline`: https://ci.us-west-2.mdn.mozit.cloud/blue/organizations/jenkins/kuma/branches/
 
 Run tests locally using Selenium Docker images
 ----------------------------------------------
