@@ -291,7 +291,7 @@
 {% block contrib_popup %}
     {%- if contribution_popup %}
         {%- with form=contribution_form, is_popover=True %}
-            {%- include "contributions/includes/contribution-form.html" %}
+            {%- include "payments/includes/payments-form.html" %}
         {%- endwith %}
     {%- endif %}
 {% endblock %}
@@ -341,7 +341,7 @@
   {% endif %}
 
   {%- if contribution_popup %}
-    {% javascript 'contribute' %}
+    {% javascript 'payments' %}
   {%- endif %}
 
 {% endblock %}

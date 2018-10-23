@@ -17,7 +17,7 @@
 
 {% block document_head %}
     {% with form=form, is_popover=False %}
-        {% include "contributions/includes/contribution-form.html" %}
+        {% include "payments/includes/payments-form.html" %}
     {% endwith %}
 {% endblock %}
 
@@ -206,6 +206,6 @@
 {% block js %}
   {%- if contribution_enabled %}
     <script src="https://checkout.stripe.com/checkout.js"></script>
-    {% javascript 'contribute' %}
+    {% javascript 'payments' %}
   {%- endif %}
 {% endblock %}
