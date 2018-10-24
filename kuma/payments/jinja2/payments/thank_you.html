@@ -5,6 +5,7 @@
 {% block title %}{{ page_title(_('Thank You')) }}{% endblock %}
 
 {% block document_head %}
+  {% translation 'en-US' %}{# Display in English until Q1 2019 #}
     <div class="{% if status == 'succeeded' %} contribution-banner {% endif %}align-center">
         <div class="column-container">
             {% if status == 'succeeded' %}
@@ -63,6 +64,7 @@
             </div>
         </div>
     </div>
+  {% endtranslation %}
 {% endblock %}
 
 {% block content %}
