@@ -90,5 +90,7 @@
 {% block js %}
   {%- if contribution_enabled %}
     {% javascript 'payments-confirmation' %}
+    {% javascript 'tooltip' %}
+    {% javascript 'payments' %}
   {%- endif %}
 {% endblock %}

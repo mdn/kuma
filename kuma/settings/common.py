@@ -957,6 +957,12 @@ PIPELINE_JS = {
             'async': True,
         },
     },
+    'tooltip': {
+        'source_filenames': (
+            'js/tooltip.js',
+        ),
+        'output_filename': 'build/js/tooltip.js',
+    },
     'payments': {
         'source_filenames': (
             'js/payments-handler.js',
