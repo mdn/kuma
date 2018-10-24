@@ -1484,18 +1484,18 @@ CONSTANCE_CONFIG = dict(
         "are removed from the file storage"
     ),
     KUMA_WIKI_IFRAME_ALLOWED_HOSTS=(
-        ('^https?\:\/\/'
-         '(stage-files.mdn.moz.works'               # Staging demos
-         '|mdn.mozillademos.org'                    # Production demos
-         '|testserver'                              # Unit test demos
-         '|localhost\:8000'                         # Docker development demos
-         '|localhost\:8080'                         # Embedded samples server
-         '|rpm.newrelic.com\/public\/charts\/.*'    # MDN/Kuma/Server_charts
-         '|(www.)?youtube.com\/embed\/(\.*)'        # Embedded videos
-         '|jsfiddle.net\/.*embedded.*'              # Embedded samples
-         '|mdn.github.io'                           # Embedded samples
-         '|interactive-examples.mdn.mozilla.net'    # Embedded samples
-         ')'),
+        (r'^https?\:\/\/'
+         r'(stage-files.mdn.moz.works'              # Staging demos
+         r'|mdn.mozillademos.org'                   # Production demos
+         r'|testserver'                             # Unit test demos
+         r'|localhost\:8000'                        # Docker development demos
+         r'|localhost\:8080'                        # Embedded samples server
+         r'|rpm.newrelic.com\/public\/charts\/.*'   # MDN/Kuma/Server_charts
+         r'|(www.)?youtube.com\/embed\/(\.*)'       # Embedded videos
+         r'|jsfiddle.net\/.*embedded.*'             # Embedded samples
+         r'|mdn.github.io'                          # Embedded samples
+         r'|interactive-examples.mdn.mozilla.net'   # Embedded samples
+         r')'),
         'Regex comprised of domain names that are allowed for IFRAME SRCs'
     ),
     GOOGLE_ANALYTICS_ACCOUNT=(
