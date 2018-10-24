@@ -6,12 +6,17 @@
     var amountSubmittedStoreKey = 'submissionDetails';
     var submissionDetails = JSON.parse(sessionStorage.getItem(amountSubmittedStoreKey));
 
+    // Don't do anything if there is no session var
+    if (!submissionDetails) {
+        return;
+    }
+
     // Default to no data
     var amountSubmitted = submissionDetails.amount || 0;
     var submissionPage = submissionDetails.page || '';
 
     var path = win.location.pathname;
-    if (path.includes('/payments/success') && submissionDetails) {
+    if (path.includes('/payments/success')) {
         mdn.analytics.trackEvent({
             category: 'payments',
             action: 'success',
@@ -21,7 +26,7 @@
             sessionStorage.removeItem(amountSubmittedStoreKey);
         });
 
-    } else if (path.includes('/payments/error') && submissionDetails) {
+    } else if (path.includes('/payments/error')) {
         mdn.analytics.trackEvent({
             category: 'Payment error',
             action: 'Payment failed'
