@@ -3,8 +3,8 @@
 @font-face {
     font-family: zillaslab;
     font-display: 'fallback';
-    src: url('#{$path-to-locale-fonts}#{"ZillaSlab-Regular.woff2"}') format('woff2'),
-         url('#{$path-to-locale-fonts}#{"ZillaSlab-Regular.woff"}') format('woff');
+    src: url('#{$path-to-locale-fonts}#{"ZillaSlab-Regular.subset.woff2"}') format('woff2'),
+         url('#{$path-to-locale-fonts}#{"ZillaSlab-Regular.subset.woff"}') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -12,8 +12,8 @@
 @font-face {
     font-family: zillaslab;
     font-display: 'optional';
-    src: url('#{$path-to-locale-fonts}#{"ZillaSlab-Bold.woff2"}') format('woff2'),
-         url('#{$path-to-locale-fonts}#{"ZillaSlab-Bold.woff"}') format('woff');
+    src: url('#{$path-to-locale-fonts}#{"ZillaSlab-Bold.subset.woff2"}') format('woff2'),
+         url('#{$path-to-locale-fonts}#{"ZillaSlab-Bold.subset.woff"}') format('woff');
     font-weight: bold;
     font-style: normal;
 }

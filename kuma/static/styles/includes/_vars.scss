@@ -109,8 +109,8 @@ $error: #900;
 /*
 typography
 ====================================================================== */
-$site-font-family-fallback: arial, x-locale-body, sans-serif;
-$site-font-family: 'Verdana', $site-font-family-fallback;
+$site-font-family-fallback: x-locale-body, sans-serif;
+$site-font-family: 'Arial', $site-font-family-fallback;
 $heading-font-family-fallback: 'Palatino', 'Palatino Linotype', x-locale-heading-secondary, serif;
 $heading-font-family: x-locale-heading-primary, zillaslab, $heading-font-family-fallback;
 $heading-line-height: 1.2;
@@ -122,26 +122,23 @@ $diff-font-family: $code-inline-font-family;
 /*
 sizes
 ====================================================================== */
-$h1-font-size: 48px;
-$h2-font-size: 40px;
-$h3-font-size: 24px;
-$h4-font-size: 22px;
-$h5-font-size: 16px;
-$callout-font-size: 22px;
-$note-font-size: 18px;
-$body-font-size: 15px;
-$form-font-size: 16px;
-$tiny-font-size: 12px;
-$left-nav-font-size: 14px;
+$h1-font-size: 51px;
+$h2-font-size: 42px;
+$h3-font-size: 26px;
+$h4-font-size: 24px;
+$h5-font-size: 18px;
+$callout-font-size: 24px;
+$base-font-size: 18px;
+$tiny-font-size: 14px;
 
 $mobile-document-title-font-size: 32px;
 $mobile-h2-font-size: 32px;
 
 /* bumps */
 $larger-font-size: $callout-font-size;
-$small-bump-font-size: ($body-font-size + 2px);
-$base-bump-font-size: ($body-font-size + 1px);
-$smaller-font-size: ($body-font-size - 2px);
+$small-bump-font-size: ($base-font-size + 2px);
+$base-bump-font-size: ($base-font-size + 1px);
+$smaller-font-size: ($base-font-size - 2px);
 
 /*
 forms
@@ -177,18 +174,18 @@ break points
 - divide pixels by browser default font size (16px)
 - and multiply by 1em to convert unit to em.
 */
-$max-width-default: (1399px / $body-font-size) * 1em;
-$small-desktop-ends: (1199px / $body-font-size) * 1em;
-$tablet-ends: (1023px / $body-font-size) * 1em;
-$mobile-ends: (767px / $body-font-size) * 1em;
-$small-mobile-ends: (479px / $body-font-size) * 1em;
+$max-width-default: (1399px / $base-font-size) * 1em;
+$small-desktop-ends: (1199px / $base-font-size) * 1em;
+$tablet-ends: (1023px / $base-font-size) * 1em;
+$mobile-ends: (767px / $base-font-size) * 1em;
+$small-mobile-ends: (479px / $base-font-size) * 1em;
 
 $small-desktop-starts: $tablet-ends + .001em;
 $tablet-starts: $mobile-ends + .001em;
 $mobile-starts: $small-mobile-ends + .001em;
 
-$navigation-break-ends: (1100px / $body-font-size) * 1em;
-$navigation-block-ends: (850px / $body-font-size) * 1em;
+$navigation-break-ends: (1100px / $base-font-size) * 1em;
+$navigation-block-ends: (850px / $base-font-size) * 1em;
 
 $navigation-break-starts: $navigation-block-ends + .001em;
 

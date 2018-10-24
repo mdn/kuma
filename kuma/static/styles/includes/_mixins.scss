@@ -7,7 +7,7 @@ Provides main mixins for use within the MDN theme.
     $v: 0;
 
     @if $u == 'px' {
-        $v: $value/$body-font-size * 1rem;
+        $v: $value/$base-font-size * 1rem;
     }
     @else {
         $v: unit($value, u);
@@ -217,7 +217,7 @@ coloured boxes
 }
 
 @mixin example-box($bg-color, $border-color) {
-    @include set-font-size($body-font-size);
+    @include set-font-size($base-font-size);
     background: $bg-color;
     border: 0 $code-block-border-style $border-color;
     @include bidi(((border-left-width, $code-block-border-width, border-right-width, 0),));
@@ -486,7 +486,7 @@ These are not dynamic but serve as mixins
 
 @mixin callout() {
     @include restrict-line-length();
-    @include set-font-size(19px);
+    @include set-font-size($callout-font-size);
     border: $section-border-width solid $accent-light;
     border-width: $section-border-width 0;
     padding: $grid-spacing 0;

@@ -7,18 +7,6 @@
     var tocItemHeight = 0;
     var headingMargin = 0;
 
-    function scrollToHeading(id) {
-        /* must use plain JS to get element, IDs contain characters jQuery can't handle */
-        var $heading = $(doc.getElementById(id));
-        var headingTop = $heading.offset().top;
-        var scrollY = headingTop - tocHeight - headingMargin;
-
-        // update hash
-        win.location.hash = '#' + id;
-        // scroll to heading
-        win.scroll(0, scrollY);
-    }
-
     /* Mobile
     ************************************************************************ */
 
@@ -67,7 +55,7 @@
                 var $button = $heading.find('button');
                 $button.click();
             }
-            scrollToHeading(headingId);
+            mdn.utils.scrollToHeading(headingId);
         }
     }
 
@@ -179,7 +167,7 @@
 
             // track click
             mdn.analytics.trackLink(event, linkHref, linkData);
-            scrollToHeading(headingId);
+            mdn.utils.scrollToHeading(headingId);
         }
 
         // if 3 lines tall or more make it not sticky
@@ -200,12 +188,6 @@
             // underline current section
             countDownToUnderline();
         });
-
-        if(window.location.hash) {
-            var thisHash = window.location.hash;
-            var headingId = thisHash.replace(/^#/, '');
-            scrollToHeading(headingId);
-        }
     }
 
     if(win.matchMedia(breakpoint).matches === true) {

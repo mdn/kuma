@@ -25,6 +25,13 @@ from .jobs import SpamDashboardHistoricalStats
 
 
 @shared_cache_control
+def index(request):
+    """Index of dashboards."""
+
+    return render(request, 'dashboards/index.html')
+
+
+@shared_cache_control
 @vary_on_headers('X-Requested-With')
 @require_GET
 def revisions(request):

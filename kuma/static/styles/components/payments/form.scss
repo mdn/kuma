@@ -213,7 +213,7 @@
     border-radius: 0;
     border: 2px solid $text-color;
     display: none;
-    font-size: $body-font-size;
+    @include set-font-size($base-font-size);
     left: 0;
     max-width: 300px;
     padding: 24px 14px;
