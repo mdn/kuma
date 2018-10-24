@@ -15,7 +15,7 @@ def get_abs_url(url, base_url):
 def url_test(url, location=None, status_code=requests.codes.moved_permanently,
              req_headers=None, req_kwargs=None, resp_headers=None, query=None,
              follow_redirects=False, final_status_code=requests.codes.ok):
-    """
+    r"""
     Function for producing a config dict for the redirect test.
 
     You can use simple bash style brace expansion in the `url` and `location`

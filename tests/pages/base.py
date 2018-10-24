@@ -206,7 +206,7 @@ class BasePage(Page):
             # if base url was not part of string there's a leading / to remove
             path = re.sub(r'^/', '', path)
             # remove locale and following /
-            path = re.sub(r'^' + locale + '\/', '', path)
+            path = re.sub(r'^' + locale + r'\/', '', path)
             return path
 
         @wait_for_window

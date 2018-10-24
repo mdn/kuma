@@ -2,24 +2,24 @@ from decorator_include import decorator_include
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_safe
 from django.views.generic import RedirectView
 from django.views.static import serve
-from django.core.urlresolvers import reverse_lazy
 
 
 from kuma.attachments import views as attachment_views
-from kuma.payments import views as payment_views
-from kuma.payments.urls import (
-    lang_urlpatterns as payments_lang_urlpatterns)
 from kuma.core import views as core_views
 from kuma.core.decorators import shared_cache_control
 from kuma.core.urlresolvers import i18n_patterns
 from kuma.dashboards.urls import lang_urlpatterns as dashboards_lang_urlpatterns
 from kuma.dashboards.views import index as dashboards_index
 from kuma.landing.urls import lang_urlpatterns as landing_lang_urlpatterns
+from kuma.payments import views as payment_views
+from kuma.payments.urls import (
+    lang_urlpatterns as payments_lang_urlpatterns)
 from kuma.search.urls import (
     lang_base_urlpatterns as search_lang_base_urlpatterns,
     lang_urlpatterns as search_lang_urlpatterns)

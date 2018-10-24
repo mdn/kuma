@@ -13,7 +13,8 @@ ARTICLE_NAME = 'Send feedback (about|on) MDN'
 def test_location(base_url, selenium):
     article_page = ArticlePage(selenium, base_url).open()
     page = article_page.header.open_feedback()
-    assert re.match(ARTICLE_NAME + ' - The MDN project \| MDN', selenium.title)
+    assert re.match(ARTICLE_NAME + r' - The MDN project \| MDN',
+                    selenium.title)
     assert re.match(ARTICLE_NAME, page.article_title_text)
     assert page.article_title_text in selenium.title
 
