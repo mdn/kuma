@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {# Set URLs outside of translation block, to keep user's locale #}
 {% set payments_url = url('payments') %}
 {% set recurring_payment_subscription_url = url('recurring_payment_subscription') %}
@@ -5,12 +6,15 @@
 {% set feedback_url = payments_url + "#contribute-feedback" %}
 
 {% translation 'en-US' %}{# Display in English until Q1 2019 #}
-<div id="contribution-popover-container" class="contribution-banner {% if is_popover %}contribution-popover is-collapsed is-hidden{% endif %}"{% if is_popover %} aria-expanded="false" aria-hidden="true"{% endif %}>
+<div id="contribution-popover-container" class="contribution-banner {% if is_popover %}contribution-popover is-collapsed is-hidden{% endif %}"
+    {% if is_popover %} aria-expanded="false" aria-hidden="true" {% endif %}>
     {% if is_popover %}
-        <div class="contribution-popover-actions">
-            <button id="collapse-popover-button" class="hide-collapse" aria-label="{{ _('Collapse pop over window') }}">{% include 'includes/icons/arrows/chevron-down.svg' %}</button>
-            <button id="close-popover-button" aria-label="{{ _('Close pop over window') }}">{% include 'includes/icons/general/close.svg' %}</button>
-        </div>
+    <div class="contribution-popover-actions">
+        <button id="collapse-popover-button" class="hide-collapse" aria-label="{{ _('Collapse pop over window') }}">{%
+            include 'includes/icons/arrows/chevron-down.svg' %}</button>
+        <button id="close-popover-button" aria-label="{{ _('Close pop over window') }}">{% include
+            'includes/icons/general/close.svg' %}</button>
+    </div>
     {% endif %}
 
     <div class="column-container">
@@ -23,53 +27,62 @@
                 <h4 tabindex="-1">{{_('Support MDN, and it comes back to you.')}}</h4>
                 <p class="body">
                     {% trans %}
-                        You come to MDN for information and assistance. Be a
-                        part of making MDN even better. You’ll get back more of
-                        the knowledge and tools you rely on for when your work
-                        has to work.
+                    You come to MDN for information and assistance. Be a
+                    part of making MDN even better. You’ll get back more of
+                    the knowledge and tools you rely on for when your work
+                    has to work.
                     {% endtrans %}
                 </p>
                 {% if is_popover %}
-                    <div class="button-group">
-                        <a href="{{url('payments')}}#contribute-faqs" class="cta-link">
-                            {{_('Learn more about payments to MDN')}} {% include 'includes/icons/arrows/arrow.svg' %}
-                        </a>
-                        <a href="{{url('payments')}}#contribute-feedback" class="cta-link">
-                            {{_('Provide feedback')}} {% include 'includes/icons/arrows/arrow.svg' %}
-                        </a>
-                    </div>
+                <div class="button-group">
+                    <a href="{{url('payments')}}#contribute-faqs" class="cta-link">
+                        {{_('Learn more about payments to MDN')}} {% include 'includes/icons/arrows/arrow.svg' %}
+                    </a>
+                    <a href="{{url('payments')}}#contribute-feedback" class="cta-link">
+                        {{_('Provide feedback')}} {% include 'includes/icons/arrows/arrow.svg' %}
+                    </a>
+                </div>
                 {% endif %}
             </div>
         </div>
-        <div class="column-half">
+        <div class="column-half payments-form">
             <!-- Replace with Waffle flag const -->
-            {% if True %}
-            <div>
-                <button>
-                    One-time Payment
-                </button>
-                <button>
-                    Monthly
-                </button>
-            </div>
-            {% endif %}
+            {% set recurring_payments = True %}
+            <div class="payments-form-container">
+                {% if recurring_payments %}
+                    <div class="payments-switch">
+                        <button class="active">
+                            One off payment
+                        </button>
+                        <button>
+                            Monthly payment
+                        </button>
+                    </div>
+                {% endif %}
 
-            {# One Time payments form #}
-            <div class="form">
+                {# One Time payments form #}
                 {% with form=form %}
                     {%- include "payments/includes/payments-form.html" %}
                 {% endwith %}
-            </div>
 
-            {# Recurring payments form #}
-            <!-- TODO: replace `True` with waffle flag varible. -->
-            {% if True %}
-                <div class="form">
-                    {% with form=form, hidden=True %}
-                        {%- include "payments/includes/payments-form.html" %}
-                    {% endwith %}
-                </div>
-            {% endif %}
+                {# Recurring payments form #}
+
+                {% if recurring_payments %}
+
+                    {% if user.username %}
+                        {% with form=form, hidden=True %}
+                            {#- include "payments/includes/payments-form.html" #}
+                        {% endwith %}
+                    {% else %}
+                        {% set github_url = provider_login_url('github', next=next_url) %}
+                        <p>We’ve noticed you’re not logged in to MDN. To complete your monthly payment, we’ll need you to log in first.</p>
+                        <a href="{{ github_url }}" class="payment-form-button" data-service="GitHub" rel="nofollow">
+                            {{ _('Sign in') }}{% include 'includes/icons/social/github.svg' %}
+                        </a>
+                    {% endif %}
+
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>
