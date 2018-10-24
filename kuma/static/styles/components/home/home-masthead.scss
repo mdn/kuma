@@ -20,7 +20,7 @@ homepage masthead (search, feature callouts)
     }
 
     h1 {
-        @include set-font-size(36px);
+        @include set-font-size(42px);
         margin: 0 0 ($grid-spacing * 2);
         line-height: 1;
     }

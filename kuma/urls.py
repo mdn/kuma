@@ -2,22 +2,24 @@ from decorator_include import decorator_include
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_safe
 from django.views.generic import RedirectView
 from django.views.static import serve
 
+
 from kuma.attachments import views as attachment_views
-from kuma.contributions import views as contribution_views
-from kuma.contributions.urls import (
-    lang_urlpatterns as contributions_lang_urlpatterns)
 from kuma.core import views as core_views
 from kuma.core.decorators import shared_cache_control
 from kuma.core.urlresolvers import i18n_patterns
 from kuma.dashboards.urls import lang_urlpatterns as dashboards_lang_urlpatterns
 from kuma.dashboards.views import index as dashboards_index
 from kuma.landing.urls import lang_urlpatterns as landing_lang_urlpatterns
+from kuma.payments import views as payment_views
+from kuma.payments.urls import (
+    lang_urlpatterns as payments_lang_urlpatterns)
 from kuma.search.urls import (
     lang_base_urlpatterns as search_lang_base_urlpatterns,
     lang_urlpatterns as search_lang_urlpatterns)
@@ -95,12 +97,17 @@ urlpatterns += i18n_patterns(url(r'^dashboards/',
                                  include(dashboards_lang_urlpatterns)))
 urlpatterns += [url('users/', include('kuma.users.urls'))]
 urlpatterns += i18n_patterns(
-    url(r'contribute/?$',
-        contribution_views.contribute,
-        name='contribute'),
+    url(r'^payments/$',
+        payment_views.contribute,
+        name='payments'),
 )
-urlpatterns += i18n_patterns(url(r'^contribute/',
-                                 include(contributions_lang_urlpatterns)))
+urlpatterns += i18n_patterns(
+    url(r'^contribute/$',
+        RedirectView.as_view(url=reverse_lazy('payments')),
+        name='redirect-to-payments'),
+)
+urlpatterns += i18n_patterns(url(r'^payments/',
+                                 include(payments_lang_urlpatterns)))
 urlpatterns += i18n_patterns(url('',
                                  decorator_include(never_cache,
                                                    users_lang_urlpatterns)))

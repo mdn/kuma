@@ -1,0 +1,90 @@
+<div id="contribution-popover-container" class="contribution-banner {% if is_popover %}contribution-popover is-collapsed is-hidden{% endif %}"{% if is_popover %} aria-expanded="false" aria-hidden="true"{% endif %}>
+    {% if is_popover %}
+        <div class="contribution-popover-actions">
+            <button id="collapse-popover-button" class="hide-collapse" aria-label="{{ _('Collapse pop over window') }}">{% include 'includes/icons/arrows/chevron-down.svg' %}</button>
+            <button id="close-popover-button" aria-label="{{ _('Close pop over window') }}">{% include 'includes/icons/general/close.svg' %}</button>
+        </div>
+    {% endif %}
+    <div class="column-container">
+        <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="" role="presentation" />
+        <div class="column-half contribute-lead-in">
+            <div class="container">
+                <h2 class="highlight highlight-spanned">
+                    <span class="highlight-span">{{ _('Give Back to MDN')}}</span>
+                </h2>
+                <h4 tabindex="-1">{{_('Support MDN, and it comes back to you.')}}</h4>
+                <p class="body">
+                    {% trans %}
+                        You come to MDN for information and assistance. Be a
+                        part of making MDN even better. You’ll get back more of
+                        the knowledge and tools you rely on for when your work
+                        has to work.
+                    {% endtrans %}
+                </p>
+                {% if is_popover %}
+                    <div class="button-group">
+                        <a href="{{url('payments')}}#contribute-faqs" class="cta-link">
+                            {{_('Learn more about payments to MDN')}} {% include 'includes/icons/arrows/arrow.svg' %}
+                        </a>
+                        <a href="{{url('payments')}}#contribute-feedback" class="cta-link">
+                            {{_('Provide feedback')}} {% include 'includes/icons/arrows/arrow.svg' %}
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="column-half">
+            <form id="contribute-form" class="contribution-form" method="post" action="{{ url('payments') }}" novalidate>
+                <div class="form-group">
+                    <label class="offscreen" for="id_{{form.name.name}}">{{form.name.label}}</label>
+                    {{form.name}}
+                    {{form.name.errors}}
+                    <div class="email-input-container">
+                        <label class="offscreen" for="id_{{form.email.name}}">{{form.email.label}}</label>
+                        {{form.email}}
+                        {{form.email.errors}}
+                        <button class="tooltip-button" id="tooltip-email-button" aria-controls="tooltip-email" aria-label="{{_('Open tooltip for further email field information') }}">
+                            {% include 'includes/icons/punctuation/question-mark.svg' %}
+                        </button>
+                        <div class="tooltip" aria-hidden="true" id="tooltip-email">
+                            <button class="tooltip-close" aria-controls="tooltip-email" aria-label="{{_('Close this tooltip') }}"></button>
+                            <p>{{_('Why do you need my email address?') }}</p>
+                            <p>{{_('This is so we can send you a receipt. This is handy if you’d like a refund.') }}</p>
+                        </div>
+                    </div>
+                    <label class="offscreen" for="id_{{form.donation_choices.name}}">{{form.donation_choices.label}}</label>
+                    {{form.donation_choices}}
+                    <label class="label" aria-label="{{ _('Other contribution amount') }}" for="id_{{form.donation_amount.name}}">{{form.donation_amount.label}}</label>
+                    {{form.donation_amount}}
+                    {{form.donation_amount.errors}}
+                    {{form.stripe_token}}
+                    {{form.stripe_public_key}}
+                    <p class="legal-copy">
+                        Payments are not tax deductible. Your payment details will be processed by
+                        <a href="https://stripe.com/" rel="noopener">Stripe</a>.
+                        Mozilla will keep record of your payment in
+                        accordance with its
+                        <a href="https://www.mozilla.org/en-US/privacy/websites">Privacy Notice</a>,
+                        and does not receive your payment details.
+                    </p>
+                </div>
+                <ul class="errorlist hidden" id="contribution-error-message">
+                    <li>{{_('There has been an issue, please try again later.')}}</li>
+                </ul>
+                <div class="form-footer">
+                    <button type="button" id="stripe_submit">
+                        <span class="hide-expand">{{_('Support MDN')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
+                        <span class="hide-collapse">
+                            {{_('Pay <span id="%(span_id)s">%(amount)s</span>', span_id="amount", amount="$64") }}
+                        </span>
+                    </button>
+                    <div class="payment-details">
+                        <img src="{{ static('img/payment-type-mastercard-1x.png') }}" srcset="{{ static('img/payment-type-mastercard-1x.png') }}, {{ static('img/payment-type-mastercard-2x.png') }} 2x" alt="{{ _('We accept Mastercard payments') }}" title="{{ _('We accept Mastercard payments') }}">
+                        <img src="{{ static('img/payment-type-visa-1x.png') }}" srcset="{{ static('img/payment-type-visa-1x.png') }}, {{ static('img/payment-type-visa-2x.png') }} 2x" alt="{{ _('We accept Visa payments') }}" title="{{ _('We accept Visa payments') }}">
+                        <img src="{{ static('img/payment-type-american-express-1x.png') }}" srcset="{{ static('img/payment-type-american-express-1x.png') }}, {{ static('img/payment-type-american-express-2x.png') }} 2x" alt="{{ _('We accept American Express payments') }}" title="{{ _('We accept American Express payments') }}">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

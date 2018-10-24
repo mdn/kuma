@@ -42,11 +42,11 @@ class RevisionDashboardForm(forms.Form):
     start_date = forms.DateField(
         required=False, label=_(u'Start Date:'),
         input_formats=['%m/%d/%Y'],
-        widget=forms.TextInput(attrs={'pattern': '\d{1,2}/\d{1,2}/\d{4}'}))
+        widget=forms.TextInput(attrs={'pattern': r'\d{1,2}/\d{1,2}/\d{4}'}))
     end_date = forms.DateField(
         required=False, label=_(u'End Date:'),
         input_formats=['%m/%d/%Y'],
-        widget=forms.TextInput(attrs={'pattern': '\d{1,2}/\d{1,2}/\d{4}'}))
+        widget=forms.TextInput(attrs={'pattern': r'\d{1,2}/\d{1,2}/\d{4}'}))
     preceding_period = forms.ChoiceField(
         choices=PERIOD_CHOICES,
         required=False,

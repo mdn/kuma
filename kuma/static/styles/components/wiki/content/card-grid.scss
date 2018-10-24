@@ -17,7 +17,7 @@ side by side calls to action
             display: block;
             margin-bottom: 12px;
 
-            @include set-font-size(22px);
+            @include set-font-size($h3-font-size);
             line-height: 1;
             @include set-heading-font-family();
         }
