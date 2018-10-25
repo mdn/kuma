@@ -208,13 +208,12 @@
                 submitted = true;
                 stripeToken.val(token.id);
                 addDisabledLocaleStorageItem();
-                // Send GA Event.
-                mdn.analytics.trackEvent({
-                    category: 'payments',
-                    action: 'submission',
-                    label: 'completed',
-                    value: selectedAmount * 100
-                });
+                // Multiply selection to get value in pennies.
+                // Following Stripe's convention so this is comparable with analytics.
+                sessionStorage.setItem('submissionDetails', JSON.stringify({
+                    amount: selectedAmount * 100,
+                    page: isPopoverBanner ? 'Banner' : 'FAQ'
+                }));
                 form.submit();
             }
         });

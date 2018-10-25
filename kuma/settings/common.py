@@ -955,7 +955,14 @@ PIPELINE_JS = {
             'js/payments-handler.js',
             'js/payments-faq.js',
         ),
-        'output_filename': 'build/js/contribute.js',
+        'output_filename': 'build/js/payments.js',
+    },
+    'payments-confirmation': {
+        'source_filenames': (
+            'js/payments-faq.js',
+            'js/payments-confirmation.js',
+        ),
+        'output_filename': 'build/js/payments-confirmation.js',
     },
     'framebuster': {
         'source_filenames': (
