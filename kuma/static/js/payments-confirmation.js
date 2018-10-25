@@ -28,8 +28,10 @@
 
     } else if (path.includes('/payments/error')) {
         mdn.analytics.trackEvent({
-            category: 'Payment error',
-            action: 'Payment failed'
+            category: 'Payments',
+            action: 'Payment failed',
+            label: submissionPage,
+            value: amountSubmitted
         }, function() {
             sessionStorage.removeItem(amountSubmittedStoreKey);
         });
