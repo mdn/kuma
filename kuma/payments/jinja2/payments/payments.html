@@ -105,10 +105,13 @@
             {%- call faq_entry(5, _("If I just donate to the Mozilla Foundation, will that help MDN?")) %}
                 <p>
                     {% trans foundation_url="https://www.mozilla.org/foundation/",
+                             tax_faq_url="https://donate.mozilla.org/faq#item_tax_a",
                              corporation_url="https://www.mozilla.org/foundation/moco/" %}
                         The <a href="{{ foundation_url }}">Mozilla Foundation</a>
                         and MDN are separate organizations and programs.
-                        Donations to the Mozilla Foundation are tax-deductible
+                        Donations to the Mozilla Foundation are
+                        <a href="{{tax_faq_url}}">tax-deductible in the U.S.</a>
+                        to the fullest extent permitted by law,
                         and go to support Mozilla public and charitable
                         programs in one general fund. MDN is part of
                         <a href="{{ corporation_url }}">Mozilla Corporation</a>
