@@ -221,12 +221,12 @@ def process_body(response):
 
 def process_inlined_examples(body):
     """
-    Manually expand @IExMacro@ declarations
+    Manually expand @InlineMacro@ declarations
     """
     return body.replace("@InlineArrayForEach@", """
 <div class="iex interactive interactive-js">
-<link href="/static/styles/interactive-examples/codemirror-5-31-0.css" rel="stylesheet" />
-<link href="/static/styles/interactive-examples/editor-js.css" rel="stylesheet" />
+<link href="/static/styles/libs/interactive-examples/codemirror-5-31-0.css" rel="stylesheet" />
+<link href="/static/styles/libs/interactive-examples/editor-js.css" rel="stylesheet" />
 
 <script>"use strict";function postToKuma(e){window.parent.postMessage(e,"https://developer.mozilla.org")}postToKuma({markName:"interactive-editor-loading"}),document.addEventListener("readystatechange",function(e){switch(e.target.readyState){case"interactive":postToKuma({markName:"interactive-editor-interactive",measureName:"ie-time-to-interactive",startMark:"interactive-editor-loading",endMark:"interactive-editor-interactive"});break;case"complete":postToKuma({markName:"interactive-editor-complete",measureName:"ie-time-to-complete",startMark:"interactive-editor-loading",endMark:"interactive-editor-complete"})}});</script>
 <section id="static">
@@ -258,8 +258,8 @@ array1.forEach(function(element) {
   </div>
 </section>
 
-<script src="/static/js/interactive-examples/codemirror-5-31-0.js"></script>
-<script src="/static/js/interactive-examples/editor-js.js"></script>
+<script src="/static/js/libs/interactive-examples/codemirror-5-31-0.js"></script>
+<script src="/static/js/libs/interactive-examples/editor-js.js"></script>
 </div>
 """)
 
