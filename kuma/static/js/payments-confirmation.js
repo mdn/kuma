@@ -28,7 +28,7 @@
 
     } else if (path.includes('/payments/error')) {
         mdn.analytics.trackEvent({
-            category: 'Payments',
+            category: 'payments',
             action: 'Payment failed',
             label: submissionPage,
             value: amountSubmitted
