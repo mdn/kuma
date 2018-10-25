@@ -43,6 +43,8 @@ Prism.hooks.add('complete', function (env) {
 
 	lineNumbersWrapper = document.createElement('span');
 	lineNumbersWrapper.className = 'line-numbers-rows';
+	// Hide line numbers from screen readers.
+	lineNumbersWrapper.setAttribute("aria-hidden", "true");
 	lineNumbersWrapper.innerHTML = lines;
 
 	if (pre.hasAttribute('data-start')) {
