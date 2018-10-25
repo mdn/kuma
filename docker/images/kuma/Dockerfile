@@ -1,4 +1,4 @@
-FROM quay.io/mozmar/kuma_base:latest
+FROM mdnwebdocs/kuma_base:latest
 
 ARG REVISION_HASH
 # Make the git commit hash permanently available within this image.
