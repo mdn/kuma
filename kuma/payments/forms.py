@@ -24,6 +24,10 @@ DONATION_CHOICES = [
     (i, '{}{}'.format(CURRENCY['USD'], i)) for i in settings.CONTRIBUTION_FORM_CHOICES
 ]
 
+RECURRING_PAYMENT__CHOICES = [
+    (i, '{}{}/mo'.format(CURRENCY['USD'], i)) for i in settings.CONTRIBUTION_RECURRING_PAYMENT_FORM_CHOICES
+]
+
 
 class ContributionForm(forms.Form):
     name = StrippedCharField(
@@ -108,14 +112,18 @@ class ContributionForm(forms.Form):
         super(ContributionForm, self).__init__(*args, **kwargs)
         self.fields['stripe_public_key'].initial = settings.STRIPE_PUBLIC_KEY
 
-    def make_charge(self):
-        """Make a charge using the Stripe API and validated form."""
+    def get_amount(self):
         amount = self.cleaned_data['donation_amount'] or self.cleaned_data['donation_choices']
         if isinstance(amount, Decimal):
             amount = amount * Decimal('100')
             amount = amount.quantize(Decimal('0'))
         else:
             amount = amount * 100
+        return amount
+
+    def make_charge(self):
+        """Make a charge using the Stripe API and validated form."""
+        amount = self.get_amount()
         token = self.cleaned_data.get('stripe_token', '')
         if token and amount:
             try:
@@ -128,6 +136,58 @@ class ContributionForm(forms.Form):
                     metadata={'name': self.cleaned_data['name']}
                 )
                 return True
+            except stripe.error.CardError as e:
+                body = e.json_body
+                err = body.get('error', {})
+                log.error("""
+Status is: {http_status}
+Type is: {type} 
+Code is: {code} 
+Param is: {param} 
+Message is: {message}
+User name: {name}
+User email: {email}""".format(**{
+                    'http_status': e.http_status,
+                    'type': err.get('type'),
+                    'code': err.get('code'),
+                    'param': err.get('param'),
+                    'message': err.get('message'),
+                    'name': self.cleaned_data['name'],
+                    'email': self.cleaned_data['email']
+                }))
+            except stripe.error.RateLimitError as e:
+                log.error(
+                    'Stripe: Too many requests made to the API too quickly: {} [{}] {}'.format(
+                        self.cleaned_data['name'],
+                        self.cleaned_data['email'],
+                        e
+                    )
+                )
+            except stripe.error.InvalidRequestError as e:
+                log.error(
+                    'Stripe: Invalid parameters were supplied to Stripe API: {} [{}] {}'.format(
+                        self.cleaned_data['name'],
+                        self.cleaned_data['email'],
+                        e
+                    )
+                )
+            except stripe.error.AuthenticationError as e:
+                log.error(
+                    'Stripe: Authentication with Stripe API failed (maybe you changed API keys recently)): ' +
+                    '{} [{}] {}'.format(
+                        self.cleaned_data['name'],
+                        self.cleaned_data['email'],
+                        e
+                    )
+                )
+            except stripe.error.APIConnectionError as e:
+                log.error(
+                    'Stripe: Network communication with Stripe failed: {} [{}] {}'.format(
+                        self.cleaned_data['name'],
+                        self.cleaned_data['email'],
+                        e
+                    )
+                )
             except Exception as e:
                 log.error(
                     'Stripe charge, something went wrong: {} [{}] {}'.format(
@@ -136,4 +196,138 @@ class ContributionForm(forms.Form):
                         e
                     )
                 )
+        return False
+
+
+class ContributionRecurringPaymentForm(ContributionForm):
+
+    def __init__(self, *args, **kwargs):
+        super(ContributionRecurringPaymentForm, self).__init__(*args, **kwargs)
+        self.fields['donation_choices'].choices = RECURRING_PAYMENT__CHOICES
+
+    @staticmethod
+    def create_customer(email, token, user, name):
+        customer = stripe.Customer.create(
+            email=email,
+            source=token,
+            metadata={'name': name}
+        )
+        user.stripe_customer_id = customer.id
+        user.save()
+        return customer.id
+
+    @staticmethod
+    def update_source_name(source_id, name):
+        """Updates the source name with the users defined name"""
+        source = stripe.Source.retrieve(source_id)
+        source.owner["name"] = name
+        source.save()
+
+    def make_recurring_payment_charge(self, user, update_source_name=False):
+        amount = self.get_amount()
+        token = self.cleaned_data.get('stripe_token', '')
+        try:
+            if token and amount:
+                if user.stripe_customer_id:
+                    # ensure that customer is active
+                    customer = stripe.Customer.retrieve(user.stripe_customer_id)
+                    # if deleted make a new customer
+                    if 'deleted' in customer:
+                        customer_id = self.create_customer(
+                            self.cleaned_data['email'],
+                            token,
+                            user,
+                            self.cleaned_data['name']
+                        )
+                    else:
+                        customer_id = user.stripe_customer_id
+                else:
+                    customer_id = self.create_customer(
+                        self.cleaned_data['email'],
+                        token,
+                        user,
+                        self.cleaned_data['name']
+                    )
+
+                if update_source_name:
+                    self.update_source_name(
+                        token,
+                        self.cleaned_data['name']
+                    )
+                plan = stripe.Plan.create(
+                    amount=amount,
+                    interval="month",
+                    product=settings.STRIPE_PRODUCT_ID,
+                    currency="usd",
+                )
+                stripe.Subscription.create(
+                    customer=customer_id,
+                    billing='charge_automatically',
+                    items=[
+                        {
+                            "plan": plan.id,
+                        },
+                    ]
+                )
+                return True
+        except stripe.error.CardError as e:
+            body = e.json_body
+            err = body.get('error', {})
+            log.error("""
+Status is: {http_status}
+Type is: {type} 
+Code is: {code} 
+Param is: {param} 
+Message is: {message}
+User name: {name}
+User email: {email}""".format(**{
+                'http_status': e.http_status,
+                'type': err.get('type'),
+                'code': err.get('code'),
+                'param': err.get('param'),
+                'message': err.get('message'),
+                'name': self.cleaned_data['name'],
+                'email': self.cleaned_data['email']
+            }))
+        except stripe.error.RateLimitError as e:
+            log.error(
+                'Stripe: Too many requests made to the API too quickly: {} [{}] {}'.format(
+                    self.cleaned_data['name'],
+                    self.cleaned_data['email'],
+                    e
+                )
+            )
+        except stripe.error.InvalidRequestError as e:
+            log.error(
+                'Stripe: Invalid parameters were supplied to Stripe API: {} [{}] {}'.format(
+                    self.cleaned_data['name'],
+                    self.cleaned_data['email'],
+                    e
+                )
+            )
+        except stripe.error.AuthenticationError as e:
+            log.error(
+                'Stripe: Authentication with Stripe API failed (maybe you changed API keys recently)): ' +
+                '{} [{}] {}'.format(
+                    self.cleaned_data['name'],
+                    self.cleaned_data['email'],
+                    e
+                )
+            )
+        except stripe.error.APIConnectionError as e:
+            log.error(
+                'Stripe: Network communication with Stripe failed: {} [{}] {}'.format(
+                    self.cleaned_data['name'],
+                    self.cleaned_data['email'],
+                    e
+                )
+            )
+        except Exception as e:
+            log.error(
+                'Stripe charge, something went wrong: {} [{}] {}'.format(
+                    self.cleaned_data['name'],
+                    self.cleaned_data['email'],
+                    e
+                )
+            )
         return False

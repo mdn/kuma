@@ -1,9 +1,3 @@
-{# Set URLs outside of translation block, to keep user's locale #}
-{% set payments_url = url('payments') %}
-{% set faq_url = payments_url + "#contribute-faqs" %}
-{% set feedback_url = payments_url + "#contribute-feedback" %}
-
-{% translation 'en-US' %}{# Display in English until Q1 2019 #}
 <div id="contribution-popover-container" class="contribution-banner {% if is_popover %}contribution-popover is-collapsed is-hidden{% endif %}"{% if is_popover %} aria-expanded="false" aria-hidden="true"{% endif %}>
     {% if is_popover %}
         <div class="contribution-popover-actions">
@@ -29,10 +23,10 @@
                 </p>
                 {% if is_popover %}
                     <div class="button-group">
-                        <a href="{{ faq_url }}" class="cta-link">
+                        <a href="{{url('payments')}}#contribute-faqs" class="cta-link">
                             {{_('Learn more about payments to MDN')}} {% include 'includes/icons/arrows/arrow.svg' %}
                         </a>
-                        <a href="{{ feedback_url }}" class="cta-link">
+                        <a href="{{url('payments')}}#contribute-feedback" class="cta-link">
                             {{_('Provide feedback')}} {% include 'includes/icons/arrows/arrow.svg' %}
                         </a>
                     </div>
@@ -40,7 +34,7 @@
             </div>
         </div>
         <div class="column-half">
-            <form id="contribute-form" class="contribution-form" method="post" action="{{ payments_url }}" novalidate>
+            <form id="contribute-form" class="contribution-form" method="{% if recurring_payment and not request.user.is_authenticated %}get{%else%}post{%endif%}" action="{% if recurring_payment %}{{url('recurring_payment_subscription')}}{%else%}{{url('payments')}}{%endif%}" novalidate>
                 <div class="form-group">
                     <label class="offscreen" for="id_{{form.name.name}}">{{form.name.label}}</label>
                     {{form.name}}
@@ -63,8 +57,15 @@
                     <label class="label" aria-label="{{ _('Other contribution amount') }}" for="id_{{form.donation_amount.name}}">{{form.donation_amount.label}}</label>
                     {{form.donation_amount}}
                     {{form.donation_amount.errors}}
-                    {{form.stripe_token}}
-                    {{form.stripe_public_key}}
+                    {% if request.user.is_authenticated or not recurring_payment and not request.user.is_authenticated %}
+                        {{form.stripe_token}}
+                        {{form.stripe_public_key}}
+                    {% endif %}
+
+                    {% if recurring_payment %}
+                        <input type="hidden" id="stripe_source_setup" value="1">
+                    {% endif %}
+
                     <p class="legal-copy">
                         Payments are not tax deductible. Your payment details will be processed by
                         <a href="https://stripe.com/" rel="noopener">Stripe</a>.
@@ -78,12 +79,21 @@
                     <li>{{_('There has been an issue, please try again later.')}}</li>
                 </ul>
                 <div class="form-footer">
-                    <button type="button" id="stripe_submit">
-                        <span class="hide-expand">{{_('Support MDN')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
-                        <span class="hide-collapse">
+                    {% if request.user.is_authenticated or not recurring_payment and not request.user.is_authenticated %}
+                        <button type="button" id="stripe_submit">
+                            <span class="hide-expand">{{_('Support MDN')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
+                            <span class="hide-collapse">
                             {{_('Pay <span id="%(span_id)s">%(amount)s</span>', span_id="amount", amount="$64") }}
                         </span>
-                    </button>
+                        </button>
+                    {% else %}
+                        <button type="submit">
+                            <span class="hide-expand">{{_('Support MDN')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
+                            <span class="hide-collapse">
+                            {{_('Pay <span id="%(span_id)s">%(amount)s</span>', span_id="amount", amount="$64") }}
+                        </span>
+                        </button>
+                    {% endif %}
                     <div class="payment-details">
                         <img src="{{ static('img/payment-type-mastercard-1x.png') }}" srcset="{{ static('img/payment-type-mastercard-1x.png') }}, {{ static('img/payment-type-mastercard-2x.png') }} 2x" alt="{{ _('We accept Mastercard payments') }}" title="{{ _('We accept Mastercard payments') }}">
                         <img src="{{ static('img/payment-type-visa-1x.png') }}" srcset="{{ static('img/payment-type-visa-1x.png') }}, {{ static('img/payment-type-visa-2x.png') }} 2x" alt="{{ _('We accept Visa payments') }}" title="{{ _('We accept Visa payments') }}">
@@ -94,4 +104,3 @@
         </div>
     </div>
 </div>
-{% endtranslation %}

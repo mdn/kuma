@@ -9,7 +9,9 @@ from django.shortcuts import redirect, render
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 
-from .forms import ContributionForm
+from kuma.core.decorators import login_required
+
+from .forms import ContributionForm, ContributionRecurringPaymentForm
 from .tasks import contribute_thank_you_email
 from .utils import enabled
 
@@ -31,7 +33,10 @@ def skip_if_disabled(func):
 def contribute(request):
     initial_data = {}
     if request.user.is_authenticated and request.user.email:
-        initial_data = {'email': request.user.email}
+        initial_data = {
+            'name': request.user.get_full_name() or request.user.username,
+            'email': request.user.email,
+        }
 
     if request.POST:
         form = ContributionForm(request.POST)
@@ -52,6 +57,7 @@ def contribute(request):
     context = {
         'form': form,
         'hide_cta': True,
+        'recurring_payment': False
     }
     return render(request, 'payments/payments.html', context)
 
@@ -61,3 +67,64 @@ def contribute(request):
 def confirmation(request, status):
     context = {'status': status}
     return render(request, 'payments/thank_you.html', context)
+
+
+@skip_if_disabled
+@never_cache
+@csrf_exempt
+def contribute_recurring_payment_initial(request):
+    initial_data = {}
+    if request.user.is_authenticated and request.user.email:
+        initial_data = {
+            'name': request.user.get_full_name() or request.user.username,
+            'email': request.user.email,
+        }
+
+    form = ContributionRecurringPaymentForm(initial=initial_data)
+
+    context = {
+        'form': form,
+        'hide_cta': True,
+        'recurring_payment': True
+    }
+    return render(request, 'payments/payments.html', context)
+
+
+@skip_if_disabled
+@login_required
+@never_cache
+@csrf_exempt
+def contribute_recurring_payment_subscription(request):
+    initial_data = {}
+    if request.GET:
+        initial_data = {
+            k: v for k, v in request.GET.iteritems() if k in ContributionRecurringPaymentForm().fields.keys()
+        }
+    elif request.user.is_authenticated and request.user.email:
+        initial_data = {
+            'name': request.user.get_full_name() or request.user.username,
+            'email': request.user.email,
+        }
+
+    if request.POST:
+        form = ContributionRecurringPaymentForm(request.POST)
+        if form.is_valid():
+            if form.make_recurring_payment_charge(request.user):
+                if settings.MDN_CONTRIBUTION_CONFIRMATION_EMAIL:
+                    contribute_thank_you_email.delay(
+                        form.cleaned_data['name'],
+                        form.cleaned_data['email']
+                    )
+                return redirect('payment_succeeded')
+            return redirect('payment_error')
+
+        form = ContributionRecurringPaymentForm(request.POST)
+    else:
+        form = ContributionRecurringPaymentForm(initial=initial_data)
+
+    context = {
+        'form': form,
+        'hide_cta': True,
+        'recurring_payment': True
+    }
+    return render(request, 'payments/payments.html', context)
