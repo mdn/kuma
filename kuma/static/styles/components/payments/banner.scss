@@ -90,6 +90,12 @@
         }
     }
 
+    @media #{$mq-tablet-and-down} {
+        .column-half {
+            width: 100%;
+        }
+    }
+
     .contribution-popover-actions {
         position: absolute;
         right: 10px;
@@ -135,18 +141,34 @@
         > .column-half {
             padding: 26px;
             box-sizing: border-box;
+            .container {
+                max-width: 540px;
+                margin: 0 auto;
+            }
         }
 
         @media #{$mq-mobile-and-down} {
-            padding: 20px;
+            padding: 20px 0;
         }
     }
 
     .payments-form-container {
         background: $contribution-form-backdrop-color;
         border-radius: 35px;
+        max-width: 540px;
         padding: 10px;
         transition: padding .3s ease-in-out;
+        margin: 0 auto;
+
+        @media #{$mq-mobile-and-up} {
+            padding: 24px;
+        }
+        @media #{$mq-small-desktop-and-up} {
+            padding: 14px;
+        }
+        @media #{$mq-large-desktop-and-up} {
+            padding: 28px;
+        }
     }
 
     .payments-switch {
@@ -256,7 +278,7 @@
 
         .contribution-form {
             margin: 0 auto;
-            width: 80%;
+            width: 100%;
         }
     }
 }
