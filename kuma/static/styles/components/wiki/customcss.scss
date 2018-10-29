@@ -69,8 +69,7 @@ div.index.widgeted li.html5 {
 
 /* Add widgeted index, adding a Webcomponent badge of the li element if class="webcomp" */
 div.index.widgeted li.webcomp::after {
-    font-family: FontAwesome;
-    content: ' \f085';
+    @include set-icon($path-to-svg-general-icons + 'cogs.svg');
 }
 
 /* --- */
@@ -413,25 +412,6 @@ div.fxosLiveSampleWrapper {
 #wikiArticle i.icon-stethoscope,
 #wikiArticle i.icon-trash {
     cursor: default;
-}
-
-#wikiArticle i.icon-beaker {
-    color: #09d;
-}
-
-/* experimental */
-#wikiArticle i.icon-warning-sign {
-    color: #db0;
-}
-
-/* non-standard */
-#wikiArticle i.icon-thumbs-down-alt {
-    color: #000;
-}
-
-/* deprecated */
-#wikiArticle i.icon-trash {
-    color: #d00;
 }
 
 /* obsolete */

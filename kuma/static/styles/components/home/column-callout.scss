@@ -1,3 +1,5 @@
+@import 'includes/mixins_indicators';
+
 /*
 colorful callouts
 ********************************************************************** */
@@ -30,14 +32,9 @@ $callout-min-height: 170px;
         }
 
         &:before {
-            @include bidi((
-                (content, '\f061', content, '\f060'),
-                (right, $grid-spacing, left, auto),
-            ));
-            font-family: FontAwesome;
-            bottom: 11px;
             position: absolute;
-            @include set-font-size(24px);
+            bottom: 11px;
+            @include set-bidi-icon($path-to-svg-arrow-icons + 'arrow-right.svg', $path-to-svg-arrow-icons + 'arrow-left.svg', $grid-spacing);
             z-index: 4;
         }
     }
@@ -163,9 +160,7 @@ Foundation callout
         &:after {
             position: absolute;
             top: 50%;
-            @include bidi(((right, 10px, left, auto),));
-            @include bidi(((content, '\f061', '\f060'),));
-            font-family: fontAwesome;
+            @include set-bidi-icon($path-to-svg-arrow-icons + 'arrow-right.svg', $path-to-svg-arrow-icons + 'arrow-left.svg', 10px);
             transform: translateY(-50%);
         }
     }

@@ -6,8 +6,9 @@
 
     // The open button template
     var $historyLink = $('<button title="' + gettext('Open implementation notes') + '" class="bc-history-link only-icon" tabindex="-1"><span>' + gettext('Open') + '</span><i class="ic-history" aria-hidden="true"></i></button>');
+    var historyCloseButtonIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="28" viewBox="0 0 22 28"><path d="M20.281 20.656c0 .391-.156.781-.438 1.062l-2.125 2.125c-.281.281-.672.438-1.062.438s-.781-.156-1.062-.438L11 19.249l-4.594 4.594c-.281.281-.672.438-1.062.438s-.781-.156-1.062-.438l-2.125-2.125c-.281-.281-.438-.672-.438-1.062s.156-.781.438-1.062L6.751 15l-4.594-4.594c-.281-.281-.438-.672-.438-1.062s.156-.781.438-1.062l2.125-2.125c.281-.281.672-.438 1.062-.438s.781.156 1.062.438L11 10.751l4.594-4.594c.281-.281.672-.438 1.062-.438s.781.156 1.062.438l2.125 2.125c.281.281.438.672.438 1.062s-.156.781-.438 1.062L15.249 15l4.594 4.594c.281.281.438.672.438 1.062z"/></svg>';
     // The close button template
-    var $historyCloseButton = $('<button class="bc-history-button only-icon"><abbr title="' + gettext('Return to compatibility table.') + '"><span>' + gettext('Close') + '</span><i class="icon-times" aria-hidden="true"></i></abbr></button>');
+    var $historyCloseButton = $('<button class="bc-history-button only-icon"><abbr title="' + gettext('Return to compatibility table.') + '"><span>' + gettext('Close') + '</span>' + historyCloseButtonIcon + '</abbr></button>');
 
     var animationProps = {
         duration: 150,

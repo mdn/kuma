@@ -2,7 +2,7 @@
 Mixins for indicators
 ********************************************************************** */
 
-$icon-spacing: 30px;
+$icon-spacing: 25px;
 $inline-horizontal-padding: .35em;
 
 /*
@@ -25,11 +25,6 @@ block indicators aka banners
             (float, left, right),
             (margin, -1px 0 -5px ($icon-spacing * -1), -5px ($icon-spacing * -1) -5px 0),
         ));
-        font-family: FontAwesome;
-        font-size: $larger-font-size;
-        font-style: normal;
-        font-weight: normal;
-        text-align: center;
     }
 
     pre {
@@ -81,7 +76,6 @@ inline indicators aka badges
             (margin-left, ($icon-spacing * -1 + 3px), 3px),
             (margin-right, 3px, ($icon-spacing * -1 + 3px)),
         ));
-        font-family: FontAwesome;
     }
 }
 
@@ -98,11 +92,70 @@ icons for both indicator types
     }
 }
 
-@mixin indicator-icon($icon) {
+/*
+Base CSS rules used for both set-icon and set-inline-icon
+====================================================================== */
+
+%icon-base {
+    display: inline-block;
+    content: '';
+    background-repeat: no-repeat;
+}
+
+@mixin indicator-svg-icon($icon, $background-size: 16px, $height: 20px) {
     @extend %indicator-with-icon;
 
     &:before {
-        content: $icon;
+        content: '';
+        background-image: url($icon);
+        background-repeat: no-repeat;
+        background-size: $background-size;
+        margin-top: 5px;
+        margin-left: -20px;
+        width: $background-size; // $background-size and width will always match
+        height: $height;
+    }
+}
+
+/*
+Styling for block level icons
+====================================================================== */
+@mixin set-icon($icon, $background-size: 16px, $height: 20px) {
+    @extend %icon-base;
+    background-image: url($icon);
+    background-size: $background-size;
+    width: $background-size;
+    height: $height;
+}
+
+/*
+Styling for inline icons
+====================================================================== */
+@mixin set-inline-icon($icon, $background-size: 16px, $height: 20px) {
+    @extend %icon-base;
+    background-image: url($icon);
+    background-size: $background-size;
+    margin: 0 5px 0 -20px;
+    width: $background-size;
+    height: $height;
+    vertical-align: middle;
+}
+
+@mixin set-bidi-icon($icon-ltr, $icon-rtl, $right: auto, $left: auto, $background-size: 16px, $height: 20px) {
+    display: inline-block;
+    content: '';
+    background-image: url($icon-ltr);
+    right: $right;
+    left: $left;
+    background-size: $background-size;
+    background-repeat: no-repeat;
+    width: $background-size;
+    height: $height;
+
+    html[dir='rtl'] & {
+        background-image: url($icon-rtl);
+        right: $right;
+        left: $left;
     }
 }
 

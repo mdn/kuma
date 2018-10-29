@@ -193,10 +193,6 @@ function to apply all the generated colors to a notification to theme it
         }
     }
 
-    .notification-img i {
-        color: #{map-get( map-get($colors-lookup, $color), 'dark')};
-    }
-
     button.close {
         color: #{map-get( map-get($colors-lookup, $color), 'medium')};
 

@@ -1,3 +1,6 @@
+@import 'includes/mixins_indicators';
+@import 'includes/svg_data_uri_icons';
+
 $bg-good: mix($positive, #fff, 5%);
 $bg-bad: mix($negative, #fff, 5%);
 
@@ -9,9 +12,6 @@ $bg-bad: mix($negative, #fff, 5%);
         @include example-box($code-block-background-color, $grey);
 
         &:after {
-            font-family: FontAwesome;
-            font-size: $larger-font-size;
-            line-height: 1;
             position: absolute;
             bottom: 2px;
             @include bidi(((right, 2px, left, auto),));
@@ -39,8 +39,7 @@ $bg-bad: mix($negative, #fff, 5%);
 
         &:after {
             background: $bg-good;
-            color: $positive;
-            content: '\f118';
+            @include set-icon($icon-green-smile);
         }
     }
 
@@ -51,8 +50,7 @@ $bg-bad: mix($negative, #fff, 5%);
 
         &:after {
             background: $bg-bad;
-            color: $negative;
-            content: '\f119';
+            @include set-icon($icon-red-frown);
         }
     }
 }

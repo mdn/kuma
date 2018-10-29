@@ -28,16 +28,6 @@
         span {
             padding: 0 25px;
         }
-
-        &:after {
-            @include bidi((
-                (margin-left, 6px, margin-right, 6px),
-                (content, '\f105', content, '\f104'),
-            ));
-            @include set-font-size(30px);
-            font-family: FontAwesome;
-            padding: 0 15px;
-        }
     }
 }
 

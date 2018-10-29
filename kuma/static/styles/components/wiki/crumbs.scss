@@ -32,10 +32,9 @@ wiki article bread crumbs
         line-height: 1;
 
         &:after {
-            @include bidi(((content, '\00a0\00a0\f054', content, '\00a0\00a0\f053'),));
-            font-family: FontAwesome;
-            color: $text-color;
-            @include set-font-size(70%);
+            margin: 10px 5px 3px;
+            vertical-align: bottom;
+            @include set-bidi-icon($path-to-svg-arrow-icons + 'chevron-right.svg', $path-to-svg-arrow-icons + 'chevron-left.svg', auto, auto, 8px, 10px);
         }
     }
 

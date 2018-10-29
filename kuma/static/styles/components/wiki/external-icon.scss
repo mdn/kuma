@@ -1,3 +1,5 @@
+@import 'includes/svg_data_uri_icons';
+
 /*
 add icon to external inks but not if they are to demos or if we're specifically to ignore
 ********************************************************************** */
@@ -7,12 +9,10 @@ add icon to external inks but not if they are to demos or if we're specifically 
 
     html[dir='ltr'] &:before,
     html[dir='rtl'] &:after {
-        content: '\f08e';
-        font-family: FontAwesome;
-        @include set-font-size(9px);
-        display: inline-block;
-        opacity: .5;
+        @include set-icon($path-to-svg-general-icons + 'external-link.svg', 12px);
+        margin-top: 3px;
         margin-right: 3px;
+        vertical-align: text-top;
     }
 
     html[dir='rtl'] &:after {
@@ -24,6 +24,18 @@ add icon to external inks but not if they are to demos or if we're specifically 
         &:before,
         &:after {
             text-decoration: none;
+        }
+    }
+}
+
+.communitymailinglist {
+    .external-icon:not([href^='https://mdn.mozillademos.org']):not(.ignore-external) {
+        html[dir='ltr'] &:before,
+        html[dir='rtl'] &:after {
+            @include set-icon($icon-white-external-link, 12px);
+            margin-top: 5px;
+            margin-right: 3px;
+            vertical-align: middle;
         }
     }
 }

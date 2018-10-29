@@ -529,6 +529,7 @@ STATICFILES_STORAGE = ('pipeline.storage.NonPackagingPipelineStorage'
 STATICFILES_DIRS = (
     path('kuma', 'static'),
     path('build', 'locale'),
+    path('jinja2', 'includes/icons'),
 )
 
 # TODO: Figure out why changing the order of apps (for example, moving taggit
@@ -691,7 +692,6 @@ def pipeline_one_scss(slug, **kwargs):
 PIPELINE_CSS = {
     'mdn': {
         'source_filenames': (
-            'styles/font-awesome.scss',
             'styles/main.scss',
         ),
         'output_filename': 'build/styles/mdn.css',
@@ -814,7 +814,6 @@ PIPELINE_CSS = {
             'styles/wiki.scss',
             'styles/wiki-wysiwyg.scss',
             'styles/wiki.scss',
-            'styles/libs/font-awesome/css/font-awesome.min.css',
         ),
         'output_filename': 'build/styles/editor-content.css',
         'template_name': 'pipeline/javascript-array.jinja',
