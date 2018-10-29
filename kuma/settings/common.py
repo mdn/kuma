@@ -46,8 +46,9 @@ PROTOCOL = config('PROTOCOL', default='https://')
 DOMAIN = config('DOMAIN', default='developer.mozilla.org')
 SITE_URL = config('SITE_URL', default=PROTOCOL + DOMAIN)
 PRODUCTION_DOMAIN = 'developer.mozilla.org'
+PRODUCTION_URL = 'https://' + PRODUCTION_DOMAIN
 STAGING_DOMAIN = 'developer.allizom.org'
-STAGING_URL = PROTOCOL + STAGING_DOMAIN
+STAGING_URL = 'https://' + STAGING_DOMAIN
 
 _PROD_INTERACTIVE_EXAMPLES = 'https://interactive-examples.mdn.mozilla.net'
 INTERACTIVE_EXAMPLES_BASE = config(
@@ -496,7 +497,12 @@ AUTHENTICATION_BACKENDS = (
 )
 AUTH_USER_MODEL = 'users.User'
 USER_AVATAR_PATH = 'uploads/avatars/'
-DEFAULT_AVATAR = STATIC_URL + 'img/avatar.png'
+
+if urlsplit(STATIC_URL).hostname in (None, 'localhost'):
+    # Gravatar needs a publicly available default image
+    DEFAULT_AVATAR = PRODUCTION_URL + '/static/img/avatar.png'
+else:
+    DEFAULT_AVATAR = STATIC_URL + 'img/avatar.png'
 
 AVATAR_SIZES = [  # in pixels
     34,   # wiki document page
