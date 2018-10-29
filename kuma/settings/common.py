@@ -1266,6 +1266,7 @@ CSP_FRAME_SRC = [
 CSP_IMG_SRC = [
     SITE_URL,
     "data:",
+    PROTOCOL + "i2.wp.com",
     "https://secure.gravatar.com",
     "https://www.google-analytics.com",
     _PROD_ATTACHMENT_SITE_URL
