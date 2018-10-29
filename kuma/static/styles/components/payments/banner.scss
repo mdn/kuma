@@ -155,6 +155,7 @@
     .payments-form-container {
         background: $contribution-form-backdrop-color;
         border-radius: 35px;
+        box-shadow: 0 0 40px -2px rgba(103, 191, 207, .7);
         max-width: 540px;
         padding: 10px;
         transition: padding .3s ease-in-out;

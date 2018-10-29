@@ -26,6 +26,7 @@
     }
 
     .form-group {
+        font-weight: bold;
         margin-top: 12px;
         margin-bottom: 0;
 
@@ -42,7 +43,7 @@
             border-color: $text-color;
             box-sizing: border-box;
             display: block;
-            font-weight: normal;
+            font-weight: bold;
             height: $contribution-form-input-height;
             line-height: 3;
             margin-top: $contribution-form-input-spacing;
