@@ -16,6 +16,7 @@ from elasticsearch import TransportError
 
 from .constants import KUMASCRIPT_BASE_URL, KUMASCRIPT_TIMEOUT_ERROR
 from .content import clean_content
+from .inline_examples import INLINE_EXAMPLES
 from .search import WikiDocumentType
 
 
@@ -219,49 +220,19 @@ def process_body(response):
     # interactive example macros
     return process_inlined_examples(clean_response)
 
+
 def process_inlined_examples(body):
     """
     Manually expand @InlineMacro@ declarations
     """
-    return body.replace("@InlineArrayForEach@", """
-<div class="iex interactive interactive-js">
-<link href="/static/styles/libs/interactive-examples/codemirror-5-31-0.css" rel="stylesheet" />
-<link href="/static/styles/libs/interactive-examples/editor-js.css" rel="stylesheet" />
+    return body \
+        .replace("@InlineArrayForEach@", INLINE_EXAMPLES["FOR_EACH"]) \
+        .replace("@InlineArrayMap@", INLINE_EXAMPLES["MAP"]) \
+        .replace("@InlineArrayFilter@", INLINE_EXAMPLES["FILTER"]) \
+        .replace("@InlineArrayFind@", INLINE_EXAMPLES["FIND"]) \
+        .replace("@InlineArrayReduce@", INLINE_EXAMPLES["REDUCE"]) \
+        .replace("@InlineArraySplice@", INLINE_EXAMPLES["SPLICE"])
 
-<script>"use strict";function postToKuma(e){window.parent.postMessage(e,"https://developer.mozilla.org")}postToKuma({markName:"interactive-editor-loading"}),document.addEventListener("readystatechange",function(e){switch(e.target.readyState){case"interactive":postToKuma({markName:"interactive-editor-interactive",measureName:"ie-time-to-interactive",startMark:"interactive-editor-loading",endMark:"interactive-editor-interactive"});break;case"complete":postToKuma({markName:"interactive-editor-complete",measureName:"ie-time-to-complete",startMark:"interactive-editor-loading",endMark:"interactive-editor-complete"})}});</script>
-<section id="static">
-  <pre>
-<code id="static-js">var array1 = ['a', 'b', 'c'];
-
-array1.forEach(function(element) {
-  console.log(element);
-});
-
-// expected output: "a"
-// expected output: "b"
-// expected output: "c"
-</code>
-</pre>
-
-</section>
-
-<section id="live" class="live hidden">
-  <header><h4>JavaScript Demo: Array.forEach()</h4></header>
-  <div id="editor" class="editor"></div>
-
-  <div class="output-container">
-      <div class="buttons-container">
-          <button id="execute" class="button run" type="button">Run &rsaquo;</button>
-          <button id="reset" type="button" class="button">Reset</button>
-      </div>
-      <div id="output" class="output"><code></code></div>
-  </div>
-</section>
-
-<script src="/static/js/libs/interactive-examples/codemirror-5-31-0.js"></script>
-<script src="/static/js/libs/interactive-examples/editor-js.js"></script>
-</div>
-""")
 
 def process_errors(response):
     """
