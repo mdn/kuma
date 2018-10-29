@@ -1,4 +1,4 @@
-<form id="contribute-form" class="contribution-form" method="{% if recurring_payment and not request.user.is_authenticated %} get {% else %} post {% endif %}" action="{% if recurring_payment %}{{url('recurring_payment_subscription')}}{%else%}{{url('payments')}}{%endif%}" novalidate>
+<form id="contribute-form" class="contribution-form" method="{% if recurring_payment and not request.user.is_authenticated %}get{% else %}post{% endif %}" action="{% if recurring_payment %}{{url('recurring_payment_subscription')}}{%else%}{{url('payments')}}{%endif%}" novalidate>
     <div class="form-group {% if recurring_payment %} recurring-form {% endif %}">
         <label class="offscreen" for="id_{{form.name.name}}">{{form.name.label}}</label>
         {{form.name}}
