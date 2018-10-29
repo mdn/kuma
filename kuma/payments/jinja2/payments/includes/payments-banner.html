@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {# Set URLs outside of translation block, to keep user's locale #}
 {% set payments_url = url('payments') %}
 {% set recurring_payment_subscription_url = url('recurring_payment_subscription') %}
@@ -47,28 +46,45 @@
         </div>
         <div class="column-half payments-form">
             <!-- Replace with Waffle flag const -->
-            {% set recurring_payments = True %}
-            <div class="payments-form-container">
-                {% if recurring_payments %}
-                    <div class="payments-switch">
-                        <button class="active">
-                            One off payment
-                        </button>
-                        <button>
-                            Monthly payment
-                        </button>
-                    </div>
-                {% endif %}
 
-                {# One Time payments form #}
+            {% if not is_popover and contribution_recurring_payment_enabled %}
+                <div class="payments-form-container">
+                    <div class="payments-switch">
+                        <a href="{{ url('payments') }}" {% if not recurring_payment %} class="active" {% endif %}>
+                            One off payment
+                        </a>
+                        <a href="{{ url('recurring_payment_subscription') }}" {% if recurring_payment %} class="active" {% endif %}>
+                            Monthly payment
+                        </a>
+                    </div>
+                    {# One Time payments form #}
+                    {% with form=form %}
+                        {%- include "payments/includes/payments-form.html" %}
+                    {% endwith %}
+
+                    {% if recurring_payment %}
+
+                        {% if user.username %}
+                            {% with form=form, form=form, is_popover=False, recurring_payment=recurring_payment  %}
+                                {#- include "payments/includes/payments-form.html" #}
+                            {% endwith %}
+                        {% else %}
+                            {% set github_url = provider_login_url('github', next=next_url) %}
+                            <p>We’ve noticed you’re not logged in to MDN. To complete your monthly payment, we’ll need you to log in first.</p>
+                            <a href="{{ github_url }}" class="payment-form-button" data-service="GitHub" rel="nofollow">
+                                {{ _('Sign in') }}{% include 'includes/icons/social/github.svg' %}
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+            {% else %}
                 {% with form=form %}
                     {%- include "payments/includes/payments-form.html" %}
                 {% endwith %}
 
                 {# Recurring payments form #}
-
                 {% if recurring_payments %}
-
                     {% if user.username %}
                         {% with form=form, hidden=True %}
                             {#- include "payments/includes/payments-form.html" #}
@@ -80,9 +96,8 @@
                             {{ _('Sign in') }}{% include 'includes/icons/social/github.svg' %}
                         </a>
                     {% endif %}
-
                 {% endif %}
-            </div>
+            {% endif %}
         </div>
     </div>
 </div>

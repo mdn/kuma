@@ -150,20 +150,28 @@
     }
 
     .payments-switch {
-        height: 56px;
         border: 2px solid #333;
         border-radius: 50px;
         box-sizing: border-box;
+        height: 56px;
 
+        > a,
         > button {
-            height: 100%;
-            border: none;
-            padding: 0;
             background: none;
-            width: 50%;
+            border: none;
+            border-radius: 50px;
+            color: #333;
+            display: inline-block;
+            font-weight: bold;
+            height: 100%;
+            line-height: 3.33;
             margin-right: -3px; // ensure % fits
             overflow: hidden;
-            border-radius: 50px;
+            padding: 0;
+            text-decoration: none;
+            text-align: center;
+            vertical-align: top;
+            width: 50%;
             &.active {
                 background: #333;
                 color: #fff;

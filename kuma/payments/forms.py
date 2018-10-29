@@ -78,7 +78,7 @@ class ContributionForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-input form-input-amount',
-                'placeholder': _('Other amount'),
+                'placeholder': _('Other'),
                 'data-error-message': _('Must be more than $1')
             }
         ),
