@@ -1,51 +1,67 @@
-<form id="contribute-form" class="contribution-form  {% if hidden %} hidden {% endif %}" method="post" action="{{ url('payments') }}" novalidate>
-  <div class="form-group">
-      <label class="offscreen" for="id_{{form.name.name}}">{{form.name.label}}</label>
-      {{form.name}}
-      {{form.name.errors}}
-      <div class="email-input-container">
-          <label class="offscreen" for="id_{{form.email.name}}">{{form.email.label}}</label>
-          {{form.email}}
-          {{form.email.errors}}
-          <button type="button" class="tooltip-button" id="tooltip-email-button" aria-controls="tooltip-email" aria-label="{{_('Open tooltip for further email field information') }}">
-              {% include 'includes/icons/punctuation/question-mark.svg' %}
-          </button>
-          <div class="tooltip" aria-hidden="true" id="tooltip-email">
-              <button type="button" class="tooltip-close" aria-controls="tooltip-email" aria-label="{{_('Close this tooltip') }}"></button>
-              <p>{{_('Why do you need my email address?') }}</p>
-              <p>{{_('This is so we can send you a receipt. This is handy if you’d like a refund.') }}</p>
-          </div>
-      </div>
-      <label class="offscreen" for="id_{{form.donation_choices.name}}">{{form.donation_choices.label}}</label>
-      {{form.donation_choices}}
-      <label class="label" aria-label="{{ _('Other contribution amount') }}" for="id_{{form.donation_amount.name}}">{{form.donation_amount.label}}</label>
-      {{form.donation_amount}}
-      {{form.donation_amount.errors}}
-      {{form.stripe_token}}
-      {{form.stripe_public_key}}
-      <p class="legal-copy">
-          Payments are not tax deductible. Your payment details will be processed by
-          <a href="https://stripe.com/" rel="noopener">Stripe</a>.
-          Mozilla will keep record of your payment in
-          accordance with its
-          <a href="https://www.mozilla.org/en-US/privacy/websites">Privacy Notice</a>,
-          and does not receive your payment details.
-      </p>
-  </div>
-  <ul class="errorlist hidden" id="contribution-error-message">
-      <li>{{_('There has been an issue, please try again later.')}}</li>
-  </ul>
-  <div class="form-footer">
-      <button type="button" id="stripe_submit" class="payment-form-button">
-          <span class="hide-expand">{{_('Support MDN')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
-          <span class="hide-collapse">
-              {{_('Pay <span id="%(span_id)s">%(amount)s</span>', span_id="amount", amount="$64") }}
-          </span>
-      </button>
-      <div class="payment-details">
-          <img src="{{ static('img/payment-type-mastercard-1x.png') }}" srcset="{{ static('img/payment-type-mastercard-1x.png') }}, {{ static('img/payment-type-mastercard-2x.png') }} 2x" alt="{{ _('We accept Mastercard payments') }}" title="{{ _('We accept Mastercard payments') }}">
-          <img src="{{ static('img/payment-type-visa-1x.png') }}" srcset="{{ static('img/payment-type-visa-1x.png') }}, {{ static('img/payment-type-visa-2x.png') }} 2x" alt="{{ _('We accept Visa payments') }}" title="{{ _('We accept Visa payments') }}">
-          <img src="{{ static('img/payment-type-american-express-1x.png') }}" srcset="{{ static('img/payment-type-american-express-1x.png') }}, {{ static('img/payment-type-american-express-2x.png') }} 2x" alt="{{ _('We accept American Express payments') }}" title="{{ _('We accept American Express payments') }}">
-      </div>
-  </div>
+<form id="contribute-form" class="contribution-form" method="{% if recurring_payment and not request.user.is_authenticated %} get {% else %} post {% endif %}" action="{% if recurring_payment %}{{url('recurring_payment_subscription')}}{%else%}{{url('payments')}}{%endif%}" novalidate>
+    <div class="form-group">
+        <label class="offscreen" for="id_{{form.name.name}}">{{form.name.label}}</label>
+        {{form.name}}
+        {{form.name.errors}}
+        <div class="email-input-container">
+            <label class="offscreen" for="id_{{form.email.name}}">{{form.email.label}}</label>
+            {{form.email}}
+            {{form.email.errors}}
+            <button class="tooltip-button" id="tooltip-email-button" aria-controls="tooltip-email" aria-label="{{_('Open tooltip for further email field information') }}">
+                {% include 'includes/icons/punctuation/question-mark.svg' %}
+            </button>
+            <div class="tooltip" aria-hidden="true" id="tooltip-email">
+                <button class="tooltip-close" aria-controls="tooltip-email" aria-label="{{_('Close this tooltip') }}"></button>
+                <p>{{_('Why do you need my email address?') }}</p>
+                <p>{{_('This is so we can send you a receipt. This is handy if you’d like a refund.') }}</p>
+            </div>
+        </div>
+        <label class="offscreen" for="id_{{form.donation_choices.name}}">{{form.donation_choices.label}}</label>
+        {{form.donation_choices}}
+        <label class="label" aria-label="{{ _('Other contribution amount') }}" for="id_{{form.donation_amount.name}}">{{form.donation_amount.label}}</label>
+        {{form.donation_amount}}
+        {{form.donation_amount.errors}}
+        {% if request.user.is_authenticated or not recurring_payment and not request.user.is_authenticated %}
+            {{form.stripe_token}}
+            {{form.stripe_public_key}}
+        {% endif %}
+
+        {% if recurring_payment %}
+            <input type="hidden" id="stripe_source_setup" value="1">
+        {% endif %}
+
+        <p class="legal-copy">
+            Payments are not tax deductible. Your payment details will be processed by
+            <a href="https://stripe.com/" rel="noopener">Stripe</a>.
+            Mozilla will keep record of your payment in
+            accordance with its
+            <a href="https://www.mozilla.org/en-US/privacy/websites">Privacy Notice</a>,
+            and does not receive your payment details.
+        </p>
+    </div>
+    <ul class="errorlist hidden" id="contribution-error-message">
+        <li>{{_('There has been an issue, please try again later.')}}</li>
+    </ul>
+    <div class="form-footer">
+        {% if request.user.is_authenticated or not recurring_payment and not request.user.is_authenticated %}
+            <button class="payment-form-button" type="button" id="stripe_submit">
+                <span class="hide-expand">{{_('Support MDN')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
+                <span class="hide-collapse">
+                {{_('Pay <span id="%(span_id)s">%(amount)s</span>', span_id="amount", amount="$64") }}
+            </span>
+            </button>
+        {% else %}
+            <button class="payment-form-button" type="submit">
+                <span class="hide-expand">{{_('Support MDN')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
+                <span class="hide-collapse">
+                {{_('Pay <span id="%(span_id)s">%(amount)s</span>', span_id="amount", amount="$64") }}
+            </span>
+            </button>
+        {% endif %}
+        <div class="payment-details">
+            <img src="{{ static('img/payment-type-mastercard-1x.png') }}" srcset="{{ static('img/payment-type-mastercard-1x.png') }}, {{ static('img/payment-type-mastercard-2x.png') }} 2x" alt="{{ _('We accept Mastercard payments') }}" title="{{ _('We accept Mastercard payments') }}">
+            <img src="{{ static('img/payment-type-visa-1x.png') }}" srcset="{{ static('img/payment-type-visa-1x.png') }}, {{ static('img/payment-type-visa-2x.png') }} 2x" alt="{{ _('We accept Visa payments') }}" title="{{ _('We accept Visa payments') }}">
+            <img src="{{ static('img/payment-type-american-express-1x.png') }}" srcset="{{ static('img/payment-type-american-express-1x.png') }}, {{ static('img/payment-type-american-express-2x.png') }} 2x" alt="{{ _('We accept American Express payments') }}" title="{{ _('We accept American Express payments') }}">
+        </div>
+    </div>
 </form>
