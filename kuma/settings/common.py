@@ -1254,17 +1254,17 @@ EMAIL_FILE_PATH = '/app/tmp/emails'
 # Content Security Policy (CSP)
 CSP_DEFAULT_SRC = ("'none'",)
 CSP_CONNECT_SRC = [
-    "'self'",
+    SITE_URL,
 ]
 CSP_FONT_SRC = [
-    "'self'",
+    SITE_URL,
 ]
 CSP_FRAME_SRC = [
     urlunsplit((scheme, netloc, '', '', ''))
     for scheme, netloc, ignored_path in ALLOWED_IFRAME_PATTERNS]
 
 CSP_IMG_SRC = [
-    "'self'",
+    SITE_URL,
     "data:",
     "https://secure.gravatar.com",
     "https://www.google-analytics.com",
@@ -1274,13 +1274,13 @@ if ATTACHMENT_SITE_URL not in (_PROD_ATTACHMENT_SITE_URL, SITE_URL):
     CSP_IMG_SRC.append(ATTACHMENT_SITE_URL)
 
 CSP_SCRIPT_SRC = [
-    "'self'",
+    SITE_URL,
     "www.google-analytics.com",
     # TODO fix things so that we don't need this
     "'unsafe-inline'",
 ]
 CSP_STYLE_SRC = [
-    "'self'",
+    SITE_URL,
     # TODO fix things so that we don't need this
     "'unsafe-inline'",
 ]
