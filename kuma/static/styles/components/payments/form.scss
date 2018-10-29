@@ -6,18 +6,14 @@
 
     .form-footer {
         margin-top: $grid-spacing;
-        white-space: nowrap;
         text-align: center;
-
-        @media #{$mq-tablet-and-up} {
-            text-align: left;
-        }
     }
 
     p.legal-copy {
         margin: 2em 0 0;
         font-size: 14px;
         text-align: center;
+        white-space: normal;
 
         @media #{$mq-tablet-and-up} {
             text-align: left;
@@ -32,7 +28,6 @@
     .form-group {
         margin-top: 12px;
         margin-bottom: 0;
-        max-width: 540px;
 
         .errorlist {
             display: block;
@@ -74,13 +69,55 @@
         .form-radios-donation-choices {
             border-radius: $contribution-form-input-height;
             display: inline-block;
-            margin: $contribution-form-input-spacing 0 0;
+            margin: $contribution-form-input-spacing 0;
             vertical-align: middle;
             width: 49%;
 
-            @media #{$mq-small-desktop-and-down} {
-                display: block;
+            @media #{$mq-large-desktop-and-down} {
+                li {
+                    margin: 0;
+                }
+            }
+        }
+
+        @media #{$mq-mobile-and-down} {
+            .form-radios-donation-choices {
+                width: 59%;
+                text-align: left;
+            }
+
+            .form-input-amount {
+                width: 39%;
+            }
+        }
+
+        @media #{$mq-small-mobile-and-down} {
+            .form-radios-donation-choices {
                 width: 100%;
+                text-align: center;
+            }
+
+            .form-input-amount {
+                width: 100%;
+            }
+        }
+
+        &.recurring-form {
+            .form-input-amount {
+                width: 33%;
+                margin: $contribution-form-input-spacing -2px;
+            }
+            .form-radios-donation-choices {
+                width: 66%;
+                > li {
+                    width: 33%;
+                    margin: 0 -2px;
+                    box-sizing: border-box;
+                    padding-right: 12px;
+                    label {
+                        width: 100%;
+                    }
+                }
             }
         }
     }
@@ -136,7 +173,7 @@
 
         @media #{$mq-mobile-and-up} {
             display: inline-block;
-            margin: 0 10px;
+            margin: 5px 10px;
             vertical-align: middle;
         }
     }
