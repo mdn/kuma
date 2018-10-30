@@ -141,9 +141,9 @@ class ContributionForm(forms.Form):
                 err = body.get('error', {})
                 log.error("""
 Status is: {http_status}
-Type is: {type} 
-Code is: {code} 
-Param is: {param} 
+Type is: {type}
+Code is: {code}
+Param is: {param}
 Message is: {message}
 User name: {name}
 User email: {email}""".format(**{
@@ -275,9 +275,9 @@ class ContributionRecurringPaymentForm(ContributionForm):
             err = body.get('error', {})
             log.error("""
 Status is: {http_status}
-Type is: {type} 
-Code is: {code} 
-Param is: {param} 
+Type is: {type}
+Code is: {code}
+Param is: {param}
 Message is: {message}
 User name: {name}
 User email: {email}""".format(**{
