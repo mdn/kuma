@@ -1,3 +1,9 @@
+{# Set URLs outside of translation block, to keep user's locale #}
+{% set payments_url = url('payments') %}
+{% set faq_url = payments_url + "#contribute-faqs" %}
+{% set feedback_url = payments_url + "#contribute-feedback" %}
+
+{% translation 'en-US' %}{# Display in English until Q1 2019 #}
 <div id="contribution-popover-container" class="contribution-banner {% if is_popover %}contribution-popover is-collapsed is-hidden{% endif %}"{% if is_popover %} aria-expanded="false" aria-hidden="true"{% endif %}>
     {% if is_popover %}
         <div class="contribution-popover-actions">
@@ -23,10 +29,10 @@
                 </p>
                 {% if is_popover %}
                     <div class="button-group">
-                        <a href="{{url('payments')}}#contribute-faqs" class="cta-link">
+                        <a href="{{ faq_url }}" class="cta-link">
                             {{_('Learn more about payments to MDN')}} {% include 'includes/icons/arrows/arrow.svg' %}
                         </a>
-                        <a href="{{url('payments')}}#contribute-feedback" class="cta-link">
+                        <a href="{{ feedback_url }}" class="cta-link">
                             {{_('Provide feedback')}} {% include 'includes/icons/arrows/arrow.svg' %}
                         </a>
                     </div>
@@ -34,7 +40,7 @@
             </div>
         </div>
         <div class="column-half">
-            <form id="contribute-form" class="contribution-form" method="post" action="{{ url('payments') }}" novalidate>
+            <form id="contribute-form" class="contribution-form" method="post" action="{{ payments_url }}" novalidate>
                 <div class="form-group">
                     <label class="offscreen" for="id_{{form.name.name}}">{{form.name.label}}</label>
                     {{form.name}}
@@ -88,3 +94,4 @@
         </div>
     </div>
 </div>
+{% endtranslation %}

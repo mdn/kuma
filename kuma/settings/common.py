@@ -620,6 +620,7 @@ TEMPLATES = [
                 'django_jinja.builtins.extensions.DjangoFiltersExtension',
                 'pipeline.jinja2.PipelineExtension',
                 'waffle.jinja.WaffleExtension',
+                'kuma.core.i18n.TranslationExtension',
             ],
         }
     },

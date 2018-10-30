@@ -5,6 +5,10 @@
 {% block title %}{{ page_title(_('Thank You')) }}{% endblock %}
 
 {% block document_head %}
+  {# Use user's locale for links #}
+  {%- set payments_url = url('payments') %}
+  {%- set share_url = 'https://developer.mozilla.org' + payments_url %}
+  {% translation 'en-US' %}{# Display in English until Q1 2019 #}
     <div class="{% if status == 'succeeded' %} contribution-banner {% endif %}align-center">
         <div class="column-container">
             {% if status == 'succeeded' %}
@@ -27,7 +31,6 @@
                     <p class="subtext">{{_('Thank you again,')}}</p>
                     <p class="subtext">{{_('The MDN Team')}}</p>
 
-                    {%- set share_url = 'https://developer.mozilla.org' + url('payments') %}
                     {%- set tweet_phrase = _("I support MDN, and you can too: %(url)s", url=share_url) %}
                     {%- set tweet_text = tweet_phrase|urlencode %}
                     {%- set twitter_cta = _("Share your support for MDN on Twitter") %}
@@ -57,12 +60,13 @@
                         {% endtrans %}
                     </p>
                     <p>
-                        <a href="{{ url('payments') }}">{{_('Click here to go back')}}</a>
+                        <a href="{{ payments_url }}">{{_('Click here to go back')}}</a>
                     </p>
                 {% endif %}
             </div>
         </div>
     </div>
+  {% endtranslation %}
 {% endblock %}
 
 {% block content %}
