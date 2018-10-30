@@ -50,7 +50,7 @@ window.mdn.utils = {
         var toc = document.getElementById('toc');
 
         // if page has a TOC,
-        if (toc !== undefined) {
+        if (toc) {
             // get and store the `offsetHeight`
             this.tocHeight = toc.offsetHeight;
             // and its sticky status
