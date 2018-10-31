@@ -65,7 +65,6 @@
     var formButton = form.find('#stripe_submit');
     var formErrorMessage = form.find('#contribution-error-message');
     var amount = formButton.find('#amount');
-    var stripeSourceSetup = form.find('#stripe_source_setup').val();
 
     var submitted = false;
 
@@ -73,30 +72,19 @@
      * Initialise the stripeCheckout handler.
      */
     function initStripeHandler() {
-        var _func = function(token) {
-            submitted = true;
-            stripeToken.val(token.id);
-            addDisabledLocaleStorageItem();
-            // Send GA Event.
-            mdn.analytics.trackEvent({
-                category: 'payments',
-                action: 'submission',
-                label: 'completed',
-                value: selectedAmount * 100
-            });
-            form.submit();
-        };
         var stripeOptions = {
             key: stripePublicKey.val(),
             locale: 'en',
             name: 'MDN Web Docs',
             description: 'One-time donation',
+            source: function(token) {
+                submitted = true;
+                stripeToken.val(token.id);
+                addDisabledLocaleStorageItem();
+                form.submit();
+            }
         };
-        if (stripeSourceSetup){
-            stripeOptions['source'] = _func;
-        } else {
-            stripeOptions['token'] = _func;
-        }
+
         return win.StripeCheckout.configure(stripeOptions);
     }
 

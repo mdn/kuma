@@ -13,7 +13,7 @@
         font-size: 12px;
         font-weight: normal;
         letter-spacing: .1px;
-        line-height: 1;
+        line-height: 1.35;
         text-align: center;
         white-space: normal;
 
@@ -22,8 +22,9 @@
         }
 
         a {
-            color: $contribution-form-button-color;
-            text-decoration: underline;
+            color: $payment-form-button-color;
+            border-bottom: 1px solid $payment-form-button-color;
+            padding-bottom: 1px;
         }
     }
 
@@ -43,13 +44,13 @@
 
         input {
             border-color: $text-color;
-            border-radius: $payments-form-border-radius;
+            border-radius: $payment-form-border-radius;
             box-sizing: border-box;
             display: block;
             font-weight: bold;
-            height: $contribution-form-input-height;
+            height: $payment-form-input-height;
             line-height: 3;
-            margin-top: $contribution-form-input-spacing;
+            margin-top: $payment-form-input-spacing;
             padding-left: 12px;
             width: 100%;
 
@@ -71,9 +72,9 @@
 
         .form-input-amount,
         .form-radios-donation-choices {
-            border-radius: $contribution-form-input-height;
+            border-radius: $payment-form-input-height;
             display: inline-block;
-            margin: $contribution-form-input-spacing 0;
+            margin: $payment-form-input-spacing 0;
             vertical-align: middle;
             width: 49%;
 
@@ -86,12 +87,14 @@
 
         @media #{$mq-mobile-and-down} {
             .form-radios-donation-choices {
-                width: 59%;
+                width: 60%;
                 text-align: left;
+                margin-right: -3px; // ensure % fits
             }
 
             .form-input-amount {
-                width: 39%;
+                width: 40%;
+                margin-left: -2px; // ensure % fits
             }
         }
 
@@ -109,7 +112,7 @@
         &.recurring-form {
             .form-input-amount {
                 width: 33%;
-                margin: $contribution-form-input-spacing -2px;
+                margin: $payment-form-input-spacing -2px;
             }
             .form-radios-donation-choices {
                 width: 66%;
@@ -151,12 +154,12 @@
 
             label {
                 background-color: #fff;
-                border-radius: $contribution-form-input-height;
+                border-radius: $payment-form-input-height;
                 border: 2px solid $text-color;
                 display: inline-block;
-                height: $contribution-form-input-height;
-                line-height: $contribution-form-input-height;
-                min-width: $contribution-form-input-height;
+                height: $payment-form-input-height;
+                line-height: $payment-form-input-height;
+                min-width: $payment-form-input-height;
                 text-align: center;
 
                 &:hover {
@@ -301,9 +304,9 @@
 .contribution-banner.contribution-popover {
     .form-input-amount,
     .form-radios-donation-choices {
-        border-radius: $contribution-form-input-height;
+        border-radius: $payment-form-input-height;
         display: inline-block;
-        margin: $contribution-form-input-spacing 0 0;
+        margin: $payment-form-input-spacing 0 0;
         vertical-align: middle;
         width: 49%;
 
