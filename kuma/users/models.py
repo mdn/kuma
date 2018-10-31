@@ -188,6 +188,10 @@ class User(AbstractUser):
         blank=True,
         validators=[WEBSITE_VALIDATORS['discourse']],
     )
+    stripe_customer_id = models.CharField(
+        max_length=255,
+        blank=True
+    )
 
     class Meta:
         db_table = 'auth_user'
