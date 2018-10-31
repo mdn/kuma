@@ -23,7 +23,7 @@
 }
 
 .contribution-banner {
-    background-image: $contribution-background-gradient;
+    background-image: $payment-background-gradient;
     min-width: 320px;
     overflow: hidden;
     position: relative;
@@ -39,17 +39,21 @@
         transition: height .5s;
         z-index: 99;
 
+        .legal-copy {
+            margin-top: 1em;
+        }
+
         .form-footer {
             margin-top: 0;
             text-align: center;
         }
 
         &.expanded {
-            height: 480px;
+            height: $payment-banner-popover-height;
         }
 
         &.expanded-extend {
-            height: 580px;
+            height: $payment-banner-popover-height-extended;
         }
 
         &.expanded,
@@ -65,7 +69,7 @@
             }
 
             .payments-form-container {
-                padding: 26px;
+                padding: $payment-form-container-padding;
             }
         }
 
@@ -80,7 +84,7 @@
             }
 
             .payments-form-container {
-                padding: 26px;
+                padding: $payment-form-container-padding;
             }
         }
 
@@ -134,8 +138,8 @@
         box-sizing: border-box;
         margin: 0 auto;
         max-height: 100%;
-        max-width: 1320px;
-        padding: 56px;
+        max-width: $payment-banner-max-width;
+        padding: $payment-banner-padding;
         position: relative;
         transition: padding .3s ease;
 
@@ -143,33 +147,33 @@
             box-sizing: border-box;
 
             .container {
-                max-width: 540px;
+                max-width: $payment-column-max-width;
                 margin: 0 auto;
             }
         }
 
         @media #{$mq-mobile-and-down} {
-            padding: 20px 0;
+            padding: $payment-banner-padding-sm;
         }
     }
 
     .payments-form-container {
-        background: $contribution-form-backdrop-color;
+        background: $payment-form-container-backdrop-color;
         border-radius: 35px;
         box-shadow: 0 0 40px -2px rgba(103, 191, 207, .7);
         max-width: 540px;
-        padding: 10px;
+        padding: $payment-form-container-padding-sm;
         transition: padding .3s ease-in-out;
         margin: 0 auto;
 
         @media #{$mq-mobile-and-up} {
-            padding: 24px;
+            padding: $payment-form-container-padding;
         }
         @media #{$mq-small-desktop-and-up} {
-            padding: 14px;
+            padding: $payment-form-container-padding-sm;
         }
         @media #{$mq-large-desktop-and-up} {
-            padding: 28px;
+            padding: $payment-form-container-padding;
         }
     }
 
@@ -177,7 +181,7 @@
         border: 2px solid #333;
         border-radius: 50px;
         box-sizing: border-box;
-        height: 56px;
+        height: $payment-form-input-height;
 
         > a,
         > button {
@@ -196,12 +200,14 @@
             text-align: center;
             vertical-align: top;
             width: 50%;
+
             &.active {
                 background: #333;
                 color: #fff;
             }
         }
     }
+
     .column {
         position: relative;
     }
@@ -229,6 +235,9 @@
     }
 
     &.is-collapsed {
+        box-sizing: border-box;
+        padding-top: $payment-collapsed-banner-padding;
+
         // Hide all unessesary content on the collapsed CTA.
         h4,
         .body,
@@ -245,7 +254,7 @@
         }
 
         .column-container {
-            padding: 0 56px;
+            padding: 0 $payment-banner-padding;
         }
     }
 
@@ -265,7 +274,7 @@
         }
 
         .column-container {
-            padding: 0 56px;
+            padding: 0 $payment-banner-padding;
         }
     }
 
@@ -296,22 +305,22 @@
 
 .payment-form-button,
 .form-footer .payment-form-button {
-    background-color: $contribution-form-button-color;
-    border-radius: $contribution-form-input-height;
+    background-color: $payment-form-button-color;
+    border-radius: $payment-form-input-height;
     border: none;
     color: #fff;
     display: inline-block;
     font-weight: bold;
     font-weight: normal;
-    height: $contribution-form-input-height;
-    line-height: $contribution-form-input-height;
-    min-width: 190px;
+    height: $payment-form-input-height;
+    line-height: $payment-form-input-height;
+    min-width: $payment-form-button-width;
     padding: 0;
     text-align: center;
     white-space: nowrap;
 
     &:hover {
-        background-color: darken($contribution-form-button-color, 5%);
+        background-color: darken($payment-form-button-color, 5%);
     }
 
     svg {

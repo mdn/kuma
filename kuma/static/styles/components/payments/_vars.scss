@@ -1,9 +1,26 @@
-$contribution-background-colors: #83cff3,#ebf8e1;
-$contribution-background-gradient: linear-gradient(to right, nth($contribution-background-colors, 1) , nth($contribution-background-colors, 2));
+// Width of banner containers
+$payment-banner-max-width: 1320px;
+$payment-column-max-width: 540px;
 
-$contribution-form-input-height: 56px;
-$contribution-form-input-spacing: 18px;
-$contribution-form-button-color: #3143e2;
-$contribution-form-backdrop-color: #ffffff;
+// Height of the popover when expanded
+$payment-banner-popover-height: 480px;
+$payment-banner-popover-height-extended: 580px;
 
-$payments-form-border-radius: 4px;
+// Outside padding on the banner container
+$payment-collapsed-banner-padding: 28px;
+$payment-banner-padding: 56px;
+$payment-banner-padding-sm: 12px;
+
+// Banner gradiient colors
+$payment-background-colors: #83cff3,#ebf8e1;
+$payment-background-gradient: linear-gradient(to right, nth($payment-background-colors, 1) , nth($payment-background-colors, 2));
+
+// Payment banner form varibles
+$payment-form-border-radius: 4px;
+$payment-form-button-color: #3143e2;
+$payment-form-button-width: 190px;
+$payment-form-container-backdrop-color: #ffffff;
+$payment-form-container-padding: 26px;
+$payment-form-container-padding-sm: 13px;
+$payment-form-input-height: 56px;
+$payment-form-input-spacing: 18px;
