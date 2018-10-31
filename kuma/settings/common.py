@@ -10,7 +10,7 @@ import dj_database_url
 import dj_email_url
 import djcelery
 from decouple import config, Csv
-from six.moves.urllib.parse import urlsplit, urlunsplit
+from six.moves.urllib.parse import parse_qs, urlencode, urlsplit, urlunsplit
 
 _Language = namedtuple(u'Language', u'english native')
 
@@ -1296,6 +1296,15 @@ CSP_REPORT_ONLY = config('CSP_REPORT_ONLY', default=False, cast=bool)
 CSP_REPORT_ENABLE = config('CSP_REPORT_ENABLE', default=False, cast=bool)
 if CSP_REPORT_ENABLE:
     CSP_REPORT_URI = config('CSP_REPORT_URI', default='/csp-violation-capture')
+    if ("sentry_key=" in CSP_REPORT_URI and
+            REVISION_HASH and REVISION_HASH != 'undefined'):
+        # Using sentry to report: add revision as sentry_release
+        bits = urlsplit(CSP_REPORT_URI)
+        query = parse_qs(bits.query)
+        query['sentry_release'] = REVISION_HASH
+        CSP_REPORT_URI = urlunsplit((bits.scheme, bits.netloc, bits.path,
+                                     urlencode(query, doseq=True),
+                                     bits.fragment))
 
 # Celery (asynchronous tasks)
 BROKER_URL = config('BROKER_URL',
