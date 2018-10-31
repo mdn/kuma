@@ -1,5 +1,5 @@
 from .forms import ContributionForm
-from .utils import enabled, popup_enabled
+from .utils import enabled, popup_enabled, recurring_payment_enabled
 
 
 def global_contribution_form(request):
@@ -7,6 +7,7 @@ def global_contribution_form(request):
     if enabled(request):
         return {
             'contribution_enabled': True,
+            'contribution_recurring_payment_enabled': recurring_payment_enabled(request),
             'contribution_popup': popup_enabled(request),
             'contribution_form': ContributionForm(),
             'hide_cta': True,
