@@ -135,12 +135,13 @@
         margin: 0 auto;
         max-height: 100%;
         max-width: 1320px;
-        padding: 0;
+        padding: 56px;
         position: relative;
+        transition: padding .3s ease;
 
         > .column-half {
-            padding: 26px;
             box-sizing: border-box;
+
             .container {
                 max-width: 540px;
                 margin: 0 auto;
@@ -242,6 +243,10 @@
         .hide-expand {
             display: inherit;
         }
+
+        .column-container {
+            padding: 0 56px;
+        }
     }
 
     &.is-collapsing {
@@ -258,6 +263,10 @@
         .payments-form-container {
             padding: 10px;
         }
+
+        .column-container {
+            padding: 0 56px;
+        }
     }
 
     .cta-link {
@@ -270,7 +279,7 @@
     }
 }
 
-@media #{$mq-mobile-and-down} {
+@media #{$mq-tablet-and-down} {
     .contribution-banner {
 
         .contribute-lead-in {
