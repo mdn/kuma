@@ -10,12 +10,14 @@
     }
 
     p.legal-copy {
-        margin: 2em 0 0;
-        font-size: 14px;
+        font-size: 12px;
+        font-weight: normal;
+        letter-spacing: .1px;
+        line-height: 1;
         text-align: center;
         white-space: normal;
 
-        @media #{$mq-tablet-and-up} {
+        @media #{$mq-small-desktop-and-up} {
             text-align: left;
         }
 
@@ -41,6 +43,7 @@
 
         input {
             border-color: $text-color;
+            border-radius: $payments-form-border-radius;
             box-sizing: border-box;
             display: block;
             font-weight: bold;
