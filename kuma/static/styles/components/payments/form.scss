@@ -22,8 +22,8 @@
         }
 
         a {
-            color: $payment-form-button-color;
             border-bottom: 1px solid $payment-form-button-color;
+            color: $payment-form-button-color;
             padding-bottom: 1px;
         }
     }
@@ -87,21 +87,21 @@
 
         @media #{$mq-mobile-and-down} {
             .form-radios-donation-choices {
-                width: 60%;
-                text-align: left;
                 margin-right: -3px; // ensure % fits
+                text-align: left;
+                width: 60%;
             }
 
             .form-input-amount {
-                width: 40%;
                 margin-left: -2px; // ensure % fits
+                width: 40%;
             }
         }
 
         @media #{$mq-small-mobile-and-down} {
             .form-radios-donation-choices {
-                width: 100%;
                 text-align: center;
+                width: 100%;
             }
 
             .form-input-amount {
@@ -111,16 +111,19 @@
 
         &.recurring-form {
             .form-input-amount {
-                width: 33%;
                 margin: $payment-form-input-spacing -2px;
+                width: 33%;
             }
+
             .form-radios-donation-choices {
                 width: 66%;
+
                 > li {
-                    width: 33%;
-                    margin: 0 -2px;
                     box-sizing: border-box;
+                    margin: 0 -2px;
                     padding-right: 12px;
+                    width: 33%;
+
                     label {
                         width: 100%;
                     }
@@ -156,6 +159,7 @@
                 background-color: #fff;
                 border-radius: $payment-form-input-height;
                 border: 2px solid $text-color;
+                box-sizing: border-box;
                 display: inline-block;
                 height: $payment-form-input-height;
                 line-height: $payment-form-input-height;
