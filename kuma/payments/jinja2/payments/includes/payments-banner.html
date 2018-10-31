@@ -5,17 +5,19 @@
 {% set feedback_url = payments_url + "#contribute-feedback" %}
 
 {% translation 'en-US' %}{# Display in English until Q1 2019 #}
-<div id="contribution-popover-container" class="contribution-banner {% if is_popover %}contribution-popover is-collapsed is-hidden{% endif %}"
+<div id="contribution-popover-container"
+    class="contribution-banner {% if is_popover %}contribution-popover is-collapsed is-hidden{% endif %}"
     {% if is_popover %} aria-expanded="false" aria-hidden="true" {% endif %}>
-    {% if is_popover %}
-    <div class="contribution-popover-actions">
-        <button id="collapse-popover-button" class="hide-collapse" aria-label="{{ _('Collapse pop over window') }}">{%
-            include 'includes/icons/arrows/chevron-down.svg' %}</button>
-        <button id="close-popover-button" aria-label="{{ _('Close pop over window') }}">{% include
-            'includes/icons/general/close.svg' %}</button>
-    </div>
-    {% endif %}
 
+    {% if is_popover %}
+        <div class="contribution-popover-actions">
+            <button id="collapse-popover-button" class="hide-collapse" aria-label="{{ _('Collapse pop over window') }}">{%
+                include 'includes/icons/arrows/chevron-down.svg' %}</button>
+            <button id="close-popover-button" aria-label="{{ _('Close pop over window') }}">
+                {% include 'includes/icons/general/close.svg' %}
+            </button>
+        </div>
+    {% endif %}
     <div class="column-container">
         <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="" role="presentation" />
         <div class="column-half contribute-lead-in">
@@ -33,20 +35,18 @@
                     {% endtrans %}
                 </p>
                 {% if is_popover %}
-                <div class="button-group">
-                    <a href="{{url('payments')}}#contribute-faqs" class="cta-link">
-                        {{_('Learn more about payments to MDN')}} {% include 'includes/icons/arrows/arrow.svg' %}
-                    </a>
-                    <a href="{{url('payments')}}#contribute-feedback" class="cta-link">
-                        {{_('Provide feedback')}} {% include 'includes/icons/arrows/arrow.svg' %}
-                    </a>
-                </div>
+                    <div class="button-group">
+                        <a href="{{url('payments')}}#contribute-faqs" class="cta-link">
+                            {{_('Learn more about payments to MDN')}} {% include 'includes/icons/arrows/arrow.svg' %}
+                        </a>
+                        <a href="{{url('payments')}}#contribute-feedback" class="cta-link">
+                            {{_('Provide feedback')}} {% include 'includes/icons/arrows/arrow.svg' %}
+                        </a>
+                    </div>
                 {% endif %}
             </div>
         </div>
         <div class="column-half payments-form">
-            <!-- Replace with Waffle flag const -->
-
             {% if not is_popover and contribution_recurring_payment_enabled %}
                 <div class="payments-form-container">
                     <div class="payments-switch">
@@ -61,9 +61,7 @@
                     {% with form=form %}
                         {%- include "payments/includes/payments-form.html" %}
                     {% endwith %}
-
                     {% if recurring_payment %}
-
                         {% if user.username %}
                             {% with form=form, form=form, is_popover=False, recurring_payment=recurring_payment  %}
                                 {#- include "payments/includes/payments-form.html" #}
@@ -77,26 +75,10 @@
                         {% endif %}
                     {% endif %}
                 </div>
-
             {% else %}
                 {% with form=form %}
                     {%- include "payments/includes/payments-form.html" %}
                 {% endwith %}
-
-                {# Recurring payments form #}
-                {% if recurring_payments %}
-                    {% if user.username %}
-                        {% with form=form, hidden=True %}
-                            {#- include "payments/includes/payments-form.html" #}
-                        {% endwith %}
-                    {% else %}
-                        {% set github_url = provider_login_url('github', next=next_url) %}
-                        <p>We’ve noticed you’re not logged in to MDN. To complete your monthly payment, we’ll need you to log in first.</p>
-                        <a href="{{ github_url }}" class="payment-form-button" data-service="GitHub" rel="nofollow">
-                            {{ _('Sign in') }}{% include 'includes/icons/social/github.svg' %}
-                        </a>
-                    {% endif %}
-                {% endif %}
             {% endif %}
         </div>
     </div>

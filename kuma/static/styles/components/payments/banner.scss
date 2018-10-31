@@ -169,9 +169,11 @@
         @media #{$mq-mobile-and-up} {
             padding: $payment-form-container-padding;
         }
+
         @media #{$mq-small-desktop-and-up} {
             padding: $payment-form-container-padding-sm;
         }
+
         @media #{$mq-large-desktop-and-up} {
             padding: $payment-form-container-padding;
         }
@@ -301,7 +303,6 @@
         }
     }
 }
-
 
 .payment-form-button,
 .form-footer .payment-form-button {
