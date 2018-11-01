@@ -18,6 +18,5 @@ def popup_enabled(request):
 
 def recurring_payment_enabled(request):
     """Returns True if recurring payment is enabled for the user."""
-    return (enabled(request) and
-            hasattr(request, 'user') and
+    return (popup_enabled(request) and
             flag_is_active(request, RECURRING_PAYMENT_BETA_FLAG))

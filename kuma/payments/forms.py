@@ -25,7 +25,7 @@ DONATION_CHOICES = [
 ]
 
 RECURRING_PAYMENT__CHOICES = [
-    (i, '{}{}/mo'.format(CURRENCY['USD'], i)) for i in settings.CONTRIBUTION_RECURRING_PAYMENT_FORM_CHOICES
+    (i, '{}{}/mo'.format(CURRENCY['USD'], i)) for i in settings.RECURRING_PAYMENT_FORM_CHOICES
 ]
 
 
@@ -199,10 +199,10 @@ User email: {email}""".format(**{
         return False
 
 
-class ContributionRecurringPaymentForm(ContributionForm):
+class RecurringPaymentForm(ContributionForm):
 
     def __init__(self, *args, **kwargs):
-        super(ContributionRecurringPaymentForm, self).__init__(*args, **kwargs)
+        super(RecurringPaymentForm, self).__init__(*args, **kwargs)
         self.fields['donation_choices'].choices = RECURRING_PAYMENT__CHOICES
 
     @staticmethod

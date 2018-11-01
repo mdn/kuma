@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from kuma.core.decorators import login_required
 
-from .forms import ContributionForm, ContributionRecurringPaymentForm
+from .forms import ContributionForm, RecurringPaymentForm
 from .tasks import contribute_thank_you_email
 from .utils import enabled
 
@@ -80,7 +80,7 @@ def contribute_recurring_payment_initial(request):
             'email': request.user.email,
         }
 
-    form = ContributionRecurringPaymentForm(initial=initial_data)
+    form = RecurringPaymentForm(initial=initial_data)
 
     context = {
         'form': form,
@@ -98,7 +98,7 @@ def contribute_recurring_payment_subscription(request):
     initial_data = {}
     if request.GET:
         initial_data = {
-            k: v for k, v in request.GET.iteritems() if k in ContributionRecurringPaymentForm().fields.keys()
+            k: v for k, v in request.GET.iteritems() if k in RecurringPaymentForm().fields.keys()
         }
     elif request.user.is_authenticated and request.user.email:
         initial_data = {
@@ -107,7 +107,7 @@ def contribute_recurring_payment_subscription(request):
         }
 
     if request.POST:
-        form = ContributionRecurringPaymentForm(request.POST)
+        form = RecurringPaymentForm(request.POST)
         if form.is_valid():
             if form.make_recurring_payment_charge(request.user):
                 if settings.MDN_CONTRIBUTION_CONFIRMATION_EMAIL:
@@ -118,9 +118,9 @@ def contribute_recurring_payment_subscription(request):
                 return redirect('payment_succeeded')
             return redirect('payment_error')
 
-        form = ContributionRecurringPaymentForm(request.POST)
+        form = RecurringPaymentForm(request.POST)
     else:
-        form = ContributionRecurringPaymentForm(initial=initial_data)
+        form = RecurringPaymentForm(initial=initial_data)
 
     context = {
         'form': form,
