@@ -145,6 +145,7 @@ UPDATE auth_user SET
 UPDATE auth_user SET
     website_url = CONCAT("https://example.com/", MD5(CONCAT(website_url, @common_hash_secret)))
     WHERE website_url != "";
+UPDATE auth_user SET stripe_customer_id = "";
 
 UPDATE wiki_revisionip SET
     ip = CONCAT('192.168.', SUBSTRING_INDEX(ip, '.', -2))
