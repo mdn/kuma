@@ -1294,14 +1294,17 @@ CSP_STYLE_SRC = [
 ]
 CSP_REPORT_ONLY = config('CSP_REPORT_ONLY', default=False, cast=bool)
 CSP_REPORT_ENABLE = config('CSP_REPORT_ENABLE', default=False, cast=bool)
+SENTRY_ENVIRONMENT = config('SENTRY_ENVIRONMENT', default=None)
 if CSP_REPORT_ENABLE:
     CSP_REPORT_URI = config('CSP_REPORT_URI', default='/csp-violation-capture')
-    if ("sentry_key=" in CSP_REPORT_URI and
-            REVISION_HASH and REVISION_HASH != 'undefined'):
-        # Using sentry to report: add revision as sentry_release
+    if "sentry_key=" in CSP_REPORT_URI:
+        # Using sentry to report. Optionally add revision and environment
         bits = urlsplit(CSP_REPORT_URI)
         query = parse_qs(bits.query)
-        query['sentry_release'] = REVISION_HASH
+        if REVISION_HASH and REVISION_HASH != 'undefined':
+            query['sentry_release'] = REVISION_HASH
+        if SENTRY_ENVIRONMENT:
+            query['sentry_environment'] = SENTRY_ENVIRONMENT
         CSP_REPORT_URI = urlunsplit((bits.scheme, bits.netloc, bits.path,
                                      urlencode(query, doseq=True),
                                      bits.fragment))
@@ -1736,6 +1739,9 @@ if SENTRY_DSN:
     }
     if REVISION_HASH and REVISION_HASH != 'undefined':
         RAVEN_CONFIG['release'] = REVISION_HASH
+    # Loaded from environment for CSP reporting endpoint
+    if SENTRY_ENVIRONMENT:
+        RAVEN_CONFIG['environment'] = SENTRY_ENVIRONMENT
     INSTALLED_APPS = INSTALLED_APPS + (
         'raven.contrib.django.raven_compat',
     )
