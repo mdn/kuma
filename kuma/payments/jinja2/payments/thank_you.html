@@ -82,7 +82,7 @@
                 </div>
                 <div class="faqs clear feedback">
                     <div class="faq-feedback">
-                        <div>
+                        <div class="sub-section">
                             <h3>{{_('Managing your payments')}}</h3>
                             <p>
                                 {% trans url="mailto:mdn-support@mozilla.com?Subject=Manage%20monthly%20payment" %}
@@ -93,13 +93,33 @@
                                 {% endtrans %}
                             </p>
                         </div>
-                        <div>
+                        <div class="sub-section">
                             <h3>{{_('Cancelling your payments')}}</h3>
                             <p>
                                 {% trans url="mailto:mdn-support@mozilla.com?Subject=Cancel%20monthly%20payment" %}
                                     If you would like to cancel your monthly payment,
                                     you are free to do so at any point. Please contact
                                     <a href="{{ url }}">mdn-support@mozilla.com</a> to cancel.
+                                {% endtrans %}
+                            </p>
+                        </div>
+                        <div class="sub-section">
+                            <h3>{{_('Payment terms')}}</h3>
+                            <p>
+                                {% trans url="https://stripe.com/us/checkout/legal" %}
+                                    Please read our
+                                    <a href="{{ url }}">payment terms</a>
+                                    for more information.
+                                {% endtrans %}
+                            </p>
+                        </div>
+                        <div>
+                            <h3>{{_('FAQ')}}</h3>
+                            <p>
+                                {% trans url=url('payments') %}
+                                    To find out more about why MDN is raising money
+                                    through the one time and monthly payment programme,
+                                    <a href="{{ url }}">please visit our FAQ</a>.
                                 {% endtrans %}
                             </p>
                         </div>
