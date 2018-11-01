@@ -3,7 +3,6 @@ import pytest
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
-from kuma.users.tests import UserTestCase
 from kuma.users.models import User
 
 from django.test.utils import override_settings
@@ -57,7 +56,6 @@ def test_views_404(mock_enabled, view, client, settings):
     mock_enabled.return_value = False
     response = client.get(reverse(view))
     assert response.status_code == 404
-
 
 
 @pytest.mark.django_db
