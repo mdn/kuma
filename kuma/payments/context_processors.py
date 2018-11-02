@@ -8,7 +8,7 @@ def global_contribution_form(request):
         initial_data = {}
         if hasattr(request, 'user'):
             initial_data = {
-                'name': request.user.get_full_name() or request.user.username,
+                'name': request.user.fullname or request.user.username,
                 'email': request.user.email,
             } if request.user.is_authenticated else {}
 

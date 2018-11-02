@@ -28,6 +28,8 @@ RECURRING_PAYMENT__CHOICES = [
     (i, '{}{}/mo'.format(CURRENCY['USD'], i)) for i in settings.RECURRING_PAYMENT_FORM_CHOICES
 ]
 
+STRIPE_MONTHLY_PLAN_ID_TEMPLATE = 'plan_monthly_{amount}_usd'
+
 
 class ContributionForm(forms.Form):
     name = StrippedCharField(
@@ -121,10 +123,21 @@ class ContributionForm(forms.Form):
             amount = amount * 100
         return amount
 
+    def get_token(self):
+        token = self.cleaned_data.get('stripe_token', '')
+        if not token:
+            log.error(
+                'Stripe error!, something went wrong, cant find STRIPE_TOKEN for {} [{}]'.format(
+                    self.cleaned_data['name'],
+                    self.cleaned_data['email']
+                )
+            )
+        return token
+
     def make_charge(self):
         """Make a charge using the Stripe API and validated form."""
         amount = self.get_amount()
-        token = self.cleaned_data.get('stripe_token', '')
+        token = self.get_token()
         if token and amount:
             try:
                 stripe.Charge.create(
@@ -208,6 +221,7 @@ class RecurringPaymentForm(ContributionForm):
     @staticmethod
     def create_customer(email, token, user, name):
         customer = stripe.Customer.create(
+            description=name,
             email=email,
             source=token,
             metadata={'name': name}
@@ -225,7 +239,7 @@ class RecurringPaymentForm(ContributionForm):
 
     def make_recurring_payment_charge(self, user, update_source_name=False):
         amount = self.get_amount()
-        token = self.cleaned_data.get('stripe_token', '')
+        token = self.get_token()
         try:
             if token and amount:
                 if user.stripe_customer_id:
@@ -254,12 +268,17 @@ class RecurringPaymentForm(ContributionForm):
                         token,
                         self.cleaned_data['name']
                     )
-                plan = stripe.Plan.create(
-                    amount=amount,
-                    interval="month",
-                    product=settings.STRIPE_PRODUCT_ID,
-                    currency="usd",
-                )
+                plan_id = STRIPE_MONTHLY_PLAN_ID_TEMPLATE.format(**{'amount': amount})
+                try:
+                    plan = stripe.Plan.retrieve(plan_id)
+                except stripe.error.InvalidRequestError:
+                    plan = stripe.Plan.create(
+                        id=plan_id,
+                        amount=amount,
+                        interval="month",
+                        product=settings.STRIPE_PRODUCT_ID,
+                        currency="usd",
+                    )
                 stripe.Subscription.create(
                     customer=customer_id,
                     billing='charge_automatically',

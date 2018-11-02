@@ -3,15 +3,8 @@ import pytest
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
-from kuma.users.models import User
 
 from django.test.utils import override_settings
-
-
-def create_user():
-    u = User(username='testuser', is_active=True)
-    u.set_password('testpass')
-    u.save()
 
 
 @pytest.mark.django_db
@@ -79,24 +72,20 @@ def test_login_required_recurring_payment_subscription_view_redirect(mock_enable
 
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled')
-def test_login_required_recurring_payment_subscription_view_ok(mock_enabled, client, settings):
+def test_login_required_recurring_payment_subscription_view_ok(mock_enabled, user_client, settings):
     """If enabled, contribution error page is returned."""
-    create_user()
     mock_enabled.return_value = True
-    client.login(username='testuser', password='testpass')
-    response = client.get(reverse('recurring_payment_subscription'))
+    response = user_client.get(reverse('recurring_payment_subscription'))
     assert_no_cache_header(response)
     assert response.status_code == 200
 
 
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled')
-def test_post_method_redirect_recurring_payment_subscription(mock_enabled, client, settings):
+def test_post_method_redirect_recurring_payment_subscription(mock_enabled, user_client, settings):
     """If enabled, contribution error page is returned."""
-    create_user()
     mock_enabled.return_value = True
-    client.login(username='testuser', password='testpass')
-    response = client.post(
+    response = user_client.post(
         reverse('recurring_payment_subscription'),
         data={
             'name': 'True name',
@@ -113,12 +102,10 @@ def test_post_method_redirect_recurring_payment_subscription(mock_enabled, clien
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled')
 @mock.patch('kuma.payments.views.RecurringPaymentForm.make_recurring_payment_charge', return_value=True)
-def test_post_method_recurring_payment_subscription(mock_enabled, form, client, settings):
+def test_post_method_recurring_payment_subscription(mock_enabled, form, user_client, settings):
     """If enabled, contribution error page is returned."""
-    create_user()
     mock_enabled.return_value = True
-    client.login(username='testuser', password='testpass')
-    response = client.post(
+    response = user_client.post(
         reverse('recurring_payment_subscription'),
         data={
             'name': 'True name',
@@ -135,12 +122,10 @@ def test_post_method_recurring_payment_subscription(mock_enabled, form, client, 
 
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled')
-def test_template_render_logged_in_recurring_payment_initial_view(mock_enabled, client, settings):
+def test_template_render_logged_in_recurring_payment_initial_view(mock_enabled, user_client, settings):
     """If enabled, contribution error page is returned."""
-    create_user()
     mock_enabled.return_value = True
-    client.login(username='testuser', password='testpass')
-    response = client.get(reverse('recurring_payment_initial'))
+    response = user_client.get(reverse('recurring_payment_initial'))
     assert_no_cache_header(response)
     assert response.status_code == 200
     assert '<input type="hidden"' in response.content
