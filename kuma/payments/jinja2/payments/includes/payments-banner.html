@@ -36,10 +36,10 @@
                     </p>
                     {% if is_popover %}
                         <div class="button-group">
-                            <a href="{{url('payments')}}#contribute-faqs" class="cta-link">
+                            <a href="{{ faq_url }}" class="cta-link">
                                 {{_('Learn more about payments to MDN')}} {% include 'includes/icons/arrows/arrow.svg' %}
                             </a>
-                            <a href="{{url('payments')}}#contribute-feedback" class="cta-link">
+                            <a href="{{ feedback_url}} " class="cta-link">
                                 {{_('Provide feedback')}} {% include 'includes/icons/arrows/arrow.svg' %}
                             </a>
                         </div>
@@ -50,10 +50,10 @@
                 {% if not is_popover and recurring_payment_enabled %}
                     <div class="payments-form-container">
                         <div class="payments-switch">
-                            <a href="{{ url('payments') }}" {% if not recurring_payment %} class="active" {% endif %}>
+                            <a href="{{ payments_url }}" {% if not recurring_payment %} class="active" {% endif %}>
                                 {{_('One off payment')}}
                             </a>
-                            <a href="{{ url('recurring_payment_subscription') }}" {% if recurring_payment %} class="active" {% endif %}>
+                            <a href="{{ recurring_payment_subscription_url }}" {% if recurring_payment %} class="active" {% endif %}>
                                 {{_('Monthly payment')}}
                             </a>
                         </div>
