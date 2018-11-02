@@ -81,6 +81,12 @@
                 submitted = true;
                 stripeToken.val(token.id);
                 addDisabledLocaleStorageItem();
+                // Multiply selection to get value in pennies.
+                // Following Stripe's convention so this is comparable with analytics.
+                sessionStorage.setItem('submissionDetails', JSON.stringify({
+                    amount: selectedAmount * 100,
+                    page: isPopoverBanner ? 'Banner' : 'FAQ'
+                }));
                 form.submit();
             }
         };
