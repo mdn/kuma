@@ -51,7 +51,7 @@ def is_untrusted(request):
 
 def paginate(request, queryset, per_page=20):
     """Get a Paginator, abstracting some common paging actions."""
-    paginator = Paginator(queryset, per_page)
+    paginator = Paginator(list(queryset), per_page)
 
     # Get the page from the request, make sure it's an int.
     try:
