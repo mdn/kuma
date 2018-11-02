@@ -1,4 +1,4 @@
-<form id="contribute-form" class="contribution-form" method="{% if recurring_payment and not request.user.is_authenticated %}get{% else %}post{% endif %}" action="{% if recurring_payment %}{{url('recurring_payment_subscription')}}{%else%}{{url('payments')}}{%endif%}" novalidate>
+<form id="contribute-form" class="contribution-form" method="{% if recurring_payment and not request.user.is_authenticated %}get{% else %}post{% endif %}" action="{% if recurring_payment %}{{url('recurring_payment_subscription')}}{% else %}{{url('payments')}}{% endif %}" novalidate>
     <div class="form-group {% if recurring_payment %} recurring-form {% endif %}">
         <label class="offscreen" for="id_{{form.name.name}}">{{form.name.label}}</label>
         {{form.name}}
@@ -31,33 +31,28 @@
         {% endif %}
 
         <p class="legal-copy">
-            Payments are not tax deductible. Your payment details will be processed by
-            <a href="https://stripe.com/" rel="noopener">Stripe</a>.
-            Mozilla will keep record of your payment in
-            accordance with its
-            <a href="https://www.mozilla.org/en-US/privacy/websites">Privacy Notice</a>,
-            and does not receive your payment details.
+            {% trans %}
+                Payments are not tax deductible. Your payment details will be processed by
+                <a href="https://stripe.com/" rel="noopener" target="_blank">Stripe</a>.
+                Mozilla will keep record of your payment in
+                accordance with its
+                <a href="https://www.mozilla.org/en-US/privacy/websites" target="_blank">Privacy Notice</a>,
+                and does not receive your payment details.
+            {% endtrans %}
         </p>
     </div>
     <ul class="errorlist hidden" id="contribution-error-message">
         <li>{{_('There has been an issue, please try again later.')}}</li>
     </ul>
     <div class="form-footer">
-        {% if request.user.is_authenticated or not recurring_payment and not request.user.is_authenticated %}
-            <button class="payment-form-button" type="button" id="stripe_submit">
-                <span class="hide-expand">{{_('Support MDN')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
-                <span class="hide-collapse">
-                    {{_('Pay <span id="%(span_id)s">%(amount)s</span>', span_id="amount", amount="$64") }}
-                </span>
-            </button>
-        {% else %}
-            <button class="payment-form-button" type="submit">
-                <span class="hide-expand">{{_('Support MDN')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
-                <span class="hide-collapse">
-                    {{_('Pay <span id="%(span_id)s">%(amount)s</span>', span_id="amount", amount="$64") }}
-                </span>
-            </button>
-        {% endif %}
+        <button class="payment-form-button"
+            {% if request.user.is_authenticated or not recurring_payment and not request.user.is_authenticated %} type="button" id="stripe_submit"
+            {% else %} type="submit" {% endif %}>
+            <span class="hide-expand">{{_('Support MDN')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
+            <span class="hide-collapse">
+                {{_('Pay <span id="%(span_id)s">%(amount)s</span>', span_id="amount", amount="$64") }}
+            </span>
+        </button>
         <div class="payment-details">
             <img src="{{ static('img/payment-type-mastercard-1x.png') }}" srcset="{{ static('img/payment-type-mastercard-1x.png') }}, {{ static('img/payment-type-mastercard-2x.png') }} 2x" alt="{{ _('We accept Mastercard payments') }}" title="{{ _('We accept Mastercard payments') }}">
             <img src="{{ static('img/payment-type-visa-1x.png') }}" srcset="{{ static('img/payment-type-visa-1x.png') }}, {{ static('img/payment-type-visa-2x.png') }} 2x" alt="{{ _('We accept Visa payments') }}" title="{{ _('We accept Visa payments') }}">
