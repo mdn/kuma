@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="column-half payments-form">
-                {% if not is_popover and contribution_recurring_payment_enabled %}
+                {% if not is_popover and recurring_payment_enabled %}
                     <div class="payments-form-container">
                         <div class="payments-switch">
                             <a href="{{ url('payments') }}" {% if not recurring_payment %} class="active" {% endif %}>
