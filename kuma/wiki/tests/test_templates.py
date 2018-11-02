@@ -391,11 +391,11 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
         response = self.client.get(rev.document.get_absolute_url(),
                                    {'v': 'test'})
         assert response.status_code == 200
-        assert 'Original Content.' not in response.content
-        assert 'Variant Content.' in response.content
-        assert self.expected_15 not in response.content
-        assert self.expected_16 not in response.content
-        assert self.script_src not in response.content
+        assert 'Original Content.' not in response.content.decode()
+        assert 'Variant Content.' in response.content.decode()
+        assert self.expected_15 not in response.content.decode()
+        assert self.expected_16 not in response.content.decode()
+        assert self.script_src not in response.content.decode()
         doc = pq(response.content)
         assert not doc('#edit-button')
 
@@ -530,7 +530,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
 
         # TODO: push test_strings functionality up into a test helper
         for test_string in test_strings:
-            assert test_string in response.content
+            assert test_string in response.content.decode()
 
     def test_new_document_preview_button(self):
         """HTTP GET to new document URL shows preview button."""
@@ -1325,7 +1325,7 @@ def test_list_revisions(elem_num, has_prev, is_english, has_revert,
     if has_prev:
         assert prev_link is not None
         with translation.override(doc.locale):
-            expected = translation.gettext('Previous').decode('utf8')
+            expected = translation.gettext('Previous')
         assert prev_link.text == expected
     else:
         assert prev_link is None
@@ -1335,7 +1335,7 @@ def test_list_revisions(elem_num, has_prev, is_english, has_revert,
     if is_english:
         assert li_element.attrib['class'] == 'revision-list-en-source'
         with translation.override(doc.locale):
-            expected = translation.gettext('English (US)').decode('utf8')
+            expected = translation.gettext('English (US)')
         assert comment_em.text == expected
     else:
         assert li_element.attrib.get('class') is None
