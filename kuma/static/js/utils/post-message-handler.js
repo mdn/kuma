@@ -58,13 +58,15 @@ window.mdn.postMessageHandler = {
         var allowedOrigin =
             window.mdn.interactiveEditor.editorUrl ||
             'https://interactive-examples.mdn.mozilla.net';
+        var interactiveEditorInlineExperimentOrigin = 'https://developer.mozilla.org';
         var eventData = event.data;
 
         /* Do not handle messages if the message originated from an origin that is
            not the `allowedOrigin`, or came from the `head` of the interactive
            examples iframe */
         if (
-            event.origin !== allowedOrigin ||
+            (event.origin !== allowedOrigin &&
+             event.origin !== interactiveEditorInlineExperimentOrigin) ||
             (eventData.markName &&
                 eventData.markName.indexOf('interactive-editor-') > -1)
         ) {
