@@ -221,7 +221,7 @@
         };
         if (stripeSourceSetup){
             stripeOptions['source'] = _func;
-        }else {
+        } else {
             stripeOptions['token'] = _func;
         }
         return win.StripeCheckout.configure(stripeOptions);
