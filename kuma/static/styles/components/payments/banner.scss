@@ -161,10 +161,10 @@
         background: $payment-form-container-backdrop-color;
         border-radius: 35px;
         box-shadow: 0 0 40px -2px rgba(103, 191, 207, .7);
+        margin: 0 auto;
         max-width: 540px;
         padding: $payment-form-container-padding-sm;
         transition: padding .3s ease-in-out;
-        margin: 0 auto;
 
         @media #{$mq-mobile-and-up} {
             padding: $payment-form-container-padding;
