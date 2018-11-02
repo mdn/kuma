@@ -192,6 +192,7 @@
     var formButton = form.find('#stripe_submit');
     var formErrorMessage = form.find('#contribution-error-message');
     var amount = formButton.find('#amount');
+    var stripeSourceSetup = form.find('#stripe_source_setup').val();
 
     var submitted = false;
 
@@ -199,24 +200,31 @@
      * Initialise the stripeCheckout handler.
      */
     function initStripeHandler() {
-        return win.StripeCheckout.configure({
+        var _func = function(token) {
+            submitted = true;
+            stripeToken.val(token.id);
+            addDisabledLocaleStorageItem();
+            // Send GA Event.
+            mdn.analytics.trackEvent({
+                category: 'payments',
+                action: 'submission',
+                label: 'completed',
+                value: selectedAmount * 100
+            });
+            form.submit();
+        };
+        var stripeOptions = {
             key: stripePublicKey.val(),
             locale: 'en',
             name: 'MDN Web Docs',
             description: 'One-time donation',
-            token: function(token) {
-                submitted = true;
-                stripeToken.val(token.id);
-                addDisabledLocaleStorageItem();
-                // Multiply selection to get value in pennies.
-                // Following Stripe's convention so this is comparable with analytics.
-                sessionStorage.setItem('submissionDetails', JSON.stringify({
-                    amount: selectedAmount * 100,
-                    page: isPopoverBanner ? 'Banner' : 'FAQ'
-                }));
-                form.submit();
-            }
-        });
+        };
+        if (stripeSourceSetup){
+            stripeOptions['source'] = _func;
+        } else {
+            stripeOptions['token'] = _func;
+        }
+        return win.StripeCheckout.configure(stripeOptions);
     }
 
     // Ensure we only show the form if js is enabled

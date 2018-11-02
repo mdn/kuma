@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block document_head %}
-    {% with form=form, is_popover=False %}
+    {% with form=form, is_popover=False, recurring_payment=recurring_payment%}
         {% include "payments/includes/payments-form.html" %}
     {% endwith %}
 {% endblock %}
