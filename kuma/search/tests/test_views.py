@@ -19,9 +19,9 @@ class ViewTests(ElasticTestCase):
         response = self.client.get('/en-US/search?q=article')
         assert response.status_code == 200
         assert_no_cache_header(response)
-        assert 'Results for' in response.content.decode()
-        assert 'an article title' in response.content.decode()
-        assert '4 documents found for "article" in English' in response.content.decode()
+        assert 'Results for' in response.content.decode('utf-8')
+        assert 'an article title' in response.content.decode('utf-8')
+        assert '4 documents found for "article" in English' in response.content.decode('utf-8')
 
     def test_serialized_filters(self):
 

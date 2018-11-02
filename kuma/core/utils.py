@@ -20,6 +20,7 @@ from django.utils.http import urlencode
 from django.utils.translation import ugettext_lazy as _
 from polib import pofile
 from pytz import timezone
+from six.moves import xrange
 from six.moves.urllib.parse import parse_qsl, ParseResult, urlparse, urlsplit, urlunsplit
 from taggit.utils import split_strip
 

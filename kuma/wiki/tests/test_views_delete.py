@@ -58,7 +58,7 @@ def test_purge_get(deleted_doc, moderator_client):
     response = moderator_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
-    assert 'This document was deleted by' in response.content.decode()
+    assert 'This document was deleted by' in response.content.decode('utf-8')
 
 
 def test_purge_get_no_log(deleted_doc, moderator_client):
@@ -67,7 +67,7 @@ def test_purge_get_no_log(deleted_doc, moderator_client):
     response = moderator_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
-    assert 'deleted, for unknown reasons' in response.content.decode()
+    assert 'deleted, for unknown reasons' in response.content.decode('utf-8')
 
 
 def test_restore_get(root_doc, moderator_client):

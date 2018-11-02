@@ -8,7 +8,6 @@ from django.test import TestCase
 from django.utils.six.moves.urllib.parse import urljoin
 from jinja2 import escape, Markup
 from pyquery import PyQuery as pq
-from six.moves import xrange
 
 import kuma.wiki.content
 
