@@ -50,8 +50,8 @@
     }
 
     /* toggles */
-    .toggle {
-        summary {
+    summary {
+        .toggle & {
             color: $text-color;
             display: inline-block;
 
@@ -63,11 +63,17 @@
                 top: 1px;
             }
         }
+
+        a {
+            margin-bottom: 0;
+        }
     }
+
     details {
         margin-bottom: 10px;
         margin-left: 0;
         padding-left: $grid-spacing;
+
         li {
             padding-left: 0;
 
@@ -75,6 +81,7 @@
                 padding-left: $grid-spacing;
             }
         }
+
         summary:before {
             @include set-font-size(.6rem);
         }
@@ -101,6 +108,7 @@
             vertical-align: top;
         }
     }
+
     li.webextension-api-sidebar {
         padding-left: $grid-spacing;
         position: relative;
