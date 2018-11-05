@@ -64,8 +64,11 @@ def contribute(request):
 
 @skip_if_disabled
 @never_cache
-def confirmation(request, status):
-    context = {'status': status}
+def confirmation(request, status, recurring=False):
+    context = {
+        'status': status,
+        'recurring': recurring
+    }
     return render(request, 'payments/thank_you.html', context)
 
 
@@ -115,8 +118,8 @@ def contribute_recurring_payment_subscription(request):
                         form.cleaned_data['name'],
                         form.cleaned_data['email']
                     )
-                return redirect('payment_succeeded')
-            return redirect('payment_error')
+                return redirect('recurring_payment_succeeded')
+            return redirect('recurring_payment_error')
 
         form = RecurringPaymentForm(request.POST)
     else:
