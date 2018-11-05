@@ -17,11 +17,11 @@
          */
         function openTooltip(tooltip) {
             // Moves tooltip to the end of the body so we can position correctly.
-            tooltip.appendTo('body');
-            tooltip.addClass('is-open').attr('aria-hidden', false);
+            $(tooltip).appendTo('body');
+            $(tooltip).addClass('is-open').attr('aria-hidden', false);
 
             $(doc).on('click.tooltipHandler', function(event) {
-                if (!tooltip.get(0).contains(event.target) || $(event.target).hasClass('tooltip-close')) {
+                if (!$(tooltip).get(0).contains(event.target) || $(event.target).hasClass('tooltip-close')) {
                     event.preventDefault();
 
                     closeTooltip(tooltip);
@@ -45,7 +45,7 @@
          * @param {Element} tooltip Tooltip element to hide.
          */
         function closeTooltip(tooltip) {
-            tooltip.removeClass('is-open has-arrow-top')
+            $(tooltip).removeClass('is-open has-arrow-top')
                 .attr('aria-hidden', true)
                 .css({
                     left: 0,
@@ -71,9 +71,9 @@
         function positionTooltip(tooltip, element) {
             // Is opening is added to remove display: none, but still keep the tooltip hidden
             // so we can get its dimensions and positino without showing it.
-            tooltip.addClass('is-opening');
+            tooltip.classList.add('is-opening');
 
-            var tooltipDomRect = tooltip.get(0).getBoundingClientRect();
+            var tooltipDomRect = $(tooltip).get(0).getBoundingClientRect();
             var elementDomRect = element.get(0).getBoundingClientRect();
             var position;
 
@@ -85,7 +85,7 @@
                     top: elementDomRect.top + elementDomRect.height + win.scrollY + 10
                 };
 
-                tooltip.addClass('has-arrow-top');
+                tooltip.classList.add('has-arrow-top');
             } else {
                 position = {
                     left: elementDomRect.left - (elementDomRect.width / 2) - (tooltipDomRect.width - 10),
@@ -96,10 +96,10 @@
             $(tooltip).css(position);
 
             // Switch back to display: none; which will be removed when openTooltip() is called.
-            tooltip.removeClass('is-opening');
+            tooltip.classList.remove('is-opening');
         }
 
-        // Handle clicks on the tooltip button.
+        // Handle clicks to the tooltip button.
         buttons.on('click', function(event) {
             event.stopImmediatePropagation();
             event.preventDefault();
@@ -116,7 +116,6 @@
             if (!tooltip) {
                 return;
             }
-
 
             if (tooltip.classList.contains('is-open')) {
                 closeTooltip(tooltip);
