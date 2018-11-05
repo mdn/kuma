@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ page_title(_('MDN Payment terms')) }}{% endblock %}
+
+{% block site_meta %}
+    {{ super() }}
+    {% set seo_description = _('MDN Payment terms') %}
+    {% set social_title = _('MDN Payment terms') %}
+    <meta property="og:description" content="{{ seo_description }}">
+    <meta name="description" content="{{ seo_description }}">
+    <meta name="twitter:description" content="{{ seo_description }}">
+    <meta name="twitter:title" content="{{ social_title }}">
+    <meta property="og:title" content="{{ social_title }}">
+{% endblock %}
+
+
+{% block content %}
+
+    <h1>{{ _('MDN Payment terms') }}</h1>
+
+{% endblock %}

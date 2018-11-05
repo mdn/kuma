@@ -128,3 +128,9 @@ def contribute_recurring_payment_subscription(request):
         'recurring_payment': True
     }
     return render(request, 'payments/payments.html', context)
+
+
+@skip_if_disabled
+@never_cache
+def payment_terms(request):
+    return render(request, 'payments/payment_terms.html')
