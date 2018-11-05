@@ -8,12 +8,6 @@ from kuma.users.models import User
 from django.test.utils import override_settings
 
 
-def create_user():
-    u = User(username='testuser', is_active=True)
-    u.set_password('testpass')
-    u.save()
-
-
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled')
 def test_contribute_view(mock_enabled, client, settings):
