@@ -85,8 +85,8 @@
                         <div class="sub-section">
                             <h3>{{_('Managing your payments')}}</h3>
                             <p>
-                                {% trans url="mailto:" + settings.CONTRIBUTION_SUPPORT_EMAIL + ?Subject=Manage%20monthly%20payment",
-                                         email=settings.CONTRIBUTION_SUPPORT_EMAIL  %}
+                                {% trans url="mailto:" + settings.CONTRIBUTION_SUPPORT_EMAIL + "?Subject=Manage%20monthly%20payment",
+                                         email=settings.CONTRIBUTION_SUPPORT_EMAIL %}
                                     If you would like to manage your monthly payment,
                                     such as changing your card account details or the
                                     amount you pay, please contact
@@ -97,10 +97,11 @@
                         <div class="sub-section">
                             <h3>{{_('Cancelling your payments')}}</h3>
                             <p>
-                                {% trans url="mailto:mdn-support@mozilla.com?Subject=Cancel%20monthly%20payment" %}
+                                {% trans url="mailto:" + settings.CONTRIBUTION_SUPPORT_EMAIL + "?Subject=Cancel%20monthly%20payment",
+                                    email=settings.CONTRIBUTION_SUPPORT_EMAIL %}
                                     If you would like to cancel your monthly payment,
                                     you are free to do so at any point. Please contact
-                                    <a href="{{ url }}">mdn-support@mozilla.com</a> to cancel.
+                                    <a href="{{ url }}">{{ email }}</a> to cancel.
                                 {% endtrans %}
                             </p>
                         </div>
