@@ -3,6 +3,10 @@
         display: flex;
         position: relative;
 
+        .sub-section {
+            margin-bottom: 2em;
+        }
+
         @media #{$mq-mobile-and-down} {
             display: block;
             h2,

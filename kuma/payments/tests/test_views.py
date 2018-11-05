@@ -94,7 +94,7 @@ def test_post_method_redirect_recurring_payment_subscription(mock_enabled, user_
     )
     assert_no_cache_header(response)
     assert response.status_code == 302
-    assert response.url == reverse('payment_error')
+    assert response.url == reverse('recurring_payment_error')
 
 
 @override_settings(MDN_CONTRIBUTION_CONFIRMATION_EMAIL=False)
@@ -116,7 +116,7 @@ def test_post_method_recurring_payment_subscription(mock_enabled, form, user_cli
     )
     assert_no_cache_header(response)
     assert response.status_code == 302
-    assert response.url == reverse('payment_succeeded')
+    assert response.url == reverse('recurring_payment_succeeded')
 
 
 @pytest.mark.django_db

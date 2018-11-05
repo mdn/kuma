@@ -9,44 +9,47 @@
   {%- set payments_url = url('payments') %}
   {%- set share_url = 'https://developer.mozilla.org' + payments_url %}
   {% translation 'en-US' %}{# Display in English until Q1 2019 #}
-    <div class="{% if status == 'succeeded' %} contribution-banner {% endif %}align-center">
+    <div class="{% if status == 'succeeded' %} contribution-banner {% endif %} payment-confirmation">
         <div class="column-container">
             {% if status == 'succeeded' %}
                 <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="" role="presentation" />
             {% endif %}
             <div class="column">
                 {% if status == 'succeeded' %}
-                    <h1 class="highlight highlight-spanned">
-                        <span class="highlight-span">{{_('Thank you for supporting MDN.')}}</span>
-                    </h1>
-                    <p class="subtext">
-                        {% trans %}
+                    <div class="column-half">
+                        <h1 class="highlight highlight-spanned">
+                            <span class="highlight-span">{{_('Thank you for supporting MDN.')}}</span>
+                        </h1>
+                        <p class="subtext">
+                            {% trans %}
                             We are committed to providing the best source of
                             information about web standards. Your support enables MDN
                             to move even faster as we build more of the content and
                             tools you use every day, and helps us make sure MDN can
                             be available to everyone, everywhere.
-                        {% endtrans %}
-                    </p>
-                    <p class="subtext">{{_('Thank you again,')}}</p>
-                    <p class="subtext">{{_('The MDN Team')}}</p>
+                            {% endtrans %}
+                        </p>
+                        <p class="subtext">{{_('Thank you again,')}}</p>
+                        <p class="subtext">{{_('The MDN Team')}}</p>
+                    </div>
 
                     {%- set tweet_phrase = _("I support MDN, and you can too: %(url)s", url=share_url) %}
                     {%- set tweet_text = tweet_phrase|urlencode %}
                     {%- set twitter_cta = _("Share your support for MDN on Twitter") %}
                     {%- set facebook_cta = _("Share your support for MDN on Facebook") -%}
-
-                    <div class="button-tab-group">
-                        <a href="https://twitter.com/intent/tweet?text={{ tweet_text }}"
-                           class="button" target="_blank" rel="noopener"
-                           aria-label="{{ twitter_cta }}">
-                            {{ include_svg('includes/icons/social/twitter.svg', twitter_cta) }}
-                        </a>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | urlencode }}"
-                           class="button" target="_blank" rel="noopener"
-                           aria-label="{{ facebook_cta }}">
-                            {{ include_svg('includes/icons/social/facebook.svg', facebook_cta) }}
-                        </a>
+                    <div class="column-half align-center">
+                        <div class="button-tab-group">
+                            <a href="https://twitter.com/intent/tweet?text={{ tweet_text }}"
+                            class="button" target="_blank" rel="noopener"
+                            aria-label="{{ twitter_cta }}">
+                                {{ include_svg('includes/icons/social/twitter.svg', twitter_cta) }}
+                            </a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | urlencode }}"
+                            class="button" target="_blank" rel="noopener"
+                            aria-label="{{ facebook_cta }}">
+                                {{ include_svg('includes/icons/social/facebook.svg', facebook_cta) }}
+                            </a>
+                        </div>
                     </div>
                 {% else %}
                     <h2 class="highlight highlight-spanned">
@@ -71,8 +74,62 @@
 
 {% block content %}
     <main id="contributions-page" class="contributions-page">
+        {% if recurring_payment_enabled and recurring %}
+            <section class="section">
+                <div class="index">
+                    <h2>{{_('Useful Things')}}</h2>
+                </div>
+                <div class="faqs clear feedback">
+                    <div class="faq-feedback">
+                        <div class="sub-section">
+                            <h3>{{_('Managing your payments')}}</h3>
+                            <p>
+                                {% trans url="mailto:" + settings.CONTRIBUTION_SUPPORT_EMAIL + "?Subject=Manage%20monthly%20payment",
+                                         email=settings.CONTRIBUTION_SUPPORT_EMAIL %}
+                                    If you would like to manage your monthly payment,
+                                    such as changing your card account details or the
+                                    amount you pay, please contact
+                                    <a href="{{ url }}">{{ email }}</a>.
+                                {% endtrans %}
+                            </p>
+                        </div>
+                        <div class="sub-section">
+                            <h3>{{_('Cancelling your payments')}}</h3>
+                            <p>
+                                {% trans url="mailto:" + settings.CONTRIBUTION_SUPPORT_EMAIL + "?Subject=Cancel%20monthly%20payment",
+                                    email=settings.CONTRIBUTION_SUPPORT_EMAIL %}
+                                    If you would like to cancel your monthly payment,
+                                    you are free to do so at any point. Please contact
+                                    <a href="{{ url }}">{{ email }}</a> to cancel.
+                                {% endtrans %}
+                            </p>
+                        </div>
+                        <div class="sub-section">
+                            <h3>{{_('Payment terms')}}</h3>
+                            <p>
+                                {% trans url="https://stripe.com/us/checkout/legal" %}
+                                    Please read our
+                                    <a href="{{ url }}">payment terms</a>
+                                    for more information.
+                                {% endtrans %}
+                            </p>
+                        </div>
+                        <div>
+                            <h3>{{_('FAQ')}}</h3>
+                            <p>
+                                {% trans url=url('payments') %}
+                                    To find out more about why MDN is raising money
+                                    through the one time and monthly payment programme,
+                                    <a href="{{ url }}">please visit our FAQ</a>.
+                                {% endtrans %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
         <section class="section">
-            <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="" role="presentation" />
+            <!-- TODO: replace with waffle flag/varible -->
             <div class="index">
                 <h2>{{_('Feedback')}}</h2>
             </div>

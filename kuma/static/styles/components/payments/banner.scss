@@ -215,7 +215,7 @@
     }
 
     .subtext {
-        margin: 2em auto;
+        margin: 1em auto;
         max-width: 600px;
     }
 
@@ -286,6 +286,30 @@
 
         &:first-of-type {
             margin-bottom: 1em;
+        }
+    }
+    &.payment-confirmation {
+
+        .column-half {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .backdrop-image {
+            bottom: 10%;
+            display: block;
+            left: 0;
+            margin: 0 auto;
+            position: absolute;
+            right: 0;
+            z-index: 0;
+        }
+
+        @media #{$mq-mobile-and-down} {
+            .column-half {
+                display: block;
+                text-align: center;
+            }
         }
     }
 }
