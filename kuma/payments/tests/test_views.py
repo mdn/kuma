@@ -5,8 +5,6 @@ from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.users.models import User
 
-from django.test.utils import override_settings
-
 
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled')
