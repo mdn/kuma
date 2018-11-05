@@ -12,12 +12,20 @@
 {% set provider = account.get_provider() %}
 {% set github_connect_url = provider_login_url('github', process='connect', next=request.session.sociallogin_next_url|default('/')) %}
 
+
+
 {% block content %}
 <section id="content">
   <div class="wrap">
     <section id="content-main" role="main">
       <article id="browser_register">
           <h1>{{ _('Create your MDN profile to continue') }}</h1>
+
+                {% if 'next=' in github_connect_url and 'name' in github_connect_url and 'email' in github_connect_url %}
+                    
+                {% endif %}
+
+      --->>>: {{ github_connect_url }}
           {% if matching_accounts.exists() and provider.id == 'github' %}
             <div class="notification warning" data-level="warning">
               {% trans %}
