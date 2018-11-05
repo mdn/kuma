@@ -18,8 +18,7 @@
         function openTooltip(tooltip) {
             // Moves tooltip to the end of the body so we can position correctly.
             tooltip.appendTo('body');
-            tooltip.addClass('is-open')
-                .attr('aria-hidden', false);
+            tooltip.addClass('is-open').attr('aria-hidden', false);
 
             $(doc).on('click.tooltipHandler', function(event) {
                 if (!tooltip.get(0).contains(event.target) || $(event.target).hasClass('tooltip-close')) {
@@ -78,8 +77,8 @@
             var elementDomRect = element.get(0).getBoundingClientRect();
             var position;
 
-            // Checks for available width to the left of the button and positions the tooltip below the button if none
-            // there isn't enough.
+            /* Checks for available width to the left of the button and positions
+            the tooltip below the button if none there isn't enough. */
             if (tooltipDomRect.width > elementDomRect.left) {
                 position = {
                     left: elementDomRect.left + elementDomRect.width - tooltipDomRect.width + 4,
@@ -100,7 +99,7 @@
             tooltip.removeClass('is-opening');
         }
 
-        // Handle clicks to the tooltip button.
+        // Handle clicks on the tooltip button.
         buttons.on('click', function(event) {
             event.stopImmediatePropagation();
             event.preventDefault();
@@ -118,9 +117,8 @@
                 return;
             }
 
-            tooltip = $(tooltip);
 
-            if (tooltip.hasClass('is-open')) {
+            if (tooltip.classList.contains('is-open')) {
                 closeTooltip(tooltip);
             } else {
                 positionTooltip(tooltip, target);
