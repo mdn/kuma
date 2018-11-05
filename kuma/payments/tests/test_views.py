@@ -13,8 +13,6 @@ def create_user():
     u.set_password('testpass')
     u.save()
 
-from django.test.utils import override_settings
-
 
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled')
