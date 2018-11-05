@@ -7,20 +7,6 @@ STAGE_BRANCH_NAME = 'stage-push'
 STANDBY_BRANCH_NAME = 'standby-push'
 KUMA_PIPELINE = 'kuma'
 KUMASCRIPT_PIPELINE= 'kumascript'
-// TODO: After cutover to IT-owned services, remove these.
-MOZMEAO_KUMA_PIPELINE = 'mdn_multibranch_pipeline'
-MOZMEAO_KUMASCRIPT_PIPELINE= 'kumascript_multibranch_pipeline'
-
-def is_mozmeao_pipeline() {
-    /*
-     * Temporary function that returns true if this is running on the
-     * MozMEAO-owned Jenkins service targeting the MozMEAO-owned Kubernetes
-     * cluster.
-     * TODO: After cutover to IT-owned services, remove this function.
-     */
-    return (env.JOB_NAME.startsWith(MOZMEAO_KUMA_PIPELINE + '/') ||
-            env.JOB_NAME.startsWith(MOZMEAO_KUMASCRIPT_PIPELINE + '/'))
-}
 
 def get_commit_tag() {
     return env.GIT_COMMIT.take(7)
@@ -58,15 +44,13 @@ def get_target_script() {
 
 def get_region() {
     if (env.BRANCH_NAME == PROD_BRANCH_NAME) {
-        // TODO: After cutover to IT-owned services, just use 'oregon'.
-        return is_mozmeao_pipeline() ? 'portland' : 'oregon'
+        return 'oregon'
     }
     if (env.BRANCH_NAME == STAGE_BRANCH_NAME) {
-        // TODO: After cutover to IT-owned services, just use 'oregon'.
-        return is_mozmeao_pipeline() ? 'portland' : 'oregon'
+        return 'oregon'
     }
     if (env.BRANCH_NAME == STANDBY_BRANCH_NAME) {
-        return is_mozmeao_pipeline() ? 'frankfurt' : 'germany'
+        return 'germany'
     }
     throw new Exception(
         'Unable to determine the region from the branch name.'
@@ -74,12 +58,10 @@ def get_region() {
 }
 
 def get_repo_name() {
-    if (env.JOB_NAME.startsWith(KUMA_PIPELINE + '/') ||
-        env.JOB_NAME.startsWith(MOZMEAO_KUMA_PIPELINE + '/')) {
+    if (env.JOB_NAME.startsWith(KUMA_PIPELINE + '/')) {
         return 'kuma'
     }
-    if (env.JOB_NAME.startsWith(KUMASCRIPT_PIPELINE + '/') ||
-        env.JOB_NAME.startsWith(MOZMEAO_KUMASCRIPT_PIPELINE + '/')) {
+    if (env.JOB_NAME.startsWith(KUMASCRIPT_PIPELINE + '/')) {
         return 'kumascript'
     }
     throw new Exception(

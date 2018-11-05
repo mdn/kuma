@@ -10,7 +10,7 @@ import dj_database_url
 import dj_email_url
 import djcelery
 from decouple import config, Csv
-from six.moves.urllib.parse import urlsplit, urlunsplit
+from six.moves.urllib.parse import parse_qs, urlencode, urlsplit, urlunsplit
 
 _Language = namedtuple(u'Language', u'english native')
 
@@ -641,7 +641,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    'VERSION': '2018.12',
+    'VERSION': '2018.13',
     'BASE_DIR': BASE_DIR,
     'TEXT_DOMAIN': 'django',
     # Tells the extract script what files to look for l10n in and what function
@@ -1295,8 +1295,20 @@ CSP_STYLE_SRC = [
 ]
 CSP_REPORT_ONLY = config('CSP_REPORT_ONLY', default=False, cast=bool)
 CSP_REPORT_ENABLE = config('CSP_REPORT_ENABLE', default=False, cast=bool)
+SENTRY_ENVIRONMENT = config('SENTRY_ENVIRONMENT', default=None)
 if CSP_REPORT_ENABLE:
     CSP_REPORT_URI = config('CSP_REPORT_URI', default='/csp-violation-capture')
+    if "sentry_key=" in CSP_REPORT_URI:
+        # Using sentry to report. Optionally add revision and environment
+        bits = urlsplit(CSP_REPORT_URI)
+        query = parse_qs(bits.query)
+        if REVISION_HASH and REVISION_HASH != 'undefined':
+            query['sentry_release'] = REVISION_HASH
+        if SENTRY_ENVIRONMENT:
+            query['sentry_environment'] = SENTRY_ENVIRONMENT
+        CSP_REPORT_URI = urlunsplit((bits.scheme, bits.netloc, bits.path,
+                                     urlencode(query, doseq=True),
+                                     bits.fragment))
 
 # Celery (asynchronous tasks)
 BROKER_URL = config('BROKER_URL',
@@ -1728,6 +1740,9 @@ if SENTRY_DSN:
     }
     if REVISION_HASH and REVISION_HASH != 'undefined':
         RAVEN_CONFIG['release'] = REVISION_HASH
+    # Loaded from environment for CSP reporting endpoint
+    if SENTRY_ENVIRONMENT:
+        RAVEN_CONFIG['environment'] = SENTRY_ENVIRONMENT
     INSTALLED_APPS = INSTALLED_APPS + (
         'raven.contrib.django.raven_compat',
     )

@@ -65,6 +65,7 @@
     var formButton = form.find('#stripe_submit');
     var formErrorMessage = form.find('#contribution-error-message');
     var amount = formButton.find('#amount');
+    var stripeSourceSetup = form.find('#stripe_source_setup').val();
 
     var submitted = false;
 
@@ -90,7 +91,6 @@
                 form.submit();
             }
         };
-
         return win.StripeCheckout.configure(stripeOptions);
     }
 
