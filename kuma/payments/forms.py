@@ -217,6 +217,16 @@ class RecurringPaymentForm(ContributionForm):
     def __init__(self, *args, **kwargs):
         super(RecurringPaymentForm, self).__init__(*args, **kwargs)
         self.fields['donation_choices'].choices = RECURRING_PAYMENT__CHOICES
+        self.fields['accept_checkbox'] = forms.BooleanField(
+            label=u'',
+            required=True,
+            widget=forms.CheckboxInput(
+                attrs={
+                    'class': 'required checkbox form-control',
+                    'data-error-message': _('Must be more than $1')
+                },
+            ),
+        )
 
     @staticmethod
     def create_customer(email, token, user, name):

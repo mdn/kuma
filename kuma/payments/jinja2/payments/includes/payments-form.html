@@ -26,21 +26,29 @@
             {{form.stripe_public_key}}
         {% endif %}
 
-        {% if recurring_payment %}
-            <input type="hidden" id="stripe_source_setup" value="1">
-        {% endif %}
 
         <p class="legal-copy">
             {% trans %}
-                Payments are not tax deductible. Your payment details will be processed by
-                <a href="https://stripe.com/" rel="noopener" target="_blank">Stripe</a>.
-                Mozilla will keep record of your payment in
-                accordance with its
-                <a href="https://www.mozilla.org/en-US/privacy/websites" rel="noopener" target="_blank">Privacy Notice</a>,
-                and does not receive your payment details.
+            Payments are not tax deductible. Your payment details will be processed by
+            <a href="https://stripe.com/" rel="noopener" target="_blank">Stripe</a>.
+            Mozilla will keep record of your payment in
+            accordance with its
+            <a href="https://www.mozilla.org/en-US/privacy/websites" rel="noopener" target="_blank">Privacy Notice</a>,
+            and does not receive your payment details.
             {% endtrans %}
         </p>
+
+        {% if recurring_payment %}
+            <input type="hidden" id="stripe_source_setup" value="1">
+            <div>
+                {{form.accept_checkbox}}
+                <span class="legal-copy">
+                    By clicking this button, I authorize Mozilla to charge this payment method $16 each month, according to the <a>Payment Terms</a>, until I cancel my subscription.
+                </span>
+            </div>
+        {% endif %}
     </div>
+
     <ul class="errorlist hidden" id="contribution-error-message">
         <li>{{_('There has been an issue, please try again later.')}}</li>
     </ul>

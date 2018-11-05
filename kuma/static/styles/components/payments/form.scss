@@ -9,11 +9,9 @@
         text-align: center;
     }
 
-    p.legal-copy {
-        font-size: 12px;
-        font-weight: normal;
-        letter-spacing: .1px;
-        line-height: 1.35;
+    .legal-copy {
+        margin: 2em 0 0;
+        font-size: 14px;
         text-align: center;
         white-space: normal;
 
@@ -42,7 +40,7 @@
             margin-top: 0;
         }
 
-        input {
+        input[type='text'] {
             border-color: $text-color;
             border-radius: $payment-form-border-radius;
             box-sizing: border-box;
