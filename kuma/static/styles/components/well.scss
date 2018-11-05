@@ -10,10 +10,10 @@ $well-highlight-width: 8px;
     position: relative;
 
     &:before {
-        content: '';
         background: $default-color;
         border-radius: $well-highlight-width;
         bottom: 0;
+        content: '';
         left: 0;
         position: absolute;
         top: 0;
