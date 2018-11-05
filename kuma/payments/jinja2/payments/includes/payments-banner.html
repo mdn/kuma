@@ -58,12 +58,12 @@
                             </a>
                         </div>
                         {# One Time payments form #}
-                        {% with form=form %}
+                        {% with form=form, payments_url=payments_url %}
                             {%- include "payments/includes/payments-form.html" %}
                         {% endwith %}
                         {% if recurring_payment %}
                             {% if user.username %}
-                                {% with form=form, form=form, is_popover=False, recurring_payment=recurring_payment  %}
+                                {% with form=form, is_popover=False, recurring_payment=recurring_payment, payments_url=payments_url, recurring_payment_subscription_url=recurring_payment_subscription_url  %}
                                     {#- include "payments/includes/payments-form.html" #}
                                 {% endwith %}
                             {% else %}
@@ -76,7 +76,7 @@
                         {% endif %}
                     </div>
                 {% else %}
-                    {% with form=form %}
+                    {% with form=form, payments_url=payments_url, recurring_payment_subscription_url=recurring_payment_subscription_url %}
                         {%- include "payments/includes/payments-form.html" %}
                     {% endwith %}
                 {% endif %}
