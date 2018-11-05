@@ -100,6 +100,7 @@ def test_post_method_redirect_recurring_payment_subscription(mock_enabled, user_
             'name': 'True name',
             'email': 'true.email@mozilla.com',
             'donation_amount': 124,
+            'accept_checkbox': True
         }
     )
     assert_no_cache_header(response)
@@ -120,6 +121,7 @@ def test_post_method_recurring_payment_subscription(mock_enabled, form, user_cli
             'name': 'True name',
             'email': 'true.email@mozilla.com',
             'donation_amount': 63,
+            'accept_checkbox': True,
             'stripe_token': 'some-token',
             'stripe_public_key': 'some-public-key',
         }
@@ -145,6 +147,7 @@ def test_template_render_logged_in_recurring_payment_initial_view(mock_enabled, 
     assert '<input type="email"' in response.content
     assert 'id="id_donation_amount"' in response.content
     assert 'id="id_donation_choices"' in response.content
+    assert 'id="id_accept_checkbox"' in response.content
 
 
 @pytest.mark.django_db
@@ -163,3 +166,22 @@ def test_template_render_not_logged_in_recurring_payment_initial_view(mock_enabl
     assert '<input type="email"' in response.content
     assert 'id="id_donation_amount"' in response.content
     assert 'id="id_donation_choices"' in response.content
+
+
+@pytest.mark.django_db
+@mock.patch('kuma.payments.views.enabled')
+def test_template_render_not_logged_in_payment_view(mock_enabled, client, settings):
+    """If enabled, contribution error page is returned."""
+    mock_enabled.return_value = True
+    response = client.get(reverse('payments'))
+    assert_no_cache_header(response)
+    assert response.status_code == 200
+    assert '<input type="hidden"' in response.content
+    assert 'id="id_stripe_token"' in response.content
+    assert 'id="id_stripe_public_key"' in response.content
+    assert '<form id="contribute-form"' in response.content
+    assert '<input type="email"' in response.content
+    assert 'id="id_donation_amount"' in response.content
+    assert 'id="id_donation_choices"' in response.content
+    assert 'id="id_accept_checkbox"' not in response.content
+
