@@ -3,7 +3,6 @@ import pytest
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
-
 from django.test.utils import override_settings
 
 

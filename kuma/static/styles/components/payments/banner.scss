@@ -23,7 +23,7 @@
 }
 
 .contribution-banner {
-    background-image: $contribution-background-gradient;
+    background-image: $payment-background-gradient;
     min-width: 320px;
     overflow: hidden;
     position: relative;
@@ -39,16 +39,21 @@
         transition: height .5s;
         z-index: 99;
 
+        .legal-copy {
+            margin-top: 1em;
+        }
+
         .form-footer {
             margin-top: 0;
+            text-align: center;
         }
 
         &.expanded {
-            height: 480px;
+            height: $payment-banner-popover-height;
         }
 
         &.expanded-extend {
-            height: 580px;
+            height: $payment-banner-popover-height-extended;
         }
 
         &.expanded,
@@ -62,21 +67,36 @@
             .form-footer {
                 margin-top: $grid-spacing;
             }
+
+            .payments-form-container {
+                padding: $payment-form-container-padding;
+            }
         }
 
         &.is-expanding {
             h4,
             .body,
             .cta-link,
+            .payments-switch,
             .form-group {
                 animation-duration: .6s;
                 animation-name: fadeIn;
+            }
+
+            .payments-form-container {
+                padding: $payment-form-container-padding;
             }
         }
 
         @media #{$mq-mobile-and-down} {
             // Make sure the banner popover never shows on mobile.
             display: none;
+        }
+    }
+
+    @media #{$mq-tablet-and-down} {
+        .column-half {
+            width: 100%;
         }
     }
 
@@ -118,12 +138,75 @@
         box-sizing: border-box;
         margin: 0 auto;
         max-height: 100%;
-        max-width: 1320px;
-        padding: 28px;
+        max-width: $payment-banner-max-width;
+        padding: $payment-banner-padding;
         position: relative;
+        transition: padding .3s ease;
+
+        > .column-half {
+            box-sizing: border-box;
+
+            .container {
+                margin: 0 auto;
+                max-width: $payment-column-max-width;
+            }
+        }
 
         @media #{$mq-mobile-and-down} {
-            padding: 20px;
+            padding: $payment-banner-padding-sm;
+        }
+    }
+
+    .payments-form-container {
+        background: $payment-form-container-backdrop-color;
+        border-radius: 35px;
+        box-shadow: 0 0 40px -2px rgba(103, 191, 207, .7);
+        margin: 0 auto;
+        max-width: 540px;
+        padding: $payment-form-container-padding-sm;
+        transition: padding .3s ease-in-out;
+
+        @media #{$mq-mobile-and-up} {
+            padding: $payment-form-container-padding;
+        }
+
+        @media #{$mq-small-desktop-and-up} {
+            padding: $payment-form-container-padding-sm;
+        }
+
+        @media #{$mq-large-desktop-and-up} {
+            padding: $payment-form-container-padding;
+        }
+    }
+
+    .payments-switch {
+        border: 2px solid #333;
+        border-radius: 50px;
+        box-sizing: border-box;
+        height: $payment-form-input-height;
+
+        > a,
+        > button {
+            background: none;
+            border: none;
+            border-radius: 50px;
+            color: #333;
+            display: inline-block;
+            font-weight: bold;
+            height: 100%;
+            line-height: 3.33;
+            margin-right: -3px; // ensure % fits
+            overflow: hidden;
+            padding: 0;
+            text-decoration: none;
+            text-align: center;
+            vertical-align: top;
+            width: 50%;
+
+            &.active {
+                background: #333;
+                color: #fff;
+            }
         }
     }
 
@@ -154,11 +237,15 @@
     }
 
     &.is-collapsed {
+        box-sizing: border-box;
+        padding-top: $payment-collapsed-banner-padding;
+
         // Hide all unessesary content on the collapsed CTA.
         h4,
         .body,
         .cta-link,
         .hide-collapse,
+        .payments-switch,
         .form-group {
             display: none;
             opacity: 0;
@@ -167,6 +254,10 @@
         .hide-expand {
             display: inherit;
         }
+
+        .column-container {
+            padding: 0 $payment-banner-padding;
+        }
     }
 
     &.is-collapsing {
@@ -174,9 +265,18 @@
         .body,
         .cta-link,
         .hide-collapse,
+        .payments-switch,
         .form-group {
             animation-duration: .6s;
             animation-name: fadeOut;
+        }
+
+        .payments-form-container {
+            padding: 10px;
+        }
+
+        .column-container {
+            padding: 0 $payment-banner-padding;
         }
     }
 
@@ -190,7 +290,7 @@
     }
 }
 
-@media #{$mq-mobile-and-down} {
+@media #{$mq-tablet-and-down} {
     .contribution-banner {
 
         .contribute-lead-in {
@@ -199,7 +299,52 @@
 
         .contribution-form {
             margin: 0 auto;
-            width: 80%;
+            width: 100%;
+        }
+    }
+}
+
+.payment-form-button,
+.form-footer .payment-form-button {
+    background-color: $payment-form-button-color;
+    border-radius: $payment-form-input-height;
+    border: none;
+    color: #fff;
+    display: inline-block;
+    font-weight: bold;
+    font-weight: normal;
+    height: $payment-form-input-height;
+    line-height: $payment-form-input-height;
+    min-width: $payment-form-button-width;
+    padding: 0;
+    text-align: center;
+    white-space: nowrap;
+
+    &:hover {
+        background-color: darken($payment-form-button-color, 5%);
+    }
+
+    svg {
+        margin-left: 1em;
+        vertical-align: middle;
+    }
+
+    .payment-details {
+        display: none;
+        line-height: 0;
+        padding: 10px;
+        vertical-align: top;
+
+        @media #{$mq-mobile-and-down} {
+            display: inline-block;
+            margin-top: -4px;
+            padding: 0;
+            position: relative;
+            vertical-align: middle;
+
+            > img {
+                max-height: 24px;
+            }
         }
     }
 }

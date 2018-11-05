@@ -961,6 +961,7 @@ PIPELINE_JS = {
         'source_filenames': (
             'js/payments-handler.js',
             'js/payments-faq.js',
+            'js/tooltip.js',
         ),
         'output_filename': 'build/js/payments.js',
     },

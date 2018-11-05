@@ -6,77 +6,32 @@
 
     .form-footer {
         margin-top: $grid-spacing;
-        white-space: nowrap;
         text-align: center;
-
-        @media #{$mq-tablet-and-up} {
-            text-align: left;
-        }
-    }
-
-    .form-footer button,
-    .form-footer .button {
-        background-color: $contribution-form-button-color;
-        border-radius: $contribution-form-input-height;
-        border: none;
-        color: #fff;
-        font-weight: bold;
-        font-weight: normal;
-        height: $contribution-form-input-height;
-        line-height: $contribution-form-input-height;
-        min-width: 190px;
-        padding: 0;
-        text-align: center;
-        white-space: nowrap;
-
-        &:hover {
-            background-color: darken($contribution-form-button-color, 5%);
-        }
-
-        svg {
-            margin-left: 1em;
-            vertical-align: middle;
-        }
-
-        .payment-details {
-            display: none;
-            line-height: 0;
-            padding: 10px;
-            vertical-align: top;
-
-            @media #{$mq-mobile-and-down} {
-                display: inline-block;
-                margin-top: -4px;
-                padding: 0;
-                position: relative;
-                vertical-align: middle;
-
-                > img {
-                    max-height: 24px;
-                }
-            }
-        }
     }
 
     p.legal-copy {
-        margin: 2em 0 0;
-        font-size: 14px;
+        font-size: 12px;
+        font-weight: normal;
+        letter-spacing: .1px;
+        line-height: 1.35;
         text-align: center;
+        white-space: normal;
 
-        @media #{$mq-tablet-and-up} {
+        @media #{$mq-small-desktop-and-up} {
             text-align: left;
         }
 
         a {
-            color: $contribution-form-button-color;
-            text-decoration: underline;
+            border-bottom: 1px solid $payment-form-button-color;
+            color: $payment-form-button-color;
+            padding-bottom: 1px;
         }
     }
 
     .form-group {
+        font-weight: bold;
         margin-top: 12px;
         margin-bottom: 0;
-        max-width: 540px;
 
         .errorlist {
             display: block;
@@ -89,12 +44,13 @@
 
         input {
             border-color: $text-color;
+            border-radius: $payment-form-border-radius;
             box-sizing: border-box;
             display: block;
-            font-weight: normal;
-            height: $contribution-form-input-height;
+            font-weight: bold;
+            height: $payment-form-input-height;
             line-height: 3;
-            margin-top: $contribution-form-input-spacing;
+            margin-top: $payment-form-input-spacing;
             padding-left: 12px;
             width: 100%;
 
@@ -116,15 +72,62 @@
 
         .form-input-amount,
         .form-radios-donation-choices {
-            border-radius: $contribution-form-input-height;
+            border-radius: $payment-form-input-height;
             display: inline-block;
-            margin: $contribution-form-input-spacing 0 0;
+            margin: $payment-form-input-spacing 0;
             vertical-align: middle;
             width: 49%;
 
-            @media #{$mq-small-desktop-and-down} {
-                display: block;
+            @media #{$mq-large-desktop-and-down} {
+                li {
+                    margin: 0;
+                }
+            }
+        }
+
+        @media #{$mq-mobile-and-down} {
+            .form-radios-donation-choices {
+                margin-right: -3px; // ensure % fits
+                text-align: left;
+                width: 60%;
+            }
+
+            .form-input-amount {
+                margin-left: -2px; // ensure % fits
+                width: 40%;
+            }
+        }
+
+        @media #{$mq-small-mobile-and-down} {
+            .form-radios-donation-choices {
+                text-align: center;
                 width: 100%;
+            }
+
+            .form-input-amount {
+                width: 100%;
+            }
+        }
+
+        &.recurring-form {
+            .form-input-amount {
+                margin: $payment-form-input-spacing -2px;
+                width: 33%;
+            }
+
+            .form-radios-donation-choices {
+                width: 66%;
+
+                > li {
+                    box-sizing: border-box;
+                    margin: 0 -2px;
+                    padding-right: 12px;
+                    width: 33%;
+
+                    label {
+                        width: 100%;
+                    }
+                }
             }
         }
     }
@@ -154,12 +157,13 @@
 
             label {
                 background-color: #fff;
-                border-radius: $contribution-form-input-height;
+                border-radius: $payment-form-input-height;
                 border: 2px solid $text-color;
+                box-sizing: border-box;
                 display: inline-block;
-                height: $contribution-form-input-height;
-                line-height: $contribution-form-input-height;
-                min-width: $contribution-form-input-height;
+                height: $payment-form-input-height;
+                line-height: $payment-form-input-height;
+                min-width: $payment-form-input-height;
                 text-align: center;
 
                 &:hover {
@@ -180,7 +184,7 @@
 
         @media #{$mq-mobile-and-up} {
             display: inline-block;
-            margin: 0 10px;
+            margin: 5px 10px;
             vertical-align: middle;
         }
     }
@@ -304,9 +308,9 @@
 .contribution-banner.contribution-popover {
     .form-input-amount,
     .form-radios-donation-choices {
-        border-radius: $contribution-form-input-height;
+        border-radius: $payment-form-input-height;
         display: inline-block;
-        margin: $contribution-form-input-spacing 0 0;
+        margin: $payment-form-input-spacing 0 0;
         vertical-align: middle;
         width: 49%;
 
