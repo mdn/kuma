@@ -74,8 +74,7 @@
 
 {% block content %}
     <main id="contributions-page" class="contributions-page">
-        <!-- TODO: replace with waffle flag/varible -->
-        {% if False %}
+        {% if recurring_payment_enabled and recurring %}
             <section class="section">
                 <div class="index">
                     <h2>{{_('Useful Things')}}</h2>
