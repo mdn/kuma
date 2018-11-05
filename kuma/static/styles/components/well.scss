@@ -1,0 +1,34 @@
+$default-color: $blue;
+$success-color: $green;
+$warning-color: $yellow;
+$error-color: $red;
+$well-highlight-width: 8px;
+
+.well {
+    margin: 2em 0;
+    padding: 2em;
+    position: relative;
+
+    &:before {
+        content: '';
+        background: $default-color;
+        border-radius: $well-highlight-width;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: $well-highlight-width;
+    }
+
+    &.well-warning:before {
+        background: $warning-color;
+    }
+
+    &.well-error:before {
+        background: $error-color;
+    }
+
+    &.well-success:before {
+        background: $success-color;
+    }
+}

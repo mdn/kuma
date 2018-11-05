@@ -18,14 +18,8 @@
 <section id="content">
   <div class="wrap">
     <section id="content-main" role="main">
-      <article id="browser_register">
+      <article id="browser_register" class="readable-line-length center">
           <h1>{{ _('Create your MDN profile to continue') }}</h1>
-
-                {% if 'next=' in github_connect_url and 'name' in github_connect_url and 'email' in github_connect_url %}
-                    
-                {% endif %}
-
-      --->>>: {{ github_connect_url }}
           {% if matching_accounts.exists() and provider.id == 'github' %}
             <div class="notification warning" data-level="warning">
               {% trans %}
@@ -43,9 +37,21 @@
             </div>
           {% endif %}
 
-          <form class="submission readable-line-length" method="post" action="{{ url('socialaccount_signup') }}">
+          <form class="submission" method="post" action="{{ url('socialaccount_signup') }}">
               {{ honeypot_field()|safe }}
-
+              <!-- {# Custom text for when the user has been redirected through the recurring paymemnt flow #} -->
+              {% if 'next=' in github_connect_url and 'name' in github_connect_url and 'email' in github_connect_url %}
+              <div class="well well-warning">
+                <p>
+                  <h3>{{_('Why do I need to set up an MDN account to complete my subscription?')}}</h3>
+                  {% trans %}
+                  An MDN accounts allows us to communicate with you directly
+                  about your subscription and in the future, will give you
+                  the ability to manage your payments directly.
+                  {% endtrans %}
+                </p>
+              </div>
+              {% endif %}
               <p>{% trans provider_name=provider.name %}
               Thanks for signing in to MDN with {{ provider_name }}. You have
               one more step to join MDN: <strong>create your MDN
