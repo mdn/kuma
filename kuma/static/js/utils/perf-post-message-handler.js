@@ -40,9 +40,11 @@ function perfMsgHandler(event) {
     var allowedOrigin =
         window.mdn.interactiveEditor.editorUrl ||
         'https://interactive-examples.mdn.mozilla.net';
+    var interactiveEditorInlineExperimentOrigin = 'https://developer.mozilla.org';
     var eventData = event.data;
 
-    if (event.origin !== allowedOrigin) {
+    if (event.origin !== allowedOrigin &&
+        event.origin !== interactiveEditorInlineExperimentOrigin) {
         return false;
     }
 

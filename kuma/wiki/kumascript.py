@@ -16,6 +16,7 @@ from elasticsearch import TransportError
 
 from .constants import KUMASCRIPT_BASE_URL, KUMASCRIPT_TIMEOUT_ERROR
 from .content import clean_content
+from .inline_examples import INLINE_EXAMPLES
 from .search import WikiDocumentType
 
 
@@ -214,7 +215,23 @@ def process_body(response):
     # We defer bleach sanitation of kumascript content all the way
     # through editing, source display, and raw output. But, we still
     # want sanitation, so it finally gets picked up here.
-    return clean_content(response.text)
+    clean_response = clean_content(response.text)
+    # After sanitization perform a final pass to substitute any inlined
+    # interactive example macros
+    return process_inlined_examples(clean_response)
+
+
+def process_inlined_examples(body):
+    """
+    Manually expand @InlineMacro@ declarations
+    """
+    return body \
+        .replace("@InlineArrayForEach@", INLINE_EXAMPLES["FOR_EACH"]) \
+        .replace("@InlineArrayMap@", INLINE_EXAMPLES["MAP"]) \
+        .replace("@InlineArrayFilter@", INLINE_EXAMPLES["FILTER"]) \
+        .replace("@InlineArrayFind@", INLINE_EXAMPLES["FIND"]) \
+        .replace("@InlineArrayReduce@", INLINE_EXAMPLES["REDUCE"]) \
+        .replace("@InlineArraySplice@", INLINE_EXAMPLES["SPLICE"])
 
 
 def process_errors(response):

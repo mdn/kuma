@@ -230,7 +230,7 @@ We cannot put these styles in the base/elements/ files because they don't apply 
 
     /* don't allow empty paragraphs by CKEditor */
     p:empty,
-    div:empty {
+    div:empty:not(.CodeMirror-gutter) {
         display: none;
     }
 
