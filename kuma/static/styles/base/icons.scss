@@ -1,3 +1,4 @@
+@import 'includes/svg_data_uri_icons';
 @import 'includes/mixins_indicators';
 
 #{$selector-icon} {
@@ -100,6 +101,17 @@ i.icon-trash {
 /* used with .notification-img */
 i.icon-info-sign {
     @include set-icon($path-to-svg-notification-icons + 'info-circle.svg', 24px, 30px);
+}
+
+/* icon used by non-standard_inline macro */
+.icon-only-inline {
+    i.icon-warning-sign {
+        @include set-icon($icon-exclamation-traingle-yellow);
+    }
+
+    i.icon-trash {
+        @include set-icon($icon-trash-red);
+    }
 }
 
 /* icons used by the HTMLRefTable macro */

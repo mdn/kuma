@@ -266,7 +266,7 @@ icons for both types of indicators
 
 #doc-rendering-in-progress.warning,
 #doc-rendering-scheduled.warning {
-    @include indicator-svg-icon($icon-white-close);
+    @include indicator-svg-icon($icon-white-clock);
 }
 
 .experimental,
