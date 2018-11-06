@@ -18,6 +18,16 @@ def test_contribute_view(mock_enabled, client, settings):
 
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled')
+def test_payment_terms_view(mock_enabled, client, settings):
+    """If enabled, contribution page is returned."""
+    mock_enabled.return_value = True
+    response = client.get(reverse('payment_terms'))
+    assert_no_cache_header(response)
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+@mock.patch('kuma.payments.views.enabled')
 def test_thanks_view(mock_enabled, client, settings):
     """If enabled, contribution thank you page is returned."""
     mock_enabled.return_value = True

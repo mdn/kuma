@@ -20,5 +20,8 @@ lang_urlpatterns = [
         name='recurring_payment_initial'),
     url(r'^recurring/subscription/?$',
         views.contribute_recurring_payment_subscription,
-        name='recurring_payment_subscription')
+        name='recurring_payment_subscription'),
+    url(r'^terms/?$',
+        views.payment_terms,
+        name='payment_terms'),
 ]
