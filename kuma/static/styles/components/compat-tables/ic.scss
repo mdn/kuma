@@ -2,6 +2,7 @@
 Custom icon font for compat tables
 ********************************************************************** */
 
+@import 'includes/mixins_indicators';
 @import '../../base/fonts/compat-icons';
 
 [class^='ic-'],
@@ -52,8 +53,7 @@ Custom icon font for compat tables
 }
 
 .ic-deprecated:before {
-    content: '\f088';
-    font-family: FontAwesome;
+    @include set-icon($path-to-svg-emoji-icons + 'thumbs-down.svg');
 }
 
 /*

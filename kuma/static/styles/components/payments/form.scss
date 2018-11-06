@@ -1,3 +1,4 @@
+@import 'includes/mixins_indicators';
 @import 'includes/vars';
 @import './vars';
 
@@ -297,10 +298,8 @@
     right: 2px;
     top: 4px;
 
-    // Sets X icon.
     &:before {
-        content: '\f00d';
-        font-family: FontAwesome;
+        @include set-icon($path-to-svg-general-icons + 'close.svg');
     }
 }
 

@@ -208,11 +208,6 @@ $notification-button-padding: 2px 5px 3px;
 /* optional icon, message displays fine without it */
 .notification-img {
     @extend .media-side;
-
-    #{$selector-icon} {
-        font-size: $larger-font-size;
-        margin: 0;
-    }
 }
 
 /* class to add to <button> and <a> to make them look buttony */

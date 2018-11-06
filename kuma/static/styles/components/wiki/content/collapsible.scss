@@ -18,18 +18,14 @@ h2 > .collapse-trigger {
 
     /* add toggle symbol */
     &:before {
-        display: inline-block;
-        color: $link-color;
-        @include bidi(((content, '\f0da', '\f0d9'),));
+        margin-right: 10px;
+        @include set-bidi-icon($path-to-svg-arrow-icons + 'caret-right.svg', $path-to-svg-arrow-icons + 'caret-left.svg', auto, auto, 8px);
         cursor: pointer;
-        font-family: FontAwesome;
-        line-height: 39px;
-        padding-right: 10px;
-        vertical-align: top;
     }
 
     &[aria-expanded='true']:before {
-        @include bidi-value-vendorize(transform, rotate(90deg), rotate(-90deg));
+        @include set-bidi-icon($path-to-svg-arrow-icons + 'caret-down.svg', $path-to-svg-arrow-icons + 'caret-down.svg', auto, auto, 16px);
+        vertical-align: baseline;
     }
 }
 

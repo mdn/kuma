@@ -1,3 +1,5 @@
+@import 'includes/svg_data_uri_icons';
+
 /*
 Indicators
 - in a perfect world each indicator is composed of 2 classes that
@@ -259,61 +261,83 @@ icons for both types of indicators
 
 #kserrors.warning {
     @extend %indicator-with-icon;
-    @include indicator-icon('\f119'); /* frowny facy */
+    @include indicator-svg-icon($icon-white-frown);
 }
 
 #doc-rendering-in-progress.warning,
 #doc-rendering-scheduled.warning {
-    @include indicator-icon('\f017'); /* clock */
+    @include indicator-svg-icon($icon-white-clock);
 }
 
 .experimental,
 .experimentalBadge {
-    @include indicator-icon('\f0c3'); /* flask */
+    @include indicator-svg-icon($path-to-svg-general-icons + 'flask.svg');
+}
+
+.inlineIndicator.experimental,
+.inlineIndicator.experimentalBadge {
+    @extend %indicator-with-icon;
+
+    &:before {
+        @include set-inline-icon($path-to-svg-general-icons + 'flask.svg');
+    }
 }
 
 .warning:not(.notification) {
-    @include indicator-icon('\f06a'); /* circle with excamation point */
+    @include indicator-svg-icon($path-to-svg-notification-icons + 'exclamation-circle.svg');
 }
 
 .deprecated {
-    @include indicator-icon('\f088'); /* thumbs down */
+    @include indicator-svg-icon($path-to-svg-emoji-icons + 'thumbs-down.svg');
+}
+
+.inlineIndicator.deprecated {
+    @extend %indicator-with-icon;
+
+    &:before {
+        @include set-inline-icon($path-to-svg-emoji-icons + 'thumbs-down.svg');
+    }
 }
 
 .draft,
 .warning.warning-review,
 .translationInProgress {
-    @include indicator-icon('\f040'); /* edit icon */
+    @include indicator-svg-icon($path-to-svg-tool-icons + 'pencil.svg');
 }
 
 .note {
-    @include indicator-icon('\f016'); /* file icon rotated */
+    @include indicator-svg-icon($path-to-svg-file-icons + 'file.svg');
 
     &:before {
-        @include vendorize(transform, scaleY(-.8) scaleX(.8));
+        @include vendorize(transform, scaleY(-1) scaleX(1));
     }
 }
 
 .obsolete {
-    @include indicator-icon('\f1f8'); /* trash can */
+    @include indicator-svg-icon($path-to-svg-general-icons + 'trash.svg');
 }
 
 .nonStandard,
 .nonstandardBadge {
-    @include indicator-icon('\f071'); /* triangle with exclamation point */
+    @include indicator-svg-icon($path-to-svg-notification-icons + 'exclamation-triangle.svg');
+}
+
+.inlineIndicator.nonStandard,
+.inlineIndicator.nonstandardBadge {
+    @extend %indicator-with-icon;
+
+    &:before {
+        @include set-inline-icon($path-to-svg-notification-icons + 'exclamation-triangle.svg');
+    }
 }
 
 .privilegedBadge,
 .install {
-    @include indicator-icon('\f132'); /* shield */
-}
-
-.translationInProgress {
-    @include indicator-icon('\f0ac'); /* globe */
+    @include indicator-svg-icon($path-to-svg-general-icons + 'shield.svg');
 }
 
 .secureContexts {
-    @include indicator-icon('\f023'); /* lock */
+    @include indicator-svg-icon($path-to-svg-general-icons + 'lock.svg');
 }
 
 
