@@ -9,3 +9,16 @@ We are committed to providing the best source of information about web standards
 
 {{_('Thank you again,')}}
 {{_('The MDN Team')}}
+
+{% if recurring_payment %}
+{% trans %}
+Managing your payments
+If you would like to manage your monthly payment, such as changing your card account details or the amount you pay, please contact {{ support_mail_link }}.
+Cancelling your payments
+If you would like to cancel your monthly payment, you are free to do so at any point. Please contact {{ support_mail_link }} to cancel.
+Payment Terms
+Please read our payment terms for more information.
+FAQ
+To find out more about why MDN is raising money through the one time and monthly payment programme, please visit our FAQ.
+{% endtrans %}
+{% endif %}

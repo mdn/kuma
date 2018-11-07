@@ -115,6 +115,82 @@
                                                       </table>
                                                     </td>
                                                   </tr>
+                                                {% if recurring_payment %}
+                                                  <tr style="border-top: 2px solid black;">
+                                                    <td width="640" align="left" style="background:#fff; border-top: 2px solid black; padding-top: 20px;">
+                                                      <table cellspacing="0" cellpadding="0">
+                                                        <tbody>
+                                                          <tr>
+                                                            <td align="left" style="font-family:Geneva,Tahoma,Verdana,sans-serif;font-size:14px;line-height:22px;color:#555555;padding-top:16px">
+                                                              <h3>{{_('Managing your payments')}}</h3>
+                                                              <p>
+                                                                {% trans %}
+                                                                If you would like to manage your monthly payment,
+                                                                such as changing your card account details or the
+                                                                amount you pay, please contact <a href="{{ support_mail_link }}">{{ support_mail }}</a>.
+                                                                {% endtrans %}
+                                                              </p>
+                                                            </td>
+                                                          </tr>
+                                                        </tbody>
+                                                      </table>
+                                                    </td>
+                                                  </tr>
+                                                  <tr style="border-top: 2px solid black;">
+                                                    <td width="640" align="left" style="background:#fff;">
+                                                      <table cellspacing="0" cellpadding="0">
+                                                        <tbody>
+                                                          <tr>
+                                                            <td align="left" style="font-family:Geneva,Tahoma,Verdana,sans-serif;font-size:14px;line-height:22px;color:#555555;padding-top:16px">
+                                                              <h3>{{_('Cancelling your payments')}}</h3>
+                                                              <p>
+                                                                {% trans %}
+                                                                If you would like to cancel your monthly payment, you are free to do so at any point. Please contact <a href="{{ support_mail_link }}">{{ support_mail }}</a> to cancel.
+                                                                {% endtrans %}
+                                                              </p>
+                                                            </td>
+                                                          </tr>
+                                                        </tbody>
+                                                      </table>
+                                                    </td>
+                                                  </tr>
+                                                  <tr style="border-top: 2px solid black;">
+                                                    <td width="640" align="left" style="background:#fff;">
+                                                      <table cellspacing="0" cellpadding="0">
+                                                        <tbody>
+                                                          <tr>
+                                                            <td align="left" style="font-family:Geneva,Tahoma,Verdana,sans-serif;font-size:14px;line-height:22px;color:#555555;padding-top:16px">
+                                                              <h3>{{_('Payment Terms')}}</h3>
+                                                              <p>
+                                                                {% trans terms_link=url('payment_terms')|absolutify %}
+                                                                Please read our <a href="{{ terms_link }}">payment terms</a> for more information.
+                                                                {% endtrans %}
+                                                              </p>
+                                                            </td>
+                                                          </tr>
+                                                        </tbody>
+                                                      </table>
+                                                    </td>
+                                                  </tr>
+                                                  <tr style="border-top: 2px solid black;">
+                                                    <td width="640" align="left" style="background:#fff;">
+                                                      <table cellspacing="0" cellpadding="0">
+                                                        <tbody>
+                                                          <tr>
+                                                            <td align="left" style="font-family:Geneva,Tahoma,Verdana,sans-serif;font-size:14px;line-height:22px;color:#555555;padding-top:16px">
+                                                              <h3>{{_('FAQ')}}</h3>
+                                                              <p>
+                                                                {% trans faq_link=url('payments')|absolutify %}
+                                                                To find out more about why MDN is raising money through the one time and monthly payment programme, <a href="{{ faq_link }}">please visit our FAQ</a>.
+                                                                {% endtrans %}
+                                                              </p>
+                                                            </td>
+                                                          </tr>
+                                                        </tbody>
+                                                      </table>
+                                                    </td>
+                                                  </tr>
+                                                {% endif %}
                                               </tbody>
                                             </table>
                                           </td>

@@ -20,7 +20,8 @@ def payments_thank_you_email(username, user_email, recurring=False):
         'user_email': user_email,
         'username': username,
         'support_mail_link': 'mailto:' + settings.CONTRIBUTION_SUPPORT_EMAIL + '?Subject=Recurring%20payment%20support',
-        'support_mail': settings.CONTRIBUTION_SUPPORT_EMAIL
+        'support_mail': settings.CONTRIBUTION_SUPPORT_EMAIL,
+        'recurring_payment': recurring,
     }
 
     # TODO: Remove when we ship translations, get legal approval
@@ -37,7 +38,7 @@ def payments_thank_you_email(username, user_email, recurring=False):
             message_context
         )
         content_html = render_email(
-            'payments/email/thank_you/{}'.format('recurring_email.html' if recurring else 'email.html'),
+            'payments/email/thank_you/{}'.format('email.html'),
             message_context
         )
 
