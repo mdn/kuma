@@ -35,11 +35,11 @@
             width: 0;
             height: 0;
 
-            &:focus+.control-indicator:before {
-                background: #cecece;
+            &:focus + .control-indicator:before {
+                background: lighten($grey, 40%);
             }
 
-            &:checked+.control-indicator:before {
+            &:checked + .control-indicator:before {
                 background: $text-color;
             }
         }
@@ -54,12 +54,12 @@
             width: 2em;
 
             &:before {
-                border: 2px solid white;
+                border: 2px solid #fff;
                 box-sizing: border-box;
                 content: '';
                 display: inline-block;
                 height: 100%;
-                padding: 0px;
+                padding: 0;
                 width: 100%;
             }
         }
