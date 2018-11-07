@@ -147,8 +147,8 @@
     if(!CKEDITOR.stylesSet.registered['default']) {
       CKEDITOR.stylesSet.add('default', [
         { name: 'None', element: 'p' },
-        { name: 'Note Box', element: 'div', attributes: { 'class': 'note' }, type: 'wrap' },
-        { name: 'Warning Box', element: 'div', attributes: { 'class': 'warning' }, type: 'wrap' },
+        { name: 'Note Box', element: 'div', attributes: { 'class': 'blockIndicator note' }, type: 'wrap' },
+        { name: 'Warning Box', element: 'div', attributes: { 'class': 'blockIndicator warning' }, type: 'wrap' },
         { name: 'Two Columns', element: 'div', attributes: { 'class': 'twocolumns' }, type: 'wrap' },
         { name: 'Three Columns', element: 'div', attributes: { 'class': 'threecolumns' }, type: 'wrap' },
         { name: 'Article Summary', element: 'p', attributes: { 'class': 'summary' } },
