@@ -40,12 +40,13 @@
 
         {% if recurring_payment %}
             <input type="hidden" id="stripe_source_setup" value="1">
-            <div>
+            <label class="recurring-payment-confirmation">
                 {{form.accept_checkbox}}
+                <div class="control-indicator"></div>
                 <span class="legal-copy">
                     By clicking this button, I authorize Mozilla to charge this payment method $16 each month, according to the <a>Payment Terms</a>, until I cancel my subscription.
                 </span>
-            </div>
+            </label>
         {% endif %}
     </div>
     <ul class="errorlist hidden" id="contribution-error-message">

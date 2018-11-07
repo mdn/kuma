@@ -10,10 +10,11 @@
     }
 
     .legal-copy {
-        margin: 2em 0 0;
-        font-size: 14px;
-        text-align: center;
-        white-space: normal;
+        font-size: 12px;
+        font-weight: normal;
+        letter-spacing: .1px;
+        line-height: 1.35;
+        margin-bottom: 1em;
 
         @media #{$mq-small-desktop-and-up} {
             text-align: left;
@@ -23,6 +24,44 @@
             border-bottom: 1px solid $payment-form-button-color;
             color: $payment-form-button-color;
             padding-bottom: 1px;
+        }
+    }
+
+    .recurring-payment-confirmation {
+        display: flex;
+
+        > input[type='checkbox'] {
+            opacity: 0;
+            width: 0;
+            height: 0;
+
+            &:focus+.control-indicator:before {
+                background: #cecece;
+            }
+
+            &:checked+.control-indicator:before {
+                background: $text-color;
+            }
+        }
+
+        .control-indicator {
+            border: 3px solid $text-color;
+            border-radius: 4px;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            height: 2em;
+            margin-right: .5em;
+            width: 2em;
+
+            &:before {
+                border: 2px solid white;
+                box-sizing: border-box;
+                content: '';
+                display: inline-block;
+                height: 100%;
+                padding: 0px;
+                width: 100%;
+            }
         }
     }
 
