@@ -14,7 +14,7 @@ log = logging.getLogger('kuma.payments.tasks')
 
 @task
 @skip_in_maintenance_mode
-def contribute_thank_you_email(username, user_email):
+def payments_thank_you_email(username, user_email, recurring=False):
     """Create a notification email for new contributor."""
     message_context = {
         'user_email': user_email,
@@ -35,7 +35,7 @@ def contribute_thank_you_email(username, user_email):
             message_context
         )
         content_html = render_email(
-            'payments/email/thank_you/email.html',
+            'payments/email/thank_you/{}'.format('recurring_email.html' if recurring else 'email.html'),
             message_context
         )
 
