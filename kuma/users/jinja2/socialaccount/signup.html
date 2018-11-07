@@ -39,18 +39,18 @@
 
           <form class="submission" method="post" action="{{ url('socialaccount_signup') }}">
               {{ honeypot_field()|safe }}
-              <!-- {# Custom text for when the user has been redirected through the recurring paymemnt flow #} -->
+              {# Custom text for when the user has been redirected through the recurring paymemnt flow #}
               {% if 'next=' in github_connect_url and 'name' in github_connect_url and 'email' in github_connect_url %}
-              <div class="well well-warning">
-                <p>
-                  <h3>{{_('Why do I need to set up an MDN account to complete my subscription?')}}</h3>
-                  {% trans %}
-                  An MDN accounts allows us to communicate with you directly
-                  about your subscription and in the future, will give you
-                  the ability to manage your payments directly.
-                  {% endtrans %}
-                </p>
-              </div>
+                <div class="well well-warning">
+                  <p>
+                    <h3>{{_('Why do I need to set up an MDN account to complete my subscription?')}}</h3>
+                    {% trans %}
+                    An MDN accounts allows us to communicate with you directly
+                    about your subscription and in the future, will give you
+                    the ability to manage your payments directly.
+                    {% endtrans %}
+                  </p>
+                </div>
               {% endif %}
               <p>{% trans provider_name=provider.name %}
               Thanks for signing in to MDN with {{ provider_name }}. You have
