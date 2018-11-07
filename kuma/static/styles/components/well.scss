@@ -9,6 +9,7 @@ $well-highlight-width: 8px;
     padding: 2em;
     position: relative;
 
+    // Pseudo element used to add rounded left border.
     &:before {
         background: $default-color;
         border-radius: $well-highlight-width;
