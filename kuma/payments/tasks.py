@@ -38,7 +38,7 @@ def payments_thank_you_email(username, user_email, recurring=False):
             message_context
         )
         content_html = render_email(
-            'payments/email/thank_you/{}'.format('email.html'),
+            'payments/email/thank_you/email.html',
             message_context
         )
 
