@@ -1,0 +1,35 @@
+$default-color: $blue;
+$success-color: $green;
+$warning-color: $yellow;
+$error-color: $red;
+$alert-message-highlight-width: 8px;
+
+.alert-message {
+    margin: 2em 0;
+    padding: 2em;
+    position: relative;
+
+    // Pseudo element used to add rounded left border.
+    &:before {
+        background: $default-color;
+        border-radius: $alert-message-highlight-width;
+        bottom: 0;
+        content: '';
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: $alert-message-highlight-width;
+    }
+
+    &.alert-message-warning:before {
+        background: $warning-color;
+    }
+
+    &.alert-message-error:before {
+        background: $error-color;
+    }
+
+    &.alert-message-success:before {
+        background: $success-color;
+    }
+}
