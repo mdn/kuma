@@ -14,7 +14,7 @@
         font-weight: normal;
         letter-spacing: .1px;
         line-height: 1.35;
-        margin-bottom: 1em;
+        margin-bottom: 12px;
 
         @media #{$mq-small-desktop-and-up} {
             text-align: left;
@@ -31,9 +31,10 @@
         display: flex;
 
         > input[type='checkbox'] {
+            margin: 0;
             opacity: 0;
-            width: 0;
             height: 0;
+            width: 0;
 
             &:focus + .control-indicator:before {
                 background: lighten($grey, 40%);
@@ -49,9 +50,9 @@
             border-radius: 4px;
             box-sizing: border-box;
             flex-shrink: 0;
-            height: 2em;
-            margin-right: .5em;
-            width: 2em;
+            height: 28px;
+            margin-right: 6px;
+            width: 28px;
 
             &:before {
                 border: 2px solid #fff;
@@ -184,7 +185,7 @@
             position: relative;
 
             @media #{$mq-tablet-and-down} {
-                margin-right: 1em;
+                margin-right: 12px;
                 width: auto;
             }
 
