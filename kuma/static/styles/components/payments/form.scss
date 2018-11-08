@@ -80,9 +80,7 @@
             margin-top: 0;
         }
 
-        input[type='text'],
-        input[type='email'],
-        input[type='radio'] {
+        input {
             border-color: $text-color;
             border-radius: $payment-form-border-radius;
             box-sizing: border-box;
@@ -100,7 +98,7 @@
             }
         }
 
-        input.form-input-amount {
+        .form-input-amount {
             padding-left: 35px;
         }
 
@@ -110,7 +108,7 @@
             position: absolute;
         }
 
-        input.form-input-amount,
+        .form-input-amount,
         .form-radios-donation-choices {
             border-radius: $payment-form-input-height;
             display: inline-block;

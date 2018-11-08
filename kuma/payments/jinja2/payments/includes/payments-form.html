@@ -28,13 +28,12 @@
 
 
         <p class="legal-copy">
-            {% trans %}
+            {% trans terms_url=url('payment_terms') %}
                 Payments are not tax deductible. Your payment details will be processed by
                 <a href="https://stripe.com/" rel="noopener" target="_blank">Stripe</a>.
-                Mozilla will keep record of your payment in
-                accordance with its
-                <a href="https://www.mozilla.org/en-US/privacy/websites" rel="noopener" target="_blank">Privacy Notice</a>,
-                and does not receive your payment details.
+                You can read our Payment Terms
+                <a href="{{ terms_url }}" rel="noopener" target="_blank">Payment terms</a>,
+                for more information.
             {% endtrans %}
         </p>
 
