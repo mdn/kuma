@@ -12,8 +12,6 @@
 {% set provider = account.get_provider() %}
 {% set github_connect_url = provider_login_url('github', process='connect', next=request.session.sociallogin_next_url|default('/')) %}
 
-
-
 {% block content %}
 <section id="content">
   <div class="wrap">
