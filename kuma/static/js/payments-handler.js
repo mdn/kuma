@@ -68,6 +68,8 @@
     var amountToUpdate = form.find('[data-dynamic-amount]');
 
     var isRecurringPayment = form.attr('data-payment-type') === 'recurring';
+    var GithubRedirectPayment = $('#id_github_redirect_payment');
+
     var submitted = false;
 
     /**
@@ -458,7 +460,17 @@
         }
     }
 
+    function modifyGithubLink(event){
+        event.preventDefault();
+        var gitHubLink = $(this).attr('href');
+        var gitHubNext = $(this).data('next');
+        var getFormFields = form.serialize();
+        gitHubLink = gitHubLink + '&next='+ gitHubNext + '?' + encodeURIComponent(getFormFields);
+        window.location.href = encodeURI(gitHubLink);
+    }
+
     // Register event handlers and set things up.
+    GithubRedirectPayment.on('click', modifyGithubLink);
     formButton.click(onFormButtonClick);
     amountRadio.change(onAmountSelect);
     customAmountInput.on('input', onAmountSelect);

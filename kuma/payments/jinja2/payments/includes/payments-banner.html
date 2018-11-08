@@ -1,8 +1,11 @@
 {# Set URLs outside of translation block, to keep user's locale #}
 {% set payments_url = url('payments') %}
 {% set recurring_payment_subscription_url = url('recurring_payment_subscription') %}
+{% set recurring_payment_initial_url = url('recurring_payment_initial') %}
 {% set faq_url = payments_url + "#contribute-faqs" %}
 {% set feedback_url = payments_url + "#contribute-feedback" %}
+{% set account_login_url = url('account_login') %}
+{% set github_next_url = account_login_url + '?next=' + recurring_payment_subscription_url %}
 
 {% translation 'en-US' %}{# Display in English until Q1 2019 #}
     <div id="contribution-popover-container"
@@ -53,26 +56,31 @@
                             <a href="{{ payments_url }}" {% if not recurring_payment %} class="active" {% endif %}>
                                 {{_('One off payment')}}
                             </a>
-                            <a href="{{ recurring_payment_subscription_url }}" {% if recurring_payment %} class="active" {% endif %}>
+                            <a href="{{ recurring_payment_initial_url }}" {% if recurring_payment %} class="active" {% endif %}>
                                 {{_('Monthly payment')}}
                             </a>
                         </div>
-                        {# One Time payments form #}
-                        {% with form=form, payments_url=payments_url %}
-                            {%- include "payments/includes/payments-form.html" %}
-                        {% endwith %}
+
                         {% if recurring_payment %}
-                            {% if user.username %}
+                            {% if user.is_authenticated %}
                                 {% with form=form, is_popover=False, recurring_payment=recurring_payment, payments_url=payments_url, recurring_payment_subscription_url=recurring_payment_subscription_url  %}
-                                    {#- include "payments/includes/payments-form.html" #}
+                                    {%  include "payments/includes/payments-form.html" %}
                                 {% endwith %}
                             {% else %}
-                                {% set github_url = provider_login_url('github', next=next_url) %}
+                                {% with form=form, hide_submit=True, is_popover=False, recurring_payment=recurring_payment, payments_url=payments_url, recurring_payment_subscription_url=recurring_payment_subscription_url  %}
+                                    {%  include "payments/includes/payments-form.html" %}
+                                {% endwith %}
+                                {% set github_url = provider_login_url('github', process='login') %}
                                 <p>{{_('We’ve noticed you’re not logged in to MDN. To complete your monthly payment, we’ll need you to log in first.')}}</p>
-                                <a href="{{ github_url }}" class="payment-form-button" data-service="GitHub" rel="nofollow">
+                                <a href="{{ github_url }}" id="id_github_redirect_payment" class="payment-form-button js-login-link" data-service="GitHub" rel="nofollow" data-next="{{ github_next_url }}">
                                     {{ _('Sign in') }}{% include 'includes/icons/social/github.svg' %}
                                 </a>
                             {% endif %}
+                        {% else %}
+                            {# One Time payments form #}
+                            {% with form=form, payments_url=payments_url %}
+                                {% include "payments/includes/payments-form.html" %}
+                            {% endwith %}
                         {% endif %}
                     </div>
                 {% else %}
