@@ -68,7 +68,9 @@
     var amountToUpdate = form.find('[data-dynamic-amount]');
 
     var isRecurringPayment = form.attr('data-payment-type') === 'recurring';
-    var GithubRedirectPayment = $('#id_github_redirect_payment');
+
+    var requestUserLogin = doc.getElementById('login-popover');
+    var githubRedirectButton = doc.getElementById('github_redirect_payment');
 
     var submitted = false;
 
@@ -251,6 +253,12 @@
             label: isPopoverBanner ? 'On pop over' : 'On FAQ page',
             value: selectedAmount * 100
         });
+
+        if (requestUserLogin) {
+            requestUserLogin.classList.remove('hidden');
+            form.addClass('hidden');
+            return;
+        }
 
         if (stripeHandler !== null) {
             // On success open Stripe Checkout modal.
@@ -460,7 +468,7 @@
         }
     }
 
-    function modifyGithubLink(event){
+    function redirectUserToLogin(event){
         event.preventDefault();
         var gitHubLink = $(this).attr('href');
         var gitHubNext = $(this).data('next');
@@ -470,7 +478,9 @@
     }
 
     // Register event handlers and set things up.
-    GithubRedirectPayment.on('click', modifyGithubLink);
+    if (requestUserLogin) {
+        $(githubRedirectButton).on('click', redirectUserToLogin);
+    }
     formButton.click(onFormButtonClick);
     amountRadio.change(onAmountSelect);
     customAmountInput.on('input', onAmountSelect);

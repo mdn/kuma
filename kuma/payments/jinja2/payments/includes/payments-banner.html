@@ -71,10 +71,12 @@
                                     {%  include "payments/includes/payments-form.html" %}
                                 {% endwith %}
                                 {% set github_url = provider_login_url('github', process='login') %}
-                                <p>{{_('We’ve noticed you’re not logged in to MDN. To complete your monthly payment, we’ll need you to log in first.')}}</p>
-                                <a href="{{ github_url }}" id="id_github_redirect_payment" class="payment-form-button js-login-link" data-service="GitHub" rel="nofollow" data-next="{{ github_next_url }}">
-                                    {{ _('Sign in') }}{% include 'includes/icons/social/github.svg' %}
-                                </a>
+                                <div id="login-popover" class="hidden align-center login-prompt">
+                                    <p>{{_('We’ve noticed you’re not logged in to MDN. To complete your monthly payment, we’ll need you to log in first.')}}</p>
+                                    <a href="{{ github_url }}" id="github_redirect_payment" class="payment-form-button js-login-link" data-service="GitHub" rel="nofollow" data-next="{{ github_next_url }}">
+                                        {{ _('Sign in') }}{% include 'includes/icons/social/github.svg' %}
+                                    </a>
+                                </div>
                             {% endif %}
                         {% else %}
                             {# One Time payments form #}
