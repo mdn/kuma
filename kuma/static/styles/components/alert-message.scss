@@ -2,9 +2,9 @@ $default-color: $blue;
 $success-color: $green;
 $warning-color: $yellow;
 $error-color: $red;
-$well-highlight-width: 8px;
+$alert-message-highlight-width: 8px;
 
-.well {
+.alert-message {
     margin: 2em 0;
     padding: 2em;
     position: relative;
@@ -12,24 +12,24 @@ $well-highlight-width: 8px;
     // Pseudo element used to add rounded left border.
     &:before {
         background: $default-color;
-        border-radius: $well-highlight-width;
+        border-radius: $alert-message-highlight-width;
         bottom: 0;
         content: '';
         left: 0;
         position: absolute;
         top: 0;
-        width: $well-highlight-width;
+        width: $alert-message-highlight-width;
     }
 
-    &.well-warning:before {
+    &.alert-message-warning:before {
         background: $warning-color;
     }
 
-    &.well-error:before {
+    &.alert-message-error:before {
         background: $error-color;
     }
 
-    &.well-success:before {
+    &.alert-message-success:before {
         background: $success-color;
     }
 }
