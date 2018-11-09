@@ -256,7 +256,7 @@
 
         if (requestUserLogin) {
             requestUserLogin.classList.remove('hidden');
-            form.addClass('hidden');
+            form.get(0).classList.add('hidden');
             return;
         }
 
@@ -468,12 +468,15 @@
         }
     }
 
-    function redirectUserToLogin(event){
+    /**
+     * Removed popover hidden state in local storge.
+     */
+    function redirectUserToLogin(event) {
         event.preventDefault();
         var gitHubLink = $(this).attr('href');
         var gitHubNext = $(this).data('next');
         var getFormFields = form.serialize();
-        gitHubLink = gitHubLink + '&next='+ gitHubNext + '?' + encodeURIComponent(getFormFields);
+        gitHubLink += '&next='+ gitHubNext + '?' + encodeURIComponent(getFormFields);
         window.location.href = encodeURI(gitHubLink);
     }
 
