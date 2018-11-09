@@ -14,11 +14,14 @@ log = logging.getLogger('kuma.payments.tasks')
 
 @task
 @skip_in_maintenance_mode
-def contribute_thank_you_email(username, user_email):
+def payments_thank_you_email(username, user_email, recurring=False):
     """Create a notification email for new contributor."""
     message_context = {
         'user_email': user_email,
         'username': username,
+        'support_mail_link': 'mailto:' + settings.CONTRIBUTION_SUPPORT_EMAIL + '?Subject=Recurring%20payment%20support',
+        'support_mail': settings.CONTRIBUTION_SUPPORT_EMAIL,
+        'recurring_payment': recurring,
     }
 
     # TODO: Remove when we ship translations, get legal approval

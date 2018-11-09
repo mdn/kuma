@@ -107,7 +107,7 @@
                         <div class="sub-section">
                             <h3>{{_('Payment terms')}}</h3>
                             <p>
-                                {% trans url="https://stripe.com/us/checkout/legal" %}
+                                {% trans url=url('payment_terms') %}
                                     Please read our
                                     <a href="{{ url }}">payment terms</a>
                                     for more information.

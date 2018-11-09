@@ -12,7 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from kuma.core.decorators import login_required
 
 from .forms import ContributionForm, RecurringPaymentForm
-from .tasks import contribute_thank_you_email
+from .tasks import payments_thank_you_email
 from .utils import enabled
 
 
@@ -43,7 +43,7 @@ def contribute(request):
         if form.is_valid():
             if form.make_charge():
                 if settings.MDN_CONTRIBUTION_CONFIRMATION_EMAIL:
-                    contribute_thank_you_email.delay(
+                    payments_thank_you_email.delay(
                         form.cleaned_data['name'],
                         form.cleaned_data['email']
                     )
@@ -114,9 +114,10 @@ def contribute_recurring_payment_subscription(request):
         if form.is_valid():
             if form.make_recurring_payment_charge(request.user):
                 if settings.MDN_CONTRIBUTION_CONFIRMATION_EMAIL:
-                    contribute_thank_you_email.delay(
+                    payments_thank_you_email.delay(
                         form.cleaned_data['name'],
-                        form.cleaned_data['email']
+                        form.cleaned_data['email'],
+                        recurring=True
                     )
                 return redirect('recurring_payment_succeeded')
             return redirect('recurring_payment_error')
