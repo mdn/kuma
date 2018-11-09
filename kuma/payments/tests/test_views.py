@@ -1,15 +1,16 @@
 import mock
 import pytest
 
+from django.test.utils import override_settings
+
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
-from django.test.utils import override_settings
 
 
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled')
-def test_contribute_view(mock_enabled, client, settings):
-    """If enabled, contribution page is returned."""
+def test_payments_view(mock_enabled, client, settings):
+    """The one-time payment page renders."""
     mock_enabled.return_value = True
     response = client.get(reverse('payments'))
     assert_no_cache_header(response)
@@ -19,7 +20,7 @@ def test_contribute_view(mock_enabled, client, settings):
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled')
 def test_payment_terms_view(mock_enabled, client, settings):
-    """If enabled, contribution page is returned."""
+    """The payment terms page renders."""
     mock_enabled.return_value = True
     response = client.get(reverse('payment_terms'))
     assert_no_cache_header(response)
@@ -29,7 +30,7 @@ def test_payment_terms_view(mock_enabled, client, settings):
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled')
 def test_thanks_view(mock_enabled, client, settings):
-    """If enabled, contribution thank you page is returned."""
+    """The thank you page renders."""
     mock_enabled.return_value = True
     response = client.get(reverse('payment_succeeded'))
     assert_no_cache_header(response)
@@ -39,7 +40,7 @@ def test_thanks_view(mock_enabled, client, settings):
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled')
 def test_error_view(mock_enabled, client, settings):
-    """If enabled, contribution error page is returned."""
+    """The error page renders."""
     mock_enabled.return_value = True
     response = client.get(reverse('payment_error'))
     assert_no_cache_header(response)
@@ -54,7 +55,7 @@ def test_error_view(mock_enabled, client, settings):
                                   'recurring_payment_subscription'))
 @mock.patch('kuma.payments.views.enabled')
 def test_views_404(mock_enabled, view, client, settings):
-    """If disabled, contribution pages are 404."""
+    """If disabled, payment pages are 404."""
     mock_enabled.return_value = False
     response = client.get(reverse(view))
     assert response.status_code == 404
@@ -63,7 +64,7 @@ def test_views_404(mock_enabled, view, client, settings):
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled')
 def test_error_recurring_payment_initial_view(mock_enabled, client, settings):
-    """If enabled, contribution error page is returned."""
+    """The initial recurring payments page renders."""
     mock_enabled.return_value = True
     response = client.get(reverse('recurring_payment_initial'))
     assert_no_cache_header(response)
@@ -73,7 +74,7 @@ def test_error_recurring_payment_initial_view(mock_enabled, client, settings):
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled')
 def test_login_required_recurring_payment_subscription_view_redirect(mock_enabled, client, settings):
-    """If enabled, contribution error page is returned."""
+    """The recurring payments page redirects anon users."""
     mock_enabled.return_value = True
     response = client.get(reverse('recurring_payment_subscription'))
     assert response.status_code == 302
@@ -82,7 +83,7 @@ def test_login_required_recurring_payment_subscription_view_redirect(mock_enable
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled')
 def test_login_required_recurring_payment_subscription_view_ok(mock_enabled, user_client, settings):
-    """If enabled, contribution error page is returned."""
+    """The recurring payments subscription page renders for logged-in users."""
     mock_enabled.return_value = True
     response = user_client.get(reverse('recurring_payment_subscription'))
     assert_no_cache_header(response)
@@ -92,7 +93,7 @@ def test_login_required_recurring_payment_subscription_view_ok(mock_enabled, use
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled')
 def test_post_method_redirect_recurring_payment_subscription(mock_enabled, user_client, settings):
-    """If enabled, contribution error page is returned."""
+    """The recurring payments form errors without a Stripe token."""
     mock_enabled.return_value = True
     response = user_client.post(
         reverse('recurring_payment_subscription'),
@@ -113,7 +114,7 @@ def test_post_method_redirect_recurring_payment_subscription(mock_enabled, user_
 @mock.patch('kuma.payments.views.enabled')
 @mock.patch('kuma.payments.views.RecurringPaymentForm.make_recurring_payment_charge', return_value=True)
 def test_post_method_recurring_payment_subscription(mock_enabled, form, user_client, settings):
-    """If enabled, contribution error page is returned."""
+    """The recurring payments form succeeds with a valid Stripe token."""
     mock_enabled.return_value = True
     response = user_client.post(
         reverse('recurring_payment_subscription'),
@@ -134,7 +135,7 @@ def test_post_method_recurring_payment_subscription(mock_enabled, form, user_cli
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled')
 def test_template_render_logged_in_recurring_payment_initial_view(mock_enabled, user_client, settings):
-    """If enabled, contribution error page is returned."""
+    """Logged-in users get the full recurring payments form."""
     mock_enabled.return_value = True
     response = user_client.get(reverse('recurring_payment_initial'))
     assert_no_cache_header(response)
@@ -153,7 +154,7 @@ def test_template_render_logged_in_recurring_payment_initial_view(mock_enabled, 
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled')
 def test_template_render_not_logged_in_recurring_payment_initial_view(mock_enabled, client, settings):
-    """If enabled, contribution error page is returned."""
+    """Anonymous users get a provisionary recurring payments form."""
     mock_enabled.return_value = True
     response = client.get(reverse('recurring_payment_initial'))
     assert_no_cache_header(response)
@@ -171,7 +172,7 @@ def test_template_render_not_logged_in_recurring_payment_initial_view(mock_enabl
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled')
 def test_template_render_not_logged_in_payment_view(mock_enabled, client, settings):
-    """If enabled, contribution error page is returned."""
+    """Anonymous users get the full one-time payments form."""
     mock_enabled.return_value = True
     response = client.get(reverse('payments'))
     assert_no_cache_header(response)
