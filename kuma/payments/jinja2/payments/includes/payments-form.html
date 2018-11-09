@@ -1,4 +1,9 @@
-<form id="contribute-form" class="contribution-form" method="{% if recurring_payment and not request.user.is_authenticated %}get{% else %}post{% endif %}" action="{% if recurring_payment %}{{ recurring_payment_subscription_url }}{% else %}{{ payments_url }}{% endif %}" novalidate>
+<form id="contribute-form"
+    class="contribution-form"
+    method="{% if recurring_payment and not request.user.is_authenticated %}get{% else %}post{% endif %}"
+    action="{% if recurring_payment %}{{ recurring_payment_subscription_url }}{% else %}{{ payments_url }}{% endif %}"
+    data-payment-type="{% if recurring_payment %}recurring{% else %}one-time{% endif %}"
+    novalidate>
     <div class="form-group {% if recurring_payment %} recurring-form {% endif %}">
         <label class="offscreen" for="id_{{form.name.name}}">{{form.name.label}}</label>
         {{form.name}}
@@ -28,13 +33,11 @@
 
 
         <p class="legal-copy">
-            {% trans terms_url=url('payment_terms') %}
-                Payments are not tax deductible. Your payment details will be processed by
-                <a href="https://stripe.com/" rel="noopener" target="_blank">Stripe</a>.
-                You can read our Payment Terms
-                <a href="{{ terms_url }}" target="_blank">Payment terms</a>,
-                for more information.
-            {% endtrans %}
+            Payments are not tax deductible. Your payment details will be processed by
+            <a href="https://stripe.com/" rel="noopener" target="_blank">Stripe</a>.
+            You can read our Payment Terms
+            <a href="{{ url('payment_terms') }}" rel="noopener" target="_blank">Payment terms</a>,
+            for more information.
         </p>
 
         {% if recurring_payment %}
@@ -43,12 +46,10 @@
                 {{form.accept_checkbox}}
                 <div class="control-indicator"></div>
                 <span class="legal-copy">
-                    {% trans amount='16' %}
-                        By clicking this button, I authorize Mozilla to charge
-                        this payment method $<span id="amount">{{ amount }}</span>
-                        each month, according to the <a>Payment Terms</a>, until
-                        I cancel my subscription.
-                    {% endtrans %}
+                    By clicking this button, I authorize Mozilla to charge
+                    this payment method <span data-dynamic-amount>$64</span>
+                    each month, according to the <a>Payment Terms</a>, until
+                    I cancel my subscription.
                 </span>
             </label>
         {% endif %}
@@ -62,7 +63,7 @@
             {% else %} type="submit" {% endif %}>
             <span class="hide-expand">{{_('Support MDN')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
             <span class="hide-collapse">
-                {{_('Pay <span id="%(span_id)s">%(amount)s</span>', span_id="amount", amount="$64") }}
+                {{_('Pay <span data-dynamic-amount>%(amount)s</span>', amount="$64") }}
             </span>
         </button>
         <div class="payment-details">

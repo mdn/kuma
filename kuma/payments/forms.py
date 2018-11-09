@@ -219,7 +219,7 @@ class RecurringPaymentForm(ContributionForm):
         widget=forms.CheckboxInput(
             attrs={
                 'class': 'required checkbox form-control',
-                'data-error-message': _('Must be more than $1')
+                'data-error-message': _('You must agree to the terms to continue')
             },
         ),
     )

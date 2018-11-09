@@ -29,6 +29,13 @@
 
     .recurring-payment-confirmation {
         display: flex;
+        position: relative;
+
+        .errorlist {
+            bottom: -14px;
+            font-size: 12px;
+            position: absolute;
+        }
 
         > input[type='checkbox'] {
             margin: 0;
@@ -36,12 +43,12 @@
             height: 0;
             width: 0;
 
-            &:focus + .control-indicator:before {
-                background: lighten($grey, 40%);
+            &:focus ~ .control-indicator:before {
+                background-color: lighten($grey, 40%);
             }
 
-            &:checked + .control-indicator:before {
-                background: $text-color;
+            &:checked ~ .control-indicator:before {
+                background-color: $text-color;
             }
         }
 
