@@ -67,7 +67,7 @@
     var formErrorMessage = form.find('#contribution-error-message');
     var amountToUpdate = form.find('[data-dynamic-amount]');
 
-    var isRecurringPayment = Boolean(form.attr('data-payment-type') === 'recurring');
+    var isRecurringPayment = form.attr('data-payment-type') === 'recurring';
     var submitted = false;
 
     /**

@@ -32,7 +32,7 @@
         position: relative;
 
         .errorlist {
-            bottom: -14px;
+            bottom: 0;
             font-size: 12px;
             position: absolute;
         }
@@ -49,6 +49,11 @@
 
             &:checked ~ .control-indicator:before {
                 background-color: $text-color;
+            }
+
+            &.error ~ .control-indicator {
+                border-color: $error;
+                margin-bottom:  40px;
             }
         }
 
