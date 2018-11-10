@@ -1714,11 +1714,31 @@ class Revision(models.Model):
         """
         Returns the previous approved revision or None.
         """
+        # If we use the following more natural Django ORM usage:
+        #
+        #     self.document.revisions.filter(
+        #         is_approved=True,
+        #         created__lt=self.created,
+        #     ).order_by('-created')[0]
+        #
+        # the problem arises where the MySQL query optimizer considers
+        # using the index on the "created" column as well as the index
+        # on the "document_id" column, and unfortunately selects the
+        # index on the "created" column. The difference between the two
+        # choices is several orders of magnitude (e.g., roughly 200,000
+        # rows versus roughly 200 rows). The following raw query is a
+        # way to force the choice of the "document_id" index.
+        sql = """
+            SELECT * FROM (
+                SELECT * FROM {rev_table} WHERE document_id = %(document_id)s
+            ) rev
+            WHERE (rev.is_approved = 1) AND (rev.created < %(created)s)
+            ORDER BY rev.created DESC
+            LIMIT 1
+        """.format(rev_table=Revision._meta.db_table)
+        params = {'document_id': self.document.id, 'created': self.created}
         try:
-            return self.document.revisions.filter(
-                is_approved=True,
-                created__lt=self.created,
-            ).order_by('-created')[0]
+            return Revision.objects.raw(sql, params)[0]
         except IndexError:
             return self.based_on
 
