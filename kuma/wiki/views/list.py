@@ -168,7 +168,7 @@ def revisions(request, document_slug, document_locale):
 
     # Process the requested page size
     per_page = request.GET.get('limit', 10)
-    if not request.user.is_authenticated() and per_page == 'all':
+    if not request.user.is_authenticated and per_page == 'all':
         return render(request, '403.html',
                       {'reason': 'revisions_login_required'}, status=403)
 

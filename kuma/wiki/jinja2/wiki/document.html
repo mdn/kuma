@@ -12,7 +12,7 @@
 {% endif %}
 
 {% set is_archive = (document.slug == 'Archive') or document.slug.startswith('Archive/') %}
-{% set is_logged_in = request.user.is_authenticated() %}
+{% set is_logged_in = request.user.is_authenticated %}
 {% set doc_abs_url = document.get_absolute_url() %}
 {% set canonical = doc_abs_url | absolutify %}
 

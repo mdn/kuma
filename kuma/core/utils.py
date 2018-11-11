@@ -327,7 +327,7 @@ def get_unique(content_type, object_pk, name=None, request=None,
     * None, ip, user_agent, unique_MD5_hash
     """
     if request:
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             user = request.user
             ip = user_agent = None
         else:
@@ -398,7 +398,7 @@ def format_date_time(request, value, format='shortdatetime'):
 
     user = request.user
     try:
-        if user.is_authenticated() and user.timezone:
+        if user.is_authenticated and user.timezone:
             user_tz = timezone(user.timezone)
             tzvalue = user_tz.normalize(tzvalue.astimezone(user_tz))
     except AttributeError:

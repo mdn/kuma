@@ -202,7 +202,7 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         Returns the default URL to redirect to after successfully
         connecting a social account.
         """
-        assert request.user.is_authenticated()
+        assert request.user.is_authenticated
         user_url = reverse('users.user_edit',
                            kwargs={'username': request.user.username})
         return user_url

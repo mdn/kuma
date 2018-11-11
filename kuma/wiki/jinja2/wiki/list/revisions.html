@@ -103,7 +103,7 @@
       var $pagination = $('.pagination');
       var $next = $pagination.find('.next');
 
-      {% set class='hidden' if not request.user.is_authenticated() %}
+      {% set class='hidden' if not request.user.is_authenticated %}
 
       if($next.length) {
         $pagination.append('<li title="{{ _('Sign in to view all history') }}"><a href="?limit=all" id="pagination-all" class="{{ class }}" rel="nofollow">{{ _('View All') }}</a></li>');

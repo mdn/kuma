@@ -1,5 +1,5 @@
 {% macro get_approvals_html(document, user) %}
-  {% if user.is_authenticated() and document.current_revision %}
+  {% if user.is_authenticated and document.current_revision %}
     {% if document.current_revision.needs_technical_review or document.current_revision.needs_editorial_review %}
     <section class="page-meta reviews">
       <p>{{ _('This article needs these reviews:') }}</p>

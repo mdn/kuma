@@ -13,7 +13,7 @@
         ga('create', '{{ config.GOOGLE_ANALYTICS_ACCOUNT }}', 'mozilla.org');
         ga('set', 'anonymizeIp', true);
 
-        {% if request.user and request.user.is_authenticated() %}
+        {% if request.user and request.user.is_authenticated %}
             // dimension1 == 'Signed-In"
             ga('set', 'dimension1', 'Yes');
 
@@ -38,7 +38,7 @@
             ga('set', 'dimension12', '{{ analytics_page_revision }}');
         {%- endif %}
 
-        {%- if request.user and not request.user.is_authenticated() and
+        {%- if request.user and not request.user.is_authenticated and
                content_experiment and
                content_experiment.selection_is_valid %}
             // dimension15 == “a/b test variation”, user scope

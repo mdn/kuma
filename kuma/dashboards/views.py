@@ -113,7 +113,7 @@ def revisions(request):
                  'deleted', 'locale', 'slug')))
 
     show_spam_submission = (
-        request.user.is_authenticated() and
+        request.user.is_authenticated and
         request.user.has_perm('wiki.add_revisionakismetsubmission'))
     if show_spam_submission:
         revisions = revisions.prefetch_related('akismet_submissions')

@@ -1,4 +1,4 @@
-{% if user.is_authenticated() %}
+{% if user.is_authenticated %}
   {% if is_watching_approved %}
     <form action="{{ url('wiki.approved_unwatch') }}" method="post">
       {% csrf_token %}
