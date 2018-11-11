@@ -167,7 +167,7 @@ def test_api_safe(client, section_doc, section_case, if_none_match, method):
                 str(section_doc.current_revision_id))
 
     if method == 'GET':
-        assert response.content == exp_content.encode('utf-8')
+        assert response.content == exp_content.decode('utf-8')
 
 
 @pytest.mark.parametrize('user_case', ('authenticated', 'anonymous'))

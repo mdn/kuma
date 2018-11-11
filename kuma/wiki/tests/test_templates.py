@@ -391,11 +391,12 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
         response = self.client.get(rev.document.get_absolute_url(),
                                    {'v': 'test'})
         assert response.status_code == 200
-        assert 'Original Content.' not in response.content.decode('utf-8')
-        assert 'Variant Content.' in response.content.decode('utf-8')
-        assert self.expected_15 not in response.content.decode('utf-8')
-        assert self.expected_16 not in response.content.decode('utf-8')
-        assert self.script_src not in response.content.decode('utf-8')
+        content = response.content.decode('utf-8')
+        assert 'Original Content.' not in content
+        assert 'Variant Content.' in content
+        assert self.expected_15 not in content
+        assert self.expected_16 not in content
+        assert self.script_src not in content
         doc = pq(response.content)
         assert not doc('#edit-button')
 
