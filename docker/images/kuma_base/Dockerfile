@@ -40,8 +40,10 @@ RUN set -x \
 # ----------------------------------------------------------------------------
 # add node.js 8.x, copied from:
 #     https://github.com/nodejs/docker-node/blob/master/8/stretch/Dockerfile
-# but with package updates and version definitions moved above, and the node
-# user gets uid/gid 1001 rather than 1000.
+# but with:
+#  Package updates and version definitions moved above
+#  The node # user gets uid/gid 1001 rather than 1000
+#  Add --no-tty option to gpg to smooth creation of /root/.gnupg/trustdb.gpg
 # ----------------------------------------------------------------------------
 
 RUN groupadd --gid 1001 node \
@@ -59,9 +61,9 @@ RUN set -ex \
     77984A986EBC2AA786BC0F66B01FBB92821C587A \
     8FCCA13FEF1D0C2E91008E09770F7A9A5AE15600 \
   ; do \
-    gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys "$key" || \
-    gpg --keyserver hkp://ipv4.pool.sks-keyservers.net --recv-keys "$key" || \
-    gpg --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
+    gpg --no-tty --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys "$key" || \
+    gpg --no-tty --keyserver hkp://ipv4.pool.sks-keyservers.net --recv-keys "$key" || \
+    gpg --no-tty --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
   done
 
 RUN ARCH=  && dpkgArch="$(dpkg --print-architecture)" \
