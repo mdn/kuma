@@ -45,7 +45,7 @@
 
         .form-footer {
             margin-top: 0;
-            text-align: center;
+            text-align: left;
         }
 
         &.expanded {
@@ -187,9 +187,11 @@
         border: 2px solid #333;
         border-radius: 50px;
         box-sizing: border-box;
+        display: flex;
         height: $payment-form-input-height;
 
         > a,
+        > label,
         > button {
             background: none;
             border: none;
@@ -199,7 +201,6 @@
             font-weight: bold;
             height: 100%;
             line-height: 3.33;
-            margin-right: -3px; // ensure % fits
             overflow: hidden;
             padding: 0;
             text-decoration: none;
@@ -208,6 +209,18 @@
             width: 50%;
 
             &.active {
+                background: #333;
+                color: #fff;
+            }
+        }
+
+        input {
+            height: 0;
+            margin: 0;
+            opacity: 0;
+            width: 0;
+
+            &:checked + label {
                 background: #333;
                 color: #fff;
             }
@@ -257,6 +270,10 @@
 
         .hide-expand {
             display: inherit;
+        }
+
+        .payments-form-container {
+            padding: 10px;
         }
 
         .column-container {

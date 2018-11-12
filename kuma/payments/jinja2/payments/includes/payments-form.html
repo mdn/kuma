@@ -1,10 +1,12 @@
 <form id="contribute-form"
-    class="contribution-form"
+    class="contribution-form {% if recurring_payment %}recurring-form{% endif %}"
     method="{% if recurring_payment and not request.user.is_authenticated %}get{% else %}post{% endif %}"
     action="{% if recurring_payment %}{{ recurring_payment_subscription_url }}{% else %}{{ payments_url }}{% endif %}"
-    data-payment-type="{% if recurring_payment %}recurring{% else %}one-time{% endif %}"
+    data-payment-type="{% if recurring_payment %}recurring{% else %}one_time{% endif %}"
+    data-recurring-action="{{ recurring_payment_subscription_url }}"
+    data-one-time-action="{{ payments_url }}"
     novalidate>
-    <div class="form-group {% if recurring_payment %} recurring-form {% endif %}">
+    <div class="form-group">
         <label class="offscreen" for="id_{{form.name.name}}">{{form.name.label}}</label>
         {{form.name}}
         {{form.name.errors}}
@@ -40,8 +42,9 @@
             for more information.
         </p>
 
-        {% if recurring_payment %}
-            <input type="hidden" id="stripe_source_setup" value="1">
+        <input type="hidden" id="stripe_source_setup" value="1">
+
+        <div id="recurring-confirmation-container" class="{% if not recurring_payment %}hidden{% endif %}">
             <label class="recurring-payment-confirmation">
                 {{form.accept_checkbox}}
                 <div class="control-indicator"></div>
@@ -52,7 +55,8 @@
                     I cancel my subscription.
                 </span>
             </label>
-        {% endif %}
+        </div>
+
     </div>
     <ul class="errorlist hidden" id="contribution-error-message">
         <li>{{_('There has been an issue, please try again later.')}}</li>

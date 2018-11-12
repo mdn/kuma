@@ -72,7 +72,16 @@
     var requestUserLogin = doc.getElementById('login-popover');
     var githubRedirectButton = doc.getElementById('github_redirect_payment');
 
+    var hasPaymentSwitch = Boolean(doc.getElementById('dynamic-payment-switch'));
+    var paymentTypeSwitch = doc.querySelectorAll('input[type=radio][name="payment_selector"]');
+    var recurringConfirmationContainer = doc.getElementById('recurring-confirmation-container');
+
     var submitted = false;
+    var paymentChoices = {
+        recurring: [4, 8, 16],
+        oneTime: [32, 64, 128]
+    };
+    var amountRadioInputs = doc.querySelectorAll('input[data-dynamic-choice-selector]');
 
     /**
      * Initialise the stripeCheckout handler.
@@ -518,6 +527,65 @@
 
     if (isPopoverBanner) {
         closeButton.click(disablePopover);
+    }
+
+    /**
+     * Runs when the payment switch changes
+     * Toggles the payment type between one-time or recurring payments
+     * Updates the form action and method to post to the correct view
+     * Updated the visual styling between one-time and recurring
+     * Updates the state of the form
+     */
+    function switchPaymentTypeHandler() {
+        var action = form.get(0).getAttribute('action');
+
+        if (this.value === 'one_time' && isRecurringPayment) {
+            // Switch to one-time payment form
+            isRecurringPayment = false;
+
+            // Hide the checkbox and mark as not required
+            recuringConfirmationCheckbox.get(0).removeAttribute('required');
+            recurringConfirmationContainer.classList.add('hidden');
+
+            // Change the form action to submit to the one-time payment view
+            action = form.get(0).getAttribute('data-one-time-action');
+            Array.prototype.forEach.call(amountRadioInputs, function(radio, i) {
+                radio.setAttribute('value', paymentChoices.oneTime[i]);
+                radio.nextSibling.nodeValue = '$' + paymentChoices.oneTime[i];
+            });
+
+            // Visually update the form
+            form.get(0).classList.remove('recurring-form');
+            popoverBanner.get(0).classList.remove('expanded-extend');
+
+        } else if (this.value === 'recurring' && !isRecurringPayment) {
+            // Switch to recurring payment form
+            isRecurringPayment = true;
+
+            // Show the confirmation checkbox and mark as required
+            recurringConfirmationContainer.classList.remove('hidden');
+            recuringConfirmationCheckbox.get(0).setAttribute('required', '');
+
+            // Change the form action to submit to the recurring subscription view
+            action = form.get(0).getAttribute('data-recurring-action');
+            Array.prototype.forEach.call(amountRadioInputs, function(radio, i) {
+                radio.setAttribute('value', paymentChoices.recurring[i]);
+                radio.nextSibling.nodeValue = '$' + paymentChoices.oneTime[i] + '/mo';
+            });
+
+            // Visually update the form
+            form.get(0).classList.add('recurring-form');
+            popoverBanner.get(0).classList.add('expanded-extend');
+        }
+
+        // Update the form action
+        form.get(0).setAttribute('action', action);
+    }
+
+    if (hasPaymentSwitch) {
+        Array.prototype.forEach.call(paymentTypeSwitch, function(radio) {
+            radio.addEventListener('change', switchPaymentTypeHandler);
+        });
     }
 
     // Send to GA if popover is displayed.
