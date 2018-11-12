@@ -68,7 +68,6 @@
     var amountToUpdate = form.find('[data-dynamic-amount]');
 
     var isRecurringPayment = form.attr('data-payment-type') === 'recurring';
-
     var requestUserLogin = doc.getElementById('login-popover');
     var githubRedirectButton = doc.getElementById('github_redirect_payment');
 
@@ -77,10 +76,7 @@
     var recurringConfirmationContainer = doc.getElementById('recurring-confirmation-container');
 
     var submitted = false;
-    var paymentChoices = {
-        recurring: [4, 8, 16],
-        oneTime: [32, 64, 128]
-    };
+    var paymentChoices = win.donationChoices;
     var amountRadioInputs = doc.querySelectorAll('input[data-dynamic-choice-selector]');
 
     /**
