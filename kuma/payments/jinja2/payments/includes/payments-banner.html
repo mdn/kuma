@@ -67,7 +67,7 @@
                                     {%  include "payments/includes/payments-form.html" %}
                                 {% endwith %}
                             {% else %}
-                                {% with form=form, hide_submit=True, is_popover=False, recurring_payment=recurring_payment, payments_url=payments_url, recurring_payment_subscription_url=recurring_payment_subscription_url  %}
+                                {% with form=form, is_popover=False, recurring_payment=recurring_payment, payments_url=payments_url, recurring_payment_subscription_url=recurring_payment_subscription_url  %}
                                     {%  include "payments/includes/payments-form.html" %}
                                 {% endwith %}
                                 {% set github_url = provider_login_url('github', process='login') %}
