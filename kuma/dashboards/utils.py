@@ -5,6 +5,7 @@ from collections import Counter, defaultdict
 
 from dateutil import parser
 from django.core.exceptions import ImproperlyConfigured
+from six.moves import xrange
 
 from kuma.wiki.models import (DocumentDeletionLog, DocumentSpamAttempt,
                               Revision, RevisionAkismetSubmission)

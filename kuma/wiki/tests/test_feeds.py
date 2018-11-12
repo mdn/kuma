@@ -467,7 +467,7 @@ def test_feeds_update_after_doc_tag_change(client, wiki_user, root_doc):
         response = client.get(reverse('wiki.feeds.recent_documents',
                                       args=['atom', tag]), follow=True)
         assert response.status_code == 200
-        assert root_doc.title not in response.content
+        assert root_doc.title not in response.content.decode('utf-8')
 
 
 def test_recent_documents_handles_ambiguous_time(root_doc, client):

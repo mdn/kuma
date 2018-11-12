@@ -178,7 +178,7 @@ def revisions(request, document_slug, document_locale):
                         .values_list('id', flat=True))
 
     # Create pairs (this revision, previous revision)
-    revision_pairs = zip(revision_ids, revision_ids[1:] + [None])
+    revision_pairs = list(zip(revision_ids, revision_ids[1:] + [None]))
 
     # Paginate the revision pairs, or use all of them
     if per_page == 'all':
