@@ -243,14 +243,14 @@
         margin-top: $grid-spacing;
 
         @media #{$mq-tablet-and-up} {
-            float: right;
             display: inline-block;
+            float: right;
             margin: 14px;
         }
 
         @media #{$mq-small-desktop-and-up} {
-            float: right;
             display: inline-block;
+            float: right;
             margin: 14px 28px;
         }
     }
