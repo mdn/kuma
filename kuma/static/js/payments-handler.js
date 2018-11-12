@@ -477,7 +477,7 @@
         var gitHubLink = $(this).attr('href');
         var gitHubNext = $(this).data('next');
         var getFormFields = form.serialize();
-        gitHubLink += '&next='+ gitHubNext + '?' + encodeURIComponent(getFormFields);
+        gitHubLink += '&next=' + gitHubNext + '?' + encodeURIComponent(getFormFields);
         window.location.href = encodeURI(gitHubLink);
     }
 
