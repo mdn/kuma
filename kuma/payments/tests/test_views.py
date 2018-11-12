@@ -171,4 +171,4 @@ def test_template_render_not_logged_in_payment_view(mock_enabled, client, settin
     assert '<input type="email"' in response.content
     assert 'id="id_donation_amount"' in response.content
     assert 'id="id_donation_choices"' in response.content
-    assert 'id="id_accept_checkbox"' not in response.content
+    assert 'id="id_accept_checkbox"' in response.content
