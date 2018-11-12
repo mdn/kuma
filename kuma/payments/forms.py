@@ -66,8 +66,8 @@ class ContributionForm(forms.Form):
         initial=DONATION_CHOICES[1][0],
         widget=forms.RadioSelect(
             attrs={
-                'class': 'form-radios form-radios-donation-choices'
-                'data-dynamic-choice-selector'
+                'class': 'form-radios form-radios-donation-choices',
+                'data-dynamic-choice-selector': ''
             }
         )
     )
