@@ -10,7 +10,7 @@
     margin-bottom: $grid-spacing;
     position: relative;
     overflow: hidden;
-    @include set-font-size($base-font-size);
+    @include set-font-size($smaller-font-size);
 
     a {
         display: inline-block;
