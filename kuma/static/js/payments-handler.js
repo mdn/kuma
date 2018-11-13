@@ -77,8 +77,25 @@
 
     var selectedAmount = 0;
     var submitted = false;
-    var paymentChoices = win.payments.donationChoices;
+
+    var paymentChoices = win.payments ? win.payments.donationChoices : null;
     var amountRadioInputs = doc.querySelectorAll('input[data-dynamic-choice-selector]');
+
+    /* Following recurring payments flow the user may be redirected back to the form to submit payment.
+       We're tracking this with a localstorage item as this should percist across various pages. */
+    var triggerAnalyticEvents = !hasUserBeenRedirected();
+
+    /**
+     * Check storage to see if user is being redirected
+     * @returns {boolean}
+     */
+    function hasUserBeenRedirected() {
+        if (!win.mdn.features.localStorage) {
+            return false;
+        }
+
+        return Boolean(localStorage.getItem('userAuthenticationOnFormSubmission'));
+    }
 
     /**
      * Initialise the stripeCheckout handler.
@@ -141,14 +158,26 @@
      * @param {Object} event - The event to be emitted
      * @param {string} event.action - The event's action name
      * @param {number} [event.value] - the event's numerical value
+     * @param {boolean} [storeUserForLaterEvents] - store user auth level for later analytic events
      */
-    function triggerRecurringPaymentEvent(event) {
+    function triggerRecurringPaymentEvent(event, storeUserForLaterEvents) {
+        if (!triggerAnalyticEvents) {
+            return;
+        }
+
         mdn.analytics.trackEvent({
-            category: 'Recuring Payments',
+            category: 'recuring payments',
             action: event.action,
-            label: win.hasAuthenticatedUser ? 'authenticated' : 'anonymous',
+            label: win.payments.hasAuthenticatedUser ? 'authenticated' : 'anonymous',
             value: event.value
         });
+
+        /* Save the user authentication level so that we can track conversion rates of
+           authenticated vs anonymous users at a later stage in the payment flow. */
+        if (storeUserForLaterEvents) {
+            var item = win.payments.hasAuthenticatedUser ? 'authenticated' : 'anonymous';
+            localStorage.setItem('userAuthenticationOnFormSubmission', item);
+        }
     }
 
     /**
@@ -159,6 +188,10 @@
      * @param {number} [event.value] - the event's numerical value
      */
     function triggerOneTimePaymentEvent(event) {
+        if (!triggerAnalyticEvents) {
+            return;
+        }
+
         mdn.analytics.trackEvent({
             category: 'payments',
             action: event.action,
@@ -286,11 +319,16 @@
         }
 
         // Send GA Event.
-        triggerOneTimePaymentEvent({
-            action: 'submission',
-            label: isPopoverBanner ? 'On pop over' : 'On FAQ page',
-            value: selectedAmount * 100
-        });
+        currrentPaymentForm === 'recurring'
+            ? triggerRecurringPaymentEvent({
+                action: 'Form completed',
+                value: selectedAmount * 100
+            }, true)
+            : triggerOneTimePaymentEvent({
+                action: 'submission',
+                label: isPopoverBanner ? 'On pop over' : 'On FAQ page',
+                value: selectedAmount * 100
+            });
 
         if (requestUserLogin && currrentPaymentForm === 'recurring') {
             requestUserLogin.classList.remove('hidden');
@@ -428,10 +466,14 @@
             });
         });
 
-        triggerOneTimePaymentEvent({
-            action: 'banner',
-            label: 'expand'
-        });
+        currrentPaymentForm === 'recurring'
+            ? triggerRecurringPaymentEvent({
+                action: 'banner expanded',
+            })
+            : triggerOneTimePaymentEvent({
+                action: 'banner',
+                label: 'expand',
+            });
     }
 
     /**
@@ -652,13 +694,14 @@
 
     // Send to GA if popover is displayed.
     if (popoverBanner && popoverBanner.is(':visible')) {
-        var event = {
-            action: 'banner',
-            label: 'shown',
-        };
         currrentPaymentForm === 'recurring'
-            ? triggerRecurringPaymentEvent(event)
-            : triggerOneTimePaymentEvent(event);
+            ? triggerRecurringPaymentEvent({
+                action: 'banner shown',
+            })
+            : triggerOneTimePaymentEvent({
+                action: 'banner',
+                label: 'shown',
+            });
     }
 
 })(document, window, jQuery);

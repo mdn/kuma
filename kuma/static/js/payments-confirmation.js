@@ -11,6 +11,8 @@
         return;
     }
 
+    var originalUserAuth = localStorage.getItem('userAuthenticationOnFormSubmission');
+
     // Default to no data
     var amountSubmitted = submissionDetails.amount || 0;
     var submissionPage = submissionDetails.page || '';
@@ -26,6 +28,16 @@
             sessionStorage.removeItem(amountSubmittedStoreKey);
         });
 
+    } else if (path.includes('/payments/recurring/success')) {
+        mdn.analytics.trackEvent({
+            category: 'recurring payments',
+            action: 'success',
+            label: originalUserAuth,
+            value: amountSubmitted
+        }, function() {
+            localStorage.removeItem('userAuthenticationOnFormSubmission');
+        });
+
     } else if (path.includes('/payments/error')) {
         mdn.analytics.trackEvent({
             category: 'payments',
@@ -34,6 +46,15 @@
             value: amountSubmitted
         }, function() {
             sessionStorage.removeItem(amountSubmittedStoreKey);
+        });
+    } else if (path.includes('/payments/recurring/error')) {
+        mdn.analytics.trackEvent({
+            category: 'payments',
+            action: 'Payment failed',
+            label: originalUserAuth,
+            value: amountSubmitted
+        }, function() {
+            localStorage.removeItem('userAuthenticationOnFormSubmission');
         });
     }
 
