@@ -58,18 +58,16 @@
         <li>{{_('There has been an issue, please try again later.')}}</li>
     </ul>
     <div class="form-footer">
-        <button class="payment-form-button"
-            {% if request.user.is_authenticated or not recurring_payment and not request.user.is_authenticated %} type="button" id="stripe_submit"
-            {% else %} type="submit" {% endif %}>
+        <button class="payment-form-button" type="button" id="stripe_submit">
             <span class="hide-expand">{{_('Support MDN')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
             <span class="hide-collapse">
                 {{_('Pay <span data-dynamic-amount>%(amount)s</span>', amount="$64") }}
             </span>
-        </button>
-        <div class="payment-details">
-            <img src="{{ static('img/payment-type-mastercard-1x.png') }}" srcset="{{ static('img/payment-type-mastercard-1x.png') }}, {{ static('img/payment-type-mastercard-2x.png') }} 2x" alt="{{ _('We accept Mastercard payments') }}" title="{{ _('We accept Mastercard payments') }}">
-            <img src="{{ static('img/payment-type-visa-1x.png') }}" srcset="{{ static('img/payment-type-visa-1x.png') }}, {{ static('img/payment-type-visa-2x.png') }} 2x" alt="{{ _('We accept Visa payments') }}" title="{{ _('We accept Visa payments') }}">
-            <img src="{{ static('img/payment-type-american-express-1x.png') }}" srcset="{{ static('img/payment-type-american-express-1x.png') }}, {{ static('img/payment-type-american-express-2x.png') }} 2x" alt="{{ _('We accept American Express payments') }}" title="{{ _('We accept American Express payments') }}">
-        </div>
+            </button>
+            <div class="payment-details">
+                <img src="{{ static('img/payment-type-mastercard-1x.png') }}" srcset="{{ static('img/payment-type-mastercard-1x.png') }}, {{ static('img/payment-type-mastercard-2x.png') }} 2x" alt="{{ _('We accept Mastercard payments') }}" title="{{ _('We accept Mastercard payments') }}">
+                <img src="{{ static('img/payment-type-visa-1x.png') }}" srcset="{{ static('img/payment-type-visa-1x.png') }}, {{ static('img/payment-type-visa-2x.png') }} 2x" alt="{{ _('We accept Visa payments') }}" title="{{ _('We accept Visa payments') }}">
+                <img src="{{ static('img/payment-type-american-express-1x.png') }}" srcset="{{ static('img/payment-type-american-express-1x.png') }}, {{ static('img/payment-type-american-express-2x.png') }} 2x" alt="{{ _('We accept American Express payments') }}" title="{{ _('We accept American Express payments') }}">
+            </div>
     </div>
 </form>
