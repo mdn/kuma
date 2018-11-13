@@ -16,45 +16,45 @@
 
 {% block content %}
     <div>
-        <h1>{{ _('Payment terms') }}</h1>
-        <br>
+        <h2>{{ _('Payment terms') }}</h2>
         <p>
-            {{ _('Mozilla (that’s us) operates MDN Web Docs') }}
+            {{ _('Mozilla (that’s us) operates MDN Web Docs.') }}
         </p>
-        <p>
-            {% trans url="https://www.mozilla.org/en-US/about/legal/terms/mozilla/" %}
+        {% trans url="https://www.mozilla.org/en-US/about/legal/terms/mozilla/" %}
+            <p>
                 These Payment Terms cover your payment to MDN. <a href="{{ url }}">The Websites & Communications Terms of Use</a>
                 cover the MDN service itself. If there is any inconsistency between these terms and the
                 Websites & Communications Terms of Use, these Payment Terms apply.
-            {% endtrans %}
-        </p>
+            </p>
+        {% endtrans %}
         <h2>{{ _('Payment Authorization') }}</h2>
-        <p>
-            {% trans terms_url="https://help.github.com/articles/github-terms-of-service/", privacy_policy_url="https://help.github.com/articles/github-privacy-statement/" %}
+        {% trans terms_url="https://help.github.com/articles/github-terms-of-service/", privacy_policy_url="https://help.github.com/articles/github-privacy-statement/" %}
+            <p>
                 You can support MDN with a one-time payment, or you can choose to schedule monthly payments. Your payments are not tax deductible.
                 In order to sign up for monthly payments, you must sign in to MDN using a GitHub account.
                 GitHub has its own <a href="{{ terms_url }}">Terms</a> and <a href="{{ privacy_policy_url }}">Privacy Policy</a>.
                 When you choose to support MDN, you authorize us to charge the payment card you provide for the amount you choose, either as a one-time payment, or as a recurring monthly payment.
-            {% endtrans %}
-        </p>
+            </p>
+        {% endtrans %}
         <h2>{{ _('Cancellation') }}</h2>
-        <p>
-            {% trans %}
+        {% trans %}
+            <p>
                 If you sign up for monthly payments, you may cancel at any time by sending an email to
                 <a href="mailto:mdn-support@mozilla.com">mdn-support@mozilla.com</a>.
                 If you choose to cancel, we will not charge your payment card for subsequent months.
-            {% endtrans %}
-        </p>
-        <h1>{{ _('Privacy Notice') }}</h1>
-        <p>
-            {% trans stripe_url="https://stripe.com/us/privacy", privacy_url="https://www.mozilla.org/en-US/privacy/websites/"%}
+            </p>
+        {% endtrans %}
+        <h2>{{ _('Privacy Notice') }}</h2>
+        {% trans stripe_url="https://stripe.com/us/privacy", privacy_url="https://www.mozilla.org/en-US/privacy/websites/"%}
+            <p>
                 Your payment is processed by <a href="{{ stripe_url }}">Stripe</a>.
-                <br>
+            </p>
+            <p>
                 Mozilla receives a record of your payment and information about how much you’ve decided to
                 pay and whether you’ve set up monthly payments. Mozilla does not receive your payment details.
                 If you sign up for an MDN account, Mozilla also receives information about your account.
                 When Mozilla receives information from you, our <a href="{{ privacy_url }}">Mozilla Privacy Policy</a> describes how we handle that information.
-            {% endtrans %}
-        </p>
+            </p>
+        {% endtrans %}
     </div>
 {% endblock %}
