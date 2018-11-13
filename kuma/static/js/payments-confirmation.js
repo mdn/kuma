@@ -30,7 +30,7 @@
 
     } else if (path.includes('/payments/recurring/success')) {
         mdn.analytics.trackEvent({
-            category: 'recurring payments',
+            category: 'Recurring payments',
             action: 'success',
             label: originalUserAuth,
             value: amountSubmitted

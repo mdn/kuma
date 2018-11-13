@@ -78,8 +78,10 @@
     var selectedAmount = 0;
     var submitted = false;
 
-    var paymentChoices = win.payments ? win.payments.donationChoices : null;
     var amountRadioInputs = doc.querySelectorAll('input[data-dynamic-choice-selector]');
+    var donationChoices = typeof window.payments !== 'undefined' && 'donationChoices' in window.payments
+        ? win.payments.donationChoices
+        : null;
 
     /* Following recurring payments flow the user may be redirected back to the form to submit payment.
        We're tracking this with a localstorage item as this should percist across various pages. */
@@ -166,16 +168,16 @@
         }
 
         mdn.analytics.trackEvent({
-            category: 'recuring payments',
+            category: 'Recurring payments',
             action: event.action,
-            label: win.payments.hasAuthenticatedUser ? 'authenticated' : 'anonymous',
+            label: win.payments.isAuthenticated ? 'authenticated' : 'anonymous',
             value: event.value
         });
 
         /* Save the user authentication level so that we can track conversion rates of
            authenticated vs anonymous users at a later stage in the payment flow. */
         if (storeUserForLaterEvents) {
-            var item = win.payments.hasAuthenticatedUser ? 'authenticated' : 'anonymous';
+            var item = win.payments.isAuthenticated ? 'authenticated' : 'anonymous';
             localStorage.setItem('userAuthenticationOnFormSubmission', item);
         }
     }
@@ -629,8 +631,8 @@
             // Change the form action to submit to the one-time payment view
             action = form.get(0).getAttribute('data-one-time-action');
             [].forEach.call(amountRadioInputs, function(radio, i) {
-                radio.setAttribute('value', paymentChoices.oneTime[i]);
-                radio.nextSibling.nodeValue = '$' + paymentChoices.oneTime[i];
+                radio.setAttribute('value', donationChoices.oneTime[i]);
+                radio.nextSibling.nodeValue = '$' + donationChoices.oneTime[i];
             });
 
             // Visually update the form
@@ -649,8 +651,8 @@
             // Change the form action to submit to the recurring subscription view
             action = form.get(0).getAttribute('data-recurring-action');
             [].forEach.call(amountRadioInputs, function(radio, i) {
-                radio.setAttribute('value', paymentChoices.recurring[i]);
-                radio.nextSibling.nodeValue = '$' + paymentChoices.recurring[i] + '/mo';
+                radio.setAttribute('value', donationChoices.recurring[i]);
+                radio.nextSibling.nodeValue = '$' + donationChoices.recurring[i] + '/mo';
             });
 
             // Visually update the form
@@ -677,8 +679,8 @@
         // Force options for popover
         if (currrentPaymentForm === 'recurring') {
             [].forEach.call(amountRadioInputs, function(radio, i) {
-                radio.setAttribute('value', paymentChoices.recurring[i]);
-                radio.nextSibling.nodeValue = '$' + paymentChoices.recurring[i] + '/mo';
+                radio.setAttribute('value', donationChoices.recurring[i]);
+                radio.nextSibling.nodeValue = '$' + donationChoices.recurring[i] + '/mo';
             });
 
             // Force required checkbox if recurring payment form
