@@ -179,6 +179,7 @@
         if (storeUserForLaterEvents) {
             var item = win.payments.isAuthenticated ? 'authenticated' : 'anonymous';
             localStorage.setItem('userAuthenticationOnFormSubmission', item);
+            triggerAnalyticEvents = false;
         }
     }
 
