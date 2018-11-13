@@ -606,6 +606,9 @@
                 radio.setAttribute('value', paymentChoices.recurring[i]);
                 radio.nextSibling.nodeValue = '$' + paymentChoices.recurring[i] + '/mo';
             });
+
+            // Force required checkbox if recurring payment form
+            recuringConfirmationCheckbox.get(0).setAttribute('required', '');
         }
     }
 

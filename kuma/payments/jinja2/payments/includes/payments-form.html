@@ -42,16 +42,24 @@
         <input type="hidden" id="stripe_source_setup" value="1">
         {% set show_checkbox = recurring_payment or (is_popover and recurring_payment_enabled) %}
         <div id="recurring-confirmation-container" {% if not show_checkbox %}class="hidden"{% endif %}>
-            <label class="recurring-payment-confirmation" for="{{form.accept_checkbox.id_for_label}}">
-                {{form.accept_checkbox}}
-                <div class="control-indicator"></div>
+            <div class="recurring-payment-confirmation">
+                <label for="{{form.accept_checkbox.id_for_label}}">
+                    <span class="offscreen">
+                        By clicking this button, I authorize Mozilla to charge
+                        this payment method <span data-dynamic-amount>$64</span>
+                        each month, according to the <a href="{{ url('payment_terms') }}">Payment Terms</a>, until
+                        I cancel my subscription.
+                    </span>
+                    {{form.accept_checkbox}}
+                    <div class="control-indicator"></div>
+                </label>
                 <span class="legal-copy">
                     By clicking this button, I authorize Mozilla to charge
                     this payment method <span data-dynamic-amount>$64</span>
-                    each month, according to the <a>Payment Terms</a>, until
+                    each month, according to the <a href="{{ url('payment_terms') }}">Payment Terms</a>, until
                     I cancel my subscription.
                 </span>
-            </label>
+            </div>
         </div>
 
     </div>

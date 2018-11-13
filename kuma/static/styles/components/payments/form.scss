@@ -25,6 +25,7 @@
             border-bottom: 1px solid $payment-form-button-color;
             color: $payment-form-button-color;
             padding-bottom: 1px;
+            text-decoration: none;
         }
     }
 
@@ -42,7 +43,7 @@
             margin: 0;
         }
 
-        > input[type='checkbox'] {
+        input[type='checkbox'] {
             margin: 0;
             opacity: 0;
             height: 0;
@@ -58,7 +59,7 @@
 
             &.error ~ .control-indicator {
                 border-color: $error;
-                margin-bottom: 40px;
+                margin-bottom: 50px;
             }
         }
 

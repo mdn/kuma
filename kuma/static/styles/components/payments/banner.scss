@@ -212,6 +212,15 @@
             vertical-align: top;
             width: 50%;
 
+            // Fix flexbox padding issues in FF
+            &:first-of-type {
+                margin-left: -5px;
+            }
+
+            &:last-of-type {
+                margin-left: 5px;
+            }
+
             &.active {
                 background: $text-color;
                 color: #fff;
