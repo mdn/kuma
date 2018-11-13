@@ -340,6 +340,15 @@ icons for both types of indicators
     @include indicator-svg-icon($path-to-svg-general-icons + 'lock.svg');
 }
 
+/* when used in inline indicator boxes */
+.inlineIndicator.secureContexts {
+    &:before {
+        background-size: 12px;
+        margin-top: 0;
+        width: 12px;
+        height: 16px;
+    }
+}
 
 /*
 Colours for both types
