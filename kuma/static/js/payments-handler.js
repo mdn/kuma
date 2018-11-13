@@ -545,7 +545,7 @@
 
             // Change the form action to submit to the one-time payment view
             action = form.get(0).getAttribute('data-one-time-action');
-            Array.prototype.forEach.call(amountRadioInputs, function(radio, i) {
+            [].forEach.call(amountRadioInputs, function(radio, i) {
                 radio.setAttribute('value', paymentChoices.oneTime[i]);
                 radio.nextSibling.nodeValue = '$' + paymentChoices.oneTime[i];
             });
@@ -564,7 +564,7 @@
 
             // Change the form action to submit to the recurring subscription view
             action = form.get(0).getAttribute('data-recurring-action');
-            Array.prototype.forEach.call(amountRadioInputs, function(radio, i) {
+            [].forEach.call(amountRadioInputs, function(radio, i) {
                 radio.setAttribute('value', paymentChoices.recurring[i]);
                 radio.nextSibling.nodeValue = '$' + paymentChoices.oneTime[i] + '/mo';
             });
@@ -579,7 +579,7 @@
     }
 
     if (hasPaymentSwitch) {
-        Array.prototype.forEach.call(paymentTypeSwitch, function(radio) {
+        [].forEach.call(paymentTypeSwitch, function(radio) {
             radio.addEventListener('change', switchPaymentTypeHandler);
         });
     }
