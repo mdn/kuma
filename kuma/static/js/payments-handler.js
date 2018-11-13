@@ -76,7 +76,7 @@
     var recurringConfirmationContainer = doc.getElementById('recurring-confirmation-container');
 
     var submitted = false;
-    var paymentChoices = win.donationChoices;
+    var paymentChoices = win.payments.donationChoices;
     var amountRadioInputs = doc.querySelectorAll('input[data-dynamic-choice-selector]');
 
     /**
@@ -536,11 +536,7 @@
         var action = form.get(0).getAttribute('action');
 
         if (this.value === 'one_time' && currrentPaymentForm === 'recurring') {
-            /**
-             * Switch to one-time payment form only if we're not
-             * on the one-time payment form already.
-            */
-
+            // Switch to one-time payment form only if we're not on the one-time payment form already.
             currrentPaymentForm = 'one_time';
 
             // Hide the checkbox and mark as not required
@@ -559,10 +555,7 @@
             popoverBanner.get(0).classList.remove('expanded-extend');
 
         } else if (this.value === 'recurring' && currrentPaymentForm === 'one_time') {
-            /**
-             * Switch to recurring payment form only if we're not
-             * on the recurring payment form already.
-            */
+            // Switch to recurring payment form only if we're not on the recurring payment form already.
             currrentPaymentForm = 'one_time';
 
             // Show the confirmation checkbox and mark as required
