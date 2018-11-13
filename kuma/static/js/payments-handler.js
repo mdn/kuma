@@ -537,6 +537,7 @@
      */
     function switchPaymentTypeHandler() {
         var action = form.get(0).getAttribute('action');
+        var checkedInput = null;
 
         if (this.value === 'one_time' && currrentPaymentForm === 'recurring') {
             // Switch to one-time payment form only if we're not on the one-time payment form already.
@@ -586,6 +587,12 @@
 
         // Update the form action
         form.get(0).setAttribute('action', action);
+
+        // Ensure the new amount is reflected
+        checkedInput = form.find('input[type=\'radio\']:checked')[0];
+        if (checkedInput) {
+            onAmountSelect({ target: checkedInput });
+        }
     }
 
     if (hasPaymentSwitch) {
