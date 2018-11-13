@@ -67,7 +67,7 @@
     var formErrorMessage = form.find('#contribution-error-message');
     var amountToUpdate = form.find('[data-dynamic-amount]');
 
-    var isRecurringPayment = form.attr('data-payment-type') === 'recurring';
+    var currrentPaymentForm = form.attr('data-payment-type');
     var requestUserLogin = doc.getElementById('login-popover');
     var githubRedirectButton = doc.getElementById('github_redirect_payment');
 
@@ -242,7 +242,7 @@
                 setFieldError(customAmountInput);
             }
 
-            if (isRecurringPayment && recuringConfirmationCheckbox[0].checkValidity()) {
+            if (currrentPaymentForm === 'recurring' && recuringConfirmationCheckbox[0].checkValidity()) {
                 clearFieldError(recuringConfirmationCheckbox[0]);
             } else {
                 setFieldError(recuringConfirmationCheckbox[0]);
@@ -515,7 +515,7 @@
     });
 
     // Clear validation for checkbox confirmation
-    if (isRecurringPayment) {
+    if (currrentPaymentForm === 'recurring') {
         recuringConfirmationCheckbox.change(function() {
             clearFieldError(recuringConfirmationCheckbox[0]);
         });
@@ -535,9 +535,13 @@
     function switchPaymentTypeHandler() {
         var action = form.get(0).getAttribute('action');
 
-        if (this.value === 'one_time' && isRecurringPayment) {
-            // Switch to one-time payment form
-            isRecurringPayment = false;
+        if (this.value === 'one_time' && currrentPaymentForm === 'recurring') {
+            /**
+             * Switch to one-time payment form only if we're not
+             * on the one-time payment form already.
+            */
+
+            currrentPaymentForm = 'one_time';
 
             // Hide the checkbox and mark as not required
             recuringConfirmationCheckbox.get(0).removeAttribute('required');
@@ -554,9 +558,12 @@
             form.get(0).classList.remove('recurring-form');
             popoverBanner.get(0).classList.remove('expanded-extend');
 
-        } else if (this.value === 'recurring' && !isRecurringPayment) {
-            // Switch to recurring payment form
-            isRecurringPayment = true;
+        } else if (this.value === 'recurring' && currrentPaymentForm === 'one_time') {
+            /**
+             * Switch to recurring payment form only if we're not
+             * on the recurring payment form already.
+            */
+            currrentPaymentForm = 'one_time';
 
             // Show the confirmation checkbox and mark as required
             recurringConfirmationContainer.classList.remove('hidden');
