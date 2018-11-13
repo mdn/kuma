@@ -135,6 +135,38 @@
     // Set errors.
     form.find('.errorlist').prev().addClass('error');
 
+
+    /**
+     * Emits an event for recurring payments
+     * @param {Object} event - The event to be emitted
+     * @param {string} event.action - The event's action name
+     * @param {number} [event.value] - the event's numerical value
+     */
+    function triggerRecurringPaymentEvent(event) {
+        mdn.analytics.trackEvent({
+            category: 'Recuring Payments',
+            action: event.action,
+            label: win.hasAuthenticatedUser ? 'authenticated' : 'anonymous',
+            value: event.value
+        });
+    }
+
+    /**
+     * Emits an event for recurring payments
+     * @param {Object} event - The event to be emitted
+     * @param {string} event.action - The event's action name
+     * @param {string} [event.label] - The event's label name
+     * @param {number} [event.value] - the event's numerical value
+     */
+    function triggerOneTimePaymentEvent(event) {
+        mdn.analytics.trackEvent({
+            category: 'payments',
+            action: event.action,
+            label: event.label,
+            value: event.value
+        });
+    }
+
     /**
      * Handles adjusting amount.
      * @param {jQuery.Event} event Event object.
@@ -156,8 +188,7 @@
             customAmountInput.val('');
 
             // Send GA Event.
-            mdn.analytics.trackEvent({
-                category: 'payments',
+            triggerOneTimePaymentEvent({
                 action: 'banner',
                 label: 'Amount radio selected',
                 value: event.target.value * 100
@@ -190,11 +221,8 @@
     function setFieldError(field) {
         $(field).addClass('error');
         $(field).next('.errorlist').remove();
-
         var error = $(field).attr('data-error-message');
-
         $('<ul class="errorlist"><li>' + error + '</li></ul>').insertAfter($(field));
-
     }
 
     /**
@@ -258,8 +286,7 @@
         }
 
         // Send GA Event.
-        mdn.analytics.trackEvent({
-            category: 'payments',
+        triggerOneTimePaymentEvent({
             action: 'submission',
             label: isPopoverBanner ? 'On pop over' : 'On FAQ page',
             value: selectedAmount * 100
@@ -285,8 +312,7 @@
                 closed: function() {
                     // Send GA Event.
                     if (!submitted) {
-                        mdn.analytics.trackEvent({
-                            category: 'payments',
+                        triggerOneTimePaymentEvent({
                             action: 'submission',
                             label: 'canceled'
                         });
@@ -353,7 +379,10 @@
      * also disables the submission button
      */
     function toggleScriptError() {
-        formButton.attr('disabled') ? formButton.removeAttr('disabled') : formButton.attr('disabled', 'true');
+        formButton.attr('disabled')
+            ? formButton.removeAttr('disabled')
+            : formButton.attr('disabled', 'true');
+
         formErrorMessage.toggle();
     }
 
@@ -399,8 +428,7 @@
             });
         });
 
-        mdn.analytics.trackEvent({
-            category: 'payments',
+        triggerOneTimePaymentEvent({
             action: 'banner',
             label: 'expand'
         });
@@ -435,8 +463,7 @@
         });
 
         // Send GA Event.
-        mdn.analytics.trackEvent({
-            category: 'payments',
+        triggerOneTimePaymentEvent({
             action: 'banner',
             label: 'collapse',
         });
@@ -452,8 +479,7 @@
         popoverBanner.attr('aria-hidden', true);
 
         // Send GA Event.
-        mdn.analytics.trackEvent({
-            category: 'payments',
+        triggerOneTimePaymentEvent({
             action: 'banner',
             label: 'close',
         });
@@ -509,15 +535,13 @@
         var value = parseFloat(event.target.value);
         if (!isNaN(value) && value >= 1) {
             // Send GA Event.
-            mdn.analytics.trackEvent({
-                category: 'payments',
+            triggerOneTimePaymentEvent({
                 action: 'banner',
                 label: 'custom amount',
                 value: Math.floor(value * 100)
             });
         } else {
-            mdn.analytics.trackEvent({
-                category: 'payments',
+            triggerOneTimePaymentEvent({
                 action: 'banner',
                 label: 'Invalid amount selected',
             });
@@ -628,11 +652,13 @@
 
     // Send to GA if popover is displayed.
     if (popoverBanner && popoverBanner.is(':visible')) {
-        mdn.analytics.trackEvent({
-            category: 'payments',
+        var event = {
             action: 'banner',
             label: 'shown',
-        });
+        };
+        currrentPaymentForm === 'recurring'
+            ? triggerRecurringPaymentEvent(event)
+            : triggerOneTimePaymentEvent(event);
     }
 
 })(document, window, jQuery);
