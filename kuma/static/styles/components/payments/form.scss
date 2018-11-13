@@ -172,7 +172,7 @@
     &.recurring-form {
         .form-input-amount {
             margin: $payment-form-input-spacing -2px;
-            width: 33%;
+            width: 32%;
         }
 
         .form-radios-donation-choices {
@@ -248,8 +248,8 @@
             margin: 14px;
         }
 
-        @media #{$mq-small-desktop-and-up} {
-            margin: 14px 28px;
+        @media #{$mq-large-desktop-and-up} {
+            margin: 14px 26px;
         }
     }
 

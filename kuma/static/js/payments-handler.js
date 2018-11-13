@@ -543,8 +543,10 @@
             currrentPaymentForm = 'one_time';
 
             // Ensure we show the form and don't request login
-            requestUserLogin.classList.add('hidden');
-            form.get(0).classList.remove('hidden');
+            if (requestUserLogin) {
+                requestUserLogin.classList.add('hidden');
+                form.get(0).classList.remove('hidden');
+            }
 
             // Hide the checkbox and mark as not required
             recuringConfirmationCheckbox.get(0).removeAttribute('required');

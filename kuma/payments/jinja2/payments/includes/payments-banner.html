@@ -72,7 +72,7 @@
                             </div>
                         {% endif %}
 
-                        {% with form=form, is_popover=is_popover, recurring_payment=recurring_payment, payments_url=payments_url, recurring_payment_subscription_url=recurring_payment_subscription_url, recurring_payment_enabled=True %}
+                        {% with form=form, default_payment_url=default_payment_url, is_popover=is_popover, recurring_payment=recurring_payment, payments_url=payments_url, recurring_payment_subscription_url=recurring_payment_subscription_url, recurring_payment_enabled=True %}
                             {%  include "payments/includes/payments-form.html" %}
                         {% endwith %}
 
@@ -87,7 +87,7 @@
                         {% endif %}
                     </div>
                 {% else %}
-                    {% with form=form, is_popover=is_popover, payments_url=payments_url, recurring_payment_subscription_url=recurring_payment_subscription_url, recurring_payment_enabled=False %}
+                    {% with form=form, default_payment_url=default_payment_url, is_popover=is_popover, payments_url=payments_url, recurring_payment_subscription_url=recurring_payment_subscription_url, recurring_payment_enabled=False %}
                         {%- include "payments/includes/payments-form.html" %}
                     {% endwith %}
                 {% endif %}

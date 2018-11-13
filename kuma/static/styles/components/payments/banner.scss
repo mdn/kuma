@@ -35,9 +35,13 @@
         box-shadow: 0 0 5px 0 rgba(0, 0, 0, .25);
         position: fixed;
         width: 100%;
-        height: 110px;
+        height: $payment-banner-popover-collapsed-height-extended;
         transition: height .5s;
         z-index: 99;
+
+        @media #{$mq-small-desktop-and-up} {
+            height: $payment-banner-popover-collapsed-height;
+        }
 
         .legal-copy {
             margin-top: 1em;
@@ -67,10 +71,6 @@
             .form-footer {
                 margin-top: $grid-spacing;
             }
-
-            .payments-form-container {
-                padding: $payment-form-container-padding;
-            }
         }
 
         &.is-expanding {
@@ -81,10 +81,6 @@
             .form-group {
                 animation-duration: .6s;
                 animation-name: fadeIn;
-            }
-
-            .payments-form-container {
-                padding: $payment-form-container-padding;
             }
         }
 
@@ -154,6 +150,14 @@
 
         @media #{$mq-mobile-and-down} {
             padding: $payment-banner-padding-sm;
+        }
+    }
+
+    .payments-form {
+        padding-top: 22px;
+
+        @media #{$mq-small-desktop-and-up} {
+            padding: 0;
         }
     }
 
@@ -336,22 +340,8 @@
     }
 }
 
-@media #{$mq-tablet-and-down} {
-    .contribution-banner {
-
-        .contribute-lead-in {
-            text-align: center;
-        }
-
-        .contribution-form {
-            margin: 0 auto;
-            width: 100%;
-        }
-    }
-}
-
-.payment-form-button,
-.form-footer .payment-form-button {
+.payment-form-link,
+.payment-form-button {
     background-color: $payment-form-button-color;
     border-radius: $payment-form-input-height;
     border: none;
@@ -366,6 +356,14 @@
     text-align: center;
     white-space: nowrap;
 
+    @media #{$mq-small-desktop-and-up} {
+        min-width: $payment-form-button-small-width;
+    }
+
+    @media #{$mq-large-desktop-and-up} {
+        min-width: $payment-form-button-width;
+    }
+
     &:hover {
         background-color: darken($payment-form-button-color, 5%);
     }
@@ -374,23 +372,28 @@
         margin-left: 1em;
         vertical-align: middle;
     }
+}
 
-    .payment-details {
-        display: none;
-        line-height: 0;
-        padding: 10px;
-        vertical-align: top;
+.payment-form-link {
+    display: none;
+}
 
-        @media #{$mq-mobile-and-down} {
-            display: inline-block;
-            margin-top: -4px;
-            padding: 0;
-            position: relative;
-            vertical-align: middle;
-
-            > img {
-                max-height: 24px;
-            }
+@media #{$mq-tablet-and-down} {
+    .contribution-banner {
+        .contribute-lead-in {
+            text-align: center;
         }
+
+        .contribution-form {
+            margin: 0 auto;
+            width: 100%;
+        }
+    }
+    .payment-form-button {
+        display: none;
+    }
+
+    .payment-form-link {
+        display: inline-block;
     }
 }
