@@ -556,7 +556,7 @@
 
         } else if (this.value === 'recurring' && currrentPaymentForm === 'one_time') {
             // Switch to recurring payment form only if we're not on the recurring payment form already.
-            currrentPaymentForm = 'one_time';
+            currrentPaymentForm = 'recurring';
 
             // Show the confirmation checkbox and mark as required
             recurringConfirmationContainer.classList.remove('hidden');
