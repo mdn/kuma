@@ -2,8 +2,10 @@
 {% set payments_url = url('payments') %}
 {% set recurring_payment_subscription_url = url('recurring_payment_subscription') %}
 {% set recurring_payment_initial_url = url('recurring_payment_initial') %}
-{% set faq_url = payments_url + "#contribute-faqs" %}
-{% set feedback_url = payments_url + "#contribute-feedback" %}
+{% set default_payment_url = recurring_payment_initial_url if recurring_payment_enabled else payments_url %}
+{% set faq_url = default_payment_url + "#contribute-faqs" %}
+{% set recurring_faq_url = default_payment_url + "#contribute-faqs" %}
+{% set feedback_url = default_payment_url + "#contribute-feedback" %}
 {% set account_login_url = url('account_login') %}
 {% set github_next_url = account_login_url + '?next=' + recurring_payment_subscription_url %}
 
@@ -54,9 +56,9 @@
                     <div class="payments-form-container">
                         {% if is_popover %}
                             <div id="dynamic-payment-switch" class="payments-switch">
-                                <input type="radio" id="switch_left" name="payment_selector" value="one_time" checked/>
+                                <input type="radio" id="switch_left" name="payment_selector" value="one_time"/>
                                 <label for="switch_left">{{_('One off payment')}}</label>
-                                <input type="radio" id="switch_right" name="payment_selector" value="recurring"/>
+                                <input type="radio" id="switch_right" name="payment_selector" value="recurring" checked/>
                                 <label for="switch_right">{{_('Monthly payment')}}</label>
                             </div>
                         {% else %}
@@ -70,7 +72,7 @@
                             </div>
                         {% endif %}
 
-                        {% with form=form, is_popover=False, recurring_payment=recurring_payment, payments_url=payments_url, recurring_payment_subscription_url=recurring_payment_subscription_url %}
+                        {% with form=form, is_popover=is_popover, recurring_payment=recurring_payment, payments_url=payments_url, recurring_payment_subscription_url=recurring_payment_subscription_url, recurring_payment_enabled=True %}
                             {%  include "payments/includes/payments-form.html" %}
                         {% endwith %}
 
@@ -85,7 +87,7 @@
                         {% endif %}
                     </div>
                 {% else %}
-                    {% with form=form, payments_url=payments_url, recurring_payment_subscription_url=recurring_payment_subscription_url %}
+                    {% with form=form, is_popover=is_popover, payments_url=payments_url, recurring_payment_subscription_url=recurring_payment_subscription_url, recurring_payment_enabled=False %}
                         {%- include "payments/includes/payments-form.html" %}
                     {% endwith %}
                 {% endif %}

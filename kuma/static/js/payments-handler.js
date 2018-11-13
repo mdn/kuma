@@ -259,7 +259,7 @@
             value: selectedAmount * 100
         });
 
-        if (requestUserLogin) {
+        if (requestUserLogin && currrentPaymentForm === 'recurring') {
             requestUserLogin.classList.remove('hidden');
             form.get(0).classList.add('hidden');
             return;
@@ -359,7 +359,10 @@
         var smallDesktop = '(max-width: 1092px)';
 
         mediaQueryList = window.matchMedia(smallDesktop);
-        var initialExpandedClass = mediaQueryList.matches ? 'expanded-extend' : 'expanded';
+        var initialExpandedClass = mediaQueryList.matches
+        || currrentPaymentForm === 'recurring'
+            ? 'expanded-extend'
+            : 'expanded';
 
         popoverBanner.addClass(initialExpandedClass + ' is-expanding');
         popoverBanner.removeClass('is-collapsed');
@@ -539,6 +542,10 @@
             // Switch to one-time payment form only if we're not on the one-time payment form already.
             currrentPaymentForm = 'one_time';
 
+            // Ensure we show the form and don't request login
+            requestUserLogin.classList.add('hidden');
+            form.get(0).classList.remove('hidden');
+
             // Hide the checkbox and mark as not required
             recuringConfirmationCheckbox.get(0).removeAttribute('required');
             recurringConfirmationContainer.classList.add('hidden');
@@ -552,6 +559,7 @@
 
             // Visually update the form
             form.get(0).classList.remove('recurring-form');
+            popoverBanner.get(0).classList.add('expanded');
             popoverBanner.get(0).classList.remove('expanded-extend');
 
         } else if (this.value === 'recurring' && currrentPaymentForm === 'one_time') {
@@ -566,7 +574,7 @@
             action = form.get(0).getAttribute('data-recurring-action');
             [].forEach.call(amountRadioInputs, function(radio, i) {
                 radio.setAttribute('value', paymentChoices.recurring[i]);
-                radio.nextSibling.nodeValue = '$' + paymentChoices.oneTime[i] + '/mo';
+                radio.nextSibling.nodeValue = '$' + paymentChoices.recurring[i] + '/mo';
             });
 
             // Visually update the form
@@ -582,6 +590,14 @@
         [].forEach.call(paymentTypeSwitch, function(radio) {
             radio.addEventListener('change', switchPaymentTypeHandler);
         });
+
+        // Force options for popover
+        if (currrentPaymentForm === 'recurring') {
+            [].forEach.call(amountRadioInputs, function(radio, i) {
+                radio.setAttribute('value', paymentChoices.recurring[i]);
+                radio.nextSibling.nodeValue = '$' + paymentChoices.recurring[i] + '/mo';
+            });
+        }
     }
 
     // Send to GA if popover is displayed.
