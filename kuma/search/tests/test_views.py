@@ -19,9 +19,10 @@ class ViewTests(ElasticTestCase):
         response = self.client.get('/en-US/search?q=article')
         assert response.status_code == 200
         assert_no_cache_header(response)
-        assert 'Results for' in response.content
-        assert 'an article title' in response.content
-        assert '4 documents found for "article" in English' in response.content
+        content = response.content.decode('utf-8')
+        assert 'Results for' in content
+        assert 'an article title' in content
+        assert '4 documents found for "article" in English' in content
 
     def test_serialized_filters(self):
 
@@ -89,7 +90,7 @@ class ViewTests(ElasticTestCase):
 
             def dispatch(self, *args, **kwargs):
                 super(FilterSearchView, self).dispatch(*args, **kwargs)
-                assert self.selected_filters == self.expected
+                assert list(self.selected_filters) == list(self.expected)
 
         view = FilterSearchView.as_view(expected=['spam'])
         view(self.get_request('/en-US/?group=spam'))
@@ -115,7 +116,7 @@ class ViewTests(ElasticTestCase):
                 # metadata
                 assert self.current_page == 1
                 assert len(self.serialized_filters) == 1
-                assert self.selected_filters == ['tagged']
+                assert list(self.selected_filters) == ['tagged']
                 assert self.url == self.request.get_full_path()
 
                 # aggregations
@@ -224,7 +225,7 @@ class ViewTests(ElasticTestCase):
     def test_score(self):
         response = self.client.get('/en-US/search.json')
         assert response.status_code == 200
-        assert response.data['documents'] > 0
+        assert len(response.data['documents']) > 0
         for document in response.data['documents']:
             assert 'score' in document
 
@@ -236,4 +237,4 @@ def test_search_plugin(db, client, locale):
     assert_shared_cache_header(response)
     assert response['Content-Type'] == 'application/opensearchdescription+xml'
     assert 'search/plugin.html' in [t.name for t in response.templates]
-    assert '/{}/search'.format(locale) in response.content
+    assert '/{}/search'.format(locale) in response.content.decode('utf-8')

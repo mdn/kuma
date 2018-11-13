@@ -15,6 +15,7 @@ from elasticsearch_dsl import document, field
 from elasticsearch_dsl.connections import connections
 from elasticsearch_dsl.mapping import Mapping
 from elasticsearch_dsl.search import Search
+from six.moves import reduce
 
 from kuma.core.utils import chord_flow, chunked
 

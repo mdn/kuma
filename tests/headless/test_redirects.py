@@ -4,9 +4,8 @@ import pytest
 
 from utils.urls import assert_valid_url
 
-from .map_301 import (GITHUB_IO_URLS, LEGACY_URLS, MOZILLADEMOS_URLS,
-                      MARIONETTE_URLS, REDIRECT_URLS, SCL3_REDIRECT_URLS,
-                      ZONE_REDIRECT_URLS)
+from .map_301 import (GITHUB_IO_URLS, LEGACY_URLS, MARIONETTE_URLS, MOZILLADEMOS_URLS, REDIRECT_URLS,
+                      SCL3_REDIRECT_URLS, ZONE_REDIRECT_URLS)
 
 # while these test methods are similar, they're each testing a
 # subset of redirects, and it was easier to work with them separately.

@@ -31,6 +31,7 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
 from honeypot.decorators import verify_honeypot_value
+from six.moves import reduce
 from taggit.utils import parse_tags
 
 from kuma.core.decorators import login_required, redirect_in_maintenance_mode

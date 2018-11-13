@@ -59,7 +59,7 @@ REVISION_HASH = config('REVISION_HASH', default='undefined')
 MANAGERS = ADMINS
 
 
-# CONN_MAX_AGE: 'persistent' to keep open connection, or max requests before
+# CONN_MAX_AGE: 'persistent' to keep open connection, or max seconds before
 # releasing. Default is 0 for a new connection per request.
 def parse_conn_max_age(value):
     try:

@@ -184,7 +184,7 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         """
         response = self.github_login()
         assert response.status_code == 200
-        assert 'Sign In Failure' not in response.content
+        assert 'Sign In Failure' not in response.content.decode('utf-8')
 
         username = self.github_profile_data['login']
         email = self.github_email_data[0]['email']

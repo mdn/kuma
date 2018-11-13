@@ -20,6 +20,7 @@ from django.utils.http import urlencode
 from django.utils.translation import ugettext_lazy as _
 from polib import pofile
 from pytz import timezone
+from six.moves import xrange
 from six.moves.urllib.parse import parse_qsl, ParseResult, urlparse, urlsplit, urlunsplit
 from taggit.utils import split_strip
 
@@ -51,7 +52,7 @@ def is_untrusted(request):
 
 def paginate(request, queryset, per_page=20):
     """Get a Paginator, abstracting some common paging actions."""
-    paginator = Paginator(queryset, per_page)
+    paginator = Paginator(list(queryset), per_page)
 
     # Get the page from the request, make sure it's an int.
     try:
