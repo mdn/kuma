@@ -45,7 +45,7 @@
         <input type="hidden" id="stripe_source_setup" value="1">
 
         <div id="recurring-confirmation-container" class="{% if not recurring_payment %}hidden{% endif %}">
-            <label class="recurring-payment-confirmation">
+            <label class="recurring-payment-confirmation" for="{{form.accept_checkbox.id_for_label}}">
                 {{form.accept_checkbox}}
                 <div class="control-indicator"></div>
                 <span class="legal-copy">
