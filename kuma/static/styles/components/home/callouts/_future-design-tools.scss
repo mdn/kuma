@@ -1,0 +1,62 @@
+/*
+Future of design tools callout
+-------------------------------------------------------------- */
+
+.callout-future-design-tools {
+    box-sizing: border-box;
+    background-color: #0066d1;
+    background-image: none;
+    padding-left: 20px;
+    background-size: 40%;
+
+    @media #{$mq-small-desktop-and-up}, (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx) {
+        background: #0066d1 url($path-to-embedded-images + 'promos/future-design-tools.svg') 95% 50px no-repeat;
+    }
+
+    @media screen and (max-width: 1130px) and (min-width: 682px) {
+        background-image: none;
+    }
+
+    .main-content {
+        color: #fff;
+    }
+
+    h3 {
+        margin: 15px 0 5px;
+        @include set-font-size(36px);
+
+        @media screen and (max-width: 1130px) and (min-width: 682px) {
+            margin-top: 15px;
+            @include set-font-size($h3-font-size);
+        }
+    }
+
+    p {
+        max-width: 220px;
+        @include set-font-size($smaller-font-size);
+    }
+
+    a {
+        &:link,
+        &:visited,
+        &:focus,
+        &:active {
+            text-decoration: none;
+        }
+
+        &:after {
+            background-image: none;
+
+            @media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx) {
+                background-image: none;
+            }
+        }
+    }
+
+    button {
+        @media screen and (max-width: 1130px) and (min-width: 682px) {
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+    }
+}

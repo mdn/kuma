@@ -1,0 +1,11 @@
+/*
+Dev Edition callout
+-------------------------------------------------------------- */
+
+.callout-deved {
+    background-color: $accent-dark;
+
+    a:after {
+        background-position: 0 -300px;
+    }
+}

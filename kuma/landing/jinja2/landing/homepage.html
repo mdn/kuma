@@ -76,20 +76,9 @@
   <h2 class="offscreen">{{ _('Featured') }}</h2>
   <div class="column-container center">
     {%- if settings.FOUNDATION_CALLOUT %}
-      <div class="column-callout callout-foundation">
-        <a href="https://donate.mozilla.org?utm_source=mdn&utm_medium=referral&utm_campaign=EOY2017-DEV&utm_term=mdnhomepage">
-          <span><strong>Mozilla</strong>{{ _('Proudly non-profit.') }}<br>{{ _('Donate before Dec 31.') }}<br><button>{{ _('Donate Now') }}</button></span>
-        </a>
-      </div>
+      {% include "landing/includes/callouts/foundation.html" %}
     {% else %}
-      <div class="column-callout callout-standard callout-fx-dev">
-        <a href="https://www.mozilla.org/firefox/developer/?utm_campaign=css_grid_learn_more&utm_medium=referral&utm_source=developer.mozilla.org">
-          <span>
-            <p class="main-copy">{{ _('Get the best <br />CSS Grid Tools') }} <span class="callout-subtext">{{ _('Only in Firefox') }}</span></p>
-            <button type="button">{{ _('Learn More') }}</button>
-          </span>
-        </a>
-      </div>
+      {% include "landing/includes/callouts/future-design-tools.html" %}
     {% endif %}
     {% if settings.NEWSLETTER %}
     <div class="column-callout callout-newsletter">

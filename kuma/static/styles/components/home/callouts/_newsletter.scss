@@ -1,0 +1,21 @@
+/*
+Newsletter block, double wide
+-------------------------------------------------------------- */
+
+.callout-newsletter {
+    background-color: #c2e8f9;
+    margin-bottom: $grid-spacing;
+
+    .newsletter-form,
+    .newsletter-thanks {
+        padding: $grid-spacing;
+        min-height: $callout-min-height - ($grid-spacing * 2);
+    }
+}
+
+@media #{$mq-tablet-and-up} {
+    .callout-newsletter {
+        @include column-8();
+        margin-bottom: 0;
+    }
+}
