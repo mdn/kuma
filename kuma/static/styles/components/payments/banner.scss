@@ -184,7 +184,7 @@
     }
 
     .payments-switch {
-        border: 2px solid #333;
+        border: 2px solid $text-color;
         border-radius: 50px;
         box-sizing: border-box;
         display: flex;
@@ -196,7 +196,7 @@
             background: none;
             border: none;
             border-radius: 50px;
-            color: #333;
+            color: $text-color;
             display: inline-block;
             font-weight: bold;
             height: 100%;
@@ -209,7 +209,7 @@
             width: 50%;
 
             &.active {
-                background: #333;
+                background: $text-color;
                 color: #fff;
             }
         }
@@ -221,7 +221,7 @@
             width: 0;
 
             &:checked + label {
-                background: #333;
+                background: $text-color;
                 color: #fff;
             }
         }
