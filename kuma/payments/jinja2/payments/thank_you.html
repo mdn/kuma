@@ -95,13 +95,12 @@
                             </p>
                         </div>
                         <div class="sub-section">
-                            <h3>{{_('Cancelling your payments')}}</h3>
+                            <h3>{{_('Refunds and cancelling your payments')}}</h3>
                             <p>
                                 {% trans url="mailto:" + settings.CONTRIBUTION_SUPPORT_EMAIL + "?Subject=Cancel%20monthly%20payment",
                                     email=settings.CONTRIBUTION_SUPPORT_EMAIL %}
-                                    If you would like to cancel your monthly payment,
-                                    you are free to do so at any point. Please contact
-                                    <a href="{{ url }}">{{ email }}</a> to cancel.
+                                    If you would like to cancel your monthly payment or apply for a refund, you are free to do so at any point.
+                                    Please contact <a href="{{ url }}">{{ email }}</a> to cancel and we won’t charge you for the following month.
                                 {% endtrans %}
                             </p>
                         </div>
