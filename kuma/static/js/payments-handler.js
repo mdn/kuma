@@ -144,7 +144,6 @@
         var closeButton = popoverBanner.find('#close-popover-button');
 
         checkPopoverDisabled();
-
     }
 
     // Set initial form selected amount state
@@ -152,11 +151,8 @@
         onAmountSelect({ target: defaultAmount.get(0) }, true);
     }
 
-
-
     // Set errors.
     form.find('.errorlist').prev().addClass('error');
-
 
     /**
      * Emits an event for recurring payments
