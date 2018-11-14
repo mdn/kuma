@@ -278,6 +278,7 @@
                 description: 'Contribute to MDN Web Docs',
                 zipCode: true,
                 allowRememberMe: false,
+                panelLabel: currrentPaymentForm === 'recurring' ? 'Pay {{amount}}/month' : 'Pay',
                 amount: (selectedAmount * 100),
                 email: $(emailField).val(),
                 closed: function() {
