@@ -70,7 +70,7 @@
         <button class="payment-form-button" type="button" id="stripe_submit">
             <span class="hide-expand">{{_('Support MDN')}} {% include 'includes/icons/arrows/chevron-up.svg' %}</span>
             <span class="hide-collapse">
-                {{_('Pay <span data-dynamic-amount>%(amount)s</span>', amount="$64") }}
+                {{_('Pay <span data-dynamic-amount>%(amount)s</span>%(recurring)s', amount="$64", recurring='/month' if recurring_payment else '') }}
             </span>
         </button>
 

@@ -171,10 +171,12 @@
         }
 
         selectedAmount = (Math.floor(event.target.value * 100) / 100);
-
         var newValue = (selectedAmount < 1 || isNaN(selectedAmount)) ? '' : '$' + selectedAmount;
-
         amountToUpdate.html(newValue);
+
+        // Explicitly add `/month` on the payment button
+        newValue += currrentPaymentForm === 'recurring' ? '/month' : '';
+        amountToUpdate[2].textContent = newValue;
     }
 
     /**
@@ -609,6 +611,12 @@
 
             // Force required checkbox if recurring payment form
             recuringConfirmationCheckbox.get(0).setAttribute('required', '');
+
+            // Ensure the new amount is reflected
+            var checkedInput = form.find('input[type=\'radio\']:checked')[0];
+            if (checkedInput) {
+                onAmountSelect({ target: checkedInput });
+            }
         }
     }
 
