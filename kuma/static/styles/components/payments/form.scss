@@ -381,4 +381,15 @@
             width: 100%;
         }
     }
+
+    @media #{$mq-tablet-and-down} {
+        .payment-form-button {
+            display: none;
+        }
+
+        .payment-form-link {
+            display: inline-block;
+        }
+    }
+
 }

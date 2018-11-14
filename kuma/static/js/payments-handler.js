@@ -598,7 +598,7 @@
         // Ensure the new amount is reflected
         checkedInput = form.find('input[type=\'radio\']:checked')[0];
         if (checkedInput) {
-            onAmountSelect({ target: NaN }, true);
+            onAmountSelect({ target: {value: NaN}}, true);
         }
     }
 
