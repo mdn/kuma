@@ -144,10 +144,13 @@
         var closeButton = popoverBanner.find('#close-popover-button');
 
         checkPopoverDisabled();
+
     }
 
     // Set initial form selected amount state
-    onAmountSelect({ target: defaultAmount.get(0) });
+    if (defaultAmount.get(0)) {
+        onAmountSelect({ target: defaultAmount.get(0) }, true);
+    }
 
 
 
@@ -206,15 +209,15 @@
     /**
      * Handles adjusting amount.
      * @param {jQuery.Event} event Event object.
-     * @param {boolean} preventValidation  - stops validation displaying
+     * @param {boolean} automatedSelection  - stops validation and events being sent
      */
-    function onAmountSelect(event, preventValidation) {
+    function onAmountSelect(event, automatedSelection) {
         form.find('label.active').removeClass('active');
 
         clearFieldError(customAmountInput);
 
         // Validate against minimum value.
-        if (!preventValidation && (parseInt(event.target.value) < 1 || isNaN(event.target.value))) {
+        if (!automatedSelection && (parseInt(event.target.value) < 1 || isNaN(event.target.value))) {
             defaultAmount.prop('checked', true);
             setFieldError(customAmountInput);
         }
@@ -223,12 +226,14 @@
         if (event.target.type === 'radio') {
             customAmountInput.val('');
 
-            // Send GA Event.
-            triggerOneTimePaymentEvent({
-                action: 'banner',
-                label: 'Amount radio selected',
-                value: event.target.value * 100
-            });
+            if (!automatedSelection) {
+                // Send GA Event.
+                triggerOneTimePaymentEvent({
+                    action: 'banner',
+                    label: 'Amount radio selected',
+                    value: event.target.value * 100
+                });
+            }
 
             $(event.target).parent().addClass('active');
 
@@ -690,7 +695,7 @@
             // Ensure the new amount is reflected
             var checkedInput = form.find('input[type=\'radio\']:checked')[0];
             if (checkedInput) {
-                onAmountSelect({ target: checkedInput });
+                onAmountSelect({ target: checkedInput }, true);
             }
         }
     }
@@ -705,6 +710,10 @@
                 action: 'banner',
                 label: 'shown',
             });
+    } else if (!popoverBanner && currrentPaymentForm === 'recurring') {
+        triggerRecurringPaymentEvent({
+            action: 'banner shown on FAQ',
+        });
     }
 
 })(document, window, jQuery);
