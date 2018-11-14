@@ -1,0 +1,75 @@
+/*
+Fx-dev callout
+-------------------------------------------------------------- */
+
+.callout-fx-dev {
+    box-sizing: border-box;
+    background: #1bccdb url($path-to-images + 'embed/promos/fx-dev-background.svg') 0 0 no-repeat;
+    background-size: cover;
+
+    span {
+        position: relative;
+        padding: 0;
+    }
+
+    a {
+        padding: $gutter-width;
+        min-height: 150px;
+
+        @media #{$mq-small-desktop-and-up} {
+            padding: 10px $gutter-width;
+        }
+
+        @media #{$mq-tablet-only} {
+            padding: 18px $gutter-width;
+            min-height: 130px;
+        }
+
+        &:hover,
+        &:visited,
+        &:focus,
+        &:active {
+            text-decoration: none;
+        }
+    }
+
+    .main-copy {
+        color: #fff;
+        margin-left: 5px;
+        @include set-font-size(2rem);
+        line-height: 1.2;
+
+        @media #{$mq-small-desktop-and-up} {
+            @include set-font-size(1.7rem);
+        }
+
+        @media #{$mq-tablet-only} {
+            @include set-font-size(1.5rem);
+        }
+    }
+
+    .callout-subtext {
+        display: block;
+        color: #fff;
+        margin-top: 5px;
+        font-weight: normal;
+    }
+
+    button {
+        padding: 5px 15px 3px;
+        border-radius: 3rem;
+        border: 0;
+        min-width: 170px;
+
+        &:before {
+            content: '';
+            display: inline-block;
+            background: transparent url($path-to-images + 'embed/promos/fx-dev-logo.png') 0 0 no-repeat;
+            background-size: 32px 33px;
+            margin-right: 5px;
+            width: 36px;
+            height: 36px;
+            vertical-align: middle;
+        }
+    }
+}
