@@ -137,4 +137,4 @@ def contribute_recurring_payment_subscription(request):
 @skip_if_disabled
 @never_cache
 def payment_terms(request):
-    return render(request, 'payments/payment_terms.html')
+    return render(request, 'payments/terms.html')
