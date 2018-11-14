@@ -66,7 +66,8 @@ class ContributionForm(forms.Form):
         initial=DONATION_CHOICES[1][0],
         widget=forms.RadioSelect(
             attrs={
-                'class': 'form-radios form-radios-donation-choices'
+                'class': 'form-radios form-radios-donation-choices',
+                'data-dynamic-choice-selector': ''
             }
         )
     )
@@ -95,6 +96,17 @@ class ContributionForm(forms.Form):
         required=False,
         widget=forms.HiddenInput(),
         max_length=255
+    )
+
+    accept_checkbox = forms.BooleanField(
+        label=u'',
+        required=False,
+        widget=forms.CheckboxInput(
+            attrs={
+                'class': 'required checkbox form-control',
+                'data-error-message': _('You must agree to the terms to continue')
+            },
+        ),
     )
 
     def clean(self):
@@ -213,20 +225,11 @@ User email: {email}""".format(**{
 
 
 class RecurringPaymentForm(ContributionForm):
-    accept_checkbox = forms.BooleanField(
-        label=u'',
-        required=True,
-        widget=forms.CheckboxInput(
-            attrs={
-                'class': 'required checkbox form-control',
-                'data-error-message': _('You must agree to the terms to continue')
-            },
-        ),
-    )
 
     def __init__(self, *args, **kwargs):
         super(RecurringPaymentForm, self).__init__(*args, **kwargs)
         self.fields['donation_choices'].choices = RECURRING_PAYMENT__CHOICES
+        self.fields['accept_checkbox'].required = True
 
     @staticmethod
     def create_customer(email, token, user, name):

@@ -25,6 +25,7 @@
             border-bottom: 1px solid $payment-form-button-color;
             color: $payment-form-button-color;
             padding-bottom: 1px;
+            text-decoration: none;
         }
     }
 
@@ -38,7 +39,11 @@
             position: absolute;
         }
 
-        > input[type='checkbox'] {
+        .legal-copy {
+            margin: 0;
+        }
+
+        input[type='checkbox'] {
             margin: 0;
             opacity: 0;
             height: 0;
@@ -54,7 +59,7 @@
 
             &.error ~ .control-indicator {
                 border-color: $error;
-                margin-bottom: 40px;
+                margin-bottom: 50px;
             }
         }
 
@@ -111,8 +116,13 @@
             }
         }
 
+        .form-radios-donation-choices {
+            width: 49%;
+        }
+
         .form-input-amount {
             padding-left: 35px;
+            width: 49%;
         }
 
         .label {
@@ -127,7 +137,6 @@
             display: inline-block;
             margin: $payment-form-input-spacing 0;
             vertical-align: middle;
-            width: 49%;
 
             @media #{$mq-large-desktop-and-down} {
                 li {
@@ -159,29 +168,30 @@
                 width: 100%;
             }
         }
+    }
 
-        &.recurring-form {
-            .form-input-amount {
-                margin: $payment-form-input-spacing -2px;
+    &.recurring-form {
+        .form-input-amount {
+            margin: $payment-form-input-spacing -2px;
+            width: 32%;
+        }
+
+        .form-radios-donation-choices {
+            width: 66%;
+
+            > li {
+                box-sizing: border-box;
+                margin: 0 -2px;
+                padding-right: 12px;
                 width: 33%;
-            }
 
-            .form-radios-donation-choices {
-                width: 66%;
-
-                > li {
-                    box-sizing: border-box;
-                    margin: 0 -2px;
-                    padding-right: 12px;
-                    width: 33%;
-
-                    label {
-                        width: 100%;
-                    }
+                label {
+                    width: 100%;
                 }
             }
         }
     }
+
 
     .form-radios-donation-choices {
         text-align: center;
@@ -233,10 +243,14 @@
         display: block;
         margin-top: $grid-spacing;
 
-        @media #{$mq-mobile-and-up} {
+        @media #{$mq-tablet-and-up} {
             display: inline-block;
-            margin: 5px 10px;
-            vertical-align: middle;
+            float: right;
+            margin: 14px;
+        }
+
+        @media #{$mq-large-desktop-and-up} {
+            margin: 14px 26px;
         }
     }
 
@@ -361,11 +375,20 @@
         display: inline-block;
         margin: $payment-form-input-spacing 0 0;
         vertical-align: middle;
-        width: 49%;
 
         @media #{$mq-tablet-and-down} {
             display: block;
             width: 100%;
+        }
+    }
+
+    @media #{$mq-tablet-and-down} {
+        .payment-form-button {
+            display: none;
+        }
+
+        .payment-form-link {
+            display: inline-block;
         }
     }
 }

@@ -54,10 +54,10 @@
     // Inputs.
     var emailField = form.find('#id_email');
     var nameField = form.find('#id_name');
-    var recuringConfirmationCheckbox = form.find('#id_accept_checkbox');
-    var defaultAmount = form.find('input[type=\'radio\']:checked');
-    var amountRadio = form.find('input[name=donation_choices]');
+    var recurringConfirmationCheckbox = form.find('#id_accept_checkbox');
     var customAmountInput = form.find('#id_donation_amount');
+    var defaultAmount = customAmountInput.val() ? customAmountInput : form.find('input[type=\'radio\']:checked');
+    var amountRadio = form.find('input[name=donation_choices]');
     // Hidden fields.
     var stripePublicKey = form.find('#id_stripe_public_key');
     var stripeToken = form.find('#id_stripe_token');
@@ -67,12 +67,18 @@
     var formErrorMessage = form.find('#contribution-error-message');
     var amountToUpdate = form.find('[data-dynamic-amount]');
 
-    var isRecurringPayment = form.attr('data-payment-type') === 'recurring';
-
+    var currrentPaymentForm = form.attr('data-payment-type');
     var requestUserLogin = doc.getElementById('login-popover');
     var githubRedirectButton = doc.getElementById('github_redirect_payment');
 
+    var hasPaymentSwitch = Boolean(doc.getElementById('dynamic-payment-switch'));
+    var paymentTypeSwitch = doc.querySelectorAll('input[type=radio][name="payment_selector"]');
+    var recurringConfirmationContainer = doc.getElementById('recurring-confirmation-container');
+
+    var selectedAmount = 0;
     var submitted = false;
+    var paymentChoices = win.payments.donationChoices;
+    var amountRadioInputs = doc.querySelectorAll('input[data-dynamic-choice-selector]');
 
     /**
      * Initialise the stripeCheckout handler.
@@ -121,12 +127,10 @@
         checkPopoverDisabled();
     }
 
-    // Set initial radio state.
-    defaultAmount.parent().addClass('active');
+    // Set initial form selected amount state
+    onAmountSelect({ target: defaultAmount.get(0) });
 
-    var selectedAmount = defaultAmount.length ? defaultAmount[0].value : 0;
 
-    customAmountInput.val('');
 
     // Set errors.
     form.find('.errorlist').prev().addClass('error');
@@ -134,14 +138,15 @@
     /**
      * Handles adjusting amount.
      * @param {jQuery.Event} event Event object.
+     * @param {boolean} preventValidation  - stops validation displaying
      */
-    function onAmountSelect(event) {
+    function onAmountSelect(event, preventValidation) {
         form.find('label.active').removeClass('active');
 
         clearFieldError(customAmountInput);
 
         // Validate against minimum value.
-        if (parseInt(event.target.value) < 1 || isNaN(event.target.value)) {
+        if (!preventValidation && (parseInt(event.target.value) < 1 || isNaN(event.target.value))) {
             defaultAmount.prop('checked', true);
             setFieldError(customAmountInput);
         }
@@ -166,10 +171,16 @@
         }
 
         selectedAmount = (Math.floor(event.target.value * 100) / 100);
-
         var newValue = (selectedAmount < 1 || isNaN(selectedAmount)) ? '' : '$' + selectedAmount;
-
         amountToUpdate.html(newValue);
+
+        // Explicitly add `/month` on the payment button for the banner
+        newValue += currrentPaymentForm === 'recurring'
+        && newValue
+        && isPopoverBanner
+            ? '/month'
+            : '';
+        amountToUpdate[2].textContent = newValue;
     }
 
     /**
@@ -237,10 +248,10 @@
                 setFieldError(customAmountInput);
             }
 
-            if (isRecurringPayment && recuringConfirmationCheckbox[0].checkValidity()) {
-                clearFieldError(recuringConfirmationCheckbox[0]);
-            } else {
-                setFieldError(recuringConfirmationCheckbox[0]);
+            if (recurringConfirmationCheckbox[0].checkValidity()) {
+                clearFieldError(recurringConfirmationCheckbox[0]);
+            } else if (currrentPaymentForm === 'recurring') {
+                setFieldError(recurringConfirmationCheckbox[0]);
             }
 
             return;
@@ -254,7 +265,7 @@
             value: selectedAmount * 100
         });
 
-        if (requestUserLogin) {
+        if (requestUserLogin && currrentPaymentForm === 'recurring') {
             requestUserLogin.classList.remove('hidden');
             form.get(0).classList.add('hidden');
             return;
@@ -268,6 +279,7 @@
                 description: 'Contribute to MDN Web Docs',
                 zipCode: true,
                 allowRememberMe: false,
+                panelLabel: currrentPaymentForm === 'recurring' ? 'Pay {{amount}}/month' : 'Pay',
                 amount: (selectedAmount * 100),
                 email: $(emailField).val(),
                 closed: function() {
@@ -354,7 +366,10 @@
         var smallDesktop = '(max-width: 1092px)';
 
         mediaQueryList = window.matchMedia(smallDesktop);
-        var initialExpandedClass = mediaQueryList.matches ? 'expanded-extend' : 'expanded';
+        var initialExpandedClass = mediaQueryList.matches
+        || currrentPaymentForm === 'recurring'
+            ? 'expanded-extend'
+            : 'expanded';
 
         popoverBanner.addClass(initialExpandedClass + ' is-expanding');
         popoverBanner.removeClass('is-collapsed');
@@ -510,14 +525,105 @@
     });
 
     // Clear validation for checkbox confirmation
-    if (isRecurringPayment) {
-        recuringConfirmationCheckbox.change(function() {
-            clearFieldError(recuringConfirmationCheckbox[0]);
+    if (currrentPaymentForm === 'recurring') {
+        recurringConfirmationCheckbox.change(function() {
+            clearFieldError(recurringConfirmationCheckbox[0]);
         });
     }
 
     if (isPopoverBanner) {
         closeButton.click(disablePopover);
+    }
+
+    /**
+     * Runs when the payment switch changes
+     * Toggles the payment type between one-time or recurring payments
+     * Updates the form action and method to post to the correct view
+     * Updated the visual styling between one-time and recurring
+     * Updates the state of the form
+     */
+    function switchPaymentTypeHandler() {
+        var action = form.get(0).getAttribute('action');
+        var checkedInput = null;
+
+        if (this.value === 'one_time' && currrentPaymentForm === 'recurring') {
+            // Switch to one-time payment form only if we're not on the one-time payment form already.
+            currrentPaymentForm = 'one_time';
+
+            // Ensure we show the form and don't request login
+            if (requestUserLogin) {
+                requestUserLogin.classList.add('hidden');
+                form.get(0).classList.remove('hidden');
+            }
+
+            // Hide the checkbox and mark as not required
+            recurringConfirmationCheckbox.get(0).removeAttribute('required');
+            recurringConfirmationContainer.classList.add('hidden');
+
+            // Change the form action to submit to the one-time payment view
+            action = form.get(0).getAttribute('data-one-time-action');
+            [].forEach.call(amountRadioInputs, function(radio, i) {
+                radio.setAttribute('value', paymentChoices.oneTime[i]);
+                radio.nextSibling.nodeValue = '$' + paymentChoices.oneTime[i];
+            });
+
+            // Visually update the form
+            form.get(0).classList.remove('recurring-form');
+            popoverBanner.get(0).classList.add('expanded');
+            popoverBanner.get(0).classList.remove('expanded-extend');
+
+        } else if (this.value === 'recurring' && currrentPaymentForm === 'one_time') {
+            // Switch to recurring payment form only if we're not on the recurring payment form already.
+            currrentPaymentForm = 'recurring';
+
+            // Show the confirmation checkbox and mark as required
+            recurringConfirmationContainer.classList.remove('hidden');
+            recurringConfirmationCheckbox.get(0).setAttribute('required', '');
+
+            // Change the form action to submit to the recurring subscription view
+            action = form.get(0).getAttribute('data-recurring-action');
+            [].forEach.call(amountRadioInputs, function(radio, i) {
+                radio.setAttribute('value', paymentChoices.recurring[i]);
+                radio.nextSibling.nodeValue = '$' + paymentChoices.recurring[i] + '/mo';
+            });
+
+            // Visually update the form
+            form.get(0).classList.add('recurring-form');
+            popoverBanner.get(0).classList.add('expanded-extend');
+        }
+
+        // Update the form action
+        form.get(0).setAttribute('action', action);
+
+        // Ensure the new amount is reflected
+        checkedInput = form.find('input[type=\'radio\']:checked')[0];
+        if (checkedInput) {
+            onAmountSelect({ target: {value: NaN}}, true);
+        }
+    }
+
+    // Init the popover banner for recurring payments
+    if (hasPaymentSwitch && isPopoverBanner) {
+        [].forEach.call(paymentTypeSwitch, function(radio) {
+            radio.addEventListener('change', switchPaymentTypeHandler);
+        });
+
+        // Force options for popover
+        if (currrentPaymentForm === 'recurring') {
+            [].forEach.call(amountRadioInputs, function(radio, i) {
+                radio.setAttribute('value', paymentChoices.recurring[i]);
+                radio.nextSibling.nodeValue = '$' + paymentChoices.recurring[i] + '/mo';
+            });
+
+            // Force required checkbox if recurring payment form
+            recurringConfirmationCheckbox.get(0).setAttribute('required', '');
+
+            // Ensure the new amount is reflected
+            var checkedInput = form.find('input[type=\'radio\']:checked')[0];
+            if (checkedInput) {
+                onAmountSelect({ target: checkedInput });
+            }
+        }
     }
 
     // Send to GA if popover is displayed.
