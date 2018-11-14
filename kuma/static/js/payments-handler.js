@@ -175,7 +175,7 @@
         amountToUpdate.html(newValue);
 
         // Explicitly add `/month` on the payment button
-        newValue += currrentPaymentForm === 'recurring' ? '/month' : '';
+        newValue += currrentPaymentForm === 'recurring' && newValue ? '/month' : '';
         amountToUpdate[2].textContent = newValue;
     }
 
@@ -591,9 +591,8 @@
         form.get(0).setAttribute('action', action);
 
         // Ensure the new amount is reflected
-        checkedInput = form.find('input[type=\'radio\']:checked')[0];
         if (checkedInput) {
-            onAmountSelect({ target: checkedInput });
+            onAmountSelect({ target: NaN });
         }
     }
 
