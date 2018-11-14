@@ -31,8 +31,12 @@
         {% set privacy_policy_url="https://help.github.com/articles/github-privacy-statement/" %}
         <p>
             You can support MDN with a one-time payment, or you can choose to schedule monthly payments. Your payments are not tax deductible.
+        </p>
+        <p>
             In order to sign up for monthly payments, you must sign in to MDN using a GitHub account.
             GitHub has its own <a href="{{ terms_url }}">Terms</a> and <a href="{{ privacy_policy_url }}">Privacy Policy</a>.
+        </p>
+        <p>
             When you choose to support MDN, you authorize us to charge the payment card you provide for the amount you choose, either as a one-time payment, or as a recurring monthly payment.
         </p>
         <h2>Cancellation</h2>
@@ -48,10 +52,11 @@
             Your payment is processed by <a href="{{ stripe_url }}">Stripe</a>.
         </p>
         <p>
-            Mozilla receives a record of your payment and information about how much you’ve decided to
-            pay and whether you’ve set up monthly payments. Mozilla does not receive your payment details.
-            If you sign up for an MDN account, Mozilla also receives information about your account.
-            When Mozilla receives information from you, our <a href="{{ privacy_url }}">Mozilla Privacy Policy</a> describes how we handle that information.
+            Mozilla receives a record of your payment, information about how much you’ve decided to pay,
+            and whether you’ve set up monthly payments. Mozilla does not receive your payment details.
+            If you sign up for an MDN account, Mozilla also receives the information you include in your account,
+            as well as your email address from your GitHub login. When Mozilla receives information from you,
+            our <a href="{{ privacy_url }}">Mozilla Privacy Policy</a> describes how we handle that information.
         </p>
     </div>
 {% endblock %}
