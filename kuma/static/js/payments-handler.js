@@ -54,7 +54,7 @@
     // Inputs.
     var emailField = form.find('#id_email');
     var nameField = form.find('#id_name');
-    var recuringConfirmationCheckbox = form.find('#id_accept_checkbox');
+    var recurringConfirmationCheckbox = form.find('#id_accept_checkbox');
     var customAmountInput = form.find('#id_donation_amount');
     var defaultAmount = customAmountInput.val() ? customAmountInput : form.find('input[type=\'radio\']:checked');
     var amountRadio = form.find('input[name=donation_choices]');
@@ -247,10 +247,10 @@
                 setFieldError(customAmountInput);
             }
 
-            if (currrentPaymentForm === 'recurring' && recuringConfirmationCheckbox[0].checkValidity()) {
-                clearFieldError(recuringConfirmationCheckbox[0]);
+            if (currrentPaymentForm === 'recurring' && recurringConfirmationCheckbox[0].checkValidity()) {
+                clearFieldError(recurringConfirmationCheckbox[0]);
             } else {
-                setFieldError(recuringConfirmationCheckbox[0]);
+                setFieldError(recurringConfirmationCheckbox[0]);
             }
 
             return;
@@ -525,8 +525,8 @@
 
     // Clear validation for checkbox confirmation
     if (currrentPaymentForm === 'recurring') {
-        recuringConfirmationCheckbox.change(function() {
-            clearFieldError(recuringConfirmationCheckbox[0]);
+        recurringConfirmationCheckbox.change(function() {
+            clearFieldError(recurringConfirmationCheckbox[0]);
         });
     }
 
@@ -556,7 +556,7 @@
             }
 
             // Hide the checkbox and mark as not required
-            recuringConfirmationCheckbox.get(0).removeAttribute('required');
+            recurringConfirmationCheckbox.get(0).removeAttribute('required');
             recurringConfirmationContainer.classList.add('hidden');
 
             // Change the form action to submit to the one-time payment view
@@ -577,7 +577,7 @@
 
             // Show the confirmation checkbox and mark as required
             recurringConfirmationContainer.classList.remove('hidden');
-            recuringConfirmationCheckbox.get(0).setAttribute('required', '');
+            recurringConfirmationCheckbox.get(0).setAttribute('required', '');
 
             // Change the form action to submit to the recurring subscription view
             action = form.get(0).getAttribute('data-recurring-action');
@@ -615,7 +615,7 @@
             });
 
             // Force required checkbox if recurring payment form
-            recuringConfirmationCheckbox.get(0).setAttribute('required', '');
+            recurringConfirmationCheckbox.get(0).setAttribute('required', '');
 
             // Ensure the new amount is reflected
             var checkedInput = form.find('input[type=\'radio\']:checked')[0];
