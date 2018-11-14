@@ -174,8 +174,12 @@
         var newValue = (selectedAmount < 1 || isNaN(selectedAmount)) ? '' : '$' + selectedAmount;
         amountToUpdate.html(newValue);
 
-        // Explicitly add `/month` on the payment button
-        newValue += currrentPaymentForm === 'recurring' && newValue ? '/month' : '';
+        // Explicitly add `/month` on the payment button for the banner
+        newValue += currrentPaymentForm === 'recurring'
+        && newValue
+        && isPopoverBanner
+            ? '/month'
+            : '';
         amountToUpdate[2].textContent = newValue;
     }
 
