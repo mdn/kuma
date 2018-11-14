@@ -190,8 +190,6 @@
                         {% endtrans %}
                     </p>
                 {% endcall %}
-
-
             </ol>
         </section>
         <section class="section">
@@ -201,28 +199,28 @@
             <ol id="contribute-monthly-faqs" class="faqs clear">
                 {%- call faq_entry(11, _("How do I manage my monthly payment?")) %}
                     <p>
-                        {% trans mailto='mailto:%s' % settings.CONTRIBUTION_SUPPORT_EMAIL,
+                        {% trans url='mailto:%s' % settings.CONTRIBUTION_SUPPORT_EMAIL,
                                  email=settings.CONTRIBUTION_SUPPORT_EMAIL %}
                             If you would like to manage your monthly payment,
                             such as changing your card account details or the amount you pay,
-                            please contact <a href="{{ mailto }}">{{ email }}</a>
+                            please contact <a href="{{ url }}">{{ email }}</a>
                         {% endtrans %}
                     </p>
                 {% endcall %}
-                {%- call faq_entry(12, _("How do apply for a refund or cancel my payment?")) %}
+                {%- call faq_entry(12, _("How do I apply for a refund or cancel my payment?")) %}
                     <p>
-                        {% trans mailto='mailto:%s' % settings.CONTRIBUTION_SUPPORT_EMAIL,
+                        {% trans url='mailto:%s' % settings.CONTRIBUTION_SUPPORT_EMAIL,
                                  email=settings.CONTRIBUTION_SUPPORT_EMAIL %}
                             If you would like to cancel your monthly payment, you are free to do so at any point.
-                            Please contact <a href="{{ mailto }}">{{ email }}</a> to cancel.
+                            Please contact <a href="{{ url }}">{{ email }}</a> to cancel.
                             If you choose to cancel, we will not charge your payment card for subsequent months.
                         {% endtrans %}
                     </p>
                 {% endcall %}
                 {%- call faq_entry(13, _("What are the payment terms?")) %}
                     <p>
-                        {% trans payment_terms=url('payment_terms') %}
-                            Please read our <a href="{{ payment_terms }}">payment terms</a> for more information.
+                        {% trans url=url('payment_terms') %}
+                            Please read our <a href="{{ url }}">payment terms</a> for more information.
                         {% endtrans %}
                     </p>
                 {% endcall %}
@@ -246,7 +244,6 @@
                 </form>
             </div>
         </section>
-
     </main>
 {% endblock %}
 
