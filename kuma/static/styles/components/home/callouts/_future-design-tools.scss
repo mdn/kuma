@@ -4,13 +4,13 @@ Future of design tools callout
 
 .callout-future-design-tools {
     box-sizing: border-box;
-    background-color: #0066d1;
+    background-color: #3987df;
     background-image: none;
     padding-left: 20px;
     background-size: 40%;
 
     @media #{$mq-small-desktop-and-up}, (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx) {
-        background: #0066d1 url($path-to-embedded-images + 'promos/future-design-tools.svg') 95% 50px no-repeat;
+        background: #3987df url($path-to-embedded-images + 'promos/future-design-tools.svg') 95% 50px no-repeat;
     }
 
     @media screen and (max-width: 1130px) and (min-width: 682px) {
@@ -54,6 +54,10 @@ Future of design tools callout
     }
 
     button {
+        padding: 10px 15px 8px;
+        border-radius: 3rem;
+        border: 0;
+
         @media screen and (max-width: 1130px) and (min-width: 682px) {
             margin-top: 10px;
             margin-bottom: 15px;
