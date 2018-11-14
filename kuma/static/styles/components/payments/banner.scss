@@ -71,6 +71,40 @@
             .form-footer {
                 margin-top: $grid-spacing;
             }
+
+            @media #{$mq-tablet-and-down} {
+                box-sizing: border-box;
+                height: $payment-banner-popover-collapsed-height-extended;
+                padding-top: $payment-collapsed-banner-padding;
+
+                // Hide all unessesary content on the collapsed CTA.
+                h4,
+                .body,
+                .cta-link,
+                .hide-collapse,
+                .payments-switch,
+                .form-group {
+                    display: none;
+                    opacity: 0;
+                }
+
+                .hide-expand {
+                    display: inherit;
+                }
+
+                .payments-form-container {
+                    margin-top: -10px;
+                    padding: 10px;
+                }
+
+                .column-container {
+                    padding: 0 $payment-banner-padding;
+                }
+
+                .form-footer {
+                    margin: 0;
+                }
+            }
         }
 
         &.is-expanding {
