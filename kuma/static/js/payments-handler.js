@@ -55,9 +55,9 @@
     var emailField = form.find('#id_email');
     var nameField = form.find('#id_name');
     var recuringConfirmationCheckbox = form.find('#id_accept_checkbox');
-    var defaultAmount = form.find('input[type=\'radio\']:checked');
-    var amountRadio = form.find('input[name=donation_choices]');
     var customAmountInput = form.find('#id_donation_amount');
+    var defaultAmount = customAmountInput.val() ? customAmountInput : form.find('input[type=\'radio\']:checked');
+    var amountRadio = form.find('input[name=donation_choices]');
     // Hidden fields.
     var stripePublicKey = form.find('#id_stripe_public_key');
     var stripeToken = form.find('#id_stripe_token');
@@ -75,6 +75,7 @@
     var paymentTypeSwitch = doc.querySelectorAll('input[type=radio][name="payment_selector"]');
     var recurringConfirmationContainer = doc.getElementById('recurring-confirmation-container');
 
+    var selectedAmount = 0;
     var submitted = false;
     var paymentChoices = win.payments.donationChoices;
     var amountRadioInputs = doc.querySelectorAll('input[data-dynamic-choice-selector]');
@@ -126,12 +127,10 @@
         checkPopoverDisabled();
     }
 
-    // Set initial radio state.
-    defaultAmount.parent().addClass('active');
+    // Set initial form selected amount state
+    onAmountSelect({ target: defaultAmount.get(0) });
 
-    var selectedAmount = defaultAmount.length ? defaultAmount[0].value : 0;
 
-    customAmountInput.val('');
 
     // Set errors.
     form.find('.errorlist').prev().addClass('error');
