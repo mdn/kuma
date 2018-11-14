@@ -138,14 +138,15 @@
     /**
      * Handles adjusting amount.
      * @param {jQuery.Event} event Event object.
+     * @param {boolean} preventValidation  - stops validation displaying
      */
-    function onAmountSelect(event) {
+    function onAmountSelect(event, preventValidation) {
         form.find('label.active').removeClass('active');
 
         clearFieldError(customAmountInput);
 
         // Validate against minimum value.
-        if (parseInt(event.target.value) < 1 || isNaN(event.target.value)) {
+        if (!preventValidation && (parseInt(event.target.value) < 1 || isNaN(event.target.value))) {
             defaultAmount.prop('checked', true);
             setFieldError(customAmountInput);
         }
@@ -247,9 +248,9 @@
                 setFieldError(customAmountInput);
             }
 
-            if (currrentPaymentForm === 'recurring' && recurringConfirmationCheckbox[0].checkValidity()) {
+            if (recurringConfirmationCheckbox[0].checkValidity()) {
                 clearFieldError(recurringConfirmationCheckbox[0]);
-            } else {
+            } else if (currrentPaymentForm === 'recurring') {
                 setFieldError(recurringConfirmationCheckbox[0]);
             }
 
@@ -597,7 +598,7 @@
         // Ensure the new amount is reflected
         checkedInput = form.find('input[type=\'radio\']:checked')[0];
         if (checkedInput) {
-            onAmountSelect({ target: NaN });
+            onAmountSelect({ target: NaN }, true);
         }
     }
 
