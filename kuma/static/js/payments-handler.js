@@ -601,7 +601,8 @@
         }
     }
 
-    if (hasPaymentSwitch) {
+    // Init the popover banner for recurring payments
+    if (hasPaymentSwitch && isPopoverBanner) {
         [].forEach.call(paymentTypeSwitch, function(radio) {
             radio.addEventListener('change', switchPaymentTypeHandler);
         });
