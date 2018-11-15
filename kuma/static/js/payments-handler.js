@@ -79,8 +79,8 @@
     var submitted = false;
 
     var amountRadioInputs = doc.querySelectorAll('input[data-dynamic-choice-selector]');
-    var donationChoices = typeof window.payments !== 'undefined' && 'donationChoices' in window.payments
-        ? win.payments.donationChoices
+    var paymentChoices = typeof window.payments !== 'undefined' && 'paymentChoices' in window.payments
+        ? win.payments.paymentChoices
         : null;
 
     /* Following recurring payments flow the user may be redirected back to the form to submit payment.
@@ -633,8 +633,8 @@
             // Change the form action to submit to the one-time payment view
             action = form.get(0).getAttribute('data-one-time-action');
             [].forEach.call(amountRadioInputs, function(radio, i) {
-                radio.setAttribute('value', donationChoices.oneTime[i]);
-                radio.nextSibling.nodeValue = '$' + donationChoices.oneTime[i];
+                radio.setAttribute('value', paymentChoices.oneTime[i]);
+                radio.nextSibling.nodeValue = '$' + paymentChoices.oneTime[i];
             });
 
             // Visually update the form
@@ -653,8 +653,8 @@
             // Change the form action to submit to the recurring subscription view
             action = form.get(0).getAttribute('data-recurring-action');
             [].forEach.call(amountRadioInputs, function(radio, i) {
-                radio.setAttribute('value', donationChoices.recurring[i]);
-                radio.nextSibling.nodeValue = '$' + donationChoices.recurring[i] + '/mo';
+                radio.setAttribute('value', paymentChoices.recurring[i]);
+                radio.nextSibling.nodeValue = '$' + paymentChoices.recurring[i] + '/mo';
             });
 
             // Visually update the form
@@ -669,6 +669,8 @@
         checkedInput = form.find('input[type=\'radio\']:checked')[0];
         if (checkedInput) {
             onAmountSelect({ target: {value: NaN}}, true);
+        } else if (customAmountInput.get(0).value) {
+            onAmountSelect({target: customAmountInput.get(0)});
         }
     }
 
@@ -681,8 +683,8 @@
         // Force options for popover
         if (currrentPaymentForm === 'recurring') {
             [].forEach.call(amountRadioInputs, function(radio, i) {
-                radio.setAttribute('value', donationChoices.recurring[i]);
-                radio.nextSibling.nodeValue = '$' + donationChoices.recurring[i] + '/mo';
+                radio.setAttribute('value', paymentChoices.recurring[i]);
+                radio.nextSibling.nodeValue = '$' + paymentChoices.recurring[i] + '/mo';
             });
 
             // Force required checkbox if recurring payment form

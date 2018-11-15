@@ -49,7 +49,7 @@
         });
     } else if (path.includes('/payments/recurring/error')) {
         mdn.analytics.trackEvent({
-            category: 'payments',
+            category: 'Recurring payments',
             action: 'Payment failed',
             label: originalUserAuth,
             value: amountSubmitted
