@@ -241,7 +241,13 @@ class RecurringPaymentForm(ContributionForm):
         )
         user.stripe_customer_id = customer.id
         user.save()
-        return customer.id
+        return customer
+
+    @staticmethod
+    def update_customer(customer_obj, token):
+        customer_obj.source = token
+        customer_obj.save()
+        return customer_obj
 
     @staticmethod
     def update_source_name(source_id, name):
@@ -260,16 +266,16 @@ class RecurringPaymentForm(ContributionForm):
                     customer = stripe.Customer.retrieve(user.stripe_customer_id)
                     # if deleted make a new customer
                     if 'deleted' in customer:
-                        customer_id = self.create_customer(
+                        customer = self.create_customer(
                             self.cleaned_data['email'],
                             token,
                             user,
                             self.cleaned_data['name']
                         )
                     else:
-                        customer_id = user.stripe_customer_id
+                        customer = self.update_customer(customer, token)
                 else:
-                    customer_id = self.create_customer(
+                    customer = self.create_customer(
                         self.cleaned_data['email'],
                         token,
                         user,
@@ -281,7 +287,14 @@ class RecurringPaymentForm(ContributionForm):
                         token,
                         self.cleaned_data['name']
                     )
+
+                # just for MVP canceling all existing subscriptions for customer
+                for sub in customer['subscriptions']['data']:
+                    s = stripe.Subscription.retrieve(sub.id)
+                    s.delete()
+
                 plan_id = STRIPE_MONTHLY_PLAN_ID_TEMPLATE.format(**{'amount': amount})
+
                 try:
                     plan = stripe.Plan.retrieve(plan_id)
                 except stripe.error.InvalidRequestError:
@@ -293,7 +306,7 @@ class RecurringPaymentForm(ContributionForm):
                         currency="usd",
                     )
                 stripe.Subscription.create(
-                    customer=customer_id,
+                    customer=customer.id,
                     billing='charge_automatically',
                     items=[
                         {
