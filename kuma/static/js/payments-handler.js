@@ -77,8 +77,27 @@
 
     var selectedAmount = 0;
     var submitted = false;
-    var paymentChoices = win.payments.donationChoices;
+
     var amountRadioInputs = doc.querySelectorAll('input[data-dynamic-choice-selector]');
+    var paymentChoices = typeof window.payments !== 'undefined' && 'paymentChoices' in window.payments
+        ? win.payments.paymentChoices
+        : null;
+
+    /* Following recurring payments flow the user may be redirected back to the form to submit payment.
+       We're tracking this with a localstorage item as this should percist across various pages. */
+    var triggerAnalyticEvents = !hasUserBeenRedirected();
+
+    /**
+     * Check storage to see if user is being redirected
+     * @returns {boolean}
+     */
+    function hasUserBeenRedirected() {
+        if (!win.mdn.features.localStorage) {
+            return false;
+        }
+
+        return Boolean(localStorage.getItem('userAuthenticationOnFormSubmission'));
+    }
 
     /**
      * Initialise the stripeCheckout handler.
@@ -128,25 +147,73 @@
     }
 
     // Set initial form selected amount state
-    onAmountSelect({ target: defaultAmount.get(0) });
-
-
+    if (defaultAmount.get(0)) {
+        onAmountSelect({ target: defaultAmount.get(0) }, true);
+    }
 
     // Set errors.
     form.find('.errorlist').prev().addClass('error');
 
     /**
+     * Emits an event for recurring payments
+     * @param {Object} event - The event to be emitted
+     * @param {string} event.action - The event's action name
+     * @param {number} [event.value] - the event's numerical value
+     * @param {boolean} [storeUserForLaterEvents] - store user auth level for later analytic events
+     */
+    function triggerRecurringPaymentEvent(event, storeUserForLaterEvents) {
+        if (!triggerAnalyticEvents) {
+            return;
+        }
+
+        mdn.analytics.trackEvent({
+            category: 'Recurring payments',
+            action: event.action,
+            label: win.payments.isAuthenticated ? 'authenticated' : 'anonymous',
+            value: event.value
+        });
+
+        /* Save the user authentication level so that we can track conversion rates of
+           authenticated vs anonymous users at a later stage in the payment flow. */
+        if (storeUserForLaterEvents) {
+            var item = win.payments.isAuthenticated ? 'authenticated' : 'anonymous';
+            localStorage.setItem('userAuthenticationOnFormSubmission', item);
+            triggerAnalyticEvents = false;
+        }
+    }
+
+    /**
+     * Emits an event for recurring payments
+     * @param {Object} event - The event to be emitted
+     * @param {string} event.action - The event's action name
+     * @param {string} [event.label] - The event's label name
+     * @param {number} [event.value] - the event's numerical value
+     */
+    function triggerOneTimePaymentEvent(event) {
+        if (!triggerAnalyticEvents) {
+            return;
+        }
+
+        mdn.analytics.trackEvent({
+            category: 'payments',
+            action: event.action,
+            label: event.label,
+            value: event.value
+        });
+    }
+
+    /**
      * Handles adjusting amount.
      * @param {jQuery.Event} event Event object.
-     * @param {boolean} preventValidation  - stops validation displaying
+     * @param {boolean} automatedSelection  - stops validation and events being sent
      */
-    function onAmountSelect(event, preventValidation) {
+    function onAmountSelect(event, automatedSelection) {
         form.find('label.active').removeClass('active');
 
         clearFieldError(customAmountInput);
 
         // Validate against minimum value.
-        if (!preventValidation && (parseInt(event.target.value) < 1 || isNaN(event.target.value))) {
+        if (!automatedSelection && (parseInt(event.target.value) < 1 || isNaN(event.target.value))) {
             defaultAmount.prop('checked', true);
             setFieldError(customAmountInput);
         }
@@ -155,13 +222,14 @@
         if (event.target.type === 'radio') {
             customAmountInput.val('');
 
-            // Send GA Event.
-            mdn.analytics.trackEvent({
-                category: 'payments',
-                action: 'banner',
-                label: 'Amount radio selected',
-                value: event.target.value * 100
-            });
+            if (!automatedSelection) {
+                // Send GA Event.
+                triggerOneTimePaymentEvent({
+                    action: 'banner',
+                    label: 'Amount radio selected',
+                    value: event.target.value * 100
+                });
+            }
 
             $(event.target).parent().addClass('active');
 
@@ -190,11 +258,8 @@
     function setFieldError(field) {
         $(field).addClass('error');
         $(field).next('.errorlist').remove();
-
         var error = $(field).attr('data-error-message');
-
         $('<ul class="errorlist"><li>' + error + '</li></ul>').insertAfter($(field));
-
     }
 
     /**
@@ -258,12 +323,16 @@
         }
 
         // Send GA Event.
-        mdn.analytics.trackEvent({
-            category: 'payments',
-            action: 'submission',
-            label: isPopoverBanner ? 'On pop over' : 'On FAQ page',
-            value: selectedAmount * 100
-        });
+        currrentPaymentForm === 'recurring'
+            ? triggerRecurringPaymentEvent({
+                action: 'Form completed',
+                value: selectedAmount * 100
+            }, true)
+            : triggerOneTimePaymentEvent({
+                action: 'submission',
+                label: isPopoverBanner ? 'On pop over' : 'On FAQ page',
+                value: selectedAmount * 100
+            });
 
         if (requestUserLogin && currrentPaymentForm === 'recurring') {
             requestUserLogin.classList.remove('hidden');
@@ -285,8 +354,7 @@
                 closed: function() {
                     // Send GA Event.
                     if (!submitted) {
-                        mdn.analytics.trackEvent({
-                            category: 'payments',
+                        triggerOneTimePaymentEvent({
                             action: 'submission',
                             label: 'canceled'
                         });
@@ -353,7 +421,10 @@
      * also disables the submission button
      */
     function toggleScriptError() {
-        formButton.attr('disabled') ? formButton.removeAttr('disabled') : formButton.attr('disabled', 'true');
+        formButton.attr('disabled')
+            ? formButton.removeAttr('disabled')
+            : formButton.attr('disabled', 'true');
+
         formErrorMessage.toggle();
     }
 
@@ -399,11 +470,14 @@
             });
         });
 
-        mdn.analytics.trackEvent({
-            category: 'payments',
-            action: 'banner',
-            label: 'expand'
-        });
+        currrentPaymentForm === 'recurring'
+            ? triggerRecurringPaymentEvent({
+                action: 'banner expanded',
+            })
+            : triggerOneTimePaymentEvent({
+                action: 'banner',
+                label: 'expand',
+            });
     }
 
     /**
@@ -435,8 +509,7 @@
         });
 
         // Send GA Event.
-        mdn.analytics.trackEvent({
-            category: 'payments',
+        triggerOneTimePaymentEvent({
             action: 'banner',
             label: 'collapse',
         });
@@ -452,8 +525,7 @@
         popoverBanner.attr('aria-hidden', true);
 
         // Send GA Event.
-        mdn.analytics.trackEvent({
-            category: 'payments',
+        triggerOneTimePaymentEvent({
             action: 'banner',
             label: 'close',
         });
@@ -509,15 +581,13 @@
         var value = parseFloat(event.target.value);
         if (!isNaN(value) && value >= 1) {
             // Send GA Event.
-            mdn.analytics.trackEvent({
-                category: 'payments',
+            triggerOneTimePaymentEvent({
                 action: 'banner',
                 label: 'custom amount',
                 value: Math.floor(value * 100)
             });
         } else {
-            mdn.analytics.trackEvent({
-                category: 'payments',
+            triggerOneTimePaymentEvent({
                 action: 'banner',
                 label: 'Invalid amount selected',
             });
@@ -599,6 +669,8 @@
         checkedInput = form.find('input[type=\'radio\']:checked')[0];
         if (checkedInput) {
             onAmountSelect({ target: {value: NaN}}, true);
+        } else if (customAmountInput.get(0).value) {
+            onAmountSelect({target: customAmountInput.get(0)});
         }
     }
 
@@ -621,17 +693,24 @@
             // Ensure the new amount is reflected
             var checkedInput = form.find('input[type=\'radio\']:checked')[0];
             if (checkedInput) {
-                onAmountSelect({ target: checkedInput });
+                onAmountSelect({ target: checkedInput }, true);
             }
         }
     }
 
     // Send to GA if popover is displayed.
     if (popoverBanner && popoverBanner.is(':visible')) {
-        mdn.analytics.trackEvent({
-            category: 'payments',
-            action: 'banner',
-            label: 'shown',
+        currrentPaymentForm === 'recurring'
+            ? triggerRecurringPaymentEvent({
+                action: 'banner shown',
+            })
+            : triggerOneTimePaymentEvent({
+                action: 'banner',
+                label: 'shown',
+            });
+    } else if (!popoverBanner && currrentPaymentForm === 'recurring') {
+        triggerRecurringPaymentEvent({
+            action: 'banner shown on FAQ',
         });
     }
 
