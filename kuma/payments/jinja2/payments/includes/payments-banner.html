@@ -71,25 +71,38 @@
                                 </a>
                             </div>
                         {% endif %}
+                        {% if recurring_payment and user.stripe_customer_id and not is_popover %}
+                            <div id="already-sub-error" class="align-center login-prompt">
+                                <p>{{_('You already have a monthly payment set up to MDN.')}}</p>
+                                <p>
+                                    {{_('If you need help regarding this payment, please contact')}}
+                                    <a href="{{'mailto:%s' % settings.CONTRIBUTION_SUPPORT_EMAIL}}">{{settings.CONTRIBUTION_SUPPORT_EMAIL}}</a>
+                                </p>
+                            </div>
+                        {% else %}
+                            {% with form=form, default_payment_url=default_payment_url, is_popover=is_popover, recurring_payment=recurring_payment, payments_url=payments_url, recurring_payment_subscription_url=recurring_payment_subscription_url, recurring_payment_enabled=True %}
+                                {%  include "payments/includes/payments-form.html" %}
+                            {% endwith %}
+                        {% endif %}
 
-                        {% with form=form, default_payment_url=default_payment_url, is_popover=is_popover, recurring_payment=recurring_payment, payments_url=payments_url, recurring_payment_subscription_url=recurring_payment_subscription_url, recurring_payment_enabled=True %}
-                            {%  include "payments/includes/payments-form.html" %}
-                        {% endwith %}
-
-                        {% if not user.is_authenticated %}
-                            {% set github_url = provider_login_url('github', process='login') %}
-                            <div id="login-popover" class="hidden align-center login-prompt">
-                                <p>{{_('We’ve noticed you’re not logged in to MDN. To complete your monthly payment, we’ll need you to log in first.')}}</p>
-                                <a href="{{ github_url }}" id="github_redirect_payment" class="payment-form-button js-login-link" data-service="GitHub" rel="nofollow" data-next="{{ github_next_url }}">
-                                    {{ _('Sign in') }}{% include 'includes/icons/social/github.svg' %}
-                                </a>
+                        {% if user.stripe_customer_id %}
+                            <div id="already-sub-error" class="hidden align-center login-prompt">
+                                <p>{{_('You already have a monthly payment set up to MDN.')}}</p>
+                                <p>
+                                    {{_('If you need help regarding this payment, please contact')}}
+                                    <a href="{{'mailto:%s' % settings.CONTRIBUTION_SUPPORT_EMAIL}}">{{settings.CONTRIBUTION_SUPPORT_EMAIL}}</a>
+                                </p>
                             </div>
                         {% endif %}
+
+                        {% set github_url = provider_login_url('github', process='login') %}
+                        <div id="login-popover" class="hidden align-center login-prompt">
+                            <p>{{_('We’ve noticed you’re not logged in to MDN. To complete your monthly payment, we’ll need you to log in first.')}}</p>
+                            <a href="{{ github_url }}" id="github_redirect_payment" class="payment-form-button js-login-link" data-service="GitHub" rel="nofollow" data-next="{{ github_next_url }}">
+                                {{ _('Sign in') }}{% include 'includes/icons/social/github.svg' %}
+                            </a>
+                        </div>
                     </div>
-                {% else %}
-                    {% with form=form, default_payment_url=default_payment_url, is_popover=is_popover, payments_url=payments_url, recurring_payment_subscription_url=recurring_payment_subscription_url, recurring_payment_enabled=False %}
-                        {%- include "payments/includes/payments-form.html" %}
-                    {% endwith %}
                 {% endif %}
             </div>
         </div>

@@ -75,6 +75,7 @@
     var paymentTypeSwitch = doc.querySelectorAll('input[type=radio][name="payment_selector"]');
     var recurringConfirmationContainer = doc.getElementById('recurring-confirmation-container');
 
+    var alreadySubscribedErrorMessage = doc.getElementById('already-sub-error');
     var selectedAmount = 0;
     var submitted = false;
 
@@ -470,6 +471,11 @@
             });
         });
 
+        if (alreadySubscribedErrorMessage && currrentPaymentForm === 'recurring') {
+            form.get(0).classList.add('hidden');
+            alreadySubscribedErrorMessage.classList.remove('hidden');
+        }
+
         currrentPaymentForm === 'recurring'
             ? triggerRecurringPaymentEvent({
                 action: 'banner expanded',
@@ -515,6 +521,12 @@
         });
 
         $(doc).off('keydown.popoverCloseHandler');
+
+        // Ensure the form is displayed
+        form.get(0).classList.remove('hidden');
+        requestUserLogin ? requestUserLogin.classList.add('hidden') : null;
+        alreadySubscribedErrorMessage ? alreadySubscribedErrorMessage.classList.add('hidden') : null;
+
     }
 
     /**
@@ -642,6 +654,12 @@
             popoverBanner.get(0).classList.add('expanded');
             popoverBanner.get(0).classList.remove('expanded-extend');
 
+            // Ensure subscribed users can pay one-time payments
+            if (alreadySubscribedErrorMessage) {
+                form.get(0).classList.remove('hidden');
+                alreadySubscribedErrorMessage.classList.add('hidden');
+            }
+
         } else if (this.value === 'recurring' && currrentPaymentForm === 'one_time') {
             // Switch to recurring payment form only if we're not on the recurring payment form already.
             currrentPaymentForm = 'recurring';
@@ -660,6 +678,12 @@
             // Visually update the form
             form.get(0).classList.add('recurring-form');
             popoverBanner.get(0).classList.add('expanded-extend');
+
+            // Check us user already has a subscription and show error message
+            if (alreadySubscribedErrorMessage) {
+                form.get(0).classList.add('hidden');
+                alreadySubscribedErrorMessage.classList.remove('hidden');
+            }
         }
 
         // Update the form action
