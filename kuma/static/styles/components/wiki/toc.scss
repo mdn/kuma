@@ -72,6 +72,7 @@ $padding-horizontal: 30px;
 $emify-tablet-height: (680px / 16px) * 1em;
 @media #{$mq-tablet-and-up} and (min-height: #{$emify-tablet-height}) {
     .toc {
+        position: -webkit-sticky;
         position: sticky;
     }
 
