@@ -34,7 +34,7 @@ def contribute(request):
     initial_data = {}
     if request.user.is_authenticated and request.user.email:
         initial_data = {
-            'name': request.user.fullname or request.user.username,
+            'name': request.user.fullname,
             'email': request.user.email,
         }
 
@@ -79,7 +79,7 @@ def contribute_recurring_payment_initial(request):
     initial_data = {}
     if request.user.is_authenticated and request.user.email:
         initial_data = {
-            'name': request.user.fullname or request.user.username,
+            'name': request.user.fullname,
             'email': request.user.email,
         }
 
