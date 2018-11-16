@@ -118,8 +118,8 @@ class ContributionForm(forms.Form):
         no_selection = not (donation_amount or donation_choice)
         both_selections = donation_amount and donation_choice
         if no_selection or both_selections:
-            raise forms.ValidationError(_('Please select donation amount or'
-                                          ' choose from pre-selected choices'))
+            raise forms.ValidationError(_('Please enter an amount or choose'
+                                          ' from the pre-selected options'))
         return d
 
     def __init__(self, *args, **kwargs):
