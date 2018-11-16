@@ -100,7 +100,8 @@
                                 {% trans url="mailto:" + settings.CONTRIBUTION_SUPPORT_EMAIL + "?Subject=Cancel%20monthly%20payment",
                                     email=settings.CONTRIBUTION_SUPPORT_EMAIL %}
                                     If you would like to cancel your monthly payment or apply for a refund, you are free to do so at any point.
-                                    Please contact <a href="{{ url }}">{{ email }}</a> to cancel and we won’t charge you for the following month.
+                                    Please contact <a href="{{ url }}">{{ email }}</a> to cancel. If you choose to cancel, we will not charge your payment
+                                    card for subsequent months.
                                 {% endtrans %}
                             </p>
                         </div>
