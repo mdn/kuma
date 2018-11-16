@@ -78,7 +78,7 @@
         {% if recurring_payment_enabled and recurring %}
             <section class="section">
                 <div class="index">
-                    <h2>{{_('Useful Things')}}</h2>
+                    <h2>{{_('Useful things')}}</h2>
                 </div>
                 <div class="faqs clear feedback">
                     <div class="faq-feedback">
@@ -95,12 +95,13 @@
                             </p>
                         </div>
                         <div class="sub-section">
-                            <h3>{{_('Refunds and cancelling your payments')}}</h3>
+                            <h3>{{_('Refunds and canceling your payments')}}</h3>
                             <p>
                                 {% trans url="mailto:" + settings.CONTRIBUTION_SUPPORT_EMAIL + "?Subject=Cancel%20monthly%20payment",
                                     email=settings.CONTRIBUTION_SUPPORT_EMAIL %}
                                     If you would like to cancel your monthly payment or apply for a refund, you are free to do so at any point.
-                                    Please contact <a href="{{ url }}">{{ email }}</a> to cancel and we won’t charge you for the following month.
+                                    Please contact <a href="{{ url }}">{{ email }}</a> to cancel. If you choose to cancel, we will not charge your payment
+                                    card for subsequent months.
                                 {% endtrans %}
                             </p>
                         </div>

@@ -194,7 +194,7 @@
         </section>
         <section class="section">
             <div class="index">
-                <h2>{{_('Monthly Payments')}}</h2>
+                <h2>{{_('Monthly payments')}}</h2>
             </div>
             <ol id="contribute-monthly-faqs" class="faqs clear">
                 {%- call faq_entry(11, _("How do I manage my monthly payment?")) %}
@@ -211,9 +211,10 @@
                     <p>
                         {% trans url='mailto:%s' % settings.CONTRIBUTION_SUPPORT_EMAIL,
                                  email=settings.CONTRIBUTION_SUPPORT_EMAIL %}
-                            If you would like to cancel your monthly payment, you are free to do so at any point.
-                            Please contact <a href="{{ url }}">{{ email }}</a> to cancel.
-                            If you choose to cancel, we will not charge your payment card for subsequent months.
+                            If you would like to cancel your monthly payment or apply for a refund,
+                            you are free to do so at any point. Please contact
+                            <a href="{{ url }}">{{ email }}</a> to cancel. If you choose to cancel, we will not
+                            charge your payment card for subsequent months.
                         {% endtrans %}
                     </p>
                 {% endcall %}
@@ -224,10 +225,11 @@
                         {% endtrans %}
                     </p>
                 {% endcall %}
-                {%- call faq_entry(14, _("Does deleting my MDN account delete my subscription?")) %}
+                {%- call faq_entry(14, _("Does deleting my MDN account cancel my subscription?")) %}
                     <p>
                         {% trans %}
-                            When you request to cancel your account we will also delete your subscription
+                        When you request to delete your account we will also cancel your subscription
+                        and not charge you for subsequent months.
                         {% endtrans %}
                     </p>
                 {% endcall %}
