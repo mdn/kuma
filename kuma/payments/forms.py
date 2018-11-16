@@ -229,6 +229,8 @@ class RecurringPaymentForm(ContributionForm):
     def __init__(self, *args, **kwargs):
         super(RecurringPaymentForm, self).__init__(*args, **kwargs)
         self.fields['donation_choices'].choices = RECURRING_PAYMENT__CHOICES
+        self.fields['donation_choices'].initial = RECURRING_PAYMENT__CHOICES[1][0]
+
         self.fields['accept_checkbox'].required = True
 
     @staticmethod
