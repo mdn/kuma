@@ -19,7 +19,7 @@ If you would like to manage your monthly payment, such as changing your card acc
 
 {{_('Cancelling your payments')}}
 {% trans %}
-If you would like to cancel your monthly payment, you are free to do so at any point. Please contact {{ support_mail }} to cancel.
+If you would like to cancel your monthly payment or apply for a refund, you are free to do so at any point. Please contact {{ support_mail }} to cancel. If you choose to cancel, we will not charge your payment card for subsequent months.
 {% endtrans %}
 
 {{_('Payment Terms')}}
