@@ -47,10 +47,10 @@ td[tabindex]:focus .bc-history-link {
 }
 
 @each $support in $bc-support {
-    .active.bc-supports-#{$support} .bc-history-link,
-    td[tabindex].bc-supports-#{$support}:hover .bc-history-link,
-    td[tabindex].bc-supports-#{$support}:focus .bc-history-link {
-        color: map-get($bc-colors, $support);
+    .active.bc-supports-#{$support} .ic-history:before,
+    td[tabindex].bc-supports-#{$support}:hover .ic-history:before,
+    td[tabindex].bc-supports-#{$support}:focus .ic-history:before {
+        background-image: map-get($bc-icon-caret-colors, $support);
     }
 }
 
