@@ -60,6 +60,9 @@ tox==2.3.1 \
     --hash=sha256:bf7fcc140863820700d3ccd65b33820ba747b61c5fe4e2b91bb8c64cb21a47ee
 
 # Wait until a database (or other) service is able to accept connections.
+# Code: https://github.com/pmac/urlwait
+# Changes: https://pypi.org/project/urlwait/#history
+# Docs: https://github.com/pmac/urlwait/blob/master/README.rst
 urlwait==0.4 \
     --hash=sha256:fc39ff2c8abbcaad5043e1f79699dcb15a036cc4b0ff4d1aa825ea105d4889ff \
     --hash=sha256:395fc0c2a7f9736858a2c2f449aa20c6e9da1f86bfc2d1fda4f2f5b78a5c115a

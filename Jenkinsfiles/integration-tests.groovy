@@ -1,85 +1,61 @@
+test_image = "kuma-integration-tests:${GIT_COMMIT_SHORT}"
+
 stage('Build') {
-  if (!dockerImageExists("kuma-integration-tests:${GIT_COMMIT_SHORT}")) {
-    dockerImageBuild("kuma-integration-tests:${GIT_COMMIT_SHORT}",
-                     ["pull": true,
-                      "dockerfile": config.job.dockerfile])
-  }
+    try {
+        sh "docker image inspect ${test_image}"
+    } catch(err) {
+        sh "docker build -f ${config.job.dockerfile} -t ${test_image} ."
+    }
 }
 
 def functional_test(browser, base_dir) {
-  // Define a parallel build that runs stand-alone Selenium for the given browser
-  return {
-    node {
-      def port = (browser == 'chrome') ? '4444' : '4445'
-      def test_name = "kuma-functional-tests-${browser}-${BUILD_TAG}"
-      def selenium_name = "kuma-selenium-standalone-${browser}-${BUILD_TAG}"
-      // Setup the pytest command
-      // Timeout after 6 minutes, due to stalled nodes
-      def cmd = "timeout --preserve-status 6m" +
-                " py.test tests/functional" +
-                " --driver Remote" +
-                " --capability browserName ${browser}" +
-                " --host ${selenium_name}" +
-                " --port ${port}" +
-                " --base-url='${config.job.base_url}'" +
-                " --junit-prefix=${browser}" +
-                " --junit-xml=/test_results/functional-${browser}.xml" +
-                " --reruns=2" +
-                " -vv"
-      if (config.job && config.job.tests) {
-        cmd += " -m \"${config.job.tests}\""
-      }
-      if (config.job && config.job.maintenance_mode) {
-        cmd += " --maintenance-mode"
-      }
-
-      try {
-        // Create the Selenium stand-alone container for the given browser
-        // The "--shm-size=2g" is recommended to avoid browser crashes (see
-        // https://github.com/SeleniumHQ/docker-selenium#running-the-images)
-        // which we've seen in our chrome integration tests without it.
-        dockerRun("selenium/standalone-${browser}:${config.job.selenium}",
-                  ["docker_args": "-d " +
-                                  "--shm-size=2g " +
-                                  "-e SE_OPTS='-port ${port}' "  +
-                                  "--name ${selenium_name}"])
-
-        try {
-            // Timeout after 7 minutes, if in-container timeout fails
-            timeout(time: 7, unit: 'MINUTES') {
-                // Run test node
-                dockerRun("kuma-integration-tests:${GIT_COMMIT_SHORT}",
-                          ["docker_args": "--link ${selenium_name} " +
-                                          "--name ${test_name} " +
-                                          "--volume ${base_dir}/test_results:/test_results " +
-                                          "--user ${UID}",
-                           "cmd": cmd])
+    // Define a parallel build that runs stand-alone Selenium
+    // for the given browser.
+    return {
+        node {
+            // Setup the extra arguments for the pytest command.
+            def pytest_opts = ""
+            if (config.job && config.job.tests) {
+                pytest_opts += "-m '${config.job.tests}'"
             }
-        } finally {
-            dockerStop(test_name)
+            if (config.job && config.job.maintenance_mode) {
+                pytest_opts += " --maintenance-mode"
+            }
+            // Timeout at 6 minutes for stalled nodes.
+            withEnv(["TIMEOUT=6m",
+                     "BROWSER=${browser}",
+                     "PYTEST_OPTS=${pytest_opts}",
+                     "BASE_URL=${config.job.base_url}",
+                     "TEST_IMAGE_TAG=${GIT_COMMIT_SHORT}",
+                     "SELENIUM_IMAGE_TAG=${config.job.selenium}",
+                     "COMPOSE_PROJECT_NAME=${browser}-${BUILD_TAG}",
+                     "COMPOSE_FILE=${base_dir}/docker-compose.selenium.yml"])
+            {
+                sh 'docker-compose pull selenium'
+                sh 'docker-compose up -d selenium'
+                try {
+                    sh 'docker-compose run tests'
+                } finally {
+                    sh 'docker-compose down --volumes --remove-orphans'
+                }
+            }
         }
-      } finally {
-          dockerStop(selenium_name)
-      }
     }
-  }
 }
 
 def headless_test(base_dir) {
-  // Define a parallel build that runs the "headless" (requests, no Selenium) tests
-  return {
-    node {
-      def test_name = "kuma-test-headless-${BUILD_TAG}"
-      dockerRun("kuma-integration-tests:${GIT_COMMIT_SHORT}",
-                  ["docker_args": "--volume ${base_dir}/test_results:/test_results" +
-                                  " --name ${test_name}" +
-                                  " --user ${UID}",
-                  "cmd": "py.test tests/headless" +
-                          " --base-url='${config.job.base_url}'" +
-                          " --junit-xml=/test_results/headless.xml" +
-                          " --reruns=2"])
+    return {
+        node {
+            // Setup the pytest command (timeout at 6 min for stalled nodes).
+            def cmd = "timeout --preserve-status 6m" +
+                      " py.test tests/headless" +
+                      " --base-url='${config.job.base_url}'" +
+                      " --junit-xml=/app/test_results/headless.xml" +
+                      " --reruns=2"
+            def run = "docker run --name headless-${BUILD_TAG}"
+            sh "${run} --rm --volume ${base_dir}:/app:z ${test_image} ${cmd}"
+        }
     }
-  }
 }
 
 stage('Test') {
@@ -88,7 +64,7 @@ stage('Test') {
     def base_dir = pwd()
     allTests['chrome'] = functional_test('chrome', base_dir)
     allTests['firefox'] = functional_test('firefox', base_dir)
-    // allTests['headless'] = headless_test(base_dir)
+    allTests['headless'] = headless_test(base_dir)
 
     def nick =  "ci-bot"
 
