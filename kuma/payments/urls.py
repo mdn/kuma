@@ -24,4 +24,7 @@ lang_urlpatterns = [
     url(r'^terms/?$',
         views.payment_terms,
         name='payment_terms'),
+    url(r'^recurring/management/?$',
+        views.recurring_payment_management,
+        name='recurring_payment_management'),
 ]

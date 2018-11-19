@@ -13,7 +13,7 @@ from kuma.core.decorators import login_required
 
 from .forms import ContributionForm, RecurringPaymentForm
 from .tasks import payments_thank_you_email
-from .utils import enabled
+from .utils import enabled, get_stripe_customer_data, cancel_stripe_customer_subscription
 
 
 def skip_if_disabled(func):
@@ -138,3 +138,25 @@ def contribute_recurring_payment_subscription(request):
 @never_cache
 def payment_terms(request):
     return render(request, 'payments/terms.html')
+
+
+@skip_if_disabled
+@login_required
+@never_cache
+def recurring_payment_management(request):
+    context = {}
+    if request.user.stripe_customer_id and 'stripe_cancel_subscription' in request.POST:
+        cancel_stripe_customer_subscription(
+            request.user.stripe_customer_id,
+            request.user.email,
+            request.user.username
+        )
+
+    if request.user.stripe_customer_id:
+        context = get_stripe_customer_data(
+            request.user.stripe_customer_id,
+            request.user.email,
+            request.user.username
+        )
+
+    return render(request, 'payments/management.html', context)

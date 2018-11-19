@@ -172,3 +172,54 @@ def test_template_render_not_logged_in_payment_view(mock_enabled, client, settin
     assert 'id="id_donation_amount"' in response.content
     assert 'id="id_donation_choices"' in response.content
     assert 'id="id_accept_checkbox"' in response.content
+
+
+@pytest.mark.django_db
+@mock.patch('kuma.payments.views.enabled', return_value=True)
+@mock.patch('kuma.payments.views.cancel_stripe_customer_subscription', return_value=True)
+@mock.patch('kuma.payments.views.get_stripe_customer_data', return_value=True)
+def test_recurring_payment_management_no_customer_id(enabled_, get, cancel_, user_client, client, settings):
+    """The recurring payments form succeeds with a valid Stripe token."""
+    response = user_client.get(reverse('recurring_payment_management'))
+    assert response.status_code == 200
+    assert '<button id="id_stripe_cancel_subscription" name="stripe_cancel_subscription"' not in response.content
+    assert "Sorry you don't have any active subscription" in response.content
+    assert_no_cache_header(response)
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+@mock.patch('kuma.payments.views.enabled', return_value=True)
+@mock.patch('kuma.payments.views.cancel_stripe_customer_subscription', return_value=True)
+@mock.patch('kuma.payments.views.get_stripe_customer_data', return_value={
+    'stripe_plan_amount': 64,
+    'stripe_card_last4': 1234,
+    'active_subscriptions': True
+})
+def test_recurring_payment_management_customer_id(enabled_, get, cancel_, client, wiki_user, settings):
+    """The recurring payments form succeeds with a valid Stripe token."""
+    wiki_user.stripe_customer_id = 'fakeCustomerID123'
+    wiki_user.set_password('password')
+    wiki_user.save()
+    client.login(username=wiki_user.username, password='password')
+    response = client.get(reverse('recurring_payment_management'))
+    assert response.status_code == 200
+    assert '<button id="id_stripe_cancel_subscription" name="stripe_cancel_subscription"' in response.content
+
+    assert_no_cache_header(response)
+    response = client.post(
+        reverse('recurring_payment_management'),
+        data={'stripe_cancel_subscription': ''}
+    )
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+@mock.patch('kuma.payments.views.enabled', return_value=True)
+@mock.patch('kuma.payments.views.cancel_stripe_customer_subscription', return_value=True)
+@mock.patch('kuma.payments.views.get_stripe_customer_data', return_value=True)
+def test_recurring_payment_management_not_logged_in(enabled_, get, cancel_, client, settings):
+    """The recurring payments form succeeds with a valid Stripe token."""
+    response = client.get(reverse('recurring_payment_management'))
+    assert response.status_code == 302
+    assert response.url == '?next='.join([reverse('account_login'), reverse('recurring_payment_management')])

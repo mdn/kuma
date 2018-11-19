@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ page_title(_('MDN Payment terms')) }}{% endblock %}
+
+{% block site_meta %}
+    {{ super() }}
+    {% set seo_description = _('MDN Payment terms') %}
+    {% set social_title = _('MDN Payment terms') %}
+    <meta property="og:description" content="{{ seo_description }}">
+    <meta name="description" content="{{ seo_description }}">
+    <meta name="twitter:description" content="{{ seo_description }}">
+    <meta name="twitter:title" content="{{ social_title }}">
+    <meta property="og:title" content="{{ social_title }}">
+{% endblock %}
+
+
+{% block content %}
+    <div>
+        <h2>Subscriptions</h2>
+        {% if request.user.stripe_customer_id and active_subscriptions %}
+            <p>
+                Monthly payment to MDN
+                ${{ stripe_plan_amount }} from your account ending in {{ stripe_card_last4 }}
+                <a href="{{ url('payment_terms') }}">Learn more about subscriptions</a>
+            </p>
+            <form id="id_stripe_management_form" method="post" action="" >
+                {% csrf_token %}
+                <button id="id_stripe_cancel_subscription" name="stripe_cancel_subscription" class="button" type="submit">Cancel your subscription</button>
+            </form>
+        {% else %}
+            <p>
+                Sorry you don't have any active subscription
+            </p>
+        {% endif %}
+    </div>
+{% endblock %}
+

@@ -61,6 +61,11 @@
             <label>{{ _('Primary Email') }} <a class="field-management" href="{{ url('account_email') }}">{{ _('Edit email') }}</a></label>
             {{ edit_user.email }}
           </li>
+            {% if request.user.stripe_customer_id %}
+                <li id="field_subscription" class="">
+                    <label>{{ _('Subscriptions') }} <a class="field-management" href="{{ url('recurring_payment_management') }}">{{ _('Edit payment subscription') }}</a></label>
+                </li>
+            {% endif %}
           {{ li_field(user_form, 'username') }}
           {{ li_field(user_form, 'fullname') }}
           {{ li_field(user_form, 'title') }}
