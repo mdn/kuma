@@ -10,6 +10,7 @@ homepage masthead (search, feature callouts)
     padding-top: ($grid-spacing * 2);
     padding-bottom: ($grid-spacing * 2);
     text-align: center;
+    overflow: hidden;
 
     .masthead-background {
         position: absolute;
