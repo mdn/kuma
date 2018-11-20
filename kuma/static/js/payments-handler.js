@@ -326,12 +326,12 @@
         currrentPaymentForm === 'recurring'
             ? triggerRecurringPaymentEvent({
                 action: 'Form completed',
-                value: selectedAmount * 100
+                value: (selectedAmount * 100).toFixed(2)
             }, true)
             : triggerOneTimePaymentEvent({
                 action: 'submission',
                 label: isPopoverBanner ? 'On pop over' : 'On FAQ page',
-                value: selectedAmount * 100
+                value: (selectedAmount * 100).toFixed(2)
             });
 
         if (requestUserLogin && currrentPaymentForm === 'recurring') {
@@ -349,7 +349,7 @@
                 zipCode: true,
                 allowRememberMe: false,
                 panelLabel: currrentPaymentForm === 'recurring' ? 'Pay {{amount}}/month' : 'Pay',
-                amount: (selectedAmount * 100),
+                amount: (selectedAmount * 100).toFixed(2),
                 email: $(emailField).val(),
                 closed: function() {
                     // Send GA Event.
