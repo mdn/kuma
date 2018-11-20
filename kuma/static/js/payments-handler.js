@@ -238,14 +238,13 @@
             form.find('input[type=\'radio\']:checked').prop('checked', false);
         }
 
-        var calcAmount = Math.floor(event.target.value * 100) / 100;
-        selectedAmount = calcAmount % 1 === 0 ? calcAmount : calcAmount.toFixed(2);
+        selectedAmount = event.target.value % 1 === 0 ? event.target.value : parseFloat(event.target.value).toFixed(2);
         var newValue = (selectedAmount < 1 || isNaN(selectedAmount)) ? '' : '$' + selectedAmount;
         amountToUpdate.html(newValue);
 
         // Explicitly add `/month` on the payment button for the banner
         newValue += currrentPaymentForm === 'recurring'
-        && newValue
+        && newValue !== ''
         && isPopoverBanner
             ? '/month'
             : '';
