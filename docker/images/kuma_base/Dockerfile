@@ -8,6 +8,8 @@ ENV NODE_VERSION=8.11.3 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
     # disable this when preparing for Django upgrade
     PYTHONWARNINGS=ignore \
+    # enable this when preparing for Django upgrade
+    # PYTHONWARNINGS=all \
     # Kuma Pipeline definitions
     PIPELINE_CSS_COMPRESSOR=kuma.core.pipeline.cleancss.CleanCSSCompressor \
     PIPELINE_CLEANCSS_BINARY=/usr/local/bin/cleancss \

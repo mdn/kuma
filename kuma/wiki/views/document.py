@@ -63,7 +63,7 @@ def _get_html_and_errors(request, doc, rendering_params):
 
     # A logged-in user can schedule a full re-render with Shift-Reload
     cache_control = None
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         # Shift-Reload sends Cache-Control: no-cache
         ua_cc = request.META.get('HTTP_CACHE_CONTROL')
         if ua_cc == 'no-cache':
@@ -166,7 +166,7 @@ def _filter_doc_html(request, doc, doc_html, rendering_params):
     # If this user can edit the document, inject section editing links.
     # TODO: Rework so that this happens on the client side?
     if ((rendering_params['edit_links'] or not rendering_params['raw']) and
-            request.user.is_authenticated()):
+            request.user.is_authenticated):
         tool.injectSectionEditingLinks(doc.slug, doc.locale)
 
     doc_html = tool.serialize()
@@ -470,7 +470,7 @@ def as_json(request, document_slug=None, document_locale=None):
                       .serialize())
 
     stale = True
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         # A logged-in user can demand fresh data with a shift-refresh
         # Shift-Reload sends Cache-Control: no-cache
         ua_cc = request.META.get('HTTP_CACHE_CONTROL')
@@ -637,7 +637,7 @@ def document(request, document_slug, document_locale):
             # request parameters.
             if (any([request.GET.get(param, None)
                      for param in ('raw', 'include', 'nocreate')]) or
-                    not request.user.is_authenticated()):
+                    not request.user.is_authenticated):
                 raise Http404
 
             # The user may be trying to create a child page; if a parent exists
@@ -762,7 +762,7 @@ def document(request, document_slug, document_locale):
         }
         response = render(request, 'wiki/document.html', context)
 
-    if ks_errors or request.user.is_authenticated():
+    if ks_errors or request.user.is_authenticated:
         add_never_cache_headers(response)
 
     # We're doing this to prevent any unknown intermediate public HTTP caches
@@ -788,7 +788,7 @@ def document_api(request, document_slug, document_locale):
     View/modify the content of a wiki document, or create a new wiki document.
     """
     if request.method == 'PUT':
-        if not (request.authkey and request.user.is_authenticated()):
+        if not (request.authkey and request.user.is_authenticated):
             raise PermissionDenied
         return _document_api_PUT(request, document_slug, document_locale)
 

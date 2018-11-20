@@ -145,7 +145,7 @@ def social_accounts(user):
         {% if accounts %} -- if there is at least one social account
     """
     accounts = {}
-    if not user.is_authenticated():
+    if not user.is_authenticated:
         return accounts
     for account in user.socialaccount_set.all().iterator():
         providers = accounts.setdefault(account.provider, [])

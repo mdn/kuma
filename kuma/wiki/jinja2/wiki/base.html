@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block experiment_js %}
-    {%- if not request.user.is_authenticated() and
+    {%- if not request.user.is_authenticated and
            content_experiment and
            not content_experiment.selection_is_valid %}
         {% javascript content_experiment.id %}

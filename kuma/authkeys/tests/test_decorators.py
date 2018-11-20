@@ -42,10 +42,10 @@ def test_auth_key_decorator(user_auth_key, settings, use_valid_key,
     assert bar == 'bar'
 
     if maintenance_mode or not (use_valid_key and use_valid_secret):
-        assert not request.user.is_authenticated()
+        assert not request.user.is_authenticated
         assert request.authkey is None
     else:
-        assert request.user.is_authenticated()
+        assert request.user.is_authenticated
         assert request.user == user_auth_key.user
         assert request.authkey
         assert request.authkey == user_auth_key.key
@@ -65,5 +65,5 @@ def test_auth_key_decorator_with_invalid_header(user_auth_key, settings):
     fake_view(request, 'foo', 'bar')
 
     # The user should not be authenticated and no error should be raised.
-    assert not request.user.is_authenticated()
+    assert not request.user.is_authenticated
     assert request.authkey is None

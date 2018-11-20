@@ -41,8 +41,8 @@ Django==1.11.16 \
 # Code: https://github.com/pennersr/django-allauth
 # Changes: https://django-allauth.readthedocs.io/en/latest/release-notes.html
 # Docs: https://django-allauth.readthedocs.io/en/latest/
-django-allauth==0.34.0 \
-    --hash=sha256:95a9f7fbebe3e97ce3a541d213fc52492b50dac92f0f91483f58949189e5aa4f
+django-allauth==0.38.0 \
+    --hash=sha256:45661b6fe308466154adf54461679fab6f0c6850b10c56dc322fbbb9d47e03d9
 
 # Refresh stale cache items asynchronously
 # Code: https://github.com/codeinthehole/django-cacheback
