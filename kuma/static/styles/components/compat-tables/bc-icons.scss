@@ -13,13 +13,18 @@
         text-align: left;
         white-space: nowrap;
 
+        @media #{$mq-tablet-only} {
+            margin-left: 42px;
+        }
+
         &:before {
             position: absolute;
-            top: 5px;
-            left: -25px;
+            top: 2px;
+            left: -28px;
             display: inline-block;
             content: '';
             background-repeat: no-repeat;
+            transform: rotate(90deg);
         }
     }
 
@@ -57,7 +62,8 @@
     }
 
     .bc-head-icon-webview_android:before {
-        @include set-icon($path-to-svg-platform-icons + 'android.svg', 20px, 24px);
+        @include set-icon($path-to-svg-platform-icons + 'android.svg', 18px, 22px);
+        left: -23px;
     }
 
     .bc-head-icon-samsunginternet_android:before {
