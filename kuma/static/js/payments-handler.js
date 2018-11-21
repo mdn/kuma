@@ -331,7 +331,7 @@
             : triggerOneTimePaymentEvent({
                 action: 'submission',
                 label: isPopoverBanner ? 'On pop over' : 'On FAQ page',
-                value:  (selectedAmount * 100).toFixed(0)
+                value: (selectedAmount * 100).toFixed(0)
             });
 
         if (requestUserLogin && currrentPaymentForm === 'recurring') {
