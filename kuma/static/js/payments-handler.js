@@ -227,7 +227,7 @@
                 triggerOneTimePaymentEvent({
                     action: 'banner',
                     label: 'Amount radio selected',
-                    value: event.target.value * 100
+                    value: (selectedAmount * 100).toFixed(0)
                 });
             }
 
@@ -238,13 +238,13 @@
             form.find('input[type=\'radio\']:checked').prop('checked', false);
         }
 
-        selectedAmount = (Math.floor(event.target.value * 100) / 100);
+        selectedAmount = event.target.value % 1 === 0 ? parseInt(event.target.value) : parseFloat(event.target.value).toFixed(2);
         var newValue = (selectedAmount < 1 || isNaN(selectedAmount)) ? '' : '$' + selectedAmount;
         amountToUpdate.html(newValue);
 
         // Explicitly add `/month` on the payment button for the banner
         newValue += currrentPaymentForm === 'recurring'
-        && newValue
+        && newValue !== ''
         && isPopoverBanner
             ? '/month'
             : '';
@@ -326,12 +326,12 @@
         currrentPaymentForm === 'recurring'
             ? triggerRecurringPaymentEvent({
                 action: 'Form completed',
-                value: selectedAmount * 100
+                value: (selectedAmount * 100).toFixed(0)
             }, true)
             : triggerOneTimePaymentEvent({
                 action: 'submission',
                 label: isPopoverBanner ? 'On pop over' : 'On FAQ page',
-                value: selectedAmount * 100
+                value: (selectedAmount * 100).toFixed(0)
             });
 
         if (requestUserLogin && currrentPaymentForm === 'recurring') {
@@ -349,7 +349,7 @@
                 zipCode: true,
                 allowRememberMe: false,
                 panelLabel: currrentPaymentForm === 'recurring' ? 'Pay {{amount}}/month' : 'Pay',
-                amount: (selectedAmount * 100),
+                amount: parseInt((selectedAmount * 100).toFixed(0)),
                 email: $(emailField).val(),
                 closed: function() {
                     // Send GA Event.
@@ -584,7 +584,7 @@
             triggerOneTimePaymentEvent({
                 action: 'banner',
                 label: 'custom amount',
-                value: Math.floor(value * 100)
+                value: (value * 100).toFixed(0)
             });
         } else {
             triggerOneTimePaymentEvent({
