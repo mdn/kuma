@@ -5,13 +5,13 @@ Development
 Basic Docker usage
 ==================
 Edit files as usual on your host machine; the current directory is mounted
-via Docker host mounting at ``/app`` within the ``kuma_web_1`` and
-other containers. Useful docker sub-commands::
+via Docker host mounting at ``/app`` within various
+Kuma containers. Useful docker sub-commands::
 
-    docker exec -it kuma_web_1 bash  # Start an interactive shell
-    docker logs kuma_web_1           # View logs from the web container
+    docker-compose exec web bash     # Start an interactive shell
+    docker-compose logs web          # View logs from the web container
     docker-compose logs -f           # Continuously view logs from all containers
-    docker restart kuma_web_1        # Force a container to reload
+    docker-compose restart seb       # Force a container to reload
     docker-compose stop              # Shutdown the containers
     docker-compose up -d             # Start the containers
     docker-compose rm                # Destroy the containers
@@ -19,10 +19,10 @@ other containers. Useful docker sub-commands::
 There are ``make`` shortcuts on the host for frequent commands, such as::
 
     make up         # docker-compose up -d
-    make bash       # docker exec -it kuma_web_1 bash
-    make shell_plus # docker exec -it kuma_web_1 ./manage.py shell_plus
+    make bash       # docker-compose exec web bash
+    make shell_plus # docker-compose exec web ./manage.py shell_plus
 
-Run all commands in this doc in the ``kuma_web_1`` container after ``make bash``.
+Run all commands in this doc in the ``web`` service container after ``make bash``.
 
 Running Kuma
 ============
@@ -239,9 +239,13 @@ container's environment and settings are configured in ``docker-compose.yml``.
 The settings are "baked" into the containers created by ``docker-compose up``.
 
 To override a container's settings for development, use a local override file.
-For example, the ``web`` service runs in container ``kuma_web_1`` with the
+For example, the ``web`` service runs in container with the
 default command
 "``gunicorn -w 4 --bind 0.0.0.0:8000 --timeout=120 kuma.wsgi:application``".
+(The container has a name that begins with ``kuma_web_1_`` and
+ends with a string of random hex digits. You can look up the name of
+your particular container with ``docker ps | grep kuma_web``. You'll
+need this container name for some of the commands described below.)
 A useful alternative for debugging is to run a single-threaded process that
 loads the Werkzeug debugger on exceptions (see docs for runserver_plus_), and
 that allows for stepping through the code with a debugger.
@@ -255,7 +259,7 @@ To use this alternative, create an override file ``docker-compose.dev.yml``::
         tty: true
 
 
-This is similar to "``docker run -it <image> ./manage.py runserver_plus``",
+This is similar to "``docker run -it <container> ./manage.py runserver_plus``",
 using all the other configuration items in ``docker-compose.yml``.
 Apply the custom setting with::
 
@@ -264,7 +268,7 @@ Apply the custom setting with::
 You can then add ``pdb`` breakpoints to the code
 (``import pdb; pdb.set_trace``) and connect to the debugger with::
 
-    docker attach kuma_web_1
+    docker attach <container>
 
 To always include the override compose file, add it to your ``.env`` file::
 
@@ -320,7 +324,7 @@ To emulate production, and test compressed and hashed assets locally:
 
 #. Set the environment variable ``DEBUG=False``
 #. Start (``docker-compose up -d``) your Docker services.
-#. Run ``docker exec -e DJANGO_SETTINGS_MODULE=kuma.settings.prod kuma_web_1 make build-static``.
+#. Run ``docker-compose exec -e DJANGO_SETTINGS_MODULE=kuma.settings.prod web make build-static``.
 #. Restart the web process using ``docker-compose restart web``.
 
 Using secure cookies
