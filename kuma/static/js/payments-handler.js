@@ -277,7 +277,7 @@
      */
     function onChange(event) {
         var field = $(event.target)[0];
-
+        field.value = field.value.trim();
         if (field.checkValidity()) {
             clearFieldError(field);
         } else {
