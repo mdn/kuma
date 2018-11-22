@@ -123,7 +123,7 @@ def test_document_redirect_rejects_invalid_url(db, url):
 
 def test_document_get_full_url(root_doc):
     """get_full_url returns full URLs."""
-    assert root_doc.get_full_url() == 'https://example.com/en-US/docs/Root'
+    assert root_doc.get_full_url() == settings.SITE_URL + '/en-US/docs/Root'
 
 
 def test_document_from_url(root_doc):

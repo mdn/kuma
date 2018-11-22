@@ -25,8 +25,8 @@ class SitemapsTestCase(UserTestCase):
         for locale in set(locales):
             # we'll expect to see this locale in the sitemap index file
             expected_sitemap_locs.append(
-                "<loc>https://example.com/sitemaps/%s/sitemap.xml</loc>" %
-                locale
+                "<loc>%s/sitemaps/%s/sitemap.xml</loc>" %
+                (settings.SITE_URL, locale)
             )
             sitemap_path = os.path.join(settings.MEDIA_ROOT, 'sitemaps',
                                         locale, 'sitemap.xml')

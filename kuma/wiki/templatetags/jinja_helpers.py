@@ -6,7 +6,7 @@ import re
 import jinja2
 from constance import config
 from cssselect.parser import SelectorSyntaxError
-from django.contrib.sites.models import Site
+from django.conf import settings
 from django.core.serializers.json import DjangoJSONEncoder
 from django.template import loader
 from django.utils import lru_cache
@@ -203,23 +203,15 @@ def tojson(value):
 
 
 @library.filter
-def absolutify(url, site=None):
-    """
-    Joins a base ``Site`` URL with a URL path.
-
-    If no site provided it gets the current site from Site.
-
-    """
+def absolutify(url):
+    """Joins settings.SITE_URL with a URL path."""
     if url.startswith('http'):
         return url
 
-    if not site:
-        site = Site.objects.get_current()
-
+    site = urlsplit(settings.SITE_URL)
     parts = urlsplit(url)
-
-    scheme = 'https'
-    netloc = site.domain
+    scheme = site.scheme
+    netloc = site.netloc
     path = parts.path
     query = parts.query
     fragment = parts.fragment

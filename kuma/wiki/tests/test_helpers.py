@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
-import mock
 import pytest
-from django.contrib.sites.models import Site
 from django.template import TemplateDoesNotExist
 from pyquery import PyQuery as pq
 
@@ -33,17 +31,16 @@ def test_tojson():
      ('/woo?var=value', 'https://testserver/woo?var=value'),
      ('/woo?var=value#fragment', 'https://testserver/woo?var=value#fragment'),
      ))
-@mock.patch.object(Site.objects, 'get_current')
-def test_absolutify(get_current, path, abspath):
+def test_absolutify(settings, path, abspath):
     """absolutify adds the current site to paths without domains."""
-    get_current.return_value.domain = 'testserver'
+    settings.SITE_URL = 'https://testserver'
     assert absolutify(path) == abspath
 
 
-def test_absolutify_site():
-    """absolutify takes a Site object for the domain."""
-    site = Site(domain='otherserver')
-    assert absolutify('/woo', site) == 'https://otherserver/woo'
+def test_absolutify_dev(settings):
+    """absolutify uses http in development."""
+    settings.SITE_URL = 'http://localhost:8000'
+    assert absolutify('') == 'http://localhost:8000/'
 
 
 def test_include_svg_invalid_path():
