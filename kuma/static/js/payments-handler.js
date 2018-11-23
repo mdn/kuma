@@ -580,6 +580,7 @@
     customAmountInput.blur(function(event) {
         var value = parseFloat(event.target.value);
         if (!isNaN(value) && value >= 1) {
+            this.value = selectedAmount;
             // Send GA Event.
             triggerOneTimePaymentEvent({
                 action: 'banner',
