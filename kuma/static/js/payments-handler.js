@@ -277,7 +277,7 @@
      */
     function onChange(event) {
         var field = $(event.target)[0];
-
+        field.value = field.value.trim();
         if (field.checkValidity()) {
             clearFieldError(field);
         } else {
@@ -580,6 +580,7 @@
     customAmountInput.blur(function(event) {
         var value = parseFloat(event.target.value);
         if (!isNaN(value) && value >= 1) {
+            this.value = selectedAmount;
             // Send GA Event.
             triggerOneTimePaymentEvent({
                 action: 'banner',

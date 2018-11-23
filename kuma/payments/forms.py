@@ -78,6 +78,8 @@ class ContributionForm(forms.Form):
         decimal_places=2,
         widget=forms.TextInput(
             attrs={
+                'type': 'number',
+                'step': '0.01',
                 'class': 'form-input form-input-amount',
                 'placeholder': _('Other'),
                 'data-error-message': _('Must be more than $1')
