@@ -162,7 +162,8 @@
      * @param {boolean} [storeUserForLaterEvents] - store user auth level for later analytic events
      */
     function triggerRecurringPaymentEvent(event, storeUserForLaterEvents) {
-        if (!triggerAnalyticEvents) {
+        // To preserve conversion rate % we should not emit events if localStorage is disabled.
+        if (!triggerAnalyticEvents || !win.mdn.features.localStorage) {
             return;
         }
 
