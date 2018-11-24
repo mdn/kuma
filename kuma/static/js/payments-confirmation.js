@@ -28,11 +28,11 @@
             sessionStorage.removeItem(amountSubmittedStoreKey);
         });
 
-    } else if (path.includes('/payments/recurring/success')) {
+    } else if (path.includes('/payments/recurring/success') && win.mdn.features.localStorage) {
         mdn.analytics.trackEvent({
             category: 'Recurring payments',
             action: 'success',
-            label: originalUserAuth,
+            label: originalUserAuth || 'lost',
             value: amountSubmitted
         }, function() {
             localStorage.removeItem('userAuthenticationOnFormSubmission');
@@ -47,15 +47,14 @@
         }, function() {
             sessionStorage.removeItem(amountSubmittedStoreKey);
         });
-    } else if (path.includes('/payments/recurring/error')) {
+    } else if (path.includes('/payments/recurring/error') && win.mdn.features.localStorage) {
         mdn.analytics.trackEvent({
             category: 'Recurring payments',
             action: 'Payment failed',
-            label: originalUserAuth,
+            label: originalUserAuth || 'lost',
             value: amountSubmitted
         }, function() {
             localStorage.removeItem('userAuthenticationOnFormSubmission');
         });
     }
-
 })(window);
