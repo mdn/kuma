@@ -50,8 +50,8 @@
     }
 
     /* toggles */
-    summary {
-        .toggle & {
+    .toggle {
+        summary {
             color: $text-color;
             display: inline-block;
 
@@ -63,10 +63,10 @@
                 top: 1px;
             }
         }
+    }
 
-        a {
-            margin-bottom: 0;
-        }
+    summary a {
+        display: inline;
     }
 
     details {
