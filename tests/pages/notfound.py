@@ -14,10 +14,9 @@ class NotFoundPage(BasePage):
                                '#content-main a[href^="' +
                                report_content_form_url + '"]')
 
-    def wait_for_page_to_load(self):
-        """The page varies on DEBUG=True, so just look for URL."""
-        self.wait.until(lambda s: self.seed_url in s.current_url)
-        return self
+    @property
+    def loaded(self):
+        return self.seed_url in self.selenium.current_url
 
     @property
     def page_title_text(self):

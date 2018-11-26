@@ -343,6 +343,107 @@ pbr==1.8.1 \
     --hash=sha256:e2127626a91e6c885db89668976db31020f0af2da728924b56480fc7ccf09649
 
 #
+# PyPOM
+#
+# Provides facilities for defining, registering and looking up components.
+# Code: https://github.com/zopefoundation/zope.component
+# Changes: https://pypi.org/project/zope.component/#history
+# Docs: https://zopecomponent.readthedocs.io/en/latest/
+zope.component==4.5 \
+    --hash=sha256:6edfd626c3b593b72895a8cfcf79bff41f4619194ce996a85bce31ac02b94e55 \
+    --hash=sha256:984a06ba3def0b02b1117fa4c45b56e772e8c29c0340820fbf367e440a93a3a4
+# Provides an implementation of “object interfaces” for Python.
+# Code: https://github.com/zopefoundation/zope.interface
+# Changes: https://pypi.org/project/zope.interface/#history
+# Docs: https://zopeinterface.readthedocs.io/en/latest/
+zope.interface==4.6.0 \
+    --hash=sha256:086707e0f413ff8800d9c4bc26e174f7ee4c9c8b0302fbad68d083071822316c \
+    --hash=sha256:1157b1ec2a1f5bf45668421e3955c60c610e31913cc695b407a574efdbae1f7b \
+    --hash=sha256:11ebddf765bff3bbe8dbce10c86884d87f90ed66ee410a7e6c392086e2c63d02 \
+    --hash=sha256:14b242d53f6f35c2d07aa2c0e13ccb710392bcd203e1b82a1828d216f6f6b11f \
+    --hash=sha256:1b3d0dcabc7c90b470e59e38a9acaa361be43b3a6ea644c0063951964717f0e5 \
+    --hash=sha256:20a12ab46a7e72b89ce0671e7d7a6c3c1ca2c2766ac98112f78c5bddaa6e4375 \
+    --hash=sha256:298f82c0ab1b182bd1f34f347ea97dde0fffb9ecf850ecf7f8904b8442a07487 \
+    --hash=sha256:2f6175722da6f23dbfc76c26c241b67b020e1e83ec7fe93c9e5d3dd18667ada2 \
+    --hash=sha256:3b877de633a0f6d81b600624ff9137312d8b1d0f517064dfc39999352ab659f0 \
+    --hash=sha256:4265681e77f5ac5bac0905812b828c9fe1ce80c6f3e3f8574acfb5643aeabc5b \
+    --hash=sha256:550695c4e7313555549aa1cdb978dc9413d61307531f123558e438871a883d63 \
+    --hash=sha256:5f4d42baed3a14c290a078e2696c5f565501abde1b2f3f1a1c0a94fbf6fbcc39 \
+    --hash=sha256:62dd71dbed8cc6a18379700701d959307823b3b2451bdc018594c48956ace745 \
+    --hash=sha256:7040547e5b882349c0a2cc9b50674b1745db551f330746af434aad4f09fba2cc \
+    --hash=sha256:7e099fde2cce8b29434684f82977db4e24f0efa8b0508179fce1602d103296a2 \
+    --hash=sha256:7e5c9a5012b2b33e87980cee7d1c82412b2ebabcb5862d53413ba1a2cfde23aa \
+    --hash=sha256:81295629128f929e73be4ccfdd943a0906e5fe3cdb0d43ff1e5144d16fbb52b1 \
+    --hash=sha256:95cc574b0b83b85be9917d37cd2fad0ce5a0d21b024e1a5804d044aabea636fc \
+    --hash=sha256:968d5c5702da15c5bf8e4a6e4b67a4d92164e334e9c0b6acf080106678230b98 \
+    --hash=sha256:9e998ba87df77a85c7bed53240a7257afe51a07ee6bc3445a0bf841886da0b97 \
+    --hash=sha256:a0c39e2535a7e9c195af956610dba5a1073071d2d85e9d2e5d789463f63e52ab \
+    --hash=sha256:a15e75d284178afe529a536b0e8b28b7e107ef39626a7809b4ee64ff3abc9127 \
+    --hash=sha256:a6a6ff82f5f9b9702478035d8f6fb6903885653bff7ec3a1e011edc9b1a7168d \
+    --hash=sha256:b639f72b95389620c1f881d94739c614d385406ab1d6926a9ffe1c8abbea23fe \
+    --hash=sha256:bad44274b151d46619a7567010f7cde23a908c6faa84b97598fd2f474a0c6891 \
+    --hash=sha256:bbcef00d09a30948756c5968863316c949d9cedbc7aabac5e8f0ffbdb632e5f1 \
+    --hash=sha256:d788a3999014ddf416f2dc454efa4a5dbeda657c6aba031cf363741273804c6b \
+    --hash=sha256:eed88ae03e1ef3a75a0e96a55a99d7937ed03e53d0cffc2451c208db445a2966 \
+    --hash=sha256:f99451f3a579e73b5dd58b1b08d1179791d49084371d9a47baad3b22417f0317
+# Provides facilities for defining names in modules that will be imported from
+# somewhere else when used.
+# Code: https://github.com/zopefoundation/zope.deferredimport
+# Changes: https://pypi.org/project/zope.deferredimport/#history
+# Docs: https://zopedeferredimport.readthedocs.io/en/latest/
+zope.deferredimport==4.3 \
+    --hash=sha256:2ddef5a7ecfff132a2dd796253366ecf9748a446e30f1a0b3a636aec9d9c05c5 \
+    --hash=sha256:4aae9cbacb2146cca58e62be0a914f0cec034d3b2d41135ea212ca8a96f4b5ec
+# Provides a simple event system
+# Code: https://github.com/zopefoundation/zope.event
+# Changes: https://pypi.org/project/zope.event/#history
+# Docs: https://zopeevent.readthedocs.io/en/latest/
+zope.event==4.4 \
+    --hash=sha256:69c27debad9bdacd9ce9b735dad382142281ac770c4a432b533d6d65c4614bcf \
+    --hash=sha256:d8e97d165fd5a0997b45f5303ae11ea3338becfe68c401dd88ffd2113fe5cae7
+# Provides a simple function called "deprecated(names, reason)" to mark
+# deprecated modules, classes, functions, methods and properties.
+# Code: https://github.com/zopefoundation/zope.deprecation
+# Changes: https://pypi.org/project/zope.deprecation/#history
+# Docs: https://zopedeprecation.readthedocs.io/en/latest/
+zope.deprecation==4.3.0 \
+    --hash=sha256:7d52e134bbaaa0d72e1e2bc90f0587f1adc116c4bdf15912afaf2f1e8856b224 \
+    --hash=sha256:c83cfef3085d10dcb07de5a59a2d95713865befa46e0e88784c5648610fba789
+# Supports the efficient creation of “hookable” objects, which are callable
+# objects that are meant to be optionally replaced.
+# Code: https://github.com/zopefoundation/zope.hookable
+# Changes: https://pypi.org/project/zope.hookable/#history
+# Docs: https://zopehookable.readthedocs.io/en/latest/
+zope.hookable==4.2.0 \
+    --hash=sha256:22886e421234e7e8cedc21202e1d0ab59960e40a47dd7240e9659a2d82c51370 \
+    --hash=sha256:39912f446e45b4e1f1951b5ffa2d5c8b074d25727ec51855ae9eab5408f105ab \
+    --hash=sha256:3adb7ea0871dbc56b78f62c4f5c024851fc74299f4f2a95f913025b076cde220 \
+    --hash=sha256:3d7c4b96341c02553d8b8d71065a9366ef67e6c6feca714f269894646bb8268b \
+    --hash=sha256:4e826a11a529ed0464ffcecf34b0b7bd1b4928dd5848c5c61bedd7833e8f4801 \
+    --hash=sha256:700d68cc30728de1c4c62088a981c6daeaefdf20a0d81995d2c0b7f442c5f88c \
+    --hash=sha256:77c82a430cedfbf508d1aa406b2f437363c24fa90c73f577ead0fb5295749b83 \
+    --hash=sha256:c1df3929a3666fc5a0c80d60a0c1e6f6ef97c7f6ed2f1b7cf49f3e6f3d4dde15 \
+    --hash=sha256:dba8b2dd2cd41cb5f37bfa3f3d82721b8ae10e492944e48ddd90a439227f2893 \
+    --hash=sha256:f492540305b15b5591bd7195d61f28946bb071de071cee5d68b6b8414da90fd2
+# Provides proxies, or special objects which serve as mostly-transparent
+# wrappers around another object.
+# Code: https://github.com/zopefoundation/zope.proxy
+# Changes: https://pypi.org/project/zope.proxy/#history
+# Docs: https://zopeproxy.readthedocs.io/en/latest/
+zope.proxy==4.3.1 \
+    --hash=sha256:0cbcfcafaa3b5fde7ba7a7b9a2b5f09af25c9b90087ad65f9e61359fed0ca63b \
+    --hash=sha256:3de631dd5054a3a20b9ebff0e375f39c0565f1fb9131200d589a6a8f379214cd \
+    --hash=sha256:5429134d04d42262f4dac25f6dea907f6334e9a751ffc62cb1d40226fb52bdeb \
+    --hash=sha256:563c2454b2d0f23bca54d2e0e4d781149b7b06cb5df67e253ca3620f37202dd2 \
+    --hash=sha256:5bcf773345016b1461bb07f70c635b9386e5eaaa08e37d3939dcdf12d3fdbec5 \
+    --hash=sha256:8d84b7aef38c693874e2f2084514522bf73fd720fde0ce2a9352a51315ffa475 \
+    --hash=sha256:90de9473c05819b36816b6cb957097f809691836ed3142648bf62da84b4502fe \
+    --hash=sha256:dd592a69fe872445542a6e1acbefb8e28cbe6b4007b8f5146da917e49b155cc3 \
+    --hash=sha256:e7399ab865399fce322f9cefc6f2f3e4099d087ba581888a9fea1bbe1db42a08 \
+    --hash=sha256:e7d1c280d86d72735a420610df592aac72332194e531a8beff43a592c3a1b8eb \
+    --hash=sha256:e90243fee902adb0c39eceb3c69995c0f2004bc3fdb482fbf629efc656d124ed
+
+#
 # pyquery
 #
 # CSS selectors for Python

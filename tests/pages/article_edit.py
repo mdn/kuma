@@ -47,13 +47,14 @@ class EditPage(BasePage):
         )
         return tagit_exists
 
-    def wait_for_page_to_load(self):
-        super(EditPage, self).wait_for_page_to_load()
+    @property
+    def loaded(self):
         # also wait for ckeditor to load
-        self.wait.until(
-            lambda s: s.execute_script(self.CKEDITOR_READY_QUERY) is True
-        )
-        return self
+        return ((self.seed_url in self.selenium.current_url) and (
+            self.wait.until(
+                lambda s: s.execute_script(self.CKEDITOR_READY_QUERY)
+            )
+        ))
 
     @property
     def current_revision_id(self):

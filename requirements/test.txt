@@ -8,9 +8,12 @@ braceexpand==0.1.1 \
     --hash=sha256:f967ca39bdb98e16299a69c45a944c5d4345393615ed6470bb1e62ca3506bf41
 
 # Page Object Model for testing with Selenium
-PyPOM==1.0 \
-    --hash=sha256:a8728981970404c3c9a14efeb23da92191749a4a4ad489130fd855e4cf8f154e \
-    --hash=sha256:5c98e3d8ef2c7f96c3365a3b8295560446f2447eecdcfe393a30abf2fcc16d96
+# Code: https://github.com/mozilla/PyPOM
+# Changes: https://pypom.readthedocs.io/en/latest/news.html#release-notes
+# Docs: https://pypom.readthedocs.io/en/latest/index.html
+PyPOM==2.2.0 \
+    --hash=sha256:4bdd57fceb72d7e6a3645cf6c9322f490d9cfb5d777eac2c851a3b658b813939 \
+    --hash=sha256:6772ec99f0a21a5bdc8c092007a8c813ed18359e67ed70258bbb233df5e28829
 
 
 # Test plugin: Re-run flaky tests
