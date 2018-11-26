@@ -11,7 +11,7 @@ Kuma containers. Useful docker sub-commands::
     docker-compose exec web bash     # Start an interactive shell
     docker-compose logs web          # View logs from the web container
     docker-compose logs -f           # Continuously view logs from all containers
-    docker-compose restart seb       # Force a container to reload
+    docker-compose restart web       # Force a container to reload
     docker-compose stop              # Shutdown the containers
     docker-compose up -d             # Start the containers
     docker-compose rm                # Destroy the containers
