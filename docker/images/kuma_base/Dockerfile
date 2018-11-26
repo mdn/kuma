@@ -13,6 +13,7 @@ ENV NODE_VERSION=8.11.3 \
     # Kuma Pipeline definitions
     PIPELINE_CSS_COMPRESSOR=kuma.core.pipeline.cleancss.CleanCSSCompressor \
     PIPELINE_CLEANCSS_BINARY=/usr/local/bin/cleancss \
+    PIPELINE_CLEANCSS_ARGUMENTS="-O2 --skip-rebase" \
     PIPELINE_JS_COMPRESSOR=pipeline.compressors.uglifyjs.UglifyJSCompressor \
     PIPELINE_SASS_BINARY=/usr/local/bin/node-sass \
     PIPELINE_UGLIFYJS_BINARY=/usr/local/bin/uglifyjs \
