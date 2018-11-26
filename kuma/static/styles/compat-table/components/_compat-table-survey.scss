@@ -1,0 +1,29 @@
+/*
+Compat table survey
+********************************************************************** */
+
+/* The survey temporarily replaces the Github link */
+.bc-github-link {
+    display: none;
+}
+
+.survey-link-container {
+    background-color: #222;
+    padding: 10px;
+
+    a {
+        color: #fff;
+
+        &:before {
+            @include set-icon($icon-white-external-link);
+            margin-right: 5px;
+            vertical-align: bottom;
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+            text-decoration: underline;
+        }
+    }
+}
