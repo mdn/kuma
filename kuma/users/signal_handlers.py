@@ -10,6 +10,7 @@ from waffle import switch_is_active
 
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.jobs import DocumentContributorsJob
+from kuma.payments.utils import cancel_stripe_customer_subscription
 
 from .jobs import UserGravatarURLJob
 from .models import User, UserBan
@@ -118,3 +119,19 @@ def invalidate_document_contribution(user):
     job = DocumentContributorsJob()
     for doc_id in doc_ids:
         job.invalidate(doc_id)
+
+
+@receiver(post_delete, sender=User, dispatch_uid='users.user.post_delete')
+def on_user_delete(sender, instance, **kwargs):
+    """
+    A signal handler to be called after deleting a user.
+
+    Invalidate all User stripe subscriptions if stripe customer ID exists
+    """
+    user = instance
+    if user.stripe_customer_id:
+        cancel_stripe_customer_subscription(
+            user.stripe_customer_id,
+            user.email,
+            user.username
+        )
