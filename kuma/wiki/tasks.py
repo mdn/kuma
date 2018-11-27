@@ -5,11 +5,14 @@ import logging
 import os
 import textwrap
 from datetime import datetime, timedelta
+from time import mktime
+from uuid import uuid4
 
 from celery import chord, task
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sitemaps import GenericSitemap
+from django.core.cache import cache
 from django.core.mail import mail_admins, send_mail
 from django.db import transaction
 from django.template.loader import render_to_string
@@ -467,3 +470,71 @@ def delete_logs_for_purged_documents():
         doc = Document.admin_objects.filter(locale=ddl.locale, slug=ddl.slug)
         if not doc.exists():
             ddl.delete()
+
+
+@task
+@skip_in_maintenance_mode
+def rerender_step1_init(macros=None, locales=None, user_id=None, email=None,
+                        batch_size=100, error_percent=10, wait_tasks=2):
+    """
+    Initialize a re-render job.
+
+    Arguments:
+    - macros: A comma-seperated list of macros to filter on
+    - locales: A comma-seperated list of locales to filter on
+    - user_id: The user ID that initiated the report
+    - email: An email to get a final report
+    - batch_size: How many documents to render in a batch
+    - error_percent: A integer in range (0, 100], to abort due to errors
+    - wait_tasks: The max number of pending tasks in the purgable queue
+      before starting a new chunk
+    """
+
+    render_filter = {}
+    if macros:
+        macros_list = [x.strip() for x in macros.split(',') if x.strip()]
+        if len(macros_list) == 1:
+            filter['macro'] = macros_list[0]
+        elif len(macros_list) > 1:
+            filter['macros'] = macros_list
+    if locales:
+        locales_list = [x.strip() for x in locales.split(',') if x.strip()]
+        if len(locales_list) == 1:
+            filter['locale'] = locales_list[0]
+        elif len(locales_list) > 1:
+            filter['locales'] = locales_list
+
+    now_ts = mktime(datetime.now().timetuple())
+
+    report = {
+        'id': str(uuid4()),
+        'filter': render_filter,
+        'state': 'init',
+        'timestamps': {
+            'init': now_ts,
+            'count1': None,
+            'count2': None,
+            'render': None,
+            'done': None,
+            'heartbeat': now_ts,
+        },
+        'user_id': user_id,
+        'email': email,
+        'count': {
+            'rough': None,
+            'detailed': None,
+            'rendered': 0,
+            'errored': 0,
+            'abandoned': 0,
+            'in_progress': 0,
+        },
+        'estimate': None,
+        'batch_id': None,
+        'recent_docs': [],
+        'tasks': {
+            'max': None,
+            'current': None,
+        },
+        'cancelled': False
+    }
+    assert report
