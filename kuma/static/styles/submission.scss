@@ -139,6 +139,13 @@ p.field-note {
     margin: 0 0 5px;
 }
 
+.subscription-link {
+    @include bidi(((float, right, left),));
+    font-size: 1rem;
+    font-weight: normal;
+    line-height: 3em;
+}
+
 .field-account {
     clear: both;
 }

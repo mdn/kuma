@@ -2,6 +2,11 @@
 
 {% block title %}{{ page_title(_('MDN Payment terms')) }}{% endblock %}
 
+{% block site_css %}
+{{ super() }}
+{% stylesheet 'users' %}
+{% endblock %}
+
 {% block site_meta %}
     {{ super() }}
     {% set seo_description = _('MDN Payment terms') %}
@@ -15,23 +20,112 @@
 
 
 {% block content %}
-    <div>
-        <h2>Subscriptions</h2>
+    <div class="manage-payments">
+        <article class="column-container">
+            <header>
+                <h1>{{_('Your MDN profile')}}</h1>
+            </header>
+            <div>
+                <a class="button neutral back">{% include 'includes/icons/arrows/arrow-left.svg' %} Back to profile</a>
+            </div>
+            <aside class="column-4">
+                <h4>{{_('Help')}}</h4>
+                <ul>
+                    <li>
+                        <a href="{{ url('recurring_payment_initial') }}" class="cta-link full-width">{{_('Monthly subscriptions FAQ')}} {% include 'includes/icons/arrows/arrow.svg' %}</a>
+                    </li>
+                    <li>
+                        <a href="{{ support_mail_link }}" class="cta-link cta-link__email full-width">{{ support_mail }}{% include 'includes/icons/general/envelope.svg' %}</a>
+                    </li>
+                </ul>
+            </aside>
+            <section class="column-half">
+                <h2>{{_('Subscriptions')}}</h2>
+                <p>
+                    {% trans url=support_mail_link, email=support_mail %}
+                        This is a list of your active subscriptions to MDN.
+                        If you wish to amend any of the details below please
+                        contact <a href="{{ url }}">{{ email }}</a>.
+                    {% endtrans %}
+                </p>
+            </section>
+        </article>
         {% if request.user.stripe_customer_id and active_subscriptions %}
-            <p>
-                Monthly payment to MDN
-                ${{ stripe_plan_amount }} from your account ending in {{ stripe_card_last4 }}
-                <a href="{{ url('payment_terms') }}">Learn more about subscriptions</a>
-            </p>
-            <form id="id_stripe_management_form" method="post" action="" >
-                {% csrf_token %}
-                <button id="id_stripe_cancel_subscription" name="stripe_cancel_subscription" class="button" type="submit">Cancel your subscription</button>
-            </form>
+            <section>
+                <h3>{{_('Monthly Subscription')}}</h3>
+                <table class="table">
+                    <tr>
+                        <th>{% include 'includes/icons/general/money-bill-alt.svg' %} {{_('Amount')}}</th>
+                        <th>{% include 'includes/icons/general/credit-card.svg' %} {{_('Card Number')}}</th>
+                        <th>{% include 'includes/icons/general/credit-card.svg' %} {{_('Expiry')}}</th>
+                    </tr>
+                    <tr>
+                        <td>${{ stripe_plan_amount }}</td>
+                        <td>**** **** **** {{ stripe_card_last4 }}</td>
+                        <td>02/19</td>
+                    </tr>
+                </table>
+                {% if not cancel_request %}
+                    <form id="id_stripe_management_form" method="post" action="" >
+                        {% csrf_token %}
+                        <button class="button negative" type="button" tooggle-confirmation>{{_('Cancel your subscription')}}</button>
+                        <div id="delete-confirmation" class="hidden">
+                            <div class="confirmation column-8 alert--danger">
+                                <div>
+                                    <h5>{{_('Are you sure?')}}</h5>
+                                    <p>
+                                        {{_('You will have to set up a new subscription if you wish to resume making payments to MDN.')}}
+                                    </p>
+                                </div>
+                                <div class="button-group">
+                                    <button class="button" type="button" tooggle-confirmation>{{_('Cancel')}}</button>
+                                    <button id="id_stripe_cancel_subscription" name="stripe_cancel_subscription" class="button negative" type="submit">{{_('Confirm')}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                {% endif %}
+            </section>
         {% else %}
-            <p>
-                Sorry you don't have any active subscription
-            </p>
+            <section>
+                <h3>{{_('Monthly Subscription')}}</h3>
+                <div class="table">
+                    <span>
+                        {% trans url=url('recurring_payment_initial') %}
+                            You have no active susbcriptions.
+                            Why not <a href="{{ url }}">set one up?</a>
+                        {% endtrans %}
+                    </span>
+                </div>
+            </section>
+        {% endif %}
+        {% if cancel_request %}
+            {% if cancel_success %}
+                <div class="confirmation column-8 alert--success">
+                    <span>
+                        <b>{{_('Your monthly subscription has been successfully cancelled')}}</b>
+                    </span>
+                </div>
+            {% else %}
+                <div class="confirmation column-8 alert--success">
+                    <span>
+                        <b>
+                            {% trans url=support_mail_link, email=support_mail, reference_number=request.user.stripe_customer_id %}
+                                There was a problemt cancelling your subscription,
+                                please contact <a href="{{ url }}">{{ email }}</a>
+                                and provide your customer refrence number {{ reference_number }}.
+                            {% endtrans %}
+                        </b>
+                    </span>
+                </div>
+            {% endif %}
         {% endif %}
     </div>
 {% endblock %}
 
+{% block js %}
+  {%- if contribution_enabled %}
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    {% javascript 'payments' %}
+  {%- endif %}
+{% endblock %}
