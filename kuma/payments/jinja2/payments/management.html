@@ -26,7 +26,7 @@
                 <h1>{{_('Your MDN profile')}}</h1>
             </header>
             <div>
-                <a class="button neutral back">{% include 'includes/icons/arrows/arrow-left.svg' %} Back to profile</a>
+                <a href="{{ url('users.user_edit', username=user.username) }}" class="button neutral back">{% include 'includes/icons/arrows/arrow-left.svg' %} {{_('Back to profile')}}</a>
             </div>
             <aside class="column-4">
                 <h4>{{_('Help')}}</h4>
