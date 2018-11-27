@@ -172,6 +172,9 @@ def test_macros_search_all_by_click(base_url, selenium):
 @pytest.mark.nondestructive
 def test_macros_search_en_by_form(base_url, selenium):
     """Manual search form can search all English pages."""
+    if selenium.capabilities['browserName'] == 'firefox':
+        pytest.xfail('"click()" on the macro form-search buttons '
+                     'does not currently work for Firefox')
     page = MacroDashboardPage(selenium, base_url).open()
     page.manual_search('CSSRef', 'en-US')
     url_bits = urlparse(selenium.current_url)
@@ -186,6 +189,9 @@ def test_macros_search_en_by_form(base_url, selenium):
 @pytest.mark.nondestructive
 def test_macros_search_all_by_form(base_url, selenium):
     """Manual search form can search all pages."""
+    if selenium.capabilities['browserName'] == 'firefox':
+        pytest.xfail('"click()" on the macro form-search buttons '
+                     'does not currently work for Firefox')
     page = MacroDashboardPage(selenium, base_url).open()
     page.manual_search('CSSRef')
     url_bits = urlparse(selenium.current_url)
