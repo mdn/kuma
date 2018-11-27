@@ -64,8 +64,9 @@ def get_doc_components_from_url(url, required_locale=None, check_host=True):
     # Extract locale and path from URL:
     parsed = urlparse(url)  # Never has errors AFAICT
     if check_host and parsed.netloc:
-        # Only allow redirects on our domain
-        if parsed.netloc != settings.DOMAIN:
+        # Only allow redirects on our site
+        site = urlparse(settings.SITE_URL)
+        if parsed.scheme != site.scheme or parsed.netloc != site.netloc:
             return False
 
     locale, path = split_path(parsed.path)

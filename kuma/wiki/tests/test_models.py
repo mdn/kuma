@@ -155,10 +155,17 @@ def test_document_from_url_revision_url_returns_none(create_revision):
     assert doc is None
 
 
-def test_document_from_url_full_url_returns_none(root_doc):
-    """from_url returns None for a full URL."""
-    doc = Document.from_url(root_doc.get_full_url())
-    assert doc is None
+def test_document_from_url_full_url_returns_doc(root_doc):
+    """from_url returns the document for a full URL."""
+    url = root_doc.get_full_url()
+    assert Document.from_url(url) == root_doc
+
+
+def test_document_from_url_other_url_returns_none(root_doc):
+    """from_url returns None for a different domain."""
+    assert settings.SITE_URL != 'https://example.com'
+    url = 'https://example.com' + root_doc.get_absolute_url()
+    assert Document.from_url(url) is None
 
 
 def test_document_get_redirect_document(root_doc):

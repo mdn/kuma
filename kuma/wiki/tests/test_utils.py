@@ -5,7 +5,6 @@ import os.path
 import mock
 import pytest
 from constance.test import override_config
-from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from googleapiclient.errors import HttpError
 from googleapiclient.http import HttpMockSequence
@@ -340,7 +339,7 @@ def test_get_doc_components_from_url_correct_required_locale(root_doc):
 
 def test_get_doc_components_from_url_check_host_same_domain(root_doc):
     """get_doc_components_from_url works with check_host and full local URL."""
-    url = 'http://' + settings.DOMAIN + root_doc.get_absolute_url()
+    url = root_doc.get_full_url()
     locale, path, slug = get_doc_components_from_url(url, check_host=True)
     assert locale == root_doc.locale
     assert path == '/docs/Root'
