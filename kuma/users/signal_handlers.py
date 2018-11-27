@@ -1,5 +1,3 @@
-import stripe
-import logging
 from allauth.account.signals import email_confirmed, user_signed_up
 from allauth.socialaccount.signals import social_account_removed
 from django.conf import settings
@@ -17,8 +15,6 @@ from kuma.payments.utils import cancel_stripe_customer_subscription
 from .jobs import UserGravatarURLJob
 from .models import User, UserBan
 from .tasks import send_welcome_email
-
-log = logging.getLogger('kuma.users.signal_handlers')
 
 
 @receiver(post_save, sender=User, dispatch_uid='users.user.post_save')
