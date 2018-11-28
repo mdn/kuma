@@ -69,7 +69,7 @@ else
 fi
 
 # SELENIUM_TAG: Docker image tag, see https://hub.docker.com/r/selenium/hub/tags/
-SELENIUM_TAG=${SELENIUM_TAG:-3.8.1}
+SELENIUM_TAG=${SELENIUM_TAG:-3.141.0}
 
 # SELENIUM_HUB: 1 to test with Selenium Hub / Node, somewhat like Jenkins
 SELENIUM_HUB=${SELENIUM_HUB:-0}

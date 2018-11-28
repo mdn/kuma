@@ -38,9 +38,9 @@ class BasePage(Page):
     def __init__(self, selenium, base_url, locale='en-US', **url_kwargs):
         super(BasePage, self).__init__(selenium, base_url, locale=locale, **url_kwargs)
 
-    def wait_for_page_to_load(self):
-        self.wait.until(lambda s: self.seed_url in s.current_url)
-        return self
+    @property
+    def loaded(self):
+        return self.seed_url in self.selenium.current_url
 
     @property
     def header(self):
@@ -96,7 +96,10 @@ class BasePage(Page):
                                          'id(\'nav-tech-submenu\')/..')
         _toolbox_locator = (By.ID, 'toolbox')
 
-        # is displayed?
+        @property
+        def loaded(self):
+            return self.root.is_displayed()
+
         @property
         def is_displayed(self):
             return self.root.is_displayed()
@@ -191,11 +194,10 @@ class BasePage(Page):
             self.find_element(*self._feedback_link_locator).click()
             # import needs to be here to avoid circular reference
             from pages.article import ArticlePage
-            url_kwargs = dict(locale=locale) if locale else dict()
             feedback_page = ArticlePage(self.selenium,
                                         self.page.base_url,
-                                        **url_kwargs)
-            feedback_page.URL_TEMPLATE = '/{locale}/docs/MDN/Feedback'
+                                        slug='MDN/Feedback',
+                                        locale=(locale or 'en-US'))
             return feedback_page.wait_for_page_to_load()
 
         def localized_feedback_path(self, locale):
@@ -261,7 +263,10 @@ class BasePage(Page):
         _privacy_locator = (By.CSS_SELECTOR, 'a[href^="' + privacy_url + '"]')
         _license_locator = (By.CSS_SELECTOR, 'a[href$="' + copyright_url + '"]')
 
-        # is displayed?
+        @property
+        def loaded(self):
+            return self.root.is_displayed()
+
         @property
         def is_displayed(self):
             return self.root.is_displayed()
