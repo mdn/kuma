@@ -183,7 +183,7 @@ def test_recurring_payment_management_no_customer_id(enabled_, get, cancel_, use
     response = user_client.get(reverse('recurring_payment_management'))
     assert response.status_code == 200
     assert '<button id="id_stripe_cancel_subscription" name="stripe_cancel_subscription"' not in response.content
-    assert "Sorry you don't have any active subscription" in response.content
+    assert "You have no active susbcriptions." in response.content
     assert_no_cache_header(response)
     assert response.status_code == 200
 
