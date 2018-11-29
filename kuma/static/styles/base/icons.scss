@@ -52,8 +52,8 @@ label #{$selector-icon}:first-child {
 .icon-tags,
 .icon-undo,
 .search-icon .icon-search {
-    width: 16px;
-    height: 16px;
+    width: $icon-size;
+    height: $icon-size;
 }
 
 /* icons used by PreviousMenuNext macro */
