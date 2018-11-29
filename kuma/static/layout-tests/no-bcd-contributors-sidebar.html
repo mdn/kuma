@@ -34,57 +34,50 @@
 
 
     <script>
-    // Mozilla DNT Helper /* This Source Code Form is subject to the terms of the
-Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with
-this file, You can obtain one at http://mozilla.org/MPL/2.0/. */ if(typeof
-Mozilla==='undefined'){var Mozilla={}}Mozilla.dntEnabled=function(dnt,ua){'use
-strict';var
-dntStatus=dnt||navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack;var
-userAgent=ua||navigator.userAgent;var anomalousWinVersions=['Windows NT
-6.1','Windows NT 6.2','Windows NT 6.3'];var
-fxMatch=userAgent.match(/Firefox\/(\d+)/);var ieRegEx=/MSIE|Trident/i;var
-isIE=ieRegEx.test(userAgent);var
-platform=userAgent.match(/Windows.+?(?=;)/g);if(isIE&&typeof
-Array.prototype.indexOf!=='function'){return false}else
-if(fxMatch&&parseInt(fxMatch[1],10)<32){dntStatus='Unspecified'}else
-if(isIE&&platform&&anomalousWinVersions.indexOf(platform.toString())!==-1){dntStatus='Unspecified'}else{dntStatus={'0':'Disabled','1':'Enabled'}[dntStatus]||'Unspecified'}return
-dntStatus==='Enabled'?true:false}; // only load GA if DNT is not enabled if
-(Mozilla && !Mozilla.dntEnabled()) {
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-36116321-5', 'mozilla.org'); ga('set', 'anonymizeIp', true); //
-dimension9 == "Section editing" // dimension12 == 'Page Revision' ga('set',
-'dimension12', '1405814'); // dimension17 == 'English Slug' ga('set',
-'dimension17', 'Web/JavaScript/Reference/Global_Objects/Array/forEach');
-(function() { //
-http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls var win
-= window; var removeUtms = function(){ var location = win.location; if
-(location.href.indexOf('utm') != -1 && win.history.replaceState) {
-win.history.replaceState({}, '', location.pathname); } }; ga('send', 'pageview',
-{'hitCallback': removeUtms}); })(); }
+    // Mozilla DNT Helper
+    /* This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/. */ if(typeof Mozilla==='undefined'){var Mozilla={}}Mozilla.dntEnabled=function(dnt,ua){'use strict';var dntStatus=dnt||navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack;var userAgent=ua||navigator.userAgent;var anomalousWinVersions=['Windows NT 6.1','Windows NT 6.2','Windows NT 6.3'];var fxMatch=userAgent.match(/Firefox\/(\d+)/);var ieRegEx=/MSIE|Trident/i;var isIE=ieRegEx.test(userAgent);var platform=userAgent.match(/Windows.+?(?=;)/g);if(isIE&&typeof Array.prototype.indexOf!=='function'){return false}else if(fxMatch&&parseInt(fxMatch[1],10)<32){dntStatus='Unspecified'}else if(isIE&&platform&&anomalousWinVersions.indexOf(platform.toString())!==-1){dntStatus='Unspecified'}else{dntStatus={'0':'Disabled','1':'Enabled'}[dntStatus]||'Unspecified'}return dntStatus==='Enabled'?true:false};
+    // only load GA if DNT is not enabled
+    if (Mozilla && !Mozilla.dntEnabled()) {
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-36116321-5', 'mozilla.org');
+        ga('set', 'anonymizeIp', true);
+
+
+
+        // dimension9 == "Section editing"
+
+            // dimension12 == 'Page Revision'
+            ga('set', 'dimension12', '1405814');
+            // dimension17 == 'English Slug'
+            ga('set', 'dimension17', 'Web/JavaScript/Reference/Global_Objects/Array/forEach');
+
+        (function() {
+            // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
+            var win = window;
+            var removeUtms = function(){
+                var location = win.location;
+                if (location.href.indexOf('utm') != -1 && win.history.replaceState) {
+                    win.history.replaceState({}, '', location.pathname);
+                }
+            };
+
+            ga('send', 'pageview', {'hitCallback': removeUtms});
+        })();
+    }
 </script>
 
 
 
-    <script>
-    // util for setting performance marks and mesaures var
-mdn=window.mdn||{};mdn.perf={getDuration:function(e){"use strict";if(void
-0!==performance.getEntriesByName)return
-performance.getEntriesByName(e)[0].duration;console.error("performance.getEntriesByName
-is not supported by your user-agent")},setMark:function(e){"use strict";if(void
-0!==performance.mark)try{performance.mark(e)}catch(e){console.error("Error while
-setting performance mark: ",e)}else console.error("performance.mark is not
-supported by your user-agent")},setMeasure:function(e){"use strict";void
-0!==performance.measure?performance.measure(e.measureName,e.startMark,e.endMark):console.error("performance.measure
-is not supported by your user-agent")}}; /* util specifically for postMessages
-sent from the `head` of the interactive examples iframe */ function
-handlePerfMarks(e){e.measureName?(window.mdn.perf.setMark(e.markName),window.mdn.perf.setMeasure({measureName:e.measureName,startMark:e.startMark,endMark:e.endMark}),ga&&ga.create&&ga("send",{hitType:"timing",timingCategory:"RUM
-- Interactive
-Examples",timingVar:e.measureName,timingValue:window.mdn.perf.getDuration(e.measureName)||0})):window.mdn.perf.setMark(e.markName)}function
-perfMsgHandler(e){"use strict";var
-a=window.mdn.interactiveEditor.editorUrl||"https://interactive-examples.mdn.mozilla.net",r=e.data;if(e.origin!==a)return!1;r.markName&&-1<r.markName.indexOf("interactive-editor-")&&handlePerfMarks(r)}window.addEventListener("message",perfMsgHandler,!1);
+<script>
+// util for setting performance marks and mesaures
+var mdn=window.mdn||{};mdn.perf={getDuration:function(e){"use strict";if(void 0!==performance.getEntriesByName)return performance.getEntriesByName(e)[0].duration;console.error("performance.getEntriesByName is not supported by your user-agent")},setMark:function(e){"use strict";if(void 0!==performance.mark)try{performance.mark(e)}catch(e){console.error("Error while setting performance mark: ",e)}else console.error("performance.mark is not supported by your user-agent")},setMeasure:function(e){"use strict";void 0!==performance.measure?performance.measure(e.measureName,e.startMark,e.endMark):console.error("performance.measure is not supported by your user-agent")}};
+/* util specifically for postMessages sent from the
+   `head` of the interactive examples iframe */
+function handlePerfMarks(e){e.measureName?(window.mdn.perf.setMark(e.markName),window.mdn.perf.setMeasure({measureName:e.measureName,startMark:e.startMark,endMark:e.endMark}),ga&&ga.create&&ga("send",{hitType:"timing",timingCategory:"RUM - Interactive Examples",timingVar:e.measureName,timingValue:window.mdn.perf.getDuration(e.measureName)||0})):window.mdn.perf.setMark(e.markName)}function perfMsgHandler(e){"use strict";var a=window.mdn.interactiveEditor.editorUrl||"https://interactive-examples.mdn.mozilla.net",r=e.data;if(e.origin!==a)return!1;r.markName&&-1<r.markName.indexOf("interactive-editor-")&&handlePerfMarks(r)}window.addEventListener("message",perfMsgHandler,!1);
 </script>
 
     <!-- common social tags -->
@@ -177,36 +170,79 @@ a=window.mdn.interactiveEditor.editorUrl||"https://interactive-examples.mdn.mozi
 </head>
 <body data-slug="Web/JavaScript/Reference/Global_Objects/Array/forEach" contextmenu="edit-history-menu" data-search-url="" class="document">
 
-  <script>
-  // make sure global mdn object exists var mdn = window.mdn || {}; (function(win)
-{ 'use strict'; (function(){ var FLAGS = { 'kumaediting': false,'page_move':
-false,'section_edit': false,'spam_checks_enabled':
-true,'spam_submissions_enabled': false,'spam_admin_override':
-false,'spam_spammer_override': false,'spam_testing_mode':
-false,'sg_task_completion': false,'contrib_beta': false }, SWITCHES = {
-'welcome_email': true,'application_ACAO': true,'store_revision_ips':
-true,'foundation_callout': false,'helpful-survey-2': true,'wiki_spam_training':
-true,'registration_disabled': false }, SAMPLES = { }; window.waffle = {
-"flag_is_active": function waffle_flag(flag_name) { return !!FLAGS[flag_name];
-}, "switch_is_active": function waffle_switch(switch_name) { return
-!!SWITCHES[switch_name]; }, "sample_is_active": function
-waffle_sample(sample_name) { return !!SAMPLES[sample_name]; }, "FLAGS": FLAGS,
-"SWITCHES": SWITCHES, "SAMPLES": SAMPLES }; })(); // This needs to be set before
-ckeditor.js loads window.CKEDITOR_BASEPATH =
-'/static/js/libs/ckeditor/build/ckeditor/'; // Site configuration
-win.mdn.ckeditor = {}; win.mdn.features = {}; win.mdn.siteUrl = '';
-win.mdn.staticPath = 'https://developer.mozilla.org/static/'; win.mdn.wiki = {
-autosuggestTitleUrl: '/en-US/docs/get-documents' }; win.mdn.assets = { js: {
-'syntax-prism':
-['https://developer.mozilla.org/static/build/js/syntax-prism.c3ad62e11c30.js',],
-'wiki-compat-tables':
-['https://developer.mozilla.org/static/build/js/wiki-compat-tables.6354ae04fcae.js',]
-} }; win.mdn.notifications = []; win.mdn.contributions = { enabled: true, popup:
-false }; // interactive editor config win.mdn.interactiveEditor = { siteUrl:
-"https://developer.mozilla.org", editorUrl:
-"https://interactive-examples.mdn.mozilla.net" }; win.mdn.langCookieName =
-"django_language"; })(this);
-</script>
+    <script>
+      // make sure global mdn object exists
+      var mdn = window.mdn || {};
+
+      (function(win) {
+          'use strict';
+
+          (function(){
+    var FLAGS = {
+      'kumaediting': false,'page_move': false,'section_edit': false,'spam_checks_enabled': true,'spam_submissions_enabled': false,'spam_admin_override': false,'spam_spammer_override': false,'spam_testing_mode': false,'sg_task_completion': false,'contrib_beta': false
+      },
+      SWITCHES = {
+      'welcome_email': true,'application_ACAO': true,'store_revision_ips': true,'foundation_callout': false,'helpful-survey-2': true,'wiki_spam_training': true,'registration_disabled': false
+      },
+      SAMPLES = {
+
+      };
+    window.waffle = {
+      "flag_is_active": function waffle_flag(flag_name) {
+
+        return !!FLAGS[flag_name];
+      },
+      "switch_is_active": function waffle_switch(switch_name) {
+
+        return !!SWITCHES[switch_name];
+      },
+      "sample_is_active": function waffle_sample(sample_name) {
+
+        return !!SAMPLES[sample_name];
+      },
+      "FLAGS": FLAGS,
+      "SWITCHES": SWITCHES,
+      "SAMPLES": SAMPLES
+    };
+  })();
+
+
+          // This needs to be set before ckeditor.js loads
+          window.CKEDITOR_BASEPATH = '/static/js/libs/ckeditor/build/ckeditor/';
+
+          // Site configuration
+          win.mdn.ckeditor = {};
+          win.mdn.features = {};
+          win.mdn.siteUrl = '';
+          win.mdn.staticPath = 'https://developer.mozilla.org/static/';
+          win.mdn.wiki = {
+              autosuggestTitleUrl: '/en-US/docs/get-documents'
+          };
+          win.mdn.assets = {
+
+              js: {
+                  'syntax-prism': ['https://developer.mozilla.org/static/build/js/syntax-prism.c3ad62e11c30.js',],
+                  'wiki-compat-tables': ['https://developer.mozilla.org/static/build/js/wiki-compat-tables.6354ae04fcae.js',]
+              }
+          };
+
+          win.mdn.notifications = [];
+          win.mdn.contributions = {
+              enabled: true,
+              popup: false
+          };
+
+
+
+          // interactive editor config
+          win.mdn.interactiveEditor = {
+              siteUrl: "https://developer.mozilla.org",
+              editorUrl: "https://interactive-examples.mdn.mozilla.net"
+          };
+          win.mdn.langCookieName = "django_language";
+
+      })(this);
+  </script>
 
     <ul id="nav-access">
   <li><a href="#content" id="skip-main">Skip to main content</a></li>
