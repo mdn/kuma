@@ -10,6 +10,11 @@
         text-align: center;
     }
 
+    // Remove 'x' from email input as it overlaps the hint action
+    input[type='email']::-ms-clear {
+        display: none;
+    }
+
     .legal-copy {
         font-size: 12px;
         font-weight: normal;
