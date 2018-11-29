@@ -7,7 +7,7 @@
         return;
     }
 
-    var toggleConfirmationButtons = Array.from(doc.querySelectorAll('button[tooggle-confirmation]'));
+    var toggleConfirmationButtons = Array.from(doc.querySelectorAll('button[toggle-confirmation]'));
     var confirmationDialog = doc.getElementById('delete-confirmation');
 
     /**
@@ -16,6 +16,8 @@
     function toggleDeleteConfirmaiton() {
         toggleConfirmationButtons[0].classList.toggle('hidden');
         confirmationDialog.classList.toggle('hidden');
+        // var hidden = confirmationDialog.getAttribute('aria-hidden');
+        confirmationDialog.toggleAttribute('aria-hidden');
     }
 
     toggleConfirmationButtons.forEach(function(button) {

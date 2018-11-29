@@ -35,12 +35,12 @@
     }
 
     .alert {
-        &--danger {
+        &.danger {
             background: $red-light;
             border: 1px solid $red;
         }
 
-        &--success {
+        &.success {
             background: $green-light;
             border: 1px solid $green;
             color: $green;
@@ -55,7 +55,7 @@
         }
     }
 
-    header {
+    .manage-payments-header {
         background: #fafafa;
         left: 0;
         padding: 2em 1.5em;
@@ -64,8 +64,9 @@
         top: 0;
     }
 
-    aside {
+    .manage-payments-help {
         background: #fff;
+        float: right;
 
         &.column-4 {
             float: right;
@@ -82,7 +83,7 @@
         }
     }
 
-    .table {
+    .bordered-info {
         border: 2px solid #000;
         display: block;
         font-size: 1.3em;
@@ -101,7 +102,7 @@
         }
 
         th {
-            font-family: zillaslab;
+            font-family: $heading-font-family;
         }
 
         td {

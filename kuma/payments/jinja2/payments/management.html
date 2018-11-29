@@ -3,8 +3,8 @@
 {% block title %}{{ page_title(_('MDN Payment terms')) }}{% endblock %}
 
 {% block site_css %}
-{{ super() }}
-{% stylesheet 'users' %}
+    {{ super() }}
+    {% stylesheet 'users' %}
 {% endblock %}
 
 {% block site_meta %}
@@ -21,23 +21,23 @@
 {% block content %}
     <div class="manage-payments">
         <article class="column-container">
-            <header>
+            <header class="manage-payments-header">
                 <h1>{{_('Your MDN profile')}}</h1>
             </header>
             <div>
                 <a href="{{ url('users.user_edit', username=user.username) }}" class="button neutral back">{% include 'includes/icons/arrows/arrow-left.svg' %} {{_('Back to profile')}}</a>
             </div>
-            <aside class="column-4">
+            <div class="manage-payments-help column-4">
                 <h4>{{_('Help')}}</h4>
                 <ul>
                     <li>
                         <a href="{{ url('recurring_payment_initial') }}" class="cta-link full-width">{{_('Monthly subscriptions FAQ')}} {% include 'includes/icons/arrows/arrow.svg' %}</a>
                     </li>
                     <li>
-                        <a href="{{ support_mail_link }}" class="cta-link cta-link__email full-width">{{ support_mail }}{% include 'includes/icons/general/envelope.svg' %}</a>
+                        <a href="{{ support_mail_link }}" class="cta-link cta-link email full-width">{{ support_mail }}{% include 'includes/icons/general/envelope.svg' %}</a>
                     </li>
                 </ul>
-            </aside>
+            </div>
             <section class="column-half">
                 <h2>{{_('Subscriptions')}}</h2>
                 <p>
@@ -52,32 +52,34 @@
         {% if request.user.stripe_customer_id and active_subscriptions %}
             <section>
                 <h3>{{_('Monthly Subscription')}}</h3>
-                <table class="table">
-                    <tr>
-                        <th>{% include 'includes/icons/general/money-bill-alt.svg' %} {{_('Amount')}}</th>
-                        <th>{% include 'includes/icons/general/credit-card.svg' %} {{_('Card Number')}}</th>
-                        <th>{% include 'includes/icons/general/credit-card.svg' %} {{_('Expiry')}}</th>
-                    </tr>
-                    <tr>
-                        <td>${{ stripe_plan_amount }}</td>
-                        <td>**** **** **** {{ stripe_card_last4 }}</td>
-                        <td>02/19</td>
-                    </tr>
+                <table class="bordered-info">
+                    <thead>
+                        <tr>
+                            <th>{% include 'includes/icons/general/money-bill-alt.svg' %} {{_('Amount')}}</th>
+                            <th>{% include 'includes/icons/general/credit-card.svg' %} {{_('Card Number')}}</th>
+                            <th>{% include 'includes/icons/general/credit-card.svg' %} {{_('Expiry')}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>${{ stripe_plan_amount }}</td>
+                            <td>**** **** **** {{ stripe_card_last4 }}</td>
+                            <td>02/19</td>
+                        </tr>
+                    </tbody>
                 </table>
                 {% if not cancel_request %}
                     <form id="id_stripe_management_form" method="post">
                         {% csrf_token %}
-                        <button class="button negative" type="button" tooggle-confirmation>{{_('Cancel your subscription')}}</button>
-                        <div id="delete-confirmation" class="hidden">
-                            <div class="confirmation column-8 alert--danger">
-                                <div>
-                                    <h5>{{_('Are you sure?')}}</h5>
-                                    <p>
-                                        {{_('You will have to set up a new subscription if you wish to resume making payments to MDN.')}}
-                                    </p>
-                                </div>
+                        <button class="button negative" type="button" toggle-confirmation>{{_('Cancel your subscription')}}</button>
+                        <div id="delete-confirmation" class="hidden" aria-hidden="true">
+                            <div class="confirmation column-8 alert danger">
+                                <h5>{{_('Are you sure?')}}</h5>
+                                <p>
+                                    {{_('You will have to set up a new subscription if you wish to resume making payments to MDN.')}}
+                                </p>
                                 <div class="button-group">
-                                    <button class="button" type="button" tooggle-confirmation>{{_('Cancel')}}</button>
+                                    <button class="button" type="button" toggle-confirmation>{{_('Cancel')}}</button>
                                     <button id="id_stripe_cancel_subscription" name="stripe_cancel_subscription" class="button negative" type="submit">{{_('Confirm')}}</button>
                                 </div>
                             </div>
@@ -88,7 +90,7 @@
         {% else %}
             <section>
                 <h3>{{_('Monthly Subscription')}}</h3>
-                <div class="table">
+                <div class="bordered-info">
                     <span>
                         {% trans url=url('recurring_payment_initial') %}
                             You have no active susbcriptions.
@@ -100,22 +102,18 @@
         {% endif %}
         {% if cancel_request %}
             {% if cancel_success %}
-                <div class="confirmation column-8 alert--success">
-                    <span>
-                        <b>{{_('Your monthly subscription has been successfully cancelled')}}</b>
-                    </span>
+                <div class="confirmation column-8 alert success">
+                    <b>{{_('Your monthly subscription has been successfully cancelled')}}</b>
                 </div>
             {% else %}
-                <div class="confirmation column-8 alert--success">
-                    <span>
-                        <b>
-                            {% trans url=support_mail_link, email=support_mail, reference_number=request.user.stripe_customer_id %}
-                                There was a problemt cancelling your subscription,
-                                please contact <a href="{{ url }}">{{ email }}</a>
-                                and provide your customer refrence number {{ reference_number }}.
-                            {% endtrans %}
-                        </b>
-                    </span>
+                <div class="confirmation column-8 alert success">
+                    <b>
+                        {% trans url=support_mail_link, email=support_mail, reference_number=request.user.stripe_customer_id %}
+                            There was a problemt cancelling your subscription,
+                            please contact <a href="{{ url }}">{{ email }}</a>
+                            and provide your customer refrence number {{ reference_number }}.
+                        {% endtrans %}
+                    </b>
                 </div>
             {% endif %}
         {% endif %}

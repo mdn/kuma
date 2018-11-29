@@ -140,9 +140,9 @@ p.field-note {
 }
 
 .subscription-link {
-    @include bidi(((float, right, left),));
     font-size: 1rem;
     font-weight: normal;
+    @include bidi(((float, right, left),));
     line-height: 3em;
 }
 
