@@ -368,7 +368,7 @@ class Document(NotificationsMixin, models.Model):
         Return None if the URL is a 404, the URL doesn't point to the right
         view, or the indicated document doesn't exist.
         To fetch all values of the returned Document not only ID,
-        set `id_only` to True.
+        set `id_only` to False.
         """
 
         try:

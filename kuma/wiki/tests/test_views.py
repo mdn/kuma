@@ -1978,10 +1978,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert rev_ip.referrer == 'http://localhost/'
 
     @pytest.mark.edit_emails
-    @mock.patch.object(Site.objects, 'get_current')
-    def test_email_for_first_edits(self, get_current):
-        get_current.return_value.domain = 'dev.mo.org'
-
+    def test_email_for_first_edits(self):
         self.client.login(username='testuser', password='testpass')
         data = new_document_data()
         slug = 'test-article-for-storing-revision-ip'
@@ -2016,8 +2013,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         def _check_message_for_headers(message, username):
             assert "%s made their first edit" % username in message.subject
             assert message.extra_headers == {
-                'X-Kuma-Document-Url':
-                    "https://dev.mo.org%s" % doc.get_absolute_url(),
+                'X-Kuma-Document-Url': doc.get_full_url(),
                 'X-Kuma-Editor-Username': username,
                 'X-Kuma-Document-Locale': doc.locale,
                 'X-Kuma-Document-Title': doc.title
@@ -2028,13 +2024,11 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         _check_message_for_headers(testuser_message, 'testuser')
         _check_message_for_headers(admin_message, 'admin')
 
-    @mock.patch.object(Site.objects, 'get_current')
-    def test_email_for_watched_edits(self, get_current):
+    def test_email_for_watched_edits(self):
         """
         When a user edits a watched document, we should send an email to users
         who are watching it.
         """
-        get_current.return_value.domain = 'dev.mo.org'
         self.client.login(username='testuser', password='testpass')
         data = new_document_data()
         rev = revision(save=True)
@@ -2090,13 +2084,11 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert 'sub-articles' not in message.body
 
     @pytest.mark.edit_emails
-    @mock.patch.object(Site.objects, 'get_current')
-    def test_email_for_child_edit_in_watched_tree(self, get_current):
+    def test_email_for_child_edit_in_watched_tree(self):
         """
         When a user edits a child document in a watched document tree, we
         should send an email to users who are watching the tree.
         """
-        get_current.return_value.domain = 'dev.mo.org'
         root_doc, child_doc, grandchild_doc = create_document_tree()
 
         testuser2 = get_user(username='testuser2')
@@ -2119,13 +2111,11 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert 'sub-articles' in message.body
 
     @pytest.mark.edit_emails
-    @mock.patch.object(Site.objects, 'get_current')
-    def test_email_for_grandchild_edit_in_watched_tree(self, get_current):
+    def test_email_for_grandchild_edit_in_watched_tree(self):
         """
         When a user edits a grandchild document in a watched document tree, we
         should send an email to users who are watching the tree.
         """
-        get_current.return_value.domain = 'dev.mo.org'
         root_doc, child_doc, grandchild_doc = create_document_tree()
 
         testuser2 = get_user(username='testuser2')
@@ -2146,14 +2136,12 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert 'sub-articles' in message.body
 
     @pytest.mark.edit_emails
-    @mock.patch.object(Site.objects, 'get_current')
-    def test_single_email_when_watching_doc_and_tree(self, get_current):
+    def test_single_email_when_watching_doc_and_tree(self):
         """
         When a user edits a watched document in a watched document tree, we
         should only send a single email to users who are watching both the
         document and the tree.
         """
-        get_current.return_value.domain = 'dev.mo.org'
         root_doc, child_doc, grandchild_doc = create_document_tree()
 
         testuser2 = get_user(username='testuser2')

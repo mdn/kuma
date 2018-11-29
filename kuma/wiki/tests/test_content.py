@@ -837,7 +837,7 @@ def test_annotate_links_existing_doc(root_doc, anchor, full_url, has_class):
     """Links to existing docs are unmodified."""
     if full_url == 'fullURL':
         url = root_doc.get_full_url()
-        assert url.startswith(AL_BASE_URL)
+        assert url.startswith(settings.SITE_URL)
     else:
         url = root_doc.get_absolute_url()
     if anchor == 'withAnchor':
@@ -847,8 +847,9 @@ def test_annotate_links_existing_doc(root_doc, anchor, full_url, has_class):
     else:
         link_class = ''
     html = normalize_html('<li><a %s href="%s"></li>' % (link_class, url))
-    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
-    assert normalize_html(actual_raw) == html
+    actual_raw = normalize_html(
+        parse(html).annotateLinks(base_url=settings.SITE_URL).serialize())
+    assert actual_raw == html
 
 
 @pytest.mark.parametrize('has_class', ('hasClass', 'noClass'))

@@ -675,8 +675,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
                        'form#wiki-page-edit textarea[name="content"]')) == 1
 
     @override_settings(TIDINGS_CONFIRM_ANONYMOUS_WATCHES=False)
-    @mock.patch.object(Site.objects, 'get_current')
-    def test_new_revision_POST_document_with_current(self, get_current):
+    def test_new_revision_POST_document_with_current(self):
         """HTTP POST to new revision URL creates the revision on a document.
 
         The document in this case already has a current_revision, therefore
@@ -684,8 +683,6 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
 
         Also assert that the edited and reviewable notifications go out.
         """
-        get_current.return_value.domain = 'testserver'
-
         # Sign up for notifications:
         EditDocumentEvent.notify('sam@example.com', self.d).activate().save()
 
@@ -738,7 +735,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
 
         assert '%s changed %s.' % (unicode(self.username), unicode(self.d.title)) in edited_email.body
 
-        assert u'https://testserver/en-US/docs/%s$history' % self.d.slug in edited_email.body
+        assert (self.d.get_full_url() + u'$history') in edited_email.body
         assert 'utm_campaign=' in edited_email.body
 
     @mock.patch.object(EditDocumentEvent, 'fire')

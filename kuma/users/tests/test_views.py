@@ -24,6 +24,7 @@ from kuma.spam.akismet import Akismet
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
 from kuma.wiki.models import (Document, DocumentDeletionLog, Revision,
                               RevisionAkismetSubmission)
+from kuma.wiki.templatetags.jinja_helpers import absolutify
 from kuma.wiki.tests import document as create_document
 
 
@@ -723,43 +724,44 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
               Name: {user.username}
               ID: {user.pk}
               Joined at: {date_joined}
-              Profile link: https://example.com/en-US/profiles/{user.username}
+              Profile link: {user_url}
 
             Submitted to Akismet as spam:
 
-              - {rev1.title} [https://example.com{rev1_url}]
-              - {rev2.title} [https://example.com{rev2_url}]
-              - {rev3.title} [https://example.com{rev3_url}]
+              - {rev1.title} [{rev1_url}]
+              - {rev2.title} [{rev2_url}]
+              - {rev3.title} [{rev3_url}]
 
             Deleted:
 
-              - {rev2.document.title} [https://example.com{rev2_doc_url}]
+              - {rev2.document.title} [{rev2_doc_url}]
 
             Reverted:
 
-              - {rev1.title} [https://example.com{rev1_url}]
+              - {rev1.title} [{rev1_url}]
 
             * NEEDS FOLLOW UP *
 
             Revisions skipped due to newer non-spam revision:
 
-              - {rev3.title} [https://example.com{rev3_url}]
+              - {rev3.title} [{rev3_url}]
 
             * NO ACTION TAKEN *
 
             Latest revision is non-spam:
 
-              - {rev3.title} [https://example.com{rev3_url}]
+              - {rev3.title} [{rev3_url}]
             """.format(
                 user=self.testuser,
+                user_url=absolutify(self.testuser.get_absolute_url()),
                 date_joined=tz.localize(self.testuser.date_joined).astimezone(utc),
                 rev1=spam_revision1[0],
                 rev2=spam_revision2[0],
                 rev3=spam_revision3[0],
-                rev1_url=spam_revision1[0].get_absolute_url(),
-                rev2_url=spam_revision2[0].get_absolute_url(),
-                rev3_url=spam_revision3[0].get_absolute_url(),
-                rev2_doc_url=spam_revision2[0].document.get_absolute_url()
+                rev1_url=absolutify(spam_revision1[0].get_absolute_url()),
+                rev2_url=absolutify(spam_revision2[0].get_absolute_url()),
+                rev3_url=absolutify(spam_revision3[0].get_absolute_url()),
+                rev2_doc_url=spam_revision2[0].document.get_full_url()
             ))
         )
 

@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
-import mock
-import pytest
+from datetime import datetime
 
-from django.contrib.sites.models import Site
+import pytest
 from django.template import TemplateDoesNotExist
 from pyquery import PyQuery as pq
 
-from kuma.users.tests import UserTestCase
-
-from . import document, revision, WikiTestCase
+from ..models import Document, Revision
 from ..templatetags.jinja_helpers import (absolutify,
                                           include_svg,
                                           revisions_unified_diff,
@@ -16,28 +13,34 @@ from ..templatetags.jinja_helpers import (absolutify,
                                           wiki_url)
 
 
-class HelpTests(WikiTestCase):
+def test_tojson():
+    """tojson converts dicts to JSON objects with escaping."""
+    output = tojson({'title': '<script>alert("Hi!")</script>'})
+    expected = ('{"title": "&lt;script&gt;alert(&quot;Hi!&quot;)'
+                '&lt;/script&gt;"}')
+    assert output == expected
 
-    def test_tojson(self):
-        assert (tojson({'title': '<script>alert("Hi!")</script>'}) ==
-                '{"title": "&lt;script&gt;alert(&quot;Hi!&quot;)&lt;/script&gt;"}')
 
-    @mock.patch.object(Site.objects, 'get_current')
-    def test_absolutify(self, get_current):
-        get_current.return_value.domain = 'testserver'
+@pytest.mark.parametrize(
+    'path,abspath',
+    (('', 'https://testserver/'),
+     ('/', 'https://testserver/'),
+     ('//', 'https://testserver/'),
+     ('/foo/bar', 'https://testserver/foo/bar'),
+     ('http://domain.com', 'http://domain.com'),
+     ('/woo?var=value', 'https://testserver/woo?var=value'),
+     ('/woo?var=value#fragment', 'https://testserver/woo?var=value#fragment'),
+     ))
+def test_absolutify(settings, path, abspath):
+    """absolutify adds the current site to paths without domains."""
+    settings.SITE_URL = 'https://testserver'
+    assert absolutify(path) == abspath
 
-        assert absolutify('') == 'https://testserver/'
-        assert absolutify('/') == 'https://testserver/'
-        assert absolutify('//') == 'https://testserver/'
-        assert absolutify('/foo/bar') == 'https://testserver/foo/bar'
-        assert absolutify('http://domain.com') == 'http://domain.com'
 
-        site = Site(domain='otherserver')
-        assert absolutify('/woo', site) == 'https://otherserver/woo'
-
-        assert absolutify('/woo?var=value') == 'https://testserver/woo?var=value'
-        assert (absolutify('/woo?var=value#fragment') ==
-                'https://testserver/woo?var=value#fragment')
+def test_absolutify_dev(settings):
+    """absolutify uses http in development."""
+    settings.SITE_URL = 'http://localhost:8000'
+    assert absolutify('') == 'http://localhost:8000/'
 
 
 def test_include_svg_invalid_path():
@@ -63,39 +66,49 @@ def test_include_svg_replace_title(title):
     assert svg_title.text() == title
 
 
-class RevisionsUnifiedDiffTests(UserTestCase, WikiTestCase):
-
-    def test_from_revision_none(self):
-        rev = revision()
-        diff = revisions_unified_diff(None, rev)  # No AttributeError
-        assert diff == "Diff is unavailable."
-
-    def test_from_revision_non_ascii(self):
-        doc1 = document(title=u'Gänsefüßchen', save=True)
-        rev1 = revision(document=doc1, content=u'spam', save=True)
-        doc2 = document(title=u'Außendienstüberwachlösung', save=True)
-        rev2 = revision(document=doc2, content=u'eggs', save=True)
-        revisions_unified_diff(rev1, rev2)  # No UnicodeEncodeError
+def test_revisions_unified_diff_none(root_doc):
+    """Passing a None revision does not raise an AttributeError."""
+    diff = revisions_unified_diff(None, root_doc.current_revision)
+    assert diff == "Diff is unavailable."
 
 
-class SelectorContentFindTests(UserTestCase, WikiTestCase):
-    def test_selector_not_found_returns_empty_string(self):
-        doc_content = u'<div id="not-summary">Not the summary</div>'
-        doc1 = document(title=u'Test Missing Selector', save=True)
-        doc1.rendered_html = doc_content
-        doc1.save()
-        revision(document=doc1, content=doc_content, save=True)
-        content = selector_content_find(doc1, 'summary')
-        assert content == ''
+def test_revisions_unified_diff_non_ascii(wiki_user):
+    """Documents with non-ASCII titles do not have Unicode errors in diffs."""
+    title1 = u'Gänsefüßchen'
+    doc1 = Document.objects.create(
+        locale='en-US', slug=title1, title=title1)
+    rev1 = Revision.objects.create(
+        document=doc1,
+        creator=wiki_user,
+        content=u'<p>%s started...</p>' % title1,
+        title=title1,
+        created=datetime(2018, 11, 21, 18, 39))
 
-    def test_pyquery_bad_selector_syntax_returns_empty_string(self):
-        doc_content = u'<div id="not-suNot the summary</span'
-        doc1 = document(title=u'Test Missing Selector', save=True)
-        doc1.rendered_html = doc_content
-        doc1.save()
-        revision(document=doc1, content=doc_content, save=True)
-        content = selector_content_find(doc1, '.')
-        assert content == ''
+    title2 = u'Außendienstüberwachlösung'
+    doc2 = Document.objects.create(
+        locale='en-US', slug=title2, title=title2)
+    rev2 = Revision.objects.create(
+        document=doc2,
+        creator=wiki_user,
+        content=u'<p>%s started...</p>' % title2,
+        title=title1,
+        created=datetime(2018, 11, 21, 18, 41))
+
+    revisions_unified_diff(rev1, rev2)  # No UnicodeEncodeError
+
+
+def test_selector_content_find_not_found_returns_empty_string(root_doc):
+    """When the ID is not in the content, return an empty string."""
+    root_doc.rendered_html = root_doc.current_revision.content
+    content = selector_content_find(root_doc, 'summary')
+    assert content == ''
+
+
+def test_selector_content_find_bad_selector_returns_empty_string(root_doc):
+    """When the ID is invalid, return an empty string."""
+    root_doc.rendered_html = root_doc.current_revision.content
+    content = selector_content_find(root_doc, '.')
+    assert content == ''
 
 
 @pytest.mark.parametrize(

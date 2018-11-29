@@ -155,7 +155,7 @@ def test_edit_document_event_emails_on_create(mock_emails, create_revision):
         'default_locale': 'en-US',
         'headers': {
             'X-Kuma-Editor-Username': 'wiki_user',
-            'X-Kuma-Document-Url': 'https://example.com/en-US/docs/Root',
+            'X-Kuma-Document-Url': create_revision.document.get_full_url(),
             'X-Kuma-Document-Title': 'Root Document',
             'X-Kuma-Document-Locale': 'en-US',
         }
@@ -187,7 +187,7 @@ def test_first_edit_email_on_create(create_revision):
                             ' creating: Root Document')
     assert mail.extra_headers == {
         'X-Kuma-Editor-Username': 'wiki_user',
-        'X-Kuma-Document-Url': 'https://example.com/en-US/docs/Root',
+        'X-Kuma-Document-Url': create_revision.document.get_full_url(),
         'X-Kuma-Document-Title': 'Root Document',
         'X-Kuma-Document-Locale': 'en-US',
     }
@@ -207,7 +207,7 @@ def test_first_edit_email_on_translate(trans_revision):
                             ' creating: Racine du Document')
     assert mail.extra_headers == {
         'X-Kuma-Editor-Username': u'wiki_user',
-        'X-Kuma-Document-Url': u'https://example.com/fr/docs/Racine',
+        'X-Kuma-Document-Url': trans_revision.document.get_full_url(),
         'X-Kuma-Document-Title': 'Racine du Document',
         'X-Kuma-Document-Locale': 'fr',
     }
@@ -243,7 +243,7 @@ def test_spam_attempt_email_on_change(wiki_user, root_doc):
                             ' /en-US/docs/Root (Root Document)')
     assert mail.extra_headers == {
         'X-Kuma-Editor-Username': 'wiki_user',
-        'X-Kuma-Document-Url': 'https://example.com/en-US/docs/Root',
+        'X-Kuma-Document-Url': root_doc.get_full_url(),
         'X-Kuma-Document-Title': 'Root Document',
         'X-Kuma-Document-Locale': 'en-US',
     }
