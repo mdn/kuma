@@ -86,9 +86,11 @@
           </li>
         </ul>
       </fieldset>
-      <div class="section notitle" id="subscriptions">
-        <h2>{{ _('Subscriptions') }} <a class="subscription-link" href="{{ url('recurring_payment_management') }}">{{ _('Edit payment subscription') }}</a></h2>
-      </div>
+      {%- if recurring_payment_enabled %}
+        <div class="section notitle" id="subscriptions">
+          <h2>{{ _('Subscriptions') }} <a class="subscription-link" href="{{ url('recurring_payment_management') }}">{{ _('Edit payment subscription') }}</a></h2>
+        </div>
+      {% endif %}
       <fieldset class="section" id="users">
         <legend><h2>{{ _('My Profiles') }}</h2></legend>
         <ul>
