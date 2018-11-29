@@ -65,7 +65,7 @@
                     </tr>
                 </table>
                 {% if not cancel_request %}
-                    <form id="id_stripe_management_form" method="post" action="" >
+                    <form id="id_stripe_management_form" method="post">
                         {% csrf_token %}
                         <button class="button negative" type="button" tooggle-confirmation>{{_('Cancel your subscription')}}</button>
                         <div id="delete-confirmation" class="hidden">
