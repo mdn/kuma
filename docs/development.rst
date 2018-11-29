@@ -83,7 +83,7 @@ To do both::
 .. _ManifestStaticFilesStorage: https://docs.djangoproject.com/en/1.11/ref/contrib/staticfiles/#django.contrib.staticfiles.storage.ManifestStaticFilesStorage
 .. _Sass: https://sass-lang.com/
 .. _UglifyJS: https://github.com/mishoo/UglifyJS2
-.. _cleancss: https://github.com/jakubpawlowicz/clean-css
+.. _cleancss: https://github.com/jakubpawlowicz/clean-css-cli
 .. _django-pipeline: https://github.com/jazzband/django-pipeline
 .. _node-sass: https://github.com/sass/node-sass
 
