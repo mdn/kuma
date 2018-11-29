@@ -42,7 +42,7 @@
                 <h2>{{_('Subscriptions')}}</h2>
                 <p>
                     {% trans url=support_mail_link, email=support_mail %}
-                        This is a list of your active subscriptions to MDN.
+                        This is a list of your active subscriptions to MDN Web Docs.
                         If you wish to amend any of the details below please
                         contact <a href="{{ url }}">{{ email }}</a>.
                     {% endtrans %}
@@ -76,7 +76,7 @@
                             <div class="confirmation column-8 alert danger">
                                 <h5>{{_('Are you sure?')}}</h5>
                                 <p>
-                                    {{_('You will have to set up a new subscription if you wish to resume making payments to MDN.')}}
+                                    {{_('You will have to set up a new subscription if you wish to resume making payments to MDN Web Docs.')}}
                                 </p>
                                 <div class="button-group">
                                     <button class="button" type="button" toggle-confirmation>{{_('Cancel')}}</button>
@@ -106,7 +106,7 @@
                     <b>{{_('Your monthly subscription has been successfully cancelled')}}</b>
                 </div>
             {% else %}
-                <div class="confirmation column-8 alert success">
+                <div class="confirmation column-8 alert danger">
                     <b>
                         {% trans url=support_mail_link, email=support_mail, reference_number=request.user.stripe_customer_id %}
                             There was a problemt cancelling your subscription,
@@ -122,7 +122,6 @@
 
 {% block js %}
   {%- if contribution_enabled %}
-    <script src="https://checkout.stripe.com/checkout.js"></script>
     {% javascript 'payments' %}
   {%- endif %}
 {% endblock %}

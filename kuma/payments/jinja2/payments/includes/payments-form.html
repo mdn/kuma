@@ -17,7 +17,7 @@
             <button class="tooltip-button" id="tooltip-email-button" aria-controls="tooltip-email" aria-label="{{_('Open tooltip for further email field information') }}">
                 {% include 'includes/icons/punctuation/question-mark.svg' %}
             </button>
-            <div class="tooltip" aria-hidden="true" id="tooltip-email">
+            <div class="tooltip {% if is_popover %}popover-fixed{% endif %}" aria-hidden="true" id="tooltip-email">
                 <button class="tooltip-close" aria-controls="tooltip-email" aria-label="{{_('Close this tooltip') }}"></button>
                 <p>{{_('Why do you need my email address?') }}</p>
                 <p>{{_('This is so we can send you a receipt. This is handy if you’d like a refund.') }}</p>

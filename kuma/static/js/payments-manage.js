@@ -1,4 +1,3 @@
-
 (function(win, doc) {
     'use strict';
 
@@ -16,7 +15,6 @@
     function toggleDeleteConfirmaiton() {
         toggleConfirmationButtons[0].classList.toggle('hidden');
         confirmationDialog.classList.toggle('hidden');
-        // var hidden = confirmationDialog.getAttribute('aria-hidden');
         confirmationDialog.toggleAttribute('aria-hidden');
     }
 
