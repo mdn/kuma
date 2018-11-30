@@ -43,7 +43,7 @@
         &.success {
             background: $green-light;
             border: 1px solid $green;
-            color: $green;
+            color: #008200;
         }
     }
 
@@ -86,7 +86,7 @@
     .bordered-info {
         border: 2px solid #000;
         display: block;
-        font-size: 1.3em;
+        font-size: 1em;
         margin-bottom: 1em;
         padding: 1em;
 
