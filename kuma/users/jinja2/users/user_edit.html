@@ -37,7 +37,7 @@
   </div>
 
   <div id="user-edit" class="column-half">
-    <h1 class="user-title">{{ edit_user.username }} <a class="user-title-profile" href="{{ edit_user.get_absolute_url() }}">{{ _('View profile') }}</a></h1>
+    <h1>{{ edit_user.username }} <a class="user-title-profile" href="{{ edit_user.get_absolute_url() }}">{{ _('View profile') }}</a></h1>
 
     {% if not is_me %}
     <div class="notification warning">
@@ -51,6 +51,7 @@
       <fieldset class="section notitle" id="personal">
         <ul>
           <li id="field-beta" class="field">
+            <h2>{{_('User Information')}}</h2>
             <label for="{{ user_form.beta.id_for_label }}">
               {{ user_form.beta }}
               {{ user_form.beta.label }}
@@ -85,9 +86,13 @@
           </li>
         </ul>
       </fieldset>
-
+      {%- if recurring_payment_enabled %}
+        <div class="section notitle" id="subscriptions">
+          <h2>{{ _('Subscriptions') }} <a class="subscription-link" href="{{ url('recurring_payment_management') }}">{{ _('Edit monthly subscription') }}</a></h2>
+        </div>
+      {% endif %}
       <fieldset class="section" id="users">
-        <legend><b>{{ _('My Profiles') }}</b></legend>
+        <legend><h2>{{ _('My Profiles') }}</h2></legend>
         <ul>
 
           <li id="field_github_url" class="field site github">
