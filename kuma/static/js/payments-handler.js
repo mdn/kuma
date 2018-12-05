@@ -624,6 +624,8 @@
     function switchPaymentTypeHandler() {
         var action = form.get(0).getAttribute('action');
         var checkedInput = null;
+        customAmountInput.get(0).value = '';
+        selectedAmount = 0;
 
         if (this.value === 'one_time' && currrentPaymentForm === 'recurring') {
             // Switch to one-time payment form only if we're not on the one-time payment form already.
