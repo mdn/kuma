@@ -6,6 +6,7 @@
     var thumbsUp = faqContainer.find('.thumbs-up');
     var thumbsDown = faqContainer.find('.thumbs-down');
     var faqFeedback = faqContainer.find('#faq-feedback');
+    var faqFeedbackConfirmation = faqContainer.find('.feedback-confirmation');
 
     function sendAnalyticsVoteEvent(action, label ,value) {
         var event = {
@@ -44,12 +45,18 @@
         event.preventDefault();
 
         var feedback = document.getElementById('contribution-feedback').value;
-        if (feedback) {
+        if (feedback && feedback.trim !== '') {
             mdn.analytics.trackEvent({
                 category: 'payments',
                 action: 'FAQ - Any other questions',
                 label: feedback,
+            }, function() {
+                faqFeedbackConfirmation.get(0).classList.remove('hidden');
+                faqFeedbackConfirmation.get(0).removeAttribute('aria-hidden');
+                faqFeedback.get(0).classList.add('disabled');
             });
+        } else {
+            faqFeedback.get(0).classList.remove('disabled');
         }
     }
 
