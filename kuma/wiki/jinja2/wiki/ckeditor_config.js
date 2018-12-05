@@ -151,9 +151,8 @@
         { name: 'Warning Box', element: 'div', attributes: { 'class': 'blockIndicator warning', 'role': 'region', 'aria-label': gettext('Important note') }, type: 'wrap' },
         { name: 'Two Columns', element: 'div', attributes: { 'class': 'twocolumns' }, type: 'wrap' },
         { name: 'Three Columns', element: 'div', attributes: { 'class': 'threecolumns' }, type: 'wrap' },
-        { name: 'Article Summary', element: 'p', attributes: { 'class': 'summary' } },
         { name: 'Syntax Box', element: 'pre', attributes: { 'class': 'syntaxbox' } },
-        { name: 'SEO Summary', element: 'span', attributes: { 'class': 'seoSummary' } },
+        { name: 'Summary', element: 'span', attributes: { 'class': 'seoSummary' } },
         { name: 'Hidden When Reading', element: 'div', attributes: { 'class': 'hidden' }, type: 'wrap' }
       ]);
     }
