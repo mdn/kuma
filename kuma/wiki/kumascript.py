@@ -1,5 +1,4 @@
 import base64
-import hashlib
 import json
 import time
 import unicodedata
@@ -10,7 +9,6 @@ import requests
 from constance import config
 from django.conf import settings
 from django.contrib.sites.models import Site
-from django.core.cache import cache
 from django.utils.six.moves.urllib.parse import urljoin
 from elasticsearch import TransportError
 
@@ -40,20 +38,18 @@ def should_use_rendered(doc, params, html=None):
             (force_macros or (not no_macros and not show_raw)))
 
 
-def post(request, content, locale=settings.LANGUAGE_CODE):
+def _post(content, env_vars, timeout=config.KUMASCRIPT_TIMEOUT):
     url = settings.KUMASCRIPT_URL_TEMPLATE.format(path='')
     headers = {
         'X-FireLogger': '1.2',
     }
-    env_vars = {
-        'url': request.build_absolute_uri('/'),
-        'locale': locale,
-    }
     add_env_headers(headers, env_vars)
+
     response = requests.post(url,
-                             timeout=config.KUMASCRIPT_TIMEOUT,
                              data=content.encode('utf8'),
-                             headers=headers)
+                             headers=headers,
+                             timeout=timeout)
+
     if response:
         body = process_body(response)
         errors = process_errors(response)
@@ -61,6 +57,13 @@ def post(request, content, locale=settings.LANGUAGE_CODE):
     else:
         errors = KUMASCRIPT_TIMEOUT_ERROR
         return content, errors
+
+
+def post(request, content, locale=settings.LANGUAGE_CODE):
+    return _post(content, {
+        'url': request.build_absolute_uri('/'),
+        'locale': locale,
+    })
 
 
 def _get_attachment_metadata_dict(attachment):
@@ -80,43 +83,21 @@ def _get_attachment_metadata_dict(attachment):
     }
 
 
-def get(document, cache_control, base_url, timeout=None):
-    """Perform a kumascript GET request for a document locale and slug."""
-    if not cache_control:
-        # Default to the configured max-age for cache control.
-        max_age = config.KUMASCRIPT_MAX_AGE
-        cache_control = 'max-age=%s' % max_age
+# TODO(djf): This get() function is actually implemented on top of
+# _post() and it performs an HTTP POST request. It should probably
+# be renamed to render_document(), and the post() method above should
+# be renamed to render_string(), maybe. For now, though, there are so
+# many tests that mock kumascript.get() that I've left the name unchanged.
+def get(document, base_url, timeout=config.KUMASCRIPT_TIMEOUT):
+    """Request a rendered version of document.html from KumaScript."""
 
     if not base_url:
         site = Site.objects.get_current()
         base_url = 'http://%s' % site.domain
 
-    if not timeout:
-        timeout = config.KUMASCRIPT_TIMEOUT
-
-    document_locale = document.locale
-    document_slug = document.slug
-    max_age = config.KUMASCRIPT_MAX_AGE
-
-    # 1063580 - Kumascript converts template name calls to lower case and bases
-    # caching keys off of that.
-    document_slug_for_kumascript = document_slug
     body, errors = None, None
 
     try:
-        url_tmpl = settings.KUMASCRIPT_URL_TEMPLATE
-        url = unicode(url_tmpl).format(path=u'%s/%s' %
-                                       (document_locale,
-                                        document_slug_for_kumascript))
-
-        cache_keys = build_cache_keys(document_slug, document_locale)
-        etag_key, modified_key, body_key, errors_key = cache_keys
-
-        headers = {
-            'X-FireLogger': '1.2',
-            'Cache-Control': cache_control,
-        }
-
         # Create the file interface
         files = []
         for attachment in document.files.select_related('current_revision'):
@@ -127,6 +108,7 @@ def get(document, cache_control, base_url, timeout=None):
         # http://developer.mindtouch.com/en/docs/DekiScript/Reference/
         #   Wiki_Functions_and_Variables
         path = document.get_absolute_url()
+
         # TODO: Someday merge with _get_document_for_json in views.py
         # where most of this is duplicated code.
         env_vars = dict(
@@ -142,51 +124,9 @@ def get(document, cache_control, base_url, timeout=None):
             tags=list(document.tags.names()),
             review_tags=list(document.current_revision.review_tags.names()),
             modified=time.mktime(document.modified.timetuple()),
-            cache_control=cache_control,
         )
-        add_env_headers(headers, env_vars)
 
-        # Set up for conditional GET, if we have the details cached.
-        cached_meta = cache.get_many([etag_key, modified_key])
-        if etag_key in cached_meta:
-            headers['If-None-Match'] = cached_meta[etag_key]
-        if modified_key in cached_meta:
-            headers['If-Modified-Since'] = cached_meta[modified_key]
-
-        # Finally, fire off the request.
-        response = requests.get(url, headers=headers, timeout=timeout)
-
-        if response.status_code == 304:
-            # Conditional GET was a pass, so use the cached content.
-            result = cache.get_many([body_key, errors_key])
-            body = result.get(body_key, '').decode('utf-8')
-            errors = result.get(errors_key, None)
-
-        elif response.status_code == 200:
-            body = process_body(response)
-            errors = process_errors(response)
-
-            # Cache the request for conditional GET, but use the max_age for
-            # the cache timeout here too.
-            headers = response.headers
-            cache.set(etag_key, headers.get('etag'), timeout=max_age)
-            cache.set(modified_key, headers.get('last-modified'), timeout=max_age)
-            cache.set(body_key, body.encode('utf-8'), timeout=max_age)
-            if errors:
-                cache.set(errors_key, errors, timeout=max_age)
-
-        elif response.status_code is None:
-            errors = KUMASCRIPT_TIMEOUT_ERROR
-
-        else:
-            errors = [
-                {
-                    "level": "error",
-                    "message": "Unexpected response from Kumascript service: %s" %
-                               response.status_code,
-                    "args": ["UnknownError"],
-                },
-            ]
+        body, errors = _post(document.html, env_vars, timeout)
 
     except Exception as exc:
         # Last resort: Something went really haywire. Kumascript server died
@@ -254,18 +194,6 @@ def process_errors(response):
             },
         ]
     return errors
-
-
-def build_cache_keys(document_locale, document_slug):
-    """Build the cache keys used for Kumascript"""
-    path_hash = hashlib.md5((u'%s/%s' % (document_locale, document_slug))
-                            .encode('utf8'))
-    base_key = 'kumascript:%s:%%s' % path_hash.hexdigest()
-    etag_key = base_key % 'etag'
-    modified_key = base_key % 'modified'
-    body_key = base_key % 'body'
-    errors_key = base_key % 'errors'
-    return (etag_key, modified_key, body_key, errors_key)
 
 
 def macro_sources(force_lowercase_keys=False):

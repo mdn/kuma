@@ -684,7 +684,7 @@ class DeferredRenderingTests(UserTestCase):
         config.KUMASCRIPT_TIMEOUT = 1.0
         rendered_content = self.rendered_content
 
-        def my_kumascript_get(self, cache_control, base_url, timeout):
+        def my_kumascript_get(self, base_url, timeout):
             time.sleep(1.0)
             return (rendered_content, None)
 
