@@ -29,6 +29,15 @@
         });
 
     } else if (path.includes('/payments/recurring/success') && win.mdn.features.localStorage) {
+        //  We're duplicating event semantics due to an Analytics issue with the event label
+        mdn.analytics.trackEvent({
+            category: 'Recurring payments v2',
+            action: 'success - ' + originalUserAuth,
+            label: originalUserAuth,
+            value: amountSubmitted
+        }, function() {
+            localStorage.removeItem('userAuthenticationOnFormSubmission');
+        });
         mdn.analytics.trackEvent({
             category: 'Recurring payments',
             action: 'success',
@@ -48,6 +57,15 @@
             sessionStorage.removeItem(amountSubmittedStoreKey);
         });
     } else if (path.includes('/payments/recurring/error') && win.mdn.features.localStorage) {
+        //  We're duplicating event semantics due to an Analytics issue with the event label
+        mdn.analytics.trackEvent({
+            category: 'Recurring payments v2',
+            action: 'Payment failed - ' + originalUserAuth,
+            label: originalUserAuth,
+            value: amountSubmitted
+        }, function() {
+            localStorage.removeItem('userAuthenticationOnFormSubmission');
+        });
         mdn.analytics.trackEvent({
             category: 'Recurring payments',
             action: 'Payment failed',

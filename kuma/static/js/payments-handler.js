@@ -167,9 +167,16 @@
             return;
         }
 
+        //  We're duplicating event semantics due to an Analytics issue with the event label
         mdn.analytics.trackEvent({
             category: 'Recurring payments',
             action: event.action,
+            label: win.payments.isAuthenticated ? 'authenticated' : 'anonymous',
+            value: event.value
+        });
+        mdn.analytics.trackEvent({
+            category: 'Recurring payments v2',
+            action: event.action + ' - ' + win.payments.isAuthenticated ? 'authenticated' : 'anonymous',
             label: win.payments.isAuthenticated ? 'authenticated' : 'anonymous',
             value: event.value
         });
