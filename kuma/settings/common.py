@@ -992,6 +992,7 @@ PIPELINE_JS = {
             "js/libs/prism/prism-rust.js",
             "js/libs/prism/prism-line-highlight.js",
             "js/libs/prism/prism-line-numbers.js",
+            "js/libs/prism-ejs-language/prism-ejs-language.js",
 
             'js/prism-mdn/components/prism-json.js',
             'js/syntax-prism.js',

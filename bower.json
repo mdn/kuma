@@ -4,6 +4,7 @@
         "html5shiv": "3.6.2",
         "jquery": "2.2.0",
         "prism": "1.15.0",
+        "prism-ejs-language": "https://github.com/dutchenkoOleg/prism-ejs-language.git#ff0ccdf0422de25551a0ee93061dbe1bb156784a",
         "selectivizr": "https://github.com/keithclark/selectivizr.git#1.0.2"
     },
     "install": {
@@ -29,6 +30,7 @@
                 "bower_components/prism/plugins/line-highlight/prism-line-highlight.css",
                 "bower_components/prism/plugins/line-numbers/prism-line-numbers.css"
             ],
+            "prism-ejs-language": "bower_components/prism-ejs-language/prism-ejs-language.js",
             "selectivizr": "bower_components/selectivizr/selectivizr.js"
         }
     }
