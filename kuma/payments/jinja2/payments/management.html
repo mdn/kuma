@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ page_title(_('MDN Payment terms')) }}{% endblock %}
+{% block title %}{{ page_title(_('MDN subscription management')) }}{% endblock %}
 
 {% block site_css %}
     {{ super() }}
@@ -9,8 +9,8 @@
 
 {% block site_meta %}
     {{ super() }}
-    {% set seo_description = _('MDN Payment terms') %}
-    {% set social_title = _('MDN Payment terms') %}
+    {% set seo_description = _('MDN subscription management') %}
+    {% set social_title = _('MDN subscription management') %}
     <meta property="og:description" content="{{ seo_description }}">
     <meta name="description" content="{{ seo_description }}">
     <meta name="twitter:description" content="{{ seo_description }}">
@@ -93,8 +93,8 @@
                 <div class="bordered-info">
                     <span>
                         {% trans url=url('recurring_payment_initial') %}
-                            You have no active susbcriptions.
-                            Why not <a href="{{ url }}">set one up?</a>
+                            You have no active subscriptions.
+                            Why not <a href="{{ url }}">set one up</a>?
                         {% endtrans %}
                     </span>
                 </div>
@@ -103,15 +103,15 @@
         {% if cancel_request %}
             {% if cancel_success %}
                 <div class="confirmation column-8 alert success">
-                    <b>{{_('Your monthly subscription has been successfully cancelled')}}</b>
+                    <b>{{_('Your monthly subscription has been successfully canceled')}}</b>
                 </div>
             {% else %}
                 <div class="confirmation column-8 alert danger">
                     <b>
                         {% trans url=support_mail_link, email=support_mail, reference_number=request.user.stripe_customer_id %}
-                            There was a problemt cancelling your subscription,
+                            There was a problem canceling your subscription,
                             please contact <a href="{{ url }}">{{ email }}</a>
-                            and provide your customer refrence number {{ reference_number }}.
+                            and provide your customer reference number {{ reference_number }}.
                         {% endtrans %}
                     </b>
                 </div>
