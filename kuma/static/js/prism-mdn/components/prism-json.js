@@ -1,4 +1,4 @@
-Prism.languages.json = Prism.languages.extend('javascript');
-Prism.languages.insertBefore('json', 'string', {
-    'key': /("|')(\\?.)*?\1(\s+)?\:/g
-});
+Prism.languages.json.property = {
+    pattern: Prism.languages.json.property,
+    alias: 'key'
+};
