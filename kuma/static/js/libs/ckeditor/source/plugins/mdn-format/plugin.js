@@ -2,16 +2,15 @@
 
 CKEDITOR.config.mdnFormat_formats = [
     {
-        tag: 'pre',
-        title: 'Preformatted Text',
-        key: CKEDITOR.CTRL + 80,
-        icon: 'mdn-format-pre'
-    },
-    {
         tag: 'code',
         title: 'Inline Code',
         key: CKEDITOR.CTRL + 79,
         icon: 'mdn-format-code'
+    },
+    {
+        tag: 'kbd',
+        title: 'Keystroke or User-entered Text',
+        icon: 'mdn-format-kbd'
     },
     {
         tag: 'h2',
@@ -36,6 +35,12 @@ CKEDITOR.config.mdnFormat_formats = [
         title: 'Heading Level 5',
         key: CKEDITOR.CTRL + 53,
         icon: 'mdn-format-h5'
+    },
+    {
+        tag: 'pre',
+        title: 'Preformatted Text',
+        key: CKEDITOR.CTRL + 80,
+        icon: 'mdn-format-pre'
     }
 ];
 
