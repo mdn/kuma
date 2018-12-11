@@ -5,16 +5,16 @@ import logging
 import os
 import textwrap
 from datetime import datetime, timedelta
-from time import mktime
-from uuid import uuid4
 
 from celery import chord, task
+from celery.result import AsyncResult
+from celery.states import READY_STATES, SUCCESS
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sitemaps import GenericSitemap
-from django.core.cache import cache
 from django.core.mail import mail_admins, send_mail
 from django.db import transaction
+from django.db.models import Q
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 from djcelery_transactions import task as transaction_task
@@ -29,9 +29,12 @@ from .exceptions import PageMoveError, StaleDocumentsRenderingInProgress
 from .models import (Document, DocumentDeletionLog,
                      DocumentRenderingInProgress, DocumentSpamAttempt,
                      Revision, RevisionIP)
+from .regen import (DocumentInProcess, load_batch, load_job,
+                    NoRegenerationBatch, RegenerationBatch, store_batch,
+                    store_job)
 from .search import WikiDocumentType
 from .templatetags.jinja_helpers import absolutify
-from .utils import tidy_content
+from .utils import purgable_count, tidy_content
 
 
 log = logging.getLogger('kuma.wiki.tasks')
@@ -473,68 +476,370 @@ def delete_logs_for_purged_documents():
 
 
 @task
-@skip_in_maintenance_mode
-def rerender_step1_init(macros=None, locales=None, user_id=None, email=None,
-                        batch_size=100, error_percent=10, wait_tasks=2):
+def rerender_step1_rough_count(job_id):
+    """Get a rough count and estimate of the documents to rerender."""
+    from .models import Document
+
+    # Load job
+    job = load_job(job_id)
+    assert job['state'] == 'waiting'
+
+    # Cancel the job?
+    now = datetime.now()
+    job['timestamps']['heartbeat'] = now
+    if settings.MAINTENANCE_MODE or job['canceled']:
+        store_job(job)
+        rerender_step6_finalize.delay(job_id)
+        return
+
+    # Update to current state
+    job['state'] = 'rough_count'
+    job['timestamps']['rough_count'] = now
+    store_job(job)
+
+    # Get rough filter
+    docs = Document.objects.all()
+    filters = job['filter_params']
+    if filters['locales']:
+        docs = docs.filter(locale__in=filters['locales'])
+    if filters['macros']:
+        macros = filters['macros']
+        macro_q = Q(html__icontains=macros[0].lower())
+        for macro in macros[1:]:
+            macro_q |= Q(html__icontains=macro.lower())
+        docs = docs.filter(macro_q)
+    rough_count = docs.count()
+    raw_doc_ids = list(docs.order_by('id').values_list('id', flat=True))
+
+    # Initialize the batch
+    batch = RegenerationBatch(data={'to_filter_ids': raw_doc_ids,
+                                    'chunk': []})
+    assert batch.is_valid()
+    batch_data = batch.validated_data
+    store_batch(batch_data)
+
+    # Update job with rough count and estimate
+    job['counts']['rough'] = rough_count
+    now = datetime.now()
+    job['timestamps']['heartbeat'] = now
+    job['estimate'] = now + timedelta(seconds=rough_count)
+    job['batch_id'] = batch_data['batch_id']
+    store_job(job)
+
+    # Schedule next step
+    rerender_step2_detailed_count.delay(job_id)
+
+
+@task
+def rerender_step2_detailed_count(job_id):
+    from .models import Document
+
+    # Load job, batch
+    job = load_job(job_id)
+    assert job['state'] == 'rough_count'
+    assert job['batch_id']
+    batch = load_batch(job['batch_id'])
+
+    # Cancel the job?
+    now = datetime.now()
+    job['timestamps']['heartbeat'] = now
+    if settings.MAINTENANCE_MODE or job['canceled']:
+        store_job(job)
+        rerender_step6_finalize.delay(job_id)
+        return
+
+    # Update to current state
+    job['state'] = 'detailed_count'
+    job['timestamps']['detailed_count'] = now
+    store_job(job)
+
+    # If macros are specified, we need a detailed count
+    to_do_ids = []
+    filter_macros = [m.lower() for m in job['filter_params']['macros']]
+    for doc_id in batch['to_filter_ids']:
+        if filter_macros:
+            # Check that the document uses the macro before rerendering
+            try:
+                doc = Document.objects.get(id=doc_id)
+            except Document.DoesNotExist:
+                continue
+            doc_macros = set([m.lower() for m in doc.extract.macro_names()])
+            match = any((macro in doc_macros for macro in filter_macros))
+        else:
+            # Rough filter is enough to include document
+            match = True
+
+        if match:
+            to_do_ids.append(doc_id)
+
+    # Update batch with filtered IDs
+    batch['to_filter_ids'] = []
+    batch['to_do_ids'] = to_do_ids
+    store_batch(batch)
+
+    # Update job with detailed count and estimate
+    detailed_count = len(to_do_ids)
+    job['counts']['detailed'] = detailed_count
+    now = datetime.now()
+    job['timestamps']['heartbeat'] = now
+    job['estimate'] = now + timedelta(seconds=detailed_count)
+    store_job(job)
+
+    # Schedule next step
+    rerender_step3_start_batch.delay(job_id)
+
+
+@task
+def rerender_step3_start_batch(job_id):
+    """Start re-rendering a batch of documents."""
+    # Load job, batch
+    job = load_job(job_id)
+    assert job['state'] in ('detailed_count', 'cool_down')
+    assert job['batch_id']
+    batch = load_batch(job['batch_id'])
+    assert batch['chunk'] == []
+
+    # Cancel the job?
+    now = datetime.now()
+    job['timestamps']['heartbeat'] = now
+    if settings.MAINTENANCE_MODE or job['canceled']:
+        store_job(job)
+        rerender_step6_finalize.delay(job_id)
+        return
+
+    # Update to current state
+    job['state'] = 'rendering'
+    if not job['timestamps']['render']:
+        job['timestamps']['render'] = now
+    job['estimate'] = now + timedelta(seconds=len(batch['to_do_ids']))
+    store_job(job)
+
+    # If the error ratio is too high, then abort
+    if job['counts']['errored']:
+        errored = job['counts']['errored']
+        rendered = job['counts']['rendered']
+        err_percent = float(errored) / float(errored + rendered)
+        if err_percent >= job['error_percent']:
+            job['state'] = 'errored'
+            store_job(job)
+            rerender_step6_finalize.delay(job_id)
+            return
+
+    # If we're done rendering, then finalize
+    if len(batch['to_do_ids']) == 0:
+        rerender_step6_finalize.delay(job_id)
+        return
+
+    # Pick the next chunk of IDs
+    batch_size = job['batch_size']
+    chunk_ids = batch['to_do_ids'][:batch_size]
+    batch['to_do_ids'] = batch['to_do_ids'][batch_size:]
+
+    # Start rerendering
+    rerender_start = datetime.now()
+    for doc_id in chunk_ids:
+        render_task = render_document.delay(doc_id, "no-cache", None,
+                                            force=True)
+        process_data = {
+            'doc_id': doc_id,
+            'task_id': render_task.id,
+            'task_state': render_task.state,
+            'change_time': rerender_start
+        }
+        in_process = DocumentInProcess(data=process_data)
+        assert in_process.is_valid()
+        batch['chunk'].append(in_process.validated_data)
+
+    # Update batch and job
+    store_batch(batch)
+    job['timestamps']['heartbeat'] = datetime.now()
+    job['counts']['in_progress'] = len(batch['chunk'])
+    store_job(job)
+
+    # Check re-render status in a few seconds
+    countdown = job['batch_interval']
+    rerender_step4_check_batch.apply_async(args=(job_id,), countdown=countdown)
+
+
+@task
+def rerender_step4_check_batch(job_id):
+    """Check the status of a batch of rerendering documents."""
+    # Load job, batch
+    job = load_job(job_id)
+    assert job['state'] == 'rendering'
+    assert job['batch_id']
+    batch = load_batch(job['batch_id'])
+    assert batch['chunk']
+
+    # Set the heartbeat
+    now = datetime.now()
+    job['timestamps']['heartbeat'] = now
+
+    # Cancel the job?
+    if settings.MAINTENANCE_MODE or job['canceled']:
+        store_job(job)
+        rerender_step6_finalize.delay(job_id)
+        return
+
+    # Check rerendering status
+    check_start = datetime.now()
+    last_change = job['timestamps']['render']  # An old time
+    docs_success = []
+    docs_errored = []
+    docs_in_progress = []
+    for in_progress in batch['chunk']:
+        doc_id = in_progress['doc_id']
+        old_state = in_progress['state']
+        if old_state in READY_STATES:
+            # Already complete
+            new_state = old_state
+        else:
+            # Ask Celery for new state
+            render_task = AsyncResult(in_progress['task_id'])
+            new_state = render_task.state
+            if new_state != old_state:
+                in_progress['change_time'] = check_start
+                last_change = check_start
+
+        if new_state == SUCCESS:
+            docs_success.append(doc_id)
+        elif new_state in READY_STATES:
+            # READY_STATES is SUCCESS plus error states
+            docs_errored.append(doc_id)
+        else:
+            docs_in_progress.append(doc_id)
+
+    # Are the re-render jobs stuck?
+    stuck_time = timedelta(job['stuck_time'])
+    is_stuck = (now - last_change) > stuck_time
+    chunk_done = is_stuck or len(docs_in_progress) == 0
+
+    if chunk_done:
+        # End of re-render, finalize chunk
+        from .models import Document
+
+        # Split successful docs by kumascript rendering errors
+        errored_ids = set(Document.objects
+                          .filter(id__in=docs_success)
+                          .exclude(rendered_errors__isnull=True)
+                          .values_list('id', flat=True))
+        ks_errors = [doc for doc in docs_success if doc in errored_ids]
+        ks_success = [doc for doc in docs_success if doc not in errored_ids]
+
+        # Update categorized document IDs in batch
+        batch['errored_ids'].extend(sorted(docs_errored + ks_errors))
+        batch['stuck_ids'].extend(docs_in_progress)
+        batch['done_ids'].extend(ks_success)
+        batch['chunk'] = []
+
+        # Update counts for the document
+        job['counts']['errored'] = len(batch['errored_ids'])
+        job['counts']['rendered'] = len(batch['done_ids'])
+        job['counts']['abandoned'] = len(batch['stuck_ids'])
+        job['counts']['in_progress'] = 0
+
+        # Add some recent docs
+        doc_urls = []
+        for doc_id in ks_errors:
+            doc = Document.objects.get(id=doc_id)
+            doc_urls.append(doc.get_absolute_url())
+        for doc_id in ks_success[:5]:
+            doc = Document.objects.get(id=doc_id)
+            doc_urls.append(doc.get_absolute_url())
+        job['recent_docs'] = doc_urls
+
+        # Next, wait for the purgable task queue to empty
+        job['tasks_max_seen'] = None
+        job['tasks_current'] = None
+        next_task = rerender_step5_empty_task_queue
+    else:
+        # Continue waiting for rerender
+        job['counts']['errored'] = (len(batch['errored_ids']) +
+                                    len(docs_errored))
+        job['counts']['rendered'] = len(batch['done_ids']) + len(docs_success)
+        job['counts']['abandoned'] = len(batch['stuck_ids'])
+        job['counts']['in_progress'] = len(docs_in_progress)
+
+        # Next, check the task status again
+        next_task = rerender_step4_check_batch
+
+    # Update batch and job
+    store_batch(batch)
+    job['timestamps']['heartbeat'] = datetime.now()
+    store_job(job)
+
+    # Check re-render status again in a few seconds
+    countdown = job['batch_interval']
+    next_task.apply_async(args=(job_id,), countdown=countdown)
+
+
+@task
+def rerender_step5_empty_task_queue(job_id):
     """
-    Initialize a re-render job.
+    Wait for the purgable task queue to calm down.
 
-    Arguments:
-    - macros: A comma-seperated list of macros to filter on
-    - locales: A comma-seperated list of locales to filter on
-    - user_id: The user ID that initiated the report
-    - email: An email to get a final report
-    - batch_size: How many documents to render in a batch
-    - error_percent: A integer in range (0, 100], to abort due to errors
-    - wait_tasks: The max number of pending tasks in the purgable queue
-      before starting a new chunk
+    Re-rendering a document starts several follow-on tasks, to extract
+    in-content data and update metadata. Wait for the depth of the
+    purgable queue to die down before starting a new chunk of work.
     """
 
-    render_filter = {}
-    if macros:
-        macros_list = [x.strip() for x in macros.split(',') if x.strip()]
-        if len(macros_list) == 1:
-            filter['macro'] = macros_list[0]
-        elif len(macros_list) > 1:
-            filter['macros'] = macros_list
-    if locales:
-        locales_list = [x.strip() for x in locales.split(',') if x.strip()]
-        if len(locales_list) == 1:
-            filter['locale'] = locales_list[0]
-        elif len(locales_list) > 1:
-            filter['locales'] = locales_list
+    # Load job, batch
+    job = load_job(job_id)
+    assert job['state'] in ('rendering', 'cool_down')
+    job['state'] = 'cool_down'
 
-    now_ts = mktime(datetime.now().timetuple())
+    # Cancel the job?
+    now = datetime.now()
+    job['timestamps']['heartbeat'] = now
+    if settings.MAINTENANCE_MODE or job['canceled']:
+        store_job(job)
+        rerender_step6_finalize.delay(job_id)
+        return
 
-    report = {
-        'id': str(uuid4()),
-        'filter': render_filter,
-        'state': 'init',
-        'timestamps': {
-            'init': now_ts,
-            'count1': None,
-            'count2': None,
-            'render': None,
-            'done': None,
-            'heartbeat': now_ts,
-        },
-        'user_id': user_id,
-        'email': email,
-        'count': {
-            'rough': None,
-            'detailed': None,
-            'rendered': 0,
-            'errored': 0,
-            'abandoned': 0,
-            'in_progress': 0,
-        },
-        'estimate': None,
-        'batch_id': None,
-        'recent_docs': [],
-        'tasks': {
-            'max': None,
-            'current': None,
-        },
-        'cancelled': False
-    }
-    assert report
+    # Update purgable task count
+    current = purgable_count()
+    job['tasks_max_seen'] = max(job['tasks_max_seen'], current)
+    job['tasks_current'] = current
+    store_job(job)
+
+    if current <= job['tasks_goal']:
+        # Start next batch
+        rerender_step3_start_batch.delay(job_id)
+    else:
+        countdown = job['batch_interval']
+        rerender_step5_empty_task_queue.apply_async(args=(job_id,),
+                                                    countdown=countdown)
+
+
+@task
+def rerender_step6_finalize(job_id):
+    """Finalize a re-render job."""
+    # Load job
+    job = load_job(job_id)
+    try:
+        batch = load_batch(job['batch_id'])
+    except NoRegenerationBatch:
+        batch = None
+
+    job['timestamps']['done'] = datetime.now()
+
+    # Was the job canceled?
+    if settings.MAINTENANCE_MODE or job['canceled']:
+        job['state'] = 'canceled'
+
+    # Set the job to done, if still in an active state
+    if job['state'] not in ('canceled', 'errored', 'orphaned'):
+        job['state'] = 'done'
+
+    # Finalize counts
+    if batch:
+        job['counts']['errored'] = len(batch['errored_ids'])
+        job['counts']['rendered'] = len(batch['done_ids'])
+        job['counts']['abandoned'] = (len(batch['to_filter_ids']) +
+                                      len(batch['to_do_ids']) +
+                                      len(batch['chunk']))
+        job['counts']['in_progress'] = 0
+
+    # TODO: Email report
+
+    store_job(job)
