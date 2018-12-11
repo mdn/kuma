@@ -36,6 +36,12 @@ PICKER_CASES = SIMPLE_ACCEPT_CASES + WEIGHTED_ACCEPT_CASES + (
 REDIRECT_CASES = [
     ('cn', 'zh-CN'),  # General to locale-specific in different general locale
     ('pt', 'pt-PT'),  # General to locale-specific
+    ('PT', 'pt-PT'),  # It does a case-insensitive comparison
+    ('fr-FR', 'fr'),  # Country-specific to language-only
+    ('Fr-fr', 'fr'),  # It does a case-insensitive comparison
+    ('en', 'en-US'),  # Ensure that en redirects to en-US, case insensitive
+    ('En', 'en-US'),
+    ('EN', 'en-US'),
     ('zh-Hans', 'zh-CN'),  # Django-preferred to Mozilla standard locale
     ('zh_tw', 'zh-TW'),  # Underscore and capitalization fix
 ] + [(orig, new) for (orig, new) in SIMPLE_ACCEPT_CASES if orig != new]
@@ -53,7 +59,7 @@ def test_locale_middleware_picker(accept_language, locale, client, db):
 
 @pytest.mark.parametrize('original,fixed', REDIRECT_CASES)
 def test_locale_middleware_fixer(original, fixed, client, db):
-    '''The LocaleMiddleware redirects for non-standard locale URLs.'''
+    '''The LocaleStandardizerMiddleware redirects non-standard locale URLs.'''
     response = client.get('/%s/' % original)
     assert response.status_code == 302
     assert response['Location'] == '/%s/' % fixed
@@ -61,7 +67,7 @@ def test_locale_middleware_fixer(original, fixed, client, db):
 
 
 def test_locale_middleware_fixer_confusion(client, db):
-    '''The LocaleMiddleware treats unknown locales as 404s.'''
+    '''The LocaleStandardizerMiddleware treats unknown locales as 404s.'''
     response = client.get('/xx/')
     assert response.status_code == 404
 

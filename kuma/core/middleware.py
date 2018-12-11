@@ -89,19 +89,24 @@ class LocaleStandardizerMiddleware(MiddlewareBase):
 
         literal_from_path = request.path_info.split('/')[1]
         fixed_locale = None
+        lower_literal = literal_from_path.lower()
+        lower_language = language_from_path.lower()
         match = literal_from_path == language_from_path
-        lower_match = literal_from_path.lower() == language_from_path.lower()
-        if lower_match and (language_from_path != literal_from_path):
+        lower_match = lower_literal == lower_language
+
+        if not match and lower_match:
             # Convert locale prefix to the preferred case (en-us -> en-US)
             fixed_locale = language_from_path
-        elif literal_from_path.lower() in settings.LOCALE_ALIASES:
+        elif lower_literal in settings.LOCALE_ALIASES:
             # Fix special cases (cn -> zh-CN, zh-Hans -> zh-CN)
-            fixed_locale = settings.LOCALE_ALIASES[literal_from_path.lower()]
-        elif not match and literal_from_path.startswith(language_from_path):
+            fixed_locale = settings.LOCALE_ALIASES[lower_literal]
+        elif not match and lower_literal.startswith(lower_language):
             # Convert regional to generic locale prefix (fr-FR -> fr)
+            # Case-insensitive so FR-Fr also goes to fr
             fixed_locale = language_from_path
-        elif not match and language_from_path.startswith(literal_from_path):
+        elif not match and lower_language.startswith(lower_literal):
             # Convert generic to regional locale prefix (pt -> pt-PT)
+            # Case-insensitive so PT -> pt-PT and En -> en-US
             fixed_locale = language_from_path
 
         if fixed_locale:
