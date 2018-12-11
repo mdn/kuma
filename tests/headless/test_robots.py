@@ -3,7 +3,7 @@ from urlparse import urlsplit
 import pytest
 import requests
 
-from . import INDEXED_ATTACHMENT_DOMAINS, INDEXED_WEB_DOMAINS
+from . import INDEXED_WEB_DOMAINS
 
 
 @pytest.mark.smoke
@@ -16,9 +16,7 @@ def test_robots(any_host_url):
 
     urlbits = urlsplit(any_host_url)
     hostname = urlbits.netloc
-    if hostname in INDEXED_ATTACHMENT_DOMAINS:
-        assert response.content.strip() == ''
-    elif hostname in INDEXED_WEB_DOMAINS:
+    if hostname in INDEXED_WEB_DOMAINS:
         assert 'Sitemap: ' in response.content
         assert 'Disallow: /admin/\n' in response.content
     else:
