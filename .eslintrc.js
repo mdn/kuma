@@ -1,8 +1,15 @@
 module.exports = {
     'env': {
         'browser': true,
-        'jquery': true
+        'es6': true,
+        "jest/globals": true,
+        'jquery': true,
+        "node": true
     },
+    'parserOptions': {
+        'ecmaVersion': 6
+    },
+    "plugins": ["jest"],
     'extends': 'eslint:recommended',
     'rules': {
         'no-global-assign': 'error',

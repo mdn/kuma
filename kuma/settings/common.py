@@ -959,17 +959,17 @@ PIPELINE_JS = {
     },
     'payments': {
         'source_filenames': (
-            'js/payments-handler.js',
-            'js/payments-faq.js',
+            'js/components/payments/payments-handler.js',
+            'js/components/payments/payments-faq.js',
             'js/tooltip.js',
-            'js/payments-manage.js',
+            'js/components/payments/payments-manage.js',
         ),
         'output_filename': 'build/js/payments.js',
     },
     'payments-confirmation': {
         'source_filenames': (
-            'js/payments-faq.js',
-            'js/payments-confirmation.js',
+            'js/components/payments/payments-faq.js',
+            'js/components/payments/payments-confirmation.js',
         ),
         'output_filename': 'build/js/payments-confirmation.js',
     },

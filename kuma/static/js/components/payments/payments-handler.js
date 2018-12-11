@@ -246,8 +246,8 @@
             form.find('input[type=\'radio\']:checked').prop('checked', false);
         }
 
-        selectedAmount = event.target.value % 1 === 0 ? parseInt(event.target.value) : parseFloat(event.target.value).toFixed(2);
-        var newValue = (selectedAmount < 1 || isNaN(selectedAmount)) ? '' : '$' + selectedAmount;
+        selectedAmount = mdn.paymentsHandlerUtils.getSelectedAmount(event.target.value);
+        var newValue = mdn.paymentsHandlerUtils.getNewValue(selectedAmount);
         amountToUpdate.html(newValue);
 
         // Explicitly add `/month` on the payment button for the banner
