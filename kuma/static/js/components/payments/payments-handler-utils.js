@@ -1,8 +1,15 @@
 var mdn = window.mdn || {};
 var paymentsHandlerUtils = {
-    getNewValue: function(selectedAmount) {
+    /**
+     * If the `selectedAmount` isNaN or less than 1, return and empty
+     * string else, prepend a dollar symbol and return.
+     * NOTE: This function relies on JavaScript's loose string-to-number conversions
+     * @param {String|Number} selectedAmount - The number to process
+     * @returns `selectedAmount` prefixed with a dollar symbol, or an empty string
+     */
+    addCurrencyPrefix: function(selectedAmount) {
         'use strict';
-        return selectedAmount < 1 || isNaN(selectedAmount)
+        return isNaN(selectedAmount) || selectedAmount < 1
             ? ''
             : '$' + selectedAmount;
     },
@@ -18,6 +25,6 @@ if (typeof exports === 'object') {
     module.exports = paymentsHandlerUtils;
 }
 
-/* this will ensure it also work in the browser,
+/* this will ensure it also works in the browser,
    without yet needing Babel */
 mdn.paymentsHandlerUtils = paymentsHandlerUtils;

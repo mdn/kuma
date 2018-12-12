@@ -247,7 +247,7 @@
         }
 
         selectedAmount = mdn.paymentsHandlerUtils.getSelectedAmount(event.target.value);
-        var newValue = mdn.paymentsHandlerUtils.getNewValue(selectedAmount);
+        var newValue = mdn.paymentsHandlerUtils.addCurrencyPrefix(selectedAmount);
         amountToUpdate.html(newValue);
 
         // Explicitly add `/month` on the payment button for the banner

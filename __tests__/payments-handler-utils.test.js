@@ -1,14 +1,14 @@
 const paymentsHandlerUtils = require('../kuma/static/js/components/payments/payments-handler-utils.js');
 
-describe('getNewValue', function() {
+describe('addCurrencyPrefix', function() {
     it('returns an empty string for non numerals and values less that 1', function() {
-        expect(paymentsHandlerUtils.getNewValue(0.5)).toEqual('');
-        expect(paymentsHandlerUtils.getNewValue('ten')).toEqual('');
+        expect(paymentsHandlerUtils.addCurrencyPrefix(0.5)).toEqual('');
+        expect(paymentsHandlerUtils.addCurrencyPrefix('ten')).toEqual('');
     });
 
     it('returns a dollar amount as a string for values greater than 1', function() {
-        expect(paymentsHandlerUtils.getNewValue(1)).toEqual('$1');
-        expect(paymentsHandlerUtils.getNewValue('10')).toEqual('$10');
+        expect(paymentsHandlerUtils.addCurrencyPrefix(1)).toEqual('$1');
+        expect(paymentsHandlerUtils.addCurrencyPrefix('10')).toEqual('$10');
     });
 });
 
