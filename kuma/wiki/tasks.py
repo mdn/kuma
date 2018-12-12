@@ -29,9 +29,9 @@ from .exceptions import PageMoveError, StaleDocumentsRenderingInProgress
 from .models import (Document, DocumentDeletionLog,
                      DocumentRenderingInProgress, DocumentSpamAttempt,
                      Revision, RevisionIP)
-from .regen import (DocumentInProcess, load_batch, load_job,
-                    NoRegenerationBatch, RegenerationBatch, store_batch,
-                    store_job)
+from .rerender import (DocumentInProcess, load_batch, load_job,
+                       NoRegenerationBatch, RegenerationBatch, store_batch,
+                       store_job)
 from .search import WikiDocumentType
 from .templatetags.jinja_helpers import absolutify
 from .utils import purgable_count, tidy_content
