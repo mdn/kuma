@@ -1,7 +1,7 @@
 FROM python:2.7-slim
 
 # Set the environment variables
-ENV NODE_VERSION=8.11.3 \
+ENV NODE_VERSION=10.14.2 \
     # extra python env
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -41,17 +41,18 @@ RUN set -x \
     && rm -rf /var/lib/apt/lists/*
 
 # ----------------------------------------------------------------------------
-# add node.js 8.x, copied from:
-#     https://github.com/nodejs/docker-node/blob/master/8/stretch/Dockerfile
+# add node.js 10.x, copied from:
+#     https://github.com/nodejs/docker-node/blob/master/10/stretch/Dockerfile
 # but with:
-#  Package updates and version definitions moved above
-#  The node # user gets uid/gid 1001 rather than 1000
-#  Add --no-tty option to gpg to smooth creation of /root/.gnupg/trustdb.gpg
+#  The NODE_VERSION environment variable is set above
+#  The node user gets uid/gid 1001 rather than 1000
+#  Omit the installation of yarn
 # ----------------------------------------------------------------------------
 
 RUN groupadd --gid 1001 node \
   && useradd --uid 1001 --gid node --shell /bin/bash --create-home node
 
+# gpg keys listed at https://github.com/nodejs/node#release-keys
 RUN set -ex \
   && for key in \
     94AE36675C464D64BAFA68DD7434390BDBE9B9C5 \
@@ -64,10 +65,10 @@ RUN set -ex \
     77984A986EBC2AA786BC0F66B01FBB92821C587A \
     8FCCA13FEF1D0C2E91008E09770F7A9A5AE15600 \
   ; do \
-    gpg --no-tty --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys "$key" || \
-    gpg --no-tty --keyserver hkp://ipv4.pool.sks-keyservers.net --recv-keys "$key" || \
-    gpg --no-tty --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
-  done
+    gpg --batch --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys "$key" || \
+    gpg --batch --keyserver hkp://ipv4.pool.sks-keyservers.net --recv-keys "$key" || \
+    gpg --batch --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
+done
 
 RUN ARCH=  && dpkgArch="$(dpkg --print-architecture)" \
     && case "${dpkgArch##*-}" in \
