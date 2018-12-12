@@ -24,12 +24,7 @@ from rest_framework.serializers import (
 )
 
 
-class BaseSerializer(Serializer):
-    """Helper utilities for JSON serializable data."""
-    pass
-
-
-class FilterParams(BaseSerializer):
+class FilterParams(Serializer):
     """The filter specified by the user."""
     macros = ListField(
         help_text="Filter documents that include any of these macros.",
@@ -43,7 +38,7 @@ class FilterParams(BaseSerializer):
     )
 
 
-class Timestamps(BaseSerializer):
+class Timestamps(Serializer):
     """Timestamps for regeneration events."""
     init = DateTimeField(
         help_text='Time at initialization',
@@ -70,7 +65,7 @@ class Timestamps(BaseSerializer):
         allow_null=True)
 
 
-class DocumentCounts(BaseSerializer):
+class DocumentCounts(Serializer):
     """Counts of re-rendered documents"""
     rough = IntegerField(
         help_text='Rough count of documents',
@@ -94,7 +89,7 @@ class DocumentCounts(BaseSerializer):
         default=0)
 
 
-class RegenerationJob(BaseSerializer):
+class RegenerationJob(Serializer):
     """Data for regeneration jobs."""
     STATES = (
         'init',             # Job is initialized
@@ -186,7 +181,7 @@ class RegenerationJob(BaseSerializer):
         default=10)
 
 
-class DocumentInProcess(BaseSerializer):
+class DocumentInProcess(Serializer):
     """Document data for the in-process document."""
     doc_id = IntegerField(
         help_text='Document ID')
@@ -201,7 +196,7 @@ class DocumentInProcess(BaseSerializer):
         default=datetime.now)
 
 
-class RegenerationBatch(BaseSerializer):
+class RegenerationBatch(Serializer):
     """
     Detailed document data for a job.
 
@@ -237,7 +232,7 @@ class RegenerationBatch(BaseSerializer):
         many=True)
 
 
-class RegenerationDashboard(BaseSerializer):
+class RegenerationDashboard(Serializer):
     """Maintain the list of RegenerationJobs."""
     job_ids = ListField(
         help_text='Known jobs',
@@ -497,7 +492,7 @@ def refresh_dashboard(data, max_time=None, preloaded_jobs=None):
     return new_dashboard.validated_data
 
 
-# from kuma.wiki.regen import try_it; try_it()
+# from kuma.wiki.rerender import try_it; try_it()
 
 
 def try_it():
