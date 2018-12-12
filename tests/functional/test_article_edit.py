@@ -13,6 +13,8 @@ from utils.decorators import skip_if_maintenance_mode
 @skip_if_maintenance_mode
 def test_edit_sign_in(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
+    # avoid the task completion popup
+    page.disable_survey_popup()
     # click edit
     page.click_edit(False)
     # check prompted for sign in
