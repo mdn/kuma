@@ -1165,7 +1165,7 @@ _PROD_ATTACHMENT_HOST = 'mdn.mozillademos.org'
 _PROD_ATTACHMENT_SITE_URL = 'https://' + _PROD_ATTACHMENT_HOST
 ATTACHMENT_HOST = config('ATTACHMENT_HOST', default=_PROD_ATTACHMENT_HOST)
 ATTACHMENT_SITE_URL = PROTOCOL + ATTACHMENT_HOST
-_PROD_ATTACHMENT_ORIGIN = 'mdn-demos-origin.moz.works'
+_PROD_ATTACHMENT_ORIGIN = 'demos-origin.mdn.mozit.cloud'
 ATTACHMENT_ORIGIN = config('ATTACHMENT_ORIGIN', default=_PROD_ATTACHMENT_ORIGIN)
 
 # This should never be false for the production and stage deployments.
