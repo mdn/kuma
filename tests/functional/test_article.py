@@ -69,10 +69,12 @@ def test_header_displays(base_url, selenium):
 @skip_if_maintenance_mode
 def test_header_signin(base_url, selenium):
     page = ArticlePage(selenium, base_url).open()
+    # avoid the task completion popup
+    page.disable_survey_popup()
     # click on sign in widget
-    page.header.trigger_signin()
-    # assert it's fowarded to github
-    assert 'https://github.com' in str(selenium.current_url)
+    page.header.signin_link.click()
+    # wait until it's fowarded to github
+    page.wait.until(lambda s: 'https://github.com' in s.current_url)
 
 
 @pytest.mark.smoke

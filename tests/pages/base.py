@@ -122,9 +122,6 @@ class BasePage(Page):
         def signin_link(self):
             return self.find_element(By.CSS_SELECTOR, self.SIGNIN_SELECTOR)
 
-        def trigger_signin(self):
-            self.signin_link.click()
-
         @property
         def is_signin_displayed(self):
             return self.signin_link.is_displayed()
