@@ -1451,7 +1451,11 @@ CELERY_ROUTES = {
     'kuma.feeder.tasks.update_feeds': {
         'queue': 'mdn_purgeable'
     },
+    'kuma.wiki.tasks.run_safe_render_job': {
+        'queue': 'mdn_wiki'
+    },
 }
+
 
 # Wiki rebuild settings
 WIKI_REBUILD_TOKEN = 'kuma:wiki:full-rebuild'

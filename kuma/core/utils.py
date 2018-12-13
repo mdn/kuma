@@ -7,6 +7,7 @@ import random
 import time
 from itertools import islice
 
+import redis
 from babel import dates, localedata
 from celery import chain, chord
 from django.conf import settings
@@ -499,3 +500,17 @@ def order_params(original_url):
     new_qs = urlencode(qs)
     new_url = urlunsplit((bits.scheme, bits.netloc, bits.path, new_qs, bits.fragment))
     return new_url
+
+
+QUEUE_NAMES = set(
+    [route['queue'] for route in settings.CELERY_ROUTES.values()])
+QUEUE_NAMES.add('celery')
+
+
+def celery_queue_sizes():
+    """Get the current sizes of the celery queues."""
+    if settings.BROKER_URL.startswith('redis://'):
+        cache = redis.from_url(settings.BROKER_URL)
+        return {queue: cache.llen(queue) for queue in QUEUE_NAMES}
+    else:
+        raise ValueError('Not redis broker: %s' % settings.BROKER_URL)

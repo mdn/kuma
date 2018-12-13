@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Regeneration data and utilities"""
+"""Data and process for safely re-rendering documents asynchronously."""
 
 from __future__ import unicode_literals
 
@@ -7,9 +7,11 @@ from datetime import datetime, timedelta
 from json import loads
 from uuid import uuid4
 
-from celery.states import ALL_STATES as CELERY_STATES
-from celery.states import PENDING
+from celery.result import AsyncResult
+from celery.states import ALL_STATES, PENDING, READY_STATES, SUCCESS
+from django.conf import settings
 from django.core.cache import cache
+from django.db.models import Q
 from rest_framework.renderers import JSONRenderer
 from rest_framework.serializers import (
     BooleanField,
@@ -22,6 +24,10 @@ from rest_framework.serializers import (
     Serializer,
     UUIDField,
 )
+
+from kuma.core.utils import celery_queue_sizes
+
+from .models import Document
 
 
 class CachedData(object):
@@ -132,7 +138,7 @@ class CachedData(object):
         self.delete_by_id(data_id)
 
 
-class BaseSerializer(Serializer):
+class CachedDataSerializer(Serializer):
     """Common create / update methods for serializers."""
 
     def create(self, validated_data, data_class):
@@ -150,14 +156,15 @@ class BaseSerializer(Serializer):
         return instance
 
 
-# Allowed states of regeneration job
-REGENERATION_STATES = (
+# Allowed states of re-render job
+JOB_STATES = (
     'init',             # Job is initialized
     'waiting',          # Waiting for other jobs
-    'rough_count',      # Making a rough count of docs to regeneration
-    'detailed_count',   # Gathering IDs of docs to regenerate
-    'rendering',        # Rendering a batch of documents
-    'cool_down',        # Waiting for the purgable queue to clear
+    'rough_count',      # Making a rough count of docs to re-render
+    'detailed_count',   # Gathering IDs of docs to re-render
+    'start_chunk',      # Start async rendering of a chunk of documents
+    'monitor_chunk',    # Monitor progress of async rendering
+    'cool_down',        # Waiting for the queues to clear
     'done',             # Done rendering documents
     'canceled',         # Job was canceled
     'errored',          # Job stopped due to errors
@@ -165,9 +172,14 @@ REGENERATION_STATES = (
 )
 
 
-class RegenerationJobSerializer(BaseSerializer):
-    """Data and formatting rules for regeneration jobs."""
+class DocumentPathSerializer(Serializer):
+    """Document ID and the path, for reports."""
+    doc_id = IntegerField(help_text='Document ID')
+    path = CharField(help_text='Document path')
 
+
+class SafeRenderJobSerializer(CachedDataSerializer):
+    """Data and formatting rules for re-render jobs."""
     job_id = UUIDField(
         help_text='ID of this job',
         default=uuid4)
@@ -175,8 +187,8 @@ class RegenerationJobSerializer(BaseSerializer):
         help_text='Job format version',
         default=1)
     state = ChoiceField(
-        help_text='Current regeneration state',
-        choices=REGENERATION_STATES,
+        help_text='Current re-render state',
+        choices=JOB_STATES,
         default='init')
     filter_macros = ListField(
         help_text="Filter documents that include any of these macros.",
@@ -189,11 +201,11 @@ class RegenerationJobSerializer(BaseSerializer):
         default=[]
     )
     user_id = IntegerField(
-        help_text='User ID that initiated regeneration',
+        help_text='User ID that initiated re-render',
         allow_null=True,
         default=None)
     emails = ListField(
-        help_text='Emails to notify at end of regeneration',
+        help_text='Emails to notify at end of re-render',
         child=EmailField(),
         default=[])
     count_rough = IntegerField(
@@ -236,7 +248,7 @@ class RegenerationJobSerializer(BaseSerializer):
         default=None,
         allow_null=True)
     ts_done = DateTimeField(
-        help_text='Time at end of regeneration',
+        help_text='Time at end of re-render',
         default=None,
         allow_null=True)
     estimate = DateTimeField(
@@ -247,24 +259,22 @@ class RegenerationJobSerializer(BaseSerializer):
         help_text='ID of current batch job',
         allow_null=True,
         default=None)
-    recent_docs = ListField(
-        help_text='URLs of recently rendered documents',
-        child=CharField(),
-        default=[])
-    errored_ids = ListField(
-        help_text='IDs of documents with KumaScript errors',
-        child=IntegerField(),
-        default=[])
+    recent_docs = DocumentPathSerializer(
+        help_text='Recently rendered documents',
+        many=True)
+    errored_docs = DocumentPathSerializer(
+        help_text='Documents with KumaScript errors',
+        many=True)
     tasks_goal = IntegerField(
-        help_text='Goal depth of purgable tasks queue before next batch',
+        help_text='Goal depth of tasks queue before next batch',
         min_value=1,
         default=2)
     tasks_max_seen = IntegerField(
-        help_text='Maximum number of purgable tasks seen',
+        help_text='Maximum number of tasks seen',
         allow_null=True,
         default=None)
     tasks_current = IntegerField(
-        help_text='Current depth of purgable task queue',
+        help_text='Current depth of task queue',
         allow_null=True,
         default=None)
     canceled = BooleanField(
@@ -275,7 +285,7 @@ class RegenerationJobSerializer(BaseSerializer):
         allow_null=True,
         default=None)
     batch_size = IntegerField(
-        help_text='Size of parallel rerender chunks',
+        help_text='Size of parallel render chunks',
         min_value=1,
         default=100)
     batch_interval = IntegerField(
@@ -283,7 +293,7 @@ class RegenerationJobSerializer(BaseSerializer):
         min_value=1,
         default=5)
     stuck_time = IntegerField(
-        help_text='Seconds until a rerender is considered stuck',
+        help_text='Seconds until a render is considered stuck',
         min_value=15,
         default=120)
     error_percent = IntegerField(
@@ -293,15 +303,15 @@ class RegenerationJobSerializer(BaseSerializer):
         default=10)
 
     def create(self, validated_data):
-        """Create a new RegenerationJob, used by .save()."""
-        return super(self, RegenerationJobSerializer).create(
-            validated_data, RegenerationJob)
+        """Create a new SafeRenderJob, used by .save()."""
+        return super(self, SafeRenderJobSerializer).create(
+            validated_data, SafeRenderJob)
 
 
-class RegenerationJob(CachedData):
+class SafeRenderJob(CachedData):
     """A async job to render a set of wiki Documents."""
 
-    serializer_class = RegenerationJobSerializer
+    serializer_class = SafeRenderJobSerializer
 
     # Fields set by the caller
     USER_FIELDS = (
@@ -326,8 +336,8 @@ class RegenerationJob(CachedData):
         ('ts_done', None),                  # Rendering complete or stopped
         ('estimate', None),                 # Estimated completion time
         ('batch_id', None),                 # UUID of detailed batch data
-        ('recent_docs', []),                # URLs of recently rendered docs
-        ('errored_ids', []),                # IDs of errored docs
+        ('recent_docs', []),                # ID and URL of recently rendered docs
+        ('errored_docs', []),               # ID and URL of errored docs
         ('tasks_max_seen', None),           # Maximum num of tasks seen
         ('tasks_current', None),            # Current num of tasks seen
         ('canceled', False),                # True when user requests cancel
@@ -335,12 +345,20 @@ class RegenerationJob(CachedData):
     )
     ID_FIELD = 'job_id'
 
+    # States at end of the job
+    FINAL_STATES = (
+        'done',             # Done rendering documents
+        'canceled',         # Job was canceled
+        'errored',          # Job stopped due to errors
+        'orphaned',         # Job appears dead for unknown reasons
+    )
+
     def __init__(
             self, filter_macros=None, filter_locales=None, user_id=None,
             emails=None, tasks_goal=2, batch_size=100, batch_interval=5,
             stuck_time=120, error_percent=10, deserialize_mode=False):
         """
-        Initialize the RegenerationJob.
+        Initialize the SafeRenderJob.
 
         Keyword Arguments:
         - filter_macros: Match docs with any of these macros (default: [])
@@ -372,11 +390,326 @@ class RegenerationJob(CachedData):
     def cache_key(cls, job_id):
         """Generate the cache key for storing job data."""
         assert job_id
-        return 'regen-job-%s' % job_id
+        return 'safe-render-job-%s' % job_id
 
     def run(self):
-        """Run the next step of this job."""
-        print("I'm running!")
+        """Run the next step of this job, and store the job."""
+
+        # Set the heartbeat
+        now = datetime.now()
+        self.ts_heartbeat = now
+
+        next_call = None
+        if settings.MAINTENANCE_MODE or self.canceled:
+            # Cancel the job
+            self.finalize('canceled')
+        elif self.state in ('init', 'waiting', 'rough_count'):
+            # Get a SQL-based count of documents to render
+            next_call = self.run_rough_count
+        elif self.state == 'detailed_count':
+            # Get a content-based count of documents to render
+            next_call = self.run_detailed_count
+        elif self.state == 'start_chunk':
+            # Start rendering a chunk of documents
+            next_call = self.run_start_chunk
+        elif self.state == 'monitor_chunk':
+            # Check if the rendered documents are complete
+            next_call = self.run_monitor_chunk
+        elif self.state == 'cool_down':
+            # Wait for the queue to process document jobs
+            next_call = self.run_cool_down
+        else:
+            # This job is already in a final state
+            assert self.state in self.FINAL_STATES
+
+        if next_call:
+            call_again, with_timeout = next_call()
+            self.store()
+            timeout = self.batch_interval if with_timeout else 0
+            return call_again, timeout
+        else:
+            return False, None
+
+    def run_rough_count(self):
+        """Get the SQL-based list of the documents to render."""
+        # Update state
+        self.state = 'rough_count'
+        self.ts_rough_count = self.ts_heartbeat
+        self.store()
+
+        # Get rough filter
+        docs = Document.objects.all()
+        if self.filter_locales:
+            docs = docs.filter(locale__in=self.filter_locales)
+        if self.filter_macros:
+            macros = self.filter_macros
+            macro_q = Q(html__icontains=macros[0].lower())
+            for macro in macros[1:]:
+                macro_q |= Q(html__icontains=macro.lower())
+            docs = docs.filter(macro_q)
+
+        # Get the rough count, which may take a while
+        self.count_rough = docs.count()
+        self.ts_heartbeat = datetime.now()
+
+        # Update the estimate from the rough count
+        self.estimate = (self.ts_heartbeat +
+                         timedelta(seconds=self.count_rough))
+
+        # Initialize the batch with the SQL-based document IDs
+        batch = SafeRenderBatch()
+        raw_doc_ids = list(docs.order_by('id').values_list('id', flat=True))
+        batch.to_filter_ids = raw_doc_ids
+        batch.store()
+        self.batch_id = batch.batch_id
+
+        # Call run_detailed_count as soon as possible
+        self.state = 'detailed_count'
+        return True, False
+
+    def run_detailed_count(self):
+        """Get the content-based list of the documents to render."""
+        # Update state
+        self.state = 'detailed_count'
+        self.ts_detailed_count = self.ts_heartbeat
+        self.store()
+
+        # If macros are specified, we need a detailed count
+        batch = SafeRenderBatch.load(self.batch_id)
+        batch.to_do_ids = []
+        filter_macros = [m.lower() for m in self.filter_macros]
+        for doc_id in batch.to_filter_ids:
+            if filter_macros:
+                # Check that the document uses the macro before rendering
+                try:
+                    doc = Document.objects.get(id=doc_id)
+                except Document.DoesNotExist:
+                    continue
+                doc_macros = set([m.lower() for m in doc.extract.macro_names()])
+                match = any((macro in doc_macros for macro in filter_macros))
+            else:
+                # Rough filter is enough to include document
+                match = True
+
+            if match:
+                batch.to_do_ids.append(doc_id)
+
+        # End of (potentially) lengthy processing, set heartbeat
+        self.ts_heartbeat = datetime.now()
+
+        # Store filtered document IDs, new estimate
+        batch.to_filter_ids = []
+        batch.store()
+        self.count_detailed = len(batch.to_do_ids)
+        self.estimate = (self.ts_heartbeat +
+                         timedelta(seconds=self.count_detailed))
+
+        # Call run_start_chunk as soon as possible
+        self.state = 'start_chunk'
+        return True, False
+
+    def run_start_chunk(self):
+        """Start async rendering of a chunk of documents."""
+        from .tasks import render_document
+
+        # Update state
+        self.state = 'start_chunk'
+        if not self.ts_render:
+            self.ts_render = self.ts_heartbeat
+        self.store()
+
+        # Load the batch and documents to render
+        batch = SafeRenderBatch.load(self.batch_id)
+        assert batch.chunk == []
+        self.estimate = (self.ts_heartbeat +
+                         timedelta(seconds=len(batch.to_do_ids)))
+
+        # If the error ratio is too high, then abort
+        if self.count_errored:
+            errored = float(self.count_errored)
+            rendered = float(self.count_rendered)
+            err_percent = 100.0 * errored / (errored + rendered)
+            if err_percent >= self.error_percent:
+                self.finalize('errored')
+                return False, False
+
+        # If we're done rendering, then finalize
+        if len(batch.to_do_ids) == 0:
+            self.finalize('done')
+            return False, False
+
+        # Pick the next chunk of IDs
+        chunk_ids = batch.to_do_ids[:self.batch_size]
+        batch.to_do_ids = batch.to_do_ids[self.batch_size:]
+
+        # Start rendering
+        for doc_id in chunk_ids:
+            task = render_document.delay(doc_id, "no-cache", None, force=True)
+            batch.chunk.append({
+                'doc_id': doc_id,
+                'task_id': task.id,
+                'task_state': task.state,
+                'change_time': self.ts_heartbeat
+            })
+
+        # Update batch and job
+        batch.store()
+        self.ts_heartbeat = datetime.now()
+        self.count_in_progress = len(batch.chunk)
+
+        # Check chunk status in a few seconds
+        self.state = 'monitor_chunk'
+        return True, True
+
+    def run_monitor_chunk(self):
+        """Check status of a chunk of rendering documents."""
+        # Update state
+        self.state = 'monitor_chunk'
+        self.store()
+
+        # Update rendering status
+        last_change = self.ts_render  # An old time
+        docs_success = []
+        docs_errored = []
+        docs_in_progress = []
+        now = self.ts_heartbeat
+        batch = SafeRenderBatch.load(self.batch_id)
+        for in_progress in batch.chunk:
+            doc_id = in_progress['doc_id']
+            old_state = in_progress['state']
+            if old_state in READY_STATES:
+                # Already complete
+                new_state = old_state
+            else:
+                # Ask Celery for new state
+                render_task = AsyncResult(in_progress['task_id'])
+                new_state = render_task.state
+                if new_state != old_state:
+                    in_progress['state'] = new_state
+                    in_progress['change_time'] = now
+                    last_change = now
+
+            if new_state == SUCCESS:
+                if in_progress['ks_errors'] == '':
+                    # Check if kumascript rendered with errors
+                    has_errors = (Document.objects.filter(id=doc_id)
+                                  .exclude(rendered_errors__isnull=True)
+                                  .exists())
+                    in_progress['ks_errors'] = 'y' if has_errors else 'n'
+                if in_progress['ks_errors'] == 'y':
+                    docs_errored.append(doc_id)
+                else:
+                    docs_success.append(doc_id)
+            elif new_state in READY_STATES:
+                # READY_STATES is SUCCESS plus error states
+                docs_errored.append(doc_id)
+            else:
+                docs_in_progress.append(doc_id)
+        self.ts_heartbeat = datetime.now()
+
+        # Are the re-render jobs stuck?
+        stuck_time = timedelta(self.stuck_time)
+        is_stuck = (self.ts_heartbeat - last_change) > stuck_time
+        chunk_done = is_stuck or len(docs_in_progress) == 0
+
+        if chunk_done:
+            # End of render, finalize chunk
+            # Move document IDs from chunks to batch categories
+            docs = Document.objects.only('id', 'locale', 'slug').order_by('id')
+            for doc in docs.filter(id__in=docs_errored):
+                self.errored_docs.append({'doc_id': doc.id,
+                                          'path': doc.get_absolute_url()})
+            batch.stuck_ids.extend(docs_in_progress)
+            batch.done_ids.extend(docs_success)
+            batch.chunk = []
+
+            # Update job progress counts
+            self.count_errored = len(self.errored_docs)
+            self.count_rendered = len(batch.done_ids)
+            self.count_abandoned = len(batch.stuck_ids)
+            self.count_in_progress = 0
+
+            # Add some recently rendered docs
+            self.recent_docs = []
+            for doc in docs.filter(id__in=docs_success[:5]):
+                self.recent_docs.append({'doc_id': doc.id,
+                                         'path': doc.get_absolute_url()})
+
+            # Next, wait for select task queues to empty
+            self.update_task_counts()
+            self.state = 'cool_down'
+        else:
+            # Continue waiting for render, update job progress counts
+            self.count_errored = len(self.errored_docs) + len(docs_errored)
+            self.count_rendered = len(batch.done_ids) + len(docs_success)
+            self.count_abandoned = len(batch.stuck_ids)
+            self.count_in_progress = len(docs_in_progress)
+            self.state = 'monitor_chunk'
+
+        # Save batch, call run_monitor_chunk or run_cool_down after delay
+        batch.store()
+        return True, True
+
+    def update_task_counts(self):
+        """
+        Get count of tasks currently queued for processing.
+
+        mdn_wiki - rendering tasks (might be the only one that matters)
+        mdn_purgeable - mostly cacheback jobs, based on external traffic
+        mdn_search - search indexing after re-rendering
+        """
+        sizes = celery_queue_sizes()
+        purgeable_tasks = sizes.get('mdn_purgeable', 0)
+        search_tasks = sizes.get('mdn_search', 0)
+        wiki_tasks = sizes.get('mdn_wiki', 0)
+        current = purgeable_tasks + search_tasks + wiki_tasks
+        self.tasks_max_seen = max(self.tasks_max_seen, current)
+        self.tasks_current = current
+
+    def run_cool_down(self):
+        """
+        Wait for the rendering task queues to empty.
+
+        Re-rendering a document starts several follow-on tasks, to extract
+        in-content data and update metadata. Wait for the depth of some queues
+        to die down before starting a new chunk of work.
+        """
+        # Update state. Don't bother storing for status, should be fast.
+        self.state = 'monitor_chunk'
+
+        # Check depth of purgable task queue
+        self.update_task_counts()
+
+        if self.tasks_current <= self.tasks_goal:
+            # We're at the target depth. Start the next chunk soon.
+            self.state = 'start_chunk'
+            return True, False
+        else:
+            # Check again after a delay
+            return True, True
+
+    def finalize(self, state='done'):
+        """Finalize the render job."""
+        # Set the state
+        assert state in self.FINAL_STATES
+        self.state = state
+        self.ts_done = self.ts_heartbeat
+
+        # Finalize counts
+        try:
+            batch = SafeRenderBatch.load(self.batch_id)
+        except SafeRenderBatch.NoData:
+            batch = None
+        else:
+            self.count_errored = len(self.errored_docs)
+            self.count_rendered = len(batch.done_ids)
+            self.count_abandoned = (len(batch.to_filter_ids) +
+                                    len(batch.to_do_ids) +
+                                    len(batch.chunk))
+            self.count_in_progress = 0
+
+        # TODO: Email report
+        self.store()
 
 
 class DocumentInProcessSerializer(Serializer):
@@ -387,14 +720,18 @@ class DocumentInProcessSerializer(Serializer):
         help_text='Celery Task ID')
     state = ChoiceField(
         help_text='Render state of document',
-        choices=CELERY_STATES,
+        choices=ALL_STATES,
         default=PENDING)
     change_time = DateTimeField(
         help_text='Time of last state change',
         default=datetime.now)
+    ks_errors = ChoiceField(
+        help_text='Were there KumaScript errors?',
+        choices=('', 'y', 'n'),
+        default='')
 
 
-class RegenerationBatchSerializer(Serializer):
+class SafeRenderBatchSerializer(CachedDataSerializer):
     """
     Detailed document data for a job.
 
@@ -412,10 +749,6 @@ class RegenerationBatchSerializer(Serializer):
         help_text='Document IDs to regenerate',
         child=IntegerField(),
         default=[])
-    errored_ids = ListField(
-        help_text='Document IDs with rendering errors',
-        child=IntegerField(),
-        default=[])
     stuck_ids = ListField(
         help_text='Document IDs with stuck rendering tasks',
         child=IntegerField(),
@@ -429,27 +762,26 @@ class RegenerationBatchSerializer(Serializer):
         many=True)
 
     def create(self, validated_data):
-        """Create a new RegenerationBatch, used by .save()."""
-        return super(self, RegenerationBatchSerializer).create(
-            validated_data, RegenerationBatch)
+        """Create a new SafeRenderBatch, used by .save()."""
+        return super(self, SafeRenderBatchSerializer).create(
+            validated_data, SafeRenderBatch)
 
 
-class RegenerationBatch(CachedData):
+class SafeRenderBatch(CachedData):
     """
-    Store detailed data for a regeneration job.
+    Store detailed data for a re-render job.
 
     This is kept separate from the rest of the job data because it is only
     maintained while the job is running, can be dropped at the end of the
     job, and isn't needed for the dashboard.
     """
 
-    serializer_class = RegenerationBatchSerializer
+    serializer_class = SafeRenderBatchSerializer
     USER_FIELDS = ()
     STATE_FIELDS = (
         ('batch_id', uuid4),        # UUID of this data
         ('to_filter_ids', []),      # Doc IDs before content filtering
         ('to_do_ids', []),          # Pending Document IDs
-        ('errored_ids', []),        # Doc IDs with KumaScript errors
         ('stuck_ids', []),          # Doc IDs that timed out rendering
         ('done_ids', []),           # Successfully rendered Doc IDs
         ('chunk', []),              # Data for Docs being currently rendered
@@ -460,11 +792,11 @@ class RegenerationBatch(CachedData):
     def cache_key(cls, batch_id):
         """Generate the cache key for storing job data."""
         assert batch_id
-        return 'regen-batch-%s' % batch_id
+        return 'safe-render-batch-%s' % batch_id
 
 
-class RegenerationDashboardSerializer(Serializer):
-    """Maintain the list of RegenerationJobs."""
+class SafeRenderDashboardSerializer(CachedDataSerializer):
+    """Maintain the list of SafeRenderJobs."""
     job_ids = ListField(
         help_text='Known jobs',
         child=UUIDField(),
@@ -479,15 +811,15 @@ class RegenerationDashboardSerializer(Serializer):
         default=7)
 
     def create(self, validated_data):
-        """Create a new RegenerationDashboard, used by .save()."""
-        return super(self, RegenerationDashboardSerializer).create(
-            validated_data, RegenerationDashboard)
+        """Create a new SafeRenderDashboard, used by .save()."""
+        return super(self, SafeRenderDashboardSerializer).create(
+            validated_data, SafeRenderDashboard)
 
 
-class RegenerationDashboard(CachedData):
-    """Maintain an index of RegenerationJobs, and pick the current one."""
+class SafeRenderDashboard(CachedData):
+    """Maintain an index of SafeRenderJobs, and pick the current one."""
 
-    serializer_class = RegenerationDashboardSerializer
+    serializer_class = SafeRenderDashboardSerializer
 
     USER_FIELDS = ()
     STATE_FIELDS = (
@@ -500,15 +832,15 @@ class RegenerationDashboard(CachedData):
     def cache_key(cls, dashboard_id=None):
         """Generate the cache key for storing dashabords."""
         assert dashboard_id is None
-        return 'regen-dashboard'
+        return 'safe-render-dashboard'
 
     @classmethod
     def get(cls):
         """Load from cache or create new dashboard."""
         try:
             dashboard = cls.load()
-        except RegenerationDashboard.NoData:
-            dashboard = RegenerationDashboard()
+        except SafeRenderDashboard.NoData:
+            dashboard = SafeRenderDashboard()
         return dashboard
 
     def register_job(self, job):
@@ -518,21 +850,29 @@ class RegenerationDashboard(CachedData):
         assert job.job_id not in self.job_ids
         self.job_ids.append(job_id)
         self.refresh(preloaded_jobs={job_id: job})
-        job.store()
+        if job.state == 'waiting':
+            # We didn't get picked as current job
+            job.store()
         return job
 
-    def refresh(self, max_time=None, preloaded_jobs=None):
+    def refresh(self, preloaded_jobs=None):
         """
         Refresh the list of active rendering jobs
 
         Keyword Arguments:
         - data: Deserialized dashboard data
-        - max_time: A max job time (default = 1 week)
         - preloaded_jobs: dictionary of job IDs to loaded jobs.
         """
+        from .tasks import run_safe_render_job
+
+        # Setup processed job list, current job
+        jobs = []
+        current_job = None
+
+        # Set timestamp for when a job is considered stale
+        ts_stale = datetime.now() - timedelta(days=self.max_days)
 
         # Load job data
-        jobs = []
         job_ids = set()
         preloaded_jobs = preloaded_jobs or {}
         for job_id in self.job_ids:
@@ -541,48 +881,34 @@ class RegenerationDashboard(CachedData):
                 job = preloaded_jobs[job_id]
             else:
                 try:
-                    job = RegenerationJob.load(job_id)
-                except RegenerationJob.NoData:
-                    job_id = None  # Job was deleted
-            if job_id:
-                job_ids.add(job_id)
+                    job = SafeRenderJob.load(job_id)
+                except SafeRenderJob.NoData:
+                    job = None  # Job was deleted
+            if job:
+                # Delete jobs older than the stale date
+                if job.ts_init < ts_stale:
+                    job.delete()
+                    job = None
+
+            if job:
+                # Job is valid
                 jobs.append(job)
+                job_ids.add(job_id)
                 if job.state == 'init':
                     job.state = 'waiting'
-
-        # Find the current job
-        current_job = None
-        if self.current_job_id:
-            for job in jobs:
-                if job.job_id == self.current_job_id:
-                    assert not current_job
+                if job_id == self.current_job_id:
                     current_job = job
-        if self.current_job_id and not current_job:
-            # Invalid current job
-            self.current_job_id = None
 
         # Is the current job done?
-        final_states = ('done', 'canceled', 'errored', 'orphaned')
-        if current_job and current_job.state in final_states:
-            self.current_job_id = None
+        if current_job and current_job.state in SafeRenderJob.FINAL_STATES:
+            current_job = None
 
-        # Drop jobs over the maximum age
-        now = datetime.now()
-        max_time = max_time or timedelta(days=7)
-        oldest = now - max_time
-        for job in jobs:
-            start = job.ts_init
-            if start < oldest:
-                if job.job_id == self.current_job_id:
-                    self.current_job_id = None
-                job.delete()
-
-        # Pick current job
-        if not self.current_job_id:
+        # Pick current job if we don't have one
+        if not current_job:
             in_progress = []
             waiting = []
             active_states = set((
-                'rough_count',      # Making a rough count of docs to regeneration
+                'rough_count',      # Making a rough count of docs to re-render
                 'detailed_count',   # Gathering IDs of docs to regenerate
                 'rendering',        # Rendering a batch of documents
                 'cool_down',        # Waiting for the purgable queue to clear
@@ -595,18 +921,20 @@ class RegenerationDashboard(CachedData):
             candidates = sorted(in_progress) + sorted(waiting)
             if candidates:
                 current_job = candidates[0][1]
-                self.current_job_id = current_job.job_id
 
         # Activate the current job if it is waiting to run
         if current_job and current_job.state == 'waiting':
-            current_job.run()
+            current_job.state = 'rough_count'
+            current_job.store()
+            run_safe_render_job.delay(current_job.job_id)
 
         # Save updated dashboard
+        self.job_ids = list(sorted([job.job_id for job in jobs]))
+        self.current_job_id = current_job.job_id if current_job else None
         self.store()
 
 
-def init_regen_job(macros=None, locales=None, user_id=None, emails=None,
-                   batch_size=100, error_percent=10, wait_tasks=2):
+def init_regen_job(macros=None, locales=None, user_id=None, emails=None):
     """
     Initialize a re-render job.
 
@@ -615,17 +943,12 @@ def init_regen_job(macros=None, locales=None, user_id=None, emails=None,
     - locales: A list of locales to filter on
     - user_id: The user ID that initiated the report
     - emails: Emails to get a final report
-    - batch_size: How many documents to render in a batch
-    - error_percent: A integer in range (0, 100], to abort due to errors
-    - wait_tasks: The max number of pending tasks in the purgable queue
-      before starting a new chunk
     """
 
-    job = RegenerationJob(
+    job = SafeRenderJob(
         filter_macros=macros, filter_locales=locales, user_id=user_id,
-        emails=emails, batch_size=batch_size, error_percent=error_percent,
-        wait_tasks=wait_tasks)
-    dashboard = RegenerationDashboard()
+        emails=emails)
+    dashboard = SafeRenderDashboard.get()
     dashboard.register_job(job)
     return job
 
@@ -634,13 +957,15 @@ def init_regen_job(macros=None, locales=None, user_id=None, emails=None,
 
 
 def try_it():
-    job = RegenerationJob(filter_macros=['experimental_inline'],
-                          filter_locales=['en-US'])
-    dashboard = RegenerationDashboard.get()
-    dashboard.register_job(job)
+    job = init_regen_job(macros=['experimental_inline'], locales=['en-US'])
     return job
 
 
 def try_it2():
-    dashboard = RegenerationDashboard.get()
+    dashboard = SafeRenderDashboard.get()
     dashboard.refresh()
+
+
+def try_it3():
+    job = init_regen_job(macros=['IncludeSubnav'])
+    return job
