@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2014-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2014-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/license
  */
 
 ( function() {
@@ -104,7 +104,7 @@
 			 *		// ret === "21 March 2020"
 			 *
 			 * @param {Object} An object returned by {@link #parseDate}
-			 * @returns {String} A human-friendly date representaiton.
+			 * @returns {String} A human-friendly date representation.
 			 */
 			DateUnfold.prototype.getFriendlyDate = function( dateObj ) {
 				// month - 1 because monthNames is 0-based array.

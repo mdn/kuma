@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2014-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2014-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/license
  */
 
 ( function() {
@@ -40,14 +40,21 @@
 			 */
 			AttributeRename.prototype.attributeTargetName = 'alt';
 
-			AttributeRename.prototype.display = function( form ) {
-				var proposedValue = this.issue.element.getAttribute( this.attributeName) || '';
+			/**
+			 * Gets the proposed new value of the target attribute.
+			 *
+			 * @returns {String}
+			*/
+			AttributeRename.prototype.getProposedValue = function() {
+				return this.issue.element.getAttribute( this.attributeName ) || '';
+			};
 
+			AttributeRename.prototype.display = function( form ) {
 				form.setInputs( {
 					value: {
 						type: 'text',
 						label: 'Value',
-						value: proposedValue
+						value: this.getProposedValue()
 					}
 				} );
 			};
