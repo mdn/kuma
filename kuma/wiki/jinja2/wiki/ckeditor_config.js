@@ -45,7 +45,7 @@
     // Should be kept in sync with the list in ckeditor/source/build-config.js.
     // Defining plugins list explicitly lets us to switch easily between dev and build versions.
     config.plugins =
-      'a11yhelp,autogrow,basicstyles,bidi,blockquote,clipboard,contextmenu,dialogadvtab,elementspath,enterkey,' +
+      'a11ychecker,a11yhelp,autogrow,balloonpanel,basicstyles,bidi,blockquote,clipboard,contextmenu,dialogadvtab,elementspath,enterkey,' +
       'entities,find,htmlwriter,image,indentlist,language,link,list,liststyle,magicline,maximize,pastefromword,' +
       'pastetext,removeformat,scayt,showblocks,showborders,sourcearea,stylescombo,tab,table,tabletools,' +
       'toolbar,undo,wsc,wysiwygarea,' +

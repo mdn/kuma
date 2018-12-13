@@ -28,8 +28,10 @@ var CKBUILDER_CONFIG = {
 
 	/* Should be kept in sync with the list in ckeditor_config.js. */
 	plugins: {
+		a11ychecker: 1,
 		a11yhelp: 1,
 		autogrow: 1,
+		balloonpanel: 1,
 		basicstyles: 1,
 		bidi: 1,
 		blockquote: 1,
