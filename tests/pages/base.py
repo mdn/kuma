@@ -4,7 +4,7 @@ from functools import wraps
 
 import pytest
 from pypom import Page, Region
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -34,6 +34,8 @@ class BasePage(Page):
     MM_BANNER_TEXT = 'MDN is currently in read-only maintenance mode.'
     MM_BANNER_SELECTOR = 'div.maintenance-mode-notice bdi'
     DEFAULT_ANIMATION_DURATION = 0.5  # defined in styles/includes/_vars.scss
+    PAYMENTS_BANNER = (By.ID, 'contribution-popover-container')
+    PAYMENTS_BANNER_CLOSE_BUTTON = (By.ID, 'close-popover-button')
 
     def __init__(self, selenium, base_url, locale='en-US', **url_kwargs):
         super(BasePage, self).__init__(selenium, base_url, locale=locale, **url_kwargs)
@@ -68,6 +70,17 @@ class BasePage(Page):
             "localStorage.removeItem('taskTracker');")
         self.selenium.refresh()
         self.wait_for_page_to_load()
+
+    def close_payments_banner(self):
+        """Close the payments banner if it's present and visible."""
+        try:
+            banner = self.find_element(*self.PAYMENTS_BANNER)
+        except NoSuchElementException:
+            return
+        else:
+            if banner.is_displayed():
+                self.find_element(*self.PAYMENTS_BANNER_CLOSE_BUTTON).click()
+                self.wait.until(lambda s: not banner.is_displayed())
 
     class Header(Region):
         report_content_form_url = 'https://bugzilla.mozilla.org/form.doc'
@@ -286,6 +299,9 @@ class BasePage(Page):
             return selected_language
 
         def select_language(self, value):
+            # Avoid the problem where the language-selection click fails
+            # because the payments banner obscures it.
+            self.page.close_payments_banner()
             language_select = self.find_element(*self._language_locator)
             Select(language_select).select_by_value(value)
             self.wait.until(lambda s: '/{0}/'.format(value) in s.current_url)
