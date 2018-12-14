@@ -1,0 +1,63 @@
+<%/*
+
+Parameter
+    $0 (first parameter):  path of Previous page
+    $1 (second parameter): path of Next page
+
+Issue
+    * Problem of Apostrophe (https://developer.mozilla.org/fr/docs/JavaScript_Guide/Op%C3%A9rateurs/Op%C3%A9rateurs_sp%C3%A9ciaux)
+
+*/
+
+var lang = env.locale;
+var strPrevious = "";
+var strNext = "<br>";
+
+var s_PreviousNext = mdn.localString({
+    "en-US": ["« Previous",          "Next  »"],
+    "cs"   : ["« Předchozí",  "Následující  »"],
+    "de"   : ["« zurück",          "weiter  »"],
+    "es"   : ["« Anterior",     "Siguiente  »"],
+    "fr"   : ["« Précédent",      "Suivant  »"],
+    "pl"   : ["« Poprzedni",     "Następny  »"],
+    "pt-PT": ["« Anterior",       "Próxima  »"],
+
+    "he"   : ["« קודם",                              "הבא »"] ,
+    "ja"   : ["« 前のページ",                        "次のページ  »"],
+    "ko"   : ["« 이전",                              "다음  »"],
+    "ru"   : ["« Предыдущая статья", "Следующая статья  »"],
+    "zh-CN": ["« 上一页",                            "下一页  »"],
+    "zh-TW": ["« 前頁",                              "次頁  »"]
+});
+
+
+// for LTR
+var textAlign = "right";
+var floatValue = "left";
+
+// for RTL
+switch(lang) {
+    case "ar":
+    case "fa":
+    case "he":
+        textAlign = "left";
+        floatValue = "right";
+        break;
+    default:
+        break;
+}
+
+
+if ($0) {
+    strPrevious = '<a style="float:' + floatValue + ';" href="/' + lang + '/docs/' + string.replace($0, ' ', '_') + '">' + s_PreviousNext[0] + '</a>';
+}
+
+if ($1) {
+    strNext = '<a href="/' + lang + '/docs/' + string.replace($1, ' ', '_') + '">' + s_PreviousNext[1] + '</a>';
+}
+
+
+
+%><div class="prevnext" style="text-align:<%- textAlign %>;">
+    <p><%- strPrevious %><%- strNext %></p>
+</div>

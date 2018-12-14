@@ -1,0 +1,4 @@
+Testing "require" of npm package:
+
+* First: Does "http.headers.Accept" exist? yes!
+* Second: Does "css.properties" exist? yes!

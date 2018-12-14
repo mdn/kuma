@@ -1,0 +1,348 @@
+<%
+/*
+  Displays general information about a CSS property or descriptor
+
+  $0 - property/descriptor name - defaults to the slug name
+  $1 - @-rule - defaults to the @-rule within the URL
+*/
+
+let slug = env.slug;
+let name = $0 || (slug ? slug.split("/").pop().toLowerCase() :
+    "preview-wiki-content");
+let atRule = $1;
+
+let propertiesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/properties.json";
+let atRulesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/at-rules.json";
+let selectorsUrl = "https://raw.githubusercontent.com/mdn/data/master/css/selectors.json";
+let typesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/types.json";
+let syntaxesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/syntaxes.json";
+let unitsUrl = "https://raw.githubusercontent.com/mdn/data/master/css/units.json";
+let localStringsUrl = "https://raw.githubusercontent.com/mdn/data/master/l10n/css.json";
+let data = {
+    properties: await MDN.fetchJSONResource(propertiesUrl),
+    atRules: await MDN.fetchJSONResource(atRulesUrl),
+    selectors: await MDN.fetchJSONResource(selectorsUrl),
+    types: await MDN.fetchJSONResource(typesUrl),
+    syntaxes: await MDN.fetchJSONResource(syntaxesUrl),
+    units: await MDN.fetchJSONResource(unitsUrl)
+};
+let formattedError = "<span style=\"color:red;\">$1$</span>";
+let commonLocalStrings = string.deserialize(await template("L10n:Common"));
+let locale = env.locale;
+let escapeQuotes = mdn.escapeQuotes;
+let localize = mdn.getLocalString;
+let localizeString = mdn.localString;
+let replacePlaceholders = mdn.replacePlaceholders;
+let localWiki = wiki;
+let currentPage = page;
+
+let cssLocalStrings = string.deserialize(await template("L10n:CSS"));
+let localStrings = await MDN.fetchJSONResource(localStringsUrl);
+
+/*
+  Creates a link to another API, e.g. a CSS property or SVG element
+
+  This function is used as a workaround for not being able to call other
+  templates like 'cssxref' from within functions (see https://bugzil.la/939214)
+
+  apiName - Name of the API to link to
+  area - Area of the API (i.e. CSS, SVG, etc.)
+  linkName - String to use as link label
+*/
+async function createLink(apiName, area, linkName) {
+    let formattedLinkName = linkName || apiName;
+    let url = "/" + locale + "/docs/Web/" + (area || "CSS") + "/" + apiName;
+    let thisPage = await localWiki.getPage(url);
+
+    if (currentPage.hasTag(thisPage, "CSS Function")) {
+        formattedLinkName += "()";
+    } else if (currentPage.hasTag(thisPage, "CSS Data Type") ||
+        currentPage.hasTag(thisPage, "Element")) {
+        formattedLinkName = "&lt;" + formattedLinkName + "&gt;";
+    }
+
+    let summary = (thisPage && thisPage.summary) ?
+        escapeQuotes(thisPage.summary) :
+        localize(commonLocalStrings, "summary");
+
+    return "<a href=\"" + url + "\"" +
+        (summary ? " title=\"" + summary + "\"" : "") + "><code>" +
+        formattedLinkName + "</code></a>";
+}
+
+
+/*
+  Parses all macros within a string
+
+  s - String to parse
+*/
+async function parseMacros(s) {
+    if (s === undefined) {
+        return undefined;
+    }
+
+    var apiName = "";
+    var area = "";
+    let parsedString = await string.asyncReplace(
+        s,
+        /\{\{(.+?)(?:\((.+?)\))?\}\}/g,
+        async function (match, macroName, paramsString) {
+            var params = paramsString ? paramsString.split(/, ?/) : [];
+            params.forEach(function(param, index, params) {
+              params[index] = params[index].toLowerCase().slice(1, -1);
+            });
+            var apiName = (params.length !== 0 ? params[0] : "");
+            switch (macroName.toLowerCase()) {
+                case "xref_csslength":
+                    apiName = "length";
+                    area = "CSS";
+                    break;
+
+                case "xref_cssangle":
+                    apiName = "angle";
+                    area = "CSS";
+                    break;
+
+                case "svgelement":
+                    area = "SVG/Element";
+                    break;
+
+                default:
+                    area = "CSS";
+            }
+
+            return await createLink(apiName, area, params[1]);
+        }
+    );
+    return parsedString;
+}
+
+
+/*
+  Appends information about to which pseudo-elements a CSS property applies to
+  the output to which normal elements it applies
+
+  output - Current value output
+  property - CSS info item name
+  cssInfo - Structure containing information about a CSS property
+*/
+function addAdditionalAppliesToOutput(output, property, cssInfo) {
+    if (property !== "appliesto" || !cssInfo.hasOwnProperty("alsoAppliesTo")) {
+        return output;
+    }
+
+    var additionalApplies = "";
+    // Remove '::placeholder' from array to avoid displaying it,
+    // because it's not standardized yet
+    var placeholderIndex = cssInfo.alsoAppliesTo.indexOf("::placeholder");
+    if (placeholderIndex !== -1) {
+      cssInfo.alsoAppliesTo.splice(placeholderIndex, 1);
+    }
+
+    // In case there are no items left, the output is returned unchanged
+    if (cssInfo.alsoAppliesTo.length === 0) {
+      return output;
+    }
+
+    cssInfo.alsoAppliesTo.forEach(function(element, index, elements) {
+        additionalApplies += "{{cssxref(\"" + element + "\")}}";
+
+        if (index < elements.length - 2) {
+            additionalApplies += localize(localStrings, "listSeparator");
+        } else if (index < elements.length - 1) {
+            additionalApplies += localize(localStrings, "andInEnumeration");
+        }
+    });
+
+    return replacePlaceholders(localize(localStrings, "applyingToMultiple"),
+        [output, additionalApplies]);
+}
+
+
+/*
+  Parses all macros within a string
+
+  string - String to parse
+*/
+async function getValueOutput(cssInfo, property, atRule) {
+    if (property === "relatedAtRule") {
+        let url = "/" + locale + "/docs/Web/CSS/" + atRule;
+        let page = await localWiki.getPage(url);
+        let summary = (page && page.summary) ? escapeQuotes(page.summary) :
+            localize(commonLocalStrings, "summary");
+
+        return "<a href=\"/" + locale + "/docs/Web/CSS/" + atRule +
+            "\" title=\"" + summary + "\"><code>" + atRule + "</code></a>";
+    }
+
+    var value = cssInfo[property];
+    if (typeof value === "string") {
+        if (property === "animationType") {
+            var animationTypeValues = value.split(" ");
+            var parsedAnimationTypeValues =
+                animationTypeValues.map(function(animationTypeValue) {
+                    var localizedString = localize(localStrings, animationTypeValue);
+                    if (animationTypeValue === "lpc") {
+                        localizedString = replacePlaceholders(localizedString,
+                            [localize(localStrings, "length")]);
+                    }
+                    return localizedString;
+                });
+
+            return await parseMacros(addAdditionalAppliesToOutput(parsedAnimationTypeValues.join(
+                localize(localStrings, "listSeparator")), property, cssInfo));
+        } else {
+            var propMatches = value.match(/^'(.+?)'$/);
+            if (propMatches) {
+                return await getValueOutput(data.properties[propMatches[1]], property);
+            } else {
+                if (property === "initial" && !localStrings.hasOwnProperty(value)) {
+                    return '<code>' + value + '</code>';
+                } else {
+                    var keywords = value.split(", ");
+                    var replacedKeywords = keywords.map(function(keyword) {
+                        return localize(localStrings, keyword);
+                    });
+
+                    var output = addAdditionalAppliesToOutput(
+                        replacedKeywords.join(", "), property, cssInfo);
+                    return await parseMacros(output);
+                }
+            }
+        }
+    } else if (Array.isArray(value)) {
+        var output = localize(localStrings, "asLonghands") + "<br/>" +
+        "<ul>";
+        for(let longhand of value) {
+            output += "<li>{{cssxref(\"" + longhand + "\")}}: " +
+                (data.properties.hasOwnProperty(longhand) ?
+                    await getValueOutput(data.properties[longhand], property) :
+                    replacePlaceholders(formattedError,
+                        [localize(cssLocalStrings, "missing")])) +
+                "</li>";
+        };
+        output += "</ul>";
+
+        return await parseMacros(addAdditionalAppliesToOutput(output, property,
+            cssInfo));
+    } else if (typeof value === "object") {
+        var output = localizeString(value);
+
+        return await parseMacros(addAdditionalAppliesToOutput(output, property,
+            cssInfo));
+    } else if (typeof value === "boolean") {
+        return localize(localStrings, value ? "yes" : "no");
+    } else if (typeof value === "undefined") {
+        return replacePlaceholders(formattedError, [localize(cssLocalStrings,
+            "missing")]);
+    }
+
+    return await parseMacros(value);
+}
+
+
+var cssInfo = null;
+
+if (!atRule) {
+    var matches = null;
+    if (slug) {
+        matches = slug.match(/\/CSS\/(@.+?)(?=\/)/);
+    }
+
+    if (matches) {
+        atRule = matches[1];
+    }
+}
+
+if (name !== "preview-wiki-content") {
+    if (atRule) {
+        if (data.atRules[atRule] && data.atRules[atRule].descriptors) {
+            cssInfo = data.atRules[atRule].descriptors[name];
+        }
+    } else if (data.properties[name]) {
+        cssInfo = data.properties[name];
+    }
+}
+
+var result = "";
+
+if (name === "preview-wiki-content") {
+    result = "<span style=\"color:red;\">" +
+        localize(cssLocalStrings, "info_in_preview_not_available") + "</span>";
+} else if (cssInfo) {
+    result = "<table class=\"properties\">" +
+        "<tbody>";
+    var properties = [];
+    if (atRule) {
+        properties = properties.concat({
+            name: "relatedAtRule",
+            label: localize(localStrings, "relatedAtRule")
+        });
+    }
+
+    properties = properties.concat({
+        name: "initial",
+        label: await template("Xref_cssinitial")
+    });
+
+    if (!atRule) {
+        properties = properties.concat({
+            name: "appliesto",
+            label: localize(localStrings, "appliesTo")
+        });
+    }
+
+    if (cssInfo.hasOwnProperty("inherited")) {
+        properties = properties.concat({
+            name: "inherited",
+            label: await template("Xref_cssinherited")
+        });
+    }
+
+    if (cssInfo.percentages !== "no") {
+        properties = properties.concat({
+            name: "percentages",
+            label: localize(localStrings, "percentages")
+        });
+    }
+
+    properties = properties.concat({
+        name: "media",
+        label: localize(localStrings, "media")
+    },
+    {
+        name: "computed",
+        label: await template("Xref_csscomputed")
+    });
+
+    if (!atRule) {
+        properties = properties.concat({
+            name: "animationType",
+            label: localize(localStrings, "animationType")
+        });
+    }
+
+    properties = properties.concat({
+        name: "order",
+        label: localize(localStrings, "canonicalOrder")
+    });
+
+    if (cssInfo.stacking) {
+        properties = properties.concat({
+            name: "stacking",
+            label: localize(localStrings, "createsStackingContext")
+        });
+    }
+
+    for(let property of properties) {
+        result += "<tr>" +
+            "<th scope=\"row\">" + property.label + "</th><td>" +
+            await getValueOutput(cssInfo, property.name, atRule) + "</td>";
+    };
+    result += "</tbody>" +
+        "</table>";
+} else {
+    result = replacePlaceholders(formattedError,
+        [localize(cssLocalStrings, "missing")]);
+}
+%><%- result %>

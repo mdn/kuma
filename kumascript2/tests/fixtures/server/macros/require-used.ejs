@@ -1,0 +1,13 @@
+<%
+var queryString = $0,
+    bcd = require('mdn-browser-compat-data');
+
+function getData() {
+  return queryString.split('.').reduce(function(prev, curr) {
+    return prev ? prev[curr] : undefined
+  }, bcd);
+}
+
+var output = `Does "${queryString}" exist? ${getData() ? 'yes!' : 'no!'}`;
+%>
+<%- output %>

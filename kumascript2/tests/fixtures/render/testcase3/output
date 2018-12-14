@@ -1,0 +1,19 @@
+Decimals are not truncated to integers:
+* ["3.6"]
+* [{"x":3.6}]
+
+Quotes and escaped quotes work correctly
+* ["This is a \"test\""]
+* ["This is a 'test'"]
+* ["This is a \"test\""]
+* ["This is a 'test'"]
+* ["This is a 'test'"]
+* ["This is a \"test\""]
+* [{"x":"This is a 'test'"}]
+* [{"x":"This is a \"test\""}]
+
+Empty arguments are not elided
+* [""]
+* [""]
+* ["","",""]
+* ["docs/User:trevorh/aTest","docs/User:trevorh/Generic_template_test","","Anything"]

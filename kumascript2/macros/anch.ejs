@@ -1,0 +1,16 @@
+<%
+// Inserts a link to an in-page section, given the section name.
+//
+// Parameters:
+//  $0  Anchor name; you may use spaces here instead of underscores -- these
+//      are converted for you.
+//  $1  (optional) Text to display instead of the anchor name itself.
+//
+// Examples:
+//  {{anch("Some section's title")}}
+//  {{anch("Another section name", "the information elsewhere in this article.")}}
+
+var text = $1 || $0;
+var anchor = '#' + string.replace($0, " ", "_");
+
+%><a href="<%- anchor %>"><%- text %></a>

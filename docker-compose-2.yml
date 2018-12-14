@@ -1,0 +1,107 @@
+version: '2.1'
+services:
+  worker: &worker
+    image: mdnwebdocs/kuma_base
+    command: ./manage.py celery worker --loglevel=INFO --events --beat --autoreload --concurrency=4 -Q mdn_purgeable,mdn_search,mdn_emails,mdn_wiki,celery
+    user: ${UID:-1000}
+    volumes:
+      - ./:/app:z
+    depends_on:
+      - mysql
+      - elasticsearch
+      - redis
+      - kumascript
+    environment:
+      # Django settings overrides:
+      - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
+      - ALLOW_ALL_IFRAMES=${ALLOW_ALL_IFRAMES:-False}
+      - ALLOWED_HOSTS=*
+      - ATTACHMENT_HOST=${ATTACHMENT_HOST:-localhost:8000}
+      - BROKER_URL=redis://redis:6379/0
+      - CELERY_ALWAYS_EAGER=False
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
+      - CSRF_COOKIE_SECURE=False
+      - DATABASE_URL=mysql://${DATABASE_USER:-root}:${DATABASE_PASSWORD:-kuma}@mysql:3306/developer_mozilla_org
+      - DEBUG=${DEBUG:-True}
+      - DOMAIN=localhost
+      - ENABLE_RESTRICTIONS_BY_HOST=${ENABLE_RESTRICTIONS_BY_HOST:-False}
+      - ES_URLS=elasticsearch:9200
+      - INTERACTIVE_EXAMPLES_BASE=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
+      - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}
+      - REDIS_CACHE_SERVER=redis://redis:6379/3
+      - PROTOCOL=http://
+      - SESSION_COOKIE_SECURE=False
+      - SITE_URL=http://localhost:8000
+      - STATIC_URL=${STATIC_URL:-http://localhost:8000/static/}
+      # Other environment overrides
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=True
+      - MAINTENANCE_MODE=${MAINTENANCE_MODE:-False}
+      - REVISION_HASH=${KUMA_REVISION_HASH:-undefined}
+
+  # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
+  web:
+    <<: *worker
+    command: gunicorn -w 4 --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 --worker-class=meinheld.gmeinheld.MeinheldWorker kuma.wsgi:application
+    ports:
+      - "8000:8000"
+
+  # API is used by KumaScript for content and metadata
+  api:
+    <<: *worker
+    command: gunicorn -w 4 --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 kuma.wsgi:application
+    depends_on:
+      - mysql
+      - elasticsearch
+      - redis
+      # Drop kumascript link
+    ports:
+      - "8001:8000"
+
+  mysql:
+    image: mysql:5.6
+    environment:
+      - MYSQL_USER=kuma
+      - MYSQL_PASSWORD=kuma
+      - MYSQL_DATABASE=developer_mozilla_org
+      - MYSQL_ROOT_PASSWORD=kuma
+    command:
+      - mysqld
+      - --character-set-server=utf8
+      - --collation-server=utf8_general_ci
+      - --innodb-flush-log-at-trx-commit=0
+      - --innodb-log-file-size=132M
+      - --max-allowed-packet=100M
+    volumes:
+      - mysqlvolume:/var/lib/mysql
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.10
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+
+  redis:
+    image: redis
+
+  kumascript:
+    image: mdnwebdocs/kumascript2
+    command: node index.js
+    depends_on:
+      - api
+    environment:
+      - DOCUMENT_URL_TEMPLATE=http://api:8000/en-US/docs/{path}?raw=1
+      - DOCUMENT_URL=http://api:8000
+      - INTERACTIVE_EXAMPLES_URL=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
+      - LIVE_SAMPLES_URL=http://${ATTACHMENT_HOST:-localhost:8000}
+    ports:
+      - "9080:9080"
+    volumes:
+      - ./kumascript2:/app
+volumes:
+    mysqlvolume:
+    esdata:
+      driver: local

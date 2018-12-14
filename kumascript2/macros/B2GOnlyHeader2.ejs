@@ -1,0 +1,72 @@
+<%/*
+
+one parameter:
+    Level of security allow to the API:
+        [ "web" || "web+" || "privileged" || "installed" || "certified" ]
+
+*/
+
+
+var lang = env.locale;
+
+var secString = {
+    'web+' : mdn.localString({
+        "en-US" : 'This API is available on Firefox or <a href="/en-US/docs/Mozilla/Firefox_OS">Firefox OS</a> for ' +
+                  '<a href="/en-US/docs/Mozilla/Firefox_OS/Security/Application_security#App_Types">web content or higher privileged applications</a>.',
+        "zh-CN" : '此 API 在 Firefox 或 <a href="/zh-CN/docs/Mozilla/Firefox_OS">Firefox OS</a> 的' +
+                  '<a href="/zh-CN/docs/Mozilla/Firefox_OS/Security/Application_security#App_Types">网页内容或高权限的应用程序</a>上可用。',
+        "fr"    : 'Cette API est disponible sur Firefox ou <a href="/fr/docs/Mozilla/Firefox_OS">Firefox OS</a> pour ' +
+                  '<a href="/fr/docs/Mozilla/Firefox_OS/Security/Application_security#App_Types">du contenu web ou des applications disposant de privilèges plus élevés</a>.',
+        "ja"    : 'この API は Firefox または <a href="/ja/docs/Mozilla/Firefox_OS">Firefox OS</a> 上で ' +
+                  '<a href="/ja/docs/Mozilla/Firefox_OS/Security/Application_security#App_Types">ウェブコンテンツまたは高度の権限を持つアプリ</a>より利用できます。',
+    }),
+    web : mdn.localString({
+        "en-US" : 'This API is available on <a href="/en-US/docs/Mozilla/Firefox_OS">Firefox OS</a> for ' +
+                  '<a href="/en-US/docs/Mozilla/Firefox_OS/Security/Application_security#App_Types">web content or higher privileged applications</a>.',
+        "zh-CN" : '此 API 在 <a href="/zh-CN/docs/Mozilla/Firefox_OS">Firefox OS</a> 的' +
+                  '<a href="/zh-CN/docs/Mozilla/Firefox_OS/Security/Application_security#App_Types">网页内容或高权限的应用程序</a>上可用。',
+        "fr"    : 'Cette API est disponible sur <a href="/fr/docs/Mozilla/Firefox_OS">Firefox OS</a> pour ' +
+                  '<a href="/fr/docs/Mozilla/Firefox_OS/Security/Application_security#App_Types">du contenu web ou des applications privilégiées</a>.',
+        "ja"    : 'この API は <a href="/ja/docs/Mozilla/Firefox_OS">Firefox OS</a> 上で ' +
+                  '<a href="/ja/docs/Mozilla/Firefox_OS/Security/Application_security#App_Types">ウェブコンテンツまたは高度の権限を持つアプリ</a>より利用できます。',
+    }),
+    installed : mdn.localString({
+        "en-US" : 'This API is available on Firefox or <a href="/en-US/docs/Mozilla/Firefox_OS">Firefox OS</a> for ' +
+                  '<a href="/en-US/docs/Mozilla/Firefox_OS/Security/Application_security#App_Types">installed or higher privileged applications</a>.',
+        "zh-CN" : '此 API 在 Firefox 或 <a href="/zh-CN/docs/Mozilla/Firefox_OS">Firefox OS</a> 的' +
+                  '<a href="/zh-CN/docs/Mozilla/Firefox_OS/Security/Application_security#App_Types">已安装或高权限应用程序</a>上可以。',
+        "fr"    : 'Cette API est disponible sur Firefox ou <a href="/fr/docs/Mozilla/Firefox_OS">Firefox OS</a> pour ' +
+                  '<a href="/fr/docs/Mozilla/Firefox_OS/Security/Application_security#App_Types">des applications installées ou privilégiées</a>.',
+        "ja"    : 'この API は Firefox または <a href="/ja/docs/Mozilla/Firefox_OS">Firefox OS</a> 上の ' +
+                  '<a href="/ja/docs/Mozilla/Firefox_OS/Security/Application_security#App_Types">インストールされたアプリ、または高度の権限を持つアプリ</a>で有効になります。',
+    }),
+    privileged: mdn.localString({
+        "en-US" : 'This API is available on <a href="/en-US/docs/Mozilla/Firefox_OS">Firefox OS</a> for ' +
+                  '<a href="/en-US/docs/Mozilla/Firefox_OS/Security/Application_security#App_Types">privileged or certified applications</a> only.',
+        "zh-CN" : '此 API 仅在 <a href="/zh-CN/docs/Mozilla/Firefox_OS">Firefox OS</a> 的' +
+                  '<a href="/zh-CN/docs/Mozilla/Firefox_OS/Security/Application_security#App_Types">高权限或已认证应用程序</a>上可用。',
+        "fr"    : 'Cette API est disponible sur <a href="/fr/docs/Mozilla/Firefox_OS">Firefox OS</a> pour ' +
+                  '<a href="/fr/docs/Mozilla/Firefox_OS/Security/Application_security#App_Types">des applications privilégiées ou certifiées</a> seulement.',
+        "ja"    : 'この API は <a href="/ja/docs/Mozilla/Firefox_OS">Firefox OS</a> 上の' +
+                  '<a href="/ja/docs/Mozilla/Firefox_OS/Security/Application_security#App_Types">特権付きアプリ、または認定済みアプリ</a>からのみ有効になります。',
+    }),
+    certified : mdn.localString({
+        "en-US" : 'This API is available on <a href="/en-US/docs/Mozilla/Firefox_OS">Firefox OS</a> for ' +
+                  '<a href="/en-US/docs/Mozilla/Firefox_OS/Security/Application_security#App_Types">internal applications</a> only.',
+        "zh-CN" : '此 API 仅在 <a href="/zh-CN/docs/Mozilla/Firefox_OS">Firefox OS</a> 的' +
+                  '<a href="/zh-CN/docs/Mozilla/Firefox_OS/Security/Application_security#App_Types">内部应用程序</a>中可用。',
+        "fr"    : 'Cette API est disponible sur <a href="/fr/docs/Mozilla/Firefox_OS">Firefox OS</a> pour ' +
+                  '<a href="/fr/docs/Mozilla/Firefox_OS/Security/Application_security#App_Types">des applications internes</a> seulement.',
+        "ja"    : 'この API は <a href="/ja/docs/Mozilla/Firefox_OS/Security/Application_security">認定済みアプリ</a>のみ、' +
+                  ' <a href="/ja/docs/Mozilla/Firefox_OS">Firefox OS</a> で有効になります。'
+    })
+};
+
+var secLevel = $0 && $0.toLowerCase() || 'certified';
+
+if ( !(secLevel in secString) ) secLevel = 'certified';
+
+
+%><div class="blockIndicator warning">
+    <p style="text-align:center"><%- secString[secLevel] %></p>
+</div>

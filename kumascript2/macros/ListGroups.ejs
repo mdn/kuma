@@ -1,0 +1,103 @@
+<%
+// ListGroups
+//
+// Generates a list of each group (API) from the GroupData JSON and
+// returns it. This can be used to create an index of APIs.
+
+let locale = env.locale;
+let APIHref = '/' + locale + '/docs/Web/API';
+let output = '';
+
+// Conveniences to shorten names of some functions
+
+let htmlEscape = kuma.htmlEscape;
+let spacesToUnderscores = web.spacesToUnderscores;
+
+// Get the GroupData database
+
+let groupData = string.deserialize(await template('GroupData'))[0];
+let groupNames = Object.keys(groupData);
+groupNames.sort();
+
+function containsTag(tagList, tag) {
+  let ret = false;
+
+  if (!tagList || tagList == undefined) {
+    return 0;
+  }
+  tag = tag.toLowerCase();
+  tagList.forEach(function(t) {
+    if (t.toLowerCase() === tag) {
+      ret = true;
+    }
+  });
+  return ret;
+}
+
+// Start building the lists for each letter
+
+let outputByLetter = [];
+
+for(let name of groupNames) {
+  let groupObj = groupData[name];
+  let firstLetter = name[0];
+  let groupOutput = '';
+  let overviewName = name;
+  let badge = "";
+
+  if (groupObj.hasOwnProperty("overview")) {
+    overviewName = groupObj.overview;
+  }
+
+  let groupUrl = APIHref + "/" + spacesToUnderscores(htmlEscape(overviewName));
+  let page = await wiki.getPage(groupUrl);
+
+  // Go through the tags and build badges if there are any to add
+
+  if (page && page != undefined) {
+    let tags = page.tags;
+
+    if (tags) {
+      if (containsTag(tags, "Non-standard") || containsTag(tags, "Non standard")) {
+        badge = " " + await template("NonStandardBadge", ["1"]);
+      }
+
+      if (containsTag(tags, "Obsolete")) {
+        badge += " " + await template("ObsoleteBadge", [1]);
+      } else if (containsTag(tags, "Deprecated")) {
+        badge += " " + await template("DeprecatedBadge", [1]);
+      }
+
+      if (containsTag(tags, "Experimental")) {
+        badge += " " + await template("ExperimentalBadge", [1]);
+      }
+
+      if (badge.length) {
+        badge = "<span class='indexListBadges'>" + badge + "</span>";
+      }
+    }
+  }
+
+  // Finish constructing the HTML and then append it to the text for the corresponding
+  // letter group.
+
+  groupOutput = "<li><a href='" + groupUrl + "'>" + name + "</a>" + badge + "</li>";
+
+  if (!outputByLetter[firstLetter]) {
+    outputByLetter[firstLetter] = groupOutput;
+  } else {
+    outputByLetter[firstLetter] += groupOutput;
+  }
+}
+
+// Now output the whole thing
+
+let keys = Object.keys(outputByLetter);
+
+keys.forEach(function(letter, idx, arr) {
+  output += "<span>" + letter + "</span><ul>" + outputByLetter[letter] + "</ul>";
+});
+
+%><div class="index">
+  <%-output%>
+</div>

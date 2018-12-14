@@ -1,0 +1,77 @@
+<%
+/*
+ * Get flod's JSON to display status of MDN UI localization
+ *
+ */
+
+var projectColumnTitle = mdn.localString({
+    "en-US": "Project",
+    "de"   : "Projekt",
+    "fr"   : "Projet",
+    "ru"   : "Проект",
+    "uk"   : "Проект"
+});
+
+var wordsColumnTitle = mdn.localString({
+    "en-US": "Strings",
+    "de"   : "Wörter",
+    "fr"   : "Mots",
+    "ru"   : "Строки",
+    "uk"   : "Рядки"
+});
+
+var statusColumnTitle = mdn.localString({
+    "en-US": "Status",
+    "de"   : "Status",
+    "fr"   : "Statut",
+    "ru"   : "Статус",
+    "uk"   : "Стан"
+});
+
+var locale = $0;
+var url = 'https://l10n.mozilla-community.org/webstatus/web_status.json';
+var mdnProjects = ["mdn", "mdn-js", "mdn-promote"];
+var result = [];
+
+var resource = await MDN.fetchJSONResource(url);
+var locales = resource.locales;
+
+if (locales.hasOwnProperty(locale)) {
+    var language = locales[locale];
+
+    for (var project in language) {
+        if (language.hasOwnProperty(project) && mdnProjects.indexOf(project) >= 0) {
+            result[project] = language[project];
+        }
+    }
+}
+%>
+
+<table class="standard-table">
+    <tr>
+        <th><a href="https://pontoon.mozilla.org/<%=locale.replace("-", "_")%>/mdn/"><%=projectColumnTitle%></a></th>
+        <th><%=wordsColumnTitle%></th>
+        <th><%=statusColumnTitle%></th>
+    </tr>
+
+<%
+for (var project in result) {
+    if (result.hasOwnProperty(project)) {
+        var translatedPercent = Math.round(result[project].translated / result[project].total * 10000) / 100;
+        var untranslatedPercent = Math.round(result[project].untranslated / result[project].total * 10000) / 100;
+        var fuzzyPercent = 100 - translatedPercent - untranslatedPercent;
+%>
+
+    <tr>
+        <td><%=result[project].name%></td>
+        <td class="total"><%=result[project].total%></td>
+        <td class="status" style="width:300px">
+            <span style="display: inline-block;height: 15px; float:left; background-color: #28910D; width: <%=translatedPercent%>%;" title="<%=result[project].translated%> translated words"></span>
+            <span style="display: inline-block;height: 15px; float:left; background-color: #FCCA00; width: <%=untranslatedPercent%>%;"   title="<%=result[project].untranslated%> untranslated words"></span>
+            <span style="display: inline-block;height: 15px; float:left; background-color: #F00;    width: <%=fuzzyPercent%>%;"   title="<%=result[project].fuzzy%> fuzzy words"></span>
+    </td>
+<%
+    }
+}
+%>
+</table>

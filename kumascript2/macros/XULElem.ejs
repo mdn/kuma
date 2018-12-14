@@ -1,0 +1,23 @@
+<%
+// Inserts a link to the XUL Reference page for the specified element.
+//
+// Parameters:
+//
+//  $0 - Element name
+
+var lang = env.locale;
+
+var destOldType = "/" + lang + '/docs/XUL:' + $0;
+var destNewType = "/" + lang + '/docs/Mozilla/Tech/XUL/' + $0;
+var url = "";
+
+if (wiki.pageExists(destNewType)) {
+    url = destNewType;
+} else if (wiki.pageExists(destOldType)) {
+    url = destOldType;
+} else {
+    url = destNewType;
+}
+
+
+%><code><a href="<%=url%>" title="<%=$0%>"><%=$0%></a></code>

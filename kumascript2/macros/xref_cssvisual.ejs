@@ -1,0 +1,19 @@
+<% if ("es" == env.locale) { %>
+<%- await template("Cssxref", ["Media/Visual", "visual"]) %>
+<% } else if ("fr" == env.locale) { %>
+<%- await template("Cssxref", ["Média/Visuel", "visuel"]) %>
+<% } else if ("ja" == env.locale) { %>
+<%- await template("Cssxref", ["Media/Visual", "visual"]) %>
+<% } else if ("ko" == env.locale) { %>
+<%- await template("Cssxref", ["Media/Visual", "visual"]) %>
+<% } else if ("pl" == env.locale) { %>
+<%- await template("Cssxref", ["Media/Visual", "visual"]) %>
+<% } else if ("zh-CN" == env.locale) { %>
+<%- await template("Cssxref", ["Media/Visual", "visual"]) %>
+<% } else if ("zh-TW" == env.locale) { %>
+<%- await template("Cssxref", ["Media/Visual", "可見"]) %>
+<% } else if ("de" == env.locale) { %>
+<%- await template("Cssxref", ["Media/Visual", "visual"]) %>
+<% } else { %>
+<%- await template("Cssxref", ["Media/Visual", "visual"]) %>
+<% } %>

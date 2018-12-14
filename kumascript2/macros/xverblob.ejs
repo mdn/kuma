@@ -1,0 +1,56 @@
+<%
+var ar = $0.split('.');
+var len = ar.length;
+var ar0 = parseInt(ar[0]);
+var b = 0;
+ 
+// fix for Gecko skipping from 2.0 to 5.0 and proportions for rapid release cycle
+if (ar0 == 2) {
+  ar0 = ar0 + 2;
+}
+// Spread 1.x versions from 1 to 4 to try and get some proportions
+if (ar0 == 1) {
+  b = 100000;
+  if (len > 1) {
+    var ar1 = parseInt(ar[1]);
+    if (ar1 < 7) {
+      b = b + (ar1 * 14286);
+      if (len > 2) {
+        b = b + (parseInt(ar[2]) * 1429);
+      }
+      if (len > 3) {
+        b = b + (parseInt(ar[3]) * 143);
+      }
+    } else {
+      b = b + ((ar1 - 6) * 100000);
+      if (ar1 < 9) {
+        if (len > 2) {
+          b = b + (parseInt(ar[2]) * 10000);
+        }
+        if (len > 3) {
+          b = b + (parseInt(ar[3]) * 1000);
+        }
+      } else {
+        if (len > 2) {
+          b = b + (parseInt(ar[2]) * 33333.33);
+        }
+        if (len > 3) {
+          b = b + (parseInt(ar[3]) * 3333.33);
+        }
+      }
+    }
+  }
+} else {
+  var b = 500000 + 100000 * ((ar0 -4) / 2); // First component is always *100000, bottom of range starts at 500000
+  if (len > 1) {
+    b = b + (ar[1] * 10000); // second component, if present, is always *5000
+  }
+  if (len > 2) {
+    b = b + (ar[2] * 100); // third component, if present, is always *100
+  }
+  if (len > 3) {
+    b = b + ar[3]; // fourth component isn't multiplied
+  }
+}
+%>
+<%- b %>

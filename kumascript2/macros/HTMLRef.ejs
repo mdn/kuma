@@ -1,0 +1,331 @@
+<%
+function containsTag(tagList, tag) {
+    if (tagList == null || tagList == undefined) return 0;
+    if (tag == undefined || tag == null) return 0;
+    tag = tag.toLowerCase();
+    for (var i = 0, len = tagList.length; i < len; i++) {
+        if (tagList[i].toLowerCase() == tag) return 1;
+    }
+    return 0;
+}
+
+var s_html_href = '/'+env.locale+'/docs/Web/HTML';
+var s_html_title = 'HTML';
+var s_html_ref_href = '/'+env.locale+'/docs/Web/HTML/Element';
+var s_html_ref_title = 'HTML Elements';
+var s_html_guide_href = '/'+env.locale+'/docs/Web/Guide/HTML';
+var s_api_href = '/' + env.locale + '/docs/Web/API';
+switch (env.locale) {
+    case 'fr':
+        s_html_href = '/'+env.locale+'/docs/HTML';
+        s_html_ref_href = '/'+env.locale+'/docs/Web/HTML/Element';
+        s_html_ref_title = 'Éléments HTML';
+        break;
+    case 'ru':
+        s_html_ref_title = 'HTML элементы';
+        break;
+    default: break;
+}
+
+var text = mdn.localStringMap({
+    'en-US': {
+        'Input_types': '<code>&lt;input&gt;</code> types'
+    }
+});
+
+// Find the section of HTML this page belongs to (that is the first tag of the form "HTML XYZ")
+var tags = env.tags;
+var found_tag = '';
+for (i in tags) {
+    if (tags[i] != s_html_ref_title) {
+        if (('' + tags[i]).substr(0, 5) == 'HTML ') {
+            found_tag = tags[i];
+            break;
+        }
+    }
+}
+
+// Find the HTML Tags belonging to the same subject
+
+if (found_tag != undefined && found_tag != null && found_tag.length) {
+    // Find the pages, sub-pages of HTML/Element that are tagged with that specific tag
+    var pageList = await page.subpagesExpand(s_html_ref_href);   // Get subpages, including tags
+    var resultHTML = [];
+
+    for (aPage in pageList) {
+        if (containsTag(pageList[aPage].tags, found_tag)) {
+            resultHTML.push(pageList[aPage].slug.split("/").pop(-1).toLowerCase());
+        }
+    }
+}
+
+/*
+// Find the interfaces belonging to the same subject
+if (found_tag) {
+    // Find the pages, sub-pages of HTML/ that are tagged with that specific tag
+    var pageList = await page.subpagesExpand(s_api_href);   // Get subpages, including tags
+    var resultAPI = [];
+
+    for (aPage in pageList) {
+        if (containsTag(pageList[aPage].tags, found_tag) &&
+            containsTag(pageList[aPage].tags, "Interface")) { // We only want interfaces, not properties or methods
+            resultAPI.push(pageList[aPage].title);
+        }
+    }
+}
+
+// Find the guides, tutorials, ... belonging to the same subject
+if (found_tag) {
+    // Find the pages, sub-pages of Guide/HTML that are tagged with that specific tag
+    var pageList = await page.subpagesExpand(s_html_guide_href);   // Get subpages, including tags
+    var resultGuide = [];
+
+    for (aPage in pageList) {
+        if (containsTag(pageList[aPage].tags, found_tag)) {
+            resultGuide.push({title: pageList[aPage].title, url: pageList[aPage].url});
+        }
+    }
+}
+*/
+var resultGuide = [];
+var resultAPI = [];
+
+ if (s_html_href) {  %>
+  <section class="Quick_links" id="Quick_Links">
+  <ol>
+   <% if (found_tag) { 
+        for( aPage in resultGuide) { // Tutorials and guides matching
+  %>
+            <li><a href="<%-resultGuide[aPage].url%>"><%-resultGuide[aPage].title%></a></li>
+  <%    }
+        for (slugLeaf in resultHTML) { // HTML entities matching 
+            if (resultHTML[slugLeaf] === "heading_elements") { // Special case for <h1>…<h6>
+  %>
+            <li><%- await template("HTMLelement", ["Heading_elements", "<code>&lt;h1&gt;-&lt;h6&gt;</code>"]) %></li>
+  <%
+            }
+            else {
+  %>
+            <li><%- await template("HTMLelement", [resultHTML[slugLeaf]]) %></li>
+  <%        }
+        } 
+        for (slugLeaf in resultAPI) { // HTML-DOM interfaces matching 
+  %>
+            <li><%- await template("domxref", [resultAPI[slugLeaf]]) %></li>
+  <%    } 
+    } %>
+    <% if (env.slug.includes("/HTML/Element/input")) { %>
+   <li><details open><summary><%-text['Input_types']%></summary>
+    <%-await template("ListSubpagesForSidebar", ['/en-US/docs/Web/HTML/Element/input'])%></details></li>
+    <% } %>
+   <li><details><summary><%-s_html_ref_title%></summary><ol>
+   <li>A
+ <ol>
+  <li><%-await template("HTMLElement", ["a"])%></li>
+  <li><%-await template("HTMLElement", ["abbr"])%></li>
+  <li><s class="obsoleteElement"><%-await template("HTMLElement", ["acronym"])%></s></li>
+  <li><%-await template("HTMLElement", ["address"])%></li>
+  <li><s class="obsoleteElement deprecatedElement"><%-await template("HTMLElement", ["applet"])%></s></li>
+  <li><%-await template("HTMLElement", ["area"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["article"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["aside"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["audio"])%></li>
+ </ol>
+ </li><li>B
+ <ol>
+  <li><%-await template("HTMLElement", ["b"])%></li>
+  <li><%-await template("HTMLElement", ["base"])%></li>
+  <li><s class="obsoleteElement deprecatedElement"><%-await template("HTMLElement", ["basefont"])%></s></li>
+  <li class="html5"><%-await template("HTMLElement", ["bdi"])%></li>
+  <li><%-await template("HTMLElement", ["bdo"])%></li>
+  <li><s class="nonStdElement"><%-await template("HTMLElement", ["bgsound"])%></s></li>
+  <li><s class="obsoleteElement"><%-await template("HTMLElement", ["big"])%></s></li>
+  <li><s class="nonStdElement"><%-await template("HTMLElement", ["blink"])%></s></li>
+  <li><%-await template("HTMLElement", ["blockquote"])%></li>
+  <li><%-await template("HTMLElement", ["body"])%></li>
+  <li><%-await template("HTMLElement", ["br"])%></li>
+  <li><%-await template("HTMLElement", ["button"])%></li>
+ </ol>
+ </li><li>C
+ <ol>
+  <li class="html5"><%-await template("HTMLElement", ["canvas"])%></li>
+  <li><%-await template("HTMLElement", ["caption"])%></li>
+  <li><s class="obsoleteElement deprecatedElement"><%-await template("HTMLElement", ["center"])%></s></li>
+  <li><%-await template("HTMLElement", ["cite"])%></li>
+  <li><%-await template("HTMLElement", ["code"])%></li>
+  <li><%-await template("HTMLElement", ["col"])%></li>
+  <li><%-await template("HTMLElement", ["colgroup"])%></li>
+  <li class="webcomp"><%-await template("HTMLElement", ["content"])%></li>
+ </ol>
+ </li><li>D
+ <ol>
+  <li class="html5"><%-await template("HTMLElement", ["data"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["datalist"])%></li>
+  <li><%-await template("HTMLElement", ["dd"])%></li>
+  <li><%-await template("HTMLElement", ["del"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["details"])%></li>
+  <li><%-await template("HTMLElement", ["dfn"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["dialog"])%></li>
+  <li><s class="obsoleteElement deprecatedElement"><%-await template("HTMLElement", ["dir"])%></s></li>
+  <li><%-await template("HTMLElement", ["div"])%></li>
+  <li><%-await template("HTMLElement", ["dl"])%></li>
+  <li><%-await template("HTMLElement", ["dt"])%></li>
+ </ol>
+ </li><li>E
+ <ol>
+  <li><%-await template("HTMLElement", ["em"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["embed"])%></li>
+ </ol>
+ </li><li>F
+ <ol>
+  <li><%-await template("HTMLElement", ["fieldset"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["figcaption"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["figure"])%></li>
+  <li><s class="deprecatedElement obsoleteElement"><%-await template("HTMLElement", ["font"])%></s></li>
+  <li class="html5"><%-await template("HTMLElement", ["footer"])%></li>
+  <li><%-await template("HTMLElement", ["form"])%></li>
+  <li><s class="obsoleteElement"><%-await template("HTMLElement", ["frame"])%></s></li>
+  <li><s class="obsoleteElement"><%-await template("HTMLElement", ["frameset"])%></s></li>
+ </ol>
+ </li><li>G H
+ <ol>
+  <li><%-await template("HTMLElement", ["h1"])%></li>
+  <li><%-await template("HTMLElement", ["h2"])%></li>
+  <li><%-await template("HTMLElement", ["h3"])%></li>
+  <li><%-await template("HTMLElement", ["h4"])%></li>
+  <li><%-await template("HTMLElement", ["h5"])%></li>
+  <li><%-await template("HTMLElement", ["h6"])%></li>
+  <li><%-await template("HTMLElement", ["head"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["header"])%></li>
+  <li class="html5"><s class="deprecatedElement obsoleteElement"><%-await template("HTMLElement", ["hgroup"])%></s></li>
+  <li><%-await template("HTMLElement", ["hr"])%></li>
+  <li><%-await template("HTMLElement", ["html"])%></li>
+ </ol>
+ </li><li>I
+ <ol>
+  <li><%-await template("HTMLElement", ["i"])%></li>
+  <li><%-await template("HTMLElement", ["iframe"])%></li>
+  <li><%-await template("HTMLElement", ["img"])%></li>
+  <li><%-await template("HTMLElement", ["input"])%></li>
+  <li><%-await template("HTMLElement", ["ins"])%></li>
+  <li><s class="obsoleteElement deprecatedElement"><%-await template("HTMLElement", ["isindex"])%></s></li>
+ </ol>
+ </li><li>J K
+ <ol>
+  <li><%-await template("HTMLElement", ["kbd"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["keygen"])%></li>
+ </ol>
+ </li><li>L
+ <ol>
+  <li><%-await template("HTMLElement", ["label"])%></li>
+  <li><%-await template("HTMLElement", ["legend"])%></li>
+  <li><%-await template("HTMLElement", ["li"])%></li>
+  <li><%-await template("HTMLElement", ["link"])%></li>
+  <li><s class="obsoleteElement deprecatedElement"><%-await template("HTMLElement", ["listing"])%></s></li>
+ </ol>
+ </li><li>M
+ <ol>
+  <li class="html5"><%-await template("HTMLElement", ["main"])%></li>
+  <li><%-await template("HTMLElement", ["map"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["mark"])%></li>
+  <li><s class="nonStdElement"><%-await template("HTMLElement", ["marquee"])%></s></li>
+  <li class="html5"><%-await template("HTMLElement", ["menu"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["menuitem"])%></li>
+  <li><%-await template("HTMLElement", ["meta"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["meter"])%></li>
+ </ol>
+ </li><li>N
+ <ol>
+  <li class="html5"><%-await template("HTMLElement", ["nav"])%></li>
+  <li><s class="nonStdElement"><%-await template("HTMLElement", ["nobr"])%></s></li>
+  <li><s class="obsoleteElement deprecatedElement"><%-await template("HTMLElement", ["noframes"])%></s></li>
+  <li><%-await template("HTMLElement", ["noscript"])%></li>
+ </ol>
+ </li><li>O
+ <ol>
+  <li><%-await template("HTMLElement", ["object"])%></li>
+  <li><%-await template("HTMLElement", ["ol"])%></li>
+  <li><%-await template("HTMLElement", ["optgroup"])%></li>
+  <li><%-await template("HTMLElement", ["option"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["output"])%></li>
+ </ol>
+ </li><li>P
+ <ol>
+  <li><%-await template("HTMLElement", ["p"])%></li>
+  <li><%-await template("HTMLElement", ["param"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["picture"])%></li>
+  <li><s class="obsoleteElement deprecatedElement"><%-await template("HTMLElement", ["plaintext"])%></s></li>
+  <li><%-await template("HTMLElement", ["pre"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["progress"])%></li>
+ </ol>
+ </li><li>Q
+ <ol>
+  <li><%-await template("HTMLElement", ["q"])%></li>
+ </ol>
+ </li><li>R
+ <ol>
+  <li class="html5"><%-await template("HTMLElement", ["rp"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["rt"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["rtc"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["ruby"])%></li>
+ </ol>
+ </li><li>S
+ <ol>
+  <li><%-await template("HTMLElement", ["s"])%></li>
+  <li><%-await template("HTMLElement", ["samp"])%></li>
+  <li><%-await template("HTMLElement", ["script"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["section"])%></li>
+  <li><%-await template("HTMLElement", ["select"])%></li>
+  <li class="webcomp"><%-await template("HTMLElement", ["shadow"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["slot"])%></li>
+  <li><%-await template("HTMLElement", ["small"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["source"])%></li>
+  <li><s class="nonStdElement"><%-await template("HTMLElement", ["spacer"])%></s></li>
+  <li><%-await template("HTMLElement", ["span"])%></li>
+  <li><s class="obsoleteElement deprecatedElement"><%-await template("HTMLElement", ["strike"])%></s></li>
+  <li><%-await template("HTMLElement", ["strong"])%></li>
+  <li><%-await template("HTMLElement", ["style"])%></li>
+  <li><%-await template("HTMLElement", ["sub"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["summary"])%></li>
+  <li><%-await template("HTMLElement", ["sup"])%></li>
+ </ol>
+ </li><li>T
+ <ol>
+  <li><%-await template("HTMLElement", ["table"])%></li>
+  <li><%-await template("HTMLElement", ["tbody"])%></li>
+  <li><%-await template("HTMLElement", ["td"])%></li>
+  <li class="webcomp"><%-await template("HTMLElement", ["template"])%></li>
+  <li><%-await template("HTMLElement", ["textarea"])%></li>
+  <li><%-await template("HTMLElement", ["tfoot"])%></li>
+  <li><%-await template("HTMLElement", ["th"])%></li>
+  <li><%-await template("HTMLElement", ["thead"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["time"])%></li>
+  <li><%-await template("HTMLElement", ["title"])%></li>
+  <li><%-await template("HTMLElement", ["tr"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["track"])%></li>
+  <li><s class="obsoleteElement"><%-await template("HTMLElement", ["tt"])%></s></li>
+ </ol>
+ </li><li>U
+ <ol>
+  <li><%-await template("HTMLElement", ["u"])%></li>
+  <li><%-await template("HTMLElement", ["ul"])%></li>
+ </ol>
+ </li><li>V
+ <ol>
+  <li><%-await template("HTMLElement", ["var"])%></li>
+  <li class="html5"><%-await template("HTMLElement", ["video"])%></li>
+ </ol>
+ </li><li>W
+ <ol>
+  <li class="html5"><%-await template("HTMLElement", ["wbr"])%></li>
+ </ol>
+ </li><li>X Y Z 
+ <ol>
+  <li><s class="obsoleteElement"><%-await template("HTMLElement", ["xmp"])%></s></li>
+ </ol>
+    </li>  
+   </ol>
+   </details></li>
+   </ol>
+  </section>
+<%}%>

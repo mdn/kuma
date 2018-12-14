@@ -1,0 +1,141 @@
+<%
+// Inserts a definition list of the subpages of the current page, with each
+// page's title as the <dt> term and its SEO summary as the <dd> term.
+//
+// Also adds other content to the page based on inputs.
+//
+// Parameters:
+//  $0  A JSON object with parameters.
+//
+// The JSON object consists of these objects:
+//
+//  community   Parameters for LandingPageCommunityBox
+//  related     Parameters for LandingPageRelatedBox
+//
+// The "community" object is passed into the LandingPageCommunityBox macro;
+// this macro doesn't normally take an object as input, so here's the mapping:
+//
+//  name        The name of the topic or community to use in descriptions
+//  listname    The mailing list name (if any)
+//  newsgroup   The newsgroup name (if any)
+//  channel     The IRC channel (leave out the "#")
+
+function pageSorter(a, b) {
+    return a.title.localeCompare(b.title);
+}
+
+function escapeQuotes(a) {
+    var b = "";
+    var len = a.length;
+    
+    for (var i=0; i<len; i++) {
+        var c = a[i];
+        if (c=="\"") {
+            c="&quot;";
+        }
+        b += c;
+    }
+    var regex = /(<([^>]+)>)/ig;
+    b = b.replace(regex, "");
+    return b;
+}
+
+function containsTag(tagList, tag) {
+    if (!tagList || tagList == undefined) return 0;
+    tag = tag.toLowerCase();
+    for (var i = 0, len = tagList.length; i < len; i++) {
+        if (tagList[i].toLowerCase() == tag) return 1;
+    }
+    return 0;
+}
+
+var termList = await page.subpagesExpand();
+var numTerms = termList.length;
+var html = "";
+
+var documentation = mdn.localString({
+  "en-US": "Documentation",
+  "zh-CN": "文档",
+  "ru"   : "Документация"
+});
+
+if (numTerms) {
+    var html = "<h2 class='Documentation'>" + documentation + "</h2><dl>";
+    
+    termList.sort(pageSorter);
+    
+    var termIndex = 0;
+    var numTerms = termList.length;
+    
+    for (var i=0; i<numTerms; i++) {
+        let page = termList[i];
+        
+        if (!containsTag(page.tags, "junk")) {
+            var title = page.title;
+            var summary = page.summary.replace(/<img[^>]*>/g," ");
+            var url = page.url;
+        
+            html += "<dt class='landingPageList'><a href='" + url + "'>" + title + "</a></dt><dd class='landingPageList'>" + summary + "</dd>";
+        }
+    }
+    
+    html += "</dl>";
+}
+
+var communityBox = "";
+var relatedBox = "";
+
+// Build the community box. We have to extract the parameters from the
+// "community" object, if there is one, then pass it into that macro.
+
+if ($0.community && $0.community != undefined) {
+    var obj = $0.community;
+    //communityBox = await template("LandingPageCommunityBox", [obj.name, obj.listname, obj.newsgroup, obj.channel]);
+    communityBox = await template("CommunityBox", [obj.name, obj.listname, obj.newsgroup, obj.channel]);
+}
+
+// Build the related topics box. We pass the "related" object into
+// the LandingPageRelatedBox macro.
+
+if ($0.related && $0.related != undefined) {
+    relatedBox = await template("LandingPageRelatedBox", [$0.related]);
+}
+
+// Now we have the entire list in HTML. Let's go through it and try to split it into two columns by force.
+
+var len = html.length;
+var fullLen = len + relatedBox.length;
+
+if (fullLen) {
+    var col1 = "";
+    var col2 = "";
+    
+    if (numTerms > 1) {
+        var pt = fullLen/2;
+        if (pt > len) {
+            pt = len;
+        } else {
+            col2 = html.substr(pt);
+            ofs = col2.search("<dt ");
+            pt += ofs;
+        }
+        col2 = relatedBox + html.substr(pt);
+        col1 = html.substr(0, pt);
+    } else {
+        col1 = html;
+        col2 = relatedBox;
+    }
+    
+    %>
+    <div class="cleared">
+    <div class="row topicpage-table">
+    <div class="section"><%-col1%></div>
+    <div class="section"><%-col2%></div>
+    </div>
+    <%-communityBox%>
+    </div>
+    <%
+} else {
+    %><p><strong>There are no subpages at this time.</strong></p><%
+}
+%>

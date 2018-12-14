@@ -1,0 +1,58 @@
+<%
+// Inserts a link to a JS API's documentation in the JS Reference.
+// Appropriate styling is applied.
+//
+// Parameters:
+//
+//  $0 - API name
+//  $1 - name to display (optional)
+//  $2 - anchor (#xyz) (optional)
+//  $3 - If set, do not put the text in <code></code>
+//
+//  {{jsxref("Date")}}
+//  {{jsxref("Date.prototype.getNumber()")}}
+//  {{jsxref("Global_Objects/Date/getNumber", "Date.prototype.getNumber()")}}
+//
+
+let jsl10n = string.deserialize(await template('L10n:JavaScript'));
+let commonl10n = string.deserialize(await template('L10n:Common'));
+
+let l10n = {
+    refslug: mdn.getLocalString(jsl10n, 'slug_reference'),
+    slug: mdn.getLocalString(jsl10n, 'slug_global_objects'),
+    summary: mdn.getLocalString(commonl10n, 'summary'),
+};
+
+let str = $1 || $0;
+
+let URL = "/" + env.locale + "/docs/Web/JavaScript/" + l10n.refslug + '/';
+
+let api  = $0.replace('()', '').replace('.prototype.', '.');
+
+let page = await wiki.getPage(URL + $0);
+let objectPage = await wiki.getPage(URL + l10n.slug + '/' +  $0);
+
+if ((api.indexOf("..") === -1) && (api.indexOf(".") !== -1)) { // Handle try...catch case
+    URL += l10n.slug + '/' + api.replace('.', '/');
+} else if (!page.slug && objectPage.slug) {
+    URL += l10n.slug + '/' + $0;
+} else {
+    URL += $0;
+}
+
+let summary = l10n.summary;
+page = await wiki.getPage(URL);
+
+if (page && page.summary) {
+    summary = mdn.escapeQuotes(page.summary);
+}
+
+let anchor = $2 || '';
+if (anchor && anchor[0] != '#') {
+    anchor = "#" + anchor;
+}
+
+let code    = !$3 ? '<code>'  : '';
+let endcode = !$3 ? '</code>' : '';
+
+%><a href="<%- URL + anchor %>" title="<%-summary%>"><%- code %><%- str %><%- endcode %></a>

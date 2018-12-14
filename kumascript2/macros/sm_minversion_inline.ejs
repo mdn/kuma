@@ -1,0 +1,15 @@
+<%
+var s1 = mdn.localString({
+    "en-US" : "Requires SeaMonkey ",
+    "ja"    : "要 SeaMonkey ",
+    "ru"    : "Требуется SeaMonkey "
+});
+
+var s2 = $0;
+
+var s3 = mdn.localString({
+    "en-US" : ""
+}); // For the word order of a non-English locale
+
+
+%><span class="inlineIndicator standardNote standardNoteInline"><%- s1 %><%- s2 %><%- s3 %></span>

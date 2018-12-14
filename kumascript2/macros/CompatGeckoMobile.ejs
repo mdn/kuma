@@ -1,0 +1,11 @@
+<%
+var fxVer = '';
+var gecko = $0.split('.',1);
+if (gecko == '2') {
+    fxVer = '4.0';
+} else {
+    fxVer = gecko + '.0';
+}
+fxVer = fxVer + " (" + $0 + ")";
+%>
+<%= fxVer %>

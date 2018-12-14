@@ -1,0 +1,35 @@
+{
+    "name": "kumascript",
+    "description": "Scripting for MDN",
+    "version": "0.2.0",
+    "license": "MPL-2.0",
+    "homepage": "https://github.com/mdn/kumascript",
+    "bugs": "https://github.com/mdn/kumascript/issues",
+    "author": "David Flanagan <dflanagan@mozilla.com>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mdn/kumascript.git"
+    },
+    "main": "./index",
+    "scripts": {
+        "start": "node index.js",
+        "test": "jest",
+        "format": "./node_modules/.bin/prettier --write --require-pragma src/*.js tests/*.js"
+    },
+    "engines": {
+        "node": "10.14"
+    },
+    "dependencies": {
+        "ejs": "2.6.1",
+        "express": "4.16",
+        "lru-cache": "5.1.1",
+        "mdn-browser-compat-data": "0.0.59",
+        "morgan": "1.9.1",
+        "winston": "3.1.0"
+    },
+    "devDependencies": {
+        "jest": "23.6.0",
+        "pegjs": "0.10.0",
+        "prettier": "1.15.3"
+    }
+}

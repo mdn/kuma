@@ -1,0 +1,52 @@
+<%
+// Returns a quote from a community member or web developer collected
+// for the MDN 10th Anniversary Campaign.
+//
+// Quotes are being provided by this macro to prevent edits that
+// misrepresent what the people contributing them said.
+//
+// Parameters:
+//  $0  The quote number to return; this corresponds to a given quote.
+//
+// If the quate number isn't provided, a random quote is returned.
+
+var quoteList = [
+    { text: 'MDN has been an exceptional aid for the entire web community. It\’s where we go for authoritative docs we can always trust to be A+.', name: "Addy Osmani", url: "https://twitter.com/addyosmani/status/621336454841503745" },
+    { text: 'I prepend "mdn" to my Google search pretty much by default. So this, kinda:<br/><code><span style="text-align:left;">.google-query::before {<br/>&nbsp;&nbsp;content: "mdn ";<br/>}</span></code>', name: "Roel N", url: "https://twitter.com/pixelambacht/status/621013436563111937" },
+    { text: 'Absolutely invaluable to me in writing my books, <em>The Book of CSS3</em> and <em>The Modern Web</em>. I even gave thanks in the acknowledgements.', name: 'Peter Gasston', url: 'https://twitter.com/stopsatgreen/status/620736175318401024' },
+    { text: "I love MDN because I can't even remember the structure of APIs I designed.", name: "Jake Archibald", url: "https://twitter.com/jaffathecake/status/620987733524262912" },
+    { text: "I use MDN almost daily because my brain isn't suited to remembering every damn argument to every JavaScript function… yet.", name: "Remy Sharp", url: "https://twitter.com/rem/status/620974995355906048" },
+    { text: 'Whenever I want to know the "why" instead of the "how"  MDN is the place to go.', name: "Christian Heilmann", url: "https://twitter.com/codepo8/status/621009648875868160" },
+    { text: '“Never memorize something that you can look up.” —<em>Albert Einstein</em><p>He would have greatly appreciated MDN.</p>', name: "Brian Blakely", url: "https://twitter.com/brianblakely/status/620995523542142976" },
+    { text: "Mozilla docs for JavaScript are made from a mixture of gold and rainbows. Lots of rainbows. They're that magical.", name: "Nathan Dimitriades", url: "https://twitter.com/nathandim" }
+];
+
+var index = 0;
+
+// Get the index from the parameters if specified; otherwise, choose one
+// at random.
+
+if (arguments.length > 0) {
+    index = $0;
+} else {
+    index = Math.floor(Math.random() * quoteList.length);
+}
+
+if (index > quoteList.length-1) {
+    index = (quoteList.length - 1) % index;
+}
+
+var quote  = quoteList[index];
+
+var attribution = "";
+
+if (quote.url != undefined && quote.url.length != 0) {
+    attribution = "<a href='" + quote.url + "'>" + quote.name + "</a>";
+} else {
+    attribution = quote.name;
+}
+%>
+<div class="quote">
+<blockquote><%-quote.text%></blockquote>
+<span class="attribution">— <%-attribution%></span>
+</div>

@@ -1,0 +1,15 @@
+<%
+var locale = env.locale;
+
+var text = mdn.localString({
+  "en-US": "This feature is available in <a href=\"/" + locale + "/docs/Web/API/Web_Workers_API\">Web Workers</a>.",
+  "zh-CN": "此特性在 <a href=\"/" + locale + "/docs/Web/API/Web_Workers_API\">Web Worker</a> 中可用。",
+  "de": "Dieses Feature ist in <a href=\"/" + locale + "/docs/Web/API/Web_Workers_API\">Web Workers</a> verfügbar.",
+  "es": "Esta característica está disponible en <a href=\"/" + locale + "/docs/Web/API/Web_Workers_API\">Web Workers</a>.",
+  "fr": "Cette fonctionnalité est disponible via les <a href=\"/" + locale + "/docs/Web/API/Web_Workers_API\">Web Workers</a>.",
+  "ja": "この機能は <a href=\"/" + locale + "/docs/Web/API/Web_Workers_API\">Web Workers</a> 内で利用可能です。",
+  "ru": "Эта возможность доступна в <a href=\"/ru/docs/Web/API/Web_Workers_API\">Web Workers</a>."
+});
+
+%>
+<%- await template("Note", [text]) %>

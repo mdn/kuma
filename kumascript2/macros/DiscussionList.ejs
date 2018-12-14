@@ -1,0 +1,203 @@
+<%
+// Outputs a list of discussion channels available for a topic.
+//
+// Parameters:
+//
+//  $0  The mailing list name
+//  $1  The newsgroup name (optional)
+//  $2  The class name to use for the list (null if none)
+//  $3  Name of the topic/community (was $0 in CommunityBox template)
+//  $4  Twitter ID (null if none)
+//  $5  Stack Overflow tag (null if none)
+
+var lang = env.locale; /* get the page language */ ;
+var mailingList, newsgroup, webFeed, stackOverflow, twitter;
+
+/* Translation Targets
+    * " mailingList"
+	* " newsgroup"
+	* " webFeed"
+    * " stackOverflow"
+    * " twitter"
+*/
+switch(lang) {
+	case 'ca':
+		mailingList = " com una llista de correu";
+		newsgroup = " com un grup de discussió";
+		webFeed = " com un canal web";
+        stackOverflow = " Stack Overflow";
+        twitter = " Twitter";
+		break;
+	case 'cs':
+		mailingList = " e-mailovou konferenci";
+		newsgroup = " diskuzní skupinu";
+		webFeed = " RSS kanál";
+        stackOverflow = " Stack Overflow";
+        twitter = " Twitter";
+		break;
+	case 'de':
+		mailingList = "Mailing-Liste";
+		newsgroup = "Newsgroup";
+		webFeed = "Web-Feed";
+        stackOverflow = " Stack Overflow";
+        twitter = " Twitter";
+		break;
+	case 'es':
+		mailingList = " como lista de correo";
+		newsgroup = " como grupo de noticias";
+		webFeed = " como RSS";
+        stackOverflow = " Stack Overflow";
+        twitter = " Twitter";
+		break;
+	case 'fi':
+		mailingList = " sähköposti listana";
+		newsgroup = " uutisryhmänä";
+		webFeed = " RSS kanál";
+        stackOverflow = " Stack Overflow";
+        twitter = " Twitter";
+		break;
+	case 'fr':
+		mailingList = " Liste de diffusion";
+		newsgroup = " 		newsgroup";
+		webFeed = " Flux de syndication";
+        stackOverflow = " Stack Overflow";
+        twitter = " Twitter";
+		break;
+	case 'it':
+		mailingList = " Mailing list";
+		newsgroup = " Newsgroup";
+		webFeed = " Feed RSS";
+        stackOverflow = " Stack Overflow";
+        twitter = " Twitter";
+		break;
+	case 'ja':
+		mailingList = " メーリングリストとして";
+		newsgroup = " ニュースグループとして";
+		webFeed = " フィードとして";
+        stackOverflow = " Stack Overflow";
+        twitter = " Twitter";
+		break;
+	case 'ko':
+		mailingList = " 메일링 리스트";
+		newsgroup = " 뉴스그룹";
+		webFeed = " 웹 Feed";
+        stackOverflow = " Stack Overflow";
+        twitter = " Twitter";
+		break;
+	case 'pl':
+		mailingList = " jako listę dyskusyjna";
+		newsgroup = " jako 		newsgroup";
+		webFeed = " jako kanał";
+        stackOverflow = " Stack Overflow";
+        twitter = " Twitter";
+		break;
+    case 'ru':
+    	mailingList = " Почтовая рассылка";
+		newsgroup = " newsgroup";
+		webFeed = " Новостная лента";
+        stackOverflow = " Stack Overflow";
+        twitter = " Твиттер";
+		break;
+	case 'zh-CN':
+		mailingList = " 邮件列表";
+		newsgroup = " 新闻组";
+		webFeed = " Web feed";
+        stackOverflow = " Stack Overflow";
+        twitter = " Twitter";
+		break;
+	case 'zh-TW':
+		mailingList = " 郵件討論";
+		newsgroup = " 新聞群組";
+		webFeed = " feed 消息來源";
+        stackOverflow = " Stack Overflow";
+        twitter = " Twitter";
+		break;
+	case 'pt-BR':
+		mailingList = "Lista de E-mails";
+		newsgroup = "grupo de discussão";
+		webFeed = "RSS feed";
+        stackOverflow = " Stack Overflow";
+        twitter = " Twitter";
+		break;
+	default:
+		mailingList = "Mailing list";
+		newsgroup = "Newsgroup";
+		webFeed = "RSS feed";
+        stackOverflow = " Stack Overflow";
+        twitter = " Twitter";
+		break;
+}
+
+// Build the Stack Overflow URL using the SO tag
+
+var stackOverflowURL = null;
+var soHTML = "";
+
+if ($5) {
+    stackOverflowURL = "http://stackoverflow.com/questions/tagged/" + $5;
+    soHTML = "<li>" + web.link(stackOverflowURL, stackOverflow) + "</li>";
+}
+
+// Build the Twitter link (if any)
+
+var twitterURL = null;
+var twitHTML = "";
+
+if ($4) {
+    twitterURL = "https://twitter.com/" + $4;
+    twitHTML = "<li>" + web.link(twitterURL, twitter) + "</li>";
+}
+
+// Build the <ul> element
+
+var listElem = "<ul";
+
+if ($2) {
+    listElem += " class='" + $2 + "'";
+}
+
+listElem += ">"; //Final ">" of the open <ul> tag
+
+
+function makeListTarget(param) {
+    function startsWith (string, prefix) {
+        return string.slice(0, prefix.length) == prefix;
+    }
+    if (startsWith(param, 'https://') || startsWith(param, 'http://')) {
+        return param;
+    }
+    return  'https://lists.mozilla.org/listinfo/' + param;
+}
+
+
+// Specify a variable to contain the below link HTML
+
+var mailingListURL = "";
+var mailingHTML = "";
+var newsgroupHTML = "";
+var newsgroupFeedHTML = "";
+
+// If the mailing list URL ($0) contains mdn or mdc, set the mailing lists and feed URLs to
+// The discourse options. Otherwise, set them to $0 and $1 (for non-MDN communities)
+
+if($0.indexOf('mdn') !== -1 || $0.indexOf('mdc') !== -1) {
+  mailingListURL = 'https://discourse.mozilla-community.org/c/mdn';
+  mailingHTML = "<li>" + web.link(mailingListURL, mailingList + '/' + newsgroup) + "</li>";
+  newsgroupHTML = '';
+  newsgroupFeedHTML = "<li>" + web.link('https://discourse.mozilla-community.org/c/mdn.rss', webFeed) + "</li>";
+} else {
+  mailingListURL = $0;
+  mailingHTML = "<li>" + web.link(makeListTarget(mailingListURL), mailingList) + "</li>";
+  newsgroupHTML = "<li>" + web.link('http://groups.google.com/group/' + $1, newsgroup) + "</li>";
+  newsgroupFeedHTML = "<li>" + web.link('http://groups.google.com/group/' + $1 + '/feeds', webFeed) + "</li>";
+}
+
+%>
+
+<%-listElem %>
+  <%- mailingHTML %>
+  <%- twitHTML %>
+  <%- soHTML %>
+  <%- newsgroupHTML %>
+  <%- newsgroupFeedHTML %>
+</ul>

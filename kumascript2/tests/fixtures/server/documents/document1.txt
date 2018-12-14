@@ -1,0 +1,25 @@
+Here is \{{ some more text \}} with double braces, but not a macro.
+But, we should also \\{ be able to use \ backslashes \\wherever \\\we like.
+Here is { some text } with braces, but not a macro.
+
+* {{t1}}
+* {{ t2(12, 12) }}
+* {{ t3(1) }}
+* This should be not found, and handled gracefully: {{ y4 }}
+
+Look, it's JSON without escaping: {{ json_unescaped('a', 'b', 'c') }}
+
+Here is a macro with a JSON parameter: {{ json_unescaped({
+    "alpha": "one", "beta": "two", "gamma": "three"
+}) }}
+
+Here is a multi-line macro: {{ json(
+  "With many", 'parameters',
+  'including "quoted"', "text of both 'kinds'",
+  "even \"escaped\"", 'like \'these\'',
+  "and numbers", -10, 0, 0.1, 10, 100
+)}} that even works inline.
+
+Here is another macro with a JSON parameter: {{ json_unescaped({
+    "alpha": "uno", "beta": "dos", "gamma": "tres"
+}) }}

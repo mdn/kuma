@@ -1,0 +1,13 @@
+<%
+var s = ["/en-US/docs/XUL_Reference", "/en-US/docs/XUL_Reference", "XUL Reference home"];
+switch (env.locale) {
+    case 'es': s = ["/es/docs/XUL/Elementos", "/es/docs/XUL/Elementos", "Referencia de XUL"]; break;
+    case 'de': s = ["/de/docs/XUL_Referenz", "/de/docs/XUL_Referenz", "XUL-Referenz Startseite"]; break;
+    case 'fr': s = ["/fr/docs/Référence_XUL", "/fr/docs/R%C3%A9f%C3%A9rence_XUL", "Accueil de la référence XUL"]; break;
+    case 'ja': s = ["/ja/docs/XUL_Reference", "/ja/docs/XUL_Reference", "XUL リファレンス HOME"]; break;
+    case 'pl': s = ["/pl/docs/Dokumentacja_XUL", "/pl/docs/Dokumentacja_XUL", "Dokumentacja XUL"]; break;
+    case 'pl': s = ["/ru/docs/XUL/Справочник", "/ru/docs/XUL/Справочник", "Справочник по XUL"]; break;
+}
+
+
+%><span class="breadcrumbs XULRefMeth_breadcrumbs">« <a title="<%=s[0]%>" href="<%=s[1]%>"><%=s[2]%></a></span>

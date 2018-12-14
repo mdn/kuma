@@ -1,0 +1,14 @@
+<%
+// Inserts the contents of a sub navigation into the document.
+//
+// Parameters:
+//
+//  $0 - URL of a page with a "Subnav" section to insert.
+//       Example: "/en-US/docs/Games".
+//       Do not use https://etc.
+//  
+
+var url = web.spacesToUnderscores($0);
+
+%>
+<%- await wiki.page(url, 'Subnav', '', 1) %>

@@ -1,0 +1,74 @@
+<%
+// Returns the version number of the current version of Gecko for the specified
+// branch (or release if none specified). The version number is taken from the
+// code for the web site (the same file used by SUMO and by the download pages).
+//
+// Parameters:
+//
+//  $0  Channel to get the version of:
+//          release
+//          beta
+//          aurora
+//          central (or nightly)
+//          esr
+//
+// If channel isn't provided, "release" is assumed.
+
+var channel = $0 || "release";
+
+// Generate the string to search for to find the line with the version number
+// for the version we're looking for
+
+channel = channel.toLowerCase();
+
+var versionID;
+
+switch(channel) {
+    case 'release':
+        versionID = "LATEST_FIREFOX_VERSION";
+        break;
+    case 'beta':
+    case 'aurora':
+        versionID = "LATEST_FIREFOX_DEVEL_VERSION";
+        break;
+    case 'nightly':
+    case 'central':
+        versionID = "FIREFOX_NIGHTLY";
+        break;
+    case 'esr':
+        versionID = "FIREFOX_ESR";
+        break;
+    default:
+        return 'undefined';
+}
+
+// The URL to pull from
+
+var url = "https://product-details.mozilla.org/1.0/firefox_versions.json";
+
+// Fetch the versions JSON file from MXR.
+
+var versionInfo = await MDN.fetchJSONResource(url);
+
+// We now have a JSON object with the version information, so peel out the value we need
+
+var version = versionInfo[versionID];
+
+// Finally, remove the cruft at the end; we don't need beta numbers etc.
+
+for (var i=0; i<version.length; i++) {
+    var c = version.charAt(i).toLowerCase();
+    if (c != '.' && (c < '0' || c > '9')) {
+        version = version.slice(0, i);
+        break;
+    }
+}
+
+// For version numbers ending in ".0", remove that. We don't care. :)
+
+if (version.slice(-2) == ".0") {
+    version = version.slice(0, -2);
+}
+
+%>
+<%-version%>

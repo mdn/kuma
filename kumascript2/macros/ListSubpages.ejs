@@ -1,0 +1,16 @@
+<%
+// Inserts a tree of subpages of the specified page.
+//
+// Parameters:
+//  $0 - The path of the page whose subpages should be listed
+//  $1 - The depth of the tree to build; if not specified, only one level is listed
+//  $2 - If specified and non-zero, the list is sorted in reverse
+//  $3 - If specified and non-zero, the list is output as <ol> instead of the default <ul>
+
+var path = $0 || env.path;
+var depth = $1 || 1;
+var reverse = $2 || 0;
+var ordered = $3 || 0;
+
+%>
+<%- await wiki.tree(path, depth, 0, reverse, ordered) %>

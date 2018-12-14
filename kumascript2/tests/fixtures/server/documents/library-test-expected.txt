@@ -1,0 +1,5 @@
+Testing a library:
+
+* First: The result was A HUGE SUCCESS!
+* Second: The result was A FOLLOWUP SUCCESS!
+* Third: The result was AN ENCORE!

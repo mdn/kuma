@@ -1,0 +1,141 @@
+<%
+
+var fxVer = '';
+var geckoVer = $0;
+
+var loca = mdn.localString({
+    'en-US' : '1.7 or earlier',
+    'es'    : '1.7 o anterior',
+    'fr'    : '1.7 ou moins',
+    'de'    : '1.7 oder früher',
+    'ru'    : '1.7 или ранее'
+});
+
+var date = {};
+date["1"]      = "2004-11-11";
+date["1.5"]    = "2005-11-25";
+date["2"]      = "2006-10-24";
+date["3"]      = "2008-06-17";
+date["3.5"]    = "2009-06-30";
+date["3.6"]    = "2010-01-21";
+date["4"]      = "2011-03-22";
+date["5"]      = "2011-06-21";
+date["6"]      = "2011-08-16";
+date["7"]      = "2011-09-26";
+date["8"]      = "2011-11-08";
+date["9"]      = "2011-12-20";
+date["10"]     = "2012-01-31";
+date["11"]     = "2012-03-13";
+date["12"]     = "2012-04-24";
+date["13"]     = "2012-06-05";
+date["14"]     = "2012-07-17";
+date["15"]     = "2012-08-28";
+date["16"]     = "2012-10-09";
+date["17"]     = "2012-11-20";
+date["18"]     = "2013-01-08";
+date["19"]     = "2013-02-19";
+date["20"]     = "2013-04-02";
+date["21"]     = "2013-05-14";
+date["22"]     = "2013-06-25";
+date["23"]     = "2013-08-06";
+date["24"]     = "2013-09-17";
+date["25"]     = "2013-10-29";
+date["26"]     = "2013-12-10";
+date["27"]     = "2014-02-04";
+date["28"]     = "2014-03-18";
+date["29"]     = "2014-04-29";
+date["30"]     = "2014-06-10";
+date["31"]     = "2014-07-22";
+date["32"]     = "2014-09-02";
+date["33"]     = "2014-10-14";
+date["34"]     = "2014-12-01";
+date["35"]     = "2015-01-13";
+date["36"]     = "2015-02-24";
+date["37"]     = "2015-04-07";
+date["38"]     = "2015-05-19";
+date["39"]     = "2015-06-30";
+date["40"]     = "2015-08-11";
+date["41"]     = "2015-09-22";
+date["42"]     = "2015-11-03";
+date["43"]     = "2015-12-15";
+date["44"]     = "2016-01-26";
+date["45"]     = "2016-03-08";
+date["46"]     = "2016-04-26";
+date["47"]     = "2016-06-07";
+date["48"]     = "2016-08-02";
+date["49"]     = "2016-09-13";
+date["50"]     = "2016-11-08";
+date["50.0.1"] = "2016-12-13";
+date["51"]     = "2017-01-24";
+date["52"]     = "2017-03-07";
+date["53"]     = "2017-04-18";
+date["54"]     = "2017-06-13";
+date["55"]     = "2017-08-08";
+date["56"]     = "2017-10-03";
+date["57"]     = "2017-11-28";
+date["58"]     = "2018-01-22";
+
+if ((geckoVer-0.0) >= 5) {
+    fxVer = geckoVer;
+}
+else {
+    switch(geckoVer) {
+        case '1':
+        case '1.0':
+        case '1.7 or earlier':
+        case '1.7':
+            fxVer = '1.0';
+            geckoVer = loca;
+            break;
+        case '1.8':
+            fxVer = '1.5';
+            break;
+        case '1.8.1':
+            fxVer = '2.0';
+            break;
+        case '1.9':
+            fxVer = '3.0';
+            break;
+        case '1.9.1':
+            fxVer = '3.5';
+            break;
+         case '1.9.1.4':
+            fxVer = '3.5.4';
+            break;
+        case '1.9.2':
+            fxVer = '3.6';
+            break;
+        case '1.9.2.4':
+            fxVer = '3.6.4';
+            break;
+        case '1.9.2.5':
+            fxVer = '3.6.5';
+            break;
+        case '1.9.2.9':
+            fxVer = '3.6.9';
+            break;
+        case '2':
+        case '2.0':
+            fxVer = '4.0';
+            break;
+        default:
+            fxVer = 'Unknown';
+    }
+}
+release = fxVer - 0.0; // Convert to a number (so that when we convert back, it won't have the trailing '.0' if an integer.
+releaseDateStr = date[release];
+titleStr = ""; // Default value
+url = fxVer; // Default value
+if ((fxVer != "1.0") && (fxVer != "Unknown")) { // No release notes for 1.0
+    titleStr = mdn.localString({
+        "fr"    : "Sorti le " + releaseDateStr + ".",
+        "en-US" : "Released on " + releaseDateStr + ".",
+        "es"    : "Publicado en " + releaseDateStr + ".",
+        "de"    : "Veröffentlicht am " + releaseDateStr + ".",
+        "ru"    : "Выпущен " + releaseDateStr + "."
+    });
+    url = '<a href="/en-US/Firefox/Releases/' + release + '"'+ (titleStr?' title="'+titleStr+'"':'') + '>'+ fxVer + '</a>';
+}
+result = url + " (" + geckoVer + ")";
+%>
+<%- result %>

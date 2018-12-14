@@ -1,0 +1,274 @@
+<%
+// Generate quick links for JavaScript standard objects docs
+//
+// TODO: Ordering of prototype / static methods (bug 948576)
+//
+// Parameters are OBSOLETE. DO NOT USE ANYMORE.
+//
+//  $0 - JavaScript reference section (e.g Global_Objects) – OBSOLETE
+//  $1 - JavaScript reference object/subject (e.g. Number, Array, Function) – OBSOLETE
+//  $2 - Related objects to display (comma separated) – OBSOLETE
+
+// Strings
+var commonl10n = string.deserialize(await template('L10n:Common'));
+var jsl10n = string.deserialize(await template('L10n:JavaScript'));
+
+var text = {
+    'refslug': mdn.getLocalString(jsl10n, 'slug_reference'),
+    'stdlibslug': mdn.getLocalString(jsl10n, 'slug_global_objects'),
+    'stdlib': mdn.getLocalString(jsl10n, 'stdlib'),
+    'Properties': mdn.getLocalString(commonl10n, 'Properties'),
+    'Methods': mdn.getLocalString(commonl10n, 'Methods'),
+    'Inheritance': mdn.getLocalString(commonl10n, 'Inheritance'),
+    'Related': mdn.getLocalString(commonl10n, 'Related_pages_wo_group'),
+    'translate': mdn.getLocalString(commonl10n, '[Translate]'),
+    'translationCTA': mdn.getLocalString(commonl10n, 'TranslationCTA'),
+};
+
+
+// Variables
+var containsTag = page.hasTag;
+var escapeQuotes = mdn.escapeQuotes;
+var slug = env.slug;
+var output = "";
+// slug is not available in preview mode.
+if (slug) {
+var locale = env.locale;
+var rtlLocales = ['ar', 'he', 'fa'];
+var slug_stdlib = '/' + env.locale + '/docs/Web/JavaScript/' + text['refslug'] + '/' + text['stdlibslug'];
+var mainObj = slug.replace('Web/JavaScript/' + text['refslug'] + '/' + text['stdlibslug'] + '/', '').split('/')[0];
+
+// Data for inheritance chain
+var inheritance = ["Object", "Function"];
+var inheritanceData = {
+    "Math": ["Object"],
+    "Function": ["Object"],
+    "Object": ["Function"],
+    "JSON": ["Object"],
+    "Intl": ["Object"],
+    "arguments": [],
+    "Reflect": ["Object"],
+    "Proxy": [],
+    "Atomics": ["Object"],
+    "WebAssembly": ["Object"],
+};
+if (typeof inheritanceData[mainObj] != 'undefined') {
+    inheritance = inheritanceData[mainObj];
+}
+
+// Data for related pages
+var groupData = {
+    "Error": ["Error", "EvalError", "InternalError", "RangeError", "ReferenceError", "SyntaxError", "TypeError", "URIError"],
+    "Intl": ["Intl", "Collator", "DateTimeFormat", "NumberFormat", "PluralRules"],
+    "TypedArray": ["TypedArray", "Int8Array", "Uint8Array", "Uint8ClampedArray", "Int16Array", "Uint16Array",
+                   "Int32Array", "Uint32Array", "Float32Array", "Float64Array"],
+    "Proxy": ["Proxy", "handler"],
+    "WebAssembly": ["WebAssembly", "WebAssembly.Module", "WebAssembly.Global", "WebAssembly.Instance", "WebAssembly.Memory",
+                    "WebAssembly.Table", "WebAssembly.CompileError", "WebAssembly.LinkError", "WebAssembly.RuntimeError"],
+};
+
+// Exceptions, we want the main object in the sidebar (e.g. Int8Array -> TypedArray)
+if (groupData["TypedArray"].indexOf(mainObj) != -1) { mainObj = "TypedArray"; }
+if (groupData["Error"].indexOf(mainObj) != -1) { mainObj = "Error"; }
+if (groupData["Proxy"].indexOf(mainObj) != -1) { mainObj = "Proxy/handler"; }
+
+// Get related pages from groups and exclude self
+var group = [];
+for(g in groupData) {
+    var index = groupData[g].indexOf(mainObj);
+    if(index != -1 ) {
+        group = groupData[g];
+        group.splice(index, 1);
+        break;
+    }
+}
+
+// Collect pages
+var source = {};
+source[mainObj] = await page.subpagesExpand('/en-US/docs/Web/JavaScript/Reference/Global_Objects/' + mainObj);
+if  (inheritance.indexOf("Function") > -1) {
+    source["iFunction"] = await page.subpagesExpand('/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function');
+}
+if  (inheritance.indexOf("Object") > -1) {
+    source["iObject"] = await page.subpagesExpand('/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object');
+}
+
+var result = {};
+result[mainObj] = {
+    title: mainObj,
+    methods: [],
+    properties: [],
+    defaultOpened: true
+};
+if  (inheritance.indexOf("Function") > -1) {
+result['iFunction'] = {
+    title: 'Function',
+    methods: [],
+    properties: [],
+    defaultOpened: false
+};
+}
+if  (inheritance.indexOf("Object") > -1) {
+result['iObject'] = {
+    title: 'Object',
+    methods: [],
+    properties: [],
+    defaultOpened: false
+};
+}
+
+var pageList, isObj, includeme;
+
+for (var object in source) {
+    pageList = source[object];
+    if (object == "iObject") {
+        isObj = true;
+    }
+    for (aPage in pageList) {
+        if (isObj) {
+            includeme = containsTag(pageList[aPage], "prototype");
+        } else {
+            includeme = true;
+        }
+        if (containsTag(pageList[aPage], 'Property') && includeme) {
+            result[object].properties.push(pageList[aPage]);
+        }
+        if (containsTag(pageList[aPage], 'Method') && includeme) {
+            result[object].methods.push(pageList[aPage]);
+        }
+    }
+}
+
+// Output helper
+
+var badges = {
+  ExperimentalBadge : '<span class="sidebar-icon">' + await template("ExperimentalBadge", [1]) + '</span>',
+  NonStandardBadge  : '<span class="sidebar-icon">' + await template("NonStandardBadge", [1]) + '</span>',
+  DeprecatedBadge   : '<span class="sidebar-icon">' + await template("DeprecatedBadge", [1]) + '</span>',
+  ObsoleteBadge     : '<span class="sidebar-icon">' + await template("ObsoleteBadge", [1]) + '</span>',
+}
+
+function buildSublist(pages, title, opened) {
+  var result = '<li>';
+  if (opened) {
+    result = '<li data-default-state="open">';
+  }
+  result += '<a href="#"><strong>' + title + '</strong></a><ol>';
+
+  for (var i in pages) {
+    var aPage = pages[i];
+    result += '<li>';
+
+    var summary = escapeQuotes(aPage.summary) || '';
+    var url = aPage.url.replace('en-US', locale);
+    var title = aPage.title;
+    var translated = false;
+
+    if (locale != 'en-US') {
+        aPage.translations.forEach(function(translation){
+            if(translation.locale === locale) {
+                summary = escapeQuotes(translation.summary) || '';
+                url = translation.url;
+                title = translation.title;
+                translated = true;
+            }
+        });
+    }
+
+    var cta = '';
+     if (!translated && locale != 'en-US') {
+        cta += ' <a href="'+ url +'$translate" style="opacity:0.5" title="'+ text['translationCTA'] + '">' + text['translate'] + '</a>';
+    }
+
+    if (containsTag(aPage, 'Experimental')) {
+        result += badges.ExperimentalBadge;
+    }
+
+    if (containsTag(aPage, 'Non-standard') || containsTag(aPage, 'Non Standard')) {
+        result += badges.NonStandardBadge;
+    }
+
+    if (containsTag(aPage, 'Deprecated')) {
+        result += badges.DeprecatedBadge;
+    }
+
+    if (containsTag(aPage, 'Obsolete')) {
+        result += badges.ObsoleteBadge;
+        result += '<s class="obsoleteElement">';
+    }
+
+    if (rtlLocales.indexOf(locale) != -1) {
+        result += '<bdi>';
+    }
+
+    if (slug == aPage.slug) {
+        result += '<em><code>' + aPage.title + '</code></em>'
+    } else {
+        result += '<a href="'
+               + url
+               + '" title="' + summary
+               + '"><code>' + title + '</code></a>' + cta;
+    }
+
+    if (rtlLocales.indexOf(locale) != -1) {
+        result += '</bdi>';
+    }
+
+    if (containsTag(aPage, 'Obsolete')) {
+        result += '</s>';
+    }
+
+    result += '</li>';
+  }
+
+  result += '</ol></li>';
+
+  return result;
+}
+
+
+var resultTitle,
+resultProperties,
+resultMethods,
+resultOpen,
+len = 0;
+
+// Output
+
+output  = '<section class="Quick_links" id="Quick_Links"><ol>';
+output += '<li><strong><a href="'+slug_stdlib+'">'+text['stdlib']+'</a></strong></li>';
+
+    for (object in result) {
+        len++;
+        resultTitle      = result[object].title || '';
+        resultProperties = result[object].properties || '';
+        resultMethods    = result[object].methods || '';
+        resultOpen       = result[object].defaultOpened || '';
+
+        if (len == 2) {
+          output += '<li><strong>'+text['Inheritance']+'</strong></li>';
+        }
+
+        output += '<li><strong><a href="'+slug_stdlib + '/' + resultTitle +'"><code>'+resultTitle+'</code></a></strong></li>';
+
+        if (resultProperties.length > 0) {
+          output += buildSublist(resultProperties, text['Properties'], resultOpen);
+        }
+        if (resultMethods.length > 0) {
+          output += buildSublist(resultMethods, text['Methods'], resultOpen);
+        }
+
+        if (len == 1 && group.length > 0) {
+            output += '<li><strong>'+text['Related']+'</strong></li>';
+            for (var i = 0; i < group.length; i++) {
+              output += '<li><strong><a href="'+ slug_stdlib + '/' + group[i].replace(".", "/") +'"><code>'+group[i]+'</code></a></strong></li>';
+            }
+        }
+
+    }
+
+output += '</ol></section>';
+}
+%>
+
+<%-output%>

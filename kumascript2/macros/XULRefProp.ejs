@@ -1,0 +1,16 @@
+<%
+var s = mdn.localString({
+    "en-US" : ["XUL_Reference",    "XUL_Reference",           "XUL Reference"],
+    "de":     ["XUL_Referenz",     "XUL_Referenz",            "XUL-Referenz Startseite"],
+    "es":     ["XUL/Elementos",    "XUL/Elementos",           "Referencia de XUL"],
+    "fr":     ["Référence_XUL",    "R%C3%A9f%C3%A9rence_XUL", "Accueil de la référence XUL"],
+    "ja":     ["XUL_Reference",    "XUL_Reference",           "XUL リファレンス"],
+    "ko":     ["XUL_Reference",    "XUL_Reference",           "XUL Reference"],
+    "pl":     ["Dokumentacja_XUL", "Dokumentacja_XUL",        "Dokumentacja XUL"],
+    "ru":     ["XUL/Справочник",   "XUL/Справочник",          "XUL Справочник"]
+});
+
+var s_href = '/' + env.locale + "/docs/" + s[1];
+
+
+%><span class="breadcrumbs XULRefProp_breadcrumbs">« <a title="<%= s[0] %>" href="<%= s_href %>"><%= s[2] %></a></span>

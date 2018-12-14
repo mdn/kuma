@@ -1,0 +1,21 @@
+<%
+/ * assume we do not have a link (most common use) */
+var str = '[' + $0 + ']';
+
+/* if we are really dealing with a link */
+if (/^(http[s]?:\/\/|mailto:)/.test('' + $0)) {
+  /* assume it is just a link */
+  var link = $0;
+  var text = $0;
+
+  /* if it also has text */
+  if ($0.indexOf(' ')) {
+    link = $0.substr(0,$0.indexOf(' '));
+    text = $0.substr($0.indexOf(' ')+1);
+  }
+
+  str = '<a class="external" href="' + link + '" title="' + link + '" target="_blank">' + text + '</a>';
+}
+
+
+%><%- str %>

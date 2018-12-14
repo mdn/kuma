@@ -1,0 +1,11 @@
+This is a test of request environment vars:
+
+* en-US
+* This is the alpha value
+* Consultez les forums dédiés de Mozilla
+* コミュニティ
+* 커뮤니티
+* ["one","two","three"]
+* {"a":1,"b":2,"c":3}
+
+That's all folks!

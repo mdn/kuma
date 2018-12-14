@@ -1,0 +1,13 @@
+<%
+/**
+ * This template allow to make a quick link to the page listing the content with a given tag
+ * 
+ * @param 
+ *  The tag to link to
+ * @param [optional]
+ *  The locale to link to (by default it's the same locale as the current page)
+ */
+ var lang = $1 || env.locale
+ var url = '/' + lang + '/docs/tag/' + encodeURI($0);
+
+%><a href="<%- url %>" hreflang="<%- lang %>" rel="tag"><%= $0 %></a>

@@ -1,0 +1,600 @@
+<%
+var currentSection = $0;
+var locale = env.locale;
+
+function state(section) {
+  if (section == currentSection) {
+    return "open";
+  }
+  return "closed";
+}
+
+var text = mdn.localStringMap({
+  'en-US': {
+    'Overview': 'JavaScript technologies overview',
+    'Tutorials': 'Tutorials:',
+    'Guide': 'JavaScript Guide',
+    'Guide_Introduction': 'Introduction',
+    'Guide_Grammar': 'Grammar and types',
+    'Guide_Control_flow': 'Control flow and error handling',
+    'Guide_Loops': 'Loops and iteration',
+    'Guide_Functions': 'Functions',
+    'Guide_Expressions': 'Expressions and operators',
+    'Guide_Numbers': 'Numbers and dates',
+    'Guide_Text': 'Text formatting',
+    'Guide_RegExp': 'Regular expressions',
+    'Guide_Indexed_collections': 'Indexed collections',
+    'Guide_keyed_collections': 'Keyed collections',
+    'Guide_Objects': 'Working with objects',
+    'Guide_OOP': 'Details of the object model',
+    'Guide_promises' : 'Using promises',
+    'Guide_Iterators_Generators': 'Iterators and generators',
+    'Guide_Meta': 'Meta programming',
+    'Complete_beginners': 'Complete beginners',
+    'Basics': 'JavaScript basics',
+    'First_steps': 'JavaScript first steps',
+    'Building_blocks': 'JavaScript building blocks',
+    'Intermediate': 'Intermediate',
+    'Introducing_objects': 'Introducing JavaScript objects',
+    'Client-side_APIs': 'Client-side web APIs',
+    'Re-introduction': 'A re-introduction to JavaScript',
+    'Data_structures': 'JavaScript data structures',
+    'Equality': 'Equality comparisons and sameness',
+    'Closures': 'Closures',
+    'Advanced': 'Advanced',
+    'Inheritance': 'Inheritance and the prototype chain',
+    'Strict_mode': 'Strict mode',
+    'Typed_arrays': 'JavaScript typed arrays',
+    'Memory_Management': 'Memory Management',
+    'Event_Loop': 'Concurrency model and Event Loop',
+    'Reference': 'References:',
+    'Global_Objects': 'Built-in objects',
+    'Operators': 'Expressions & operators',
+    'Statements': 'Statements & declarations',
+    'Functions': 'Functions',
+    'Classes': 'Classes',
+    'Errors': 'Errors',
+    'More': 'Misc',
+    'New_in_JS': 'New in JavaScript',
+    'Lexical_grammar': 'Lexical grammar',
+    'Enumerability':'Enumerability and ownership of properties',
+    'Data_types': 'Data types and data structures',
+    'Iteration_protocols': 'Iteration protocols',
+    'Transitioning_to_strict_mode': 'Transitioning to strict mode',
+    'Template_strings': 'Template literals',
+    'Deprecated_features': 'Deprecated features',
+    'Documentation': 'Documentation:',
+    'Useful_lists': 'Useful lists',
+    'Index': 'All pages index',
+    'Methods_Index': 'Methods index',
+    'Properties_Index': 'Properties index',
+    'JavaScript_tag': 'Pages tagged "JavaScript"',
+    'Contribute': 'Contribute',
+    'Doc_status': 'JavaScript doc status',
+    'The_MDN_project': 'The MDN project',
+  },
+  'ru': {
+    'Overview': 'Обзор технологий JavaScript',
+    'Tutorials': 'Уроки:',
+    'Guide': 'Руководство по JavaScript',
+    'Guide_Introduction': 'Вступление',
+    'Guide_Grammar': 'Грамматика и типы',
+    'Guide_Control_flow': 'Порядок выполнения и обработка ошибок',
+    'Guide_Loops': 'Циклы и итерации',
+    'Guide_Functions': 'Функции',
+    'Guide_Expressions': 'Выражения и операторы',
+    'Guide_Numbers': 'Числа и даты',
+    'Guide_Text': 'Форматирование текста',
+    'Guide_RegExp': 'Регулярные выражения',
+    'Guide_Indexed_collections': 'Упорядоченные наборы данных',
+    'Guide_keyed_collections': 'Коллекции',
+    'Guide_Objects': 'Работа с объектами',
+    'Guide_OOP': 'Подробнее об объектной модели',
+    'Guide_promises' : 'Using promises',
+    'Guide_Iterators_Generators': 'Итераторы и генераторы',
+    'Guide_Meta': 'Метапрограммирование',
+    'Complete_beginners': 'Базовые',
+    'Basics': 'Основы JavaScript',
+    'First_steps': 'JavaScript first steps',
+    'Building_blocks': 'JavaScript building blocks',
+    'Intermediate': 'Средние',
+    'Introducing_objects': 'Introducing JavaScript objects',
+    'Client-side_APIs': 'Client-side web APIs',
+    'Re-introduction': 'Повторное введение в JavaScript',
+    'Data_structures': 'Структуры данных JavaScript',
+    'Equality': 'Проверки на равенство и когда их использовать',
+    'Closures': 'Замыкания',
+    'Advanced': 'Продвинутые',
+    'Inheritance': 'Наследование и цепочка прототипов',
+    'Strict_mode': 'Строгий режим',
+    'Typed_arrays': 'Типизированные массивы JavaScript',
+    'Memory_Management': 'Управление памятью',
+    'Event_Loop': 'Модель совпадения и циклы событий',
+    'Reference': 'Справочная информация:',
+    'Global_Objects': 'Встроенные объекты',
+    'Operators': 'Выражения и операторы',
+    'Statements': 'Инструкции и объявления',
+    'Functions': 'Функции',
+    'Classes': 'Классы',
+    'Errors': 'Ошибки',
+    'More': 'Ещё',
+    'New_in_JS': 'Новое в JavaScript',
+    'Lexical_grammar': 'Лексическая грамматика',
+    'Enumerability':'Перечисляемость и принадлежность свойств',
+    'Data_types': 'Типы и структуры данных',
+    'Iteration_protocols': 'Протоколы перебора',
+    'Transitioning_to_strict_mode': 'Переход в строгий режим',
+    'Template_strings': 'Шаблонные строки',
+    'Deprecated_features': 'Устаревшие возможности',
+    'Documentation': 'Документация:',
+    'Useful_lists': 'Полезные списки',
+    'Index': 'Индекс всех страниц',
+    'Methods_Index': 'Индекс методов',
+    'Properties_Index': 'Индекс свойств',
+    'JavaScript_tag': 'Страницы, помеченные «JavaScript»',
+    'Contribute': 'Внести свой вклад',
+    'Doc_status': 'Статус документации по JavaScript',
+    'The_MDN_project': 'Проект MDN',
+  },
+  'fr': {
+    'Overview': 'Aperçu des technologies JavaScript',
+    'Tutorials': 'Tutoriel\xa0:',
+    'Guide': 'Guide JavaScript',
+    'Guide_Introduction': 'Introduction',
+    'Guide_Grammar': 'Types et grammaire',
+    'Guide_Control_flow': 'Contrôle du flux et gestion des erreurs',
+    'Guide_Loops': 'Boucles et itération',
+    'Guide_Functions': 'Fonctions',
+    'Guide_Expressions': 'Expressions et opérateurs',
+    'Guide_Numbers': 'Nombres et dates',
+    'Guide_Text': 'Formatage du texte',
+    'Guide_RegExp': 'Expressions rationnelles',
+    'Guide_Indexed_collections': 'Collections indexées',
+    'Guide_keyed_collections': 'Collections avec clés',
+    'Guide_Objects': 'Manipuler les objets',
+    'Guide_OOP': 'Détails du modèle objet',
+    'Guide_promises' : 'Using promises',
+    'Guide_Iterators_Generators': 'Itérateurs et générateurs',
+    'Guide_Meta': 'Meta-programmation',
+    'Complete_beginners': 'Débutant',
+    'Basics': 'Les bases en JavaScript',
+    'First_steps': 'Premiers pas en JavaScript',
+    'Building_blocks': 'Les briques JavaScript',
+    'Intermediate': 'Intermédiaire',
+    'Introducing_objects': 'Introducing JavaScript objects',
+    'Client-side_APIs': 'Client-side web APIs',
+    'Re-introduction': 'Réintroduction à JavaScript',
+    'Data_structures': 'Structures de données en JavaScript',
+    'Equality': 'Différents tests d\'égalité',
+    'Closures': 'Closures',
+    'Advanced': 'Avancé',
+    'Inheritance': 'Héritage et la chaîne de prototypes',
+    'Strict_mode': 'Mode strict',
+    'Typed_arrays': 'Tableaux typés en JavaScript',
+    'Memory_Management': 'Gestion de la mémoire',
+    'Event_Loop': 'Concurrence et boucle des événements',
+    'Reference': 'Références\xa0:',
+    'Global_Objects': 'Objets natifs',
+    'Operators': 'Expressions & opérateurs',
+    'Statements': 'Instructions & déclarations',
+    'Functions': 'Fonctions',
+    'Classes': 'Classes',
+    'Errors': 'Errors',
+    'More': 'Plus',
+    'New_in_JS': 'Nouveautés de JavaScript',
+    'Lexical_grammar': 'Grammaire lexicale',
+    'Enumerability':'Rattachement des propriétés',
+    'Data_types': 'Types et structures de données',
+    'Iteration_protocols': 'Protocoles d\'itération',
+    'Transitioning_to_strict_mode': 'Passer au mode strict',
+    'Template_strings': 'Gabarit de chaîne de caractère',
+    'Deprecated_features': 'Fonctionnalités dépréciées',
+    'Documentation': 'Documentation\xa0:',
+    'Useful_lists': 'Listes utiles',
+    'Index': 'Index des pages',
+    'Methods_Index': 'Index des méthodes',
+    'Properties_Index': 'Index des propriétés',
+    'JavaScript_tag': 'Pages étiquetées "JavaScript"',
+    'Contribute': 'Contribuer',
+    'Doc_status': 'Statut de la documentation',
+    'The_MDN_project': 'Le projet MDN',
+  },
+  'zh-CN': {
+    'Overview': 'JavaScript 知识概要',
+    'Tutorials': '教程:',
+    'Guide': 'JavaScript 指南',
+    'Guide_Introduction': 'Introduction',
+    'Guide_Grammar': 'Grammar and types',
+    'Guide_Control_flow': 'Control flow and error handling',
+    'Guide_Loops': 'Loops and iteration',
+    'Guide_Functions': 'Functions',
+    'Guide_Expressions': 'Expressions and operators',
+    'Guide_Numbers': 'Numbers and dates',
+    'Guide_Text': 'Text formatting',
+    'Guide_RegExp': 'Regular expressions',
+    'Guide_Indexed_collections': 'Indexed collections',
+    'Guide_keyed_collections': 'Keyed collections',
+    'Guide_Objects': 'Working with objects',
+    'Guide_OOP': 'Details of the object model',
+    'Guide_promises' : 'Using promises',
+    'Guide_Iterators_Generators': 'Iterators and generators',
+    'Guide_Meta': 'Meta programming',
+    'Complete_beginners': '快速入门',
+    'Basics': 'JavaScript 基础知识',
+    'First_steps': 'JavaScript first steps',
+    'Building_blocks': 'JavaScript building blocks',
+    'Intermediate': '中级教程',
+    'Introducing_objects': 'Introducing JavaScript objects',
+    'Client-side_APIs': 'Client-side web APIs',
+    'Re-introduction': '深入 JavaScript',
+    'Data_structures': 'JavaScript 数据结构',
+    'Equality': '如何正确判断相等性',
+    'Closures': 'Closures',
+    'Advanced': '高级',
+    'Inheritance': '继承和原型链',
+    'Strict_mode': '严格模式',
+    'Typed_arrays': 'JavaScript 类型化数组',
+    'Memory_Management': '内存管理',
+    'Event_Loop': 'Concurrency model and Event Loop',
+    'Reference': '引用:',
+    'Global_Objects': '内置对象',
+    'Operators': '表达式和运算符',
+    'Statements': '语句和声明',
+    'Functions': '函数',
+    'Classes': 'Classes',
+    'Errors': 'Errors',
+    'More': '更多',
+    'New_in_JS': 'New in JavaScript',
+    'Lexical_grammar': '词法文法',
+    'Enumerability':'属性的可枚举性和所有权',
+    'Data_types': '数据类型和数据解构',
+    'Iteration_protocols': 'Iteration protocols',
+    'Transitioning_to_strict_mode': '切换到严格模式',
+    'Template_strings': '模板字符串',
+    'Deprecated_features': '已废弃的特性',
+    'Documentation': '文档:',
+    'Useful_lists': '常用列表',
+    'Index': '全部页面索引',
+    'Methods_Index': '方法索引',
+    'Properties_Index': '属性索引',
+    'JavaScript_tag': '拥有 "JavaScript" 标签的页面',
+    'Contribute': '贡献',
+    'Doc_status': 'JavaScript 文档翻译状态',
+    'The_MDN_project': 'MDN 项目'
+  },
+  'de': {
+    'Overview': 'Technologienübersicht',
+    'Tutorials': 'Tutorials:',
+    'Guide': 'JavaScript Guide',
+    'Guide_Introduction': 'Einführung',
+    'Guide_Grammar': 'Grammatik und Typen',
+    'Guide_Control_flow': 'Kontrollfluss und Fehlerbehandlung',
+    'Guide_Loops': 'Schleifen und Iterationen',
+    'Guide_Functions': 'Funktionen',
+    'Guide_Expressions': 'Ausdrücke und Operatoren',
+    'Guide_Numbers': 'Zahlen und Zeitangaben',
+    'Guide_Text': 'Textformatierung',
+    'Guide_RegExp': 'Reguläre Ausdrücke',
+    'Guide_Indexed_collections': 'Indexierte Collections',
+    'Guide_keyed_collections': 'Collections mit Schlüsseln',
+    'Guide_Objects': 'Mit Objekten arbeiten',
+    'Guide_OOP': 'Feinheiten des Objektmodells',
+    'Guide_promises' : 'Using promises',
+    'Guide_Iterators_Generators': 'Iteratoren und Generatoren',
+    'Guide_Meta': 'Metaprogrammierung',
+    'Complete_beginners': 'Einleitend',
+    'Basics': 'JavaScript Grundlagen',
+    'First_steps': 'JavaScript first steps',
+    'Building_blocks': 'JavaScript building blocks',
+    'Intermediate': 'Fortgeschritten',
+    'Introducing_objects': 'Introducing JavaScript objects',
+    'Client-side_APIs': 'Client-side web APIs',
+    'Re-introduction': 'Eine Wiedereinführung in JavaScript',
+    'Data_structures': 'JavaScript Datenstrukturen',
+    'Equality': 'Vergleiche auf Gleichheit',
+    'Closures': 'Closures',
+    'Advanced': 'Erweitert',
+    'Inheritance': 'Vererbung und Prototypenkette',
+    'Strict_mode': 'Strict Modus',
+    'Typed_arrays': 'JavaScript Typed-Arrays',
+    'Memory_Management': 'Memory Management',
+    'Event_Loop': 'Laufzeitmodell und Event-Loop',
+    'Reference': 'Referenzen:',
+    'Global_Objects': 'Standardobjekte',
+    'Operators': 'Ausdrücke & Operatoren',
+    'Statements': 'Anweisungen & Deklarationen',
+    'Functions': 'Funktionen',
+    'Classes': 'Klassen',
+    'Errors': 'Fehler',
+    'More': 'Weiteres',
+    'New_in_JS': 'Neu in JavaScript',
+    'Lexical_grammar': 'Lexikalische Grammatik',
+    'Enumerability':'Enumerability und Ownership von Eigenschaften',
+    'Data_types': 'Datentypen und Datenstrukturen',
+    'Iteration_protocols': 'Protokolle zur Iteration',
+    'Transitioning_to_strict_mode': 'Zum Strict Modus wechseln',
+    'Template_strings': 'Template Strings',
+    'Deprecated_features': 'Veraltete Bestandteile',
+    'Documentation': 'Dokumentation:',
+    'Useful_lists': 'Nützliche Listen',
+    'Index': 'Index aller Seiten',
+    'Methods_Index': 'Index aller Methoden',
+    'Properties_Index': 'Index aller Eigenschaften',
+    'JavaScript_tag': 'Seiten mit dem Tag "JavaScript"',
+    'Contribute': 'Mitmachen',
+    'Doc_status': 'Stand der JavaScript-Dokumentation',
+    'The_MDN_project': 'Das MDN-Projekt',
+  },
+  'ja': {
+    'Overview': 'JavaScript 技術概説',
+    'Tutorials': 'チュートリアル:',
+    'Guide': 'JavaScript ガイド',
+    'Guide_Introduction': '入門編',
+    'Guide_Grammar': '文法とデータ型',
+    'Guide_Control_flow': '制御フローとエラー処理',
+    'Guide_Loops': 'ループとイテレーター',
+    'Guide_Functions': '関数',
+    'Guide_Expressions': '式と演算子',
+    'Guide_Numbers': '数と日付',
+    'Guide_Text': 'テキスト処理',
+    'Guide_RegExp': '正規表現',
+    'Guide_Indexed_collections': 'インデックス付きコレクション',
+    'Guide_keyed_collections': 'キー付きコレクション',
+    'Guide_Objects': 'オブジェクトを利用する',
+    'Guide_OOP': 'オブジェクトモデルの詳細',
+    'Guide_promises' : 'Using promises',
+    'Guide_Iterators_Generators': 'イテレーターとジェネレーター',
+    'Guide_Meta': 'メタプログラミング',
+    'Complete_beginners': '初級編',
+    'Basics': 'JavaScript の基礎',
+    'First_steps': 'JavaScript first steps',
+    'Building_blocks': 'JavaScript building blocks',
+    'Intermediate': '中級編',
+    'Introducing_objects': 'Introducing JavaScript objects',
+    'Client-side_APIs': 'Client-side web APIs',
+    'Re-introduction': 'JavaScript 「再」入門',
+    'Data_structures': 'JavaScript のデータ構造',
+    'Equality': '等値比較と同一性',
+    'Closures': 'クロージャ',
+    'Advanced': '上級編',
+    'Inheritance': '継承とプロトタイプチェーン',
+    'Strict_mode': 'Strict モード',
+    'Typed_arrays': 'JavaScript 型付き配列',
+    'Memory_Management': 'メモリ管理',
+    'Event_Loop': '並列モデルとイベントループ',
+    'Reference': 'リファレンス:',
+    'Global_Objects': 'ビルトインオブジェクト',
+    'Operators': '式と演算子',
+    'Statements': '文と宣言',
+    'Functions': '関数',
+    'Classes': 'クラス',
+    'Errors': 'Errors',
+    'More': 'その他',
+    'New_in_JS': 'JavaScript の新機能',
+    'Lexical_grammar': '字句文法',
+    'Enumerability': 'プロパティの列挙可能性と所有権',
+    'Data_types': 'データ型とデータ構造',
+    'Iteration_protocols': '反復処理プロトコル',
+    'Transitioning_to_strict_mode': 'strict モードへの移行',
+    'Template_strings': 'テンプレート文字列',
+    'Deprecated_features': '廃止予定の機能',
+    'Documentation': '文書化について:',
+    'Useful_lists': '便利なページ一覧',
+    'Index': '全ページ索引',
+    'Methods_Index': 'メソッド索引',
+    'Properties_Index': 'プロパティ索引',
+    'JavaScript_tag': '"JavaScript" タグ付きページ',
+    'Contribute': '貢献する',
+    'Doc_status': 'JavaScript 文書化状況',
+    'The_MDN_project': 'MDN プロジェクト',
+  },
+  'pt-BR': {
+    'Overview': 'Visão geral das Tecnologias JavaScript',
+    'Tutorials': 'Tutoriais:',
+    'Guide': 'Guia de JavaScript',
+    'Guide_Introduction': 'Introdução',
+    'Guide_Grammar': 'Gramática e tipos',
+    'Guide_Control_flow': 'Controle de fluxo e tratamento de erros',
+    'Guide_Loops': 'Repetiço e iteração',
+    'Guide_Functions': 'Funçes',
+    'Guide_Expressions': 'Expressões e operadores',
+    'Guide_Numbers': 'Números e datas',
+    'Guide_Text': 'Formatação de texto',
+    'Guide_RegExp': 'Expressões Regulares',
+    'Guide_Indexed_collections': 'Coleções indexadas',
+    'Guide_keyed_collections': 'Coleções com chave (chave-valor)',
+    'Guide_Objects': 'Trabalhando com objetos',
+    'Guide_OOP': 'Detalhes do modelo de objetos',
+    'Guide_promises' : 'Usando "promises"',
+    'Guide_Iterators_Generators': 'Iteradores e geradores',
+    'Guide_Meta': 'Metaprogramação',
+    'Complete_beginners': 'Completos iniciantes',
+    'Basics': 'O básico de JavaScript',
+    'First_steps': 'Primeiros passos com JavaScript',
+    'Building_blocks': 'Blocos de construção de JavaScript',
+    'Intermediate': 'Intermediário',
+    'Introducing_objects': 'Introdução a objetos JavaScript',
+    'Client-side_APIs': 'APIs Web para aplicações Cliente',
+    'Re-introduction': 'Uma reintrodução a JavaScript',
+    'Data_structures': 'Estruturas de dados de JavaScript',
+    'Equality': 'Comparadores de igualdade e semelhança',
+    'Closures': 'Closures',
+    'Advanced': 'Avançado',
+    'Inheritance': 'Herança e a cadeia de "prototype"',
+    'Strict_mode': 'Strict mode - Modo estrito',
+    'Typed_arrays': 'Arranjos tipados em JavaScript',
+    'Memory_Management': 'Gerenciamento de memória',
+    'Event_Loop': 'Modelo de concorrência e Loop de Eventos',
+    'Reference': 'Referências:',
+    'Global_Objects': 'Objetos pré-definidos',
+    'Operators': 'Expressões e operadores',
+    'Statements': 'Afirmações e declarações',
+    'Functions': 'Funções',
+    'Classes': 'Classes',
+    'Errors': 'Erros',
+    'More': 'Mais conteúdo',
+    'New_in_JS': 'Novidades em JavaScript',
+    'Lexical_grammar': 'Gramática léxica',
+    'Enumerability':'Enumerabilidade e domínio de propriedades',
+    'Data_types': 'Tipos de dados e estruturas de dados',
+    'Iteration_protocols': 'Protocolos de iteração',
+    'Transitioning_to_strict_mode': 'Migrando para o "strict mode"',
+    'Template_strings': 'Template literals',
+    'Deprecated_features': 'Funcionalidades depreciadas',
+    'Documentation': 'Documentação:',
+    'Useful_lists': 'Listas úteis',
+    'Index': 'Índice para todas as páginas',
+    'Methods_Index': 'Índice de Métodos',
+    'Properties_Index': 'Índice de Propriedades',
+    'JavaScript_tag': 'Páginas com a tag "JavaScript"',
+    'Contribute': 'Contribua!',
+    'Doc_status': 'Estado da documentação de JavaScript',
+    'The_MDN_project': 'O projeto MDN',
+  },
+});
+%>
+<section class="Quick_links" id="Quick_Links">
+ <ol>
+  <li><a href="/<%=locale%>/docs/Web/JavaScript"><strong><em>JavaScript</em></strong></a></li>
+  <li><a href="/<%=locale%>/docs/Web/JavaScript/Tutorials"><strong><%=text['Tutorials']%></strong></a></li>
+  <li class="toggle">
+    <details <%=state('Complete_beginners')%>>
+      <summary><%=text['Complete_beginners']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Learn/Getting_started_with_the_web/JavaScript_basics"><%=text['Basics']%></a></li>
+        <li><a href="/<%=locale%>/docs/Learn/JavaScript/First_steps"><%=text['First_steps']%></a></li>
+        <li><a href="/<%=locale%>/docs/Learn/JavaScript/Building_blocks"><%=text['Building_blocks']%></a></li>
+        <li><a href="/<%=locale%>/docs/Learn/JavaScript/Objects"><%=text['Introducing_objects']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('JavaScript Guide')%>>
+      <summary><%=text['Guide']%></summary>
+      <ol>
+          <li><a href="/<%=locale%>/docs/Web/JavaScript/Guide/Introduction"><%=text['Guide_Introduction']%></a></li>
+          <li><a href="/<%=locale%>/docs/Web/JavaScript/Guide/Grammar_and_Types"><%=text['Guide_Grammar']%></a></li>
+          <li><a href="/<%=locale%>/docs/Web/JavaScript/Guide/Control_flow_and_error_handling"><%=text['Guide_Control_flow']%></a></li>
+          <li><a href="/<%=locale%>/docs/Web/JavaScript/Guide/Loops_and_iteration"><%=text['Guide_Loops']%></a></li>
+          <li><a href="/<%=locale%>/docs/Web/JavaScript/Guide/Functions"><%=text['Guide_Functions']%></a></li>
+          <li><a href="/<%=locale%>/docs/Web/JavaScript/Guide/Expressions_and_Operators"><%=text['Guide_Expressions']%></a></li>
+          <li><a href="/<%=locale%>/docs/Web/JavaScript/Guide/Numbers_and_dates"><%=text['Guide_Numbers']%></a></li>
+          <li><a href="/<%=locale%>/docs/Web/JavaScript/Guide/Text_formatting"><%=text['Guide_Text']%></a></li>
+          <li><a href="/<%=locale%>/docs/Web/JavaScript/Guide/Regular_Expressions"><%=text['Guide_RegExp']%></a></li>
+          <li><a href="/<%=locale%>/docs/Web/JavaScript/Guide/Indexed_collections"><%=text['Guide_Indexed_collections']%></a></li>
+          <li><a href="/<%=locale%>/docs/Web/JavaScript/Guide/Keyed_collections"><%=text['Guide_keyed_collections']%></a></li>
+          <li><a href="/<%=locale%>/docs/Web/JavaScript/Guide/Working_with_Objects"><%=text['Guide_Objects']%></a></li>
+          <li><a href="/<%=locale%>/docs/Web/JavaScript/Guide/Details_of_the_Object_Model"><%=text['Guide_OOP']%></a></li>
+          <li><a href="/<%=locale%>/docs/Web/JavaScript/Guide/Using_promises"><%=text['Guide_promises']%></a></li>
+          <li><a href="/<%=locale%>/docs/Web/JavaScript/Guide/Iterators_and_generators"><%=text['Guide_Iterators_Generators']%></a></li>
+          <li><a href="/<%=locale%>/docs/Web/JavaScript/Guide/Meta_programming"><%=text['Guide_Meta']%></a></li>
+        </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Intermediate')%>>
+      <summary><%=text['Intermediate']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Learn/JavaScript/Objects"><%=text['Introducing_objects']%></a></li>
+        <li><a href="/<%=locale%>/docs/Learn/JavaScript/Client-side_web_APIs"><%=text['Client-side_APIs']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/A_re-introduction_to_JavaScript"><%=text['Re-introduction']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/Data_structures"><%=text['Data_structures']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/Equality_comparisons_and_sameness"><%=text['Equality']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/Closures"><%=text['Closures']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Advanced')%>>
+      <summary><%=text['Advanced']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/Inheritance_and_the_prototype_chain"><%=text['Inheritance']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/Reference/Strict_mode"><%=text['Strict_mode']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/Typed_arrays"><%=text['Typed_arrays']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/Memory_Management"><%=text['Memory_Management']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/EventLoop"><%=text['Event_Loop']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li><strong><a href="/<%=locale%>/docs/Web/JavaScript/Reference"><%=text['Reference']%></a></strong></li>
+  <li class="toggle">
+    <details <%=state('Objects')%>>
+       <summary><%=text['Global_Objects']%></summary>
+        <%-await template("ListSubpagesForSidebar", ['/en-US/docs/Web/JavaScript/Reference/Global_Objects', 1])%>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Operators')%>>
+      <summary><%=text['Operators']%></summary>
+      <%-await template("ListSubpagesForSidebar", ['/en-US/docs/Web/JavaScript/Reference/Operators', 1])%>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Statements')%>>
+      <summary><%=text['Statements']%></summary>
+      <%-await template("ListSubpagesForSidebar", ['/en-US/docs/Web/JavaScript/Reference/Statements', 1])%>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Functions')%>>
+      <summary><%=text['Functions']%></summary>
+      <%-await template("ListSubpagesForSidebar", ['/en-US/docs/Web/JavaScript/Reference/Functions', 1])%>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Classes')%>>
+      <summary><%=text['Classes']%></summary>
+      <%-await template("ListSubpagesForSidebar", ['/en-US/docs/Web/JavaScript/Reference/Classes', 1])%>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Errors')%>>
+      <summary><%=text['Errors']%></summary>
+      <%-await template("ListSubpagesForSidebar", ['/en-US/docs/Web/JavaScript/Reference/Errors', 1])%>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('More')%>>
+      <summary><%=text['More']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/JavaScript_technologies_overview"><%=text['Overview']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/Reference/Lexical_grammar"><%=text['Lexical_grammar']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/Data_structures"><%=text['Data_structures']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/Enumerability_and_ownership_of_properties"><%=text['Enumerability']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/Reference/Iteration_protocols"><%=text['Iteration_protocols']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/Reference/Strict_mode"><%=text['Strict_mode']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/Reference/Strict_mode/Transitioning_to_strict_mode"><%=text['Transitioning_to_strict_mode']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/Reference/Template_literals"><%=text['Template_strings']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/Reference/Deprecated_and_obsolete_features"><%=text['Deprecated_features']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('New_in_JS')%>>
+      <summary><%=text['New_in_JS']%></summary>
+      <%-await template("ListSubpagesForSidebar", ['/en-US/docs/Web/JavaScript/New_in_JavaScript', 1])%>
+    </details>
+  </li>
+  <li><strong><a href="/<%=locale%>/docs/MDN"><%=text['Documentation']%></a></strong></li>
+  <li class="toggle">
+    <details <%=state('Useful_lists')%>>
+      <summary><%=text['Useful_lists']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/Index"><%=text['Index']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/Reference/Methods_Index"><%=text['Methods_Index']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/JavaScript/Reference/Properties_Index"><%=text['Properties_Index']%></a></li>
+        <li><a href="/<%=locale%>/docs/tag/JavaScript"><%=text['JavaScript_tag']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Contribute')%>>
+      <summary><%=text['Contribute']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/MDN/Doc_status/JavaScript"><%=text['Doc_status']%></a></li>
+        <li><a href="/<%=locale%>/docs/MDN"><%=text['The_MDN_project']%></a></li>
+      </ol>
+    </details>
+  </li>
+ </ol>
+</section>

@@ -1,0 +1,110 @@
+<%
+// Presents a box showing assorted information about the community
+// for the technology area covered by a landing page.
+//
+// THIS IS THE NEW VERSION, PRESENTED AS A FULL-WIDTH BANNER.
+//
+// Parameters:
+//  $0  Name of the topic
+
+var ircChannelName = "mdn";
+var mlName = "mdn";
+var ngName = "mozilla.dev.mdc";
+var driver = {};
+
+switch ($0) {
+    case 'CSS':
+    case 'HTML':
+        driver =    {   "name"      : "Jean-Yves Perrier",
+                        "ircPseudo" : "teoli",
+                        "mdnPseudo" : "teoli",
+                        "docStatus" : "MDN/Doc_status/" + $0
+                    };
+    break;
+    case 'JavaScript':
+    case 'MathML':
+    case 'SVG':
+    case 'Documentation status':
+        driver =    {   "name"      : "Florian Scholz",
+                        "ircPseudo" : "fscholz",
+                        "mdnPseudo" : "fscholz",
+                        "docStatus" : "MDN/Doc_status"
+                    };
+    break;
+    case 'DevTools':
+        driver =    {   "name"      : "Will Bamberg",
+                        "ircPseudo" : "wbamberg",
+                        "mdnPseudo" : "wbamberg",
+                        "docStatus" : "MDN/Doc_status/" + $0
+                    };
+    break;
+    case 'Learn':
+        driver =    {   "name"      : "Jeremie Patonnier",
+                        "ircPseudo" : "Jeremie",
+                        "mdnPseudo" : "Jeremie",
+                        "docStatus" : "MDN/Doc_status/" + $0
+                    };
+    break;
+    default:
+        driver =    {   "name"      : "Eric Shepherd",
+                        "ircPseudo" : "sheppy",
+                        "mdnPseudo" : "sheppy",
+                        "docStatus" : "MDN/Doc_status"
+                    };
+}
+
+var headingStr = "";
+var topicDriverStr = "";
+var ircStr = "";
+var statusStr = "";
+
+var ircInfoLink = "<a href='https://wiki.mozilla.org/IRC'>";
+
+// Build the IRC channel URL if a channel name was specified
+ircLink = "<a href='irc://irc.mozilla.org/" + ircChannelName + "'>#" + ircChannelName + "</a>";
+
+// Generate localized strings
+
+switch(env.locale) {
+    case "de":  // German
+        headingStr = "Hilf dem '" + $0 + "'-Dokumentationsprojekt…";
+        statusStr = "Schau dir den aktuellen <a href='/de/docs/" + driver.docStatus + "'>Status</a> der '" + $0 +"'-Dokumentation an.";
+        topicDriverStr = "Bereichsverantwortlicher: <a href='/de/profiles/" + driver.mdnPseudo + "'>" + driver.name + "</a> (IRC-Nickname: " + driver.ircPseudo + ")";
+        ircStr = "Zögere nicht, uns auf " + ircLink + " oder der <em>" + mlName.toUpperCase() + "</em> Discourse-Gruppe/-Liste zu kontaktieren:";
+        break;
+    case "fr":  // French
+        headingStr = "Aidez le projet de documentation '" + $0 + "'…";
+        statusStr = "Consultez le <a href='/fr/docs/" + driver.docStatus + "'>statut</a> de la documentation '" + $0 + "'.";
+        topicDriverStr = "Coordinateur du domaine : <a href='/fr/profiles/" + driver.mdnPseudo + "'>" + driver.name + "</a> (Pseudo IRC&nbsp;: " + driver.ircPseudo + ")";
+        ircStr = "N'hésitez pas à nous contacter sur " + ircLink + " ou sur la liste de diffusion " + mlName + " :";
+        break;
+    case "ru":  // Russian
+        headingStr = "Помочь проекту документирования '" + $0 + "'…";
+        statusStr = "Взгляните на текущий <a href='/ru/docs/" + driver.docStatus + "'>статус</a> документации по проекту '" + $0 +"'.";
+        topicDriverStr = "Координатор проекта: <a href='/ru/profiles/" + driver.mdnPseudo + "'>" + driver.name + "</a> (псевдоним IRC: " + driver.ircPseudo + ")";
+        ircStr = "Не стесняйтесь обращаться к нам на " + ircLink + " или пишите в список рассылки <em>" + mlName + "</em>:";
+        break;
+    case "id":  // Bahasa Indonesia
+        headingStr = "Bantu proyek dokumentasi '" + $0 + "'";
+        statusStr = "Lihatlah <a href='/id/docs/" + driver.docStatus + "'>status</a> saat ini dari dokumentasi '" + $0 +"'.";
+        topicDriverStr = "Pengarah topik : <a href='/id/profiles/" + driver.mdnPseudo + "'>" + driver.name + "</a> (IRC pseudo: " + driver.ircPseudo + ")";
+        ircStr = "Jangan ragu untuk menghubungi kami di " + ircLink + " atau di mailing-list <em>" + mlName + "</em>:";
+        break;
+    default:    // English
+        headingStr = "Help the '" + $0 + "' documentation project…";
+        statusStr = "Look at the current <a href='/en-US/docs/" + driver.docStatus + "'>status</a> of the '" + $0 +"' documentation.";
+        topicDriverStr = "Topic driver : <a href='/en-US/profiles/" + driver.mdnPseudo + "'>" + driver.name + "</a> (IRC nickname: " + driver.ircPseudo + ")";
+        ircStr = "Don't hesitate to contact us on " + ircLink + " or on the <em>" + mlName.toUpperCase() + "</em> discourse group/list:";
+        break;
+}
+%>
+
+<div class="blockIndicator communitybox">
+    <div class="column-container">
+        <div class="communitysubhead" id="Help_topic"><%=headingStr%></div>
+        <div class="communitycontact"><%-topicDriverStr%></div>
+        <div class="communitycontact"><%-statusStr%></div>
+        <div class="communitysubhead communitycontact"><%-ircStr%></div>
+        <%-await template("DiscussionList", [mlName, ngName, "communitymailinglist"])%>
+    </div>
+</div>

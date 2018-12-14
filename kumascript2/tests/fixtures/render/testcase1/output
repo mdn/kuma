@@ -1,0 +1,4 @@
+Here is {{ some more text }} with double braces, but not a macro.
+But, we should also \{ be able to use \ backslashes \\wherever \\\we like.
+Here is { some text } with braces, but not a macro.
+This is a (This macro is plain text) macro and (This macro is plain text) macro.

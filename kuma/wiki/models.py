@@ -564,7 +564,7 @@ class Document(NotificationsMixin, models.Model):
             # A timeout of 0 should shortcircuit kumascript usage.
             self.rendered_html, self.rendered_errors = self.html, []
         else:
-            self.rendered_html, errors = kumascript.get(self, cache_control,
+            self.rendered_html, errors = kumascript.get(self,
                                                         base_url,
                                                         timeout=timeout)
             self.rendered_errors = errors and json.dumps(errors) or None

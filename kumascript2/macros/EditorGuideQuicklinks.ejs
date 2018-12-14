@@ -1,0 +1,40 @@
+<%
+var s_guide = 'Editor guide',
+    s_ckeditor = 'CKEditor documentation site',
+    s_mxr = 'MXR: Mozilla source cross-reference',
+    s_style = 'Style guides',
+    s_economist = 'The Economist style guide',
+    s_chicago = 'The Chicago manual of style',
+    s_answers = 'Answers.com dictionary',
+    s_errors = 'Common Errors in English';
+switch (env.locale) {
+    case 'ru':
+        s_guide = 'Руководство редактора';
+        s_ckeditor = 'Сайт документации по CKEditor';
+        s_mxr = 'MXR: Перекрёстные ссылки на исходники Mozilla';
+        s_style = 'Руководства по стилю';
+        s_economist = 'Руководство по стилю The Economist';
+        s_chicago = 'Чикагский стилистический справочник';
+        s_answers = 'Словарь Answers.com';
+        s_errors = 'Частые ошибки в английском';
+        break;
+    default: break;
+}
+%>
+<section id="Quick_Links">
+<ol>
+ <li><a href="#" title="#"><%-s_guide%></a>
+ <%-await template("ListSubpages", ["/en-US/docs/MDN/Contribute/Editor", 1, 0, 1])%>
+ </li>
+ <li><a href="http://docs.ckeditor.com/"><%-s_ckeditor%></a></li>
+ <li><a href="http://mxr.mozilla.org/"><%-s_mxr%></a></li>
+ <li><a href="#" title="#"><%-s_style%></a>
+  <ol>
+   <li><a href="http://www.economist.com/research/StyleGuide/"><%-s_economist%></a></li>
+   <li><a href="http://www.amazon.com/gp/product/0226104036/"><%-s_chicago%></a></li>
+   <li><a href="http://www.answers.com/library/Dictionary"><%-s_answers%></a></li>
+   <li><a href="http://www.wsu.edu/~brians/errors/"><%-s_errors%></a></li>
+  </ol>
+ </li>
+</ol>
+</section>

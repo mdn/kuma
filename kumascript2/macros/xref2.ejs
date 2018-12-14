@@ -1,0 +1,56 @@
+<%
+/*
+ * NOTE: This template should only be used by another template, do not use directly in content
+ * Basically any template that ends in xref should use this
+ *
+ * Inserts an appropriatly styled cross reference link. Usually, you should use the xref macro.
+ * This macro lets you specify multiple URLs to try, for cases where the target might be in
+ * one of a number of places.
+ *
+ * $0 - URL list; URLs are separated by the "|" character. Specify the most likely URL first.
+ * $1 - Link text
+ * $2 - Show tooltip summary (optional - Default is True except when the URL contains an anchor)
+ *      This should only be set to false for content areas where the summary is consistantly poor as a short term solution
+ */
+
+// Get the page summary
+var summary = "";
+var url = "";
+
+var urllist = $0.split("|");
+var count = urllist.length;
+var page;
+
+for (var i=0; i<count; i++) {
+    page = await wiki.getPage(urllist[i]);
+
+    if (page && page.url) {
+        url = urllist[i];
+        break;
+    }
+}
+
+// If the page doesn't exist, report it
+
+if (!page) {
+    switch(lang) {
+        case "de":
+            summary = "Dieser Artikel wurde noch nicht geschrieben. Bitte hilf mit!";
+            break;
+        case "ru":
+            summary = "Эта статья ещё не написана. Пожалуйста, почитайте о вкладе!";
+            break;
+        default:
+            summary = "This article hasn't been written yet. Please consider contributing!";
+            break;
+    }
+    url = urllist[0];   // assume the first URL, which should be the most likely one
+} else {
+    if (($2 !== false && $0.indexOf("#") === -1) || $2 === true) {
+        if (page.summary) {
+            summary = mdn.escapeQuotes(page.summary);
+        }
+    }
+}
+
+%><code><a href="<%-url%>" title="<%-summary%>"><%- $1 %></a></code>

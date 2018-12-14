@@ -1,0 +1,11 @@
+<%
+/* one parameter: version of deprecation (optional) */
+/* prepend version with HTML, CSS, JS or Gecko for those techs */
+/* for backwards compatibility unprefixed is Gecko, please avoid this */
+
+var str = $0;
+if (string.IsDigit($0)) {
+  str = "gecko" + $0;
+}
+%>
+<%- await template("deprecatedGeneric", ["header", str]) %>

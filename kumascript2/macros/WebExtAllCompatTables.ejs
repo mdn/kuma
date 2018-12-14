@@ -1,0 +1,29 @@
+<%
+
+/*
+WebExtAllCompatTables.ejs
+-------------------------
+Use this macro to insert a collection of aggregated compat tables,
+one for each WebExtension namespace. For example, "runtime" or "browserAction".
+
+Each table gets an H2 heading whose content is the name of the namespace.
+
+It assumes, in general, that namespaces live directly under
+"webextensions.api" in the compat data: so it iterates through all the
+objects under that object, generating an aggregated table for each object.
+
+This macro can be inserted anywhere, and takes no arguments.
+*/
+
+const bcd = require('mdn-browser-compat-data');
+var features = bcd.webextensions.api;
+var featureList = Object.keys(features).sort();
+var output = '';
+
+for (featureName of featureList) {
+  output += `<h2>${featureName}</h2>`;
+  output += await template("compat", [`webextensions.api.${featureName}`, 2, true]);
+}
+
+%>
+<%-output%>

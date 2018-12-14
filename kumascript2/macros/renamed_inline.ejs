@@ -1,0 +1,9 @@
+<%
+// Use this as an inline indicator that something was renamed in a given Gecko release.
+//
+// Parameters:
+//  $0 - API name
+//  $1 - Gecko release it was renamed in
+
+
+%><span title="<%-await template("geckoRelease", [$1])%>" class="inlineIndicator renamed renamedInline">Renamed from <code><%=$0%></code> in Gecko <%=$1%></span>

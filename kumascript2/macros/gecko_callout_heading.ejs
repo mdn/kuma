@@ -1,0 +1,22 @@
+<%
+// Used to create the heading at the top of a callout box, indicating that the
+// box refers to a given Gecko version.
+//
+// Parameters:
+//  $0 - Gecko version
+
+var lang = env.locale;
+var str = "Gecko " + $0 + " note";
+
+switch(lang) {
+    case 'de': str = "Hinweis zu Gecko " + $0; break;
+    case 'zh-TW': str = "Gecko " + $0 + " 備註"; break;
+    case 'ru': str = "Замечание по Gecko " + $0; break;
+    default: break;
+}
+%>
+
+<div class="geckoVersionHeading">
+<%=str%>
+<div style="font-size:9px; line-height:1; font-style:italic;"><%=await template('geckoRelease', [$0])%></div>
+</div>

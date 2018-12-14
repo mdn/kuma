@@ -1,0 +1,9 @@
+<%
+/* first parameter: method name */
+/* second parameter: version of obsolescence */
+/* Example: {{ method_obsolete_gecko("closeTopLevelWindow","1.8") }} */
+
+var str = "gecko" + $1;
+
+
+%><%- await template("obsoleteGeneric",["method",str,$0]) %>

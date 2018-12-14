@@ -1,0 +1,75 @@
+<%
+
+/**
+WebExtBrowserCompat.ejs
+-----------------------
+Use this macro to insert the appropriate WebExtension compat table for the
+current page.
+
+It takes one optional argument.
+
+* If the argument is given, the macro calls the standard {{compat}} macro
+
+* If the argument is omitted, the macro calls tableFromSlug(), which uses
+  the slug of the current page to determine the correct argument for {{compat}}.
+  The no-argument form is only allowed on pages under "Add-ons/WebExtensions/API/".
+*/
+
+
+/**
+This function transforms the URL of the current page into a path through
+the compat data, and uses this path to retrieve the appropriate bit of data.
+For example:
+
+https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/alarms
+...would become data["alarms"]
+
+https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/alarms/get
+...would become data["alarms"]["get"]
+
+One tricky detail is that it needs to handle the devtools APIs, which name
+themselves "devtools.thing":
+
+https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/devtools.panels
+...would become data["devtools"]["panels"]
+
+It then passes the compat data into "WebExtBrowserCompatTable", which
+builds the table.
+
+This function may only be called from pages under "Add-ons/WebExtensions/API/".
+*/
+async function tableFromSlug() {
+  const webExtAPIBaseUrl = "Add-ons/WebExtensions/API/";
+
+  // Pages that include this macro must be under
+  // the "Add-ons/WebExtensions/API/" hierarchy.
+  // So first, let's get the part of the URL following that subpath, or fail.
+  var components = env.slug.split(webExtAPIBaseUrl);
+  if (components.length < 2) {
+    throw "If no arguments are given, then this macro can only be called from pages under \"Add-ons/WebExtensions/API/\"";
+  }
+
+  // Now we're looking at a subpath like:
+  // "Alarms" or "Alarms/clear" or "storage/StorageArea/get"
+  // or even "devtools.panels/ExtensionPanel"
+  // So split this subpath on either "/" or "."
+  // and join all parts on "." again.
+  pathPieces = components[1].split(/[\.//]/).join(".");
+  // If there is only one subpath, we are on an API main page,
+  // so turn on aggregate mode for the table.
+  // Don't split on "." this time, as there are main API pages like "devtools.panels"
+  let aggregate = components[1].split("/").length === 1;
+
+  return await template("Compat", ["webextensions.api." + pathPieces, 1, aggregate]);
+}
+
+var output;
+
+if ($0) {
+  output = await template("Compat", [$0]);
+} else {
+  output = await tableFromSlug();
+}
+
+%>
+<%-output%>

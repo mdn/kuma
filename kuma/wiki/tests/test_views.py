@@ -26,7 +26,6 @@ from kuma.users.tests import UserTestCase
 
 from . import (create_document_tree, document, make_translation,
                new_document_data, normalize_html, revision, WikiTestCase)
-from .conftest import ks_toolbox
 from ..content import get_seo_description
 from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import MIDAIR_COLLISION
@@ -420,110 +419,6 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         mock_kumascript_get.return_value = (self.doc.html, None)
         self.client.get('%s?raw&macros' % self.url, follow=False)
         assert mock_kumascript_get.called, "kumascript should have been used"
-
-    @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=1234)
-    @requests_mock.mock()
-    def test_ua_max_age_zero(self, mock_requests):
-        """
-        Authenticated users can request a zero max-age for kumascript
-        """
-        mock_requests.get(
-            requests_mock.ANY,
-            [
-                dict(content='HELLO WORLD'),
-                ks_toolbox().macros_response,
-            ]
-        )
-
-        self.client.get(self.url, follow=False, HTTP_CACHE_CONTROL='no-cache')
-        assert ('max-age=1234' ==
-                mock_requests.request_history[0].headers['Cache-Control'])
-
-        self.client.login(username='admin', password='testpass')
-        self.client.get(self.url, follow=False,
-                        HTTP_CACHE_CONTROL='no-cache')
-        assert ('no-cache' ==
-                mock_requests.request_history[1].headers['Cache-Control'])
-
-    @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=1234)
-    @requests_mock.mock()
-    def test_ua_no_cache(self, mock_requests):
-        """
-        Authenticated users can request no-cache for kumascript
-        """
-        mock_requests.get(
-            requests_mock.ANY,
-            [
-                dict(content='HELLO WORLD'),
-                ks_toolbox().macros_response,
-            ]
-        )
-
-        self.client.get(self.url, follow=False, HTTP_CACHE_CONTROL='no-cache')
-        assert ('max-age=1234' ==
-                mock_requests.request_history[0].headers['Cache-Control'])
-
-        self.client.login(username='admin', password='testpass')
-        self.client.get(self.url, follow=False, HTTP_CACHE_CONTROL='no-cache')
-        assert ('no-cache' ==
-                mock_requests.request_history[1].headers['Cache-Control'])
-
-    @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=1234)
-    @requests_mock.mock()
-    def test_conditional_get(self, mock_requests):
-        """
-        Ensure conditional GET in requests to kumascript work as expected
-        """
-        expected_etag = "8675309JENNY"
-        expected_modified = "Wed, 14 Mar 2012 22:29:17 GMT"
-        expected_content = "HELLO THERE, WORLD"
-
-        mock_requests.get(
-            requests_mock.ANY, [
-                {
-                    'content': expected_content,
-                    'headers': {
-                        'etag': expected_etag,
-                        'last-modified': expected_modified,
-                        'age': '456',
-                    }
-                },
-                {
-                    'content': expected_content,
-                    'headers': {
-                        'etag': expected_etag,
-                        'last-modified': expected_modified,
-                        'age': '456',
-                    },
-                },
-                {
-                    'content': expected_content,
-                    'status_code': 304,
-                    'headers': {
-                        'etag': expected_etag,
-                        'last-modified': expected_modified,
-                        'age': '123',
-                    },
-                }
-            ]
-        )
-        # First request to let the view cache etag / last-modified
-        self.client.get(self.url)
-
-        # Clear rendered_html to force another request.
-        self.doc.rendered_html = ''
-        self.doc.save()
-
-        # Second request to verify the view sends them back
-        response = self.client.get(self.url)
-        assert (expected_etag ==
-                mock_requests.request_history[1].headers['If-None-Match'])
-        assert (expected_modified ==
-                mock_requests.request_history[1].headers['If-Modified-Since'])
-
-        # Third request to verify content was cached and served on a 304
-        response = self.client.get(self.url)
-        assert expected_content in response.content
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=600)
     @requests_mock.mock()

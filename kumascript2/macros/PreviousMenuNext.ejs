@@ -1,0 +1,98 @@
+<%/*
+
+Parameter
+    $0 (first parameter):  path of Previous page
+    $1 (second parameter): path of Next page
+    $2 (third parameter): path to main menu of module
+
+Issue
+    * Problem of Apostrophe (https://developer.mozilla.org/fr/docs/JavaScript_Guide/Op%C3%A9rateurs/Op%C3%A9rateurs_sp%C3%A9ciaux)
+
+*/
+
+var lang = env.locale;
+var strPrevious = "";
+var strNext = "<br>";
+var strMenu = "";
+
+var buttonStyle = "display:inline-block;background: #eaeff2;border-radius:4px;box-shadow: inset 0 -1px #bbbfc2;color: #4d4353;padding:0.3em 0.8em;";
+
+var s_PreviousNext = mdn.localString({
+    "en-US": [" Previous ",          " Next  "],
+    "cs"   : [" Předchozí ",  " Následující  "],
+    "de"   : [" zurück ",          " weiter  "],
+    "es"   : [" Anterior ",     " Siguiente  "],
+    "fr"   : [" Précédent ",      " Suivant  "],
+    "pl"   : [" Poprzedni ",     " Następny  "],
+    "pt-PT": [" Anterior ",       " Próxima  "],
+    "pt-BR": [" Anterior ",       " Próxima  "],
+
+    "he"   : [" קוד ם",                               "הבא "] ,
+    "ja"   : [" 前のページ ",                        " 次のページ  "],
+    "ko"   : [" 이전 ",                              " 다음  "],
+    "ru"   : [" Назад ", " Далее  "],
+    "zh-CN": [" 上一页 ",                            " 下一页  "],
+    "zh-TW": [" 前頁 ",                              " 次頁  "]
+});
+
+var s_Menu = mdn.localString({
+    "en-US": " Overview: ",
+    "pt-BR": " Menu: ",
+    "fr"   : " Aperçu&nbsp;: ",
+    "ru"   : " Обзор: ",
+    "de"   : " Übersicht: "
+});
+
+
+// for LTR
+var prevTextAlign = "left";
+var nextTextAlign = "right";
+
+var prevFloatValue = "left";
+var nextFloatValue = "right";
+
+// for RTL
+switch(lang) {
+    case "ar":
+    case "fa":
+    case "he":
+        prevTextAlign = "right";
+        nextTextAlign = "left";
+        prevFloatValue = "right";
+        nextFloatValue = "left";
+        break;
+    default:
+        break;
+}
+
+
+if ($0) {
+    strPrevious = '<a style="float:' + prevFloatValue + '; width: 20%; text-align:' + prevTextAlign + ';" href="/' + lang + '/docs/' + string.replace($0, ' ', '_') + '"><span style="' + buttonStyle + '"><i class="icon-arrow-left" aria-hidden="true"></i>' + s_PreviousNext[0] + '</a>';
+}
+
+if ($1) {
+    strNext = '<a style="width: 20%;float:' + nextFloatValue + ';text-align: ' + nextTextAlign + ';" href="/' + lang + '/docs/' + string.replace($1, ' ', '_') + '"><span style="' + buttonStyle + '">' + s_PreviousNext[1] + '<i class="icon-arrow-right" aria-hidden="true"></i></a>';
+}
+
+if ($2) {
+  var startString = $2;
+  var linkTextArray = startString.split('/');
+  var linkText = linkTextArray[linkTextArray.length-1];
+  var re = /_/gi;
+  var finalString = linkText.replace(re,' ');
+  
+  if($0 && $1) {
+    strMenu = '<a style="float:' + prevFloatValue + '; width: 60%;text-align: center;" href="/' + lang + '/docs/' + string.replace($2, ' ', '_') + '"><span style="' + buttonStyle + '"><i class="icon-arrow-up" aria-hidden="true"></i>' + s_Menu + finalString + '</a>';
+  } else if($0) {
+    strMenu = '<a style="float:' + nextFloatValue + '; width: 60%;text-align: ' + nextTextAlign + ';" href="/' + lang + '/docs/' + string.replace($2, ' ', '_') + '"><span style="' + buttonStyle + '"><i class="icon-arrow-up" aria-hidden="true"></i>' + s_Menu + finalString + '</a>';
+  } else if($1) {
+    strMenu = '<a style="float:' + prevFloatValue + '; width: 60%;text-align: ' + prevTextAlign + ';" href="/' + lang + '/docs/' + string.replace($2, ' ', '_') + '"><span style="' + buttonStyle + '"><i class="icon-arrow-up" aria-hidden="true"></i>' + s_Menu + finalString + '</a>';
+  }
+}
+
+
+
+%><div class="prevnext">
+    <div><%- strPrevious %><%- strMenu %><%- strNext %></div>
+    <p>&nbsp;</p>
+</div>

@@ -1,0 +1,170 @@
+<%
+var currentSection = $0;
+var locale = env.locale;
+
+function state(section) {
+  if (section == currentSection) {
+    return "open";
+  }
+  return "closed";
+}
+
+var text = mdn.localStringMap({
+  'en-US': {
+    'Canvas_API': 'Canvas API',
+    'Canvas_tutorial': 'Canvas tutorial',
+    'Basic_usage': 'Basic usage',
+    'Drawing_shapes': 'Drawing shapes',
+    'Applying': 'Applying styles and colors',
+    'Text': 'Drawing text',
+    'Using_images': 'Using images',
+    'Transformations': 'Transformations',
+    'Compositing': 'Compositing and clipping',
+    'Basic_animations': 'Basic animations',
+    'Advanced_animations': 'Advanced animations',
+    'Pixel_manipulation': 'Pixel manipulation',
+    'Hitregions': 'Hit regions and accessibility',
+    'Optimizing': 'Optimizing the canvas',
+    'Finale': 'Finale',
+    'Examples': 'Examples',
+    'raycaster': 'A basic raycaster',
+    'snippets': 'Canvas code snippets',
+    'dom_canvas': 'Drawing DOM objects into a canvas',
+    'video_canvas': 'Manipulating video using canvas',
+    'Interfaces': 'Interfaces',
+    'Documentation': 'Documentation:',
+    'Useful_lists': 'Useful lists',
+    'Canvas_tag': 'Pages tagged "Canvas"',
+    'Contribute': 'Contribute',
+    'Doc_status': 'Canvas doc status',
+    'The_MDN_project': 'The MDN project',
+  },
+  'zh-CN': {
+    'Canvas_API': 'Canvas API',
+    'Canvas_tutorial': 'Canvas 教程',
+    'Basic_usage': '基本用法',
+    'Drawing_shapes': '绘制形状',
+    'Applying': '添加样式和颜色',
+    'Text': '绘制文本',
+    'Using_images': '使用图片',
+    'Transformations': '变形',
+    'Compositing': '合成与裁剪',
+    'Basic_animations': '基本动画',
+    'Advanced_animations': '高级动画',
+    'Pixel_manipulation': '像素操作',
+    'Hitregions': '点击区域和无障碍访问',
+    'Optimizing': 'canvas 的优化',
+    'Finale': '终极',
+    'Examples': '示例',
+    'raycaster': '一个基本的光线投射例子',
+    'snippets': 'Canvas 代码片段',
+    'dom_canvas': '在 canvas 上绘制 DOM 对象',
+    'video_canvas': '在 canvas 中操作视频',
+    'Interfaces': '接口',
+    'Documentation': '文档:',
+    'Useful_lists': '常用页面列表',
+    'Canvas_tag': '拥有 "Canvas" 标签的页面',
+    'Contribute': '贡献',
+    'Doc_status': 'Canvas 文档翻译状态',
+    'The_MDN_project': 'MDN 项目',
+  },
+  'ru': {
+    'Canvas_API': 'Canvas API',
+    'Canvas_tutorial': 'Руководство по Canvas',
+    'Basic_usage': 'Базовое использование',
+    'Drawing_shapes': 'Рисование фигур',
+    'Applying': 'Применение стилей и цветов',
+    'Text': 'Рисование текста',
+    'Using_images': 'Использование изображений',
+    'Transformations': 'Трансформации',
+    'Compositing': 'Композиция и обрезка',
+    'Basic_animations': 'Простые анимации',
+    'Advanced_animations': 'Расширенные анимации',
+    'Pixel_manipulation': 'Манипуляция пикселями',
+    'Hitregions': 'Достижение областей и доступность',
+    'Optimizing': 'Оптимизация canvas',
+    'Finale': 'Заключение',
+    'Examples': 'Примеры',
+    'raycaster': 'Простой излучатель лучей',
+    'snippets': 'Спиппеты кода Canvas',
+    'dom_canvas': 'Рисование DOM объектов в canvas',
+    'video_canvas': 'Манипяция видео с помощью canvas',
+    'Interfaces': 'Интерфейсы',
+    'Documentation': 'Документация:',
+    'Useful_lists': 'Полезные списки',
+    'Canvas_tag': 'Страницы отмеченные "Canvas"',
+    'Contribute': 'Внести свой вклад',
+    'Doc_status': 'Статус документации по Canvas',
+    'The_MDN_project': 'Проект MDN',
+  }
+});
+%>
+<section id="Quick_Links">
+ <ol>
+  <li><a href="/<%=locale%>/docs/Web/API/Canvas_API"><strong><%=text['Canvas_API']%></strong></a></li>
+  <li class="toggle">
+    <details open>
+      <summary><%=text['Canvas_tutorial']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Web/API/Canvas_API/Tutorial/Basic_usage"><%=text['Basic_usage']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes"><%=text['Drawing_shapes']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/Canvas_API/Tutorial/Applying_styles_and_colors"><%=text['Applying']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/Canvas_API/Tutorial/Drawing_text"><%=text['Text']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/Canvas_API/Tutorial/Using_images"><%=text['Using_images']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/Canvas_API/Tutorial/Transformations"><%=text['Transformations']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/Canvas_API/Tutorial/Compositing"><%=text['Compositing']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/Canvas_API/Tutorial/Basic_animations"><%=text['Basic_animations']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/Canvas_API/Tutorial/Advanced_animations"><%=text['Advanced_animations']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/Canvas_API/Tutorial/Pixel_manipulation_with_canvas"><%=text['Pixel_manipulation']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/Canvas_API/Tutorial/Hit_regions_and_accessibility"><%=text['Hitregions']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas"><%=text['Optimizing']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/Canvas_API/Tutorial/Finale"><%=text['Finale']%></a></li>
+        </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details open>
+      <summary><%=text['Examples']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Web/API/Canvas_API/A_basic_ray-caster"><%=text['raycaster']%></a></li>
+        <li><a href="/<%=locale%>/Add-ons/Code_snippets/Canvas"><%=text['snippets']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/Canvas_API/Drawing_DOM_objects_into_a_canvas"><%=text['dom_canvas']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/Canvas_API/Manipulating_video_using_canvas"><%=text['video_canvas']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details open>
+      <summary><%=text['Interfaces']%></summary>
+      <ol>
+        <li><%-await template("domxref", ["HTMLCanvasElement"])%></li>
+        <li><%-await template("domxref", ["CanvasRenderingContext2D"])%></li>
+        <li><%-await template("domxref", ["CanvasGradient"])%></li>
+        <li><%-await template("domxref", ["CanvasPattern"])%></li>
+        <li><%-await template("domxref", ["ImageBitmap"])%></li>
+        <li><%-await template("domxref", ["ImageData"])%></li>
+        <li><%-await template("domxref", ["TextMetrics"])%></li>
+        <li><span class="sidebar-icon"><%-await template("ExperimentalBadge", [1])%></span> <%-await template("domxref", ["Path2D"])%></li>
+      </ol>
+    </details>
+  </li>
+  <li><strong><a href="/<%=locale%>/docs/MDN"><%=text['Documentation']%></a></strong></li>
+  <li class="toggle">
+    <details <%=state('Useful_lists')%>>
+      <summary><%=text['Useful_lists']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/tag/Canvas"><%=text['Canvas_tag']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Contribute')%>>
+      <summary><%=text['Contribute']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/MDN/Doc_status/API/Canvas"><%=text['Doc_status']%></a></li>
+        <li><a href="/<%=locale%>/docs/MDN"><%=text['The_MDN_project']%></a></li>
+      </ol>
+    </details>
+  </li>
+ </ol>
+</section>

@@ -1,0 +1,21 @@
+<%
+// Inserts a link to an XPCOM Interface reference page.
+// Appropriate styling is applied.
+//
+// Parameters:
+//
+//  $0 - Interface name
+
+var lang = env.locale;
+
+var URL = "/" + lang + "/docs/Mozilla/Tech/XPCOM/Reference/Interface/" + $0;
+
+switch(lang) {
+  case 'de':
+    URL = "/de/docs/XPCOM_Interface_Referenz/" + $0;
+    break;
+}
+
+// Note: Tooltips are disabled at present. We need to fix how this works with pages that use the IFSummary template
+%>
+<%- await template("xref", [URL, $0, false]) %>

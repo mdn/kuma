@@ -1,0 +1,18 @@
+<%
+/*
+  Outputs properties as a table
+
+  $0 - String containing a serialized array of properties of the structure
+       {"label": "foo", "value": "bar"}
+*/
+var properties = string.deserialize($0);
+var result = "<table class=\"properties\">" +
+    "<tbody>";
+properties.forEach(function(property) {
+    result += "<tr>" +
+        "<th scope=\"row\">" + property.label + "</th>" +
+        "<td>" + property.value + "</td>";
+});
+result += "</tbody>" +
+    "</table>";
+%><%- result %>

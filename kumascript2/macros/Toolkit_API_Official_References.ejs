@@ -1,0 +1,35 @@
+<% if ("ko" == env.locale) { %>
+<p>
+  <ul>
+    <li><a title="ko/Bundles" href="/ko/Bundles">설치 가능한 번들</a>: 설치 가능한 번들(확장 기능, 테마, XULRunner 어플리케이션 등)에 대하여 기술하고 있습니다.</li>
+    <li><a title="ko/Extension_Packaging" href="/ko/Extension_Packaging">확장기능 포장</a>: 확장 기능을 포장하는 방법에 대한 정보를 제공합니다.</li>
+    <li><a title="ko/Theme_Packaging" href="/ko/Theme_Packaging">테마 포장</a>: 테마 기능을 포장하는 방법에 대한 정보를 제공합니다.</li>
+    <li><a title="Ko/Multiple_Item_Packaging" href="/Ko/Multiple_Item_Packaging">여러 항목을 포함한 XPI 포장</a>: 여러 항목들이 포함되는 XPI 를 포장하는 방법에 대한 정보를 제공합니다.</li>
+    <li><a title="ko/XUL_Application_Packaging" href="/ko/XUL_Application_Packaging">XUL 응용프로그램 포장</a>: XULRunner 응용프로그램을 포장하는 방법에 대한 정보를 제공합니다.</li>
+    <li><a title="ko/Chrome_Registration" href="/ko/Chrome_Registration">Chrome 등록</a>: Chrome의 등록하는 방법에 대한 정보를 제공합니다.</li>
+  </ul>
+</p>
+<% } else if ("de" == env.locale) { %>
+    <p>
+      <ul>
+        <li><a title="de/Bundles" href="/de/Bundles">Struktur eines installierbaren Bündels</a>: Beschreibung der gemeinsamen Struktur von installierbaren Bündeln von Erweiterungen, Themes und XULRunner Anwendungen</li>
+        <li><a title="de/Packen_von_Erweiterungen" href="/de/Packen_von_Erweiterungen">Packen von Erweiterungen</a>: Informationen über das Packen von Erweiterungen</li>
+        <li><a title="de/Packen_von_Themes" href="/de/Packen_von_Themes">Packen von Themes</a>: Informationen über das Packen von Themes</li>
+        <li><a title="de/Packen_von_mehreren_Erweiterungen" href="/de/Packen_von_mehreren_Erweiterungen">Packen von mehreren Erweiterungen</a>: Informationen über das Packen von mehreren Erweiterungen</li>
+        <li><a title="de/Packen_einer_XUL_Anwendung" href="/de/Packen_einer_XUL_Anwendung">Packen einer XUL Anwendung</a>: Informationen über das Packen von XUL Anwendungen</li>
+        <li><a title="de/Chrome_Registrierung" href="/de/Chrome_Registrierung">Chrome Registrierung</a></li>
+      </ul>
+    </p>
+<% } else { %>
+<p>
+  <ul>
+    <li><a title="en/Bundles" href="/en/Bundles">Structure of an Installable Bundle</a>: describes the common structure of installable bundles, including extensions, themes, and XULRunner applications</li> 
+    <li><a title="en/Extension_Packaging" href="/en/Extension_Packaging">Extension Packaging</a>: specific information about how to package extensions</li>
+    <li><a title="en/Theme_Packaging" href="/en/Theme_Packaging">Theme Packaging</a>: specific information about how to package themes</li>
+    <li><a title="en/Multiple_Item_Packaging" href="/en/Multiple_Item_Packaging">Multiple-item Extension Packaging</a>: specific information about multiple-item extension XPIs</li> 
+    <li><a title="en/XUL_Application_Packaging" href="/en/XUL_Application_Packaging">XUL Application Packaging</a>: specific information about how to package XULRunner applications</li>
+    <li><a title="en/Chrome_Registration" href="/en/Chrome_Registration">Chrome Registration</a></li>
+    <li><a href="/en-US/docs/Mozilla/Tech/XUL/Printing">Printing in XUL Apps</a></li>
+  </ul>
+</p>
+<% } %>

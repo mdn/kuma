@@ -1,0 +1,20 @@
+<%
+
+var s_warning = mdn.localString({
+    "en-US": "Warning:",
+    "de": "Achtung:",
+    "es": "Advertencia:",
+    "fr": "Avertissement\xa0:",
+    "it": "Attenzione:",
+    "ja": "警告:",
+    "ko": "Warning:",
+    "pl": "Ostrzeżenie:",
+    "pt-PT": "Aviso:",
+    "ru": "Предупреждение:",
+    "zh-TW": "小心：",
+    "zh-CN": "Warning:"
+});
+
+%><div class="blockIndicator warning">
+    <p><strong><%=s_warning%></strong> <%- $0 %></p>
+</div>

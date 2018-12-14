@@ -1,0 +1,151 @@
+<%
+// General macro for inserting a deprecation warning.
+//
+// Parameters:
+//  $0  The type of warning indicator: inline/header/method
+//  $1  The version of obsolescence (optional)
+//      prepend the version with HTML, CSS, JS, or Gecko for those techs;
+//      for example "HTML5" to say the content is deprecated in HTML 5.
+//  $2  Additional information required for the type specified by the
+//      first parameter ("method" requires the method's name)
+
+var lang = env.locale;
+
+var str = "";
+var ver = "";
+var link = "";
+var tip = "";
+
+if ($1) {
+    var t = $1.toLowerCase();
+    var n = "";
+
+    if ( string.startswith(t, "js") ) {
+        n = string.trim( string.substr(t, 2) );
+        ver = "JavaScript ";
+        if (string.length(n) > 0) {
+            if(wiki.pageExists(lang + '/docs/JavaScript/New_in_JavaScript/' + n)) {
+                link = '/' + lang + '/docs/JavaScript/New_in_JavaScript/' + n;
+            } else if(wiki.pageExists('/en-US/docs/JavaScript/New_in_JavaScript/' + n)) {
+                link = '/en-US/docs/JavaScript/New_in_JavaScript/' + n;
+            }
+        }
+    } else if (string.startswith(t, "css")) {
+        n = string.trim(string.substr(t, 3));
+        ver = "CSS ";
+    } else if (string.startswith(t, "html")) {
+        n = string.trim(string.substr(t, 4));
+
+        var N = (n[0] === "4") ? "" : n;
+
+        ver = "HTML";
+
+        if (string.length(N) > 0) {
+            if(wiki.pageExists('/' + lang + '/docs/HTML/HTML' + N)) {
+                link = '/' + lang + '/docs/HTML/HTML' + N;
+            } else if(wiki.pageExists('/en-US/docs/HTML/HTML' + N)) {
+                link = '/en-US/docs/HTML/HTML' + N;
+            } else if(wiki.pageExists('/' + lang + '/docs/HTML')) {
+                link = '/' + lang + '/docs/HTML';
+            } else {
+                link = '/en-US/docs/HTML';
+            }
+        } else {
+            link = '/' + lang + '/docs/HTML';
+        }
+    } else if (string.startswith(t, "svg")) {
+        n = string.trim(string.substr(t, 3));
+        ver = "SVG ";
+    } else if (string.startswith(t, "gecko")) {
+        n = string.trim( string.substr(t, 5) );
+        ver = "Gecko ";
+        tip = await template("geckoRelease", [n]);
+    }
+
+    n = string.trim(n);
+    ver = (string.length(n) > 0) ? ver + n : "";
+}
+
+// If there's a link, turn the version into a link to that URL
+
+if (link.length) { ver = web.link(link, ver); }
+
+switch(lang) {
+    case 'de':
+        str = "Unerwünscht";
+        if (ver.length) { str = str + " " + ver; }
+        break;
+    case 'es':
+        str = "Desaprobado";
+        if (ver.length) { str = str + " " + ver; }
+        break;
+    case 'fr':
+        str = "Obsolète";
+        if (ver.length) { str = str + " depuis " + ver; }
+        break;
+    case 'it':
+        str = "Deprecato";
+        if (ver.length) { str = str + " " + ver; }
+        break;
+    case 'ja':
+        str = "非推奨";
+        if (ver.length) { str = str + " " + ver; }
+        break;
+    case 'ko':
+        str = "Deprecated";
+        if (ver.length) { str = str + " " + ver; }
+        break;
+    case 'pl':
+        str = "Wycofywany";
+        if (ver.length) { str = str + " " + ver; }
+        break;
+    case 'ru':
+        str = "Устарело";
+        if (ver.length) { str = str + " " + ver; }
+        break;
+    case 'zh-CN':
+        str = "已废弃";
+        if (ver.length) { str = str + " " + ver; }
+        break;
+    case 'zh-TW':
+        str = "已正式宣告棄用";
+        if (ver.length) { str = str + " " + ver; }
+        break;
+    default:
+        str = "Deprecated";
+        if (ver.length) { str = str + " since " + ver; }
+        break;
+}
+
+var str_desc = mdn.localString({
+  "en-US": "This feature is no longer recommended. Though some browsers might still support it, it may have already been removed from the relevant web standards, may be in the process of being dropped, or may only be kept for compatibility purposes. Avoid using it, and update existing code if possible; see the <a href='#Browser_compatibility'>compatibility table</a> at the bottom of this page to guide your decision. Be aware that this feature may cease to work at any time.",
+  "de":    "Dieses Feature wurde aus den Webstandards entfernt. Obwohl manche Browser es immer noch unterstützen, wird es zukünftig wegfallen. Es sollte daher nicht mehr in alten oder neuen Projekten verwendet werden. Webseiten oder Webapps, die es benutzen, funktionieren möglicherweise irgendwann nicht mehr korrekt.",
+  "es":    "This feature has been removed from the Web standards. Though some browsers may still support it, it is in the process of being dropped. Do not use it in old or new projects. Pages or Web apps using it may break at any time.",
+  "fr":    "Cette fonctionnalité a été supprimée des standards du Web. Bien que quelques navigateurs puissent encore la supporter, elle est en cours d'éradication. Ne l'utilisez ni dans d'anciens projets, ni dans de nouveaux. Les pages et applications Web l'utilisant peuvent cesser de fonctionner à tout moment.",
+  "ja":    "この機能はウェブ標準から削除されました。まだ対応しているプラウザーがあるかもしれませんが、ゆくゆくはなくなるものです。使用を避け、できれば既存のコードを更新してください。このページの下部にある<a href='#Browser_compatibility'>ブラウザーの対応</a>を見て判断してください。この機能は突然動作しなくなる可能性があることに注意してください。",
+  "pl":    "This feature has been removed from the Web standards. Though some browsers may still support it, it is in the process of being dropped. Do not use it in old or new projects. Pages or Web apps using it may break at any time.",
+  "ru":    "Эта возможность была удалена из веб-стандартов. Хотя некоторые браузеры по-прежнему могут поддерживать её, она находится в процессе удаления. Не используйте её ни в старых, ни в новых проектах. Страницы или веб-приложения, использующие её, могут в любой момент сломаться.",
+  "zh-CN": "该特性已经从 Web 标准中删除，虽然一些浏览器目前仍然支持它，但也许会在未来的某个时间停止支持，请尽量不要使用该特性。",
+  "zh-TW": "This feature has been removed from the Web standards. Though some browsers may still support it, it is in the process of being dropped. Do not use it in old or new projects. Pages or Web apps using it may break at any time."
+});
+
+
+switch($0) {
+    case 'inline':
+        %><span class="inlineIndicator deprecated deprecatedInline" title="<%=(tip)%>"><%-str%></span><%
+        break;
+    case 'header':
+        if (tip.length) { str = str + " " + tip; }
+        %><div class="blockIndicator deprecated deprecatedHeader">
+            <p><strong><%-await template("ObsoleteBadge", [1])%> <%-str%></strong><br/><%-str_desc%></p>
+        </div><%
+        break;
+    case 'method':
+        if (tip.length) { str = str + " " + tip; }
+        %><div>
+            <span class="indicatorInHeadline deprecated deprecatedMethod"><%-str%></span>
+            <h3><%-($2)%></h3>
+        </div><%
+        break;
+    default: break;
+}%>

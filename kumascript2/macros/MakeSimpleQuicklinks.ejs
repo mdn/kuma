@@ -1,0 +1,59 @@
+<%
+// Creates a quicklinks box that contains the pages given as arguments. Only
+// one level of hierarchy is allowed by this macro.
+//
+// Parameters:
+//
+//  $0..$n  The pages to link to in quicklinks.
+//
+// If an item starts with "http://" or "https://", there must be a "|<title>"
+// at the end to give the item a title to use in the list. You can optionally
+// also include text for the tooltip. For example:
+//
+// {{MakeSimpleQuicklinks("/en-US/docs/foo", "http://somesite.com|Awesome Site",
+//     "https://othersite.com|Another site|Tooltip for another site")}}
+
+let quicklinks = "<section id='Quick_Links'><ol>";
+let count = arguments.length;
+
+for (let i=0; i<count; i++) {
+    let item = arguments[i];
+    let path = "";
+    let title = "";
+    let text = "";
+    
+    if (item.substr(0, 7) == "http://" || item.substr(0, 8) == "https://") {
+      let ar = item.split("|");
+      path = ar[0];
+      text = ar[1];
+      if (ar.length > 2) {
+        title = wiki.escapeQuotes(ar[2]);
+      }
+    } else {
+      let page = await wiki.getPage(item);
+      if (page && page.url) {
+        path = page.url;
+        if (page.summary) {
+            title = wiki.escapeQuotes(page.summary);
+        } else {
+            title = "";
+        }
+        text = page.title;
+      } else {
+          path = item;
+          text = item;
+          title = "";
+      }
+    }
+    
+    quicklinks += "<li><a href='" + path + "'";
+    
+    if (title) {
+        quicklinks += " title='" + title + "'";
+    }
+    quicklinks += ">" + text + "</a></li>";
+}
+
+quicklinks += "</ol></section>";
+%>
+<%-quicklinks%>

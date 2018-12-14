@@ -1,0 +1,19 @@
+<%
+// Create a single item in a list. Intended for use in quicklinks. The item
+// is created as a link with the item text as specified, linked to the
+// given page; its title attribute is the SEO summary for the target page.
+//
+// ONLY FOR PAGES ON MDN.
+//
+// Parameters:
+//
+//  $0  Item text
+//  $1  URL
+
+let page = await wiki.getPage($1);
+let summary = '';
+if (page.summary) { // If the page doesn't exist (not yet translated)
+    summary = wiki.escapeQuotes(page.summary);
+}
+%>
+<a href="<%-$1%>" <%- summary?'title="'+summary+'"':''%>><%-$0%></a>

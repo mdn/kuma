@@ -1,0 +1,25 @@
+<%
+var lang = env.locale;
+
+var anch = "m-" + $0;
+var dispApi = ($2 || $0) + $1;
+
+var methodName = mdn.localString({
+  "en-US": "Method",
+  "de": "Methoden",
+  "fr": "Méthodes",
+  "pl": "Metoda",
+  "ru": "Методы"
+});
+
+var destOldType = lang + '/docs/XUL:' + methodName + ':' + $0;
+var destNewType = lang + '/docs/Mozilla/Tech/XUL/' + methodName + '/' + $0;
+
+if (wiki.pageExists(destNewType)) {
+  %><span id="<%=(anch)%>"><code><%-(web.link(wiki.uri(destNewType), dispApi))%></code></span><%
+} else if (wiki.pageExists(destOldType)) {
+  %><span id="<%=(anch)%>"><code><%-(web.link(wiki.uri(destOldType), dispApi))%></code></span><%
+} else {
+  %><span id="<%=(anch)%>"><code><%-(web.link(wiki.uri(destNewType), dispApi))%></code></span><%
+}
+%>

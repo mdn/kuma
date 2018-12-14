@@ -1,0 +1,11 @@
+<%
+// Inserts a banner across the page indicating Firefox version requirements.
+// Calls through to the new FirefoxVersionIndicator macro, which should be used
+// instead.
+//
+// Parameters:
+//
+//  $0  Firefox version required.
+%>
+
+<%-await template("FirefoxVersionIndicator", [2, $0])%>

@@ -1,0 +1,67 @@
+<%
+
+/*
+The "examples.json" file from the https://github.com/mdn/webextensions-examples
+repository contains information about the examples living in that repository.
+
+This macro loads the "examples.json" file and uses it to build a table
+presenting that information.
+
+For example, the page at https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Examples
+is generated using this macro.
+
+*/
+
+const examplesBaseUrl = "https://github.com/mdn/webextensions-examples/tree/master/";
+const allExamples = await MDN.fetchJSONResource("https://raw.githubusercontent.com/mdn/webextensions-examples/master/examples.json");
+const lang = env.locale;
+
+const s_name = mdn.localString({
+    "en-US": "Name"
+});
+
+const s_desc = mdn.localString({
+    "en-US": "Description"
+});
+
+const s_javascript_apis = mdn.localString({
+    "en-US": "JavaScript APIs"
+});
+
+const s_webextension_api_path = mdn.localString({
+    "en-US": "Add-ons/WebExtensions/API"
+});
+
+function writeJavaScriptAPIs(apisJSON) {
+  let output = "";
+  for (let jsAPI of apisJSON) {
+    var link = `/${lang}/${s_webextension_api_path}/${jsAPI.replace(".", "/")}`;
+    output += `<a href="${link}"><code>${jsAPI}</code></a><br/>`;
+  }
+  return output;
+}
+
+function writeAllExamples(examples) {
+  let output = "<table class=\"standard-table fullwidth-table\">";
+  output += `<tr>
+               <th>${s_name}</th>
+               <th>${s_desc}</th>
+               <th style=\"width: 40%\">${s_javascript_apis}</th>
+            </tr>`;
+
+  for (let example of examples) {
+    output += `<tr>`;
+    output += `  <td><a href="${examplesBaseUrl + example.name}">${example.name}</a></td>`;
+    output += `  <td>${example.description}</td>`;
+    output += `  <td>${writeJavaScriptAPIs(example.javascript_apis)}</td>`;
+    output += `</tr>`;
+  }
+  output += "</table>";
+  return output;
+}
+
+var output = writeAllExamples(allExamples);
+
+%>
+
+<%- output %>

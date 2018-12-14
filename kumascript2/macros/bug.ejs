@@ -1,0 +1,94 @@
+<%
+/*
+ * Inserts a link to a bug in Mozilla's Bugzilla database.
+ *
+ * $0 - The bug number to link to. As we follow resolved duplicate this may not be the number in the output.
+ * $1 - Type of output (optional)
+ *      bug (default) - Linked bug number, title of link includes status and summary
+ *      table - Row in a table, columns are linked bug number and summary
+ *      summary - Linked bug number and summary
+ * $2 - Comment number to link to (optional)
+ *
+ * http://www.bugzilla.org/docs/tip/en/html/api/Bugzilla/WebService/Server/REST.html
+ * https://wiki.mozilla.org/Bugzilla:REST_API
+ */
+
+var type = $1 || 'bug';
+
+var desc = '';
+var tipStatus = '';
+var style = '';
+var bugNumber;
+var bugDupe = $0;
+var url;
+var bugDetail = [];
+while (bugDupe != null) {
+    bugNumber = bugDupe;
+    url = encodeURI('https://bugzilla.mozilla.org/rest/bug/' + bugDupe + '?include_fields=summary,dupe_of,resolution');
+    bugzillaDetail = await MDN.fetchJSONResource(url);
+    if (bugzillaDetail == null) {
+        desc = "Unable to contact Bugzilla server.";
+        bugDupe = null;
+    } else if (bugzillaDetail.error != null) {
+        if (bugzillaDetail.code == 102) {
+            desc = "Access to this bug is restricted.";
+        } else {
+            desc = bugzillaDetail.message;
+            tipStatus = "ERROR: ";
+        }
+        bugDupe = null;
+    } else if (bugzillaDetail.bugs != null) {
+        bugDetail = bugzillaDetail.bugs[0];
+        bugDupe = bugDetail.dupe_of;
+        if (!bugDupe) {
+            if (bugDetail.resolution == "FIXED") {
+                tipStatus = 'FIXED: ';
+                style = "class='bug-resolved'";
+            }
+            desc = bugDetail.summary;
+        }
+    } else {
+        desc = "Unknown error.";
+        bugDupe = null;
+    }
+}
+
+var bugPageURL = 'https://bugzilla.mozilla.org/show_bug.cgi?id=' + bugNumber;
+
+var s_comment = "";
+
+if ($2 != undefined && !isNaN($2)) {
+    var comment = parseInt($2, 10);
+    if (!isNaN(comment)) {
+        bugPageURL += "#c" + comment;
+
+        s_comment = mdn.localString({
+            "en-US":    ", comment " + comment
+        });
+    }
+}
+
+var s_bug = mdn.localString({
+    "en-US": "bug",
+    "ca"   : "errada",
+    "cs"   : "chyba",
+    "es"   : "error",
+    "ja"   : "バグ",
+    "pl"   : "błąd",
+    "de"   : "Bug",
+    "ru"   : "баг"
+});
+if (type == 'table') { %>
+<tr>
+    <td><a <%= style %> href="<%= bugPageURL %>"><%= bugNumber %></a></td>
+    <td><%= desc %></td>
+</tr>
+<%
+} else if (type == 'summary') {
+%>
+<a href="<%= bugPageURL %>"><%=s_bug%>&nbsp;<%= bugNumber %> – <%= desc %></a>
+<%
+} else {
+%>
+<a href="<%= bugPageURL %>" title="<%= tipStatus + desc %>"><%=s_bug%>&nbsp;<%= bugNumber %><%=s_comment%></a>
+<% } %>

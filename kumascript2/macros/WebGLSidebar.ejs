@@ -1,0 +1,186 @@
+<%
+var currentSection = $0;
+var locale = env.locale;
+
+function state(section) {
+  if (section == currentSection) {
+    return "open";
+  }
+  return "closed";
+}
+
+var text = mdn.localStringMap({
+  'en-US': {
+    'WebGL_API': 'WebGL API',
+    'WebGL_tutorial': 'WebGL tutorial',
+    'Getting_started': 'Getting started with WebGL',
+    '2D_content': 'Adding 2D content to a WebGL context',
+    'shaders_color': 'Using shaders to apply color in WebGL',
+    'Animating': 'Animating objects with WebGL',
+    '3D_objects': 'Creating 3D objects using WebGL',
+    'Textures': 'Using textures in WebGL',
+    'Lightning': 'Lighting in WebGL',
+    'Animating_textures': 'Animating textures in WebGL',
+    'Examples': 'Examples and articles',
+    'webgl_matrix_math': 'Matrix math for the web',
+    'webgl_mvp': 'WebGL model view projection',
+    'webgl_best_practices': 'WebGL best practices',
+    'webgl_extensions': 'Using WebGL extensions',
+    'basic_2d_example': 'A basic 2D WebGL animation example',
+    'Interfaces': 'Interfaces',
+    'Documentation': 'Documentation:',
+    'Useful_lists': 'Useful lists',
+    'WebGL_tag': 'Pages tagged "WebGL"',
+    'Contribute': 'Contribute',
+    'Doc_status': 'WebGL doc status',
+    'The_MDN_project': 'The MDN project',
+  },
+   'de': {
+    'WebGL_API': 'WebGL API',
+    'WebGL_tutorial': 'WebGL Tutorial',
+    'Getting_started': 'Einführung in WebGL',
+    '2D_content': 'Hinzufügen von 2D Inhalten in einen WebGL-Kontext',
+    'shaders_color': 'Farben mittels Shader in einen WebGL-Kontext hinzufügen',
+    'Animating': 'Objekte mit WebGL animieren',
+    '3D_objects': '3D-Objekte mit WebGL erstellen',
+    'Textures': 'Texturen in WebGL verwenden',
+    'Lightning': 'Beleuchtung in WebGL',
+    'Animating_textures': 'Animierte Texturen in WebGL',
+    'Examples': 'Beispiele und Artikel',
+    'webgl_matrix_math': 'Matrix math for the web',
+    'webgl_mvp': 'WebGL model view projection',
+    'webgl_best_practices': 'WebGL best practices',
+    'webgl_extensions': 'Using WebGL extensions',
+    'Interfaces': 'Interfaces',
+    'Documentation': 'Dokumentation:',
+    'Useful_lists': 'Nützliche Listen',
+    'WebGL_tag': 'Seiten mit dem Tag "WebGL"',
+    'Contribute': 'Mitmachen',
+    'Doc_status': 'Status der WebGL-Dokumentation',
+    'The_MDN_project': 'Das MDN-Projekt',
+  },
+  'fr': {
+    'WebGL_API': 'WebGL API',
+    'WebGL_tutorial': 'WebGL tutoriel',
+    'Getting_started': 'Commencer avec WebGL',
+    '2D_content': 'Ajouter du contenu à WebGL',
+    'shaders_color': 'Ajouter des couleurs avec les shaders',
+    'Animating': 'Animer des objets avec WebGL',
+    '3D_objects': 'Créer des objets 3D avec WebGL',
+    'Textures': 'Utiliser les textures avec WebGL',
+    'Lightning': 'Lighting in WebGL',
+    'Animating_textures': 'Animating textures in WebGL',
+    'Examples': 'Examples and articles',
+    'webgl_matrix_math': 'Matrix math for the web',
+    'webgl_mvp': 'WebGL model view projection',
+    'webgl_best_practices': 'WebGL best practices',
+    'webgl_extensions': 'Using WebGL extensions',
+    'Interfaces': 'Interfaces',
+    'Documentation': 'Documentation:',
+    'Useful_lists': 'Listes utiles',
+    'WebGL_tag': 'Pages étiquetées "WebGL"',
+    'Contribute': 'Contribuer',
+    'Doc_status': 'Statut de la documentation',
+    'The_MDN_project': 'Le projet MDN',
+  },
+  'ru': {
+    'WebGL_API': 'WebGL API',
+    'WebGL_tutorial': 'Руководство WebGL',
+    'Getting_started': 'Начало работы с WebGL',
+    '2D_content': 'Добавление двухмерного контента в контекст WebGL',
+    'shaders_color': 'Использование шейдеров для задания цвета в WebGL',
+    'Animating': 'Оживление объектов при помощи WebGL',
+    '3D_objects': 'Создание 3D с помощью WebGL',
+    'Textures': 'Использование текстур WebGL',
+    'Lightning': 'Освещение WebGL',
+    'Animating_textures': 'Анимация текстур WebGL',
+    'Examples': 'Примеры и статьи',
+    'webgl_matrix_math': 'Математическая матрица для Веба',
+    'webgl_mvp': 'WebGL модель, представление, проекция',
+    'webgl_best_practices': 'WebGL лучшие практики',
+    'webgl_extensions': 'Использование расширений WebGL',
+    'Interfaces': 'Интерфейсы',
+    'Documentation': 'Доментация:',
+    'Useful_lists': 'Полезные списки',
+    'WebGL_tag': 'Страницы отмеченные "WebGL"',
+    'Contribute': 'Внести вклад',
+    'Doc_status': 'Стутус документации WebGL',
+    'The_MDN_project': 'Проект MDN',
+  }
+});
+%>
+<section id="Quick_Links">
+ <ol>
+  <li><a href="/<%=locale%>/docs/Web/API/WebGL_API"><strong><%=text['WebGL_API']%></strong></a></li>
+  <li class="toggle">
+    <details open>
+      <summary><%=text['WebGL_tutorial']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL"><%=text['Getting_started']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/WebGL_API/Tutorial/Adding_2D_content_to_a_WebGL_context"><%=text['2D_content']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/WebGL_API/Tutorial/Using_shaders_to_apply_color_in_WebGL"><%=text['shaders_color']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/WebGL_API/Tutorial/Animating_objects_with_WebGL"><%=text['Animating']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/WebGL_API/Tutorial/Creating_3D_objects_using_WebGL"><%=text['3D_objects']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/WebGL_API/Tutorial/Using_textures_in_WebGL"><%=text['Textures']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/WebGL_API/Tutorial/Lighting_in_WebGL"><%=text['Lightning']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/WebGL_API/Tutorial/Animating_textures_in_WebGL"><%=text['Animating_textures']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details open>
+      <summary><%=text['Examples']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Web/API/WebGL_API/Matrix_math_for_the_web"><%=text['webgl_matrix_math']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/WebGL_API/WebGL_model_view_projection"><%=text['webgl_mvp']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/WebGL_API/WebGL_best_practices"><%=text['webgl_best_practices']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/WebGL_API/Using_Extensions"><%=text['webgl_extensions']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/WebGL_API/Basic_2D_animation_example"><%=text['basic_2d_example']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details open>
+      <summary><%=text['Interfaces']%></summary>
+      <ol>
+        <li><%-await template("domxref", ["WebGLRenderingContext"])%></li>
+        <li><%-await template("domxref", ["WebGL2RenderingContext"])%></li>
+        <li><%-await template("domxref", ["WebGLActiveInfo"])%></li>
+        <li><%-await template("domxref", ["WebGLBuffer"])%></li>
+        <li><%-await template("domxref", ["WebGLContextEvent"])%></li>
+        <li><%-await template("domxref", ["WebGLFramebuffer"])%></li>
+        <li><%-await template("domxref", ["WebGLProgram"])%></li>
+        <li><%-await template("domxref", ["WebGLQuery"])%></li>
+        <li><%-await template("domxref", ["WebGLRenderbuffer"])%></li>
+        <li><%-await template("domxref", ["WebGLSampler"])%></li>
+        <li><%-await template("domxref", ["WebGLShader"])%></li>
+        <li><%-await template("domxref", ["WebGLShaderPrecisionFormat"])%></li>
+        <li><%-await template("domxref", ["WebGLSync"])%></li>
+        <li><%-await template("domxref", ["WebGLTexture"])%></li>
+        <li><%-await template("domxref", ["WebGLTransformFeedback"])%></li>
+        <li><%-await template("domxref", ["WebGLUniformLocation"])%></li>
+        <li><%-await template("domxref", ["WebGLVertexArrayObject"])%></li>
+      </ol>
+    </details>
+  </li>
+
+  <li><strong><a href="/<%=locale%>/docs/MDN"><%=text['Documentation']%></a></strong></li>
+  <li class="toggle">
+    <details <%=state('Useful lists')%>>
+      <summary><%=text['Useful_lists']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/tag/WebGL"><%=text['WebGL_tag']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Contribute')%>>
+      <summary><%=text['Contribute']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/MDN/Doc_status/API/WebGL"><%=text['Doc_status']%></a></li>
+        <li><a href="/<%=locale%>/docs/MDN"><%=text['The_MDN_project']%></a></li>
+      </ol>
+    </details>
+  </li>
+ </ol>
+</section>

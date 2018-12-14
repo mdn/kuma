@@ -1,0 +1,10 @@
+<%
+// Used in the Accessibility documentation to generate links to event
+// reference pages.
+//
+// Parameters
+//  $0  Event name to link to
+
+var href = '/' + env.locale + '/docs/Web/Accessibility/AT-APIs/Gecko/Events#' + $0;
+%>
+<code><a href="<%- href %>"><%- $0 %></a></code>

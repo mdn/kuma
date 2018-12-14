@@ -1,0 +1,60 @@
+<%
+// Embeds a live sample given the ID of its header block.
+//
+// Parameters:
+//  $0 - The ID of the header block containing the sample
+//  $1 - The width of the iframe (optional)
+//  $2 - The height of the iframe (optional)
+//  $3 - The url of a screenshot of the sample working as intended (optional)
+//  $4 - The slug from which to load the sample (optional; current page used if not provided)
+//  $5 - The class name of the frame; defaults to "sample-code-frame". If you
+//       pass this parameter and give it a value other than "sample-code-frame",
+//       then the "Open in CodePen"/"Open in JSFiddle" buttons will not be displayed.
+//  $6 - Allowed features, separated by semicolons (optional)
+//
+// See also : LiveSampleLink
+
+var sampleId = $0;
+var width = $1;
+var height = $2;
+var screenshotUrl = $3;
+var sampleSlug = $4;
+var className = $5 || "sample-code-frame";
+var allowedFeatures = $6;
+
+var hasScreenshot = (screenshotUrl && (screenshotUrl.length > 0));
+
+var sampleUrl = "";
+if (sampleSlug) {
+    sampleUrl = "https://developer.mozilla.org/" + env.locale + "/docs";
+    if (sampleSlug.charAt(0) != "/") {
+        sampleUrl += "/";
+    }
+    sampleUrl += sampleSlug;
+}
+var url = await template('LiveSampleURL', [sampleId, sampleUrl]);
+
+if (hasScreenshot) {
+%><table class="sample-code-table"><%
+  %><thead><%
+    %><tr><%
+      %><th scope="col" style="text-align: center;">Screenshot</th><%
+      %><th scope="col" style="text-align: center;">Live sample</th><%
+    %></tr><%
+  %></thead><%
+  %><tbody><%
+    %><tr><%
+      %><td><%
+        %><img alt="" class="internal" src="<%= screenshotUrl %>" /><%
+      %></td><%
+      %><td><%
+} // end hasScreenshot
+%><iframe class="live-sample-frame <%= className %>"<%
+%> id="frame_<%= sampleId %>"<%
+%> frameborder="0"<%
+if (width) { %> width="<%= width %>"<% }
+if (height) { %> height="<%= height %>"<% }
+%> src="<%- url %>"<%
+if (allowedFeatures) { %> allow="<%= allowedFeatures %>"<% }
+%>></iframe><%
+if (hasScreenshot) { %></td></tr></tbody></table><% } %>

@@ -1,0 +1,14 @@
+<%
+// Constructs a QuickLinks box for the current page, using the subpages
+// of the specified page to generate the links. If no input is specified,
+// then the current page's subpages are used.
+//
+// Only two levels total of depth are permitted.
+//
+// Parameters:
+//
+//  $0  Optional; the page whose subpages are to be included.
+%>
+<section class="Quick_links" id="Quick_Links">
+<%-await template("ListSubpages", [$0, 2, 0, 1])%>
+</section>

@@ -1,0 +1,30 @@
+<% 
+var str = mdn.localStringMap({
+   "en-US": {
+       'title': "Please update this with the earliest version of support.",
+       'text':  "Yes"
+   },
+   "es": {
+       'title': "Por favor actualiza esto con la versión más reciente que de soporte.",
+       'text':  "Yes"
+   },
+   "fr": {
+       'title': "Veuillez mettre à jour avec la version minimale du support",
+       'text':  "Oui"
+   },
+   "ja": {
+       'title': "最新の対応状況に更新してください。",
+       'text':  "有"
+   },
+   "de": {
+       'title': "Bitte mit der frühsten Version des Supports updaten.",
+       'text':  "Ja"
+   },
+   "ru": {
+       'title': "Пожалуйста, замените этот шаблон на указание самой ранней поддерживаемой версии.",
+       'text':  "Да"
+   }
+});
+
+
+%><span style="color: #888" title="<%- str['title'] %>">(<%- str['text'] %>)</span>

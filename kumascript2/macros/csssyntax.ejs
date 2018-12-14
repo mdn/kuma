@@ -1,0 +1,460 @@
+<%
+/*
+  Displays the syntax of a CSS property or descriptor
+
+  $0 - property/descriptor name - defaults to the slug name
+  $1 - @-rule - defaults to the @-rule within the URL
+*/
+
+let propertiesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/properties.json";
+let atRulesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/at-rules.json";
+let selectorsUrl = "https://raw.githubusercontent.com/mdn/data/master/css/selectors.json";
+let typesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/types.json";
+let syntaxesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/syntaxes.json";
+let unitsUrl = "https://raw.githubusercontent.com/mdn/data/master/css/units.json";
+// List types for which we want to link to a description instead of
+// including it in the formal syntax block
+let s_named_color_link = mdn.localString({
+    "en-US": "/docs/Web/CSS/color_value#Color_keywords",
+    "fr"   : "/docs/Web/CSS/Type_color#Les_mots-clés",
+    "de"   : "/docs/Web/CSS/Farben#Farbschlüsselwörter",
+    "es"   : "/docs/Web/CSS/color_value#Color_keywords",
+    "ja"   : "/docs/Web/CSS/color_value#Color_keywords",
+    "nl"   : "/docs/Web/CSS/kleur_waarde#Color_keywords",
+    "pt-BR": "/docs/Web/CSS/color_value#Palavras-chave_de_cores",
+    "zh-CN": "/docs/Web/CSS/color_value#色彩关键字"
+});
+let s_system_color_link = mdn.localString({
+  "en-US": "/docs/Web/CSS/color_value#Color_keywords",
+  "fr"   : "/docs/Web/CSS/Type_color#Couleurs_système",
+  "de"   : "/docs/Web/CSS/Farben#Systemfarben",
+  "es"   : "/docs/Web/CSS/color_value#Colores_de_Sistema",
+  "ja"   : "/docs/Web/CSS/color_value#System_Colors",
+  "nl"   : "/docs/Web/CSS/kleur_waarde#System_Colors",
+  "pt-BR": "/docs/Web/CSS/color_value#System_Colors",
+  "zh-CN": "/docs/Web/CSS/color_value#系统颜色"
+});
+let externallyDescribedTypesData = {
+  "named-color": {
+    link: s_named_color_link
+  },
+  "deprecated-system-color": {
+    link: s_system_color_link
+  }
+};
+let data = {
+    properties: await MDN.fetchJSONResource(propertiesUrl),
+    atRules: await MDN.fetchJSONResource(atRulesUrl),
+    selectors: await MDN.fetchJSONResource(selectorsUrl),
+    types: await MDN.fetchJSONResource(typesUrl),
+    syntaxes: await MDN.fetchJSONResource(syntaxesUrl),
+    units: await MDN.fetchJSONResource(unitsUrl),
+    externallyDescribedTypes: externallyDescribedTypesData
+};
+let slug = env.slug;
+let locale = env.locale;
+let localWiki = wiki;
+let escapeQuotes = mdn.escapeQuotes;
+let name = $0 || (slug ? slug.split("/").pop().toLowerCase() : "preview-wiki-content");
+let atRule = $1;
+let rawSyntax = "";
+let formattedSyntax = "";
+let localize = mdn.getLocalString;
+
+let commonLocalStrings = string.deserialize(await template("L10n:Common"));
+let localStrings = string.deserialize(await template("L10n:CSS"));
+
+let s_missing = mdn.localString({
+    "en-US": "Syntax not found in DB!",
+    "fr"   : "La syntaxe n'a pas été trouvée !",
+    "de"   : "Syntax nicht in der Datenbank gefunden!",
+    "zh-CN": "该属性的语法尚未添加",
+    "ru"   : "Синтаксис не найден в базе данных"
+});
+
+let s_where = mdn.localString({
+    "en-US": "where ",
+    "de"   : "wobei ",
+    "fr"   : "où ",
+    "ru"   : "где "
+});
+
+let s_syntax_value_definition = mdn.localString({
+    "en-US": "Value_definition_syntax",
+    "de"   : "Wertdefinitionssyntax",
+    "fr"   : "Syntaxe_de_d%C3%A9finition_des_valeurs"
+});
+
+let s_and = mdn.localString({
+    "en-US": "and ",
+    "de"   : "und ",
+    "fr"   : "et ",
+	"ja"   : "と",
+    "ru"   : "и "
+});
+
+let s_or = mdn.localString({
+    "en-US": "or",
+    "de"   : "oder",
+    "ru"   : "или"
+});
+
+let s_possible_values = mdn.localString({
+    "en-US": "Possible values: ",
+    "de"   : "Mögliche Werte: ",
+    "ru"   : "Возможные значения: "
+});
+
+let s_number_followed_by = mdn.localString({
+    "en-US": "a number followed by",
+    "de"   : "eine Nummer gefolgt von",
+});
+
+let s_like = mdn.localString({
+    "en-US": "like",
+    "de"   : "wie",
+    "ru"   : "как"
+});
+
+let typeInfo = {
+    "angle": {
+        "title": s_possible_values + s_number_followed_by + "'deg', 'grad', 'rad' " + s_or + " 'turn', " + s_like + " 2turn, 1.3rad, -60deg " + s_or + " 0grad."
+    },
+    "blend-mode": {
+        "title": s_possible_values + "normal, multiply, screen, overlay, darken, lighten, color-dodge, color-burn, hard-light, soft-light, difference, exclusion, hue, saturation, color, luminosity"
+    },
+    "color": {
+        "typeLinkName": "color_value"
+    },
+    "custom-ident": {},
+    "filter-function": {
+        "title": s_possible_values + "blur(), brightness(), contrast(), drop-shadow(), grayscale(), hue-rotate(), invert(), opacity(), saturate(), sepia()"
+    },
+    "flex": {
+        "typeLinkName": "flex_value"
+    },
+    "frequency": {},
+    "ident": {},
+    "image": {},
+    "integer": {},
+    "length": {
+        "title": s_possible_values + s_number_followed_by + "'em', 'ex', 'ch', 'rem', 'px', 'cm', 'mm', 'in', 'vh', 'vw', 'vmin', 'vmax', 'pt', 'pc' " + s_or + " 'px', " + s_like + " 3px, 1.5cm, -0.5em " + s_or + " 0"
+    },
+    "number": {},
+    "percentage": {},
+    "position": {
+        "typeLinkName": "position_value"
+    },
+    "resolution": {},
+    "single-transition-timing-function": {
+        "title": s_possible_values + "cubic-bezier(), steps(), linear, ease, ease-in, ease-out, east-in-out, step-start-step-end"
+    },
+    "string": {},
+    "time": {
+        "title": s_possible_values + s_number_followed_by + "'s' " + s_or + " 'ms', " + s_like + " 3s, -2.5ms " + s_or + " 0s."
+    },
+    "timing-function": {
+        "title": s_possible_values + "cubic-bezier(), steps(), linear, ease, ease-in, ease-out, east-in-out, step-start-step-end"
+    },
+    "url": {},
+    "uri": {},
+    "transform-function": {
+        "title": s_possible_values + "matrix(), matrix3d(), rotate(), rotate3d(), rotateX(), rotateY(), rotateZ(), scale(), scale3d(), scaleX(), scaleY(), scaleZ(), skewX(), skewY(), translate(), translate3d(), translateX(), translateY(), translateZ()"
+    }
+};
+
+let operators = [
+    {
+        regexp: /\#/g,
+        title: mdn.localString({
+            "en-US": "Hash mark: the entity is repeated one or several times, each occurence separated by a comma",
+            "de": "Rautensymbol: Die Entität wird einmal oder mehrmals wiederholt, wobei jedes Vorkommen durch ein Komma getrennt wird"
+        }),
+        anchor: mdn.localString({
+            "en-US": "Hash_mark_()",
+            "de"   : "Rautensymbol_()"
+        })
+    },
+    {
+        regexp: /\|\|/g,
+        title: mdn.localString({
+            "en-US": "Double bar: one or several of the entities must be present, in any order",
+            "de"   : "Doppelter Balken: Eine oder mehrere der Entitäten muss angegeben werden, in beliebiger Reihenfolge"
+        }),
+        anchor: mdn.localString({
+            "en-US": "Double_bar",
+            "de"   : "Doppelter_Balken"
+        })
+    },
+    {
+        regexp: /[^\|](\|)[^\|]/g,
+        title: mdn.localString({
+            "en-US": "Single bar: exactly one of the entities must be present",
+            "de"   : "Einfacher Balken: Genau eine der Entitäten muss angegeben werden"
+        }),
+        anchor: mdn.localString({
+            "en-US": "Single_bar",
+            "de"   : "Einfacher_Balken"
+        })
+    },
+    {
+        regexp: /&&/g,
+        title: mdn.localString({
+            "en-US": "Double ampersand: all of the entities must be present, in any order",
+            "de"   : "Doppeltes Und-Zeichen: Alle Entitäten müssen angegeben werden, in beliebiger Reihenfolge"
+        }),
+        anchor: mdn.localString({
+            "en-US": "Double_ampersand",
+            "de"   : "Doppeltes_Und-Zeichen"
+        })
+    },
+    {
+        regexp: /\?/g,
+        title: mdn.localString({
+            "en-US": "Question mark: the entity is optional",
+            "de"   : "Fragezeichen: Die Entität ist optional"
+        }),
+        anchor: mdn.localString({
+            "en-US": "Question_mark_()",
+            "de"   : "Fragezeichen_()"
+        })
+    },
+    {
+        regexp: /([^\/])\*(?!\/)/g,
+        title: mdn.localString({
+            "en-US": "Asterisk: the entity may occur zero, one or several times",
+            "de"   : "Asterisk: Die Entität kann keinmal, einmal oder mehrmals vorkommen"
+        }),
+        anchor: mdn.localString({
+            "en-US": "Asterisk_(*)",
+            "de"   : "Asterisk_(*)"
+        })
+    },
+    {
+        regexp: /\+/g,
+        title: mdn.localString({
+            "en-US": "Plus: the entity may occur one or several times",
+            "de"   : "Plus: Die Entität kann einmal oder mehrmals vorkommen"
+        }),
+        anchor: mdn.localString({
+            "en-US": "Plus_()",
+            "de"   : "Plus_()"
+        })
+    },
+    {
+        regexp: /\[|\]/g,
+        title: mdn.localString({
+            "en-US": "Brackets: enclose several entities, combinators, and multipliers to transform them as a single component",
+            "de"   : "Eckige Klammern: umschließen mehrere Entitäten, Kombinatoren und Multiplikatoren, um diese als eine gesamte Komponente zu behandeln"
+        }),
+        anchor: mdn.localString({
+            "en-US": "Brackets",
+            "de"   : "Eckige_Klammern"
+        })
+    },
+    {
+        regexp: /\{(?!\s)|(\d)\}/g,
+        title: mdn.localString({
+            "en-US": "Curly braces: encloses two integers defining the minimal and maximal numbers of occurrences of the entity",
+            "de"   : "Geschweifte Klammern: umschließen zwei Ganzzahlen, die die Minimal- und Maximalanzahl an Vorkommen der Entität angeben"
+        }),
+        anchor: mdn.localString({
+            "en-US": "Curly_braces_(_)",
+            "de"   : "Geschweifte_Klammern_(_)"
+        })
+    },
+    {
+        regexp: /!/g,
+        title: mdn.localString({
+            "en-US": "Exclamation point: the group must produce at least one value",
+            "de"   : "Ausrufezeichen: die Gruppe muss mindestens einen Wert erzeugen"
+        }),
+        anchor: mdn.localString({
+            "en-US": "#Exclamation_point_(!)",
+            "de"   : "Ausrufezeichen_(!)"
+        })
+    },
+];
+
+async function buildLink(match, type) {
+    var link = "/" + locale + "/docs/Web/CSS/";
+    var title = "";
+    var propertyName = type.match(/\'(.+?)\'/);
+
+    // Handle property references like <'color'>
+    if (propertyName) {
+        if (data.properties[propertyName[1]]) {
+            title = data.properties[propertyName[1]].syntax;
+        }
+        return "<a href=\"" + link + propertyName[1] + "\" title=\"" + title + "\">&lt;" + propertyName[0] + "&gt;</a>";
+
+    // Handle basic types
+    } else if (typeInfo.hasOwnProperty(type)) {
+        var typeLinkName = typeInfo[type].typeLinkName || type;
+
+        link += typeLinkName;
+
+        if (typeInfo[type].title) {
+            title = typeInfo[type].title;
+        } else {
+            let page = await localWiki.getPage(link);
+            title = (page && page.summary) ? escapeQuotes(page.summary) :
+                localize(commonLocalStrings, "summary");
+        }
+
+    // Handle types which we want to describe using a link to a different page
+    }  else if (data.externallyDescribedTypes.hasOwnProperty(type)) {
+             return "<a href=\"/" + locale + data.externallyDescribedTypes[type].link + "\">&lt;" + type + "&gt;</a>";
+
+    // Handle advanced types having their syntax defined within the 'CSSData' template
+    } else if (data.syntaxes[type]) {
+        return "<a href=\"#" + type + "\">&lt;" + type + "&gt;</a>";
+
+    // Handled advanced types having their syntax not defined
+    } else {
+        return "&lt;" + type + "&gt;";
+    }
+
+    return "<a href=\"" + link + "\" title=\"" + title + "\">&lt;" + type + "&gt;</a>";
+}
+
+function addBrackets(str) {
+    return str.match(/\(\)$/) ? str : str + "()";
+}
+
+async function formatSyntax(rawSyntax) {
+    if (rawSyntax === "") {
+        return "";
+    }
+
+    var formattedSyntax = rawSyntax;
+    operators.forEach(function(operator) {
+        if (formattedSyntax.indexOf("\n") !== -1 &&
+            operator.title === "Curly braces") {
+		    return "";
+        }
+
+        formattedSyntax = formattedSyntax.replace(operator.regexp,
+            function(match, text) {
+            var linkText = match;
+            if (match.indexOf("*") !== -1) {
+                linkText = "*";
+            } else if (match.indexOf("}") !== -1) {
+                linkText = "}";
+            } else if (typeof text === "string") {
+                linkText = text;
+            }
+
+            var output = "<a href=\"/" + locale + "/docs/CSS/" +
+                s_syntax_value_definition + "#" + operator.anchor +
+                "\" title=\"" + operator.title + "\">" + linkText + "</a>";
+            if (linkText === "|") {
+                output = " " + output + " ";
+            } else if (linkText === "*" || linkText === "}") {
+                output = text + output;
+            }
+
+            return output;
+        });
+    });
+    formattedSyntax = await string.asyncReplace(
+        formattedSyntax,
+        /<([a-z0-9\(\)\'\-]+?)>/gi,
+        buildLink
+    );
+
+    return formattedSyntax;
+}
+
+async function formatTypesSyntax(formattedSyntax, describedTypes) {
+    var formattedTypesSyntax = "";
+    var types = [];
+    var typeAnchorAttributes = formattedSyntax.match(/href=".+?"/g);
+    if (typeAnchorAttributes) {
+        typeAnchorAttributes.forEach(function(typeAnchorAttribute) {
+            var type = typeAnchorAttribute.match(/href="(?:#|.*\/)(.+?)"/);
+            if (types.indexOf(type[1]) === -1 &&
+                type[1].indexOf(s_syntax_value_definition) === -1) {
+                // Some data type page names have '_value' appended,
+                // which needs to be removed in order to find the syntax
+                var subType = type[1].replace("_value", "");
+                // Describe this type if it exists in "syntaxes" and
+                // it *does not* exist in externallyDescribedTypes
+                if ((data.syntaxes.hasOwnProperty(subType)) &&
+                    (!data.externallyDescribedTypes.hasOwnProperty(subType))) {
+                    types.push(subType);
+                }
+            }
+        });
+
+        var typesSyntax = "";
+        if (types.length > 0) {
+            for(let index = 0; index < types.length; index++) {
+                let type = types[index];
+                // Avoid recursions by checking whether a type was already
+                // described before
+                // check whether https://github.com/mdn/data/pull/66 was merged
+                var syntax = data.syntaxes[type].syntax || data.syntaxes[type];
+                if (describedTypes.indexOf(type) === -1) {
+                    typesSyntax += "<span id=\"" + type + "\">&lt;" + type +
+                        "&gt;</span> = " + await formatSyntax(syntax);
+                    if (index < types.length - 1) {
+                        typesSyntax += "<br/>";
+                    }
+                    describedTypes.push(type);
+                }
+            };
+
+            if (typesSyntax !== "") {
+                formattedTypesSyntax += "<p style=\"font-family:Open Sans,Arial," +
+                    "sans-serif; margin: 10px 0 0 0;\">" + s_where +
+                    "<br/><code style=\"font-family:Consolas,Monaco," +
+                    "&quot;Andale Mono&quot;,monospace;\">" + typesSyntax +
+                    "</code></p>";
+            }
+        }
+
+        return formattedTypesSyntax + await formatTypesSyntax(typesSyntax, describedTypes);
+    }
+
+    return formattedTypesSyntax;
+}
+
+if (!atRule) {
+    var matches = null;
+    if (slug) {
+        matches = slug.match(/\/CSS\/(@.+?)(?=\/)/);
+    }
+
+    if (matches) {
+        atRule = matches[1];
+    }
+}
+
+if (name === "preview-wiki-content") {
+    formattedSyntax = "<span style=\"color:red;\">" +
+        localize(localStrings, "info_in_preview_not_available") + "</span>";
+} else {
+    if (atRule) {
+        if (data.atRules[atRule] && data.atRules[atRule].descriptors) {
+    	    rawSyntax = data.atRules[atRule].descriptors[name].syntax;
+        }
+    } else if (name[0] === "@") {
+        if (data.atRules[name].syntax) {
+            rawSyntax = data.atRules[name].syntax;
+        }
+    } else if (name[0] === ":" && typeof data.selectors[name] !== 'undefined') {
+        rawSyntax = data.selectors[name].syntax;
+    } else if (data.properties[name]) {
+        rawSyntax = data.properties[name].syntax;
+    } else if (data.syntaxes[addBrackets(name)]) {
+        rawSyntax = data.syntaxes[addBrackets(name)].syntax;
+    }
+
+    formattedSyntax = await formatSyntax(rawSyntax);
+    formattedSyntax += await formatTypesSyntax(formattedSyntax, []);
+}
+
+var result = formattedSyntax || s_missing;
+
+%><%- result %>

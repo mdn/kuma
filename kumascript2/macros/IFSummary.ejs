@@ -1,0 +1,26 @@
+<%
+// This is a shortcut for using IFSummaryStart, then summary text, then
+// IFSummaryEnd. It's used to create the summary box at the top of a page.
+//
+// Parameters:
+//
+//  $0 - Path of IDL file
+//  $1 - The interface's parent class
+//  $2 - "scriptable" or "not scriptable"
+//  $3 - The last Gecko version the interface changed in
+//  $4 - A summary of the interface (optional)
+//  $5 - The Gecko version the interface was introduced in (optional)
+//  $6 - The Gecko version the interface was deprecated in (optional)
+//  $7 - The Gecko version the interface was removed in (optional)
+//
+%>
+
+<%-await template("IFSummaryStart", [$0, $2])%>
+<%
+var summary = $4;
+if (!$4) {
+  summary = "<i>Please add a summary to this article.</i>";
+}
+%>
+<%-summary%>
+<%-await template("IFSummaryEnd", [$1, $3, $5, $6, $7])%>

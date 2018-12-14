@@ -1,0 +1,26 @@
+<%
+var lang = env.locale;
+/* set up the page name based on language */
+
+var propName = "Property";
+var anch = "p-" + $0;
+var dispApi = ($1 || $0);
+
+var propName = mdn.localString({
+  "en-US": "Property",
+  "de": "Eigenschaften",
+  "fr": "Propriétés",
+  "pl": "Własność"
+});
+
+var destOldType = lang + '/docs/XUL:' + propName + ':' + $0;
+var destNewType = lang + '/docs/XUL/' + propName + '/' + $0;
+
+if (wiki.pageExists(destNewType)) {
+  %><code><span><%-(web.link(wiki.uri(destNewType), dispApi))%></span></code><%
+} else if (wiki.pageExists(destOldType)) {
+  %><code><span><%-(web.link(wiki.uri(destOldType), dispApi))%></span></code><%
+} else {
+  %><code><span><%-(web.link(wiki.uri(destNewType), dispApi))%></span></code><%
+}
+%>

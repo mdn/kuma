@@ -1,0 +1,126 @@
+<%
+// This template allow to build a list of entry to the glossary with some filter applied on it
+//
+// Parameters:
+// $0 : A JSON object with one or more of the following properties:
+//      * `terms` : An array of terms to list (if undefined, consider the whole list of terms available in the glossary)
+//      * `filter`: A filter to be applied to the input list of terms. It can be one of the following:
+//                  * `notdefined` : Only terms that are not defined will be listed
+//                  * `defined`    : Only terms that are currently defined will be listed
+//                  * `all`        : (default) no filter applied, all terms are listed
+//      * `split` : A string with one of the value `h1`, `h2`, `h3`, `h4`, `h5`, `h6`. If this property is define with a valid value, the list of terms will be split with intermediate title for each letter.
+//      * `css`   : A sring representing some extra CSS class to apply to the list (to the top most UL elements)
+
+var URL    = "/en-US/docs/Glossary";
+
+var i, l, c, splitTitle, startWithDigit = /^\d/;
+var csscl  = $0 && $0.css ? $0.css : "";
+var pages  = page.subPagesFlatten(await page.subpagesExpand(URL, 2));
+var locale = env.locale;
+
+// Retrieve locale pages when accurate and simplify the data model {url, title, summary}
+pages = pages.map(function (p) {
+    var result = {
+        url    : p.url.replace('en-US', locale),
+        title  : p.title,
+        summary: mdn.escapeQuotes(p.summary)
+    };
+
+    if (locale !== 'en-US' && Array.isArray(p.translations)) {
+        p.translations.some(function (loc) {
+            if (locale === loc.locale) {
+                result = {
+                    url    : loc.url,
+                    title  : loc.title,
+                    summary: mdn.escapeQuotes(loc.summary)
+                };
+
+                return true;
+            }
+
+            return false;
+        });
+    }
+
+    return result;
+});
+
+var UCKeys = pages.map(function (p) { return p.title; });
+var keys   = pages.map(function (p) { return p.title.toLowerCase(); });
+var terms  = $0 && $0.terms && Array.isArray($0.terms) ? $0.terms : UCKeys;
+var split  = $0 && $0.split && /^h[1-6]$/i.test($0.split) ? $0.split.toLowerCase() : false;
+var filter = $0 && $0.filter && $0.filter.toLowerCase() === 'notdefined' ? 'notdefined' :
+             $0 && $0.filter && $0.filter.toLowerCase() === 'defined'    ? 'defined'    :
+                                                         /* Otherwise */   'all';
+var list = [];
+
+function sortMe(a, b) {
+    if (startWithDigit.test(a.title) && !startWithDigit.test(b.title)) { return  1; }
+    if (startWithDigit.test(b.title) && !startWithDigit.test(a.title)) { return -1; }
+
+    // This is broken with NodeJS, we need something else.
+    return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
+}
+
+function filterMe(term) {
+    var i = keys.indexOf(term.toLowerCase());
+
+    if (i  >  -1 && (filter === 'all' || filter === 'defined')) {
+        this.push(pages[i]);
+    }
+
+    else if (locale === 'en-US' && (filter === 'all' || filter === 'notdefined')) {
+        this.push({
+            url    : URL + '/' + term.toLowerCase().replace(' ', '_'),
+            title  : term,
+            summary: 'The definition of that term (' + term + ') has not been written yet; please consider contributing it!'
+        });
+    }
+}
+
+terms.forEach(filterMe, list);
+list.sort(sortMe);
+
+for (i = 0, l = list.length; i < l; i++) {
+    if (split) {
+        // This is potentialy broken for non-latin locale
+        // Using the Intl ES API could be a better solution
+        c = list[i].title.charAt(0).toUpperCase();
+
+        if (startWithDigit.test(c)) {
+            c = mdn.localString({
+                'en-US' : 'Other',
+                'fr'    : 'Autre',
+                'ja'    : 'その他',
+            });
+        }
+
+        if (splitTitle !== c) {
+            splitTitle = c;
+            if (i > 0) {
+%>
+    </ul>
+<%
+            }
+%>
+    <%- '<' + split + '>' + splitTitle + '</' + split + '>' %>
+    <ul class="<%= csscl %>">
+<%
+        }
+    }
+    
+    else if (i === 0) {
+%>
+    <ul class="<%= csscl %>">
+<%
+    }
+%>
+        <li><a href="<%- list[i].url %>" title="<%- list[i].summary %>"><%= list[i].title %></a></li>
+<%
+    if (i === l-1) {
+%>
+    </ul>
+<%
+    }
+}
+%>

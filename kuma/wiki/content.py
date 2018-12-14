@@ -183,6 +183,13 @@ def clean_content(content):
     else:
         allowed_iframe_patterns = settings.ALLOWED_IFRAME_PATTERNS
         filtered = parsed.filterIframeHosts(allowed_iframe_patterns)
+
+    # NOTE(djf): if you ever want to compare HTML renderings of a document
+    # (before and after a KumaScript or macro change, for example) you
+    # may need to add alphabetical_attributes=True to the serialize call
+    # below so that attributes are output in a deterministic order. This was
+    # a particular problem for <iframe> tags, presumably because of the
+    # iframe filtering above.
     content_out = filtered.serialize()
     return content_out
 

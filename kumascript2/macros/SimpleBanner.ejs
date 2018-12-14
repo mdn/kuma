@@ -1,0 +1,12 @@
+<%/* Creates a banner with some text but no icon.
+
+    Parameters:
+        $0 - Text to display as the badge heading line
+        $1 - Class name for custom style
+        $2 - Additional text to display
+
+*/%>
+<div class="blockIndicator <%= $1 %>">
+<div class="bannerHeading"><%- $0 %></div>
+<div class="bannerText"><%- $2 %></div>
+</div>

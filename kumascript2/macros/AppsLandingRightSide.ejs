@@ -1,0 +1,145 @@
+<%
+/*
+ * for https://developer.mozilla.org/en-US/docs/Apps
+ * Parameter: none
+ */
+
+
+switch(env.locale) {
+    case "ja":
+
+%><h5 class="Tools" id="Tools" name="Tools">ツール</h5>
+<ul>
+    <li><a href="https://marketplace.firefox.com/developers/">Firefox Marketplace Developer Hub</a></li>
+    <li><a href="/ja/docs/Tools/Firefox_OS_Simulator">Firefox OS シミュレータ</a></li>
+    <li><a href="/ja/docs/Web/Apps/App_developer_tools">App 開発者ツール</a></li>
+</ul>
+<h5 class="Documentation" id="Documentation" name="Documentation">関連技術文書</h5>
+<div class="twocolumns">
+    <ul>
+        <li><a href="/ja/docs/Web/CSS">CSS</a></li>
+        <li><a href="/ja/docs/DOM">DOM</a></li>
+        <li><a href="/ja/docs/Web/HTML">HTML</a></li>
+        <li><a href="/ja/docs/JavaScript">JavaScript</a></li>
+        <li><a href="/ja/docs/WebAPI">WebAPI</a></li>
+        <li><a href="/ja/docs/Web/WebGL">WebGL</a></li>
+        <li><a href="/ja/docs/SVG">SVG</a></li>
+        <li><a href="https://www.mozilla.org/ja/apps/">Open Web Apps overview site</a></li>
+        <li><a href="https://wiki.mozilla.org/Apps">Apps project wiki page</a></li>
+    </ul>
+</div>
+<h5 class="Community" id="Community" name="Community">コミュニティ</h5>
+<p>貢献したいが何をするべきか分からないという方は、是非コミュニティに参加して下さい。</p>
+<ul>
+    <li>webapps フォーラム: <%- await template("DiscussionList", ["dev-webapps", "mozilla.dev.webapps"]) %>
+        <ul>
+            <li>IRC の Open Web Apps チャンネルで質問: <a class="link-irc" href="irc://irc.mozilla.org/openwebapps">#openwebapps</a></li>
+        </ul>
+    </li>
+</ul>
+<p><span class="alllinks"><a rel="external" href="http://www.catb.org/~esr/faqs/smart-questions.html"><em>ネチケット</em>をお忘れなく...</a></span></p><%
+
+    break;
+    case "bn-BD":
+
+%><h5 class="Tools" id="Tools" name="Tools">এ্যাপ ডেভেলপারদের জনয টূল</h5>
+<ul>
+    <li><a href="https://marketplace.firefox.com/developers/">ফায়ারফক্স ওএস মার্কেটপ্লেস ডেভেলপার হাব</a></li>
+    <li><a href="/bn-BD/docs/Mozilla/Firefox_OS/Using_Firefox_OS_Simulator">ফায়ারফক্স ওএস সিম্যুলেটর</a></li>
+    <li><a href="/bn-BD/docs/Apps/App_developer_tools">এ্যাপ ডেভেলপার টুলস</a></li>
+</ul>
+<h2 class="Documentation" id="Documentation" name="Documentation">প্রযুক্তি রেফারেন্স ডকুমেন্টেশন</h5>
+<div class="twocolumns">
+    <ul>
+        <li><a href="/bn-BD/docs/CSS" title="CSS">CSS (সিএসএস)</a></li>
+        <li><a href="/bn-BD/docs/DOM" title="DOM">DOM (ডম)</a></li>
+        <li><a href="/bn-BD/docs/HTML" title="HTML">HTML (এইচটিএমএল)</a></li>
+        <li><a href="/bn-BD/docs/JavaScript" title="JavaScript">JavaScript (জাভাস্ক্রিপ্ট)</a></li>
+        <li><a href="/bn-BD/docs/WebAPI" title="WebAPI">WebAPI (ওয়েব এপিআই)</a></li>
+        <li><a href="/bn-BD/docs/WebGL" title="WebGL">WebGL (ওয়েব জিএল)</a></li>
+        <li><a href="/bn-BD/docs/SVG" title="SVG">SVG (এসভিজি)</a></li>
+        <li><a href="https://www.mozilla.org/bn-BD/apps/">ওপেন ওয়েব এ্যাপ পরিদর্শন</a></li>
+        <li><a href="https://wiki.mozilla.org/Apps">এ্যাপস প্রজেক্ট উইকি পেজ</a></li>
+    </ul>
+</div>
+<h5 class="Community" id="Community" name="Community">কমিউনিটি থেকে সাহায্য নেওয়া</h5>
+<p>আপনি যদি এখনও কিভাবে কোন কাজ করতে হবে - এ ব্যাপারে সন্দিহান হয়ে থাকেন, তবে এখনই আলোচনায় যোগ দিন আমাদের সঙ্গে!</p>
+<ul>
+    <li>ওয়েব এ্যাপস ফোরাম: <%- await template("DiscussionList", ["dev-webapps", "mozilla.dev.webapps"]) %>
+        <ul>
+            <li>ওপেন ওয়েব এ্যাপস আইআরসি চ্যানেলে আপনার প্রশ্ন জিজ্ঞাসা করুন: <a class="link-irc" href="irc://irc.mozilla.org/openwebapps">#openwebapps</a></li>
+        </ul>
+    </li>
+</ul>
+<p><span class="alllinks"><a rel="external" href="http://www.catb.org/~esr/faqs/smart-questions.html"><em>অনলাইন আচরণবিধি</em> ভুলে গেলে চলবে না...</a></span></p><%
+
+    break;
+    case "zh-CN":
+
+%><h5 class="Tools" id="Tools" name="Tools">面向应用开发者的工具</h5>
+<ul>
+    <li><a href="https://marketplace.firefox.com/developers/">访问 Firefox 应以市场开发者中心</a></li>
+    <li><a href="/zh-CN/docs/Mozilla/Firefox_OS/Using_Firefox_OS_Simulator">Firefox OS 模拟器</a></li>
+    <li><a href="/zh-CN/docs/Apps/App_developer_tools">应用开发者工具</a></li>
+</ul>
+<h5 class="Documentation" id="Documentation" name="Documentation">技术参考文档</h5>
+<div class="twocolumns">
+    <ul>
+        <li><a href="/zh-CN/docs/Web/CSS">CSS</a></li>
+        <li><a href="/zh-CN/docs/DOM">DOM</a></li>
+        <li><a href="/zh-CN/docs/Web/HTML">HTML</a></li>
+        <li><a href="/zh-CN/docs/JavaScript">JavaScript</a></li>
+        <li><a href="/zh-CN/docs/WebAPI">WebAPI</a></li>
+        <li><a href="/zh-CN/docs/Web/WebGL">WebGL</a></li>
+        <li><a href="/zh-CN/docs/SVG">SVG</a></li>
+        <li><a href="https://www.mozilla.org/zh-CN/apps/">开放网络应用 概览网站</a></li>
+        <li><a href="https://wiki.mozilla.org/Apps">应用项目 wiki 页面</a></li>
+    </ul>
+</div>
+<h5 class="Community" id="Community" name="Community">从社区获取帮助</h5>
+<p>如果您还不确定该做的事，欢迎随时加入讨论。</p>
+<ul>
+    <li>咨询 webapps 论坛：<%- await template("DiscussionList", ["dev-webapps", "mozilla.dev.webapps"]) %>
+        <ul>
+            <li>在 Open Web Apps IRC 频道上提问和讨论：<a class="link-irc" href="irc://irc.mozilla.org/openwebapps">#openwebapps</a></li>
+        </ul>
+    </li>
+</ul>
+<p><span class="alllinks"><a rel="external" href="http://www.catb.org/~esr/faqs/smart-questions.html">别忘记<em>网络礼仪</em>...</a></span></p><%
+
+    break;
+    default:
+
+%><h5 class="Tools" id="Tools" name="Tools">Tools for app developers</h5>
+<ul>
+    <li><a href="https://marketplace.firefox.com/developers/">Visit Firefox Marketplace Developer Hub</a></li>
+    <li><a href="/en-US/docs/Mozilla/Firefox_OS/Using_Firefox_OS_Simulator">Firefox OS Simulator</a></li>
+    <li><a href="/en-US/docs/Apps/App_developer_tools">App developer tools</a></li>
+</ul>
+<h5 class="Documentation" id="Documentation" name="Documentation">Technology reference documentation</h5>
+<div class="twocolumns">
+    <ul>
+        <li><a href="/en-US/docs/Web/CSS">CSS</a></li>
+        <li><a href="/en-US/docs/DOM">DOM</a></li>
+        <li><a href="/en-US/docs/Web/HTML">HTML</a></li>
+        <li><a href="/en-US/docs/JavaScript">JavaScript</a></li>
+        <li><a href="/en-US/docs/WebAPI">WebAPI</a></li>
+        <li><a href="/en-US/docs/Web/WebGL">WebGL</a></li>
+        <li><a href="/en-US/docs/SVG">SVG</a></li>
+        <li><a href="https://www.mozilla.org/en-US/apps/">Open Web Apps overview site</a></li>
+        <li><a href="https://wiki.mozilla.org/Apps">Apps project wiki page</a></li>
+    </ul>
+</div>
+<h5 class="Community" id="Community" name="Community">Getting help from the community</h5>
+<p>If you still aren't sure how to do what you're trying to get done, feel free to join the conversation!</p>
+<ul>
+    <li>Consult the webapps forum: <%- await template("DiscussionList", ["dev-webapps", "mozilla.dev.webapps"]) %>
+        <ul>
+            <li>Ask your question on the Open Web Apps IRC channel: <a class="link-irc" href="irc://irc.mozilla.org/openwebapps">#openwebapps</a></li>
+        </ul>
+    </li>
+</ul>
+<p><span class="alllinks"><a rel="external" href="http://www.catb.org/~esr/faqs/smart-questions.html">Don't forget about the <em>netiquette</em>...</a></span></p><%
+
+    break;
+}%>

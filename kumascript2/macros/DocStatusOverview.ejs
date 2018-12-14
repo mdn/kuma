@@ -1,0 +1,104 @@
+<%
+/*
+ * Displays an overview table for documentation status
+ *
+ * Parameters:
+ *  $0  (optional) Title string filter; if this is specified, pages whose title
+ *      don't contain this string are ignored
+ */
+
+
+/*** Collect doc status data ***/
+var result = {};
+var totalPages = 0,
+    totalNoTags = 0,
+    totalNeedsTags = 0,
+    totalEditorial = 0,
+    totalTechnical = 0,
+    totalOutdated = 0,
+    totalddn = 0,
+    totaldr = 0;
+
+var pageList = await page.subpagesExpand('/en-US/docs/MDN/Doc_status');
+
+async function getPages(pageList, filterString) {
+    if (pageList) {
+        for (var aPage in pageList) {
+            if ((filterString != null) && (pageList[aPage].title.indexOf(filterString) != -1)) {
+                var url = 'https://developer.mozilla.org' + pageList[aPage].url + '?raw&macros&section=json';
+                var resource = await MDN.fetchHTTPResource(url);
+                if (resource != '') {
+                    result[pageList[aPage].title] = {};
+                    result[pageList[aPage].title].metrics = JSON.parse(resource);
+                    result[pageList[aPage].title].url = pageList[aPage].url;
+                }
+
+                var subpage = await getPages(pageList[aPage].subpages, filterString);
+            }
+        }
+    }
+}
+
+await getPages(pageList, $0);
+
+/*** Summary table ***/
+%>
+<table class="docstatussummary standard-table">
+  <thead>
+    <tr>
+        <th>Section</th>
+        <th>Pages</th>
+        <th>No tags</th>
+        <th>Needs* tags</th>
+        <th>Editorial reviews</th>
+        <th>Technical reviews</th>
+        <th>Outdated pages</th>
+        <th>Dev-doc-needed bugs</th>
+        <th>Documentation requests</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%
+    var columns = ['noTags', 'needsTags', 'editorialReviews', 'technicalReviews', 'outdated', 'ddn', 'dr'];
+
+        for (var key in result) {
+        totalPages += result[key].metrics.pages.counter;
+        totalNeedsTags += result[key].metrics.needsTags.counter;
+        totalEditorial += result[key].metrics.editorialReviews.counter;
+        totalTechnical += result[key].metrics.technicalReviews.counter;
+        totalOutdated += result[key].metrics.outdated.counter;
+        if (result[key].metrics.noTags) { totalNoTags += result[key].metrics.noTags.counter }
+        if (result[key].metrics.ddn) { totalddn += result[key].metrics.ddn.counter }
+        if (result[key].metrics.dr) { totaldr += result[key].metrics.dr.counter }
+    %>
+        <tr>
+            <td><a href="<%=result[key].url%>"><%=key.replace("documentation status", "", "i")%></a></td>
+            <td><%=result[key].metrics.pages.counter%></td>
+            <%
+            for (i=0; i < columns.length; i++) {
+                var metric = columns[i];
+                var color = "none";
+                if (result[key].metrics[metric]) {
+                    var percent = Math.ceil((result[key].metrics[metric].counter / result[key].metrics.pages.counter) * 100);
+                    color = "rgb(204, 255, 153)";
+                    if (percent >= 5) { color = "rgb(255, 255, 153)" }
+                    if (percent >= 10) { color = "rgb(255, 204, 204)" }
+                }
+             %>
+                <td style="background-color: <%=color%>;"><%if(result[key].metrics[metric]){ %><%=result[key].metrics[metric].counter%> (<%=percent%>%)<%}else{%>n/a<%}%></td>
+            <% } %>
+        </tr>
+    <% } %>
+    <tr>
+        <td><strong>Total</strong></td>
+        <td><strong><%=totalPages%></strong></td>
+        <td><strong><%=totalNoTags%></strong></td>
+        <td><strong><%=totalNeedsTags%></strong></td>
+        <td><strong><%=totalEditorial%></strong></td>
+        <td><strong><%=totalTechnical%></strong></td>
+        <td><strong><%=totalOutdated%></strong></td>
+        <td><strong><%=totalddn%></strong></td>
+        <td><strong><%=totaldr%></strong></td>
+    </tr>
+</tbody>
+</table>

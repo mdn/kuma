@@ -1,0 +1,20 @@
+<%
+/* one parameter: Gecko version */
+/* get the page language */
+var lang = env.locale;
+var str = "";
+
+switch(lang) {
+    case "ja":
+        str = "JSAPI " + $0 + " まで";
+        break;
+    case "ru":
+        str = "JSAPI " + $0 + " и старее";
+        break;
+    default:
+        str = "JSAPI " + $0 + " and earlier";
+        break;
+}
+
+
+%><span class="inlineIndicator standardNote"><%=str%></span>

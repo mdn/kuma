@@ -1,0 +1,80 @@
+<%
+// Builds an index / inventory table for a section
+//
+// Parameters:
+//  $0  -  The slug to build the index for (e.g. "/en-us/docs/Web/JavaScript")
+
+
+var l10nHeading = mdn.localString({
+    "en-US": "Found #nbP# pages:",
+    "fr"   : "#nbP# pages trouvées\xa0:",
+    "ja"   : "#nbP# ページあります:",
+    "ru"   : "Найдено #nbP# страниц:",
+    "pt-BR": "Encontradas #nbP# páginas:"
+});
+
+var l10nNumber = mdn.localString({
+    "en-US": "#",
+    "fr"   : "N°",
+    "ja"   : "#",
+    "ru"   : "№",
+    "pt-BR": "Nº"
+});
+
+var l10nPage = mdn.localString({
+    "en-US": "Page",
+    "fr"   : "Page",
+    "ja"   : "ページ",
+    "ru"   : "Страница",
+    "pt-BR": "Páginas"
+});
+
+var l10nTags = mdn.localString({
+    "en-US": "Tags and summary",
+    "fr"   : "Étiquettes et résumé",
+    "ja"   : "タグと要約",
+    "ru"   : "Теги и описание",
+    "pt-BR": "Tags e Resumo"
+});
+
+
+var section = $0;
+
+var pageList = await page.subpagesExpand(section, '', true);
+var result = [];
+
+function getPages(pageList) {
+    if (pageList) {
+        for (var i = 0; i < pageList.length; i++) {
+            result.push({title: pageList[i].title.replace('<','&lt;').replace('>','&gt;'), url: pageList[i].url, tags: pageList[i].tags.sort(), summary: pageList[i].summary || '<strong>No summary!</strong>'})
+            var subpage = getPages(pageList[i].subpages);
+        }
+    }
+}
+
+getPages(pageList);
+
+%>
+
+<p><strong><%=l10nHeading.replace("#nbP#",result.length)%></strong></p>
+<table class="fullwidth-table standard-table">
+<thead>
+    <th><%=l10nNumber%></th>
+    <th><%=l10nPage%></th>
+    <th><%=l10nTags%></th>
+</thead>
+<tbody>
+
+<% for (i=0; i < result.length; i++) { %>
+<tr>
+    <td rowspan="2"><%=i+1%></td>
+    <td rowspan="2"><a href='<%=result[i].url%>'><%=result[i].title%></a></td>
+    <td><strong><%=result[i].tags.join(", ")%></strong></td>
+</tr>
+<tr>
+    <td><%-result[i].summary%></td>
+<tr>
+<% } %>
+
+</tbody>
+</table>

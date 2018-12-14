@@ -1,0 +1,20 @@
+The following items are all macros, though:
+
+* {{ MacroUsingParams("Foo", "Bar", "Baz") }}
+* {{HelloWorld("HéllöWôrld")}}
+* {{ 頁尾附註 ( "下一頁", "カタカナ", "BLAH" ) }}
+* {{ Alpha_Macro_123 ( "Quoted, Comma", 'Another, quoted' ) }}
+* {{ ParenTastic ( "()()()" ) }}
+* {{ Bracepocalypse(  "{{}}{{}}{{}}"  ) }}
+
+Here is a {{ Multi:Line:Macro(
+  "With many", 'parameters',
+  'including "quoted"', "text of both 'kinds'",
+  "even \"escaped\"", 'like \'these\'',
+  "and numbers", -10, 0, 0.1, 10, 100
+)}} that even works inline.
+
+Here is a {{ MacroWithJson({
+    "es":"es/JavaScript/Acerca_de_JavaScript",
+    "en": "en/JavaScript/About_JavaScript"
+}) }} that even works inline.

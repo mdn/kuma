@@ -1,0 +1,17 @@
+<%
+/* one parameter: version of obsolescence (optional) */
+/* prepend version with HTML, CSS, JS or Gecko for those techs */
+/* for backwards compatibility unprefixed is Gecko, please avoid this */
+
+var str = "";
+
+if ($0) {
+  if (string.isdigit($0)) {
+    str = "gecko" + $0;
+  } else {
+    str = $0
+  }
+}
+
+
+%><%- await template("obsoleteGeneric", ["header",str]) %>

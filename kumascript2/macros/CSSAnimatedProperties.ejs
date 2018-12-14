@@ -1,0 +1,47 @@
+<%
+/*
+  Searches all CSS properties in CSSData that are animated and lists them
+  in columns
+*/
+
+// Read all CSSData and extract animated properties
+
+var propertiesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/properties.json";
+var atRulesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/at-rules.json";
+var selectorsUrl = "https://raw.githubusercontent.com/mdn/data/master/css/selectors.json";
+var typesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/types.json";
+var syntaxesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/syntaxes.json";
+var unitsUrl = "https://raw.githubusercontent.com/mdn/data/master/css/units.json";
+var data = {
+    properties: await MDN.fetchJSONResource(propertiesUrl),
+    atRules: await MDN.fetchJSONResource(atRulesUrl),
+    selectors: await MDN.fetchJSONResource(selectorsUrl),
+    types: await MDN.fetchJSONResource(typesUrl),
+    syntaxes: await MDN.fetchJSONResource(syntaxesUrl),
+    units: await MDN.fetchJSONResource(unitsUrl)
+};
+var animatedProps = [];
+
+// Go through all properties, and test if they are animated. If so, add them to
+// the animatedProps array.
+for (var property in data.properties) {
+    if (data.properties.hasOwnProperty(property)) {
+        if (data.properties[property].animationType !== "discrete") {
+            animatedProps.push(property);
+        }
+    }
+}
+animatedProps.sort();
+
+// Build the output string
+var result = "<div class=\"index\">\n  <ul>\n";
+for (var propIndex in animatedProps) {
+    var prop = animatedProps[propIndex];
+    if (result) {
+        result += " ";
+    }
+    result += "    <li>" + await template("cssxref", [prop]) + "</li>\n";
+}
+result += "  </ul>\n</div>";
+
+%><%- result %>

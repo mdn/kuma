@@ -1,0 +1,270 @@
+<%
+// API Sidebar
+//
+// Parameters:
+//  $0  A tag for the API group (searches for related APIs)
+
+// Variables and data
+var slug = env.slug;
+var locale = env.locale;
+var APIHref = '/' + locale + '/docs/Web/API';
+var EventHref = '/' + locale + '/docs/Web/Events';
+var output = "";
+// slug is not available in preview mode.
+if (slug) {
+var mainIF = slug.replace('Web/API/','').split('/')[0];
+mainIF = mainIF.charAt(0).toUpperCase() + mainIF.slice(1);
+var group = $0;
+var hasTag = page.hasTag;
+var escapeQuotes = mdn.escapeQuotes;
+var htmlEscape = kuma.htmlEscape;
+var rtlLocales = ['ar', 'he', 'fa'];
+
+var webAPIData = string.deserialize(await template("InterfaceData"));
+if (group) {
+  var webAPIGroups = string.deserialize(await template("GroupData"));
+}
+
+var commonl10n = string.deserialize(await template('L10n:Common'));
+
+var text = {
+    'Methods': mdn.getLocalString(commonl10n, 'Methods'),
+    'Properties': mdn.getLocalString(commonl10n, 'Properties'),
+    'Constructor': mdn.getLocalString(commonl10n, 'Constructor'),
+    'Inheritance': mdn.getLocalString(commonl10n, 'Inheritance'),
+    'Implemented_by': mdn.getLocalString(commonl10n, 'Implemented_by'),
+    'Related': mdn.getLocalString(commonl10n, 'Related_pages').replace('$1', group),
+    'translate': mdn.getLocalString(commonl10n, '[Translate]'),
+    'title': mdn.getLocalString(commonl10n, 'TranslationCTA'),
+    'Events': mdn.getLocalString(commonl10n, 'Events'),
+};
+
+
+// Collect all the things
+var mainIFPages = await page.subpagesExpand('/en-US/docs/Web/API/' + mainIF);
+var impl = webAPIData[0][mainIF] != undefined ? webAPIData[0][mainIF].impl : [];
+var inh = webAPIData[0][mainIF] != undefined ? webAPIData[0][mainIF].inh : '';
+var related = [];
+var events = []
+if (group && webAPIGroups[0][group]) {
+  var rel_if = webAPIGroups[0][group].interfaces || [];
+  var rel_met = webAPIGroups[0][group].methods || [];
+  var rel_prop = webAPIGroups[0][group].properties || [];
+  related = rel_if.concat(rel_met, rel_prop);
+  related.splice(related.indexOf(mainIF), 1);
+  related.sort();
+  events = webAPIGroups[0][group].events || [];
+}
+
+var pageList = mainIFPages;
+
+var properties = [];
+var methods = [];
+var ctors = [];
+var inheritedIF = [];
+var implementedBy = [];
+
+function collect(pageList) {
+  for (var i in pageList) {
+    var aPage = pageList[i];
+    if (hasTag(aPage, "Property")) {
+        properties.push(aPage);
+    }
+    if (hasTag(aPage, "Method")) {
+        methods.push(aPage);
+    }
+    if (hasTag(aPage, "Constructor")) {
+        ctors.push(aPage);
+    }
+  }
+}
+
+collect(mainIFPages);
+
+if (impl.length > 0) {
+  for (var i = 0; i < impl.length; i++) {
+    var implementPages = await page.subpagesExpand('/en-US/docs/Web/API/' + impl[i]);
+    collect(implementPages);
+  }
+}
+
+function APISort(a, b) {
+  var aSplit = a.title.split('.');
+  var a = aSplit[aSplit.length - 1];
+  var bSplit = b.title.split('.');
+  var b = bSplit[bSplit.length - 1];
+  return a.toLowerCase().localeCompare(b.toLowerCase());
+}
+
+properties.sort(APISort);
+methods.sort(APISort);
+ctors.sort(APISort);
+
+function getInheritance(inh) {
+  if (inh.length > 0) {
+    inheritedIF.push(inh);
+    if (webAPIData[0].hasOwnProperty(inh)) {
+        var inh = webAPIData[0][inh].inh;
+        getInheritance(inh);
+    }
+  }
+}
+getInheritance(inh);
+
+function getImplementedBy(data) {
+  for (var key in data) {
+    if (data.hasOwnProperty(key)
+        && data[key].impl
+        && data[key].impl.indexOf(mainIF) != -1) {
+      implementedBy.push(key);
+    }
+  }
+  implementedBy.sort();
+}
+getImplementedBy(webAPIData[0]);
+
+// output helpers
+
+var badges = {
+  ExperimentalBadge : '<span class="sidebar-icon">' + await template("ExperimentalBadge", [1]) + '</span>',
+  NonStandardBadge  : '<span class="sidebar-icon">' + await template("NonStandardBadge", [1]) + '</span>',
+  DeprecatedBadge   : '<span class="sidebar-icon">' + await template("DeprecatedBadge", [1]) + '</span>',
+  ObsoleteBadge     : '<span class="sidebar-icon">' + await template("ObsoleteBadge", [1]) + '</span>',
+}
+
+function buildSublist(pages, title) {
+  var result = '<li class="toggle"><details open><summary>' + title + '</summary><ol>';
+
+  for (var i in pages) {
+    var aPage = pages[i];
+    var summary = escapeQuotes(aPage.summary) || '';
+    var url = aPage.url.replace('en-US', locale);
+    var titleSplit = htmlEscape(aPage.title).split('.'); // Two cases, as sometimes the interface name is forgotten in the title:
+    var title = titleSplit[titleSplit.length - 1];       // "WebGLRenderingContext.activeTexture()" and "activeTexture()" should both become "activeTexture()"
+
+    var translated = false;
+    if (locale != 'en-US') {
+        aPage.translations.forEach(function(translation){
+            if(translation.locale === locale) {
+                summary = escapeQuotes(translation.summary) || '';
+                url = translation.url;
+                titleSplit = htmlEscape(translation.title).split('.');
+                title = titleSplit[titleSplit.length - 1];
+                translated = true;
+            }
+        });
+    }
+
+    var cta = '';
+     if (!translated && locale != 'en-US') {
+        cta += ' <a href="'+ url +'$translate" style="opacity:0.5" title="'+ text['title'] + '">' + text['translate'] + '</a>';
+    }
+
+
+    result += '<li>';
+
+    if (hasTag(aPage, 'Experimental')) {
+        result += badges.ExperimentalBadge;
+    }
+
+    if (hasTag(aPage, 'Non-standard') || hasTag(aPage, 'Non Standard')) {
+        result += badges.NonStandardBadge;
+    }
+
+    if (hasTag(aPage, 'Deprecated')) {
+        result += badges.DeprecatedBadge;
+    }
+
+    if (hasTag(aPage, 'Obsolete')) {
+        result += badges.ObsoleteBadge;
+        result += '<s class="obsoleteElement">';
+    }
+
+    if (rtlLocales.indexOf(locale) != -1) {
+        result += '<bdi>';
+    }
+
+    if (slug == aPage.slug) {
+        result += '<em><code>' + title + '</code></em>'
+    } else {
+        result += '<a href="' + url + '" title="' + summary + '"><code>' + title + '</code></a>' + cta;
+    }
+
+    if (rtlLocales.indexOf(locale) != -1) {
+        result += '</bdi>';
+    }
+
+    if (hasTag(aPage, 'Obsolete')) {
+        result += '</s>';
+    }
+
+    result += '</li>';
+  }
+
+  result += '</ol></details></li>';
+
+  return result;
+}
+
+function buildIFList(interfaces, title) {
+  var result = '<li class="toggle"><details open><summary>' + title + '</summary><ol>';
+
+  for (var i = 0; i < interfaces.length; i++) {
+    var url = interfaces[i].replace('()', '').replace('.', '/');
+    result += '<li><a href="' + APIHref + '/' + url + '"><code>' + interfaces[i] + '</code></a></li>';
+  }
+
+  result += '</ol></details></li>';
+
+  return result;
+}
+
+function buildEventList(events, title) {
+  var result = '<li class="toggle"><details open><summary>' + title + '</summary><ol>';
+
+  for (var i = 0; i < events.length; i++) {
+    result += '<li><a href="' + EventHref + '/' + events[i] + '"><code>' + events[i] + '</code></a></li>';
+  }
+
+  result += '</ol></details></li>';
+
+  return result;
+}
+
+
+// output
+output = '<section class="Quick_links" id="Quick_Links"><ol>';
+if (group && webAPIGroups[0][group] && webAPIGroups[0][group].overview) {
+  output += '<li><strong><a href="' +  APIHref + '/' + webAPIGroups[0][group].overview[0].replace(/ /g, '_') + '">' + webAPIGroups[0][group].overview[0] + '</a></strong></li>';
+}
+output += '<li><strong><a href="' +  APIHref + '/' + mainIF + '"><code>' + mainIF + '</a></code></strong></li>';
+
+if (ctors.length > 0) {
+  output += buildSublist(ctors, text['Constructor']);
+}
+
+if (properties.length > 0) {
+  output += buildSublist(properties, text['Properties']);
+}
+if (methods.length > 0) {
+  output += buildSublist(methods, text['Methods']);
+}
+if (inh.length > 0) {
+  output += buildIFList(inheritedIF, text['Inheritance']);
+}
+if (implementedBy.length > 0) {
+  output += buildIFList(implementedBy, text['Implemented_by']);
+}
+if (events.length > 0) {
+  output += buildEventList(events, text['Events']);
+}
+
+if (related.length > 0) {
+  output += buildIFList(related, text['Related']);
+}
+
+output += '</ol></section>';
+}
+%>
+
+<%-output%>

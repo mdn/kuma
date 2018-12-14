@@ -1,0 +1,87 @@
+<%
+
+/* Appending a "+" to the version number you specify means that version and all later versions. */
+var geckoRelease = '';
+var arg = string.trim($0);
+var plus = '';
+var extraMessage = '';
+if (string.EndsWith(arg, '+')) {
+  arg = arg.substr(0, arg.length-1);
+  plus = '+';
+}
+switch(arg)
+{
+  case '1.8':
+    geckoRelease = ['Firefox 1.5', 'Thunderbird 1.5', 'SeaMonkey 1.0'];
+    break;
+  case '1.8.1':
+    geckoRelease = ['Firefox 2', 'Thunderbird 2', 'SeaMonkey 1.1'];
+    break;
+  case '1.9':
+    geckoRelease = ['Firefox 3'];
+    break;
+  case '1.9.1':
+    geckoRelease = ['Firefox 3.5', 'Thunderbird 3.0', 'SeaMonkey 2.0'];
+    break;
+  case '1.9.1.4':
+    geckoRelease = ['Firefox 3.5.4'];
+    break;
+  case '1.9.2':
+    geckoRelease = ['Firefox 3.6', 'Thunderbird 3.1', 'Fennec 1.0'];
+    break;
+  case '1.9.2.4':
+    geckoRelease = ['Firefox 3.6.4'];
+    break;
+  case '1.9.2.5':
+    geckoRelease = ['Firefox 3.6.5'];
+    break;
+  case '1.9.2.9':
+    geckoRelease = ['Firefox 3.6.9'];
+    break;
+  case '1.9.3':
+    geckoRelease = ['Firefox 4'];
+    extraMessage = ' <- update this template reference to Gecko 2!';
+    break;
+  case '2.0b2':
+    geckoRelease = ['Firefox 4.0b2'];
+    break;
+  case '2.0b4':
+    geckoRelease = ['Firefox 4.0b4'];
+    break;
+  case '2':
+  case '2.0':
+    geckoRelease = ['Firefox 4', 'Thunderbird 3.3', 'SeaMonkey 2.1'];
+    break;
+  case '2.1':
+    geckoRelease = ['Firefox 4 Mobile'];
+    break;
+  default:
+    if (arg >= 5) {
+      geckoRelease = ['Firefox ' + arg, 'Thunderbird ' + arg, 'SeaMonkey 2.' + (Number(arg)-3).toString()];
+      switch(arg)
+      {
+        case '18':
+          geckoRelease.push("Firefox OS 1.0.1", "Firefox OS 1.1");
+          break;
+        case '26':
+          geckoRelease.push("Firefox OS 1.2");
+          break;
+        case '28':
+          geckoRelease.push("Firefox OS 1.3");
+          break;
+        case '30':
+          geckoRelease.push("Firefox OS 1.4");
+          break;
+        case '32':
+          geckoRelease.push("Firefox OS 2.0");
+          break;
+      }
+    }
+    break;
+}
+if (geckoRelease != "") {
+  geckoRelease = string.Join(geckoRelease, plus + ' / ') + plus;
+  geckoRelease = '(' + geckoRelease + ')' + extraMessage;
+}
+%>
+<%=geckoRelease%>

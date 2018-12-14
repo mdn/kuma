@@ -1,0 +1,152 @@
+<div class="blockIndicator inheritsbox template-jsOverrides">
+<%
+/**
+ * Given an object and a list of properties or
+ * methods implemented elsewhere, output a list of the properties or methods
+ * inherited from that object.
+ *
+ * TODO: make it work with an inheritance chain, e.g., if you want inherited
+ * properties or methods from both Function and Object, where Function itself
+ * overrides methods from Object. We don't want to see that it inherits a
+ * "valueOf" method from Function and again on Object.
+ *
+ * @param the object to inherit from
+ * @param "properties" or "methods"
+ * @param a list of properties or methods overridden by this object
+ */
+
+var prototypes = {
+  "Array": {
+    methods: [
+      "pop", "push", "reverse", "shift", "sort", "splice", "unshift", "concat",
+      "join", "slice", "toSource", "toString", "indexOf", "lastIndexOf",
+      "filter", "forEach", "every", "map", "some", "reduce", "reduceRight"
+    ],
+    properties: ["constructor", "index", "input", "length"]
+  },
+  "Boolean": { methods: ["toSource", "toString", "valueOf"], properties: ["constructor"] },
+  "Date": {
+    methods: [
+      "getDate", "getDay", "getFullYear", "getHours", "getMilliseconds",
+      "getMinutes", "getMonth", "getSeconds", "getTime", "getTimezoneOffset",
+      "getUTCDate", "getUTCDay", "getUTCFullYear", "getUTCHours",
+      "getUTCMilliseconds", "getUTCMinutes", "getUTCMonth", "getUTCSeconds",
+      "getYear", "setDate", "setFullYear", "setHours", "setMilliseconds",
+      "setMinutes", "setMonth", "setSeconds", "setTime", "setUTCDate",
+      "setUTCFullYear", "setUTCHours", "setUTCMilliseconds", "setUTCMinutes",
+      "setUTCMonth", "setUTCSeconds", "setYear", "toDateString", "toGMTString",
+      "toLocaleDateString", "toLocaleFormat", "toLocaleString",
+      "toLocaleTimeString", "toSource", "toString", "toTimeString",
+      "toUTCString", "valueOf"
+    ],
+    properties: ["constructor"]
+  },
+  "Error": { methods: ["toSource", "toString"], properties: ["constructor", "message", "name", "description", "number", "fileName", "lineNumber", "stack"] },
+  "EvalError": { methods: ["toSource", "toString"], properties: ["constructor", "name"] },
+  "Function": { methods: ["apply", "call", "toSource", "toString"], properties: ["arity", "caller", "constructor", "length", "name"] },
+  "Number": {
+    methods: ["toExponential", "toFixed", "toLocaleString", "toPrecision", "toSource", "toString", "valueOf"],
+    properties: ["constructor"]
+  },
+  "Object": {
+    methods: [
+      "__defineGetter__", "__defineSetter__", "hasOwnProperty", "isPrototypeOf",
+      "__lookupGetter__", "__lookupSetter__", "__noSuchMethod__",
+      "propertyIsEnumerable", "toSource", "toLocaleString", "toString",
+      "unwatch", "valueOf", "watch"
+    ],
+    properties: ["constructor", "__parent__", "__proto__"]
+  },
+  "RangeError": { methods: ["toSource", "toString" ], properties: ["constructor", "name"] },
+  "ReferenceError": { methods: ["toSource", "toString"], properties: ["constructor", "name"] },
+  "RegExp": { methods: ["exec", "test", "toSource", "toString" ], properties: ["constructor", "global", "ignoreCase", "lastIndex", "multiline", "source"] },
+  "String": {
+    methods: [
+      "charAt", "charCodeAt", "concat", "indexOf", "lastIndexOf",
+      "localeCompare", "match", "quote", "replace", "search", "slice", "split",
+      "substr", "substring", "toLocaleLowerCase", "toLocaleUpperCase",
+      "toLowerCase", "toSource", "toString", "toUpperCase", "trim", "trimLeft",
+      "trimRight", "valueOf", "anchor", "big", "blink", "bold", "fixed",
+      "fontcolor", "fontsize", "italics", "link", "small", "strike", "sub", "sup"
+    ],
+    properties: ["constructor", "length"]
+  },
+  "SyntaxError": { methods: ["toSource", "toString"], properties: ["constructor", "name"] },
+  "TypeError": { methods: [ "toSource", "toString"], properties: ["constructor", "name"] },
+  "URIError": { methods: ["toSource", "toString"], properties: ["constructor", "name"] }
+};
+
+var prefix;
+
+switch(env.locale) {
+    case "fr":
+        prefix = '/fr/docs/Web/JavaScript/Reference/Objets_globaux/';
+        break;
+    case "pl":
+        prefix = '/pl/docs/Web/JavaScript/Referencje/Obiekty/';
+        break;
+    default:
+        prefix = '/' + env.locale + '/docs/Web/JavaScript/Reference/Global_Objects/';
+        break;
+}
+
+var pageuri = wiki.uri(prefix + $0);
+
+var captionText = string.ToUpperFirst(string.toLower($1));
+
+var titleString = "";
+
+switch(env.locale) {
+    case "ja":
+        if (captionText === "Properties") { captionText = "プロパティ"; }
+        if (captionText === "Methods") { captionText = "メソッド"; }
+        titleString = '<a class="internal" href="' + pageuri + '"><code>' + $0 + '</code></a> から継承される' + captionText;
+        break;
+    case "fr":
+        if (captionText === "Properties") { captionText = "Propriétés"; }
+        if (captionText === "Methods") { captionText = "Méthodes"; }
+        titleString = captionText  + ' héritées de <a href="' + pageuri + '"><code>' + $0 + '</code></a>:';
+        break;
+    case "ru":
+        if (captionText === "Properties") { captionText = "Свойства"; }
+        if (captionText === "Methods") { captionText = "Методы"; }
+        titleString = captionText  + ', унаследованные из <a href="' + pageuri + '"><code>' + $0 + '</code></a>:';
+        break;
+    default:
+        titleString = captionText  + ' inherited from <a href="' + pageuri + '"><code>' + $0 + '</code></a>:';
+        break;
+}
+
+
+
+var desiredprototype = prototypes[$0][string.toLower($1)];
+var overrides = arguments.slice(2);
+
+for (var i = 0; i < overrides.length; i++) {
+    var override = overrides[i];
+    var index = desiredprototype.indexOf(override);
+
+    if (index != (-1)) {
+		desiredprototype.splice(index, 1);
+	}
+}
+
+var htmlstring = '';
+
+var lastindex = desiredprototype.length - 1; /* ? */
+var parts = [];
+
+for (var i = 0; i < desiredprototype.length; i++) {
+	var p = desiredprototype[i];
+	var pimproper = string.ToUpperFirst(string.replace(p, '__', ''));
+
+	pageuri = wiki.uri(prefix + $0 + '/' + pimproper);
+	parts.push('<a class="internal" href="' + pageuri + '"><code>' + p + '</code></a>');
+}
+
+htmlstring += parts.join(', ');
+
+
+%><div><span style="font-weight:700;"><%- titleString %></span></div>
+<div><%- htmlstring %></div>
+</div>

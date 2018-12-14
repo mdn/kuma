@@ -1,0 +1,19 @@
+<%
+/* generates a basic "this Gecko interface implements this standard DOM interface" page */
+/* two parameters: Gecko interface name, DOM interface name */
+
+/* get the page language */
+var lang = env.locale;
+var str = "";
+
+switch(lang) {
+    case "ja":
+        str = await template("interface", [$0]) + "インターフェースには" + await template("domxref", [$1]) + "インターフェースが実装されています。詳細については各ページを参照して下さい。";
+        break;
+    default:
+        str = "The " + await template("interface", [$0]) + " interface implements the DOM " + await template("domxref", [$1]) + " interface. See that page for details.";
+        break;
+}
+
+
+%><%- str %>

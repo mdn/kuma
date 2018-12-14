@@ -1,0 +1,596 @@
+<%
+/*
+  Inserts an index of all CSS properties, selectors, types, functions and
+  at-rules plus their descriptors.
+
+  $0 - Array of strings used to filter the displayed items by type
+       (valid values: 'properties', 'selectors', 'types', 'functions',
+       'at-rules', 'descriptors'; defaults to showing all)
+  $1 - Item grouping type
+       (valid values: 'alphabetically', 'no'; defaults to 'alphabetically')
+  $2 - Array of strings used to filter the items by their status
+       (valid values: 'standard', 'experimental', "nonstandard', 'obsolete';
+       defaults to ['standard'])
+*/
+
+var propertiesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/properties.json";
+var atRulesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/at-rules.json";
+var selectorsUrl = "https://raw.githubusercontent.com/mdn/data/master/css/selectors.json";
+var typesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/types.json";
+var syntaxesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/syntaxes.json";
+var unitsUrl = "https://raw.githubusercontent.com/mdn/data/master/css/units.json";
+var data = {
+    properties: await MDN.fetchJSONResource(propertiesUrl),
+    atRules: await MDN.fetchJSONResource(atRulesUrl),
+    selectors: await MDN.fetchJSONResource(selectorsUrl),
+    types: await MDN.fetchJSONResource(typesUrl),
+    syntaxes: await MDN.fetchJSONResource(syntaxesUrl),
+    units: await MDN.fetchJSONResource(unitsUrl)
+};
+var localStrings = string.deserialize(await template("L10n:Common"));
+var types = ["properties", "selectors", "types", "syntaxes", "at-rules",
+             "descriptors", "units"];
+var groupingType = "alphabetically";
+var outputStatuses = ["standard"];
+
+if ($0) {
+    types = JSON.parse($0);
+}
+
+if ($1 === "category" || $1 === "no") {
+    groupingType = $1;
+}
+
+if ($2) {
+    outputStatuses = JSON.parse($2);
+}
+
+function htmlEscape(str) {
+    return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function normalize(str) {
+    return str.replace(/ \(@[\w\-]+\)$/, "").replace(/@[\w\-]+\/|[^a-z0-9\(\)\-]/gi, "");
+}
+
+function compareItems(itemA, itemB) {
+    var normalizedItemA = normalize(itemA.label);
+    var normalizedItemB = normalize(itemB.label);
+    if (normalizedItemA === normalizedItemB) {
+        if (itemA.label === itemB.label) {
+            return 0;
+        }
+
+        return itemA.label > itemB.label ? 1 : -1;
+    }
+
+    return normalizedItemA > normalizedItemB ? 1 : -1;
+}
+
+function getItemsFromSyntax(syntax) {
+    var items = syntax.match(/[\w\-]+\([\w\-<>,#+*?\[\]\| ]*\)|@[\w\-]+/g) || [];
+    for (var i = 0; i < items.length; i++) {
+        // Remove parameters
+        items[i] = items[i].replace(/\(.*?\)/, "()");
+    }
+    return items;
+}
+
+var index = {};
+
+if (types.some(function(type) { return type === "properties"; })) {
+    // Add properties to index
+    for (var prop in data.properties) {
+        // Exclude properties that don't have the right status
+        if (outputStatuses.indexOf(data.properties[prop].status) === -1) {
+            continue;
+        }
+
+        var initial = prop[0].toUpperCase();
+
+        if (!index.hasOwnProperty(initial)) {
+            index[initial] = [];
+        }
+
+        index[initial].push({
+            urlPath: prop,
+            label: prop
+        });
+    }
+}
+
+if (types.some(function(type) { return type === "types"; })) {
+    // Add types to index
+    for (var type in data.types) {
+        // Exclude types that don't have the right status
+        if (outputStatuses.indexOf(data.types[type].status) === -1) {
+            continue;
+        }
+
+        var normalizedType = normalize(type);
+        var initial = normalizedType[0].toUpperCase();
+
+        if (!index.hasOwnProperty(initial)) {
+            index[initial] = [];
+        }
+
+        var label = type;
+        if (label.charAt(0) != "<") {
+            // https://github.com/mdn/data/pull/81 was merged
+            label =  "<" + type + ">";
+        }
+
+        var item = {
+            urlPath: "",
+            label: label
+        };
+
+        // Generate URL path regarding some special cases
+        switch (normalizedType) {
+            case "color":
+                item.urlPath = "color_value";
+                break;
+
+            case "flex":
+                item.urlPath = "flex_value";
+                break;
+
+            case "position":
+                item.urlPath = "position_value";
+                break;
+
+            default:
+                item.urlPath = normalizedType;
+        }
+
+        index[initial].push(item);
+    }
+}
+
+if (types.some(function(type) { return type === "syntaxes"; })) {
+    // Add value syntaxes to index
+
+    var syntaxes = data.syntaxes;
+    for (let syntax of Object.keys(syntaxes)) {
+        if (syntax.match(/\(\)$/)) {
+            var initial = normalize(syntax)[0].toUpperCase();
+
+            if (!index.hasOwnProperty(initial)) {
+                index[initial] = [];
+            }
+
+            index[initial].push({
+                urlPath: syntax.replace("()", ""),
+                label: syntax
+            });
+        }
+
+        // Add items within at-rule syntax (e.g. "@annotation")
+        // check whether https://github.com/mdn/data/pull/66 was merged
+        var items = getItemsFromSyntax(syntaxes[syntax].syntax || syntaxes[syntax]);
+
+        for (var i = 0; i < items.length; i++) {
+            if (syntaxes[items[i]] && outputStatuses.indexOf(syntaxes[items[i]]) === -1) {
+                continue;
+            }
+
+            var initial = normalize(items[i])[0].toUpperCase();
+
+            if (!index.hasOwnProperty(initial)) {
+                index[initial] = [];
+            }
+
+            index[initial].push({
+                urlPath: items[i].replace("()", ""),
+                label: items[i]
+            });
+        }
+    }
+}
+
+if (types.some(function(type) { return type === "at-rules"; })) {
+    // Add at-rules to index
+    for (var atRule in data.atRules) {
+        // Exclude at-rules that don't have the right status
+        if (outputStatuses.indexOf(data.atRules[atRule].status) === -1) {
+            continue;
+        }
+
+        var initial = normalize(atRule)[0].toUpperCase();
+
+        if (!index.hasOwnProperty(initial)) {
+            index[initial] = [];
+        }
+
+        index[initial].push({
+            urlPath: atRule,
+            label: atRule
+        });
+
+        // Add items within at-rule syntax
+        if (data.atRules[atRule].syntax) {
+            var items = getItemsFromSyntax(data.atRules[atRule].syntax);
+
+            for (var i = 0; i < items.length; i++) {
+                // Exclude the at-rule itself when its inside the syntax
+                if (items[i] === atRule) {
+                    continue;
+                }
+
+                var initial = normalize(items[i])[0].toUpperCase();
+
+                if (!index.hasOwnProperty(initial)) {
+                    index[initial] = [];
+                }
+
+                index[initial].push({
+                    urlPath: atRule + "/" + items[i],
+                    label: items[i] + " (" + atRule + ")"
+                });
+            }
+        }
+
+        if (types.some(function(type) { return type === "descriptors"; })) {
+            // Add the at-rule's descriptors
+            for (var descriptor in data.atRules[atRule].descriptors) {
+                // Exclude descriptors that don't have the right status
+                if (outputStatuses.indexOf(data.atRules[atRule].
+                    descriptors[descriptor].status) === -1) {
+                    continue;
+                }
+
+                var initial = descriptor[0].toUpperCase();
+
+                if (!index.hasOwnProperty(initial)) {
+                    index[initial] = [];
+                }
+
+                index[initial].push({
+                    urlPath: atRule + "/" + descriptor,
+                    label: descriptor + " (" + atRule + ")"
+                });
+
+                // Add items within descriptor syntax
+                var items = getItemsFromSyntax(
+                    data.atRules[atRule].descriptors[descriptor].syntax);
+
+                for (var i = 0; i < items.length; i++) {
+                    var initial = normalize(items[i])[0].toUpperCase();
+
+                    if (!index.hasOwnProperty(initial)) {
+                        index[initial] = [];
+                    }
+
+                    index[initial].push({
+                        urlPath: atRule + "/" + descriptor + "#" + items[i],
+                        label: items[i]
+                    });
+                }
+            }
+        }
+    }
+}
+
+if (types.some(function(type) { return type === "selectors"; })) {
+    // Add selectors to index
+    for (var selector in data.selectors) {
+        // Exclude selectors that don't have the right status
+        if (outputStatuses.indexOf(data.selectors[selector].status) === -1) {
+            continue;
+        }
+
+        // Exclude basic selectors
+        if (selector.indexOf(" ") !== -1) {
+            continue;
+        }
+
+        var initial = normalize(selector)[0].toUpperCase();
+
+        initial = initial.toUpperCase();
+
+        if (!index.hasOwnProperty(initial)) {
+            index[initial] = [];
+        }
+
+        index[initial].push({
+            urlPath: selector,
+            label: selector
+        });
+    }
+}
+
+if (types.some(function(type) { return type === "units"; })) {
+    // Add units to index
+    for (var unit in data.units) {
+        // Exclude units that don't have the right status
+        if (outputStatuses.indexOf(data.units[unit].status) === -1) {
+            continue;
+        }
+
+        var initial = unit[0].toUpperCase();
+
+        initial = initial.toUpperCase();
+
+        if (!index.hasOwnProperty(initial)) {
+            index[initial] = [];
+        }
+
+        var unitInfo = {
+            urlPath: unit,
+            label: unit
+        };
+
+        switch(data.units[unit].groups[1]) {
+            case "CSS Lengths":
+                unitInfo.urlPath = "length#" + unit;
+                break;
+
+            case "CSS Angles":
+                unitInfo.urlPath = "angle#" + unit;
+                break;
+
+            case "CSS Flexible Lengths":
+                unitInfo.urlPath = "flex_value#" + unit;
+                break;
+
+            case "CSS Frequencies":
+                unitInfo.urlPath = "frequency#" + unit;
+                break;
+
+            case "CSS Times":
+                unitInfo.urlPath = "time#" + unit;
+                break;
+
+            case "CSS Resolutions":
+                unitInfo.urlPath = "resolution#" + unit;
+                break;
+        }
+
+        index[initial].push(unitInfo);
+    }
+}
+
+var characters = Object.keys(index).sort();
+
+// Add missing items
+if (types.indexOf("types") !== -1) {
+    if (!index.C) {
+        index.C = [];
+    }
+    index.C.push({
+        urlPath: "counter",
+        label: "<counter>"
+    });
+
+    index.U.push({
+        urlPath: "url#The_url()_functional_notation",
+        label: "url()"
+    });
+}
+
+if (types.indexOf("syntaxes") !== -1) {
+    if (!index.I) {
+        index.I = [];
+    }
+    index.I.push({
+        urlPath: "inherit",
+        label: "inherit"
+    });
+    index.I.push({
+        urlPath: "initial",
+        label: "initial"
+    });
+    if (!index.R) {
+        index.R = [];
+    }
+    index.R.push({
+        urlPath: "revert",
+        label: "revert"
+    });
+    if (!index.U) {
+        index.U = [];
+    }
+    index.U.push({
+        urlPath: "unset",
+        label: "unset"
+    });
+
+    if (!index.V) {
+        index.V = [];
+    }
+    index.V.push({
+        urlPath: "var",
+        label: "var()"
+    });
+}
+
+if (types.indexOf("properties") !== -1) {
+    index.Others = [{
+        urlPath: "--*",
+        label: "--*"
+    }];
+    characters.push("Others");
+}
+
+// Adjust data for output
+for (var i in characters) {
+    for (var j = index[characters[i]].length - 1; j >= 0; j--) {
+        var item = index[characters[i]][j];
+
+        switch (item.label) {
+            case "::after":
+            case "::before":
+            case "::first-letter":
+            case "::first-line":
+                item.label += " (" + item.label.replace(/^:/, "") + ")";
+                break;
+
+            case "@annotation":
+            case "@character-variant":
+            case "@ornaments":
+            case "@styleset":
+            case "@stylistic":
+            case "@swash":
+                item.urlPath = "@font-feature-values#" + item.label;
+                break;
+
+            case "annotation()":
+            case "character-variant()":
+            case "ornaments()":
+            case "styleset()":
+            case "stylistic()":
+            case "swash()":
+                item.urlPath = "font-variant-alternates#" + item.label;
+                break;
+
+            case "format()":
+                item.urlPath = "@font-face/src#format()";
+                break;
+
+            case "image()":
+                item.urlPath = "image#The_image()_functional_notation";
+                break;
+
+            case "url()":
+                item.urlPath = "url#The_url()_functional_notation";
+                break;
+
+            case "blur()":
+            case "brightness()":
+            case "contrast()":
+            case "drop-shadow()":
+            case "grayscale()":
+            case "hue-rotate()":
+            case "invert()":
+            case "opacity()":
+            case "saturate()":
+            case "sepia()":
+                item.urlPath = "filter-function/" + item.label.replace("()", "");
+                break;
+
+            case "matrix()":
+            case "matrix3d()":
+            case "perspective()":
+            case "rotate()":
+            case "rotate3d()":
+            case "rotateX()":
+            case "rotateY()":
+            case "rotateZ()":
+            case "scale()":
+            case "scale3d()":
+            case "scaleX()":
+            case "scaleY()":
+            case "scaleZ()":
+            case "skew()":
+            case "skewX()":
+            case "skewY()":
+            case "translate()":
+            case "translate3d()":
+            case "translateX()":
+            case "translateY()":
+            case "translateZ()":
+                item.urlPath = "transform-function/" + item.label.replace("()", "");
+                break;
+
+            case "rgb()":
+            case "rgba()":
+            case "hsl()":
+            case "hsla()":
+                item.urlPath = "color_value#" + item.label;
+                break;
+
+            case "inset()":
+            case "polygon()":
+            case "circle()":
+            case "ellipse()":
+                item.urlPath = "basic-shape#" + item.label;
+                break;
+
+            case "rect()":
+                item.urlPath = "shape#" + item.label;
+                break;
+
+            case "@top-left-corner":
+            case "@top-left":
+            case "@top-center":
+            case "@top-right":
+            case "@top-right-corner":
+            case "@bottom-left-corner":
+            case "@bottom-left":
+            case "@bottom-center":
+            case "@bottom-right":
+            case "@bottom-right-corner":
+            case "@left-top":
+            case "@left-middle":
+            case "@left-bottom":
+            case "@right-top":
+            case "@right-middle":
+            case "@right-bottom":
+                item.urlPath = "@page#page-margin-box-type";
+                break;
+
+            case "cubic-bezier()":
+            case "frames()":
+            case "steps()":
+                item.urlPath = "single-transition-timing-function#" + item.label;
+                break;
+        }
+    }
+}
+
+// Removed duplicates
+for (var i in characters) {
+    index[characters[i]].sort(compareItems);
+
+    for (var j = index[characters[i]].length - 1; j >= 0; j--) {
+        var item = index[characters[i]][j];
+
+        if (j !== 0 && item.urlPath === index[characters[i]][j - 1].urlPath) {
+          index[characters[i]].splice(j, 1);
+        }
+    }
+}
+
+var output = "";
+
+if (groupingType === "no") {
+    output = "<ul>";
+}
+
+var baseURL = "/" + env.locale + "/docs/Web/CSS/";
+
+for (var characterIndex in characters) {
+    var character = characters[characterIndex];
+
+    if (groupingType === "alphabetically") {
+        output += "<span>" + character + "</span><ul>";
+    }
+
+    for (var i = 0; i < index[character].length; i++) {
+        var url = baseURL + index[character][i].urlPath;
+        /*
+        //var thisPage = await wiki.getPage(url);   Getting the summary this way is too slow
+        var summary = "";
+        if (thisPage && thisPage.summary) {
+            summary = mdn.escapeQuotes(thisPage.summary);
+        } else {
+            summary = mdn.getLocalString(localStrings, "summary");
+        }*/
+        var summary = "";
+        output += "<li><a href=\"" + url + "\"" +
+            (summary ? " title=\"" + summary + "\"" : "") + "><code>" +
+            htmlEscape(index[character][i].label) + "</code></a></li>";
+    }
+
+    if (groupingType === "alphabetically") {
+        output += "</ul>";
+    }
+}
+
+if (groupingType === "no") {
+    output += "</ul>";
+}
+%>
+<div class="index">
+    <%- output %>
+</div>

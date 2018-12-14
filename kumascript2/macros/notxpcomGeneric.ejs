@@ -1,0 +1,24 @@
+<%
+/*
+ * first parameter: inline/method
+ * second parameter: additional information required for the type specified by the first parameter
+*/
+
+var s_str = mdn.localString({
+    "en-US": ["Violates the XPCOM interface guidelines", "Only use this method if you REALLY know what you are doing!"],
+    "ja"   : ["XPCOM インタフェースガイドライン違反",    "ガイドライン違反である事を理解している場合のみご使用ください。"],
+    "ru"   : ["Нарушает принципы XPCOM интерфейса", "Используйте этот метод, если вы ДЕЙСТВИТЕЛЬНО знаете, что вы делаете!"]
+});
+
+
+switch($0) {
+    case 'inline':
+        %><span title="<%- s_str[1] %>" class="inlineIndicator notXPCOM notXPCOMInline"><%- s_str[0] %></span><%
+        break;
+    case 'method':
+        %><div>
+<%      %>  <span title="<%- s_str[1] %>" class="indicatorInHeadline notXPCOM notXPCOMMethod"><%- s_str[0] %></span>
+<%      %>  <h3><%= $1 %>()</h3>
+<%      %></div><%
+    break;
+}%>

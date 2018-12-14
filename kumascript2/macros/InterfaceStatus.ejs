@@ -1,0 +1,16 @@
+<%
+/* Please update this interface to use the IFSummary template. */
+var scriptable = "";
+
+switch(string.tolower($4)) {
+  case ("yes"):
+    scriptable = "scriptable";
+    break;
+  case ("no"):
+    scriptable = "not scriptable";
+    break;
+}
+
+var gecko = string.replace(string.replace(string.replace(string.tolower($3), "gecko" , "") ,"mozilla", "") ," ", ""); 
+%>
+<%- await template("IFSummary", [$1, "", scriptable, gecko, ""]) %>

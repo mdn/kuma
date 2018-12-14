@@ -1,0 +1,76 @@
+<%
+/*
+ * first parameter: inline/header
+*/
+
+var str_inline = mdn.localString({
+  "en-US": "Non-standard",
+  "de":    "Kein Standard",
+  "es":    "No estándar",
+  "fr":    "Non standard",
+  "ja":    "非標準",
+  "pl":    "Niestandardowy",
+  "ru":    "Не стандартно",
+  "zh-CN": "非标准",
+  "zh-TW": "非標準"
+});
+
+var str_long = mdn.localString({
+  "en-US": "This feature is non-standard and is not on a standards track. Do not use it on production sites facing the Web: it will not work for every user. There may also be large incompatibilities between implementations and the behavior may change in the future.",
+  "de":    "Diese Funktion entspricht nicht dem Standard und ist nicht Teil der Standardisierung. Diese Funktion darf nicht in Webseiten, die via das Internet zugänglich sind, benutzt werden: Sie wird nicht für alle Nutzer funktionieren. Es kann zu umfangreichen Inkompatibilitäten zwischen verschiedenen Implementierungen kommen und die Funktionsweise oder Eigenschaften könnten in der Zukunft verändert werden.",
+  "fr":    "Cette fonctionnalité n'est ni standard, ni en voie de standardisation. Ne l'utilisez pas pour des sites accessibles sur le Web : elle ne fonctionnera pas pour tout utilisateur. Il peut également y avoir d'importantes incompatibilités entre les implémentations et son comportement peut être modifié dans le futur.",
+  "it":    "Questa funzionalità non è standard e non è parte di un processo di standardizzazione. Non utilizzarla in siti accessibili dal Web: non funzionerà per tutti gli utenti. Inoltre si potrebbero verificare incompatibilità sostanziali tra le implementazioni, ed il comportamento potrebbe cambiare in futuro.",
+  "ja":    "この機能は標準ではなく、標準化の予定もありません。公開されているウェブサイトには使用しないでください。ユーザーによっては使用できないことがあります。実装ごとに大きな差があることもあり、将来は振る舞いが変わるかもしれません。",
+  "ru":    "Эта возможность не является стандартной и стандартизировать её пока никто не собирается. Не используйте её на сайтах, смотрящих во внешний мир: она будет работать не у всех пользователей. Также могут присутствовать большие несовместимости между реализациями и её поведение может в будущем измениться.",
+  "zh-CN": "该特性是非标准的，请尽量不要在生产环境中使用它！"
+});
+
+var str_fxos_long = mdn.localString({
+  "en-US": "This feature is not on a current W3C standards track, but it is supported on the Firefox OS platform. Although implementations may change in the future and it is not supported widely across browsers, it is suitable for use in code dedicated to Firefox OS apps.",
+  "de":    "Diese Funktion ist nicht Teil der W3C-Standards, allerdings wird sie innerhalb der Platform des Firefox-Betriebssystems unterstützt. Obwohl sich Implementierungen über längere Zeit ändern können und die Funktion gegenwärtig nicht universell von allen Browsern unterstüzt wird, ist sie durchaus für den Programmiergebrauch in dedizierten Applikationen für das Firefox-Betriebssystem geeignet.",
+  "fr":    "Cette fonctionnalité n'est pas en voie de standardisation au W3C, mais elle est supportée par la plateforme Firefox OS. Bien que son implémentation puisse changer dans le futur et qu'elle n'est pas largement supportée par les différents navigateurs, elle est utilisable pour du code dédié aux applications Firefox OS.",
+  "it":    "Questa funzionalità non è al momento parte di un processo di standardizzazione del W3C, ma è supportata dalla piattaforma Firefox OS. Sebbene l'implementazione potrebbe cambiare in futuro e non è supportata sufficientemente tra i vari browser, è comunque adatta per l'utilizzo nel codice dedicato ad applicazioni per Firefox OS.",
+  "ja":    "この機能は現在 W3C の標準化のプロセスに乗っていませんが、Firefox OS プラットフォームではサポートされています。将来は動作が変わるかもしれませんし、他のブラウザーで広くサポートされているわけでもありませんが、Firefox OS アプリ専用のコードで使うには適しています。",
+  "ru":    "Эта возможность не является стандартом W3C и стандартизировать её пока никто не собирается, но она поддерживается на платформе Firefox OS. Хотя возможность не поддерживается всеми браузерами и в будущем её реализация может изменяться, она может использоваться в коде приложений для Firefox OS."
+});
+
+var fxosCheck = 0;
+
+for (i = 0 ; i <= env.tags.length-1 ; i++) {
+    if (env.tags[i] == "Firefox OS") {
+      fxosCheck = 1;
+      break;        // we can break out now, to save some time
+    }
+}
+
+if (fxosCheck == 0) {
+
+switch($0) {
+  case 'inline':
+    %><span class="inlineIndicator nonStandard nonStandardInline"><%-str_inline%></span><%
+    break;
+  case 'header':
+    %><div class="blockIndicator nonStandard nonStandardHeader">
+      <p><strong><%-await template("NonStandardBadge", [1])%> <%-str_inline%></strong><br/>
+      <%-str_long%></p>
+      </div><%
+    break;
+}
+
+} else {
+
+switch($0) {
+  case 'inline':
+    %><span class="inlineIndicator nonStandard nonStandardInline"><%-str_inline%></span><%
+    break;
+  case 'header':
+    %><div class="blockIndicator nonStandard nonStandardHeader">
+      <p><strong><%-await template("NonStandardBadge", [1])%> <%-str_inline%></strong><br/>
+      <%-str_fxos_long%></p>
+      </div><%
+    break;
+}
+
+}
+
+%>

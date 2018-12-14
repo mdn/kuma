@@ -1,0 +1,22 @@
+<%
+// Embeds a JSFiddle.
+//
+// Parameters:
+//  $0 - jsfiddle.net url
+//  $1 - which tabs to display (optional); this is a string such as "html,css" or "html,js"
+//  $2 - height of the iframe (optional)
+
+var s_text = mdn.localString({
+    "en-US": "Try it yourself in JSFiddle",
+    "ru"   : "Проверьте сами на JSFiddle"
+});
+
+var options = $1 || "";
+
+if (options.length != 0) {
+    options += "/";
+}
+
+var s_result = '<p><iframe allowfullscreen="allowfullscreen" frameborder="0" height="' + $2 + '" src="' + $0 + 'embedded/' + options + '" width="100%"></iframe></p>';
+
+%><%- s_result %>

@@ -1,0 +1,10 @@
+<%
+// Inserts a link to the specified role's page
+//
+// Parameters:
+//  $0 - role
+
+var lang = env.locale;
+var href = '/' + lang + '/docs/Web/Accessibility/AT-APIs/Gecko/Roles/' + $0;
+%>
+<code><a href="<%=href%>"><%=$0%></a></code>

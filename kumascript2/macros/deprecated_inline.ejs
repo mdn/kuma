@@ -1,0 +1,33 @@
+<%
+// Inserts an inline indicator noting that an inline item is deprecated.
+//
+// NOTE:    "Deprecated" means that the item should no longer be used, but
+//          still functions. If you mean that it no longer works at all,
+//          use the term "obsolete."
+//
+// Parameters:
+//
+//  $0  Version of deprecation (optional).
+//
+// The version should be prepended with "html", "js", "css", or "gecko"
+// to indicate which technology the version number refers to. For backward
+// compatibility, unprefixed versions are assumed to refer to Gecko, but
+// you shouldn't rely on this.
+
+var str = $0;
+var type = 0;   // assume we want the text badge
+
+if ($0 && $0 != undefined) {
+    if (string.IsDigit($0)) {
+        str = "gecko" + $0;
+    }
+} else {
+    type = 1;   // switch to the icon indicator if no version specified
+}
+
+if (str.length) {
+    %><%-await template('deprecatedGeneric', ["inline",str])%><%
+} else {
+    %><%-await template('DeprecatedBadge', [type])%><%
+}
+%>

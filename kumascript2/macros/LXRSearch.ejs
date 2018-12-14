@@ -1,0 +1,17 @@
+<%
+var lang = env.locale;
+var searchfor = ' Search for <code>' + $2 + '</code>';
+switch(lang) {
+  case 'de':
+    searchfor = ' Suche nach <code>' + $2 + '</code>';
+    break;
+  case 'ja':
+    searchfor = ' で <code>' + $2 + '</code> を';
+    break;
+  case 'ru':
+    searchfor = ' Искать <code>' + $2 + '</code>';
+    break;
+}
+%>
+<a href="http://mxr.mozilla.org/mozilla-central/<%= $0 + '?' + $1 + '=' + $2 %>"><%-
+  string.trim($3) ? $3 : ('MXR ' + ($0 == 'ident' ? 'ID' : '') + searchfor) %></a>

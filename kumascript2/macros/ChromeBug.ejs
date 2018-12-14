@@ -1,0 +1,19 @@
+<%
+/*
+  Displays a link to Google Chrome's / Chromium's issue tracker
+
+  $0 - Issue number
+*/
+var bugPageURL = "https://bugs.chromium.org/p/chromium/issues/detail?id=" + $0;
+var s = "";
+var linkLabel = mdn.replacePlaceholders(mdn.localString({
+    "en-US": "Chromium bug $1$",
+    "es": "Error Chromium $1$",
+    "de": "Chromium Bug $1$",
+    "ca": "Chromium errada $1$",
+    "cs": "Chromium chyba $1$",
+    "pl": "Chromium błąd $1$",
+    "ru": "Баг Chromium $1$"
+}), [$0]);
+%>
+<a rel="external" href="<%= bugPageURL %>" class="external"><%= linkLabel %></a>

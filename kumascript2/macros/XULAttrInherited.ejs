@@ -1,0 +1,7 @@
+<%/* TODO: Disabled for now, because `webcache` needs to be implemented */%>
+<% if (false) { %>
+var ttl = 3600;	// 60 minute TTL
+var lang = page.language;
+var cacheKey = lang + '-XULAttrInherited';
+webcache.fetch(cacheKey) || webcache.store(cacheKey, template.XULAttrInheritedNoCache(), ttl);
+<% } %>

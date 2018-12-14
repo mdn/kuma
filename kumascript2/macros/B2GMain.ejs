@@ -1,0 +1,22 @@
+<% if (false) {
+%><div class="prevnext"><%
+
+var prevStr = mdn.localString({
+    "en-US": "« Back to Boot to Gecko",
+    "zh-CN": "« 返回 Boot to Gecko",
+    "de": "« zurück",
+    "es": "« Anterior",
+    "fr": "« Précédent",
+    "ja": "« 前",
+    "ko": "« 이전",
+    "pl": "« Poprzedni",
+    "ru": "« Предыдущая статья",
+    "zh-TW": "« 前頁"
+});
+
+/* RTL problem */
+%>  <div class="prevnext">
+        <p align="right"><span style="float: left;"><%-web.link(wiki.uri(env.locale + '/docs/Mozilla/Boot_to_Gecko'), prevStr)%></span></p>
+    </div>
+</div>
+<% } %>

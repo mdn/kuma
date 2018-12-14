@@ -1,0 +1,19 @@
+Decimals are not truncated to integers:
+* {{jsonify(3.6)}}
+* {{jsonify({"x":3.6})}}
+
+Quotes and escaped quotes work correctly
+* {{ jsonify('This is a "test"') }}
+* {{ jsonify("This is a 'test'") }}
+* {{ jsonify("This is a \"test\"") }}
+* {{ jsonify('This is a \'test\'') }}
+* {{ jsonify("This is a \'test\'") }}
+* {{ jsonify('This is a \"test\"') }}
+* {{ jsonify({"x":"This is a 'test'"}) }}
+* {{ jsonify({"x":"This is a \"test\""}) }}
+
+Empty arguments are not elided
+* {{ jsonify('') }}
+* {{ jsonify("") }}
+* {{ jsonify("",'',"") }}
+* {{ jsonify("docs/User:trevorh/aTest","docs/User:trevorh/Generic_template_test","","Anything") }}

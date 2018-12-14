@@ -1,0 +1,11 @@
+<%
+// Inserts an inline indicator noting Gecko version requirements.
+// Nothing is displayed if the Gecko version is older than a certain time,
+// as defined in the GeckoVersionIndicator macro, which should be used
+// instead, as this simply calls through.
+//
+// Parameters:
+//  $0  Gecko version required.
+%>
+
+<%-await template("GeckoVersionIndicator", [0, $0])%>

@@ -1,0 +1,65 @@
+<%
+/* get a page's language (Don't use page.language!) */
+/* one parameter: Interface name */
+var uri = Uri.Parts(Page.uri);
+var lang = string.toLower(uri.path[0]);
+if(string.Contains(lang, "project")) {
+ var lang = string.Substr(lang, 8);
+}
+/* fall back to page.language on a user page */
+else if (string.StartsWith(lang, "user:")) {
+ var lang = page.language;
+}
+
+var str = "/XPCOM_Interface_Reference/";
+
+switch(lang) {
+  case 'de':
+    var str = "/XPCOM_Interface_Referenz/";
+    break;
+}
+
+/* check $0 exists */
+if(wiki.pageExists(lang + str + $0)) {
+  %><code><%- (web.link(wiki.uri(lang + str + $0), $0)) %></code><%
+} else if(wiki.pageExists(lang + '/' + $0)) {
+  %><code><%- (web.link(wiki.uri(lang + '/' + $0), $0)) %></code><%
+} else {
+  var targeturi = "https://developer.mozilla.org/Article_not_found?uri=" + lang + str + $0 +
+        "&ident=" + $0;
+  %><code><a rel="internal" href="<%=targeturi%>" class="new"><%=$0%></a></code><%
+}
+
+// See original: https://developer.mozilla.org/Template:interface
+//
+// /* get a page's language (Don't use page.language!) */
+// /* one parameter: Interface name */
+// var uri = Uri.Parts(Page.uri);
+// var lang = string.toLower(uri.path[0]);
+// if(string.Contains(lang, "project")) {
+//  let lang = string.Substr(lang, 8);
+// }
+// /* fall back to page.language on a user page */
+// else if (string.StartsWith(lang, "user:")) {
+//  let lang = page.language;
+// }
+// 
+// var str = "/XPCOM_Interface_Reference/";
+// 
+// switch(lang) {
+//   case 'de':
+//     let str = "/XPCOM_Interface_Referenz/";
+//     break;
+// }
+// 
+// /* check $0 exists */
+// if(wiki.pageExists(lang .. str .. $0)) {
+//   <code>(web.link(wiki.uri(lang .. str .. $0), $0))</code>;
+// } else if(wiki.pageExists(lang .. '/' .. $0)) {
+//   <code>(web.link(wiki.uri(lang .. '/' .. $0), $0))</code>;
+// } else {
+//   var targeturi = "https://developer.mozilla.org/Article_not_found?uri=" .. lang .. str .. $0 ..
+//         "&ident=" .. $0;
+//   <code><a rel=('internal') href=(targeturi) class=('new')>$0</a></code>
+// }
+%>

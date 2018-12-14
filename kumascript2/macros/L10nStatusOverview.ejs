@@ -1,0 +1,139 @@
+<%
+/*
+ * Displays an overview table for l10n status
+ *
+ */
+
+var sectionColumnTitle = mdn.localString({
+    "en-US": "Section",
+    "de"   : "Bereich",
+    "fr"   : "Catégorie",
+    "ja"   : "セクション",
+    "ru"   : "Раздел",
+    "pt-BR": "Seção"
+});
+
+var pagesColumnTitle = mdn.localString({
+    "en-US": "Pages",
+    "de"   : "Seiten",
+    "fr" : "Pages",
+    "ja"   : "ページ",
+    "ru"   : "Страниц",
+    "pt-BR": "Páginas"
+});
+
+var translatedColumnTitle = mdn.localString({
+    "en-US": "Translated",
+    "de"   : "Übersetzt",
+    "fr"   : "Traduites",
+    "ja"   : "翻訳済み",
+    "ru"   : "Переведено",
+    "pt-BR": "Traduzidas"
+});
+
+var translationsUpToDateColumnTitle = mdn.localString({
+    "en-US": "Translation up to date",
+    "de"   : "Übersetzung auf neustem Stand",
+    "fr"   : "Traductions à jour",
+    "ja"   : "翻訳が更新済み",
+    "ru"   : "Актуальных переводов",
+    "pt-BR": "Traduções atualizada"
+});
+
+var total = mdn.localString({
+    "en-US": "Total",
+    "de"   : "Gesamt",
+    "fr"   : "Total",
+    "ja"   : "合計",
+    "ru"   : "Итого",
+    "pt-BR": "Total"
+});
+
+var statusStr = mdn.localString({
+   "en-US": "documentation status",
+   "de"   : "Dokumentationsstatus",
+   "fr"   : "Statut de la documentation",
+   "ja"   : "文書化状況",
+   "ru"   : "Статус документации",
+   "pt-BR": "Status da documentação"
+});
+
+/*** Collect doc status data ***/
+var result = {};
+var totalPages = 0,
+    totalTranslated = 0,
+    totalUpToDate = 0;
+var pageList = await page.subpagesExpand('/' + env.locale + '/docs/MDN/Doc_status');
+
+async function getPages(pageList) {
+    if (pageList) {
+        for (var aPage in pageList) {
+            if (pageList[aPage].url.indexOf("Doc_status/Overview") == -1) {
+                var url = 'https://developer.mozilla.org/' + pageList[aPage].locale + '/docs/' + pageList[aPage].slug + '?raw&macros&section=json';
+                var resource = await MDN.fetchHTTPResource(url);
+                if (resource != '') {
+                    result[pageList[aPage].title] = {};
+                    result[pageList[aPage].title].metrics = JSON.parse(resource);
+                    result[pageList[aPage].title].url = pageList[aPage].url;
+                }
+                var subpage = await getPages(pageList[aPage].subpages);
+            }
+        }
+    }
+}
+
+await getPages(pageList);
+
+/*** Summary table ***/
+%>
+<table class="docstatussummary standard-table">
+  <thead>
+    <tr>
+        <th><%=sectionColumnTitle%></th>
+        <th><%=pagesColumnTitle%></th>
+        <th><%=translatedColumnTitle%></th>
+        <th><%=translationsUpToDateColumnTitle%></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%
+        for (var key in result) {
+            if (result.hasOwnProperty(key) && typeof key != 'undefined') {
+                var pageCounter = result[key].metrics.pages.counter || 0;
+                var translationCounter = result[key].metrics.translations.counter || 0;
+                var updateCounter = result[key].metrics.updateNeeded.counter || 0;
+
+                totalPages += pageCounter;
+                totalTranslated += translationCounter;
+                totalUpToDate += updateCounter;
+                
+                var translationPercent =  0;
+                var uptodatePercent = 0;
+                if (pageCounter !== 0) {
+                    translationPercent = Math.floor((translationCounter / pageCounter) * 100);
+                    uptodatePercent = Math.floor((updateCounter / pageCounter) * 100);
+                }
+
+                var totalTranslatedPercent = 0;
+                var totalUpToDatePercent = 0;
+                if (totalPages !== 0) {
+                    totalTranslatedPercent = Math.floor((totalTranslated / totalPages) * 100);
+                    totalUpToDatePercent = Math.floor((totalUpToDate / totalPages) * 100);
+                }
+    %>
+        <tr>
+            <td><a href="<%=result[key].url%>"><%=key.replace(statusStr, "", "i")%></a></td>
+            <td><%=pageCounter%></td>
+            <td><%=translationCounter%> (<%=translationPercent%>%)</td>
+            <td><%=updateCounter%> (<%=uptodatePercent%>%)</td>
+        </tr>
+    <% }} %>
+    <tr>
+        <td><strong><%=total%></strong></td>
+        <td><strong><%=totalPages%></strong></td>
+        <td><strong><%=totalTranslated%> (<%=totalTranslatedPercent%>%)</strong></td>
+        <td><strong><%=totalUpToDate%> (<%=totalUpToDatePercent%>%)</strong></td>
+    </tr>
+</tbody>
+</table>
+<div id="json" style="display: none"><%=JSON.stringify(result) %></div>

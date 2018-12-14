@@ -1,0 +1,6 @@
+There is a trailing comma in the JSON arguments below.
+
+{{ MacroWithJson({
+    "es":"es/JavaScript/Acerca_de_JavaScript",
+    "en": "en/JavaScript/About_JavaScript",
+}) }}

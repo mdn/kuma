@@ -1,0 +1,33 @@
+<%
+/* Used for generating cross-references within the event documentation. */
+/* @param */
+/*   The path of the page to link to  */
+/* @param [optional] */
+/*   The text to use for the link.  If omitted, the value of the first */
+/*   parameter will be used */
+/* @param [optional] */
+/*   An anchor to link to on the page. Link text will display as $0.$2 or $1.$2 */
+ 
+/* get a page's language (Don't use page.language!) */
+var lang = env.locale;
+ 
+var api = $0;
+var str = $1 || $0;
+ 
+var URL = "/" + lang + "/docs/Web/Events/" + api + $2;
+ 
+// Locals that use the new location
+// Add your local when you have moved your pages
+var filter = ['en-US'];
+
+if (filter.indexOf(lang) === -1) { URL = "/" + lang + '/docs/Web/Reference/Events/' + api + $2; }
+
+ 
+var anch = '';
+ 
+if ($2) {
+  str = str + '.' + $2;
+  anch = '#' + $2;
+}
+%>
+<code><a href="<%- URL+anch %>" title="<%- URL+anch %>"><%= str %></a></code>

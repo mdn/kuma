@@ -1,0 +1,4 @@
+This document will use macros that will experience errors:
+* {{ broken1("this breaks first") }}
+* {{ broken2("this breaks second") }}
+* {{ broken3("this breaks third") }}

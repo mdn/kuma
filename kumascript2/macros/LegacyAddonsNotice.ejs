@@ -1,0 +1,53 @@
+<%
+
+var output = mdn.localString({
+    'en-US': '<div class="blockIndicator warning">' +
+        '<p>Add-ons using the techniques described in this document are considered a legacy technology in Firefox. ' +
+        'Don\'t use these techniques to develop new add-ons. Use ' +
+        '<a href="/en-US/Add-ons/WebExtensions">WebExtensions</a> instead. ' +
+        'If you maintain an add-on which uses the techniques described here, consider migrating it to use ' +
+        'WebExtensions.</p>' +
+        '<p><strong>Starting from <a href="https://wiki.mozilla.org/RapidRelease/Calendar">Firefox 53</a>, no new legacy add-ons will be accepted on addons.mozilla.org (AMO) for desktop Firefox and Firefox for Android.</strong></p>' +
+        '<p><strong>Starting from <a href="https://wiki.mozilla.org/RapidRelease/Calendar">Firefox 57</a>, only extensions developed using WebExtensions APIs will be supported ' +
+        'on Desktop Firefox and Firefox for Android. </strong></p>' +
+        '<p>Even before Firefox 57, changes coming up in the Firefox platform will break many legacy extensions. ' +
+        'These changes include multiprocess Firefox (e10s), sandboxing, and multiple content processes. ' +
+        'Legacy extensions that are affected by these changes should migrate to use WebExtensions APIs if they can. ' +
+        'See the <a href="https://blog.mozilla.org/addons/2017/02/16/the-road-to-firefox-57-compatibility-milestones/">"Compatibility Milestones" document</a> for more information.</p>' +
+        '<p>A wiki page containing <a href="https://wiki.mozilla.org/Add-ons/developer/communication">' +
+        'resources, migration paths, office hours, and more</a>, '+
+        'is available to help developers transition to the new technologies.</p>' +
+        '</div>',
+    'zh-CN': '<div class="blockIndicator warning">' +
+        '<p>我们即将放弃这篇文档中描述的 Firefox 附加组件技术。</p>' +
+        '<p>请勿使用下列技术开发新的附加组件。请改用 ' +
+        '<a href="/zh-CN/Add-ons/WebExtensions">WebExtension</a> 代替。' +
+        '<p>如果您在维护使用下列技术的附加组件，请考虑将其迁移为使用 ' +
+        'WebExtensions 技术。<p>' +
+        '<p>使用下列技术开发的附加组件可能不适用于多进程 Firefox（e10s），它已在 ' +
+        'Firefox Nightly 和 Firefox Developer Edition 中默认启用，并很快将遍及 ' +
+        'Firefox 的公测版（Beta）和正式版。我们准备了<a ' +
+        'href="/zh-CN/Add-ons/Working_with_multiprocess_Firefox">制作多进程兼容的附加组件</a>的文档，但迁移到 WebExtension 是更加着眼于未来的选择。</p>' +
+        '<p>有关的 wiki 页面写有协助开发人员过渡到新技术的<a href="https://wiki.mozilla.org/Add-ons/developer/communication">有关资源、迁移路径、办公时间等信息</a>'+
+        '。</div>',
+    'fr': '<div class="blockIndicator warning">' +
+        '<p>Les modules complémentaires utilisant les techniques décrites dans ce document sont considérés comme une ancienne technologie dans Firefox. ' +
+        'N\'utilisez pas ces techniques pour developper de nouveaux modules complémentaires. Utilisez plutôt ' +
+        '<a href="/fr/Add-ons/WebExtensions">les WebExtensions</a>. ' +
+        'Si vous maintenez un module qui utilise les techniques qui sont décrites ici, envisagez d\'effectuer la migration vers ' +
+        'les WebExtensions.</p>' +
+        '<p><strong>À partir de <a href="https://wiki.mozilla.org/RapidRelease/Calendar">Firefox 53</a>, plus aucun ancien module complémentaire ne sera accepté sur addons.mozilla.org (AMO) pour Firefox pour les ordinateurs et Firefox pour Android.</strong></p>' +
+        '<p><strong>À partir de <a href="https://wiki.mozilla.org/RapidRelease/Calendar">Firefox 57</a>, seules les extensions développées avec l\'API des WebExtensions seront prises en charge ' +
+        'sur Firefox pour les ordinateurs et Firefox pour Android. </strong></p>' +
+        '<p>Même avant Firefox 57, les changements qui arrivent dans la plateforme Firefox vont rendre beaucoup d\'anciennes extensions inutilisables. ' +
+        'Ces changements incluent Firefox multiprocessus (e10s), le sandboxing, et les processus de contenu multiple. ' +
+        'Les extensions héritées qui sont touchées par ces changements devraient migrer vers l\'API des WebExtensions si possible. ' +
+        'Voir le <a href="https://blog.mozilla.org/addons/2017/02/16/the-road-to-firefox-57-compatibility-milestones/">document "Compatibility Milestones" (étapes de compatibilité)</a> pour plus d\'informations.</p>' +
+        '<p>Une page du wiki contenant <a href="https://wiki.mozilla.org/Add-ons/developer/communication">' +
+        'les ressources, chemins de migration, heures d\'ouverture et autres</a>, '+
+        'est disponible pour les développeurs souhaitant effectuer la transition vers les nouvelles technologies.</p>' +
+        '</div>'
+});
+%>
+
+<%- output %>

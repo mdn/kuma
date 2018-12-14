@@ -1,0 +1,47 @@
+<%
+// Closes an interface summary box; you should use this after the note
+// after using IFSummaryStart.
+//
+// Parameters:
+//
+//  $0 - The interface's parent class
+//  $1 - The last Gecko version the interface changed in
+//  $2 - The Gecko version the interface was introduced in (optional)
+//  $3 - The Gecko version the interface was deprecated in (optional)
+//  $4 - The Gecko version the interface was removed in (optional)
+//
+
+/* defaults to English */
+var lastChanged = "Last changed in Gecko ";
+var inheritsFrom = "Inherits from: ";
+
+switch(env.locale) {
+  case "ja":
+    inheritsFrom = "継承元: ";
+    lastChanged = "最終更新: Gecko ";
+    break;
+  case "zh-CN":
+    inheritsFrom = "继承于: ";
+    lastChanged = "最后修改于Gecko ";
+    break;
+  case "ru":
+    inheritsFrom = "Наследуется из: ";
+    lastChanged = "Последнее изменение в Gecko ";
+    break;  
+}
+%>
+
+</span>
+<% if ($2) { %>
+  <%- await template("VersionTimeline", [$2, $1, $4, $3]) %>
+<% } %>
+<div style="background:#eee; padding:2px;">
+<%
+if ($0 != "") {
+  %><%- inheritsFrom  + await template("interface", [$0]) %><%
+} else {
+  %><span>&nbsp;</span><%
+}
+%>
+<span style="text-align:right; float:right;"><%- lastChanged + $1 + " " + await template("geckoRelease", [$1]) %></span></div>
+</div>

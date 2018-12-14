@@ -1,0 +1,205 @@
+<%
+// Presents a box showing assorted information about the community
+// for the technology area covered by a landing page.
+//
+// THIS IS THE NEW VERSION, PRESENTED AS A FULL-WIDTH BANNER.
+//
+// Parameters:
+//  $0  Name of the topic/community
+//  $1  Name of the mailing list for the community.
+//      If this is an mdc/mdn list, it will be changed to https://discourse.mozilla-community.org/c/mdn in the DiscussionList macro
+//  $2  Name of the newsgroup for the community
+//      If this is an mdc/mdn newsgroup, it will be changed to https://discourse.mozilla-community.org/c/mdn in the DiscussionList macro
+//  $3  IRC channel name
+//  $4  String containing a list of URLs and descriptions for additional
+//      links (null if none).
+//  $5  Stack Overflow tag to promote, if any
+//  $6  Twitter ID to promote, if any
+//
+// The $4 string of additional links is formatted as a list like this:
+// heading|url|text|description||heading|url|text|description...
+//
+// To have multiple links per heading, use "++" to join them:
+//
+// heading|url|text|description++url|text|description...
+//
+// The "description" part is optional and is used as non-linked added
+// text.
+
+var ircInfoStr = "";
+var headingStr = "";
+var messageStr = "";
+var messageNoteStr = "";
+var ircLink = "";
+var extraLinks = "";
+var needDir = "";
+
+var ircInfoLink = "<a href='https://wiki.mozilla.org/IRC'>";
+
+// Build the IRC channel URL if a channel name was specified
+
+if ($3) {
+    ircLink = "<a href='irc://irc.mozilla.org/" + $3 + "'>#" + $3 + "</a>";
+}
+
+// Generate localized strings
+
+switch(env.locale) {
+    case "de":
+        headingStr = "Werde Teil der " + $0 + " Community";
+        messageStr = "Mailing Liste/Newsgroup:";
+        messageNoteStr = "Wähle eine der Möglichkeiten, um an der Diskussion teilzunehmen:";
+        if ($3) {
+            ircInfoStr = "<span class='smaller'>(" + ircInfoLink + "mehr erfahren</a>)</span>";
+        }
+        break;
+    case "fr":
+        headingStr = "Rejoignez la communauté " + $0 ;
+        messageStr = "Liste de diffusion/newsgroup :";
+        messageNoteStr = "Choisissez votre méthode préférée pour rejoindre la discussion&nbsp;:";
+        if ($3) {
+            ircInfoStr = "<span class='smaller'>(" + ircInfoLink + "en apprendre plus</a>)</span>";
+        }
+        break;
+    case "it":
+        headingStr = "Unisciti alla comunità " + $0;
+        messageStr = "Mailing list/newsgroup:";
+        messageNoteStr = "Scegli il metodo che preferisci per unirti alla discussione:";
+        if ($3) {
+            ircInfoStr = "<span class='smaller'>(" + ircInfoLink + "maggiori informazioni</a>)</span>";
+        }
+        break;
+    case "pt-BR":
+        headingStr = "Junte-se à comunidade " + $0;
+        messageStr = "Lista de emails/newsgroup:";
+        messageNoteStr = "Escolha a sua forma preferida de juntar-se à discussão:";
+        if ($3) {
+            ircInfoStr = "<span class='smaller'>(" + ircInfoLink + "saiba mais</a>)</span>";
+        }
+        break;
+    case "zh-CN":
+        headingStr = "加入 " + $0 + " 社区";
+        messageStr = "邮件列表/新闻组：";
+        messageNoteStr = "请选择你喜欢的方式加入我们：";
+        if ($3) {
+            ircInfoStr = "<span class='smaller'>(" + ircInfoLink + "了解 IRC</a>)</span>";
+        }
+        break;
+    case "ru":
+        headingStr = "Присоединяйтесь к сообществу " + $0;
+        messageStr = "Почтовая рассылка:";
+        messageNoteStr = "Выберите удобный способ для общения:";
+        if ($3) {
+            ircInfoStr = "<span class='smaller'>(" + ircInfoLink + "Узнать больше</a>)</span>";
+        }
+        break;
+    case "id":  // Bahasa Indonesia
+        headingStr = "Gabung dengan komunitas " + $0;
+        messageStr = "Mailing list/newsgroup:";
+        messageNoteStr = "Pilih metode untuk bergabung diskusi:";
+        break;
+    case "en":
+        headingStr = "Join the " + $0 + " community";
+        messageStr = "Mailing list/newsgroup:";
+        messageNoteStr = "Choose your preferred method for joining the discussion:";
+        if ($3) {
+            ircInfoStr = "<span class='smaller'>(" + ircInfoLink + "learn more</a>)</span>";
+        }
+        break;
+    case "ja":
+        headingStr = $0 + "コミュニティに参加してください";
+        messageStr = "メーリングリスト／ニュースグループ:";
+        messageNoteStr = "あなたの好きな方法でディスカッションに参加してください";
+        if ($3) {
+            ircInfoStr = "<span class='smaller'>(" + ircInfoLink + "さらに詳しく</a>)</span>";
+        }
+        break;
+    default: // Like English + info about ltr!
+        needDir = "ltr";
+        headingStr = "Join the " + $0 + " community";
+        messageStr = "Mailing list/newsgroup:";
+        messageNoteStr = "Choose your preferred method for joining the discussion:";
+        if ($3) {
+            ircInfoStr = "<span class='smaller'>(" + ircInfoLink + "learn more</a>)</span>";
+        }
+}
+
+// If the extra links string is provided, build that HTML
+
+var haveExtra = $4 && ($4 != undefined);
+
+if (haveExtra || ircLink.length) {
+    var list;
+
+    extraLinks = "<ul class='communitycontact'>";
+
+    if (ircLink.length) {
+        extraLinks += "<li><strong>IRC: </strong>" + ircLink + " " + ircInfoStr + "</li>";
+    }
+
+    if (haveExtra) {
+        list = $4.split("||");      // a list of each item in "url|description" format
+
+        for (var i=0; i<list.length; i++) {
+            // First, get the heading off the row and remove it
+
+            var headingEnd = list[i].indexOf("|");
+            var heading = list[i].substr(0, headingEnd);
+            var row = list[i].slice(headingEnd+1);
+
+            // Add the heading to the HTML
+
+            extraLinks += "<li><strong>" + heading + ": </strong>";
+
+            // Now split it up into all the terms for the heading
+
+            var links = row.split("++");
+
+            // Loop over all the links, adding them to the HTML
+
+            for (var j=0; j<links.length; j++) {
+
+                // If the next entry in the list starts with a space, it's really part of
+                // this entry; this should fix cases of things like "C++" being in the
+                // text
+                if (j<(links.length-1)) {
+                    if (links[j+1][0] == ' ') {
+                        links[j] += "++" + links[j+1];
+                        links.splice(j+1, 1);
+                    }
+                }
+
+                var comp = links[j].split("|");  // comp[0] is URL, 1 is text, 2 is description
+                var tooltipPart = "";
+
+                if (comp[2]) {
+                    tooltipPart = " title='" + comp[2] + "'";
+                }
+                extraLinks += "<a href='" + comp[0] + "'" + tooltipPart + ">" + comp[1] + "</a>";
+
+                if (j < (links.length-1)) {
+                    extraLinks += ", ";
+                }
+            }
+
+            extraLinks += "</li>";
+        }
+    }
+
+    extraLinks += "</ul>";
+}
+
+%>
+<div class="blockIndicator communitybox" <%- needDir?'dir="' + needDir + '"':''%>>
+
+    <div class="column-container">
+        <h2 id="Join_the_community"><%=headingStr%></h2>
+        <div class="column-half">
+            <div class="communitysubhead"><%-messageNoteStr%></div>
+            <%-await template("DiscussionList", [$1, $2, "communitymailinglist", $0, $5, $6])%>
+        </div>
+        <div class="column-half">
+            <%-extraLinks%>
+        </div>
+    </div>
+</div>

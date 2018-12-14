@@ -1,0 +1,12 @@
+The following items are all macros, though:
+
+* ["Foo","Bar","Baz"]
+* ["HéllöWôrld"]
+* ["下一頁","カタカナ","BLAH"]
+* ["Quoted, Comma","Another, quoted"]
+* ["()()()"]
+* ["{{}}{{}}{{}}"]
+
+Here is a ["With many","parameters","including \"quoted\"","text of both 'kinds'","even \"escaped\"","like 'these'","and numbers","-10","0","0.1","10","100"] that even works inline.
+
+Here is a [{"es":"es/JavaScript/Acerca_de_JavaScript","en":"en/JavaScript/About_JavaScript"}] that even works inline.

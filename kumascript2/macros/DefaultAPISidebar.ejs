@@ -1,0 +1,140 @@
+<%
+// API Sidebar for overview pages
+//
+// Parameters:
+//  $0  Name of the API group in GroupData
+
+// Variables and data
+var slug = env.slug;
+var locale = env.locale;
+var APIHref = '/' + locale + '/docs/Web/API';
+var EventHref = '/' + locale + '/docs/Web/Events';
+var output = "";
+var group = $0;
+var htmlEscape = kuma.htmlEscape;
+var escapeQuotes = mdn.escapeQuotes;
+// slug is not available in preview mode.
+if (slug && group) {
+
+var webAPIGroups = string.deserialize(await template("GroupData"));
+
+var commonl10n = string.deserialize(await template('L10n:Common'));
+
+var text = {
+    'Methods': mdn.getLocalString(commonl10n, 'Methods'),
+    'Properties': mdn.getLocalString(commonl10n, 'Properties'),
+    'Events': mdn.getLocalString(commonl10n, 'Events'),
+    'Interfaces': mdn.getLocalString(commonl10n, 'Interfaces'),
+    'Guides': mdn.getLocalString(commonl10n, 'Guides'),
+    'translate': mdn.getLocalString(commonl10n, '[Translate]'),
+    'title': mdn.getLocalString(commonl10n, 'TranslationCTA'),
+};
+
+if (webAPIGroups[0][group]) {
+
+var interfaces = webAPIGroups[0][group].interfaces || [];
+var methods = webAPIGroups[0][group].methods || [];
+var properties = webAPIGroups[0][group].properties || [];
+var events = webAPIGroups[0][group].events || [];
+var guides = [];
+
+if (webAPIGroups[0][group].overview) {
+    guides = await page.subpagesExpand('/en-US/docs/Web/API/' + webAPIGroups[0][group].overview[0].replace(/ /g, '_'));
+    var otherGuides = webAPIGroups[0][group].guides || [];
+    guides = guides.concat(otherGuides);
+}
+
+function buildSublist(pages, title) {
+  var result = '<li class="toggle"><details open><summary>' + title + '</summary><ol>';
+
+  for (var i in pages) {
+    var aPage = pages[i];
+    var summary = escapeQuotes(aPage.summary || '');
+    var url = aPage.url.replace('en-US', locale);
+    var title = htmlEscape(aPage.title);
+    
+    var translated = false;
+    if (locale != 'en-US' && aPage.translations) {
+        aPage.translations.forEach(function(translation){
+            if(translation.locale === locale) {
+                summary = escapeQuotes(translation.summary) || '';
+                url = translation.url;
+                title = htmlEscape(translation.title);
+                translated = true;
+            }
+        });
+    }
+    
+    var cta = '';
+     if (!translated && locale != 'en-US' && aPage.translations) {
+        cta += ' <a href="'+ url +'$translate" style="opacity:0.5" title="'+ text['title'] + '">' + text['translate'] + '</a>';
+    }
+    
+    result += '<li>';
+    result += '<a href="' + url + '" title="' + summary + '">' + title + '</a>' + cta;
+    result += '</li>';
+  }
+
+  result += '</ol></details></li>';
+
+  return result;
+}
+
+function buildIFList(interfaces, title) {
+  var result = '<li class="toggle"><details open><summary>' + title + '</summary><ol>';
+
+  for (var i = 0; i < interfaces.length; i++) {
+    var url = interfaces[i].replace('()', '').replace('.', '/');
+    result += '<li><a href="' + APIHref + '/' + url + '"><code>' + interfaces[i] + '</code></a></li>';
+  }
+
+  result += '</ol></details></li>';
+
+  return result;
+}
+
+function buildEventList(events, title) {
+  var result = '<li class="toggle"><details open><summary>' + title + '</summary><ol>';
+
+  for (var i = 0; i < events.length; i++) {
+    result += '<li><a href="' + EventHref + '/' + events[i] + '"><code>' + events[i] + '</code></a></li>';
+  }
+
+  result += '</ol></details></li>';
+
+  return result;
+}
+
+
+// output
+output = '<section class="Quick_links" id="Quick_Links"><ol>';
+
+if (webAPIGroups[0][group].overview) {
+  output += '<li><strong><a href="' +  APIHref + '/' + webAPIGroups[0][group].overview[0].replace(/ /g, '_') + '">' + webAPIGroups[0][group].overview[0] + '</a></strong></li>';
+}
+
+if (guides.length > 0) {
+  output += buildSublist(guides, text['Guides']);
+}
+
+if (interfaces.length > 0) {
+  output += buildIFList(interfaces, text['Interfaces']);
+}
+
+if (properties.length > 0) {
+  output += buildIFList(properties, text['Properties']);
+}
+
+if (methods.length > 0) {
+  output += buildIFList(methods, text['Methods']);
+}
+
+if (events.length > 0) {
+  output += buildEventList(events, text['Events']);
+}
+
+output += '</ol></section>';
+}}
+%>
+
+<%-output%>

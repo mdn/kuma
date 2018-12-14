@@ -1,0 +1,10 @@
+<% 
+var result;
+if ($0) {
+    result = await template("optionalGeneric", ["inline",$0]);
+} else {
+    result = await template("optionalGeneric", ["inline"]);
+}
+
+
+%><%- result %>

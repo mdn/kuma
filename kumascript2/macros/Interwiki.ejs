@@ -1,0 +1,25 @@
+<%
+// Insert a link to a page on an external wiki.
+//
+// Parameters:
+//  $0  Wiki to link to ("wikipedia" or "wikimo")
+//  $1  Path to page on the destination wiki
+//  $2  Alternate link text to use instead of $1
+
+var path = $1;
+var title = $2 || path;
+
+var lang = env.locale.substr(0, 2);
+var prefix = $0;
+
+switch(prefix) {
+    case 'wikipedia':
+        %><a title="<%=title%>" href="<%-'https://' + lang + '.wikipedia.org/wiki/' + path%>"><%-title%></a><%
+        break;
+    case 'wikimo':
+        %><a class="wikimo" title="<%=title%>" href="<%-'https://wiki.mozilla.org/' + path%>"><%-title%></a><%
+        break;
+    default:
+        %>Unknown prefix: <%- prefix %>.<%
+        break;
+}%>

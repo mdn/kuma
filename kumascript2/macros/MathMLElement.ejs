@@ -1,0 +1,12 @@
+<%
+var name = $0;
+
+var sectionname = mdn.localString({
+  "en-US": "Element",
+  "es": "Elemento"
+});
+
+var dest = '/' + env.locale + '/docs/Web/MathML/' + sectionname + '/' + name;
+var result = '<code><a href="' + dest +'" title="<' + name + '>">&lt;' + name + '&gt;</a></code>';
+%>
+<%- result %>

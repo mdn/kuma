@@ -1,0 +1,116 @@
+<%
+// Displays an indicator indicating the Firefox compatibility for a technology
+// or API term.
+//
+// The indicator is not displayed if the Firefox version is more than 9 releases
+// old; this is one year.
+//
+// Parameters:
+//
+//  $0  Indicator type (0 = badge, 2 = banner; 1 for icon will draw as badge;
+//                      3 = permanent badge)
+//	$1	Minimum Firefox version
+//	$2	Additional text (displayed in tooltip for badge or in the banner)
+
+var lang = env.locale;
+var primaryText = "";
+var versionDetails = "";
+
+// Determine if we should display anything at all by comparing the current
+// Gecko version to the one specified.
+
+var currentGecko = await template("CurrentGecko");
+
+if ((parseInt(currentGecko, 10) - parseInt($1, 10) < 9) || ($0==3)) {
+
+	// At this point, we know we need to show the indicator, so build the version
+	// required string.
+
+    ct = $1.trim();
+    var version = $1.split('.',2).join('.').replace(/\.0/,'');
+    
+    var productVersion = 'Firefox ' + version
+    var articleName = productVersion + " for developers";
+    // Short term fix until products are moved
+    var link = lang + '/docs/Mozilla/Firefox/Releases/' + version;
+    var versionLink = web.link(wiki.uri(link), productVersion);
+    
+    var text = "This content covers features introduced in " + versionLink;
+    var note = productVersion + " note";
+    var newIn = "New in ";
+    
+    switch(lang) {
+        case 'de':
+            articleName = productVersion + " für Entwickler";
+            link = lang + '/docs/Mozilla/Firefox/Releases/' + version;
+            text = "Dieser Artikel umfasst Features die in " + versionLink + " eingeführt wurden";
+            note = "Hinweis zu " + productVersion;
+            newIn = "Neu in ";
+            break;
+        case 'es':
+            articleName = productVersion + " para desarrolladores";
+            link = lang + '/docs/Mozilla/Firefox/Releases/' + version;
+            text = "Este artículo cubre características introducidas en " + versionLink;
+            note = "Nota sobre " + productVersion;
+            newIn = "Nuevo en ";
+            break;
+        case 'fr':
+            articleName = productVersion + " pour les développeurs";
+            link = lang + '/docs/Mozilla/Firefox/Releases/' + version;
+            text = "Cet article traite de fonctionnalités introduites dans " + versionLink;
+            note = "Note concernant " + productVersion;
+            newIn = "Nouveau dans ";
+            break;
+        case 'ja':
+            articleName = productVersion + " for developers";
+            link = lang + '/docs/Mozilla/Firefox/Releases/' + version;
+            text = "この記事は " + versionLink + "  の新機能について述べています";
+            note = productVersion + " における注記";
+            break;
+        case 'ko':
+            articleName = productVersion + " for developers";
+            text = "이 문서는 Firefox 개발자들을 위한 정보입니다. " + versionLink;
+            break;
+        case 'pl':
+            articleName = productVersion + " dla programistów";
+            link = lang + '/docs/Mozilla/Firefox/Releases/' + version;
+            text = "Ten artykuł obejmuje funkcje wprowadzone w " + versionLink;
+            note = "Uwaga dotycząca Firefoksa " + version;
+            newIn = "Nowość w ";
+            break;
+        case 'pt-PT':
+            articleName = productVersion + " para desenvolvedores";
+            link = lang + '/docs/Mozilla/Firefox/Releases/' + version;
+            text = "Este artigo cobre características introduzidas no " + versionLink;
+            newIn = "Novidade no ";
+            break;
+        case 'ru':
+            articleName = productVersion + " для разработчиков";
+            link = lang + '/docs/Mozilla/Firefox/Releases/' + version;
+            newIn = "Нововведение в ";
+            break;
+        case 'zh-CN':
+            articleName = productVersion + " for developers";
+            link = lang + '/docs/Mozilla/Firefox/Releases/' + version;
+            text = "该条目记录了 " + versionLink + " 引入的新特性";
+            break;
+        case 'zh-TW':
+            articleName = productVersion + " 技術文件";
+            link = lang + '/docs/Mozilla/Firefox/Releases/' + version;
+            text = "本文描述 " + versionLink + " 之後加入的功能。";
+            break;
+        default: break;
+    }
+
+	switch(parseInt($0, 10)) {
+		case 0:
+		case 1:
+        case 3:
+			%><%-await template("SimpleBadge", [versionLink, "firefoxVersionBadge", newIn + productVersion])%><%
+			break;
+		case 2:
+			%><%-await template("SimpleBanner", [newIn + productVersion, "firefoxVersionBadge", text])%><%
+			break;
+	}
+}
+%>

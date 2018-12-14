@@ -1,0 +1,18 @@
+<%
+/* get the page's language */
+var lang = env.locale;
+ 
+/* if no $1 then link to constants */
+var constantsTable = 'Constants';
+var constantsLink = 'Constants';
+if ($1) {
+    constantsTable = $1;
+    constantsLink = $1.replace(/ /g,'_').replace(/%20/g,'_');
+}
+var link = web.link(wiki.uri('/' + lang + '/docs/XPCOM_Interface_Reference/' + $0) + '#' + constantsLink, $0 + '.' + constantsTable);
+/* If interface is at old path */
+if (!wiki.pageExists(lang + '/docs/XPCOM_Interface_Reference/' + $0) && wiki.pageExists(lang + '/docs/' + $0)) {
+    link = web.link(wiki.uri('/' + lang + '/docs/' + $0) + '#' + constantsLink, $0 + '.' + constantsTable);
+}
+%>
+<code><%- link %></code>

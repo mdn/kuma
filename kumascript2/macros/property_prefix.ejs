@@ -1,0 +1,11 @@
+<%
+    var locale = env.locale;
+    
+    var tooltip_text = mdn.localString({
+        'en-US': "The name of this feature is prefixed with '" + $0 + "' as this browser considers it experimental",
+        'fr'   : "Le nom de cette fonctionnalité est préfixé par '" + $0 + "' car ce navigateur la considère expérimentale",
+        'ru'   : "Эта возможность с префиксом с версии '" + $0 + "' этого браузера, считается экспериментальной"
+    });
+%>
+
+<span class="inlineIndicator prefixBox prefixBoxInline" title="prefix"><a href="/<%=locale%>/docs/Web/Guide/Prefixes" title="<%=tooltip_text%>"><%=$0%></a></span>

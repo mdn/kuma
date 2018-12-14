@@ -1,0 +1,10 @@
+<%
+var l = "en-us";
+
+switch(env.locale) {
+    case "ja": l = "ja-jp"; break;
+    default: break;
+}
+
+
+%><%- web.link('http://msdn.microsoft.com/'+ l +'/library/' + $0 + '(VS.85).aspx', 'MSDN: ' + $1, '', '_blank') %>

@@ -1,0 +1,24 @@
+<%
+
+var output = "";
+var apiPages;
+var apiSummaryId = "api-summary";
+
+if ($0) {
+  apiPages = await page.subpagesExpand($0);
+}
+else {
+  apiPages = await page.subpagesExpand();
+}
+
+for (var i=0; i < apiPages.length; i++) {
+  var apiPage = apiPages[i];
+  var apiPageUrlPieces = apiPage.url.split("/");
+  var apiName = apiPageUrlPieces[apiPageUrlPieces.length-1];
+  output += "<h2>" + apiName + "</h2>";
+  output += '<p>' + apiPage.summary + '</p>';
+  output += '<p><a href="' + apiPage.url + '">API reference documentation</a></p>';
+}
+
+%>
+<%-output%>

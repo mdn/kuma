@@ -1,0 +1,123 @@
+<%
+var currentSection = $0;
+var locale = env.locale;
+
+function state(section) {
+  if (section == currentSection) {
+    return "open";
+  }
+  return "closed";
+}
+
+var text = mdn.localStringMap({
+  'en-US': {
+    'WebRTC_API': 'WebRTC API',
+    'WebRTC_guides': 'WebRTC Guides',
+    'Architecture': 'WebRTC Architecture',
+    'Basics': 'WebRTC Basics',
+    'Protocols': 'WebRTC Protocols',
+    'Connectivity': 'Dealing with connectivity',
+    'Overview': 'Overview of WebRTC interfaces',
+    'Session_lifetime': 'Lifetime of a WebRTC Session',
+    'Using_data_channels': 'Using data channels',
+    'WebRTC_tutorials': 'WebRTC Tutorials',
+    'adapter_js': 'Interoperability with adapter.js',
+    'still_photos': 'Taking still photos from the camera',
+    'simple_sample': 'A simple data channel example',
+    'Interfaces': 'Interfaces',
+    'Documentation': 'Documentation:',
+    'Useful_lists': 'Useful lists',
+    'WebRTC_tag': 'Pages tagged "WebRTC"',
+    'Contribute': 'Contribute',
+    'Doc_status': 'WebRTC doc status',
+    'The_MDN_project': 'The MDN project',
+  },
+  'ru': {
+    'WebRTC_API': 'WebRTC API',
+    'WebRTC_guides': 'Руководства по WebRTC',
+    'Architecture': 'Архитектура WebRTC',
+    'Basics': 'Основы WebRTC',
+    'Protocols': 'Протоколы WebRTC',
+    'Connectivity': 'Работа с подключением',
+    'Overview': 'Обзор интерфейсов WebRTC',
+    'Session_lifetime': 'Время жизни сессии WebRTC',
+    'WebRTC_tutorials': 'Уроки по WebRTC',
+    'adapter_js': 'Функциональная совместимость с adapter.js',
+    'still_photos': 'Делаем фото с камеры',
+    'simple_sample': 'Простой пример канала с данными',
+    'Interfaces': 'Интерфейсы',
+    'Documentation': 'Документация:',
+    'Useful_lists': 'Полезные списки',
+    'WebRTC_tag': 'Страницы, отмеченные "WebRTC"',
+    'Contribute': 'Внести вклад',
+    'Doc_status': 'Статус документации по WebRTC',
+    'The_MDN_project': 'Проект MDN',
+  }
+});
+%>
+<section id="Quick_Links">
+ <ol>
+  <li><a href="/<%=locale%>/docs/Web/API/WebRTC_API"><strong><%=text['WebRTC_API']%></strong></a></li>
+  <li class="toggle">
+    <details open>
+      <summary><%=text['WebRTC_guides']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Web/API/WebRTC_API/Architecture"><%=text['Architecture']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/WebRTC_API/WebRTC_Basics"><%=text['Basics']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/WebRTC_API/Protocols"><%=text['Protocols']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/WebRTC_API/Connectivity"><%=text['Connectivity']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/WebRTC_API/Overview"><%=text['Overview']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/WebRTC_API/Session_lifetime"><%=text['Session_lifetime']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/WebRTC_API/Using_data_channels"><%=text['Using_data_channels']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details open>
+      <summary><%=text['WebRTC_tutorials']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Web/API/WebRTC_API/adapter.js"><%=text['adapter_js']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/WebRTC_API/Taking_still_photos"><%=text['still_photos']%></a></li>
+        <li><a href="/<%=locale%>/docs/Web/API/WebRTC_API/Simple_RTCDataChannel_sample"><%=text['simple_sample']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details open>
+      <summary><%=text['Interfaces']%></summary>
+      <ol>
+        <li><%-await template("domxref", ["RTCPeerConnection"])%></li>
+        <li><%-await template("domxref", ["RTCSessionDescription"])%></li>
+        <li><%-await template("domxref", ["RTCIceCandidate"])%></li>
+        <li><%-await template("domxref", ["RTCPeerConnectionIceEvent"])%></li>
+        <li><%-await template("domxref", ["MessageEvent"])%></li>
+        <li><%-await template("domxref", ["MediaStream"])%></li>
+        <li><%-await template("domxref", ["RTCStatsReport"])%></li>
+        <li><%-await template("domxref", ["RTCIdentityEvent"])%></li>
+        <li><%-await template("domxref", ["RTCIdentityErrorEvent"])%></li>
+        <li><%-await template("domxref", ["MediaStreamEvent"])%></li>
+        <li><%-await template("domxref", ["MediaStreamTrack"])%></li>
+        <li><%-await template("domxref", ["MediaDevices"])%></li>
+      </ol>
+    </details>
+  </li>
+  <li><strong><a href="/<%=locale%>/docs/MDN"><%=text['Documentation']%></a></strong></li>
+  <li class="toggle">
+    <details <%=state('Useful lists')%>>
+      <summary><%=text['Useful_lists']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/tag/WebRTC"><%=text['WebRTC_tag']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Contribute')%>>
+      <summary><%=text['Contribute']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/MDN/Doc_status/API/WebRTC"><%=text['Doc_status']%></a></li>
+        <li><a href="/<%=locale%>/docs/MDN"><%=text['The_MDN_project']%></a></li>
+      </ol>
+    </details>
+  </li>
+ </ol>
+</section>

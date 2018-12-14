@@ -1,0 +1,48 @@
+<%
+var s_header = mdn.localString({
+    "en-US": [ "Desktop", "Mobile" ],
+    "pt-BR": [ "Desktop", "Dispositivo móvel" ],
+    "cs":    [ "Plocha", "Mobile" ],
+    "es":    [ "Escritorio", "Móvil" ],
+    "ja":    [ "デスクトップ", "モバイル" ],
+    "pl":    [ "Pulpit", "Mobile" ],
+    "de":    [ "Desktop", "Mobile" ],
+    "ru":    [ "Настольные", "Мобильные" ],
+    "fr":    [ "Ordinateur", "Mobile" ]
+});
+
+var repoLink = 'https://github.com/mdn/browser-compat-data';
+var migrationLink = '/' + env.locale + '/docs/MDN/Contribute/Structures/Compatibility_tables';
+var cta = mdn.localString({
+  "en-US": `<strong><a href="${repoLink}">We're converting our compatibility data into a machine-readable JSON format</a></strong>.
+            This compatibility table still uses the old format,
+            because we haven't yet converted the data it contains.
+            <strong><a href="${migrationLink}">Find out how you can help!</a></strong>`,
+  "pt-BR": `<strong><a href="${repoLink}">Estamos convertendo nossos dados de compatibilidade para o formato JSON</a></strong>.
+            Esta tabela de compatibilidade ainda usa o formato antigo,
+            pois ainda não convertemos os dados que ela contém.
+            <strong><a href="${migrationLink}">Descubra como você pode ajudar!</a></strong>`,
+  "de":     `<strong><a href="${repoLink}">Wir konvertieren die Kompatibilitätsdaten in ein maschinenlesbares JSON Format</a></strong>.
+            Diese Kompatibilitätstabelle liegt noch im alten Format vor,
+            denn die darin enthaltenen Daten wurden noch nicht konvertiert.
+            <strong><a href="${migrationLink}">Finde heraus wie du helfen kannst!</a></strong>`,
+  "fr":     `<strong><a href="${repoLink}">Nous convertissons les données de compatibilité dans un format JSON</a></strong>.
+            Ce tableau de compatibilité utilise encore l'ancien format
+            car nous n'avons pas encore converti les données qu'il contient.
+            <strong><a href="${migrationLink}">Vous pouvez nous aider en contribuant !</a></strong>`,
+  "ja":    `<strong><a href="${repoLink}">現在、互換性データを可読形式の JSON フォーマットに置き換えているところです。</a></strong>
+            この互換性一覧は古い形式を使っており、これに含まれるデータの置き換えが済んでいません。
+            <strong><a href="${migrationLink}">手助けしていただける場合は、こちらから！</a></strong>`,
+});
+
+%>
+
+<div class="blockIndicator warning"><%-cta%></div>
+
+<div class="htab">
+    <a id="AutoCompatibilityTable" name="AutoCompatibilityTable"></a>
+    <ul>
+        <li class="selected"><a href="javascript:;"><%- s_header[0] %></a></li>
+        <li><a href="javascript:;"><%- s_header[1] %></a></li>
+    </ul>
+</div>

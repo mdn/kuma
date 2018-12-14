@@ -1,0 +1,19 @@
+<% /*
+    $0 = [String] Gecko version
+    $1 = [String] headline content
+    $2 = [String / Optional] name/id attribute
+*/
+ 
+var idAttr = $2 ? ' name="' + $2 + '" id="' + $2 + '"' : "";
+ 
+var str = mdn.localString({
+    "en-US" : "Requires Gecko " + $1,
+    "ja"    : "Gecko " + $1 + " が必要",
+    "ru"    : "Требуется Gecko " + $1
+});
+ 
+ 
+%><div class="headingWithIndicator">
+    <h1<%- idAttr %>><%= $0 %></h1>
+    <span class="indicatorInHeadline minVer geckoMinVerMethod"><%- str %><%- await template("geckoRelease", [$1]) %></span>
+</div>

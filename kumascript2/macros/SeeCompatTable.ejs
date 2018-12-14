@@ -1,0 +1,17 @@
+<%
+
+var str = mdn.localString({
+    "de"    : "<strong>Dies ist eine experimentelle Technologie</strong><br />Da diese Technologie noch nicht definitiv implementiert wurde, sollte die <a href='#Browser_compatibility'>Browserkompatibilität</a> beachtet werden. Es ist auch möglich, dass die Syntax in einer späteren Spezifikation noch geändert wird.",
+    "es"    : "<strong>Esta es una <a href='/en-US/docs/MDN/Contribute/Guidelines/Conventions_definitions#Experimental'>tecnología experimental</a></strong><br />Comprueba la <a href='#Browser_compatibility'>Tabla de compabilidad de navegadores</a> cuidadosamente antes de usarla en producción.",
+    "fr"    : "<strong>Cette fonction est expérimentale</strong><br />Puisque cette fonction est toujours en développement dans certains navigateurs, veuillez consulter le <a href='#Compatibilité_des_navigateurs'>tableau de compatibilité</a> pour les préfixes à utiliser selon les navigateurs.<br />Il convient de noter qu'une fonctionnalité expérimentale peut voir sa syntaxe ou son comportement modifié dans le futur en fonction des évolutions de la spécification.",
+    "ja"    : "<strong>これは<a href='/ja/docs/MDN/Contribute/Guidelines/Conventions_definitions#Experimental'>実験的な機能</a>です。</strong>本番で使用する前に<a href='#Browser_compatibility'>ブラウザー実装状況</a>をチェックしてください。",
+    "zh-CN" : "<strong>这是一个实验中的功能</strong><br />此功能某些浏览器尚在开发中，请参考<a href='#Browser_compatibility'>浏览器兼容性表格</a>以得到在不同浏览器中适合使用的前缀。由于该功能对应的标准文档可能被重新修订，所以在未来版本的浏览器中该功能的语法和行为可能随之改变。",
+    "zh-TW" : "<strong>這是一個實驗中的功能</strong><br />此功能在某些瀏覽器尚在開發中，請參考<a href='#Browser_compatibility'>兼容表格</a>以得到不同瀏覽器用的前輟。",
+    "en-US" : "<strong>This is an <a href='/en-US/docs/MDN/Contribute/Guidelines/Conventions_definitions#Experimental'>experimental technology</a></strong><br />Check the <a href='#Browser_compatibility'>Browser compatibility table</a> carefully before using this in production.",
+    "pt-BR" : "<strong>Esta é uma <a href='/pt-BR/docs/MDN/Contribute/Guidelines/Conventions_definitions#Experimental'>tecnologia experimental</a></strong><br />Verifique a <a href='#Compatibilidade_de_navegadores'>tabela de compatibilidade entre Navegadores</a> cuidadosamente antes de usar essa funcionalidade em produção.",
+    "ru"    : "<strong>Это экспериментальная технология</strong><br />Так как спецификация этой технологии ещё не стабилизировалась, смотрите <a href='#Browser_compatibility'>таблицу совместимости</a> по поводу использования в различных браузерах. Также заметьте, что синтаксис и поведение экспериментальной технологии может измениться в будущих версиях браузеров, вслед за изменениями спецификации."
+});
+
+%><div class="blockIndicator experimental indicator-warning">
+    <p><%-await template("ExperimentalBadge", [1])%> <%- str %></p>
+</div>

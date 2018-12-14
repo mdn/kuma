@@ -1,0 +1,103 @@
+<%
+/*
+// Generate the menu for the a landing page. This page is divided
+// up into various categories using the pages' tags. Once that's done,
+// any remaining pages are put into a "miscellaneous" group.
+//
+// Parameters:
+//
+//  $0  JSON object defining the categories
+//
+// Category object contains an array of objects describing each category;
+// the categories are defined by the tag used to identify them and a name
+// used as the heading in the menu.
+//
+// "[{'tag': 'tagname', 'name': 'categoryname'}, ...]"
+//
+// You can then turn this into a two-column menu list using MakeColumnsForDL.
+*/
+
+var lang = env.locale;
+var categoryList = JSON.parse($0);
+var html = "";
+var otherPagesText = "";
+
+switch(lang) {
+    case 'de':
+        otherPagesText = "Andere Seiten";
+        break;
+    case 'fr':
+        otherPagesText = "Autres pages";
+        break;
+    case 'ja':
+        otherPagesText = "その他のページ";
+        break;
+    case 'ru':
+        otherPagesText = "Другие страницы";
+        break;
+    default:
+        otherPagesText = "Other pages";
+        break;
+}
+
+// Get a list of all subpages of the current page. This is, by default,
+// our list of "miscellaneous" pages. We'll then pull pages out of that
+// list as we move them into others by category.
+
+var miscPages = await page.subpagesExpand(env.path, 1, 0);
+var numPages = miscPages.length;
+
+var featureBoxes = null;
+var haveFeatures = false;
+
+// Look for any "Featured" pages. The first 3 (or fewer) we see are
+// presented in grid boxes.
+
+for (var i=0; i<numPages; i++) {
+    if (page.hasTag(miscPages[i], "Featured")) {
+        if (featureBoxes == null) {
+            featureBoxes = "<ul class='card-grid'>";
+            haveFeatures = true;
+        }
+        featureBoxes += "<li><span><a href='" + miscPages[i].url + "'>" + miscPages[i].title + "</a></span><p>" + miscPages[i].summary + "</p></li>";
+    }
+}
+
+if (haveFeatures) {
+    featureBoxes += "</ul>";
+}
+
+// Iterate over the pages, adding them to each list they match.
+
+for (var i=0; i<categoryList.length; i++) {
+    var category = categoryList[i];
+    var currentList = [];
+    var otherList = [];
+    
+    html += "<h2>" + category.name + "</h2>";
+    
+    for (var j=0; j<miscPages.length; j++) {
+        if (page.hasTag(miscPages[j], category.tag)) {
+            currentList.push(miscPages[j]);                  // Otherwise the end
+        } else {
+            otherList.push(miscPages[j]);
+        }
+    }
+    
+    miscPages = otherList;           // The ones left over are still in consideration for the next list
+    
+    html += await template("SubpagesWithSummaries", [JSON.stringify(currentList)]);
+}
+
+// Output the pages that didn't match any category
+
+if (miscPages.length) {
+    html += "<h2 id='Other'>" + otherPagesText + "</h2>" + await template("SubpagesWithSummaries", [JSON.stringify(miscPages)]);
+}
+
+// Split the list up into multiple columns
+
+html = await template("MakeColumnsForDL", [html]);
+%>
+<%-featureBoxes%>
+<%-html%>

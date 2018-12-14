@@ -1,0 +1,22 @@
+<%/*
+    $0(optional): Outdated message
+*/
+
+var optionStr = $0 || '';
+var str = mdn.localString({
+    "de": "<strong>Dieser Artikel ist möglicherweise veraltet.</strong> "      + optionStr,
+    "es": "<strong>The content of this article may be out of date.</strong> "  + optionStr,
+    "fr": "<strong>Le contenu de cet article peut ne plus être à jour.</strong> "  + optionStr,
+    "he": "<strong>The content of this article may be out of date.</strong> "  + optionStr,
+    "it": "<strong>The content of this article may be out of date.</strong> "  + optionStr,
+    "ja": "<strong>この記事の内容は古くなっている可能性があります。</strong> "       + optionStr,
+    "pl": "<strong>The content of this article may be out of date.</strong> "  + optionStr,
+    "ru": "<strong>Контент этой статьи может быть устаревшим.</strong> "  + optionStr,
+    "pt-PT": "<strong>The content of this article may be out of date.</strong> " + optionStr,
+    "zh-CN": "<strong>The content of this article may be out of date.</strong> " + optionStr,
+    "zh-TW": "<strong>The content of this article may be out of date.</strong> " + optionStr,
+    "en-US": "<strong>The content of this article may be out of date.</strong> " + optionStr
+});
+
+
+%><%- await template("warning", [str]) %>

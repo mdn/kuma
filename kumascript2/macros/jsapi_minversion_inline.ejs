@@ -1,0 +1,38 @@
+<%
+/* one parameter: SpiderMonkey version */
+
+/* get the page language */
+var lang = env.locale;
+var link = '';
+
+/* check if page exists, English for fall back */
+if(wiki.pageExists(lang + '/docs/SpiderMonkey/' + $0)) {
+  link = web.link(wiki.uri(lang + '/docs/SpiderMonkey/' + $0), 'SpiderMonkey ' + $0);
+} else if(wiki.pageExists('en-US/docs/SpiderMonkey/' + $0)) {
+  link = web.link(wiki.uri('en-US/docs/SpiderMonkey/' + $0), 'SpiderMonkey ' + $0);
+} else {
+  link = 'SpiderMonkey ' + $0;
+}
+
+var str = 'Added in ' + link;
+
+/* New JSAPI versions  */
+if ($0) {
+    var t = string.tolower($0);
+    if (string.startswith(t, "jsapi")) {
+        t = string.trim(string.substr(t, 5));
+        str = "Added in JSAPI " + t;
+    }
+}
+
+switch(lang) {
+  case 'ja':
+    str = link + ' の新機能';
+    break;
+  case 'ru':
+    str = 'Добавлено в '+link;
+    break;
+}
+
+
+%><span style="border: 1px solid rgb(129, 129, 81); background: rgb(255, 255, 225);font-size: 9px; vertical-align: text-top;"><%- str %></span>

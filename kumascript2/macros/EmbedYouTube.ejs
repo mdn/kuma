@@ -1,0 +1,34 @@
+<%
+// Embeds a YouTube video into the article.
+//
+// Parameters:
+//  $0  Video ID
+//  $1  Aspect Ratio (optional - will be 16:9 if not specified)
+//
+// If the video URL is https://www.youtube.com/embed/G4FnzvLr_ak, the ID
+// is "G4FnzvLr_ak".
+//
+// We always request HTML5 video, hoping to avoid Flash whenever possible.
+
+
+var ratio = $1 || "16:9";
+var ratio_class = '';
+
+if (ratio == "16:9") {
+    // default, no change needed
+} else if (ratio == "4:3") {
+    ratio_class = "intrinsic-container-4x3";
+} else {
+    // no match, use default
+    // adding any more ratios must be done in co-operation with style sheet changes
+}
+
+var video = "<div class='intrinsic-wrapper'>";
+video += "<div class='intrinsic-container " + ratio_class + "'>";
+video += "<iframe allowfullscreen src='https://www.youtube.com/embed/" + $0 + "?rel=0&html5=1'></iframe>";
+video +="</div>";
+video +="</div>";
+
+%>
+
+<%-video%>

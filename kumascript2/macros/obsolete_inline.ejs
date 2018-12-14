@@ -1,0 +1,36 @@
+<%
+// Inserts an inline indicator that notes that an item is obsolete.
+//
+// NOTE: "Obsolete" means that the indicated item NO LONGER FUNCTIONS. If
+//       the item still works, but should no longer be used, it's "deprecated".
+//
+// Parameters:
+//
+//  $0  Version of obsolescence
+//
+// The version should be prepended with "html", "js", "css", or "gecko"
+// to indicate which technology the version number refers to. For backward
+// compatibility, unprefixed versions are assumed to refer to Gecko, but
+// you shouldn't rely on this.
+
+var str = "";
+var type = 0;   // assume we want the text badge
+
+if ($0 && $0 != undefined) {
+  if (string.IsDigit($0)) {
+    str = "gecko" + $0;
+  } else {
+    str = $0
+  }
+} else {
+  type = 1; // switch to the icon if no version specified
+}
+
+// If a version was specified, we need to use the older badge type
+
+if (str.length) {
+    %><%- await template('obsoleteGeneric', ["inline",str]) %><%
+} else {
+    %><%- await template('ObsoleteBadge', [type]) %><%
+}
+%>

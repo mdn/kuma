@@ -1,0 +1,28 @@
+<%
+// Inserts a link to a specific IRC channel, given its name.
+//
+// Parameters:
+//
+//  $0  IRC channel name (no "#")
+
+var channelURL = "";
+var channelName = $0.toLowerCase();
+var tooltip = "";
+var html = "";
+
+var lang = env.locale;
+
+channelURL = "irc://irc.mozilla.org/" + channelName;
+
+switch(lang) {
+    case "ru":
+        tooltip = "Присоединиться к каналу #" + channelName + " на irc.mozilla.org. Требуется IRC клиент.";
+        break;
+    default: // en-US and unspecified languages
+        tooltip = "Connect to the #" + channelName + " channel on irc.mozilla.org. Requires an IRC client.";
+        break;
+}
+
+html = "<a href='" + channelURL + "' title='" + tooltip + "'>#" + channelName + "</a>";
+%>
+<%-html%>

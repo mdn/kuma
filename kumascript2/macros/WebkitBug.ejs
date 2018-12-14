@@ -1,0 +1,31 @@
+<%
+var bugPageURL = 'https://bugs.webkit.org/show_bug.cgi?id=' + $0;
+var s = "";
+var linkLabel = mdn.replacePlaceholders(mdn.localString({
+    "en-US": "WebKit bug $1$",
+    "de": "WebKit Bug $1$",
+    "ca": "WebKit errada $1$",
+    "cs": "WebKit chyba $1$",
+    "pl": "WebKit błąd $1$",
+    "ru": "Баг WebKit $1$",
+}), [$0]);
+
+/* TODO: Re-enable when we have a fix for bug 765642
+var bugPageXML = web.xml(bugPageURL);
+if (#bugPageXML == 0)
+  s = "Unable to access bug's page. Try reloading this page to see bug's status and summary in this tooltip.";
+else{
+  s = xml.text(bugPageXML, '//span[@id="static_bug_status"]');
+  if (s){
+    // Remove \n and redundant spaces
+    s = string.trimEnd(string.replace(s, "\n", ""));
+    if (string.contains(s, "  "))
+      s = string.join(list.select(string.split(s, " "), "#$>0"), " ");
+    s += ' - ' + xml.text(bugPageXML, '//span[@id="short_desc_nonedit_display"]');
+  }
+  else if (string.contains(bugPageXML, "Access Denied"))
+    s = "The access to the bug's page is restricted.";
+}
+*/
+%>
+<a rel="external" href="<%= bugPageURL %>" class="external" title="<%= s %>"><%= linkLabel %></a>

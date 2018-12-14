@@ -1,0 +1,139 @@
+<% 
+ // Collection of documentation status pages for sections and languages
+var titleValues = mdn.localStringMap({
+    'en-US': {
+        'Doc_status': 'Documentation status pages',
+        'Overview': 'Overview',
+        'Sections': 'Sections',
+        'Accessibility': 'Accessibility',
+        'API': 'API',
+        'Apps': 'Apps',
+        'CSS': 'CSS',
+        'DevTools': 'DevTools',
+        'Firefox_OS': 'Firefox OS',
+        'Games': 'Games',
+        'HTML': 'HTML',
+        'JavaScript': 'JavaScript',
+        'Marketplace': 'Marketplace',
+        'MathML': 'MathML',
+        'SVG': 'SVG',
+        'Maintenance_pages': 'Maintenance pages',
+        'Editorial_reviews': 'Editorial reviews',
+        'Technical_reviews': 'Technical reviews',
+        'with-errors': 'Pages with errors',
+        'without-parent': 'Pages without a parent',
+        'top-level': 'Top-level pages',
+        'Localizations': 'Localizations'
+    },
+    'ru': {
+        'Doc_status': 'Страницы со статусом документации',
+        'Overview': 'Обзор',
+        'Sections': 'Разделы',
+        'Accessibility': 'Доступность',
+        'API': 'API',
+        'Apps': 'Приложения',
+        'CSS': 'CSS',
+        'DevTools': 'Инструменты разработчика',
+        'Firefox_OS': 'Firefox OS',
+        'Games': 'Игры',
+        'HTML': 'HTML',
+        'JavaScript': 'JavaScript',
+        'Marketplace': 'Магазин приложений',
+        'MathML': 'MathML',
+        'SVG': 'SVG',
+        'Maintenance_pages': 'Технические страницы',
+        'Editorial_reviews': 'Требуются редакторские правки',
+        'Technical_reviews': 'Требуются технические правки',
+        'with-errors': 'Страницы с ошибками',
+        'without-parent': 'Страницы без родителей',
+        'top-level': 'Корневые страницы',
+        'Localizations': 'Локализации'
+    },
+     'pt-BR': {
+        'Doc_status': 'Status das páginas de documentação',
+        'Overview': 'Visão global',
+        'Sections': 'Seção',
+        'Accessibility': 'Acessibilidade',
+        'API': 'API',
+        'Apps': 'Apps',
+        'CSS': 'CSS',
+        'DevTools': 'DevTools',
+        'Firefox_OS': 'Firefox OS',
+        'Games': 'Games',
+        'HTML': 'HTML',
+        'JavaScript': 'JavaScript',
+        'Marketplace': 'Mercado',
+        'MathML': 'MathML',
+        'SVG': 'SVG',
+        'Maintenance_pages': 'Páginas de manutenção',
+        'Editorial_reviews': 'Avaliação editorial',
+        'Technical_reviews': 'Avaliação técnica',
+        'with-errors': 'Páginas com erros',
+        'without-parent': 'Páginas sem raiz',
+        'top-level': 'Páginas de nível superior',
+        'Localizations': 'Localizações'
+    }
+});
+%>
+<section class="Quick_links" id="Quick_Links">
+    <ol>
+        <li><strong><a href="/<%=env.locale%>/docs/MDN/Doc_status"><%=titleValues['Doc_status']%></a></strong></li>
+        <li><strong><a href="/<%=env.locale%>/docs/MDN/Doc_status/Overview"><%=titleValues['Overview']%></a></strong></li>
+        <li><strong><%=titleValues['Sections']%>:</strong></li>
+            <ol>
+                <li><a href="/<%=env.locale%>/docs/MDN/Doc_status/Accessibility"><%=titleValues['Accessibility']%></a></li>
+                <li><a href="/<%=env.locale%>/docs/MDN/Doc_status/API"><%=titleValues['API']%></a></li>
+                <li><a href="/<%=env.locale%>/docs/MDN/Doc_status/Apps"><%=titleValues['Apps']%></a></li>
+                <li><a href="/<%=env.locale%>/docs/MDN/Doc_status/CSS"><%=titleValues['CSS']%></a></li>
+                <li><a href="/<%=env.locale%>/docs/MDN/Doc_status/DevTools"><%=titleValues['DevTools']%></a></li>
+                <li><a href="/<%=env.locale%>/docs/MDN/Doc_status/Firefox_OS"><%=titleValues['Firefox_OS']%></a></li>
+                <li><a href="/<%=env.locale%>/docs/MDN/Doc_status/Games"><%=titleValues['Games']%></a></li>
+                <li><a href="/<%=env.locale%>/docs/MDN/Doc_status/HTML"><%=titleValues['HTML']%></a></li>
+                <li><a href="/<%=env.locale%>/docs/MDN/Doc_status/JavaScript"><%=titleValues['JavaScript']%></a></li>
+                <li><a href="/<%=env.locale%>/docs/MDN/Doc_status/Marketplace"><%=titleValues['Marketplace']%></a></li>
+                <li><a href="/<%=env.locale%>/docs/MDN/Doc_status/MathML"><%=titleValues['MathML']%></a></li>
+                <li><a href="/<%=env.locale%>/docs/MDN/Doc_status/SVG"><%=titleValues['SVG']%></a></li>
+            </ol>
+        </li>
+        <li class="toggle">
+            <details>
+                <summary><%=titleValues['Maintenance_pages']%>:</summary>
+                <ol>
+                    <li><a href="/<%=env.locale%>/docs/needs-review/editorial"><%=titleValues['Editorial_reviews']%></a></li>
+                    <li><a href="/<%=env.locale%>/docs/needs-review/technical"><%=titleValues['Technical_reviews']%></a></li>
+                    <li><a href="/<%=env.locale%>/docs/with-errors"><%=titleValues['with-errors']%></a></li>
+                    <li><a href="/<%=env.locale%>/docs/without-parent"><%=titleValues['without-parent']%></a></li>
+                    <li><a href="/<%=env.locale%>/docs/top-level"><%=titleValues['top-level']%></a></li>
+                </ol>
+            </details>
+        </li>
+        <li class="toggle">
+            <details>
+                <summary><%=titleValues['Localizations']%>:</summary>
+                <ol>
+                    <li><a href="/bn-BD/docs/MDN/Doc_status/Overview">বাংলা (বাংলাদেশ) (bn-BD)</a>
+                    <li><a href="/de/docs/MDN/Doc_status/Overview">Deutsch (de)</a>
+                    <li><a href="/es/docs/MDN/Doc_status/Overview">Español (es)</a>
+                    <li><a href="/fr/docs/MDN/Doc_status/Overview">Français (fr)</a>
+                    <li><a href="/ja/docs/MDN/Doc_status/Overview">日本語 (ja)</a>
+                    <li><a href="/pl/docs/MDN/Doc_status/Overview">Polski (pl)</a>
+                    <li><a href="/pt-BR/docs/MDN/Doc_status/Overview">Português (do Brasil) (pt-BR)</a>
+                    <li><a href="/ru/docs/MDN/Doc_status/Overview">Русский (ru)</a>
+                    <li><a href="/zh-CN/docs/MDN/Doc_status/Overview">中文 (简体) (zh-CN)</a>
+                </ol>
+            </details>
+        </li>
+        <li><strong><%=titleValues['Localizations']%>:</strong></li>
+            <ol>
+                <li><a href="/bn-BD/docs/MDN/Doc_status/Overview">বাংলা (বাংলাদেশ) (bn-BD)</a></li>
+                <li><a href="/de/docs/MDN/Doc_status/Overview">Deutsch (de)</a></li>
+                <li><a href="/es/docs/MDN/Doc_status/Overview">Español (es)</a></li>
+                <li><a href="/fr/docs/MDN/Doc_status/Overview">Français (fr)</a></li>
+                <li><a href="/ja/docs/MDN/Doc_status/Overview">日本語 (ja)</a></li>
+                <li><a href="/pl/docs/MDN/Doc_status/Overview">Polski (pl)</a></li>
+                <li><a href="/pt-BR/docs/MDN/Doc_status/Overview">Português (do Brasil) (pt-BR)</a></li>
+                <li><a href="/ru/docs/MDN/Doc_status/Overview">Русский (ru)</a></li>
+                <li><a href="/zh-CN/docs/MDN/Doc_status/Overview">中文 (简体) (zh-CN)</a></li>
+            </ol>
+    </ol>
+</section>

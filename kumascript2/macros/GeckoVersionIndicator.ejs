@@ -1,0 +1,69 @@
+<%
+// Displays an indicator indicating the Gecko compatibility range for a technology
+// or API term.
+//
+// The indicator is not displayed if the Gecko version is more than 10 releases
+// old.
+//
+// Parameters:
+//
+//  $0	Indicator type (0 = badge, 2 = banner; 1 for icon will draw as badge)
+//	$1	Minimum Gecko version
+//	$2	Additional text (displayed in tooltip for badge or in the banner)
+
+var lang = env.locale;
+var primaryText = "";
+var versionDetails = "";
+
+// Determine if we should display anything at all by comparing the current
+// Gecko version to the one specified.
+
+var currentGecko = await template("CurrentGecko");
+
+if (parseInt(currentGecko, 10) - parseInt($1, 10) <= 10) {
+
+	// At this point, we know we need to show the indicator, so build the version
+	// required string.
+
+	switch(lang) {
+		case 'fr':
+			primaryText = "Nécessite Gecko " + $1;
+			break;
+		case 'ja':
+			primaryText = "Gecko " + $1	 + " が必要";
+			break;
+		case 'pl':
+			primaryText = "Wymaga Gecko " + $1;
+			break;
+		case 'pt':
+			primaryText = "Requer Gecko " + $1;
+			break;
+		case 'de':
+			primaryText = "Ab Gecko " + $1;
+			break;
+		case 'es':
+			primaryText = "Requiere Gecko " + $1;
+			break;
+        case 'ru':
+    		primaryText = "Требуется Gecko " + $1;
+			break;
+		default:
+			primaryText = "Requires Gecko " + $1;
+			break;
+	}
+
+	// Fetch the version details
+
+	versionDetails = await template("geckoRelease", [$1]);
+
+	switch(parseInt($0, 10)) {
+		case 0:
+		case 1:
+			%><%-await template("SimpleBadge", [primaryText, "geckoVersionBadge", versionDetails])%><%
+			break;
+		case 2:
+			%><%-await template("SimpleBanner", [primaryText + " " + versionDetails, "geckoVersionBadge", $2])%><%
+			break;
+	}
+}
+%>

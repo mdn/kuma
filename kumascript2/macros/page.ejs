@@ -1,0 +1,23 @@
+<%
+// Inserts the contents of a page into the document. This process is often
+// referred to as "transclusion."
+//
+// Parameters:
+//
+//  $0 - URL of page to insert. Example: "/en-US/docs". Do not use https://etc.
+//  $1 - (optional) section name of a section to transclude (rather than the whole page)
+//       Can be a section title like "Quick Start", can also be an id attribute
+//       like this: <div id="grabme">
+//       Example: {{Page("/en-US/docs/MyPage", "grabme")}}
+//  $2 - (optional) revision number to pull from. UNSUPPORTED.
+//  $3 - (optional) whether or not to show the first heading. Defaults to false.
+//  $4 - (optional) the heading level to use as the top heading level; others
+//       are adjusted to match.
+
+var url = web.spacesToUnderscores($0);
+
+if ($1) {
+    $1 = web.spacesToUnderscores($1);
+}
+%>
+<%- await wiki.page(url, $1, $2, $3, $4) %>

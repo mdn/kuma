@@ -1,0 +1,38 @@
+<%
+// Creates a link to the NPAPI page with the given name
+//
+//  $0 - page name
+
+    var lang = env.locale;
+    
+    var langName = "Gecko Plugin API Reference";
+    
+    switch(lang) {
+        case 'pl':
+            langName = "Dokumentacja wtyczek Gecko";
+            break;
+        case 'de':
+            langName = "Gecko Plugin API Referenz";
+            break;
+        case 'fr':
+            langName = "Documentation API Greffons Gecko";
+            break;
+        case 'ru':
+            langName = "Документация по API для плагинов Gecko";
+            break;
+    }
+
+    var destOldType = "/" + lang + '/docs/' + langName + ':' + $0;
+    var destNewType = "/" + lang + '/docs/' + langName + '/' + $0;
+    var url = "";
+
+    if (wiki.pageExists(destNewType)) {
+        url = destNewType;
+    } else if (wiki.pageExists(destOldType)) {
+        url = destOldType;
+    } else {
+        url = destNewType;
+    }
+    url = web.spacesToUnderscores(url);
+%>
+<a href="<%=url%>"><%=$0%></a>

@@ -1,0 +1,12 @@
+<%
+/* one parameter: HTML version */
+
+var link = "HTML " + $0;
+var envLocale = env.locale;
+
+if ($0 == "4") {
+    link = web.link("/" + envLocale + "/docs/HTML", "HTML 4");
+} else if ($0 == "5") {
+    link = web.link("/" + envLocale + "/docs/HTML/HTML5", "HTML5");
+}%>
+<span class="inlineIndicator htmlVer htmlVerInline"><%-link%></span>

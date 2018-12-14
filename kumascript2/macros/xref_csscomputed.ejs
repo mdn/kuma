@@ -1,0 +1,26 @@
+<%
+let page = mdn.localString({
+    "en-US": "computed_value",
+    "de"   : "berechneter_Wert",
+    "es"   : "Valor_calculado",
+    "fr"   : "Valeur_calcul%c3%a9e",
+    "ja"   : "computed_value",
+    "pl"   : "warto%c5%9b%c4%87_wyliczona",
+    "zh-CN": "computed_value",
+    "ru"   : "computed_value"
+});
+
+let linkText = mdn.localString({
+    "en-US": "Computed value",
+    "de"   : "Berechneter Wert",
+    "es"   : "Valor calculado",
+    "fr"   : "Valeur calculée",
+    "ja"   : "計算値",
+    "pl"   : "Wartość wyliczona",
+    "zh-CN": "计算值",
+    "ru"   : "Обработка значения"
+});
+
+let link = "<a href=\"/" + env.locale + "/docs/Web/CSS/$1$\">$2$</a>";
+%>
+<%- mdn.replacePlaceholders(link, [page, linkText]) %>

@@ -1,0 +1,8 @@
+<%
+// Macro for inserting a block secure context header notice, i.e. to mark a
+// feature as only available on secure contexts. See the following page:
+// https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts
+
+%>
+
+<%-await template('secureContextGeneric', ["header"])%>

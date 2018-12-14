@@ -1,0 +1,219 @@
+<%
+// This template allows to build reference tables for HTML
+//
+// Param:
+// $0 : An optional tag to filter the list of HTML elements or a configuration object
+//      The configuration object get three optional parameters:
+//      * include : An array of tags, the HTML Element page must have one of them to be listed
+//      * exclude : An array of tags, the HTML Element page must NOT have any of them to be listed
+//      * elements: An array of elements name to add to the list of HTML elements (useful for custom list or not documented elements)
+// $1 : An optional extra boolean flag to display status badges as the first column
+
+
+// LOCALISATION
+// ------------
+
+let l10n = {
+    element : mdn.localString({
+        "de"   : "Element",
+        "en-US": "Element",
+        "fr"   : "Élément",
+        "zh-CN": "元素",
+        "ru"   : "Элемент"
+    }),
+
+    description : mdn.localString({
+        "de"   : "Beschreibung",
+        "en-US": "Description",
+        "zh-CN": "描述",
+        "ru"   : "Описание"
+    }),
+    
+    deprecated : mdn.localString({
+        "de"   : "Dieses Element ist veraltet.",
+        "en-US": "This element is deprecated.",
+        "fr"   : "Cet élément est obsolète.",
+        "zh-CN": "该元素已被废弃",
+        "ru"   : "Этот элемент устарел."
+    }),
+    
+    experimental : mdn.localString({
+        "de"   : "Dieses Element wird als experimentell erachtet.",
+        "en-US": "This element is considered experimental.",
+        "fr"   : "Cet élément est considéré comme experimental.",
+        "zh-CN": "该元素仍处于试验阶段",
+        "ru"   : "Этот элемент считается экспериментальным."
+    }),
+    
+    html5 : mdn.localString({
+        "de"   : "Dieses Element wurde mit HTML5 eingeführt.",
+        "en-US": "This element has been introduced with HTML5.",
+        "fr"   : "Cet élément a été ajouté avec HTML5.",
+        "zh-CN": "该元素于 HTML5 规范中引入",
+        "ru"   : "Этот элемент не был представлен в HTML5."
+    }),
+    
+    components : mdn.localString({
+        "de"   : "Dieses Element wurde mit den Web Components Spezifikationen eingeführt.",
+        "en-US": "This element has been introduced with the Web Components specifications.",
+        "fr"   : "Cet élément a été introduit par les spécifications sur les Web Components.",
+        "zh-CN": "该元素于 Web 组建规范中引入",
+        "ru"   : "Этот элемент представлен в спецификации Веб компонентов."
+    })
+};
+
+
+// UTILS
+// -----
+
+// Simple function to turn a string into lower case. This especialy made to work
+// as a walking function for Array.prototypt.map
+function lowerMe(S) {
+    return S.toLowerCase();
+}
+
+// Function to check is two Arrays has at least one value in common.
+function hasCommonTag(A, B) {
+    if (!Array.isArray(A) || !Array.isArray(A)) return false;
+    
+    // To fasten check, we make sure b is always the smaller array.
+    var a = A.length >= B.length ? A : B;
+    var b = A.length >= B.length ? B : A;
+    
+    for (var i in b) {
+        if (a.indexOf(b[i]) > -1) return true;    
+    }
+
+    return false;
+}
+
+
+// CODE VARIABLES
+// --------------
+
+let tag;
+let badge;
+let withBadges = $1 || false;
+let TagFilters = {
+       include : typeof $0 === 'string' ? [lowerMe($0)]
+                : $0 && $0.include && Array.isArray($0.include) ? $0.include.map(lowerMe)
+                : [],
+        exclude : $0 && $0.exclude && Array.isArray($0.exclude) ? $0.exclude.map(lowerMe)
+                : []
+};
+let ForcedElements = $0 && $0.elements && Array.isArray($0.elements) ? $0.elements.map(lowerMe) : [];
+let HTMLRefBaseURL = "/docs/Web/HTML/Element";
+let HTMLLocalBaseURL = "/" + env.locale + HTMLRefBaseURL + "/";
+let HTMLDocPages   = await page.subpagesExpand("/en-US" + HTMLRefBaseURL, 1);
+let HTMLTags       = [];
+
+
+// BUSINESS LOGIC
+// --------------
+
+// Get the relevant pages for HTML Elements based on the template input; include only
+// the part of the title that's actually the element name
+for(let page of HTMLDocPages) {
+    let p;
+    let t = lowerMe(page.slug.split("/").pop(-1));
+    let tags = page.tags.map(lowerMe);
+
+    if (ForcedElements.indexOf(t) > -1
+    || ((TagFilters.include.length === 0 ||  hasCommonTag(tags, TagFilters.include))
+    &&  (TagFilters.exclude.length === 0 || !hasCommonTag(tags, TagFilters.exclude)))){
+        p = await wiki.getPage(HTMLLocalBaseURL + t);
+
+        HTMLTags.push({
+            tagName      : t,
+            // We need to special case the "Heading elements" article
+            // which stand for all hn elements.
+            tagLink      : (t !== 'heading_elements'
+                               ? await template("HTMLelement", [t])
+                               : (await Promise.all([
+                                   template("HTMLelement", ['h1']),
+                                   template("HTMLelement", ['h2']),
+                                   template("HTMLelement", ['h3']),
+                                   template("HTMLelement", ['h4']),
+                                   template("HTMLelement", ['h5']),
+                                   template("HTMLelement", ['h6'])
+                               ])).join(', ')),
+            summary      : (p && p.summary) || "",
+            deprecated   : hasCommonTag(tags, ['deprecated', 'obsolete']),
+            experimental : hasCommonTag(tags, ['experimental']),
+            html5        : hasCommonTag(tags, ['html5']),
+            component    : hasCommonTag(tags, ['html components'])
+        });
+    }
+}
+
+// Handle elements inside the ForcedElements list which currently do not have
+// an english documentation page yet.
+let ElementList = HTMLTags.map(function (ele) {
+    return ele.tagName;
+});
+
+let missingElement = [];
+ForcedElements.forEach(function (ele) {
+    if(ElementList.indexOf(ele) === -1) {
+        missingElement.push(ele);
+    }
+});
+
+if (missingElement.length > 0) {
+   for(let t of missingElement) {
+        HTMLTags.push({
+            tagName      : t,
+            tagLink      : await template("HTMLelement", [t]),
+            summary      : "",
+            deprecated   : false,
+            experimental : false,
+            html5        : false,
+            component    : false
+        });
+    }
+}
+
+// We make sure elements are sorted in alphabetical order.
+HTMLTags.sort(function (a, b) {
+    return a.tagName.localeCompare(b.tagName);
+});
+%>
+<table class="standard-table">
+ <thead>
+  <tr>
+<%
+if (withBadges) {
+%>
+   <th scope="col">&nbsp;</th>
+<%
+}
+%>
+   <th scope="col"><%- l10n.element %></th>
+   <th scope="col"><%- l10n.description %></th>
+  </tr>
+ </thead>
+ <tbody>
+ <%
+ for (let i = 0, l = HTMLTags.length; i < l; i++) {
+ %>
+  <tr>
+<%
+if (withBadges) {
+    badge = HTMLTags[i].deprecated   ? '<span title="' + l10n.deprecated   + '">' + await template("FontAwesomeIcon", ["icon-thumbs-down-alt"]) + '<span>'
+          : HTMLTags[i].experimental ? '<span title="' + l10n.experimental + '">' + await template("FontAwesomeIcon", ["icon-beaker"]) + '<span>'
+          : HTMLTags[i].component    ? '<span title="' + l10n.components   + '">' + await template("FontAwesomeIcon", ["icon-cogs"]) + '<span>'
+          : HTMLTags[i].html5        ? '<a href="/' + env.locale + '/docs/HTML/HTML5"><img alt="HTML5" title="' + l10n.html5 + '" src="/files/3843/HTML5_Badge_32.png" width="16" height="16"></a>'
+          : '&nbsp;';
+%>
+   <td style="vertical-align: top;"><%- badge %></td>
+<%
+}
+%>
+   <td style="vertical-align: top;"><%- HTMLTags[i].tagLink %></td>
+   <td><%- HTMLTags[i].summary %></td>
+  </tr>
+<%
+}
+%>
+ </tbody>
+</table>

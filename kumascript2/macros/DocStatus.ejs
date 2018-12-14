@@ -1,0 +1,510 @@
+<%
+// Builds a documentation status page
+//
+// Parameters:
+//  $0  -  The section to look at (e.g. "Web/JavaScript")
+//  $1  -  (optional) Group tags. An array of tags to filter the section even more (only pages with these tags are included then; OR logic).
+//  $2  -  (optional) Date for pages to be marked as outdated. 365 days and more is always outdated. (TODO: Make 365 configurable to more days)
+//  $3  -  (optional) Bugzilla query for dev-doc-needed
+//  $4  -  (optional) Bugzilla query for documentation requests
+//  $5  -  (optional) Custom status metrics. Object containg the headline as the key and the metric number plus a anchor as an array.
+//         e.g. { "cleanup": {"title": "Clean-up", "link": "#Cleanup_on_standard_built-in_ECMAScript_objects", "counter": 142 }}
+//  $6  -  (optional) Tags that all pages should have. (OR logic)
+
+/*** Variables ***/
+var slug = $0;
+var enURL = '';
+if (slug.indexOf("/en-US") != -1) {
+    enURL = slug;
+} else {
+    enURL = '/en-US/docs/' + slug;
+}
+var pageList = await page.subpagesExpand(enURL, '', true);
+var missingPages = '';
+var groupTags = [];
+if ($1) {
+    groupTags = JSON.parse($1);
+    missingPages = string.deserialize(await template("MissingPages"));
+}
+var outdate = $2;
+var bzddn = $3;
+var bzdr = $4;
+var cMetrics = $5;
+var requiredTags = [];
+if ($6) {
+    requiredTags = JSON.parse($6);
+}
+
+var languages = await page.translations(env.path);
+var bugPageURL = 'https://bugzilla.mozilla.org/show_bug.cgi?id=';
+
+var metrics = {
+    pages: {
+        title: 'Pages',
+        link: enURL + '/Index',
+        counter: 0
+    },
+    noTags: {
+        title: 'No tags',
+        link: '#No_tags',
+        counter: 0,
+        help: 'Learn more about <a href="https://developer.mozilla.org/en-US/docs/MDN/Contribute/Howto/Tag">how to tag pages</a>.'
+    },
+    needsTags: {
+        title: 'Needs* tags',
+        link: '#Needs*_tags',
+        counter: 0,
+        help: 'Learn more about <a href="https://developer.mozilla.org/en-US/docs/MDN/Contribute/Howto/Tag#Document_metadata">how to deal with meta-tags</a>.'
+    },
+    requiredTags: {
+        title: 'Missing tags',
+        link: '#Missing_tags',
+        counter: 0,
+        help: 'Learn more about <a href="https://developer.mozilla.org/en-US/docs/MDN/Contribute/Howto/Tag">how to tag pages</a>.'
+    },
+    editorialReviews: {
+        title: 'Editorial reviews',
+        link: '#Editorial_reviews',
+        counter: 0,
+        help: 'Learn more about <a href="https://developer.mozilla.org/en-US/docs/MDN/Contribute/Howto/Do_an_editorial_review">how to do an editorial review</a>.'
+    },
+    technicalReviews: {
+        title: 'Technical reviews',
+        link: '#Technical_reviews',
+        counter: 0,
+        help: 'Learn more about <a href="https://developer.mozilla.org/en-US/docs/MDN/Contribute/Howto/Do_a_technical_review">how to do a technical review</a>.'
+    },
+    outdated: {
+        title: 'Outdated pages',
+        link: '#Outdated_pages',
+        counter: 0,
+        help: "These pages haven't been updated in over a year. Outdated pages can have problems with both content and format. Look at these pages and consider: Is this page talking about the Web of today? Does it look consistent with newer pages in this topic area? If not, make any needed changes."
+    }
+};
+
+if (groupTags.length > 0) {
+    metrics.noTags = undefined;
+    metrics.missing = {
+        title: 'Missing pages',
+        link: '#Missing_pages',
+        counter: 0,
+        help: "These pages are not yet written. Please help to create them."
+    };
+}
+
+var output = {
+    noTags: [],
+    needsTags: {},
+    requiredTags: [],
+    editorialReviews: [],
+    technicalReviews: [],
+    outdated: []
+};
+
+if (groupTags.length > 0) {
+    output.noTags = undefined;
+    output.missing = [];
+}
+
+/*** Add optional and custom metrics to the metrics object ***/
+if (bzddn && bzddn != '') {
+    metrics.ddn = {
+        title:'Dev-doc-needed bugs',
+        link: '#Dev-doc-needed_bugs',
+        counter: 0
+    };
+}
+
+if (bzdr && bzdr != '') {
+    metrics.dr = {
+        title: 'Documentation requests',
+        link: '#Documentation_requests',
+        counter: 0
+    };
+}
+
+if (cMetrics && cMetrics != '') {
+  var customMetrics = JSON.parse(cMetrics);
+  for (var key in customMetrics) {
+    metrics[key] = customMetrics[key];
+  }
+}
+
+
+/*** Helper functions ***/
+
+
+function hasTags(tags, needle) {
+    if (!tags || tags == undefined) return 0;
+    for (var i = 0, len = tags.length; i < len; i++) {
+        if (tags[i].toLowerCase() === needle.toLowerCase()) return 1;
+    }
+    return 0;
+}
+
+function hasNoTags(tagList) {
+    if (!tagList || tagList == undefined || tagList.length == 0) {
+      return 1;
+    }
+    return 0;
+}
+
+function missingTags(tagList, requiredTags) {
+   if (!tagList || tagList == undefined) return 0;
+   var yay = 0;
+   for (var i = 0; i < tagList.length; i++) {
+      if (tagList[i] == 'Index') return 0;
+      for (var j = 0; j < requiredTags.length; j++) {
+          if (tagList[i].toLowerCase() == requiredTags[j].toLowerCase()) {
+              yay++;
+          }
+      }
+   }
+   if (yay == 0) return 1;
+    return 0;
+}
+
+function containsNeedsWorkTag(tagList) {
+    if (!tagList || tagList == undefined) return 0;
+    for (var i = 0, len = tagList.length; i < len; i++) {
+        if (tagList[i].toLowerCase().substr(0, 5) == 'needs') return 1;
+    }
+    return 0;
+}
+
+function hasReviewTag(reviewTags, reviewType) {
+    if (!reviewTags || reviewTags == undefined) return 0;
+    for (var i = 0, len = reviewTags.length; i < len; i++) {
+        if (reviewTags[i] === reviewType) return 1;
+    }
+    return 0;
+}
+
+function isOutdated(pageDate, compareDate) {
+    if (!pageDate || pageDate == undefined) return 0;
+    if (new Date(pageDate) < new Date(compareDate)) return 1;
+    return 0;
+}
+
+function daysBetween(date1, date2) {
+  var aDay = 1000*60*60*24;
+
+  var d1ms = date1.getTime();
+  var d2ms = date2.getTime();
+  var diff = d2ms - d1ms;
+
+  return Math.round(diff/aDay);
+}
+
+
+/*** Get pages recursively by walking through the page tree and collect data ***/
+
+function collect(page) {
+    metrics.pages.counter++;
+    var cleanTitle = page.title.replace('<','&lt;').replace('>','&gt;');
+    var pageurl = page.url;
+    var rgx = /needs[A-Za-z0-9]+/gi;
+
+    if (hasNoTags(page.tags)) {
+        metrics.noTags.counter++;
+        output.noTags.push({title: cleanTitle, url: pageurl});
+    }
+    if (containsNeedsWorkTag(page.tags)) {
+        metrics.needsTags.counter++;
+        page.tags.forEach(function (tag) {
+            if (rgx.test(tag)) {
+                output.needsTags[tag] = output.needsTags[tag] || [];
+                output.needsTags[tag].push({title: cleanTitle, url: pageurl});
+            }
+        });
+    }
+    if (hasReviewTag(page.review_tags, 'editorial')) {
+        metrics.editorialReviews.counter++;
+        output.editorialReviews.push({title: cleanTitle, url: pageurl});
+    }
+    if (hasReviewTag(page.review_tags, 'technical')) {
+        metrics.technicalReviews.counter++;
+        output.technicalReviews.push({title: cleanTitle, url: pageurl});
+    }
+    if (requiredTags.length > 0 && missingTags(page.tags, requiredTags)) {
+        metrics.requiredTags.counter++;
+        output.requiredTags.push({title: cleanTitle, url: pageurl});
+    }
+    var pageAge = daysBetween(new Date(page.last_edit), new Date());
+    if ((outdate != undefined && isOutdated(page.last_edit, outdate)) || pageAge > 365) {
+        metrics.outdated.counter++;
+        output.outdated.push({title: cleanTitle, url: pageurl, note: pageAge + ' days old'});
+    }
+}
+
+function getPages(pageList) {
+    if (pageList) {
+        for (var i = 0; i < pageList.length; i++) {
+            if (groupTags.length > 0) {
+                for (var j = 0; j < groupTags.length; j++) {
+                    if (hasTags(pageList[i].tags, groupTags[j])) {
+                        collect(pageList[i]);
+                    }
+                }
+            } else {
+                collect(pageList[i]);
+            }
+
+            var subpage = getPages(pageList[i].subpages);
+        }
+    }
+}
+
+getPages(pageList);
+
+
+/*** Missing pages ***/
+
+if (groupTags.length > 0) {
+    for (var j = 0; j < groupTags.length; j++) {
+        var group = groupTags[j];
+        var missingForGroup = missingPages[0][group] || [];
+        for (var i = 0; i < missingForGroup.length; i++) {
+            output.missing.push({title: missingForGroup[i], url: '/en-US/docs/Web/API/' + missingForGroup[i].replace('.', '/')});
+            metrics.missing.counter++;
+        }
+    }
+}
+
+
+/*** Bugzilla querying ***/
+
+
+if (bzddn && bzddn != '') {
+    var ddnBugs = await MDN.bzSearch(bzddn);
+    metrics.ddn.counter = ddnBugs.bugs.length;
+}
+
+if (bzdr && bzdr != '') {
+    var drBugs = await MDN.bzSearch(bzdr);
+    metrics.dr.counter = drBugs.bugs.length;
+}
+
+
+/* Data for L10n status table */
+
+var l10nResult = {};
+
+async function getL10nPages(pageList) {
+    if (pageList) {
+        for (var aPage in pageList) {
+            var url = 'https://developer.mozilla.org' + pageList[aPage].url + '?raw&macros&section=json';
+            var resource = await MDN.fetchHTTPResource(url);
+            if (resource != '') {
+                l10nResult[pageList[aPage].locale] = {};
+                l10nResult[pageList[aPage].locale].metrics = JSON.parse(resource);
+                l10nResult[pageList[aPage].locale].url = pageList[aPage].url;
+            }
+        }
+    }
+}
+
+await getL10nPages(languages);
+
+
+
+/*** Output ***/
+
+
+
+/*** Summary table ***/
+%>
+<table class="docstatussummary standard-table">
+  <thead>
+    <tr>
+<%
+for (var obj in metrics) {
+if (metrics.hasOwnProperty(obj) && typeof metrics[obj] !== 'undefined') {
+    var href = metrics[obj].link;
+    if (href && href.indexOf('#', 0) === 0) {
+        href = env.path + href;
+    }
+%>
+    <th><a href="<%=href%>"><%=metrics[obj].title%></a></th>
+<% }} %>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+<%
+for (var obj in metrics) {
+if (metrics.hasOwnProperty(obj) && typeof metrics[obj] !== 'undefined') {
+    var percent = Math.ceil((metrics[obj].counter / metrics.pages.counter) * 100);
+    var color = "rgb(204, 255, 153)";
+    if (percent >= 5) { color = "rgb(255, 255, 153)" }
+    if (percent >= 10) { color = "rgb(255, 204, 204)" }
+    if (obj == 'pages') {
+%>
+    <td><%=metrics.pages.counter%></td>
+<% } else { %>
+    <td style="background-color: <%=color%>;"><%=metrics[obj].counter%> (<%=percent%>%) </td>
+<% }
+}}%>
+    </tr>
+  </tbody>
+</table>
+
+<p>See also <a href="<%=env.url%>#Localizations">localization status</a> of this section.</p>
+
+
+<% /*** page metrics ***/ %>
+
+
+<%
+
+for (var obj in output) {
+if (output.hasOwnProperty(obj) && typeof metrics[obj] != 'undefined' && metrics[obj].counter > 0) {
+%>
+<h2 id="<%=metrics[obj].link.slice(1)%>"><%=metrics[obj].title%></h2>
+<%
+    if (obj === 'requiredTags') {
+        let taglinks = await Promise.all(
+            requiredTags.map(t => template('Tag', [t]))
+        );
+%>
+<p><small><em>At least missing one of the following</em>: <%- taglinks.join(', ') %></small></p>
+<%
+    }
+
+    var result = output[obj];
+    switch(env.locale) {
+    default:
+        amount = "Found " + metrics[obj].counter + " pages.";
+        break;
+    }
+%>
+
+<p><strong><%=amount%></strong> <%-metrics[obj].help%></p>
+<div class="wideColumnBox wideColumnBoxList">
+<ul>
+<% if (Array.isArray(result)) {
+    for (i=0; i < result.length; i++) { %>
+    <li><a href='<%=result[i].url%>'><%=result[i].title%></a><% if (result[i].note != undefined) { %><br/><small><%=result[i].note%></small><% } %></li>
+<%  }
+} else {
+    for (ntag in result) {
+        if (result.hasOwnProperty(ntag)) {
+%>
+    <li>
+        <strong><%= ntag %></strong>
+        <ul>
+<%          for (i=0; i < result[ntag].length; i++) { %>
+            <li><a href='<%=result[ntag][i].url%>'><%=result[ntag][i].title%></a></li>
+<%          } %>
+        </ul>
+    </li>
+<%
+        }
+    }
+} %>
+</ul>
+</div>
+<% }} %>
+
+
+<% /*** Bug lists ***/ %>
+
+<% if (bzddn && bzddn != '') {
+    if (ddnBugs.bugs.length > 0) {
+        var bzLink = 'https://bugzilla.mozilla.org/buglist.cgi?bug_id=';
+%>
+    <h2 id="Dev-doc-needed_bugs">Dev-doc-needed bugs</h2>
+    <p><strong>Found <%=ddnBugs.bugs.length%> bugs.</strong> Learn more about <a href="https://developer.mozilla.org/en-US/docs/MDN/Contribute/Howto/Resolve_a_dev-doc-needed_bug">how to resolve a dev-doc-needed bug</a>.</p>
+
+    <table class="standard-table">
+        <thead>
+            <tr>
+                <th>Bug</th>
+                <th>Summary</th>
+                <th>Release</th>
+            </tr>
+        </thead>
+    <tbody>
+
+    <% for (var i=0; i < ddnBugs.bugs.length; i++) {
+        bzLink += ddnBugs.bugs[i].id + ',';
+    %>
+    <tr>
+        <td><a href="<%= bugPageURL + ddnBugs.bugs[i].id %>"><%= ddnBugs.bugs[i].id %></a></td>
+        <td><%= ddnBugs.bugs[i].summary %></td>
+        <td><%= ddnBugs.bugs[i].target_milestone %></td>
+    </tr>
+    <% } %>
+
+    </tbody>
+    </table>
+    <p>Browse as <a href="<%=bzLink%>">bug list</a>.</p>
+<% } } %>
+
+<% if (bzdr && bzdr != '') {
+    if (drBugs.bugs.length > 0) {
+        var bzLink = 'https://bugzilla.mozilla.org/buglist.cgi?bug_id=';
+%>
+    <h2 id="Documentation_requests">Documentation requests</h2>
+    <p><strong>Found <%=drBugs.bugs.length%> bugs.</strong> Documentation request bugs can contain various kinds work related to MDN pages. Read through the bug and ask questions in the bug if in doubt.</p>
+
+    <table class="standard-table">
+        <thead>
+            <tr>
+                <th>Bug</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+    <tbody>
+
+    <% for (var i=0; i < drBugs.bugs.length; i++) {
+        bzLink += drBugs.bugs[i].id + ',';
+    %>
+    <tr>
+        <td><a href="<%= bugPageURL + drBugs.bugs[i].id %>"><%= drBugs.bugs[i].id %></a></td>
+        <td><%= drBugs.bugs[i].summary %></td>
+    </tr>
+    <% } %>
+
+    </tbody>
+    </table>
+    <p>Browse as <a href="<%=bzLink%>">bug list</a>.</p>
+<% } } %>
+
+
+<% /*** L10n status table ***/ %>
+
+
+<h2 id="Localizations">Localizations</h2>
+<p>Please help us to localize this documentation into different languages. Read more about <a href="https://developer.mozilla.org/en-US/docs/MDN/Contribute/Localize/Translating_pages">how to translate</a>.</p>
+<table class="standard-table">
+  <thead>
+    <tr>
+        <th>Language</th>
+        <th>Pages</th>
+        <th>Translated</th>
+        <th>Translations up to date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%
+        for (var key in l10nResult) {
+        if (l10nResult.hasOwnProperty(key) && typeof key != 'undefined') {
+
+        var translationPercent = Math.floor((l10nResult[key].metrics.translations.counter / l10nResult[key].metrics.pages.counter) * 100);
+        var uptodatePercent = l10nResult[key].metrics.translations.counter == 0 ? 0 : Math.floor((l10nResult[key].metrics.updateNeeded.counter / l10nResult[key].metrics.translations.counter) * 100);
+    %>
+        <tr>
+            <td><a href="<%=l10nResult[key].url%>"><%=key%></a></td>
+            <td><%=l10nResult[key].metrics.pages.counter%></td>
+            <td><%=l10nResult[key].metrics.translations.counter%> (<%=translationPercent%>%)</td>
+            <td><%=l10nResult[key].metrics.updateNeeded.counter%> (<%=uptodatePercent%>%)</td>
+        </tr>
+    <% }} %>
+</tbody>
+</table>
+
+
+<% /*** Doc status metrics API :-) ***/ %>
+
+<div id="json" style="display: none"><%=JSON.stringify(metrics) %></div>

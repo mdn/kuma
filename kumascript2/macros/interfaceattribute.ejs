@@ -1,0 +1,18 @@
+<%
+/* creates a link to a attribute in an interface */
+/* parameters: interface name then attribute name */
+var lang = env.locale;
+
+var destNewType = lang + '/docs/XPCOM_Interface_Reference/' + $0;
+var destOldType = lang + '/docs/' + $0;
+
+/* default to the page exists from the dekiwiki age */
+var destLink = web.link(wiki.uri(destNewType) + '#' + $1, $0 + '.' + $1);
+
+/* check $0#$1 exists */
+if(wiki.pageExists(destNewType)) { /* the page exists from the dekiwiki age */
+} else if(wiki.pageExists(destOldType)) {
+    destLink = web.link(wiki.uri(destOldType) + '#' + $1, $0 + '.' + $1);
+}
+%>
+<%- destLink %>

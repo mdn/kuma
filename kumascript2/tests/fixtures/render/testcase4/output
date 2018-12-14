@@ -1,0 +1,10 @@
+Double right braces are legal outside of macros
+
+<p>Sometimes, people declare them in their component&#39;s .h file instead. A typical definition is:</p>
+<pre class="eval">
+   /* 2d96b3d0-c051-11d1-a827-0040959a28c9 */
+   #define NS_WINDOW_CID \
+   { 0x2d96b3d0, 0xc051, 0x11d1, \
+       {0xa8, 0x27, 0x00, 0x40, 0x95, 0x9a, 0x28, 0xc9}}
+</pre>
+<p><strong>The contract ID:</strong> (the <code>@example.com/...</code> part, not to be confused with the &quot;CID&quot; = component ID) is the string that people can pass to <code>GetService</code> or <code>CreateInstance</code> to get an instance of your class.</p>

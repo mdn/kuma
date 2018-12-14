@@ -1,0 +1,25 @@
+<%
+/* Parameters:
+    $0 - version of Gecko
+    $1 - optional text that will display under the version line
+*/
+
+/* get the page language */
+var lang = env.locale;
+
+var str = "Gecko " + $0 + " note";
+
+switch(lang) {
+  case 'de':
+    str = "Hinweis zu Gecko " + $0;
+    break;
+  case 'ru':
+    str = "Замечание по Gecko " + $0;
+    break;
+}
+%>
+
+<div class="blockIndicator geckoMinVer standardNote">
+  <div style="text-align:center; font-weight:bold; padding-bottom: 0.5em;"><%- str %></div>
+  <div><%- $1 %></div>
+</div>

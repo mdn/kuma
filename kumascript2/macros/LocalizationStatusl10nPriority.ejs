@@ -1,0 +1,31 @@
+<%
+
+// These strings are copied from LocalizationStatusInSection
+// where there should be maintained
+let l10nPriority = mdn.localString({
+    "en-US": "Priority_articles",
+    "ar"   : "المقالات_ذات_الأولوية",
+    "de"   : "Priorisierte_Artikel",
+    "fr"   : "Articles_prioritaires",
+    "ja"   : "最優先記事",
+    "pt-BR": "Artigos_prioritários",
+    "ru"   : "Приоритетные_статьи",
+    "zh-CN": "优先级较高的文档"
+});
+
+let slugBase = "/docs/MDN/Doc_status$children?expand";
+let locale = $0;
+let url =  "http://developer.mozilla.org/" + locale + slugBase;
+let jsonOverview = await MDN.fetchJSONResource(url);
+let output = "";
+for (let page in jsonOverview.subpages){
+  let sections = jsonOverview.subpages[page].sections;
+  for (let section in sections){
+    if(sections[section].id === l10nPriority){
+          output += "<h2> "+jsonOverview.subpages[page].title + "</h2>";
+          output += await template("Page", [jsonOverview.subpages[page].url, sections[section].id]);
+        }
+    }
+}
+%>
+<%- output %>

@@ -1,0 +1,75 @@
+<%
+// Creates a link to a specification, given a "short" version of the spec's
+// name. The link will use the formal name of the specification as the link
+// text.
+//
+// Parameters:
+//  $0  The shorthand name of the specification to link to.
+//  $1  (Optional) Added text to append to the base URL; this allows you to
+//      build links to subpages in a multi-page spec, or to link to anchors.
+//  $2  (Optional) Replacement link text; this lets you specify the name of
+//      a specific method, property, or other entity to customize the
+//      appearance of the link.
+
+var spec   = $0;
+var anchor = $1;
+var name;
+var url;
+var title;
+var result;
+var lang = env.locale;
+
+var specList = string.deserialize(await template('SpecData'));
+
+// Some APIs share specifications. Here we attend to that.
+
+specList['Blending'] = specList['Compositing'];
+specList['CSS3 2D Transforms'] = specList['CSS3 Transforms'];
+specList['CSS3 3D Transforms'] = specList['CSS Transforms 2'];
+specList['CSS3 Break'] = specList['CSS3 Fragmentation'];
+specList['CSS3 Flexbox'] = specList['CSS Flexbox'];
+specList['CSS3 Template'] = specList['CSS3 Grid'] = specList['CSS Grid'];
+specList['CSS3 UI'] = specList['CSS3 Basic UI'];
+specList['CSS4 UI'] = specList['CSS4 Basic UI'];
+specList['CSS Scroll Snap Points'] = specList['CSS Scroll Snap'];
+specList['WebSMS'] = specList['Messaging'];
+specList['ES2015'] = specList['ES6'];
+specList['ES7'] = specList['ES2016'];
+specList['ES8'] = specList['ES2017'];
+
+// Pull out the name and URL (or use "unknown" if not available)
+
+name = specList[spec] && specList[spec].name || 'Unknown';
+url  = specList[spec] && specList[spec].url  || 'about:unknown';
+
+// If a replacement link text is provided, use that.
+
+if ($2) {
+    title = mdn.localString({
+        "en-US": "The definition of '" + $2 + "' in that specification.",
+        "es": "La definición de '" + $2 + "' en esta especificación.",
+        "fr": "La définition de '" + $2 + "' dans cette spécification.",
+        "de": "Die Definition von '" + $2 + "' in dieser Spezifikation.",
+        "ru": "Определение '" + $2 + "' в этой спецификации.",
+        "zh-CN": $2,
+        "ja": $2 + " の定義",
+    });
+
+    result = '<a href="' + url + anchor + '" hreflang="en" lang="en" class="external">' + name + '<br><small lang="' + lang + '">' + title + "</small></a>";
+
+} else {
+    title = mdn.localString({
+        "en-US": "The '" + name + "' specification",
+        "es": "La especificación '" + name + "'",
+        "fr": "La spécificaction '" + name + "'",
+        "de": "Die '" + name + "' Spezifikation",
+        "ru": "Спецификация '" + name + "'",
+        "zh-CN": name,
+        "ja": name + "の仕様書",
+    });
+
+    result = '<a href="' + url + anchor + '" hreflang="en" lang="en" class="external" title="' + title + '">' + name + "</a>";
+}
+
+
+%><%- result %>

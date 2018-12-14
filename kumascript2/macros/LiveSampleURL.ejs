@@ -1,0 +1,25 @@
+<%
+// Returns the URL used to access as a live sample the code
+// at a given ID.
+//
+// Parameters:
+//
+// $0   The ID of the sample's section or containing block.
+// $1   The URL from which to pull the sample; if not provided,
+//      the current page is assumed.
+
+var pageUrl = env.url;
+var base = pageUrl;
+
+if ($1 && $1.length > 0) {
+    base = $1;
+}
+
+let url = new kuma.url.URL(base);
+let liveSampleUrl = new kuma.url.URL(env.live_samples.base_url);
+url.host = liveSampleUrl.host;
+url.protocol = liveSampleUrl.protocol;
+url.pathname = url.pathname + '$samples/' + $0;
+url.search = 'revision=' + env.revision_id;
+%>
+<%= url %>

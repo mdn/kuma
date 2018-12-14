@@ -1,0 +1,122 @@
+<%
+/*
+    Parameter: none
+    Usage: {{XULRefElem}}
+    Example: https://developer.mozilla.org/en-US/docs/XUL/action
+*/
+
+
+// Default strings (en-US)
+var s_top_url         = "XUL_Reference";
+var s_top_title       = "XUL Reference home";
+var s_examples_href   = "Examples";
+var s_examples        = "Examples";
+var s_attributes_href = "Attributes";
+var s_attributes      = "Attributes";
+var s_properties_href = "Properties";
+var s_properties      = "Properties";
+var s_methods_href    = "Methods";
+var s_methods         = "Methods";
+var s_related_href    = "Related";
+var s_related         = "Related";
+
+switch (env.locale) {
+    case 'de':
+        s_top_url         = "XUL_Referenz";
+        s_top_title       = "XUL Referenz Startseite";
+        s_examples_href   = "Beispiele";
+        s_examples        = "Beispiele";
+        s_attributes_href = "Attribute";
+        s_attributes      = "Attribute";
+        s_properties_href = "Eigenschaften";
+        s_properties      = "Eigenschaften";
+        s_methods_href    = "Methoden";
+        s_methods         = "Methoden";
+        s_related_href    = "Verwandte_Themen";
+        s_related         = "Verwandte Themen";
+        break;
+    case 'es':
+        s_top_url         = "XUL/Elementos";
+        s_top_title       = "Referencia de XUL";
+        s_examples        = "Ejemplos";
+        s_attributes      = "Atributos";
+        s_properties      = "Propiedades";
+        s_methods         = "Methoden";
+        s_related         = "Métodos";
+        break;
+    case 'fr':
+        s_top_url         = "Référence_XUL";
+        s_top_title       = "Accueil de la référence XUL";
+        s_examples_href   = "Exemples";
+        s_examples        = "Exemples";
+        s_attributes_href = "Attributs";
+        s_attributes      = "Attributs";
+        s_properties_href = "Propri.C3.A9t.C3.A9s";
+        s_properties      = "Propriétés";
+        s_methods_href    = "M.C3.A9thodes";
+        s_methods         = "Méthodes";
+        s_related_href    = "Sujets_li.C3.A9s";
+        s_related         = "Sujets liés";
+        break;
+    case 'ja':
+        s_top_url         = "XUL/XUL_Reference";
+        s_top_title       = "XUL リファレンス HOME";
+        s_examples        = "例";
+        s_attributes      = "属性";
+        s_properties      = "プロパティ";
+        s_methods         = "メソッド";
+        s_related         = "関連項目";
+        break;
+    case 'ko':
+        s_top_url         = "XUL_Reference";
+        s_examples        = "예제";
+        s_attributes      = "Attributes";
+        s_properties      = "Properties";
+        s_methods         = "Methods";
+        s_related         = "관련 항목";
+        break;
+    case 'pl':
+        s_top_url         = "Dokumentacja_XUL";
+        s_top_title       = "Dokumentacja XUL";
+        s_examples_href   = "Przyk.C5.82ady";
+        s_examples        = "Przykłady";
+        s_attributes_href = "Atrybuty";
+        s_attributes      = "Atrybuty";
+        s_properties_href = "W.C5.82asno.C5.9Bci";
+        s_properties      = "Własności";
+        s_methods_href    = "Metody";
+        s_methods         = "Metody";
+        s_related_href    = "Podobne";
+        s_related         = "Podobne";
+        break;
+    case 'ru':
+        s_top_url         = "XUL/Справочник";
+        s_top_title       = "Справочник по XUL";
+        s_examples        = "Примеры";
+        s_attributes_href = "Атрибуты";
+        s_attributes      = "Атрибуты";
+        s_properties_href = "Property";
+        s_properties      = "Свойства";
+        s_methods_href    = "Методы";
+        s_methods         = "Методы";
+        s_related         = "См. также";
+        break;
+    case 'zh-CN':
+        s_top_url         = "XUL_Reference";
+        s_examples        = "示例";
+        s_attributes      = "属性";
+        s_properties      = "特性";
+        s_methods         = "方法";
+        s_related         = "相关";
+        break;
+}
+
+
+%><span class="breadcrumbs XULRef_breadcrumbs">
+ « <a href="/<%= env.locale %>/docs/<%=s_top_url%>"><%= s_top_title %></a>    [ 
+ <a href="#<%=s_examples_href%>"><%= s_examples %></a> | 
+ <a href="#<%=s_attributes_href%>"><%= s_attributes %></a> | 
+ <a href="#<%=s_properties_href%>"><%= s_properties %></a> | 
+ <a href="#<%=s_methods_href%>"><%= s_methods %></a> | 
+ <a href="#<%=s_related_href%>"><%= s_related %></a> ]
+</span>

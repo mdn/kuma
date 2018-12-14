@@ -1,0 +1,39 @@
+<% 
+/* 
+ * 2 parameters expected
+ * $0 : the file name to embed
+ * $1 : the syntaxe color to apply
+ */
+
+var found = false;
+var brush = ['bash', 'shell', 'css', 'java', 'js', 'jscript', 'javascript', 'php', 'py', 'python', 'sql', 'xml', 'xhtml', 'xslt', 'html', 'xhtml']
+var syntaxe = "txt";
+
+var m1 = mdn.localString({
+    "en-US" : "Unable to find file ",
+    "ja"    : "ファイル「 ",
+    "zh-CN" : "找不到附件“",
+    "ru"    : "Не удалось найти файл "
+});
+
+var m2 = mdn.localString({
+    "en-US" : "",
+    "ja"    : " 」が見つかりません。",
+    "zh-CN" : "”，请在本页面上传对应文件名的附件。",
+    "ru"    : ""
+});
+
+if (brush.indexOf($1) > -1) {
+    syntaxe = $1;
+}
+
+for(let aFile of env.files) {
+    if ($0 === aFile.filename) {
+        found = true;
+%><pre class="brush: <%= syntaxe %>"><%= await MDN.getFileContent(aFile) %></pre><%
+    }
+}
+
+if (!found) {
+    %><p><%-m1%><em><%= $0 %></em><%-m2%></p><%
+}%>

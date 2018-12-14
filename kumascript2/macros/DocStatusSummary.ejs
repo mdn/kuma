@@ -1,0 +1,134 @@
+<%
+// Generates summary data for documentation status metrics
+//
+// Parameters:
+//  $0  -  The section to look at (e.g. "/en-us/docs/Web/JavaScript")
+//  $1  -  Custom status metrics. Object containg the headline as the key and the metric number plus a anchor as an array.
+// (e.g. { "cleanup": ["Clean-up", "#Cleanup_on_standard_built-in_ECMAScript_objects", "250"], "missingPages": ["Missing pages", "#Missing_pages", "42"] }).
+
+//Switching locales
+var s_pages = mdn.localString({
+    "en-US" : "Pages",
+    "ru"    : "Страницы"
+});
+
+var s_no_tags = mdn.localString({
+    "en-US" : "No tags",
+    "ru"    : "Нет меток"
+});
+
+var s_needs_tags = mdn.localString({
+    "en-US" : "Needs* tags",
+    "ru"    : "Метки Needs*"
+});
+
+var s_editorial = mdn.localString({
+    "en-US" : "Editorial reviews",
+    "ru"    : "Редакторско одобренных"
+});
+
+var s_technical = mdn.localString({
+    "en-US" : "Technical reviews",
+    "ru"    : "Технически одобренных"
+});
+
+var pageList = await page.subpagesExpand($0);
+var pageCounter = 0;
+var metrics = {
+                      // title, link, counter
+  "noTags":           [s_no_tags, "#No_tags", 0],
+  "needsTags":        [s_needs_tags, "#Need_tags", 0],
+  "editorialReviews": [s_editorial, "#Editorial_reviews", 0],
+  "technicalReviews": [s_technical, "#Technical_reviews", 0],
+}
+
+if ($1) {
+  var customMetrics = JSON.parse($1);
+  for (var key in customMetrics) {
+    metrics[key] = customMetrics[key];
+  }
+}
+
+function hasNoTags(tagList) {
+    if (!tagList || tagList == undefined || tagList.length == 0) {
+      return 1;
+    }
+    return 0;
+}
+function containsNeedsWorkTag(tagList) {
+    if (!tagList || tagList == undefined) return 0;
+    for (var i = 0, len = tagList.length; i < len; i++) {
+        if (tagList[i].toLowerCase().substr(0, 5) == 'needs') return 1;
+    }
+    return 0;
+}
+
+function hasReviewTag(reviewTags, reviewType) {
+    if (!reviewTags || reviewTags == undefined) return 0;
+    for (var i = 0, len = reviewTags.length; i < len; i++) {
+        if (reviewTags[i] === reviewType) return 1;
+    }
+    return 0;
+}
+
+function getPages(pageList) {
+    if (pageList) {
+        for (var i = 0; i < pageList.length; i++) {
+            pageCounter++;
+            if (hasNoTags(pageList[i].tags)) { metrics["noTags"][2]++; }
+            if (containsNeedsWorkTag(pageList[i].tags)) { metrics["needsTags"][2]++; }
+            if (hasReviewTag(pageList[i].review_tags, 'editorial')) { metrics["editorialReviews"][2]++; }
+            if (hasReviewTag(pageList[i].review_tags, 'technical')) { metrics["technicalReviews"][2]++; }
+            
+            var subpage = getPages(pageList[i].subpages);
+            if (subpage) {
+                pageCounter++;
+                if (hasNoTags(subpage.tags)) { metrics["noTags"][2]++; }
+                if (containsNeedsWorkTag(subpage.tags)) { metrics["needsTags"][2]++; }
+                if (hasReviewTag(subpage.review_tags, 'editorial')) { metrics["editorialReviews"][2]++; }
+                if (hasReviewTag(subpage.review_tags, 'technical')) { metrics["technicalReviews"][2]++; }
+            }
+        }
+    }
+}
+
+getPages(pageList);
+
+var indexPage = $0 + '/Index';
+
+%>
+<table class="docstatussummary standard-table">
+  <thead>
+    <tr>
+      <th><a href="<%=indexPage%>"><%=s_pages%></a></th>
+<%
+ for (var key in metrics) {
+  if (metrics.hasOwnProperty(key)) { 
+      var href = metrics[key][1];
+      var title = metrics[key][0].replace(/_/g, " ");
+      if (href.indexOf('#', 0) === 0) {
+        href = env.path + metrics[key][1];
+      }
+%>
+    <th><a href="<%=href%>"><%=title%></a></th>
+<%  }
+} %>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%=pageCounter%></td>
+<%
+ for (var key in metrics) {
+  if (metrics.hasOwnProperty(key)) {
+    var percent = Math.ceil((metrics[key][2] / pageCounter) * 100);
+    var color = "rgb(204, 255, 153)";
+    if (percent >= 5) { color = "rgb(255, 255, 153)" }
+    if (percent >= 10) { color = "rgb(255, 204, 204)" }
+ %>
+    <td style="background-color: <%=color%>;"><%=metrics[key][2]%> (<%=percent%>%) </td>
+<%  }
+} %>
+    </tr>
+  </tbody>
+</table>

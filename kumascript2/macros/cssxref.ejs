@@ -1,0 +1,89 @@
+<%
+/*
+  Inserts a link to a CSS entity documentation
+  Appropriate styling is applied.
+
+  This template handles CSS data types and CSS functions gracefully by
+  automatically adding arrow brackets or round brackets, respectively.
+
+  Parameters:
+  $0 - API name to refer to
+  $1 - name of the link to display (optional)
+  $2 - anchor within the article to jump to of the form '#xyz' (optional)
+
+  Examples:
+  {{cssxref("background")}} =>
+      <a href="/en-US/docs/Web/CSS/background" title="The background CSS 
+      property is..."><code>background</code></a>
+  {{cssxref("length")}} =>
+      <a href="/en-US/docs/Web/CSS/length" title="The <length> CSS data type
+      denotes..."><code>&lt;length&gt;</code></a>
+  {{cssxref("linear-gradient")}} =>
+      <a href="/en-US/docs/Web/CSS/linear-gradient" title="The CSS
+      linear-gradient() function creates..."><code>linear-gradient()</code></a>
+  {{cssxref("margin-top", "top margin")}} =>
+      <a href="/en-US/docs/Web/CSS/margin-top" title="The margin-top CSS 
+      property of an element sets..."><code>top margin</code></a>
+  {{cssxref("filter", "", "#url")}} =>
+      <a href="/en-US/docs/Web/CSS/filter#url()"><code>filter</code></a>
+*/
+
+var lang = env.locale;
+var url = "";
+var urlWithoutAnchor = "";
+var str = ($1 || $0);
+var localStrings = string.deserialize(await template("L10n:Common"));
+
+// Deal with CSS data types by removing <>
+var slug = $0.replace(/&lt;(.*)&gt;/g, '$1');
+
+// Special case <color>, <flex>, and <position>
+switch ($0) {
+    case '&lt;color&gt;':
+        slug = 'color_value';
+        break;
+
+    case '&lt;flex&gt;':
+        slug = 'flex_value';
+        break;
+
+    case '&lt;position&gt;':
+        slug = 'position_value';
+        break;
+}
+
+str = str.toLowerCase();
+urlWithoutAnchor = "/" + lang + "/docs/Web/CSS/" + slug;
+url = urlWithoutAnchor + $2;
+
+var thisPage = null; // Will be lazy evaluated
+if (!$1) {
+    thisPage = await wiki.getPage(urlWithoutAnchor); // lazy evaluation
+
+    // Append parameter brackets to CSS functions
+    if (page.hasTag(thisPage, "CSS Function")) {
+        str += "()";
+    }
+
+    // Enclose CSS data types in arrow brackets
+    if (page.hasTag(thisPage, "CSS Data Type") && !/^&lt;.+&gt;$/.test(str)) {
+        str = "&lt;" + str + "&gt;";
+    }
+}
+
+var summary = "";
+
+if (!$2) {
+    //if (!thisPage) thisPage = await wiki.getPage(url); // lazy evaluation // Disabled to test performance (we get a lot of Kumascript errors)
+
+    if (thisPage && thisPage.summary) {
+        summary = mdn.escapeQuotes(thisPage.summary);
+    } else {
+        summary = mdn.getLocalString(localStrings, "summary");
+    }
+}
+
+var entry = "<a href=\"" + url + "\"" + (summary?" title=\""+summary+"\"":"") + "><code>" + str + "</code></a>";
+
+
+%><%- entry %>

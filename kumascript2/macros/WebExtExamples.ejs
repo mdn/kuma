@@ -1,0 +1,112 @@
+<%
+
+/*
+The "examples.json" file from the https://github.com/mdn/webextensions-examples
+repository contains information about the examples living in that repository.
+
+This macro must be embedded in a WebExtensions API page, either of:
+
+* a "module" page (for example: "/en-US/Add-ons/WebExtensions/API/alarms" or "/en-US/Add-ons/WebExtensions/API/tabs")
+* an "API" page (for example: "/en-US/Add-ons/WebExtensions/API/alarms/create" or "/en-US/Add-ons/WebExtensions/API/tabs/executeScript")
+
+If it's embedded in a module page, it fetches all the examples that use any
+of the APIs in the given module, and outputs a list of links to those examples.
+
+If it's embedded in an API page, it fetches all the examples that use the
+given API, and outputs a list of links to those examples.
+
+It prepends this list with a header. By default the header is <h3>.
+The macro takes one optional argument, which is the name of the tag to use
+for the header. So if you want the header to be an <h2>, call it with "h2".
+*/
+
+const allExamples = await MDN.fetchJSONResource("https://raw.githubusercontent.com/mdn/webextensions-examples/master/examples.json");
+const examplesBaseURL = "https://github.com/mdn/webextensions-examples/tree/master/";
+const desiredHeading = $0 || "h3";
+const lang = env.locale;
+
+const s_example_addons = mdn.localString({
+    "en-US": "Example extensions"
+});
+
+/*
+The `module` argument is the name of a JavaScript API module, like "alarms"
+or "tabs".
+
+This function returns an array of JSON objects representing examples which use
+any of the APIs under the given module.
+*/
+function getExamplesForModule(module) {
+  let examplesForModule = [];
+  for (let example of allExamples) {
+    for (let jsAPI of example.javascript_apis) {
+      jsAPI = jsAPI.split(".")[0];
+      if (jsAPI === module) {
+        examplesForModule.push(example);
+        break;
+      }
+    }
+  }
+  return examplesForModule;
+}
+
+/*
+The `module` argument is the name of a JavaScript API module, like "alarms"
+or "tabs".
+
+The `api` argument is the name of a JavaScript API in that module, like "create"
+or "executeScript".
+
+This function returns an array of JSON objects representing examples which the
+given API, like "alarms.create" or "tabs.executeScript".
+*/
+function getExamplesForAPI(module, api) {
+  let examplesForAPI = [];
+  let moduleAndAPI = `${module}.${api}`;
+  for (let example of allExamples) {
+    for (let jsAPI of example.javascript_apis) {
+      if (moduleAndAPI === jsAPI) {
+        examplesForAPI.push(example);
+        break;
+      }
+    }
+  }
+  return examplesForAPI;
+}
+
+/*
+Given an array of JSON objects representing example add-ons,
+this function outputs:
+* a header
+* a list of links to the example source in GitHub
+*/
+function writeExampleLinks(examples) {
+  let output = "";
+  if (examples.length > 0) {
+    output = `<${desiredHeading}>${s_example_addons}</${desiredHeading}>`;
+    output += "<ul>";
+    for (let example of examples) {
+      output += `<li><a href="${examplesBaseURL}${example.name}">${example.name}</a></li>`;
+    }
+    output += "</ul>";
+  }
+  return output;
+}
+
+let output = "";
+let pieces = env.slug.split("/");
+let leaf = pieces[pieces.length-1];
+let parent = pieces[pieces.length-2];
+
+// If the immediate parent of this page is named "API", assume we are in a module page, like "alarms" or "tabs".
+if (parent == "API") {
+  output = writeExampleLinks(getExamplesForModule(leaf));
+}
+// Otherwise, assume we are in an API page, like "alarms.create" or "tabs.executeScript".
+else {
+  output = writeExampleLinks(getExamplesForAPI(parent, leaf));
+}
+
+%>
+
+<%- output %>

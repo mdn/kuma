@@ -1,0 +1,14 @@
+<%
+var path = 'en-US/XUL/Property';
+switch (env.locale) {
+    case 'de':    path = 'de/XUL/Eigenschaften'; break;
+    case 'es':    path = 'es/XUL/Property'; break;
+    case 'fr':    path = 'fr/XUL/Propriétés'; break;
+    case 'ja':    path = 'ja/XUL/Property'; break;
+    case 'ko':    path = 'ko/XUL/Property'; break;
+    case 'pl':    path = 'pl/XUL/Własność'; break;
+    case 'zh-CN': path = 'zh-CN/XUL/Property'; break;
+    case 'ru':    path = 'ru/XUL/Property'; break;
+}
+%>
+<div id="<%='p-' + $0%>"><%- await wiki.page(path + '/' + $0) %></div>

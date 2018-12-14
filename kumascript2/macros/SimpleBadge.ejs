@@ -1,0 +1,8 @@
+<%/* Creates a badge with some text but no icon.
+
+    Parameters:
+        $0 - Text to display in the badge
+        $1 - Class name for custom style
+        $2 - Tooltip text (optional)
+
+*/%><span class="inlineIndicator <%= $1 %>" title="<%= $2 %>"><span class="badgeText"><%- $0 %></span></span>

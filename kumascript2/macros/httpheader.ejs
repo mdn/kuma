@@ -1,0 +1,31 @@
+<%
+
+let lang = env.locale;
+let header = $0;
+let str = $1 || $0;
+let rtlLocales = ['ar', 'he', 'fa'];
+let localStrings = string.deserialize(await template("L10n:Common"));
+let URL = "/" + lang + '/docs/Web/HTTP/Headers/' + header;
+let anch = '';
+
+if ($2) {
+  str = str + '.' + $2;
+  anch = '#' + $2;
+}
+
+let page = await wiki.getPage(URL);
+let summary = "";
+
+if (!$2) {
+    if (page && page.summary) {
+        summary = mdn.escapeQuotes(page.summary);
+    } else {
+        summary = mdn.getLocalString(localStrings, "summary");
+    }
+}
+
+let code = '';
+let endcode = '';
+if (!$3) { code = '<code>'; endcode = '</code>' }
+
+%><a href="<%- URL+anch %>" title="<%-summary%>"><%- code %><%- str %><%- endcode %></a>

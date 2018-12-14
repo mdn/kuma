@@ -1,0 +1,180 @@
+<%
+var currentSection = $0;
+var locale = env.locale;
+var slug = env.slug;
+var baseURL = "/" + locale + "/docs/Mozilla/B2G_OS/";
+
+function currentPageIsUnder(root) {
+  rootSlug = "B2G_OS/" + root;
+  if (slug.indexOf(rootSlug) != -1) {
+    return "open";
+  }
+  return "closed";
+}
+
+var text = mdn.localStringMap({
+  "en-US": {
+    "Build_and_install": "Build and install",
+    "Build_and_install_overview": "Build and install overview",
+    "B2G_OS_build_process_summary": "B2G OS build process summary",
+    "Build_prerequisites": "Build prerequisites",
+    "Preparing_for_your_first_build": "Preparing for your first build",
+    "Building_B2G_OS": "Building B2G OS",
+    "B2G_installer_add-on": "B2G installer add-on",
+    "Building_B2G_OS_for_Flame_on_Mac_OS_X": "Building B2G OS for Flame on Mac OS X",
+    "Choosing_how_to_run_Gaia_or_B2G_OS": "Choosing how to run Gaia or B2G OS",
+    "Compatible_Devices": "Compatible Devices",
+    "Installing_B2G_OS_on_a_mobile_device": "Installing B2G OS on a mobile device",
+    "Creating_and_applying_B2G_OS_update_packages": "Creating and applying B2G OS update packages",
+    "Building_and_installing_FOTA_community_builds": "Building and installing FOTA community builds",
+    "B2G_build_variables_reference_sheet": "B2G build variables reference sheet",
+    "Porting_B2G_OS": "Porting B2G OS",
+    "Porting_overview": "Porting overview",
+    "Porting_basics": "Porting basics",
+    "Porting_on_CyanogenMod": "Porting on CyanogenMod",
+    "Developing_Gaia": "Developing Gaia",
+    "Developing_Gaia_overview": "Developing Gaia overview",
+    "Running_the_Gaia_codebase": "Running the Gaia codebase",
+    "Understanding_the_Gaia_codebase": "Understanding the Gaia codebase",
+    "Making_Gaia_code_changes": "Making Gaia code changes",
+    "Testing_Gaia_code_changes": "Testing Gaia code changes",
+    "Submitting_a_Gaia_patch": "Submitting a Gaia patch",
+    "Gaia_build_system_primer": "Gaia build system primer",
+    "Make_options_reference": "Make options reference",
+    "Gaia_tools_reference": "Gaia tools reference",
+    "B2G_OS_APIs": "B2G OS APIs",
+    "Mulet": "Run Gaia on desktop using Mulet",
+    "Different_ways_to_run_Gaia": "Different ways to run Gaia"
+  },
+  "de": {
+    "Build_and_install": "Erstellung und Installation",
+    "Build_and_install_overview": "Erstellung und Installation - Übersicht",
+    "B2G_OS_build_process_summary": "B2G OS Erstellung - Übersicht",
+    "Build_prerequisites": "System Vorbereitungen",
+    "Preparing_for_your_first_build": "Arbeitsvorbereitungen",
+    "Building_B2G_OS": "Erstellung von B2G OS",
+    "B2G_installer_add-on": "Firefox B2G OS installations Erweiterung",
+    "Building_B2G_OS_for_Flame_on_Mac_OS_X": "Erstellung von B2G OS für Flame auf Mac OS X",
+    "Choosing_how_to_run_Gaia_or_B2G_OS": "mögliche Laufzeitumgebungen für Gaia oder B2G OS",
+    "Compatible_Devices": "Kompatible Geräte",
+    "Installing_B2G_OS_on_a_mobile_device": "Installation von B2G OS auf einem Gerät",
+    "Creating_and_applying_B2G_OS_update_packages": "Erstellung und Aufspielung von B2G OS Aktualisierungen",
+    "Building_and_installing_FOTA_community_builds": "Erstellung und installation von FOTA-community-builds",
+    "B2G_build_variables_reference_sheet": "Variablen Referenzliste von B2G OS",
+    "Porting_B2G_OS": "Portierung von B2G OS auf dein Gerät",
+    "Porting_overview": "Portierung - Übersicht",
+    "Porting_basics": "Portierung Basiswissen",
+    "Porting_on_CyanogenMod": "Portierung auf CyanogenMod Geräte",
+    "Developing_Gaia": "Entwicklung von Gaia",
+    "Developing_Gaia_overview": "Entwicklung von Gaia - Übersicht",
+    "Running_the_Gaia_codebase": "Gaia starten",
+    "Understanding_the_Gaia_codebase": "Gaia verstehen",
+    "Making_Gaia_code_changes": "Gaia entwickeln",
+    "Testing_Gaia_code_changes": "Gaia testen",
+    "Submitting_a_Gaia_patch": "Gaia-code bereitstellen",
+    "Gaia_build_system_primer": "Gaia Systemvorbereitungen",
+    "Customizing_build-time_apps": "Entwickeln von Apps",
+    "Market_customizations_guide": "Marktplatz Einstellungen",
+    "Customizing_the_keyboard_in_B2G_OS_apps": "Tastatur Einstellungen in B2G OS Apps",
+    "Localizing_B2G_OS": "Regionalisierung von B2G OS",
+    "Make_options_reference": "Make options Referenz",
+    "Gaia_tools_reference": "Gaia Werkzeug Referenz",
+    "B2G_OS_add-ons": "B2G OS Erweiterungen",
+    "B2G_OS_add-ons_overview": "B2G OS Erweiterungen - Übersicht",
+    "Developing_B2G_OS_add-ons": "Entwickeln von B2G OS Erweiterungen",
+    "B2G_OS_APIs": "B2G OS APIs",
+    "Porting_B2G_onto_Nexus_Player_(Lollipop)": "Portierung von B2G OS auf Nexus Player (Lollipop)",
+    "Raptor": "Raptor: Performance Werkzeuge für Gaia",
+    "Mulet": "Starte gaia auf dem Schreibtisch mit Mulet",
+    "Different_ways_to_run_Gaia": "Verschiedene wege Gaia zu starten"
+  },
+  "it": {
+    "Build_and_install": "Compilazione e installazione",
+    "Build_and_install_overview": "Panoramica su compilazione ed installazione",
+    "B2G_OS_build_process_summary": "Sommario del processo di compilazione di B2G OS",
+    "Build_prerequisites": "Prerequisiti per la compilazione",
+    "Preparing_for_your_first_build": "Preparare la tua prima compilazione",
+    "Building_B2G_OS": "Compilare B2G OS",
+    "B2G_installer_add-on": "Add-on per l\"installazione di B2G OS",
+    "Building_B2G_OS_for_Flame_on_Mac_OS_X": "Compilare B2G OS per Flame su Mac OS X",
+    "Choosing_how_to_run_Gaia_or_B2G_OS": "Scegliere come eseguire Gaia e B2G OS",
+    "Compatible_Devices": "Dispositivi compatibili",
+    "Installing_B2G_OS_on_a_mobile_device": "Installare B2G OS su dispositivo mobile",
+    "Creating_and_applying_B2G_OS_update_packages": "Creare e applicare pacchetti di aggiornamento per B2G OS",
+    "Building_and_installing_FOTA_community_builds": "Compilare e installare aggiornamenti via Internet prodotti dalla comunità",
+    "B2G_build_variables_reference_sheet": "Foglio di riferimento per le variabili di compilazione di B2G OS",
+    "Porting_B2G_OS": "Portabilità di B2G OS",
+    "Porting_overview": "Panoramica sulla portabilità",
+    "Porting_basics": "Basi della portabilità",
+    "Porting_on_CyanogenMod": "Portabilità su CyanogenMod",
+    "Developing_Gaia": "Sviluppare Gaia",
+    "Developing_Gaia_overview": "Panoramica sullo sviluppo di Gaia",
+    "Running_the_Gaia_codebase": "Eseguire il codice base di Gaia",
+    "Mulet": "Esegui Gaia su desktop usando Mulet",
+    "Understanding_the_Gaia_codebase": "Comprendere il codice base di Gaia",
+    "Making_Gaia_code_changes": "Fare variazioni al codice di Gaia",
+    "Testing_Gaia_code_changes": "Verificare le variazioni al codice di Gaia",
+    "Submitting_a_Gaia_patch": "Inviare una patch di Gaia",
+    "Gaia_build_system_primer": "Sistema di compilazione primario di Gaia",
+    "Make_options_reference": "Riferimento per le opzioni di Make",
+    "Gaia_tools_reference": "Riferimento per gli strumenti di Gaia",
+    "B2G_OS_APIs": "API di B2G OS",
+    "Different_ways_to_run_Gaia": "Differenti modi per eseguire Gaia"
+    }
+});
+%>
+
+<section class="Quick_links" id="Quick_Links">
+
+<ol>
+  <li class="toggle">
+      <details <%=currentPageIsUnder('Building_and_installing_B2G_OS')%>>
+          <summary><%=text['Build_and_install']%></summary>
+          <ol>
+            <li><strong><a href="<%=baseURL%>Building_and_installing_B2G_OS"><%=text['Build_and_install_overview']%></a></strong></li>
+            <li><a href="<%=baseURL%>Building_and_installing_B2G_OS/B2G_OS_build_process_summary"><%=text['B2G_OS_build_process_summary']%></a></li>
+            <li><a href="<%=baseURL%>B2G_OS_build_prerequisites"><%=text['Build_prerequisites']%></a></li>
+            <li><a href="<%=baseURL%>Preparing_for_your_first_B2G_build"><%=text['Preparing_for_your_first_build']%></a></li>
+            <li><a href="<%=baseURL%>Building"><%=text['Building_B2G_OS']%></a></li>
+            <li><a href="<%=baseURL%>Building_and_installing_B2G_OS/B2G_installer_add-on"><%=text['B2G_installer_add-on']%></a></li>
+            <li><a href="<%=baseURL%>Building_and_installing_B2G_OS/Building_for_Flame_on_OS_X"><%=text['Building_B2G_OS_for_Flame_on_Mac_OS_X']%></a></li>
+            <li><a href="<%=baseURL%>Choosing_how_to_run_Gaia_or_B2G"><%=text['Choosing_how_to_run_Gaia_or_B2G_OS']%></a></li>
+            <li><a href="<%=baseURL%>Building_and_installing_B2G_OS/Compatible_Devices"><%=text['Compatible_Devices']%></a></li>
+            <li><a href="<%=baseURL%>Installing_on_a_mobile_device"><%=text['Installing_B2G_OS_on_a_mobile_device']%></a></li>
+            <li><a href="<%=baseURL%>Building_and_installing_B2G_OS/B2G_OS_update_packages"><%=text['Creating_and_applying_B2G_OS_update_packages']%></a></li>
+            <li><a href="<%=baseURL%>Building/FOTA_community_builds"><%=text['Building_and_installing_FOTA_community_builds']%></a></li>
+            <li><a href="<%=baseURL%>Building_and_installing_B2G_OS/B2G_Build_Variables_Reference_Sheet"><%=text['B2G_build_variables_reference_sheet']%></a></li>
+          </ol>
+      </details>
+  </li>
+  <li class="toggle">
+      <details <%=currentPageIsUnder('Porting_B2G_OS')%>>
+          <summary><%=text['Porting_B2G_OS']%></summary>
+          <ol>
+            <li><strong><a href="<%=baseURL%>Porting_B2G_OS"><%=text['Porting_overview']%></a></strong></li>
+            <li><a href="<%=baseURL%>Porting_B2G_OS/basics"><%=text['Porting_basics']%></a></li>
+            <li><a href="<%=baseURL%>Porting_B2G_OS/Porting_on_CyanogenMod"><%=text['Porting_on_CyanogenMod']%></a></li>
+          </ol>
+      </details>
+  </li>
+  <li class="toggle">
+      <details <%=currentPageIsUnder('Developing_Gaia')%>>
+          <summary>Developing Gaia</summary>
+          <ol>
+            <li><strong><a href="<%=baseURL%>Developing_Gaia"><%=text['Developing_Gaia_overview']%></a></strong></li>
+            <li><a href="<%=baseURL%>Developing_Gaia/Running_the_Gaia_codebase"><%=text['Running_the_Gaia_codebase']%></a></li>
+            <li><a href="<%=baseURL%>Mulet"><%=text['Mulet']%></a></li>
+            <li><a href="<%=baseURL%>Developing_Gaia/Understanding_the_Gaia_codebase"><%=text['Understanding_the_Gaia_codebase']%></a></li>
+            <li><a href="<%=baseURL%>Developing_Gaia/Making_Gaia_code_changes"><%=text['Making_Gaia_code_changes']%></a></li>
+            <li><a href="<%=baseURL%>Developing_Gaia/Testing_Gaia_code_changes"><%=text['Testing_Gaia_code_changes']%></a></li>
+            <li><a href="<%=baseURL%>Developing_Gaia/Submitting_a_Gaia_patch"><%=text['Submitting_a_Gaia_patch']%></a></li>
+            <li><a href="<%=baseURL%>Developing_Gaia/Build_System_Primer"><%=text['Gaia_build_system_primer']%></a></li>
+            <li><a href="<%=baseURL%>Developing_Gaia/Different_ways_to_run_Gaia"><%=text['Different_ways_to_run_Gaia']%></a></li>
+            <li><a href="<%=baseURL%>Developing_Gaia/make_options_reference"><%=text['Make_options_reference']%></a></li>
+            <li><a href="<%=baseURL%>Developing_Gaia/Gaia_tools_reference"><%=text['Gaia_tools_reference']%></a></li>
+          </ol>
+      </details>
+  </li>
+  <li><a href="<%=baseURL%>API"><%=text['B2G_OS_APIs']%></a></li>
+</ol>
+</section>

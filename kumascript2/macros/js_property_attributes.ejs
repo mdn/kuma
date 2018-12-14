@@ -1,0 +1,121 @@
+<%
+// Generate a table of JavaScript object property's attributes
+//
+// Parameters:
+//
+//  $0 - writable 
+//  $1 - enumerable
+//  $2 - configurable
+// 
+// {{js_property_attributes(1,1,0)}}
+
+var header, 
+    writable_name, 
+    enumerable_name,
+    configurable_name,
+    yes,
+    no;
+
+switch(env.locale) {
+    case "fr":
+        header = 'Attributs de <code>' + env.title + '</code>';
+        writable_name = 'Écrivable';
+        enumerable_name = 'Énumérable';
+        configurable_name = 'Configurable';
+        yes = 'Oui';
+        no = 'Non';
+        break;
+    case "es":
+        header = 'Atributos de la propiedad <code>' + env.title + '</code>';
+        writable_name = 'Sobrescribir';
+        enumerable_name = 'Numerable';
+        configurable_name = 'Configurable';
+        yes = 'Sí';
+        no = 'No';
+        break;
+    case "ru":
+        header = 'Атрибуты свойства' + '<code>' + env.title + '</code>';
+        writable_name = 'Записываемое';
+        enumerable_name = 'Перечисляемое';
+        configurable_name = 'Настраиваемое';
+        yes = 'да';
+        no = 'нет';
+        break;
+    case "zh-CN":
+        header = '<code>' + env.title + '</code> 属性的属性特性：';
+        writable_name = 'writable';
+        enumerable_name = 'enumerable';
+        configurable_name = 'configurable';
+        yes = 'true';
+        no = 'false';
+        break;
+    case "ja":
+        header = '<code>' + env.title + '</code> のプロパティ属性';
+        writable_name = '書込可能';
+        enumerable_name = '列挙可能';
+        configurable_name = '設定可能';
+        yes = '可';
+        no = '不可';
+        break;
+    case "de":
+        header = 'Eigenschaftsattribute von <code>' + env.title + '</code>';
+        writable_name = 'Schreibbar';
+        enumerable_name = 'Aufzählbar';
+        configurable_name = 'Konfigurierbar';
+        yes = 'ja';
+        no = 'nein';
+        break;
+    case "uk":
+        header = 'Атрибути поля <code>' + env.title + '</code>';
+        writable_name = 'Доступний для запису';
+        enumerable_name = 'Доступний для переліку';
+        configurable_name = 'Доступний для налаштування';
+        yes = 'так';
+        no = 'ні';
+        break;
+    default:
+        header = 'Property attributes of <code>' + env.title + '</code>';
+        writable_name = 'Writable';
+        enumerable_name = 'Enumerable';
+        configurable_name = 'Configurable';
+        yes = 'yes';
+        no = 'no';
+        break;
+}
+
+var writable = no;
+var enumerable = no;
+var configurable = no;
+
+if ($0 == 1) {
+    writable = yes;
+}
+if ($1 == 1) {
+    enumerable = yes;
+}
+if ($2 == 1) {
+    configurable = yes;
+}
+
+%>
+<table class="standard-table">
+  <thead>
+    <tr>
+      <th class="header" colspan="2"><%-header%></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%=writable_name%></td>
+      <td><%=writable%></td>
+    </tr>
+    <tr>
+      <td><%=enumerable_name%></td>
+      <td><%=enumerable%></td>
+    </tr>
+    <tr>
+      <td><%=configurable_name%></td>
+      <td><%=configurable%></td>
+    </tr>
+  </tbody>
+</table>

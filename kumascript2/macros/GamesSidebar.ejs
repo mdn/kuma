@@ -1,0 +1,674 @@
+<%
+
+const locale = env.locale;
+
+const baseURL = `/${locale}/docs/Games/`;
+const webURL = `/${locale}/docs/Web/`;
+const appsURL = `/${locale}/docs/Web/Apps/`;
+
+const text = mdn.localStringMap({
+  "en-US": {
+    "Introduction": "Introduction",
+      "Anatomy": "Anatomy",
+      "Examples": "Examples",
+    "APIs_for_game_development": "APIs for game development",
+      "Canvas": "Canvas",
+      "CSS": "CSS",
+      "Full_Screen": "Full screen",
+      "Gamepad": "Gamepad",
+      "IndexedDB": "IndexedDB",
+      "JavaScript": "JavaScript",
+      "Pointer_Lock": "Pointer Lock",
+      "SVG": "SVG",
+      "Typed_Arrays": "Typed Arrays",
+      "Web_Audio": "Web Audio",
+      "WebGL": "WebGL",
+      "WebRTC": "WebRTC",
+      "Web_Sockets": "WebSockets",
+      "WebVR": "WebVR",
+      "Web_Workers": "Web Workers",
+      "XMLHttpRequest": "XMLHttpRequest",
+    "Techniques": "Techniques",
+      "Using_async_scripts_for_asm.js": "Using async scripts for asm.js",
+      "Optimizing_startup_performance": "Optimizing startup performance",
+      "Using_WebRTC_peer-to-peer_data_channels": "Using WebRTC peer-to-peer data channels",
+      "Efficient_animation_for_web_games": "Efficient animation for web games",
+      "Audio_for_Web_Games": "Audio for Web Games",
+      "2D_collision_detection": "2D collision detection",
+      "Tiles_and_tilemaps_overview": "Tiles and tilemaps overview",
+    "3D_games_on_the_Web": "3D games on the Web",
+      "3D_games_on_the_Web_overview": "3D games on the Web overview",
+      "Explaining_basic_3D_theory": "Explaining basic 3D theory",
+      "Building_up_a_basic_demo_with_A-Frame": "Building up a basic demo with A-Frame",
+      "Building_up_a_basic_demo_with_Babylon.js": "Building up a basic demo with Babylon.js",
+      "Building_up_a_basic_demo_with_PlayCanvas": "Building up a basic demo with PlayCanvas",
+      "Building_up_a_basic_demo_with_Three.js": "Building up a basic demo with Three.js",
+      "WebVR_guide": "WebVR",
+      "3D_collision_detection": "3D collision detection",
+      "Bounding_volume_collision_detection_with_THREE.js": "Bounding volume collision detection with THREE.js",
+    "Implementing_game_control_mechanisms": "Implementing game control mechanisms",
+      "Control_mechanisms": "Control mechanisms",
+      "Mobile_touch": "Mobile touch",
+      "Desktop_with_mouse_and_keyboard": "Desktop with mouse and keyboard",
+      "Desktop_with_gamepad": "Desktop with gamepad",
+      "Other": "Other",
+    "Tutorials": "Tutorials",
+      "2D_breakout_game_using_pure_JavaScript": "2D breakout game using pure JavaScript",
+      "2D_breakout_game_using_Phaser": "2D breakout game using Phaser",
+      "2D_maze_game_with_device_orientation": "2D maze_game with device orientation",
+      "2D_platform_game_using_Phaser": "2D platform game using Phaser",
+    "Publishing_games": "Publishing games",
+      "Publishing_games_overview": "Publishing games overview",
+      "Game_distribution": "Game distribution",
+      "Game_promotion": "Game promotion",
+      "Game_monetization": "Game monetization"
+  },
+  "bn-BD": {
+    "Introduction": "ওয়েবের জন্য গেম ডেভেলপমেন্ট পরিচিতি",
+      "Anatomy": "একটি ভিডিও গেমের বিশ্লেষণ",
+      "Examples": "Examples",
+    "APIs_for_game_development": "APIs for game development",
+      "Canvas": "Canvas",
+      "CSS": "CSS",
+      "Full_Screen": "Full screen",
+      "Gamepad": "Gamepad",
+      "IndexedDB": "IndexedDB",
+      "JavaScript": "JavaScript",
+      "Pointer_Lock": "Pointer Lock",
+      "SVG": "SVG",
+      "Typed_Arrays": "Typed Arrays",
+      "Web_Audio": "Web Audio",
+      "WebGL": "WebGL",
+      "WebRTC": "WebRTC",
+      "Web_Sockets": "WebSockets",
+      "WebVR": "WebVR",
+      "Web_Workers": "Web Workers",
+      "XMLHttpRequest": "XMLHttpRequest",
+    "Techniques": "কৌশল সমূহ",
+      "Using_async_scripts_for_asm.js": "asm.js এর জন্য async স্ক্রিপ্ট ব্যবহার কর",
+      "Optimizing_startup_performance": "চালু হওয়াকালীন পারফর্মেন্স উন্নত কর",
+      "Using_WebRTC_peer-to-peer_data_channels": "WebRTC peer-to-peer ডাটা চ্যানেল ব্যবহার কর",
+      "Efficient_animation_for_web_games": "ওয়েব গেমের জন্য দক্ষ এনিমেশন",
+      "Audio_for_Web_Games": "Audio for Web Games",
+      "2D_collision_detection": "2D collision detection",
+      "Tiles_and_tilemaps_overview": "Tiles and tilemaps overview",
+    "3D_games_on_the_Web": "3D games on the Web",
+      "3D_games_on_the_Web_overview": "3D games on the Web overview",
+      "Explaining_basic_3D_theory": "Explaining basic 3D theory",
+      "Building_up_a_basic_demo_with_A-Frame": "Building up a basic demo with A-Frame",
+      "Building_up_a_basic_demo_with_Babylon.js": "Building up a basic demo with Babylon.js",
+      "Building_up_a_basic_demo_with_PlayCanvas": "Building up a basic demo with PlayCanvas",
+      "Building_up_a_basic_demo_with_Three.js": "Building up a basic demo with Three.js",
+      "WebVR_guide": "WebVR",
+      "3D_collision_detection": "3D collision detection",
+      "Bounding_volume_collision_detection_with_THREE.js": "Bounding volume collision detection with THREE.js",
+    "Implementing_game_control_mechanisms": "Implementing game control mechanisms",
+      "Control_mechanisms": "Control mechanisms",
+      "Mobile_touch": "Mobile touch",
+      "Desktop_with_mouse_and_keyboard": "Desktop with mouse and keyboard",
+      "Desktop_with_gamepad": "Desktop with gamepad",
+      "Other": "Other",
+    "Tutorials": "Tutorials",
+      "2D_breakout_game_using_pure_JavaScript": "2D breakout game using pure JavaScript",
+      "2D_breakout_game_using_Phaser": "2D breakout game using Phaser",
+      "2D_maze_game_with_device_orientation": "2D maze_game with device orientation",
+      "2D_platform_game_using_Phaser": "2D platform game using Phaser",
+    "Publishing_games": "Publishing games",
+      "Publishing_games_overview": "Publishing games overview",
+      "Game_distribution": "Game distribution",
+      "Game_promotion": "Game promotion",
+      "Game_monetization": "Game monetization"
+  },
+  "de": {
+    "Introduction": "Einleitung in die Spieleentwicklung für das Web",
+      "Anatomy": "Erklärung eines Videospiels",
+      "Examples": "Examples",
+    "APIs_for_game_development": "APIs for game development",
+      "Canvas": "Canvas",
+      "CSS": "CSS",
+      "Full_Screen": "Full screen",
+      "Gamepad": "Gamepad",
+      "IndexedDB": "IndexedDB",
+      "JavaScript": "JavaScript",
+      "Pointer_Lock": "Pointer Lock",
+      "SVG": "SVG",
+      "Typed_Arrays": "Typed Arrays",
+      "Web_Audio": "Web Audio",
+      "WebGL": "WebGL",
+      "WebRTC": "WebRTC",
+      "Web_Sockets": "WebSockets",
+      "WebVR": "WebVR",
+      "Web_Workers": "Web Workers",
+      "XMLHttpRequest": "XMLHttpRequest",
+    "Techniques": "Techniken",
+      "Using_async_scripts_for_asm.js": "async scripts für asm.js benutzen",
+      "Optimizing_startup_performance": "Startleistung optimieren",
+      "Using_WebRTC_peer-to-peer_data_channels": "Benutzung von WebRTC-Peer-to-Peer Datenkanälen",
+      "Efficient_animation_for_web_games": "Effiziente Animation für Web-Spiele",
+      "Audio_for_Web_Games": "Audio for Web Games",
+      "2D_collision_detection": "2D collision detection",
+      "Tiles_and_tilemaps_overview": "Tiles and tilemaps overview",
+    "3D_games_on_the_Web": "3D games on the Web",
+      "3D_games_on_the_Web_overview": "3D games on the Web overview",
+      "Explaining_basic_3D_theory": "Explaining basic 3D theory",
+      "Building_up_a_basic_demo_with_A-Frame": "Building up a basic demo with A-Frame",
+      "Building_up_a_basic_demo_with_Babylon.js": "Building up a basic demo with Babylon.js",
+      "Building_up_a_basic_demo_with_PlayCanvas": "Building up a basic demo with PlayCanvas",
+      "Building_up_a_basic_demo_with_Three.js": "Building up a basic demo with Three.js",
+      "WebVR_guide": "WebVR",
+      "3D_collision_detection": "3D collision detection",
+      "Bounding_volume_collision_detection_with_THREE.js": "Bounding volume collision detection with THREE.js",
+    "Implementing_game_control_mechanisms": "Implementing game control mechanisms",
+      "Control_mechanisms": "Control mechanisms",
+      "Mobile_touch": "Mobile touch",
+      "Desktop_with_mouse_and_keyboard": "Desktop with mouse and keyboard",
+      "Desktop_with_gamepad": "Desktop with gamepad",
+      "Other": "Other",
+    "Tutorials": "Tutorials",
+      "2D_breakout_game_using_pure_JavaScript": "2D breakout game using pure JavaScript",
+      "2D_breakout_game_using_Phaser": "2D breakout game using Phaser",
+      "2D_maze_game_with_device_orientation": "2D maze_game with device orientation",
+      "2D_platform_game_using_Phaser": "2D platform game using Phaser",
+    "Publishing_games": "Publishing games",
+      "Publishing_games_overview": "Publishing games overview",
+      "Game_distribution": "Game distribution",
+      "Game_promotion": "Game promotion",
+      "Game_monetization": "Game monetization"
+  },
+  "es": {
+    "Introduction": "Introducción para desarrollo de juegos para la Web",
+      "Anatomy": "Anatomía de un videojuego",
+      "Examples": "Examples",
+    "APIs_for_game_development": "APIs for game development",
+      "Canvas": "Canvas",
+      "CSS": "CSS",
+      "Full_Screen": "Full screen",
+      "Gamepad": "Gamepad",
+      "IndexedDB": "IndexedDB",
+      "JavaScript": "JavaScript",
+      "Pointer_Lock": "Pointer Lock",
+      "SVG": "SVG",
+      "Typed_Arrays": "Typed Arrays",
+      "Web_Audio": "Web Audio",
+      "WebGL": "WebGL",
+      "WebRTC": "WebRTC",
+      "Web_Sockets": "WebSockets",
+      "WebVR": "WebVR",
+      "Web_Workers": "Web Workers",
+      "XMLHttpRequest": "XMLHttpRequest",
+    "Techniques": "Técnicas",
+      "Using_async_scripts_for_asm.js": "asm.js",
+      "Optimizing_startup_performance": "Optimizar rendimiento de inicio",
+      "Using_WebRTC_peer-to-peer_data_channels": "persona-a-persona",
+      "Efficient_animation_for_web_games": "Animaciones eficientes",
+      "Audio_for_Web_Games": "Audio for Web Games",
+      "2D_collision_detection": "2D collision detection",
+      "Tiles_and_tilemaps_overview": "Tiles and tilemaps overview",
+    "3D_games_on_the_Web": "3D games on the Web",
+      "3D_games_on_the_Web_overview": "3D games on the Web overview",
+      "Explaining_basic_3D_theory": "Explaining basic 3D theory",
+      "Building_up_a_basic_demo_with_A-Frame": "Building up a basic demo with A-Frame",
+      "Building_up_a_basic_demo_with_Babylon.js": "Building up a basic demo with Babylon.js",
+      "Building_up_a_basic_demo_with_PlayCanvas": "Building up a basic demo with PlayCanvas",
+      "Building_up_a_basic_demo_with_Three.js": "Building up a basic demo with Three.js",
+      "WebVR_guide": "WebVR",
+      "3D_collision_detection": "3D collision detection",
+      "Bounding_volume_collision_detection_with_THREE.js": "Bounding volume collision detection with THREE.js",
+    "Implementing_game_control_mechanisms": "Implementing game control mechanisms",
+      "Control_mechanisms": "Control mechanisms",
+      "Mobile_touch": "Mobile touch",
+      "Desktop_with_mouse_and_keyboard": "Desktop with mouse and keyboard",
+      "Desktop_with_gamepad": "Desktop with gamepad",
+      "Other": "Other",
+    "Tutorials": "Tutorials",
+      "2D_breakout_game_using_pure_JavaScript": "2D breakout game using pure JavaScript",
+      "2D_breakout_game_using_Phaser": "2D breakout game using Phaser",
+      "2D_maze_game_with_device_orientation": "2D maze_game with device orientation",
+      "2D_platform_game_using_Phaser": "2D platform game using Phaser",
+    "Publishing_games": "Publishing games",
+      "Publishing_games_overview": "Publishing games overview",
+      "Game_distribution": "Game distribution",
+      "Game_promotion": "Game promotion",
+      "Game_monetization": "Game monetization"
+  },
+  "fr": {
+    "Introduction": "Introduction",
+      "Anatomy": "Anatomie d'un jeu vidéo",
+      "Examples": "Exemples",
+    "APIs_for_game_development": "API pour le développement de jeux",
+      "Canvas": "Canvas",
+      "CSS": "CSS",
+      "Full_Screen": "Full Screen (plein écran)",
+      "Gamepad": "Gamepad (manette)",
+      "IndexedDB": "IndexedDB",
+      "JavaScript": "JavaScript",
+      "Pointer_Lock": "Pointer Lock (verrou de pointeur)",
+      "SVG": "SVG",
+      "Typed_Arrays": "Typed Arrays (tableaux typés)",
+      "Web_Audio": "Web Audio",
+      "WebGL": "WebGL",
+      "WebRTC": "WebRTC",
+      "Web_Sockets": "WebSockets",
+      "WebVR": "WebVR (réalité virtuelle)",
+      "Web_Workers": "Web Workers",
+      "XMLHttpRequest": "XMLHttpRequest",
+    "Techniques": "Techniques",
+      "Using_async_scripts_for_asm.js": "Utiliser des scripts asynchrones pour asm.js",
+      "Optimizing_startup_performance": "Optimiser les performances de démarrage",
+      "Using_WebRTC_peer-to-peer_data_channels": "Utiliser WebRTC - canaux de données pair-à-pair",
+      "Efficient_animation_for_web_games": "Animation efficace pour un jeu internet",
+      "Audio_for_Web_Games": "Audio pour les jeux web",
+      "2D_collision_detection": "Détection de collision 2D",
+      "Tiles_and_tilemaps_overview": "Carreaux et carrelages",
+    "3D_games_on_the_Web": "Jeux 3D sur le Web",
+      "3D_games_on_the_Web_overview": "Aperçu des jeux 3D sur le Web",
+      "Explaining_basic_3D_theory": "Théorie de base sur la 3D",
+      "Building_up_a_basic_demo_with_A-Frame": "Construire une démo avec A-Frame",
+      "Building_up_a_basic_demo_with_Babylon.js": "Construire une démo avec Babylon.js",
+      "Building_up_a_basic_demo_with_PlayCanvas": "Construire une démo avec PlayCanvas",
+      "Building_up_a_basic_demo_with_Three.js": "Construire une démo avec Three.js",
+      "WebVR_guide": "WebVR (réalité virtuelle)",
+      "3D_collision_detection": "Détection de collision en 3D",
+      "Bounding_volume_collision_detection_with_THREE.js": "Détection de collision de volumes avec THREE.js",
+    "Implementing_game_control_mechanisms": "Mise en place des contrôle du jeu",
+      "Control_mechanisms": "Aperçu des mécanismes de contrôle du jeu",
+      "Mobile_touch": "Commandes tactiles mobiles",
+      "Desktop_with_mouse_and_keyboard": "Commandes à la souris et au clavier",
+      "Desktop_with_gamepad": "Commandes à la manette",
+      "Other": "Contrôles non conventionnels",
+    "Tutorials": "Tutoriels",
+      "2D_breakout_game_using_pure_JavaScript": "Jeu de casse-briques 2D avec du pur JavaScript",
+      "2D_breakout_game_using_Phaser": "Jeu de casse-tête 2D avec Phaser",
+      "2D_maze_game_with_device_orientation": "Jeu de labyrinthe 2D avec orientation du périphérique",
+      "2D_platform_game_using_Phaser": "Jeu de plateforme 2D avec Phaser",
+    "Publishing_games": "Publication de jeux",
+      "Publishing_games_overview": "Aperçu des outils de publication des jeux",
+      "Game_distribution": "Distribution des jeux",
+      "Game_promotion": "Promotion des jeux",
+      "Game_monetization": "Monétisation des jeux"
+  },
+  "ja": {
+    "Introduction": "Web のゲーム開発紹介",
+      "Anatomy": "ビデオゲームとの違い",
+      "Examples": "Examples",
+    "APIs_for_game_development": "ツール",
+      "Canvas": "Canvas",
+      "CSS": "CSS",
+      "Full_Screen": "Full screen",
+      "Gamepad": "Gamepad",
+      "IndexedDB": "IndexedDB",
+      "JavaScript": "JavaScript",
+      "Pointer_Lock": "Pointer Lock",
+      "SVG": "SVG",
+      "Typed_Arrays": "Typed Arrays",
+      "Web_Audio": "Web Audio",
+      "WebGL": "WebGL",
+      "WebRTC": "WebRTC",
+      "Web_Sockets": "WebSockets",
+      "WebVR": "WebVR",
+      "Web_Workers": "Web Workers",
+      "XMLHttpRequest": "XMLHttpRequest",
+    "Techniques": "ゲーム開発テクニック",
+      "Using_async_scripts_for_asm.js": "asm.js の同期スクリプトを利用する",
+      "Optimizing_startup_performance": "起動パフォーマンスを最適化する",
+      "Using_WebRTC_peer-to-peer_data_channels": "ピア通信チャンネルとして WebRTC を利用する",
+      "Efficient_animation_for_web_games": "Web ゲームの効率的なアニメーション",
+      "Audio_for_Web_Games": "Web ゲーム向けの音",
+      "2D_collision_detection": "2D 衝突検出",
+      "Tiles_and_tilemaps_overview": "タイルとタイルマップの概要",
+    "3D_games_on_the_Web": "Web上の 3D ゲームの概要",
+      "3D_games_on_the_Web_overview": "Web上の 3D ゲームの概要",
+      "Explaining_basic_3D_theory": "基本の 3D理論の説明",
+      "Building_up_a_basic_demo_with_A-Frame": "A-Frame",
+      "Building_up_a_basic_demo_with_Babylon.js": "Babylon.js",
+      "Building_up_a_basic_demo_with_PlayCanvas": "PlayCanvas を利用した基本的なデモの制作",
+      "Building_up_a_basic_demo_with_Three.js": "Three.js を使った基本的なデモ製作",
+      "WebVR_guide": "WebVR",
+      "3D_collision_detection": "3D 衝突検出の概要",
+      "Bounding_volume_collision_detection_with_THREE.js": "THREE.js を使ったバウンディングボリューム衝突検出",
+    "Implementing_game_control_mechanisms": "Implementing game control mechanisms",
+      "Control_mechanisms": "Control mechanisms",
+      "Mobile_touch": "Mobile touch",
+      "Desktop_with_mouse_and_keyboard": "Desktop with mouse and keyboard",
+      "Desktop_with_gamepad": "Desktop with gamepad",
+      "Other": "Other",
+    "Tutorials": "チュートリアル",
+      "2D_breakout_game_using_pure_JavaScript": "そのままの JavaScript を使ったブロックくずしゲーム",
+      "2D_breakout_game_using_Phaser": "Phaser を使ったブロックくずしゲーム",
+      "2D_maze_game_with_device_orientation": "デバイス回転方向を使った 2D 迷路ゲーム",
+      "2D_platform_game_using_Phaser": "Phaser を使った 2D プラットフォームゲーム",
+    "Publishing_games": "ゲームを公開する",
+      "Publishing_games_overview": "ゲームを公開するには",
+      "Game_distribution": "ゲームの配信",
+      "Game_promotion": "ゲームのプロモーション",
+      "Game_monetization": "ゲームのマネタイズ"
+  },
+  "ko": {
+    "Introduction": "웹 게임 개발 소개",
+      "Anatomy": "비디오 게임 구조 파악하기",
+      "Examples": "예제",
+    "APIs_for_game_development": "게임 개발에 필요한 API",
+      "Canvas": "Canvas",
+      "CSS": "CSS",
+      "Full_Screen": "Full screen",
+      "Gamepad": "Gamepad",
+      "IndexedDB": "IndexedDB",
+      "JavaScript": "JavaScript",
+      "Pointer_Lock": "Pointer Lock",
+      "SVG": "SVG",
+      "Typed_Arrays": "Typed Arrays",
+      "Web_Audio": "Web Audio",
+      "WebGL": "WebGL",
+      "WebRTC": "WebRTC",
+      "Web_Sockets": "WebSockets",
+      "WebVR": "WebVR",
+      "Web_Workers": "Web Workers",
+      "XMLHttpRequest": "XMLHttpRequest",
+    "Techniques": "기술",
+      "Using_async_scripts_for_asm.js": "asm.js를 위해 async 스크립트 사용하기",
+      "Optimizing_startup_performance": "시작 단계 성능 최적화 하기",
+      "Using_WebRTC_peer-to-peer_data_channels": "피어-투-피어 데이터 채널을 위해 WebRTC 사용하기",
+      "Efficient_animation_for_web_games": "웹 게임을 위한 효율적인 애니메이션",
+      "Audio_for_Web_Games": "웹 게임을 위한 오디오",
+      "2D_collision_detection": "2D 충돌 감지",
+      "Tiles_and_tilemaps_overview": "타일과 타일맵 개요",
+    "3D_games_on_the_Web": "웹 3D 게임",
+      "3D_games_on_the_Web_overview": "웹 3D 게임",
+      "Explaining_basic_3D_theory": "기본적인 3D 이론",
+      "Building_up_a_basic_demo_with_A-Frame": "Building up a basic demo with A-Frame",
+      "Building_up_a_basic_demo_with_Babylon.js": "Building up a basic demo with Babylon.js",
+      "Building_up_a_basic_demo_with_PlayCanvas": "PlayCanvas를 사용하여 데모 만들기",
+      "Building_up_a_basic_demo_with_Three.js": "Three.js를 사용하여 데모 만들기",
+      "WebVR_guide": "WebVR",
+      "3D_collision_detection": "3D 충돌 감지",
+      "Bounding_volume_collision_detection_with_THREE.js": "THREE.js를 사용한 충돌 용적 감지",
+    "Implementing_game_control_mechanisms": "Implementing game control mechanisms",
+      "Control_mechanisms": "Control mechanisms",
+      "Mobile_touch": "Mobile touch",
+      "Desktop_with_mouse_and_keyboard": "Desktop with mouse and keyboard",
+      "Desktop_with_gamepad": "Desktop with gamepad",
+      "Other": "Other",
+    "Tutorials": "튜토리얼",
+      "2D_breakout_game_using_pure_JavaScript": "순수 자바스크립트를 사용한 2D 게임",
+      "2D_breakout_game_using_Phaser": "Phaser를 사용한 2D 게임",
+      "2D_maze_game_with_device_orientation": "기기 수평/수직 기능을 활용한 2D 주사위 게임",
+      "2D_platform_game_using_Phaser": "2D platform game using Phaser",
+    "Publishing_games": "게임 배포하기",
+      "Publishing_games_overview": "게임 배포하기 개요",
+      "Game_distribution": "게임 배포하기",
+      "Game_promotion": "게임 홍보하기",
+      "Game_monetization": "게임 결제기능"
+  },
+  "pl": {
+    "Introduction": "Wprowadzenie",
+      "Anatomy": "Anatomia w grach wideo",
+      "Examples": "Przykłady",
+    "APIs_for_game_development": "APIs dla rozwoju gry",
+      "Canvas": "Canvas",
+      "CSS": "CSS",
+      "Full_Screen": "Full screen",
+      "Gamepad": "Gamepad",
+      "IndexedDB": "IndexedDB",
+      "JavaScript": "JavaScript",
+      "Pointer_Lock": "Pointer Lock",
+      "SVG": "SVG",
+      "Typed_Arrays": "Typed Arrays",
+      "Web_Audio": "Web Audio",
+      "WebGL": "WebGL",
+      "WebRTC": "WebRTC",
+      "Web_Sockets": "WebSockets",
+      "WebVR": "WebVR",
+      "Web_Workers": "Web Workers",
+      "XMLHttpRequest": "XMLHttpRequest",
+    "Techniques": "Metody",
+      "Using_async_scripts_for_asm.js": "Użycie async skryptów dla asm.js",
+      "Optimizing_startup_performance": "Optimizing startup performance",
+      "Using_WebRTC_peer-to-peer_data_channels": "Using WebRTC peer-to-peer data channels",
+      "Efficient_animation_for_web_games": "Efektywne animacje dla gier wideo",
+      "Audio_for_Web_Games": "Audio dla gier internetowych",
+      "2D_collision_detection": "2D collision detection",
+      "Tiles_and_tilemaps_overview": "Tiles and tilemaps overview",
+    "3D_games_on_the_Web": "3D games on the Web",
+      "3D_games_on_the_Web_overview": "3D games on the Web overview",
+      "Explaining_basic_3D_theory": "Explaining basic 3D theory",
+      "Building_up_a_basic_demo_with_A-Frame": "Tworzenie podstawowego demo z A-Frame",
+      "Building_up_a_basic_demo_with_Babylon.js": "Tworzenie podstawowego demo z Babylon.js",
+      "Building_up_a_basic_demo_with_PlayCanvas": "Tworzenie podstawowego demo z PlayCanvas",
+      "Building_up_a_basic_demo_with_Three.js": "Tworzenie podstawowego demo z Three.js",
+      "WebVR_guide": "WebVR",
+      "3D_collision_detection": "3D collision detection",
+      "Bounding_volume_collision_detection_with_THREE.js": "Bounding volume collision detection with THREE.js",
+    "Implementing_game_control_mechanisms": "Implementing game control mechanisms",
+      "Control_mechanisms": "Control mechanisms",
+      "Mobile_touch": "Mobile touch",
+      "Desktop_with_mouse_and_keyboard": "Desktop with mouse and keyboard",
+      "Desktop_with_gamepad": "Desktop with gamepad",
+      "Other": "Other",
+    "Tutorials": "Samouczki",
+      "2D_breakout_game_using_pure_JavaScript": "2D breakout game using pure JavaScript",
+      "2D_breakout_game_using_Phaser": "2D breakout game using Phaser",
+      "2D_maze_game_with_device_orientation": "2D maze_game with device orientation",
+      "2D_platform_game_using_Phaser": "2D platform game using Phaser",
+    "Publishing_games": "Publikacja gier",
+      "Publishing_games_overview": "Publishing games overview",
+      "Game_distribution": "Game distribution",
+      "Game_promotion": "Game promotion",
+      "Game_monetization": "Game monetization"
+  },
+  "pt-BR": {
+    "Introduction": "Introdução",
+      "Anatomy": "Anatomia de um video game",
+      "Examples": "Exemplos",
+    "APIs_for_game_development": "APIs para desenvolvimento de jogos",
+      "Canvas": "Canvas",
+      "CSS": "CSS",
+      "Full_Screen": "Full screen",
+      "Gamepad": "Gamepad",
+      "IndexedDB": "IndexedDB",
+      "JavaScript": "JavaScript",
+      "Pointer_Lock": "Pointer Lock",
+      "SVG": "SVG",
+      "Typed_Arrays": "Typed Arrays",
+      "Web_Audio": "Web Audio",
+      "WebGL": "WebGL",
+      "WebRTC": "WebRTC",
+      "Web_Sockets": "WebSockets",
+      "WebVR": "WebVR",
+      "Web_Workers": "Web Workers",
+      "XMLHttpRequest": "XMLHttpRequest",
+    "Techniques": "Técnicas",
+      "Using_async_scripts_for_asm.js": "Usando async scripts para&nbsp;asm.js",
+      "Optimizing_startup_performance": "Otimizando a performance de startup",
+      "Using_WebRTC_peer-to-peer_data_channels": "Usando canais de dados WebRTC peer-to-peer",
+      "Efficient_animation_for_web_games": "Animação eficiente para jogos web",
+      "Audio_for_Web_Games": "Audio para Jogos Web",
+      "2D_collision_detection": "Detecção de colisão 2D",
+      "Tiles_and_tilemaps_overview": "Visão geral de Tiles e tilemaps",
+    "3D_games_on_the_Web": "Visão geral de jogos 3D na Web",
+      "3D_games_on_the_Web_overview": "Visão geral de jogos 3D na Web",
+      "Explaining_basic_3D_theory": "Explicando teoria básica 3D",
+      "Building_up_a_basic_demo_with_A-Frame": "Desenvolvendo um demo básico com A-Frame",
+      "Building_up_a_basic_demo_with_Babylon.js": "Desenvolvendo um demo básico com Babylon.js",
+      "Building_up_a_basic_demo_with_PlayCanvas": "Desenvolvendo um demo básico com PlayCanvas",
+      "Building_up_a_basic_demo_with_Three.js": "Desenvolvendo um demo básico com Three.js",
+      "WebVR_guide": "WebVR",
+      "3D_collision_detection": "Detecção de colisão 3D",
+      "Bounding_volume_collision_detection_with_THREE.js": "BDetecção da quantidade de&nbsp;choque de colisão com THREE.js",
+    "Implementing_game_control_mechanisms": "Implementando mecanismos de controle de jogo",
+      "Control_mechanisms": "Visão geral de mecanismos de controle de jogo",
+      "Mobile_touch": "Controles de toque Mobile",
+      "Desktop_with_mouse_and_keyboard": "Controles de rato e teclado em Desktop",
+      "Desktop_with_gamepad": "Controle de gamepad em Desktop",
+      "Other": "Other",
+    "Tutorials": "Tutoriais",
+      "2D_breakout_game_using_pure_JavaScript": "Jogo 2D usando JavaScript puro",
+      "2D_breakout_game_using_Phaser": "Jogo 2D usando Phaser",
+      "2D_maze_game_with_device_orientation": "Jogo labirinto 2D com device orientation",
+      "2D_platform_game_using_Phaser": "Plataforma de jogo 2D usando Phaser",
+    "Publishing_games": "Publicando jogos",
+      "Publishing_games_overview": "Visão geral sobre publicação de jogos",
+      "Game_distribution": "Distribuição de Jogos",
+      "Game_promotion": "Promoção de Jogos",
+      "Game_monetization": "Monetização de Jogos"
+  },
+  "th": {
+    "Introduction": "Introduction",
+      "Anatomy": "Anatomy",
+      "Examples": "Examples",
+    "APIs_for_game_development": "APIs for game development",
+      "Canvas": "Canvas",
+      "CSS": "CSS",
+      "Full_Screen": "Full screen",
+      "Gamepad": "Gamepad",
+      "IndexedDB": "IndexedDB",
+      "JavaScript": "JavaScript",
+      "Pointer_Lock": "Pointer Lock",
+      "SVG": "SVG",
+      "Typed_Arrays": "Typed Arrays",
+      "Web_Audio": "Web Audio",
+      "WebGL": "WebGL",
+      "WebRTC": "WebRTC",
+      "Web_Sockets": "WebSockets",
+      "WebVR": "WebVR",
+      "Web_Workers": "Web Workers",
+      "XMLHttpRequest": "XMLHttpRequest",
+    "Techniques": "Kỹ thuật",
+      "Using_async_scripts_for_asm.js": "Sử dụng tập lệnh async cho asm.js",
+      "Optimizing_startup_performance": "Tối ưu hóa hiệu suất khởi động",
+      "Using_WebRTC_peer-to-peer_data_channels": "Sử dụng các kênh dữ liệu WebRTC peer-to-peer",
+      "Efficient_animation_for_web_games": "Hiệu quả hoạt hình cho các trò chơi trên web",
+      "Audio_for_Web_Games": "Âm thanh cho Trò chơi Web",
+      "2D_collision_detection": "Phát hiện va chạm 2D",
+      "Tiles_and_tilemaps_overview": "Gạch ngói và tổng quan",
+    "3D_games_on_the_Web": "Trò chơi 3D trên tổng quan về Web",
+      "3D_games_on_the_Web_overview": "Trò chơi 3D trên tổng quan về Web",
+      "Explaining_basic_3D_theory": "Giải thích lý thuyết cơ bản 3D",
+      "Building_up_a_basic_demo_with_A-Frame": "Xây dựng một bản giới thiệu cơ bản với A-Frame",
+      "Building_up_a_basic_demo_with_Babylon.js": "Xây dựng bản giới thiệu cơ bản với Babylon.js",
+      "Building_up_a_basic_demo_with_PlayCanvas": "Xây dựng bản giới thiệu cơ bản với PlayCanvas",
+      "Building_up_a_basic_demo_with_Three.js": "Xây dựng bản giới thiệu cơ bản với Three.js",
+      "WebVR_guide": "WebVR",
+      "3D_collision_detection": "Phát hiện va chạm 3D",
+      "Bounding_volume_collision_detection_with_THREE.js": "Bẫy sự va chạm khối lượng với THREE.js",
+    "Implementing_game_control_mechanisms": "Thực hiện cơ chế kiểm soát trò chơi",
+      "Control_mechanisms": "Tổng quan về cơ chế kiểm soát trò chơi",
+      "Mobile_touch": "Điều khiển cảm ứng di động",
+      "Desktop_with_mouse_and_keyboard": "Bộ điều khiển bàn phím chuột và bàn phím",
+      "Desktop_with_gamepad": "Bộ điều khiển trò chơi trên máy tính để bàn",
+      "Other": "Kiểm soát độc đáo",
+    "Tutorials": "Hướng dẫn",
+      "2D_breakout_game_using_pure_JavaScript": "Trò chơi 2D breakout sử dụng JavaScript thuần túy",
+      "2D_breakout_game_using_Phaser": "Trò chơi 2D breakout bằng Phaser",
+      "2D_maze_game_with_device_orientation": "Game 2D mê cung với định hướng thiết bị",
+      "2D_platform_game_using_Phaser": "Trò chơi nền tảng 2D sử dụng Phaser",
+    "Publishing_games": "Trò chơi xuất bản",
+      "Publishing_games_overview": "Xuất bản trò chơi tổng quan",
+      "Game_distribution": "Phân phối trò chơi",
+      "Game_promotion": "Quảng cáo trò chơi",
+      "Game_monetization": "Kiếm tiền từ trò chơi"
+  }
+});
+
+%>
+
+<section class="Quick_links" id="Quick_Links">
+  <ol>
+    <li class="toggle">
+        <details>
+            <summary><%=text["Introduction"]%></summary>
+            <ol>
+              <li><a href="<%=baseURL%>Introduction"><%=text["Introduction"]%></a></li>
+              <li><a href="<%=baseURL%>Anatomy"><%=text["Anatomy"]%></a></li>
+              <li><a href="<%=baseURL%>Examples"><%=text["Examples"]%></a></li>
+            </ol>
+        </details>
+    </li>
+    <li class="toggle">
+        <details>
+            <summary><%=text["APIs_for_game_development"]%></summary>
+            <ol>
+              <li><a href="<%=webURL%>API/Canvas_API"><%=text["Canvas"]%></a></li>
+              <li><a href="<%=webURL%>CSS"><%=text["CSS"]%></a></li>
+              <li><a href="<%=appsURL%>Fundamentals/User_notifications/Full_screen_api"><%=text["Full_Screen"]%></a></li>
+              <li><a href="<%=webURL%>API/Gamepad_API"><%=text["Gamepad"]%></a></li>
+              <li><a href="<%=webURL%>API/IndexedDB_API"><%=text["IndexedDB"]%></a></li>
+              <li><a href="<%=webURL%>JavaScript"><%=text["JavaScript"]%></a></li>
+              <li><a href="<%=webURL%>API/Pointer_Lock_API"><%=text["Pointer_Lock"]%></a></li>
+              <li><a href="<%=webURL%>SVG"><%=text["SVG"]%></a></li>
+              <li><a href="<%=webURL%>JavaScript/Reference/Global_Objects/TypedArray"><%=text["Typed_Arrays"]%></a></li>
+              <li><a href="<%=webURL%>API/Web_Audio_API"><%=text["Web_Audio"]%></a></li>
+              <li><a href="<%=webURL%>API/WebGL_API"><%=text["WebGL"]%></a></li>
+              <li><a href="<%=webURL%>API/WebRTC_API"><%=text["WebRTC"]%></a></li>
+              <li><a href="<%=webURL%>API/WebSockets_API"><%=text["Web_Sockets"]%></a></li>
+              <li><a href="<%=webURL%>API/WebVR_API"><%=text["WebVR"]%></a></li>
+              <li><a href="<%=webURL%>API/Web_Workers_API"><%=text["Web_Workers"]%></a></li>
+              <li><a href="<%=webURL%>API/XMLHttpRequest"><%=text["XMLHttpRequest"]%></a></li>
+            </ol>
+        </details>
+    </li>
+    <li class="toggle">
+        <details>
+            <summary><%=text["Techniques"]%></summary>
+            <ol>
+              <li><a href="<%=baseURL%>Techniques/Async_scripts"><%=text["Using_async_scripts_for_asm.js"]%></a></li>
+              <li><a href="<%=appsURL%>Developing/Optimizing_startup_performance"><%=text["Optimizing_startup_performance"]%></a></li>
+              <li><a href="<%=baseURL%>Techniques/WebRTC_data_channels"><%=text["Using_WebRTC_peer-to-peer_data_channels"]%></a></li>
+              <li><a href="<%=baseURL%>Techniques/Efficient_animation_for_web_games"><%=text["Efficient_animation_for_web_games"]%></a></li>
+              <li><a href="<%=baseURL%>Techniques/Audio_for_Web_Games"><%=text["Audio_for_Web_Games"]%></a></li>
+              <li><a href="<%=baseURL%>Techniques/2D_collision_detection"><%=text["2D_collision_detection"]%></a></li>
+              <li><a href="<%=baseURL%>Techniques/Tilemaps"><%=text["Tiles_and_tilemaps_overview"]%></a></li>
+            </ol>
+        </details>
+    </li>
+    <li class="toggle">
+        <details>
+            <summary><%=text["3D_games_on_the_Web"]%></summary>
+            <ol>
+              <li><a href="<%=baseURL%>Techniques/3D_on_the_web"><%=text["3D_games_on_the_Web_overview"]%></a></li>
+              <li><a href="<%=baseURL%>Techniques/3D_on_the_web/Basic_theory"><%=text["Explaining_basic_3D_theory"]%></a></li>
+              <li><a href="<%=baseURL%>Techniques/3D_on_the_web/Building_up_a_basic_demo_with_A-Frame"><%=text["Building_up_a_basic_demo_with_A-Frame"]%></a></li>
+              <li><a href="<%=baseURL%>Techniques/3D_on_the_web/Building_up_a_basic_demo_with_Babylon.js"><%=text["Building_up_a_basic_demo_with_Babylon.js"]%></a></li>
+              <li><a href="<%=baseURL%>Techniques/3D_on_the_web/Building_up_a_basic_demo_with_PlayCanvas"><%=text["Building_up_a_basic_demo_with_PlayCanvas"]%></a></li>
+              <li><a href="<%=baseURL%>Techniques/3D_on_the_web/Building_up_a_basic_demo_with_Three.js"><%=text["Building_up_a_basic_demo_with_Three.js"]%></a></li>
+              <li><a href="<%=baseURL%>Techniques/3D_on_the_web/WebVR"><%=text["WebVR_guide"]%></a></li>
+              <li><a href="<%=baseURL%>Techniques/3D_collision_detection"><%=text["3D_collision_detection"]%></a></li>
+              <li><a href="<%=baseURL%>Techniques/3D_collision_detection/Bounding_volume_collision_detection_with_THREE.js"><%=text["Bounding_volume_collision_detection_with_THREE.js"]%></a></li>
+            </ol>
+        </details>
+    </li>
+    <li class="toggle">
+        <details>
+            <summary><%=text["Implementing_game_control_mechanisms"]%></summary>
+            <ol>
+              <li><a href="<%=baseURL%>Techniques/Control_mechanisms"><%=text["Control_mechanisms"]%></a></li>
+              <li><a href="<%=baseURL%>Techniques/Control_mechanisms/Mobile_touch"><%=text["Mobile_touch"]%></a></li>
+              <li><a href="<%=baseURL%>Techniques/Control_mechanisms/Desktop_with_mouse_and_keyboard"><%=text["Desktop_with_mouse_and_keyboard"]%></a></li>
+              <li><a href="<%=baseURL%>Techniques/Control_mechanisms/Desktop_with_gamepad"><%=text["Desktop_with_gamepad"]%></a></li>
+              <li><a href="<%=baseURL%>Techniques/Control_mechanisms/Other"><%=text["Other"]%></a></li>
+            </ol>
+        </details>
+    </li>
+    <li class="toggle">
+        <details>
+            <summary><%=text["Tutorials"]%></summary>
+            <ol>
+              <li><a href="<%=baseURL%>Tutorials/2D_Breakout_game_pure_JavaScript"><%=text["2D_breakout_game_using_pure_JavaScript"]%></a></li>
+              <li><a href="<%=baseURL%>Tutorials/2D_breakout_game_Phaser"><%=text["2D_breakout_game_using_Phaser"]%></a></li>
+              <li><a href="<%=baseURL%>Tutorials/HTML5_Gamedev_Phaser_Device_Orientation"><%=text["2D_maze_game_with_device_orientation"]%></a></li>
+              <li><a href="https://mozdevs.github.io/html5-games-workshop/en/guides/platformer/start-here/"><%=text["2D_platform_game_using_Phaser"]%></a></li>
+            </ol>
+        </details>
+    </li>
+    <li class="toggle">
+        <details>
+            <summary><%=text["Publishing_games"]%></summary>
+            <ol>
+              <li><a href="<%=baseURL%>Publishing_games"><%=text["Publishing_games_overview"]%></a></li>
+              <li><a href="<%=baseURL%>Publishing_games/Game_distribution"><%=text["Game_distribution"]%></a></li>
+              <li><a href="<%=baseURL%>Publishing_games/Game_promotion"><%=text["Game_promotion"]%></a></li>
+              <li><a href="<%=baseURL%>Publishing_games/Game_monetization"><%=text["Game_monetization"]%></a></li>
+            </ol>
+        </details>
+    </li>
+  </ol>
+</section>

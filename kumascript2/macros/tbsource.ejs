@@ -1,0 +1,12 @@
+<%
+// Insert a link to a file in the Thunderbird source repository.
+//
+//  $0 - File to link to
+//  $1 - (OPTIONAL) text for the link
+//
+// If $1 isn't provided, the link itself is the link text
+
+var url = "http://mxr.mozilla.org/comm-central/source/" + $0;
+var text = ($1 || url);
+%>
+<a href="<%=url%>"><%=text%></a>

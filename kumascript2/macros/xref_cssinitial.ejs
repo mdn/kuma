@@ -1,0 +1,30 @@
+<%
+let page = mdn.localString({
+    "en-US": "initial_value",
+    "de"   : "Initialwert",
+    "es"   : "Valor_inicial",
+    "fr"   : "Valeur_initiale",
+    "ja"   : "initial_value",
+    "ko"   : "initial_value",
+    "pl"   : "warto%c5%9b%c4%87_pocz%c4%85tkowa",
+    "zh-CN": "initial_value",
+    "zh-TW": "%e9%a0%90%e8%a8%ad%e5%80%bc",
+    "ru"   : "initial_value"
+});
+
+let linkText = mdn.localString({
+    "en-US": "Initial value",
+    "de"   : "Initialwert",
+    "es"   : "Valor inicial",
+    "fr"   : "Valeur initiale",
+    "ja"   : "初期値",
+    "ko"   : "초기값",
+    "pl"   : "Wartość początkowa",
+    "zh-CN": "初始值",
+    "zh-TW": "預設值",
+    "ru"   : "Начальное значение"
+});
+
+let link = "<a href=\"/" + env.locale + "/docs/Web/CSS/$1$\">$2$</a>";
+%>
+<%- mdn.replacePlaceholders(link, [page, linkText]) %>

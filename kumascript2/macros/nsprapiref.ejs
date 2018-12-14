@@ -1,0 +1,563 @@
+<%
+var currentSection = $0;
+var locale = env.locale;
+
+function state(section) {
+  if (section == currentSection) {
+    return "open";
+  }
+  return "closed";
+}
+
+var text = mdn.localStringMap({
+  'en-US': {
+    'NSPR' : 'NSPR',
+    'About NSPR' : 'About NSPR',
+    'NSPR API Reference' : 'NSPR API Reference',
+    'NSPR Build Instruction' : 'NSPR Build Instruction',
+    'NSPR Release Process' : 'NSPR Release Process',
+    'Introduction to NSPR' : 'Introduction to NSPR',
+    'NSPR Naming Conventions' : 'NSPR Naming Conventions',
+    'NSPR Threads' : 'NSPR Threads',
+    'Thread Scheduling' : 'Thread Scheduling',
+    'Setting Thread Priorities' : 'Setting Thread Priorities',
+    'Preempting Threads' : 'Preempting Threads',
+    'Interrupting Threads' : 'Interrupting Threads',
+    'NSPR Thread Synchronization' : 'NSPR Thread Synchronization',
+    'Locks and Monitors' : 'Locks and Monitors',
+    'Condition Variables' : 'Condition Variables',
+    'NSPR Sample Code' : 'NSPR Sample Code',
+    'NSPR Types' : 'NSPR Types',
+    'Calling Convention Types' : 'Calling Convention Types',
+    'Algebraic Types' : 'Algebraic Types',
+    '8-, 16-, and 32-bit Integer Types' : '8-, 16-, and 32-bit Integer Types',
+    'Signed Integers' : 'Signed Integers',
+    'Unsigned Integers' : 'Unsigned Integers',
+    '64-bit Integer Types' : '64-bit Integer Types',
+    'Floating-Point Integer Type' : 'Floating-Point Integer Type',
+    'Native OS Integer Types' : 'Native OS Integer Types',
+    'Miscellaneous Types' : 'Miscellaneous Types',
+    'Size Type' : 'Size Type',
+    'Pointer Difference Types' : 'Pointer Difference Types',
+    'Boolean Types' : 'Boolean Types',
+    'Status Type for Return Values' : 'Status Type for Return Values',
+    'Threads' : 'Threads',
+    'Threading Types and Constants' : 'Threading Types and Constants',
+    'Threading Functions' : 'Threading Functions',
+    'Creating, Joining, and Identifying Threads' : 'Creating, Joining, and Identifying Threads',
+    'Controlling Thread Priorities' : 'Controlling Thread Priorities',
+    'Controlling Per-Thread Private Data' : 'Controlling Per-Thread Private Data',
+    'Interrupting and Yielding' : 'Interrupting and Yielding',
+    'Setting Global Thread Concurrency' : 'Setting Global Thread Concurrency',
+    'Getting a Thread\'s Scope' : 'Getting a Thread\'s Scope',
+    'Process Initialization' : 'Process Initialization',
+    'Identity and Versioning' : 'Identity and Versioning',
+    'Name and Version Constants' : 'Name and Version Constants',
+    'Initialization and Cleanup' : 'Initialization and Cleanup',
+    'Module Initialization' : 'Module Initialization',
+    'Locks' : 'Locks',
+    'Lock Type' : 'Lock Type',
+    'Lock Functions' : 'Lock Functions',
+    'Condition Variables' : 'Condition Variables',
+    'Condition Variable Type' : 'Condition Variable Type',
+    'Condition Variable Functions' : 'Condition Variable Functions',
+    'Monitors' : 'Monitors',
+    'Monitor Type' : 'Monitor Type',
+    'Monitor Functions' : 'Monitor Functions',
+    'Cached Monitors' : 'Cached Monitors',
+    'Cached Monitor Functions' : 'Cached Monitor Functions',
+    'I/O Types' : 'I/O Types',
+    'Directory Type' : 'Directory Type',
+    'File Descriptor Types' : 'File Descriptor Types',
+    'File Info Types' : 'File Info Types',
+    'Network Address Types' : 'Network Address Types',
+    'Types Used with Socket Options Functions' : 'Types Used with Socket Options Functions',
+    'Type Used with Memory-Mapped I/O' : 'Type Used with Memory-Mapped I/O',
+    'Offset Interpretation for Seek Functions' : 'Offset Interpretation for Seek Functions',
+    'I/O Functions' : 'I/O Functions',
+    'Functions that Operate on Pathnames' : 'Functions that Operate on Pathnames',
+    'Functions that Act on File Descriptors' : 'Functions that Act on File Descriptors',
+    'Directory I/O Functions' : 'Directory I/O Functions',
+    'Socket Manipolation Functions' : 'Socket Manipolation Functions',
+    'Converting Between Host and Network Addresses' : 'Converting Between Host and Network Addresses',
+    'Memory-Mapped I/O Functions' : 'Memory-Mapped I/O Functions',
+    'Anonymous Pipe Function' : 'Anonymous Pipe Function',
+    'Polling Functions' : 'Polling Functions',
+    'Pollable Events' : 'Pollable Events',
+    'Manipulating Layers' : 'Manipulating Layers',
+    'Network Addresses' : 'Network Addresses',
+    'Network Address Types and Constants' : 'Network Address Types and Constants',
+    'Network Address Functions' : 'Network Address Functions',
+    'Atomic Operations' : 'Atomic Operations',
+    'Interval Timing' : 'Interval Timing',
+    'Interval Time Type and Constants' : 'Interval Time Type and Constants',
+    'Interval Functions' : 'Interval Functions',
+    'Date and Time' : 'Date and Time',
+    'Types and Constants' : 'Types and Constants',
+    'Time Parameter Callback Functions' : 'Time Parameter Callback Functions',
+    'Functions' : 'Functions',      
+    'Memory Management Operations' : 'Memory Management Operations',
+    'Memory Allocation Functions' : 'Memory Allocation Functions',
+    'Memory Allocation Macros' : 'Memory Allocation Macros',
+    'String Operations' : 'String Operations',
+    'Floating Point Number to String Conversion' : 'Floating Point Number to String Conversion',
+    'Linked Lists' : 'Linked Lists',
+    'Linked List Types' : 'Linked List Types',
+    'Linked List Macros' : 'Linked List Macros',
+    'Dynamic Library Linking' : 'Dynamic Library Linking',
+    'Library Linking Types' : 'Library Linking Types',
+    'Library Linking Functions' : 'Library Linking Functions',
+    'Finding Symbols Defined in the Main Executable Program' : 'Finding Symbols Defined in the Main Executable Program',
+    'Platform Notes' : 'Platform Notes',
+    'Dynamic Library Search Path' : 'Dynamic Library Search Path',
+    'Exporting Symbols from the Main Executable Program' : 'Exporting Symbols from the Main Executable Program',
+    'Process Management and Interprocess Communication' : 'Process Management and Interprocess Communication',
+    'Process Management Types and Constants' : 'Process Management Types and Constants',
+    'Process Management Functions' : 'Process Management Functions',
+    'Setting the Attributes of a New Process' : 'Setting the Attributes of a New Process',
+    'Creating and Managing Processes' : 'Creating and Managing Processes',
+    'Multiwait Receive' : 'Multiwait Receive',
+    'System Information and Environment Variables' : 'System Information and Environment Variables',
+    'Logging' : 'Logging',
+    'Conditional Compilation and Execution' : 'Conditional Compilation and Execution',
+    'Log Types and Variables' : 'Log Types and Variables',
+    'Logging Functions and Macros' : 'Logging Functions and Macros',
+    'Use Example' : 'Use Example',
+    'Instrumentation Counters' : 'Instrumentation Counters',
+    'Named Shared Memory' : 'Named Shared Memory',
+    'Shared Memory Protocol' : 'Shared Memory Protocol',
+    'Named Shared Memory Functions' : 'Named Shared Memory Functions',
+    'Anonymous Shared Memory' : 'Anonymous Shared Memory',
+    'Anonymous Memory Protocol' : 'Anonymous Memory Protocol',
+    'Anonymous Shared Memory Functions' : 'Anonymous Shared Memory Functions',
+    'IPC Semaphores' : 'IPC Semaphores',
+    'IPC Semaphore Functions' : 'IPC Semaphore Functions',
+    'Thread Pools' : 'Thread Pools',
+    'Thread Pool Types' : 'Thread Pool Types',
+    'Thread Pool Functions' : 'Thread Pool Functions',
+    'Random Number Generator' : 'Random Number Generator',
+    'Random Number Generator Function' : 'Random Number Generator Function',
+    'Hash Tables' : 'Hash Tables',
+    'Hash Tables and Type Constants' : 'Hash Tables and Type Constants',
+    'Hash Table Functions' : 'Hash Table Functions',
+    'NSPR Error Handling' : 'NSPR Error Handling',
+    'Error Type' : 'Error Type',
+    'Error Functions' : 'Error Functions',
+    'Error Codes' : 'Error Codes',
+    'Contribute' : 'Contribute',
+    'Doc_Status' : 'NSPR Documentation status',
+    'The_MDN_project' : 'The MDN Project'
+    
+  },
+});
+%>
+
+<section id="Quick_Links">
+<ol>
+  <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR"><%=text['NSPR']%></a></li>
+  <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/About_NSPR"><%=text['About NSPR']%></a></li>
+  <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference"><%=text['NSPR API Reference']%></a></li>
+  <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/NSPR_build_instructions"><%=text['NSPR Build Instruction']%></a></li>
+  <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Release_process"><%=text['NSPR Release Process']%></a></li>
+  <li class="toggle">
+    <details <%=state('Introduction to NSPR')%>>
+      <summary><%=text['Introduction to NSPR']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Introduction_to_NSPR#NSPR_Naming_Conventions"><%=text['NSPR Naming Conventions']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Introduction_to_NSPR#NSPR_Threads"><%=text['NSPR Threads']%></a>
+          <ol>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Introduction_to_NSPR#Thread_Schedoling"><%=text['Thread Scheduling']%></a>
+              <ol>
+                <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Introduction_to_NSPR#Setting_Thread_Priorities"><%=text['Setting Thread Priorities']%></a></li>
+                <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Introduction_to_NSPR#Preempting_Threads"><%=text['Preempting Threads']%></a></li>
+                <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Introduction_to_NSPR#Interrupting_Threads"><%=text['Interrupting Threads']%></a></li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Introduction_to_NSPR#NSPR_Thread_Synchronization"><%=text['NSPR Thread Synchronization']%></a>
+          <ol>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Introduction_to_NSPR#Locks_and_Monitors"><%=text['Locks and Monitors']%></a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Introduction_to_NSPR#Condition_Variables"><%=text['Condition Variables']%></a></li>
+          </ol>
+        </li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Introduction_to_NSPR#NSPR_Sample_Code"><%=text['NSPR Sample Code']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('NSPR Types')%>>
+      <summary><%=text['NSPR Types']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/NSPR_Types#Calling_Convention_Types"><%=text['Calling Convention Types']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/NSPR_Types#Algebraic_Types"><%=text['Algebraic Types']%></a>
+          <ol>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/NSPR_Types#8-.2C_16-.2C_and_32-bit_Integer_Types"><%=text['8-, 16-, and 32-bit Integer Types']%></a>
+              <ol>
+                <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/NSPR_Types#Signed_Integers"><%=text['Signed Integers']%></a></li>
+                <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/NSPR_Types#Unsigned_Integers"><%=text['Unsigned Integers']%></a></li>
+              </ol>
+            </li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/NSPR_Types#64-bit_Integer_Types"><%=text['64-bit Integer Types']%></a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/NSPR_Types#Floating-Point_Number_Type"><%=text['Floating-Point Integer Type']%></a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/NSPR_Types#Native_OS_Integer_Types"><%=text['Native OS Integer Types']%></a></li>
+          </ol>
+        </li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/NSPR_Types#Miscellaneous_Types"><%=text['Miscellaneous Types']%></a>
+          <ol>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/NSPR_Types#Size_Type"><%=text['Size Type']%></a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/NSPR_Types#Pointer_Difference_Types"><%=text['Pointer Difference Types']%></a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/NSPR_Types#Boolean_Types"><%=text['Boolean Types']%></a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/NSPR_Types#Status_Type_for_Return_Values"><%=text['Status Type for Return Values']%></a></li>
+          </ol>
+        </li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Threads')%>>
+      <summary><%=text['Threads']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Threads#Threading_Types_and_Constants"><%=text['Threading Types and Constants']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Threads#Threading_Functions"><%=text['Threading Functions']%></a>
+          <ol>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Threads#Creating.2C_Joining.2C_and_Identifying_Threads"><%=text['Creating, Joining, and Identifying Threads']%></a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Threads#Controlling_Thread_Priorities"><%=text['Controlling Thread Priorities']%></a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Threads#Controlling_Per-Thread_Private_Data"><%=text['Controlling Per-Thread Private Data']%></a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Threads#Interrupting_and_Yielding"><%=text['Interrupting and Yielding']%></a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Threads#Setting_Global_Thread_Concurrency"><%=text['Setting Global Thread Concurrency']%></a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Threads#Getting_a_Thread.27s_Scope"><%=text['Getting a Thread\'s Scope']%></a></li>
+          </ol>
+        </li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Process Initialization')%>>
+      <summary><%=text['Process Initialization']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Process_Initialization#Identity_and_Versioning"><%=text['Identity and Versioning']%></a>
+          <ol>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Process_Initialization#Name_and_Version_Constants"><%=text['Name and Version Constants']%></a></li>
+          </ol>
+        </li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Process_Initialization#Initialization_and_Cleanup"><%=text['Initialization and Cleanup']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Process_Initialization#Module_Initialization"><%=text['Module Initialization']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Locks')%>>
+      <summary><%=text['Locks']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Locks#Lock_Type"><%=text['Lock Type']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Locks#Lock_Functions"><%=text['Lock Functions']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Condition Variables')%>>
+      <summary><%=text['Condition Variables']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Condition_Variables#Condition_Variable_Type"><%=text['Condition Variable Type']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Condition_Variables#Condition_Variable_Functions"><%=text['Condition Variable Functions']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Monitors')%>>
+      <summary><%=text['Monitors']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Monitors#Monitor_Type"><%=text['Monitor Type']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Monitors#Monitor_Functions"><%=text['Monitor Functions']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Cached Monitors')%>>
+      <summary><%=text['Cached Monitors']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Cached_Monitors#Cached_Monitor_Functions"><%=text['Cached Monitor Functions']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('I/O Types')%>>
+      <summary><%=text['I/O Types']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/I_O_Types#Directory_Type"><%=text['Directory Type']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/I_O_Types#File_Descriptor_Types"><%=text['File Descriptor Types']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/I_O_Types#File_Info_Types"><%=text['File Info Types']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/I_O_Types#Network_Address_Types"><%=text['Network Address Types']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/I_O_Types#Types_Used_with_Socket_Options_Functions"><%=text['Types Used with Socket Options Functions']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/I_O_Types#Type_Used_with_Memory-Mapped_I.2FO"><%=text['Type Used with Memory-Mapped I/O']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/I_O_Types#Offset_Interpretation_for_Seek_Functions"><%=text['Offset Interpretation for Seek Functions']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('I/O Functions')%>>
+      <summary><%=text['I/O Functions']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/I_O_Functions#Functions_that_Operate_on_Pathnames"><%=text['Functions that Operate on Pathnames']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/I_O_Functions#Functions_that_Act_on_File_Descriptors"><%=text['Functions that Act on File Descriptors']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/I_O_Functions#Directory_I.2FO_Functions"><%=text['Directory I/O Functions']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/I_O_Functions#Socket_Manipolation_Functions"><%=text['Socket Manipolation Functions']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/I_O_Functions#Converting_Between_Host_and_Network_Addresses"><%=text['Converting Between Host and Network Addresses']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/I_O_Functions#Memory-Mapped_I.2FO_Functions"><%=text['Memory-Mapped I/O Functions']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/I_O_Functions#Anonymous_Pipe_Function"><%=text['Anonymous Pipe Function']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/I_O_Functions#Polling_Functions"><%=text['Polling Functions']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/I_O_Functions#Pollable_Events"><%=text['Pollable Events']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/I_O_Functions#Manipulating_Layers"><%=text['Manipulating Layers']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Network Addresses')%>>
+      <summary><%=text['Network Addresses']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Network_Addresses#Network_Address_Types_and_Constants"><%=text['Network Address Types and Constants']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Network_Addresses#Network_Address_Functions"><%=text['Network Address Functions']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Atomic Operation')%>>
+      <summary><%=text['Atomic Operations']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_AtomicIncrement">PR_AtomicIncrement</a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_AtomicDecrement">PR_AtomicDecrement</a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_AtomicSet">PR_AtomicSet</a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Interval Timing')%>>
+      <summary><%=text['Interval Timing']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Interval_Timing#Interval_Time_Type_and_Constants"><%=text['Interval Time Type and Constants']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Interval_Timing#Interval_Functions"><%=text['Interval Functions']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Date and Time')%>>
+      <summary><%=text['Date and Time']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Date_and_Time#Types_and_Constants"><%=text['Types and Constants']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Date_and_Time#Time_Parameter_Callback_Functions"><%=text['Time Parameter Callback Functions']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Date_and_Time#Functions"><%=text['Functions']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Memory Management Operations')%>>
+      <summary><%=text['Memory Management Operations']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Memory_Management_Operations#Memory_Allocation_Functions"><%=text['Memory Allocation Functions']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Memory_Management_Operations#Memory_Allocation_Macros"><%=text['Memory Allocation Macros']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('String Operations')%>>
+      <summary><%=text['String Operations']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PL_strlen">PL_strlen</a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PL_strcpy">PL_strcpy</a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PL_strdup">PL_strdup</a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PL_strfree">PL_strfree</a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Floating Point Number to String Conversion')%>>
+      <summary><%=text['Floating Point Number to String Conversion']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_strtod">PR_strtod</a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_dtoa">PR_dtoa</a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_cnvtf">PR_cnvtf</a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Linked Lists')%>>
+      <summary><%=text['Linked Lists']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Linked_Lists#Linked_List_Types"><%=text['Linked List Types']%></a>
+          <ol>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PRCList">PRCList</a></li>
+          </ol>
+        </li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Linked_Lists#Linked_List_Macros"><%=text['Linked List Macros']%></a>
+          <ol>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_INIT_CLIST">PR_INIT_CLIST</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_INIT_STATIC_CLIST">PR_INIT_STATIC_CLIST</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_APPEND_LINK">PR_APPEND_LINK</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_INSERT_LINK">PR_INSERT_LINK</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_NEXT_LINK">PR_NEXT_LINK</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_PREV_LINK">PR_PREV_LINK</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_REMOVE_LINK">PR_REMOVE_LINK</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_REMOVE_AND_INIT_LINK">PR_REMOVE_AND_INIT_LINK</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_INSERT_BEFORE">PR_INSERT_BEFORE</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_INSERT_AFTER">PR_INSERT_AFTER</a></li>
+          </ol>
+        </li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Dynamic Library Linking')%>>
+      <summary><%=text['Dynamic Library Linking']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Dynamic_Library_Linking#Library_Linking_Types"><%=text['Library Linking Types']%></a>
+          <ol>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PRLibrary">PRLibrary</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PRStaticLinkTable">PRStaticLinkTable</a></li>
+          </ol>
+        </li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Dynamic_Library_Linking#Library_Linking_Functions"><%=text['Library Linking Functions']%></a>
+          <ol>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_SetLibraryPath">PR_SetLibraryPath</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_GetLibraryPath">PR_GetLibraryPath</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_GetLibraryName">PR_GetLibraryName</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_FreeLibraryName">PR_FreeLibraryName</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_LoadLibrary">PR_LoadLibrary</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_UnloadLibrary">PR_UnloadLibrary</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_FindSymbol">PR_FindSymbol</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_FindSymbolAndLibrary">PR_FindSymbolAndLibrary</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Dynamic_Library_Linking#Finding_Symbols_Defined_in_the_Main_Executable_Program"><%=text['Finding Symbols Defined in the Main Executable Program']%></a></li>
+          </ol>
+        </li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Dynamic_Library_Linking#Platform_Notes"><%=text['Platform Notes']%></a>
+          <ol>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Dynamic_Library_Linking#Dynamic_Library_Search_Path"><%=text['Dynamic Library Search Path']%></a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Dynamic_Library_Linking#Exporting_Symbols_from_the_Main_Executable_Program"><%=text['Exporting Symbols from the Main Executable Program']%></a></li>
+          </ol>
+        </li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Process Management and Interprocess Communication')%>>
+      <summary><%=text['Process Management and Interprocess Communication']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Process_Management_and_Interprocess_Communication#Process_Management_Types_and_Constants"><%=text['Process Management Types and Constants']%></a>
+          <ol>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PRProcess">PRProcess</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PRProcessAttr">PRProcessAttr</a></li>
+          </ol>
+        </li>
+        <li><a href="/<%=locale%>/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Process_Management_and_Interprocess_Communication#Process_Management_Functions"><%=text['Process Management Functions']%></a>
+          <ol>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Process_Management_and_Interprocess_Communication#Setting_the_Attributes_of_a_New_Process"><%=text['Setting the Attributes of a New Process']%></a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Process_Management_and_Interprocess_Communication#Creating_and_Managing_Processes"><%=text['Creating and Managing Processes']%></a></li>
+          </ol>
+        </li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Logging')%>>
+      <summary><%=text['Logging']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Logging#Conditional_Compilation_and_Execution"><%=text['Conditional Compilation and Execution']%></a></li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Logging#Log_Types_and_Variables"><%=text['Log Types and Variables']%></a>
+          <ol>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PRLogModoleInfo">PRLogModoleInfo</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PRLogModoleLevel">PRLogModoleLevel</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/NSPR_LOG_MODULES">NSPR_LOG_MODULES</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/NSPR_LOG_FILE">NSPR_LOG_FILE</a></li>
+          </ol>
+        </li>
+        <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Logging#Logging_Functions_and_Macros"><%=text['Logging Functions and Macros']%></a>
+          <ol>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_NewLogModole">PR_NewLogModole</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_SetLogFile">PR_SetLogFile</a></li>
+            <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_SetLogBuffering">PR_SetLogBuffering</a>/li>
+              <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_LogPrint">PR_LogPrint</a></li>
+              <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_LogFlush">PR_LogFlush</a></li>
+              <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_LOG_TEST">PR_LOG_TEST</a></li>
+              <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_LOG">PR_LOG</a></li>
+              <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_Assert_">PR_Assert</a></li>
+              <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_ASSERT">PR_ASSERT</a></li>
+              <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/PR_NOT_REACHED">PR_NOT_REACHED</a></li>
+            </ol>
+          </li>
+          <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Logging#Use_Example"><%=text['Use Example']%></a></li>
+        </ol>
+      </details>
+    </li>
+    <li class="toggle">
+      <details <%=state('Named Shared Memory')%>>
+        <summary><%=text['Named Shared Memory']%></summary>
+        <ol>
+          <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Named_Shared_Memory#Shared_Memory_Protocol"><%=text['Shared Memory Protocol']%></a></li>
+          <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Named_Shared_Memory#Named_Shared_Memory_Functions"><%=text['Named Shared Memory Functions']%></a></li>
+        </ol>
+      </details>
+    </li>
+    <li class="toggle">
+      <details <%=state('Anonymous Shared Memory')%>>
+        <summary><%=text['Anonymous Shared Memory']%></summary>
+        <ol>
+          <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Anonymous_Shared_Memory#Anonymous_Memory_Protocol"><%=text['Anonymous Memory Protocol']%></a></li>
+          <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Anonymous_Shared_Memory#Anonymous_Shared_Memory_Functions"><%=text['Anonymous Shared Memory Functions']%></a></li>
+        </ol>
+      </details>
+    </li>
+    <li class="toggle">
+      <details <%=state('IPC Semaphores')%>>
+        <summary><%=text['IPC Semaphores']%></summary>
+        <ol>
+          <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/IPC_Semaphores#IPC_Semaphore_Functions"><%=text['IPC Semaphore Functions']%></a></li>
+        </ol>
+      </details>
+    </li>
+    <li class="toggle">
+      <details <%=state('Thread Pools')%>>
+        <summary><%=text['Thread Pools']%></summary>
+        <ol>
+          <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Thread_Pools#Thread_Pool_Types"><%=text['Thread Pool Types']%></a></li>
+          <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Thread_Pools#Thread_Pool_Functions"><%=text['Thread Pool Functions']%></a></li>
+        </ol>
+      </details>
+    </li>
+    <li class="toggle">
+      <details <%=state('Random Number Generator')%>>
+        <summary><%=text['Random Number Generator']%></summary>
+        <ol>
+          <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Random_Number_Generator#Random_Number_Generator_Function"><%=text['Random Number Generator Function']%></a></li>
+        </ol>
+      </details>
+    </li>
+    <li class="toggle">
+      <details <%=state('Hash Tables')%>>
+        <summary><%=text['Hash Tables']%></summary>
+        <ol>
+          <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Hash_Tables#Hash_Tables_and_Type_Constants"><%=text['Hash Tables and Type Constants']%></a></li>
+          <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/Hash_Tables#Hash_Table_Functions"><%=text['Hash Table Functions']%></a></li>
+        </ol>
+      </details>
+    </li>
+    <li class="toggle">
+      <details <%=state('NSPR Error Handling')%>>
+        <summary><%=text['NSPR Error Handling']%></summary>
+        <ol>
+          <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/NSPR_Error_Handling#Error_Type"><%=text['Error Type']%></a></li>
+          <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/NSPR_Error_Handling#Error_Functions"><%=text['Error Functions']%></a></li>
+          <li><a href="/<%=locale%>/docs/Mozilla/Projects/NSPR/Reference/NSPR_Error_Handling#Error_Codes"><%=text['Error Codes']%></a></li>
+        </ol>
+      </details>
+    </li>
+    <li class="toggle">
+      <details <%=state('Contribute')%>>
+        <summary><%=text['Contribute']%></summary>
+        <ol>
+          <li><a href="/<%=locale%>/docs/MDN/Doc_status/NSPR"><%=text['Doc_status']%></a></li>
+          <li><a href="/<%=locale%>/docs/MDN"><%=text['The_MDN_project']%></a></li>
+        </ol>
+      </details>
+    </li>
+  </ol>
+</section>

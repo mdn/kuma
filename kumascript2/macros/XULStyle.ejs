@@ -1,0 +1,20 @@
+<%
+var lang = env.locale;
+var propName = mdn.localString({
+  "en-US": "Style",
+  "pl": "Styl",
+  "ru": "Стили"
+});
+
+var destOldType = '/' + lang + '/docs/XUL:' + propName + ':' + $0;
+var destNewType = '/' + lang + '/docs/XUL/' + propName + '/' + $0;
+
+if (wiki.pageExists(destNewType)) {
+  %><code><%-(web.link(wiki.uri(destNewType), $0))%></code><%
+} else if (wiki.pageExists(destOldType)) {
+  %><code><%-(web.link(wiki.uri(destOldType), $0))%></code><%
+} else {
+  var targeturi = "/docs/new?slug=XUL/" + propName + '/' + api;
+  %><code><a rel="internal" href="<%=targeturi%>" class="new"><%=$0%></a></code><%
+}
+%>

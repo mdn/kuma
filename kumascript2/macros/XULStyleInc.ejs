@@ -1,0 +1,27 @@
+<%
+/* get the page language */
+var lang = env.locale;
+
+/* set up the page name based on language */
+var StyleName = mdn.localString({
+    "en-US" : "Style",
+    "pl"    : "Styl",
+    "ru"    : "Стили"
+});
+
+/* get the Style name */
+var api = $0;
+var destOldType = lang + '/' + 'XUL:' + StyleName + ':' + api;
+var destNewType = lang + '/' + 'XUL/' + StyleName + '/' + api;
+
+if (wiki.pageExists(destNewType)) {
+    /* the page exists from the deki age */
+    %><%-await wiki.page(destNewType)%><%
+} else if (wiki.pageExists(destOldType)) {
+    /* the page exists from the mediawiki age */
+    %><%-await wiki.page(destOldType)%><%
+} else {
+    /* the page doesn't exist */
+    var targeturi = "/docs/new?slug=XUL/" + StyleName + '/' + api;
+    %><code><a rel="internal" href="<%=targeturi%>" class="new"><%=($1 || $0)%></a></code><%
+}%>

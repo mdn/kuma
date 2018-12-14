@@ -1,0 +1,30 @@
+<%
+let page = mdn.localString({
+    "en-US": "inheritance",
+    "de"   : "Vererbung",
+    "es"   : "inheritance",
+    "fr"   : "H%c3%a9ritage",
+    "ja"   : "inheritance",
+    "ko"   : "inheritance",
+    "pl"   : "dziedziczenie",
+    "zh-CN": "inheritance",
+    "zh-TW": "inheritance",
+    "ru"   : "inheritance"
+});
+
+let linkText = mdn.localString({
+    "en-US": "Inherited",
+    "de"   : "Vererbt",
+    "es"   : "Heredable",
+    "fr"   : "Héritée",
+    "ja"   : "継承",
+    "ko"   : "상속",
+    "pl"   : "Dziedziczona",
+    "zh-CN": "是否是继承属性",
+    "zh-TW": "繼承與否",
+    "ru"   : "Наследуется"
+});
+
+let link = "<a href=\"/" + env.locale + "/docs/Web/CSS/$1$\">$2$</a>";
+%>
+<%- mdn.replacePlaceholders(link, [page, linkText]) %>

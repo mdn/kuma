@@ -1,0 +1,16 @@
+<%
+/* $0 = the URL of the previous page */
+/* $1 = the title of the previous page */
+
+var s_text = mdn.localString({
+  "en-US": "Go to Previous Section:",
+  "fr": "Retourner à la section précédente :",
+  "ja": "前章に戻る",
+  "de": "Zurück zur vorherigen Seite:",
+  "ru": "Перейти к предыдущему разделу:"
+});
+
+var result = '<a class="button neutral previousPage" rel="prev" href="' + $0 + '" title="' + $1 +'">' + s_text + '<br />' + $1 + '</a>';
+
+
+%><%- result %>

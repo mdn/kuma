@@ -1,0 +1,25 @@
+<%
+/*
+    Parameters : none
+*/
+
+var titleAttrValue = mdn.localString({
+    "en-US": "This deprecated API should no longer be used, but will probably still work.",
+    "fr"   : "Cette API obsolète ne doit plus être utilisée, mais elle peut continuer à fonctionner.",
+    "ru"   : "Это устаревшее API больше не должно использоваться, но оно по-прежнему может работать.",
+    "ja"   : "これは非推奨 API です。未だ動作しているかも知れませんが、将来的に削除される可能性があります。"
+});
+
+var str = mdn.localString({
+    "en-US": "Deprecated",
+    "fr"   : "Obsolète",
+    "ru"   : "Устарел",
+    "ja"   : "非推奨"
+});
+
+if ($0) {
+    %><span title="<%=titleAttrValue%>"><i class="icon-thumbs-down-alt"> </i></span><%
+} else {
+    %><%-await template("SimpleBadge", [str, "deprecatedBadge", titleAttrValue])%><%
+}
+%>

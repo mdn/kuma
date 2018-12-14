@@ -1,0 +1,18 @@
+<%
+/* creates a link to a method in an interface */
+/* parameters: interface name then method name */
+/* get a page's language (Don't use page.language!) */
+var lang = env.locale;
+var destNewType = lang + '/docs/XPCOM_Interface_Reference/' + $0;
+var destOldType = lang + '/docs/' + $0;
+var apiString = $0 + '.' + $1 + '()';
+if(wiki.pageExists(destNewType)) { /* the page exists from the dekiwiki age */
+    %><code><%-(web.link(wiki.uri(destNewType) + '#' + $1 + '()', apiString))%></code><%
+} else if (wiki.pageExists(destOldType)) { /* the page exists from the mediawiki age */
+    %><code><%-(web.link(wiki.uri(destOldType) + '#' + $1 + '()', apiString))%></code><%
+} else { /* the page doesn't exist */
+  var targeturi = "https://developer.mozilla.org/Article_not_found?uri=" + destNewType +
+        "&ident=" + $0;
+  %><code><a rel="internal" href="<%=targeturi%>" class="new"><%=apiString%></a></code><%
+}
+%>

@@ -1,0 +1,57 @@
+<div class="multiColumnList">
+<ul>
+<%
+/*
+ * Parameters:
+ * $0 = max version to show in the list
+ */
+
+var CURRENT_MAX_VERSION = $0;
+
+var maxVersion = CURRENT_MAX_VERSION;
+var minVersion = maxVersion - 30;
+
+if (minVersion < 4) { minVersion = 4 }
+
+// for href attr
+var slug = mdn.localString({
+    "en-US" : "Releases",
+    "fr" : "Versions"
+});
+
+// for content
+var str = mdn.localString({
+    "fr" : ["Firefox ", " pour les développeurs"],
+    "en-US": ["Firefox ", " for developers"],
+    "ru": ["Firefox ", " для разработчиков"]
+});
+
+var loc = env.locale;
+
+// for newer version
+for (var i = maxVersion; i >= minVersion; i--) {
+    %><li><a href="/<%-loc%>/docs/Mozilla/Firefox/<%- slug %>/<%- i %>"><%- str[0] %><%- i %><%- str[1] %></a></li><%
+}
+
+// for older version
+if (minVersion == 4) {
+  var ov = ["3.6", "3.5", "3", "2", "1.5"];
+  var ovStart = ov.indexOf($0);
+  if (ovStart == -1) {
+    ovStart = 0;
+  }
+  for(var i = ovStart; i < ov.length; i++) {
+      %><li><a href="/<%-loc%>/docs/Mozilla/Firefox/<%- slug %>/<%- ov[i] %>"><%- str[0] %><%-ov[i]%><%- str[1] %></a></li><%
+  }
+}
+
+/*
+    This template is difficult. Because, old "fr" page have other rule...
+    If the URL of your country's page is the same as the English pages,
+    You just have to add your country into the object in argument of mdn.localString.
+
+    And, some old pages have this link: "https://developer.mozilla.org/en-US/docs/Updating_web_applications_for_Firefox_3"
+*/
+
+%></ul>
+</div>

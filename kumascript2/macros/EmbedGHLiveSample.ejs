@@ -1,0 +1,26 @@
+<%
+// Embeds a live sample from a mdn.github.io GitHub page
+//
+// Parameters:
+//  $0 - The URL of mdn.github.io page (relative)
+//  $1 - The width of the iframe (optional)
+//  $2 - The height of the iframe (optional)
+//
+//  Example call {{EmbedGHLiveSample("canvas-raycaster", 900, 300)}}
+//
+ 
+var str = "";
+var widthHeight = "";
+var url = "https://mdn.github.io/" + $0;
+
+if ($1) {
+    widthHeight = "width='" + $1 + "' ";
+}
+if ($2) {
+    widthHeight += "height='" + $2 + "' ";
+}
+
+str = '<iframe class="live-sample-frame" frameborder="0" ' + widthHeight + 'src="' + url + '"></iframe>';
+
+%>
+<%- str %>

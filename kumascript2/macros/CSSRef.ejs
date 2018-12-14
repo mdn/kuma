@@ -1,0 +1,304 @@
+<%
+// CSS Sidebar
+
+var slug = env.slug;
+var locale = env.locale;
+var pageTags = env.tags;
+var title = env.title;
+var CSSHref = '/' + locale + '/docs/Web/CSS';
+var CSSRefHref = '/' + locale + '/docs/Web/CSS/Reference';
+var output = "";
+
+// slug is not available in preview mode.
+if (slug) {
+    var name = slug.replace('Web/CSS/','').split('/')[0];
+    var hasTag = page.hasTag;
+    var escapeQuotes = mdn.escapeQuotes;
+    var htmlEscape = kuma.htmlEscape;
+    var rtlLocales = ['ar', 'he', 'fa'];
+
+    var propertiesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/properties.json";
+    var atRulesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/at-rules.json";
+    var selectorsUrl = "https://raw.githubusercontent.com/mdn/data/master/css/selectors.json";
+    var typesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/types.json";
+    var syntaxesUrl = "https://raw.githubusercontent.com/mdn/data/master/css/syntaxes.json";
+    var unitsUrl = "https://raw.githubusercontent.com/mdn/data/master/css/units.json";
+    var data = {
+        properties: await MDN.fetchJSONResource(propertiesUrl),
+        atRules: await MDN.fetchJSONResource(atRulesUrl),
+        selectors: await MDN.fetchJSONResource(selectorsUrl),
+        types: await MDN.fetchJSONResource(typesUrl),
+        syntaxes: await MDN.fetchJSONResource(syntaxesUrl),
+        units: await MDN.fetchJSONResource(unitsUrl)
+    };
+    var commonl10n = string.deserialize(await template('L10n:Common'));
+    var cssl10n = string.deserialize(await template('L10n:CSS'));
+
+    var text = {
+        'Properties': mdn.getLocalString(commonl10n, 'Properties'),
+        'translate': mdn.getLocalString(commonl10n, '[Translate]'),
+        'title': mdn.getLocalString(commonl10n, 'TranslationCTA'),
+        'css_ref_title': mdn.getLocalString(cssl10n, 'css_ref_title'),
+        'at_rules': mdn.getLocalString(cssl10n, 'at_rules'),
+        'types': mdn.getLocalString(cssl10n, 'types'),
+        'Guides': mdn.getLocalString(commonl10n, 'Guides'),
+        'tag_selectors':  mdn.getLocalString(cssl10n, 'tag_selectors'),
+        'Basic Selectors': mdn.getLocalString(cssl10n, 'Basic Selectors'),
+        'Pseudo-classes': mdn.getLocalString(cssl10n, 'Pseudo-classes'),
+        'Pseudo-elements': mdn.getLocalString(cssl10n, 'Pseudo-elements'),
+        'Combinators': mdn.getLocalString(cssl10n, 'Combinators')
+    }
+
+    function isAtRule(foo) {
+      return foo.indexOf('@') !== -1;
+    }
+
+    function isType(foo) {
+      return foo.indexOf('<') !== -1 && foo.indexOf('>') !== -1;
+    }
+
+    function containsTag(tagList, tag) {
+        if (!tagList || typeof tagList == 'undefined') return 0;
+        tag = tag.toLowerCase();
+        for (var i = 0, len = tagList.length; i < len; i++) {
+            if (tagList[i].toLowerCase() == tag) return 1;
+        }
+        return 0;
+    }
+
+    var group = [];
+    var isSelector = containsTag(pageTags, text['tag_selectors']) || slug.indexOf(':') !== -1;
+    var isOverviewPage = slug.indexOf("_") !== -1 && !isType(title);
+
+    if (isOverviewPage && !isSelector) {
+      group.push(name.replace(/_/g, ' '));
+    } else if (isSelector) {
+      group.push('CSS Selectors');
+    } else {
+        name = name.toLowerCase();
+        // Find group of this page in CSSData
+        if (isAtRule(slug) && data.atRules[name] && data.atRules[name].groups) {
+            group = group.concat(data.atRules[name].groups);
+        } else if (data.properties[name] && data.properties[name].groups) {
+            group = group.concat(data.properties[name].groups);
+        } else if (isType(title)) {
+            var cleanType = title;
+            if (!(cleanType in data.types)) {
+                // https://github.com/mdn/data/pull/81 was merged
+                cleanType = title.replace('<', '').replace('>', '');
+            }
+            if (data.types[cleanType] && data.types[cleanType].groups) {
+                group = group.concat(data.types[cleanType].groups);
+            }
+        }
+    }
+
+    var groupData = [];
+    var properties = [];
+    var atRules = [];
+    var selectors = [];
+    var types = [];
+
+    // I am a selector or a type, we want to list all of them.
+    if (isSelector) {
+      for (var selector in data.selectors) {
+        groupData.push(selector);
+      }
+    } else {
+        // I am a property or an at-rule
+        // Find other properties, at-rules or types with these groups
+        for (var property in data.properties) {
+            var propertyGroup = data.properties[property].groups;
+            for (var g in propertyGroup) {
+                if (group.indexOf(propertyGroup[g]) !== -1 &&
+                        groupData.indexOf(property) === -1) {
+                    groupData.push(property);
+                }
+            }
+        }
+        for (var atRule in data.atRules) {
+            var atRuleGroup = data.atRules[atRule].groups;
+            for (var g in atRuleGroup) {
+                if (group.indexOf(atRuleGroup[g]) !== -1 &&
+                        groupData.indexOf(atRule) === -1) {
+                    groupData.push(atRule);
+                }
+            }
+        }
+        for (var type in data.types) {
+            var typeGroup = data.types[type].groups;
+            for (var g in typeGroup) {
+                if (group.indexOf(typeGroup[g]) !== -1 &&
+                        groupData.indexOf(type) === -1) {
+                    groupData.push(type);
+                }
+            }
+        }
+    }
+
+    // Load the CSS pages data, gather info for the found properties and atRules
+    var pageList = await page.subpagesExpand('/en-US/docs/Web/CSS');
+    for (var i in pageList) {
+      var aPage = pageList[i];
+      for (var x in groupData) {
+        if (aPage.slug.split("/").pop() === groupData[x].replace(/ /g, '_')) {
+          if (isAtRule(groupData[x])) {
+            atRules.push(aPage);
+          } else if (aPage.slug.indexOf('selectors') !== -1 ||
+                aPage.slug.indexOf('combinator') !== -1 ||
+                aPage.slug.indexOf(':') !== -1 ) {
+            selectors.push(aPage);
+          } else {
+            properties.push(aPage);
+          }
+        } else if (aPage.title === groupData[x] && isType(groupData[x])) {
+            types.push(aPage);
+        }
+      }
+    }
+
+    if (isSelector) {
+      var selectorData = data.selectors;
+      var selectorCollection = {};
+      for (var selector in selectorData) {
+          var g = selectorData[selector].groups[0];
+          for (s in selectors) {
+            var aPage = selectors[s];
+            if(aPage.slug.split("/").pop().replace(/_/g, ' ') === selector) {
+                if (g in selectorCollection) {
+                    selectorCollection[g].push(aPage);
+                } else {
+                    selectorCollection[g] = [];
+                    selectorCollection[g].push(aPage);
+                }
+            }
+          }
+      }
+    }
+
+    // Load sub pages of the group
+    var groupPages = [];
+    for (var i = 0; i < group.length; i++) {
+        groupPages = groupPages.concat(await page.subpagesExpand('/en-US/docs/Web/CSS/' + group[i].replace(/ /g, '_')));
+    }
+
+    // output helpers
+    var badges = {
+      ExperimentalBadge : '<span class="sidebar-icon">' + await template("ExperimentalBadge", [1]) + '</span>',
+      NonStandardBadge  : '<span class="sidebar-icon">' + await template("NonStandardBadge", [1]) + '</span>',
+      DeprecatedBadge   : '<span class="sidebar-icon">' + await template("DeprecatedBadge", [1]) + '</span>',
+      ObsoleteBadge     : '<span class="sidebar-icon">' + await template("ObsoleteBadge", [1]) + '</span>',
+    }
+
+    function buildSublist(pages, title, noCodeTags) {
+      var result = '<li class="toggle"><details open><summary>' + title + '</summary><ol>';
+      var code    = !noCodeTags ? '<code>'  : '';
+      var endcode = !noCodeTags ? '</code>' : '';
+
+      for (var i in pages) {
+        var aPage = pages[i];
+        var summary = escapeQuotes(aPage.summary) || '';
+        var url = aPage.url.replace('en-US', locale);
+        var title = htmlEscape(aPage.title);
+
+        var translated = false;
+        if (locale != 'en-US') {
+            aPage.translations.forEach(function(translation){
+                if(translation.locale === locale) {
+                    summary = escapeQuotes(translation.summary) || '';
+                    url = translation.url;
+                    title = htmlEscape(translation.title);
+                    translated = true;
+                }
+            });
+        }
+
+        var cta = '';
+         if (!translated && locale != 'en-US') {
+            cta += ' <a href="'+ url +'$translate" style="opacity:0.5" title="'+ text['title'] + '">' + text['translate'] + '</a>';
+        }
+
+        result += '<li>';
+
+        if (hasTag(aPage, 'Experimental')) {
+            result += badges.ExperimentalBadge;
+        }
+
+        if (hasTag(aPage, 'Non-standard') || hasTag(aPage, 'Non Standard')) {
+            result += badges.NonStandardBadge;
+        }
+
+        if (hasTag(aPage, 'Deprecated')) {
+            result += badges.DeprecatedBadge;
+        }
+
+        if (hasTag(aPage, 'Obsolete')) {
+            result += badges.ObsoleteBadge;
+            result += '<s class="obsoleteElement">';
+        }
+
+        if (rtlLocales.indexOf(locale) != -1) {
+            result += '<bdi>';
+        }
+
+        if (slug == aPage.slug) {
+            result += '<em>' + code + title + endcode + '</em>'
+        } else {
+            result += '<a href="' + url + '" title="' + summary + '">' + code + title + endcode + '</a>' + cta;
+        }
+
+        if (rtlLocales.indexOf(locale) != -1) {
+            result += '</bdi>';
+        }
+
+        if (hasTag(aPage, 'Obsolete')) {
+            result += '</s>';
+        }
+
+        result += '</li>';
+      }
+
+      result += '</ol></details></li>';
+
+      return result;
+    }
+
+    // output
+    output = '<section class="Quick_links" id="Quick_Links"><ol>';
+    output += '<li><strong><a href="' +  CSSHref + '">CSS</a></strong></li>';
+    output += '<li><strong><a href="' +  CSSRefHref + '">' + text['css_ref_title'] + '</a></strong></li>';
+
+    for (var i = 0; i < group.length; i++) {
+      output += '<li><strong><a href="' +  CSSHref + '/' + group[i].replace(/ /g, '_') + '">' + group[i] + '</a></strong></li>';
+    }
+
+    if (groupPages.length > 0) {
+      output += buildSublist(groupPages, text['Guides'], true);
+    }
+
+    if (atRules.length > 0) {
+      output += buildSublist(atRules, text['at_rules']);
+    }
+
+    if (properties.length > 0) {
+      output += buildSublist(properties, text['Properties']);
+    }
+
+    if (types.length > 0) {
+      output += buildSublist(types, text['types']);
+    }
+
+    if (isSelector) {
+      for (sg in selectorCollection) {
+        var selectorGroup = selectorCollection[sg];
+        if (selectorGroup.length > 0) {
+          output += buildSublist(selectorGroup, text[sg]);
+        }
+      }
+    }
+
+    output += '</ol></section>';
+}
+%>
+
+<%-output%>

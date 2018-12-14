@@ -1,0 +1,11 @@
+<%
+// Inserts a banner across the page indicating Gecko version requirements.
+// Calls through to the new GeckoVersionIndicator macro, which should be used
+// instead.
+//
+// Parameters:
+//
+//  $0  Gecko version required.
+%>
+
+<%-await template("GeckoVersionIndicator", [2, $0])%>

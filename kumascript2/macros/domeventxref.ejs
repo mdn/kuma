@@ -1,0 +1,43 @@
+<%
+
+/* Used for generating cross-references within the DOM Event documentation.     */
+/* Link to DOM/DOM_event_reference/$0,                                          */
+ /* @param */
+/*   The path of the page to link to, relative to the DOM documentation path.   */
+/* @param [optional] */
+/*   The text to use for the link.  If omitted, the value of the first          */
+/*   parameter will be used */
+/* @param [optional] */
+/*   An anchor to link to on the page. Link text will display as $0.$2 or $1.$2 */
+
+var lang = env.locale;
+
+var api = $0;
+var str = $0;
+
+if ($1 && string.IsLetter($1)) {
+  str = $1;
+}
+
+if (string.endswith($0, '()')) {
+  api = string.remove(api, string.length(api) - 2);
+}
+
+var destNewType = lang + '/docs/DOM/DOM_event_reference/' + api;
+var destEng = 'en-US/docs/DOM/DOM_event_reference/' + api;
+var anch = '';
+
+if ($2) {
+  str = str + '.' + $2;
+  anch = '#' + $2;
+}
+if(wiki.pageExists(destNewType)) { /* the page exists from the dekiwiki age */
+  %><code><%-web.link(wiki.uri(destNewType) + anch,str)%></code><%
+} else if (lang == 'zh-TW' && wiki.pageExists(destEng)){  
+  /* the MozTW community consider links to English pages better than red ones. 
+     I'll write about this to mozilla.dev.mdc later */ 
+  %><code><%-web.link(wiki.uri(destEng) + anch,str)%></code><%
+} else { /* the page doesn't exist */
+  %><code><a rel="internal" href="<%=wiki.uri(destNewType) + anch%>" class="new"><%=str%></a></code><%
+}
+%>

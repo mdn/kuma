@@ -1,0 +1,49 @@
+<%
+// Embeds the contents of a page about the specified XUL attribute.
+//
+// Parameters:
+//  $0  The attribute to embed.
+
+var lang = env.locale;
+
+var attrLocal = mdn.localString({
+    "en-US":    "Attribute",
+    "de":       "Attribute",
+    "es":       "Attribute",
+    "fr":       "Attributs",
+    "ja":       "Attribute",
+    "ko":       "Attribute",
+    "pl":       "Atrybut",
+    "zh-CN":    "Attribute",
+    "ru":       "Атрибуты"
+});
+
+var newPath = mdn.localString({
+    "en-US":    "Mozilla/Tech/XUL/Attribute",
+    "de":       "Mozilla/Tech/XUL/Attribute",
+    "es":       "Mozilla/Tech/XUL/Attribute",
+    "fr":       "Mozilla/Tech/XUL/Attributs",
+    "ja":       "Mozilla/Tech/XUL/Attribute",
+    "ko":       "Mozilla/Tech/XUL/Attribute",
+    "pl":       "Mozilla/Tech/XUL/Atrybut",
+    "zh-CN":    "Mozilla/Tech/XUL/Attribute",
+    "ru":       "Mozilla/Tech/XUL/Атрибуты"
+});
+
+var destOldest = lang + "/docs/XUL:" + attrLocal + ":" + $0;
+var destOld = lang + "/docs/XUL/" + attrLocal + "/" + $0;
+var destNew = lang + "/docs/" + newPath + "/" + $0;
+
+var docPath = null;
+
+if (wiki.pageExists(destNew)) {
+    docPath = destNew;
+} else if (wiki.pageExists(destOld)) {
+    docPath = destOld;
+} else {
+    docPath = destOldest;
+}
+%>
+<div id="<%='a-' + $0%>">
+<%- await wiki.page(docPath) %>
+</div>

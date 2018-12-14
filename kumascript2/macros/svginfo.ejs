@@ -1,0 +1,80 @@
+<%
+/*
+  Displays general information about an SVG element
+
+  $0 - SVG element name - defaults to the slug name (optional, uses last part of URL as default)
+*/
+
+var slug = env.slug;
+var name = $0 || (slug ? slug.split("/").pop() :
+    "preview-wiki-content");
+var data = string.deserialize(await template("SVGData"));
+var formattedError = "<span style=\"color:red;\">$1$</span>";
+var commonLocalStrings = string.deserialize(await template("L10n:Common"));
+var localStrings = string.deserialize(await template("L10n:SVG"));
+
+var localize = mdn.getLocalString;
+var replacePlaceholders = mdn.replacePlaceholders;
+
+var svgInfo = data.elements[name];
+var result = "";
+
+if (name === "preview-wiki-content") {
+    result = "<span style=\"color:red;\">" +
+        localize(localStrings, "info_in_preview_not_available") + "</span>";
+} else if (svgInfo) {
+    var properties = [];
+
+    // Add categories
+    var categories = svgInfo.categories.map(function(category) {
+        return localize(localStrings, category);
+    });
+    properties.push({
+        label: localize(localStrings, "categories"),
+        value: categories.join(localize(commonLocalStrings, "listSeparator"))
+    });
+
+    // Add permitted content
+    var permittedContent = typeof svgInfo.content.description === "string" ?
+        mdn.getLocalString(localStrings, svgInfo.content.description) :
+        mdn.localString(svgInfo.content.description);
+    if (svgInfo.content.elements) {
+        var elementGroups = [];
+        var elements = [];
+        for (var i = 0; i < svgInfo.content.elements.length; i++) {
+            var element = svgInfo.content.elements[i];
+            var link = "";
+            if (element.indexOf("&lt;") !== -1) {
+                elements.push(await template("SVGElement",
+                    [element.replace(/&lt;|&gt;/g, "")]));
+            } else {
+                var anchor = element.replace(/[A-Z]/g, function(match) {
+                        return "_" + match.toLowerCase();
+                    }).replace(/^./, function(match) {
+                        return match.toUpperCase();
+                    });
+                elementGroups.push("<a href=\"/" + env.locale +
+                    "/docs/Web/SVG/Element#" + anchor + "\">" +
+                    localize(localStrings, element) + "</a>");
+            }
+        }
+
+        if (elementGroups.length !== 0) {
+          permittedContent += "<br/>" + elementGroups.join("<br/>");
+        }
+        if (elements.length !== 0) {
+            permittedContent += "<br/>" + elements.join(localize(
+                commonLocalStrings, "listSeparator"));
+        }
+    }
+    properties.push({
+        label: localize(localStrings, "permittedContent"),
+        value: permittedContent
+    });
+
+    result = await template("propertiesbox", [string.serialize(properties)]);
+} else {
+    result = replacePlaceholders(formattedError,
+        [localize(commonLocalStrings, "missing")]);
+}
+%><%- result %>

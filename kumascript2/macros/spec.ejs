@@ -1,0 +1,91 @@
+<%/*
+********************************************************************************
+* WARNING: Do not use this template anymore. It leads to unmaintainable pages  *
+* Exclusively use compatibility tables with the Spec2 and SpecName templates   *
+********************************************************************************
+
+Inserts a link to W3C specification. (OPTION: Insert states Indicator.)
+    https://developer.mozilla.org/en-US/docs/Project:Custom_Templates#Template.3Aspec
+
+parameters: 
+    $0 = link to specification 
+	$1 = link text (optional) 
+	$2 = status of specification (optional). Possible values: ED, WD, LC, CR, PR, REC. ( Lowercase O.K ! )
+*/
+
+var lang = env.locale,
+    status = ($2).toUpperCase(),
+    title = "",
+    color = "#fff",
+    bgcolor = "",
+    titles = [],
+    bgc = ["#e61919", "#e66e33", "#e2a669", "#cfd510", "#72ac35", "#309c40", "#000"];
+
+function setting(i) { bgcolor = bgc[i]; title = titles[i]; }
+
+
+
+/*	=	=	=	=	=	Localize	=	=	=	=	=	=	*/
+switch(lang) {	
+    case "de":
+		titles = [ "Editor's Draft (unofficial)", "Working Draft", "Last Call", "Candidate Recommendation", "Proposed Recommendation", "Recommendation" ];
+		break;
+    case "es":
+		titles = [ "Editor's Draft (unofficial)", "Working Draft", "Last Call", "Candidate Recommendation", "Proposed Recommendation", "Recommendation" ];
+		break;
+    case "fr":
+		titles = [ "Editor's Draft (unofficial)", "Working Draft", "Last Call", "Candidate Recommendation", "Proposed Recommendation", "Recommendation" ];
+		break;
+	case "he":
+		titles = [ "Editor's Draft (unofficial)", "Working Draft", "Last Call", "Candidate Recommendation", "Proposed Recommendation", "Recommendation" ];
+		break;
+    case "it":
+		titles = [ "Editor's Draft (unofficial)", "Working Draft", "Last Call", "Candidate Recommendation", "Proposed Recommendation", "Recommendation" ];
+		break;
+	case "ja":
+		titles = [ "草案（非公式）", "草案", "最終草案", "勧告候補", "勧告案", "W3C 勧告" ];
+		break;
+    case "ko":
+    	titles = [ "Editor's Draft (unofficial)", "Working Draft", "Last Call", "Candidate Recommendation", "Proposed Recommendation", "Recommendation" ];
+		break;
+    case "pl":
+		titles = [ "Editor's Draft (unofficial)", "Working Draft", "Last Call", "Candidate Recommendation", "Proposed Recommendation", "Recommendation" ];
+		break;
+    case "pt-BR":
+    	titles = [ "Editor's Draft (unofficial)", "Working Draft", "Last Call", "Candidate Recommendation", "Proposed Recommendation", "Recommendation" ];
+		break;
+    case "pt-PT":
+		titles = [ "Editor's Draft (unofficial)", "Working Draft", "Last Call", "Candidate Recommendation", "Proposed Recommendation", "Recommendation" ];
+		break;
+    case "ru":
+    	titles = [ "Редакторский черновик (неофициальный)", "Рабочий черновик", "Последнее изменение", "Кандидат в рекомендации", "Предложенная рекомендация", "Рекомендация" ];
+		break;
+	case "zh-CN":
+		titles = [ "编辑草案(非官方)", "工作草案", "Last Call", "候选标准", "推荐标准", "正式标准" ];
+		break;
+    case "zh-TW":
+		titles = [ "Editor's Draft (unofficial)", "Working Draft", "Last Call", "Candidate Recommendation", "Proposed Recommendation", "Recommendation" ];
+		break;
+    default:
+		titles = [ "Editor's Draft (unofficial)", "Working Draft", "Last Call", "Candidate Recommendation", "Proposed Recommendation", "Recommendation" ];
+		break;
+}/*	=	=	=	=	=	=	=	=	=	=	=	=	=	=	*/
+
+
+
+switch(status) {
+    case 'ED':	setting(0); break;
+    case 'WD':	setting(1); break;
+    case 'LC':	setting(2); break;
+    case 'CR':	setting(3); break;
+    case 'PR':	setting(4); break;
+    case 'REC':	setting(5); break;
+	default:	setting(6); break;
+}%><%- web.link( $0, ($1 || $0) ) %><%
+if ($2) {
+	%><span <%
+		%>title="<%=title%>" <%
+		%>style="color:<%-color%>;<%
+		%>background:<%-bgcolor%>;<%
+		%>display:inline-block; font-size:x-small; margin-left:6px; white-space:nowrap; padding:2px 5px;"><%- status %></span><%
+} %>

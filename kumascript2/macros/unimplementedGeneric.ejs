@@ -1,0 +1,77 @@
+<%
+/*
+ * first parameter: inline/header/method
+ * second parameter: (optional) bug number
+ * third parameter: additional information required for the type specified by the first parameter
+ *   method requires the method name
+ * fourth parameter: (optional) Product bug eg. Mozilla(default), WebKit
+*/
+
+var product = ($3 || "Mozilla");
+
+var s_str = mdn.localString({
+    "ca" : ["Unimplemented", "see"],
+    "cs" : ["Unimplemented", "see"],
+    "de" : ["Nicht implementiert", "siehe"],
+    "el" : ["Unimplemented", "see"],
+    "es" : ["No implementado", "mira"],
+    "fa" : ["Unimplemented", "see"],
+    "fi" : ["Unimplemented", "see"],
+    "fr" : ["Non implémenté", "voir"],
+    "he" : ["Unimplemented", "see"],
+    "hr" : ["Unimplemented", "see"],
+    "hu" : ["Unimplemented", "see"],
+    "id" : ["Unimplemented", "see"],
+    "it" : ["Unimplemented", "see"],
+    "ja" : ["未実装", "参照"],
+    "ka" : ["Unimplemented", "see"],
+    "ko" : ["Unimplemented", "see"],
+    "ms" : ["Unimplemented", "see"],
+    "nl" : ["Unimplemented", "see"],
+    "pl" : ["Unimplemented", "see"],
+    "ro" : ["Unimplemented", "see"],
+    "ru" : ["Не реализовано", "смотрите"],
+    "sq" : ["Unimplemented", "see"],
+    "th" : ["Unimplemented", "see"],
+    "tr" : ["Unimplemented", "see"],
+    "vi" : ["Unimplemented", "see"],
+    "bn-BD" : ["Unimplemented", "see"],
+    "fy-NL" : ["Unimplemented", "see"],
+    "ga-IE" : ["Unimplemented", "see"],
+    "pt-BR" : ["Unimplemented", "see"],
+    "pt-PT" : ["Unimplemented", "see"],
+    "zh-CN" : ["未实现", "查看"],
+    "zh-TW" : ["Unimplemented", "see"],
+    "en-US" : ["Unimplemented", "see"]
+});
+
+var str = s_str[0];
+
+if ($1 && $0 != 'method') {
+  switch(product.toLowerCase()) {
+    case 'mozilla':
+      str += " (" + s_str[1] + " " + await template("bug", [$1]) + ")";
+    break;
+    case 'webkit':
+      str += " (" + s_str[1] + " " + await template("WebkitBug", [$1]) + ")";
+    break;
+  }
+}
+
+switch($0) {
+  case 'inline':
+    %><span class="inlineIndicator unimplemented unimplementedInline"><%-str%></span><%
+    break;
+  case 'header':
+    %><div class="blockIndicator unimplemented unimplementedHeader">
+      <p><%-str%></p>
+      </div><%
+    break;
+  case 'method':
+    %><div>
+      <span class="indicatorInHeadline unimplemented unimplementedMethod"><%- str %></span>
+      <h3><%= $2 %>()</h3>
+      </div><%
+    break;
+}
+%>

@@ -36,6 +36,12 @@ class Requester(object):
         return self._session
 
     def request(self, path, raise_for_status=True, method='GET'):
+        # When doing a long-running recursive scrape, you may find
+        # it useful to uncomment the following two lines. The sleep
+        # helps to avoid rate-limiting, and the print allows you to
+        # monitor the progress of your scrape.
+        # time.sleep(1)
+        # print path
         url = self.base_url + path
         logger.debug("%s %s", method, url)
         attempts = 0

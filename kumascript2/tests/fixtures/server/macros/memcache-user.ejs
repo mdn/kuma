@@ -1,0 +1,11 @@
+<%
+var key = 'test-cache';
+var value1 = cacheFn(key, 3600, function (next) {
+    next("Cached");
+});
+var value2 = cacheFn(key, 3600, function (next) {
+    next("THIS SHOULDN'T BE EXECUTED");
+});
+var used_cache = (value1 == value2);
+%>
+<%= used_cache %>

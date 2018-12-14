@@ -1,0 +1,20 @@
+<%
+var str = "Not available to workers ";
+var title = "This feature cannot be used to Web Workers.";
+
+switch(env.locale) {
+    case "ja":
+        str = "読取専用 ";
+        break;
+    case "fr":
+        str = "Non disponible dans les workers ";
+        title = "Cette fonction n'est pas accessible dans un worker Web.";
+        break;
+    case "ru":
+        str = "Не доступно в workers ";
+        title = "Эту возможность нельзя использовать в Web Workers."
+    default:
+        break;
+}
+
+%><span title="<%= title %>" class="inlineIndicator unimplemented unimplementedInline"><%= str %></span>

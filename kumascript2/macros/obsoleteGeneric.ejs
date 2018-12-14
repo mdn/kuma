@@ -1,0 +1,131 @@
+<%/*
+$0 : inline / header / method"
+$1 : version of obsolescence (optional)
+    prepend version with HTML, CSS, JS, JSAPI, or Gecko for those techs
+$3 : additional information required for the type specified by the first parameter
+    method requires the method name
+*/
+
+var lang = env.locale;
+
+var str = "";
+var ver = "";
+var link = "";
+var tip = "";
+
+if ($1) {
+    var t = string.tolower($1);
+    var n = "";
+
+    if (string.startswith(t, "jsapi")) {
+        n = string.trim(string.substr(t, 5));
+        ver = "JSAPI ";
+    } else if (string.startswith(t, "js")) {
+        n = string.trim(string.substr(t, 2));
+        ver = "JavaScript ";
+        if (string.length(n) > 0) {
+            if(wiki.pageExists('/' + lang + '/docs/JavaScript/New_in_JavaScript/' + n)) {
+                link = '/' + lang + '/docs/JavaScript/New_in_JavaScript/' + n;
+            } else if(wiki.pageExists('/en-US/docs/JavaScript/New_in_JavaScript/' + n)) {
+                link = '/en-US/docs/JavaScript/New_in_JavaScript/' + n;
+            }
+        }
+    } else if (string.startswith(t, "css")) {
+        n = string.trim(string.substr(t, 3));
+        ver = "CSS ";
+    } else if (string.startswith(t, "html")) {
+        n = string.trim(string.substr(t, 4));
+        ver = "HTML";
+        if (n < 5) {
+            if(wiki.pageExists('/' + lang + '/docs/HTML')) {
+                link = '/' + lang + '/docs/HTML';
+            } else {
+                link = '/en-US/docs/HTML';
+            }
+        } else {
+            if(wiki.pageExists('/' + lang + '/docs/HTML/HTML' + n)) {
+                link = '/' + lang + '/docs/HTML/HTML' + n;
+            } else {
+                link = '/en-US/docs/HTML/HTML' + n;
+            }
+        }
+    } else if (string.startswith(t, "gecko")) {
+        n = string.trim(string.substr(t, 5));
+        ver = "Gecko ";
+        tip = await template('geckoRelease', [n]);
+    }
+
+    n = string.trim(n);
+
+    ver = (string.length(n) > 0) ? ver + n: "";
+}
+
+if (string.length(link)) { ver = web.link(link, ver); }
+
+switch(lang) {
+    case 'de':
+        str = "Veraltet";
+        if (string.length(ver)) { str = str + " seit " + ver; }
+        break;
+    case 'es':
+        str = "Obsoleto";
+        if (string.length(ver)) { str = str + " " + ver; }
+        break;
+    case 'fr':
+        str = "Obsolète";
+        if (string.length(ver)) { str = str + " depuis " + ver; }
+        break;
+    case 'ja':
+        str = "廃止"; if (string.length(ver)) { str = ver + " で" + str; }
+        break;
+    case 'ko':
+        str = "안씀";
+        if (string.length(ver)) { str = str + " " + ver; }
+        break;
+    case 'pl':
+        str = "Przestarzały";
+        if (string.length(ver)) { str = str + " " + ver; }
+        break;
+    case 'ru':
+        str = "Вышла из употребления";
+        if (string.length(ver)) { str = str + " с версии " + ver; }
+        break;
+    case 'zh-TW':
+        str = "已過時";
+        if (string.length(ver)) { str = str + " " + ver; }
+        break;
+    case 'zh-CN':
+        str = "已废弃";
+        if (string.length(ver)) { str = str + " " + ver; }
+        break;
+    default:
+        str = "Obsolete";
+        if (string.length(ver)) { str = str + " since " + ver; }
+        break;
+}
+
+var str_desc = mdn.localString({
+  "en-US": "This feature is obsolete. Although it may still work in some browsers, its use is discouraged since it could be removed at any time. Try to avoid using it.",
+  "de":    "Dieses Feature ist veraltet. Obwohl es in manchen Browsern immer noch funktioniert, wird von seiner Benutzung abgeraten, da es jederzeit entfernt werden kann. Es sollte daher nicht mehr verwendet werden.",
+  "fr":    "Cette fonctionnalité est obsolète. Bien qu'encore supportée par des navigateurs, son utilisation est découragée pour tout nouveau projet. Évitez de l'utiliser.",
+  "es":    "Esta funcionalidad es obsoleta. Aunque puede aún funcionar en algunos navegadores, se desalienta su uso ya que puede ser removida en cualquier momento. Evite usarla.",
+  "ja":    "この機能は廃止されました。まだいくつかのブラウザーで動作するかもしれませんが、いつ削除されてもおかしくないので、使わないようにしましょう。",
+  "ru":    "Эта возможность вышла из употребления. Хотя она может продолжать работать в некоторых браузерах, её использование не рекомендуется, поскольку она может быть удалена в любое время. Старайтесь избегать её использования."
+});
+
+switch($0) {
+    case 'inline':
+        %><span title="<%=tip%>" class="inlineIndicator obsolete obsoleteInline"><%-str%></span><%
+        break;
+    case 'header':
+        if (string.length(tip)) { str = str + " " + tip; }
+        %><div class="blockIndicator obsolete obsoleteHeader"><p><strong><%-await template("ObsoleteBadge", [1])%> <%-str%></strong><br/><%-str_desc%></p></div><%
+        break;
+    case 'method':
+        if (string.length(tip)) { str = str + " " + tip; }
+        %><div class="headingWithIndicator">
+        <h3><%- $2 %>()</h3>
+        <span class="indicatorInHeadline obsolete obsoleteMethod"><%- str %></span>
+        </div><%
+        break;
+}%>

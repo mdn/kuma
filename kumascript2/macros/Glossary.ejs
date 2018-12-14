@@ -1,0 +1,67 @@
+<%
+// Inserts a link to a term's entry in our glossary.
+// Appropriate styling is applied.
+//
+// Parameters:
+//
+//  $0 - Term name
+//  $1 - name to display (optional)
+//  $2 - Remove custom style on links; boolean (optional)
+
+let str = $1 || $0;
+let css = !$2 ? "glossaryLink" : "";
+
+// Terme location
+let URL_EN = "/en-US/docs/Glossary/";
+let URL    = mdn.localString({
+    "ar"   : "/ar/docs/Glossary/",
+    "bg"   : "/bg/docs/Речник/",
+    "de"   : "/de/docs/Glossary/",
+    "en-US": URL_EN,
+    "es"   : "/es/docs/Glossary/",
+    "fr"   : "/fr/docs/Glossaire/",
+    "ja"   : "/ja/docs/Glossary/",
+    "pt-BR": "/pt-BR/docs/Glossario/",
+    "ru"   : "/ru/docs/Словарь/",
+    "uk"   : "/uk/docs/Glossary/"
+});
+
+let sep = mdn.localString({
+    "en-US":": ",
+    "fr"   :"&nbsp;: "
+});
+
+URL_EN += $0.replace(/\s+/g,'_');
+URL    += $0.replace(/\s+/g,'_');
+
+let page    = await wiki.getPage(URL);
+let summary = mdn.localString({
+    "ar"   : "لم يتم تعريف المصطلح ("+ str +") بعد، يرجى النظر في المساهمة بتعريفه!",
+    "bg"   : "Все още няма определение за понятието „" + str + "“. Моля, създайте го.",
+    "de"   : "Die Definition dieses Ausdrucks (" + str + ") wurde noch nicht geschrieben; bitte hilf mit und trage sie bei!",
+    "en-US": "The definition of that term (" + str + ") has not been written yet; please consider contributing it!",
+    "es"   : "La definición de ese término (" + str + ") no se ha escrito todavía; por favor considera contribuir escribiendola!",
+    "fr"   : "La définition de ce terme («&nbsp;"+ str +"&nbsp;») n'a pas encore été rédigée. Nous serions heureux de vous voir l'écrire&nbsp;!",
+    "ja"   : "この用語 (" + str + ") の定義はまだ書かれていません。ぜひご寄稿ください！",
+    "ru"   : "Определение термина «" + str + "» ещё не написано; может быть, вы напишете?",
+    "uk"   : "Визначення терміна «" + str + "» на разі відсутнє. Додайте самі, коли ваша ласка."
+});
+
+if (page && page.summary) {
+    summary = str + sep + mdn.escapeQuotes(page.summary);
+} else if (env.locale !== "en-US") {
+    page = await wiki.getPage(URL_EN);
+    URL  = URL_EN.replace('en-US', env.locale);
+    if (page && page.translations && page.translations.length > 0) {
+        for(let obj of page.translations) {
+            if (obj.locale === env.locale) {
+                URL  = obj.url;
+                page = await wiki.getPage(URL);
+                if (page && page.summary) {
+                    summary = str + sep + mdn.escapeQuotes(page.summary);
+                }
+            }
+        }
+    }
+}
+%><a href="<%- URL %>" title="<%-summary%>" class="<%-css%>"><%= str %></a>

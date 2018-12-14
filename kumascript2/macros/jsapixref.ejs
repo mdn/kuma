@@ -1,0 +1,38 @@
+<%
+// Inserts a link to a JS API's documentation in the JSAPI Reference.
+// Appropriate styling is applied.
+//
+// Parameters:
+//
+//  $0 - API name
+//  $1 - name to display (optional)
+//  $2 - anchor (#xyz) (optional)
+//  $3 - If set, do not put the text in <code></code>
+//
+
+var l10n = {
+    summary : mdn.localString({
+        "en-US": "The documentation about this has not yet been written; please consider contributing!",
+        "ru"   : "Документация об этом ещё не написана; пожалуйста, поспособствуйте её написанию!",
+        "zh-CN": "此页面仍未被本地化, 期待您的翻译!",
+        "fr": "Cette documentation n'a pas encore été rédigée, vous pouvez aider en contribuant&nsbp!"
+    })
+};
+
+
+var str = $1 || $0;
+var api  = $0.replace('()', '');
+var URL = "/" + env.locale + "/docs/Mozilla/Projects/SpiderMonkey/JSAPI_reference/" + api;
+
+var summary = l10n.summary;
+page = await wiki.getPage(URL);
+
+if (page && page.summary) {
+    summary = mdn.escapeQuotes(page.summary);
+}
+
+
+var code    = !$3 ? '<code>'  : '';
+var endcode = !$3 ? '</code>' : '';
+
+%><a href="<%- URL + $2 %>" title="<%-summary%>"><%- code %><%= str %><%- endcode %></a>

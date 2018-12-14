@@ -1,0 +1,58 @@
+<%
+// Outputs a two-column view for the input HTML, which must be a <dl>
+// list.
+//
+// Parameters:
+//
+//  $0  The HTML containing a <dl> to turn into a two column menu.
+
+var html = $0;
+var len = html.length;
+
+// Adds translation of "There are no subpages at this time."
+var s_subpages_text = 'There are no subpages at this time.';
+switch (env.locale) {
+    case 'ru':
+        s_subpages_text = 'В настоящее время подстраниц нет.';
+        break;
+    default: break;
+}
+
+if (len) {
+    var items = html.split("<dt ");
+    //items.shift();  // The first item is empty here since the string should start with "<dt"
+    var sum = 0;
+    var lengths = items.map(function(v) {
+        sum += v.length;
+        return v.length;
+    });
+        
+    var n = 0;
+    var ts = 0;
+    
+    // Figure out how many items go in the first column. If there are only
+    // two items in the list, this is always 1, to be sure both columns
+    // have content.
+    
+    if (items.length <= 2) {
+        n = 1;
+    } else {
+        while (ts < sum/2) {
+            ts += lengths[n++];
+        }
+    }
+    
+    //var col1 = ""; //items[0];
+    var col1 = items[0] + "<dt " + items.slice(1, n).join("<dt ");
+    var col2 = "<dt " + items.slice(n, items.length).join("<dt ");
+    
+    %>
+    <div class="row topicpage-table">
+    <div class="section"><dl><%-col1%></dl></div>
+    <div class="section"><dl><%-col2%></dl></div>
+    </div>
+    <%
+} else {
+    %><p><strong><%-s_subpages_text%></strong></p><%
+}
+%>

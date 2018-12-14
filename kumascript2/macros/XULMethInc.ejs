@@ -1,0 +1,39 @@
+<%
+var lang = env.locale;
+
+
+/* set up the page name based on language */
+var methodName = "Method";
+
+switch(lang) {
+    case 'de':
+        methodName = "Methoden";
+        break;
+    case 'fr':
+        methodName = "Méthodes";
+        break;
+    case 'pl':
+        methodName = "Metoda";
+        break;
+    case 'ru':
+        methodName = "Методы";
+        break;
+    default:
+        break;
+}
+
+
+/* get the method name */
+var api = $0;
+var destOldType = lang + '/docs/' + 'XUL:' + methodName + ':' + api;
+var destNewType = lang + '/docs/' + 'Mozilla/Tech/XUL/' + methodName + '/' + api;
+
+if (wiki.pageExists(destNewType)) { /* the page exists from the deki age */
+    %><%-await template("page", [destNewType])%><%
+} else if(wiki.pageExists(destOldType)) { /* the page exists from the mediawiki age */
+    %><%-await template("page", [destOldType])%><%
+} else { /* the page doesn't exist */
+    var targeturi = "/docs/new?slug=Mozilla/Tech/XUL/" + methodName + "/" + api;
+    %><code><a href="<%=targeturi%>" class="new"><%=(api)%></a></code><%
+}
+%>

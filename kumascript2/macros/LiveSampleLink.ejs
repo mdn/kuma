@@ -1,0 +1,12 @@
+<%
+// Links to a live sample given the ID of its header block.
+//
+// Example: {{ LiveSampleLink('Full_IndexedDB_example', "Test the online live demo") }}
+//
+// Parameters:
+//  $0 - The ID of the header block containing the sample
+//  $1 - The link label
+//
+// See also : EmbedLiveSample
+%>
+<a href="<%= await template('LiveSampleURL', [$0]) %>"><%=$1%></a>

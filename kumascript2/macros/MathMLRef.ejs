@@ -1,0 +1,54 @@
+<%
+function containsTag(tagList, tag) {
+    if (!tagList || tagList == undefined) return 0;
+    tag = tag.toLowerCase();
+    for (var i = 0, len = tagList.length; i < len; i++) {
+        if (tagList[i].toLowerCase() == tag) return 1;
+    }
+    return 0;
+}
+
+function safe_tags(str) {
+    return str.replace(/</g,'&lt;').replace(/>/g,'&gt;') ;
+}
+
+var s_mathml_ref_href = '/en-US/docs/Web/MathML/Element';
+var s_mathml_ref_title = 'MathML Reference';
+var s_mathml_element_tag = 'MathML:Element';
+
+switch (env.locale) {
+    case 'de':
+        s_mathml_ref_href = '/de/docs/Web/MathML/Element';
+        s_mathml_ref_title = 'MathML Referenz';
+        s_mathml_element_tag = 'MathML:Element';
+        break;
+    case 'ru':
+        s_mathml_ref_href = '/ru/docs/Web/MathML/Element';
+        s_mathml_ref_title = 'Руководство MathML';
+        s_mathml_element_tag = 'MathML:Element';
+        break;
+    default: break;
+}
+
+// Find the pages of s_mathml_ref_href that are tagged with s_mathml_element_tag
+var pageList = await page.subpagesExpand(s_mathml_ref_href);   // Get subpages, including tags
+var result = [];
+
+for (aPage in pageList) {
+    if (containsTag(pageList[aPage].tags, s_mathml_element_tag)) {
+        result.push(pageList[aPage]);
+    }
+}
+%>
+
+<section class="Quick_links" id="Quick_Links">
+    <ol>
+        <li><strong><a href="<%=s_mathml_ref_href%>"><%=s_mathml_ref_title%></a></strong>
+
+        <% for (aPage in result) { %>
+            <li><a href="<%-result[aPage].url%>"><%-safe_tags(result[aPage].title)%></a></li>
+        <% } %>
+        
+        </li>  
+    </ol>
+</section>

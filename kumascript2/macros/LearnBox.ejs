@@ -1,0 +1,88 @@
+<%
+// This template display a box with a random article to learn from
+//
+// Params
+// $0 (optional): A configuration object with the following properties (all optional)
+//   title  : A string representing the title of the box
+//            Default is "What to learn today?" (localized)
+//   sources: A string or Array of strings representing a root URL where to pick the article to display.
+//            Default is "/en-US/docs/Glossary" (localized)
+//   tags   : A string or Array of strings the article must match to be displayed.
+//            If a tag is prefixed with "!" it indicate that the article must NOT match that tag
+//            Default is [] which means no specific tags required
+
+// L10N
+// ----------------------------------------------------------------------------
+var l10n = {
+    title: mdn.localString({
+        "en-US": "Something to learn about...",
+        "fr"   : "Qu'apprendre aujourd'hui ?",
+        "ru"   : "Узнать о чём-то..."
+    }),
+    
+    src: await (async function () {
+        var s = '/en-US/docs/Glossary';
+        
+        if (env.locale === 'en-US') { return s; }
+        
+        (await page.translations(s)).some(function (t) {
+            var isLocale = t.locale === env.locale;
+
+            if (isLocale) { s = t.url; }
+            
+            return isLocale;
+        });
+        
+        return s;
+    })()
+}
+
+
+// ENV
+// ----------------------------------------------------------------------------
+var title   = ($0 && $0.title) || l10n.title;
+var sources = ($0 && $0.source && (Array.isArray($0.source) ? $0.source : [$0.source])) || [l10n.src];
+var tags    = ($0 && $0.tags   && (Array.isArray($0.tags)   ? $0.tags   : [$0.tags]  )) || [];
+var articles= [];
+
+
+// EXTRACTION LOGIC
+// ----------------------------------------------------------------------------
+for(let root of sources) {
+    var url = root;
+    var pages = page.subPagesFlatten(await page.subpagesExpand(url)).forEach(function (p) {
+        var self  = env.url.indexOf(p.url) > -1;
+        var match = !self && (tags.length === 0 || tags.every(function (t) {
+            if (t.indexOf("!") === 0) {
+                return !page.hasTag(p, t.substr(1));
+            }
+
+            return page.hasTag(p, t);
+        }));
+
+        if (match) {
+            articles.push({
+                title   : p.title,
+                url     : p.url,
+                summary : p.summary
+            });
+        }
+    });
+}
+
+
+// DISPLAY
+// ----------------------------------------------------------------------------
+if (articles.length > 0) {
+    var a = articles[Math.floor(Math.random() * (articles.length))];
+%>
+<div class="moreinfo">
+  <p style="margin: 0 0 0.5em; font-size:120%;"><%- title %></p>
+  <dl>
+    <dt><a href="<%- a.url %>"><%- a.title %></a></dt>
+    <dd><%- a.summary %></dd>
+  </dl>
+</div>
+<%
+}
+%>

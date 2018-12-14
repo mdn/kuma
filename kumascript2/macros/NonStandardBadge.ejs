@@ -1,0 +1,85 @@
+<% /* Inserts a badge indicating a term or API is non-standard.
+
+    Parameters:
+        $0  If specified and non-zero, a small badge is displayed.
+
+*/
+
+var titleAttrValue = mdn.localString({
+    "ca": "This API has not been standardized.",
+    "cs": "This API has not been standardized.",
+    "de": "This API has not been standardized.",
+    "el": "This API has not been standardized.",
+    "es": "This API has not been standardized.",
+    "fa": "This API has not been standardized.",
+    "fi": "This API has not been standardized.",
+    "fr": "Cette API n'a pas été standardisée.",
+    "he": "This API has not been standardized.",
+    "hr": "This API has not been standardized.",
+    "hu": "This API has not been standardized.",
+    "id": "This API has not been standardized.",
+    "it": "This API has not been standardized.",
+    "ja": "この API は標準化されていません。",
+    "ka": "This API has not been standardized.",
+    "ko": "This API has not been standardized.",
+    "ms": "This API has not been standardized.",
+    "nl": "This API has not been standardized.",
+    "pl": "This API has not been standardized.",
+    "ro": "This API has not been standardized.",
+    "ru": "Это API не было стандартизировано.",
+    "sq": "This API has not been standardized.",
+    "th": "This API has not been standardized.",
+    "tr": "This API has not been standardized.",
+    "vi": "This API has not been standardized.",
+    "bn-BD": "This API has not been standardized.",
+    "fy-NL": "This API has not been standardized.",
+    "ga-IE": "This API has not been standardized.",
+    "pt-BR": "This API has not been standardized.",
+    "pt-PT": "This API has not been standardized.",
+    "zh-CN": "This API has not been standardized.",
+    "zh-TW": "This API has not been standardized.",
+    "en-US": "This API has not been standardized."
+});
+
+var str = "";
+
+if ($0) {
+    %><span title="<%=titleAttrValue%>" class="icon-only-inline"><i class="icon-warning-sign"> </i></span><%
+} else {
+    str = mdn.localString({
+        "ca": "Non-standard",
+        "cs": "Non-standard",
+        "de": "Non-standard",
+        "el": "Non-standard",
+        "es": "Non-standard",
+        "fa": "Non-standard",
+        "fi": "Non-standard",
+        "fr": "Non standard",
+        "he": "לא סטנדרטי",
+        "hr": "Non-standard",
+        "hu": "Non-standard",
+        "id": "Non-standard",
+        "it": "Non-standard",
+        "ja": "非標準",
+        "ka": "Non-standard",
+        "ko": "Non-standard",
+        "ms": "Non-standard",
+        "nl": "Non-standard",
+        "pl": "Non-standard",
+        "ro": "Non-standard",
+        "ru": "Нестандартное",
+        "sq": "Non-standard",
+        "th": "Non-standard",
+        "tr": "Non-standard",
+        "vi": "Non-standard",
+        "bn-BD": "Non-standard",
+        "fy-NL": "Non-standard",
+        "ga-IE": "Non-standard",
+        "pt-BR": "Non-standard",
+        "pt-PT": "Non-standard",
+        "zh-CN": "非标准",
+        "zh-TW": "非標準",
+        "en-US": "Non-standard"
+    });
+    %><%-await template("SimpleBadge", [str, "nonstandardBadge", titleAttrValue])%><%
+}%>

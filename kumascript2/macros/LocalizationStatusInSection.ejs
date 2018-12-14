@@ -1,0 +1,650 @@
+<%
+// Generates a table of the localization status for a given section
+//
+// Parameters:
+//  $0  -  The slug to build the table for (e.g. "/en-us/docs/Web/JavaScript")
+//  $1  -  The locale to check for the localization status
+//  $2  -  (optional) Group tags. An array of tags to filter the section even more (only pages with these tags are included then; OR logic).
+
+/* LOCALISATION STRINGS */
+var l10nSummary = mdn.localString({
+    "en-US": "Summary",
+    "de"   : "Übersicht",
+    "fr"   : "En bref",
+    "ja"   : "概要",
+    "pt-BR": "Resumo",
+    "ru"   : "Сводка",
+    "zh-CN": "翻译状态概览"
+});
+
+var l10nDetails = mdn.localString({
+    "en-US": "All articles",
+    "de"   : "Alle Artikel",
+    "fr"   : "Tous les articles",
+    "ja"   : "全記事一覧",
+    "pt-BR": "Todos os artigos",
+    "ru"   : "Все статьи",
+    "zh-CN": "所有文档"
+});
+
+var l10nPage = mdn.localString({
+    "en-US": "Page",
+    "de"   : "Seite",
+    "fr"   : "Page",
+    "ja"   : "ページ",
+    "pt-BR": "Página",
+    "ru"   : "Страница",
+    "zh-CN": "文档标题及链接"
+});
+
+var l10nPages = mdn.localString({
+    "en-US": "Pages",
+    "de"   : "Seiten",
+    "fr"   : "Pages",
+    "ja"   : "ページ数",
+    "pt-BR": "Páginas",
+    "ru"   : "Страницы",
+    "zh-CN": "文档总页数"
+});
+    
+var l10nPriority = mdn.localString({
+    "en-US": "Priority articles",
+    "de"   : "Priorisierte Artikel",
+    "fr"   : "Articles prioritaires",
+    "ja"   : "最優先記事",
+    "pt-BR": "Artigos prioritários",
+    "ru"   : "Приоритетные статьи",
+    "zh-CN": "优先级较高的文档"
+});
+    
+var l10nStateUnavailable = mdn.localString({
+    "en-US": "Not available.",
+    "de"   : "Nicht verfügbar.",
+    "fr"   : "Indisponible.",
+    "ja"   : "未訳です。",
+    "pt-BR": "Indisponível.",
+    "ru"   : "Перевод не доступен.",
+    "zh-CN": "未翻译。"
+});
+
+var l10nTranslateNow = mdn.localString({
+    "en-US": "Translate now.",
+    "de"   : "Jetzt übersetzen.",
+    "fr"   : "Traduire.",
+    "ja"   : "今すぐ翻訳しましょう。",
+    "ru"   : "Перевести.",
+    "fr"   : "Traduire.",
+    "zh-CN": "我来译！"
+});
+
+var l10nStateUptodate = mdn.localString({
+    "en-US": "Yes, and up to date.",
+    "de"   : "Ja, und aktuell.",
+    "fr"   : "Oui et à jour.",
+    "ja"   : "はい、最新の状態です。",
+    "pt-BR": "Sim e atualizado.",
+    "ru"   : "Перевод есть и актуален.",
+    "zh-CN": "翻译已更新到最新版本！。"
+});
+
+var l10nStateOutofdate = mdn.localString({
+    "en-US": "Yes, but not up to date ($1$ older).",
+    "de"   : "Ja, aber nicht aktuell ($1$ älter).",
+    "fr"   : "Oui mais pas à jour ($1$ d'écart).",
+    "ja"   : "はい、ただし最新の状態ではありません ($1$前)。",
+    "pt-BR": "Sim, mas desatualizado (há $1$).",
+    "ru"   : "Перевод есть, но он не актуален (устарел на $1$).",
+    "zh-CN": "翻译过但未与最新版英文文档保持同步（英文文档更新于 $1$）。"
+});
+
+var l10nStateInprogress = mdn.localString({
+    "en-US": "Yes, but translation in progress.",
+    "de"   : "Ja, aber Übersetzung in Bearbeitung.",
+    "fr"   : "Traduction en cours.",
+    "ja"   : "はい、ただし翻訳途中です。",
+    "pt-BR": "Sim, mas com tradução em andamento.",
+    "ru"   : "Перевод есть, но он ещё не закончен.",
+    "zh-CN": "是，但翻译正在进行。"
+});
+
+var l10nStateEditorial = mdn.localString({
+    "en-US": "Yes, but editorial review needed.",
+    "de"   : "Ja, aber redaktionelle Überprüfung benötigt.",
+    "fr"   : "Oui, mais relecture éditoriale nécessaire.",
+    "ja"   : "はい、ただし編集レビューが必要です。",
+    "ru"   : "Перевод есть, но требуются редакторские правки.",
+    "zh-CN": "翻译完成，但需要进行文档格式检查。"
+});
+
+var l10nStateTechnical = mdn.localString({
+    "en-US": "Yes, but technical review needed.",
+    "de"   : "Ja, aber technische Überprüfung benötigt.",
+    "fr"   : "Oui, mais relecture technique nécessaire.",
+    "ja"   : "はい、ただし技術レビューが必要です。",
+    "ru"   : "Перевод есть, но требуются технические правки.",
+    "zh-CN": "翻译完成，但需要进行技术检查。"
+});
+    
+var l10nEditTranslation = mdn.localString({
+    "en-US": "Edit.",
+    "de"   : "Bearbeiten.",
+    "fr"   : "Éditer.",
+    "ja"   : "編集する。",
+    "ru"   : "Редактировать.",
+    "zh-CN": "我来译！"
+});
+
+var l10nTranslated = mdn.localString({
+    "en-US": "Translated",
+    "de"   : "Übersetzt",
+    "fr"   : "Traduction",
+    "ja"   : "翻訳済み",
+    "pt-BR": "Traduzido",
+    "ru"   : "Переведено",
+    "zh-CN": "已翻译文档数"
+});
+   
+var l10nTranslationStatus= mdn.localString({
+    "en-US": "Translated?",
+    "de"   : "Übersetzt?",
+    "fr"   : "Traduction",
+    "ja"   : "翻訳状況",
+    "pt-BR": "Traduzido",
+    "ru"   : "Переведено?",
+    "zh-CN": "当前翻译状态"
+}); 
+
+var l10nUptodate = mdn.localString({
+    "en-US": "Translations up to date",
+    "de"   : "Übersetzungen auf neuestem Stand",
+    "fr"   : "Traductions à jour",
+    "ja"   : "翻訳が更新済み",
+    "pt-BR": "Traduções atualizadas",
+    "ru"   : "Актуальных переводов",
+    "zh-CN": "翻译过并与英文文档同步的文档数量"
+});
+
+var l10nTechReviewed = mdn.localString({
+    "en-US": "Translations technically reviewed",
+    "de"   : "Übersetzungen technisch überprüft",
+    "fr"   : "Relectures techniques réalisées",
+    "ja"   : "翻訳が技術レビュー済み",
+    "ru"   : "Технически одобренных",
+    "zh-CN": "翻译完成但需要技术检查的文档数"
+});
+
+var l10nEditReviewed = mdn.localString({
+    "en-US": "Translations editorially reviewed",
+    "de"   : "Übersetzungen redaktionell überprüft",
+    "fr"   : "Relectures éditoriales réalisées",
+    "ja"   : "翻訳が編集レビュー済み",
+    "ru"   : "Редакторско одобренных",
+    "zh-CN": "翻译完成但需要文档格式检查的文档数"
+});
+
+var l10nMacroName = mdn.localString({
+    "en-US": "Name",
+    "de"   : "Name",
+    "fr"   : "Nom",
+    "ja"   : "マクロ名",
+    "ru"   : "Имя",
+    "zh-CN"   : "名称"
+});
+
+var l10nStrings = mdn.localString({
+    "en-US": "Strings",
+    "de"   : "Strings",
+    "fr"   : "Chaînes",
+    "ja"   : "文字列数",
+    "ru"   : "字符串",
+    "zh-CN": ""
+});
+
+var l10nMacroStrings = mdn.localString({
+    "en-US": "Macros strings",
+    "de"   : "Makrostrings",
+    "fr"   : "Chaînes de macros",
+    "ja"   : "マクロの文字列数",
+    "ru"   : "Строки макросов",
+    "zh-CN": "宏字符串"
+});
+
+var l10nMacroStringsTranslated = mdn.localString({
+    "en-US": "Translated macros strings",
+    "de"   : "Übersetzte Makrostrings",
+    "fr"   : "Chaînes de macros traduites",
+    "ja"   : "翻訳済みのマクロの文字列数",
+    "ru"   : "Переведённые строки макросов",
+    "zh-CN": "已翻译的宏字符串"
+});
+
+var l10nMacrol10n = mdn.localString({
+    "en-US": "Macros",
+    "de"   : "Makros",
+    "fr"   : "Macros",
+    "ja"   : "マクロ",
+    "ru"   : "Макросы",
+    "zh-CN": "宏"
+});
+
+var l10nDays = mdn.localString({
+    "en-US": "days",
+    "de"   : "Tage",
+    "es"   : "dias",
+    "fr"   : "jours",
+    "ja"   : "日",
+    "pt-BR": "dias",
+    "ru"   : "дня",
+    "zh-CN": "天"
+});
+
+var l10nDay = mdn.localString({
+    "en-US": "day",
+    "de"   : "Tag",
+    "es"   : "dia",
+    "fr"   : "jour",
+    "ja"   : "日",
+    "pt-BR": "dia",
+    "ru"   : "день",
+    "zh-CN": "天"
+});
+
+var l10nHours = mdn.localString({
+    "en-US": "hours",
+    "de"   : "Stunden",
+    "es"   : "horas",
+    "fr"   : "heures",
+    "ja"   : "時間",
+    "ru"   : "часов",
+    "zh-CN": "小时"
+});
+
+var l10nHour = mdn.localString({
+    "en-US": "hour",
+    "de"   : "Stunde",
+    "es"   : "hora",
+    "fr"   : "heure",
+    "ja"   : "時間",
+    "ru"   : "час",
+    "zh-CN": "小时"
+});
+
+var l10nMinutes = mdn.localString({
+    "en-US": "minutes",
+    "de"   : "Minuten",
+    "es"   : "minutos",
+    "fr"   : "minutes",
+    "ja"   : "分",
+    "ru"   : "минут",
+    "zh-CN": "分"
+});
+
+var l10nMinute = mdn.localString({
+    "en-US": "minute",
+    "de"   : "Minute",
+    "es"   : "minuto",
+    "fr"   : "minute",
+    "ja"   : "分",
+    "ru"   : "минуту",
+    "zh-CN": "分"
+});
+
+var section = $0;
+var locale = $1;
+var groupTags = [];
+if ($2) {
+    groupTags = JSON.parse($2);
+}
+
+// Defining used l10n macros
+// TODO: Add GitHub macros analysis
+var speL10nMacros = {
+  "CSS": ["CSS"],
+  "SVG": ["SVG"],
+  "JavaScript": ["JavaScript"]
+};
+// These are l10n macros for every section
+var l10nMacros = ["Common", "CompatTable"];
+
+//$0.substr($0.lastIndexOf("/")+1) will give JavaScript if $0 equals "/en-us/docs/Web/JavaScript"
+var currSection =$0.substr($0.lastIndexOf("/")+1);
+if (speL10nMacros.hasOwnProperty(currSection)) {
+    l10nMacros = l10nMacros.concat(speL10nMacros[currSection]);
+}
+
+var pageList = await page.subpagesExpand(section, '', true);
+var result = [];
+var priorities = []
+var translationCounter = 0;
+var outdatedCounter = 0;
+var priorityCounter = 0;
+var inprogressCounter = 0;
+var editorialCounter = 0;
+var technicalCounter = 0;
+var macroTranslationCounter = 0;
+var macroStringsCounter = 0;
+var macroStringsTranslatedCounter = 0;
+
+function collect(page) {
+    result.push({title: page.title.replace('<','&lt;').replace('>','&gt;'), url: page.url, translations: page.translations, last_edit: page.last_edit})
+
+    if (hasTranslation(page.translations, locale)) {
+        translationCounter++;
+    }
+    var translation = getTranslation(page.translations, locale);
+    if (isOutdated(page.last_edit, translation.last_edit)) {
+        outdatedCounter++;
+    }
+    if (translation.localization_tags && hasFlags(translation.localization_tags, "inprogress")) {
+        inprogressCounter++;
+    }
+    if (translation.review_tags && hasFlags(translation.review_tags, "editorial")) {
+        editorialCounter++;
+    }
+    if (translation.review_tags && hasFlags(translation.review_tags, "technical")) {
+        technicalCounter++;
+    }
+    
+    if (hasTags(page.tags, "l10n:priority")) {
+        priorities.push({title: page.title.replace('<','&lt;').replace('>','&gt;'), url: page.url, translations: page.translations, last_edit: page.last_edit});
+        priorityCounter++;
+    }
+}
+
+function getPages(pageList) {
+    if (pageList) {
+        for (var i = 0; i < pageList.length; i++) {
+            if (!hasTags(pageList[i].tags, "l10n:exclude")) {
+                if (groupTags.length > 0) {
+                    for (var j = 0; j < groupTags.length; j++) {
+                        if (hasTags(pageList[i].tags, groupTags[j])) {
+                            collect(pageList[i]);
+                        }
+                    }
+                } else {
+                    collect(pageList[i]);
+                }
+                
+                var subpage = getPages(pageList[i].subpages);
+            }
+        }
+    }
+}
+
+function isOutdated(enDate, l10nDate) {
+    if (!enDate || typeof enDate == 'undefined' || !l10nDate || typeof l10nDate == 'undefined') return 0;
+    if (new Date(l10nDate) < new Date(enDate)) return 1;
+    return 0;
+}
+
+function getTimeSpan(dateTime1, dateTime2) {
+    dateTime1 = new Date(dateTime1);
+    dateTime2 = new Date(dateTime2);
+    var timeSpan = (dateTime2 - dateTime1) / 86400000;
+
+    var timeUnits = [
+        {
+            unitPlural: l10nMinutes,
+            unitSingular: l10nMinute,
+            interval: 60
+        },
+        {
+            unitPlural: l10nHours,
+            unitSingular: l10nHour,
+            interval: 24
+        },
+        {
+            unitPlural: l10nDays,
+            unitSingular: l10nDay,
+            interval: 1
+        }
+    ];
+
+    for (var i = timeUnits.length - 1; i >= 0; i--) {
+        var roundedTimeSpan = Math.round(timeSpan);
+        if (roundedTimeSpan > 0 || i === 0) {
+            return roundedTimeSpan + " " + timeUnits[i]["unit" + (roundedTimeSpan === 1 ? "Singular" : "Plural")];
+        }
+
+        timeSpan *= timeUnits[i - 1].interval;
+    }
+}
+
+function hasTranslation(pageTranslations, locale) {
+    if (!pageTranslations || typeof pageTranslations == 'undefined') return 0;
+    for (var i = 0, len = pageTranslations.length; i < len; i++) {
+        if (pageTranslations[i].locale == locale) return 1;
+    }
+    return 0;
+}
+
+function getTranslation(pageTranslations, locale) {
+    if (!pageTranslations || typeof pageTranslations == 'undefined') return 0;
+    for (var i = 0, len = pageTranslations.length; i < len; i++) {
+        if (pageTranslations[i].locale == locale) return pageTranslations[i];
+    }
+    return 0;
+}
+
+function hasTags(tags, needle) {
+    if (!tags || tags == undefined) return 0;
+    for (var i = 0, len = tags.length; i < len; i++) {
+        if (tags[i].toLowerCase() === needle.toLowerCase()) return 1;
+    }
+    return 0;
+}
+
+function hasFlags(flagType, flag) {
+    if (!flagType || flagType == undefined) return 0;
+    for (var i = 0, len = flagType.length; i < len; i++) {
+        if (flagType[i] === flag) return 1;
+    }
+    return 0;
+}
+
+function crawlL10nMacro(json) {
+  var result = { total: 0, translated: 0 }
+  for (k in json) {
+    result.total++;
+    if (json[k].hasOwnProperty(locale)) {
+        result.translated++;
+    }
+    // Nested structure crawling 
+    // var childResult = crawlL10n(json[k]);
+    // result.total += childResult.total;
+    // result.translated += childResult.translated;
+  }
+  return result;
+}
+
+var l10nMacroDetails = [];
+for (var i = 0; i < l10nMacros.length; i++) {
+    var macroData = string.deserialize(await template("L10n:" + l10nMacros[i]));
+    var res = crawlL10nMacro(macroData);
+    if (res.translated === res.total) {
+        macroTranslationCounter++;
+    }
+    macroStringsCounter += res.total;
+    macroStringsTranslatedCounter += res.translated;
+    l10nMacroDetails.push({
+        "name": l10nMacros[i],
+        "total": res.total,
+        "translated": res.translated
+    });
+}
+
+
+getPages(pageList);
+
+
+var translationPercent = Math.floor((translationCounter / result.length) * 100);
+var uptodateCounter = translationCounter - outdatedCounter;
+var uptodatePercent = Math.floor((uptodateCounter / translationCounter) * 100);
+var editCounter = translationCounter - editorialCounter;
+var editPercent = Math.floor((editCounter / translationCounter) * 100);
+var techCounter = translationCounter - technicalCounter;
+var techPercent = Math.floor((techCounter / translationCounter) * 100);
+var macroTranslationPercent = (l10nMacros.length > 0) ? Math.floor((macroStringsTranslatedCounter / macroStringsCounter) * 100) : 100;
+
+if (isNaN(uptodatePercent)) { uptodatePercent = 0; }
+%>
+<h2 id="Summary"><%=l10nSummary%></h2>
+<table class="docstatussummary standard-table">
+  <thead>
+    <tr>
+      <th><%=l10nPages%></th>
+      <th><%=l10nTranslated%></th>
+      <th><%=l10nUptodate%></th>
+      <th><%=l10nTechReviewed%></th>
+      <th><%=l10nEditReviewed%></th>
+      <% if (l10nMacros.length > 0) { %>
+      <th><%=l10nMacroStrings%></th>
+      <th><%=l10nMacroStringsTranslated%></th>
+      <% } %>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%=result.length%></td>
+      <td><%=translationCounter%> (<%=translationPercent%>%)</td>
+      <td><%=uptodateCounter%> (<%=uptodatePercent%>%)</td>
+      <td><%=techCounter%> (<%=techPercent%>%)</td>
+      <td><%=editCounter%> (<%=editPercent%>%)</td>
+      <% if (l10nMacros.length > 0) { %>
+      <td><%=macroStringsCounter%></td>
+      <td><%=macroStringsTranslatedCounter%> (<%=macroTranslationPercent%>%)</td>
+      <% } %>
+    </tr>
+  </tbody>
+</table>
+<% if (priorityCounter > 0) { %>
+<h2 id="<%=l10nPriority.replace(" ","_")%>"><%=l10nPriority%></h2>
+<table class="fullwidth-table standard-table">
+<thead>
+    <th><%=l10nPage%></th>
+    <th><%=l10nTranslationStatus%></th>
+</thead>
+<tbody>
+
+<% for (i=0; i < priorities.length; i++) { %>
+<tr>
+    <td><a href='<%=priorities[i].url%>'><%=priorities[i].title%></a></td>
+    <% if (hasTranslation(priorities[i].translations, locale)) {
+        var translation = getTranslation(priorities[i].translations, locale);
+        if (translation.review_tags && hasFlags(translation.review_tags, "editorial")) { %>
+            <td style="background-color: #FF9"><a href="<%=translation.url%>"><%=l10nStateEditorial%></a> <a href="<%=translation.url%>$edit"><%=l10nEditTranslation%></a></td>
+        <% } else  if (translation.review_tags && hasFlags(translation.review_tags, "technical")) { %>
+            <td style="background-color: #FF9"><a href="<%=translation.url%>"><%=l10nStateTechnical%></a> <a href="<%=translation.url%>$edit"><%=l10nEditTranslation%></a></td>
+        <% } else if (isOutdated(priorities[i].last_edit, translation.last_edit)) { 
+            var timeSpan = getTimeSpan(translation.last_edit, priorities[i].last_edit); %>
+            <td style="background-color: #FF9"><a href="<%=translation.url%>"><%=mdn.replacePlaceholders(l10nStateOutofdate, [timeSpan])%></a> <a href="<%=translation.url%>$edit"><%=l10nEditTranslation%></a></td>
+        <% } else if (translation.localization_tags && hasFlags(translation.localization_tags, "inprogress")) { %>
+            <td style="background-color: #FF9"><a href="<%=translation.url%>"><%=l10nStateInprogress%></a> <a href="<%=translation.url%>$edit"><%=l10nEditTranslation%></a></td>
+        <% } else { %>
+            <td style="background-color: #CF9"><a href="<%=translation.url%>"><%=l10nStateUptodate%></a></td>
+        <% } %>
+    <% } else { %>
+        <td style="background-color: #FCC"><%=l10nStateUnavailable%></td>
+    <% } %>
+</tr>
+<% } %>
+
+</tbody>
+</table>
+<% } %>
+
+<h2 id="<%=l10nDetails.replace(" ","_")%>"><%=l10nDetails%></h2>
+<table class="fullwidth-table standard-table">
+<thead>
+    <th><%=l10nPage%></th>
+    <th><%=l10nTranslationStatus%></th>
+</thead>
+<tbody>
+
+<% for (i=0; i < result.length; i++) { %>
+<tr>
+    <td><a href='<%=result[i].url%>'><%=result[i].title%></a></td>
+    <% if (hasTranslation(result[i].translations, locale)) {
+        var translation = getTranslation(result[i].translations, locale);
+        if (translation.review_tags && hasFlags(translation.review_tags, "editorial")) { %>
+            <td style="background-color: #FF9"><a href="<%=translation.url%>"><%=l10nStateEditorial%></a> <a href="<%=translation.url%>$edit"><%=l10nEditTranslation%></a></td>
+        <% } else  if (translation.review_tags && hasFlags(translation.review_tags, "technical")) { %>
+            <td style="background-color: #FF9"><a href="<%=translation.url%>"><%=l10nStateTechnical%></a> <a href="<%=translation.url%>$edit"><%=l10nEditTranslation%></a></td>
+        <% } else if (isOutdated(result[i].last_edit, translation.last_edit)) {
+            var timeSpan = getTimeSpan(translation.last_edit, result[i].last_edit); %>
+            <td style="background-color: #FF9"><a href="<%=translation.url%>"><%=mdn.replacePlaceholders(l10nStateOutofdate, [timeSpan])%></a> <a href="<%=translation.url%>$edit"><%=l10nEditTranslation%></a></td>
+        <% } else if (translation.localization_tags && hasFlags(translation.localization_tags, "inprogress")) { %>
+            <td style="background-color: #FF9"><a href="<%=translation.url%>"><%=l10nStateInprogress%></a> <a href="<%=translation.url%>$edit"><%=l10nEditTranslation%></a></td>
+        <% } else { %>
+            <td style="background-color: #CF9"><a href="<%=translation.url%>"><%=l10nStateUptodate%></a></td>
+        <% } %>
+    <% } else { %>
+        <td style="background-color: #FCC"><%=l10nStateUnavailable%> <a href="<%=result[i].url%>$translate?tolocale=<%=locale%>"><%=l10nTranslateNow%></a></td>
+    <% } %>
+</tr>
+<% } %>
+
+</tbody>
+</table>
+
+<% if (l10nMacros.length > 0) {%>
+<h2 id="<%=l10nMacrol10n.replace(" ","_")%>"><%=l10nMacrol10n%></h2>
+<table class="fullwidth-table standard-table">
+<thead>
+    <th><%=l10nMacroName%></th>
+    <th><%=l10nStrings%></th>
+    <th><%=l10nTranslated%></th>
+</thead>
+<tbody>
+
+<% for (var i = 0; i < l10nMacroDetails.length; i++) { %>
+    <tr>
+    <td><a href='https://github.com/mdn/kumascript/blob/master/macros/L10n-<%=l10nMacroDetails[i].name%>.json'><%=l10nMacroDetails[i].name%></a></td>
+    <td><%=l10nMacroDetails[i].total%></td>
+    <% if (l10nMacroDetails[i].translated < l10nMacroDetails[i].total) { %>
+        <td style="background-color: #FF9"><%=l10nMacroDetails[i].translated%></td>
+    <% } else { %>
+        <td style="background-color: #CF9"><%=l10nMacroDetails[i].translated%></td>
+    <% } %>
+    </tr>
+<% }; %>
+</tbody>
+</table>
+<% } %>
+<%
+var metrics = {
+    pages: {
+        title: 'Number of English pages',
+        counter: result.length
+    },
+    translations: {
+        title: 'Translations available',
+        counter: translationCounter
+    },
+    updateNeeded: {
+        title: 'Translations up to date',
+        counter: uptodateCounter
+    },
+    inprogress: {
+        title: 'Translations in progress',
+        counter: inprogressCounter
+    },
+    editorial: {
+        title: 'Translations in need of editorial review',
+        counter: editorialCounter
+    },
+    technical: {
+        title: 'Translations in need of technical review',
+        counter: technicalCounter
+    },
+    l10nMacros: {
+        title: 'Number of l10n-macros',
+        counter: l10nMacros.length
+    },
+    l10nMacrosTranslated: {
+        title: 'Number of l10n-macros fully translated',
+        counter: macroTranslationCounter
+    }
+};
+%>
+<div id="json" style="display: none"><%=JSON.stringify(metrics) %></div>

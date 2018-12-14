@@ -1,0 +1,29 @@
+<%
+var str = "Read only ";
+var title = "This value may not be changed.";
+
+switch(env.locale) {
+    case "ja":
+        str = "読取専用 ";
+        break;
+    case "fr":
+        str = "Lecture seule ";
+        title = "Cette valeur ne peut pas être changée.";
+        break;
+    case "pt-BR":
+        str = "Somente leitura ";
+        title = "Este valor não pode ser alterado.";
+        break;
+    case "zh-CN":
+        str = "只读 ";
+        title = "该属性的值无法更改";
+        break;
+    case "ru":
+        str = "Только для чтения ";
+        title = "Это значение изменять нельзя.";
+        break;
+    default:
+        break;
+}
+
+%><span title="<%= title %>" class="inlineIndicator readOnly readOnlyInline"><%= str %></span>

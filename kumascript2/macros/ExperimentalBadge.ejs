@@ -1,0 +1,87 @@
+<%
+//
+// Inserts a badge indicating that a term or API is experimental.
+//
+// Parameters:
+//  $0  If specified and non-zero, a "small" version of the badge is displayed.
+
+var titleAttrValue = mdn.localString({
+    "ca": "This is an experimental API that should not be used in production code.",
+    "cs": "This is an experimental API that should not be used in production code.",
+    "de": "This is an experimental API that should not be used in production code.",
+    "el": "This is an experimental API that should not be used in production code.",
+    "es": "This is an experimental API that should not be used in production code.",
+    "fa": "This is an experimental API that should not be used in production code.",
+    "fi": "This is an experimental API that should not be used in production code.",
+    "fr": "This is an experimental API that should not be used in production code.",
+    "he": "This is an experimental API that should not be used in production code.",
+    "hr": "This is an experimental API that should not be used in production code.",
+    "hu": "This is an experimental API that should not be used in production code.",
+    "id": "This is an experimental API that should not be used in production code.",
+    "it": "This is an experimental API that should not be used in production code.",
+    "ja": "これは実験段階の API です。製品内のコードで使用しないようご注意ください。",
+    "ka": "This is an experimental API that should not be used in production code.",
+    "ko": "This is an experimental API that should not be used in production code.",
+    "ms": "This is an experimental API that should not be used in production code.",
+    "nl": "This is an experimental API that should not be used in production code.",
+    "pl": "This is an experimental API that should not be used in production code.",
+    "ro": "This is an experimental API that should not be used in production code.",
+    "ru": "Это экспериментальное API, которое не должно использоваться в рабочем коде.",
+    "sq": "This is an experimental API that should not be used in production code.",
+    "th": "This is an experimental API that should not be used in production code.",
+    "tr": "This is an experimental API that should not be used in production code.",
+    "vi": "This is an experimental API that should not be used in production code.",
+    "bn-BD": "This is an experimental API that should not be used in production code.",
+    "fy-NL": "This is an experimental API that should not be used in production code.",
+    "ga-IE": "This is an experimental API that should not be used in production code.",
+    "pt-BR": "This is an experimental API that should not be used in production code.",
+    "pt-PT": "This is an experimental API that should not be used in production code.",
+    "zh-CN": "这是一个实验性的 API，请尽量不要在生产环境中使用它。",
+    "zh-TW": "This is an experimental API that should not be used in production code.",
+    "en-US": "This is an experimental API that should not be used in production code."
+});
+
+var str = "";
+
+if ($0) {
+    %><span title="<%=titleAttrValue%>"><i class="icon-beaker"> </i></span><%
+} else {
+str = mdn.localString({
+    "ca": "Experimental",
+    "cs": "Experimental",
+    "de": "Experimental",
+    "el": "Experimental",
+    "es": "Experimental",
+    "fa": "Experimental",
+    "fi": "Experimental",
+    "fr": "Experimental",
+    "he": "Experimental",
+    "hr": "Experimental",
+    "hu": "Experimental",
+    "id": "Experimental",
+    "it": "Experimental",
+    "ka": "Experimental",
+    "ko": "Experimental",
+    "ms": "Experimental",
+    "nl": "Experimental",
+    "pl": "Experimental",
+    "ro": "Experimental",
+    "ru": "Экспериментальное",
+    "sq": "Experimental",
+    "th": "Experimental",
+    "tr": "Experimental",
+    "vi": "Experimental",
+    "bn-BD": "Experimental",
+    "fy-NL": "Experimental",
+    "ga-IE": "Experimental",
+    "pt-BR": "Experimental",
+    "pt-PT": "Experimental",
+    "zh-CN": "实验性 API",
+    "zh-TW": "Experimental",
+    "en-US": "Experimental"
+});
+/* ja : OK */
+
+%><%-await template("SimpleBadge", [str, "experimentalBadge", titleAttrValue])%><%
+}
+%>

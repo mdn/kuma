@@ -1,0 +1,137 @@
+<%
+// Inserts a tree of subpages of the specified page to be used in the sidebar (quicklinks)
+// Displays common flags/icons
+// Includes the parent page at the top of the list.
+//
+// Parameters:
+//  $0 - The path of the page whose subpages should be listed.
+//  $1 - If true, do not put the text in <code></code>.
+//  $2 - If true, do add the parent page to the list
+//  $3 - Open delimiter: only text after this in the title will be used
+//  $4 - Close delimiter: only text before this is used
+//
+// Examples:
+//
+// {{ListSubpagesForSidebar("/en-US/docs/Web/API/WebRTC_API", 1)}}
+// {{ListSubpagesForSidebar("/en-US/docs/Web/HTML/Element", 0, 0, "<", ">")}}
+
+var path = $0;
+var locale = env.locale;
+var parent = $2 ? 1 : 0;
+var startDelim = $3;
+var endDelim = $4;
+
+// If the path ends with a slash, remove it.    
+if (path.substr(-1, 1) === '/') {
+    path = path.slice(0, -1);
+}
+    
+var pages = await page.subpagesExpand(path, -1, parent);
+var containsTag = page.hasTag;
+var escapeQuotes = mdn.escapeQuotes;
+var htmlEscape = kuma.htmlEscape;
+
+var output = '';
+var openTag = '<ol>';
+var closeTag = '</ol>';
+var code    = !$1 ? '<code>'  : '';
+var endcode = !$1 ? '</code>' : '';
+
+// Strings
+var commonl10n = string.deserialize(await template('L10n:Common'));
+var text = {
+    'translate': mdn.getLocalString(commonl10n, '[Translate]'),
+    'title': mdn.getLocalString(commonl10n, 'TranslationCTA'),
+};
+
+var badges = {
+    ExperimentalBadge      : '<span class="sidebar-icon">' + await template("ExperimentalBadge", [1]) + '</span>',
+    NonStandardBadge       : '<span class="sidebar-icon">' + await template("NonStandardBadge", [1]) + '</span>',
+    DeprecatedBadge        : '<span class="sidebar-icon">' + await template("DeprecatedBadge", [1]) + '</span>',
+    ObsoleteBadge          : '<span class="sidebar-icon">' + await template("ObsoleteBadge", [1]) + '</span>',
+};
+
+// Trims the title, returning only the text
+// between the start and end delimiter characters.
+// Does nothing if both are null or empty.
+function trimTitle(title) {
+    var startIndex;
+    var endIndex;
+
+    startIndex = 0;
+    if (startDelim) {
+        startIndex = title.indexOf(startDelim);
+        if (startIndex) {
+            startIndex += 1;
+        }
+    }
+
+    endIndex = 0;
+    if (endDelim) {
+        endIndex = title.indexOf(endDelim)+1;
+    }
+    if (!endIndex) {
+        endIndex = title.length;
+    }
+
+    return title.substring(startIndex, endIndex);
+}
+
+function createLink(item) {
+    var result = '';
+
+    var summary = escapeQuotes(item.summary) || '';
+    var url = item.url.replace('en-US', locale);
+    var title = htmlEscape(trimTitle(item.title));
+
+    var translated = false;
+    if (locale != 'en-US') {
+        item.translations.forEach(function(translation){
+            if(translation.locale === locale) {
+                summary = escapeQuotes(translation.summary) || '';
+                url = translation.url;
+                title = htmlEscape(trimTitle(translation.title));
+                translated = true;
+            }
+        });
+    }
+    
+    var cta = '';
+     if (!translated && locale != 'en-US') {
+        cta += ' <a href="'+ url +'$translate" style="opacity:0.5" title="'+ text['title'] + '">' + text['translate'] + '</a>';
+    }
+    
+    result += '<li>';
+    
+    if (containsTag(item, 'Experimental')) {
+        result += badges.ExperimentalBadge;
+    }
+    
+    if (containsTag(item, 'Non-standard') || containsTag(item, 'Non Standard')) {
+        result += badges.NonStandardBadge;
+    }
+    
+    if (containsTag(item, 'Deprecated')) {
+        result += badges.DeprecatedBadge;
+    }
+    
+    if (containsTag(item, 'Obsolete')) {
+        result += badges.ObsoleteBadge;
+    }
+    
+    result += '<a href="' + url + '" title="' + summary + '">' + code + title + endcode + '</a>' + cta + '</li>';
+    return result;
+}
+
+if (pages.length) {
+    output += openTag;
+    
+    pages.forEach(function(item) {
+        if (!item) { return; }
+        output += createLink(item);
+    });
+    
+    output += closeTag;
+}
+%>
+<%- output %>

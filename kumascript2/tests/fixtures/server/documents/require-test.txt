@@ -1,0 +1,4 @@
+Testing "require" of npm package:
+
+* First: {{ require-used("http.headers.Accept") }}
+* Second: {{ require-used("css.properties") }}

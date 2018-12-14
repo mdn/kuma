@@ -1,0 +1,18 @@
+<%
+//
+// Inserts a link to the specified template's page.
+// Useful when describing a template and wanting to link to its
+// code for reference.
+//
+// Note that GitHub URLs are case-sensitve.
+// e.g. {{TemplateLink("Page")}} leads to 404, but {{TemplateLink("page")}} works
+// as the file is named "page.ejs".
+//
+// Parameters:
+//
+// $0   Name of the template to link to.
+//
+
+var dest = "https://github.com/mdn/kumascript/tree/master/macros/" + $0 + ".ejs";
+%>
+<span class="templateLink"><code><a href="<%-dest%>"><%=$0%></a></code></span>

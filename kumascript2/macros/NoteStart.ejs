@@ -1,0 +1,23 @@
+<%
+// Starts a "Note" box. These are used to provide important notes inline; these are NOT
+// meant to be used for endnotes or footnotes.
+//
+// Use the "NoteEnd" macro to close the box; everything between this macro and that one
+// will be inside the box.
+//
+// Parameters
+//  None.
+
+var note = mdn.localString({
+    "en-US": "Note:",
+    "de": "Hinweis:",
+    "es": "Nota:",
+    "fr": "Note&nbsp;:",
+    "ja": "註:",
+    "ko": "주의:",
+    "pl": "Uwaga:",
+    "ru": "Примечание:",
+    "zh-TW": "註："
+});
+
+%><div class="blockIndicator note"><strong><%-note%></strong>&nbsp;

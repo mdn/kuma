@@ -1,0 +1,37 @@
+<%
+// Inserts a link to the specified attribute of a particular HTML element.
+//
+// Parameters:
+//  $0  The attribute to insert
+//  $1  The element on which the attribute is used (optional)
+//  $2  The text to display (between code)
+//  $3  If set, do not put the text in <code></code>
+//
+// If the element isn't specified, the link is made to the Global Attributes
+// page.
+
+var lang = env.locale;
+var url = "";
+
+var globalAttrSlug = mdn.localString({
+    "en-US": "Global_attributes",
+    "fr"   : "Attributs_universels"
+});
+
+
+$0 = $0.toLowerCase();
+
+var text = ($2 && ($2!=undefined))?$2:$0;
+
+if ($1 && ($1 != undefined)) {
+    url = '/' + lang + '/docs/Web/HTML/Element/' + $1;
+} else {
+    url = '/' + lang + '/docs/Web/HTML/' + globalAttrSlug;
+}
+
+var code    = !$3 ? '<code>'  : '';
+var endcode = !$3 ? '</code>' : '';
+
+var result = code + '<a href="' + url + '#attr-' + $0 +'">' + text + '</a>'+ endcode;
+%>
+<%- result %>

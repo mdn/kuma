@@ -1,0 +1,31 @@
+<%
+/* one parameter: SpiderMonkey version */
+
+/* get the page language */
+var lang = env.locale;
+var link = '';
+
+/* check if page exists, English for fall back */
+if(wiki.pageExists(lang + '/docs/SpiderMonkey/' + $0)) {
+    link = web.link(wiki.uri(lang + '/docs/SpiderMonkey/' + $0), 'SpiderMonkey ' + $0);
+} else if(wiki.pageExists('/en-US/docs/SpiderMonkey/' + $0)) {
+    link = web.link(wiki.uri('/en-US/docs/SpiderMonkey/' + $0), 'SpiderMonkey ' + $0);
+} else {
+    link = 'SpiderMonkey ' + $0;
+}
+
+var str = 'This article covers features introduced in ' + link;
+
+switch(lang) {
+    case 'ja':
+        str = 'この記事は ' + link + ' の新機能について書かれています。';
+        break;
+    case 'ru':
+        str = 'Эта статья покрывает возможности, представленные в  ' + link;
+        break;
+}
+
+
+%><div class="blockIndicator jsMinVer jsMinVerHeader">
+    <p><%- str %></p>
+</div>

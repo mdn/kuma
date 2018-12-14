@@ -1,0 +1,95 @@
+<%
+/*
+ * $0 - inline/header/note
+ * $1 - product eg Firefox/Thunderbird/SeaMonkey (Use proper case as will be used directly in content)
+ * $2 - Product version
+ * $3 - additional information required for the type specified by the first parameter
+ *   note requires the note to display
+*/
+var lang = env.locale;
+
+var product = $1.trim();
+var version = $2.split('.',2).join('.').replace(/\.0/,'');
+if (product == 'Firefox OS' && $2 == '1.0.1') {
+    version = $2
+}
+
+var productVersion = product + ' ' + version
+var articleName = productVersion + " for developers";
+var link = lang + '/docs/Mozilla/' + web.spacesToUnderscores(product) + '/Releases/' + version;
+var text = "This content covers features introduced in " + web.link(wiki.uri(link), productVersion);
+var note = productVersion + " note";
+var newIn = "New in ";
+
+switch(lang) {
+    case 'de':
+        articleName = productVersion + " für Entwickler";
+        text = "Dieser Artikel umfasst Features die in " + web.link(wiki.uri(link), productVersion) + " eingeführt wurden";
+        note = "Hinweis zu " + productVersion;
+        newIn = "Neu in ";
+        break;
+    case 'es':
+        articleName = productVersion + " para desarrolladores";
+        text = "Este artículo cubre características introducidas en " + web.link(wiki.uri(link), productVersion);
+        note = "Nota sobre " + productVersion;
+        newIn = "Nuevo en ";
+        break;
+    case 'fr':
+        articleName = productVersion + " pour les développeurs";
+        text = "Cet article traite de fonctionnalités introduites dans " + web.link(wiki.uri(link), productVersion);
+        note = "Note concernant " + productVersion;
+        newIn = "Nouveau dans ";
+        break;
+    case 'ja':
+        articleName = productVersion + " for developers";
+        text = "この記事は " + web.link(wiki.uri(link), productVersion) + "  の新機能について述べています";
+        note = productVersion + " における注記";
+        break;
+    case 'ko':
+        articleName = productVersion + " for developers";
+        text = "이 문서는 " + product + "개발자들을 위한 정보입니다. " + web.link(wiki.uri(link), productVersion);
+        break;
+    case 'pl':
+        articleName = productVersion + " dla programistów";
+        text = "Ten artykuł obejmuje funkcje wprowadzone w " + web.link(wiki.uri(link), productVersion);
+        note = "Uwaga dotycząca Firefoksa " + version;
+        newIn = "Nowość w ";
+        break;
+    case 'pt-PT':
+        articleName = productVersion + " para desenvolvedores";
+        text = "Este artigo cobre características introduzidas no " + web.link(wiki.uri(link), productVersion);
+        newIn = "Novidade no ";
+        break;
+    case 'ru':
+        articleName = productVersion + " для разработчиков";
+        text = "Этот контент описывает возможности, представленные в " + web.link(wiki.uri(link), productVersion);
+        newIn = "Нововведение в ";
+        note = "Замечание по "+productVersion;
+        break;
+    case 'zh-CN':
+        articleName = productVersion + " for developers";
+        text = "该条目记录了 " + web.link(wiki.uri(link), productVersion) + " 引入的新特性";
+        break;
+    case 'zh-TW':
+        articleName = productVersion + " 技術文件";
+        text = "本文描述 " + web.link(wiki.uri(link), productVersion) + " 之後加入的功能。";
+        break;
+    default: break;
+}
+
+switch($0) {
+    case 'inline':
+        %><span class="inlineIndicator standardNote"><%=newIn%><%- web.link(wiki.uri(link), productVersion) %></span><%
+        break;
+    case 'header':
+        %><div class="blockIndicator standardNote">
+<p><%-text%></p>
+</div><%
+        break;
+    case 'note':
+        %><div class="blockIndicator standardNote">
+    <p><%- web.link(wiki.uri(link), note) %></p>
+    <p style="font-weight:400;"><%-$3%></p>
+</div><%
+        break;
+} %>

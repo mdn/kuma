@@ -1,0 +1,61 @@
+<%
+var locale = env.locale;
+var baseURL = "/" + locale + "/docs/WebAssembly";
+
+var text = mdn.localStringMap({
+  'en-US': {
+    'WebAssembly_home_page' : 'WebAssembly home page',
+    'Tutorials' : 'Tutorials',
+      'WebAssembly_concepts' : 'WebAssembly concepts',
+      'Compiling_to_wasm' : 'Compiling from C/C++ to WebAssembly',
+      'Compiling_rust_to_wasm' : 'Compiling from Rust to WebAssembly',
+      'JavaScript_API' : 'Using the WebAssembly JavaScript API',
+      'Text_format' : 'Understanding WebAssembly text format',
+      'Text_format_to_wasm' : 'Converting WebAssembly text format to wasm',
+      'Loading_and_running' : 'Loading and running WebAssembly code',
+      'Caching_modules' : 'Caching compiled WebAssembly modules',
+      'Exported_functions' : 'Exported WebAssembly functions',
+    'Object_reference' : 'Object reference'
+  }
+});
+%>
+
+<section class="Quick_links" id="Quick_Links">
+
+<ol>
+  <li data-default-state="open"><a href="<%=baseURL%>"><strong><%=text['WebAssembly_home_page']%></strong></a>
+  <li class="toggle">
+    <details open>
+      <summary><%=text['Tutorials']%></summary>
+      <ol>
+        <li><a href="<%=baseURL%>/Concepts"><%=text['WebAssembly_concepts']%></a></li>
+        <li><a href="<%=baseURL%>/C_to_wasm"><%=text['Compiling_to_wasm']%></a></li>
+        <li><a href="<%=baseURL%>/Rust_to_wasm"><%=text['Compiling_rust_to_wasm']%></a></li>
+        <li><a href="<%=baseURL%>/Using_the_JavaScript_API"><%=text['JavaScript_API']%></a></li>
+        <li><a href="<%=baseURL%>/Understanding_the_text_format"><%=text['Text_format']%></a></li>
+        <li><a href="<%=baseURL%>/Text_format_to_wasm"><%=text['Text_format_to_wasm']%></a></li>
+        <li><a href="<%=baseURL%>/Loading_and_running"><%=text['Loading_and_running']%></a></li>
+        <li><a href="<%=baseURL%>/Caching_modules"><%=text['Caching_modules']%></a></li>
+        <li><a href="<%=baseURL%>/Exported_functions"><%=text['Exported_functions']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details open>
+      <summary><%=text['Object_reference']%></summary>
+      <ol>
+        <li><%- await template("jsxref", ["WebAssembly"]) %></li>
+        <li><%- await template("jsxref", ["WebAssembly.Module"]) %></li>
+        <li><%- await template("jsxref", ["WebAssembly.Global"]) %></li>
+        <li><%- await template("jsxref", ["WebAssembly.Instance"]) %></li>
+        <li><%- await template("jsxref", ["WebAssembly.Memory"]) %></li>
+        <li><%- await template("jsxref", ["WebAssembly.Table"]) %></li>
+        <li><%- await template("jsxref", ["WebAssembly.CompileError"]) %></li>
+        <li><%- await template("jsxref", ["WebAssembly.LinkError"]) %></li>
+        <li><%- await template("jsxref", ["WebAssembly.RuntimeError"]) %></li>
+      </ol>
+    </details>
+  </li>
+</ol>
+
+</section>

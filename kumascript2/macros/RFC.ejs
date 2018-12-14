@@ -1,0 +1,30 @@
+<%
+//
+// Inserts a link to the specified RFC.
+//
+// Parameters:
+//
+// $0   RFC number to which to link.
+// $1   (Optional) Additional link text, to be used to add a name for the RFC
+// $2   (Optional) Section number within the RTC to link to
+//
+// If you provide the section number, the URL gets "#section-$2" appended to
+// it, and the default text shown has ", section $2" appended to it.
+//
+
+var link = "https://tools.ietf.org/html/rfc" + $0;
+var text = "";
+
+var commonl10n = string.deserialize(await template('L10n:Common'));
+
+if ($1 && $1 != undefined && $1.length) {
+    text = ": " + $1;
+}
+
+if ($2 && $2 != undefined) {
+    link = link + "#section-" + $2;
+    text = ", " + mdn.getLocalString(commonl10n, "section") + " " + $2 + text;
+}
+
+%>
+<a href="<%-link%>">RFC <%=$0%><%=text%></a>

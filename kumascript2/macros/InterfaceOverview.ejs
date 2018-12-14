@@ -1,0 +1,308 @@
+<%
+// *** EXPERIMENTAL - DO NOT USE! ***
+//
+// Constructs an API overview for the API rooted at the current page.
+//
+// Parameters:
+//  $0  The API group name; used to locate info about related APIs
+//  $1  (FOR TESTING ONLY) Slug of root page of API
+
+var slug = env.slug;
+if ($1) {
+    slug = $1;
+}
+var locale = env.locale;
+var group = $0;
+var APIHref = '/' + locale + '/docs/Web/API';
+var output = '';
+
+// Slug isn't available in preview mode, so don't do anything if it's
+// not available.
+
+if (slug) {
+    var mainIF = slug.replace('Web/API/', '').split('/')[0];
+    mainIF = mainIF.charAt(0).toUpperCase() + mainIF.slice(1);
+
+    // Convenience to shorten some function names
+
+    var hasTag = page.hasTag;
+    var escapeQuotes = mdn.escapeQuotes;
+    var htmlEscape = kuma.htmlEscape;
+    var getLocalString = mdn.getLocalString;
+    var localString = mdn.localString;
+
+    var rtlLocales = ['ar', 'he', 'fa'];
+
+    // Fetch the databases
+
+    var webAPIData = string.deserialize(await template('InterfaceData'));
+
+    if (group) {
+        var webAPIGroups = string.deserialize(await template('GroupData'));
+    }
+
+    var commonl10n = string.deserialize(await template('L10n:Common'));
+
+    // Strings that need translating
+
+    var strNone = localString({
+      "en-US": "This interface has no $1."
+    });
+
+    var strInherits = localString({
+      "en-US": "This interface has no $1, but inherits $1 from: $2"
+    });
+
+    var strAlsoInherits = localString({
+      "en-US": "Also inherits $1 from: $2"
+    });
+    
+  // Get translations of strings we need
+
+    var text = {
+        Methods: getLocalString(commonl10n, 'Methods'),
+        Properties: getLocalString(commonl10n, 'Properties'),
+        EventHandlers: getLocalString(commonl10n, 'Event_handlers'),
+        Constructor: getLocalString(commonl10n, 'Constructor'),
+        Events: getLocalString(commonl10n, 'Events'),
+        translate: getLocalString(commonl10n, '[Translate]'),
+        title: getLocalString(commonl10n, 'TranslationCTA'),
+        separator: getLocalString(commonl10n, 'listSeparator')
+    };
+
+    // Get the information about this API specifically out of the
+    // databases, as well as from the subtree below this page.
+    
+    var mainIFPages = await page.subpagesExpand('/en-US/docs/Web/API/' + mainIF);
+    var events = [];
+
+    if (group && webAPIGroups[0][group]) {
+        // ADD HERE ANY CODE NEEDED TO PULL OTHER INFO FROM GROUPDATA
+        events = webAPIGroups[0][group].events || [];
+    }
+
+    // Scan the pages and collect the information we need about them
+
+    var properties = [];
+    var eventHandlers = [];
+    var methods = [];
+    var ctors = [];
+
+    function collect(pageList) {
+        for (var i in pageList) {
+            var aPage = pageList[i];
+            if (hasTag(aPage, 'Event Handler')) {
+              eventHandlers.push(aPage);
+            } else if (hasTag(aPage, 'Property')) { // "else" because handlers are also properties
+                properties.push(aPage);
+            }
+            if (hasTag(aPage, 'Method')) {
+                methods.push(aPage);
+            }
+            if (hasTag(aPage, 'Constructor')) {
+                ctors.push(aPage);
+            }
+        }
+    }
+    
+    collect(mainIFPages);
+
+    // Build inheritance information, if any
+
+    var inherited = [];
+
+    var impl = webAPIData[0][mainIF] != undefined ? webAPIData[0][mainIF].impl : [];
+    var inh = webAPIData[0][mainIF] != undefined ? webAPIData[0][mainIF].inh : '';
+
+    if (inh) {
+      inherited.push(inh);
+    }
+    
+    impl.forEach(function(value, index, ar) {
+      inherited.push(value);
+    });
+
+    // Now sort the lists
+
+    function APISort(a, b) {
+        var aSplit = a.title.split('.');
+        a = aSplit[aSplit.length - 1];
+        var bSplit = b.title.split('.');
+        b = bSplit[bSplit.length - 1];
+        return a.toLowerCase().localeCompare(b.toLowerCase());
+    }
+    
+    eventHandlers.sort(APISort);
+    properties.sort(APISort);
+    methods.sort(APISort);
+    ctors.sort(APISort);
+    inherited.sort(APISort);
+
+    // Build inheritance list string
+    let inheritanceList = (await Promise.all(
+        inherited.map(val => template("domxref", [val]))
+    )).join(text.separator);
+
+    // Preconstructed HTML for each type of badge
+
+    var badges = {
+        ExperimentalBadge : '<span class="sidebar-icon">' + await template("ExperimentalBadge", [1]) + '</span>',
+        NonStandardBadge  : '<span class="sidebar-icon">' + await template("NonStandardBadge", [1]) + '</span>',
+        DeprecatedBadge   : '<span class="sidebar-icon">' + await template("DeprecatedBadge", [1]) + '</span>',
+        ObsoleteBadge     : '<span class="sidebar-icon">' + await template("ObsoleteBadge", [1]) + '</span>',
+        ReadOnlyBadge     : await template("ReadOnlyInline"),
+    };
+
+    // Function to construct one section of the page, given
+    // its title and an array of the pages in the section.
+
+    function buildSection(title, pages, headLevel) {
+        if (!headLevel) {
+          headLevel = 2;
+        }
+        var result = '<h' + headLevel + '>' + title + '</h' + headLevel + '>';
+        var inheritText = '';
+        
+        if (title != text.Constructor) {
+            // If there are any items in the section and there are
+            // inherited interfaces:
+            
+            if (pages.length && inherited.length) {
+              inheritText = strAlsoInherits.replace(/\$1/ig,
+                            title.toLocaleLowerCase());
+              inheritText = inheritText.replace(/\$2/ig, inheritanceList);
+            }
+    
+            // ... if there are no items in the section and no inherited
+            // interfaces:
+            else if (!pages.length && !inherited.length) {
+              inheritText = strNone.replace(/\$1/ig, title.toLocaleLowerCase());
+            }
+    
+            // ... if there are no items in the section but there are inherited
+            // interfaces:
+    
+            else if (!pages.length) {
+              inheritText = strInherits.replace(/\$1/ig, title.toLocaleLowerCase());
+              inheritText = inheritText.replace(/\$2/ig, inheritanceList);
+            }
+    
+            // ... otherwise, there are items in the section but none inherited,
+            // so we don't have any special text at all.
+    
+            if (inheritText.length) {
+              result += '<p><em>' + inheritText + '</em></p>';
+            }
+        }
+        
+        result += '<dl>';
+
+        for (var i in pages) {
+            var aPage = pages[i];
+            //var summary = escapeQuotes(aPage.summary) || '';    // MAYBE A "TEXT NEEDED" NOTICE?
+            var summary = aPage.summary.replace(/img[^>]*>/g, " ");
+            var url = aPage.url.replace('/en-US/', "/" + locale + "/");
+            var titleSplit = htmlEscape(aPage.title).split('.');    // Handle both when writer correctly uses "memberName" and
+            var title = titleSplit[titleSplit.length-1];            // when incorrectly uses interface.memberName as page title
+
+            // Has the page been translated? If so, we need to use its
+            // text instead of the text for English.
+
+            var translated = false;
+            if (locale != 'en-US') {
+                aPage.translations.forEach(function(translation) {
+                    if (translation.locale === locale) {
+                        summary = escapeQuotes(translation.summary) || '';
+                        url = translation.url;
+                        titleSplit = htmlEscape(aPage.title).split('.');
+                        title = titleSplit[titleSplit.length-1];
+                        translated = true;
+                    }
+                });
+            }
+
+            // If the page hasn't been translated, we need a call to action!
+
+            var cta = '';
+             if (!translated && locale != 'en-US') {
+                cta += ' <a href="'+ url +'$translate" style="opacity:0.5" title="'+ text['title'] + '">' + text['translate'] + '</a>';
+            }
+
+            // Strike through items which are obsolete
+
+            if (hasTag(aPage, 'Obsolete')) {
+                result += '<s class="obsoleteElement">';
+            }
+
+            // Now construct the text for the page's entry in the list
+
+            if (rtlLocales.indexOf(locale) != -1) {
+                result += '<bdi>';
+            }
+
+            result += '<dt><a href="' + url + '"><code>' + title + '</code></a>';
+
+            // Close any case-specific elements
+
+            if (rtlLocales.indexOf(locale) != -1) {
+                result += '</bdi>';
+            }
+
+            if (hasTag(aPage, 'Obsolete')) {
+                result += '</s>';
+            }
+
+            // Add badges. We need them, seriously.
+
+            if (hasTag(aPage, 'Experimental')) {
+                result += " " + badges.ExperimentalBadge;
+            }
+            if (hasTag(aPage, 'Non-standard') || hasTag(aPage, 'Non Standard')) {
+                result += " " + badges.NonStandardBadge;
+            }
+            if (hasTag(aPage, 'Deprecated')) {
+                result += " " + badges.DeprecatedBadge;
+            }
+            if (hasTag(aPage, 'Obsolete')) {
+                result += " " + badges.ObsoleteBadge;
+            }
+            if (hasTag(aPage, 'Read-only')) {
+                result += " " + badges.ReadOnlyBadge;
+            }
+
+            // Add the call to action, if any, and close the title
+
+            result += cta + '</dt>';
+
+            // Add the summary
+
+            result += '<dd>' + summary + '</dd>';
+        }
+
+        return result;
+    }
+    
+    // Time to do the output of the whole thing!
+
+    if (ctors.length > 0) {
+        output += buildSection(text['Constructor'], ctors);
+    }
+
+//    if (properties.length > 0) {
+        output += buildSection(text['Properties'], properties);
+//    }
+
+      if (eventHandlers.length > 0) {
+        output += buildSection(text['EventHandlers'], eventHandlers, 3);
+      }
+
+//    if (methods.length > 0) {
+        output += buildSection(text['Methods'], methods);
+//    }
+
+    // Wrap it up
+
+    output += '</dl>';
+}
+%>
+<%-output%>

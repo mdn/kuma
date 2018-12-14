@@ -1,0 +1,142 @@
+<%
+/* parameters: version created, version last changed, version obsoleted (optional), version deprecated (optional) */
+/* specify 0 for obsoleted if it's deprecated but not yet obsolete */
+
+// Variables defining positioning of items in the diagram
+var barTopHeight = "height:8px; top:16px;";
+var underTextTop = "top:22px;";
+
+var currentGecko = await template("CurrentGecko", ["nightly"]);
+var unitBlob = await template("xverblob", ["1"]);
+var currentBlob = await template("xverblob", [currentGecko]) - unitBlob;
+
+var impStart = 0;
+var impWidth = 0;
+var depStart = 0;
+var depWidth = 0;
+var obsStart = 0;
+var obsWidth = 0;
+
+var st = "";
+var stOver = "";
+var stUnder = "";
+
+// Keep track of the last end point
+var endLast = 100;
+
+%>
+<div style="height:42px; position:relative; padding:2px; width:auto;">
+<%
+// Draw the "1.0" legend if implemented version does not collide with it
+if (parseFloat($0) > 1) {
+  %>
+  <div style="top:22px; font-size:11px; position:absolute;">1.0</div>
+  <%
+}
+// Draw the "current version" legend if nothing collides with it
+if (($2 != currentGecko) && ($0 != currentGecko) && ($3 != currentGecko)) {
+  %>
+  <div style="top:22px; font-size:11px; position:absolute; left:0px; text-align:right; float: right; width:100%;"><%- currentGecko %></div>
+  <%
+}
+
+// Obsolete
+if (parseFloat($2) > 0) {
+  var obsStartBlob = await template("xverblob", [$2]) - unitBlob;
+  obsStart = 100*(obsStartBlob/currentBlob);
+  obsWidth = endLast - obsStart;
+  endLast = obsStart;
+}
+// Deprecated
+if ($2 != $3 && parseFloat($3) > 0) {
+  var depStartBlob = await template("xverblob", [$3]) - unitBlob;
+  depStart = 100*(depStartBlob/currentBlob);
+  depWidth = endLast - depStart;
+  endLast = depStart;
+}
+// Implemented
+var startVer = $0;
+if (parseFloat(startVer) < 1) {
+  startVer = "1";    // deal with cases where the start version predates 1.0
+}
+var impStartBlob = await template("xverblob", [startVer]) - unitBlob;
+impStart = 100*(impStartBlob/currentBlob);
+impWidth = endLast - impStart;
+endLast = impStart;
+
+// If Implemented is not version 1.0 or earlier draw red block
+if (endLast > 0) {
+  st = barTopHeight + "background:#dd0000; left:0px; position:absolute; width:" + endLast + "%";
+  %>
+  <div style="<%=st%>"></div>
+  <%
+}
+// Draw Implemented green block
+var impTitle = "Introduced in Gecko " + $0 + " " + await template("geckoRelease", [$0]);
+st = barTopHeight + "left:" + impStart + "%; background:#00dd00; position:absolute; width:" + impWidth + "%";
+%>
+<div style="<%-st%>" title="<%=impTitle%>"></div>
+<%
+if (impStart > impWidth && impStart > 10) {
+  stOver = "top:0px; font-size:11px; position:absolute; left:0px; text-align:right; float: right; width:" + impStart + "%;";
+  stUnder = underTextTop + "font-size:11px; position:absolute; left:0px; text-align:right; float: right; width:" + impStart + "%;";
+} else {
+  stOver = "top:0px; font-size:11px; position:absolute; left:" + impStart + "%;";
+  stUnder = underTextTop + "font-size:11px; position:absolute; left:" + impStart + "%;";
+}
+%>
+<div style="<%-stOver%>">Introduced</div>
+<div style="<%-stUnder%>">Gecko <%=$0%></div>
+<%
+// Draw Deprecated orange block
+if (depStart > 0) {
+  if (depWidth > 0) {
+    var depTitle = "Deprecated in Gecko " + $3 + " " + await template("geckoRelease", [$3]);
+    st = barTopHeight + "left:" + depStart + "%; background:#ff8000; position:absolute; width:" + depWidth + "%";
+    %>
+    <div style="<%-st%>" title="<%=depTitle%>"></div>
+    <%
+  }
+  if (impWidth > depWidth) {
+    stOver = "top:0px; font-size:11px; position:absolute; left:0px; text-align:right; float: right; width:" + depStart + "%;";
+    stUnder = underTextTop + "font-size:11px; position:absolute; left:0px; text-align:right; float: right; width:" + depStart + "%;";
+  } else {
+    stOver = "top:0px; font-size:11px; position:absolute; left:" + depStart + "%;";
+    stUnder = underTextTop + "font-size:11px; position:absolute; left:" + depStart + "%;";
+  }
+  %>
+  <div style="<%-stOver%>">Deprecated</div>
+  <div style="<%-stUnder%>">Gecko <%-$3%></div>
+  <%
+}
+// Draw Obsolete black block and text
+if (obsStart > 0) {
+  if (obsWidth > 0) {
+    var obsTitle = "Obsolete in Gecko " + $2 + " " + await template("geckoRelease", [$2]);
+    st = barTopHeight + "left:" + obsStart + "%; background:#000000; position:absolute; width:" + obsWidth + "%";
+    %>
+    <div style="<%-st%>" title="<%=obsTitle%>"></div>
+    <%
+  }
+  st = "top:0px; font-size:11px; position:absolute; left:0px; text-align:right; float: right; width:" + obsStart + "%;";
+  %>
+  <div style="<%-st%>">Obsolete</div>
+  <%
+  st = underTextTop + "font-size:11px; position:absolute; left:0px; text-align:right; float: right; width:" + obsStart + "%;";
+  %>
+  <div style="<%-st%>">Gecko <%-$2%></div>
+  <%
+}
+// Draw an indicator for the last-changed version
+if (parseFloat($1) > 1) {
+  var chaStart = (100 * ((await template("xverblob", [$1]) - unitBlob) / currentBlob)) - 0.5;
+  if (chaStart > impStart ) {
+    chaTitle = "Last changed in Gecko " + $1 + " " + await template("geckoRelease", [$1]);
+    st = barTopHeight + "left:" + chaStart + "%; background:#eeee00; position:absolute; width:1%; border-radius:4px; -webkit-border-radius:4px; -moz-border-radius:4px; -o-border-radius:4px;";
+    %>
+    <div style="<%-st%>" title="<%-chaTitle%>"></div>
+    <%
+  }   
+}
+%>
+</div>

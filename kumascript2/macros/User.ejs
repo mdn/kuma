@@ -1,0 +1,18 @@
+<%
+/* Display link to user page.
+
+Parameter
+  $0 : User ID
+  $1 : Display Name (Optional / Overwrite "User:XXX" Syntax)
+*/
+
+var str_User = mdn.localString({
+    "en-US": "User:",
+    "de": "Benutzer:",
+    "ru": "Пользователь:"
+});
+
+var displayName = $1 ? $1 : str_User + $0;
+
+
+%><a href="/profiles/<%-$0%>"><%-displayName%></a>

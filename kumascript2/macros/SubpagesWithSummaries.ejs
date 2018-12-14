@@ -1,0 +1,63 @@
+<%
+// Creates a list of the subpages of the current page, with their summaries,
+// as a definition list. Doesn't do any additional formatting.
+//
+// Parameters:
+//
+//  $0  A list of pages to output instead of the subpages of the current page;
+//      OPTIONAL.
+
+function pageSorter(a, b) {
+    return a.title.localeCompare(b.title);
+}
+
+var termList;
+var html = "";
+
+if ($0 && ($0 != undefined)) {
+    termList = JSON.parse($0);
+} else {
+    termList = await page.subpagesExpand();
+}
+
+var numTerms = termList.length;
+
+if (numTerms) {
+    var importantList = [];
+    var regularList = [];
+    
+    // Alphabetize the list
+    
+    termList.sort(pageSorter);
+    
+    // Now move the important items to the top; these are items tagged "Important".
+    
+    for (var i=0; i<numTerms; i++) {
+        if (page.hasTag(termList[i], "Important")) {
+            importantList.push(termList[i]);
+        } else {
+            regularList.push(termList[i]);
+        }
+    }
+    
+    termList = importantList.concat(regularList);
+    
+    var termIndex = 0;
+    html += "<dl>";
+    
+    for (var i=0; i<numTerms; i++) {
+        var aPage = termList[i];
+        
+        if (!page.hasTag(aPage, "junk") && (aPage.title != "Index")) {
+            var title = aPage.title;
+            var summary = aPage.summary.replace(/<img[^>]*>/g," ");
+            var url = aPage.url;
+        
+            html += "<dt class='landingPageList'><a href='" + url + "'>" + title + "</a></dt><dd class='landingPageList'>" + summary + "</dd>";
+        }
+    }
+    
+    html += "</dl>";
+}
+%>
+<%-html%>

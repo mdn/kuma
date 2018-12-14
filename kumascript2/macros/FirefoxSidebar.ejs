@@ -1,0 +1,375 @@
+<%
+
+const locale = env.locale;
+
+const baseURL = `/${locale}/docs/Mozilla/`;
+const addonsURL = `/${locale}/Add-ons/`;
+
+const text = mdn.localStringMap({
+  "en-US": {
+    "Firefox_developer_release_notes": "Firefox developer release notes",
+    "Add-ons": "Add-ons",
+      "Browser_extensions": "Browser extensions",
+      "Themes": "Themes",
+    "Firefox_internals": "Firefox internals",
+      "Mozilla_project": "Mozilla project",
+      "Gecko": "Gecko",
+      "Headless_mode": "Headless mode",
+      "JavaScript_code_modules": "JavaScript code modules",
+      "JS-ctypes": "JS-ctypes",
+      "MathML_project": "MathML project",
+      "MFBT": "MFBT",
+      "Mozilla_projects": "Mozilla projects",
+      "Preference_system": "Preference system",
+      "WebIDL_bindings": "WebIDL bindings",
+      "XPCOM": "XPCOM",
+      "XUL": "XUL",
+    "Building_and_contributing": "Building and contributing",
+      "Build_instructions": "Build instructions",
+      "Configuring_build_options": "Configuring build options",
+      "How_the_build_system_works": "How the build system works",
+      "Mozilla_source_code": "Mozilla source code",
+      "Localization": "Localization",
+      "Mercurial": "Mercurial",
+      "Quality_assurance": "Quality assurance",
+      "Using_Mozilla_code_in_other_projects": "Using Mozilla code in other projects"
+  },
+  "bn-BD": {
+    "Firefox_developer_release_notes": "ফায়ারফক্স ডেভেলপার রিলিজ নোট",
+    "Add-ons": "অ্যাড-অন",
+      "Browser_extensions": "Browser extensions",
+      "Themes": "থিম",
+    "Firefox_internals": "ফায়ারফক্স অভ্যন্তরীণ",
+      "Mozilla_project": "মজিলা প্রোজেক্ট",
+      "Gecko": "গেকো",
+      "Headless_mode": "Headless mode",
+      "JavaScript_code_modules": "জাভাস্ক্রিপ্ট কোড মডিউল",
+      "JS-ctypes": "JS-ctypes",
+      "MathML_project": "MathML প্রজেক্ট",
+      "MFBT": "MFBT",
+      "Mozilla_projects": "মজিলার প্রোজেক্ট সমূহ",
+      "Preference_system": "প্রেফারেন্স সিস্টেম",
+      "WebIDL_bindings": "WebIDL bindings",
+      "XPCOM": "XPCOM",
+      "XUL": "XUL",
+    "Building_and_contributing": "বিল্ড করা এবং কন্ট্রিবিউট",
+      "Build_instructions": "বিল্ড করার নির্দেশনা",
+      "Configuring_build_options": "বিল্ড অপশন কনফিগার",
+      "How_the_build_system_works": "বিল্ড সিস্টেমের কাজ করার কৌশল",
+      "Mozilla_source_code": "মজিলা সোর্স কোড",
+      "Localization": "লোকালাইজেশন",
+      "Mercurial": "মারকিউরিয়াল",
+      "Quality_assurance": "কোয়ালিটি এসুরেন্স",
+      "Using_Mozilla_code_in_other_projects": "মজিলার কোড অন্যান্য প্রজেক্টে ব্যবহার করা"
+  },
+  "es": {
+    "Firefox_developer_release_notes": "Notas de la Versión para Desarrolladores de Firefox",
+    "Add-ons": "Complementos",
+      "Browser_extensions": "Extensiones del navegador",
+      "Themes": "Temas",
+    "Firefox_internals": "Firefox por dentro",
+      "Mozilla_project": "Proyecto Mozilla (Inglés)",
+      "Gecko": "Gecko",
+      "Headless_mode": "Headless mode",
+      "JavaScript_code_modules": "Modulos de código JavaScript (Inglés)",
+      "JS-ctypes": "JS-ctypes (Inglés)",
+      "MathML_project": "Proyecto MathML",
+      "MFBT": "MFBT (Inglés)",
+      "Mozilla_projects": "Proyectos Mozilla (Inglés)",
+      "Preference_system": "Sistema de Preferencias (Inglés)",
+      "WebIDL_bindings": "Ataduras WebIDL (Inglés)",
+      "XPCOM": "XPCOM",
+      "XUL": "XUL",
+    "Building_and_contributing": "Crear y contribuir",
+      "Build_instructions": "Instrucciones para la compilación",
+      "Configuring_build_options": "Configurar las opciones de compilación",
+      "How_the_build_system_works": "Cómo funciona el sistema de compilación (Inglés)",
+      "Mozilla_source_code": "Código fuente de Mozilla",
+      "Localization": "Localización",
+      "Mercurial": "Mercurial (Inglés)",
+      "Quality_assurance": "Garantía de Calidad",
+      "Using_Mozilla_code_in_other_projects": "Usar Mozilla en otros proyectos (Inglés)"
+  },
+  "fr": {
+    "Firefox_developer_release_notes": "Notes de versions pour développeurs",
+    "Add-ons": "Modules complémentaires",
+      "Browser_extensions": "WebExtensions",
+      "Themes": "Thèmes",
+    "Firefox_internals": "Fonctionnement interne de Firefox",
+      "Mozilla_project": "Le projet Mozilla",
+      "Gecko": "Gecko",
+      "Headless_mode": "Mode « headless »",
+      "JavaScript_code_modules": "Modules de code Javascript",
+      "JS-ctypes": "JS-ctypes",
+      "MathML_project": "Le projet MathML",
+      "MFBT": "MFBT",
+      "Mozilla_projects": "Les projets Mozilla",
+      "Preference_system": "Le système de préférences",
+      "WebIDL_bindings": "Connexions WebIDL",
+      "XPCOM": "XPCOM",
+      "XUL": "XUL",
+    "Building_and_contributing": "Développer et contribuer",
+      "Build_instructions": "Instructions de compilation",
+      "Configuring_build_options": "Configuration des options de compilation",
+      "How_the_build_system_works": "Fonctionnement de la compilation",
+      "Mozilla_source_code": "Code source de Mozilla",
+      "Localization": "Localisation",
+      "Mercurial": "Mercurial",
+      "Quality_assurance": "Assurance qualité",
+      "Using_Mozilla_code_in_other_projects": "Utilisation de code Mozilla dans d'autres projets"
+  },
+  "id": {
+    "Firefox_developer_release_notes": "Catatan rilis developer Firefox",
+    "Add-ons": "Add-ons",
+      "Browser_extensions": "Browser extensions",
+      "Themes": "Themes",
+    "Firefox_internals": "Firefox internals",
+      "Mozilla_project": "Mozilla project",
+      "Gecko": "Gecko",
+      "Headless_mode": "Headless mode",
+      "JavaScript_code_modules": "JavaScript code modules",
+      "JS-ctypes": "JS-ctypes",
+      "MathML_project": "MathML project",
+      "MFBT": "MFBT",
+      "Mozilla_projects": "Mozilla projects",
+      "Preference_system": "Preference system",
+      "WebIDL_bindings": "WebIDL bindings",
+      "XPCOM": "XPCOM",
+      "XUL": "XUL",
+    "Building_and_contributing": "Building and contributing",
+      "Build_instructions": "Build instructions",
+      "Configuring_build_options": "Configuring build options",
+      "How_the_build_system_works": "How the build system works",
+      "Mozilla_source_code": "Mozilla source code",
+      "Localization": "Localization",
+      "Mercurial": "Mercurial",
+      "Quality_assurance": "Quality assurance",
+      "Using_Mozilla_code_in_other_projects": "Menggunakan kode Mozilla di project lain"
+  },
+  "it": {
+    "Firefox_developer_release_notes": "Note di rilascio di Firefox per gli svilupatori",
+    "Add-ons": "Componenti aggiuntivi",
+      "Browser_extensions": "WebExtensions",
+      "Themes": "Temi",
+    "Firefox_internals": "Funzionamento interno di Firefox",
+      "Mozilla_project": "Il progetto Mozilla",
+      "Gecko": "Gecko",
+      "Headless_mode": "Headless mode",
+      "JavaScript_code_modules": "Moduli per il codice JavaScript",
+      "JS-ctypes": "JS-ctypes",
+      "MathML_project": "Progetto MathML",
+      "MFBT": "MFBT",
+      "Mozilla_projects": "Progetti di Mozilla",
+      "Preference_system": "Sistema delle preferenze",
+      "WebIDL_bindings": "Binding WebIDL",
+      "XPCOM": "XPCOM",
+      "XUL": "XUL",
+    "Building_and_contributing": "Compilare e contribuire",
+      "Build_instructions": "Istruzioni di compilazione",
+      "Configuring_build_options": "Configurare le opzioni di compilazione",
+      "How_the_build_system_works": "Come funziona il sistema di compilazione",
+      "Mozilla_source_code": "Codice sorgente di Mozilla",
+      "Localization": "Localizzazione",
+      "Mercurial": "Mercurial",
+      "Quality_assurance": "Controllo qualità",
+      "Using_Mozilla_code_in_other_projects": "Usare il codice di Mozilla in altri progetti"
+  },
+  "pl": {
+    "Firefox_developer_release_notes": "Informacje do wydań Firefoxa dla deweloperów",
+    "Add-ons": "Dodatki",
+      "Browser_extensions": "Browser extensions",
+      "Themes": "Motywy",
+    "Firefox_internals": "Wewnętrzne Firefox",
+      "Mozilla_project": "Mozilla project",
+      "Gecko": "Gecko",
+      "Headless_mode": "Headless mode",
+      "JavaScript_code_modules": "JavaScript code modules",
+      "JS-ctypes": "JS-ctypes",
+      "MathML_project": "MathML project",
+      "MFBT": "MFBT",
+      "Mozilla_projects": "Mozilla projects",
+      "Preference_system": "Preference system",
+      "WebIDL_bindings": "WebIDL bindings",
+      "XPCOM": "XPCOM",
+      "XUL": "XUL",
+    "Building_and_contributing": "Tworzenie i współpraca",
+      "Build_instructions": "Build instructions",
+      "Configuring_build_options": "Configuring build options",
+      "How_the_build_system_works": "How the build system works",
+      "Mozilla_source_code": "Mozilla source code",
+      "Localization": "Localization",
+      "Mercurial": "Mercurial",
+      "Quality_assurance": "Quality assurance",
+      "Using_Mozilla_code_in_other_projects": "Using Mozilla code in other projects"
+  },
+  "pt-BR": {
+    "Firefox_developer_release_notes": "Notas de lançamento do Firefox para o desenvolvedor",
+    "Add-ons": "Complementos",
+      "Browser_extensions": "WebExtensions",
+      "Themes": "Temas",
+    "Firefox_internals": "Informações sobre o Firefox",
+      "Mozilla_project": "Projeto Mozilla",
+      "Gecko": "Gecko",
+      "Headless_mode": "Headless mode",
+      "JavaScript_code_modules": "JavaScript code modules",
+      "JS-ctypes": "JS-ctypes",
+      "MathML_project": "MathML project",
+      "MFBT": "MFBT",
+      "Mozilla_projects": "Mozilla projects",
+      "Preference_system": "Preference system",
+      "WebIDL_bindings": "WebIDL bindings",
+      "XPCOM": "XPCOM",
+      "XUL": "XUL",
+    "Building_and_contributing": "Construindo e contribuindo",
+      "Build_instructions": "Build instructions",
+      "Configuring_build_options": "Configuring build options",
+      "How_the_build_system_works": "How the build system works",
+      "Mozilla_source_code": "Mozilla source code",
+      "Localization": "Localização",
+      "Mercurial": "Mercurial",
+      "Quality_assurance": "Quality assurance",
+      "Using_Mozilla_code_in_other_projects": "Usando o código Mozilla em outros projetos"
+  },
+  "ru": {
+    "Firefox_developer_release_notes": "Замечания к релизам Firefox для разработчиков",
+    "Add-ons": "Дополнения",
+      "Browser_extensions": "Расширения браузера",
+      "Themes": "Темы",
+    "Firefox_internals": "Firefox internals",
+      "Mozilla_project": "Проект Mozilla",
+      "Gecko": "Gecko",
+      "Headless_mode": "Headless mode",
+      "JavaScript_code_modules": "Модули в JavaScript",
+      "JS-ctypes": "JS-ctypes",
+      "MathML_project": "Проект MathML",
+      "MFBT": "MFBT",
+      "Mozilla_projects": "Проекты Mozilla",
+      "Preference_system": "Система настроек",
+      "WebIDL_bindings": "WebIDL bindings",
+      "XPCOM": "XPCOM",
+      "XUL": "XUL",
+    "Building_and_contributing": "Собрать Firefox из исходного кода и внести вклад в проект",
+      "Build_instructions": "Инструкции по сборке Firefox",
+      "Configuring_build_options": "Настройка правил сборки",
+      "How_the_build_system_works": "Как устроен механизм сборки",
+      "Mozilla_source_code": "Исходный код Mozilla",
+      "Localization": "Локализация",
+      "Mercurial": "Меркуриал",
+      "Quality_assurance": "Контроль качества",
+      "Using_Mozilla_code_in_other_projects": "Использование кода Mozilla в других проектах"
+  },
+  "zh-CN": {
+    "Firefox_developer_release_notes": "Firefox developer 发布说明",
+    "Add-ons": "附加组件",
+      "Browser_extensions": "浏览器扩展",
+      "Themes": "主题",
+    "Firefox_internals": "Firefox 的内部机制",
+      "Mozilla_project": "Mozilla 项目",
+      "Gecko": "Gecko",
+      "Headless_mode": "Headless mode",
+      "JavaScript_code_modules": "JavaScript代码模块",
+      "JS-ctypes": "JS-ctypes",
+      "MathML_project": "MathML 项目",
+      "MFBT": "MFBT",
+      "Mozilla_projects": "Mozilla 项目",
+      "Preference_system": "Preference 系统",
+      "WebIDL_bindings": "WebIDL 绑定",
+      "XPCOM": "XPCOM",
+      "XUL": "XUL",
+    "Building_and_contributing": "构建与作出贡献",
+      "Build_instructions": "构建说明",
+      "Configuring_build_options": "配置构建选项",
+      "How_the_build_system_works": "构建系统如何工作",
+      "Mozilla_source_code": "Mozilla源代码",
+      "Localization": "本地化",
+      "Mercurial": "Mercurial",
+      "Quality_assurance": "质量保证",
+      "Using_Mozilla_code_in_other_projects": "在其他项目中使用来自Mozilla的代码"
+  },
+  "zh-TW": {
+    "Firefox_developer_release_notes": "Firefox developer release notes",
+    "Add-ons": "擴充套件",
+      "Browser_extensions": "瀏覽器擴充功能",
+      "Themes": "主題",
+    "Firefox_internals": "Firefox internals",
+      "Mozilla_project": "Mozilla project",
+      "Gecko": "Gecko",
+      "Headless_mode": "Headless mode",
+      "JavaScript_code_modules": "JavaScript 程式碼模組",
+      "JS-ctypes": "JS-ctypes",
+      "MathML_project": "MathML 專案",
+      "MFBT": "MFBT",
+      "Mozilla_projects": "Mozilla 專案",
+      "Preference_system": "Preference system",
+      "WebIDL_bindings": "WebIDL bindings",
+      "XPCOM": "XPCOM",
+      "XUL": "XUL",
+    "Building_and_contributing": "Building and contributing",
+      "Build_instructions": "建置教學",
+      "Configuring_build_options": "Configuring build options",
+      "How_the_build_system_works": "How the build system works",
+      "Mozilla_source_code": "Mozilla 原始碼",
+      "Localization": "在地化",
+      "Mercurial": "Mercurial",
+      "Quality_assurance": "Quality assurance",
+      "Using_Mozilla_code_in_other_projects": "在我們的專案中使用 Mozilla 程式碼"
+  }
+});
+
+%>
+
+<section class="Quick_links" id="Quick_Links">
+  <ol>
+    <li class="toggle">
+        <details>
+            <summary><%=text["Firefox_developer_release_notes"]%></summary>
+            <ol>
+              <li><a href="<%=baseURL%>Firefox/Releases"><%=text["Firefox_developer_release_notes"]%></a></li>
+            </ol>
+        </details>
+    </li>
+    <li class="toggle">
+        <details>
+            <summary><%=text["Add-ons"]%></summary>
+            <ol>
+              <li><a href="<%=addonsURL%>WebExtensions"><%=text["Browser_extensions"]%></a></li>
+              <li><a href="<%=addonsURL%>Themes"><%=text["Themes"]%></a></li>
+            </ol>
+        </details>
+    </li>
+    <li class="toggle">
+        <details>
+            <summary><%=text["Firefox_internals"]%></summary>
+            <ol>
+              <li><a href="<%=baseURL%>"><%=text["Mozilla_project"]%></a></li>
+              <li><a href="<%=baseURL%>Gecko"><%=text["Gecko"]%></a></li>
+              <li><a href="<%=baseURL%>Firefox/Headless_mode"><%=text["Headless_mode"]%></a></li>
+              <li><a href="<%=baseURL%>JavaScript_code_modules"><%=text["JavaScript_code_modules"]%></a></li>
+              <li><a href="<%=baseURL%>js-ctypes"><%=text["JS-ctypes"]%></a></li>
+              <li><a href="<%=baseURL%>MathML_Project"><%=text["MathML_project"]%></a></li>
+              <li><a href="<%=baseURL%>MFBT"><%=text["MFBT"]%></a></li>
+              <li><a href="<%=baseURL%>Projects"><%=text["Mozilla_projects"]%></a></li>
+              <li><a href="<%=baseURL%>Preferences"><%=text["Preference_system"]%></a></li>
+              <li><a href="<%=baseURL%>WebIDL_bindings"><%=text["WebIDL_bindings"]%></a></li>
+              <li><a href="<%=baseURL%>Tech/XPCOM"><%=text["XPCOM"]%></a></li>
+              <li><a href="<%=baseURL%>Tech/XUL"><%=text["XUL"]%></a></li>
+            </ol>
+        </details>
+    </li>
+    <li class="toggle">
+        <details>
+            <summary><%=text["Building_and_contributing"]%></summary>
+            <ol>
+              <li><a href="<%=baseURL%>Developer_guide/Build_Instructions"><%=text["Build_instructions"]%></a></li>
+              <li><a href="<%=baseURL%>Developer_guide/Build_Instructions/Configuring_Build_Options"><%=text["Configuring_build_options"]%></a></li>
+              <li><a href="<%=baseURL%>Developer_guide/Build_Instructions/How_Mozilla_s_build_system_works"><%=text["How_the_build_system_works"]%></a></li>
+              <li><a href="<%=baseURL%>Developer_guide/Source_Code/Mercurial"><%=text["Mozilla_source_code"]%></a></li>
+              <li><a href="<%=baseURL%>Localization"><%=text["Localization"]%></a></li>
+              <li><a href="<%=baseURL%>Mercurial"><%=text["Mercurial"]%></a></li>
+              <li><a href="<%=baseURL%>QA"><%=text["Quality_assurance"]%></a></li>
+              <li><a href="<%=baseURL%>Using_Mozilla_code_in_other_projects"><%=text["Using_Mozilla_code_in_other_projects"]%></a></li>
+            </ol>
+        </details>
+    </li>
+  </ol>
+</section>

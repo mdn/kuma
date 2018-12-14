@@ -1,0 +1,78 @@
+<%
+// Insert a banner indicating that the page is a draft. If a parameter is
+// provided, it's added to the box as an explanation for the draft status;
+// this could be used to include information about who's working on the
+// page, what hasn't been done yet, or even what specifically could use
+// some review help.
+//
+// Parameters:
+//  $0  (optional) A string providing details about why the page is a draft.
+//      You can make MDN usernames link to the corresponding profile by
+//      prefacing them with "~~", like "~~supereditordeluxe".
+//
+// If you use a profile link, make sure your profile includes a way to
+// contact you.
+
+var s_draft = 'Draft';
+var s_not_complete = 'This page is not complete.';
+
+// Handle the optional string
+
+var s_details = '';
+
+if ($0) {
+    s_details = $0;
+
+    var pattern = /~~(\w+)(\W)/ig;
+
+    s_details = "<em>" + s_details.replace(pattern, function replacer(match, username, endchar) {
+        return "<a href='https://developer.mozilla.org/profiles/" + username + "'>" + username + "</a>" + endchar;
+    }) + "</em>";
+}
+
+switch (env.locale) {
+    case 'es':
+        s_draft = 'Borrador';
+        s_not_complete = "Esta página no está completa.";
+        break;
+    case 'fr':
+        s_draft = 'Brouillon';
+        s_not_complete = "Cette page n'est pas terminée.";
+        break;
+    case 'ja':
+        s_draft = '草案';
+        s_not_complete = "このページは完成していません。";
+        break;
+    case 'ko':
+        s_draft = '초안';
+        s_not_complete = "이 문서는 작성중입니다.";
+        break;
+    case 'pl':
+        s_draft = 'Szkic';
+        s_not_complete = "Strona ta nie jest jeszcze ukończona.";
+        break;
+    case 'zh-CN':
+        s_draft = '草案';
+        s_not_complete = "本页尚未完工.";
+        break;
+    case 'zh-TW':
+        s_draft = '編撰中';
+        s_not_complete = '本頁仍未完成';
+        break;
+    case 'pt-PT':
+        s_draft = 'Esboço';
+        s_not_complete = 'Esta página está incompleta.';
+        break;
+    case 'pt-BR':
+        s_draft = 'Rascunho';
+        s_not_complete = 'Esta página está incompleta.';
+        break;
+    case 'ru':
+        s_draft = 'Черновик';
+        s_not_complete = 'Эта страница не завершена.';
+}
+%><div class="blockIndicator draft">
+    <p><strong><%=s_draft%></strong><br/>
+    <%=s_not_complete%></p>
+    <%-s_details%>
+</div>

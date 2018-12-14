@@ -1,0 +1,20 @@
+<%
+/* creates a link to an attribute in an interface */
+/* parameters: interface_name, attribute_name */
+
+var lang = env.locale;
+
+var destNewType = "/" + lang + '/docs/XPCOM_Interface_Reference/' + $0;
+var destOldType = "/" + lang + '/docs/' + $0;
+var apiString = $0 + '.' + $1;
+var html = "";
+
+if (wiki.pageExists(destNewType)) { /* the page exists from the dekiwiki age */
+    html = web.link(wiki.uri(destNewType) + '#' + $1, apiString);
+} else if (wiki.pageExists(destOldType)) { /* the page exists from the mediawiki age */
+    html = web.link(wiki.uri(destOldType) + '#' + $1, apiString);
+} else { /* the page doesn't exist */
+  html = web.link(wiki.uri(destNewType) + '#' + $1, apiString);
+}
+%>
+<code><%-html%></code>

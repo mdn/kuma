@@ -1,0 +1,13 @@
+<%
+var lang = env.locale;
+
+var langName = $1 + " Page";
+
+switch(lang) {
+  case 'ja':
+    langName = $1 + " ページ";
+    break;
+}
+var dest = '/' + lang + '/docs/' + $0;
+%>
+<a href="<%=dest%>">« <%=langName%></a>

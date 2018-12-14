@@ -1,0 +1,11 @@
+This is a test of request environment vars:
+
+* {{ reqlocale }}
+* {{ reqvar('alpha') }}
+* {{ reqvar('beta') }}
+* {{ reqvar('gamma') }}
+* {{ reqvar('delta') }}
+* {{ reqvar-json('foo') }}
+* {{ reqvar-json('bar') }}
+
+That's all folks!

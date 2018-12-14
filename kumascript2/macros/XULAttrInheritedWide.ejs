@@ -1,0 +1,79 @@
+<%
+var s_inherited = "Inherited from XUL element";
+
+switch (env.locale) {
+    case "de":
+        s_inherited = "Geerbt von XUL-Element"; break;
+    case "es":
+        s_inherited = "Heredados desde el elemento XUL"; break;
+    case "fr":
+        s_inherited = "Hérités de XUL element"; break;
+    case "ja":
+        s_inherited = "XUL 要素からの継承"; break;
+    case "pl":
+        s_inherited = "Dziedziczy z elementu XUL"; break;
+    case "ru":
+        s_inherited = "Наследуется с XUL элемента"; break;
+}
+
+
+
+%><table style="border: 1px solid rgb(204, 204, 204); margin: 0 0 10px 10px; padding: 0 10px; background: rgb(238, 238, 238);">
+<tbody>
+<tr>
+<td><p><strong><%=s_inherited%></strong><br /> <small> 
+<%- await template("XULAttr", ["align"]) %>, 
+<%- await template("XULAttr", ["allowevents"]) %>, 
+<%- await template("XULAttr", ["allownegativeassertions"]) %>, 
+<%- await template("XULAttr", ["class"]) %>, 
+<%- await template("XULAttr", ["coalesceduplicatearcs"]) %>, 
+<%- await template("XULAttr", ["collapsed"]) %>, 
+<%- await template("XULAttr", ["container"]) %>, 
+<%- await template("XULAttr", ["containment"]) %>, 
+<%- await template("XULAttr", ["context"]) %>, 
+<%- await template("XULAttr", ["contextmenu"]) %>, 
+<%- await template("XULAttr", ["datasources"]) %>, 
+<%- await template("XULAttr", ["dir"]) %>, 
+<%- await template("XULAttr", ["empty"]) %>, 
+<%- await template("XULAttr", ["equalsize"]) %>, 
+<%- await template("XULAttr", ["flags"]) %>, 
+<%- await template("XULAttr", ["flex"]) %>, 
+<%- await template("XULAttr", ["height"]) %>, 
+<%- await template("XULAttr", ["hidden"]) %>, 
+<%- await template("XULAttr", ["id"]) %>, 
+<%- await template("XULAttr", ["insertafter"]) %>, 
+<%- await template("XULAttr", ["insertbefore"]) %>, 
+<%- await template("XULAttr", ["left"]) %>, 
+<%- await template("XULAttr", ["maxheight"]) %>, 
+<%- await template("XULAttr", ["maxwidth"]) %>, 
+<%- await template("XULAttr", ["menu"]) %>, 
+<%- await template("XULAttr", ["minheight"]) %>, 
+<%- await template("XULAttr", ["minwidth"]) %>, 
+<%- await template("XULAttr", ["mousethrough"]) %>, 
+<%- await template("XULAttr", ["observes"]) %>, 
+<%- await template("XULAttr", ["ordinal"]) %>, 
+<%- await template("XULAttr", ["orient"]) %>, 
+<%- await template("XULAttr", ["pack"]) %>, 
+<%- await template("XULAttr", ["persist"]) %>, 
+<%- await template("XULAttr", ["popup"]) %>, 
+<%- await template("XULAttr", ["position"]) %>, 
+<%- await template("XULAttr", ["preference-editable"]) %>, 
+<%- await template("XULAttr", ["querytype"]) %>, 
+<%- await template("XULAttr", ["ref"]) %>, 
+<%- await template("XULAttr", ["removeelement"]) %>, 
+<%- await template("XULAttr", ["sortDirection"]) %>, 
+<%- await template("XULAttr", ["sortResource"]) %>, 
+<%- await template("XULAttr", ["sortResource2"]) %>, 
+<%- await template("XULAttr", ["statustext"]) %>, 
+<%- await template("XULAttr", ["style"]) %>, 
+<%- await template("XULAttr", ["template"]) %>, 
+<%- await template("XULAttr", ["tooltip"]) %>, 
+<%- await template("XULAttr", ["tooltiptext"]) %>, 
+<%- await template("XULAttr", ["top"]) %>, 
+<%- await template("XULAttr", ["uri"]) %>, 
+<%- await template("XULAttr", ["wait-cursor"]) %>, 
+<%- await template("XULAttr", ["width"]) %> </small></p>
+</td>
+</tr>
+</tbody>
+</table>

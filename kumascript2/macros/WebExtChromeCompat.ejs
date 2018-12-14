@@ -1,0 +1,29 @@
+<%
+
+var output = "<h3>Chrome incompatibilities</h3>";
+
+// source URL for incompatibilities
+var url = "/en-US/docs/Mozilla/Add-ons/WebExtensions/Chrome_incompatibilities";
+var none = "<p>None.</p>"
+
+// API is either $0 or the name of the calling page
+var slug = env.slug;
+var pathComponents = slug.split("/");
+if (pathComponents < 1) {
+    return;
+}
+var leafDocument = pathComponents[pathComponents.length-1];
+var section = $0 || leafDocument;
+
+var incompatibilities = await wiki.page(url, section);
+
+if (incompatibilities) {
+  output += incompatibilities;
+}
+else {
+  output += none;
+}
+
+%>
+
+<%- output %>

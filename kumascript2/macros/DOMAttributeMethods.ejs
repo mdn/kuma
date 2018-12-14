@@ -1,0 +1,79 @@
+<%
+var tableTitle = 'DOM methods dealing with element\'s attributes:',
+    tableHead1 = 'Not namespace-aware, most commonly used methods',
+    tableHead2 = 'Namespace-aware variants (DOM Level 2)',
+    tableHead3 = 'DOM Level 1 methods for dealing with <code>Attr</code> nodes directly (seldom used)',
+    tableHead4 = 'DOM Level 2 namespace-aware methods for dealing with <code>Attr</code> nodes directly (seldom used)';
+
+switch(env.locale) {
+    case 'es':
+        tableTitle = 'Métodos DOM que tratan con atributos de elementos:';
+        break;
+    case 'fr':
+        tableTitle = 'Méthodes DOM traitant des attributs sur les éléments :';
+        tableHead1 = 'DOM Level 1 (le plus courant)';
+        tableHead2 = 'DOM Level 2';
+        tableHead3 = 'DOM Level 1 traitant directement les nœuds <code>Attr</code>';
+        tableHead4 = 'DOM Level 2 traitant directement les nœuds <code>Attr</code>';
+        break;
+    case 'ja':
+        tableTitle = 'DOM メソッドは要素の属性を取り扱います。';
+        tableHead1 = '名前空間に無関係、<br />最も一般的に使用されるメソッド';
+        tableHead2 = '名前空間に限定される変数<br />(DOM Level 2)';
+        tableHead3 = '<code>Attr</code> ノードを直接扱う DOM レベル 1 のメソッド<br />(ほとんど使用されない)';
+        tableHead4 = '<code>Attr</code> ノードを直接扱う DOM レベル 2 名前空間に限定されるメソッド<br />(ほとんど使用されない)';
+        break;
+    case 'pl':
+        tableTitle = 'Metody DOM do obsługi atrybutów to:';
+        tableHead1 = 'DOM Level 1 <small>(brak obsługi przestrzeni nazw, najczęściej używane)</small>';
+        tableHead2 = 'DOM Level 2 <small>(obsługa przestrzeni nazw)</small>';
+        tableHead3 = 'DOM Level 1 <small>- praca bezpośrednio z węzłami <code>Attr</code> (rzadko używane)';
+        tableHead4 = 'DOM Level 2 <small>- praca bezpośrednio z węzłami <code>Attr</code>, z obsługą przestrzeni nazw (rzadko używane)</small>';
+        break;
+    case 'ru':
+        tableTitle = 'Методы DOM имеют дело с атрибутами элементов:',
+        tableHead1 = 'Не знают пространства имён, наиболее часто используемые методы',
+        tableHead2 = 'Вариант, знающий пространство имён (Уровень DOM 2)',
+        tableHead3 = 'Уровень DOM 1 методы для работы с <code>Attr</code> узлами напрямую (используется редко)',
+        tableHead4 = 'Уровень DOM 2 знает о методах пространства имён для работы с <code>Attr</code> узлами напрямую (используется редко)';
+        break;
+    default: break;
+}
+%>
+<p><%- tableTitle %></p>
+<table class="standard-table">
+<thead>
+<tr>
+<th><%- tableHead1 %></th>
+<th><%- tableHead2 %></th>
+<th><%- tableHead3 %></th>
+<th><%- tableHead4 %></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><%- await template("domxref",["element.setAttribute","setAttribute"]) %> (DOM 1)</td>
+<td><%- await template("domxref",["element.setAttributeNS","setAttributeNS"]) %></td>
+<td><%- await template("domxref",["element.setAttributeNode","setAttributeNode"]) %></td>
+<td><%- await template("domxref",["element.setAttributeNodeNS","setAttributeNodeNS"]) %></td>
+</tr>
+<tr>
+<td><%- await template("domxref",["element.getAttribute","getAttribute"]) %> (DOM 1)</td>
+<td><%- await template("domxref",["element.getAttributeNS","getAttributeNS"]) %></td>
+<td><%- await template("domxref",["element.getAttributeNode","getAttributeNode"]) %></td>
+<td><%- await template("domxref",["element.getAttributeNodeNS","getAttributeNodeNS"]) %></td>
+</tr>
+<tr>
+<td><%- await template("domxref",["element.hasAttribute","hasAttribute"]) %> (DOM 2)</td>
+<td><%- await template("domxref",["element.hasAttributeNS","hasAttributeNS"]) %></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><%- await template("domxref",["element.removeAttribute","removeAttribute"]) %> (DOM 1)</td>
+<td><%- await template("domxref",["element.removeAttributeNS","removeAttributeNS"]) %></td>
+<td><%- await template("domxref",["element.removeAttributeNode","removeAttributeNode"]) %></td>
+<td>-</td>
+</tr>
+</tbody>
+</table>

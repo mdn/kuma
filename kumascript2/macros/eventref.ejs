@@ -1,0 +1,63 @@
+<%
+// Event Sidebar
+//
+
+// Variables and data
+var slug = env.slug;
+var locale = env.locale;
+var APIHref = '/' + locale + '/docs/Web/API';
+var EventHref = '/' + locale + '/docs/Web/Events';
+var output = "";
+// slug is not available in preview mode.
+if (slug) {
+
+    var groups = string.deserialize(await template("GroupData"))[0];
+    var event = slug.replace('Web/Events/','').split('/')[0];
+
+
+    // output
+    output = '<section class="Quick_links" id="Quick_Links"><ol>';
+    output += '<li><strong><a href="' +  EventHref + '">Events</a></strong></li>';
+
+    function buildEventList(name, events, open) {
+        var openstr = open ? ' open' : '';
+        var result = '<li class="toggle"><details ' + openstr + '><summary>' + name + '</summary><ol>';
+        for (var i = 0; i < events.length; i++) {
+            result += '<li><a href="' + EventHref + '/' + events[i] + '"><code>' + events[i] + '</code></a></li>';
+        }
+        result += '</ol></details></li>';
+        return result;
+    }
+
+    var foundGroup = false;
+    var collectedGroups = []
+    for (g in groups) {
+        var aGroup = groups[g];
+        if (aGroup.events.indexOf(event) !== -1) {
+            foundGroup = true;
+            collectedGroups.push({name: g, events: aGroup.events.sort()});
+        }
+    }
+
+    if (collectedGroups.length === 1) {
+        output += buildEventList(collectedGroups[0].name.replace(/ events/i, '') + ' events', collectedGroups[0].events, true);
+    } else if (collectedGroups.length > 1) {
+        for (x in collectedGroups) {
+            output += buildEventList(collectedGroups[x].name.replace(/ events/i, '') + ' events', collectedGroups[x].events, false);
+        }
+    }
+
+    if (!foundGroup) {
+        for (g in groups) {
+            var aGroup = groups[g];
+            if (aGroup.events.length > 0) {
+                output += buildEventList(g.replace(/ events/i, '') + ' events', aGroup.events.sort(), false);
+            }
+        }
+    }
+
+    output += '</ol></section>';
+}
+%>
+
+<%-output%>

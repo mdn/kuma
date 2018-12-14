@@ -1,0 +1,26 @@
+<%
+    var lang = env.locale;
+    
+    var html = '<b><a href="/en-US/docs/Transforming_XML_with_XSLT/The_Netscape_XSLT%2f%2fXPath_Reference">XSLT/XPath Reference</a></b>: <a href="/en-US/docs/XSLT/Elements">XSLT elements</a>, <a href="/en-US/docs/EXSLT">EXSLT functions</a>, <a href="/en-US/docs/XPath/Functions">XPath functions</a>, <a href="/en-US/docs/XPath/Axes">XPath axes</a>';
+    
+    switch(lang) {
+        case "es":
+            html = '<b><a href="/es/docs/Transformando_XML_con_XSLT#Referencia_de_XSLT.2FXPath">Referencia de XSLT y XPath</a></b>: <a href="/es/docs/XSLT/Elementos">Elementos XSLT</a>, <a href="/es/docs/EXSLT">Funciones EXSLT</a>, <ahref="/es/docs/XPath/Funciones">XPath:Funciones</a>, <a href="/es/docs/XPath/Ejes">XPath:Ejes</a>';
+            break;
+        case "fr":
+            html = '<b><a href="/fr/docs/Transformations_XML_avec_XSLT/La_r%c3%a9f%c3%a9rence_XSLT%2f%2fXPath_de_Netscape">Référence XSLT/XPath</a></b> : <a href="/fr/docs/XSLT/%c3%89l%c3%a9ments">Éléments XSLT</a>, <a href="/fr/docs/EXSLT">Fonctions EXSLT</a>, <a href="/fr/docs/XPath/Fonctions">Fonctions XPath</a>, <a href="/fr/docs/XPath/Axes">Axes XPath</a>';
+            break;
+        case "ja":
+            html = '<b><a href="/ja/docs/Transforming_XML_with_XSLT/The_Netscape_XSLT%2f%2fXPath_Reference">XSLT/XPath リファレンス</a></b>: <a href="/ja/docs/XSLT/Elements">XSLT 要素</a>, <a href="/ja/docs/EXSLT">EXSLT 関数</a>, <a href="/ja/docs/XPath/Functions">XPath 関数</a>, <a href="/ja/docs/XPath/Axes">XPath 軸</a>';
+            break;
+        case "ko":
+            html = '<b><a href="/ko/docs/Transforming_XML_with_XSLT/The_Netscape_XSLT%2f%2fXPath_Reference">XSLT/XPath 참고 문서</a></b>: <a href="/ko/docs/XSLT/Elements">XSLT 요소</a>, <a href="/ko/docs/XPath/Functions">XPath 함수</a>, <a href="/ko/docs/XPath/Axes">XPath 축</a>';
+            break;
+        case "pl":
+            html = '<b><a href="/pl/docs/Transformacje_XML_z_XSLT/Dokumentacja_XSLT%2f%2fXPath">Dokumentacja XSLT/XPath</a></b>: <a href="/pl/docs/XSLT/Elementy">Elementy XSLT</a>, <a href="/pl/docs/EXSLT">Funkcje EXSLT</a>, <a href="/pl/docs/XPath/Funkcje">Funkcje XPath</a>, <a href="/pl/docs/XPath/Osie">Osie XPath</a>';
+            break;
+    }
+%>
+<div style="background:#f5f5f5; margin: 5px 0;">
+    <%-html%>
+</div>

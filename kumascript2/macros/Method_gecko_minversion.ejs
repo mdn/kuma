@@ -1,0 +1,41 @@
+<%
+/*
+Inserts a method heading including info about the minimum required Gecko version
+
+Parameters:
+    $0: Name of the method
+    $1: Required Gecko version
+    $2: Headline level (optional; Default: "3")
+*/
+  
+var str = mdn.localString({
+    "en-US": "Requires Gecko $version$",
+    "de": "Benötigt Gecko $version$",
+    "ja": "要 Gecko $version$",
+    "ru": "Требует Gecko $version$"
+});
+  
+var headlineLevel = $2 || "3";
+
+// Do nothing if the specified version is older than the
+// current version of Gecko.
+
+var currentGecko = await template("CurrentGecko");
+
+if (parseInt(currentGecko, 10) - parseInt($1, 10) < 9) {
+%>
+  <div class="headingWithIndicator">
+<%
+}
+%>
+    <h<%= headlineLevel %> id="<%=$0%>()"><%= $0 %>()</h<%= headlineLevel %>>
+<%
+if (parseInt(currentGecko, 10) - parseInt($1, 10) < 9) {
+%>
+    <span class="indicatorInHeadline standardNote standardNoteMethod"><%-
+     mdn.replacePlaceholders(str, {version: $1}) %> <%- await template("geckoRelease", [$1])
+    %></span>
+</div>
+<%
+}
+%>

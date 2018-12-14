@@ -1,0 +1,5 @@
+Testing a library:
+
+* First: {{ library1-used("A HUGE SUCCESS") }}
+* Second: {{ library1-used("A FOLLOWUP SUCCESS") }}
+* Third: {{ library1-used("AN ENCORE") }}

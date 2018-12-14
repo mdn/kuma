@@ -1,0 +1,29 @@
+<%
+/*
+ * NOTE: This template should only be used by another template, do not use directly in content
+ * Basically any template that ends in xref should use this
+ *
+ * Inserts an appropriatly styled cross reference link.
+ *
+ * $0 - URL
+ * $1 - Link text
+ * $2 - Show tooltip summary (optional - Default is True except when the URL contains an anchor)
+ *      This should only be set to false for content areas where the summary is consistantly poor as a short term solution
+ */
+ 
+// Get the page summary
+let summary = "";
+    
+if (($2 !== false && $0.indexOf("#") === -1) || $2 === true) {
+    let page = await wiki.getPage($0);
+    if (page && page.summary) {
+        summary = mdn.escapeQuotes(page.summary);
+    } else {
+        switch(lang) {
+            default:
+            summary = "This article hasn't been written yet. Please consider contributing!";
+        }
+    }
+}
+
+%><code><a href="<%- $0 %>" title="<%-summary%>"><%- $1 %></a></code>

@@ -1,0 +1,39 @@
+<%
+// Inserts a link to an XBL element's documentation, with proper formatting.
+//
+//  $0 - Element name
+
+var lang = env.locale;
+
+var refName = "XBL 1.0 Reference";
+var elemName = "Elements";
+
+switch(lang) {
+  case 'fr':
+    refName = "Référence XBL 1.0";
+    elemName = "Éléments";
+    break;
+  case 'pl':
+    refName = "Dokumentacja XBL 1.0";
+    elemName = "Elementy";
+    break;
+  case 'ru':
+    refName = "Документация XBL 1.0";
+    elemName = "Элементы";
+    break;
+}
+var destOldType = "/" + lang + '/docs/XBL:' + refName + ':' + elemName;
+var destNewType = "/" + lang + '/docs/XBL/' + refName + '/' + elemName;
+var url = "";
+
+if (wiki.pageExists(destNewType)) {
+    url = destNewType;
+} else if (wiki.pageExists(destOldType)) {
+    url = destOldType;
+} else {
+    url = destNewType;
+}
+
+    url = web.spacesToUnderscores(url + "#" + $0);
+%>
+<code><a href="<%=url%>"><%=$0%></a></code>

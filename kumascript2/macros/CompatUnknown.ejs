@@ -1,0 +1,21 @@
+<%
+var style = "color: rgb(255, 153, 0);";
+
+// Localizers: add your language to the switch statement below!
+
+switch(env.locale) {
+    case 'es':
+        title = "Compatibilidad desconocida, por favor actualízala.";
+        str = "?";
+        break;
+    case 'ru':
+        title = "Совместимость неизвестна; пожалуйста, обновите информацию.";
+        str = "?";
+        break;
+    default:
+        title = "Compatibility unknown; please update this.";
+        str = "?";
+        break;
+}
+%>
+<span title="<%-title%>" style="<%-style%>"><%-str%></span>

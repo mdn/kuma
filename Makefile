@@ -10,10 +10,12 @@ VERSION ?= $(shell git describe --tags --exact-match 2>/dev/null || git rev-pars
 KS_VERSION ?= $(shell cd kumascript && git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD)
 export KUMA_REVISION_HASH ?= $(shell git rev-parse HEAD)
 export KUMASCRIPT_REVISION_HASH ?= $(shell cd kumascript && git rev-parse HEAD)
+export KUMASCRIPT2_REVISION_HASH ?= $(shell cd kumascript2 && git rev-parse HEAD)
 endif
 BASE_IMAGE_NAME ?= kuma_base
 KUMA_IMAGE_NAME ?= kuma
 KUMASCRIPT_IMAGE_NAME ?= kumascript
+KUMASCRIPT2_IMAGE_NAME ?= kumascript2
 IMAGE_PREFIX ?= mdnwebdocs
 BASE_IMAGE ?= ${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:${VERSION}
 BASE_IMAGE_PY3 ?= ${IMAGE_PREFIX}/${BASE_IMAGE_NAME}\:py3
@@ -22,7 +24,9 @@ IMAGE ?= $(BASE_IMAGE_LATEST)
 KUMA_IMAGE ?= ${IMAGE_PREFIX}/${KUMA_IMAGE_NAME}\:${VERSION}
 KUMA_IMAGE_LATEST ?= ${IMAGE_PREFIX}/${KUMA_IMAGE_NAME}\:latest
 KUMASCRIPT_IMAGE ?= ${IMAGE_PREFIX}/${KUMASCRIPT_IMAGE_NAME}\:${KS_VERSION}
+KUMASCRIPT2_IMAGE ?= ${IMAGE_PREFIX}/${KUMASCRIPT2_IMAGE_NAME}\:${KS_VERSION}
 KUMASCRIPT_IMAGE_LATEST ?= ${IMAGE_PREFIX}/${KUMASCRIPT_IMAGE_NAME}\:latest
+KUMASCRIPT2_IMAGE_LATEST ?= ${IMAGE_PREFIX}/${KUMASCRIPT2_IMAGE_NAME}\:latest
 
 target = kuma
 requirements = -r requirements/local.txt
@@ -114,6 +118,11 @@ build-kumascript:
 	--build-arg REVISION_HASH=${KUMASCRIPT_REVISION_HASH} \
 	-f docker/images/kumascript/Dockerfile -t ${KUMASCRIPT_IMAGE} .
 
+build-kumascript2:
+	docker build \
+	--build-arg REVISION_HASH=${KUMASCRIPT2_REVISION_HASH} \
+	-f docker/images/kumascript2/Dockerfile -t ${KUMASCRIPT2_IMAGE} .
+
 build: build-base build-kuma build-kumascript
 
 push-base:
@@ -124,6 +133,9 @@ push-kuma:
 
 push-kumascript:
 	docker push ${KUMASCRIPT_IMAGE}
+
+push-kumascript2:
+	docker push ${KUMASCRIPT2_IMAGE}
 
 push: push-base push-kuma
 

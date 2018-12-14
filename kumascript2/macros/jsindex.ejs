@@ -1,0 +1,101 @@
+<%
+// Builds an index of all JS methods/properties
+//
+// See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Methods_Index
+//
+// Parameters:
+//  $0  -  The slug to build the index for (e.g. "/en-us/docs/Web/JavaScript")
+//  $1  -  The tag to search for (e.g. "Method" or "Property")
+
+var section = $0;
+var tag = $1;
+
+function hasTag(tags, tag) {
+    if (!tags || tags == undefined) return 0;
+    for (var i = 0, len = tags.length; i < len; i++) {
+        if (tags[i].toLowerCase() === tag.toLowerCase()) return 1;
+    }
+    return 0;
+}
+
+var pageList = await page.subpagesExpand(section, '', true);
+var obj = { a: [], b: [], c: [], d: [], e: [], f: [], g: [], h: [], i: [], j: [], k: [], l: [], m: [],
+            n: [], o: [], p: [], q: [], r: [], s: [], t: [], u: [], v: [], w: [], x: [], y: [], z: [], _: []};
+var counter = 0;
+
+function getPages(pageList) {
+    if (pageList) {
+        for (var i = 0; i < pageList.length; i++) {
+            if (hasTag(pageList[i].tags, tag)) {
+                var title = pageList[i].title;
+                var formattedTitle = title.replace('()', '').slice(title.lastIndexOf('.')+1, title.length);
+                var firstLetter = formattedTitle[0].toLowerCase();
+                if (!obj[firstLetter]) {
+                    obj[firstLetter] = [];
+                }
+                obj[firstLetter].push({title: formattedTitle, url: pageList[i].url, summary: pageList[i].summary || '<strong>No summary!</strong>', tags: pageList[i].tags});
+                counter++;
+            }
+            var subpage = getPages(pageList[i].subpages);
+        }
+    }
+}
+
+function compare(a,b) {
+  if (a.title < b.title)
+     return -1;
+  if (a.title > b.title)
+    return 1;
+  return 0;
+}
+
+getPages(pageList);
+
+for (var char in obj) {
+    obj[char].sort(compare);
+}
+
+var found = mdn.localString({
+    "en-US": 'Found ' + counter + ' pages with the tag "' + tag + '":',
+    "fr"   : 'Trouvé ' + counter + ' pages avec le tag "' + tag + '":',
+    "ru"   : 'Найдено ' + counter + ' страниц с меткой "' + tag + '":',
+    "de"   : counter + ' Seiten mit dem Tag "' + tag + '" gefunden:',
+});
+
+
+%>
+<p><%-found%></p>
+<% for (var char in obj) { %>
+<h2><%-char.toUpperCase()%></h2>
+<ul>
+  <% var result = obj[char];
+     for (i in result) { %>
+         <li>
+
+            <% if (hasTag(result[i].tags, 'Experimental')) { %>
+                <span class="sidebar-icon"><%-await template("ExperimentalBadge", [1])%></span>
+            <% } %>
+            <% if (hasTag(result[i].tags, 'Non-standard')) { %>
+                 <span class="sidebar-icon"><%-await template("NonStandardBadge", [1])%></span>
+            <% } %>
+            <% if (hasTag(result[i].tags, 'Deprecated')) { %>
+                 <span class="sidebar-icon"><%-await template("DeprecatedBadge", [1])%></span>
+            <% } %>
+            <% if (hasTag(result[i].tags, 'Obsolete')) { %>
+                <span class="sidebar-icon"><%-await template("ObsoleteBadge", [1])%></span>
+            <% } %>
+            
+             <% if (hasTag(result[i].tags, 'Obsolete')) { %>
+                <s class="obsoleteElement">
+            <% } %>
+            <% if (result[i].url != '') { %>
+                <a href="<%-result[i].url%>"><code><%-result[i].title%></code></a>: <%-result[i].summary%>
+            <% } %>
+            <% if (hasTag(result[i].tags, 'Obsolete')) { %>
+                </s>
+            <% } %>
+        
+        </li>
+    <% } %>
+</ul>
+<% } %>

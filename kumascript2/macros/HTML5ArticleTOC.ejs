@@ -1,0 +1,247 @@
+<%
+var LOCALE = env.locale,
+    PATH  = "/" + LOCALE + "/docs/",
+    HTML5Documentation = "HTML5 Documentation",
+    LINKS = {};
+
+/* Translation */ /* -------------------------------
+    1, Copy this code.
+    2, Paste it into switch statement.
+    3, Change case string to your locale.
+    4, Translate array in object.  Format: ["Link Text", "Title attribute", "Path under /docs/ "]
+    5, Check output.
+
+	case "LOCALE STRING":
+		HTML5Documentation = "HTML5 Documentation";
+		LINKS = {
+			HTML: ["HTML", "HTML5 Documentation", "HTML/HTML5/HTML5_Thematic_Classification#HTML"],
+	
+			AudioAndVideo: ["Audio/Video", "Using HTML5 audio and video", "Using_HTML5_audio_and_video"],
+			Canvas: ["Canvas", "Canvas", "HTML/Canvas"],
+			WebGL: ["WebGL", "WebGL", "WebGL"],
+			SVG: ["SVG", "SVG", "SVG"],
+			MathML: ["MathML", "MathML", "MathML"],
+			WebForms: ["WebForms", "HTML5 Thematic Classification #WebForms", "HTML/HTML5/HTML5_Thematic_Classification#WebForms"],
+			AppCache: ["AppCache", "Using Application Cache", "HTML/Using_the_application_cache"],
+			Microformats: ["Microformats", "Using microformats", "Using_microformats"],
+			SemanticTags: ["SemanticTags", "HTML5 Thematic Classification#Semantic tags", "HTML/HTML5/HTML5_Thematic_Classification#Semantic_tags"],
+	
+			JavaScript: ["JavaScript", "HTML5 Thematic Classification #JavaScript", "HTML/HTML5/HTML5_Thematic_Classification#JavaScript"],
+			Storage: ["Storage", "HTML5 Thematic Classification #Client-Side Storage", "HTML/HTML5/HTML5_Thematic_Classification#Client-Side_Storage"],
+			IndexedDB: ["IndexedDB", "HTML5 Thematic Classification #IndexedDB", "HTML/HTML5/HTML5_Thematic_Classification#IndexedDB"],
+			WebSockets: ["WebSockets", "WebSockets", "WebSockets"],
+			WebWorkers: ["WebWorkers", "Using web workers", "Using_web_workers"],
+			Events: ["Events", "Online and offline events", "Online_and_offline_events"],
+			DragAndDrop: ["Drag/Drop", "Drag and Drop", "DragDrop/Drag_and_Drop"],
+			ProtocolHandler: ["ProtocolHandler", "Web-based protocol handlers", "Web-based_protocol_handlers"],
+			Geolocation: ["Geolocation", "Using geolocation", "Using_geolocation"],
+			Focus: ["Focus", "Focus management in HTML", "Focus_management_in_HTML"],
+	
+			CSS: ["CSS", "HTML5 Thematic Classification #CSS", "HTML/HTML5/HTML5_Thematic_Classification#CSS"],
+			NewSelectors: ["NewSelectors", "Mozilla CSS support chart", "Mozilla_CSS_support_chart"],
+			Typography: ["Typography", "HTML5 Thematic Classification #Typography", "HTML/HTML5/HTML5_Thematic_Classification#Typography"],
+			Visual: ["Visual", "HTML5 Thematic Classification #Visual", "HTML/HTML5/HTML5_Thematic_Classification#Visual"],
+			Effects: ["Effects", "HTML5 Thematic Classification #Effects", "HTML/HTML5/HTML5_Thematic_Classification#Effects"]
+		};
+		break;
+
+---------------------------------------------------- */
+
+switch (LOCALE) {
+        case "fr":
+        HTML5Documentation = "HTML5 Documentation";
+        LINKS = {
+            HTML: ["HTML", "Documentation HTML5", "Web/HTML/HTML5"],
+     
+            AudioAndVideo: ["Audio/Video", "Using HTML5 audio and video", "Utilisation_d'audio_et_video_dans_Firefox"],
+            Canvas: ["Canvas", "Canvas", "Web/HTML/Canvas"],
+            WebGL: ["WebGL", "WebGL", "WebGL"],
+            SVG: ["SVG", "SVG", "SVG"],
+            MathML: ["MathML", "MathML", "Web/MathML"],
+            WebForms: ["Formulaires", "Formulaires Web en HTML", "Web/HTML/Forms_in_HTML"],
+            AppCache: ["AppCache", "Utiliser Application Cache", "Utiliser_Application_Cache"],
+            Microformats: ["Microformats", "Utilisation des microformats", "Utilisation_de_microformats"],
+            SemanticTags: ["SemanticTags", "Structure et plan d'un document HTML5", "Web/HTML/Sections_and_Outlines_of_an_HTML5_document"],
+     
+            JavaScript: ["JavaScript", "Documentation JavaScript", "JavaScript"],
+            Storage: ["Stockage côté client", "Stockage côté client (DOM storage)", "Web/Guide/DOM/Storage"],
+            IndexedDB: ["IndexedDB", "IndexedDB", "IndexedDB"],
+            WebSockets: ["WebSockets", "WebSockets", "WebSockets"],
+            WebWorkers: ["WebWorkers", "Utilisation des web workers", "Utilisation_des_web_workers"],
+            Events: ["Événements", "Événements online et offline", "Événements_online_et_offline"],
+            DragAndDrop: ["Drag/Drop", "Drag and Drop", "DragDrop/Drag_and_Drop"],
+            ProtocolHandler: ["Gestionnaires de protocoles", "Gestionnaires de protocoles web", "Gestionnaires_de_protocoles_web"],
+            Geolocation: ["Géolocalisation", "Utilisation de la géolocalisation", "Utilisation_de_la_géolocalisation"],
+            Focus: ["Focus", "Gestion du focus en HTML", "Web/HTML/Gestion_du_focus_en_HTML"],
+     
+            CSS: ["CSS", "Documentation CSS", "CSS"],
+            NewSelectors: ["Nouveaux Sélecteurs", "Récapitulatif du support des sélecteurs CSS par Mozilla", "Mozilla_CSS_support_chart"],
+            Typography: ["Typographie", "Typographie CSS", "HTML/HTML5/HTML5_Thematic_Classification"],
+            Visual: ["Visuel", "Nouveaux élément visuels dans la classification thématique", "HTML/HTML5/HTML5_Thematic_Classification"],
+            Effects: ["Effets", "Effets CSS dans la classification thématique", "HTML/HTML5/HTML5_Thematic_Classification"]
+        };
+        break;
+
+
+	case "ja":
+		HTML5Documentation = "HTML5 関連文書";
+		LINKS = {
+			HTML: ["HTML", "HTML5 Documentation", "HTML/HTML5/HTML5_Thematic_Classification#HTML"],
+			
+			AudioAndVideo: ["Audio/Video", "Firefox でマルチメディアコンテンツを扱う", "Using_HTML5_audio_and_video"],
+			Canvas: ["Canvas", "Canvas", "HTML/Canvas"],
+			WebGL: ["WebGL", "WebGL", "WebGL"],
+			SVG: ["SVG", "SVG", "SVG"],
+			MathML: ["MathML", "MathML", "MathML"],
+			WebForms: ["WebForms", "HTML5 Thematic Classification #WebForms", "HTML/HTML5/HTML5_Thematic_Classification#WebForms"],
+			AppCache: ["AppCache", "Using Application Cache", "HTML/Using_the_application_cache"],
+			Microformats: ["Microformats", "Using microformats", "Using_microformats"],
+			SemanticTags: ["SemanticTags", "HTML5 Thematic Classification - セマンティックなタグ", "HTML/HTML5/HTML5_Thematic_Classification#Semantic_tags"],
+			
+			JavaScript: ["JavaScript", "HTML5 Thematic Classification #JavaScript", "HTML/HTML5/HTML5_Thematic_Classification#JavaScript"],
+			Storage: ["Storage", "HTML5 Thematic Classification #Client-Side Storage", "HTML/HTML5/HTML5_Thematic_Classification#Client-Side_Storage"],
+			IndexedDB: ["IndexedDB", "HTML5 Thematic Classification #IndexedDB", "HTML/HTML5/HTML5_Thematic_Classification#IndexedDB"],
+			WebSockets: ["WebSockets", "WebSockets", "WebSockets"],
+			WebWorkers: ["WebWorkers", "Using web workers", "DOM/Using_web_workers"],
+			Events: ["Events", "Online and offline events", "Online_and_offline_events"],
+			DragAndDrop: ["Drag/Drop", "ドラッグ＆ドロップ", "DragDrop/Drag_and_Drop"],
+			ProtocolHandler: ["ProtocolHandler", "Web-based protocol handlers", "Web-based_protocol_handlers"],
+			Geolocation: ["Geolocation", "Geolocation の利用", "Using_geolocation"],
+			Focus: ["Focus", "Focus management in HTML", "Focus_management_in_HTML"],
+			
+			CSS: ["CSS", "HTML5 Thematic Classification #CSS", "HTML/HTML5/HTML5_Thematic_Classification#CSS"],
+			NewSelectors: ["NewSelectors", "Mozilla CSS サポートチャート", "Mozilla_CSS_support_chart"],
+			Typography: ["Typography", "HTML5 Thematic Classification - タイポグラフィ", "HTML/HTML5/HTML5_Thematic_Classification#Typography"],
+			Visual: ["Visual", "HTML5 Thematic Classification - ビジュアル", "HTML/HTML5/HTML5_Thematic_Classification#Visual"],
+			Effects: ["Effects", "HTML5 Thematic Classification - 動的なエフェクト", "HTML/HTML5/HTML5_Thematic_Classification#Effects"]
+		};
+		break;
+	
+	
+	case "zh-TW":
+		HTML5Documentatio = "HTML5 文件";
+		LINKS = {
+			HTML: ["HTML", "HTML5 Documentation", "HTML/HTML5/HTML5_Thematic_Classification#HTML"],
+			
+			AudioAndVideo: ["Audio/Video", "Using HTML5 audio and video", "Using_HTML5_audio_and_video"],
+			Canvas: ["Canvas", "Canvas", "HTML/Canvas"],
+			WebGL: ["WebGL", "WebGL", "WebGL"],
+			SVG: ["SVG", "SVG", "SVG"],
+			MathML: ["MathML", "MathML", "MathML"],
+			WebForms: ["WebForms", "HTML5 Thematic Classification #WebForms", "HTML/HTML5/HTML5_Thematic_Classification#WebForms"],
+			AppCache: ["AppCache", "Using Application Cache", "Using_Application_Cache"],
+			Microformats: ["Microformats", "Using microformats", "Using_microformats"],
+			SemanticTags: ["SemanticTags", "HTML5 Thematic Classification#Semantic tags", "HTML/HTML5/HTML5_Thematic_Classification#Semantic_tags"],
+			
+			JavaScript: ["JavaScript", "HTML5 Thematic Classification #JavaScript", "HTML/HTML5/HTML5_Thematic_Classification#JavaScript"],
+			Storage: ["Storage", "HTML5 Thematic Classification #Client-Side Storage", "HTML/HTML5/HTML5_Thematic_Classification#Client-Side_Storage"],
+			IndexedDB: ["IndexedDB", "HTML5 Thematic Classification #IndexedDB", "HTML/HTML5/HTML5_Thematic_Classification#IndexedDB"],
+			WebSockets: ["WebSockets", "WebSockets", "WebSockets"],
+			WebWorkers: ["WebWorkers", "Using web workers", "Using_web_workers"],
+			Events: ["Events", "Online and offline events", "Online_and_offline_events"],
+			DragAndDrop: ["Drag/Drop", "Drag and Drop", "DragDrop/Drag_and_Drop"],
+			ProtocolHandler: ["ProtocolHandler", "Web-based protocol handlers", "Web-based_protocol_handlers"],
+			Geolocation: ["Geolocation", "Using geolocation", "Using_geolocation"],
+			Focus: ["Focus", "Focus management in HTML", "Focus_management_in_HTML"],
+
+			CSS: ["CSS", "HTML5 Thematic Classification #CSS", "HTML/HTML5/HTML5_Thematic_Classification#CSS"],
+			NewSelectors: ["NewSelectors", "Mozilla CSS support chart", "Mozilla_CSS_support_chart"],
+			Typography: ["Typography", "HTML5 Thematic Classification #Typography", "HTML/HTML5/HTML5_Thematic_Classification#Typography"],
+			Visual: ["Visual", "HTML5 Thematic Classification #Visual", "HTML/HTML5/HTML5_Thematic_Classification#Visual"],
+			Effects: ["Effects", "HTML5 Thematic Classification #Effects", "HTML/HTML5/HTML5_Thematic_Classification#Effects"]
+		};
+		break;
+	
+	
+	default:
+		LINKS = {
+			HTML: ["HTML", "HTML5 Documentation", "HTML/HTML5/HTML5_Thematic_Classification#HTML"],
+
+			AudioAndVideo: ["Audio/Video", "Using HTML5 audio and video", "Using_HTML5_audio_and_video"],
+			Canvas: ["Canvas", "Canvas", "HTML/Canvas"],
+			WebGL: ["WebGL", "WebGL", "WebGL"],
+			SVG: ["SVG", "SVG", "SVG"],
+			MathML: ["MathML", "MathML", "MathML"],
+			WebForms: ["WebForms", "HTML5 Thematic Classification #WebForms", "HTML/HTML5/HTML5_Thematic_Classification#WebForms"],
+			AppCache: ["AppCache", "Using Application Cache", "HTML/Using_the_application_cache"],
+			Microformats: ["Microformats", "Using microformats", "Using_microformats"],
+			SemanticTags: ["SemanticTags", "HTML5 Thematic Classification#Semantic tags", "HTML/HTML5/HTML5_Thematic_Classification#Semantic_tags"],
+	
+			JavaScript: ["JavaScript", "HTML5 Thematic Classification #JavaScript", "HTML/HTML5/HTML5_Thematic_Classification#JavaScript"],
+			Storage: ["Storage", "HTML5 Thematic Classification #Client-Side Storage", "HTML/HTML5/HTML5_Thematic_Classification#Client-Side_Storage"],
+			IndexedDB: ["IndexedDB", "HTML5 Thematic Classification #IndexedDB", "HTML/HTML5/HTML5_Thematic_Classification#IndexedDB"],
+			WebSockets: ["WebSockets", "WebSockets", "WebSockets"],
+			WebWorkers: ["WebWorkers", "Using web workers", "Using_web_workers"],
+			Events: ["Events", "Online and offline events", "Online_and_offline_events"],
+			DragAndDrop: ["Drag/Drop", "Drag and Drop", "DragDrop/Drag_and_Drop"],
+			ProtocolHandler: ["ProtocolHandler", "Web-based protocol handlers", "Web-based_protocol_handlers"],
+			Geolocation: ["Geolocation", "Using geolocation", "Using_geolocation"],
+			Focus: ["Focus", "Focus management in HTML", "Focus_management_in_HTML"],
+	
+			CSS: ["CSS", "HTML5 Thematic Classification #CSS", "HTML/HTML5/HTML5_Thematic_Classification#CSS"],
+			NewSelectors: ["NewSelectors", "Mozilla CSS support chart", "Mozilla_CSS_support_chart"],
+			Typography: ["Typography", "HTML5 Thematic Classification #Typography", "HTML/HTML5/HTML5_Thematic_Classification#Typography"],
+			Visual: ["Visual", "HTML5 Thematic Classification #Visual", "HTML/HTML5/HTML5_Thematic_Classification#Visual"],
+			Effects: ["Effects", "HTML5 Thematic Classification #Effects", "HTML/HTML5/HTML5_Thematic_Classification#Effects"]
+		};
+		break;
+
+}
+
+var rowStyle = 'border-left:none; border-right: none; border-top:none; border-bottom:dotted 2px rgba(224,244,244,200);';
+var col1Style = 'style="width:150px;' + rowStyle + '"';
+var col2Style = 'style="' + rowStyle + '"';
+var lastRowStyle = 'style="border:none;"';
+%>
+<div class="horizFlexboxContainer">
+  <div class="smallTextMultiColumnBoxHeading"><%= HTML5Documentation %></div>
+  <div class="smallTextMultiColumnBoxList">
+<table class="html5ArticleToc">
+	<tbody>
+		<tr>
+			<td <%-col1Style%>><a href="<%= PATH %><%= LINKS.HTML[2] %>" title="<%= LINKS.HTML[1] %>"><%= LINKS.HTML[0] %></a></td>
+			<td <%-col2Style%>>
+				<ul>
+					<li><a href="<%= PATH %><%= LINKS.AudioAndVideo[2] %>" title="<%= LINKS.AudioAndVideo[1] %>"><%= LINKS.AudioAndVideo[0] %></a></li>
+					<li><a href="<%= PATH %><%= LINKS.Canvas[2] %>" title="<%= LINKS.Canvas[1] %>"><%= LINKS.Canvas[0] %></a></li>
+					<li><a href="<%= PATH %><%= LINKS.WebGL[2] %>" title="<%= LINKS.WebGL[1] %>"><%= LINKS.WebGL[0] %></a></li>
+					<li><a href="<%= PATH %><%= LINKS.SVG[2] %>" title="<%= LINKS.SVG[1] %>"><%= LINKS.SVG[0] %></a></li>
+					<li><a href="<%= PATH %><%= LINKS.MathML[2] %>" title="<%= LINKS.MathML[1] %>"><%= LINKS.MathML[0] %></a></li>
+					<li><a href="<%= PATH %><%= LINKS.WebForms[2] %>" title="<%= LINKS.WebForms[1] %>"><%= LINKS.WebForms[0] %></a></li>
+					<li><a href="<%= PATH %><%= LINKS.AppCache[2] %>" title="<%= LINKS.AppCache[1] %>"><%= LINKS.AppCache[0] %></a></li>
+					<li><a href="<%= PATH %><%= LINKS.Microformats[2] %>" title="<%= LINKS.Microformats[1] %>"><%= LINKS.Microformats[0] %></a></li>
+					<li><a href="<%= PATH %><%= LINKS.SemanticTags[2] %>" title="<%= LINKS.SemanticTags[1] %>"><%= LINKS.SemanticTags[0] %></a></li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td <%-col1Style%>><a href="<%= PATH %><%= LINKS.JavaScript[2] %>" title="<%= LINKS.JavaScript[1] %>"><%= LINKS.JavaScript[0] %></a></td>
+			<td <%-col2Style%>>
+				<ul>
+					<li><a href="<%= PATH %><%= LINKS.Storage[2] %>" title="<%= LINKS.Storage[1] %>"><%= LINKS.Storage[0] %></a></li>
+					<li><a href="<%= PATH %><%= LINKS.IndexedDB[2] %>" title="<%= LINKS.IndexedDB[1] %>"><%= LINKS.IndexedDB[0] %></a></li>
+					<li><a href="<%= PATH %><%= LINKS.WebSockets[2] %>" title="<%= LINKS.WebSockets[1] %>"><%= LINKS.WebSockets[0] %></a></li>
+					<li><a href="<%= PATH %><%= LINKS.WebWorkers[2] %>" title="<%= LINKS.WebWorkers[1] %>"><%= LINKS.WebWorkers[0] %></a></li>
+					<li><a href="<%= PATH %><%= LINKS.Events[2] %>" title="<%= LINKS.Events[1] %>"><%= LINKS.Events[0] %></a></li>
+					<li><a href="<%= PATH %><%= LINKS.DragAndDrop[2] %>" title="<%= LINKS.DragAndDrop[1] %>"><%= LINKS.DragAndDrop[0] %></a></li>
+					<li><a href="<%= PATH %><%= LINKS.ProtocolHandler[2] %>" title="<%= LINKS.ProtocolHandler[1] %>"><%= LINKS.ProtocolHandler[0] %></a></li>
+					<li><a href="<%= PATH %><%= LINKS.Geolocation[2] %>" title="<%= LINKS.Geolocation[1] %>"><%= LINKS.Geolocation[0] %></a></li>
+					<li><a href="<%= PATH %><%= LINKS.Focus[2] %>" title="<%= LINKS.Focus[1] %>"><%= LINKS.Focus[0] %></a></li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td <%-lastRowStyle%>><a href="<%= PATH %><%= LINKS.CSS[2] %>" title="<%= LINKS.CSS[1] %>"><%= LINKS.CSS[0] %></a></td>
+			<td <%-lastRowStyle%>>
+				<ul>
+					<li><a href="<%= PATH %><%= LINKS.NewSelectors[2] %>" title="<%= LINKS.NewSelectors[1] %>"><%= LINKS.NewSelectors[0] %></a></li>
+					<li><a href="<%= PATH %><%= LINKS.Typography[2] %>" title="<%= LINKS.Typography[1] %>"><%= LINKS.Typography[0] %></a></li>
+					<li><a href="<%= PATH %><%= LINKS.Visual[2] %>" title="<%= LINKS.Visual[1] %>"><%= LINKS.Visual[0] %></a></li>
+					<li><a href="<%= PATH %><%= LINKS.Effects[2] %>" title="<%= LINKS.Effects[1] %>"><%= LINKS.Effects[0] %></a></li>
+				</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+</div>

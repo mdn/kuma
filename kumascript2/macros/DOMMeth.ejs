@@ -1,0 +1,16 @@
+<%
+var lang = env.locale;
+
+var dispName = $0 + "()";
+
+var destOldType = lang + '/docs/DOM:element.' + $0;
+var destNewType = lang + '/docs/DOM/element.' + $0;
+
+if (wiki.pageExists(destNewType)) {
+  %><code><%-(web.link(wiki.uri(destNewType), dispName))%></code><%
+} else if (wiki.pageExists(destOldType)) {
+  %><code><%-(web.link(wiki.uri(destOldType), dispName))%></code><%
+} else {
+  %><code><%-(web.link(wiki.uri(destNewType), dispName))%></code><%
+}
+%>

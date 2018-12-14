@@ -1,0 +1,196 @@
+<%
+var currentSection = $0;
+var locale = env.locale;
+
+var learnBaseURL = "/" + locale + "/docs/Learn/";
+
+function state(section) {
+  if (section == currentSection) {
+    return "open";
+  }
+  return "closed";
+}
+
+var text = mdn.localStringMap({
+  'en-US': {
+    'Tutorials': 'Tutorials:',
+    'HTML_basics': 'HTML basics',
+    'Introduction_to_HTML': 'Introduction to HTML',
+      'Introduction_to_HTML_overview': 'Introduction to HTML overview',
+      'Getting_started_with_HTML': 'Getting started with HTML',
+      'Whats_in_the_head_metadata_in_HTML': 'What\'s in the head? Metadata in HTML',
+      'HTML_text_fundamentals': 'HTML text fundamentals',
+      'Creating_hyperlinks': 'Creating hyperlinks',
+      'Advanced_text_formatting': 'Advanced text formatting',
+      'Document_and_website_structure': 'Document and website structure',
+      'Debugging_HTML': 'Debugging HTML',
+      'Assessment_marking_up_a_letter': 'Assessment: Marking up a letter',
+      'Assessment_structuring_a_page_of_content': 'Assessment: Structuring a page of content',
+    'Multimedia_and_embedding': 'Multimedia and embedding',
+      'Multimedia_and_embedding_overview': 'Multimedia and embedding overview',
+      'Images_in_HTML': 'Images in HTML',
+      'Video_and_audio_content': 'Video and audio content',
+      'Other_embedding_technologies': 'From object to iframe — other embedding technologies',
+      'Adding_vector_graphics_to_the_Web': 'Adding vector graphics to the Web',
+      'Responsive_images': 'Responsive images',
+      'Assessment_Mozilla_splash_page': 'Assessment: Mozilla splash page',
+    'Reference': 'References:',
+    'HTML_Elements': 'HTML elements',
+    'Global_attributes': 'Global attributes',
+    'Input_types': '<code>&lt;input&gt;</code> types',
+    'Documentation': 'Documentation:',
+    'Useful_lists': 'Useful lists',
+    'Index': 'All pages index',
+    'HTML_tag': 'Pages tagged "HTML"',
+    'Contribute': 'Contribute',
+    'Doc_status': 'HTML doc status',
+    'The_MDN_project': 'The MDN project',
+  },
+  'fr': {
+    'Tutorials': 'Tutoriels:',
+    'Introductory': 'Introduction',
+    'HTML_Guide': 'Guide HTML',
+    'Intermediate': 'Intermédiaire',
+    'Block-level': 'Éléments de blocs',
+    'Advanced': 'Avancé',
+    'Speculative_parsing': 'Optimiser une page pour l\'analyse spéculative',
+    'Reference': 'Références\xa0:',
+    'HTML_Elements': 'Éléments HTML',
+    'Global_attributes': 'Attributs universels',
+    'Documentation': 'Documentation\xa0:',
+    'Useful_lists': 'Listes utiles',
+    'Index': 'Index de toutes les pages',
+    'HTML_tag': 'Pages étiquetées "HTML"',
+    'Contribute': 'Contribuer',
+    'Doc_status': 'Statut de la documentation HTML',
+    'The_MDN_project': 'Le projet MDN',
+  },
+  'pt-BR': {
+    'Tutorials': 'Tutoriais:',
+    'HTML_basics': 'O básico de HTML',
+    'Introduction_to_HTML': 'Introdução ao HTML',
+      'Introduction_to_HTML_overview': 'Visão geral da Introdução ao HTML',
+      'Getting_started_with_HTML': 'Iniciando com HTML',
+      'Whats_in_the_head_metadata_in_HTML': 'O que está na "head"? Metadados em HTML',
+      'HTML_text_fundamentals': 'Fundamentos de textos HTML',
+      'Creating_hyperlinks': 'Criando hiperlinks',
+      'Advanced_text_formatting': 'Formatação avançada de textos',
+      'Document_and_website_structure': 'Estrutura do Documento e do Site',
+      'Debugging_HTML': 'Depurando HTML',
+      'Assessment_marking_up_a_letter': 'Avaliação: Melhorando uma carta',
+      'Assessment_structuring_a_page_of_content': 'Avaliação: Estruturando uma página de conteúdos',
+    'Multimedia_and_embedding': 'Multimídia e incorporação',
+      'Multimedia_and_embedding_overview': 'Visão geral sobre Multimídia e incorporação',
+      'Images_in_HTML': 'Trabalhando com imagens em HTML',
+      'Video_and_audio_content': 'Conteúdos com vídeo e áudio',
+      'Other_embedding_technologies': 'De objeto a iframe — outras tecnologias de incorporação',
+      'Adding_vector_graphics_to_the_Web': 'Adicionando gráficos vetoriais à Web',
+      'Responsive_images': 'Imagens responsivas',
+      'Assessment_Mozilla_splash_page': 'Avaliação: Página "splash" da Mozilla',
+    'Reference': 'Referências:',
+    'HTML_Elements': 'Elementos HTML',
+    'Global_attributes': 'Atributos globais',
+    'Input_types': 'Tipos de <code>&lt;input&gt;</code>',
+    'Documentation': 'Documentação:',
+    'Useful_lists': 'Listas úteis',
+    'Index': 'Índice para todas as páginas',
+    'HTML_tag': 'Páginas com a tag "HTML"',
+    'Contribute': 'Contribua!',
+    'Doc_status': 'Estado da documentação do HTML',
+    'The_MDN_project': 'O projeto MDN',
+  },
+  'ru': {
+    'Tutorials': 'Уроки:',
+    'Introductory': 'Вступление',
+    'HTML_Guide': 'Руководство HTML разработчика',
+    'Intermediate': 'Средний',
+    'Block-level': 'Блочные элементы',
+    'Advanced': 'Продвинутый',
+    'Speculative_parsing': 'Оптимизация ваших страниц для ускорения парсинга',
+    'Reference': 'Руководства:',
+    'HTML_Elements': 'HTML элементы',
+    'Global_attributes': 'Глобальные атрибуты',
+    'Documentation': 'Документация:',
+    'Useful_lists': 'Полезные списки',
+    'Index': 'Индекс всех страниц',
+    'HTML_tag': 'Страницы отмеченные "HTML"',
+    'Contribute': 'Внести вклад',
+    'Doc_status': 'Статус HTML документации',
+    'The_MDN_project': 'Проект MDN',
+  }
+});
+%>
+<section class="Quick_links" id="Quick_Links">
+ <ol>
+  <li><a href="/<%=locale%>/docs/Web/HTML"><strong><em>HTML</em></strong></a></li>
+  <li><strong><%=text['Tutorials']%></strong></li>
+  <li><a href="<%=learnBaseURL%>Getting_started_with_the_web/HTML_basics"><%=text['HTML_basics']%></a></li>
+  <li class="toggle">
+    <details <%=state('Introduction_to_HTML')%>>
+      <summary><%=text['Introduction_to_HTML']%></summary>
+      <ol>
+          <li><a href="<%=learnBaseURL%>HTML/Introduction_to_HTML"><%=text['Introduction_to_HTML_overview']%></a></li>
+          <li><a href="<%=learnBaseURL%>HTML/Introduction_to_HTML/Getting_started"><%=text['Getting_started_with_HTML']%></a></li>
+          <li><a href="<%=learnBaseURL%>HTML/Introduction_to_HTML/The_head_metadata_in_HTML"><%=text['Whats_in_the_head_metadata_in_HTML']%></a></li>
+          <li><a href="<%=learnBaseURL%>HTML/Introduction_to_HTML/HTML_text_fundamentals"><%=text['HTML_text_fundamentals']%></a></li>
+          <li><a href="<%=learnBaseURL%>HTML/Introduction_to_HTML/Creating_hyperlinks"><%=text['Creating_hyperlinks']%></a></li>
+          <li><a href="<%=learnBaseURL%>HTML/Introduction_to_HTML/Advanced_text_formatting"><%=text['Advanced_text_formatting']%></a></li>
+          <li><a href="<%=learnBaseURL%>HTML/Introduction_to_HTML/Document_and_website_structure"><%=text['Document_and_website_structure']%></a></li>
+          <li><a href="<%=learnBaseURL%>HTML/Introduction_to_HTML/Debugging_HTML"><%=text['Debugging_HTML']%></a></li>
+          <li><a href="<%=learnBaseURL%>HTML/Introduction_to_HTML/Marking_up_a_letter"><%=text['Assessment_marking_up_a_letter']%></a></li>
+          <li><a href="<%=learnBaseURL%>HTML/Introduction_to_HTML/Structuring_a_page_of_content"><%=text['Assessment_structuring_a_page_of_content']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Multimedia_and_embedding')%>>
+      <summary><%=text['Multimedia_and_embedding']%></summary>
+      <ol>
+        <li><a href="<%=learnBaseURL%>HTML/Multimedia_and_embedding"><%=text['Multimedia_and_embedding_overview']%></a></li>
+        <li><a href="<%=learnBaseURL%>HTML/Multimedia_and_embedding/Images_in_HTML"><%=text['Images_in_HTML']%></a></li>
+        <li><a href="<%=learnBaseURL%>HTML/Multimedia_and_embedding/Video_and_audio_content"><%=text['Video_and_audio_content']%></a></li>
+        <li><a href="<%=learnBaseURL%>HTML/Multimedia_and_embedding/Other_embedding_technologies"><%=text['Other_embedding_technologies']%></a></li>
+        <li><a href="<%=learnBaseURL%>HTML/Multimedia_and_embedding/Adding_vector_graphics_to_the_Web"><%=text['Adding_vector_graphics_to_the_Web']%></a></li>
+        <li><a href="<%=learnBaseURL%>HTML/Multimedia_and_embedding/Responsive_images"><%=text['Responsive_images']%></a></li>
+        <li><a href="<%=learnBaseURL%>HTML/Multimedia_and_embedding/Mozilla_splash_page"><%=text['Assessment_Mozilla_splash_page']%></a></li>
+      </ol>
+    </details>
+  </li>
+  <li><strong><a href="/<%=locale%>/docs/Web/HTML/Reference"><%=text['Reference']%></a></strong></li>
+  <li class="toggle">
+    <details <%=state('HTML_Elements')%>>
+      <summary><%=text['HTML_Elements']%></summary>
+      <%-await template("ListSubpagesForSidebar", ['/en-US/docs/Web/HTML/Element', 0, 0, "<", ">"])%>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Global_attributes')%>>
+      <summary><%=text['Global_attributes']%></summary>
+      <%-await template("ListSubpagesForSidebar", ['/en-US/docs/Web/HTML/Global_attributes'])%>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Input_types')%>>
+      <summary><%-text['Input_types']%></summary>
+      <%-await template("ListSubpagesForSidebar", ['/en-US/docs/Web/HTML/Element/input'])%>
+    </details>
+  </li>
+  <li><strong><a href="/<%=locale%>/docs/MDN"><%=text['Documentation']%></a></strong></li>
+  <li class="toggle">
+    <details <%=state('Useful_lists')%>>
+      <summary><%=text['Useful_lists']%></summary>
+      <li><a href="/<%=locale%>/docs/Web/HTML/Index"><%=text['Index']%></a></li>
+      <li><a href="/<%=locale%>/docs/tag/HTML"><%=text['HTML_tag']%></a></li>
+    </details>
+  </li>
+  <li class="toggle">
+    <details <%=state('Contribute')%>>
+      <summary><%=text['Contribute']%></summary>
+      <ol>
+        <li><a href="/<%=locale%>/docs/MDN/Doc_status/HTML"><%=text['Doc_status']%></a></li>
+        <li><a href="/<%=locale%>/docs/MDN"><%=text['The_MDN_project']%></a></li>
+      </ol>
+    </details>
+  </li>
+ </ol>
+</section>

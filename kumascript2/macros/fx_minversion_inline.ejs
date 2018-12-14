@@ -1,0 +1,12 @@
+<%
+// Inserts an inline indicator noting Firefox version requirements.
+// Nothing is displayed if the Firefox version is older than a certain time,
+// as defined in the GeckoVersionIndicator macro, which should be used
+// instead, as this simply calls through.
+//
+// Parameters:
+//  $0  Firefox version required.
+//  $1  default to false; if set make use of a permanent badge
+%>
+
+<%-await template("FirefoxVersionIndicator", [($1?3:0), $0])%>

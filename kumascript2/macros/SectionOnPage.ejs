@@ -1,0 +1,63 @@
+<%
+// Create a link to a specific section on a page.
+//
+// Parameters:
+//
+// $0   Page path
+// $1   Section name
+// $2   Element name to wrap the page title (not the section name) in;
+//      leave blank or don't specify this parameter to not wrap the title.
+//      Don't include the angle brackets! Only specific tags are permitted;
+//      they're in the allowedWrappers array. OPTIONAL.
+//
+// Example:
+//
+// {{SectionOnPage("/en-US/docs/Web/API/RTCPeerConnection",
+//                 "RTCSignalingState enum", "code")}}
+
+let allowedWrappers = [
+    "code",
+    "kbd",
+];
+
+let section = $1;
+let lang = env.locale;
+let text = "";
+let page = await wiki.getPage($0);
+let title = kuma.htmlEscape(page.title);
+
+let commonLocalStrings = string.deserialize(await template("L10n:Common"));
+let localize = mdn.getLocalString;
+
+let summary = (page && page.summary) ? mdn.escapeQuotes(page.summary) :
+    localize(commonLocalStrings, "summary");
+
+if (!title || title == undefined || title == "undefined") {
+    title = localize(commonLocalStrings, "MissingPage");
+}
+
+let elem = $2;
+
+if (elem && elem != "") {
+    elem = elem.toLowerCase();
+
+    if (allowedWrappers.includes(elem)) {
+        title = `<${elem}>${title}</${elem}>`;
+    }
+}
+
+let url = $0 + "#" + section;
+
+url = Web.spacesToUnderscores(url);
+url = url.replace(":", "");             // Remove colons
+
+switch(lang) {
+    case "ru":
+        text = `<a href="${url}" title="${summary}">${section}</a> в <a href="${$0}" title="${summary}">${title}</a>`;
+        break;
+    default:
+        text = `<a href="${url}" title="${summary}">${section}</a> in <a href=${$0} title="${summary}">${title}</a>`;
+        break;
+}
+%>
+<%-text%>

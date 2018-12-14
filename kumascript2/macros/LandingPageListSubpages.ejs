@@ -1,0 +1,14 @@
+<%
+// Inserts a definition list of the subpages of the current page, with each
+// page's title as the <dt> term and its SEO summary as the <dd> term. The
+// List is presented in a two-column view where possible.
+//
+// Parameters:
+//  None
+
+var html = await template("SubpagesWithSummaries");
+
+// Now we have the entire list in HTML. Let's go through it and try to split it into two columns by force.
+%>
+
+<%-await template("MakeColumnsForDL", [html])%>

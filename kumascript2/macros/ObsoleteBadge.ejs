@@ -1,0 +1,86 @@
+<%
+// Inserts a badge marking an API or term as being obsolete.
+//
+// Parameters:
+//  $0  If specified, the badge is "small"
+
+var titleAttrValue = mdn.localString({
+    "ca": "This is an obsolete API and is no longer guaranteed to work.",
+    "cs": "This is an obsolete API and is no longer guaranteed to work.",
+    "de": "Dies ist eine veraltete API und es wird nicht mehr garantiert, dass sie funktioniert.",
+    "el": "This is an obsolete API and is no longer guaranteed to work.",
+    "es": "This is an obsolete API and is no longer guaranteed to work.",
+    "fa": "This is an obsolete API and is no longer guaranteed to work.",
+    "fi": "This is an obsolete API and is no longer guaranteed to work.",
+    "fr": "This is an obsolete API and is no longer guaranteed to work.",
+    "he": "This is an obsolete API and is no longer guaranteed to work.",
+    "hr": "This is an obsolete API and is no longer guaranteed to work.",
+    "hu": "This is an obsolete API and is no longer guaranteed to work.",
+    "id": "This is an obsolete API and is no longer guaranteed to work.",
+    "it": "This is an obsolete API and is no longer guaranteed to work.",
+    "ja": "これは廃止されたAPIであり、今後の動作は保障されていません。ご注意下さい。",
+    "ka": "This is an obsolete API and is no longer guaranteed to work.",
+    "ko": "This is an obsolete API and is no longer guaranteed to work.",
+    "ms": "This is an obsolete API and is no longer guaranteed to work.",
+    "nl": "This is an obsolete API and is no longer guaranteed to work.",
+    "pl": "This is an obsolete API and is no longer guaranteed to work.",
+    "ro": "This is an obsolete API and is no longer guaranteed to work.",
+    "ru": "Этот API вышел из употребления и его работа больше не гарантируется.",
+    "sq": "This is an obsolete API and is no longer guaranteed to work.",
+    "th": "This is an obsolete API and is no longer guaranteed to work.",
+    "tr": "This is an obsolete API and is no longer guaranteed to work.",
+    "vi": "This is an obsolete API and is no longer guaranteed to work.",
+    "bn-BD": "This is an obsolete API and is no longer guaranteed to work.",
+    "fy-NL": "This is an obsolete API and is no longer guaranteed to work.",
+    "ga-IE": "This is an obsolete API and is no longer guaranteed to work.",
+    "pt-BR": "This is an obsolete API and is no longer guaranteed to work.",
+    "pt-PT": "This is an obsolete API and is no longer guaranteed to work.",
+    "zh-CN": "This is an obsolete API and is no longer guaranteed to work.",
+    "zh-TW": "This is an obsolete API and is no longer guaranteed to work.",
+    "en-US": "This is an obsolete API and is no longer guaranteed to work."
+});
+
+var str = "";
+
+if ($0) {
+    %><span title="<%=titleAttrValue%>" class="icon-only-inline"><i class="icon-trash"> </i></span><%
+} else {
+str = mdn.localString({
+    "ca": "Obsolete",
+    "cs": "Obsolete",
+    "de": "Veraltet",
+    "el": "Obsolete",
+    "es": "Obsolete",
+    "fa": "Obsolete",
+    "fi": "Obsolete",
+    "fr": "Obsolete",
+    "he": "Obsolete",
+    "hr": "Obsolete",
+    "hu": "Obsolete",
+    "id": "Obsolete",
+    "it": "Obsolete",
+    "ja": "廃止",
+    "ka": "Obsolete",
+    "ko": "Obsolete",
+    "ms": "Obsolete",
+    "nl": "Obsolete",
+    "pl": "Obsolete",
+    "ro": "Obsolete",
+    "ru": "Вышел из употребления",
+    "sq": "Obsolete",
+    "th": "Obsolete",
+    "tr": "Obsolete",
+    "vi": "Obsolete",
+    "bn-BD": "Obsolete",
+    "fy-NL": "Obsolete",
+    "ga-IE": "Obsolete",
+    "pt-BR": "Obsolete",
+    "pt-PT": "Obsolete",
+    "zh-CN": "Obsolete",
+    "zh-TW": "Obsolete",
+    "en-US": "Obsolete"
+});
+
+%><%-await template("SimpleBadge", [str, "obsoleteBadge", titleAttrValue])%><%
+}
+%>

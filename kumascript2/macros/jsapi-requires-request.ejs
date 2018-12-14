@@ -1,0 +1,15 @@
+<%
+var lang = env.locale;
+var str = "";
+
+switch(lang) {
+    case "ja":
+        str = 'リクエストが必要。 <em>(<code><a href="/ja/docs/JS_THREADSAFE#Requests">JS_THREADSAFE</a></code> ビルドでは、呼び出し側はこの <code>JSContext</code> 上のリクエストでなければなりません。)</em>';
+        break;
+    default:
+        str = 'Requires request. <em>In a <code><a href="/en-US/docs/Mozilla/Projects/SpiderMonkey/JSAPI_reference/JS_THREADSAFE#Requests">JS_THREADSAFE</a></code> build, the caller must be in a request on this <code>JSContext</code>.</em>';
+        break;
+}
+
+
+%><%-str%>

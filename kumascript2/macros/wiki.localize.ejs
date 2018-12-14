@@ -1,0 +1,15 @@
+<%
+/*
+ * Do not use this template for new content. It is intended only to fix existing broken pages.
+ * For paremeter details see http://developer.mindtouch.com/en/docs/DekiScript/Reference/Wiki_Functions_and_Variables/Wiki.Localize
+*/
+
+var str = 'Not implemented, update template.';
+
+switch($0) {
+  case 'System.API.page-generated-for-subpage':
+    str = 'This page was auto-generated because a user created a sub-page to this page.';
+    break;
+}
+%>
+<%- str %>
