@@ -7,8 +7,8 @@ pytest.register_assert_rewrite('utils.urls')
 
 # Untrusted attachments and samples domains that are indexed
 INDEXED_ATTACHMENT_DOMAINS = set((
-    'mdn.mozillademos.org',         # Main attachments domain
-    'mdn-demos-origin.moz.works',   # Attachments origin
+    'mdn.mozillademos.org',          # Main attachments domain
+    'demos-origin.mdn.mozit.cloud',  # Attachments origin
 ))
 
 # Kuma web domains that are indexed
