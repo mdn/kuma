@@ -523,31 +523,21 @@ def test_kumascript_error_reporting(admin_client, root_doc, ks_toolbox,
     )
     mock_ks_config = mock.patch('kuma.wiki.kumascript.config', **ks_settings)
     with mock_ks_config:
+        mock_requests.post(
+            requests_mock.ANY,
+            text='HELLO WORLD',
+            headers=ks_toolbox.errors_as_headers,
+        )
+        mock_requests.get(
+            requests_mock.ANY,
+            **ks_toolbox.macros_response
+        )
         if endpoint == 'preview':
-            mock_requests.post(
-                requests_mock.ANY,
-                text='HELLO WORLD',
-                headers=ks_toolbox.errors_as_headers,
-            )
-            mock_requests.get(
-                requests_mock.ANY,
-                **ks_toolbox.macros_response
-            )
             response = admin_client.post(
                 reverse('wiki.preview'),
                 dict(content='anything truthy')
             )
         else:
-            mock_requests.get(
-                requests_mock.ANY,
-                [
-                    dict(
-                        text='HELLO WORLD',
-                        headers=ks_toolbox.errors_as_headers
-                    ),
-                    ks_toolbox.macros_response,
-                ]
-            )
             with mock.patch('kuma.wiki.models.config', **ks_settings):
                 response = admin_client.get(root_doc.get_absolute_url())
 

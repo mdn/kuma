@@ -58,9 +58,6 @@ services:
     ports:
       - "8001:8000"
 
-  memcached:
-    image: memcached
-
   mysql:
     image: mysql:5.6
     environment:
@@ -95,22 +92,13 @@ services:
     command: node run.js
     depends_on:
       - api
-      - memcached
+      - redis
     environment:
-      - interactive_examples__base_url=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
-      - live_samples__base_url=http://${ATTACHMENT_HOST:-localhost:8000}
-      - log__console=true
-      - log__file=
-      - server__template_root_dir=macros
-      - server__document_url_template=http://api:8000/en-US/docs/{path}?raw=1&redirect=no
-      - server__memcache__server=memcached:11211
-      - server__template_class=EJSTemplate
-      - server__autorequire__mdn=MDN:Common
-      - server__autorequire__Page=DekiScript:Page
-      - server__autorequire__String=DekiScript:String
-      - server__autorequire__Uri=DekiScript:Uri
-      - server__autorequire__Web=DekiScript:Web
-      - server__autorequire__Wiki=DekiScript:Wiki
+      - DOCUMENT_URL_TEMPLATE=http://api:8000/en-US/docs/{path}?raw=1&redirect=no
+      - DOCUMENT_URL=http://api:8000
+      - INTERACTIVE_EXAMPLES_URL=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
+      - LIVE_SAMPLES_URL=http://${ATTACHMENT_HOST:-localhost:8000}
+      - REDIS_URL=redis://redis:6379/2
     ports:
       - "9080:9080"
     volumes:
