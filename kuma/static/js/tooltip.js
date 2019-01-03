@@ -3,6 +3,9 @@
 
     /**
      * Handles setting up and binding events for tooltips.
+     * Currently this tooltip is only used by the payments form.
+     * The SCSS for this is located at:
+     * kuma/static/styles/components/payments/_tooltip.scss
      */
     function setupTooltips() {
         var buttons = $('.tooltip-button');
@@ -16,12 +19,17 @@
          * @param {Element} tooltip Tooltip element to show.
          */
         function openTooltip(tooltip) {
-            // Moves tooltip to the end of the body so we can position correctly.
-            $(tooltip).appendTo('body');
-            $(tooltip).addClass('is-open').attr('aria-hidden', false);
+            $(tooltip)
+                .addClass('is-open')
+                .attr('aria-hidden', false);
 
             $(doc).on('click.tooltipHandler', function(event) {
-                if (!$(tooltip).get(0).contains(event.target) || $(event.target).hasClass('tooltip-close')) {
+                if (
+                    !$(tooltip)
+                        .get(0)
+                        .contains(event.target) ||
+                    $(event.target).hasClass('tooltip-close')
+                ) {
                     event.preventDefault();
 
                     closeTooltip(tooltip);
@@ -36,7 +44,7 @@
             mdn.analytics.trackEvent({
                 category: 'payments',
                 action: 'banner',
-                label: 'Tooltip Opened',
+                label: 'Tooltip Opened'
             });
         }
 
@@ -45,12 +53,9 @@
          * @param {Element} tooltip Tooltip element to hide.
          */
         function closeTooltip(tooltip) {
-            $(tooltip).removeClass('is-open has-arrow-top')
-                .attr('aria-hidden', true)
-                .css({
-                    left: 0,
-                    top: 0
-                });
+            $(tooltip)
+                .removeClass('is-open')
+                .attr('aria-hidden', true);
 
             $(doc).off('click.tooltipHandler');
             $(win).off('resize.tooltipHandler');
@@ -59,44 +64,8 @@
             mdn.analytics.trackEvent({
                 category: 'payments',
                 action: 'banner',
-                label: 'Tooltip Closed',
+                label: 'Tooltip Closed'
             });
-        }
-
-        /**
-         * Positioning the tooltip to the left or below the button depending on the available space.
-         * @param {Element} tooltip Tooltip element.
-         * @param {Element} element Tooltip button element.
-         */
-        function positionTooltip(tooltip, element) {
-            // Is opening is added to remove display: none, but still keep the tooltip hidden
-            // so we can get its dimensions and positino without showing it.
-            tooltip.classList.add('is-opening');
-
-            var tooltipDomRect = $(tooltip).get(0).getBoundingClientRect();
-            var elementDomRect = element.get(0).getBoundingClientRect();
-            var position;
-
-            /* Checks for available width to the left of the button and positions
-            the tooltip below the button if none there isn't enough. */
-            if (tooltipDomRect.width > elementDomRect.left) {
-                position = {
-                    left: elementDomRect.left + elementDomRect.width - tooltipDomRect.width + 4,
-                    top: elementDomRect.top + elementDomRect.height + win.scrollY + 10
-                };
-
-                tooltip.classList.add('has-arrow-top');
-            } else {
-                position = {
-                    left: elementDomRect.left - (elementDomRect.width / 2) - (tooltipDomRect.width - 10),
-                    top: elementDomRect.top + (elementDomRect.height / 2) - (tooltipDomRect.height / 2) + win.scrollY
-                };
-            }
-
-            $(tooltip).css(position);
-
-            // Switch back to display: none; which will be removed when openTooltip() is called.
-            tooltip.classList.remove('is-opening');
         }
 
         // Handle clicks to the tooltip button.
@@ -120,7 +89,6 @@
             if (tooltip.classList.contains('is-open')) {
                 closeTooltip(tooltip);
             } else {
-                positionTooltip(tooltip, target);
                 openTooltip(tooltip);
             }
         });
