@@ -34,53 +34,6 @@ from ..models import Document, RevisionIP
 from ..templatetags.jinja_helpers import get_compare_url
 
 
-class RedirectTests(UserTestCase, WikiTestCase):
-    """Tests for the REDIRECT wiki directive"""
-
-    def test_redirect_suppression(self):
-        """The document view shouldn't redirect when passed redirect=no."""
-        rev = revision(is_approved=True, save=True,
-                       content='REDIRECT <a class="redirect" '
-                               'href="/en-US/docs/blah">smoo</a>')
-        url = rev.document.get_absolute_url() + '?redirect=no'
-        response = self.client.get(url, follow=True)
-        self.assertContains(response, 'REDIRECT ')
-
-    def test_redirects_only_internal(self):
-        """Ensures redirects cannot be used to link to other sites"""
-        rev = revision(is_approved=True, save=True,
-                       content='REDIRECT <a class="redirect" '
-                               'href="//davidwalsh.name">DWB</a>')
-        url = rev.document.get_absolute_url()
-        response = self.client.get(url, follow=True)
-        self.assertContains(response, 'DWB')
-
-    def test_redirects_only_internal_2(self):
-        """Ensures redirects cannot be used to link to other sites"""
-        rev = revision(is_approved=True, save=True,
-                       content='REDIRECT <a class="redirect" '
-                               'href="http://davidwalsh.name">DWB</a>')
-        url = rev.document.get_absolute_url()
-        response = self.client.get(url, follow=True)
-        self.assertContains(response, 'DWB')
-
-    def test_self_redirect_suppression(self):
-        """The document view shouldn't redirect to itself."""
-        slug = 'redirdoc'
-        html = ('REDIRECT <a class="redirect" href="/en-US/docs/%s">smoo</a>' %
-                slug)
-
-        doc = document(title='blah', slug=slug, html=html, save=True,
-                       locale=settings.WIKI_DEFAULT_LANGUAGE)
-        revision(document=doc, content=html, is_approved=True, save=True)
-
-        response = self.client.get(doc.get_absolute_url(), follow=True)
-        assert 200 == response.status_code
-        response_html = pq(response.content)
-        article_body = to_html(response_html.find('#wikiArticle'))
-        self.assertHTMLEqual(html, article_body)
-
-
 class ViewTests(UserTestCase, WikiTestCase):
     fixtures = UserTestCase.fixtures + ['wiki/documents.json']
 
