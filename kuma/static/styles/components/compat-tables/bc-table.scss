@@ -106,6 +106,8 @@ Table layout
 .bc-table .bc-browsers th {
     border-top: 0;
     padding: 3px 0;
+    height: 200px;
+    vertical-align: bottom;
     @include set-font-size(22px);
 }
 
@@ -206,6 +208,20 @@ tablet display
     /* tablet */
     @media #{$mq-tablet-only} {
         @include bc-table-tablet-display-grid();
+    }
+
+    @media #{$mq-tablet-small-desktop-only} {
+        /* At this breakpoint the table uses grid layout
+           where supported. This stops `vertical-align: bottom`
+           on `.bc-table .bc-browsers th` from working so, we need
+           to switch to this workaround to ensure the layout
+           still works. */
+        .bc-browsers {
+            .bc-head-txt-label {
+                position: relative;
+                bottom: -150px;
+            }
+        }
     }
 
     /* small desktop, but only if there's a left column */
