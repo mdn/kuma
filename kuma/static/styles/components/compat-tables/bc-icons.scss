@@ -4,18 +4,16 @@
 .bc-browsers {
     .bc-head-txt-label {
         display: inline-block;
-        margin: 0 0 0 50px;
+        bottom: 0;
+        margin: 0 0 20px 10px;
         padding: 0;
-        width: 140px;
-        height: 210px;
+        width: 20px;
+        height: 20px;
         transform: rotate(-90deg);
+        transform-origin: left;
         @include set-font-size($small-bump-font-size);
         text-align: left;
         white-space: nowrap;
-
-        @media #{$mq-tablet-only} {
-            margin-left: 42px;
-        }
 
         &:before {
             position: absolute;
