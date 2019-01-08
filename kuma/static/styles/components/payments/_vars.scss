@@ -3,8 +3,7 @@ $payment-banner-max-width: 1320px;
 $payment-column-max-width: 540px;
 
 // Height of the popover when expanded
-$payment-banner-popover-height: 550px;
-$payment-banner-popover-height-extended: 630px;
+$payment-banner-popover-height: 630px;
 // Height of the popover when collapsed
 $payment-banner-popover-collapsed-height: 110px;
 $payment-banner-popover-collapsed-height-extended: 180px;
@@ -12,7 +11,7 @@ $payment-banner-popover-collapsed-height-extended: 180px;
 
 // Outside padding on the banner container
 $payment-collapsed-banner-padding: 28px;
-$payment-banner-padding: 56px;
+$payment-banner-padding: 36px 56px;
 $payment-banner-padding-sm: 12px;
 
 // Banner gradient colors

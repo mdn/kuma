@@ -56,12 +56,7 @@
             height: $payment-banner-popover-height;
         }
 
-        &.expanded-extend {
-            height: $payment-banner-popover-height-extended;
-        }
-
-        &.expanded,
-        &.expanded-extend {
+        &.expanded {
             // Locks position of Pay button and payment options while the
             // popover animates up and down.
             .contribution-form {
@@ -69,7 +64,7 @@
             }
 
             .form-footer {
-                margin-top: $grid-spacing;
+                margin-top: $grid-spacing / 2;
             }
 
             @media #{$mq-tablet-and-down} {
