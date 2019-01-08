@@ -58,22 +58,32 @@ Docker setup
 
         git clone --recursive https://github.com/mozilla/kuma.git
 
+   If you think you might be submitting pull requests, consider
+   forking the repository first, and then cloning your fork of it.
+
 #. Ensure you are in the existing or newly cloned kuma working copy::
 
         cd kuma
 
-#. Initialize and customize ``.env``. Linux users should set the ``UID``
-   parameter in ``.env``
-   (i.e. change ``#UID=1000`` to ``UID=1000``) to avoid file permission
-   issues when mixing ``docker-compose`` and ``docker`` commands::
+#. Initialize and customize ``.env``::
 
         cp .env-dist.dev .env
         vim .env  # Or your favorite editor
+
+   Linux users should set the ``UID`` parameter in ``.env``
+   (i.e. change ``#UID=1000`` to ``UID=1000``) to avoid file
+   permission issues when mixing ``docker-compose`` and ``docker``
+   commands. MacOS users do not need to change any of the defaults to
+   get started. Note that there are settings in this file that can be
+   useful when debugging, however.
 
 #. Pull the Docker images and build the containers::
 
         docker-compose pull
         docker-compose build
+
+   (The ``build`` command is effectively a no-op at this point because
+   the ``pull`` command just downloaded pre-built docker images.)
 
 #. Start the containers in the background::
 
@@ -85,34 +95,23 @@ Docker setup
 .. _post-install instructions: https://docs.docker.com/engine/installation/linux/linux-postinstall/
 .. _docker as non-root: https://docs.docker.com/engine/installation/linux/linux-postinstall/
 
-The following instructions assume that you are running from a folder named
-``kuma``, so that the containers created are named ``kuma_web_1``,
-``kuma_worker_1``, etc.  If you run from another folder, like ``mdn``, the
-containers will be named ``mdn_web_1``, ``mdn_worker_1``, etc. Adjust the
-command accordingly, or force the ``kuma`` name with::
-
-        docker-compose up -d -p kuma
-
 .. _provision-the-database:
 
 Load the sample database
 ========================
-Download and load the sample database::
+
+Download the sample database with either of the following ``wget`` or
+``curl`` (installed by default on macOS) commands::
 
     wget -N https://mdn-downloads.s3-us-west-2.amazonaws.com/mdn_sample_db.sql.gz
-    docker exec -i kuma_web_1 bash -c "zcat | ./manage.py dbshell" < mdn_sample_db.sql.gz
-
-Alternatively, you can use ``curl`` (installed by default on macOS)::
-
     curl -O https://mdn-downloads.s3-us-west-2.amazonaws.com/mdn_sample_db.sql.gz
-    docker exec -i kuma_web_1 bash -c "zcat | ./manage.py dbshell" < mdn_sample_db.sql.gz
 
-It takes a few seconds to load, with this expected output::
+Next, upload that sample database into the Kuma web container with::
 
-    mysql: [Warning] Using a password on the command line interface can be insecure.
+    docker-compose exec web bash -c "zcat mdn_sample_db.sql.gz | ./manage.py dbshell"
 
-This command can be adjusted to restore from an uncompressed database, or
-directly from a ``mysqldump`` command.
+(This command can be adjusted to restore from an uncompressed database, or
+directly from a ``mysqldump`` command.)
 
 Then run the following command::
 
@@ -125,7 +124,7 @@ Compile locales
 Localized string databases are included in their source form, and need to be
 compiled to their binary form::
 
-    docker exec -i kuma_web_1 make localecompile
+    docker-compose exec web make localecompile
 
 Dozens of lines of warnings will be printed::
 
@@ -153,7 +152,7 @@ Generate static assets
 Static assets such as CSS and JS are included in source form, and need to be
 compiled to their final form::
 
-    docker exec -i kuma_web_1 make build-static
+    docker-compose exec web make build-static
 
 A few thousand lines will be printed, like::
 
@@ -216,7 +215,7 @@ password access for local development.
 
 If you want to create a new admin account, use ``createsuperuser``::
 
-    docker exec -it kuma_web_1 ./manage.py createsuperuser
+    docker-compose exec web ./manage.py createsuperuser
 
 This will prompt you for a username, email address (a fake address like
 ``admin@example.com`` will work), and a password.
@@ -267,7 +266,7 @@ top of any page.
 With social accounts are enabled, you can disable the admin password in the
 Django shell::
 
-    docker exec -it kuma_web_1 ./manage.py shell_plus
+    docker-compose exec web ./manage.py shell_plus
     >>> me = User.objects.get(username='admin_username')
     >>> me.set_unusable_password()
     >>> me.save()
@@ -280,21 +279,21 @@ Django shell::
 Interact with the Docker containers
 ===================================
 The current directory is mounted as the ``/app`` folder in the web and worker
-containers (``kuma_web_1`` and ``kuma_worker_1``). Changes made to your local
+containers. Changes made to your local
 directory are usually reflected in the running containers. To force the issue,
-the container can be restarted::
+the containers for specified services can be restarted::
 
-    docker restart kuma_web_1 kuma_worker_1
+    docker-compose restart web worker
 
 You can connect to a running container to run commands. For example, you can
 open an interactive shell in the web container::
 
-    docker exec -it kuma_web_1 /bin/bash
+    docker-compose exec web /bin/bash
     make bash  # Same command, less typing
 
 To view the logs generated by a container::
 
-    docker logs kuma_web_1
+    docker-compose logs web
 
 To continuously view logs from all containers::
 
