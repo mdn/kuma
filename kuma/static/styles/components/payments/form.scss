@@ -16,13 +16,14 @@
     }
 
     .legal-copy {
+        display: inline-block;
         font-size: 12px;
         font-weight: normal;
         letter-spacing: .1px;
         line-height: 1.35;
         margin-bottom: 18px;
 
-        @media #{$mq-small-desktop-and-up} {
+        @media #{$mq-large-desktop-and-up} {
             text-align: left;
         }
 
@@ -37,6 +38,14 @@
     .recurring-payment-confirmation {
         display: flex;
         position: relative;
+
+        .legal-copy {
+            max-width: 370px;
+
+            @media #{$mq-large-desktop-and-up} {
+                max-width: 420px;
+            }
+        }
 
         .errorlist {
             bottom: 0;
@@ -69,6 +78,7 @@
         }
 
         .control-indicator {
+            display: inline-block;
             border: 3px solid $text-color;
             border-radius: 4px;
             box-sizing: border-box;
@@ -76,6 +86,7 @@
             height: 28px;
             margin-right: 6px;
             width: 28px;
+            vertical-align: top;
 
             &:before {
                 border: 2px solid #fff;
