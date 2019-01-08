@@ -152,7 +152,7 @@ Generate static assets
 Static assets such as CSS and JS are included in source form, and need to be
 compiled to their final form::
 
-    docker-compose web make build-static
+    docker-compose exec web make build-static
 
 A few thousand lines will be printed, like::
 
