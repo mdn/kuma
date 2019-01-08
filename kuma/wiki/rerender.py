@@ -711,6 +711,9 @@ class SafeRenderJob(CachedData):
         # TODO: Email report
         self.store()
 
+        # Update dashboard, schedule next job
+        SafeRenderDashboard.get().refresh()
+
 
 class DocumentInProcessSerializer(Serializer):
     """Document data for the in-process document."""
@@ -746,7 +749,7 @@ class SafeRenderBatchSerializer(CachedDataSerializer):
         child=IntegerField(),
         default=[])
     to_do_ids = ListField(
-        help_text='Document IDs to regenerate',
+        help_text='Document IDs to re-render',
         child=IntegerField(),
         default=[])
     stuck_ids = ListField(
@@ -909,7 +912,7 @@ class SafeRenderDashboard(CachedData):
             waiting = []
             active_states = set((
                 'rough_count',      # Making a rough count of docs to re-render
-                'detailed_count',   # Gathering IDs of docs to regenerate
+                'detailed_count',   # Gathering IDs of docs to re-render
                 'rendering',        # Rendering a batch of documents
                 'cool_down',        # Waiting for the purgable queue to clear
             ))
@@ -934,7 +937,9 @@ class SafeRenderDashboard(CachedData):
         self.store()
 
 
-def init_regen_job(macros=None, locales=None, user_id=None, emails=None):
+def init_rerender_job(
+        macros=None, locales=None, user_id=None, emails=None,
+        **advanced_options):
     """
     Initialize a re-render job.
 
@@ -943,11 +948,12 @@ def init_regen_job(macros=None, locales=None, user_id=None, emails=None):
     - locales: A list of locales to filter on
     - user_id: The user ID that initiated the report
     - emails: Emails to get a final report
+    - advanced_options: other options to SafeRenderJob
     """
 
     job = SafeRenderJob(
         filter_macros=macros, filter_locales=locales, user_id=user_id,
-        emails=emails)
+        emails=emails, **advanced_options)
     dashboard = SafeRenderDashboard.get()
     dashboard.register_job(job)
     return job
@@ -957,7 +963,7 @@ def init_regen_job(macros=None, locales=None, user_id=None, emails=None):
 
 
 def try_it():
-    job = init_regen_job(macros=['experimental_inline'], locales=['en-US'])
+    job = init_rerender_job(macros=['experimental_inline'], locales=['en-US'])
     return job
 
 
@@ -967,5 +973,5 @@ def try_it2():
 
 
 def try_it3():
-    job = init_regen_job(macros=['IncludeSubnav'])
+    job = init_rerender_job(macros=['IncludeSubnav'])
     return job
