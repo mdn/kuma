@@ -324,7 +324,7 @@ To emulate production, and test compressed and hashed assets locally:
 
 #. Set the environment variable ``DEBUG=False``
 #. Start (``docker-compose up -d``) your Docker services.
-#. Run ``docker-compose exec -e DJANGO_SETTINGS_MODULE=kuma.settings.prod web make build-static``.
+#. Run ``docker-compose run --rm -e DJANGO_SETTINGS_MODULE=kuma.settings.prod web make build-static``.
 #. Restart the web process using ``docker-compose restart web``.
 
 Using secure cookies
