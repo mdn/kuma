@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
 from django.db.models import Prefetch
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
 from django.views.decorators.cache import never_cache
@@ -18,6 +18,7 @@ from kuma.core.decorators import shared_cache_control
 from kuma.core.utils import paginate
 from kuma.wiki.kumascript import macro_usage
 from kuma.wiki.models import Document, Revision
+from kuma.wiki.rerender import SafeRenderDashboard, SafeRenderJob
 
 from . import PAGE_SIZE
 from .forms import RevisionDashboardForm
@@ -210,3 +211,49 @@ def macros(request):
         'has_counts': total != 0
     }
     return render(request, 'dashboards/macros.html', context)
+
+
+@never_cache
+@login_required
+@permission_required('wiki.bulk_render', raise_exception=True)
+def rerender_dashboard(request):
+    """List re-render jobs."""
+    dashboard = SafeRenderDashboard.get()
+    dashboard.refresh()
+
+    # Segment the known jobs
+    current_job = None
+    complete_jobs = []
+    pending_jobs = []
+    for job_id in dashboard.job_ids:
+        job = SafeRenderJob.load(job_id)
+        if dashboard.current_job_id == job_id:
+            current_job = job
+        elif job.state in SafeRenderJob.FINAL_STATES:
+            complete_jobs.append(job)
+        else:
+            pending_jobs.append(job)
+
+    context = {
+        'current_job': current_job,
+        'pending_jobs': pending_jobs,
+        'complete_jobs': complete_jobs,
+        'data': SafeRenderDashboard.serializer_class(dashboard).data,
+    }
+    return render(request, 'dashboards/rerender_list.html', context)
+
+
+@never_cache
+@login_required
+@permission_required('wiki.bulk_render', raise_exception=True)
+def rerender_job(request, job_id):
+    """Show details of a re-render job."""
+    try:
+        job = SafeRenderJob.load(job_id)
+    except SafeRenderJob.NoData:
+        raise Http404
+    context = {
+        'job': job,
+        'data': SafeRenderJob.serializer_class(job).data,
+    }
+    return render(request, 'dashboards/rerender_job.html', context)

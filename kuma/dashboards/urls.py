@@ -27,4 +27,10 @@ lang_urlpatterns = [
     url(r'^macros$',
         views.macros,
         name='dashboards.macros'),
+    url(r'^rerender$',
+        views.rerender_dashboard,
+        name='dashboards.rerender_dashboard'),
+    url(r'^rerender/(?P<job_id>.+)$',
+        views.rerender_job,
+        name='dashboards.rerender_job')
 ]

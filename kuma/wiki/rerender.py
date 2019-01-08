@@ -714,6 +714,10 @@ class SafeRenderJob(CachedData):
         # Update dashboard, schedule next job
         SafeRenderDashboard.get().refresh()
 
+    def status(self):
+        """Return a status string."""
+        return "I'm OK"
+
 
 class DocumentInProcessSerializer(Serializer):
     """Document data for the in-process document."""

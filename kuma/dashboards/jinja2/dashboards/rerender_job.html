@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% set title = _('Re-render dashboard job') %}
+
+{% block title %}{{ page_title(title) }}{% endblock %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+
+<em><a href="{{ url('dashboards.rerender_dashboard') }}">{{ _('Back to dashboard') }}</a></em>
+
+<dl>
+    <dt>Job ID</dt>
+    <dd>{{job.job_id}}</dd>
+    <dt>State</dt>
+    <dd>{{job.state}}</dd>
+</dl>
+
+<p>Raw Data:<p>
+<dl>
+{% for key, value in data.iteritems() %}
+    <dt>{{ key|e }}</dt>
+    <dd>{{ value|e }}</dd>
+{% endfor %}
+</dl>
+
+{% endblock %}

@@ -17,6 +17,8 @@
         url('wiki.document', document_path='MDN/Doc_status')),
     (_("Documents with errors"), url('wiki.errors')),
     (_("Documents with no parent"), url('wiki.without_parent')),
+    (_("Re-render dashboard"), url('dashboards.rerender_dashboard'),
+        request.user.has_perm('bulk_render')),
     (_("Revision Dashboard"), url('dashboards.revisions')),
     (_("Top level documents"), url('wiki.top_level')),
     (_("Server charts"),

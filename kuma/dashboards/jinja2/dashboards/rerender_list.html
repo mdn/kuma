@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% set title = _('Re-render dashboard') %}
+
+{% block title %}{{ page_title(title) }}{% endblock %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+
+<dl>
+    <dt>{{ _('Current job') }}</dt>
+    <dd>
+        {%- if current_job %}
+            <a href="{{ url('dashboards.rerender_job', current_job.job_id) }}">{{ current_job.job_id }}</a>:
+            {{ current_job.status() }}
+        {%- else %}
+            <em>{{_('none')}}</em>
+        {%- endif %}
+    </dd>
+    {% if pending_jobs %}
+        <dt>{{ _('Pending jobs') }}</dt>
+        {% for job in pending_jobs %}
+            <dd>
+                <a href="{{ url('dashboards.rerender_job', job.job_id) }}">{{ job.job_id }}</a>:
+                {{ job.status() }}
+            </dd>
+        {% endfor %}
+    {% endif %}
+    {% if complete_jobs %}
+        <dt>{{ _('Complete jobs') }}</dt>
+        {% for job in complete_jobs %}
+            <dd>
+                <a href="{{ url('dashboards.rerender_job', job.job_id) }}">{{ job.job_id }}</a>:
+                {{ job.status() }}
+            </dd>
+        {% endfor %}
+    {% endif %}
+</dl>
+
+{% endblock %}
