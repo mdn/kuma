@@ -33,9 +33,9 @@ dennis==0.9 \
     --hash=sha256:f6487392ac91800c5f0684a99b404b7fd0f72ceb48faeb5a0ce4e2c24fb62d3f
 
 # Web framework for Python projects of a certain age
-Django==1.11.16 \
-    --hash=sha256:29268cc47816a44f27308e60f71da635f549c47d8a1d003b28de55141df75791 \
-    --hash=sha256:37f5876c1fbfd66085001f4c06fa0bf96ef05442c53daf8d4294b6f29e7fa6b8
+Django==1.11.18 \
+    --hash=sha256:73cca1dac154e749b39cc91a54dc876109eb0512a5c6804986495305047066a5 \
+    --hash=sha256:7ee7d93d407f082e3849c8d10da50ff5b488af37ed1b0066a22dee5f2709ed16
 
 # 3rd party logins like Github
 # Code: https://github.com/pennersr/django-allauth
