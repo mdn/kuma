@@ -2,6 +2,9 @@
     .section {
         display: flex;
         position: relative;
+        margin: 0 auto;
+        padding: 56px 18px;
+        max-width: 1170px;
 
         .sub-section {
             margin-bottom: 2em;
@@ -22,11 +25,16 @@
     }
 
     .backdrop-image {
-        height: auto;
-        left: 0;
-        position: absolute;
-        top: 0;
-        width: auto;
+        display: none;
+
+        @media #{$mq-small-desktop-and-up} {
+            display: block;
+            position: absolute;
+            top: 30px;
+            left: 70px;
+            width: 410px;
+            height: auto;
+        }
     }
 
     .index {
@@ -64,6 +72,13 @@
     .faqs {
         flex: 60%;
 
+        a {
+            border-bottom: 1px solid $payment-form-button-color;
+            color: $payment-form-button-color;
+            padding-bottom: 1px;
+            text-decoration: none;
+        }
+
         .faq {
             background-color: #fff;
             border: 2px solid $text-color;
@@ -96,6 +111,7 @@
 
             .small {
                 display: block;
+                font-weight: 700;
             }
 
             .feedback {
