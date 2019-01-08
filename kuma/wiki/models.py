@@ -312,6 +312,7 @@ class Document(NotificationsMixin, models.Model):
             ('move_tree', 'Can move a tree of documents'),
             ('purge_document', 'Can permanently delete document'),
             ('restore_document', 'Can restore deleted document'),
+            ('bulk_render', 'Can render multiple documents'),
         )
 
     objects = DocumentManager()
