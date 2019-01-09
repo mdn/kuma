@@ -386,22 +386,6 @@
         }
     }
 
-    var mediaQueryList = null;
-
-    /**
-     * Increases or decreases the height of the `popoverBanner`
-     * based on a `mediaQueryList` match
-     */
-    function handleViewportChange(evt) {
-        if (evt.matches) {
-            popoverBanner.removeClass('expanded');
-            popoverBanner.addClass('expanded-extend');
-        } else {
-            popoverBanner.removeClass('expanded-extend');
-            popoverBanner.addClass('expanded');
-        }
-    }
-
     /**
      * Gets and executes stripe's checkout.js script to be used when submitting
      * also handles errors when getting the resource
@@ -442,19 +426,9 @@
     function expandPopover() {
         getStripeCheckoutScript();
         var secondaryHeader = popoverBanner[0].querySelector('h4');
-        var smallDesktop = '(max-width: 1092px)';
 
-        mediaQueryList = window.matchMedia(smallDesktop);
-        var initialExpandedClass = mediaQueryList.matches
-        || currrentPaymentForm === 'recurring'
-            ? 'expanded-extend'
-            : 'expanded';
-
-        popoverBanner.addClass(initialExpandedClass + ' is-expanding');
+        popoverBanner.addClass('expanded is-expanding');
         popoverBanner.removeClass('is-collapsed');
-
-        // listens for, and responds to, matchMedia events
-        mediaQueryList.addListener(handleViewportChange);
 
         popoverBanner.on('transitionend', function() {
             popoverBanner.removeClass('is-expanding');
@@ -501,11 +475,8 @@
 
         // Add transitional class for opacity animation.
         popoverBanner.addClass('is-collapsing');
-        popoverBanner.removeClass('expanded expanded-extend');
+        popoverBanner.removeClass('expanded');
         popoverBanner.attr('aria-expanded', false);
-
-        // remove the mediaQuery listener when in collapsed state
-        mediaQueryList.removeListener(handleViewportChange);
 
         popoverBanner.on('transitionend', function() {
             popoverBanner.addClass('is-collapsed');
@@ -651,7 +622,6 @@
             // Visually update the form
             form.get(0).classList.remove('recurring-form');
             popoverBanner.get(0).classList.add('expanded');
-            popoverBanner.get(0).classList.remove('expanded-extend');
 
         } else if (this.value === 'recurring' && currrentPaymentForm === 'one_time') {
             // Switch to recurring payment form only if we're not on the recurring payment form already.
@@ -668,9 +638,8 @@
                 radio.nextSibling.nodeValue = '$' + paymentChoices.recurring[i] + '/mo';
             });
 
-            // Visually update the form
+            // Identify form as recurring
             form.get(0).classList.add('recurring-form');
-            popoverBanner.get(0).classList.add('expanded-extend');
         }
 
         // Update the form action
