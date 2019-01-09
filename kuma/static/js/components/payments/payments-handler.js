@@ -256,7 +256,7 @@
         && isPopoverBanner
             ? '/month'
             : '';
-        amountToUpdate[2].textContent = newValue;
+        amountToUpdate[1].textContent = newValue;
     }
 
     /**
