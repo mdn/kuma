@@ -34,9 +34,9 @@ flake8-import-order==0.18 \
 
 # Calculate hashes for pip 8.x+
 # Code: https://github.com/peterbe/hashin
-hashin==0.13.4 \
-    --hash=sha256:4e7731953dda1bbc1bbd11c80eef9bdcb2c0995be3a55807aa14991d197af6f9 \
-    --hash=sha256:a038ac6ff4bb881fe99b0c646c0624f803cd62486d461d82ed4fb6b2cce04e0f
+hashin==0.14.1 \
+    --hash=sha256:43ae3277fbd937ba1c99bc3fef9e4dd2e68cd5f2eea8f60ebdb53d83983d861b \
+    --hash=sha256:5dbf06b2adc32e5e438b9b9b352622b787c8555d4a2aa88b38d64764526f81a1
 
 # Test mocks, added to the Python 3 standard library
 mock==1.3.0 \
