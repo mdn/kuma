@@ -9,6 +9,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
+from six.moves.urllib.parse import quote_plus
 
 
 def wait_for_window(fn):
@@ -83,7 +84,10 @@ class BasePage(Page):
                 self.wait.until(lambda s: not banner.is_displayed())
 
     class Header(Region):
-        report_content_form_url = 'https://bugzilla.mozilla.org/form.doc'
+        report_content_form_url = (
+            'https://github.com/mdn/sprints/issues/new?template='
+            'issue-template.md&projects=mdn/sprints/2&labels=user-report'
+            '&title=')
         report_bug_form_url = 'https://bugzilla.mozilla.org/form.mdn'
         # locators
         SIGNIN_SELECTOR = '#toolbox .login-link'
@@ -226,12 +230,8 @@ class BasePage(Page):
             self.find_element(*self._report_content_locator).click()
 
         def is_report_content_url_expected(self, selenium, article_url):
-            current_url = selenium.current_url
-            report_url = self.report_content_form_url
-            # compare
-            url_matches = report_url in current_url
-            # TODO check url contains article url in query variable
-            return url_matches
+            return (quote_plus(self.report_content_form_url)
+                    in selenium.current_url)
 
         @wait_for_window
         def open_report_bug(self):
