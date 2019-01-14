@@ -102,7 +102,7 @@ services:
       - log__console=true
       - log__file=
       - server__template_root_dir=macros
-      - server__document_url_template=http://api:8000/en-US/docs/{path}?raw=1
+      - server__document_url_template=http://api:8000/en-US/docs/{path}?raw=1&redirect=no
       - server__memcache__server=memcached:11211
       - server__template_class=EJSTemplate
       - server__autorequire__mdn=MDN:Common

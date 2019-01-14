@@ -6,6 +6,7 @@ Legacy tests are in test_views.py.
 import base64
 import json
 from collections import namedtuple
+from datetime import datetime
 
 import mock
 import pytest
@@ -22,6 +23,7 @@ from kuma.core.models import IPBan
 from kuma.core.tests import assert_no_cache_header, assert_shared_cache_header
 from kuma.core.urlresolvers import reverse
 
+from ..constants import REDIRECT_CONTENT
 from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..models import Document, Revision
 from ..views.document import _apply_content_experiment
@@ -768,3 +770,70 @@ def test_deleted_doc_no_purge_permdeleted(deleted_doc, wiki_moderator,
     assert full_description in content
     assert 'Restore this document' in content
     assert 'Purge this document' not in content
+
+
+@mock.patch('kuma.wiki.kumascript.get')
+def test_redirect_suppression(mock_kumascript_get, constance_config, client,
+                              root_doc, redirect_doc):
+    """The document view shouldn't redirect when passed redirect=no."""
+    constance_config.KUMASCRIPT_TIMEOUT = 1
+    mock_kumascript_get.return_value = (redirect_doc.html, None)
+    url = redirect_doc.get_absolute_url() + '?redirect=no'
+    response = client.get(url, follow=True)
+    assert response.status_code == 200
+    assert not response.redirect_chain
+    content = response.content.decode(response.charset)
+    body = pq(content).find('#wikiArticle')
+    assert body.text() == 'REDIRECT {}'.format(root_doc.title)
+    assert body.find(
+        'a[href="{}"][class="redirect"]'.format(root_doc.get_absolute_url()))
+
+
+@pytest.mark.parametrize(
+    'href', ['//davidwalsh.name', 'http://davidwalsh.name'])
+@mock.patch('kuma.wiki.kumascript.get')
+def test_redirects_only_internal(mock_kumascript_get, constance_config,
+                                 wiki_user, client, href):
+    """Ensures redirects cannot be used to link to other sites"""
+    constance_config.KUMASCRIPT_TIMEOUT = 1
+    redirect_doc = Document.objects.create(
+        locale='en-US', slug='Redirection', title='External Redirect Document')
+    Revision.objects.create(
+        document=redirect_doc,
+        creator=wiki_user,
+        content=REDIRECT_CONTENT % {'href': href, 'title': 'DWB'},
+        title='External Redirect Document',
+        created=datetime(2018, 4, 18, 12, 15))
+    mock_kumascript_get.return_value = (redirect_doc.html, None)
+    url = redirect_doc.get_absolute_url()
+    response = client.get(url, follow=True)
+    assert response.status_code == 200
+    assert not response.redirect_chain
+    content = response.content.decode(response.charset)
+    body = pq(content).find('#wikiArticle')
+    assert body.text() == 'REDIRECT DWB'
+    assert body.find('a[href="{}"]'.format(href))
+
+
+@mock.patch('kuma.wiki.kumascript.get')
+def test_self_redirect_supression(mock_kumascript_get, constance_config,
+                                  wiki_user, client):
+    """The document view shouldn't redirect to itself."""
+    constance_config.KUMASCRIPT_TIMEOUT = 1
+    redirect_doc = Document.objects.create(
+        locale='en-US', slug='Redirection', title='Self Redirect Document')
+    url = redirect_doc.get_absolute_url()
+    Revision.objects.create(
+        document=redirect_doc,
+        creator=wiki_user,
+        content=REDIRECT_CONTENT % {'href': url, 'title': 'Self Redirection'},
+        title='Self Redirect Document',
+        created=datetime(2018, 4, 19, 12, 15))
+    mock_kumascript_get.return_value = (redirect_doc.html, None)
+    response = client.get(url, follow=True)
+    assert response.status_code == 200
+    assert not response.redirect_chain
+    content = response.content.decode(response.charset)
+    body = pq(content).find('#wikiArticle')
+    assert body.text() == 'REDIRECT Self Redirection'
+    assert body.find('a[href="{}"][class="redirect"]'.format(url))
