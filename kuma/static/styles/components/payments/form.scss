@@ -125,6 +125,16 @@
             padding-left: 12px;
             width: 100%;
 
+            &:focus {
+                outline: 0;
+            }
+
+            /* undo the above outline style when a user is navigating using the keyboard,
+               and the element receiving focus would normally receive specific focus styling */
+            &:focus-visible { /* stylelint-disable-line selector-pseudo-class-no-unknown */
+                outline: unset;
+            }
+
             &.error {
                 border-color: $error;
                 color: $error;
@@ -315,4 +325,9 @@
             display: inline-block;
         }
     }
+}
+
+/* utility class for keyboard focus style */
+.focus-visible {
+    box-shadow: 1px 1px 5px #2196f3, -1px -1px 5px #2196f3;
 }
