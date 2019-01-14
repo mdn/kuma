@@ -9,7 +9,7 @@ class NotFoundPage(BasePage):
     URL_TEMPLATE = '/{locale}/' + SLUG
 
     _page_title = (By.CSS_SELECTOR, '#content-main > h1')
-    report_content_form_url = 'https://bugzilla.mozilla.org/form.doc'
+    report_content_form_url = 'https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report'
     _report_content_locator = (By.CSS_SELECTOR,
                                '#content-main a[href^="' +
                                report_content_form_url + '"]')
