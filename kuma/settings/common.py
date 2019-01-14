@@ -1007,12 +1007,12 @@ PIPELINE_JS = {
             "js/libs/prism/prism-css.js",
             "js/libs/prism/prism-clike.js",
             "js/libs/prism/prism-javascript.js",
+            "js/libs/prism/prism-json.js",
             "js/libs/prism/prism-css-extras.js",
             "js/libs/prism/prism-rust.js",
             "js/libs/prism/prism-line-highlight.js",
             "js/libs/prism/prism-line-numbers.js",
 
-            'js/prism-mdn/components/prism-json.js',
             'js/syntax-prism.js',
         ),
         'output_filename': 'build/js/syntax-prism.js',
