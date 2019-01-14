@@ -26,6 +26,7 @@ from rest_framework.serializers import (
 )
 
 from kuma.core.utils import celery_queue_sizes
+from kuma.users.models import User
 
 from .models import Document
 
@@ -69,10 +70,12 @@ class CachedData(object):
         expected = set(cls.USER_FIELDS)
         expected |= set(name for name, _ in cls.STATE_FIELDS)
         params_keys = set(params.keys())
-        assert expected >= params_keys, (
-            'Missing params %s' % (expected - params_keys))
-        assert params_keys >= expected, (
-            'Missing params %s' % (params_keys - expected))
+        if expected < params_keys:
+            raise cls.InvalidData(
+                'Extra param(s) %s' % ','.join(params_keys - expected))
+        if expected > params_keys:
+            raise cls.InvalidData(
+                'Missing param(s) %s' % ','.join(expected - params_keys))
 
         # Initialize from the params
         init_params = {name: params[name] for name in cls.USER_FIELDS}
@@ -81,7 +84,7 @@ class CachedData(object):
             setattr(instance, name, params[name])
         return instance
 
-    def store(self, validated_data=None):
+    def store(self, validated_data=None, cache_time=None):
         """Store in the cache."""
         if validated_data is None:
             # Run through serializer to standardize formats
@@ -98,7 +101,8 @@ class CachedData(object):
             key = self.cache_key(None)
         data_json = JSONRenderer().render(data)
         print('saving %s:%s\n' % (key, data_json))
-        cache.set(key, data_json)
+        cache_time = cache_time or 60 * 60 * 24 * 7
+        cache.set(key, data_json, cache_time)
 
     class NoData(ValueError):
         pass
@@ -204,6 +208,10 @@ class SafeRenderJobSerializer(CachedDataSerializer):
         help_text='User ID that initiated re-render',
         allow_null=True,
         default=None)
+    username = CharField(
+        help_text='Username that initiated re-render',
+        allow_blank=True,
+        default='')
     emails = ListField(
         help_text='Emails to notify at end of re-render',
         child=EmailField(),
@@ -315,8 +323,9 @@ class SafeRenderJob(CachedData):
 
     # Fields set by the caller
     USER_FIELDS = (
-        'filter_macros', 'filter_locales', 'user_id', 'emails', 'tasks_goal',
-        'batch_size', 'batch_interval', 'stuck_time', 'error_percent')
+        'filter_macros', 'filter_locales', 'user_id', 'username', 'emails',
+        'tasks_goal', 'batch_size', 'batch_interval', 'stuck_time',
+        'error_percent')
     # Fields initialized at the start of the job
     STATE_FIELDS = (
         ('job_id', uuid4),                  # UUID of this job
@@ -355,8 +364,9 @@ class SafeRenderJob(CachedData):
 
     def __init__(
             self, filter_macros=None, filter_locales=None, user_id=None,
-            emails=None, tasks_goal=2, batch_size=100, batch_interval=5,
-            stuck_time=120, error_percent=10, deserialize_mode=False):
+            username='', emails=None, tasks_goal=2, batch_size=100,
+            batch_interval=5, stuck_time=120, error_percent=10,
+            deserialize_mode=False):
         """
         Initialize the SafeRenderJob.
 
@@ -364,6 +374,7 @@ class SafeRenderJob(CachedData):
         - filter_macros: Match docs with any of these macros (default: [])
         - filter_locales: Match docs with any of these locales (default: [])
         - user_id: User ID that initiated the job (default: None)
+        - username: Username that initiated the job (default: empty)
         - emails: Emails to send final report (default: [])
         - tasks_goal: Size of task queue to start next batch (default: 2)
         - batch_size: Size of parallel render batch (default: 100)
@@ -376,6 +387,7 @@ class SafeRenderJob(CachedData):
         self.filter_macros = filter_macros or []
         self.filter_locales = filter_locales or []
         self.user_id = user_id
+        self.username = username
         self.emails = emails or []
         self.tasks_goal = tasks_goal
         self.batch_size = batch_size
@@ -714,9 +726,86 @@ class SafeRenderJob(CachedData):
         # Update dashboard, schedule next job
         SafeRenderDashboard.get().refresh()
 
-    def status(self):
-        """Return a status string."""
-        return "I'm OK"
+    def summary(self):
+        """Return an English summary of the job."""
+
+        parts = []
+
+        # Summarize the filter
+        filter_parts = []
+        if self.filter_macros:
+            if len(self.filter_macros) == 1:
+                filter_parts.append("macros=%s" % self.filter_macros[0])
+            else:
+                filter_parts.append("macros=[%s]"
+                                    % ", ".join(self.filter_macros))
+        if self.filter_locales:
+            if len(self.filter_locales) == 1:
+                filter_parts.append("locales=%s" % self.filter_locales)
+            else:
+                filter_parts.append("locale=[%s]"
+                                    % ", ".join(self.filter_locales))
+        parts.append((' and '.join(filter_parts)) or 'All documents')
+
+        # Add the requester if given
+        if self.username:
+            parts.append('requested by %s' % self.username)
+
+        # Add the status and related details
+        if self.state == 'init':
+            age = (datetime.now() - self.ts_init).total_seconds()
+            parts.append('initialized %d second%s ago'
+                         % (age, '' if age == 1 else 's'))
+        elif self.state == 'waiting':
+            age = (datetime.now() - self.ts_init).total_seconds()
+            parts.append('waiting for %d second%s'
+                         % (age, '' if age == 1 else 's'))
+        elif self.state == 'rough_count':
+            age = (datetime.now() - (self.ts_rough_count or self.ts_heartbeat)).total_seconds()
+            parts.append('estimating document count for %d second%s'
+                         % (age, '' if age == 1 else 's'))
+        elif self.state == 'detailed_count':
+            age = (datetime.now() - self.ts_detailed_count).total_seconds()
+            parts.append(('gathering filtered documents for %d second%s'
+                          ' (rough count is %d document%s)')
+                         % (age,
+                            '' if age == 1 else 's',
+                            self.count_rough,
+                            '' if self.count_rough == 1 else 's'))
+        elif self.state in ('start_chunk', 'monitor_chunk'):
+            parts.append(('rendering %d document%s'
+                          ' (%d rendered, %d errored, %d abandoned)')
+                         % (self.count_detailed,
+                            '' if self.count_detailed == 1 else 's',
+                            self.count_rendered,
+                            self.count_errored,
+                            self.count_abandoned))
+        elif self.state == 'cool_down':
+            parts.append(('waiting for task queue to empty'
+                          ' (%d current tasks, goal is %d, max seen is %d)')
+                         % (self.tasks_current,
+                            self.tasks_goal,
+                            self.tasks_max_seen))
+        elif self.state == 'done':
+            duration = (self.ts_done - self.ts_render).total_seconds()
+            parts.append(('rendered %d document%s in %d second%s'
+                          ' (%d rendered, %d errored, %d abandoned)')
+                         % (self.count_detailed,
+                            '' if self.count_detailed == 1 else 's',
+                            duration,
+                            '' if self.duration == 1 else 's',
+                            self.count_rendered,
+                            self.count_errored,
+                            self.count_abandoned))
+        elif self.state == 'canceled':
+            parts.append('canceled')
+        elif self.state == 'errored':
+            parts.append('errored')
+        else:
+            assert self.state == 'orphaned'
+            parts.append('orphaned')
+
+        return ', '.join(parts)
 
 
 class DocumentInProcessSerializer(Serializer):
@@ -955,9 +1044,13 @@ def init_rerender_job(
     - advanced_options: other options to SafeRenderJob
     """
 
+    if user_id:
+        username = User.objects.get(id=user_id).only('username').username
+    else:
+        username = ''
     job = SafeRenderJob(
         filter_macros=macros, filter_locales=locales, user_id=user_id,
-        emails=emails, **advanced_options)
+        username=username, emails=emails, **advanced_options)
     dashboard = SafeRenderDashboard.get()
     dashboard.register_job(job)
     return job
