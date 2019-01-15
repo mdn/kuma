@@ -139,6 +139,10 @@
             padding: 0;
             vertical-align: middle;
 
+            svg {
+                fill: #333;
+            }
+
             &:last-child {
                 margin-right: 0;
             }
@@ -213,7 +217,7 @@
     }
 
     .login-prompt {
-        padding: 20px;
+        padding: 100px 20px;
     }
 
     .payments-switch {
@@ -386,7 +390,6 @@
     color: #fff;
     display: inline-block;
     font-weight: bold;
-    font-weight: normal;
     height: $payment-form-input-height;
     line-height: $payment-form-input-height;
     min-width: $payment-form-button-width;
