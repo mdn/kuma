@@ -354,9 +354,17 @@
     }
     &.payment-confirmation {
 
+        .column-container {
+            max-width: 1270px;
+        }
+
         .column-half {
             display: inline-block;
             vertical-align: middle;
+
+            @media #{$mq-tablet-and-down} {
+                text-align: center;
+            }
         }
 
         .backdrop-image {
