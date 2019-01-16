@@ -65,17 +65,8 @@ def post(request, content, locale=settings.LANGUAGE_CODE):
 
 def _get_attachment_metadata_dict(attachment):
     current_revision = attachment.current_revision
-    try:
-        filesize = current_revision.file.size
-    except OSError:
-        filesize = 0
     return {
-        'title': current_revision.title,
-        'description': current_revision.description,
         'filename': current_revision.filename,
-        'size': filesize,
-        'author': current_revision.creator.username,
-        'mime': current_revision.mime_type,
         'url': attachment.get_file_url(),
     }
 
@@ -137,7 +128,6 @@ def get(document, cache_control, base_url, timeout=None):
             locale=document.locale,
             title=document.title,
             files=files,
-            attachments=files,  # Just for sake of verbiage?
             slug=document.slug,
             tags=list(document.tags.names()),
             review_tags=list(document.current_revision.review_tags.names()),
