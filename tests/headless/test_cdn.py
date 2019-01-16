@@ -136,6 +136,7 @@ def test_maintenance_mode(base_url, is_behind_cdn, is_maintenance_mode):
 @pytest.mark.nondestructive
 @pytest.mark.parametrize(
     'slug', ['/en-US/dashboards/spam',
+             '/en-US/dashboards/revisions',
              '/en-US/profile',
              '/en-US/docs/new?slug=test',
              '/en-US/docs/preview-wiki-content',
@@ -272,24 +273,6 @@ def test_no_locale_cached_302(base_url, is_behind_cdn, slug, zone):
     """
     response = assert_cached(base_url + slug.format(zone), 302, is_behind_cdn)
     assert response.headers['location'].startswith('/docs/')
-
-
-@pytest.mark.nondestructive
-def test_revisions_dashboard(base_url, is_behind_cdn, kuma_status):
-    """
-    Ensure that the revisions dashboard is cached, and forwards/caches
-    based-on the "X-Requested-With" header and any query parameters.
-    """
-    url = base_url + '/en-US/dashboards/revisions'
-    params = {'page': 2}
-    headers = {'X-Requested-With': 'XMLHttpRequest'}
-    response1 = assert_cached(url, 200, is_behind_cdn)
-    response2 = assert_cached(url, 200, is_behind_cdn, headers=headers)
-    response3 = assert_cached(url, 200, is_behind_cdn, headers=headers,
-                              params=params)
-    assert response3.content != response2.content
-    assert response3.content != response1.content
-    assert response2.content != response1.content
 
 
 @pytest.mark.nondestructive

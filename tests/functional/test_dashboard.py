@@ -11,8 +11,11 @@ from utils.decorators import (
 
 
 @pytest.mark.smoke
+@pytest.mark.login
 @pytest.mark.nondestructive
 def test_dashboard(base_url, selenium):
+    admin = AdminLogin(selenium, base_url).open()
+    admin.login_new_user()
     page = DashboardPage(selenium, base_url).open()
     first_row = page.first_row
     # ip toggle not present
@@ -26,8 +29,11 @@ def test_dashboard(base_url, selenium):
 
 
 @pytest.mark.smoke
+@pytest.mark.login
 @pytest.mark.nondestructive
 def test_dashboard_open_details(base_url, selenium):
+    admin = AdminLogin(selenium, base_url).open()
+    admin.login_new_user()
     page = DashboardPage(selenium, base_url).open()
     # no dashboard-details
     assert page.details_items_length is 0
@@ -41,8 +47,11 @@ def test_dashboard_open_details(base_url, selenium):
 
 
 @pytest.mark.smoke
+@pytest.mark.login
 @pytest.mark.nondestructive
 def test_dashboard_load_page_two(base_url, selenium):
+    admin = AdminLogin(selenium, base_url).open()
+    admin.login_new_user()
     page = DashboardPage(selenium, base_url).open()
     # save id of first revision on page one
     first_row_id = page.first_row_id
@@ -55,6 +64,7 @@ def test_dashboard_load_page_two(base_url, selenium):
 
 
 @pytest.mark.xfail(reason='bug 1405690: fails for some revision diffs')
+@pytest.mark.login
 @pytest.mark.smoke
 @pytest.mark.nondestructive
 def test_dashboard_overflow(base_url, selenium):
@@ -63,17 +73,11 @@ def test_dashboard_overflow(base_url, selenium):
 
     bug 1405690 - some content causes overflows
     """
+    admin = AdminLogin(selenium, base_url).open()
+    admin.login_new_user()
     page = DashboardPage(selenium, base_url).open()
     page.open_first_details()
     assert page.scroll_width <= page.client_width
-
-
-@pytest.mark.nondestructive
-@skip_if_not_maintenance_mode
-def test_dashboard_in_mm(base_url, selenium):
-    page = DashboardPage(selenium, base_url).open()
-    assert page.is_maintenance_mode_banner_displayed
-    assert not page.header.is_signin_displayed
 
 
 @pytest.mark.smoke
