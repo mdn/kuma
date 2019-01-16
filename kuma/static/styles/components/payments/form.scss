@@ -19,7 +19,7 @@
         font-size: 12px;
         font-weight: normal;
         letter-spacing: .1px;
-        line-height: 1.35;
+        line-height: 1.4;
         margin-bottom: 18px;
 
         @media #{$mq-large-desktop-and-up} {
@@ -152,12 +152,6 @@
             display: inline-block;
             margin: $payment-form-input-spacing 0;
             vertical-align: middle;
-
-            @media #{$mq-large-desktop-and-down} {
-                li {
-                    margin: 0;
-                }
-            }
         }
 
         @media #{$mq-mobile-and-down} {
@@ -209,20 +203,16 @@
 
 
     .form-radios-donation-choices {
-        text-align: center;
-
-        @media #{$mq-large-desktop-and-up} {
-            text-align: left;
-        }
+        text-align: left;
 
         li {
-            display: inline-block;
-            margin-right: 11px;
             position: relative;
+            display: inline-block;
+            margin-right: 8px;
+            width: auto;
 
-            @media #{$mq-tablet-and-down} {
-                margin-right: 12px;
-                width: auto;
+            @media #{$mq-large-desktop-and-up} {
+                margin-right: 16px;
             }
 
             input[type='radio'] {
