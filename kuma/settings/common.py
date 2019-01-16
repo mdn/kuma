@@ -959,6 +959,7 @@ PIPELINE_JS = {
     },
     'payments': {
         'source_filenames': (
+            'js/components/payments/focus-visible.js',
             'js/components/payments/payments-handler-utils.js',
             'js/components/payments/payments-handler.js',
             'js/components/payments/payments-faq.js',

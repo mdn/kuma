@@ -28,6 +28,13 @@
     overflow: hidden;
     position: relative;
 
+    .contribute-lead-in h4,
+    .cta-link {
+        &:focus {
+            outline: 0;
+        }
+    }
+
     // Additional styling for when the banner acts a popover and is fixed to the
     // bottom of the viewport.
     &.contribution-popover {
