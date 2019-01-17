@@ -135,9 +135,12 @@ django-pipeline==1.6.8 \
     --hash=sha256:b7cdc2efe27e478ddd38e878dd7b5e5ac121c2898fd85accf3187e19137fe6b7
 
 # Rate limit access to some views
-django-ratelimit==1.1.0 \
-    --hash=sha256:3c954ca36ad66675a3bb079f526b4234a3d0092954f8e84820132b77e87c00e0 \
-    --hash=sha256:6e1c88b22055c49dc5abf721340fdc39a35de5f310f81acc3752c689ece71a15
+# Code: https://github.com/jsocol/django-ratelimit
+# Changes: https://github.com/jsocol/django-ratelimit/blob/master/CHANGELOG
+# Docs: https://django-ratelimit.readthedocs.io/en/stable/
+django-ratelimit==2.0.0 \
+    --hash=sha256:40dd23dcdda413d2199bb88b4d9151bf66ea19586b2047ada313ddcf77e2959c \
+    --hash=sha256:ddb6bd68a7a25fab335a0441671681ce9993167e640a2301a2e0e07ce9dd46fb
 
 # Use ReCaptcha in signup form
 django-recaptcha==1.0.5 \
