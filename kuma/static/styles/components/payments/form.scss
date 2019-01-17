@@ -319,5 +319,5 @@
 
 /* utility class for keyboard focus style */
 .focus-visible {
-    box-shadow: 1px 1px 5px #2196f3, -1px -1px 5px #2196f3;
+    @include focus-visible();
 }
