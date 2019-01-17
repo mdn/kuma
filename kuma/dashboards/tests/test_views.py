@@ -74,23 +74,30 @@ def known_author(wiki_user):
     return wiki_user
 
 
-def test_revisions(root_doc, client):
-    """The revision dashboard works."""
-    response = client.get(reverse('dashboards.revisions'))
+def test_revisions_not_logged_in(root_doc, client):
+    """A user who is not logged in can't see the revisions dashboard."""
+    url = reverse('dashboards.revisions')
+    response = client.get(url)
+    assert response.status_code == 302
+    assert response['Location'] == '/en-US/users/signin?next={}'.format(url)
+    assert_no_cache_header(response)
+
+
+def test_revisions(root_doc, user_client):
+    """The revision dashboard works for logged in users."""
+    response = user_client.get(reverse('dashboards.revisions'))
     assert response.status_code == 200
-    assert 'Vary' in response
-    assert 'X-Requested-With' in response['Vary']
     assert 'Cache-Control' in response
-    assert_shared_cache_header(response)
+    assert_no_cache_header(response)
     assert 'text/html' in response['Content-Type']
     assert ('dashboards/revisions.html' in
             (template.name for template in response.templates))
 
 
-def test_revisions_list_via_AJAX(dashboard_revisions, client):
+def test_revisions_list_via_AJAX(dashboard_revisions, user_client):
     """The full list of revisions can be returned via AJAX."""
-    response = client.get(reverse('dashboards.revisions'),
-                          HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    response = user_client.get(reverse('dashboards.revisions'),
+                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     assert response.status_code == 200
     page = pq(response.content)
     rev_rows = page.find('.dashboard-row')
@@ -134,11 +141,11 @@ def test_revisions_show_spam_submission_button(has_perm, root_doc, wiki_user,
     assert len(spam_report_button) == (1 if has_perm else 0)
 
 
-def test_revisions_locale_filter(dashboard_revisions, client):
+def test_revisions_locale_filter(dashboard_revisions, user_client):
     """Revisions can be filtered by locale."""
     url = urlparams(reverse('dashboards.revisions', locale='fr'),
                     locale='fr')
-    response = client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    response = user_client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     assert response.status_code == 200
 
     page = pq(response.content)
@@ -148,10 +155,10 @@ def test_revisions_locale_filter(dashboard_revisions, client):
     assert locale == 'fr'
 
 
-def test_revisions_creator_filter(dashboard_revisions, client):
+def test_revisions_creator_filter(dashboard_revisions, user_client):
     """Revisions can be filtered by a username."""
     url = urlparams(reverse('dashboards.revisions'), user='wiki_user_2')
-    response = client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    response = user_client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     assert response.status_code == 200
 
     page = pq(response.content)
@@ -163,10 +170,10 @@ def test_revisions_creator_filter(dashboard_revisions, client):
         assert author.text_content().strip() == 'wiki_user_2'
 
 
-def test_revisions_topic_filter(dashboard_revisions, client):
+def test_revisions_topic_filter(dashboard_revisions, user_client):
     """Revisions can be filtered by topic (the document slug)."""
     url = urlparams(reverse('dashboards.revisions'), topic='wiki_user_2-doc')
-    response = client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    response = user_client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     assert response.status_code == 200
 
     page = pq(response.content)
@@ -181,11 +188,11 @@ def test_revisions_topic_filter(dashboard_revisions, client):
 @pytest.mark.parametrize('authors', (RevisionDashboardForm.KNOWN_AUTHORS,
                                      RevisionDashboardForm.UNKNOWN_AUTHORS,
                                      RevisionDashboardForm.ALL_AUTHORS))
-def test_revisions_known_authors_filter(authors, dashboard_revisions, client,
-                                        known_author):
+def test_revisions_known_authors_filter(authors, dashboard_revisions,
+                                        user_client, known_author):
     """Revisions can be filtered by the Known Authors group."""
     url = urlparams(reverse('dashboards.revisions'), authors=authors)
-    response = client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    response = user_client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     assert response.status_code == 200
 
     page = pq(response.content)
@@ -208,12 +215,12 @@ def test_revisions_known_authors_filter(authors, dashboard_revisions, client,
 
 
 def test_revisions_creator_overrides_known_authors_filter(
-        dashboard_revisions, client, known_author):
+        dashboard_revisions, user_client, known_author):
     """If the creator filter is set, the Known Authors filter is ignored."""
     url = urlparams(reverse('dashboards.revisions'),
                     user='wiki_user_3',
                     authors=RevisionDashboardForm.KNOWN_AUTHORS)
-    response = client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    response = user_client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     assert response.status_code == 200
     page = pq(response.content)
     revisions = page.find('.dashboard-row')
@@ -225,7 +232,8 @@ def test_revisions_creator_overrides_known_authors_filter(
         assert username == 'wiki_user_3'
 
 
-def test_revisions_deleted_document(dashboard_revisions, client, wiki_user):
+def test_revisions_deleted_document(dashboard_revisions, user_client,
+                                    wiki_user):
     """The revisions dashboard includes deleted documents."""
     del_doc = dashboard_revisions[0].document
     DocumentDeletionLog.objects.create(
@@ -233,7 +241,7 @@ def test_revisions_deleted_document(dashboard_revisions, client, wiki_user):
         reason='Testing deleted docs.')
     del_doc.delete()
 
-    response = client.get(reverse('dashboards.revisions'))
+    response = user_client.get(reverse('dashboards.revisions'))
     assert response.status_code == 200
     page = pq(response.content)
     rev_rows = page.find('.dashboard-row')
@@ -588,11 +596,11 @@ def test_disallowed_methods(db, client, http_method, endpoint):
     url = reverse('dashboards.{}'.format(endpoint))
     response = getattr(client, http_method)(url)
     assert response.status_code == 405
-    if endpoint == 'spam':
+    if endpoint in ('spam', 'revisions'):
         assert_no_cache_header(response)
     else:
         assert_shared_cache_header(response)
-        if endpoint in ('revisions', 'user_lookup', 'topic_lookup'):
+        if endpoint in ('user_lookup', 'topic_lookup'):
             assert 'Vary' in response
             assert 'X-Requested-With' in response['Vary']
 

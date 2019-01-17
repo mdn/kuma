@@ -31,9 +31,9 @@ def index(request):
     return render(request, 'dashboards/index.html')
 
 
-@shared_cache_control
-@vary_on_headers('X-Requested-With')
+@never_cache
 @require_GET
+@login_required
 def revisions(request):
     """Dashboard for reviewing revisions"""
 
