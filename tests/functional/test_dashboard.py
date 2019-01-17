@@ -4,10 +4,7 @@ import pytest
 
 from pages.admin import AdminLogin
 from pages.dashboard import DashboardPage, MacroDashboardPage
-from utils.decorators import (
-    skip_if_maintenance_mode,
-    skip_if_not_maintenance_mode,
-)
+from utils.decorators import skip_if_maintenance_mode
 
 
 @pytest.mark.smoke
