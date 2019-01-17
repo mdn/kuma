@@ -8,24 +8,14 @@ from kuma.payments.utils import (
     stripe)
 
 
-class SubscriptionDict(dict):
-    """Cheap version of Stripe's Subscription object.
-
-    Allows access like dict (data['id']) or property (data.id)
-    """
-    @property
-    def id(self):
-        return self['id']
-
-
 # Subset of data returned for customer
 # https://stripe.com/docs/api/customers/retrieve
 simple_customer_data = {
     'sources': {'data': [{'card': {'last4': '0019'}}]},
-    'subscriptions': {'data': [SubscriptionDict({
+    'subscriptions': {'data': [{
         'id': 'sub_id',
         'plan': {'amount': 6400},
-    })]},
+    }]},
 }
 
 
@@ -92,10 +82,9 @@ def test_cancel_stripe_customer_subscription(mock_sub, mock_cust):
 
 @mock.patch('stripe.Customer.retrieve',
             return_value={
-                'subscriptions': {'data': [
-                    SubscriptionDict({'id': 'sub_id1'}),
-                    SubscriptionDict({'id': 'sub_id2'}),
-                ]}})
+                'subscriptions': {'data': [{'id': 'sub_id1'},
+                                           {'id': 'sub_id2'},
+                                           ]}})
 @mock.patch('stripe.Subscription.retrieve',
             side_effect=[mock.Mock(spec_set=['delete']),
                          mock.Mock(spec_set=['delete'])])

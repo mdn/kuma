@@ -61,7 +61,7 @@ def cancel_stripe_customer_subscription(stripe_customer_id, email, username):
     try:
         customer = stripe.Customer.retrieve(stripe_customer_id)
         for sub in customer['subscriptions']['data']:
-            s = stripe.Subscription.retrieve(sub.id)
+            s = stripe.Subscription.retrieve(sub['id'])
             s.delete()
         return True
     except stripe.error.InvalidRequestError as e:
