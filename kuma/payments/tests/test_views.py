@@ -1,5 +1,6 @@
 import mock
 import pytest
+import stripe
 
 from django.test.utils import override_settings
 
@@ -197,12 +198,13 @@ def test_recurring_payment_management_no_customer_id(enabled_, get, user_client)
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled', return_value=True)
 @mock.patch('kuma.payments.views.get_stripe_customer_data',
-            return_value={'stripe_plan_amount': 0,
-                          'stripe_card_last4': 0,
-                          'active_subscriptions': False
-                          })
-def test_recurring_payment_management_api_failure(enabled_, get, user_client):
-    """The page shows no active subscriptions if the API fails."""
+            side_effect=stripe.error.InvalidRequestError(
+                'No such customer: fakeCustomerID123',
+                param='id',
+                code='resourse_missing',
+                http_status=404))
+def test_recurring_payment_management_api_failure(enabled_, get, stripe_user, user_client):
+    """The page shows no active subscriptions if ID is unknown."""
     response = user_client.get(reverse('recurring_payment_management'))
     assert response.status_code == 200
     assert '<button id="id_stripe_cancel_subscription" name="stripe_cancel_subscription"' not in response.content
@@ -249,14 +251,19 @@ def test_recurring_payment_management_cancel(enabled_, get, cancel_, user_client
 
 @pytest.mark.django_db
 @mock.patch('kuma.payments.views.enabled', return_value=True)
-@mock.patch('kuma.payments.views.cancel_stripe_customer_subscription', return_value=False)
+@mock.patch('kuma.payments.views.cancel_stripe_customer_subscription',
+            side_effect=stripe.error.InvalidRequestError(
+                'No such customer: fakeCustomerID123',
+                param='id',
+                code='resourse_missing',
+                http_status=404))
 @mock.patch('kuma.payments.views.get_stripe_customer_data', return_value={
     'stripe_plan_amount': 64,
     'stripe_card_last4': '1234',
     'active_subscriptions': True
 })
 def test_recurring_payment_management_cancel_fails(enabled_, get, cancel_, user_client, stripe_user):
-    """A message is displayed if cancelling fails."""
+    """A message is displayed if cancelling fails due to unknow customer."""
     response = user_client.post(
         reverse('recurring_payment_management'),
         data={'stripe_cancel_subscription': ''}
