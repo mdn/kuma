@@ -44,6 +44,15 @@ Provides main mixins for use within the MDN theme.
     letter-spacing: -remify(-.05px);
 }
 
+/*
+Accessibility helpers
+====================================================================== */
+/* When changing the values of this mixin, remember to also update the
+   relevant test at __tests__/sass/mdn/_a11y-helpers-mixins-test.scss */
+@mixin focus-visible() {
+    box-shadow: 1px 1px 5px #2196f3, -1px -1px 5px #2196f3;
+}
+
 
 /*
 Vendor prefixes
