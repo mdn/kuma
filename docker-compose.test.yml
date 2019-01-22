@@ -11,36 +11,6 @@ services:
       - DATABASE_URL=sqlite:///
       - PYTHONDONTWRITEBYTECODE=1
 
-  sqlite_memcached:
-    #memcached only external dependency
-    #many tests currently fail due to dependency on mysql specific behavior
-    image: mdnwebdocs/kuma_base
-    user: ${UID:-0}
-    volumes:
-      - ./:/app
-    command: py.test --nomigrations kuma --ignore=kuma/search
-    depends_on:
-      - memcached
-    environment:
-      - DATABASE_URL=sqlite:///
-      - MEMCACHE_SERVERS=memcached:11211
-      - PYTHONDONTWRITEBYTECODE=1
-
-  nosearch:
-    image: mdnwebdocs/kuma_base
-    user: ${UID:-0}
-    volumes:
-      - ./:/app
-    command: sh -c "urlwait && py.test --nomigrations kuma --ignore=kuma/search"
-    depends_on:
-      - mysql
-      - redis
-    environment:
-      - DATABASE_URL=mysql://root:kuma@mysql:3306/developer_mozilla_org
-      - REDIS_CACHE_SERVER=redis://redis:6379/3
-      - PYTHONDONTWRITEBYTECODE=1
-      - URLWAIT_TIMEOUT=300
-
   test:
     image: mdnwebdocs/kuma_base
     user: ${UID:-0}
