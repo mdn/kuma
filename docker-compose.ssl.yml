@@ -33,5 +33,5 @@ services:
       - web
   kumascript:
     environment:
-      - live_samples__base_url=https://demos.developer.127.0.0.1.nip.io
+      - LIVE_SAMPLES_URL=https://demos.developer.127.0.0.1.nip.io
 
