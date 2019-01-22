@@ -38,8 +38,7 @@ def should_use_rendered(doc, params, html=None):
             (force_macros or (not no_macros and not show_raw)))
 
 
-def _post(content, env_vars, cache_control='',
-          timeout=config.KUMASCRIPT_TIMEOUT):
+def _post(content, env_vars, cache_control=None, timeout=None):
     url = settings.KUMASCRIPT_URL_TEMPLATE.format(path='')
     headers = {
         'X-FireLogger': '1.2',
@@ -50,6 +49,11 @@ def _post(content, env_vars, cache_control='',
     # that it does not use its cache when re-rendering the page.
     if cache_control == 'no-cache':
         headers['Cache-Control'] = cache_control
+
+    # Load just-in-time, since constance requires DB and cache
+    # TODO: Move to a standard Django setting w/ env override
+    if timeout is None:
+        timeout = config.KUMASCRIPT_TIMEOUT
 
     add_env_headers(headers, env_vars)
 
@@ -87,9 +91,7 @@ def _get_attachment_metadata_dict(attachment):
 # be renamed to render_document(), and the post() method above should
 # be renamed to render_string(), maybe. For now, though, there are so
 # many tests that mock kumascript.get() that I've left the name unchanged.
-def get(document, base_url,
-        cache_control='',
-        timeout=config.KUMASCRIPT_TIMEOUT):
+def get(document, base_url, cache_control=None, timeout=None):
     """Request a rendered version of document.html from KumaScript."""
 
     if not base_url:
