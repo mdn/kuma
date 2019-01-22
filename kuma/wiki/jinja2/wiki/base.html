@@ -16,6 +16,7 @@
     {{ super() }}
 
     {% stylesheet 'wiki' %}
+    {% stylesheet 'codepen-iex' %}
 
 {% endblock %}
 
@@ -23,5 +24,8 @@
     {{ super() }}
 
     {% javascript 'wiki' %}
+    {% javascript 'codepen-iex' %}
+
+    <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
 {% endblock %}

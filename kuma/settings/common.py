@@ -697,6 +697,12 @@ PIPELINE_CSS = {
         'output_filename': 'build/styles/mdn.css',
         'variant': 'datauri',
     },
+    'codepen-iex': {
+        'source_filenames': (
+            'styles/components/codepen-iex/codepen-iex.scss',
+        ),
+        'output_filename': 'build/styles/codepen-iex.css',
+    },
     'jquery-ui': {
         'source_filenames': (
             'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
@@ -931,6 +937,12 @@ PIPELINE_JS = {
         'extra_context': {
             'async': True,
         },
+    },
+    'codepen-iex': {
+        'source_filenames': (
+            'js/components/codepen-iex/codepen-iex.js',
+        ),
+        'output_filename': 'build/js/codepen-iex.js',
     },
     'dashboard': {
         'source_filenames': (
