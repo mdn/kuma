@@ -78,14 +78,6 @@ def post(request, content, locale=settings.LANGUAGE_CODE):
     })
 
 
-def _get_attachment_metadata_dict(attachment):
-    current_revision = attachment.current_revision
-    return {
-        'filename': current_revision.filename,
-        'url': attachment.get_file_url(),
-    }
-
-
 # TODO(djf): This get() function is actually implemented on top of
 # _post() and it performs an HTTP POST request. It should probably
 # be renamed to render_document(), and the post() method above should
@@ -101,11 +93,6 @@ def get(document, base_url, cache_control=None, timeout=None):
     body, errors = None, None
 
     try:
-        # Create the file interface
-        files = []
-        for attachment in document.files.select_related('current_revision'):
-            files.append(_get_attachment_metadata_dict(attachment))
-
         # Assemble some KumaScript env vars
         # TODO: See dekiscript vars for future inspiration
         # http://developer.mindtouch.com/en/docs/DekiScript/Reference/
@@ -121,7 +108,6 @@ def get(document, base_url, cache_control=None, timeout=None):
             revision_id=document.current_revision.pk,
             locale=document.locale,
             title=document.title,
-            files=files,
             slug=document.slug,
             tags=list(document.tags.names()),
             review_tags=list(document.current_revision.review_tags.names()),
