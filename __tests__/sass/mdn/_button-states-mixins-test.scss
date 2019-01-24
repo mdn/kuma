@@ -1,0 +1,15 @@
+@include describe('active-button-state') {
+    @include it(
+        'Returns an active button style that is applied to elements that are interactive and has focus'
+    ) {
+        @include assert {
+            @include output {
+                @include active-button-state();
+            }
+
+            @include expect {
+                box-shadow: 1px 1px 5px #212121, -1px -1px 5px #bdbdbd;
+            }
+        }
+    }
+}
