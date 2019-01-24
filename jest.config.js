@@ -24,7 +24,7 @@ module.exports = {
     // collectCoverageFrom: null,
 
     // The directory where Jest should output its coverage files
-    coverageDirectory: 'coverage'
+    coverageDirectory: 'coverage',
 
     // An array of regexp pattern strings used to skip coverage collection
     // coveragePathIgnorePatterns: [
@@ -74,7 +74,7 @@ module.exports = {
     // moduleNameMapper: {},
 
     // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
-    // modulePathIgnorePatterns: [],
+    modulePathIgnorePatterns: ['kumascript'],
 
     // Activates notifications for test results
     // notify: false,
