@@ -26,12 +26,18 @@ Styles for Korean
        local('Malgun Gothic Bold');
 }
 
-
 /* Bug 973171 */
-
+/* stylelint-disable declaration-no-important */
 * {
     /* !important required for locale specific override */
-    font-style: normal !important; /* stylelint-disable-line declaration-no-important */
+    font-style: normal !important;
 }
 
+/* Bug 1522385 */
+.syntaxbox {
+    var,
+    em {
+        font-style: italic !important;
+    }
+}
 /* stylelint-enable */
