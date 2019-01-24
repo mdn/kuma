@@ -754,7 +754,6 @@ PIPELINE_CSS = {
     'wiki-compat-tables': {
         'source_filenames': (
             'styles/wiki-compat-tables.scss',
-            'styles/compat-table/components/compat-table-survey.scss',
         ),
         'output_filename': 'build/styles/wiki-compat-tables.css',
         'template_name': 'pipeline/javascript-array.jinja',
@@ -1051,13 +1050,6 @@ PIPELINE_JS = {
             'js/wiki-compat-tables.js',
         ),
         'output_filename': 'build/js/wiki-compat-tables.js',
-        'template_name': 'pipeline/javascript-array.jinja',
-    },
-    'wiki-compat-table-survey': {
-        'source_filenames': (
-            'js/compat-table/components/compat-table-survey.js',
-        ),
-        'output_filename': 'build/js/wiki-compat-table-survey.js',
         'template_name': 'pipeline/javascript-array.jinja',
     },
     'task-completion': {

@@ -31,17 +31,7 @@
                 dataType: 'script',
                 cache: true
             }).then(function() {
-                var compatSurveyJS = mdn.assets.js['wiki-compat-table-survey'][0];
                 $('.bc-table').mozCompatTable();
-
-                // now load the survey JS
-                $.ajax({
-                    url: compatSurveyJS,
-                    dataType: 'script',
-                    cache: true
-                }).fail(function(jqXHR, textStatus, errorThrown) {
-                    console.error('Failed to load BCD survey JS: ' + textStatus + ': ', errorThrown);
-                });
             });
 
         }).appendTo(doc.head);
