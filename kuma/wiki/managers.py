@@ -29,6 +29,7 @@ class BaseDocumentManager(models.Manager):
                     .exclude(slug__startswith='User_talk:')
                     .exclude(slug__startswith='Template_talk:')
                     .exclude(slug__startswith='Project_talk:')
+                    .exclude(slug__startswith='Experiment:')
                     .order_by('slug'))
         if locale:
             docs = docs.filter(locale=locale)
