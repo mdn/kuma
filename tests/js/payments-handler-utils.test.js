@@ -1,4 +1,4 @@
-const paymentsHandlerUtils = require('../kuma/static/js/components/payments/payments-handler-utils.js');
+const paymentsHandlerUtils = require('../../kuma/static/js/components/payments/payments-handler-utils.js');
 
 describe('addCurrencyPrefix', function() {
     it('returns an empty string for non numerals and values less that 1', function() {
