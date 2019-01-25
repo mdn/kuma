@@ -45,9 +45,7 @@
                         {{ format_comment(revision) }}
                     </td>
                     <td class="dashboard-author">
-                        <a href="{{ revision.creator.get_absolute_url() }}"
-                           {%- if not revision.creator.is_active %} rel="nofollow"{% endif -%}
-                           >{{ revision.creator }}</a><br>
+                        <a href="{{ revision.creator.get_absolute_url() }}" rel="nofollow">{{ revision.creator }}</a><br>
                         {% if show_ips %}
                             {% set revision_ip = revision.revisionip_set.first() %}
                             {% if revision_ip %}

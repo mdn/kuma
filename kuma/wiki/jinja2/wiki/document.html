@@ -243,9 +243,7 @@
                   <div class="contributors-sub">
                     {% include 'includes/icons/general/clock.svg' %}
                     <strong>{{ _('Last updated by:') }}</strong>
-                    <a href="{{ current_revision.creator.get_absolute_url() }}"
-                       {%- if not current_revision.creator.is_active %} rel="nofollow"{% endif -%}
-                       >{{ current_revision.creator }}</a>,
+                    <a href="{{ current_revision.creator.get_absolute_url() }}" rel="nofollow">{{ current_revision.creator }}</a>,
                     {{ datetimeformat(current_revision.created, format='datetime') }}
                   </div>
                 {% endif %}

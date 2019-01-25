@@ -54,10 +54,9 @@
                   <p>
                   {% trans id=original_revision.id,
                            user_profile_url=original_revision.creator.get_absolute_url(),
-                           rel='' if original_revision.creator.is_active else 'rel="nofollow"',
                            user=original_revision.creator,
                            date=datetimeformat(original_revision.created, format='longdatetime') %}
-                     Revision {{ id }} by <a href="{{ user_profile_url }}" {{ rel }}>{{ user }}</a> on {{ date }}
+                     Revision {{ id }} by <a href="{{ user_profile_url }}" rel="nofollow">{{ user }}</a> on {{ date }}
                   {% endtrans %}
                   </p>
               </div>
@@ -71,9 +70,8 @@
                 {% trans id=current_revision.id,
                          user_profile_url=current_revision.creator.get_absolute_url(),
                          user=current_revision.creator,
-                         rel='' if current_revision.creator.is_active else 'rel="nofollow"',
                          date=datetimeformat(current_revision.created, format='longdatetime') %}
-                   Revision {{ id }} by <a href="{{ user_profile_url }}" {{ rel }}>{{ user }}</a> on {{ date }}
+                   Revision {{ id }} by <a href="{{ user_profile_url }}" rel="nofollow">{{ user }}</a> on {{ date }}
                 {% endtrans %}
                 </p>
               </div>
