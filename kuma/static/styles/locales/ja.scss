@@ -45,10 +45,10 @@ Styles for Japanese
 }
 
 /* Bug 973171 */
-
+/** Back ground of Bug 973171 is obsolete already, the fix was for Windows XP, lacks Anti-Alias function **/
 * {
     /* !important required for locale specific override */
-    font-style: normal !important;  /* stylelint-disable-line declaration-no-important */
+    /* font-style: normal !important; */ /* stylelint-disable-line declaration-no-important */
 }
 
 
