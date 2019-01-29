@@ -6,7 +6,7 @@ import os
 import textwrap
 from datetime import datetime, timedelta
 
-from celery import chord, task
+from celery import chain, chord, task
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sitemaps import GenericSitemap
@@ -18,7 +18,7 @@ from djcelery_transactions import task as transaction_task
 from lxml import etree
 
 from kuma.core.decorators import skip_in_maintenance_mode
-from kuma.core.utils import CacheLock, chord_flow, chunked
+from kuma.core.utils import CacheLock, chunked
 from kuma.search.models import Index
 
 from .events import first_edit_email
@@ -127,12 +127,12 @@ def render_stale_documents(log=None):
     log.info('Found %s stale documents' % stale_docs_count)
     stale_pks = stale_docs.values_list('pk', flat=True)
 
-    pre_task = acquire_render_lock.si()
     render_tasks = [render_document_chunk.si(pks)
                     for pks in chunked(stale_pks, 5)]
-    post_task = release_render_lock.si()
 
-    chord_flow(pre_task, render_tasks, post_task).apply_async()
+    render_tasks.insert(0, acquire_render_lock.si())
+    render_tasks.append(release_render_lock.si())
+    chain(*render_tasks).apply_async()
 
 
 @task
