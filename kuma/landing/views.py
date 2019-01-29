@@ -99,6 +99,7 @@ Disallow: /media
 Disallow: /*move-requested
 Disallow: /*preview-wiki-content
 Disallow: /*profiles*/edit
+Disallow: /*/search
 Disallow: /skins
 Disallow: /*type=feed
 Disallow: /*users/
