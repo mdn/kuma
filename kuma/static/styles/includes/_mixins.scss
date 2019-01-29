@@ -510,7 +510,8 @@ These are not dynamic but serve as mixins
 
     article > &:first-child,
     article > div:first-child:empty + &,
-    article > p:first-child:empty + & {
+    article > p:first-child:empty + &,
+    article > p:first-child:empty + p:empty + & {
         border-top-width: 0;
         padding-top: 0;
     }
