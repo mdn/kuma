@@ -14,10 +14,10 @@ performance.
 
 The main flow of rendering is:
 
-* A new document's content is stored as *revision content*
+* A document's new or updated content is stored as *revision content*
 * The content is processed to create *cleaned content*, with macros and safe HTML
 * The content is passed to KumaScript to create *KumaScript content*, with rendered macros
-* The content is processed to create *rendered content*
+* The content is processed to create *rendered content*, and is only safe HTML
 * This content is split up into *body HTML*, *quick links HTML*, *ToC HTML*, *summary HTML*, and *summary text*
 
 There are secondary rendering flows as well:
@@ -26,7 +26,7 @@ There are secondary rendering flows as well:
 * The *revision content* is filtered into the *re-edit content* for editing
 * The *re-edit content* is sent to KumaScript to create *preview content*
 * The *cleaned content* is processed for *raw content*
-* The *rendered content* is process to create a *code sample*
+* The *rendered content* is process to create a *live sample*
 
 Revision content
 ================
@@ -36,6 +36,8 @@ for further processing.
 
 source
    User-entered content, usually via CKEditor and ``$edit`` view
+
+   PUT ``$api``
 on MDN
    "Revision Source" section of revision detail view (in ``<pre>`` tag)
 database
@@ -85,6 +87,9 @@ HTML, avoiding formatting and content restrictions. This can be used to attempt
 to inject scripts like a ``onclick`` attribute or a ``<script>``. These
 attempts are stored in the revision content.
 
+The PUT ``$API`` can also be used to add new revisions. This API is for staff
+only at this time.
+
 .. _`/en-US/docs/Sandbox/simple`: https://developer.mozilla.org/en-US/docs/Sandbox/simple
 .. _CSSRef: https://github.com/mdn/kumascript/blob/master/macros/CSSRef.ejs
 .. _HTMLElement: https://github.com/mdn/kumascript/blob/master/macros/HTMLElement.ejs
@@ -99,11 +104,11 @@ tags, and also cleaning the content and saving it on the Document record.
 source
    *revision content*, processed with multiple filters
 on MDN
-   *not published*
+   ``$api`` endpoint
 database
    ``wiki_document.html`` for current revision, not stored for historical revisions
 code
-   ``Document.html`` (current revision), ``Revision.content_cleaned`` (dynamically generate)
+   ``Document.get_html`` (current revision, cached), ``Revision.content_cleaned`` (any revision, dynamically generated)
 
 The *cleaned content* of the simple document looks like this:
 
@@ -198,7 +203,7 @@ of macros, provided by the KumaScript service, as well as the count of pages
 using the macros, populated from site search.
 
 If KumaScript encounters an issue during rendering, the error
-is returned encoded in the header, in a format compatible with FireLogger_.
+is encoded and returned in an HTTP header, in a format compatible with FireLogger_.
 These errors are stored as JSON in ``wiki_document.rendered_errors``. The
 rendered HTML isn't stored, but it passed for further processing. Moderators
 frequently review `documents with errors`_, and fix those that they can fix.
@@ -691,7 +696,7 @@ document suitable for displaying in an ``<iframe>``.
 source
    A section extracted from *rendered content*, with further processing
 output
-   Code sample documents on a separate domain, such as https://mdn.mozillademos.org
+   Live sample documents on a separate domain, such as https://mdn.mozillademos.org
 database
    Not stored in the database, but cached
 code
