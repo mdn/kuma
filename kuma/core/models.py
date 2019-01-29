@@ -1,11 +1,15 @@
+from __future__ import unicode_literals
+
 from django.db import models
 from django.dispatch import receiver
 from django.utils import timezone
+from django.utils.encoding import python_2_unicode_compatible
 
 from .jobs import BannedIPsJob
 from .managers import IPBanManager
 
 
+@python_2_unicode_compatible
 class IPBan(models.Model):
     """
     Ban an IP address.
@@ -22,8 +26,8 @@ class IPBan(models.Model):
         self.deleted = timezone.now()
         self.save()
 
-    def __unicode__(self):
-        return u'%s banned on %s' % (self.ip, self.created)
+    def __str__(self):
+        return '%s banned on %s' % (self.ip, self.created)
 
 
 @receiver(models.signals.post_save, sender=IPBan)

@@ -1,6 +1,8 @@
 """
 Delete old revision IPs
 """
+from __future__ import unicode_literals
+
 from django.core.management.base import BaseCommand
 
 from kuma.core.tasks import delete_old_ip_bans

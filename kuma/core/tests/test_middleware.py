@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import pytest
 from django.core.exceptions import MiddlewareNotUsed
 from django.test import RequestFactory
@@ -22,7 +24,7 @@ def test_slash_middleware_keep_404(client, db, path):
 
 def test_slash_middleware_removes_slash(client, db):
     '''The SlashMiddleware fixes a URL that shouldn't have a trailing slash.'''
-    response = client.get(u'/contribute.json/')
+    response = client.get('/contribute.json/')
     assert response.status_code == 301
     assert response['Location'].endswith('/contribute.json')
 
@@ -37,7 +39,7 @@ def test_slash_middleware_adds_slash(path, client, db):
 
 def test_slash_middleware_retains_querystring(client, db):
     '''The SlashMiddleware handles encoded querystrings.'''
-    response = client.get(u'/contribute.json/?xxx=\xc3')
+    response = client.get('/contribute.json/?xxx=%C3%83')
     assert response.status_code == 301
     assert response['Location'].endswith('/contribute.json?xxx=%C3%83')
 

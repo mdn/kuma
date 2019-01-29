@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import datetime
 import json
 
@@ -62,7 +64,7 @@ class Paginator(object):
         self.pager = pager
 
         self.max = 10
-        self.span = (self.max - 1) / 2
+        self.span = (self.max - 1) // 2
 
         self.page = pager.number
         self.num_pages = pager.paginator.num_pages
@@ -94,7 +96,7 @@ class Paginator(object):
 
 @library.filter
 def yesno(boolean_value):
-    return jinja2.Markup(_(u'Yes') if boolean_value else _(u'No'))
+    return jinja2.Markup(_('Yes') if boolean_value else _('No'))
 
 
 @library.filter
@@ -105,7 +107,7 @@ def entity_decode(str):
 
 @library.global_function
 def page_title(title):
-    return jinja2.Markup(u'%s | MDN' % jinja2.escape(title))
+    return jinja2.Markup('%s | MDN' % jinja2.escape(title))
 
 
 @library.filter

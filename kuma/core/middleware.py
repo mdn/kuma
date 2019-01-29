@@ -1,4 +1,4 @@
-import contextlib
+from __future__ import unicode_literals
 
 from django.conf import settings
 from django.contrib.sessions.middleware import SessionMiddleware
@@ -7,7 +7,7 @@ from django.core.urlresolvers import get_script_prefix, resolve, Resolver404
 from django.http import (HttpResponseForbidden,
                          HttpResponsePermanentRedirect,
                          HttpResponseRedirect)
-from django.utils.encoding import iri_to_uri, smart_str
+from django.utils.encoding import smart_str
 from django.utils.six.moves.urllib.parse import urlsplit, urlunsplit
 from whitenoise.middleware import WhiteNoiseMiddleware
 
@@ -272,31 +272,14 @@ class SlashMiddleware(MiddlewareBase):
             if path.endswith('/') and is_valid_path(path[:-1], language):
                 # Remove the trailing slash for a valid URL
                 new_path = path[:-1]
-            elif not path.endswith('/') and is_valid_path(path + u'/', language):
+            elif not path.endswith('/') and is_valid_path(path + '/', language):
                 # Add a trailing slash for a valid URL
-                new_path = path + u'/'
+                new_path = path + '/'
             if new_path:
                 if request.GET:
-                    with safe_query_string(request):
-                        new_path += '?' + request.META['QUERY_STRING']
+                    new_path += '?' + request.META['QUERY_STRING']
                 return HttpResponsePermanentRedirect(new_path)
         return response
-
-
-@contextlib.contextmanager
-def safe_query_string(request):
-    """
-    Turn the QUERY_STRING into a unicode- and ascii-safe string.
-
-    We need unicode so it can be combined with a reversed URL, but it has to be
-    ascii to go in a Location header.  iri_to_uri seems like a good compromise.
-    """
-    qs = request.META['QUERY_STRING']
-    try:
-        request.META['QUERY_STRING'] = iri_to_uri(qs)
-        yield
-    finally:
-        request.META['QUERY_STRING'] = qs
 
 
 class SetRemoteAddrFromForwardedFor(MiddlewareBase):

@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from babel import Locale, localedata
 from babel.support import Format
 from django import forms
@@ -54,13 +56,13 @@ class BaseValidator(validators.BaseValidator):
 
 
 class MinLengthValidator(validators.MinLengthValidator, BaseValidator):
-    message = _(u'Ensure this value has at least %(limit_value)s '
-                u'characters (it has %(show_value)s).')
+    message = _('Ensure this value has at least %(limit_value)s '
+                'characters (it has %(show_value)s).')
 
 
 class MaxLengthValidator(validators.MaxLengthValidator, BaseValidator):
-    message = _(u'Ensure this value has at most %(limit_value)s '
-                u'characters (it has %(show_value)s).')
+    message = _('Ensure this value has at most %(limit_value)s '
+                'characters (it has %(show_value)s).')
 
 
 def _format_decimal(num, format=None):
