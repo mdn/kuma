@@ -105,7 +105,6 @@ We cannot put these styles in the base/elements/ files because they don't apply 
 
         /* fix spacing and line if h2 directly follows a hr, summary, or blockquote */
         > hr,
-        > .summary,
         > blockquote {
             + h2 {
                 margin-top: ($grid-spacing + $section-border-width) * -1;
