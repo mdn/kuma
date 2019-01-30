@@ -12,38 +12,44 @@ performance.
 
 .. image:: /images/rendering.*
 
-The main flow of rendering is:
+A revision goes through several rendering steps before it appears on the site:
 
-* A document's new or updated content is stored as *revision content*
-* The content is processed to create *cleaned content*, with macros and safe HTML
-* The content is passed to KumaScript to create *KumaScript content*, with rendered macros
-* The content is processed to create *rendered content*, and is only safe HTML
-* This content is split up into *body HTML*, *quick links HTML*, *ToC HTML*, *summary HTML*, and *summary text*
+1. A user submits new content, and Kuma stores it as :ref:`revision-content`
+2. Kuma bleaches and filters the content to create :ref:`cleaned-content`
+3. KumaScript renders macros and returns :ref:`kumascript-content`
+4. Kuma bleaches and filters the content again to create :ref:`rendered-content`
+5. Kuma divides and processes the content into :ref:`body-html`, :ref:`quick-links-html`, :ref:`toc-html`, :ref:`summary-text-and-html`
 
-There are secondary rendering flows as well:
+There are other rendered outputs:
 
-* The *revision content* is normalized as the *diff format*, for comparing revisions
-* The *revision content* is filtered into the *re-edit content* for editing
-* The *re-edit content* is sent to KumaScript to create *preview content*
-* The *cleaned content* is processed for *raw content*
-* The *rendered content* is process to create a *live sample*
+* Kuma normalizes the :ref:`revision-content` into the :ref:`diff-format` to comparing revisions
+* Kuma filters the :ref:`revision-content` and adds section IDs to create the :ref:`re-edit-content` for updating pages
+* KumaScript renders the :ref:`re-edit-content` as :ref:`preview-content`
+* Kuma filters the :ref:`cleaned-content` and adds section IDs to publish the :ref:`raw-content`
+* Kuma extracts code sections from the :ref:`rendered-content` to flesh out a :ref:`live-sample`
+
+.. _revision-content:
 
 Revision content
 ================
-:doc:`CKEditor </ckeditor>` is used to provide a visual HTML editor for MDN
-writers.  The raw HTML returned from CKEditor is stored in the Kuma database
-for further processing.
+:doc:`CKEditor </ckeditor>` provides a visual HTML editor for MDN writers.  The
+raw HTML returned from CKEditor is stored in the Kuma database for further
+processing.
 
 source
-   User-entered content, usually via CKEditor and ``$edit`` view
+   User-entered content, usually via CKEditor from the `edit view`_ (URLs ending with ``$edit``)
 
-   PUT ``$api``
-on MDN
-   "Revision Source" section of revision detail view (in ``<pre>`` tag)
+   Developer-submitted content via an HTTP ``PUT`` to the `API view`_ (URLs ending in ``$api``)
+displayed on MDN
+   "Revision Source" section of the `revision detail view`_ (URLs ending with
+   ``$revision/<id>``), in a ``<pre>`` tag
 database
    ``wiki_revision.content``
 code
-   ``Revision.content``
+   ``kuma.wiki.models.Revision.content``
+
+To illustrate rendering, consider a new document published at
+`/en-US/docs/Sandbox/simple`_ with this *Revision content*:
 
 .. code-block:: html
 
@@ -69,11 +75,14 @@ code
 
 This document has elements that highlight different areas of rendering:
 
-* A sidebar macro CSSRef_, which is rendered and extracted for display
-* A ``<h2>`` tag, which gains an ``id`` attribute
-* A list of three links: to an existing document, using a reference macro HTMLElement_, and to a new document
-* An ``onclick`` attribute
-* A ``<script>`` section
+* A sidebar macro CSSRef_, which will be rendered by KumaScript and extracted for display
+* A ``<h2>`` tag, which will gain an ``id`` attribute
+* A list of three links:
+   1. An HTML link to an existing document
+   2. A reference macro HTMLElement_ which will be rendered by KumaScript
+   3. An HTML link to a new document, which will get ``rel="nofollow"`` and ``class="new"`` attributes
+* An ``onclick`` attribute, added in Source mode, which will be removed
+* A ``<script>`` section, added in Source mode, which will be escaped
 
 CKEditor has partial support for restricting content to the HTML subset
 allowed for display. It also enforces a style where paragraphs (``<p>``)
@@ -87,12 +96,18 @@ HTML, avoiding formatting and content restrictions. This can be used to attempt
 to inject scripts like a ``onclick`` attribute or a ``<script>``. These
 attempts are stored in the revision content.
 
-The PUT ``$API`` can also be used to add new revisions. This API is for staff
-only at this time.
+The `PUT API`_ can also be used to add new revisions. This experimental API is
+for staff only at this time.
 
+.. _`edit view`: https://developer.mozilla.org/en-US/docs/Sandbox/simple$edit
+.. _`API view`: https://developer.mozilla.org/en-US/docs/Sandbox/simple$api
+.. _`revision detail view`: https://developer.mozilla.org/en-US/docs/Sandbox/simple$revision/1454597
 .. _`/en-US/docs/Sandbox/simple`: https://developer.mozilla.org/en-US/docs/Sandbox/simple
 .. _CSSRef: https://github.com/mdn/kumascript/blob/master/macros/CSSRef.ejs
 .. _HTMLElement: https://github.com/mdn/kumascript/blob/master/macros/HTMLElement.ejs
+.. _`PUT API`: https://developer.mozilla.org/en-US/docs/MDN/Contribute/Tools/PUT_API
+
+.. _cleaned-content:
 
 Cleaned content
 ===============
@@ -102,15 +117,17 @@ MDN. When a new revision is created, the related document is updated in
 tags, and also cleaning the content and saving it on the Document record.
 
 source
-   *revision content*, processed with multiple filters
-on MDN
-   ``$api`` endpoint
+   :ref:`revision-content`, processed with multiple filters
+displayed on MDN
+   The `API view`_ (URLs ending in ``$api``)
 database
    ``wiki_document.html`` for current revision, not stored for historical revisions
 code
-   ``Document.get_html`` (current revision, cached), ``Revision.content_cleaned`` (any revision, dynamically generated)
+   ``kuma.wiki.models.Document.get_html()`` (current revision, cached)
 
-The *cleaned content* of the simple document looks like this:
+   ``kuma.wiki.models.Revision.content_cleaned`` (any revision, dynamically generated)
+
+The *Cleaned content* of the simple document looks like this:
 
 .. code-block:: html
 
@@ -151,21 +168,23 @@ adds the extra space in ``style="color: red"``.
 .. _`allowed lists`: https://github.com/mozilla/kuma/blob/master/kuma/wiki/constants.py
 .. _html5lib: https://github.com/html5lib/html5lib-python
 
+.. _kumascript-content:
+
 KumaScript content
 ==================
 KumaScript macros are represented by text content in two curly braces, and
 ``{{lookLike('this')}}``. The KumaScript service processes these macros and
 replaces them with plain HTML. This intermediate representation is not stored,
-but instead is further processed to generate the rendered HTML.
+but instead is further processed to generate the :ref:`rendered-content`.
 
 source
-   *cleaned content*, processed by KumaScript
-on MDN
+   :ref:`cleaned-content`, processed by KumaScript
+displayed on MDN
    *not published*
 database
    Errors at ``wiki_document.rendered_errors``, content not stored
 code
-   Errors at ``Document.rendered_errors``, content not stored
+   Errors at ``kuma.wiki.models.Document.rendered_errors``, content not stored
 
 The *KumaScript content* for the simple document looks like this:
 
@@ -191,22 +210,48 @@ The *KumaScript content* for the simple document looks like this:
      alert('How about this?');
    &lt;/script&gt;
 
-In the sample document, the ``{{CSSRef}}`` macro renders a skeleton version of
-the full sidebar. On pages like `Media queries`_, the sidebar grows to several
-kilobytes, to bring in links to related CSS pages.  The
-``{{HTMLElement('div')}}`` requires page data, which is gathered via a HTTP
-request to a Kuma API server.
+In the sample document, the ``{{CSSRef}}`` macro renders a sidebar.  It uses
+data from the `mdn/data project`_ (fetched from GitHub), and the child pages of
+the CSS topic index (fetched from `Web/CSS$children`_ on the Kuma API server).
+
+Because the sample document isn't a real CSS reference page, the sidebar is
+smaller than usual. The data may specify that a page is in one or
+more groups, and a cross-reference should be added to the sidebar. For example,
+on `Web/CSS/@media`_, the `mdn/data JSON`_ says it is in the "Media Queries"
+group, and the cross-reference is populated from API data feteched from
+`Web/CSS/Media_queries$children`_. These data-driven elements can cause the
+sidebar to grow to several kilobytes.
+
+The ``{{HTMLElement('div')}}`` macro also requires metadata from the ``<div>``
+page, fetched from `Web/HTML/Element/div$json`_ on the Kuma API server, to
+populate the ``title`` attribute of the link.
 
 Macros are implemented as `Embedded JavaScript templates`_ (``.ejs`` files),
 which mix JavaScript code with HTML output. The `macro dashboard`_ has a list
 of macros, provided by the KumaScript service, as well as the count of pages
-using the macros, populated from site search.
+using the macros, populated from site search. The macro source is stored in
+the KumaScript repo, such as CSSRef.ejs_ and HTMLElement.ejs_. Macro names are
+case-insenstive, so ``{{CSSRef}}`` is the same as ``{{cssref}}``.
 
 If KumaScript encounters an issue during rendering, the error
 is encoded and returned in an HTTP header, in a format compatible with FireLogger_.
 These errors are stored as JSON in ``wiki_document.rendered_errors``. The
 rendered HTML isn't stored, but it passed for further processing. Moderators
 frequently review `documents with errors`_, and fix those that they can fix.
+
+.. _`mdn/data project`: https://github.com/mdn/data
+.. _`Web/CSS$children`: https://developer.mozilla.org/en-US/docs/Web/CSS$children
+.. _`Web/CSS/@media`: https://developer.mozilla.org/en-US/docs/Web/CSS/@media
+.. _`mdn/data JSON`: https://github.com/mdn/data/blob/master/css/at-rules.json
+.. _`Web/CSS/Media_queries$children`: https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries$children
+.. _`Web/HTML/Element/div$json`: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div$json
+.. _`div page metadata`: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div$json
+.. _`Embedded JavaScript templates`: https://www.ejs.co/
+.. _`macro dashboard`: https://developer.mozilla.org/en-US/dashboards/macros
+.. _`CSSRef.ejs`: https://github.com/mdn/kumascript/blob/master/macros/CSSRef.ejs
+.. _`HTMLElement.ejs`: https://github.com/mdn/kumascript/blob/master/macros/HTMLElement.ejs
+.. _FireLogger: https://firelogger.binaryage.com
+.. _`documents with errors`: https://developer.mozilla.org/en-US/docs/with-errors
 
 Environment variables
 ---------------------
@@ -254,8 +299,8 @@ local data
    (from SpecData.json_) or Compat_ (from the npm-installed
    `browser-compat-data project`_)
 Kuma data
-   The output varies on data gathered from Kuma API calls to an
-   in-cluster dedicated API server, like Index_, which calls
+   The output varies on data gathered from `Kuma API calls`_ to an
+   in-cluster dedicated Kuma API server, like Index_, which calls
    the ``$children`` API, or HTMLElement_, which calls the
    ``$json`` API.
 external data
@@ -263,9 +308,6 @@ external data
    Bug_ (loads data from the Bugzilla_ API) or CSSRef_ (loads data from the
    `mdn/data project`_ via the GitHub API)
 
-.. _`Embedded JavaScript templates`: https://www.ejs.co/
-.. _`macro dashboard`: https://developer.mozilla.org/en-US/dashboards/macros
-.. _`Media queries`: https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries
 .. _SimpleBadge: https://github.com/mdn/kumascript/blob/master/macros/SimpleBadge.ejs
 .. _obsolete_inline: https://github.com/mdn/kumascript/blob/master/macros/obsolete_inline.ejs
 .. _ObsoleteBadge: https://github.com/mdn/kumascript/blob/master/macros/ObsoleteBadge.ejs
@@ -277,27 +319,28 @@ external data
 .. _Index: https://github.com/mdn/kumascript/blob/master/macros/Index.ejs
 .. _Bug: https://github.com/mdn/kumascript/blob/master/macros/bug.ejs
 .. _Bugzilla: https://bugzilla.mozilla.org
-.. _`mdn/data project`: https://github.com/mdn/data
-.. _FireLogger: https://firelogger.binaryage.com
 .. _Compat: https://github.com/mdn/kumascript/blob/master/macros/Compat.ejs
-.. _`documents with errors`: https://developer.mozilla.org/en-US/docs/with-errors
+.. _`Kuma API Calls`: https://developer.mozilla.org/en-US/docs/MDN/Contribute/Tools/Document_parameters#Document_metadata_resources
+
+.. _rendered-content:
 
 Rendered content
 ================
-The content returned from KumaScript isn't stored, but is cleaned up using the
-same process as *cleaned content*. This ensures that escaping issues in
-KumaScript macros do not affect the security of users on displayed pages.
+*Rendered content* is :ref:`kumascript-content` that has been cleaned up
+using the same process as :ref:`cleaned-content`.  This ensures that escaping
+issues in KumaScript macros do not affect the security of users on displayed
+pages.
 
 source
-   *KumaScript content*, with further processing
-on MDN
+   Cleaned :ref:`kumascript-content`
+displayed on MDN
    *not published*
 database
    ``wiki_document.rendered_html``
 code
-   ``Document.get_rendered()``
+   ``kuma.wiki.models.Document.get_rendered()``
 
-The *rendered content* for the simple document looks like this:
+The *Rendered content* for the simple document looks like this:
 
 .. code-block:: html
 
@@ -328,20 +371,22 @@ editing format, where ``{{CSSRef}}`` is text that needs to be in a paragraph
 element, and the rendered content, where the macro is expanded as a
 ``<section>``.
 
+.. _body-html:
+
 Body HTML
 =========
-The "middle" of a wiki document is populated by the *body HTML*.
+The "middle" of a wiki document is populated by the *Body HTML*.
 
 source
-   Extracted from *rendered content*
-on MDN
-   On wiki pages, in ``<article>`` element
+   Extracted from :ref:`rendered-content`, cached in the database
+displayed on MDN
+   On the `displayed page`_, in an ``<article>`` element
 database
    ``wiki_document.body_html``
 code
-   ``Document.get_body_html()``
+   ``kuma.wiki.models.Document.get_body_html()``
 
-The *body HTML* for the simple document looks like this:
+The *Body HTML* for the simple document looks like this:
 
 .. code-block:: html
 
@@ -366,10 +411,10 @@ The *body HTML* for the simple document looks like this:
    &lt;/script&gt;
 
 The section ``<section id="Quick_links">`` is discarded, leaving the empty
-``<p></p>`` elements from the *rendered content*. This can cause annoying
+``<p></p>`` elements from the :ref:`rendered-content`. This can cause annoying
 empty space at the top of a document.
 
-IDs are injected into header elements (such as ``id="A_simple_document"``),
+IDs are injected into header elements (such as ``id="Some_Links"``),
 based on the header text.
 
 Any links on the page are checked to see if they are links to other wiki
@@ -377,20 +422,24 @@ pages, and if the destination page exists. The link to ``a_new_document``
 gains a ``rel="nofollow"`` as well as ``class="new"``, to tell crawlers
 and humans that the link is to a page that hasn't been written yet.
 
+.. _`displayed page`: https://developer.mozilla.org/en-US/docs/Sandbox/simple
+
+.. _quick-links-html:
+
 Quick links HTML
 ================
 The sidebar, on pages that include it, is populated from the *quick links html*.
 
 source
-   Extracted from *rendered content*
-on MDN
-   On wiki pages, in ``<div class="quick-links" id="quick-links">`` element
+   Extracted from :ref:`rendered-content`, cached in the database
+displayed on MDN
+   On the `displayed page`_, in a ``<div class="quick-links" id="quick-links">`` element
 database
    ``wiki_document.quick_links_html``
 code
-   ``Document.get_quick_links_html()``
+   ``kuma.wiki.models.Document.get_quick_links_html()``
 
-For the simple document, the *quick links HTML* looks like this:
+For the simple document, the *Quick links HTML* looks like this:
 
 .. code-block:: html
 
@@ -400,19 +449,25 @@ The content of ``<section id="Quick_Links">`` is extracted from the rendered
 HTML. It is processed to annotate any new links with ``rel="nofollow"`` and
 ``class="new"``.
 
+.. _toc-html:
+
 ToC HTML
 ========
-The table of contents is populated from the ``<h2>`` elements, if any,
-and appears as a floating "Jump to" bar when included.
+The table of contents is populated from the ``<h2>`` elements of the
+:ref:`rendered-content`, if any, and appears as a floating "Jump to" bar when
+included. The "Jump to" bar can be supressed in editing mode by opening "Edit
+Page Title and Properties", and setting TOC to "No table of contents".
+The JavaScript can also decide to keep the bar hidden, such as when there
+is a single heading. Even when not shown, the *ToC HTML* is generated and cached.
 
 source
-   Extracted from *rendered content*
-on MDN
-   On wiki pages, in ``<ol class="toc-links">`` element
+   Extracted from :ref:`rendered-content`, cached in the database
+displayed on MDN
+   On the `displayed page`_, in an ``<ol class="toc-links">`` element
 database
    ``wiki_document.toc_html``
 code
-   ``Document.get_toc_html()``
+   ``kuma.wiki.models.Document.get_toc_html()``
 
 For the simple document, the *ToC HTML* looks like this:
 
@@ -420,29 +475,38 @@ For the simple document, the *ToC HTML* looks like this:
 
    <li><a rel="internal" href="#Some_Links">Some Links</a>
 
+.. _summary-text-and-html:
+
 Summary text and HTML
 =====================
 Summary text is used for SEO purposes. An editor can specify the summary text
-by adding a ``id="Summary"`` attribute. Otherwise, the code attempts to
-extract a summary from the first paragraph.
+by adding an ``id="Summary"`` attribute to the element that contains the
+summary. Otherwise, the code extracts a summary from the first non-empty
+paragraph.
 
 source
-   Extracted from *rendered content*
-on MDN (text)
-   On wiki pages, in ``<meta name"description">`` and other elements
+   Extracted from :ref:`rendered-content`, cached in the database
+displayed on MDN (text)
+   On the `displayed page`_, in the ``<meta name"description">`` element and other elements
 
-   In internal search results
+   In `internal search results`_, as the search hit summary
 
-   On some document lists, like `Documents with no parent`_
+   On some document lists, like `Documents by tag`_
 
-on MDN (HTML)
-   ``$json`` page metadata, other APIs
+displayed on MDN (HTML)
+   The `page metadata view`_ (URLs ending in ``$json``)
 
-   KumaScript macros that use ``$json`` page data, for example to populate ``title`` attributes
+   The `summary view`_ (URLs with ``?summary=1``) (currently broken, see `bug 1523955`_)
+
+   KumaScript macros that use page metadata, for example to populate ``title`` attributes
 database
-   ``wiki_document.summary_text`` and ``wiki_document.summary_html``
+   ``wiki_document.summary_text``
+
+   ``wiki_document.summary_html``
 code
-   ``Document.get_summary_text()`` and ``Document.get_summary_html``
+   ``kuma.wiki.models.Document.get_summary_text()``
+
+   ``kuma.wiki.models.Document.get_summary_html()``
 
 
 For the simple document, the summary text is:
@@ -457,27 +521,41 @@ The summary HTML is:
 
    I am a <strong>simple document</strong> with a CSS sidebar.
 
-.. _`Documents with no parent`: https://developer.mozilla.org/en-US/docs/without-parent
+.. _`internal search results`: https://developer.mozilla.org/en-US/search?q=%22I+am+a+simple+document%22&none=none
+.. _`Documents by tag`: https://developer.mozilla.org/en-US/docs/tag/CSS
+.. _`page metadata view`: https://developer.mozilla.org/en-US/docs/Sandbox/simple$json
+.. _`summary view`: https://developer.mozilla.org/en-US/docs/Sandbox/simple?summary=1
+.. _`bug 1523955`: https://bugzilla.mozilla.org/show_bug.cgi?id=1523955
+
+.. _diff-format:
 
 Diff format
 ===========
 MDN moderators and localization leaders are interested in the changes to wiki
 pages. They want to revert spam and vandalism, enforce documentation standards,
 and learn about the writer community. They are focused on what changed between
-document revisions. The differences format, or *diff format*, is used to
+document revisions. The differences format, or *Diff format*, is used to
 highlight content changes.
 
 source
-   *revision content*, processed with Tidy
-output
-   `Revision comparison`_, `revision dashboard`_, page watch emails, first
-   edit emails, RSS feeds, Atom feeds.
+   :ref:`revision-content`, pretty-printed with tidylib_, and
+   compared to other revisions.
+displayed on MDN
+   `Revision comparison views`_ (URLs ending in ``$compare``)
+
+   The `Revision dashboard`_
+
+   `Page watch emails`_
+
+   First edit emails, sent to content moderators
+
+   `RSS and Atom feeds`_
 database
    ``wiki_revision.tidied_content``
 code
-   ``Revision.content_tidied``
+   ``kuma.wiki.models.Revision.get_tidied_content()``
 
-The simple document in *diff format* looks like this:
+The simple document in *Diff format* looks like this:
 
 .. code-block:: html
 
@@ -516,36 +594,55 @@ The simple document in *diff format* looks like this:
      </body>
    </html>
 
-The editing format is normalized using pytidylib_, a Python interface to the C
-tidylib_ library, which turns the content into a well-structured HTML 4.01
-document.
+The :ref:`revision-content` is normalized using pytidylib_, a Python interface
+to the C tidylib_ library, which turns the content into a well-structured HTML
+4.01 document.
 
-Content difference reports, or "diffs", are generated by comparing tidied
-content to other tidied content, and removing lines that are the same between
-revisions. These diffs often contain line numbers, which do not correspond to
-the line numbers in the editing format, because of differences in formatting
+Content difference reports, or "diffs", are generated by a line-by-line
+comparison of the content in *Diff format* of two revisions. Lines that differ
+are dropped, so that the reports focus on just the changed content, often
+without the wrapping HTML tags like ``<p></p>``. These diffs often contain line
+numbers from the *Diff format*, which do not correspond to the line numbers in
+the :ref:`revision-content` because of differences in formatting and
 whitespace.
+
+Because the *Diff format* can contain unsafe content, it is not displayed
+directly on MDN. On `Revision comparison views`_, the `Revision dashboard`_,
+and in feeds, two *Diff formats* are processed by `difflib.HtmlDiff`_ to
+generate an HTML ``<table>`` showing only the changed lines, and with HTML
+escaping for the content.
+
+For emails, `difflib.unified_diff`_ generates a text-based difference
+report, and it is sent as a plain-text email without escaping.
 
 .. _pytidylib: https://pypi.org/project/pytidylib/
 .. _tidylib: http://www.html-tidy.org/developer/
-.. _`Revision comparison`: https://developer.mozilla.org/en-US/docs/Web$compare?locale=en-US&to=1445176&from=1444948
-.. _`revision dashboard`: https://developer.mozilla.org/en-US/dashboards/revisions
+.. _`Revision comparison views`: https://developer.mozilla.org/en-US/docs/Sandbox/simple$compare?locale=en-US&to=1454597&from=1454596
+.. _`Revision dashboard`: https://developer.mozilla.org/en-US/dashboards/revisions
+.. _`Page watch emails`: https://developer.mozilla.org/en-US/docs/MDN/Contribute/Tools/Page_watching
+.. _`RSS and Atom feeds`: https://developer.mozilla.org/en-US/docs/MDN/Contribute/Tools/Feeds
+.. _`difflib.HtmlDiff`: https://docs.python.org/2/library/difflib.html#difflib.HtmlDiff
+.. _`difflib.unified_diff`: https://docs.python.org/2/library/difflib.html#difflib.HtmlDiff
+
+.. _re-edit-content:
 
 Re-edit content
 ===============
-When a document is re-edited, the *revision content* of the current revision is
-processed before being sent to the editor.
+When a document is re-edited, the :ref:`revision-content` of the current
+revision is processed before being sent to the editor.
 
 source
-   *revision content*, with further processing in ``RevisionForm``.
-output
-   Editing input in the edit (``$edit``) and translation (``$translate``) views
+   :ref:`revision-content`, with further processing in ``RevisionForm``.
+displayed on MDN
+   Editing ``<textarea>`` in the `edit view`_ (URLs ending with ``$edit``)
+
+   Editing ``<textarea`` in the `translate view`_ (URLs ending with ``$translate``)
 database
    *not stored*
 code
    *not available*
 
-For the simple document, this is the content in *re-edit format*:
+For the simple document, this is the *Re-edit content*:
 
 .. code-block:: html
 
@@ -582,8 +679,12 @@ sometimes notice the empty ``<div>`` and replace it with
 on the page. It may also remove the ``<script>`` element entirely.
 
 If a writer makes a change, these backend and CKEditor changes will be
-reflected in the new *revision content*. This can confuse writers
+reflected in the new :ref:`revision-content`. This can confuse writers
 ("I didn't add those IDs!").
+
+.. _`translate view`: https://developer.mozilla.org/en-US/docs/Sandbox/simple$translate?tolocale=fr
+
+.. _preview-content:
 
 Preview content
 ===============
@@ -591,8 +692,7 @@ When editing, a user can request a preview of the document. This sends the
 in-progress document to editing, with a smaller list of environment variables.
 
 source
-   *revision content* or *re-edit content*, with CKEditor parsing, passed
-   through KumaScript
+   :ref:`re-edit-content`, with CKEditor parsing, passed through KumaScript
 output
    HTML content at ``/<locale>/docs/preview-wiki-content``
 database
@@ -600,7 +700,7 @@ database
 code
    *not available*
 
-The *preview content* for the simple document is:
+The *Preview content* for the simple document is:
 
 .. code-block:: html
 
@@ -624,7 +724,8 @@ The *preview content* for the simple document is:
      alert('How about this?');
    &lt;/script&gt;
 
-The environment in preview is different than in regular KumaScript rendering:
+Fewer environment variables are passed to the KumaScript server for preview
+than when generating the :ref:`kumascript-content`:
 
 url
    The base URL of the website, like ``https://developer.mozilla.org/``
@@ -637,9 +738,11 @@ is not defined, and outputs an empty string, leaving ``<p></p>`` in the
 preview output.
 
 Other macros don't have specific code to detect preview mode, and have
-kumascript rendering errors.
+KumaScript rendering errors in preview.
 
-Some macros, like ``{{HTMLElement}}``, can work as expected in preview.
+Some macros, like ``{{HTMLElement}}``, work as expected in preview.
+
+.. _raw-content:
 
 Raw content
 ===========
@@ -647,7 +750,7 @@ A ``?raw`` parameter can be added to the end of a document to request the
 source for a revision.
 
 source
-   *cleaned content*, with filters
+   :ref:`cleaned-content`, with filters
 output
    The page with a ``?raw`` query parameter
 database
@@ -679,13 +782,15 @@ For the simple document, this is the *raw content*:
      alert('How about this?');
    &lt;/script&gt;
 
-The *cleaned content* is parsed for filtering . The headers get IDs, based on
-the content, if they did not have them before.  For example,
+The :ref:`cleaned-content` is parsed for filtering . The headers get IDs, based
+on the content, if they did not have them before.  For example,
 ``id="Some_Links"`` is added to the ``<h2>``.
 
 A simple filter is applied that strips any attributes that start with
 ``on``, such as the scripting attempt ``onclick``. However, none of these
-should remain in the *cleaned content*.
+should remain in the :ref:`cleaned-content`.
+
+.. _live-sample:
 
 Live sample
 ============
@@ -694,17 +799,58 @@ to extract the CSS, JS, and HTML, and reformat them as a stand-alone HTML
 document suitable for displaying in an ``<iframe>``.
 
 source
-   A section extracted from *rendered content*, with further processing
+   A section extracted from :ref:`rendered-content`, with further processing
 output
    Live sample documents on a separate domain, such as https://mdn.mozillademos.org
 database
    Not stored in the database, but cached
 code
-   ``Document.extract_code_sample(section_id)``
+   ``kuma.wiki.Document.extract.code_sample(section_id)``
 
-`Live samples`_ are long, so the simple document does not include one.
+The simple document does not include one of these samples.
+The `Live samples`_ page on MDN describes how the system works for content
+authors, and includes a `live sample demo`_.
+
+Most live samples are loaded in an ``<iframe>``, inserted by the macro
+EmbedLiveSample_. If the sample doesn't work as an ``<iframe>``,
+LiveSampleLink_ can be used instead. The ``<iframe src=`` URL is Kuma, running
+on a different domain, such as https://mdn.mozillademos.org, and configured
+to serve live samples (the `code sample view`_) and attachments. A separate
+domain for user-created content, often served in an ``<iframe>``, mitigates
+many security issues.
+
+The live sample is cached on first access, and generated when requested.  The
+extractor looks for ``<pre>`` sections with ``class="brush: html"``,
+``"brush: css"``, and ``"brush: js"``, to find the sample content, and then
+selectively un-escapes some HTML and CSS. These sections are used to
+populate a basic HTML file.
+
+There are other sample types that are not derived from wiki content.
+These are out-of-scope for this document, but the most significant are listed
+here for the curious:
+
+* **Legacy samples**, like `cssref/background-attachment.html`_, are no longer maintained
+  and are planned for removal (see `bug 1076893`_ and related bugs).
+* **GitHub Live Samples**, like the `CSS circle demo`_, are maintained in an
+  MDN repo like `mdn/css-examples`_, served by GitHub pages,
+  and inserted with EmbedGHLiveSample_.
+* **Interactive examples** are sourced in the
+  `mdn/interactive-examples repository`_, deployed as a static website,
+  inserted with the EmbedInteractiveExamples_ macro near the top of the page,
+  and are displayed in an ``<iframe>``.
 
 .. _`Live samples`: https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Live_samples
+.. _`live sample demo`: https://developer.mozilla.org/en-US/docs/MDN/Contribute/Structures/Live_samples#Live_sample_demo
+.. _`code sample view`: https://mdn.mozillademos.org/en-US/docs/MDN/Contribute/Structures/Live_samples$samples/Live_sample_demo?revision=1438808
+.. _EmbedLiveSample: https://github.com/mdn/kumascript/blob/master/macros/EmbedLiveSample.ejs
+.. _LiveSampleLink: https://github.com/mdn/kumascript/blob/master/macros/LiveSampleLink.ejs
+.. _cssref/background-attachment.html: https://developer.mozilla.org/samples/cssref/background-attachment.html
+.. _`bug 1076893`: https://bugzilla.mozilla.org/show_bug.cgi?id=1076893
+.. _`CSS circle demo`: https://mdn.github.io/css-examples/shapes/overview/circle.html
+.. _`mdn/css-examples`: https://github.com/mdn/css-examples
+.. _EmbedGHLiveSample: https://github.com/mdn/kumascript/blob/master/macros/EmbedGHLiveSample.ejs
+.. _`mdn/interactive-examples repository`: https://github.com/mdn/interactive-examples
+.. _EmbedInteractiveExamples: https://github.com/mdn/kumascript/blob/master/macros/EmbedInteractiveExample.ejs
 
 Future Changes
 ==============
@@ -713,35 +859,36 @@ than how it was designed. There are some potential changes that would simplify
 rendering:
 
 * Sidebar macros are heavy users of API data and require post-processing of the
-  content. Sidebar generation could be moved into Kuma instead of being
-  specified by a macro.
-* The *diff format* could be replaced by the *cleaned content* format, which
-  would be stored for each revision rather than just for the most recent
-  document.
+  :ref:`rendered-content`. Sidebar generation could be moved into Kuma instead
+  of being specified by a macro.
+* The :ref:`diff-format` could be replaced by the :ref:`cleaned-content`
+  format, which would be stored for each revision rather than just for the most
+  recent document.
 * Content from editing could be normalized and filtered before storing as the
-  *revision content*. This may unify the *re-edit format*, *diff format*, and
-  *cleaned content*
-* Add IDs immediately to the *revision content*, rather than wait for the
-  *re-edit format* or *body HTML*.
-* Add more consistent ways to access and generate content, rather than
-  repeating filter logic in different forms and views.
+  :ref:`revision-content`. This may unify the :ref:`re-edit-content`,
+  :ref:`diff-format`, and :ref:`cleaned-content`.
+* The views that accept new revisions could add IDs to the content before
+  storing the :ref:`revision-content`, rather than wait for the
+  :ref:`re-edit-content` or :ref:`body-html`.
+* Developers could refactor the code to consistently access and generate
+  content, rather than repeat filter logic in different forms and views.
 
 History
 =======
 MDN has used different rendering processes in the past.
 
 Prior to 2004, Netscape's DevEdge was a statically-generated website, with
-content stored in a revision control system (CSV_ or similar). This was
-shut down for a while, until Mozilla was able to acquire the license for the
+content stored in a revision control system (CVS_ or similar). This was
+shut down for a while, until Mozilla was able to negotiate a license for the
 content.
 
 From 2005 to 2008, MediaWiki_ was used as the engine of Mozilla Developer
 Center. The DevEdge content was converted to `MediaWiki Markup`_.
 
 From 2008 to 2011, `MindTouch DekiWiki`_ was used as the engine. MindTouch
-performed the conversion of content from MediaWiki to DekiWiki format,
-a restricted subset of HTML, augmented with macros ("DekiScript"). During this
-period, the site was rebranded as Mozilla Developer Network.
+migrated the MediaWiki content to the DekiWiki format, a restricted subset of
+HTML, augmented with macros ("DekiScript"). During this period, the site was
+rebranded as Mozilla Developer Network.
 
 In 2011, Kuma was forked from Kitsune_, the Django-based platform for
 support.mozilla.org_. The wiki format was as close as possible to the
@@ -750,12 +897,13 @@ DekiScript-style macros. The macros, also known as templates, were stored
 as content in the database. The service had a ``GET`` API to render pages,
 and a ``POST`` API to render previews.
 
-In 2013, content zones were added, which allowed a different style for
-a zone of pages, such as a logo and sub-navigation for all the Firefox
-documents under ``/Mozilla/Firefox``. Sub-navigation was similar to quick
-links, identified by ``<section id="Subnav">``, but stored on the
-"zone root" (``/Mozilla/Firefox``) rather than generated by a macro.
-This was part of an effort to consolidate developer documentation on MDN.
+In 2013, content zones were added, which allowed a "zone" of pages to have a
+different style from the rest of the site. For example, the Firefox Zone of
+all the documents under ``/Mozilla/Firefox`` had a logo and a shared
+sub-navigation sidebar.  Sub-navigation was similar to quick links, identified
+by ``<section id="Subnav">``, but stored on the "zone root"
+(``/Mozilla/Firefox``) rather than generated by a macro.  Zones were part of an
+effort to consolidate developer documentation on MDN.
 
 In 2016, the macros were exported from the Kuma database into the
 `macros folder in the KumaScript repository`_. The historical changes were
@@ -763,7 +911,7 @@ exported to `mdn/archived_kumascript`_. This made rendering faster, and
 allowed code reviews and automated tests of macros, at the cost of requiring
 review and a production push to deploy macro changes.
 
-In 2018, the content zones feature was dropped. This was part of an effort
+In 2018, the content zones feature was removed. This was part of an effort
 to focus MDN Web Docs on common web platform technologies, and away from
 Mozilla-specific documentation. The sub-navigation feature was dropped.
 
@@ -772,7 +920,7 @@ features of JavaScript, such as ``async`` / ``await``, rather than
 libraries common in 2011. The API was also unified, so that both previews
 and standard renders required a ``POST``.
 
-.. _CSV: https://en.wikipedia.org/wiki/Concurrent_Versions_System
+.. _CVS: https://en.wikipedia.org/wiki/Concurrent_Versions_System
 .. _MediaWiki: https://en.wikipedia.org/wiki/MediaWiki
 .. _`MediaWiki Markup`: https://en.wikipedia.org/wiki/MediaWiki#Markup
 .. _`MindTouch DekiWiki`: https://en.wikipedia.org/wiki/MindTouch
