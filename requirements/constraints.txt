@@ -201,9 +201,19 @@ python-dateutil==2.7.3 \
 # flake8
 #
 # Backport of Python 3 configparser, version tracks Python 3 versions
-# Code: https://bitbucket.org/ambv/configparser
-configparser==3.5.0 \
-    --hash=sha256:5308b47021bc2340965c371f0f058cc6971a04502638d4244225c49d80db273a
+# Code: https://github.com/jaraco/configparser
+# Changes: https://github.com/jaraco/configparser/blob/master/CHANGES.rst
+# Docs: https://docs.python.org/3/library/configparser.html
+configparser==3.7.1 \
+    --hash=sha256:c114ff90ee2e762db972fa205f02491b1f5cf3ff950decd8542c62970c9bedac \
+    --hash=sha256:df28e045fbff307a28795b18df6ac8662be3219435560ddb068c283afab1ea7a \
+    --hash=sha256:5bd5fa2a491dc3cfe920a3f2a107510d65eceae10e9c6e547b90261a4710df32
+# Advertise objects with a common interface
+# Code: https://github.com/takluyver/entrypoints
+# Docs: https://entrypoints.readthedocs.io/en/latest/
+entrypoints==0.3 \
+    --hash=sha256:589f874b313739ad35be6e0cd7efde2a4e9b6fea91edcc34e58ecbb8dbe56d19 \
+    --hash=sha256:c70dd71abe5a8c85e55e12c19bd91ccfeec11a6e99044204511f9ed547d48451
 # McCabe complexity checker
 # Code: https://github.com/pycqa/mccabe
 mccabe==0.6.1 \
@@ -213,13 +223,15 @@ mccabe==0.6.1 \
 # Code: https://github.com/pycqa/pycodestyle
 # Changes: https://pycodestyle.readthedocs.io/en/latest/developer.html#changes
 # Docs: https://pycodestyle.readthedocs.io/
-pycodestyle==2.4.0 \
-    --hash=sha256:74abc4e221d393ea5ce1f129ea6903209940c1ecd29e002e8c6933c2b21026e0 \
-    --hash=sha256:cbc619d09254895b0d12c2c691e237b2e91e9b2ecf5e84c26b35400f93dcfb83 \
-    --hash=sha256:cbfca99bd594a10f674d0cd97a3d802a1fdef635d4361e1a2658de47ed261e3a
-pyflakes==2.0.0 \
-    --hash=sha256:9a7662ec724d0120012f6e29d6248ae3727d821bba522a0e6b356eff19126a49 \
-    --hash=sha256:f661252913bc1dbe7fcfcbf0af0db3f42ab65aabd1a6ca68fe5d466bace94dae
+pycodestyle==2.5.0 \
+    --hash=sha256:95a2219d12372f05704562a14ec30bc76b05a5b297b21a5dfe3f6fac3491ae56 \
+    --hash=sha256:e40a936c9a450ad81df37f549d676d127b1b66000a6c500caa2b085bc0ca976c
+# Checks Python source files for errors
+# Code: https://github.com/PyCQA/pyflakes
+# Changes: https://github.com/PyCQA/pyflakes/blob/master/NEWS.rst
+pyflakes==2.1.0 \
+    --hash=sha256:f277f9ca3e55de669fba45b7393a1449009cff5a37d1af10ebb76c52765269cd \
+    --hash=sha256:5e8c00e30c464c99e0b501dc160b13a14af7f27d4dffb529c556e30a159e231d
 
 # google-api-python-client
 httplib2==0.9.2 \

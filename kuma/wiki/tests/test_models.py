@@ -1105,28 +1105,28 @@ class PageMoveTests(UserTestCase):
 
     @pytest.mark.move
     def test_preserve_tags(self):
-            tags = "'moving', 'tests'"
-            rev = revision(title='Test page-move tag preservation',
-                           slug='page-move-tags',
-                           tags=tags,
-                           is_approved=True,
-                           save=True)
-            rev.review_tags.set('technical')
-            rev = Revision.objects.get(pk=rev.id)
+        tags = "'moving', 'tests'"
+        rev = revision(title='Test page-move tag preservation',
+                       slug='page-move-tags',
+                       tags=tags,
+                       is_approved=True,
+                       save=True)
+        rev.review_tags.set('technical')
+        rev = Revision.objects.get(pk=rev.id)
 
-            revision(title='New Top-level parent for tree moves',
-                     slug='new-top',
-                     is_approved=True,
-                     save=True)
+        revision(title='New Top-level parent for tree moves',
+                 slug='new-top',
+                 is_approved=True,
+                 save=True)
 
-            doc = rev.document
-            doc._move_tree('new-top/page-move-tags')
+        doc = rev.document
+        doc._move_tree('new-top/page-move-tags')
 
-            moved_doc = Document.objects.get(pk=doc.id)
-            new_rev = moved_doc.current_revision
-            assert tags == new_rev.tags
-            assert (['technical'] ==
-                    [str(tag) for tag in new_rev.review_tags.all()])
+        moved_doc = Document.objects.get(pk=doc.id)
+        new_rev = moved_doc.current_revision
+        assert tags == new_rev.tags
+        assert (['technical'] ==
+                [str(tag) for tag in new_rev.review_tags.all()])
 
     @pytest.mark.move
     def test_move_tree_breadcrumbs(self):

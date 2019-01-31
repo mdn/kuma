@@ -13,7 +13,9 @@ from kuma.core.decorators import login_required
 
 from .forms import ContributionForm, RecurringPaymentForm
 from .tasks import payments_thank_you_email
-from .utils import enabled, get_stripe_customer_data, cancel_stripe_customer_subscription
+from .utils import (cancel_stripe_customer_subscription,
+                    enabled,
+                    get_stripe_customer_data)
 
 
 def skip_if_disabled(func):

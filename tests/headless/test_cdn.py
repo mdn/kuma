@@ -240,8 +240,8 @@ def test_cached(base_url, is_behind_cdn, is_local_url, is_searchable, slug):
 def test_cached_301(base_url, is_behind_cdn, is_local_url, slug):
     """Ensure that these requests that should return 301 are cached."""
     if is_local_url and any(slug.startswith(p) for p in ('/files/', '/@api/')):
-            pytest.xfail('attachments are typically not served from a '
-                         'local development instance')
+        pytest.xfail('attachments are typically not served from a '
+                     'local development instance')
     assert_cached(base_url + slug, 301, is_behind_cdn)
 
 
