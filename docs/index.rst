@@ -28,3 +28,5 @@ Contents:
 
    docker
    deploy
+
+   rendering
