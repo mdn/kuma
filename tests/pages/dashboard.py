@@ -84,8 +84,7 @@ class DashboardPage(BasePage):
         try:
             self.wait.until(lambda s: int(
                             self.find_element(*self._revision_page_input)
-                            .get_attribute('value'))
-                            is not 1)
+                            .get_attribute('value')) != 1)
         except TimeoutException:
             if self.selenium._is_remote and self.selenium.name == 'firefox':
                 pytest.xfail("Known issue with AJAX refresh"

@@ -252,13 +252,15 @@ def get_seo_description(content, locale=None, strip_markup=True):
                     # because we don't want p's wrapped
                     # in DIVs ("<div class='warning'>") and pyQuery adds
                     # "<html><div>" wrapping to entire document
-                    if (text and len(text) and
+                    text_match = (
+                        text and len(text) and
                         'Redirect' not in text and
                         text.find(u'«') == -1 and
                         text.find('&laquo') == -1 and
-                            item.parents().length == 2):
-                                seo_summary = text.strip()
-                                break
+                        item.parents().length == 2)
+                    if text_match:
+                        seo_summary = text.strip()
+                        break
 
     if strip_markup:
         # Post-found cleanup
@@ -933,12 +935,14 @@ class SectionFilter(html5lib_Filter):
 
                 # If this is the first heading of the section and we want to
                 # omit it, note that we've found it
-                if (self.in_section and
+                is_first_heading = (
+                    self.in_section and
                     self.ignore_heading and
                     not self.already_ignored_header and
                     not self.heading_to_ignore and
-                        self._isHeading(token)):
-                            self.heading_to_ignore = token
+                    self._isHeading(token))
+                if is_first_heading:
+                    self.heading_to_ignore = token
 
             elif token['type'] == 'EndTag':
                 self.open_level -= 1

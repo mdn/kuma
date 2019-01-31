@@ -106,9 +106,9 @@ def provider_login_url(context, provider_id, **params):
     auth_params = params.get('auth_params', None)
     scope = params.get('scope', None)
     process = params.get('process', None)
-    if scope is '':
+    if scope == '':
         del params['scope']
-    if auth_params is '':
+    if auth_params == '':
         del params['auth_params']
     if 'next' not in params:
         next = get_request_param(request, 'next')

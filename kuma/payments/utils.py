@@ -1,5 +1,6 @@
-import stripe
 import logging
+
+import stripe
 from django.conf import settings
 from waffle import flag_is_active
 

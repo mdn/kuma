@@ -21,9 +21,9 @@ django-debug-toolbar==1.10.1 \
 # Code: https://github.com/PyCQA/flake8
 # Docs: http://flake8.readthedocs.io/en/latest/
 # Changes: http://flake8.readthedocs.io/en/latest/release-notes/index.html
-flake8==3.6.0 \
-    --hash=sha256:6a35f5b8761f45c5513e3405f110a86bea57982c3b75b766ce7b65217abe1670 \
-    --hash=sha256:c01f8a3963b3571a8e6bd7a4063359aff90749e160778e03817cd9b71c9e07d2
+flake8==3.7.3 \
+    --hash=sha256:806ec5785af23b4d9f3224a47cdd73714528923fccc95cc13cb1b74ba19c1820 \
+    --hash=sha256:b70f13ee944e536f22becfd716802b1f2fa4ca5ff7aea2c6423567569004f732
 
 # Standardize Python import order
 # Code: https://github.com/PyCQA/flake8-import-order
@@ -34,9 +34,9 @@ flake8-import-order==0.18 \
 
 # Calculate hashes for pip 8.x+
 # Code: https://github.com/peterbe/hashin
-hashin==0.14.1 \
-    --hash=sha256:43ae3277fbd937ba1c99bc3fef9e4dd2e68cd5f2eea8f60ebdb53d83983d861b \
-    --hash=sha256:5dbf06b2adc32e5e438b9b9b352622b787c8555d4a2aa88b38d64764526f81a1
+hashin==0.14.4 \
+    --hash=sha256:db4b1568f947066354b8c3abb11a23780468f5471300e4c6c0b848ee6bdd5aca \
+    --hash=sha256:bee9823a515ec3a15ca0c652385a5dcb0e57496316592e6267be4c1e1ff7bd40
 
 # Test mocks, added to the Python 3 standard library
 mock==1.3.0 \

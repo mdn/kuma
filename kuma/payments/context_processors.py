@@ -1,9 +1,9 @@
 import json
 
+from django.conf import settings
+
 from .forms import ContributionForm, RecurringPaymentForm
 from .utils import enabled, popup_enabled, recurring_payment_enabled
-
-from django.conf import settings
 
 
 def global_contribution_form(request):

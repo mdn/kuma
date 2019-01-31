@@ -22,7 +22,7 @@ def test_dashboard(base_url, selenium):
     # spam ham button not present
     assert not first_row.is_spam_ham_button_present
     # no dashboard-details
-    assert page.details_items_length is 0
+    assert page.details_items_length == 0
 
 
 @pytest.mark.smoke
@@ -33,11 +33,11 @@ def test_dashboard_open_details(base_url, selenium):
     admin.login_new_user()
     page = DashboardPage(selenium, base_url).open()
     # no dashboard-details
-    assert page.details_items_length is 0
+    assert page.details_items_length == 0
     # click first cell
     page.open_first_details()
     # dashboard-details exist and are visible
-    assert page.details_items_length is 1
+    assert page.details_items_length == 1
     assert page.is_first_details_displayed
     # contains a diff
     page.wait_for_first_details_diff_displayed()
