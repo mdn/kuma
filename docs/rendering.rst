@@ -15,7 +15,7 @@ performance.
 A revision goes through several rendering steps before it appears on the site:
 
 1. A user submits new content, and Kuma stores it as :ref:`revision-content`
-2. Kuma bleaches and filters the content to create :ref:`cleaned-content`
+2. Kuma bleaches and filters the content to create :ref:`bleached-content`
 3. KumaScript renders macros and returns :ref:`kumascript-content`
 4. Kuma bleaches and filters the content again to create :ref:`rendered-content`
 5. Kuma divides and processes the content into :ref:`body-html`, :ref:`quick-links-html`, :ref:`toc-html`, :ref:`summary-text-and-html`
@@ -23,9 +23,9 @@ A revision goes through several rendering steps before it appears on the site:
 There are other rendered outputs:
 
 * Kuma normalizes the :ref:`revision-content` into the :ref:`diff-format` to comparing revisions
-* Kuma filters the :ref:`revision-content` and adds section IDs to create the :ref:`re-edit-content` for updating pages
-* KumaScript renders the :ref:`re-edit-content` as :ref:`preview-content`
-* Kuma filters the :ref:`cleaned-content` and adds section IDs to publish the :ref:`raw-content`
+* Kuma filters the :ref:`revision-content` and adds section IDs to create the :ref:`triaged-content` for updating pages
+* KumaScript renders the :ref:`triaged-content` as :ref:`preview-content`
+* Kuma filters the :ref:`bleached-content` and adds section IDs to publish the :ref:`raw-content`
 * Kuma extracts code sections from the :ref:`rendered-content` to flesh out a :ref:`live-sample`
 
 .. _revision-content:
@@ -107,10 +107,10 @@ for staff only at this time.
 .. _HTMLElement: https://github.com/mdn/kumascript/blob/master/macros/HTMLElement.ejs
 .. _`PUT API`: https://developer.mozilla.org/en-US/docs/MDN/Contribute/Tools/PUT_API
 
-.. _cleaned-content:
+.. _bleached-content:
 
-Cleaned content
-===============
+Bleached content
+================
 A revision can contain invalid markup, or elements that are not allowed on
 MDN. When a new revision is created, the related document is updated in
 ``revision.make_current()``. This includes updating the title, path, and
@@ -127,7 +127,7 @@ code
 
    ``kuma.wiki.models.Revision.content_cleaned`` (any revision, dynamically generated)
 
-The *Cleaned content* of the simple document looks like this:
+The *Bleached content* of the simple document looks like this:
 
 .. code-block:: html
 
@@ -178,7 +178,7 @@ replaces them with plain HTML. This intermediate representation is not stored,
 but instead is further processed to generate the :ref:`rendered-content`.
 
 source
-   :ref:`cleaned-content`, processed by KumaScript
+   :ref:`bleached-content`, processed by KumaScript
 displayed on MDN
    *not published*
 database
@@ -256,8 +256,8 @@ frequently review `documents with errors`_, and fix those that they can fix.
 Environment variables
 ---------------------
 KumaScript macros often vary on page metadata, stored in the ``env`` object in
-the render context. The render call is a ``POST`` where the body is the cleaned
-format content, and the headers include the encoded page metadata:
+the render context. The render call is a ``POST`` where the body is the
+:ref:`bleached-content`, and the headers include the encoded page metadata:
 
 id
    The database ID of the document, like ``233925``
@@ -327,12 +327,12 @@ external data
 Rendered content
 ================
 *Rendered content* is :ref:`kumascript-content` that has been cleaned up
-using the same process as :ref:`cleaned-content`.  This ensures that escaping
+using the same process as :ref:`bleached-content`.  This ensures that escaping
 issues in KumaScript macros do not affect the security of users on displayed
 pages.
 
 source
-   Cleaned :ref:`kumascript-content`
+   Bleached :ref:`kumascript-content`
 displayed on MDN
    *not published*
 database
@@ -624,12 +624,14 @@ report, and it is sent as a plain-text email without escaping.
 .. _`difflib.HtmlDiff`: https://docs.python.org/2/library/difflib.html#difflib.HtmlDiff
 .. _`difflib.unified_diff`: https://docs.python.org/2/library/difflib.html#difflib.HtmlDiff
 
-.. _re-edit-content:
+.. _triaged-content:
 
-Re-edit content
+Triaged content
 ===============
 When a document is re-edited, the :ref:`revision-content` of the current
-revision is processed before being sent to the editor.
+revision is processed before being sent to the editor. This is a lighter
+version of the full bleaching process used to create :ref:`bleached-content`
+and :ref:`rendered-content`.
 
 source
    :ref:`revision-content`, with further processing in ``RevisionForm``.
@@ -642,7 +644,7 @@ database
 code
    *not available*
 
-For the simple document, this is the *Re-edit content*:
+For the simple document, this is the *Triaged content*:
 
 .. code-block:: html
 
@@ -692,7 +694,7 @@ When editing, a user can request a preview of the document. This sends the
 in-progress document to editing, with a smaller list of environment variables.
 
 source
-   :ref:`re-edit-content`, with CKEditor parsing, passed through KumaScript
+   :ref:`triaged-content`, with CKEditor parsing, passed through KumaScript
 output
    HTML content at ``/<locale>/docs/preview-wiki-content``
 database
@@ -747,10 +749,11 @@ Some macros, like ``{{HTMLElement}}``, work as expected in preview.
 Raw content
 ===========
 A ``?raw`` parameter can be added to the end of a document to request the
-source for a revision.
+source for a revision. This is processed in a similar way to the
+:ref:`triaged-content`, but from the :ref:`bleached-content`.
 
 source
-   :ref:`cleaned-content`, with filters
+   :ref:`bleached-content`, with filters
 output
    The page with a ``?raw`` query parameter
 database
@@ -782,13 +785,14 @@ For the simple document, this is the *raw content*:
      alert('How about this?');
    &lt;/script&gt;
 
-The :ref:`cleaned-content` is parsed for filtering . The headers get IDs, based
+The :ref:`bleached-content` is parsed for filtering . The headers get IDs, based
 on the content, if they did not have them before.  For example,
 ``id="Some_Links"`` is added to the ``<h2>``.
 
 A simple filter is applied that strips any attributes that start with
-``on``, such as the scripting attempt ``onclick``. However, none of these
-should remain in the :ref:`cleaned-content`.
+``on``, such as the scripting attempt ``onclick``. However, this step should
+do nothing, since these attribute are dropped when creating the
+:ref:`bleached-content`.
 
 .. _live-sample:
 
@@ -861,15 +865,15 @@ rendering:
 * Sidebar macros are heavy users of API data and require post-processing of the
   :ref:`rendered-content`. Sidebar generation could be moved into Kuma instead
   of being specified by a macro.
-* The :ref:`diff-format` could be replaced by the :ref:`cleaned-content`
+* The :ref:`diff-format` could be replaced by the :ref:`bleached-content`
   format, which would be stored for each revision rather than just for the most
   recent document.
 * Content from editing could be normalized and filtered before storing as the
-  :ref:`revision-content`. This may unify the :ref:`re-edit-content`,
-  :ref:`diff-format`, and :ref:`cleaned-content`.
+  :ref:`revision-content`. This may unify the :ref:`triaged-content`,
+  :ref:`diff-format`, and :ref:`bleached-content`.
 * The views that accept new revisions could add IDs to the content before
   storing the :ref:`revision-content`, rather than wait for the
-  :ref:`re-edit-content` or :ref:`body-html`.
+  :ref:`triaged-content` or :ref:`body-html`.
 * Developers could refactor the code to consistently access and generate
   content, rather than repeat filter logic in different forms and views.
 
