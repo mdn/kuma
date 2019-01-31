@@ -31,6 +31,7 @@ from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..forms import MIDAIR_COLLISION
 from ..models import Document, RevisionIP
 from ..templatetags.jinja_helpers import get_compare_url
+from ..views.document import _get_seo_parent_title
 
 
 class ViewTests(UserTestCase, WikiTestCase):
@@ -409,11 +410,13 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
 class DocumentSEOTests(UserTestCase, WikiTestCase):
     """Tests for the document seo logic"""
 
-    # NOTE(djf): In the past, we included the title of the "SEO Root"
-    # document in the title of every page, and this test tested for it.
-    # That feature has been removed now, and now this test verifies that
-    # the SEO root title does *not* appear in document titles.
-    def test_no_seo_title(self):
+    def test_get_seo_parent_doesnt_throw_404(self):
+        """bug 1190212"""
+        doc = document(save=True)
+        slug_dict = {'seo_root': 'Root/Does/Not/Exist'}
+        _get_seo_parent_title(doc, slug_dict, 'bn-BD')  # Should not raise Http404
+
+    def test_seo_title(self):
         self.client.login(username='admin', password='testpass')
 
         # Utility to make a quick doc
@@ -428,21 +431,21 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
 
         # Test nested document titles
         _make_doc('One', ['One | MDN'], 'one')
-        _make_doc('Two', ['Two | MDN'], 'one/two')
-        _make_doc('Three', ['Three | MDN'], 'one/two/three')
+        _make_doc('Two', ['Two - One | MDN'], 'one/two')
+        _make_doc('Three', ['Three - One | MDN'], 'one/two/three')
         _make_doc(u'Special Φ Char',
-                  [u'Special \u03a6 Char | MDN',
-                   u'Special \xce\xa6 Char | MDN'],
+                  [u'Special \u03a6 Char - One | MDN',
+                   u'Special \xce\xa6 Char - One | MDN'],
                   'one/two/special_char')
 
         # Additional tests for /Web/*  changes
         _make_doc('Firefox OS', ['Firefox OS | MDN'], 'firefox_os')
-        _make_doc('Email App', ['Email App | MDN'],
+        _make_doc('Email App', ['Email App - Firefox OS | MDN'],
                   'firefox_os/email_app')
         _make_doc('Web', ['Web | MDN'], 'Web')
         _make_doc('HTML', ['HTML | MDN'], 'Web/html')
-        _make_doc('Fieldset', ['Fieldset | MDN'], 'Web/html/fieldset')
-        _make_doc('Legend', ['Legend | MDN'],
+        _make_doc('Fieldset', ['Fieldset - HTML | MDN'], 'Web/html/fieldset')
+        _make_doc('Legend', ['Legend - HTML | MDN'],
                   'Web/html/fieldset/legend')
 
     def test_seo_script(self):

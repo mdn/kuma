@@ -111,6 +111,29 @@ def _make_doc_structure(document, level, expand, depth):
     return result
 
 
+def _get_seo_parent_title(document, slug_dict, document_locale):
+    """
+    Get parent-title information for SEO purposes.
+    """
+    seo_doc_slug = slug_dict['seo_root']
+    seo_root_doc = None
+
+    if seo_doc_slug:
+        # If the SEO root doc is the parent topic, save a query
+        if document.parent_topic_id and document.parent_topic.slug == seo_doc_slug:
+            seo_root_doc = document.parent_topic
+        else:
+            try:
+                seo_root_doc = Document.objects.only('title').get(locale=document_locale, slug=seo_doc_slug)
+            except Document.DoesNotExist:
+                pass
+
+    if seo_root_doc:
+        return u' - {}'.format(seo_root_doc.title)
+    else:
+        return ''
+
+
 def _filter_doc_html(request, doc, doc_html, rendering_params):
     """
     Apply needed filtering/annotating operations to a Document's HTML.
@@ -682,6 +705,10 @@ def document(request, document_slug, document_locale):
         # Get the SEO summary
         seo_summary = doc.get_summary_text()
 
+        # Get the additional title information, if necessary.
+        seo_parent_title = _get_seo_parent_title(
+            original_doc, slug_dict, document_locale)
+
         # Retrieve pre-parsed content hunks
         quick_links_html = doc.get_quick_links_html()
         body_html = doc.get_body_html()
@@ -725,6 +752,7 @@ def document(request, document_slug, document_locale):
             ),
             'render_raw_fallback': rendering_params['render_raw_fallback'],
             'seo_summary': seo_summary,
+            'seo_parent_title': seo_parent_title,
             'share_text': share_text,
             'search_url': get_search_url_from_referer(request) or '',
             'analytics_page_revision': doc.current_revision_id,
