@@ -102,7 +102,8 @@ Disallow: /*profiles*/edit
 Disallow: /skins
 Disallow: /*type=feed
 Disallow: /*users/
-'''
+''' + '\n'.join('Disallow: /{locale}/search'.format(locale=locale)
+                for locale in settings.ENABLED_LOCALES)
 
 ROBOTS_GO_AWAY_TXT = '''\
 User-Agent: *
