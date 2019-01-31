@@ -863,7 +863,7 @@ here for the curious:
 Search content
 ==============
 Wiki documents are converted to a JSON format and indexed by
-:doc:`ElasticSearch </search>` for `internal search`_. This allows searching
+:doc:`ElasticSearch </elasticsearch>` for `internal search`_. This allows searching
 for words in the wiki content.
 
 source
