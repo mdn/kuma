@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import mock
 import pytest
 import stripe
@@ -137,15 +139,16 @@ def test_template_render_logged_in_recurring_payment_initial_view(mock_enabled, 
     response = user_client.get(reverse('recurring_payment_initial'))
     assert_no_cache_header(response)
     assert response.status_code == 200
-    assert '<input type="hidden"' in response.content
-    assert 'id="id_stripe_token"' in response.content
-    assert 'id="stripe_source_setup"' in response.content
-    assert 'id="id_stripe_public_key"' in response.content
-    assert '<form id="contribute-form"' in response.content
-    assert '<input type="email"' in response.content
-    assert 'id="id_donation_amount"' in response.content
-    assert 'id="id_donation_choices"' in response.content
-    assert 'id="id_accept_checkbox"' in response.content
+    content = response.content.decode(response.charset)
+    assert '<input type="hidden"' in content
+    assert 'id="id_stripe_token"' in content
+    assert 'id="stripe_source_setup"' in content
+    assert 'id="id_stripe_public_key"' in content
+    assert '<form id="contribute-form"' in content
+    assert '<input type="email"' in content
+    assert 'id="id_donation_amount"' in content
+    assert 'id="id_donation_choices"' in content
+    assert 'id="id_accept_checkbox"' in content
 
 
 @pytest.mark.django_db
@@ -155,14 +158,15 @@ def test_template_render_not_logged_in_recurring_payment_initial_view(mock_enabl
     response = client.get(reverse('recurring_payment_initial'))
     assert_no_cache_header(response)
     assert response.status_code == 200
-    assert '<input type="hidden"' in response.content
-    assert 'id="id_stripe_token"' not in response.content
-    assert 'id="stripe_source_setup"' in response.content
-    assert 'id="id_stripe_public_key"' not in response.content
-    assert '<form id="contribute-form"' in response.content
-    assert '<input type="email"' in response.content
-    assert 'id="id_donation_amount"' in response.content
-    assert 'id="id_donation_choices"' in response.content
+    content = response.content.decode(response.charset)
+    assert '<input type="hidden"' in content
+    assert 'id="id_stripe_token"' not in content
+    assert 'id="stripe_source_setup"' in content
+    assert 'id="id_stripe_public_key"' not in content
+    assert '<form id="contribute-form"' in content
+    assert '<input type="email"' in content
+    assert 'id="id_donation_amount"' in content
+    assert 'id="id_donation_choices"' in content
 
 
 @pytest.mark.django_db
@@ -172,14 +176,15 @@ def test_template_render_not_logged_in_payment_view(mock_enabled, client, settin
     response = client.get(reverse('payments'))
     assert_no_cache_header(response)
     assert response.status_code == 200
-    assert '<input type="hidden"' in response.content
-    assert 'id="id_stripe_token"' in response.content
-    assert 'id="id_stripe_public_key"' in response.content
-    assert '<form id="contribute-form"' in response.content
-    assert '<input type="email"' in response.content
-    assert 'id="id_donation_amount"' in response.content
-    assert 'id="id_donation_choices"' in response.content
-    assert 'id="id_accept_checkbox"' in response.content
+    content = response.content.decode(response.charset)
+    assert '<input type="hidden"' in content
+    assert 'id="id_stripe_token"' in content
+    assert 'id="id_stripe_public_key"' in content
+    assert '<form id="contribute-form"' in content
+    assert '<input type="email"' in content
+    assert 'id="id_donation_amount"' in content
+    assert 'id="id_donation_choices"' in content
+    assert 'id="id_accept_checkbox"' in content
 
 
 @pytest.mark.django_db
@@ -189,8 +194,10 @@ def test_recurring_payment_management_no_customer_id(enabled_, get, user_client)
     """The recurring payments page shows there are no active subscriptions."""
     response = user_client.get(reverse('recurring_payment_management'))
     assert response.status_code == 200
-    assert '<button id="id_stripe_cancel_subscription" name="stripe_cancel_subscription"' not in response.content
-    assert "You have no active subscriptions." in response.content
+    content = response.content.decode(response.charset)
+    assert ('<button id="id_stripe_cancel_subscription"'
+            ' name="stripe_cancel_subscription"') not in content
+    assert "You have no active subscriptions." in content
     assert_no_cache_header(response)
     assert response.status_code == 200
 
@@ -207,8 +214,10 @@ def test_recurring_payment_management_api_failure(enabled_, get, stripe_user, us
     """The page shows no active subscriptions if ID is unknown."""
     response = user_client.get(reverse('recurring_payment_management'))
     assert response.status_code == 200
-    assert '<button id="id_stripe_cancel_subscription" name="stripe_cancel_subscription"' not in response.content
-    assert "You have no active subscriptions." in response.content
+    content = response.content.decode(response.charset)
+    assert ('<button id="id_stripe_cancel_subscription"'
+            ' name="stripe_cancel_subscription"') not in content
+    assert "You have no active subscriptions." in content
     assert_no_cache_header(response)
     assert response.status_code == 200
 
@@ -224,7 +233,9 @@ def test_recurring_payment_management_customer_id(enabled_, get, user_client, st
     """The recurring payments page shows there are active subscriptions."""
     response = user_client.get(reverse('recurring_payment_management'))
     assert response.status_code == 200
-    assert '<button id="id_stripe_cancel_subscription" name="stripe_cancel_subscription"' in response.content
+    content = response.content.decode(response.charset)
+    assert ('<button id="id_stripe_cancel_subscription"'
+            ' name="stripe_cancel_subscription"') in content
     assert_no_cache_header(response)
 
 
@@ -246,7 +257,8 @@ def test_recurring_payment_management_cancel(enabled_, get, cancel_, user_client
     assert cancel_.called
     assert get.called
     text = 'Your monthly subscription has been successfully canceled'
-    assert text in response.content
+    content = response.content.decode(response.charset)
+    assert text in content
 
 
 @pytest.mark.django_db
@@ -272,7 +284,8 @@ def test_recurring_payment_management_cancel_fails(enabled_, get, cancel_, user_
     assert cancel_.called
     assert get.called
     text = 'There was a problem canceling your subscription'
-    assert text in response.content
+    content = response.content.decode(response.charset)
+    assert text in content
 
 
 @pytest.mark.django_db

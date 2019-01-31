@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import stripe
 from django.conf import settings
 from waffle import flag_is_active
