@@ -52,8 +52,8 @@ def update_feed(feed):
     stream = fetch_feed(feed)
 
     if stream:
-        log.debug(u'Processing %s (%s): %s' % (feed.title, feed.shortname,
-                                               feed.url))
+        log.debug('Processing %s (%s): %s' % (feed.title, feed.shortname,
+                                              feed.url))
         for entry in stream.entries:
             if save_entry(feed, entry):
                 new_entry_count += 1
