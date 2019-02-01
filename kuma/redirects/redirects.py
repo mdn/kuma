@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from functools import partial
 
 from redirect_urls import redirect as lib_redirect
@@ -772,39 +774,39 @@ scl3_redirectpatterns = [
 ]
 
 zone_redirects = (
-    (u'Add-ons', u'Mozilla/Add-ons', ('af', 'ar', 'bn-BD', 'bn-IN', 'ca',
-                                      'cs', 'de', 'en-US', 'es', 'fa',
-                                      'fr', 'hu', 'id', 'it', 'ja',
-                                      'ms', 'nl', 'pl', 'pt-BR', 'pt-PT',
-                                      'ro', 'ru', 'sv-SE', 'th', 'uk',
-                                      'vi', 'zh-CN', 'zh-TW', None)),
-    (u'Add-ons', u'Mozilla/Πρόσθετα', ('el',)),
-    (u'Add-ons', u'Mozilla/애드온들', ('ko',)),
-    (u'Add-ons', u'Mozilla/Eklentiler', ('tr',)),
-    (u'Firefox', u'Mozilla/Firefox', ('af', 'ar', 'az', 'bm', 'bn-IN', 'ca',
-                                      'cs', 'de', 'ee', 'el', 'en-US', 'es',
-                                      'ff', 'fi', 'fr', 'fy-NL', 'ga-IE', 'ha',
-                                      'he', 'hi-IN', 'hr', 'hu', 'id', 'ig',
-                                      'it', 'ja', 'ka', 'ko', 'ln', 'ml',
-                                      'ms', 'my', 'nl', 'pl', 'pt-BR', 'pt-PT',
-                                      'ro', 'ru', 'son', 'sq', 'sv-SE', 'sw',
-                                      'ta', 'th', 'tl', 'tr', 'vi', 'wo',
-                                      'xh', 'yo', 'zh-CN', 'zh-TW', 'zu',
-                                      None)),
-    (u'Firefox', u'Mozilla/ফায়ারফক্স', ('bn-BD',)),
-    (u'Apps', u'Web/Apps', ('en-US', 'fa', 'fr', 'ja', 'ta', 'th', 'zh-CN',
-                            'zh-TW', None)),
-    (u'Apps', u'Web/Aplicaciones', ('es',)),
-    (u'Apps', u'Apps', ('bn-BD', 'de', 'it', 'ko', 'pt-BR', 'ru')),
-    (u'Learn', u'Learn', ('ca', 'de', None)),
-    (u'Apprendre', u'Apprendre', ('fr',)),
-    (u'Marketplace', u'Mozilla/Marketplace', ('de', 'en-US', 'es', 'fr', 'it',
-                                              'ja', 'zh-CN', None)),
-    (u'Marketplace', u'Mozilla/بازار', ('fa',)),
+    ('Add-ons', 'Mozilla/Add-ons', ('af', 'ar', 'bn-BD', 'bn-IN', 'ca',
+                                    'cs', 'de', 'en-US', 'es', 'fa',
+                                    'fr', 'hu', 'id', 'it', 'ja',
+                                    'ms', 'nl', 'pl', 'pt-BR', 'pt-PT',
+                                    'ro', 'ru', 'sv-SE', 'th', 'uk',
+                                    'vi', 'zh-CN', 'zh-TW', None)),
+    ('Add-ons', 'Mozilla/Πρόσθετα', ('el',)),
+    ('Add-ons', 'Mozilla/애드온들', ('ko',)),
+    ('Add-ons', 'Mozilla/Eklentiler', ('tr',)),
+    ('Firefox', 'Mozilla/Firefox', ('af', 'ar', 'az', 'bm', 'bn-IN', 'ca',
+                                    'cs', 'de', 'ee', 'el', 'en-US', 'es',
+                                    'ff', 'fi', 'fr', 'fy-NL', 'ga-IE', 'ha',
+                                    'he', 'hi-IN', 'hr', 'hu', 'id', 'ig',
+                                    'it', 'ja', 'ka', 'ko', 'ln', 'ml',
+                                    'ms', 'my', 'nl', 'pl', 'pt-BR', 'pt-PT',
+                                    'ro', 'ru', 'son', 'sq', 'sv-SE', 'sw',
+                                    'ta', 'th', 'tl', 'tr', 'vi', 'wo',
+                                    'xh', 'yo', 'zh-CN', 'zh-TW', 'zu',
+                                    None)),
+    ('Firefox', 'Mozilla/ফায়ারফক্স', ('bn-BD',)),
+    ('Apps', 'Web/Apps', ('en-US', 'fa', 'fr', 'ja', 'ta', 'th', 'zh-CN',
+                          'zh-TW', None)),
+    ('Apps', 'Web/Aplicaciones', ('es',)),
+    ('Apps', 'Apps', ('bn-BD', 'de', 'it', 'ko', 'pt-BR', 'ru')),
+    ('Learn', 'Learn', ('ca', 'de', None)),
+    ('Apprendre', 'Apprendre', ('fr',)),
+    ('Marketplace', 'Mozilla/Marketplace', ('de', 'en-US', 'es', 'fr', 'it',
+                                            'ja', 'zh-CN', None)),
+    ('Marketplace', 'Mozilla/بازار', ('fa',)),
 )
 
 zone_pattern_fmt = r'^{prefix}{zone_root_pattern}(?:/?|(?P<sub_path>[/$].+))$'
-sub_path_fmt = u'/{prefix}docs/{wiki_slug}{{sub_path}}'
+sub_path_fmt = '/{prefix}docs/{wiki_slug}{{sub_path}}'
 
 zone_redirectpatterns = []
 for zone_root, wiki_slug, locales in zone_redirects:
