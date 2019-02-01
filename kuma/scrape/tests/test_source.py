@@ -169,9 +169,9 @@ def test_invalid_values(option_type, option, bad_value):
 
 @pytest.mark.parametrize(
     "href,decoded", [
-        (b'binary', u'binary'),
-        (b'%E7%A7%BB%E8%A1%8C%E4%BA%88%E5%AE%9A', u'移行予定'),
-        (u'Slug#Anchor_\u2014_With_Dash', u'Slug#Anchor_\u2014_With_Dash'),
+        (b'binary', 'binary'),
+        (b'%E7%A7%BB%E8%A1%8C%E4%BA%88%E5%AE%9A', '移行予定'),
+        ('Slug#Anchor_\u2014_With_Dash', 'Slug#Anchor_\u2014_With_Dash'),
     ])
 def test_decode_href(href, decoded):
     """Source.decode_href() turns URL-encoded hrefs into unicode strings."""

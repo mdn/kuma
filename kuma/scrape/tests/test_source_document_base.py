@@ -1,4 +1,6 @@
 """Tests for the DocumentBaseSource class."""
+from __future__ import unicode_literals
+
 import pytest
 
 from kuma.scrape.sources import DocumentBaseSource

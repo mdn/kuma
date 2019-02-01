@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import json
 
 from django.core.management.base import CommandError

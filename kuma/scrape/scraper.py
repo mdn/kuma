@@ -44,7 +44,7 @@ class Requester(object):
         timeout = self.TIMEOUT
         while retry and 0 <= attempts < self.MAX_ATTEMPTS:
             attempts += 1
-            err = None
+            error = None
             retry = False
             request_function = getattr(self.session, method.lower())
             try:
@@ -53,11 +53,13 @@ class Requester(object):
                 logger.warn("Timeout on request %d for %s", attempts, url)
                 time.sleep(timeout)
                 timeout *= 2
+                error = err
             except requests.exceptions.ConnectionError as err:
                 logger.warn("Error request %d for %s: %s", attempts, url, err)
+                error = err
             if response is None:
                 if attempts >= self.MAX_ATTEMPTS:
-                    raise err
+                    raise error
                 else:
                     retry = True
             elif response.status_code == 429:
