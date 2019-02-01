@@ -1,5 +1,6 @@
+from __future__ import unicode_literals
+
 import mock
-from django.utils import six
 
 from kuma.core.tests import KumaTestCase
 
@@ -81,9 +82,7 @@ class TestCacheKeyWithDifferentEncoding(KumaTestCase):
         self.job = EncodingJob()
 
     def test_unicode_and_bytestring_args(self):
-        self.assertEqual(self.job.key(six.b('eggs')),
-                         self.job.key(six.u('eggs')))
+        self.assertEqual(self.job.key(b'eggs'), self.job.key('eggs'))
 
     def test_unicode_and_bytestring_kwargs(self):
-        self.assertEqual(self.job.key(spam=six.b('eggs')),
-                         self.job.key(spam=six.u('eggs')))
+        self.assertEqual(self.job.key(spam=b'eggs'), self.job.key(spam='eggs'))

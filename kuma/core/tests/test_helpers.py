@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from datetime import datetime
 
 import mock
@@ -76,7 +78,7 @@ class TestDateTimeFormat(UserTestCase):
         super(TestDateTimeFormat, self).setUp()
         url_ = reverse('home')
         self.context = {'request': RequestFactory().get(url_)}
-        self.context['request'].LANGUAGE_CODE = u'en-US'
+        self.context['request'].LANGUAGE_CODE = 'en-US'
         self.context['request'].user = self.user_model.objects.get(username='testuser01')
 
     def test_today(self):
@@ -84,17 +86,17 @@ class TestDateTimeFormat(UserTestCase):
         date_today = datetime.today()
         value_expected = 'Today at %s' % format_time(date_today,
                                                      format='short',
-                                                     locale=u'en_US')
+                                                     locale='en_US')
         value_returned = datetimeformat(self.context, date_today,
                                         output='json')
         assert value_expected == value_returned
 
     def test_locale(self):
         """Expects shortdatetime in French."""
-        self.context['request'].LANGUAGE_CODE = u'fr'
+        self.context['request'].LANGUAGE_CODE = 'fr'
         value_test = datetime.fromordinal(733900)
         value_expected = format_datetime(value_test, format='short',
-                                         locale=u'fr')
+                                         locale='fr')
         value_returned = datetimeformat(self.context, value_test,
                                         output='json')
         assert value_expected == value_returned
@@ -103,7 +105,7 @@ class TestDateTimeFormat(UserTestCase):
         """Expects shortdatetime."""
         value_test = datetime.fromordinal(733900)
         value_expected = format_datetime(value_test, format='short',
-                                         locale=u'en_US')
+                                         locale='en_US')
         value_returned = datetimeformat(self.context, value_test,
                                         output='json')
         assert value_expected == value_returned
@@ -113,7 +115,7 @@ class TestDateTimeFormat(UserTestCase):
         value_test = datetime.fromordinal(733900)
         tzvalue = pytz.timezone(settings.TIME_ZONE).localize(value_test)
         value_expected = format_datetime(tzvalue, format='long',
-                                         locale=u'en_US')
+                                         locale='en_US')
         value_returned = datetimeformat(self.context, value_test,
                                         format='longdatetime',
                                         output='json')
@@ -122,7 +124,7 @@ class TestDateTimeFormat(UserTestCase):
     def test_date(self):
         """Expects date format."""
         value_test = datetime.fromordinal(733900)
-        value_expected = format_date(value_test, locale=u'en_US')
+        value_expected = format_date(value_test, locale='en_US')
         value_returned = datetimeformat(self.context, value_test,
                                         format='date',
                                         output='json')
@@ -131,7 +133,7 @@ class TestDateTimeFormat(UserTestCase):
     def test_time(self):
         """Expects time format."""
         value_test = datetime.fromordinal(733900)
-        value_expected = format_time(value_test, locale=u'en_US')
+        value_expected = format_time(value_test, locale='en_US')
         value_returned = datetimeformat(self.context, value_test,
                                         format='time',
                                         output='json')
@@ -140,7 +142,7 @@ class TestDateTimeFormat(UserTestCase):
     def test_datetime(self):
         """Expects datetime format."""
         value_test = datetime.fromordinal(733900)
-        value_expected = format_datetime(value_test, locale=u'en_US')
+        value_expected = format_datetime(value_test, locale='en_US')
         value_returned = datetimeformat(self.context, value_test,
                                         format='datetime',
                                         output='json')
@@ -155,8 +157,8 @@ class TestDateTimeFormat(UserTestCase):
     @mock.patch('babel.dates.format_datetime')
     def test_broken_format(self, mocked_format_datetime):
         value_test = datetime.fromordinal(733900)
-        value_english = format_datetime(value_test, locale=u'en_US')
-        self.context['request'].LANGUAGE_CODE = u'fr'
+        value_english = format_datetime(value_test, locale='en_US')
+        self.context['request'].LANGUAGE_CODE = 'fr'
         mocked_format_datetime.side_effect = [
             # first call is returning a KeyError as if the format is broken
             KeyError,
@@ -191,7 +193,7 @@ class TestDateTimeFormat(UserTestCase):
         tzvalue = user_tz.normalize(tzvalue.astimezone(user_tz))
 
         value_expected = format_datetime(tzvalue, format='long',
-                                         locale=u'en_US')
+                                         locale='en_US')
         value_returned = datetimeformat(self.context, value_test,
                                         format='longdatetime',
                                         output='json')

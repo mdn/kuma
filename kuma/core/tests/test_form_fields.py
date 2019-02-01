@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from django.utils import translation
 
 from . import KumaTestCase
@@ -15,7 +17,7 @@ class TestFormatDecimal(KumaTestCase):
         """French locale returns french format"""
         translation.activate('fr')
         num = _format_decimal(1234.567)
-        assert u'1\xa0234,567' == num
+        assert '1\xa0234,567' == num
 
     def test_xx_YY_locale(self):
         """Falls back to English for unknown Django locales"""

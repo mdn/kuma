@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import pyquery
 from django.test import RequestFactory
 

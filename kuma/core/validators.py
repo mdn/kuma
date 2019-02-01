@@ -3,9 +3,13 @@
 # Placed into the Public Domain by tav <tav@espians.com>
 
 """Validate Javascript Identifiers for use as JSON-P callback parameters."""
+from __future__ import unicode_literals
 
 import re
 from unicodedata import category
+
+from django.utils.six import text_type, unichr
+
 
 # ------------------------------------------------------------------------------
 # javascript identifier unicode categories and "exceptional" chars
@@ -54,15 +58,15 @@ is_reserved_js_word = frozenset([
 # ------------------------------------------------------------------------------
 
 
-def valid_javascript_identifier(identifier, escape=r'\u', ucd_cat=category):
+def valid_javascript_identifier(identifier, escape='\\u', ucd_cat=category):
     """Return whether the given ``id`` is a valid Javascript identifier."""
 
     if not identifier:
         return False
 
-    if not isinstance(identifier, unicode):
+    if not isinstance(identifier, text_type):
         try:
-            identifier = unicode(identifier, 'utf-8')
+            identifier = text_type(identifier, 'utf-8')
         except UnicodeDecodeError:
             return False
 
@@ -82,7 +86,7 @@ def valid_javascript_identifier(identifier, escape=r'\u', ucd_cat=category):
                 return False
             add_char(segment[4:])
 
-        identifier = u''.join(new)
+        identifier = ''.join(new)
 
     if is_reserved_js_word(identifier):
         return False
@@ -104,11 +108,11 @@ def valid_javascript_identifier(identifier, escape=r'\u', ucd_cat=category):
 def valid_jsonp_callback_value(value):
     """Return whether the given ``value`` can be used as a JSON-P callback."""
 
-    for identifier in value.split(u'.'):
+    for identifier in value.split('.'):
         while '[' in identifier:
             if not has_valid_array_index(identifier):
                 return False
-            identifier = replace_array_index(u'', identifier)
+            identifier = replace_array_index('', identifier)
         if not valid_javascript_identifier(identifier):
             return False
 

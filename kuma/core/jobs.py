@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from cacheback.base import Job
 from django.utils import crypto
 

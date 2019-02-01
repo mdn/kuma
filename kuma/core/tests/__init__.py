@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import os
 
 from django.conf import settings
@@ -52,10 +54,10 @@ class KumaTestMixin(object):
         return messages
 
     def assertFileExists(self, path):
-        self.assertTrue(os.path.exists(path), u'Path %r does not exist' % path)
+        self.assertTrue(os.path.exists(path), 'Path %r does not exist' % path)
 
     def assertFileNotExists(self, path):
-        self.assertFalse(os.path.exists(path), u'Path %r does exist' % path)
+        self.assertFalse(os.path.exists(path), 'Path %r does exist' % path)
 
 
 class KumaTestCase(KumaTestMixin, TestCase):

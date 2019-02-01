@@ -1,4 +1,6 @@
 '''Check that settings are consistent.'''
+from __future__ import unicode_literals
+
 import pytest
 from django.conf import settings
 

@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import pytest
 from django.test import TestCase
 from taggit.models import Tag
@@ -18,11 +20,11 @@ class NamespacedTaggableManagerTest(TestCase):
         apple = self.food_model.objects.create(name="apple")
 
         expected_tags = {
-            u'': [u'foo', u'bar', u'baz'],
-            u'int:': [u'int:1', u'int:2'],
-            u'string:': [u'string:asdf'],
-            u'color:': [u'color:red'],
-            u'system:contest:': [u'system:contest:finalist']
+            '': ['foo', 'bar', 'baz'],
+            'int:': ['int:1', 'int:2'],
+            'string:': ['string:asdf'],
+            'color:': ['color:red'],
+            'system:contest:': ['system:contest:finalist']
         }
 
         for tags in expected_tags.values():

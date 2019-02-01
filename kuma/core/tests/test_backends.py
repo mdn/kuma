@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import pytest
 from constance.backends.database import DatabaseBackend
 from django.db import models

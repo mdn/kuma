@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from pipeline.compilers.sass import SASSCompiler
 
 

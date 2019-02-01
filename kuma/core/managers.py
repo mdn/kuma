@@ -7,11 +7,13 @@ TODO:
 - Permissions for tag namespaces (eg. system:* is superuser-only)
 - Machine tag assists
 """
+from __future__ import unicode_literals
+
 from datetime import date, timedelta
 
-from django.contrib.auth.models import AnonymousUser
 from django.db import models
 from django.db.models.fields import BLANK_CHOICE_DASH
+from django.utils.encoding import python_2_unicode_compatible
 from taggit.managers import _TaggableManager, TaggableManager
 from taggit.models import Tag
 from taggit.utils import edit_string_for_tags, require_instance_manager
@@ -32,9 +34,10 @@ class NamespacedTaggableManager(TaggableManager):
         super(NamespacedTaggableManager, self).__init__(*args, **kwargs)
 
 
+@python_2_unicode_compatible
 class _NamespacedTaggableManager(_TaggableManager):
 
-    def __unicode__(self):
+    def __str__(self):
         """Return the list of tags as an editable string.
         Expensive: Does a DB query for the tags"""
         # HACK: Yes, I really do want to allow tags in admin change lists
@@ -110,59 +113,6 @@ class _NamespacedTaggableManager(_TaggableManager):
                 t = '%s%s' % (namespace, t)
             ns_tags.append(t)
         return ns_tags
-
-
-def parse_tag_namespaces(tag_list):
-    """Parse a list of tags out into a dict of lists by namespace"""
-    namespaces = {}
-    for tag in tag_list:
-        ns = (':' in tag) and ('%s:' % tag.rsplit(':', 1)[0]) or ''
-        if ns not in namespaces:
-            namespaces[ns] = []
-        namespaces[ns].append(tag)
-    return namespaces
-
-
-def allows_tag_namespace_for(model_obj, ns, user):
-    """Decide whether a tag namespace is editable by a user"""
-    if user.is_staff or user.is_superuser:
-        # Staff / superuser can manage any tag namespace
-        return True
-    if not ns.startswith('system:'):
-        return True
-    return False
-
-
-def resolve_allowed_tags(model_obj, tags_curr, tags_new,
-                         request_user=AnonymousUser):
-    """Given a new set of tags and a user, build a list of allowed new tags
-    with changes accepted only for namespaces where editing is allowed for
-    the user. For disallowed namespaces, this object's current tag set will
-    be imposed.
-
-    No changes are made; the new tag list is just returned.
-    """
-    # Produce namespaced sets of current and incoming new tags.
-    ns_tags_curr = parse_tag_namespaces(tags_curr)
-    ns_tags_new = parse_tag_namespaces(tags_new)
-
-    # Produce a union of all namespaces, current and new tag set
-    all_ns = set(ns_tags_curr.keys() + ns_tags_new.keys())
-
-    # Assemble accepted changed tag set according to permissions
-    tags_out = []
-    for ns in all_ns:
-        if model_obj.allows_tag_namespace_for(ns, request_user):
-            # If the user is allowed this namespace, apply changes by
-            # accepting new tags or lack thereof.
-            if ns in ns_tags_new:
-                tags_out.extend(ns_tags_new[ns])
-        elif ns in ns_tags_curr:
-            # If the user is not allowed this namespace, carry over
-            # existing tags or lack thereof
-            tags_out.extend(ns_tags_curr[ns])
-
-    return tags_out
 
 
 class IPBanManager(models.Manager):

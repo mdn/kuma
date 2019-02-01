@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import datetime
 import functools
 import hashlib
@@ -17,6 +19,7 @@ from django.shortcuts import _get_queryset
 from django.utils.cache import patch_cache_control
 from django.utils.encoding import force_text, smart_bytes
 from django.utils.http import urlencode
+from django.utils.six import text_type
 from django.utils.translation import ugettext_lazy as _
 from polib import pofile
 from pytz import timezone
@@ -73,7 +76,7 @@ def paginate(request, queryset, per_page=20):
 
     qsa = urlencode(items)
 
-    paginated.url = u'%s?%s' % (base, qsa)
+    paginated.url = '%s?%s' % (base, qsa)
     return paginated
 
 
@@ -222,8 +225,8 @@ def parse_tags(tagstring, sorted=True):
     # Special case - if there are no commas or double quotes in the
     # input, we don't *do* a recall... I mean, we know we only need to
     # split on spaces.
-    if u',' not in tagstring and u'"' not in tagstring:
-        words = list(split_strip(tagstring, u' '))
+    if ',' not in tagstring and '"' not in tagstring:
+        words = list(split_strip(tagstring, ' '))
         if sorted:
             words.sort()
         return words
@@ -239,38 +242,38 @@ def parse_tags(tagstring, sorted=True):
     try:
         while True:
             c = i.next()
-            if c == u'"':
+            if c == '"':
                 if buffer:
-                    to_be_split.append(u''.join(buffer))
+                    to_be_split.append(''.join(buffer))
                     buffer = []
                 # Find the matching quote
                 open_quote = True
                 c = i.next()
-                while c != u'"':
+                while c != '"':
                     buffer.append(c)
                     c = i.next()
                 if buffer:
-                    word = u''.join(buffer).strip()
+                    word = ''.join(buffer).strip()
                     if word:
                         words.append(word)
                     buffer = []
                 open_quote = False
             else:
-                if not saw_loose_comma and c == u',':
+                if not saw_loose_comma and c == ',':
                     saw_loose_comma = True
                 buffer.append(c)
     except StopIteration:
         # If we were parsing an open quote which was never closed treat
         # the buffer as unquoted.
         if buffer:
-            if open_quote and u',' in buffer:
+            if open_quote and ',' in buffer:
                 saw_loose_comma = True
-            to_be_split.append(u''.join(buffer))
+            to_be_split.append(''.join(buffer))
     if to_be_split:
         if saw_loose_comma:
-            delimiter = u','
+            delimiter = ','
         else:
-            delimiter = u' '
+            delimiter = ' '
         for chunk in to_be_split:
             words.extend(split_strip(chunk, delimiter))
     words = list(words)
@@ -338,7 +341,7 @@ def get_unique(content_type, object_pk, name=None, request=None,
     # HACK: Build a hash of the fields that should be unique, let MySQL
     # chew on that for a unique index. Note that any changes to this algo
     # will create all new unique hashes that don't match any existing ones.
-    hash_text = "\n".join(unicode(x).encode('utf-8') for x in (
+    hash_text = "\n".join(text_type(x).encode('utf-8') for x in (
         content_type.pk, object_pk, name or '', ip, user_agent,
         (user and user.pk or 'None')
     ))
@@ -432,7 +435,7 @@ def format_date_value(value, tzvalue, locale, format):
         if value.toordinal() == datetime.date.today().toordinal():
             formatted = dates.format_time(tzvalue, format='short',
                                           locale=locale)
-            return _(u'Today at %s') % formatted
+            return _('Today at %s') % formatted
         else:
             return dates.format_datetime(tzvalue, format='short',
                                          locale=locale)

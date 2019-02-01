@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from celery.task import task
 from constance import config
 from django.contrib.sessions.models import Session
