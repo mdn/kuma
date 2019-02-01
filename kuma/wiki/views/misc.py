@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import newrelic.agent
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.shortcuts import render

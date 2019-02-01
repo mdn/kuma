@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.shortcuts import get_list_or_404, get_object_or_404, render
 from django.views.decorators.http import require_GET
 from ratelimit.decorators import ratelimit

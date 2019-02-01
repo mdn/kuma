@@ -168,14 +168,14 @@ class ViewTests(ElasticTestCase):
             response = self.client.get('/en-US/search', {'q': q},
                                        HTTP_HOST=settings.WIKI_HOST)
             assert response.status_code == 200
-            assert 'camel-case-test' in response.content
+            assert b'camel-case-test' in response.content
 
     def test_index(self):
         self.client.login(username='admin', password='testpass')
         response = self.client.get('/en-US/search',
                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
-        expected = 'Search index: %s' % Index.objects.get_current().name
+        expected = f'Search index: {Index.objects.get_current().name}'
         assert expected in response.content.decode(response.charset)
 
     def test_api_redirect(self):

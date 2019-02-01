@@ -1,4 +1,6 @@
 '''Tests for kuma/wiki/views/edit.py'''
+from __future__ import unicode_literals
+
 import pytest
 from django.conf import settings
 

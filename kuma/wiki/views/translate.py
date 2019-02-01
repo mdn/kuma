@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from csp.decorators import csp_update
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
@@ -85,7 +87,7 @@ def translate(request, document_slug, document_locale):
             args=[parent_doc.slug]))
 
     if not parent_doc.is_localizable:
-        message = _(u'You cannot translate this document.')
+        message = _('You cannot translate this document.')
         context = {'message': message}
         return render(request, 'handlers/400.html', context, status=400)
 

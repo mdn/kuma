@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """py.test fixtures for kuma.wiki.tests."""
+from __future__ import unicode_literals
+
 import base64
 import json
 from collections import namedtuple
@@ -317,15 +319,15 @@ def ks_toolbox():
     }
 
     d_json = json.dumps(errors)
-    d_b64 = base64.encodestring(d_json.encode('utf-8'))
-    d_lines = [x for x in d_b64.split("\n") if x]
+    d_b64 = base64.encodestring(d_json.encode('utf-8')).decode('utf-8')
+    d_lines = [x for x in d_b64.split('\n') if x]
 
     # Headers are case-insensitive, so let's drive that point home.
     p = ['firelogger', 'FIRELOGGER', 'FireLogger']
     fl_uid = 8675309
     errors_as_headers = {}
-    for i in range(0, len(d_lines)):
-        errors_as_headers['%s-%s-%s' % (p[i % len(p)], fl_uid, i)] = d_lines[i]
+    for i, line in enumerate(d_lines):
+        errors_as_headers['%s-%s-%s' % (p[i % len(p)], fl_uid, i)] = line
 
     macros_response = {
         'json': {

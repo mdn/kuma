@@ -257,8 +257,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         """Enable Akismet and mock calls to it. Return the mock object."""
         self.submissions_flag = Flag.objects.create(
             name=SPAM_SUBMISSIONS_FLAG, everyone=True)
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(SPAM_URL, content=Akismet.submission_success)
+        mock_requests.post(VERIFY_URL, content=b'valid')
+        mock_requests.post(
+            SPAM_URL, content=Akismet.submission_success.encode('utf-8'))
         return mock_requests
 
     def test_delete_document(self):
@@ -386,7 +387,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         assert_no_cache_header(resp)
 
         # All of self.testuser's revisions have been submitted
-        testuser_submissions = RevisionAkismetSubmission.objects.filter(revision__creator=self.testuser.id)
+        testuser_submissions = RevisionAkismetSubmission.objects.filter(
+            revision__creator=self.testuser.id)
         assert testuser_submissions.count() == num_revisions
         for submission in testuser_submissions:
             assert submission.revision in revisions_created
@@ -1051,7 +1053,7 @@ def test_bug_698126_l10n(wiki_user, user_client):
     for field in response.context['user_form'].fields:
         # if label is localized it's a lazy proxy object
         lbl = response.context['user_form'].fields[field].label
-        assert not isinstance(lbl, six.string_types), 'Field %s is a string!' % field
+        assert not isinstance(lbl, str), 'Field %s is a string!' % field
 
 
 def test_user_edit_github_is_public(wiki_user, wiki_user_github_account,

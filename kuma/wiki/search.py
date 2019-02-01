@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import division
+from __future__ import division, unicode_literals
 
 import logging
 from math import ceil
@@ -251,7 +251,7 @@ class WikiDocumentType(document.Document):
         if highlighted:
             for excerpt_field in self.excerpt_fields:
                 if excerpt_field in highlighted:
-                    return u'…'.join(highlighted[excerpt_field])
+                    return '…'.join(highlighted[excerpt_field])
         return self.summary
 
     @classmethod

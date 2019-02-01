@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import base64
 import json
 import time
@@ -60,7 +62,7 @@ def _post(content, env_vars, cache_control=None, timeout=None):
 
     try:
         response = requests.post(url,
-                                 data=content.encode('utf8'),
+                                 data=content,#.encode('utf8'),
                                  headers=headers,
                                  timeout=timeout)
     except (ConnectionError, ReadTimeout) as err:
@@ -117,7 +119,9 @@ def get(document, base_url, cache_control=None, timeout=None):
 def add_env_headers(headers, env_vars):
     """Encode env_vars as kumascript headers, as base64 JSON-encoded values."""
     headers.update(dict(
-        ('x-kumascript-env-%s' % k, base64.b64encode(json.dumps(v)))
+        ('x-kumascript-env-%s' % k, base64.b64encode(
+            json.dumps(v).encode('utf-8')
+        ).decode('utf-8'))
         for k, v in env_vars.items()
     ))
     return headers
@@ -151,7 +155,7 @@ def process_errors(response):
         for contents in packets.values():
             keys = sorted(contents.keys(), key=int)
             encoded = '\n'.join(contents[key] for key in keys)
-            decoded_json = base64.decodestring(encoded)
+            decoded_json = base64.decodebytes(encoded.encode('utf-8'))
             packet = json.loads(decoded_json)
             msgs.extend(packet['logs'])
 

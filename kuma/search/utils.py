@@ -59,7 +59,7 @@ class QueryURLObject(URLObject):
                 default = [item or '' for item in default]
                 if len(default) == 1:
                     default = default[0]
-            if isinstance(default, six.string_types):
+            if isinstance(default, str):
                 default = default.strip()
             # make sure the parameter name and value aren't empty
             if param and default:

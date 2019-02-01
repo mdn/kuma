@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import django.dispatch
 
 render_done = django.dispatch.Signal(

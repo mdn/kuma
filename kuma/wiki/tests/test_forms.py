@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import json
 import unicodedata
 
@@ -376,7 +375,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
 
     def setup_form(
             self, mock_requests, override_original=None, override_data=None,
-            is_spam='false'):
+            is_spam=b'false'):
         """
         Setup a RevisionForm for a POST to edit a page.
 
@@ -401,7 +400,11 @@ class RevisionFormEditTests(RevisionFormViewTests):
         request = self.rf.post('/en-US/docs/Web/CSS/display$edit')
         request.user = self.testuser
 
-        mock_requests.post(VERIFY_URL, content='valid')
+        # The mock request content has to be a byte string
+        if not isinstance(is_spam, bytes):
+            is_spam = is_spam.encode('utf-8')
+
+        mock_requests.post(VERIFY_URL, content=b'valid')
         mock_requests.post(CHECK_URL, content=is_spam)
 
         section_id = None
@@ -528,7 +531,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
     def test_akismet_spam(self, mock_requests):
         assert DocumentSpamAttempt.objects.count() == 0
         assert len(mail.outbox) == 0
-        rev_form = self.setup_form(mock_requests, is_spam='true')
+        rev_form = self.setup_form(mock_requests, is_spam=b'true')
         assert not rev_form.is_valid()
         assert rev_form.errors == {'__all__': [rev_form.akismet_error_message]}
         admin_path = reverse('admin:wiki_documentspamattempt_changelist')
@@ -569,7 +572,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
     def test_akismet_error(self, mock_requests):
         assert DocumentSpamAttempt.objects.count() == 0
         assert len(mail.outbox) == 0
-        rev_form = self.setup_form(mock_requests, is_spam='terrible')
+        rev_form = self.setup_form(mock_requests, is_spam=b'terrible')
         assert not rev_form.is_valid()
         assert rev_form.errors == {'__all__': [rev_form.akismet_error_message]}
 
@@ -710,7 +713,7 @@ class RevisionFormCreateTests(RevisionFormViewTests):
         'toc_depth': Revision.TOC_DEPTH_ALL,
     }
 
-    def setup_form(self, mock_requests, is_spam='false'):
+    def setup_form(self, mock_requests, is_spam=b'false'):
         """
         Setup a RevisionForm for a POST to create a new page.
 
@@ -727,7 +730,7 @@ class RevisionFormCreateTests(RevisionFormViewTests):
         # In the view, the form data's locale is set from the request
         request.LANGUAGE_CODE = data['locale']
 
-        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(VERIFY_URL, content=b'valid')
         mock_requests.post(CHECK_URL, content=is_spam)
 
         parent_slug = 'Web/Guide'
@@ -770,7 +773,7 @@ class RevisionFormCreateTests(RevisionFormViewTests):
     def test_akismet_spam(self, mock_requests):
         assert DocumentSpamAttempt.objects.count() == 0
         assert len(mail.outbox) == 0
-        rev_form = self.setup_form(mock_requests, is_spam='true')
+        rev_form = self.setup_form(mock_requests, is_spam=b'true')
         assert not rev_form.is_valid()
         assert rev_form.errors == {'__all__': [rev_form.akismet_error_message]}
 
@@ -855,9 +858,8 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
         request = self.rf.post('/en-US/docs/Web/Guide/HTML$translate')
         request.user = self.testuser
 
-        is_spam = 'false'
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(CHECK_URL, content=is_spam)
+        mock_requests.post(VERIFY_URL, content=b'valid')
+        mock_requests.post(CHECK_URL, content=b'false')
 
         parent_slug = 'Web/Guide'
         rev_form1 = RevisionForm(request=request,
@@ -966,9 +968,8 @@ class RevisionFormEditTranslationTests(RevisionFormViewTests):
         request = self.rf.post('/fr/docs/Web/Guide/HTML')
         request.user = self.testuser
 
-        is_spam = 'false'
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(CHECK_URL, content=is_spam)
+        mock_requests.post(VERIFY_URL, content=b'valid')
+        mock_requests.post(CHECK_URL, content=b'false')
 
         # Form #1 - Document validation
         data = self.view_data.copy()

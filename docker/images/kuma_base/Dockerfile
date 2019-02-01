@@ -1,4 +1,4 @@
-FROM python:2.7-slim@sha256:b0ef68fd0683515cdda7174efad2de9a6b857570378886381687edb6f3b1acbc
+FROM python:3.7-slim
 
 # Set the environment variables
 ENV NODE_VERSION=10.16.3 \
@@ -101,10 +101,6 @@ RUN useradd --uid 1000 --shell /bin/bash --create-home kuma \
 WORKDIR /app
 COPY --chown=kuma:kuma ./requirements /app/requirements
 RUN pip install --no-cache-dir -r requirements/dev.txt
-
-# fix import issue with configparser 3.5.0
-# https://bitbucket.org/ambv/configparser/issues/20/importwarning-missing-__init__py
-RUN touch /usr/local/lib/python2.7/site-packages/backports/__init__.py
 
 # install Node.js tools
 # config files are symlinks to make updating easier
