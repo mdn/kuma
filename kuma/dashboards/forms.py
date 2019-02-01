@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
@@ -30,28 +32,28 @@ class RevisionDashboardForm(forms.Form):
         # Required for non-translations, which is
         # enforced in Document.clean().
         required=False,
-        label=_(u'Locale:'))
+        label=_('Locale:'))
     user = StrippedCharField(
         min_length=1, max_length=255,
         required=False,
-        label=_(u'User:'))
+        label=_('User:'))
     topic = StrippedCharField(
         min_length=1, max_length=255,
         required=False,
-        label=_(u'Topic:'))
+        label=_('Topic:'))
     start_date = forms.DateField(
-        required=False, label=_(u'Start Date:'),
+        required=False, label=_('Start Date:'),
         input_formats=['%m/%d/%Y'],
         widget=forms.TextInput(attrs={'pattern': r'\d{1,2}/\d{1,2}/\d{4}'}))
     end_date = forms.DateField(
-        required=False, label=_(u'End Date:'),
+        required=False, label=_('End Date:'),
         input_formats=['%m/%d/%Y'],
         widget=forms.TextInput(attrs={'pattern': r'\d{1,2}/\d{1,2}/\d{4}'}))
     preceding_period = forms.ChoiceField(
         choices=PERIOD_CHOICES,
         required=False,
-        label=_(u'Preceding Period:'))
+        label=_('Preceding Period:'))
     authors = forms.ChoiceField(
         choices=AUTHOR_CHOICES,
         required=False,
-        label=_(u'Authors'))
+        label=_('Authors'))
