@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from celery import task
 
 from kuma.core.decorators import skip_in_maintenance_mode

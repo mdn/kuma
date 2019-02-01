@@ -25,39 +25,39 @@ HACKS_PARSED = FeedParserDict(
         # Omited attributes: author_detail, authors, content, guidislink,
         # links, summary_detail, tags, title_detail, comments, slash_comments,
         # wfw_commentrss
-        author=u'Jen Simmons',
-        id=u'https://hacks.mozilla.org/?p=31957',
-        link=u'https://hacks.mozilla.org/2018/02/its-resilient-css-week/',
-        published=u'Mon, 26 Feb 2018 15:05:08 +0000',
+        author='Jen Simmons',
+        id='https://hacks.mozilla.org/?p=31957',
+        link='https://hacks.mozilla.org/2018/02/its-resilient-css-week/',
+        published='Mon, 26 Feb 2018 15:05:08 +0000',
         published_parsed=struct_time((2018, 2, 26, 15, 5, 8, 0, 57, 0)),
-        summary=u'Jen Simmons celebrates resilient CSS',
-        title=u'It\u2019s Resilient CSS Week',
+        summary='Jen Simmons celebrates resilient CSS',
+        title='It\u2019s Resilient CSS Week',
     ), FeedParserDict(
-        author=u'James Hobin',
-        id=u'https://hacks.mozilla.org/?p=31946',
-        link=(u'https://hacks.mozilla.org/2018/02/making-a-clap-sensing'
-              u'-web-thing/'),
-        published=u'Thu, 22 Feb 2018 15:55:45 +0000',
+        author='James Hobin',
+        id='https://hacks.mozilla.org/?p=31946',
+        link=('https://hacks.mozilla.org/2018/02/making-a-clap-sensing'
+              '-web-thing/'),
+        published='Thu, 22 Feb 2018 15:55:45 +0000',
         published_parsed=struct_time((2018, 2, 22, 15, 55, 45, 3, 53, 0)),
-        summary=(u'The Project Things Gateway exists as a platform to bring'
-                 u' all of your IoT devices together under a unified'
-                 u' umbrella.'),
-        title=u'Making a Clap-Sensing Web Thing',
+        summary=('The Project Things Gateway exists as a platform to bring'
+                 ' all of your IoT devices together under a unified'
+                 ' umbrella.'),
+        title='Making a Clap-Sensing Web Thing',
     )],
-    etag=u'W/"1da1fc6a456fd49c32a9291b38ec31ee-gzip"',
+    etag='W/"1da1fc6a456fd49c32a9291b38ec31ee-gzip"',
     feed=FeedParserDict(
         # Omited attributes: generator, generator_detail, language, links,
         # subtitle_detail, sy_updatefrequency, sy_updateperiod, title_detail,
-        link=u'https://hacks.mozilla.org',
-        subtitle=u'hacks.mozilla.org',
-        title=u'Mozilla Hacks \u2013 the Web developer blog',
-        updated=u'Mon, 26 Feb 2018 21:23:38 +0000',
+        link='https://hacks.mozilla.org',
+        subtitle='hacks.mozilla.org',
+        title='Mozilla Hacks \u2013 the Web developer blog',
+        updated='Mon, 26 Feb 2018 21:23:38 +0000',
         updated_parsed=struct_time((2018, 2, 26, 21, 23, 38, 0, 57, 0))),
-    href=u'https://hacks.mozilla.org/feed/',
+    href='https://hacks.mozilla.org/feed/',
     status=200,
     updated='Mon, 26 Feb 2018 21:23:38 GMT',
     updated_parsed=struct_time((2018, 2, 26, 21, 23, 38, 0, 57, 0)),
-    version=u'rss20')
+    version='rss20')
 
 
 def modify_fpd(parsed, **kwargs):
@@ -123,7 +123,7 @@ def test_fetch_feed_sets_title(hacks_feed, mocked_parse):
     stream = fetch_feed(hacks_feed)
     assert stream
     feed = Feed.objects.get()
-    assert feed.title == u'Mozilla Hacks \u2013 the Web developer blog'
+    assert feed.title == 'Mozilla Hacks \u2013 the Web developer blog'
 
 
 def test_fetch_feed_redirect(hacks_feed, mocked_parse):
@@ -143,7 +143,7 @@ def test_fetch_feed_unchanged(hacks_feed, mocked_parse, enabled):
     """If the ETag matches, the feed is enabled but not processed."""
     hacks_feed.last_modified = datetime(2018, 2, 26, 21, 23, 38)
     hacks_feed.etag = 'W/"1da1fc6a456fd49c32a9291b38ec31ee-gzip"'
-    hacks_feed.title = u'Mozilla Hacks \u2013 the Web developer blog'
+    hacks_feed.title = 'Mozilla Hacks \u2013 the Web developer blog'
     hacks_feed.enabled = (enabled == 'enabled')
     hacks_feed.save()  # Won't be saved in enabled case
     mocked_parse.return_value = modify_fpd(HACKS_PARSED, status=304)
