@@ -1,4 +1,4 @@
-from __future__ import division
+from __future__ import division, unicode_literals
 
 import datetime
 from collections import Counter, defaultdict
@@ -196,7 +196,7 @@ def spam_dashboard_recent_events(start=None, end=None):
     """Gather data for recent spam events."""
     now = datetime.datetime.now()
     data = {
-        'events_generated': now.isoformat(' '),
+        'events_generated': str(now),
         'recent_spam': [],
     }
 

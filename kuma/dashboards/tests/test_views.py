@@ -612,12 +612,12 @@ def test_lookup(root_doc, wiki_user_2, wiki_user_3, client, mode, endpoint):
     if mode == 'ajax':
         if endpoint == 'topic_lookup':
             qs = '?topic=root'
-            expected_content = [{u'label': u'Root'}]
+            expected_content = [{'label': 'Root'}]
         else:
             qs = '?user=wiki'
-            expected_content = [{u'label': u'wiki_user'},
-                                {u'label': u'wiki_user_2'},
-                                {u'label': u'wiki_user_3'}]
+            expected_content = [{'label': 'wiki_user'},
+                                {'label': 'wiki_user_2'},
+                                {'label': 'wiki_user_3'}]
         headers.update(HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     else:
         expected_content = []
