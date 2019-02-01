@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import datetime
 import json
 
@@ -10,6 +12,7 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.template.loader import render_to_string
+from django.utils.six import text_type
 from django.utils.six.moves import html_parser
 from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse
 from pyquery import PyQuery as pq
@@ -387,15 +390,15 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
     @requests_mock.mock()
     def test_preview_nonascii(self, mock_requests):
         """POSTing non-ascii to kumascript should encode to utf8"""
-        content = u'Français'
+        content = 'Français'
         mock_requests.post(requests_mock.ANY, content=content.encode('utf8'))
 
         self.client.login(username='admin', password='testpass')
         resp = self.client.post(reverse('wiki.preview'), {'content': content},
                                 HTTP_HOST=settings.WIKI_HOST)
         assert_no_cache_header(resp)
-        # No UnicodeDecodeError
-        mock_requests.request_history[0].body.decode('utf8')
+        # No UnicodeDecodeError, it's a unicode string
+        assert isinstance(mock_requests.request_history[0].body, str)
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=600)
     @mock.patch('kuma.wiki.kumascript.post')
@@ -445,9 +448,9 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
         _make_doc('One', ['One | MDN'], 'one')
         _make_doc('Two', ['Two - One | MDN'], 'one/two')
         _make_doc('Three', ['Three - One | MDN'], 'one/two/three')
-        _make_doc(u'Special Φ Char',
-                  [u'Special \u03a6 Char - One | MDN',
-                   u'Special \xce\xa6 Char - One | MDN'],
+        _make_doc('Special Φ Char',
+                  ['Special \u03a6 Char - One | MDN',
+                   'Special \xce\xa6 Char - One | MDN'],
                   'one/two/special_char')
 
         # Additional tests for /Web/*  changes
@@ -498,25 +501,25 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
                                   '<p>ignore ignore ignore</p>',
                                   'yes yes yes')
         # Don't take legacy crumbs
-        make_page_and_compare_seo('six', u'<p>« CSS</p><p>I am me!</p>',
+        make_page_and_compare_seo('six', '<p>« CSS</p><p>I am me!</p>',
                                   'I am me!')
         # Take the seoSummary class'd element
         make_page_and_compare_seo('seven',
-                                  u'<p>I could be taken</p>'
+                                  '<p>I could be taken</p>'
                                   '<p class="seoSummary">I should be though</p>',
                                   'I should be though')
         # Two summaries append
         make_page_and_compare_seo('eight',
-                                  u'<p>I could be taken</p>'
+                                  '<p>I could be taken</p>'
                                   '<p class="seoSummary">a</p>'
                                   '<p class="seoSummary">b</p>',
                                   'a b')
 
         # No brackets
         make_page_and_compare_seo('nine',
-                                  u'<p>I <em>am</em> awesome.'
+                                  '<p>I <em>am</em> awesome.'
                                   ' <a href="blah">A link</a> is also &lt;cool&gt;</p>',
-                                  u'I am awesome. A link is also cool')
+                                  'I am awesome. A link is also cool')
 
 
 @pytest.mark.parametrize('content,expected', [
@@ -1299,15 +1302,15 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         response = self.client.get(reverse('wiki.feeds.list_review',
                                            args=('atom',)),
                                    HTTP_HOST=settings.WIKI_HOST)
-        assert doc_entry in response.content
+        assert doc_entry in response.content.decode('utf-8')
         response = self.client.get(reverse('wiki.feeds.list_review_tag',
                                            args=('atom', 'technical', )),
                                    HTTP_HOST=settings.WIKI_HOST)
-        assert doc_entry not in response.content
+        assert doc_entry not in response.content.decode('utf-8')
         response = self.client.get(reverse('wiki.feeds.list_review_tag',
                                            args=('atom', 'editorial', )),
                                    HTTP_HOST=settings.WIKI_HOST)
-        assert doc_entry in response.content
+        assert doc_entry in response.content.decode('utf-8')
 
     @pytest.mark.review_tags
     def test_quick_review(self):
@@ -1461,25 +1464,24 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         history_url = reverse(
             'wiki.document_revisions', kwargs={'document_path': doc_path}, locale=locale
         )
-        # The midair collission error, with the document url
-        midair_collission_error = (unicode(
-            MIDAIR_COLLISION) % {'url': history_url}
-        ).encode('utf-8')
+        # The midair collision error, with the document url
+        collision_err = MIDAIR_COLLISION % {'url': history_url}
 
+        content = resp.content.decode('utf-8')
         if is_ajax:
-            location_of_error = json.loads(resp.content)['error_message']
+            location_of_error = json.loads(content)['error_message']
         else:
             # If this is not an ajax post, then the error comes back in escaped
             # html. We unescape the resp.content, but not all of it, since that
             # causes ascii errors.
-            start_of_error = resp.content.index(midair_collission_error[0:20])
+            start_of_error = content.index(collision_err[0:20])
             # Add an some extra characters to the end, since the unescaped length
             # is a little less than the escaped length
-            end_of_error = start_of_error + len(midair_collission_error) + 20
+            end_of_error = start_of_error + len(collision_err) + 20
             location_of_error = html_parser.HTMLParser().unescape(
-                resp.content[start_of_error: end_of_error]
+                content[start_of_error: end_of_error]
             )
-        assert midair_collission_error in location_of_error
+        assert collision_err in location_of_error
 
     @pytest.mark.midair
     def test_edit_midair_collisions_ajax(self):
@@ -1495,7 +1497,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         """Tests attempted spam edits that occur on Ajax POSTs."""
         # Note: Akismet is enabled by the Flag overrides
 
-        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(VERIFY_URL, content=b'valid')
         # The return value of akismet.check_comment is set to True
         mock_akismet_method.return_value = True
 
@@ -2392,10 +2394,10 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         assert normalize_html(expected) == normalize_html(response.content)
 
         # Also, ensure that the revision is slipped into the headers
-        assert (unicode(Document.objects.get(slug=rev.document.slug,
-                                             locale=rev.document.locale)
-                                        .current_revision.id) ==
-                unicode(response['x-kuma-revision']))
+        assert (text_type(Document.objects.get(slug=rev.document.slug,
+                                               locale=rev.document.locale)
+                                          .current_revision.id) ==
+                text_type(response['x-kuma-revision']))
 
     @pytest.mark.midair
     def test_midair_section_collision_ajax(self):
@@ -2473,11 +2475,11 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         history_url = reverse(
             'wiki.document_revisions',
             kwargs={'document_path': rev.document.slug})
-        midair_collission_error = (unicode(MIDAIR_COLLISION) % {'url': history_url}).encode('utf-8')
-        assert midair_collission_error in json.loads(resp.content)['error_message']
+        collision_err = MIDAIR_COLLISION % {'url': history_url}
+        assert collision_err in json.loads(resp.content)['error_message']
 
     def test_raw_include_option(self):
-        doc_src = u"""
+        doc_src = """
             <div class="noinclude">{{ XULRefAttr() }}</div>
             <dl>
               <dt>{{ XULAttr(&quot;maxlength&quot;) }}</dt>
@@ -2490,7 +2492,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             </div>
         """
         rev = revision(is_approved=True, save=True, content=doc_src)
-        expected = u"""
+        expected = """
             <dl>
               <dt>{{ XULAttr(&quot;maxlength&quot;) }}</dt>
               <dd>Type: <em>integer</em></dd>
@@ -2506,7 +2508,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         assert resp.status_code == 200
         assert_shared_cache_header(resp)
         assert (normalize_html(expected) ==
-                normalize_html(resp.content.decode('utf-8')))
+                normalize_html(resp.content.decode(resp.charset)))
 
     def test_section_edit_toc(self):
         """show_toc is preserved in section editing."""

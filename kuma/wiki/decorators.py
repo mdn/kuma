@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 try:
     from functools import wraps
 except ImportError:

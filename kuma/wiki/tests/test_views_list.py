@@ -197,8 +197,8 @@ def test_tag_list(root_doc, trans_doc, client, locale_case, tag_case, tag):
     assert resp.status_code == 200
     dom = pq(resp.content)
     assert len(dom('#document-list ul.document-list li')) == 0
-    assert root_doc.slug not in resp.content.decode('utf-8')
-    assert trans_doc.slug not in resp.content.decode('utf-8')
+    assert root_doc.slug not in resp.content.decode(resp.charset)
+    assert trans_doc.slug not in resp.content.decode(resp.charset)
 
 
 @pytest.mark.parametrize('locale', ['en-US', 'de', 'fr'])

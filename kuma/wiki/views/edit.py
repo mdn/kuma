@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
 import newrelic.agent
 from csp.decorators import csp_update
@@ -161,8 +162,8 @@ def edit(request, document_slug, document_locale):
                 if doc_form.is_valid():
                     # if must be here for section edits
                     if 'slug' in post_data:
-                        post_data['slug'] = u'/'.join([slug_dict['parent'],
-                                                       post_data['slug']])
+                        post_data['slug'] = '/'.join([slug_dict['parent'],
+                                                      post_data['slug']])
 
                     # Get the possibly new slug for the imminent redirection:
                     doc = doc_form.save(parent=None)

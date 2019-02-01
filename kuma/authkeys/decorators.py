@@ -23,7 +23,7 @@ def accepts_auth_key(func):
                 try:
                     basic, b64_auth = http_auth.split(' ', 1)
                     if 'Basic' == basic:
-                        auth = base64.decodestring(b64_auth.encode('utf-8')).decode('utf-8')
+                        auth = base64.decodebytes(b64_auth.encode('utf-8')).decode('utf-8')
                         key_id, secret = auth.split(':', 1)
                         key = Key.objects.get(key=key_id)
                         if key.check_secret(secret):

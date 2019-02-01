@@ -34,14 +34,17 @@ def get_compare_url(doc, from_id, to_id):
 
 @library.filter
 def bugize_text(content):
-    content = jinja2.escape(content)
+    escaped = jinja2.escape(content)
     regex = re.compile(r'(bug)\s+#?(\d+)', re.IGNORECASE)
-    content = regex.sub(
-        jinja2.Markup('<a href="https://bugzilla.mozilla.org/'
-                      'show_bug.cgi?id=\\2" '
-                      'target="_blank" rel="noopener">\\1 \\2</a>'),
-        content)
-    return content
+
+    def replacer(match):
+        return jinja2.Markup(
+            '<a href="https://bugzilla.mozilla.org/'
+            'show_bug.cgi?id={1}" '
+            'target="_blank" rel="noopener">{0} {1}</a>'
+            ''.format(*match.groups()))
+
+    return jinja2.Markup(regex.sub(replacer, escaped))
 
 
 @library.global_function
@@ -84,7 +87,7 @@ def revisions_unified_diff(from_revision, to_revision):
     tidy_from = from_revision.get_tidied_content()
     tidy_to = to_revision.get_tidied_content()
 
-    return u'\n'.join(difflib.unified_diff(
+    return '\n'.join(difflib.unified_diff(
         tidy_from.splitlines(),
         tidy_to.splitlines(),
         fromfile=fromfile,
@@ -111,7 +114,7 @@ def diff_table(content_from, content_to, prev_id, curr_id, tidy=False):
                                     numlines=config.DIFF_CONTEXT_LINES)
     except RuntimeError:
         # some diffs hit a max recursion error
-        message = ugettext(u'There was an error generating the content.')
+        message = ugettext('There was an error generating the content.')
         diff = '<div class="warning"><p>%s</p></div>' % message
     return jinja2.Markup(diff)
 
@@ -175,12 +178,12 @@ def _recursive_escape(value, esc=conditional_escape):
     """
     if isinstance(value, dict):
         return type(value)((esc(k), _recursive_escape(v))
-                           for (k, v) in value.iteritems())
+                           for (k, v) in value.items())
     elif isinstance(value, (list, tuple)):
         return type(value)(_recursive_escape(v) for v in value)
-    elif isinstance(value, six.string_types):
+    elif isinstance(value, str):
         return esc(value)
-    elif isinstance(value, (int, long, float)) or value in (True, False, None):
+    elif isinstance(value, (int, float)) or value in (True, False, None):
         return value
     # We've exhausted all the types acceptable by the default JSON encoder.
     # Django's improved JSON encoder handles a few other types, all of which

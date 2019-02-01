@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import datetime
 import json
 
@@ -153,7 +155,7 @@ def analytics_upageviews(revision_ids, start_date, end_date=None):
                             'filters': [
                                 {'dimensionName': 'ga:dimension12',
                                  'operator': 'IN_LIST',
-                                 'expressions': map(str, revision_ids)}
+                                 'expressions': [str(x) for x in revision_ids]}
                             ]
                         }
                     ],

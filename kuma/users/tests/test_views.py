@@ -258,8 +258,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         """Enable Akismet and mock calls to it. Return the mock object."""
         self.submissions_flag = Flag.objects.create(
             name=SPAM_SUBMISSIONS_FLAG, everyone=True)
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(SPAM_URL, content=Akismet.submission_success)
+        mock_requests.post(VERIFY_URL, content=b'valid')
+        mock_requests.post(
+            SPAM_URL, content=Akismet.submission_success.encode('utf-8'))
         return mock_requests
 
     def test_delete_document(self):
@@ -387,7 +388,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         assert_no_cache_header(resp)
 
         # All of self.testuser's revisions have been submitted
-        testuser_submissions = RevisionAkismetSubmission.objects.filter(revision__creator=self.testuser.id)
+        testuser_submissions = RevisionAkismetSubmission.objects.filter(
+            revision__creator=self.testuser.id)
         assert testuser_submissions.count() == num_revisions
         for submission in testuser_submissions:
             assert submission.revision in revisions_created
@@ -1052,7 +1054,7 @@ def test_bug_698126_l10n(wiki_user, user_client):
     for field in response.context['user_form'].fields:
         # if label is localized it's a lazy proxy object
         lbl = response.context['user_form'].fields[field].label
-        assert not isinstance(lbl, six.string_types), 'Field %s is a string!' % field
+        assert not isinstance(lbl, str), 'Field %s is a string!' % field
 
 
 def test_user_edit_github_is_public(wiki_user, wiki_user_github_account,
@@ -1143,12 +1145,12 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                 'terms': True,
                 'g-recaptcha-response': 'FAILED'}
 
-        with mock.patch('captcha.client.request') as request_mock:
-            request_mock.return_value.read.return_value = '{"success": null}'
+        with mock.patch('captcha.client.recaptcha_request') as request_mock:
+            request_mock.return_value.read.return_value = b'{"success": null}'
             response = self.client.post(self.signup_url, data=data, follow=True)
         assert response.status_code == 200
         assert (response.context['form'].errors ==
-                {'captcha': [u'Incorrect, please try again.']})
+                {'captcha': ['Error verifying reCAPTCHA, please try again.']})
 
     def test_matching_user(self):
         self.github_login()

@@ -471,17 +471,17 @@ def safer_pyquery(*args, **kwargs):
     NOTE! As of May 10 2019, this risk exists the the latest release of
     PyQuery. Hopefully it will be fixed but it would a massively disruptive
     change and thus unlikely to happen any time soon.
+
+    NOTE 2! Unlikely to be fixed by core pyquery team any time soon
+    https://github.com/gawel/pyquery/issues/203
     """
 
-    if isinstance(args[0], unicode):
-        if args[0].split('://', 1)[0] in ('http', 'https'):
-            args = (' {}'.format(args[0]),) + args[1:]
-    elif isinstance(args[0], str):
-        # If the input is a byte string, deal with it a byte string.
-        # Since this file is using __future__.unicode_literals and
-        # type and quoted string automatically becomes a unicode string.
-        # In this case force it all to stay as byte strings.
-        if args[0].split(force_bytes('://'), 1)[0] in (force_bytes('http'), force_bytes('https')):
-            args = (force_bytes(' ') + args[0],) + args[1:]
+    # This "if" statement is exactly what PyQuery's constructor does.
+    # We'll run it ourselves once and if it matches, "ruin" it by
+    # injecting that extra space.
+    if (len(args) >= 1 and
+       isinstance(args[0], str) and
+       args[0].split('://', 1)[0] in ('http', 'https')):
+        args = (f' {args[0]}',) + args[1:]
 
     return pq(*args, **kwargs)

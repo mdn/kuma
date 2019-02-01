@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from datetime import date, datetime, timedelta
 
 from django.db import models

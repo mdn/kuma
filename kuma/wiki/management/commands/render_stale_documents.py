@@ -1,6 +1,8 @@
 """
 Manually re-render stale documents
 """
+from __future__ import unicode_literals
+
 import logging
 
 from django.core.management.base import BaseCommand

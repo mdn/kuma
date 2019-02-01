@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import base64
 
 import pytest
@@ -31,7 +29,7 @@ def test_auth_key_decorator(user_auth_key, settings, use_valid_key,
         user_auth_key.secret if use_valid_secret else 'FAKE'
     )
 
-    b64_auth = base64.encodestring(auth.encode('utf-8')).decode('utf-8')
+    b64_auth = base64.encodebytes(auth.encode('utf-8')).decode('utf-8')
     request.META['HTTP_AUTHORIZATION'] = 'Basic %s' % b64_auth
 
     settings.MAINTENANCE_MODE = maintenance_mode

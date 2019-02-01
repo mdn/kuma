@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import newrelic.agent
 from django.core.exceptions import PermissionDenied
 from django.http import Http404

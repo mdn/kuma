@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import logging
 
 from . import (akismet_revision, code, create, delete, document, edit, legacy, list,  # noqa

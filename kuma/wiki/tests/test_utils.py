@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import datetime
 import os.path
 
@@ -41,7 +43,7 @@ class RecordingHttpMockSequence(HttpMockSequence):
 @mock.patch('kuma.wiki.utils.ServiceAccountCredentials')
 class AnalyticsUpageviewsTests(KumaTestCase):
     start_date = datetime.date(2016, 1, 1)
-    valid_response = """{"reports": [
+    valid_response = b"""{"reports": [
             {
                 "data": {
                     "rows": [

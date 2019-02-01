@@ -98,98 +98,98 @@ SUMMARIES_SEO_CONTENT = {
 }
 
 
-class GetContentSectionsTests(TestCase):
-    def test_section_pars_for_empty_docs(self):
-        doc = document(title='Doc', locale=u'fr', slug=u'doc', save=True,
-                       html='<!-- -->')
-        res = get_content_sections(doc.html)
-        assert 'list' == type(res).__name__
+def test_section_pars_for_empty_docs(db):
+    doc = document(title='Doc', locale='fr', slug='doc', save=True,
+                   html='<!-- -->')
+    res = get_content_sections(doc.html)
+    assert 'list' == type(res).__name__
 
 
-class InjectSectionIDsTests(TestCase):
-    def test_section_ids(self):
+def test_section_ids():
 
-        doc_src = """
-            <h1 class="header1">Header One</h1>
-            <p>test</p>
-            <section>
-                <h1 class="header2">Header Two</h1>
-                <h1 name="Header: X" class="header3">Header Three</h1>
-                <p>test</p>
-            </section>
-            <h2 name="C~o:n;s/t%a$n=t@s" class="hasname">This is ignored</h2>
-            <p>test</p>
-
-            <h1 id="i-already-have-an-id" class="hasid">This text clobbers the ID</h1>
-
-            <h1 class="header3">Header Three</h1>
-            <p>test</p>
-
-            <section id="Quick_Links" class="Quick_Links">
-                <ol>
-                    <li>Hey look, quick links</li>
-                </ol>
-            </section>
-        """
-
-        result_src = (kuma.wiki.content
-                      .parse(doc_src)
-                      .injectSectionIDs()
-                      .serialize())
-        result_doc = pq(result_src)
-
-        expected = (
-            ('header1', 'Header_One'),
-            ('header2', 'Header_Two'),
-            ('header3', 'Header_X'),
-            ('hasname', 'Constants'),
-            ('hasid', 'This_text_clobbers_the_ID'),
-            ('Quick_Links', 'Quick_Links'),
-        )
-        for cls, id in expected:
-            assert id == result_doc.find('.%s' % cls).attr('id')
-
-        # Then, ensure all elements in need of an ID now all have unique IDs.
-        assert len(SECTION_TAGS)
-        els = result_doc.find(', '.join(SECTION_TAGS))
-        seen_ids = set()
-        for i in range(0, len(els)):
-            id = els.eq(i).attr('id')
-            assert id is not None
-            assert id not in seen_ids
-            seen_ids.add(id)
-
-    def test_incremented_section_ids(self):
-
-        doc_src = """
+    doc_src = """
         <h1 class="header1">Header One</h1>
-        <h1>Header One</h1>
-        <h1>Header One</h1>
-        <h1>Header Two</h1>
-        <h1 name="someId">Header Two</h1>
-        """
+        <p>test</p>
+        <section>
+            <h1 class="header2">Header Two</h1>
+            <h1 name="Header: X" class="header3">Header Three</h1>
+            <p>test</p>
+        </section>
+        <h2 name="C~o:n;s/t%a$n=t@s" class="hasname">This is ignored</h2>
+        <p>test</p>
 
-        result_src = (kuma.wiki.content
-                      .parse(doc_src)
-                      .injectSectionIDs()
-                      .serialize())
+        <h1 id="i-already-have-an-id" class="hasid">This text clobbers the ID</h1>
 
-        expected = """
-        <h1 id="Header_One" class="header1">Header One</h1>
-        <h1 id="Header_One_2">Header One</h1>
-        <h1 id="Header_One_3">Header One</h1>
-        <h1 id="Header_Two">Header Two</h1>
-        <h1 id="someId" name="someId">Header Two</h1>
-        """
+        <h1 class="header3">Header Three</h1>
+        <p>test</p>
 
-        self.assertHTMLEqual(result_src, expected)
+        <section id="Quick_Links" class="Quick_Links">
+            <ol>
+                <li>Hey look, quick links</li>
+            </ol>
+        </section>
+    """
 
-        # Ensure 1, 2 doesn't turn into 3, 4
-        result_src = (kuma.wiki.content
-                      .parse(expected)
-                      .injectSectionIDs()
-                      .serialize())
-        self.assertHTMLEqual(result_src, expected)
+    result_src = (kuma.wiki.content
+                  .parse(doc_src)
+                  .injectSectionIDs()
+                  .serialize())
+    result_doc = pq(result_src)
+
+    expected = (
+        ('header1', 'Header_One'),
+        ('header2', 'Header_Two'),
+        ('header3', 'Header_X'),
+        ('hasname', 'Constants'),
+        ('hasid', 'This_text_clobbers_the_ID'),
+        ('Quick_Links', 'Quick_Links'),
+    )
+    for cls, id in expected:
+        assert id == result_doc.find('.%s' % cls).attr('id')
+
+    # Then, ensure all elements in need of an ID now all have unique IDs.
+    assert len(SECTION_TAGS)
+    els = result_doc.find(', '.join(SECTION_TAGS))
+    seen_ids = set()
+    for i in range(0, len(els)):
+        id = els.eq(i).attr('id')
+        assert id is not None
+        assert id not in seen_ids
+        seen_ids.add(id)
+
+
+def test_incremented_section_ids():
+
+    doc_src = """
+    <h1 class="header1">Header One</h1>
+    <h1>Header One</h1>
+    <h1>Header One</h1>
+    <h1>Header Two</h1>
+    <h1 name="someId">Header Two</h1>
+    """
+
+    result_src = (kuma.wiki.content
+                  .parse(doc_src)
+                  .injectSectionIDs()
+                  .serialize())
+
+    expected = """
+    <h1 id="Header_One" class="header1">Header One</h1>
+    <h1 id="Header_One_2">Header One</h1>
+    <h1 id="Header_One_3">Header One</h1>
+    <h1 id="Header_Two">Header Two</h1>
+    <h1 id="someId" name="someId">Header Two</h1>
+    """
+
+    assert normalize_html(result_src) == normalize_html(expected)
+
+    # Ensure 1, 2 doesn't turn into 3, 4
+    result_src = (kuma.wiki.content
+                  .parse(expected)
+                  .injectSectionIDs()
+                  .serialize())
+
+    assert normalize_html(result_src) == normalize_html(expected)
 
 
 def test_extractSection_by_header_id():
@@ -322,124 +322,123 @@ def test_extractSection_ignore_heading():
     assert normalize_html(result) == normalize_html(expected)
 
 
-class ReplaceSectionTests(TestCase):
-    def test_basic_section_replace(self):
-        doc_src = """
-            <h1 id="s1">Head 1</h1>
-            <p>test</p>
-            <p>test</p>
-            <h1 id="s2">Head 2</h1>
-            <p>test</p>
-            <p>test</p>
-            <h1 id="s3">Head 3</h1>
-            <p>test</p>
-            <p>test</p>
-        """
-        replace_src = """
-            <h1 id="s2">Head 2</h1>
-            <p>replacement worked</p>
-        """
-        expected = """
-            <h1 id="s1">Head 1</h1>
-            <p>test</p>
-            <p>test</p>
-            <h1 id="s2">Head 2</h1>
-            <p>replacement worked</p>
-            <h1 id="s3">Head 3</h1>
-            <p>test</p>
-            <p>test</p>
-        """
-        result = (kuma.wiki.content
-                  .parse(doc_src)
-                  .replaceSection(id="s2", replace_src=replace_src)
-                  .serialize())
-        assert normalize_html(expected) == normalize_html(result)
-
-    def test_ignore_heading_section_replace(self):
-        doc_src = """
-            <h1 id="s1">Head 1</h1>
-            <p>test</p>
-            <p>test</p>
-            <h1 id="s2">Head 2</h1>
-            <p>test</p>
-            <p>test</p>
-            <h1 id="s3">Head 3</h1>
-            <p>test</p>
-            <p>test</p>
-        """
-        replace_src = """
-            <p>replacement worked yay hooray</p>
-        """
-        expected = """
-            <h1 id="s1">Head 1</h1>
-            <p>test</p>
-            <p>test</p>
-            <h1 id="s2">Head 2</h1>
-            <p>replacement worked yay hooray</p>
-            <h1 id="s3">Head 3</h1>
-            <p>test</p>
-            <p>test</p>
-        """
-        result = (kuma.wiki.content
-                  .parse(doc_src)
-                  .replaceSection(id="s2",
-                                  replace_src=replace_src,
-                                  ignore_heading=True)
-                  .serialize())
-        assert normalize_html(expected) == normalize_html(result)
+def test_basic_section_replace():
+    doc_src = """
+        <h1 id="s1">Head 1</h1>
+        <p>test</p>
+        <p>test</p>
+        <h1 id="s2">Head 2</h1>
+        <p>test</p>
+        <p>test</p>
+        <h1 id="s3">Head 3</h1>
+        <p>test</p>
+        <p>test</p>
+    """
+    replace_src = """
+        <h1 id="s2">Head 2</h1>
+        <p>replacement worked</p>
+    """
+    expected = """
+        <h1 id="s1">Head 1</h1>
+        <p>test</p>
+        <p>test</p>
+        <h1 id="s2">Head 2</h1>
+        <p>replacement worked</p>
+        <h1 id="s3">Head 3</h1>
+        <p>test</p>
+        <p>test</p>
+    """
+    result = (kuma.wiki.content
+              .parse(doc_src)
+              .replaceSection(id="s2", replace_src=replace_src)
+              .serialize())
+    assert normalize_html(expected) == normalize_html(result)
 
 
-class RemoveSectionTests(TestCase):
-    def test_basic_section_remove(self):
-        doc_src = """
-            <h1 id="s1">Head 1</h1>
-            <div id="here">Remove <span>this</span>.</div>
-            <p>test</p>
-            <div class="here">Leave <span>this</span>.</div>
-        """
-        expected = """
-            <h1 id="s1">Head 1</h1>
-            <p>test</p>
-            <div class="here">Leave <span>this</span>.</div>
-        """
-        result = (kuma.wiki.content
-                  .parse(doc_src)
-                  .removeSection('here')
-                  .serialize())
-        assert normalize_html(expected) == normalize_html(result)
+def test_ignore_heading_section_replace():
+    doc_src = """
+        <h1 id="s1">Head 1</h1>
+        <p>test</p>
+        <p>test</p>
+        <h1 id="s2">Head 2</h1>
+        <p>test</p>
+        <p>test</p>
+        <h1 id="s3">Head 3</h1>
+        <p>test</p>
+        <p>test</p>
+    """
+    replace_src = """
+        <p>replacement worked yay hooray</p>
+    """
+    expected = """
+        <h1 id="s1">Head 1</h1>
+        <p>test</p>
+        <p>test</p>
+        <h1 id="s2">Head 2</h1>
+        <p>replacement worked yay hooray</p>
+        <h1 id="s3">Head 3</h1>
+        <p>test</p>
+        <p>test</p>
+    """
+    result = (kuma.wiki.content
+              .parse(doc_src)
+              .replaceSection(id="s2",
+                              replace_src=replace_src,
+                              ignore_heading=True)
+              .serialize())
+    assert normalize_html(expected) == normalize_html(result)
 
 
-class InjectSectionEditingLinksTests(TestCase):
-    def test_section_edit_links(self):
-        doc_src = """
-            <h1 id="s1">Head 1</h1>
-            <p>test</p>
-            <p>test</p>
-            <h2 id="s2">Head 2</h2>
-            <p>test</p>
-            <p>test</p>
-            <h3 id="s3">Head 3</h3>
-            <p>test</p>
-            <p>test</p>
-        """
-        expected = """
-            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/some-slug?raw=true&amp;section=s1" href="/en-US/docs/some-slug$edit?edit_links=true&amp;section=s1" title="Edit section">Edit</a>Head 1</h1>
-            <p>test</p>
-            <p>test</p>
-            <h2 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/some-slug?raw=true&amp;section=s2" href="/en-US/docs/some-slug$edit?edit_links=true&amp;section=s2" title="Edit section">Edit</a>Head 2</h2>
-            <p>test</p>
-            <p>test</p>
-            <h3 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/some-slug?raw=true&amp;section=s3" href="/en-US/docs/some-slug$edit?edit_links=true&amp;section=s3" title="Edit section">Edit</a>Head 3</h3>
-            <p>test</p>
-            <p>test</p>
-        """
-        result = (kuma.wiki.content
-                  .parse(doc_src)
-                  .injectSectionEditingLinks('some-slug', 'en-US')
-                  .serialize())
-        assert normalize_html(expected) == normalize_html(result)
+def test_basic_section_remove():
+    doc_src = """
+        <h1 id="s1">Head 1</h1>
+        <div id="here">Remove <span>this</span>.</div>
+        <p>test</p>
+        <div class="here">Leave <span>this</span>.</div>
+    """
+    expected = """
+        <h1 id="s1">Head 1</h1>
+        <p>test</p>
+        <div class="here">Leave <span>this</span>.</div>
+    """
+    result = (kuma.wiki.content
+              .parse(doc_src)
+              .removeSection('here')
+              .serialize())
+    assert normalize_html(expected) == normalize_html(result)
 
 
+def test_section_edit_links():
+    doc_src = """
+        <h1 id="s1">Head 1</h1>
+        <p>test</p>
+        <p>test</p>
+        <h2 id="s2">Head 2</h2>
+        <p>test</p>
+        <p>test</p>
+        <h3 id="s3">Head 3</h3>
+        <p>test</p>
+        <p>test</p>
+    """
+    expected = """
+        <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/some-slug?raw=true&amp;section=s1" href="/en-US/docs/some-slug$edit?edit_links=true&amp;section=s1" title="Edit section">Edit</a>Head 1</h1>
+        <p>test</p>
+        <p>test</p>
+        <h2 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/some-slug?raw=true&amp;section=s2" href="/en-US/docs/some-slug$edit?edit_links=true&amp;section=s2" title="Edit section">Edit</a>Head 2</h2>
+        <p>test</p>
+        <p>test</p>
+        <h3 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/some-slug?raw=true&amp;section=s3" href="/en-US/docs/some-slug$edit?edit_links=true&amp;section=s3" title="Edit section">Edit</a>Head 3</h3>
+        <p>test</p>
+        <p>test</p>
+    """
+    result = (kuma.wiki.content
+              .parse(doc_src)
+              .injectSectionEditingLinks('some-slug', 'en-US')
+              .serialize())
+    assert normalize_html(expected) == normalize_html(result)
+
+
+<<<<<<< HEAD
 class CodeSyntaxFilterTests(TestCase):
     def test_code_syntax_conversion(self):
         doc_src = """
@@ -499,181 +498,244 @@ class SectionIDFilterTests(TestCase):
 
         for original, slugified in headers:
             assert slugified == section_filter.slugify(original)
+=======
+def test_code_syntax_conversion():
+    doc_src = """
+        <h2>Some JavaScript</h2>:
+        <pre class="deki-transform" function="syntax.JavaScript">
+        function foo(){
+            alert("bar");
+        }
+        </pre>
+        <pre>Some CSS:</pre>
+        <pre class="dek-trans" function="syntax.CSS">
+        .dek-trans { color: red; }
+        </pre>
+    """
+    expected = """
+        <h2>Some JavaScript</h2>:
+        <pre class="brush: js">
+        function foo(){
+            alert("bar");
+        }
+        </pre>
+        <pre>Some CSS:</pre>
+        <pre class="brush: css">
+        .dek-trans { color: red; }
+        </pre>
+    """
+    result = (kuma.wiki.content
+              .parse(doc_src)
+              .filter(CodeSyntaxFilter).serialize())
+    assert normalize_html(expected) == normalize_html(result)
+
+
+def test_non_ascii_section_headers():
+    headers = [
+        ('Documentation à propos de HTML',
+         'Documentation_à_propos_de_HTML'),
+        ('Outils facilitant le développement HTML',
+         'Outils_facilitant_le_développement_HTML'),
+        ('字面值(literals)',
+         '字面值(literals)'),
+        ('Documentação',
+         'Documentação'),
+        ('Lektury uzupełniające',
+         'Lektury_uzupełniające'),
+        ('Атрибуты',
+         'Атрибуты'),
+        ('HTML5 엘리먼트',
+         'HTML5_엘리먼트'),
+        ('Non safe title "#$%&+,/:;=?@[\\]^`{|}~',
+         'Non_safe_title'),
+    ]
+
+    section_filter = SectionIDFilter('')
+
+    for original, slugified in headers:
+        assert slugified == section_filter.slugify(original)
+>>>>>>> bug 1467518 Python 3.7 everything
 
 
 @pytest.mark.toc
-class TOCFilterTests(TestCase):
-    def test_generate_toc(self):
-        doc_src = """
-            <h2 id="HTML">HTML</h2>
-              <h3 id="HTML5_canvas_element">HTML5 <code>canvas</code> element</h3>
-            <h2 id="JavaScript">JavaScript</h2>
-              JavaScript is awesome.
-              <h3 id="WebGL">WebGL</h3>
-              <h3 id="Audio">Audio</h3>
-                <h4 id="Audio-API">Audio API</h4>
-            <h2 id="CSS">CSS</h2>
-                <h4 id="CSS_transforms">CSS transforms</h4>
-              <h3 id="Gradients">Gradients</h3>
-                <h4 id="Scaling_backgrounds">Scaling backgrounds</h4>
-        """
-        expected = """
-            <li><a rel="internal" href="#HTML">HTML</a>
+def test_generate_toc():
+    doc_src = """
+        <h2 id="HTML">HTML</h2>
+          <h3 id="HTML5_canvas_element">HTML5 <code>canvas</code> element</h3>
+        <h2 id="JavaScript">JavaScript</h2>
+          JavaScript is awesome.
+          <h3 id="WebGL">WebGL</h3>
+          <h3 id="Audio">Audio</h3>
+            <h4 id="Audio-API">Audio API</h4>
+        <h2 id="CSS">CSS</h2>
+            <h4 id="CSS_transforms">CSS transforms</h4>
+          <h3 id="Gradients">Gradients</h3>
+            <h4 id="Scaling_backgrounds">Scaling backgrounds</h4>
+    """
+    expected = """
+        <li><a rel="internal" href="#HTML">HTML</a>
+            <ol>
+              <li><a rel="internal" href="#HTML5_canvas_element">HTML5 <code>canvas</code> element</a></li>
+            </ol>
+        </li>
+        <li><a rel="internal" href="#JavaScript">JavaScript</a>
+            <ol>
+              <li><a rel="internal" href="#WebGL">WebGL</a>
+              <li><a rel="internal" href="#Audio">Audio</a>
                 <ol>
-                  <li><a rel="internal" href="#HTML5_canvas_element">HTML5 <code>canvas</code> element</a></li>
+                  <li><a rel="internal" href="#Audio-API">Audio API</a></li>
                 </ol>
-            </li>
-            <li><a rel="internal" href="#JavaScript">JavaScript</a>
+              </li>
+            </ol>
+        </li>
+        <li><a rel="internal" href="#CSS">CSS</a>
+            <ol>
+              <li>
                 <ol>
-                  <li><a rel="internal" href="#WebGL">WebGL</a>
-                  <li><a rel="internal" href="#Audio">Audio</a>
-                    <ol>
-                      <li><a rel="internal" href="#Audio-API">Audio API</a></li>
-                    </ol>
-                  </li>
+                  <li><a rel="internal" href="#CSS_transforms">CSS transforms</a>
                 </ol>
-            </li>
-            <li><a rel="internal" href="#CSS">CSS</a>
+              </li>
+              <li><a rel="internal" href="#Gradients">Gradients</a>
                 <ol>
-                  <li>
-                    <ol>
-                      <li><a rel="internal" href="#CSS_transforms">CSS transforms</a>
-                    </ol>
-                  </li>
-                  <li><a rel="internal" href="#Gradients">Gradients</a>
-                    <ol>
-                      <li><a rel="internal" href="#Scaling_backgrounds">Scaling backgrounds</a>
-                    </ol>
+                  <li><a rel="internal" href="#Scaling_backgrounds">Scaling backgrounds</a>
                 </ol>
-            </li>
-        """
-        result = (kuma.wiki.content
-                  .parse(doc_src)
-                  .filter(SectionTOCFilter).serialize())
-        assert normalize_html(expected) == normalize_html(result)
-
-    def test_generate_toc_h2(self):
-        doc_src = """
-            <h2 id="HTML">HTML</h2>
-              <h3 id="HTML5_canvas_element">HTML5 <code>canvas</code> element</h3>
-            <h2 id="JavaScript">JavaScript</h2>
-              JavaScript is awesome.
-              <h3 id="WebGL">WebGL</h3>
-              <h3 id="Audio">Audio</h3>
-                <h4 id="Audio-API">Audio API</h4>
-            <h2 id="CSS">CSS</h2>
-                <h4 id="CSS_transforms">CSS transforms</h4>
-              <h3 id="Gradients">Gradients</h3>
-                <h4 id="Scaling_backgrounds">Scaling backgrounds</h4>
-        """
-        expected = """
-            <li><a rel="internal" href="#HTML">HTML</a>
-            </li>
-            <li><a rel="internal" href="#JavaScript">JavaScript</a>
-            </li>
-            <li><a rel="internal" href="#CSS">CSS</a>
-            </li>
-        """
-        result = (kuma.wiki.content
-                  .parse(doc_src)
-                  .filter(H2TOCFilter).serialize())
-        assert normalize_html(expected) == normalize_html(result)
-
-    def test_generate_toc_h3(self):
-        doc_src = """
-            <h2 id="HTML">HTML</h2>
-              <h3 id="HTML5_canvas_element">HTML5 <code>canvas</code> element</h3>
-            <h2 id="JavaScript">JavaScript</h2>
-              JavaScript is awesome.
-              <h3 id="WebGL">WebGL</h3>
-              <h3 id="Audio">Audio</h3>
-                <h4 id="Audio-API">Audio API</h4>
-            <h2 id="CSS">CSS</h2>
-                <h4 id="CSS_transforms">CSS transforms</h4>
-              <h3 id="Gradients">Gradients</h3>
-                <h4 id="Scaling_backgrounds">Scaling backgrounds</h4>
-        """
-        expected = """
-            <li><a rel="internal" href="#HTML">HTML</a>
-                <ol>
-                  <li><a rel="internal" href="#HTML5_canvas_element">HTML5 <code>canvas</code> element</a></li>
-                </ol>
-            </li>
-            <li><a rel="internal" href="#JavaScript">JavaScript</a>
-                <ol>
-                  <li><a rel="internal" href="#WebGL">WebGL</a>
-                  <li><a rel="internal" href="#Audio">Audio</a>
-                  </li>
-                </ol>
-            </li>
-            <li><a rel="internal" href="#CSS">CSS</a>
-                <ol>
-                  <li><a rel="internal" href="#Gradients">Gradients</a>
-                </ol>
-            </li>
-        """
-        result = (kuma.wiki.content
-                  .parse(doc_src)
-                  .filter(H3TOCFilter).serialize())
-        assert normalize_html(expected) == normalize_html(result)
-
-    def test_bug_925043(self):
-        '''Bug 925043 - Redesign TOC has a bunch of empty <code> tags in markup'''
-        doc_src = """
-            <h2 id="Print">Mastering <code>print</code></h2>
-            <code>print 'Hello World!'</code>
-        """
-        expected = """
-            <li>
-                <a href="#Print" rel="internal">Mastering<code>print</code></a>
-            </li>
-        """
-        result = (kuma.wiki.content
-                  .parse(doc_src)
-                  .filter(SectionTOCFilter).serialize())
-        assert normalize_html(expected) == normalize_html(result)
+            </ol>
+        </li>
+    """
+    result = (kuma.wiki.content
+              .parse(doc_src)
+              .filter(SectionTOCFilter).serialize())
+    assert normalize_html(expected) == normalize_html(result)
 
 
-class FilterOutNoIncludeTests(TestCase):
-    def test_noinclude(self):
-        doc_src = u"""
-            <div class="noinclude">{{ XULRefAttr() }}</div>
-            <dl>
-              <dt>{{ XULAttr(&quot;maxlength&quot;) }}</dt>
-              <dd>Type: <em>integer</em></dd>
-              <dd>Przykłady 例 예제 示例</dd>
-            </dl>
-            <div class="noinclude">
-              <p>{{ languages( { &quot;ja&quot;: &quot;ja/XUL/Attribute/maxlength&quot; } ) }}</p>
-            </div>
-        """
-        expected = u"""
-            <dl>
-              <dt>{{ XULAttr(&quot;maxlength&quot;) }}</dt>
-              <dd>Type: <em>integer</em></dd>
-              <dd>Przykłady 例 예제 示例</dd>
-            </dl>
-        """
-        result = (kuma.wiki.content.filter_out_noinclude(doc_src))
-        assert normalize_html(expected) == normalize_html(result)
-
-    def test_noinclude_empty_content(self):
-        """Bug 777475: The noinclude filter and pyquery seems to really dislike
-        empty string as input"""
-        doc_src = ''
-        result = kuma.wiki.content.filter_out_noinclude(doc_src)
-        assert result == ''
+@pytest.mark.toc
+def test_generate_toc_h2():
+    doc_src = """
+        <h2 id="HTML">HTML</h2>
+          <h3 id="HTML5_canvas_element">HTML5 <code>canvas</code> element</h3>
+        <h2 id="JavaScript">JavaScript</h2>
+          JavaScript is awesome.
+          <h3 id="WebGL">WebGL</h3>
+          <h3 id="Audio">Audio</h3>
+            <h4 id="Audio-API">Audio API</h4>
+        <h2 id="CSS">CSS</h2>
+            <h4 id="CSS_transforms">CSS transforms</h4>
+          <h3 id="Gradients">Gradients</h3>
+            <h4 id="Scaling_backgrounds">Scaling backgrounds</h4>
+    """
+    expected = """
+        <li><a rel="internal" href="#HTML">HTML</a>
+        </li>
+        <li><a rel="internal" href="#JavaScript">JavaScript</a>
+        </li>
+        <li><a rel="internal" href="#CSS">CSS</a>
+        </li>
+    """
+    result = (kuma.wiki.content
+              .parse(doc_src)
+              .filter(H2TOCFilter).serialize())
+    assert normalize_html(expected) == normalize_html(result)
 
 
-class BugizeTests(TestCase):
-    def test_bugize_text(self):
-        bad = 'Fixing bug #12345 again. <img src="http://davidwalsh.name" /> <a href="">javascript></a>'
-        good = 'Fixing <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=12345" target="_blank" rel="noopener">bug 12345</a> again. &lt;img src=&#34;http://davidwalsh.name&#34; /&gt; &lt;a href=&#34;&#34;&gt;javascript&gt;&lt;/a&gt;'
-        assert bugize_text(bad) == Markup(good)
+@pytest.mark.toc
+def test_generate_toc_h3():
+    doc_src = """
+        <h2 id="HTML">HTML</h2>
+          <h3 id="HTML5_canvas_element">HTML5 <code>canvas</code> element</h3>
+        <h2 id="JavaScript">JavaScript</h2>
+          JavaScript is awesome.
+          <h3 id="WebGL">WebGL</h3>
+          <h3 id="Audio">Audio</h3>
+            <h4 id="Audio-API">Audio API</h4>
+        <h2 id="CSS">CSS</h2>
+            <h4 id="CSS_transforms">CSS transforms</h4>
+          <h3 id="Gradients">Gradients</h3>
+            <h4 id="Scaling_backgrounds">Scaling backgrounds</h4>
+    """
+    expected = """
+        <li><a rel="internal" href="#HTML">HTML</a>
+            <ol>
+              <li><a rel="internal" href="#HTML5_canvas_element">HTML5 <code>canvas</code> element</a></li>
+            </ol>
+        </li>
+        <li><a rel="internal" href="#JavaScript">JavaScript</a>
+            <ol>
+              <li><a rel="internal" href="#WebGL">WebGL</a>
+              <li><a rel="internal" href="#Audio">Audio</a>
+              </li>
+            </ol>
+        </li>
+        <li><a rel="internal" href="#CSS">CSS</a>
+            <ol>
+              <li><a rel="internal" href="#Gradients">Gradients</a>
+            </ol>
+        </li>
+    """
+    result = (kuma.wiki.content
+              .parse(doc_src)
+              .filter(H3TOCFilter).serialize())
+    assert normalize_html(expected) == normalize_html(result)
 
-        bad_upper = 'Fixing Bug #12345 again.'
-        good_upper = 'Fixing <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=12345" target="_blank" rel="noopener">Bug 12345</a> again.'
-        assert bugize_text(bad_upper) == Markup(good_upper)
+
+@pytest.mark.toc
+def test_bug_925043():
+    '''Bug 925043 - Redesign TOC has a bunch of empty <code> tags in markup'''
+    doc_src = """
+        <h2 id="Print">Mastering <code>print</code></h2>
+        <code>print 'Hello World!'</code>
+    """
+    expected = """
+        <li>
+            <a href="#Print" rel="internal">Mastering<code>print</code></a>
+        </li>
+    """
+    result = (kuma.wiki.content
+              .parse(doc_src)
+              .filter(SectionTOCFilter).serialize())
+    assert normalize_html(expected) == normalize_html(result)
+
+
+def test_noinclude():
+    doc_src = """
+        <div class="noinclude">{{ XULRefAttr() }}</div>
+        <dl>
+          <dt>{{ XULAttr(&quot;maxlength&quot;) }}</dt>
+          <dd>Type: <em>integer</em></dd>
+          <dd>Przykłady 例 예제 示例</dd>
+        </dl>
+        <div class="noinclude">
+          <p>{{ languages( { &quot;ja&quot;: &quot;ja/XUL/Attribute/maxlength&quot; } ) }}</p>
+        </div>
+    """
+    expected = """
+        <dl>
+          <dt>{{ XULAttr(&quot;maxlength&quot;) }}</dt>
+          <dd>Type: <em>integer</em></dd>
+          <dd>Przykłady 例 예제 示例</dd>
+        </dl>
+    """
+    result = (kuma.wiki.content.filter_out_noinclude(doc_src))
+    assert normalize_html(expected) == normalize_html(result)
+
+
+def test_noinclude_empty_content():
+    """Bug 777475: The noinclude filter and pyquery seems to really dislike
+    empty string as input"""
+    doc_src = ''
+    result = kuma.wiki.content.filter_out_noinclude(doc_src)
+    assert result == ''
+
+
+def test_bugize_text_lower():
+    bad = 'Fixing bug #12345 again. <img src="http://davidwalsh.name" /> <a href="">javascript></a>'
+    good = 'Fixing <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=12345" target="_blank" rel="noopener">bug 12345</a> again. &lt;img src=&#34;http://davidwalsh.name&#34; /&gt; &lt;a href=&#34;&#34;&gt;javascript&gt;&lt;/a&gt;'
+    assert bugize_text(bad) == Markup(good)
+
+
+def test_bugize_text_upper():
+    bad_upper = 'Fixing Bug #12345 again.'
+    good_upper = 'Fixing <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=12345" target="_blank" rel="noopener">Bug 12345</a> again.'
+    assert bugize_text(bad_upper) == Markup(good_upper)
 
 
 def test_filteriframe():
@@ -826,10 +888,10 @@ def test_bleach_clean_hrefs(href):
 
 def test_annotate_links_encoded_utf8(db):
     """Encoded UTF8 characters in links are decoded."""
-    Document.objects.create(locale='fr', slug=u'CSS/Héritage',
-                            title=u'Héritée')
+    Document.objects.create(locale='fr', slug='CSS/Héritage',
+                            title='Héritée')
     html = normalize_html(
-        u'<li><a href="/fr/docs/CSS/H%c3%a9ritage">Héritée</a></li>')
+        '<li><a href="/fr/docs/CSS/H%c3%a9ritage">Héritée</a></li>')
     actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
     assert normalize_html(actual_raw) == html
 
@@ -936,18 +998,18 @@ def test_annotate_links_collation_insensitive(db):
 
     Under MySQL's utf8_general_ci collation, é == e
     """
-    accent = u'Récursion'
-    no_accent = u'Recursion'
+    accent = 'Récursion'
+    no_accent = 'Recursion'
     assert accent.lower() != no_accent.lower
-    Document.objects.create(locale='fr', slug=u'Glossaire/' + accent,
+    Document.objects.create(locale='fr', slug='Glossaire/' + accent,
                             title=accent)
     html = normalize_html(
-        u'<li><a href="/fr/docs/Absent"></li>' +
-        u'<li><a href="/fr/docs/Glossaire/%s"></li>' % no_accent)
+        '<li><a href="/fr/docs/Absent"></li>' +
+        '<li><a href="/fr/docs/Glossaire/%s"></li>' % no_accent)
     actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
     expected = normalize_html(
-        u'<li><a class="new" rel="nofollow" href="/fr/docs/Absent"></li>' +
-        u'<li><a href="/fr/docs/Glossaire/%s"></li>' % no_accent)
+        '<li><a class="new" rel="nofollow" href="/fr/docs/Absent"></li>' +
+        '<li><a href="/fr/docs/Glossaire/%s"></li>' % no_accent)
     assert normalize_html(actual_raw) == expected
 
 
@@ -1232,7 +1294,7 @@ def test_extractor_code_sample(root_doc, wiki_user):
 
 def test_extractor_code_sample_unescape(root_doc, wiki_user):
     '''The Extractor unescapes content in <pre> blocks.'''
-    sample_html = u"""
+    sample_html = """
         <div class="foo">
             <p>Hello world!</p>
             <p>Unicode fun: Przykłady 例 예제 示例</p>
@@ -1287,7 +1349,7 @@ def test_extractor_code_sample_nbsp_is_converted(root_doc, wiki_user):
     root_doc.current_revision = Revision.objects.create(
         document=root_doc, content=content, creator=wiki_user)
     result = root_doc.extract.code_sample('With_nbsp')
-    assert u'\xa0' not in result['css']
+    assert '\xa0' not in result['css']
     assert '&nbsp;' not in result['css']
 
 
@@ -1317,8 +1379,8 @@ def test_extractor_code_sample_missing_parts(root_doc, wiki_user, skip_part):
 
 
 @pytest.mark.parametrize('sample_id', ('Bug:1173170',       # bug 1173170
-                                       u'sam\x00ple',       # bug 1269143
-                                       u"""sam<'&">ple""",  # bug 1269143
+                                       'sam\x00ple',       # bug 1269143
+                                       """sam<'&">ple""",  # bug 1269143
                                        ))
 def test_extractor_code_sample_with_problem_id(root_doc, wiki_user, sample_id):
     """The Extractor does not error if the code sample ID is bad."""
@@ -1384,7 +1446,7 @@ def test_multiple_seo_summaries(markup, expected_markup, text, wrapper):
 
 
 def test_empty_paragraph_content():
-    content = u"""<p></p><div class="overheadIndicator draft draftHeader">
+    content = """<p></p><div class="overheadIndicator draft draftHeader">
         <strong>DRAFT</strong>
         <div>This page is not complete.</div>
         </div><p></p>

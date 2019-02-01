@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import pytest
 from django.conf import settings
 
@@ -59,7 +61,8 @@ def test_purge_get(deleted_doc, moderator_client):
     response = moderator_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert_no_cache_header(response)
-    assert 'This document was deleted by' in response.content.decode('utf-8')
+    assert ('This document was deleted by' in
+            response.content.decode(response.charset))
 
 
 def test_purge_get_no_log(deleted_doc, moderator_client):
@@ -68,7 +71,8 @@ def test_purge_get_no_log(deleted_doc, moderator_client):
     response = moderator_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert_no_cache_header(response)
-    assert 'deleted, for unknown reasons' in response.content.decode('utf-8')
+    assert ('deleted, for unknown reasons' in
+            response.content.decode(response.charset))
 
 
 def test_restore_get(root_doc, moderator_client):

@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import json
+from io import BytesIO
 
 import newrelic.agent
 from django.conf import settings
@@ -12,7 +15,6 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.cache import add_never_cache_headers, patch_vary_headers
 from django.utils.http import parse_etags, quote_etag
 from django.utils.safestring import mark_safe
-from django.utils.six import StringIO
 from django.utils.translation import ugettext
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
@@ -131,7 +133,7 @@ def _get_seo_parent_title(document, slug_dict, document_locale):
                 pass
 
     if seo_root_doc:
-        return u' - {}'.format(seo_root_doc.title)
+        return ' - {}'.format(seo_root_doc.title)
     else:
         return ''
 
@@ -286,7 +288,7 @@ def _apply_content_experiment(request, doc):
     If the page is not under a content experiment, the return is
     (original Document, None).
     """
-    key = u"%s:%s" % (doc.locale, doc.slug)
+    key = "%s:%s" % (doc.locale, doc.slug)
     for experiment in settings.CONTENT_EXPERIMENTS:
         if key in experiment['pages']:
             # This page is under a content experiment
@@ -689,7 +691,7 @@ def wiki_document(request, document_slug, document_locale):
         # Redirected from <a href="%(url)s?redirect=no">%(url)s</a>
         messages.add_message(
             request, messages.WARNING,
-            mark_safe(ugettext(u'Redirected from %(url)s') % {
+            mark_safe(ugettext('Redirected from %(url)s') % {
                 "url": request.build_absolute_uri(doc.get_absolute_url())
             }), extra_tags='wiki_redirect')
         return HttpResponsePermanentRedirect(url)
@@ -944,15 +946,16 @@ def _document_api_PUT(request, document_slug, document_locale):
 
         elif content_type.startswith('multipart/form-data'):
             parser = MultiPartParser(request.META,
-                                     StringIO(request.body),
+                                     BytesIO(request.body),
                                      request.upload_handlers,
                                      request.encoding)
-            data, files = parser.parse()
+            data, _ = parser.parse()
 
         elif content_type.startswith('text/html'):
             # TODO: Refactor this into wiki.content ?
             # First pass: Just assume the request body is an HTML fragment.
-            html = request.body
+            html = request.body.decode(
+                request.encoding or settings.DEFAULT_CHARSET)
             data = dict(content=html)
 
             # Second pass: Try parsing the body as a fuller HTML document,

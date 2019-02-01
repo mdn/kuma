@@ -169,7 +169,7 @@ def test_build_json_data_unsaved_doc():
         'tags': [],
         'title': 'New Doc',
         'translations': [],
-        'url': u'/en-US/docs/NewDoc',
+        'url': '/en-US/docs/NewDoc',
         'uuid': '765203ea-c5b8-4385-a551-26c1ef9fc843'
     }
     assert new_json == expected

@@ -1,6 +1,8 @@
 """
 Delete old DocumentSpamAttempt data
 """
+from __future__ import unicode_literals
+
 from django.core.management.base import BaseCommand
 
 from kuma.wiki.tasks import delete_old_documentspamattempt_data

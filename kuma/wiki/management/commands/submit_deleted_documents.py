@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from datetime import timedelta
 
 from django.contrib.auth import get_user_model
@@ -54,7 +56,7 @@ class Command(BaseCommand):
         self.stdout.write('Checking %s deleted document logs' % count)
 
         sender = get_user_model().objects.get(username=options['username'])
-        self.stdout.write(u'Submitting spam to Akismet as user %s' % sender)
+        self.stdout.write('Submitting spam to Akismet as user %s' % sender)
 
         akismet = Akismet()
 
@@ -72,7 +74,7 @@ class Command(BaseCommand):
             if document is None:
                 # no document found with that locale and slug,
                 # probably purged at some point
-                self.stderr.write(u'Ignoring locale %s and slug %s' %
+                self.stderr.write('Ignoring locale %s and slug %s' %
                                   (logged_deletion.locale,
                                    logged_deletion.slug))
                 continue
@@ -80,34 +82,34 @@ class Command(BaseCommand):
             if not document.deleted:
                 # guess the document got undeleted at some point again,
                 # ignoring..
-                self.stderr.write(u'Ignoring undeleted document %s' % document)
+                self.stderr.write('Ignoring undeleted document %s' % document)
                 continue
 
             if not document.current_revision:
                 # no current revision found, which means something is fishy
                 # but we can't submit it as spam since we don't have a revision
-                self.stderr.write(u'Ignoring document %s without current '
-                                  u'revision' % document.pk)
+                self.stderr.write('Ignoring document %s without current '
+                                  'revision' % document.pk)
                 continue
 
             akismet_data = AkismetHistoricalData(document.current_revision)
             params = akismet_data.parameters
             if dry_run:
                 # we're in dry-run, so let's continue okay?
-                self.stdout.write(u'Not submitting current revision %s of '
-                                  u'document %s because of dry-mode' %
+                self.stdout.write('Not submitting current revision %s of '
+                                  'document %s because of dry-mode' %
                                   (document.current_revision.pk, document.pk))
                 continue
             try:
                 akismet.submit_spam(**params)
             except AkismetError as exc:
-                self.stderr.write(u'Akismet error while submitting current '
-                                  u'revision %s of document %s: %s' %
+                self.stderr.write('Akismet error while submitting current '
+                                  'revision %s of document %s: %s' %
                                   (document.current_revision.pk, document.pk,
                                    exc.debug_help))
             else:
-                self.stdout.write(u'Successfully submitted current '
-                                  u'revision %s of document %s' %
+                self.stdout.write('Successfully submitted current '
+                                  'revision %s of document %s' %
                                   (document.current_revision.pk, document.pk))
                 submission = RevisionAkismetSubmission(
                     revision=document.current_revision,

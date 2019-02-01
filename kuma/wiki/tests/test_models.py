@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import time
 from datetime import date, datetime, timedelta
 from xml.sax.saxutils import escape
@@ -158,7 +157,7 @@ def test_document_raises_error_when_translating_non_localizable(root_doc):
     """Adding a translation of a non-localizable document raises an error."""
     root_doc.is_localizable = False
     root_doc.save()
-    de_doc = Document(parent=root_doc, slug=u'Rübe', locale='de')
+    de_doc = Document(parent=root_doc, slug='Rübe', locale='de')
     with pytest.raises(ValidationError):
         de_doc.save()
 
@@ -173,14 +172,14 @@ def test_document_raises_error_setting_non_loc_for_trans_doc(trans_doc):
 
 def test_document_non_english_implies_non_localizable(db):
     """All non-English documents are set non-localizable."""
-    es_doc = Document.objects.create(locale='es', slug=u'Tubérculos')
+    es_doc = Document.objects.create(locale='es', slug='Tubérculos')
     assert not es_doc.is_localizable
 
 
 def test_document_translations(trans_doc):
     """other_translations lists other translations, English first."""
     en_doc = trans_doc.parent
-    ar_doc = Document.objects.create(locale='ar', slug=u'جذور الخضروات',
+    ar_doc = Document.objects.create(locale='ar', slug='جذور الخضروات',
                                      parent=en_doc)
     # Translations are returned English first, then ordered, and omit self
     assert ar_doc.locale < en_doc.locale < trans_doc.locale
@@ -423,10 +422,10 @@ class UserDocumentTests(UserTestCase):
     def test_code_sample_extraction(self):
         """Make sure sample extraction works from the model.
         This is a smaller version of the test from test_content.py"""
-        sample_html = u'<p class="foo">Hello world!</p>'
-        sample_css = u'.foo p { color: red; }'
-        sample_js = u'window.alert("Hi there!");'
-        doc_src = u"""
+        sample_html = '<p class="foo">Hello world!</p>'
+        sample_css = '.foo p { color: red; }'
+        sample_js = 'window.alert("Hi there!");'
+        doc_src = """
             <p>This is a page. Deal with it.</p>
             <ul id="s2" class="code-sample">
                 <li><pre class="brush: html">%s</pre></li>
@@ -538,7 +537,7 @@ class RevisionTests(UserTestCase):
 
     def test_revision_unicode(self):
         """Revision containing unicode characters is saved successfully."""
-        content = u'Firefox informa\xe7\xf5es \u30d8\u30eb'
+        content = 'Firefox informa\xe7\xf5es \u30d8\u30eb'
         rev = revision(is_approved=True, save=True, content=content)
         assert content == rev.content
 
@@ -1515,24 +1514,12 @@ class PageMoveTests(UserTestCase):
                  slug='test-move-error-messaging/moved/grandchild',
                  is_approved=True,
                  save=True)
-        # TODO: Someday when we're on Python 2.7, we can use
-        # assertRaisesRegexp. Until then, we have to manually catch
-        # and inspect the exception.
-        try:
+
+        mentioned_url = (
+            f'https://developer.mozilla.org/{grandchild_doc.locale}'
+            f'/docs/{grandchild_doc.slug}')
+        with self.assertRaisesRegex(PageMoveError, mentioned_url):
             child_doc._move_tree('test-move-error-messaging/moved')
-        except PageMoveError as e:
-            err_strings = [
-                'with id %s' % grandchild_doc.id,
-                'https://developer.mozilla.org/%s/docs/%s' % (grandchild_doc.locale,
-                                                              grandchild_doc.slug),
-                "Exception type: <type 'exceptions.Exception'>",
-                'Exception message: Requested move would overwrite a non-redirect page.',
-                'in _move_tree',
-                'in _move_conflicts',
-                'raise Exception("Requested move would overwrite a non-redirect page.")',
-            ]
-            for s in err_strings:
-                assert s in e.args[0]
 
 
 class RevisionIPTests(UserTestCase):

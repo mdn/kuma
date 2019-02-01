@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import pytest
 import requests_mock
 from constance.test import override_config
@@ -69,7 +70,7 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
         doc = document(title='blah', slug=slug, html=html, save=True)
         revision(document=doc, content=html, is_approved=True, save=True)
         dsa = DocumentSpamAttempt(slug=slug, document=doc)
-        assert self.admin.doc_short(dsa) == u'/en-US/docs/NotSpam (blah)'
+        assert self.admin.doc_short(dsa) == '/en-US/docs/NotSpam (blah)'
         assert self.admin.doc_short(dsa) == str(doc)
 
     def test_doc_short_long_slug_and_title(self):
@@ -80,18 +81,18 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
                        locale='de')
         revision(document=doc, content=html, is_approved=True, save=True)
         dsa = DocumentSpamAttempt(slug=slug, document=doc)
-        expected = u'/de/docs/Web/Guide/HTML/… (Sections and Outlines of…)'
+        expected = '/de/docs/Web/Guide/HTML/… (Sections and Outlines of…)'
         assert self.admin.doc_short(dsa) == expected
 
     def test_doc_short_long_unicode(self):
-        slug = u'Web/Guide/HTML/HTML5_ডকুমেন্টের_সেকশন_এবং_আউটলাইন'
-        title = u'HTML5 ডকুমেন্টের সেকশন এবং আউটলাইন'
+        slug = 'Web/Guide/HTML/HTML5_ডকুমেন্টের_সেকশন_এবং_আউটলাইন'
+        title = 'HTML5 ডকুমেন্টের সেকশন এবং আউটলাইন'
         html = '<p>This Bengali page is not spam.</p>'
         doc = document(title=title, slug=slug, html=html, save=True,
                        locale='bn')
         revision(document=doc, content=html, is_approved=True, save=True)
         dsa = DocumentSpamAttempt(slug=slug, document=doc)
-        expected = u'/bn/docs/Web/Guide/HTML/… (HTML5 ডকুমেন্টের সেকশন এব…)'
+        expected = '/bn/docs/Web/Guide/HTML/… (HTML5 ডকুমেন্টের সেকশন এব…)'
         assert self.admin.doc_short(dsa) == expected
 
     def test_submitted_data(self):
@@ -157,8 +158,9 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
                                   data=self.sample_data,
                                   review=DocumentSpamAttempt.HAM)
         assert not DocumentSpamAttempt.objects.exists()
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(HAM_URL, content=Akismet.submission_success)
+        mock_requests.post(VERIFY_URL, content=b'valid')
+        mock_requests.post(HAM_URL,
+                           content=Akismet.submission_success.encode('utf-8'))
         self.admin.save_model(self.request, dsa, None, True)
         dsa = DocumentSpamAttempt.objects.get()
         assert dsa.review == DocumentSpamAttempt.HAM
@@ -177,8 +179,9 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
                                   data=self.sample_data,
                                   review=DocumentSpamAttempt.HAM)
         assert not DocumentSpamAttempt.objects.exists()
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(HAM_URL, content=Akismet.submission_success)
+        mock_requests.post(VERIFY_URL, content=b'valid')
+        mock_requests.post(HAM_URL,
+                           content=Akismet.submission_success.encode('utf-8'))
         self.admin.save_model(self.request, dsa, None, True)
         self.assert_needs_review()
 
@@ -191,8 +194,9 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
                                   data=self.sample_data,
                                   review=DocumentSpamAttempt.HAM)
         assert not DocumentSpamAttempt.objects.exists()
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(HAM_URL, content=Akismet.submission_success)
+        mock_requests.post(VERIFY_URL, content=b'valid')
+        mock_requests.post(HAM_URL,
+                           content=Akismet.submission_success.encode('utf-8'))
         self.admin.save_model(self.request, dsa, None, True)
         self.assert_needs_review()
 
@@ -212,15 +216,15 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         )
         self.client.login(username='admin', password='testpass')
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        assert response.status_code == 200
 
         page = pq(response.content)
         revision_inputs = page.find('input#id_revision')
-        self.assertEqual(len(revision_inputs), 1)
-        self.assertEqual(revision_inputs[0].value, str(revision.id))
+        assert len(revision_inputs) == 1
+        assert revision_inputs[0].value == str(revision.id)
 
         type_inputs = page.find('input[name=type]')
-        self.assertEqual(len(type_inputs), 2)
+        assert len(type_inputs) == 2
 
         for type_input in type_inputs:
             value = type_input.attrib['value']
@@ -237,8 +241,9 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         revision = admin.created_revisions.all()[0]
         url = reverse('admin:wiki_revisionakismetsubmission_add')
 
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(SPAM_URL, content=Akismet.submission_success)
+        mock_requests.post(VERIFY_URL, content=b'valid')
+        mock_requests.post(SPAM_URL,
+                           content=Akismet.submission_success.encode('utf-8'))
 
         data = {
             'revision': revision.id,
@@ -247,21 +252,21 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         self.client.login(username='admin', password='testpass')
         url = reverse('admin:wiki_revisionakismetsubmission_add')
         response = self.client.post(url, data)
-        self.assertEqual(response.status_code, 302)
+        assert response.status_code == 302
 
         # successfully created the submission record
         submission = RevisionAkismetSubmission.objects.first()
-        self.assertTrue(submission is not None)
-        self.assertEqual(submission.sender, admin)
-        self.assertTrue(submission.sent)
-        self.assertEqual(submission.revision, revision)
-        self.assertEqual(submission.type, 'spam')
+        assert submission is not None
+        assert submission.sender == admin
+        assert submission.sent
+        assert submission.revision == revision
+        assert submission.type == 'spam'
 
-        self.assertEqual(mock_requests.call_count, 2)
+        assert mock_requests.call_count == 2
         request_body = mock_requests.request_history[1].body
-        self.assertIn('user_ip=0.0.0.0', request_body)
-        self.assertIn('user_agent=', request_body)
-        self.assertIn(revision.slug, request_body)
+        assert 'user_ip=0.0.0.0' in request_body
+        assert 'user_agent=' in request_body
+        assert revision.slug in request_body
         query_pairs = parse_qsl(request_body)
         expected_content = (
             'Seventh revision of the article.\n'
@@ -280,7 +285,7 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
              'http://testserver/en-US/docs/article-with-revisions'),
             ('user_ip', '0.0.0.0')
         ]
-        self.assertEqual(sorted(query_pairs), expected)
+        assert sorted(query_pairs) == expected
 
         assert mock_requests.called
         assert mock_requests.call_count == 2
@@ -294,8 +299,9 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         revision.save()
         url = reverse('admin:wiki_revisionakismetsubmission_add')
 
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(SPAM_URL, content=Akismet.submission_success)
+        mock_requests.post(VERIFY_URL, content=b'valid')
+        mock_requests.post(SPAM_URL,
+                           content=Akismet.submission_success.encode('utf-8'))
 
         data = {
             'revision': revision.id,
@@ -304,7 +310,7 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         self.client.login(username='admin', password='testpass')
         url = reverse('admin:wiki_revisionakismetsubmission_add')
         response = self.client.post(url, data)
-        self.assertEqual(response.status_code, 302)
+        assert response.status_code == 302
 
         request_body = mock_requests.request_history[1].body
         submitted_data = dict(parse_qsl(request_body))
@@ -317,7 +323,7 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
             'Banana\n'
             'Orange'
         )
-        self.assertEqual(submitted_data['comment_content'], expected_content)
+        assert submitted_data['comment_content'] == expected_content
 
     def test_create_no_revision(self):
         url = urlparams(
@@ -326,8 +332,9 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         )
         self.client.login(username='admin', password='testpass')
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(SUBMISSION_NOT_AVAILABLE, response.content.decode('utf-8'))
+        assert response.status_code == 200
+        assert (SUBMISSION_NOT_AVAILABLE in
+                response.content.decode(response.charset))
 
     @override_flag(SPAM_SUBMISSIONS_FLAG, True)
     def test_view_change_existing(self):
@@ -340,8 +347,9 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         url = reverse('admin:wiki_revisionakismetsubmission_change',
                       args=(submission.id,))
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(SUBMISSION_NOT_AVAILABLE, response.content.decode('utf-8'))
+        assert response.status_code == 200
+        assert (SUBMISSION_NOT_AVAILABLE in
+                response.content.decode(response.charset))
 
     @override_flag(SPAM_SUBMISSIONS_FLAG, True)
     def test_view_change_with_data(self):
@@ -356,9 +364,9 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         url = reverse('admin:wiki_revisionakismetsubmission_change',
                       args=(submission.id,))
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(b'<dt>content</dt><dd>spam</dd>',
-                      response.content)
+        assert response.status_code == 200
+        assert ('<dt>content</dt><dd>spam</dd>' in
+                response.content.decode(response.charset))
 
     @override_flag(SPAM_SUBMISSIONS_FLAG, True)
     def test_view_changelist_existing(self):
@@ -375,5 +383,6 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         revision_url = revision.get_absolute_url()
-        self.assertIn(revision_url.encode('utf-8'), response.content)
-        self.assertIn('None', response.content)
+        content = response.content.decode(response.charset)
+        assert revision_url in content
+        assert 'None' in content
