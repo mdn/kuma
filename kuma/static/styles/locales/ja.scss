@@ -44,14 +44,8 @@ Styles for Japanese
        local('IPA P Gothic');
 }
 
-/* Bug 973171 */
-/* stylelint-disable declaration-no-important */
-* {
-    /* !important required for locale specific override */
-    font-style: normal !important;
-}
-
 /* Bug 1522385 */
+/* stylelint-disable declaration-no-important */
 .syntaxbox {
     var,
     em {
