@@ -53,6 +53,8 @@ Kumascript tests
 If you're changing Kumascript, be sure to run its tests too.
 See https://github.com/mdn/kumascript.
 
+.. _front-end-development:
+
 Front-end development
 =====================
 Assets are processed in several steps by Django and django-pipeline_:
@@ -86,6 +88,8 @@ To do both::
 .. _cleancss: https://github.com/jakubpawlowicz/clean-css-cli
 .. _django-pipeline: https://github.com/jazzband/django-pipeline
 .. _node-sass: https://github.com/sass/node-sass
+
+.. _compiling-with-gulp:
 
 Compiling on the host system with gulp
 --------------------------------------
@@ -170,6 +174,8 @@ Kuma tracks its Python dependencies with pip_.  See the
 
 .. _pip: https://pip.pypa.io/
 .. _README in the requirements folder: https://github.com/mozilla/kuma/tree/master/requirements
+
+.. _front-end-asset-dependencies:
 
 Front-end asset dependencies
 ----------------------------

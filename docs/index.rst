@@ -30,3 +30,4 @@ Contents:
    deploy
 
    rendering
+   assets
