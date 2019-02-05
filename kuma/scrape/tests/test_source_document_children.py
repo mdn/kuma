@@ -20,7 +20,7 @@ child_data = {
             'url': '/en-US/docs/Web/Guide/HTML/HTML5/Validation'
         }, {
             # Minimum data actually used
-            'url': u'/en-US/docs/Web/Guide/HTML/HTML5/Parser',
+            'url': '/en-US/docs/Web/Guide/HTML/HTML5/Parser',
         }
     ],
     'title': 'HTML5',
