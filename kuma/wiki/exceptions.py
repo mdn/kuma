@@ -19,13 +19,6 @@ class DocumentRenderingInProgress(Exception):
     """
 
 
-class StaleDocumentsRenderingInProgress(Exception):
-    """
-    An attempt to render a stale page while a rendering is already in
-    progress is disallowed.
-    """
-
-
 class DocumentRenderedContentNotAvailable(Exception):
     """
     No rendered content available, and an attempt to render on the spot was

@@ -5,7 +5,6 @@ import time
 
 from django.core.management.base import BaseCommand
 
-from kuma.core.utils import cache_lock
 from kuma.feeder.utils import update_feeds
 
 
@@ -18,7 +17,6 @@ class Command(BaseCommand):
             help='Fetch even disabled feeds.',
             action='store_true')
 
-    @cache_lock('kuma_feeder')
     def handle(self, *args, **options):
         """
         Locked command handler to avoid running this command more than once
