@@ -10,6 +10,9 @@
 
   {% if not edit_link %}
     {% set edit_link = document.get_edit_url() %}
+    {% if not user.is_authenticated %}
+        {% set edit_link = url('account_login') + '?next=' + (edit_link | urlencode) %}
+    {% endif %}
   {% endif %}
 
   {% set watch_menu_items_html = watch_menu_items(document, user) %}

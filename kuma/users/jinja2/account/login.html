@@ -6,6 +6,10 @@
 
 {% set socialaccount_providers = get_providers() %}
 
+{% block extrahead %}
+  <link rel="canonical" href="{{ url('account_login') | absolutify }}" >
+{% endblock %}
+
 {% block content %}
 <div class="text-content readable-line-length">
   <article id="login">
