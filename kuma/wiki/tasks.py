@@ -18,11 +18,11 @@ from djcelery_transactions import task as transaction_task
 from lxml import etree
 
 from kuma.core.decorators import skip_in_maintenance_mode
-from kuma.core.utils import CacheLock, chunked
+from kuma.core.utils import chunked
 from kuma.search.models import Index
 
 from .events import first_edit_email
-from .exceptions import PageMoveError, StaleDocumentsRenderingInProgress
+from .exceptions import PageMoveError
 from .models import (Document, DocumentDeletionLog,
                      DocumentRenderingInProgress, DocumentSpamAttempt,
                      Revision, RevisionIP)
@@ -32,7 +32,6 @@ from .utils import tidy_content
 
 
 log = logging.getLogger('kuma.wiki.tasks')
-render_lock = CacheLock('render-stale-documents-lock', expires=60 * 60)
 
 
 @task(rate_limit='60/m')
@@ -88,28 +87,6 @@ def render_document_chunk(pks, cache_control='no-cache', base_url=None,
     logger.info(u'Finished rendering of document chunk')
 
 
-@task(throws=(StaleDocumentsRenderingInProgress,))
-@skip_in_maintenance_mode
-def acquire_render_lock():
-    """
-    A task to acquire the render document lock
-    """
-    if render_lock.locked():
-        # fail loudly if this is running already
-        # may indicate a problem with the schedule of this task
-        raise StaleDocumentsRenderingInProgress
-    render_lock.acquire()
-
-
-@task
-@skip_in_maintenance_mode
-def release_render_lock():
-    """
-    A task to release the render document lock
-    """
-    render_lock.release()
-
-
 @task
 @skip_in_maintenance_mode
 def render_stale_documents(log=None):
@@ -129,9 +106,6 @@ def render_stale_documents(log=None):
 
     render_tasks = [render_document_chunk.si(pks)
                     for pks in chunked(stale_pks, 5)]
-
-    render_tasks.insert(0, acquire_render_lock.si())
-    render_tasks.append(release_render_lock.si())
     chain(*render_tasks).apply_async()
 
 
