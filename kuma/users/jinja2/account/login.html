@@ -7,7 +7,7 @@
 {% set socialaccount_providers = get_providers() %}
 
 {% block extrahead %}
-  <link rel="canonical" href="{{ url('account_login') | absolutify }}" >
+  <link rel="canonical" href="{{ url('account_login', locale='en-US') | absolutify }}" >
 {% endblock %}
 
 {% block content %}
