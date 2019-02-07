@@ -199,7 +199,6 @@ def test_recurring_payment_management_no_customer_id(enabled_, get, user_client)
             ' name="stripe_cancel_subscription"') not in content
     assert "You have no active subscriptions." in content
     assert_no_cache_header(response)
-    assert response.status_code == 200
 
 
 @pytest.mark.django_db
@@ -219,7 +218,6 @@ def test_recurring_payment_management_api_failure(enabled_, get, stripe_user, us
             ' name="stripe_cancel_subscription"') not in content
     assert "You have no active subscriptions." in content
     assert_no_cache_header(response)
-    assert response.status_code == 200
 
 
 @pytest.mark.django_db
