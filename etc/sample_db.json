@@ -2,7 +2,6 @@
   "sources": [
     ["links", "/", {"translations": true, "revisions": 3}],
     ["document", "/en-US/docs/Mozilla/Firefox", {"revisions": 15}],
-    ["document", "/en-US/docs/Web/Apps", {"translations": true, "revisions": 3}],
     ["document", "/en-US/docs/MDN_at_ten/History_of_MDN", {}],
     ["document", "/en-US/docs/Archive/JXON", {}],
     ["document", "/en-US/docs/User:anonymous:uitest", {"translations": true, "revisions": 3}],
@@ -14,6 +13,10 @@
     ["document", "/en-US/docs/Web/Guide/CSS/Media_queries", {}],
     ["document", "/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics", {}],
     ["document", "/en-US/docs/Learn/CSS/Styling_text/Fundamentals", {}],
+    ["document", "/en-US/docs/Sandbox/All-Indicators", {"revisions": 2}],
+    ["document", "/en-US/docs/Sandbox/Indicators", {"revisions": 2}],
+    ["document", "/en-US/docs/Sandbox/simple", {"revisions": 2}],
+    ["document", "/en-US/docs/MDN/Promote", {"revisions": 2}],
     ["document", "/es/docs/Mozilla/Firefox", {"revisions": 3}],
     ["document", "/fr/docs/Mozilla/Firefox", {"revisions": 3}],
     ["document", "/de/docs/Mozilla/Firefox", {"revisions": 3}],
@@ -360,6 +363,14 @@
         "note": "Show Survey Gizmo link to task completion survey.",
         "superusers": false,
         "created": "2016-08-12"
+      }, {
+        "name": "contrib_beta",
+        "note": "Enable the contribution popup and views.",
+        "created": "2018-09-23"
+      }, {
+        "name": "recurring_payment_beta",
+        "note": "Enables recurring payments, if single payments are active (contrib_beta)",
+        "created": "2018-11-05"
       }
     ],
     "waffle.switch": [
