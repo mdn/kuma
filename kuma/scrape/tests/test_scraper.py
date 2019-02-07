@@ -287,5 +287,5 @@ def test_warn_dependency_block(scraper, mock_logger):
     """
     scraper.add_source('fake', 'bad_document', length=2, error=True)
     scraper.scrape()
-    expected_msg = 'Dependency block detected. Aborting.'
-    mock_logger.warn.assert_called_once_with(expected_msg)
+    expected_msg = 'Dependency block detected. Aborting after %d second%s.'
+    mock_logger.warn.assert_called_once_with(expected_msg, 1, '')
