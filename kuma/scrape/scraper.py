@@ -131,8 +131,8 @@ class Scraper(object):
         return self.source_types[source_type](source_param, **options)
 
     # Scrape progress report patterns
-    _report_prefix = ('%(cycle)d:%(source_num)d/%(source_total)d'
-                      ' Source %(source_key)s ')
+    _report_prefix = ('Round %(cycle)d, Source %(source_num)d of'
+                      ' %(source_total)d: %(source_key)s ')
     _report_done = (_report_prefix +
                     'complete, freshness=%(freshness)s, with %(dep_count)s'
                     ' dependent source%(dep_s)s.')
