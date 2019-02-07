@@ -16,6 +16,11 @@
 {% set doc_abs_url = document.get_absolute_url() %}
 {% set canonical = doc_abs_url | absolutify %}
 
+{% set doc_edit_url = document.get_edit_url() %}
+{% if not is_logged_in %}
+  {% set doc_edit_url = url('account_login') + '?next=' + (doc_edit_url | urlencode) %}
+{% endif %}
+
 {% set current_revision = document.current_revision %}
 {% if (is_logged_in and current_revision) and (current_revision.needs_technical_review or current_revision.needs_editorial_review) %}
   {% set approvals_html = get_approvals_html(document, request.user) %}
@@ -188,7 +193,7 @@
               {% if document.parent_id and document.current_revision %}
                 {% if document.current_revision.localization_in_progress %}
                   {% if not settings.MAINTENANCE_MODE and document.current_revision.translation_age >= 10 %}
-                    <div class="overheadIndicator translationInProgress"><p>{% trans translate_url=document.get_edit_url() %}
+                    <div class="overheadIndicator translationInProgress"><p>{% trans translate_url=doc_edit_url %}
                       This translation is incomplete. Please help <a href="{{ translate_url }}">translate this article</a> from English.
                     {% endtrans %}</p></div>
                   {% else %}
@@ -281,7 +286,7 @@
     {% endif %}
 
   <menu type="context" id="edit-history-menu">
-    <menuitem data-action="{{ document.get_edit_url() }}" label="{{_('Edit page')}}"></menuitem>
+    <menuitem data-action="{{ doc_edit_url }}" label="{{_('Edit page')}}"></menuitem>
     <menuitem data-action="{{ url('wiki.document_revisions', document.slug) }}" label="{{_('View page history')}}"></menuitem>
   </menu>
 {% endblock %}
@@ -301,7 +306,7 @@
         (function($) {
             $('#wikiArticle').children('h2[id]').each(function() {
                 var id = $(this).attr('id');
-                var href = '{{ document.get_edit_url() }}#' + id;
+                var href = '{{ doc_edit_url }}#' + id;
                 var pencil = window.mdnIcons ? window.mdnIcons.getIcon('pencil') : '';
 
                 $('<a>').attr({
