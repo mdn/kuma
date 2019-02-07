@@ -3,12 +3,13 @@ from allauth.socialaccount.signals import social_account_removed
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models.signals import post_delete, post_save
+from django.db.models.signals import post_delete, post_save, pre_delete
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from waffle import switch_is_active
 
 from kuma.core.urlresolvers import reverse
+from kuma.payments.utils import cancel_stripe_customer_subscription
 from kuma.wiki.jobs import DocumentContributorsJob
 
 from .jobs import UserGravatarURLJob
@@ -118,3 +119,13 @@ def invalidate_document_contribution(user):
     job = DocumentContributorsJob()
     for doc_id in doc_ids:
         job.invalidate(doc_id)
+
+
+@receiver(pre_delete, sender=User, dispatch_uid='users.unsubscribe_payments')
+def unsubscribe_payments_on_user_delete(sender, instance, **kwargs):
+    """Cancel Stripe subscriptions before deleting User."""
+    user = instance
+    if user.stripe_customer_id:
+        # This may raise an exception if the Stripe API call fails.
+        # This will stop User deletion while an admin investigates.
+        cancel_stripe_customer_subscription(user.stripe_customer_id)

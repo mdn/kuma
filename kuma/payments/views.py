@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import logging
 from functools import wraps
 
 from django.conf import settings
@@ -8,6 +9,7 @@ from django.http import Http404
 from django.shortcuts import redirect, render
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
+from stripe.error import StripeError
 
 from kuma.core.decorators import login_required
 
@@ -16,6 +18,8 @@ from .tasks import payments_thank_you_email
 from .utils import (cancel_stripe_customer_subscription,
                     enabled,
                     get_stripe_customer_data)
+
+log = logging.getLogger('kuma.payments.views')
 
 
 def skip_if_disabled(func):
@@ -154,21 +158,28 @@ def recurring_payment_management(request):
     }
 
     if request.user.stripe_customer_id and 'stripe_cancel_subscription' in request.POST:
-        cancel_success = cancel_stripe_customer_subscription(
-            request.user.stripe_customer_id,
-            request.user.email,
-            request.user.username
-        )
         context['cancel_request'] = True
+        cancel_success = False
+        try:
+            cancel_stripe_customer_subscription(request.user.stripe_customer_id)
+        except StripeError:
+            log.exception(
+                'Stripe subscription cancellation: Stripe error for %s [%s]',
+                request.user.username, request.user.email)
+        else:
+            cancel_success = True
         context['cancel_success'] = cancel_success
 
     if request.user.stripe_customer_id:
-        context.update(
-            get_stripe_customer_data(
-                request.user.stripe_customer_id,
-                request.user.email,
-                request.user.username
-            ),
-        )
+        data = {
+            'active_subscriptions': False
+        }
+        try:
+            data = get_stripe_customer_data(request.user.stripe_customer_id)
+        except StripeError:
+            log.exception(
+                'Stripe subscription data: Stripe error for %s [%s]',
+                request.user.username, request.user.email)
+        context.update(data)
 
     return render(request, 'payments/management.html', context)
