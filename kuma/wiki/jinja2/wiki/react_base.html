@@ -1,0 +1,31 @@
+{% extends "react_base.html" %}
+
+{% block perfhead %}
+    {% include "wiki/includes/perf.html" %}
+{% endblock %}
+
+{% block experiment_js %}
+    {%- if not request.user.is_authenticated and
+           content_experiment and
+           not content_experiment.selection_is_valid %}
+        {% javascript content_experiment.id %}
+    {%- endif %}
+{% endblock %}
+
+{% block site_css %}
+    {{ super() }}
+
+    {% stylesheet 'wiki' %}
+    {% stylesheet 'codepen-iex' %}
+
+{% endblock %}
+
+{% block site_js %}
+    {{ super() }}
+
+    {% javascript 'wiki' %}
+    {% javascript 'codepen-iex' %}
+
+    <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+{% endblock %}

@@ -774,6 +774,195 @@ def document(request, document_slug, document_locale):
     return _add_kuma_revision_header(doc, response)
 
 
+# This is the handler for the /ducks/ URL that we're using for our React spike
+# To start, it is just a copy of the document() method, using a different
+# template.
+@shared_cache_control
+@csrf_exempt
+@require_http_methods(['GET', 'HEAD'])
+@allow_CORS_GET
+@process_document_path
+@newrelic.agent.function_trace()
+@ratelimit(key='user_or_ip', rate='400/m', block=True)
+def react_document(request, document_slug, document_locale):
+    """
+    View a wiki document.
+    """
+    fallback_reason = None
+    slug_dict = split_slug(document_slug)
+
+    # Is there a document at this slug, in this locale?
+    doc, fallback_reason = _get_doc_and_fallback_reason(document_locale,
+                                                        document_slug)
+
+    if doc is None:
+        # Possible the document once existed, but is now deleted.
+        # If so, show that it was deleted.
+        deletion_log_entries = DocumentDeletionLog.objects.filter(
+            locale=document_locale,
+            slug=document_slug
+        )
+        if deletion_log_entries.exists():
+            # Show deletion log and restore / purge for soft-deleted docs
+            deleted_doc = Document.deleted_objects.filter(
+                locale=document_locale, slug=document_slug)
+            if deleted_doc.exists():
+                return _document_deleted(request, deletion_log_entries)
+
+        # We can throw a 404 immediately if the request type is HEAD.
+        # TODO: take a shortcut if the document was found?
+        if request.method == 'HEAD':
+            raise Http404
+
+        # Check if we should fall back to default locale.
+        fallback_doc, fallback_reason, redirect_url = _default_locale_fallback(
+            request, document_slug, document_locale)
+        if fallback_doc is not None:
+            doc = fallback_doc
+            if redirect_url is not None:
+                return redirect(redirect_url)
+        else:
+            # If a Document is not found, we may 404 immediately based on
+            # request parameters.
+            if (any([request.GET.get(param, None)
+                     for param in ('raw', 'include', 'nocreate')]) or
+                    not request.user.is_authenticated):
+                raise Http404
+
+            # The user may be trying to create a child page; if a parent exists
+            # for this document, redirect them to the "Create" page
+            # Otherwise, they could be trying to create a main level doc.
+            create_url = _document_redirect_to_create(document_slug,
+                                                      document_locale,
+                                                      slug_dict)
+            response = redirect(create_url)
+            add_never_cache_headers(response)
+            return response
+
+    # We found a Document. Now we need to figure out how we're going
+    # to display it.
+
+    # If we're a redirect, and redirecting hasn't been disabled, redirect.
+
+    # Obey explicit redirect pages:
+    # Don't redirect on redirect=no (like Wikipedia), so we can link from a
+    # redirected-to-page back to a "Redirected from..." link, so you can edit
+    # the redirect.
+    redirect_url = (None if request.GET.get('redirect') == 'no'
+                    else doc.get_redirect_url())
+
+    if redirect_url and redirect_url != doc.get_absolute_url():
+        url = urlparams(redirect_url, query_dict=request.GET)
+        # TODO: Re-enable the link in this message after Django >1.5 upgrade
+        # Redirected from <a href="%(url)s?redirect=no">%(url)s</a>
+        messages.add_message(
+            request, messages.WARNING,
+            mark_safe(ugettext(u'Redirected from %(url)s') % {
+                "url": request.build_absolute_uri(doc.get_absolute_url())
+            }), extra_tags='wiki_redirect')
+        return HttpResponsePermanentRedirect(url)
+
+    # Read some request params to see what we're supposed to do.
+    rendering_params = {}
+    for param in ('raw', 'summary', 'include', 'edit_links'):
+        rendering_params[param] = request.GET.get(param, False) is not False
+    rendering_params['section'] = request.GET.get('section', None)
+    rendering_params['render_raw_fallback'] = False
+
+    # Are we in a content experiment?
+    original_doc = doc
+    doc, exp_params = _apply_content_experiment(request, doc)
+    rendering_params['experiment'] = exp_params
+
+    # Get us some HTML to play with.
+    rendering_params['use_rendered'] = (
+        kumascript.should_use_rendered(doc, request.GET))
+    doc_html, ks_errors, render_raw_fallback = _get_html_and_errors(
+        request, doc, rendering_params)
+    rendering_params['render_raw_fallback'] = render_raw_fallback
+
+    # Start parsing and applying filters.
+    if doc.show_toc and not rendering_params['raw']:
+        toc_html = doc.get_toc_html()
+    else:
+        toc_html = None
+    doc_html = _filter_doc_html(request, doc, doc_html, rendering_params)
+
+    if rendering_params['raw']:
+        response = _document_raw(doc_html)
+    else:
+        # Get the SEO summary
+        seo_summary = doc.get_summary_text()
+
+        # Get the additional title information, if necessary.
+        seo_parent_title = _get_seo_parent_title(
+            original_doc, slug_dict, document_locale)
+
+        # Retrieve pre-parsed content hunks
+        quick_links_html = doc.get_quick_links_html()
+        body_html = doc.get_body_html()
+
+        # Record the English slug in Google Analytics,
+        # to associate translations
+        if original_doc.locale == 'en-US':
+            en_slug = original_doc.slug
+        elif original_doc.parent_id and original_doc.parent.locale == 'en-US':
+            en_slug = original_doc.parent.slug
+        else:
+            en_slug = ''
+
+        share_text = ugettext(
+            'I learned about %(title)s on MDN.') % {"title": doc.title}
+
+        contributors = doc.contributors
+        contributors_count = len(contributors)
+        has_contributors = contributors_count > 0
+        other_translations = original_doc.get_other_translations(
+            fields=['title', 'locale', 'slug', 'parent']
+        )
+
+        # Bundle it all up and, finally, return.
+        context = {
+            'document': original_doc,
+            'document_html': doc_html,
+            'toc_html': toc_html,
+            'quick_links_html': quick_links_html,
+            'body_html': body_html,
+            'contributors': contributors,
+            'contributors_count': contributors_count,
+            'contributors_limit': 6,
+            'has_contributors': has_contributors,
+            'fallback_reason': fallback_reason,
+            'kumascript_errors': ks_errors,
+            'macro_sources': (
+                kumascript.macro_sources(force_lowercase_keys=True)
+                if ks_errors else
+                None
+            ),
+            'render_raw_fallback': rendering_params['render_raw_fallback'],
+            'seo_summary': seo_summary,
+            'seo_parent_title': seo_parent_title,
+            'share_text': share_text,
+            'search_url': get_search_url_from_referer(request) or '',
+            'analytics_page_revision': doc.current_revision_id,
+            'analytics_en_slug': en_slug,
+            'content_experiment': rendering_params['experiment'],
+            'other_translations': other_translations,
+        }
+        response = render(request, 'wiki/react_document.html', context)
+
+    if ks_errors or request.user.is_authenticated:
+        add_never_cache_headers(response)
+
+    # We're doing this to prevent any unknown intermediate public HTTP caches
+    # from erroneously caching without considering cookies, since cookies do
+    # affect the content of the response. The primary CDN is configured to
+    # cache based on a whitelist of cookies.
+    patch_vary_headers(response, ('Cookie',))
+
+    return _add_kuma_revision_header(doc, response)
+
+
 @shared_cache_control
 @csrf_exempt
 @require_http_methods(['GET', 'HEAD', 'PUT'])
