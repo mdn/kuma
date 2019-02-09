@@ -1,49 +1,84 @@
 from __future__ import with_statement
 
 import os
+import re
 from datetime import datetime
 
-from django.conf import settings
+import mock
+import pytest
 
+from kuma.core.urlresolvers import reverse
 from kuma.users.models import User
 from kuma.users.tests import UserTestCase
+from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 from ..models import Document, DocumentDeletionLog, DocumentSpamAttempt
 from ..tasks import (build_sitemaps,
                      delete_logs_for_purged_documents,
-                     delete_old_documentspamattempt_data)
+                     delete_old_documentspamattempt_data,
+                     WikiSitemap)
 
 
-class SitemapsTestCase(UserTestCase):
-    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
-
-    def test_sitemaps_files(self):
+@pytest.mark.parametrize('max_urls_per_file', (2, 5))
+def test_sitemaps(max_urls_per_file, tmpdir, settings, doc_hierarchy):
+    """
+    Test the build of the sitemaps. There are 4 "en-US" documents in the
+    "doc_hierarchy" fixture, as well as one document in each of the "de",
+    "fr", and "it" locales. This test covers both the normal case where
+    every URL (all of the document URL's as well as the home-page URL) of
+    each locale can be placed into a single sitemap file, as well as a
+    special case where the "en-US" locale requires mulitple sitemap files
+    (max_urls_per_file=2).
+    """
+    settings.SITE_URL = 'https://example.com'
+    settings.MEDIA_ROOT = str(tmpdir.mkdir('media'))
+    with mock.patch.object(WikiSitemap, 'limit', max_urls_per_file):
         build_sitemaps()
-        locales = (Document.objects.filter_for_list()
-                                   .values_list('locale', flat=True))
-        expected_sitemap_locs = []
-        for locale in set(locales):
-            # we'll expect to see this locale in the sitemap index file
-            expected_sitemap_locs.append(
-                "<loc>%s/sitemaps/%s/sitemap.xml</loc>" %
-                (settings.SITE_URL, locale)
-            )
-            sitemap_path = os.path.join(settings.MEDIA_ROOT, 'sitemaps',
-                                        locale, 'sitemap.xml')
-            with open(sitemap_path, 'r') as sitemap_file:
-                sitemap_xml = sitemap_file.read()
 
-            docs = Document.objects.filter_for_list(locale=locale)
+        loc_re = re.compile(r'<loc>(.+)</loc>')
+        lastmod_re = re.compile(r'<lastmod>(.+)</lastmod>')
 
-            for doc in docs:
-                assert doc.modified.strftime('%Y-%m-%d') in sitemap_xml
-                assert doc.slug in sitemap_xml
+        sitemap_file_path = os.path.join(settings.MEDIA_ROOT, 'sitemap.xml')
+        assert os.path.exists(sitemap_file_path)
+        with open(sitemap_file_path) as file:
+            actual_index_locs = loc_re.findall(file.read())
 
-        sitemap_path = os.path.join(settings.MEDIA_ROOT, 'sitemap.xml')
-        with open(sitemap_path, 'r') as sitemap_file:
-            index_xml = sitemap_file.read()
-        for loc in expected_sitemap_locs:
-            assert loc in index_xml
+        # Check for duplicates.
+        assert len(actual_index_locs) == len(set(actual_index_locs))
+
+        expected_index_locs = set()
+        sitemap_path_fmt = 'sitemaps/{}/sitemap{}.xml'
+
+        for locale, _ in settings.LANGUAGES:
+            postfixes = ['']
+            if (locale == 'en-US') and (max_urls_per_file == 2):
+                postfixes.extend(('_2', '_3'))
+
+            actual_locs, actual_lastmods = [], []
+            for postfix in postfixes:
+                sitemap_path = sitemap_path_fmt.format(locale, postfix)
+                expected_index_locs.add(absolutify(sitemap_path))
+                sitemap_file_path = os.path.join(settings.MEDIA_ROOT,
+                                                 sitemap_path)
+                assert os.path.exists(sitemap_file_path)
+                with open(sitemap_file_path) as file:
+                    sitemap = file.read()
+                    actual_locs.extend(loc_re.findall(sitemap))
+                    actual_lastmods.extend(lastmod_re.findall(sitemap))
+
+            # Check for duplicates.
+            assert len(actual_locs) == len(set(actual_locs))
+
+            expected_locs, expected_lastmods = set(), set()
+            expected_locs.add(absolutify(reverse('home', locale=locale)))
+            for doc in Document.objects.filter(locale=locale).all():
+                expected_locs.add(absolutify(doc.get_absolute_url()))
+                expected_lastmods.add(doc.modified.strftime('%Y-%m-%d'))
+
+            assert set(actual_locs) == expected_locs
+            assert set(actual_lastmods) == expected_lastmods
+
+        assert set(actual_index_locs) == expected_index_locs
 
 
 class DeleteOldDocumentSpamAttemptData(UserTestCase):

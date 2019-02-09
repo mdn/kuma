@@ -18,6 +18,7 @@ from djcelery_transactions import task as transaction_task
 from lxml import etree
 
 from kuma.core.decorators import skip_in_maintenance_mode
+from kuma.core.urlresolvers import reverse
 from kuma.core.utils import chunked
 from kuma.search.models import Index
 
@@ -271,29 +272,53 @@ def build_locale_sitemap(locale):
     if not os.path.isdir(directory):
         os.makedirs(directory)
 
-    queryset = Document.objects.filter_for_list(locale=locale)
-    if queryset.exists():
-        names = []
-        info = {
-            'queryset': queryset,
-            'date_field': 'modified',
-        }
-        sitemap = WikiSitemap(info)
-        for page in range(1, sitemap.paginator.num_pages + 1):
-            urls = sitemap.get_urls(page=page)
-            if page == 1:
-                name = 'sitemap.xml'
-            else:
-                name = 'sitemap_%s.xml' % page
-            names.append(name)
+    home_url_info = {
+        'location': absolutify(reverse('home', locale=locale)),
+        'lastmod': None,
+        'changefreq': None,
+        'priority': None
+    }
+    home_url_added = False
 
-            rendered = smart_str(render_to_string('wiki/sitemap.xml',
-                                                  {'urls': urls}))
-            path = os.path.join(directory, name)
-            with open(path, 'w') as sitemap_file:
-                sitemap_file.write(rendered)
+    sitemap = WikiSitemap({
+        'queryset': Document.objects.filter_for_list(locale=locale),
+        'date_field': 'modified',
+    })
 
-        return locale, names, timestamp
+    names = []
+
+    def create_sitemap_file(file_number, urls):
+        if file_number == 1:
+            name = 'sitemap.xml'
+        else:
+            name = 'sitemap_%s.xml' % file_number
+        names.append(name)
+        rendered = smart_str(
+            render_to_string('wiki/sitemap.xml', {'urls': urls}))
+        path = os.path.join(directory, name)
+        with open(path, 'w') as sitemap_file:
+            sitemap_file.write(rendered)
+
+    # Note that "sitemap.paginator.page_range" will always return at
+    # least one page, since "sitemap.paginator" has been created with
+    # "allow_empty_first_page=True", and that's what we want, since
+    # we'll always have at least one URL (the URL of the home page) to
+    # add to a sitemap file for any given locale.
+    for page in sitemap.paginator.page_range:
+        urls = sitemap.get_urls(page=page)
+
+        # If we have room (the number of URL's in a sitemap file is strictly
+        # limited), let's add the home-page URL to this batch of URL's.
+        if len(urls) < sitemap.paginator.per_page:
+            urls.append(home_url_info)
+            home_url_added = True
+
+        create_sitemap_file(page, urls)
+
+    if not home_url_added:
+        create_sitemap_file(page + 1, [home_url_info])
+
+    return locale, names, timestamp
 
 
 @task
