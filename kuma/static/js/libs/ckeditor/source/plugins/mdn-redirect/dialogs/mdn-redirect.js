@@ -79,6 +79,12 @@ CKEDITOR.dialog.add('mdn-redirect', function(editor) {
         url = dialog.sender.getContentElement('info', 'url').getValue(),
         pattern = mdn.ckeditor.redirectPattern;
 
+      // Don't allow HTML in the page title.
+      // See https://bugzilla.mozilla.org/1521693
+      title = title.replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+
       editor && title && url && editor.setData(
         pattern.replace('%(href)s', url).replace('%(title)s', title)
       );
