@@ -150,16 +150,6 @@ Links
 }
 
 /*
-Button states
-====================================================================== */
-/* Used for :hover, :active, :focus states
-   When changing the values of this mixin, remember to also update the
-   relevant test at __tests__/sass/mdn/_button-states-mixins-test.scss */
-@mixin active-button-state() {
-    box-shadow: 1px 1px 5px #212121, -1px -1px 5px #bdbdbd;
-}
-
-/*
 Colours
 ====================================================================== */
 

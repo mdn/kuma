@@ -80,10 +80,6 @@ ALLOWED_ATTRIBUTES['del'] = ['datetime']
 ALLOWED_ATTRIBUTES['meter'] += ['max', 'min', 'value', 'low', 'high', 'optimum',
                                 'form']
 ALLOWED_ATTRIBUTES['details'] += ['open']
-# attributes required for codepen-iex
-ALLOWED_ATTRIBUTES['div'] += ['data-prefill', 'data-height', 'data-editable',
-                              'data-default-tab', 'data-theme-id']
-ALLOWED_ATTRIBUTES['pre'] += ['data-lang']
 # MathML
 ALLOWED_ATTRIBUTES.update(dict((x, ['encoding', 'src']) for x in (
     'annotation', 'annotation-xml')))
