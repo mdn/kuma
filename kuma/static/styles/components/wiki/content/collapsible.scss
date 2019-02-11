@@ -4,7 +4,7 @@ h2 > .collapse-trigger {
     background-color: inherit;
     border: inherit;
     color: inherit;
-    display: block;
+    display: inline-block;
     font-family: inherit;
     font-weight: normal;
     letter-spacing: inherit;
@@ -14,12 +14,12 @@ h2 > .collapse-trigger {
     position: relative;
     text-decoration: inherit;
     text-align: left;
-    width: 100%;
 
     /* add toggle symbol */
     &:before {
         margin-right: 10px;
         @include set-bidi-icon($path-to-svg-arrow-icons + 'caret-right.svg', $path-to-svg-arrow-icons + 'caret-left.svg', auto, auto, 8px);
+        background-position: 0 5px;
         cursor: pointer;
     }
 
