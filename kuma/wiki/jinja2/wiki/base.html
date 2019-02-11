@@ -14,18 +14,11 @@
 
 {% block site_css %}
     {{ super() }}
-
     {% stylesheet 'wiki' %}
-    {% stylesheet 'codepen-iex' %}
 
 {% endblock %}
 
 {% block site_js %}
     {{ super() }}
-
     {% javascript 'wiki' %}
-    {% javascript 'codepen-iex' %}
-
-    <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-
 {% endblock %}
