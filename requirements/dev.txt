@@ -68,6 +68,9 @@ urlwait==0.4 \
     --hash=sha256:395fc0c2a7f9736858a2c2f449aa20c6e9da1f86bfc2d1fda4f2f5b78a5c115a
 
 # Enables ./manage.py runserver_plus with in-browser exception debugging
-Werkzeug==0.11.4 \
-    --hash=sha256:7db3cb2d4725be0680abf64a45b18229186f03ad8b9989abbe053f9357b17b37 \
- --hash=sha256:e48fb7e3f2bb5a740dd9a666624699a4d83e2e028555f9c46bcc8ecfc2cd8c32
+# Code: https://github.com/pallets/werkzeug
+# Changes: https://github.com/pallets/werkzeug/blob/master/CHANGES.rst
+# Docs: http://werkzeug.pocoo.org/docs/0.14/
+Werkzeug==0.14.1 \
+    --hash=sha256:d5da73735293558eb1651ee2fddc4d0dedcfa06538b8813a2e20011583c9e49b \
+    --hash=sha256:c3fd7a7d41976d9f44db327260e263132466836cef6f91512889ed60ad26557c
