@@ -24,22 +24,20 @@
         "node": ">=10.0.0",
         "npm": ">=6.0.0"
     },
-    "dependencies": {
+    "devDependencies": {
         "clean-css-cli": "4.2.1",
         "eslint": "5.1.0",
         "eslint-plugin-jest": "22.1.2",
-        "node-sass": "4.9.4",
-        "stylelint": "9.3.0",
-        "uglify-js": "2.8.29"
-    },
-    "devDependencies": {
         "gulp": "3.9.1",
         "gulp-sass": "4.0.1",
         "gulp-stylelint": "7.0.0",
         "gulp-watch": "5.0.0",
         "husky": "0.14.3",
         "jest": "23.6.0",
+        "node-sass": "4.9.4",
         "sass-true": "4.0.0",
-        "svgo": "1.0.5"
+        "stylelint": "9.3.0",
+        "svgo": "1.0.5",
+        "uglify-js": "2.8.29"
     }
 }
