@@ -210,6 +210,13 @@ django-waffle==0.14.0 \
     --hash=sha256:f243a56db80bd28601222b1a8a0b1fa4e7e6ac1bbf809952c3725cb4cc0012d9 \
     --hash=sha256:f3db39cc17d6e388a485230b6029095e5d6fba4ceaff8d4fcc21f95c47fe2e97
 
+# Use webpack-generated bundles in Django templates
+# Code: https://github.com/owais/django-webpack-loader
+# Changes: https://github.com/owais/django-webpack-loader/blob/master/CHANGELOG.md
+django-webpack-loader==0.6.0 \
+    --hash=sha256:60bab6b9a037a5346fad12d2a70a6bc046afb33154cf75ed640b93d3ebd5f520 \
+    --hash=sha256:970b968c2a8975fb7eff56a3bab5d0d90d396740852d1e0c50c5cfe2b824199a
+
 # Configure Django DATABASES settings from an environment variable
 dj-database-url==0.4.0 \
     --hash=sha256:858312abb7b330ea875733a65806a36ad04d7b8451c6ce8835118a2fa10d6870
