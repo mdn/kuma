@@ -20,6 +20,10 @@
         "precommit": "npm run eslint && npm run stylelint",
         "test": "jest"
     },
+    "engines": {
+        "node": ">=10.0.0",
+        "npm": ">=6.0.0"
+    },
     "dependencies": {
         "clean-css-cli": "4.2.1",
         "eslint": "5.1.0",
