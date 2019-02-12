@@ -565,11 +565,29 @@
         // Keep track of editor dirtiness
         function checkEditorDirtiness() {
             var editorDirty = editor.checkDirty();
+            var $container = $form.find('.editor-container');
 
-            if (editorDirty) {
-                $form.find('.editor-container').addClass('dirty').trigger('mdn:dirty');
+            if ($container.length) {
+                if (editorDirty) {
+                    $container.addClass('dirty').trigger('mdn:dirty');
+                } else {
+                    $container.removeClass('dirty').trigger('mdn:clean');
+                }
             } else {
-                $form.find('.editor-container').removeClass('dirty').trigger('mdn:clean');
+                /*
+                 * When the editor is maximized, the container doesn't
+                 * exist in the form, but we still need to fire mdn:dirty
+                 * and mdn:clean events to enable and disable the save
+                 * buttons in the editor. Fortunately, those events are
+                 * handled on the form, so we just trigger the events
+                 * directly on the form in that case, and we don't
+                 * bother with adding and removing the 'dirty' class.
+                 */
+                if (editorDirty) {
+                    $form.trigger('mdn:dirty');
+                } else {
+                    $form.trigger('mdn:clean');
+                }
             }
         }
 
