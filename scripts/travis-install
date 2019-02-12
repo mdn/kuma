@@ -29,7 +29,7 @@ fi
 # Install asset tools with npm
 if [ ${INSTALL_NPM_TOOLS:-0} -ne 0 ]
 then
-    npm install --production
+    npm install
 fi
 
 # Install docker-compose
