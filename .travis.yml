@@ -69,8 +69,8 @@ matrix:
             INSTALL_ELASTICSEARCH=1
             INSTALL_NPM_TOOLS=1
 install:
-    - nvm install 8
-    - nvm use 8
+    - nvm install 10
+    - nvm use 10
     - scripts/travis-install
     - pip install -U pip
     - pip install -r requirements/travis.txt
