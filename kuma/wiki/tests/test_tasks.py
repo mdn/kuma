@@ -1,12 +1,13 @@
 from __future__ import with_statement
 
 import os
+import re
 from datetime import datetime
 
-from django.conf import settings
-
+from kuma.core.urlresolvers import reverse
 from kuma.users.models import User
 from kuma.users.tests import UserTestCase
+from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 from ..models import Document, DocumentDeletionLog, DocumentSpamAttempt
 from ..tasks import (build_sitemaps,
@@ -14,36 +15,56 @@ from ..tasks import (build_sitemaps,
                      delete_old_documentspamattempt_data)
 
 
-class SitemapsTestCase(UserTestCase):
-    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
+def test_sitemaps(tmpdir, settings, doc_hierarchy):
+    """
+    Test the build of the sitemaps.
+    """
+    settings.SITE_URL = 'https://example.com'
+    settings.MEDIA_ROOT = str(tmpdir.mkdir('media'))
 
-    def test_sitemaps_files(self):
-        build_sitemaps()
-        locales = (Document.objects.filter_for_list()
-                                   .values_list('locale', flat=True))
-        expected_sitemap_locs = []
-        for locale in set(locales):
-            # we'll expect to see this locale in the sitemap index file
-            expected_sitemap_locs.append(
-                "<loc>%s/sitemaps/%s/sitemap.xml</loc>" %
-                (settings.SITE_URL, locale)
-            )
-            sitemap_path = os.path.join(settings.MEDIA_ROOT, 'sitemaps',
-                                        locale, 'sitemap.xml')
-            with open(sitemap_path, 'r') as sitemap_file:
-                sitemap_xml = sitemap_file.read()
+    build_sitemaps()
 
-            docs = Document.objects.filter_for_list(locale=locale)
+    loc_re = re.compile(r'<loc>(.+)</loc>')
+    lastmod_re = re.compile(r'<lastmod>(.+)</lastmod>')
 
-            for doc in docs:
-                assert doc.modified.strftime('%Y-%m-%d') in sitemap_xml
-                assert doc.slug in sitemap_xml
+    sitemap_file_path = os.path.join(settings.MEDIA_ROOT, 'sitemap.xml')
+    assert os.path.exists(sitemap_file_path)
+    with open(sitemap_file_path) as file:
+        actual_index_locs = loc_re.findall(file.read())
 
-        sitemap_path = os.path.join(settings.MEDIA_ROOT, 'sitemap.xml')
-        with open(sitemap_path, 'r') as sitemap_file:
-            index_xml = sitemap_file.read()
-        for loc in expected_sitemap_locs:
-            assert loc in index_xml
+    # Check for duplicates.
+    assert len(actual_index_locs) == len(set(actual_index_locs))
+
+    expected_index_locs = set()
+    for locale, _ in settings.LANGUAGES:
+        names = ['sitemap_other.xml']
+        actual_locs, actual_lastmods = [], []
+        docs = Document.objects.filter(locale=locale)
+        if docs.exists():
+            names.append('sitemap.xml')
+        for name in names:
+            sitemap_path = os.path.join('sitemaps', locale, name)
+            expected_index_locs.add(absolutify(sitemap_path))
+            sitemap_file_path = os.path.join(settings.MEDIA_ROOT, sitemap_path)
+            assert os.path.exists(sitemap_file_path)
+            with open(sitemap_file_path) as file:
+                sitemap = file.read()
+                actual_locs.extend(loc_re.findall(sitemap))
+                actual_lastmods.extend(lastmod_re.findall(sitemap))
+
+        # Check for duplicates.
+        assert len(actual_locs) == len(set(actual_locs))
+
+        expected_locs, expected_lastmods = set(), set()
+        expected_locs.add(absolutify(reverse('home', locale=locale)))
+        for doc in docs:
+            expected_locs.add(absolutify(doc.get_absolute_url()))
+            expected_lastmods.add(doc.modified.strftime('%Y-%m-%d'))
+
+        assert set(actual_locs) == expected_locs
+        assert set(actual_lastmods) == expected_lastmods
+
+    assert set(actual_index_locs) == expected_index_locs
 
 
 class DeleteOldDocumentSpamAttemptData(UserTestCase):

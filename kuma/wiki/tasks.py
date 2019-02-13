@@ -18,6 +18,7 @@ from djcelery_transactions import task as transaction_task
 from lxml import etree
 
 from kuma.core.decorators import skip_in_maintenance_mode
+from kuma.core.urlresolvers import reverse
 from kuma.core.utils import chunked
 from kuma.search.models import Index
 
@@ -271,29 +272,41 @@ def build_locale_sitemap(locale):
     if not os.path.isdir(directory):
         os.makedirs(directory)
 
+    # Add any non-document URL's, which will always include the home page.
+    other_urls = [
+        {
+            'location': absolutify(reverse('home', locale=locale)),
+            'lastmod': None,
+            'changefreq': None,
+            'priority': None
+        }
+    ]
+    make = [('sitemap_other.xml', other_urls)]
+
+    # Add the document URL's within this locale.
     queryset = Document.objects.filter_for_list(locale=locale)
     if queryset.exists():
-        names = []
-        info = {
+        sitemap = WikiSitemap({
             'queryset': queryset,
             'date_field': 'modified',
-        }
-        sitemap = WikiSitemap(info)
+        })
         for page in range(1, sitemap.paginator.num_pages + 1):
             urls = sitemap.get_urls(page=page)
             if page == 1:
                 name = 'sitemap.xml'
             else:
                 name = 'sitemap_%s.xml' % page
-            names.append(name)
+            make.append((name, urls))
 
-            rendered = smart_str(render_to_string('wiki/sitemap.xml',
-                                                  {'urls': urls}))
-            path = os.path.join(directory, name)
-            with open(path, 'w') as sitemap_file:
-                sitemap_file.write(rendered)
+    # Make the sitemap files.
+    for name, urls in make:
+        rendered = smart_str(
+            render_to_string('wiki/sitemap.xml', {'urls': urls}))
+        path = os.path.join(directory, name)
+        with open(path, 'w') as sitemap_file:
+            sitemap_file.write(rendered)
 
-        return locale, names, timestamp
+    return locale, [name for name, _ in make], timestamp
 
 
 @task
