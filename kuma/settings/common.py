@@ -528,6 +528,7 @@ STATICFILES_STORAGE = ('pipeline.storage.NonPackagingPipelineStorage'
 
 STATICFILES_DIRS = (
     path('kuma', 'static'),
+    path('kuma', 'javascript', 'dist'),
     path('build', 'locale'),
     path('jinja2', 'includes/icons'),
 )
@@ -919,6 +920,24 @@ PIPELINE_JS = {
             'js/lang-switcher.js',
         ),
         'output_filename': 'build/js/main.js',
+    },
+    'react-main': {
+        'source_filenames': (
+            'js/libs/jquery/jquery.js',
+            'js/libs/icons.js',
+            'js/components.js',
+            'js/analytics.js',
+            'js/main.js',
+            'js/components/nav-main-search.js',
+            'js/auth.js',
+            'js/highlight.js',
+            'js/wiki-compat-trigger.js',
+            'js/lang-switcher.js',
+            # The react.js file is created by webpack and
+            # placed in the kuma/javascript/dist/ directory.
+            'react.js'
+        ),
+        'output_filename': 'build/js/react-main.js',
     },
     'users': {
         'source_filenames': (

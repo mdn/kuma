@@ -14,6 +14,8 @@
     },
     "scripts": {
         "build-watch": "gulp",
+        "webpack": "webpack",
+        "webpack-watch": "webpack -w",
         "stylelint": "./node_modules/.bin/stylelint \"kuma/static/styles/**/*.scss\"",
         "eslint": "./node_modules/.bin/eslint kuma/",
         "optim:svg": "svgo jinja2/includes/icons/* --disable={removeViewBox,removeTitle} --multipass --pretty",
@@ -24,10 +26,25 @@
         "node": ">=10.0.0",
         "npm": ">=6.0.0"
     },
+    "dependencies": {
+        "@emotion/core": "^10.0.7",
+        "@emotion/styled": "^10.0.7",
+        "react": "^16.8.1",
+        "react-dom": "^16.8.1"
+    },
     "devDependencies": {
+        "@babel/core": "^7.2.2",
+        "@babel/plugin-proposal-class-properties": "^7.3.0",
+        "@babel/preset-env": "^7.3.1",
+        "@babel/preset-flow": "^7.0.0",
+        "@babel/preset-react": "^7.0.0",
+        "@emotion/babel-preset-css-prop": "^10.0.7",
+        "babel-loader": "^8.0.5",
+        "babel-plugin-emotion": "^10.0.7",
         "clean-css-cli": "4.2.1",
         "eslint": "5.1.0",
         "eslint-plugin-jest": "22.1.2",
+        "flow-bin": "^0.92.1",
         "gulp": "3.9.1",
         "gulp-sass": "4.0.1",
         "gulp-stylelint": "7.0.0",
@@ -35,9 +52,12 @@
         "husky": "0.14.3",
         "jest": "23.6.0",
         "node-sass": "4.9.4",
+        "prettier": "^1.16.4",
         "sass-true": "4.0.0",
         "stylelint": "9.3.0",
         "svgo": "1.0.5",
-        "uglify-js": "2.8.29"
+        "uglify-js": "2.8.29",
+        "webpack": "^4.29.3",
+        "webpack-cli": "^3.2.3"
     }
 }
