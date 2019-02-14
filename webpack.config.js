@@ -1,4 +1,5 @@
 const path = require('path');
+const nodePath = process.env.NODE_PATH || './node_modules';
 
 module.exports = {
     mode: "production",
@@ -15,12 +16,18 @@ module.exports = {
                 "loader": "babel-loader",
                 "options": {
                     "presets": [
-                        "@babel/preset-env",
-                        "@babel/preset-react",
-                        "@babel/preset-flow",
+                        nodePath + "/@babel/preset-env",
+                        nodePath + "/@babel/preset-react",
+                        nodePath + "/@babel/preset-flow",
                     ]
-                }
+                },
             }
         }]
+    },
+    resolve: {
+        modules: [nodePath]
+    },
+    resolveLoader: {
+        modules: [nodePath]
     }
 };

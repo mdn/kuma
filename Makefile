@@ -84,7 +84,7 @@ localeextract:
 localecompile:
 	cd locale; ../scripts/compile-mo.sh .
 
-localerefresh: localeextract localetest localecompile compilejsi18n collectstatic
+localerefresh: localeextract localetest localecompile build-static
 
 pull-base:
 	docker pull ${BASE_IMAGE}

@@ -117,6 +117,7 @@ RUN ln -s /app/package.json /tools \
     && npm install
 USER root
 RUN find /tools/node_modules/.bin/ -executable -type f -o -type l -exec ln -s {} /usr/local/bin/ \;
+ENV NODE_PATH=/tools/node_modules
 
 # setup default run parameters
 USER kuma
