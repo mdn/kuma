@@ -1,4 +1,4 @@
-FROM node:10.14.2-slim
+FROM node:10.14.2
 
 RUN set -ex && \
     apt-get update && \
@@ -7,6 +7,7 @@ RUN set -ex && \
         mime-support \
         build-essential \
         python2.7 \
+        default-jre \
     && rm -rf /var/lib/apt/lists/*
 
 # remove the node user from the base package and add a non-priviledged user
