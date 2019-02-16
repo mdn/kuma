@@ -3,25 +3,25 @@ import * as React from 'react';
 
 const ducksStyle = Object.freeze({
     font: 'bold 26px/29px zillaslab',
-    'background-color': 'black',
+    backgroundColor: 'black',
     color: 'white',
     position: 'absolute',
     width: 'calc(219px - 50px)',
     height: '29px',
     top: '15px',
-    'margin-left': '50px',
-    'z-index': '100',
+    marginLeft: '50px',
+    zIndex: '100',
 });
 
 const h2Style = Object.freeze({
     position: 'absolute',
     height: '48px',
     width: '48px',
-    'line-height': '55px',
+    lineHeight: '55px',
     left: '11px',
     top: '-5px',
-    'z-index': 100,
-    'background-color': 'black',
+    zIndex: 100,
+    backgroundColor: 'black',
     transform: 'scale(-1, 1)',
 });
 

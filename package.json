@@ -16,6 +16,7 @@
         "build-watch": "gulp",
         "webpack": "webpack",
         "webpack-watch": "webpack -w",
+        "react-prebuild": "./node_modules/.bin/babel-node ./react-prebuild.jsx --presets @babel/env,@babel/react,@babel/flow",
         "stylelint": "./node_modules/.bin/stylelint \"kuma/static/styles/**/*.scss\"",
         "eslint": "./node_modules/.bin/eslint kuma/",
         "optim:svg": "svgo jinja2/includes/icons/* --disable={removeViewBox,removeTitle} --multipass --pretty",
@@ -27,6 +28,7 @@
         "npm": ">=6.0.0"
     },
     "dependencies": {
+        "@babel/node": "^7.2.2",
         "@emotion/core": "^10.0.7",
         "@emotion/styled": "^10.0.7",
         "react": "^16.8.1",

@@ -104,7 +104,9 @@
 
     <!-- Header -->
     <header id="main-header" class="header-main">
-      <div id="main-header-logo" data-url="{{ url('home') }}"></div>
+      <div id="main-header-logo" data-url="{{ url('home') }}">
+        {% include "includes/prebuilt-react-components/"+LANG+"/Logo.html" %}
+      </div>
       <div class="nav-toolbox-wrapper">
         {% include "includes/header-main-nav.html" %}
         {% include "includes/header-toolbox.html" %}

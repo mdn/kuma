@@ -79,6 +79,7 @@ node_modules/
 /static/
 kuma/javascript/dist/
 /tmp/emails/*.log
+jinja2/includes/prebuilt-react-components/
 
 # Selenium
 geckodriver.log

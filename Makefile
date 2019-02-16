@@ -46,6 +46,10 @@ webpack:
 	@ echo "## Running webpack ##"
 	@ npm run webpack
 
+prebuild-react:
+	@ echo "## Prebuilding React.js components ##"
+	@ python manage.py prebuild_react
+
 compilejsi18n:
 	@ echo "## Generating JavaScript translation catalogs ##"
 	@ mkdir -p build/locale
@@ -55,7 +59,7 @@ collectstatic:
 	@ echo "## Compiling (Sass), collecting, and building static files ##"
 	@ python manage.py collectstatic --noinput
 
-build-static: webpack compilejsi18n collectstatic
+build-static: webpack prebuild-react compilejsi18n collectstatic
 
 install:
 	@ echo "## Installing $(requirements) ##"
@@ -157,4 +161,4 @@ npmrefresh:
 	npm install
 
 # Those tasks don't have file targets
-.PHONY: test coveragetest locust clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh npmrefresh webpack
+.PHONY: test coveragetest locust clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh npmrefresh webpack prebuild-react
