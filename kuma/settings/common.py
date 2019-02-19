@@ -527,6 +527,7 @@ STATICFILES_STORAGE = ('pipeline.storage.NonPackagingPipelineStorage'
                        'kuma.core.pipeline.storage.ManifestPipelineStorage')
 
 STATICFILES_DIRS = (
+    path('assets', 'static'),
     path('kuma', 'static'),
     path('build', 'locale'),
     path('jinja2', 'includes/icons'),
