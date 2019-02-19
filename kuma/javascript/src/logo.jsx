@@ -1,20 +1,22 @@
 //@flow
 import * as React from 'react';
 
-export default function(props : {|url: string|}) : React.Node {
+const styles = {
+    logo: {
+        display: 'block',
+        height: 48,
+        width: 219,
+        marginTop: 15,
+        // The sprite image includes a mask, and is not itself 48px high
+        // so we need overflow to hide the mask.
+        overflow: 'hidden'
+    }
+};
+
+export default function Logo(props: {| url: string |}): React.Node {
     return (
-        <a css={{margin:0}} className="logo" href={props.url}>
-          MDN Web Docs
+        <a css={styles.logo} href={props.url}>
+            <img src="/static/img/web-docs-sprite.svg" alt="MDN Web Docs" />
         </a>
     );
-
-    /*
-      Or, to get the ducks back:
-      <a href="{{ url('home') }}" class="logo">{{ _('MDN Web Docs') }}</a>
-      <div style="font: bold 26px/29px zillaslab;
-                  background-color:black; color:white;
-                  position:relative; left: -50px; height:29px; top:15px;
-                  z-index:100">ducks&nbsp;</div>
-      <h2 style="position:absolute;height:48px;width:48px;line-height:55px;left:11px;top:-5px;z-index:100;background-color:black;transform:scale(-1,1)">&#8239;&#x1f986;&#8239;</h2>
-     */
 }

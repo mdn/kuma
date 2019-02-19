@@ -2,6 +2,7 @@ const path = require('path');
 const nodePath = process.env.NODE_PATH || './node_modules';
 
 module.exports = {
+//    mode: "development",
     mode: "production",
     entry: path.resolve(__dirname, './kuma/javascript/src/index.jsx'),
     output: {
@@ -10,17 +11,21 @@ module.exports = {
     },
     module: {
         rules: [{
-            "test": /\.(js|jsx)$/,
+            "test": /\.jsx?$/,
             "exclude": /node_modules/,
             "use": {
                 "loader": "babel-loader",
                 "options": {
                     "presets": [
-                        nodePath + "/@babel/preset-env",
-                        nodePath + "/@babel/preset-react",
-                        nodePath + "/@babel/preset-flow",
+                        "@babel/preset-env",
+                        "@babel/preset-react",
+                        "@babel/preset-flow",
+                        "@emotion/babel-preset-css-prop"
+                    ],
+                    "plugins": [
+                        "@babel/plugin-proposal-class-properties"
                     ]
-                },
+                }
             }
         }]
     },
