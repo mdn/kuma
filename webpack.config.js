@@ -7,7 +7,7 @@ const path = require('path');
 // variable so that code can be found in /tools/node_modules.
 // But we also have to convince webpack and babel to use the /tools
 // directory when we're running in docker, so this nodePath constant
-// is the absolute path to the node_modules director we want to use.
+// is the absolute path to the node_modules directory we want to use.
 // We set it on resolve.modules below, and prepend it to the name of
 // all the babel plugins so we're sure we're gettting precisely the
 // file we want both locally (NODE_PATH not set) and in docker.
