@@ -24,4 +24,7 @@ Here are the subfolders:
 * `reference`: These files are related to assets, but are not part of an
   automated build process, and are not served to users.
 * `src`: (TODO) Input for the ``webpack`` process.
-* `static`: These files are copied to ``/static``.
+* `static`: These files are copied to ``/static``. Small files (under 32
+  kilobytes) in a folder called `embed` (such as `static/img/embed`) may be
+  inlined as ``data:`` by
+  [django-pipeline](https://django-pipeline.readthedocs.io/en/latest/configuration.html#embedding-fonts-and-images).
