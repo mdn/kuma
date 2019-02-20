@@ -42,6 +42,10 @@ coveragetesthtml: coveragetest
 locust:
 	locust -f tests/performance/smoke.py --host=https://developer.allizom.org
 
+webpack:
+	@ echo "## Running webpack ##"
+	@ npm run webpack
+
 compilejsi18n:
 	@ echo "## Generating JavaScript translation catalogs ##"
 	@ mkdir -p build/locale
@@ -51,7 +55,7 @@ collectstatic:
 	@ echo "## Compiling (Sass), collecting, and building static files ##"
 	@ python manage.py collectstatic --noinput
 
-build-static: compilejsi18n collectstatic
+build-static: webpack compilejsi18n collectstatic
 
 install:
 	@ echo "## Installing $(requirements) ##"
@@ -80,7 +84,7 @@ localeextract:
 localecompile:
 	cd locale; ../scripts/compile-mo.sh .
 
-localerefresh: localeextract localetest localecompile compilejsi18n collectstatic
+localerefresh: localeextract localetest localecompile build-static
 
 pull-base:
 	docker pull ${BASE_IMAGE}
@@ -153,4 +157,4 @@ npmrefresh:
 	npm install
 
 # Those tasks don't have file targets
-.PHONY: test coveragetest locust clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh npmrefresh
+.PHONY: test coveragetest locust clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh npmrefresh webpack

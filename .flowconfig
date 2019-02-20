@@ -1,0 +1,12 @@
+[ignore]
+<PROJECT_ROOT>/kumascript/.*
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+
+[strict]
