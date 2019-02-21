@@ -278,8 +278,13 @@ The ``staticfiles`` app is configured by Django settings:
 
 ``STATICFILES_DIRS``
    A list of folders in the ``kuma`` directory that the ``FileSystemFinder``
-   will scan for static assets. For MDN, this is set to ``kuma/static``,
-   ``build/locale``, and ``jinja2/includes/icons``.
+   will scan for static assets. For MDN, this includes:
+
+   * ``assets/static``
+   * ``kuma/static``
+   * ``kuma/javascript/dist``
+   * ``build/locale``
+   * ``jinja2/includes/icons``
 
    For example, the :ref:`localization JavaScript <build-locale-js>`
    ``build/locale/jsi18n/fr/javascript.js`` will be collected to
