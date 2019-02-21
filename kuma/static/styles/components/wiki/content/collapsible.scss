@@ -1,6 +1,6 @@
 h2 > .collapse-trigger {
     /* over-ride button styles */
-    @include set-font-size($mobile-h2-font-size);
+    @include set-font-size($collapse-trigger-mobile-font-size);
     background-color: inherit;
     border: inherit;
     color: inherit;
@@ -19,7 +19,7 @@ h2 > .collapse-trigger {
     &:before {
         margin-right: 10px;
         @include set-bidi-icon($path-to-svg-arrow-icons + 'caret-right.svg', $path-to-svg-arrow-icons + 'caret-left.svg', auto, auto, 8px);
-        background-position: 0 5px;
+        background-position: 0 8px;
         cursor: pointer;
     }
 
