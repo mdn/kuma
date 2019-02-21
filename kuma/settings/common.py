@@ -527,6 +527,7 @@ STATICFILES_STORAGE = ('pipeline.storage.NonPackagingPipelineStorage'
                        'kuma.core.pipeline.storage.ManifestPipelineStorage')
 
 STATICFILES_DIRS = (
+    path('assets', 'static'),
     path('kuma', 'static'),
     path('kuma', 'javascript', 'dist'),
     path('build', 'locale'),

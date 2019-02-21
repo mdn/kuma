@@ -1,4 +1,0 @@
-Images in this directory can be embedded in stylesheets as data URIs.
-
-More information:
-https://django-pipeline.readthedocs.io/en/latest/configuration.html#embedding-fonts-and-images
