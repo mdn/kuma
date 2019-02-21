@@ -37,8 +37,8 @@ The three phases of an asset's life are **Building**, **Collecting**, and
     - :ref:`gulp <gulp-alternative>` provides alternative tools to ``staticfiles``
       for local development of assets.
 * **Serving** - Collected assets are served to visitors in development and production
-    - The :ref:`static tag <static-tag>` returns the URL of assets
-      collected by ``staticfiles``.
+    - In `Django and Jinja templates`_, the :ref:`static tag <static-tag>` returns
+      the URL of assets collected by ``staticfiles``.
     - The :ref:`statici18n tag <statici18n-tag>` returns the URL of localization
       JavaScript collected by ``staticfiles``.
     - The :ref:`pipeline tags <pipeline-tags>` ``javascript`` and
@@ -46,6 +46,8 @@ The three phases of an asset's life are **Building**, **Collecting**, and
       by ``django-pipeline``.
     - :ref:`WhiteNoise <serve-whitenoise>` serves static assets as part of the
       Django process.
+
+.. _`Django and Jinja template`: http://jinja.pocoo.org/docs/2.10/templates/#
 
 .. _build-locale-files:
 
@@ -152,7 +154,7 @@ file, with optional minimization. For example, the file
 * `kuma/static/js/lang-switcher.js`_
 
 In development, the source files (10 for ``main.js``) are served, so there are
-10 ``<script>`` elements in the HTML when when ``{{javascript('main')}}`` is
+10 ``<script>`` elements in the HTML when ``{{javascript('main')}}`` is
 used in a template.  In production, the output bundle is used, so a single
 ``<script>`` tag appears in the HTML. The single bundle is also processed
 with UglifyJS_, which removes whitespace, replaces variable names with
@@ -264,9 +266,9 @@ The ``staticfiles`` app is configured by Django settings:
    are stored, what URLs they have, and provides hooks for modifying files when
    copying them.  Kuma uses three different storages, depending on the context:
 
-   * Development server (``DEBUG=False``): pipeline.storage.NonPackagingPipelineStorage_,
+   * Development server (``DEBUG=True``): pipeline.storage.NonPackagingPipelineStorage_,
      which avoids combining files when collecting them.
-   * Production server (``DEBUG=True``): kuma.core.pipeline.storage.ManifestPipelineStorage_,
+   * Production server (``DEBUG=False``): kuma.core.pipeline.storage.ManifestPipelineStorage_,
      which combines packaged files, hashes the names, and creates a manifest.
    * Testing (``pytest``, TravisCI, etc.) and ``make`` commands: pipeline.storage.PipelineStorage_,
      which combines packaged files but does not hash the names.
