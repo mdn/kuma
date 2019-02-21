@@ -47,7 +47,8 @@ The three phases of an asset's life are **Building**, **Collecting**, and
     - :ref:`WhiteNoise <serve-whitenoise>` serves static assets as part of the
       Django process.
 
-.. _`Django and Jinja template`: http://jinja.pocoo.org/docs/2.10/templates/#
+
+.. _`Django and Jinja templates`: http://jinja.pocoo.org/docs/2.10/templates/#
 
 .. _build-locale-files:
 
@@ -58,7 +59,8 @@ messages, and in emails. These are stored in the mdn-l10n_ repository,
 and included as a `git submodule`_ at ``locale/``.  See the
 :doc:`localization document </localization>` for more details about locales.
 
-Puente_ extracts strings to the Portable Object Template (``.pot``) files. The
+Puente_ extracts strings to the Portable Object Template (``.pot``) files,
+as specified in the `PUENTE configuration`_. The
 file ``locale/templates/LC_MESSAGES/django.pot`` contains strings from template
 files and Python code. The file ``javascript.pot`` contains strings from
 JavaScript files. Puente looks for the string parameters of ``gettext``
@@ -70,8 +72,10 @@ such as ``locale/fr/LC_MESSAGES/django.po``, to add new strings and comment out
 removed strings.
 
 Extracting and merging is done with ``make localeextract``, usually
-during :doc:`deployment </deploy>`, when UI strings change.  The changes are
-pushed as a new commit to the mdn-l10n_ repository.
+during :doc:`deployment </deploy>`, when UI strings change.  This uses the
+`extract management command` provided by Puente, which uses Babel_ to extract
+strings and update the catalog. A maintainer pushes the updated catalogs as a
+new commit to the mdn-l10n_ repository.
 
 Pontoon detects that the repository has changed, and notifies localization
 teams that there are new strings. In about 48 hours, the most active teams will
@@ -89,6 +93,9 @@ images or when a developer wants to see updated translations.
 .. _`git submodule`: https://github.blog/2016-02-01-working-with-submodules/
 .. _gettext: https://en.wikipedia.org/wiki/Gettext
 .. _Puente: https://puente.readthedocs.io/en/latest/
+.. _`PUENTE configuration`: https://github.com/mozilla/kuma/blob/master/kuma/settings/common.py#L645-L669
+.. _`extract management command`: https://github.com/mozilla/puente/blob/master/puente/management/commands/extract.py
+.. _Babel: http://babel.pocoo.org/en/latest/messages.html
 
 .. _build-locale-js:
 
@@ -101,12 +108,14 @@ on access. For efficiency, django-statici18n_ generates files for each locale
 from the ``JavaScriptCatalog`` output, so they can be served as static assets.
 
 The translation catalog files are created with ``make compilejsi18n``
-from the locale Machine Object ``.mo`` files.  Kuma sets ``STATICI18N_ROOT``
-to ``build/locale``, and the output files have names like
-``build/locale/jsi18n/de/javascript.js``.
+from the locale Machine Object ``.mo`` files.  This calls the
+`compilejsi18n management command`_ provided by `django-statici18n`.
+Kuma sets ``STATICI18N_ROOT`` to ``build/locale``, and the output files have
+names like ``build/locale/jsi18n/de/javascript.js``.
 
 .. _`JavaScriptCatalog view`: https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#module-django.views.i18n
 .. _django-statici18n: https://django-statici18n.readthedocs.io/en/latest/
+.. _`compilejsi18n management command`: https://github.com/zyegfryed/django-statici18n/blob/master/src/statici18n/management/commands/compilejsi18n.py
 
 .. _build-ckeditor:
 
@@ -124,8 +133,9 @@ Kuma repository.
 
 Including JS libraries
 ======================
-Third-party JavaScript libraries are included in the Kuma repository.
-Some were added manually, and others with Bower_. See
+Third-party JavaScript libraries are included in the Kuma repository, to
+avoid ambiguity about what versions of libraries are used.
+Some libraries were added manually, and others with Bower_. See
 :ref:`front-end-asset-dependencies` for more details about these
 libraries.
 
@@ -153,14 +163,20 @@ file, with optional minimization. For example, the file
 * `kuma/static/js/wiki-compat-trigger.js`_
 * `kuma/static/js/lang-switcher.js`_
 
+The JS bundles are specified in PIPELINE_JS_ in the Django settings.
+The bundles are served differently in "development" and "production" modes.
+This is roughly controlled by the Django setting ``DEBUG``, which sets further
+parameters like ``PIPELINE[PIPEINE_ENABLED]``, and the environment
+setting ``DJANGO_SETTINGS_MODULE``, which switches the Django settings
+file. See django-pipeline_ as well as the :ref:`pipeline tags <pipeline-tags>`
+section for details.
+
 In development, the source files (10 for ``main.js``) are served, so there are
 10 ``<script>`` elements in the HTML when ``{{javascript('main')}}`` is
 used in a template.  In production, the output bundle is used, so a single
 ``<script>`` tag appears in the HTML. The single bundle is also processed
 with UglifyJS_, which removes whitespace, replaces variable names with
 shorter names, and performs other transformations to make the file smaller.
-See django-pipeline_ as well as the :ref:`pipeline tags <pipeline-tags>`
-section for more information.
 
 .. _`static/build/js/main.js`: https://developer.mozilla.org/static/build/js/main.js
 .. _`kuma/static/js/libs/jquery/jquery.js`: https://github.com/mozilla/kuma/blob/master/kuma/static/js/libs/jquery/jquery.js
@@ -173,6 +189,7 @@ section for more information.
 .. _`kuma/static/js/highlight.js`: https://github.com/mozilla/kuma/blob/master/kuma/static/js/highlight.js
 .. _`kuma/static/js/wiki-compat-trigger.js`: https://github.com/mozilla/kuma/blob/master/kuma/static/js/wiki-compat-trigger.js
 .. _`kuma/static/js/lang-switcher.js`: https://github.com/mozilla/kuma/blob/master/kuma/static/js/lang-switcher.js
+.. _PIPELINE_JS: https://github.com/mozilla/kuma/blob/master/kuma/settings/common.py#L909-L923
 .. _UglifyJS: https://github.com/mishoo/UglifyJS2/tree/v2.x
 
 .. _pipeline-css-bundles:
@@ -193,17 +210,24 @@ developers tend to use ``make build-static`` to build and collect these files,
 and front-end developers tend to use ``gulp watch`` to directly compile them.
 See :ref:`front-end-development` for more information.
 
+The CSS bundles are specified in PIPELINE_CSS_ in the Django settings.
+The bundles are served differently in "development" and "production" modes.
+This is roughly controlled by the Django setting ``DEBUG``, which sets further
+parameters like ``PIPELINE[PIPEINE_ENABLED]``, and the environment
+setting ``DJANGO_SETTINGS_MODULE``, which switches the Django settings
+file. See django-pipeline_ as well as the :ref:`pipeline tags <pipeline-tags>`
+section for details.
+
 In development, the source files (2 for ``dashboards.css``) are used, so there are
 2 ``<link>`` elements in the HTML when when ``{{stylesheet('dashboards')}}`` is
 used in a template.  In production, the output bundle is used, so a single
 ``<link>`` tag appears in the HTML. When bundled, CSS is also processed by
 clean-css_, which transforms the CSS to make the output files smaller.
-See django-pipeline_ as well as the :ref:`pipeline tags <pipeline-tags>` section
-for more information.
 
 .. _`static/build/styles/dashboards.css`: https://developer.mozilla.org/static/build/styles/dashboards.css
 .. _`kuma/static/styles/dashboards.scss`:  https://github.com/mozilla/kuma/blob/master/kuma/static/styles/dashboards.scss
 .. _`kuma/static/styles/diff.scss`: https://github.com/mozilla/kuma/blob/master/kuma/static/diff.scss
+.. _PIPELINE_CSS: https://github.com/mozilla/kuma/blob/master/kuma/settings/common.py#L787-L793
 .. _clean-css: https://github.com/jakubpawlowicz/clean-css
 
 .. _django-staticfiles:
