@@ -5,6 +5,12 @@
 # Build CKEditor for Kuma.
 # Based on https://github.com/ckeditor/ckeditor-presets/blob/master/build.sh
 
+BUILD_IT=1
+if [ "$1" == "--download" ]; then
+    BUILD_IT=0
+    shift
+fi
+
 CKEDITOR_VERSION="4.5.10"
 
 CKBUILDER_VERSION="2.3.1"
@@ -18,8 +24,13 @@ WORDCOUNT_VERSION="v1.16"
 
 set -e
 
-echo "CKEditor Builder"
-echo "========================"
+if [ $BUILD_IT -eq 1 ]; then
+  echo "CKEditor Builder"
+  echo "================"
+else
+  echo "CKEditor Downloader"
+  echo "==================="
+fi
 
 target="../build"
 
@@ -109,22 +120,26 @@ download_plugin "wordcount" $WORDCOUNT_VERSION "https://github.com/w8tcha/CKEdit
 cp -R plugins/* ckeditor/plugins/
 
 
-echo ""
-echo "Deleting $target..."
-rm -rf $target
+if [ $BUILD_IT -eq 1 ]; then
+  echo ""
+  echo "Deleting $target..."
+  rm -rf $target
 
+  # Run the builder.
+  echo ""
+  echo "Building the package..."
 
-# Run the builder.
-echo ""
-echo "Building the package..."
-
-java -jar ckbuilder/$CKBUILDER_VERSION/ckbuilder.jar --build ckeditor $target \
+  java -jar ckbuilder/$CKBUILDER_VERSION/ckbuilder.jar --build ckeditor $target \
 	-s --version="$CKEDITOR_VERSION" --revision $rev --build-config build-config.js --overwrite --no-tar --no-zip "$@"
 
+  echo "Removing added plugins..."
+  rm -rf ckeditor/
 
-echo "Removing added plugins..."
-rm -rf ckeditor/
-
-echo ""
-echo "Build created into the \"$target\" directory."
-echo ""
+  echo ""
+  echo "Build created into the \"$target\" directory."
+  echo ""
+else
+  echo ""
+  echo "Sources downloaded."
+  echo ""
+fi

@@ -66,6 +66,7 @@ etc/nginx/ssl/developer.127.0.0.1.nip.io.crt
 etc/nginx/ssl/developer.127.0.0.1.nip.io.key
 humans.txt
 james.ini
+kuma/static/js/libs/ckeditor/source/ckeditor/
 kuma/static/js/libs/ckeditor/source/ckbuilder/
 mdn_sample_db.sql
 mdn_sample_db.sql.gz

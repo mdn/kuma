@@ -1,18 +1,37 @@
-<!-- Production ready CKEditor scripts -->
-{% javascript 'ckeditor-prod' %}
-
-<!-- Development version -->
-{#
-{% javascript 'ckeditor-dev' %}
-#}
-<script>
-  // Define the path to non-core plugins.
-  (
-    'scayt,wsc,mdn-attachment,mdn-format,mdn-sticky-toolbar,mdn-image-attachment,mdn-link-customization,' +
-    'mdn-link-launch,mdn-redirect,mdn-sample-finder,mdn-sampler,mdn-spell,mdn-syntaxhighlighter,' +
-    'mdn-system-integration,mdn-table-customization,mdn-toggle-block,mdn-wrapstyle,descriptionlist,' +
-    'tablesort,texzilla,mdn-youtube'
-  ).split(',').forEach(function(pluginName) {
-    CKEDITOR.plugins.addExternal(pluginName, '{{ MEDIA_URL }}js/libs/ckeditor/source/plugins/' + pluginName + '/');
-  });
-</script>
+{%- if settings.CKEDITOR_DEV %}
+  {# Development CKEditor #}
+  <script src="{{ static('js/libs/ckeditor/source/ckeditor/ckeditor.js') }}"></script>
+  <script src="{{ static('js/libs/ckeditor/source/ckeditor/adapters/jquery.js') }}"></script>
+  {%- set pluginList=[
+     'descriptionlist',
+     'mdn-attachment',
+     'mdn-format',
+     'mdn-image-attachment',
+     'mdn-link-customization',
+     'mdn-link-launch',
+     'mdn-redirect',
+     'mdn-sample-finder',
+     'mdn-sampler',
+     'mdn-spell',
+     'mdn-sticky-toolbar',
+     'mdn-syntaxhighlighter',
+     'mdn-system-integration',
+     'mdn-table-customization',
+     'mdn-toggle-block',
+     'mdn-wrapstyle',
+     'mdn-youtube',
+     'scayt',
+     'tablesort',
+     'texzilla',
+     'wsc',
+    ] %}
+  <script>
+    {%- for pluginName in pluginList %}
+      CKEDITOR.plugins.addExternal('{{ pluginName }}', '{{ static('js/libs/ckeditor/source/plugins/' + pluginName + '/') }}');
+    {%- endfor %}
+  </script>
+{%- else %}
+  {# Production CKEditor scripts #}
+  <script src="{{ static('js/libs/ckeditor/build/ckeditor/ckeditor.js') }}"></script>
+  <script src="{{ static('js/libs/ckeditor/build/ckeditor/adapters/jquery.js') }}"></script>
+{%- endif %}
