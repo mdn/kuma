@@ -1,7 +1,7 @@
 {%- if settings.CKEDITOR_DEV %}
   {# Development CKEditor #}
-  <script src="{{ static('js/libs/ckeditor/source/ckeditor/ckeditor.js') }}"></script>
-  <script src="{{ static('js/libs/ckeditor/source/ckeditor/adapters/jquery.js') }}"></script>
+  <script src="{{ static('js/libs/ckeditor4/source/ckeditor/ckeditor.js') }}"></script>
+  <script src="{{ static('js/libs/ckeditor4/source/ckeditor/adapters/jquery.js') }}"></script>
   {%- set pluginList=[
      'descriptionlist',
      'mdn-attachment',
@@ -27,11 +27,11 @@
     ] %}
   <script>
     {%- for pluginName in pluginList %}
-      CKEDITOR.plugins.addExternal('{{ pluginName }}', '{{ static('js/libs/ckeditor/source/plugins/' + pluginName + '/') }}');
+      CKEDITOR.plugins.addExternal('{{ pluginName }}', '{{ static('js/libs/ckeditor4/source/plugins/' + pluginName + '/') }}');
     {%- endfor %}
   </script>
 {%- else %}
   {# Production CKEditor scripts #}
-  <script src="{{ static('js/libs/ckeditor/build/ckeditor/ckeditor.js') }}"></script>
-  <script src="{{ static('js/libs/ckeditor/build/ckeditor/adapters/jquery.js') }}"></script>
+  <script src="{{ static('js/libs/ckeditor4/build/ckeditor/ckeditor.js') }}"></script>
+  <script src="{{ static('js/libs/ckeditor4/build/ckeditor/adapters/jquery.js') }}"></script>
 {%- endif %}

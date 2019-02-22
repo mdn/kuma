@@ -10,7 +10,7 @@ Building CKEditor
 -----------------
 To rebuild CKEditor, run this on the host system::
 
-    cd kuma/static/js/libs/ckeditor/
+    cd assets/ckeditor4/
     ./docker-build.sh  # Creates a Java container, builds CKEditor
     docker-compose exec web make build-static
 
@@ -20,7 +20,7 @@ is installed where it belongs.
 
 To rebuild CKEditor locally, if you have Java installed::
 
-    cd kuma/static/js/libs/ckeditor/source/
+    cd assets/ckeditor4/
     ./build.sh
     docker-compose exec web make build-static
 
@@ -44,7 +44,7 @@ to the tag or commit number specified in ``build.sh``:
 * wordcount_
 
 Change to CKEditor plugins which are bundled into Kuma should be made in the
-directory `/kuma/static/js/libs/ckeditor/source/ckeditor/plugins/`_.
+directory `/assets/ckeditor4/source/plugins/`_.
 
 Once you've made changes to a plugin, be sure to build the editor and the static
 resources again, as described in `Building CKEditor`_.
@@ -57,7 +57,7 @@ more involved changes, you can load CKEditor in development mode.
 To interactively develop CKEditor plugins, first download the CKEditor source
 code on the host system::
 
-    cd kuma/static/js/libs/ckeditor/source/
+    cd assets/ckeditor4/source/
     ./build.sh --download
 
 Enable development mode by adding a line to ``.env``::
@@ -77,7 +77,6 @@ Restart Docker with ``docker-compose restart web``, and follow the instructions
 above for `Building CKEditor`_, to delete the CKEditor source code and
 rebuild CKEditor with your changes.
 
-
 Committing Changes
 ------------------
 When updating CKEditor, adding a plugin, or changing the configuration,
@@ -87,15 +86,15 @@ sources. We check in the "built" files, which combine CKEditor with plugins and
 configuration, so that they do not need to be rebuilt by the static files
 process. This is enforced by ``.gitignore``, so ``git add`` can be used::
 
-    git add kuma/static/js/libs/ckeditor/
+    git add assets/ckeditor4
 
 Reviewers should rebuild CKEditor to ensure this was done correctly. Building
 is not atomic, because a hex-encoded timestamp is embedded in some minified
 files::
 
-    kuma/static/js/libs/ckeditor/build/ckeditor/ckeditor.js
-    skins/moono/editor.css
-    skins/moono/editor_*.css
+    assets/ckeditor4/build/ckeditor/ckeditor.js
+    assets/ckeditor4/build/ckeditor/skins/moono/editor.css
+    assets/ckeditor4/build/ckeditor/skins/moono/editor_*.css
 
 Small changes (with big diffs) to these files are expected. Changes to other
 files are not expected.
@@ -105,7 +104,7 @@ files are not expected.
 .. _scayt: https://github.com/WebSpellChecker/ckeditor-plugin-scayt
 .. _wsc: https://github.com/WebSpellChecker/ckeditor-plugin-wsc
 .. _wordcount: https://github.com/w8tcha/CKEditor-WordCount-Plugin
-.. _`/kuma/static/js/libs/ckeditor/source/ckeditor/plugins/`:
-   https://github.com/mozilla/kuma/tree/master/kuma/static/js/libs/ckeditor/source/plugins
+.. _`/assets/ckeditor4/source/plugins/`:
+   https://github.com/mozilla/kuma/tree/master/assets/ckeditor4/source/plugins
 .. _`/kuma/wiki/jinja2/wiki/includes/ckeditor_scripts.html`:
    https://github.com/mozilla/kuma/tree/master/kuma/wiki/jinja2/wiki/includes/ckeditor_scripts.html
