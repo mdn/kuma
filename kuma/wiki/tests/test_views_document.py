@@ -23,6 +23,7 @@ from kuma.core.models import IPBan
 from kuma.core.tests import assert_no_cache_header, assert_shared_cache_header
 from kuma.core.urlresolvers import reverse
 
+from . import HREFLANG_TEST_CASES
 from ..constants import REDIRECT_CONTENT
 from ..events import EditDocumentEvent, EditDocumentInTreeEvent
 from ..models import Document, Revision
@@ -827,3 +828,26 @@ def test_self_redirect_supression(mock_kumascript_get, constance_config,
     body = pq(content).find('#wikiArticle')
     assert body.text() == 'REDIRECT Self Redirection'
     assert body.find('a[href="{}"][class="redirect"]'.format(url))
+
+
+@pytest.mark.parametrize('locales,expected_results',
+                         HREFLANG_TEST_CASES.values(),
+                         ids=HREFLANG_TEST_CASES.keys())
+def test_hreflang(client, root_doc, locales, expected_results):
+    docs = [
+        Document.objects.create(
+            locale=locale,
+            slug='Root',
+            title='Root Document',
+            rendered_html='<p>...</p>',
+            parent=root_doc
+        ) for locale in locales
+    ]
+    for doc, expected_result in zip(docs, expected_results):
+        url = doc.get_absolute_url()
+        response = client.get(url)
+        assert response.status_code == 200, url
+        html = pq(response.content.decode(response.charset))
+        assert html.attr('lang') == expected_result
+        assert html.find('head > link[hreflang="{}"][href$="{}"]'.format(
+            expected_result, url))

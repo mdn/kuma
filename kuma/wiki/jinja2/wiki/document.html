@@ -1,4 +1,5 @@
 {% extends "wiki/base.html" %}
+{% block lang %}{{ document.get_hreflang(all_locales) }}{% endblock %}
 {% block title %}{{ page_title(document.title + seo_parent_title) }}{% endblock %}
 
 {% from "wiki/includes/document_macros.html" import build_document_crumbs, get_document_quick_links, document_watch, contributor_links with context %}
@@ -65,10 +66,10 @@
   <link rel="canonical" href="{{ canonical }}" >
 
   {# Google requires the current page to be referenced as an alternate too for SEO purposes see bug 1449210 #}
-  <link rel="alternate" hreflang="{{ document.locale }}" href="{{ document.get_absolute_url() | absolutify }}" title="{{ document.title }}">
+  <link rel="alternate" hreflang="{{ document.get_hreflang(all_locales) }}" href="{{ document.get_absolute_url() | absolutify }}" title="{{ document.title }}">
   {% if other_translations %}
     {% for translation in other_translations %}
-      <link rel="alternate" hreflang="{{ translation.locale }}" href="{{ translation.get_absolute_url() | absolutify }}" title="{{ translation.title }}">
+      <link rel="alternate" hreflang="{{ translation.get_hreflang(all_locales) }}" href="{{ translation.get_absolute_url() | absolutify }}" title="{{ translation.title }}">
     {% endfor %}
   {% endif %}
 

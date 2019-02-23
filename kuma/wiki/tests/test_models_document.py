@@ -12,7 +12,7 @@ from datetime import timedelta
 import mock
 import pytest
 
-from . import normalize_html
+from . import HREFLANG_TEST_CASES, normalize_html
 from ..models import Document, Revision
 
 
@@ -41,6 +41,42 @@ def doc_with_sections(root_doc, wiki_user):
         document=root_doc, content=src, creator=wiki_user)
     root_doc.save()
     return root_doc
+
+
+@pytest.mark.parametrize('locales,expected_results',
+                         HREFLANG_TEST_CASES.values(),
+                         ids=HREFLANG_TEST_CASES.keys())
+def test_document_get_hreflang(root_doc, locales, expected_results):
+    docs = [
+        Document.objects.create(
+            locale=locale,
+            slug='Root',
+            title='Root Document',
+            rendered_html='<p>...</p>',
+            parent=root_doc
+        ) for locale in locales
+    ]
+    for doc, expected_result in zip(docs, expected_results):
+        assert doc.get_hreflang() == expected_result
+
+
+@pytest.mark.parametrize('locales,expected_results',
+                         HREFLANG_TEST_CASES.values(),
+                         ids=HREFLANG_TEST_CASES.keys())
+def test_document_get_hreflang_with_other_locales(root_doc, locales,
+                                                  expected_results):
+    for locale, expected_result in zip(locales, expected_results):
+        doc = Document.objects.create(
+            locale=locale,
+            slug='Root',
+            title='Root Document',
+            rendered_html='<p>...</p>',
+            parent=root_doc
+        )
+        with mock.patch.object(doc, 'get_other_translations',
+                               return_value=()) as mocked_method:
+            assert doc.get_hreflang(locales) == expected_result
+            assert not mocked_method.called
 
 
 def test_get_json_data_cached_parsed_json(root_doc):

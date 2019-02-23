@@ -1358,7 +1358,7 @@ Full traceback:
             current_parent = current_parent.parent_topic
         return parents
 
-    def get_other_translations(self, fields=[]):
+    def get_other_translations(self, fields=()):
         """
         Return a list of Documents - other translations of this Document
         :param fields: Model Fields that should only be fetched
@@ -1430,6 +1430,37 @@ Full traceback:
     @property
     def is_experiment(self):
         return self.slug.startswith(EXPERIMENT_TITLE_PREFIX)
+
+    def get_hreflang(self, other_locales=None):
+        """
+        Return the hreflang value for this document, possibily depending upon
+        the other locales in which this document is available.
+        """
+        # In most cases, just return the language code, removing the country
+        # code if present (so, for example, 'en-US' becomes 'en').
+        hreflang = self.locale.split('-')[0]
+
+        # Check for the special case when we want the full locale (i.e.,
+        # including the country code). This is the case when this document's
+        # locale is not the preferred locale, and the preferred locale is
+        # among the other locales in which this document is available. For
+        # example, if this document is available in 'en-US', 'pt-PT', and
+        # 'pt-BR', the respective hreflang values would be 'en', 'pt', and
+        # 'pt-BR' (we're using the full locale for 'pt-BR'), but if it's only
+        # available in 'en-US' and 'pt-BR', we'll choose hreflang values of
+        # 'en' and 'pt' (we're not using the full locale for 'pt-BR', just the
+        # language code 'pt', so the one translation covers all countries for
+        # that language).
+        if hreflang in settings.PREFERRED_LOCALE:
+            preferred = settings.PREFERRED_LOCALE[hreflang]
+            if self.locale != preferred:
+                if other_locales is None:
+                    trans = self.get_other_translations(fields=('locale',))
+                    other_locales = (doc.locale for doc in trans)
+                if preferred in other_locales:
+                    return self.locale
+
+        return hreflang
 
 
 class DocumentDeletionLog(models.Model):
