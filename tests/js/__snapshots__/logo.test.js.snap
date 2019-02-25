@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Logo snapshot 1`] = `
+<a
+  css={
+    Object {
+      "display": "block",
+      "height": 48,
+      "marginTop": 15,
+      "overflow": "hidden",
+      "width": 219,
+    }
+  }
+  href="https://developer.mozilla.org"
+>
+  <img
+    alt="MDN Web Docs"
+    src="/static/img/web-docs-sprite.svg"
+  />
+</a>
+`;

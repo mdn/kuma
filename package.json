@@ -61,6 +61,7 @@
         "jest": "^24.1.0",
         "node-sass": "4.9.4",
         "prettier": "^1.16.4",
+        "react-test-renderer": "16.8.3",
         "sass-true": "4.0.0",
         "stylelint": "9.3.0",
         "svgo": "1.0.5",
