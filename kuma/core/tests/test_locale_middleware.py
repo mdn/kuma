@@ -70,7 +70,7 @@ def test_locale_middleware_picker(accept_language, locale, client, db):
 @pytest.mark.parametrize('original,fixed', REDIRECT_CASES)
 def test_locale_middleware_fixer(original, fixed, client, db):
     '''The LocaleStandardizerMiddleware redirects non-standard locale URLs.'''
-    response = client.get('/%s/' % original)
+    response = client.get(('/%s/' % original) if original else '/')
     if original == '':
         # LocaleMiddleware handles this case, and it's a 301 instead
         # of a 302 since it's the homepage.
