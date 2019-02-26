@@ -856,7 +856,17 @@ def test_hreflang(client, root_doc, locales, expected_results):
         url = doc.get_absolute_url()
         response = client.get(url)
         print(" Requested %s for doc %s, got %s" % (url, doc.id, response.status_code))
-        assert response.status_code == 200, response.content
+        if response.status_code == 404:
+            doc = Document.objects.get(id=doc.id)
+            print("Document %s at %s" % (doc.id, doc.get_absolute_url()))
+            print(" Deleted? %s" % doc.deleted)
+            print(" Current revision? %s" % doc.current_revision)
+            print(" Redirect? %s" % doc.is_redirect)
+            print(" Sleeping for 1 second and trying again.")
+            import time
+            time.sleep(1)
+            response = client.get(url)
+        assert response.status_code == 200
         html = pq(response.content.decode(response.charset))
         assert html.attr('lang') == expected_result
         assert html.find('head > link[hreflang="{}"][href$="{}"]'.format(
