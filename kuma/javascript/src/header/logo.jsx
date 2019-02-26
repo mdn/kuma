@@ -1,16 +1,16 @@
 //@flow
 import * as React from 'react';
+import { css } from '@emotion/core';
 
 const styles = {
-    logo: {
+    logo: css({
         display: 'block',
         height: 48,
         width: 219,
-        marginTop: 15,
         // The sprite image includes a mask, and is not itself 48px high
         // so we need overflow to hide the mask.
         overflow: 'hidden'
-    }
+    })
 };
 
 export default function Logo(props: {| url: string |}): React.Node {

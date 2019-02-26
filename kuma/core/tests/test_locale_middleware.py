@@ -49,11 +49,19 @@ REDIRECT_CASES = [
 ] + [(orig, new) for (orig, new) in SIMPLE_ACCEPT_CASES if orig != new]
 
 
+def test_locale_middleware_redirect_when_not_homepage(client, db):
+    '''The LocaleMiddleware redirects via 302 when it's not the homepage.'''
+    response = client.get('/docs/Web/HTML')
+    assert response.status_code == 302
+    assert response['Location'] == '/en-US/docs/Web/HTML'
+    assert_shared_cache_header(response)
+
+
 @pytest.mark.parametrize('accept_language,locale', PICKER_CASES)
 def test_locale_middleware_picker(accept_language, locale, client, db):
     '''The LocaleMiddleware picks locale from the Accept-Language header.'''
     response = client.get('/', HTTP_ACCEPT_LANGUAGE=accept_language)
-    assert response.status_code == 302
+    assert response.status_code == 301
     url_locale = locale or 'en-US'
     assert response['Location'] == ('/%s/' % url_locale)
     assert_shared_cache_header(response)
@@ -62,8 +70,14 @@ def test_locale_middleware_picker(accept_language, locale, client, db):
 @pytest.mark.parametrize('original,fixed', REDIRECT_CASES)
 def test_locale_middleware_fixer(original, fixed, client, db):
     '''The LocaleStandardizerMiddleware redirects non-standard locale URLs.'''
-    response = client.get('/%s/' % original)
-    assert response.status_code == 302
+    response = client.get(('/%s/' % original) if original else '/')
+    if original == '':
+        # LocaleMiddleware handles this case, and it's a 301 instead
+        # of a 302 since it's the homepage.
+        expected_status_code = 301
+    else:
+        expected_status_code = 302
+    assert response.status_code == expected_status_code
     assert response['Location'] == '/%s/' % fixed
     assert_shared_cache_header(response)
 
@@ -78,7 +92,7 @@ def test_locale_middleware_language_cookie(client, db):
     '''The LocaleMiddleware uses the language cookie over the header.'''
     client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
     response = client.get('/', HTTP_ACCEPT_LANGUAGE='fr')
-    assert response.status_code == 302
+    assert response.status_code == 301
     assert response['Location'] == '/bn-BD/'
     assert_shared_cache_header(response)
 
