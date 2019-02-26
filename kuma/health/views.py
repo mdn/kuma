@@ -12,7 +12,8 @@ from django.views.decorators.http import require_POST, require_safe
 from elasticsearch.exceptions import (ConnectionError as ES_ConnectionError,
                                       NotFoundError)
 from raven.contrib.django.models import client
-from requests.exceptions import ConnectionError as Requests_ConnectionError
+from requests.exceptions import (ConnectionError as Requests_ConnectionError,
+                                 ReadTimeout)
 
 from kuma.users.models import User
 from kuma.wiki.kumascript import request_revision_hash
@@ -116,7 +117,7 @@ def status(request):
     }
     try:
         ks_response = request_revision_hash()
-    except Requests_ConnectionError:
+    except (Requests_ConnectionError, ReadTimeout):
         ks_response = None
     if not ks_response or ks_response.status_code != 200:
         ks_data['available'] = False

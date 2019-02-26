@@ -4,9 +4,12 @@ import json
 
 import mock
 import pytest
+import requests_mock
 from django.utils.six.moves.urllib.parse import urljoin
 from elasticsearch import TransportError
 from elasticsearch_dsl.connections import connections
+from requests.exceptions import (ConnectionError, ContentDecodingError,
+                                 ReadTimeout, TooManyRedirects)
 
 from . import WikiTestCase
 from .. import kumascript
@@ -242,3 +245,49 @@ def test_macro_usage_2nd_es_exception(mock_sources, mock_page_count):
 
     with pytest.raises(TransportError):
         kumascript.macro_usage()
+
+
+@pytest.mark.parametrize('exc_cls', [ConnectionError, ReadTimeout])
+def test_get_with_requests_exception(root_doc, mock_requests, exc_cls):
+    """Test that connection and timeout errors are handled for get."""
+    mock_requests.post(requests_mock.ANY, exc=exc_cls('some I/O error'))
+    body, errors = kumascript.get(root_doc, 'https://example.com', timeout=1)
+    assert body == root_doc.html
+    assert errors == [{
+        'level': 'error',
+        'message': 'some I/O error',
+        'args': [exc_cls.__name__]
+    }]
+
+
+@pytest.mark.parametrize('exc_cls', [ContentDecodingError, TooManyRedirects])
+def test_get_with_other_exception(root_doc, mock_requests, exc_cls):
+    """Test that non-connection/non-timeout errors are not handled for get."""
+    mock_requests.post(requests_mock.ANY, exc=exc_cls('requires attention'))
+    with pytest.raises(exc_cls):
+        kumascript.get(root_doc, 'https://example.com', timeout=1)
+
+
+@pytest.mark.parametrize('exc_cls', [ConnectionError, ReadTimeout])
+def test_post_with_requests_exception(db, rf, mock_requests, exc_cls):
+    """Test that connection and timeout errors are handled for post."""
+    content = 'some freshly edited content'
+    request = rf.get('/en-US/docs/preview-wiki-content')
+    mock_requests.post(requests_mock.ANY, exc=exc_cls('some I/O error'))
+    body, errors = kumascript.post(request, content)
+    assert body == content
+    assert errors == [{
+        'level': 'error',
+        'message': 'some I/O error',
+        'args': [exc_cls.__name__]
+    }]
+
+
+@pytest.mark.parametrize('exc_cls', [ContentDecodingError, TooManyRedirects])
+def test_post_with_other_exception(db, rf, mock_requests, exc_cls):
+    """Test that non-connection/non-timeout errors are not handled for post."""
+    content = 'some freshly edited content'
+    request = rf.get('/en-US/docs/preview-wiki-content')
+    mock_requests.post(requests_mock.ANY, exc=exc_cls('requires attention'))
+    with pytest.raises(exc_cls):
+        kumascript.post(request, content)

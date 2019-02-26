@@ -11,8 +11,9 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.utils.six.moves.urllib.parse import urljoin
 from elasticsearch import TransportError
+from requests.exceptions import ConnectionError, ReadTimeout
 
-from .constants import KUMASCRIPT_BASE_URL, KUMASCRIPT_TIMEOUT_ERROR
+from .constants import KUMASCRIPT_BASE_URL
 from .content import clean_content
 from .search import WikiDocumentType
 
@@ -57,18 +58,22 @@ def _post(content, env_vars, cache_control=None, timeout=None):
 
     add_env_headers(headers, env_vars)
 
-    response = requests.post(url,
-                             data=content.encode('utf8'),
-                             headers=headers,
-                             timeout=timeout)
+    try:
+        response = requests.post(url,
+                                 data=content.encode('utf8'),
+                                 headers=headers,
+                                 timeout=timeout)
+    except (ConnectionError, ReadTimeout) as err:
+        error = {
+            "level": "error",
+            "message": str(err),
+            "args": [err.__class__.__name__]
+        }
+        return content, [error]
 
-    if response:
-        body = process_body(response)
-        errors = process_errors(response)
-        return body, errors
-    else:
-        errors = KUMASCRIPT_TIMEOUT_ERROR
-        return content, errors
+    body = process_body(response)
+    errors = process_errors(response)
+    return body, errors
 
 
 def post(request, content, locale=settings.LANGUAGE_CODE):
@@ -90,43 +95,23 @@ def get(document, base_url, cache_control=None, timeout=None):
         site = Site.objects.get_current()
         base_url = 'http://%s' % site.domain
 
-    body, errors = None, None
+    # Assemble some KumaScript env vars
+    path = document.get_absolute_url()
 
-    try:
-        # Assemble some KumaScript env vars
-        # TODO: See dekiscript vars for future inspiration
-        # http://developer.mindtouch.com/en/docs/DekiScript/Reference/
-        #   Wiki_Functions_and_Variables
-        path = document.get_absolute_url()
+    env_vars = dict(
+        path=path,
+        url=urljoin(base_url, path),
+        id=document.pk,
+        revision_id=document.current_revision.pk,
+        locale=document.locale,
+        title=document.title,
+        slug=document.slug,
+        tags=list(document.tags.names()),
+        review_tags=list(document.current_revision.review_tags.names()),
+        modified=time.mktime(document.modified.timetuple()),
+    )
 
-        # TODO: Someday merge with _get_document_for_json in views.py
-        # where most of this is duplicated code.
-        env_vars = dict(
-            path=path,
-            url=urljoin(base_url, path),
-            id=document.pk,
-            revision_id=document.current_revision.pk,
-            locale=document.locale,
-            title=document.title,
-            slug=document.slug,
-            tags=list(document.tags.names()),
-            review_tags=list(document.current_revision.review_tags.names()),
-            modified=time.mktime(document.modified.timetuple()),
-        )
-
-        body, errors = _post(document.html, env_vars, cache_control, timeout)
-
-    except Exception as exc:
-        # Last resort: Something went really haywire. Kumascript server died
-        # mid-request, or something. Try to report at least some hint.
-        errors = [
-            {
-                "level": "error",
-                "message": "Kumascript service failed unexpectedly: %s" % exc,
-                "args": ["UnknownError"],
-            },
-        ]
-    return (body, errors)
+    return _post(document.html, env_vars, cache_control, timeout)
 
 
 def add_env_headers(headers, env_vars):
