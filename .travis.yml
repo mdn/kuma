@@ -37,37 +37,9 @@ matrix:
             INSTALL_NPM_TOOLS=1
         - python: "2.7"
           env:
-            TOXENV=flake8
-        - python: "2.7"
-          env:
-            TOXENV=docs
-        - python: "2.7"
-          env:
-            TOXENV=locales
-            CREATE_DB=kuma
-            INSTALL_NPM_TOOLS=1
-        - python: "2.7"
-          env:
             TOXENV=docker
             INSTALL_DOCKER_COMPOSE=1
             UID=0
-        - python: "2.7"
-          env:
-            TOXENV=assetlint
-            INSTALL_NPM_TOOLS=1
-        - python: "3.6"
-          env:
-            TOXENV=pytest3
-            CREATE_DB=kuma
-            INSTALL_ELASTICSEARCH=1
-            INSTALL_NPM_TOOLS=1
-    allow_failures:
-        - python: "3.6"
-          env:
-            TOXENV=pytest3
-            CREATE_DB=kuma
-            INSTALL_ELASTICSEARCH=1
-            INSTALL_NPM_TOOLS=1
 install:
     - nvm install 10
     - nvm use 10
