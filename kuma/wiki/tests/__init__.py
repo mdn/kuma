@@ -15,6 +15,8 @@ from ..models import Document, Revision
 
 HREFLANG_TEST_CASES = {
     'no-country': (('ar', 'af', 'zu'), ('ar', 'af', 'zu')),
+    'no-country-no-zu': (('ar', 'af'), ('ar', 'af')),
+    'no-country-no-af': (('ar', 'zu'), ('ar', 'zu')),
     'single-country': (('fy-NL', 'ga-IE', 'hi-IN', 'sv-SE'),
                        ('fy', 'ga', 'hi', 'sv')),
     'bn-preferred-only': (('bn-BD',), ('bn',)),
@@ -28,7 +30,9 @@ HREFLANG_TEST_CASES = {
     'sr-both': (('sr', 'sr-Latn'), ('sr', 'sr-Latn')),
     'zh-preferred-only': (('zh-CN',), ('zh',)),
     'zh-non-preferred-only': (('zh-TW',), ('zh',)),
+    'zh-non-preferred-only-2': (('zh-TW',), ('zh',)),
     'zh-both': (('zh-CN', 'zh-TW'), ('zh', 'zh-TW')),
+    'zh-both-reverse': (('zh-TW', 'zh-CN'), ('zh-TW', 'zh')),
 }
 
 
