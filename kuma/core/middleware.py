@@ -190,7 +190,11 @@ class LocaleMiddleware(MiddlewareBase):
                         1
                     ))
                 # Kuma: Add caching headers to redirect
-                redirect = HttpResponseRedirect(language_url)
+                if request.path_info == '/':
+                    # Only the homepage should be redirected permanently.
+                    redirect = HttpResponsePermanentRedirect(language_url)
+                else:
+                    redirect = HttpResponseRedirect(language_url)
                 add_shared_cache_control(redirect)
                 return redirect
 
