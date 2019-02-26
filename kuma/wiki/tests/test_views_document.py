@@ -843,6 +843,9 @@ def test_hreflang(client, root_doc, locales, expected_results):
             parent=root_doc
         ) for locale in locales
     ]
+    from pprint import pprint
+    print()
+    pprint([doc.get_full_url() for doc in Document.objects.order_by('id')])
     for doc, expected_result in zip(docs, expected_results):
         url = doc.get_absolute_url()
         response = client.get(url)
