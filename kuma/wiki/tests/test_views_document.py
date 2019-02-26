@@ -850,10 +850,14 @@ def test_hreflang(client, root_doc, locales, expected_results):
             created=datetime(2019, 2, 26, 14, 21))
         docs.append(doc)
     from pprint import pprint
+    from kuma.wiki.utils import locale_and_slug_from_path
     print()
-    pprint(["%s: %s" % (doc.id, doc.get_full_url()) for doc in Document.objects.order_by('id')])
+    pprint(["%s: %s" % (d.id, d.get_full_url()) for d in Document.objects.order_by('id')])
     for doc, expected_result in zip(docs, expected_results):
         url = doc.get_absolute_url()
+        print("Requesting document %s at %s" % (doc.id, url))
+        doc_locale, doc_slug, needs_redirect = locale_and_slug_from_path(url)
+        print(" (locale=%s, slug=%s, needs_redirect=%s)" % (doc_locale, doc_slug, needs_redirect))
         response = client.get(url)
         print(" Requested %s for doc %s, got %s" % (url, doc.id, response.status_code))
         if response.status_code == 404:
