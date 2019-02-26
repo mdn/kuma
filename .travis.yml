@@ -35,11 +35,6 @@ matrix:
             CREATE_DB=kuma
             INSTALL_ELASTICSEARCH=1
             INSTALL_NPM_TOOLS=1
-        - python: "2.7"
-          env:
-            TOXENV=docker
-            INSTALL_DOCKER_COMPOSE=1
-            UID=0
 install:
     - nvm install 10
     - nvm use 10
