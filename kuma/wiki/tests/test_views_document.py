@@ -834,15 +834,21 @@ def test_self_redirect_supression(mock_kumascript_get, constance_config,
                          HREFLANG_TEST_CASES.values(),
                          ids=HREFLANG_TEST_CASES.keys())
 def test_hreflang(client, root_doc, locales, expected_results):
-    docs = [
-        Document.objects.create(
+    docs = []
+    for locale in locales:
+        doc = Document.objects.create(
             locale=locale,
             slug='Root',
             title='Root Document',
-            rendered_html='<p>...</p>',
-            parent=root_doc
-        ) for locale in locales
-    ]
+            parent=root_doc)
+        Revision.objects.create(
+            document=doc,
+            creator=root_doc.current_revision.creator,
+            based_on=root_doc.current_revision,
+            content='<p>...</p>',
+            title='Root Document',
+            created=datetime(2019, 2, 26, 14, 21))
+        docs.append(doc)
     from pprint import pprint
     print()
     pprint([doc.get_full_url() for doc in Document.objects.order_by('id')])
