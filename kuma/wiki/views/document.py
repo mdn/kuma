@@ -606,6 +606,8 @@ def document(request, document_slug, document_locale):
     doc, fallback_reason = _get_doc_and_fallback_reason(document_locale,
                                                         document_slug)
 
+    print 'RYAN:', document_slug, document_locale, doc, fallback_reason
+
     if doc is None:
         # Possible the document once existed, but is now deleted.
         # If so, show that it was deleted.

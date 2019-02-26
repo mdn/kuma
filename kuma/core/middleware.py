@@ -165,6 +165,8 @@ class LocaleMiddleware(MiddlewareBase):
         language_from_path = get_language_from_path(request.path_info)
         urlconf = getattr(request, 'urlconf', settings.ROOT_URLCONF)
 
+        print 'RYAN: (LocaleMiddleware):', response.status_code, language_from_path
+
         # Kuma: assume locale-prefix patterns, including default language
         if response.status_code == 404 and not language_from_path:
             # Maybe the language code is missing in the URL? Try adding the

@@ -88,8 +88,12 @@ def get_supported_language_variant(raw_lang_code):
     * Force strict=False to always allow fuzzy matching (zh-CHS gets zh-CN)
     """
     if raw_lang_code:
+        print 'RYAN: (get_supported_language_variant) raw_lang_code =', raw_lang_code
+
         # Kuma: Convert Kuma to Django language code
         lang_code = kuma_language_code_to_django(raw_lang_code)
+
+        print 'RYAN: (get_supported_language_variant) lang_code =', lang_code
 
         # Kuma: Check for known override
         if lang_code in settings.LOCALE_ALIASES:
@@ -105,16 +109,23 @@ def get_supported_language_variant(raw_lang_code):
         possible_lang_codes.append(generic_lang_code)
         supported_lang_codes = get_django_languages()
 
+        print 'RYAN: (get_supported_language_variant) possible_lang_codes =', possible_lang_codes
+        print 'RYAN: (get_supported_language_variant) supported_lang_codes =', supported_lang_codes
+
         # Look for exact match
         for code in possible_lang_codes:
             if code in supported_lang_codes and check_for_language(code):
                 # Kuma: Convert to Kuma language code
-                return django_language_code_to_kuma(code)
+                result = django_language_code_to_kuma(code)
+                print 'RYAN: (get_supported_language_variant) (1) returning', result
+                return result
         # If fr-fr is not supported, try fr-ca.
         for supported_code in supported_lang_codes:
             if supported_code.startswith(generic_lang_code + '-'):
                 # Kuma: Convert to Kuma language code
-                return django_language_code_to_kuma(supported_code)
+                result = django_language_code_to_kuma(supported_code)
+                print 'RYAN: (get_supported_language_variant) (2) returning', result
+                return result
     raise LookupError(raw_lang_code)
 
 
@@ -129,13 +140,19 @@ def get_language_from_path(path):
     * Don't accept or pass strict parameter (assume strict=False).
     * Use our customized get_supported_language_variant().
     """
+    print 'RYAN: (get_language_from_path) path =', path
     regex_match = language_code_prefix_re.match(path)
     if not regex_match:
+        print 'RYAN: (get_language_from_path) no match'
         return None
     lang_code = regex_match.group(1)
+    print 'RYAN: (get_language_from_path) lang_code =', lang_code
     try:
+        result = get_supported_language_variant(lang_code)
+        print 'RYAN: (get_language_from_path) returning', result
         return get_supported_language_variant(lang_code)
     except LookupError:
+        print 'RYAN: (get_language_from_path) returning None!'
         return None
 
 
