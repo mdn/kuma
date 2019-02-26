@@ -851,11 +851,12 @@ def test_hreflang(client, root_doc, locales, expected_results):
         docs.append(doc)
     from pprint import pprint
     print()
-    pprint([doc.get_full_url() for doc in Document.objects.order_by('id')])
+    pprint(["%s: %s" % (doc.id, doc.get_full_url()) for doc in Document.objects.order_by('id')])
     for doc, expected_result in zip(docs, expected_results):
         url = doc.get_absolute_url()
         response = client.get(url)
-        assert response.status_code == 200, url
+        print(" Requested %s for doc %s, got %s" % (url, doc.id, response.status_code))
+        assert response.status_code == 200, response.content
         html = pq(response.content.decode(response.charset))
         assert html.attr('lang') == expected_result
         assert html.find('head > link[hreflang="{}"][href$="{}"]'.format(
