@@ -221,6 +221,15 @@ ACCEPTED_LOCALES = (
     'zu',       # Zulu
 )
 
+# When there are multiple options for a given language, this gives the
+# preferred locale for that language (language => preferred locale).
+PREFERRED_LOCALE = {
+    'bn': 'bn-BD',
+    'pt': 'pt-PT',
+    'sr': 'sr',
+    'zh': 'zh-CN',
+}
+
 # Locales being considered for MDN. This makes the UI strings available for
 # localization in Pontoon, but pages can not be translated into this language.
 # https://developer.mozilla.org/en-US/docs/MDN/Contribute/Localize/Starting_a_localization

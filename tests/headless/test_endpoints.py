@@ -92,3 +92,15 @@ def test_home(base_url, is_indexed):
         assert content == 'index, follow'
     else:
         assert content == 'noindex, nofollow'
+
+
+@pytest.mark.headless
+@pytest.mark.nondestructive
+def test_hreflang_basic(base_url):
+    """Ensure that we're specifying the correct value for lang and hreflang."""
+    url = base_url + '/en-US/docs/Web/HTTP'
+    resp = requests.get(url)
+    assert resp.status_code == 200
+    html = PyQuery(resp.text)
+    assert html.attr('lang') == 'en'
+    assert html.find('head > link[hreflang="en"][href="{}"]'.format(url))

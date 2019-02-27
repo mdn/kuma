@@ -220,7 +220,8 @@ def compose_test() {
     // Run the "smoke" tests with no external dependencies.
     sh_with_notify("${dc} run noext", 'Smoke tests')
     // Build the static assets required for many tests.
-    sh_with_notify("${dc} run noext make build-static", 'Build static assets')
+    sh_with_notify("${dc} run noext make localecompile build-static",
+                   'Compile locales and build static assets')
     // Run the Kuma tests, building the mysql image before starting.
     sh_with_notify("${dc} build mysql", 'Build mysql')
     sh_with_notify("${dc} run test", 'Kuma tests')

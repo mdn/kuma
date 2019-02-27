@@ -1,7 +1,7 @@
 {% set untrusted = settings.ENABLE_RESTRICTIONS_BY_HOST and (request.get_host() in (settings.ATTACHMENT_ORIGIN, settings.ATTACHMENT_HOST)) %}
 
 <!DOCTYPE html>
-<html lang="{{ LANG }}" dir="{{ DIR }}" class="no-js">
+<html lang="{% block lang %}{{ LANG }}{% endblock %}" dir="{{ DIR }}" class="no-js">
 <head {%- if not untrusted %} prefix="og: http://ogp.me/ns#"{% endif %}>
   <meta charset="utf-8">
   {%- block experiment_js %}{% endblock %}

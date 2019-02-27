@@ -731,6 +731,8 @@ def document(request, document_slug, document_locale):
         other_translations = original_doc.get_other_translations(
             fields=['title', 'locale', 'slug', 'parent']
         )
+        all_locales = (set([original_doc.locale]) |
+                       set(trans.locale for trans in other_translations))
 
         # Bundle it all up and, finally, return.
         context = {
@@ -759,6 +761,7 @@ def document(request, document_slug, document_locale):
             'analytics_en_slug': en_slug,
             'content_experiment': rendering_params['experiment'],
             'other_translations': other_translations,
+            'all_locales': all_locales,
         }
         response = render(request, 'wiki/document.html', context)
 
@@ -920,6 +923,8 @@ def react_document(request, document_slug, document_locale):
         other_translations = original_doc.get_other_translations(
             fields=['title', 'locale', 'slug', 'parent']
         )
+        all_locales = (set([original_doc.locale]) |
+                       set(trans.locale for trans in other_translations))
 
         # Bundle it all up and, finally, return.
         context = {
@@ -948,6 +953,7 @@ def react_document(request, document_slug, document_locale):
             'analytics_en_slug': en_slug,
             'content_experiment': rendering_params['experiment'],
             'other_translations': other_translations,
+            'all_locales': all_locales,
         }
         response = render(request, 'wiki/react_document.html', context)
 
