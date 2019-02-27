@@ -103,4 +103,4 @@ def test_hreflang_basic(base_url):
     assert resp.status_code == 200
     html = PyQuery(resp.text)
     assert html.attr('lang') == 'en'
-    assert html.find('head > link[hreflang="{}"][href="{}"]'.format('en', url))
+    assert html.find('head > link[hreflang="en"][href="{}"]'.format(url))

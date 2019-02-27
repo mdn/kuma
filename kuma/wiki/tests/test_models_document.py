@@ -73,10 +73,10 @@ def test_document_get_hreflang_with_other_locales(root_doc, locales,
             rendered_html='<p>...</p>',
             parent=root_doc
         )
-        with mock.patch.object(doc, 'get_other_translations',
-                               return_value=()) as mocked_method:
+        method = 'get_other_translations'
+        exc = Exception('"{!r}.{}" unexpectedly called'.format(doc, method))
+        with mock.patch.object(doc, method, side_effect=exc):
             assert doc.get_hreflang(locales) == expected_result
-            assert not mocked_method.called
 
 
 def test_get_json_data_cached_parsed_json(root_doc):
