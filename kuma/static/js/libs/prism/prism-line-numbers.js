@@ -73,12 +73,17 @@
 
 		// works only for <code> wrapped inside <pre> (not inline)
 		var pre = env.element.parentNode;
+		if (!pre || !/pre/i.test(pre.nodeName)) {
+			return;
+		}
+		// If either <pre> or <code> has no-line-numbers class, ignore it.
+		var noClsReg = /\s*\bno-line-numbers\b\s*/;
+		if (noClsReg.test(pre.className) || noClsReg.test(env.element.className)) {
+			return;
+		}
+		// Require line-numbers class either in <pre> or <code>.
 		var clsReg = /\s*\bline-numbers\b\s*/;
-		if (
-			!pre || !/pre/i.test(pre.nodeName) ||
-			// Abort only if nor the <pre> nor the <code> have the class
-			(!clsReg.test(pre.className) && !clsReg.test(env.element.className))
-		) {
+		if (!clsReg.test(pre.className) && !clsReg.test(env.element.className)) {
 			return;
 		}
 
