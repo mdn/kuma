@@ -69,7 +69,7 @@ CKEDITOR.plugins.add('mdn-syntaxhighlighter', {
           if(!pre) return;
         }
 
-        pre.$.className = brushId == 'none' ? '' : 'brush: ' + brushId;
+        pre.$.className = brushId == 'none' ? '' : 'brush: ' + brushId + ';';
 
         // Refresh, because class change is not a context change,
         // so refresh will not be called automatically.

@@ -35,6 +35,11 @@ in syntax-prism.js to just add it to <pre>, it also wraps the contents of the
     pre.line-numbers {
         padding-left: 3.8em;
     }
+
+    /* Something caused .no-line-numbers to no longer be correctly respected */
+    pre.no-line-numbers .line-numbers-rows {
+        display: none;
+    }
 }
 
 /*
