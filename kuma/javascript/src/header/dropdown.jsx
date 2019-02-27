@@ -68,11 +68,15 @@ export default function Dropdown(props: DropdownProps) {
         if (shown) {
             window.addEventListener('click', handler, true);
             window.addEventListener('keydown', handler, true);
-            document.documentElement.style.pointerEvents = 'none';
+            if (document.documentElement) {
+                document.documentElement.style.pointerEvents = 'none';
+            }
             return () => {
                 window.removeEventListener('click', handler, true);
                 window.removeEventListener('keydown', handler, true);
-                document.documentElement.style.pointerEvents = 'auto';
+                if (document.documentElement) {
+                    document.documentElement.style.pointerEvents = 'auto';
+                }
             };
         }
     });
