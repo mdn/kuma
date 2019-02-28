@@ -202,11 +202,6 @@ ALLOWED_PROTOCOLS = [
 DIFF_WRAP_COLUMN = 65
 EXPERIMENT_TITLE_PREFIX = 'Experiment:'
 DOCUMENTS_PER_PAGE = 100
-KUMASCRIPT_TIMEOUT_ERROR = [
-    {"level": "error",
-     "message": "Request to Kumascript service timed out",
-     "args": ["TimeoutError"]}
-]
 _ks_urlbits = urlparse(settings.KUMASCRIPT_URL_TEMPLATE)
 KUMASCRIPT_BASE_URL = urlunparse((_ks_urlbits.scheme, _ks_urlbits.netloc,
                                   '', '', '', ''))
