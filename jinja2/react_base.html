@@ -103,14 +103,7 @@
     {% include "includes/a11y-nav.html" %}
 
     <!-- Header -->
-    <header id="main-header" class="header-main">
-      <div id="main-header-logo" data-url="{{ url('home') }}"></div>
-      <div class="nav-toolbox-wrapper">
-        {% include "includes/header-main-nav.html" %}
-        {% include "includes/header-toolbox.html" %}
-      </div>
-      {% include "includes/nav-main-search.html" %}
-    </header>
+    <header id="react-header"></header>
   {%- endif %} {# if not untrusted #}
 
   <!-- Content will go here -->

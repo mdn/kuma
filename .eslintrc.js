@@ -9,19 +9,14 @@ module.exports = {
     'parser': "babel-eslint",
     'parserOptions': {
         "ecmaVersion": 6,
-        "ecmaFeatures": {
-            "jsx": true
-        }
     },
-    "plugins": ["jest", "flowtype", "react", "import", "jsx-a11y"],
+    "plugins": ["jest", "flowtype", "import", "jsx-a11y"],
     'extends': [
         'eslint:recommended',
         "plugin:import/errors",
         "plugin:flowtype/recommended",
-        "plugin:react/recommended",
         "plugin:jsx-a11y/recommended",
-        "prettier",
-        "prettier/react"
+        "prettier"
     ],
     'rules': {
         'no-global-assign': 'error',

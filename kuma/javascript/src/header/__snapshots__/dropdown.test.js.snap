@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dropdown closed and open snapshots 1`] = `
+.emotion-4 {
+  position: relative;
+  pointer-events: auto;
+}
+
+.emotion-2 {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 5px 10px;
+}
+
+.emotion-2:hover {
+  background-color: #eee;
+}
+
+.emotion-0 {
+  font-size: 12px;
+  padding-left: 2px;
+}
+
+<div
+  className="emotion-4 emotion-5"
+>
+  <div
+    className="emotion-2 emotion-3"
+    onClick={[Function]}
+  >
+    Test
+    <span
+      className="emotion-0 emotion-1"
+    >
+      ▼
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Dropdown closed and open snapshots 2`] = `
+.emotion-6 {
+  position: relative;
+  pointer-events: auto;
+}
+
+.emotion-2 {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 5px 10px;
+}
+
+.emotion-2:hover {
+  background-color: #eee;
+}
+
+.emotion-0 {
+  font-size: 12px;
+  padding-left: 2px;
+}
+
+.emotion-4 {
+  position: absolute;
+  z-index: 100;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: white;
+  border: solid black 1px;
+  box-shadow: 3px 3px 5px black;
+  padding: 10px;
+  min-width: 100%;
+}
+
+.emotion-4 li {
+  padding: 5px;
+  white-space: nowrap;
+}
+
+<div
+  className="emotion-6 emotion-7"
+>
+  <div
+    className="emotion-2 emotion-3"
+    onClick={null}
+  >
+    Test
+    <span
+      className="emotion-0 emotion-1"
+    >
+      ▲
+    </span>
+  </div>
+  <ul
+    className="emotion-4 emotion-5"
+  >
+    <li>
+      foo
+    </li>
+    <li>
+      bar
+    </li>
+  </ul>
+</div>
+`;

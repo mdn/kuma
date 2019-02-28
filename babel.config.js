@@ -28,7 +28,8 @@ module.exports = api => {
                     browsers: 'last 2 versions'
                 }
             }
-        ]
+        ],
+        path.join(nodePath, '@emotion/babel-preset-css-prop')
     ];
     const plugins = [
         path.join(nodePath, '@babel/plugin-proposal-class-properties')
