@@ -59,6 +59,7 @@
         "gulp-watch": "5.0.0",
         "husky": "0.14.3",
         "jest": "^24.1.0",
+        "jest-emotion": "^10.0.7",
         "node-sass": "4.9.4",
         "prettier": "^1.16.4",
         "react-test-renderer": "16.8.3",

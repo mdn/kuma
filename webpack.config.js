@@ -17,32 +17,22 @@ const path = require('path');
 const nodePath = process.env.NODE_PATH || path.join(__dirname, 'node_modules');
 
 module.exports = {
-    mode: "production",  // Or switch to "development"
+    mode: 'production', // Or switch to "development"
     entry: path.resolve(__dirname, './kuma/javascript/src/index.jsx'),
     output: {
         filename: 'react.js',
         path: path.resolve(__dirname, './kuma/javascript/dist/')
     },
     module: {
-        rules: [{
-            "test": /\.jsx?$/,
-            "exclude": /node_modules/,
-            "use": {
-                "loader": "babel-loader",
-                "options": {
-                    "presets": [
-                        path.join(nodePath, "@babel/preset-env"),
-                        path.join(nodePath, "@babel/preset-react"),
-                        path.join(nodePath, "@babel/preset-flow"),
-                        path.join(nodePath, "@emotion/babel-preset-css-prop")
-                    ],
-                    "plugins": [
-                        path.join(nodePath,
-                                  "@babel/plugin-proposal-class-properties")
-                    ]
+        rules: [
+            {
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader'
                 }
             }
-        }]
+        ]
     },
     resolve: {
         modules: [nodePath]

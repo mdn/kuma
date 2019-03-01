@@ -1,16 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Logo snapshot 1`] = `
+.emotion-0 {
+  display: block;
+  height: 48px;
+  width: 219px;
+  overflow: hidden;
+}
+
 <a
-  css={
-    Object {
-      "display": "block",
-      "height": 48,
-      "marginTop": 15,
-      "overflow": "hidden",
-      "width": 219,
-    }
-  }
+  className="emotion-0"
   href="https://developer.mozilla.org"
 >
   <img

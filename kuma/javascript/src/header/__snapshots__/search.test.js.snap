@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search snapshot 1`] = `
+.emotion-2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-bottom: solid black 1px;
+  max-width: 350px;
+  min-width: 120px;
+  -webkit-flex: 2 1 120px;
+  -ms-flex: 2 1 120px;
+  flex: 2 1 120px;
+}
+
+.emotion-0 {
+  vertical-align: -2px;
+  -webkit-flex: 0 0 20px;
+  -ms-flex: 0 0 20px;
+  flex: 0 0 20px;
+}
+
+.emotion-1 {
+  border-width: 0 !important;
+  font-size: 18px;
+  font-weight: bold !important;
+  padding-bottom: 0 !important;
+  -webkit-flex: 0 1 300px;
+  -ms-flex: 0 1 300px;
+  flex: 0 1 300px;
+}
+
+<form
+  action="/en-US/search"
+  className="emotion-2"
+  id="nav-main-search"
+  method="get"
+  role="search"
+>
+  <svg
+    aria-hidden="true"
+    className="emotion-0"
+    height="20"
+    viewBox="0 0 26 28"
+    width="20"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M18 13c0-3.859-3.141-7-7-7s-7 3.141-7 7 3.141 7 7 7 7-3.141 7-7zm8 13c0 1.094-.906 2-2 2a1.96 1.96 0 0 1-1.406-.594l-5.359-5.344a10.971 10.971 0 0 1-6.234 1.937c-6.078 0-11-4.922-11-11s4.922-11 11-11 11 4.922 11 11c0 2.219-.672 4.406-1.937 6.234l5.359 5.359c.359.359.578.875.578 1.406z"
+    />
+  </svg>
+  <input
+    className="emotion-1"
+    id="main-q"
+    name="q"
+    placeholder="Search MDN"
+    type="search"
+  />
+</form>
+`;
