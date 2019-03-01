@@ -15,10 +15,11 @@ const MenuContainer = styled.div`
     pointer-events: auto;
 `;
 
-const MenuLabel = styled.div`
+const MenuLabel = styled.button`
     font-size: 18px;
     font-weight: bold;
     padding: 5px 10px;
+    border: none;
     :hover {
         background-color: #eee;
     }
@@ -81,6 +82,13 @@ export default function Dropdown(props: DropdownProps) {
         }
     });
 
+    /*
+     * TODO: we're only rendering the children when the menu
+     * is shown. This might be an accessibility issue. Maybe
+     * better to render them always for the benefit of screen
+     * readers but only show them to sighted users when the
+     * menu is open.
+     */
     return (
         <MenuContainer>
             <MenuLabel onClick={!shown ? () => setShown(true) : null}>

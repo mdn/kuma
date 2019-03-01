@@ -10,6 +10,7 @@ exports[`Dropdown closed and open snapshots 1`] = `
   font-size: 18px;
   font-weight: bold;
   padding: 5px 10px;
+  border: none;
 }
 
 .emotion-2:hover {
@@ -24,7 +25,7 @@ exports[`Dropdown closed and open snapshots 1`] = `
 <div
   className="emotion-4 emotion-5"
 >
-  <div
+  <button
     className="emotion-2 emotion-3"
     onClick={[Function]}
   >
@@ -34,7 +35,7 @@ exports[`Dropdown closed and open snapshots 1`] = `
     >
       ▼
     </span>
-  </div>
+  </button>
 </div>
 `;
 
@@ -48,6 +49,7 @@ exports[`Dropdown closed and open snapshots 2`] = `
   font-size: 18px;
   font-weight: bold;
   padding: 5px 10px;
+  border: none;
 }
 
 .emotion-2:hover {
@@ -85,7 +87,7 @@ exports[`Dropdown closed and open snapshots 2`] = `
 <div
   className="emotion-6 emotion-7"
 >
-  <div
+  <button
     className="emotion-2 emotion-3"
     onClick={null}
   >
@@ -95,7 +97,7 @@ exports[`Dropdown closed and open snapshots 2`] = `
     >
       ▲
     </span>
-  </div>
+  </button>
   <ul
     className="emotion-4 emotion-5"
   >

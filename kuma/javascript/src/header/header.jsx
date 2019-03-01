@@ -97,12 +97,9 @@ function fixurl(url) {
     }
 }
 
-const HOME_URL =
-    window && window.location
-        ? `${window.location.protocol}//${window.location.host}/${
-              window.location.pathname.split('/')[1]
-          }/`
-        : 'https://developer.mozilla.org/en-US/';
+const LOCALE =
+    window && window.location && window.location.pathname.split('/')[1];
+const HOME_URL = LOCALE ? `/${LOCALE}/` : '/en-US/';
 
 export default function Header(): React.Node {
     return (

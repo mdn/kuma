@@ -45,6 +45,7 @@ exports[`Header snapshot 1`] = `
   font-size: 18px;
   font-weight: bold;
   padding: 5px 10px;
+  border: none;
 }
 
 .emotion-5:hover {
@@ -134,7 +135,7 @@ exports[`Header snapshot 1`] = `
 >
   <a
     className="emotion-0"
-    href="http://localhost//"
+    href="/en-US/"
   >
     <img
       alt="MDN Web Docs"
@@ -148,7 +149,7 @@ exports[`Header snapshot 1`] = `
   <div
     className="emotion-7 emotion-8"
   >
-    <div
+    <button
       className="emotion-5 emotion-6"
       onClick={[Function]}
     >
@@ -158,12 +159,12 @@ exports[`Header snapshot 1`] = `
       >
         ▼
       </span>
-    </div>
+    </button>
   </div>
   <div
     className="emotion-7 emotion-8"
   >
-    <div
+    <button
       className="emotion-5 emotion-6"
       onClick={[Function]}
     >
@@ -173,12 +174,12 @@ exports[`Header snapshot 1`] = `
       >
         ▼
       </span>
-    </div>
+    </button>
   </div>
   <div
     className="emotion-7 emotion-8"
   >
-    <div
+    <button
       className="emotion-5 emotion-6"
       onClick={[Function]}
     >
@@ -188,7 +189,7 @@ exports[`Header snapshot 1`] = `
       >
         ▼
       </span>
-    </div>
+    </button>
   </div>
   <div
     className="emotion-21 emotion-22"

@@ -34,12 +34,16 @@ const styles = {
     })
 };
 
+const LOCALE =
+    window && window.location && window.location.pathname.split('/')[1];
+const URL = LOCALE ? `/${LOCALE}/search` : '/en-US/search';
+
 export default function Search() {
     return (
         <form
             css={styles.container}
             id="nav-main-search"
-            action="/en-US/search"
+            action={URL}
             method="get"
             role="search"
         >
