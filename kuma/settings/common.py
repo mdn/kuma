@@ -672,6 +672,8 @@ PUENTE = {
             ('kuma/static/js/components/**.js', 'javascript'),
             ('kuma/static/js/libs/ckeditor/source/plugins/mdn-**/*.js',
              'javascript'),
+            ('kuma/javascript/src/**.js', 'javascript'),
+            ('kuma/javascript/src/**.jsx', 'javascript'),
         ],
     },
     'PROJECT': 'MDN',
