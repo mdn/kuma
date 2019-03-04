@@ -55,6 +55,14 @@ function clientSideNavigate(url) {
     let linksElement = document.querySelector('#quick-links');
     let TOC = document.querySelector('ol.toc-links');
 
+    // If this document is missing any of those elements then
+    // we can't do client-side navigation from here and should
+    // force a hard reload
+    if (!h1Element || !articleElement || !linksElement || !TOC) {
+        window.location = url.replace('/docs/', '/ducks/');
+        return;
+    }
+
     // Hide the current content in those sections immediately
     h1Element.style.opacity = 0.25;
     articleElement.style.opacity = 0.25;
