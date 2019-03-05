@@ -938,7 +938,6 @@ PIPELINE_JS = {
             'js/components.js',
             'js/analytics.js',
             'js/main.js',
-            'js/components/nav-main-search.js',
             'js/auth.js',
             'js/highlight.js',
             'js/wiki-compat-trigger.js',
