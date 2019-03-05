@@ -8,7 +8,6 @@ from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount
 from constance.test.utils import override_config
 from django.conf import settings
-from django.contrib.auth.models import Group
 from django.core import mail
 from django.db import IntegrityError
 from django.http import Http404
@@ -44,11 +43,6 @@ def wiki_user_github_account(wiki_user):
             html_url="https://github.com/{}".format(wiki_user.username)
         )
     )
-
-
-@pytest.fixture
-def beta_testers_group(db):
-    return Group.objects.create(name='Beta Testers')
 
 
 def test_old_profile_url_gone(db, client):
