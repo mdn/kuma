@@ -185,9 +185,10 @@ django-statici18n==1.7.0 \
     --hash=sha256:e84fc081166433886220a814356a66760f50196a4d00a3e25327427160e5ccd1
 
 # Better timezone picker for user profiles
-django-sundial==1.0.2 \
-    --hash=sha256:3362b59cca885f36741c6d7164a185ab6d23d057125dfaba70e3d419555c6b30 \
-    --hash=sha256:3745891337d726041b37aed95005b9c70377116d232157726e48b46aefef1961
+# Code: https://github.com/charettes/django-sundial/
+django-sundial==1.0.6 \
+    --hash=sha256:08361afffc0da2358d4283e83a0426b862342af211e60d50f273213093306208 \
+    --hash=sha256:7dd7deff7aea8b2283b8795d5bd19f93d77484518efed6a7605dada7be965665
 
 # Simple tagging support
 django-taggit==0.21.6 \
