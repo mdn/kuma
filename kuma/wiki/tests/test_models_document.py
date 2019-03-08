@@ -45,7 +45,7 @@ def doc_with_sections(root_doc, wiki_user):
 
 @pytest.mark.parametrize('locales,expected_results',
                          HREFLANG_TEST_CASES.values(),
-                         ids=HREFLANG_TEST_CASES.keys())
+                         ids=tuple(HREFLANG_TEST_CASES.keys()))
 def test_document_get_hreflang(root_doc, locales, expected_results):
     docs = [
         Document.objects.create(
@@ -62,7 +62,7 @@ def test_document_get_hreflang(root_doc, locales, expected_results):
 
 @pytest.mark.parametrize('locales,expected_results',
                          HREFLANG_TEST_CASES.values(),
-                         ids=HREFLANG_TEST_CASES.keys())
+                         ids=tuple(HREFLANG_TEST_CASES.keys()))
 def test_document_get_hreflang_with_other_locales(root_doc, locales,
                                                   expected_results):
     for locale, expected_result in zip(locales, expected_results):
