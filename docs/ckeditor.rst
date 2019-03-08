@@ -49,6 +49,35 @@ directory `/kuma/static/js/libs/ckeditor/source/ckeditor/plugins/`_.
 Once you've made changes to a plugin, be sure to build the editor and the static
 resources again, as described in `Building CKEditor`_.
 
+Interactively developing CKEditor plugins
+-----------------------------------------
+For small changes, it may be fastest to rebuild CKEditor for each change. For
+more involved changes, you can load CKEditor in development mode.
+
+To interactively develop CKEditor plugins, first download the CKEditor source
+code on the host system::
+
+    cd kuma/static/js/libs/ckeditor/source/
+    ./build.sh --download
+
+Enable development mode by adding a line to ``.env``::
+
+    CKEDITOR_DEV=True
+
+Restart Docker with ``docker-compose restart web`` to apply the new setting. This
+will switch to a mode where plugins are loaded dynamically, based on the list
+in `/kuma/wiki/jinja2/wiki/includes/ckeditor_scripts.html`_, and you can see
+your changes by reloading the browser.
+
+When you are done, disable development mode in ``.env``::
+
+    CKEDITOR_DEV=False  # Or comment out the line
+
+Restart Docker with ``docker-compose restart web``, and follow the instructions
+above for `Building CKEditor`_, to delete the CKEditor source code and
+rebuild CKEditor with your changes.
+
+
 Committing Changes
 ------------------
 When updating CKEditor, adding a plugin, or changing the configuration,
@@ -78,3 +107,5 @@ files are not expected.
 .. _wordcount: https://github.com/w8tcha/CKEditor-WordCount-Plugin
 .. _`/kuma/static/js/libs/ckeditor/source/ckeditor/plugins/`:
    https://github.com/mozilla/kuma/tree/master/kuma/static/js/libs/ckeditor/source/plugins
+.. _`/kuma/wiki/jinja2/wiki/includes/ckeditor_scripts.html`:
+   https://github.com/mozilla/kuma/tree/master/kuma/wiki/jinja2/wiki/includes/ckeditor_scripts.html

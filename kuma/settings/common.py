@@ -524,6 +524,8 @@ MAX_AVATAR_FILE_SIZE = 131072  # 100k, in bytes
 
 ROOT_URLCONF = 'kuma.urls'
 
+CKEDITOR_DEV = config('CKEDITOR_DEV', default=False, cast=bool)
+
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -1086,20 +1088,6 @@ PIPELINE_JS = {
         'extra_context': {
             'async': True,
         },
-    },
-    'ckeditor-prod': {
-        'source_filenames': (
-            'js/libs/ckeditor/build/ckeditor/ckeditor.js',
-            'js/libs/ckeditor/build/ckeditor/adapters/jquery.js',
-        ),
-        'output_filename': 'build/js/ckeditor-prod.js',
-    },
-    'ckeditor-dev': {
-        'source_filenames': (
-            'js/libs/ckeditor/source/ckeditor/ckeditor.js',
-            'js/libs/ckeditor/source/ckeditor/adapters/jquery.js',
-        ),
-        'output_filename': 'build/js/ckeditor-dev.js',
     },
     'html5shiv': {
         'source_filenames': (

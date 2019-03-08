@@ -8,7 +8,12 @@
         {{ waffle.wafflejs() }}
 
         // This needs to be set before ckeditor.js loads
-        window.CKEDITOR_BASEPATH = '/static/js/libs/ckeditor/build/ckeditor/';
+        {%- if settings.CKEDITOR_DEV %}
+          {%- set ckeditor_basepath = static('js/libs/ckeditor/source/ckeditor/') %}
+        {%- else %}
+          {%- set ckeditor_basepath = static('js/libs/ckeditor/build/ckeditor/') %}
+        {%- endif %}
+        window.CKEDITOR_BASEPATH = '{{ ckeditor_basepath }}';
 
         // Site configuration
         win.mdn.ckeditor = {};
