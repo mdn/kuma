@@ -7,14 +7,32 @@ exports[`Dropdown closed and open snapshots 1`] = `
 }
 
 .emotion-2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   font-size: 18px;
   font-weight: bold;
-  padding: 5px 10px;
+  line-height: 48px;
+  white-space: nowrap;
+  padding: 0 10px;
+  margin: 0;
   border: none;
 }
 
 .emotion-2:hover {
   background-color: #eee;
+}
+
+.emotion-2:focus {
+  outline-offset: -3px;
 }
 
 .emotion-0 {
@@ -46,14 +64,32 @@ exports[`Dropdown closed and open snapshots 2`] = `
 }
 
 .emotion-2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   font-size: 18px;
   font-weight: bold;
-  padding: 5px 10px;
+  line-height: 48px;
+  white-space: nowrap;
+  padding: 0 10px;
+  margin: 0;
   border: none;
 }
 
 .emotion-2:hover {
   background-color: #eee;
+}
+
+.emotion-2:focus {
+  outline-offset: -3px;
 }
 
 .emotion-0 {
@@ -99,7 +135,7 @@ exports[`Dropdown closed and open snapshots 2`] = `
     </span>
   </button>
   <ul
-    className="emotion-4 emotion-5"
+    className="dropdown-menu emotion-4 emotion-5"
   >
     <li>
       foo

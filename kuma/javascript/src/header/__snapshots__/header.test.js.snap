@@ -42,14 +42,32 @@ exports[`Header snapshot 1`] = `
 }
 
 .emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   font-size: 18px;
   font-weight: bold;
-  padding: 5px 10px;
+  line-height: 48px;
+  white-space: nowrap;
+  padding: 0 10px;
+  margin: 0;
   border: none;
 }
 
 .emotion-5:hover {
   background-color: #eee;
+}
+
+.emotion-5:focus {
+  outline-offset: -3px;
 }
 
 .emotion-3 {
@@ -114,20 +132,35 @@ exports[`Header snapshot 1`] = `
 }
 
 .emotion-29 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   font-size: 18px;
   font-weight: bold;
   color: black;
   -webkit-text-decoration: none;
   text-decoration: none;
+  line-height: 48px;
+  padding: 0 8px;
 }
 
 .emotion-29:hover {
   -webkit-text-decoration: none;
   text-decoration: none;
+  background-color: #eee;
+}
+
+.emotion-29:focus {
+  outline-offset: -3px;
 }
 
 .emotion-28 {
-  vertical-align: -6px;
+  margin-left: 5px;
 }
 
 <div

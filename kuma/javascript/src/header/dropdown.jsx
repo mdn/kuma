@@ -1,6 +1,7 @@
 //@flow
 import * as React from 'react';
 import { useState, useEffect } from 'react';
+import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 
 const MenuContainer = styled.div`
@@ -16,12 +17,22 @@ const MenuContainer = styled.div`
 `;
 
 const MenuLabel = styled.button`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     font-size: 18px;
     font-weight: bold;
-    padding: 5px 10px;
+    line-height: 48px;
+    white-space: nowrap;
+    padding: 0 10px;
+    margin: 0;
     border: none;
     :hover {
         background-color: #eee;
+    }
+    :focus {
+        // The default focus outline doesn't look right in Chrome without this
+        outline-offset: -3px;
     }
 `;
 
@@ -47,10 +58,18 @@ const Menu = styled.ul`
     }
 `;
 
-type DropdownProps = {
-    label: string,
-    children: Array<React.Node>
-};
+type DropdownProps = {|
+    // The string or component to display. Clicking on this will
+    // display the menu
+    label: string | React.Node,
+    // If set to true, the menu will be anchored to the right edge of
+    // the label and may extend beyond the left edge. If this is
+    // false or unset, the default behavior is to attach the menu to
+    // the left side of the label and allow it to extend beyond the
+    // right edge of the label.
+    right?: boolean,
+    children: React.Node
+|};
 
 export default function Dropdown(props: DropdownProps) {
     const [shown, setShown] = useState(false);
@@ -61,8 +80,24 @@ export default function Dropdown(props: DropdownProps) {
     useEffect(() => {
         function handler(e) {
             if (e.type === 'click' || e.key === 'Escape') {
-                setShown(false);
-                e.stopImmediatePropagation();
+                // We defer the setShown() call to ensure that the link
+                // or button in the menu is still visible when the event
+                // is dispatched on it. Otherwise the default action
+                // (such as form submission) might not happen.
+                setTimeout(() => setShown(false));
+
+                // If the browser supports the closest() method and if
+                // that method tells us that the event was not inside
+                // the menu then just swallow the event and don't let
+                // anyone else see it.
+                if (
+                    e.target &&
+                    e.target.closest &&
+                    e.target.closest('ul.dropdown-menu') === null
+                ) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                }
             }
         }
 
@@ -70,6 +105,12 @@ export default function Dropdown(props: DropdownProps) {
             window.addEventListener('click', handler, true);
             window.addEventListener('keydown', handler, true);
             if (document.documentElement) {
+                // Make the entire document transparent to mouse events
+                // so that all events go directly to the html element
+                // except for elements (like our menus) that have explictly
+                // set pointerEvents to auto. This prevents links in the
+                // document from highlighting on hover while a menu is
+                // displayed, for example.
                 document.documentElement.style.pointerEvents = 'none';
             }
             return () => {
@@ -95,7 +136,14 @@ export default function Dropdown(props: DropdownProps) {
                 {props.label}
                 <Arrow>{shown ? '▲' : '▼'}</Arrow>
             </MenuLabel>
-            {shown && <Menu>{props.children}</Menu>}
+            {shown && (
+                <Menu
+                    className="dropdown-menu"
+                    css={css(props.right && { right: 0 })}
+                >
+                    {props.children}
+                </Menu>
+            )}
         </MenuContainer>
     );
 }

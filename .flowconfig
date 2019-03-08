@@ -4,6 +4,7 @@
 [include]
 
 [libs]
+kuma/javascript/src/flow-typed
 
 [lints]
 
