@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 import logging
 import time
 from collections import OrderedDict
+from datetime import datetime
+from math import ceil
 
 import requests
 
@@ -131,8 +133,8 @@ class Scraper(object):
         return self.source_types[source_type](source_param, **options)
 
     # Scrape progress report patterns
-    _report_prefix = ('%(cycle)d:%(source_num)d/%(source_total)d'
-                      ' Source %(source_key)s ')
+    _report_prefix = ('Round %(cycle)d, Source %(source_num)d of'
+                      ' %(source_total)d: %(source_key)s ')
     _report_done = (_report_prefix +
                     'complete, freshness=%(freshness)s, with %(dep_count)s'
                     ' dependent source%(dep_s)s.')
@@ -148,12 +150,14 @@ class Scraper(object):
         if not self.sources:
             logger.warn("No sources to scrape.")
             return self.sources
-        first = True
-        repeat = False
+        first = True     # Always run it once
+        repeat = False   # Run another round if there are new sources to scrape
+        blocked = False  # Stop if we're stuck on a blocked dependency
         cycle = 0
+        start = datetime.now()
         state_counts = OrderedDict((state, 0) for state in Source.STATES)
         state_counts[Source.STATE_INIT] = len(self.sources)
-        while first or repeat:
+        while (first or repeat) and not blocked:
             first = False
             repeat = False
             source_total = (len(self.sources) -
@@ -221,7 +225,14 @@ class Scraper(object):
                                    for k, v in state_counts.items()
                                    if v > 0)))
             if last_counts == state_counts:
-                logger.warn("Dependency block detected. Aborting.")
-                return self.sources
-        logger.info('Scrape complete.')
+                # It looks like nothing changed state this round, so we have
+                # a blocked dependency and won't finish.
+                blocked = True
+        duration = int(ceil((datetime.now() - start).total_seconds()))
+        if blocked:
+            logger.warn('Dependency block detected. Aborting after %d'
+                        ' second%s.', duration, '' if duration == 1 else 's')
+        else:
+            logger.info('Scrape complete in %d second%s.',
+                        duration, '' if duration == 1 else 's')
         return self.sources

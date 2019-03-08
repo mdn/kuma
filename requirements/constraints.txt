@@ -26,9 +26,9 @@ pytest==3.1.3 \
 # Docs: http://pytz.sourceforge.net/
 # Changes: https://launchpad.net/pytz/+announcements
 # Used by babel, celery, django-sundial
-pytz==2018.5 \
-    --hash=sha256:a061aa0a9e06881eb8b3b2b43f05b9439d6583c206d0a6c340ff72a7b6669053 \
-    --hash=sha256:ffb9ef1de172603304d9d2819af6f5ece76f2e85ec10692a524dd876e72bf277
+pytz==2018.9 \
+    --hash=sha256:32b0891edff07e28efe91284ed9c31e123d84bea3fd98e1f72be2508f43ef8d9 \
+    --hash=sha256:d5f05e487007e29e03409f9398d074e158d920d36eb82eaf66fb1136b0c5374c
 # Used by cryptography, django-honeypot
 setuptools==26.1.1 \
     --hash=sha256:226c9ce65e76c6069e805982b036f36dc4b227b37dd87fc219aef721ec8604ae \

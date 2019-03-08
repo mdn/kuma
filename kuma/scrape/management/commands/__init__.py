@@ -28,27 +28,22 @@ class ScrapeCommand(BaseCommand):
 
     def setup_logging(self, verbosity):
         """Update logger for desired verbosity."""
-        log_format = '%(levelname)s: %(message)s'
-        log_name = 'kuma.scraper'
-        console = logging.StreamHandler(self.stderr)
 
         if verbosity == 0:
             level = logging.WARNING
         elif verbosity == 1:  # default
             level = logging.INFO
-        elif verbosity == 2:
+        elif verbosity >= 2:
             level = logging.DEBUG
-        elif verbosity > 2:
-            level = logging.DEBUG
-            log_format = '%(name)s:%(levelname)s: %(message)s'
-            log_name = ''
 
-        formatter = logging.Formatter(log_format)
+        formatter = logging.Formatter('%(levelname)s: %(message)s')
+        console = logging.StreamHandler(self.stderr)
         console.setLevel(level)
         console.setFormatter(formatter)
-        logger = logging.getLogger(log_name)
+        logger = logging.getLogger('kuma.scraper')
         logger.setLevel(level)
         logger.addHandler(console)
+        logger.propagate = False
 
     def int_all_type(self, value):
         """A command argument that can take an integer or 'all'."""
