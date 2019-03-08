@@ -832,7 +832,7 @@ def test_self_redirect_supression(mock_kumascript_get, constance_config,
 
 @pytest.mark.parametrize('locales,expected_results',
                          HREFLANG_TEST_CASES.values(),
-                         ids=HREFLANG_TEST_CASES.keys())
+                         ids=tuple(HREFLANG_TEST_CASES.keys()))
 def test_hreflang(client, root_doc, locales, expected_results):
     docs = [
         Document.objects.create(
