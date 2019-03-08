@@ -679,6 +679,8 @@ PUENTE = {
             ('kuma/static/js/components/**.js', 'javascript'),
             ('assets/ckeditor4/source/plugins/mdn-**/*.js',
              'javascript'),
+        ],
+        'react': [
             ('kuma/javascript/src/**.js', 'javascript'),
             ('kuma/javascript/src/**.jsx', 'javascript'),
         ],
@@ -686,6 +688,11 @@ PUENTE = {
     'PROJECT': 'MDN',
     'MSGID_BUGS_ADDRESS': ADMIN_EMAILS[0],
 }
+
+# Combine JavaScript strings into React domain
+PUENTE['DOMAIN_METHODS']['react'] = (
+    PUENTE['DOMAIN_METHODS']['javascript'] +
+    PUENTE['DOMAIN_METHODS']['react'])
 
 STATICI18N_ROOT = 'build/locale'
 STATICI18N_DOMAIN = 'javascript'

@@ -51,11 +51,16 @@ compilejsi18n:
 	@ mkdir -p build/locale
 	@ python manage.py compilejsi18n
 
+compile-react-i18n:
+	@ echo "## Generating React translation catalogs ##"
+	@ mkdir -p build/locale
+	@ python manage.py compilejsi18n -d react
+
 collectstatic:
 	@ echo "## Compiling (Sass), collecting, and building static files ##"
 	@ python manage.py collectstatic --noinput
 
-build-static: webpack compilejsi18n collectstatic
+build-static: webpack compilejsi18n compile-react-i18n collectstatic
 
 install:
 	@ echo "## Installing $(requirements) ##"
@@ -81,10 +86,19 @@ localeextract:
 	python manage.py extract
 	python manage.py merge
 
+locale-populate-react:
+	@ mkdir -p locale/compendia
+	for localename in `find locale -mindepth 1 -maxdepth 1 -type d | cut -d/ -f2 | grep -v templates | grep -v compendia`; do \
+		rm -f locale/compendia/$$localename.compendium; \
+		msgcat --use-first -o locale/compendia/$$localename.compendium locale/$$localename/LC_MESSAGES/django.po locale/$$localename/LC_MESSAGES/javascript.po; \
+		rm -f locale/$$localename/LC_MESSAGES/react.po; \
+		msgmerge --compendium locale/compendia/$$localename.compendium -o locale/$$localename/LC_MESSAGES/react.po /dev/null locale/templates/LC_MESSAGES/react.pot; \
+	done
+
 localecompile:
 	cd locale; ../scripts/compile-mo.sh .
 
-localerefresh: localeextract localetest localecompile build-static
+localerefresh: localeextract locale-populate-react localetest localecompile build-static
 
 pull-base:
 	docker pull ${BASE_IMAGE}
@@ -157,4 +171,4 @@ npmrefresh:
 	npm install
 
 # Those tasks don't have file targets
-.PHONY: test coveragetest locust clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh npmrefresh webpack
+.PHONY: test coveragetest locust clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh npmrefresh webpack compile-react-i18n locale-populate-react
