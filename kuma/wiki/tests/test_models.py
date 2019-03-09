@@ -559,9 +559,11 @@ class RevisionTests(UserTestCase):
         assert fake_tidied == rev.get_tidied_content()
 
     def test_get_tidied_content_tidies_in_process_by_default(self):
-        content = '<h1>  Test get_tidied_content.  </h1>'
+        content = '<h1>  Test get_tidied_content  </h1>'
         rev = revision(is_approved=True, save=True, content=content)
-        tidied_content, errors = tidy_content(content)
+        tidied_content, errors = tidy_content(
+            '<h1 id="Test_get_tidied_content">  Test get_tidied_content  </h1>'
+        )
         assert tidied_content == rev.get_tidied_content()
 
     def test_get_tidied_content_returns_none_on_allow_none(self):

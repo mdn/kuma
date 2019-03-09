@@ -154,7 +154,11 @@ def _filter_doc_html(request, doc, doc_html, rendering_params):
     # ?raw view is often used for editors - apply safety filtering.
     # TODO: Should this stuff happen in render() itself?
     if rendering_params['raw']:
-        # HACK: Raw rendered content has not had section IDs injected
+        # TODO: There will be no need to call "injectSectionIDs" or
+        #       "filterEditorSafety" when the code that calls "clean_content"
+        #       on Revision.save is deployed to production, AND the current
+        #       revisions of all docs have had their content cleaned with
+        #       "clean_content".
         tool.injectSectionIDs()
         tool.filterEditorSafety()
 
@@ -465,6 +469,10 @@ def as_json(request, document_slug=None, document_locale=None):
         return HttpResponseBadRequest()
 
     document = get_object_or_404(Document, **kwargs)
+    # TODO: There will be no need for the following line of code when the
+    #       code that calls "clean_content" on Revision.save is deployed to
+    #       production, AND the current revisions of all docs have had their
+    #       content cleaned with "clean_content".
     (kuma.wiki.content.parse(document.html)
                       .injectSectionIDs()
                       .serialize())

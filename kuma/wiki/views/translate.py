@@ -130,6 +130,10 @@ def translate(request, document_slug, document_locale):
     if not doc:
         content = based_on_rev.content
     if content:
+        # TODO: There will be no need to "filterEditorSafety" when the code
+        #       that calls "clean_content" on Revision.save is deployed to
+        #       production, AND the current revisions of all docs have had
+        #       their content cleaned with "clean_content".
         initial.update(content=kuma.wiki.content.parse(content)
                                                 .filterEditorSafety()
                                                 .serialize())

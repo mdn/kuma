@@ -324,12 +324,16 @@ class Document(NotificationsMixin, models.Model):
 
     @cache_with_field('body_html')
     def get_body_html(self, *args, **kwargs):
-        html = self.rendered_html and self.rendered_html or self.html
+        html = self.rendered_html or self.html
         sections_to_hide = ('Quick_Links', 'Subnav')
         doc = parse_content(html)
         for sid in sections_to_hide:
             doc = doc.replaceSection(sid, '')
             doc = doc.removeSection(sid)
+        # TODO: There will be no need to "injectSectionIDs" when the code
+        #       that calls "clean_content" on Revision.save is deployed to
+        #       production, AND the current revisions of all docs have had
+        #       their content cleaned with "clean_content".
         doc.injectSectionIDs()
         doc.annotateLinks(base_url=settings.SITE_URL)
         return doc.serialize()
@@ -344,7 +348,11 @@ class Document(NotificationsMixin, models.Model):
             return ''
         if not self.current_revision.toc_depth:
             return ''
-        html = self.rendered_html and self.rendered_html or self.html
+        html = self.rendered_html or self.html
+        # TODO: There will be no need to "injectSectionIDs" when the code
+        #       that calls "clean_content" on Revision.save is deployed to
+        #       production, AND the current revisions of all docs have had
+        #       their content cleaned with "clean_content".
         return (parse_content(html)
                 .injectSectionIDs()
                 .filter(self.TOC_FILTERS[2])
@@ -613,7 +621,11 @@ class Document(NotificationsMixin, models.Model):
         return get_seo_description(src, self.locale, strip_markup)
 
     def build_json_data(self):
-        html = self.rendered_html and self.rendered_html or self.html
+        html = self.rendered_html or self.html
+        # TODO: There will be no need to "injectSectionIDs" when the code
+        #       that calls "clean_content" on Revision.save is deployed to
+        #       production, AND the current revisions of all docs have had
+        #       their content cleaned with "clean_content".
         content = parse_content(html).injectSectionIDs().serialize()
         sections = get_content_sections(content)
 
@@ -1677,6 +1689,8 @@ class Revision(models.Model):
         if not self.slug:
             self.slug = self.document.slug
 
+        self.content = clean_content(self.content)
+
         super(Revision, self).save(*args, **kwargs)
 
         # When a revision is approved, update document metadata and re-cache
@@ -1690,7 +1704,7 @@ class Revision(models.Model):
         """
         self.document.title = self.title
         self.document.slug = self.slug
-        self.document.html = self.content_cleaned
+        self.document.html = self.content
         self.document.render_max_age = self.render_max_age
         self.document.current_revision = self
 
@@ -1743,6 +1757,13 @@ class Revision(models.Model):
 
     @property
     def content_cleaned(self):
+        """
+        Return content that has been cleaned (i.e., bleached, section ids
+        added, attributes alphabetized, etc.).
+        """
+        # We still need this for the wiki.revision and wiki.translate endpoints
+        # (due to old revisions and "based_on" revisions whose content may have
+        # not been cleaned).
         return clean_content(self.content)
 
     @cached_property
