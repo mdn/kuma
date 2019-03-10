@@ -86,6 +86,7 @@ if 'mysql' in DEFAULT_DATABASE['ENGINE']:
             'init_command': 'SET '
                             'innodb_strict_mode=1,'
                             'storage_engine=INNODB,'
+                            "sql_mode='STRICT_TRANS_TABLES',"
                             'character_set_connection=utf8,'
                             'collation_connection=utf8_general_ci',
         },
