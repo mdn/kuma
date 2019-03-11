@@ -40,6 +40,30 @@ def test_document_is_experiment():
     assert doc.is_experiment
 
 
+@pytest.mark.parametrize('slug,legacy', [
+    # See LEGACY_MINDTOUCH_NAMESPACES in ../constants.py
+    ('Help:Login', True),
+    ('Help_talk:Login', True),
+    ('Project:MDN', True),
+    ('Project_talk:MDN', True),
+    ('Special:easter_egg', True),
+    ('Talk:Web:CSS', True),
+    ('Template:domxref', True),
+    ('Template_talk:domxref', True),
+    ('User:jezdez', True),
+    ('User_talk:jezdez', True),
+    # Experiments aren't legacy yet
+    ('Experiment:Blue', False),
+    # Slugs without colons don't have namespaces
+    ('CSS', False),
+    # Slugs with colons might not be legacy
+    (':hover', False)
+])
+def test_document_has_legacy_namespace(slug, legacy):
+    """Excluded slugs should not update the search index."""
+    assert Document(slug=slug).has_legacy_namespace == legacy
+
+
 def test_document_delete_removes_tag_relationsip(root_doc):
     """Deleting a tagged document also deletes the tag relationship."""
     root_doc.tags.add('grape')

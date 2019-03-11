@@ -51,6 +51,21 @@ def test_document(base_url, is_indexed):
 
 @pytest.mark.headless
 @pytest.mark.nondestructive
+def test_user_document(base_url):
+    url = base_url + '/en-US/docs/User:anonymous:uitest'
+    resp = requests.get(url)
+    assert resp.status_code == 200
+    assert resp.headers['Content-Type'] == 'text/html; charset=utf-8'
+    meta = META_ROBOTS_RE.search(resp.content)
+    assert meta
+    content = meta.group('content')
+    # Pages with legacy MindTouch namespaces like 'User:' never get
+    # indexed, regardless of what the base url is
+    assert content == 'noindex, nofollow'
+
+
+@pytest.mark.headless
+@pytest.mark.nondestructive
 def test_document_based_redirection(base_url):
     """Ensure that content-based redirects properly redirect."""
     url = base_url + '/en-US/docs/MDN/Promote'

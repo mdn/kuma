@@ -39,7 +39,7 @@
 {% endif %}
 
 {% block robots_value %}
-  {%- if document.is_experiment or fallback_reason or not document_html -%}
+  {%- if document.is_experiment or document.has_legacy_namespace or fallback_reason or not document_html -%}
     noindex, nofollow
   {%- else -%}
     {{ super() }}
