@@ -24,8 +24,9 @@ h2 > .collapse-trigger {
     }
 
     &[aria-expanded='true']:before {
-        @include set-bidi-icon($path-to-svg-arrow-icons + 'caret-down.svg', $path-to-svg-arrow-icons + 'caret-down.svg', auto, auto, 16px);
-        vertical-align: baseline;
+        background-position: 0;
+        transform: rotate(90deg);
+        vertical-align: text-top;
     }
 }
 
