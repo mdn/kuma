@@ -1,21 +1,242 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Login snapshot 1`] = `
+exports[`Login component when user is logged in 1`] = `
+.emotion-5 {
+  position: relative;
+  pointer-events: auto;
+}
+
+.emotion-3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 48px;
+  white-space: nowrap;
+  padding: 0 10px;
+  margin: 0;
+  border: none;
+}
+
+.emotion-3:hover {
+  background-color: #eee;
+}
+
+.emotion-3:focus {
+  outline-offset: -3px;
+}
+
+.emotion-0 {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
 .emotion-1 {
+  font-size: 12px;
+  padding-left: 2px;
+}
+
+<div
+  className="emotion-5 emotion-6"
+>
+  <button
+    className="emotion-3 emotion-4"
+    onClick={[Function]}
+  >
+    <img
+      alt="test-username"
+      className="emotion-0"
+      src="test-url"
+    />
+    <span
+      className="emotion-1 emotion-2"
+    >
+      ▼
+    </span>
+  </button>
+</div>
+`;
+
+exports[`Login component when user is logged in 2`] = `
+.emotion-8 {
+  position: relative;
+  pointer-events: auto;
+}
+
+.emotion-3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 48px;
+  white-space: nowrap;
+  padding: 0 10px;
+  margin: 0;
+  border: none;
+}
+
+.emotion-3:hover {
+  background-color: #eee;
+}
+
+.emotion-3:focus {
+  outline-offset: -3px;
+}
+
+.emotion-0 {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.emotion-1 {
+  font-size: 12px;
+  padding-left: 2px;
+}
+
+.emotion-6 {
+  position: absolute;
+  z-index: 100;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: white;
+  border: solid black 1px;
+  box-shadow: 3px 3px 5px black;
+  padding: 10px;
+  min-width: 100%;
+  right: 0;
+}
+
+.emotion-6 li {
+  padding: 5px;
+  white-space: nowrap;
+}
+
+.emotion-5 {
+  border-width: 0;
+  padding: 0;
+  color: #3d7e9a;
+  font-weight: normal;
+}
+
+.emotion-5:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+<div
+  className="emotion-8 emotion-9"
+>
+  <button
+    className="emotion-3 emotion-4"
+    onClick={null}
+  >
+    <img
+      alt="test-username"
+      className="emotion-0"
+      src="test-url"
+    />
+    <span
+      className="emotion-1 emotion-2"
+    >
+      ▲
+    </span>
+  </button>
+  <ul
+    className="dropdown-menu emotion-6 emotion-7"
+  >
+    <li>
+      <a
+        href="//profiles/test-username"
+      >
+        View profile
+      </a>
+    </li>
+    <li>
+      <a
+        href="//profiles/test-username/edit"
+      >
+        Edit profile
+      </a>
+    </li>
+    <li>
+      <form
+        action="//users/signout"
+        method="post"
+      >
+        <input
+          name="next"
+          type="hidden"
+          value="/"
+        />
+        <button
+          className="emotion-5"
+          type="submit"
+        >
+          Sign out
+        </button>
+      </form>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Login component when user is not logged in 1`] = `
+.emotion-1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   font-size: 18px;
   font-weight: bold;
   color: black;
   -webkit-text-decoration: none;
   text-decoration: none;
+  line-height: 48px;
+  padding: 0 8px;
 }
 
 .emotion-1:hover {
   -webkit-text-decoration: none;
   text-decoration: none;
+  background-color: #eee;
+}
+
+.emotion-1:focus {
+  outline-offset: -3px;
 }
 
 .emotion-0 {
-  vertical-align: -6px;
+  margin-left: 5px;
 }
 
 <a
