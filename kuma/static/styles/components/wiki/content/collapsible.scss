@@ -18,14 +18,27 @@ h2 > .collapse-trigger {
     /* add toggle symbol */
     &:before {
         margin-right: 10px;
-        @include set-bidi-icon($path-to-svg-arrow-icons + 'caret-right.svg', $path-to-svg-arrow-icons + 'caret-left.svg', auto, auto, 8px);
+        @include set-bidi-icon($path-to-svg-arrow-icons + 'chevron-right.svg', $path-to-svg-arrow-icons + 'chevron-left.svg', auto, auto, 8px);
         background-position: 0 8px;
         cursor: pointer;
     }
 
     &[aria-expanded='true']:before {
-        @include set-bidi-icon($path-to-svg-arrow-icons + 'caret-down.svg', $path-to-svg-arrow-icons + 'caret-down.svg', auto, auto, 16px);
-        vertical-align: baseline;
+        background-position: 0;
+        transform: rotate(90deg);
+        vertical-align: text-top;
+    }
+}
+
+html[dir='rtl'] h2 > .collapse-trigger {
+    &:before {
+        background-position: 5px 10px;
+        padding-left: 10px;
+    }
+
+    &[aria-expanded='true']:before {
+        transform: rotate(-90deg);
+        vertical-align: top;
     }
 }
 
