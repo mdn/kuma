@@ -537,13 +537,17 @@ STATICFILES_STORAGE = ('pipeline.storage.NonPackagingPipelineStorage'
                        if DEBUG else
                        'kuma.core.pipeline.storage.ManifestPipelineStorage')
 
-STATICFILES_DIRS = (
+STATICFILES_DIRS = [
     path('assets', 'static'),
     path('kuma', 'static'),
     path('kuma', 'javascript', 'dist'),
     path('build', 'locale'),
     path('jinja2', 'includes/icons'),
-)
+    ('js/libs/ckeditor4/build', path('assets', 'ckeditor4', 'build')),
+]
+if CKEDITOR_DEV:
+    STATICFILES_DIRS.append(('js/libs/ckeditor4/source',
+                             path('assets', 'ckeditor4', 'source')))
 
 # TODO: Figure out why changing the order of apps (for example, moving taggit
 # higher in the list) breaks tests.
@@ -672,7 +676,7 @@ PUENTE = {
             # We can't say **.js because that would dive into any libraries.
             ('kuma/static/js/*.js', 'javascript'),
             ('kuma/static/js/components/**.js', 'javascript'),
-            ('kuma/static/js/libs/ckeditor/source/plugins/mdn-**/*.js',
+            ('assets/ckeditor4/source/plugins/mdn-**/*.js',
              'javascript'),
         ],
     },

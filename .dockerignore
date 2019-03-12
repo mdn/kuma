@@ -59,6 +59,7 @@ celeryev.pid
 
 # Kuma-specfic
 *devmo*.sql*
+assets/ckeditor4/source/ckbuilder/
 bower_components
 build.py
 developer.mozilla.org.tar.gz
@@ -66,7 +67,6 @@ docker-compose.dev.yml
 docker-compose.locust.yml
 humans.txt
 james.ini
-kuma/static/js/libs/ckeditor/source/ckbuilder/
 mdn_sample_db.sql
 mdn_sample_db.sql.gz
 mdntests/
@@ -89,6 +89,8 @@ xfers/
 wheelhouse
 uploads/
 kumascript.log
+kuma/static/js/libs/ckeditor/source/ckeditor/
+kuma/static/js/libs/ckeditor/source/ckbuilder/
 
 #
 # End adjusted kuma .gitignore

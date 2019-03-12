@@ -13,8 +13,8 @@ Here are the subfolders:
 
 * `build`: (TODO) Output of ``gulp`` and ``make compilejsi18n``, copied to
   ``static/build``.
-* `ckeditor4`: (TODO) The source and build folders for CKEditor.
-  ``ckeditor/build`` is copied to ``static/js/libs/ckeditor/build``.
+* `ckeditor4`: The source and build folders for CKEditor 4.
+  ``ckeditor4/build`` is copied to ``static/js/libs/ckeditor4/build``.
 * `dist`: (TODO) Output of the ``webpack`` process, copied to ``static/dist``.
 * `legacy`: These files are no longer served to users, and are candidates
   for deletion.

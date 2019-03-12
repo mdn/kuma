@@ -57,6 +57,7 @@ ENV/
 
 # Kuma-specfic
 *devmo*.sql*
+assets/ckeditor4/source/ckbuilder/
 bower_components
 build.py
 developer.mozilla.org.tar.gz
@@ -66,8 +67,6 @@ etc/nginx/ssl/developer.127.0.0.1.nip.io.crt
 etc/nginx/ssl/developer.127.0.0.1.nip.io.key
 humans.txt
 james.ini
-kuma/static/js/libs/ckeditor/source/ckeditor/
-kuma/static/js/libs/ckeditor/source/ckbuilder/
 mdn_sample_db.sql
 mdn_sample_db.sql.gz
 /mdntests/
@@ -91,6 +90,8 @@ geckodriver.log
 wheelhouse
 /uploads/
 kumascript.log
+kuma/static/js/libs/ckeditor/source/ckeditor/
+kuma/static/js/libs/ckeditor/source/ckbuilder/
 
 # Emacs backup files
 *~

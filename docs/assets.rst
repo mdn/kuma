@@ -281,6 +281,7 @@ The ``staticfiles`` app is configured by Django settings:
    will scan for static assets. For MDN, this includes:
 
    * ``assets/static``
+   * ``assets/ckeditor4/build`` (to ``/static/js/libs/ckeditor4/build``)
    * ``kuma/static``
    * ``kuma/javascript/dist``
    * ``build/locale``
