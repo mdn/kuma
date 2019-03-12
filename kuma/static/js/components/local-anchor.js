@@ -8,6 +8,12 @@
 
     function prependLocalAnchors() {
         var mainDocument = document.getElementById('document-main');
+
+        // if no `mainDocument`, skip because we're on an edit page
+        if (!mainDocument) {
+            return;
+        }
+
         // collect all headings with an `id` attribute
         var headings = Array.from(document.querySelectorAll('h2[id]')).concat(
             Array.from(document.querySelectorAll('h3[id]'))
