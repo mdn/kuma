@@ -28,6 +28,74 @@ from ..models import (Document, DocumentTag, Revision, RevisionIP,
 from ..utils import tidy_content
 
 
+def test_clean_current_revision_with_no_change(root_doc, wiki_user_2):
+    assert root_doc.clean_current_revision(wiki_user_2) is None
+
+
+def test_clean_current_revision_with_no_current(root_doc, wiki_user_2):
+    root_doc.current_revison = None
+    assert root_doc.clean_current_revision(wiki_user_2) is None
+
+
+@pytest.mark.parametrize('case', ('default-language', 'translation'))
+def test_clean_current_revision(root_doc, trans_doc, wiki_user_2, case):
+    doc = trans_doc if case == 'translation' else root_doc
+    current_rev = doc.current_revision
+    current_rev.content = (
+        '<div onclick="alert(\'hacked!\')">click me</div>'
+    )
+    current_rev.tidied_content = """
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+        <html>
+          <head>
+            <title></title>
+          </head>
+          <body>
+            <div onclick="alert('hacked!')">
+              click me
+            </div>
+          </body>
+        </html>
+    """
+    tags = '"Banana" "Orange" "Apple"'
+    l10n_tags = set(['inprogress'])
+    review_tags = set(['editorial', 'technical'])
+    current_rev.tags = tags
+    current_rev.localization_tags.set(*l10n_tags)
+    current_rev.review_tags.set(*review_tags)
+    prior_creator = current_rev.creator
+    prior_created = current_rev.created
+    if case == 'translation':
+        expected_based_on_pk = current_rev.based_on.pk
+    else:
+        expected_based_on_pk = current_rev.pk
+    rev = doc.clean_current_revision(wiki_user_2)
+    assert rev
+    assert rev.creator != prior_creator
+    assert rev.creator == wiki_user_2
+    assert rev.created > prior_created
+    assert rev.based_on.pk == expected_based_on_pk
+    assert rev.content == '<div>click me</div>'
+    assert rev.tidied_content == (
+        '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">\n'
+        '<html>\n'
+        '  <head>\n'
+        '    <title></title>\n'
+        '  </head>\n'
+        '  <body>\n'
+        '    <div>\n'
+        '      click me\n'
+        '    </div>\n'
+        '  </body>\n'
+        '</html>\n'
+    )
+    assert rev.tags == tags
+    assert set(t.name for t in rev.localization_tags.all()) == l10n_tags
+    assert set(t.name for t in rev.review_tags.all()) == review_tags
+    assert rev.comment == 'Clean prior revision of {} by {}'.format(
+        prior_created, prior_creator)
+
+
 def test_document_is_not_experiment():
     """A document without the experiment prefix is not an experiment."""
     doc = Document(slug='test')

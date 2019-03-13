@@ -1480,6 +1480,58 @@ Full traceback:
 
         return hreflang
 
+    def clean_current_revision(self, user):
+        """
+        If this document's current revision has not yet been cleaned, creates
+        and returns a new revision from the current revision's cleaned content,
+        and then makes the newly-created revision the current revision. The
+        "tidied_content" of the new revision is also updated with a tidied
+        version of the cleaned content, and the review and localization tags
+        are preserved. The given user is set as the creator of the new
+        revision, if one is created.
+        """
+        rev = self.current_revision
+        if not rev:
+            return None
+
+        cleaned_content = clean_content(rev.content)
+
+        if rev.content == cleaned_content:
+            # The content is already clean.
+            return None
+
+        prior_pk = rev.pk
+        prior_creator = rev.creator
+        prior_created = rev.created
+        prior_review_tags = list(rev.review_tags.names())
+        prior_localization_tags = list(rev.localization_tags.names())
+        tidied_and_cleaned_content, _ = tidy_content(cleaned_content)
+
+        with transaction.atomic():
+            rev.pk = None
+            rev.creator = user
+            rev.created = datetime.now()
+            rev.content = cleaned_content
+            rev.tidied_content = tidied_and_cleaned_content
+            if not self.parent:
+                # This is updated only if the document is not a translation,
+                # otherwise its original value is preserved.
+                rev.based_on_id = prior_pk
+            rev.comment = 'Clean prior revision of {} by {}'.format(
+                prior_created, prior_creator)
+            rev.save()
+            if prior_review_tags:
+                rev.review_tags.set(*prior_review_tags)
+            if prior_localization_tags:
+                rev.localization_tags.set(*prior_localization_tags)
+
+        # Populate the model instance with fresh data from database.
+        rev.refresh_from_db()
+
+        # Make this new revision the current one for the document.
+        rev.make_current()
+        return rev
+
 
 class DocumentDeletionLog(models.Model):
     """
