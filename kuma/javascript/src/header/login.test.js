@@ -40,8 +40,13 @@ test('Login component when user is logged in', () => {
 
     expect(login.toJSON()).toMatchSnapshot();
 
-    // Expect a Dropdown element
+    // Expect a edit this page link
     let root = login.root;
+    let link = root.findByType('a');
+    expect(link).toBeDefined();
+    expect(link.props.title).toBe('Edit this page');
+
+    // Expect a Dropdown element
     let dropdown = root.findByType(Dropdown);
     expect(dropdown).toBeDefined();
 
@@ -51,7 +56,7 @@ test('Login component when user is logged in', () => {
 
     // Open up the dropdown menu
     act(() => {
-        login.toJSON().children[0].props.onClick();
+        login.toJSON()[0].children[0].props.onClick();
     });
 
     expect(login.toJSON()).toMatchSnapshot();

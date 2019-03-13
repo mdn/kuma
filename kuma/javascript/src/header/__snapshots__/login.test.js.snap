@@ -1,7 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Login component when user is logged in 1`] = `
-.emotion-5 {
+Array [
+  .emotion-5 {
   position: relative;
   pointer-events: auto;
 }
@@ -47,28 +48,55 @@ exports[`Login component when user is logged in 1`] = `
 }
 
 <div
-  className="emotion-5 emotion-6"
->
-  <button
-    className="emotion-3 emotion-4"
-    onClick={[Function]}
+    className="emotion-5 emotion-6"
   >
-    <img
-      alt="test-username"
-      className="emotion-0"
-      src="test-url"
-    />
-    <span
-      className="emotion-1 emotion-2"
+    <button
+      className="emotion-3 emotion-4"
+      onClick={[Function]}
     >
-      ▼
-    </span>
-  </button>
-</div>
+      <img
+        alt="test-username"
+        className="emotion-0"
+        src="test-url"
+      />
+      <span
+        className="emotion-1 emotion-2"
+      >
+        ▼
+      </span>
+    </button>
+  </div>,
+  .emotion-0 {
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-flex-basis: 8px;
+  -ms-flex-preferred-size: 8px;
+  flex-basis: 8px;
+}
+
+<div
+    className="emotion-0 emotion-1"
+    width={8}
+  />,
+  <a
+    href="/$edit"
+    title="Edit this page"
+  >
+    <svg mock
+      alt="Edit this page"
+    />
+  </a>,
+]
 `;
 
 exports[`Login component when user is logged in 2`] = `
-.emotion-8 {
+Array [
+  .emotion-8 {
   position: relative;
   pointer-events: auto;
 }
@@ -150,60 +178,86 @@ exports[`Login component when user is logged in 2`] = `
 }
 
 <div
-  className="emotion-8 emotion-9"
->
-  <button
-    className="emotion-3 emotion-4"
-    onClick={null}
+    className="emotion-8 emotion-9"
   >
-    <img
-      alt="test-username"
-      className="emotion-0"
-      src="test-url"
-    />
-    <span
-      className="emotion-1 emotion-2"
+    <button
+      className="emotion-3 emotion-4"
+      onClick={null}
     >
-      ▲
-    </span>
-  </button>
-  <ul
-    className="dropdown-menu emotion-6 emotion-7"
-  >
-    <li>
-      <a
-        href="//profiles/test-username"
+      <img
+        alt="test-username"
+        className="emotion-0"
+        src="test-url"
+      />
+      <span
+        className="emotion-1 emotion-2"
       >
-        View profile
-      </a>
-    </li>
-    <li>
-      <a
-        href="//profiles/test-username/edit"
-      >
-        Edit profile
-      </a>
-    </li>
-    <li>
-      <form
-        action="//users/signout"
-        method="post"
-      >
-        <input
-          name="next"
-          type="hidden"
-          value="/"
-        />
-        <button
-          className="emotion-5"
-          type="submit"
+        ▲
+      </span>
+    </button>
+    <ul
+      className="dropdown-menu emotion-6 emotion-7"
+    >
+      <li>
+        <a
+          href="//profiles/test-username"
         >
-          Sign out
-        </button>
-      </form>
-    </li>
-  </ul>
-</div>
+          View profile
+        </a>
+      </li>
+      <li>
+        <a
+          href="//profiles/test-username/edit"
+        >
+          Edit profile
+        </a>
+      </li>
+      <li>
+        <form
+          action="//users/signout"
+          method="post"
+        >
+          <input
+            name="next"
+            type="hidden"
+            value="/"
+          />
+          <button
+            className="emotion-5"
+            type="submit"
+          >
+            Sign out
+          </button>
+        </form>
+      </li>
+    </ul>
+  </div>,
+  .emotion-0 {
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-flex-basis: 8px;
+  -ms-flex-preferred-size: 8px;
+  flex-basis: 8px;
+}
+
+<div
+    className="emotion-0 emotion-1"
+    width={8}
+  />,
+  <a
+    href="/$edit"
+    title="Edit this page"
+  >
+    <svg mock
+      alt="Edit this page"
+    />
+  </a>,
+]
 `;
 
 exports[`Login component when user is not logged in 1`] = `

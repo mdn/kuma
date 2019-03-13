@@ -3,7 +3,7 @@ import * as React from 'react';
 import { css } from '@emotion/core';
 
 import gettext from '../gettext.js';
-import SearchIcon from './search-icon.svg';
+import SearchIcon from '../icons/search.svg';
 
 const strings = {
     placeholder: gettext('Search MDN')

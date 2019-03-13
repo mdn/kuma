@@ -6,12 +6,18 @@ import { css } from '@emotion/core';
 
 import CurrentUser from '../current-user.jsx';
 import Dropdown from './dropdown.jsx';
+import EditIcon from '../icons/pencil.svg';
 import gettext from '../gettext.js';
-import GithubLogo from './github-logo.svg';
+import GithubLogo from '../icons/github.svg';
+import { Strut } from '../layout.jsx';
 
+// XXX: PATHNAME and EDITURL are fix to whatever page was initially loaded
+// Instead, we need them to be updated on every client-side navigation
+// and we'll want to pull them out of a context, I think.
 const PATHNAME = window && window.location ? window.location.pathname : '/';
 const LOCALE =
     window && window.location && window.location.pathname.split('/')[1];
+const EDITURL = PATHNAME.replace('/ducks/', '/docs/') + '$edit';
 
 const strings = {
     signIn: gettext('Sign in'),
@@ -75,26 +81,36 @@ export default function Login(): React.Node {
             />
         );
         return (
-            <Dropdown label={label} right={true}>
-                <li>
-                    <a href={`/${LOCALE}/profiles/${userData.username}`}>
-                        {strings.viewProfile}
-                    </a>
-                </li>
-                <li>
-                    <a href={`/${LOCALE}/profiles/${userData.username}/edit`}>
-                        {strings.editProfile}
-                    </a>
-                </li>
-                <li>
-                    <form action={`/${LOCALE}/users/signout`} method="post">
-                        <input name="next" type="hidden" value={PATHNAME} />
-                        <button css={styles.signOutButton} type="submit">
-                            {strings.signOut}
-                        </button>
-                    </form>
-                </li>
-            </Dropdown>
+            <>
+                <Dropdown label={label} right={true}>
+                    <li>
+                        <a href={`/${LOCALE}/profiles/${userData.username}`}>
+                            {strings.viewProfile}
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href={`/${LOCALE}/profiles/${
+                                userData.username
+                            }/edit`}
+                        >
+                            {strings.editProfile}
+                        </a>
+                    </li>
+                    <li>
+                        <form action={`/${LOCALE}/users/signout`} method="post">
+                            <input name="next" type="hidden" value={PATHNAME} />
+                            <button css={styles.signOutButton} type="submit">
+                                {strings.signOut}
+                            </button>
+                        </form>
+                    </li>
+                </Dropdown>
+                <Strut width={8} />
+                <a href={EDITURL} title="Edit this page">
+                    <EditIcon alt="Edit this page" />
+                </a>
+            </>
         );
     } else {
         // Otherwise, show a login prompt

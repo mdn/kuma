@@ -1,33 +1,18 @@
 //@flow
 import * as React from 'react';
 import { css } from '@emotion/core';
-import styled from '@emotion/styled';
 
+import LanguageIcon from '../icons/language.svg';
 import Login from './login.jsx';
 import Logo from './logo.jsx';
 import Dropdown from './dropdown.jsx';
+import { Row, Spring, Strut } from '../layout.jsx';
 import Search from './search.jsx';
 import gettext from '../gettext.js';
 
 const styles = {
     headerRow: css({ borderTop: '5px solid #83d0f2' })
 };
-
-const Row = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-`;
-
-const Spring = styled.div`
-    flex: 1 1 0px;
-`;
-
-const Strut = styled.div(props => ({
-    flexGrow: 0,
-    flexShrink: 0,
-    flexBasis: props.width
-}));
 
 const menus = [
     {
@@ -125,6 +110,16 @@ export default function Header(): React.Node {
                     ))}
                 </Dropdown>
             ))}
+            {
+                // We should have a LanguageMenu component here.
+                // We can get available languages from the $json query.
+                // Maybe do anohter context/provider thing and set the
+                // available set of translations on that, then update
+                // on document load and on every client-side navigation?
+            }
+            <Dropdown label={<LanguageIcon />}>
+                <li>Not yet implemented</li>
+            </Dropdown>
             <Spring />
             <Search />
             {/* search box here */}
