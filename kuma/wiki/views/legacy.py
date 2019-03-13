@@ -5,23 +5,11 @@ from django.shortcuts import redirect
 
 from kuma.core.decorators import shared_cache_control
 
+from ..constants import LEGACY_MINDTOUCH_NAMESPACES
 from ..models import Document, Revision
 
 
 # Legacy MindTouch redirects.
-
-MINDTOUCH_NAMESPACES = (
-    'Help',
-    'Help_talk',
-    'Project',
-    'Project_talk',
-    'Special',
-    'Talk',
-    'Template',
-    'Template_talk',
-    'User',
-)
-
 
 def mindtouch_namespace_to_kuma_url(locale, namespace, slug):
     """
@@ -87,7 +75,7 @@ def mindtouch_to_kuma_url(locale, path):
         # The namespaces (Talk:, User:, etc.) get their own
         # special-case handling.
         # TODO: Test invalid namespace
-        if namespace in MINDTOUCH_NAMESPACES:
+        if namespace in LEGACY_MINDTOUCH_NAMESPACES:
             return mindtouch_namespace_to_kuma_url(locale, namespace, slug)
 
     # Last attempt: we try the request locale as the document locale,

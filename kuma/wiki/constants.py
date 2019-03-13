@@ -201,6 +201,19 @@ ALLOWED_PROTOCOLS = [
 
 DIFF_WRAP_COLUMN = 65
 EXPERIMENT_TITLE_PREFIX = 'Experiment:'
+LEGACY_MINDTOUCH_NAMESPACES = (
+    'Help',
+    'Help_talk',
+    'Project',
+    'Project_talk',
+    'Special',
+    'Talk',
+    'Template',
+    'Template_talk',
+    'User',
+    'User_talk'
+)
+
 DOCUMENTS_PER_PAGE = 100
 _ks_urlbits = urlparse(settings.KUMASCRIPT_URL_TEMPLATE)
 KUMASCRIPT_BASE_URL = urlunparse((_ks_urlbits.scheme, _ks_urlbits.netloc,

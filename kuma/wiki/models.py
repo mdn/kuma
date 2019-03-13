@@ -30,6 +30,7 @@ from kuma.spam.models import AkismetSubmission, SpamAttempt
 
 from . import kumascript
 from .constants import (DEKI_FILE_URL, EXPERIMENT_TITLE_PREFIX, KUMA_FILE_URL,
+                        LEGACY_MINDTOUCH_NAMESPACES,
                         REDIRECT_CONTENT, REDIRECT_HTML)
 from .content import (clean_content, Extractor, get_content_sections,
                       get_seo_description, H2TOCFilter, H3TOCFilter,
@@ -1430,6 +1431,11 @@ Full traceback:
     @property
     def is_experiment(self):
         return self.slug.startswith(EXPERIMENT_TITLE_PREFIX)
+
+    @property
+    def has_legacy_namespace(self):
+        namespace, separator, _ = self.slug.partition(':')
+        return namespace in LEGACY_MINDTOUCH_NAMESPACES if separator else False
 
     def get_hreflang(self, other_locales=None):
         """
