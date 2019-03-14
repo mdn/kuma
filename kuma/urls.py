@@ -138,7 +138,10 @@ else:
 
 urlpatterns += [
     # User API service
-    url('api/v1/', include('kuma.users.api.v1.urls')),
+    url('^api/v1/', include('kuma.users.api.v1.urls')),
+
+    # Document API service
+    url('^api/v1/', include('kuma.wiki.api.v1.urls')),
 
     # Services and sundry.
     url('', include('kuma.version.urls')),
