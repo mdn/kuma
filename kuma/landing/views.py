@@ -56,6 +56,7 @@ User-agent: *
 Sitemap: https://developer.mozilla.org/sitemap.xml
 
 Disallow: /admin/
+Disallow: /api/
 Disallow: /*/dashboards/*
 Disallow: /*docs/feeds
 Disallow: /*docs/templates
