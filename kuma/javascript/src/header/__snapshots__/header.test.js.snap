@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Header snapshot 1`] = `
-.emotion-32 {
+.emotion-38 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -75,13 +75,13 @@ exports[`Header snapshot 1`] = `
   padding-left: 2px;
 }
 
-.emotion-21 {
+.emotion-27 {
   -webkit-flex: 1 1 0px;
   -ms-flex: 1 1 0px;
   flex: 1 1 0px;
 }
 
-.emotion-25 {
+.emotion-31 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -101,14 +101,14 @@ exports[`Header snapshot 1`] = `
   flex: 2 1 120px;
 }
 
-.emotion-23 {
+.emotion-29 {
   vertical-align: -2px;
   -webkit-flex: 0 0 20px;
   -ms-flex: 0 0 20px;
   flex: 0 0 20px;
 }
 
-.emotion-24 {
+.emotion-30 {
   border-width: 0 !important;
   font-size: 18px;
   font-weight: bold !important;
@@ -118,7 +118,7 @@ exports[`Header snapshot 1`] = `
   flex: 0 1 300px;
 }
 
-.emotion-26 {
+.emotion-32 {
   -webkit-box-flex: 0;
   -webkit-flex-grow: 0;
   -ms-flex-positive: 0;
@@ -131,7 +131,7 @@ exports[`Header snapshot 1`] = `
   flex-basis: 15px;
 }
 
-.emotion-29 {
+.emotion-35 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -149,22 +149,22 @@ exports[`Header snapshot 1`] = `
   padding: 0 8px;
 }
 
-.emotion-29:hover {
+.emotion-35:hover {
   -webkit-text-decoration: none;
   text-decoration: none;
   background-color: #eee;
 }
 
-.emotion-29:focus {
+.emotion-35:focus {
   outline-offset: -3px;
 }
 
-.emotion-28 {
+.emotion-34 {
   margin-left: 5px;
 }
 
 <div
-  className="emotion-32 emotion-33"
+  className="emotion-38 emotion-39"
 >
   <a
     className="emotion-0"
@@ -225,20 +225,35 @@ exports[`Header snapshot 1`] = `
     </button>
   </div>
   <div
-    className="emotion-21 emotion-22"
+    className="emotion-7 emotion-8"
+  >
+    <button
+      className="emotion-5 emotion-6"
+      onClick={[Function]}
+    >
+      <svg mock />
+      <span
+        className="emotion-3 emotion-4"
+      >
+        ▼
+      </span>
+    </button>
+  </div>
+  <div
+    className="emotion-27 emotion-28"
   />
   <form
     action="/en-US/search"
-    className="emotion-25"
+    className="emotion-31"
     id="nav-main-search"
     method="get"
     role="search"
   >
     <svg mock
-      className="emotion-23"
+      className="emotion-29"
     />
     <input
-      className="emotion-24"
+      className="emotion-30"
       id="main-q"
       name="q"
       placeholder="Search MDN"
@@ -246,11 +261,11 @@ exports[`Header snapshot 1`] = `
     />
   </form>
   <div
-    className="emotion-26 emotion-2"
+    className="emotion-32 emotion-2"
     width={15}
   />
   <a
-    className="emotion-29"
+    className="emotion-35"
     data-service="GitHub"
     href="/users/github/login/?next=/"
     rel="nofollow"
@@ -258,11 +273,11 @@ exports[`Header snapshot 1`] = `
     Sign in
      
     <svg mock
-      className="emotion-28"
+      className="emotion-34"
     />
   </a>
   <div
-    className="emotion-26 emotion-2"
+    className="emotion-32 emotion-2"
     width={15}
   />
 </div>
