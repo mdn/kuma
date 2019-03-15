@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import base64
 import json
 
 import newrelic.agent
@@ -35,6 +36,7 @@ from kuma.search.store import get_search_url_from_referer
 
 from .utils import calculate_etag, split_slug
 from .. import kumascript
+from ..api.v1.views import document_api_data
 from ..constants import SLUG_CLEANSING_RE
 from ..decorators import (allow_CORS_GET, check_readonly, prevent_indexing,
                           process_document_path)
@@ -807,19 +809,6 @@ def react_document(request, document_slug, document_locale):
                                                         document_slug)
 
     if doc is None:
-        # Possible the document once existed, but is now deleted.
-        # If so, show that it was deleted.
-        deletion_log_entries = DocumentDeletionLog.objects.filter(
-            locale=document_locale,
-            slug=document_slug
-        )
-        if deletion_log_entries.exists():
-            # Show deletion log and restore / purge for soft-deleted docs
-            deleted_doc = Document.deleted_objects.filter(
-                locale=document_locale, slug=document_slug)
-            if deleted_doc.exists():
-                return _document_deleted(request, deletion_log_entries)
-
         # We can throw a 404 immediately if the request type is HEAD.
         # TODO: take a shortcut if the document was found?
         if request.method == 'HEAD':
@@ -833,22 +822,7 @@ def react_document(request, document_slug, document_locale):
             if redirect_url is not None:
                 return redirect(redirect_url)
         else:
-            # If a Document is not found, we may 404 immediately based on
-            # request parameters.
-            if (any([request.GET.get(param, None)
-                     for param in ('raw', 'include', 'nocreate')]) or
-                    not request.user.is_authenticated):
-                raise Http404
-
-            # The user may be trying to create a child page; if a parent exists
-            # for this document, redirect them to the "Create" page
-            # Otherwise, they could be trying to create a main level doc.
-            create_url = _document_redirect_to_create(document_slug,
-                                                      document_locale,
-                                                      slug_dict)
-            response = redirect(create_url)
-            add_never_cache_headers(response)
-            return response
+            raise Http404
 
     # We found a Document. Now we need to figure out how we're going
     # to display it.
@@ -873,106 +847,56 @@ def react_document(request, document_slug, document_locale):
             }), extra_tags='wiki_redirect')
         return HttpResponsePermanentRedirect(url)
 
-    # Read some request params to see what we're supposed to do.
-    rendering_params = {}
-    for param in ('raw', 'summary', 'include', 'edit_links'):
-        rendering_params[param] = request.GET.get(param, False) is not False
-    rendering_params['section'] = request.GET.get('section', None)
-    rendering_params['render_raw_fallback'] = False
+    # Get the SEO summary
+    seo_summary = doc.get_summary_text()
 
-    # Are we in a content experiment?
-    original_doc = doc
-    doc, exp_params = _apply_content_experiment(request, doc)
-    rendering_params['experiment'] = exp_params
+    # Get the additional title information, if necessary.
+    seo_parent_title = _get_seo_parent_title(
+        doc, slug_dict, document_locale)
 
-    # Get us some HTML to play with.
-    rendering_params['use_rendered'] = (
-        kumascript.should_use_rendered(doc, request.GET))
-    doc_html, ks_errors, render_raw_fallback = _get_html_and_errors(
-        request, doc, rendering_params)
-    rendering_params['render_raw_fallback'] = render_raw_fallback
-
-    # Start parsing and applying filters.
-    if doc.show_toc and not rendering_params['raw']:
-        toc_html = doc.get_toc_html()
+    # Record the English slug in Google Analytics,
+    # to associate translations
+    if doc.locale == 'en-US':
+        en_slug = doc.slug
+    elif doc.parent_id and doc.parent.locale == 'en-US':
+        en_slug = doc.parent.slug
     else:
-        toc_html = None
-    doc_html = _filter_doc_html(request, doc, doc_html, rendering_params)
+        en_slug = ''
 
-    if rendering_params['raw']:
-        response = _document_raw(doc_html)
-    else:
-        # Get the SEO summary
-        seo_summary = doc.get_summary_text()
+    share_text = ugettext(
+        'I learned about %(title)s on MDN.') % {"title": doc.title}
 
-        # Get the additional title information, if necessary.
-        seo_parent_title = _get_seo_parent_title(
-            original_doc, slug_dict, document_locale)
+    contributors = doc.contributors
+    contributors_count = len(contributors)
+    has_contributors = contributors_count > 0
+    other_translations = doc.get_other_translations(
+        fields=['title', 'locale', 'slug', 'parent']
+    )
+    all_locales = (set([doc.locale]) |
+                   set(trans.locale for trans in other_translations))
 
-        # Retrieve pre-parsed content hunks
-        quick_links_html = doc.get_quick_links_html()
-        body_html = doc.get_body_html()
-
-        # Record the English slug in Google Analytics,
-        # to associate translations
-        if original_doc.locale == 'en-US':
-            en_slug = original_doc.slug
-        elif original_doc.parent_id and original_doc.parent.locale == 'en-US':
-            en_slug = original_doc.parent.slug
-        else:
-            en_slug = ''
-
-        share_text = ugettext(
-            'I learned about %(title)s on MDN.') % {"title": doc.title}
-
-        contributors = doc.contributors
-        contributors_count = len(contributors)
-        has_contributors = contributors_count > 0
-        other_translations = original_doc.get_other_translations(
-            fields=['title', 'locale', 'slug', 'parent']
-        )
-        all_locales = (set([original_doc.locale]) |
-                       set(trans.locale for trans in other_translations))
-
-        # Bundle it all up and, finally, return.
-        context = {
-            'document': original_doc,
-            'document_html': doc_html,
-            'toc_html': toc_html,
-            'quick_links_html': quick_links_html,
-            'body_html': body_html,
-            'contributors': contributors,
-            'contributors_count': contributors_count,
-            'contributors_limit': 6,
-            'has_contributors': has_contributors,
-            'fallback_reason': fallback_reason,
-            'kumascript_errors': ks_errors,
-            'macro_sources': (
-                kumascript.macro_sources(force_lowercase_keys=True)
-                if ks_errors else
-                None
-            ),
-            'render_raw_fallback': rendering_params['render_raw_fallback'],
-            'seo_summary': seo_summary,
-            'seo_parent_title': seo_parent_title,
-            'share_text': share_text,
-            'search_url': get_search_url_from_referer(request) or '',
-            'analytics_page_revision': doc.current_revision_id,
-            'analytics_en_slug': en_slug,
-            'content_experiment': rendering_params['experiment'],
-            'other_translations': other_translations,
-            'all_locales': all_locales,
-        }
-        response = render(request, 'wiki/react_document.html', context)
-
-    if ks_errors or request.user.is_authenticated:
-        add_never_cache_headers(response)
-
-    # We're doing this to prevent any unknown intermediate public HTTP caches
-    # from erroneously caching without considering cookies, since cookies do
-    # affect the content of the response. The primary CDN is configured to
-    # cache based on a whitelist of cookies.
-    patch_vary_headers(response, ('Cookie',))
+    # Bundle it all up and, finally, return.
+    context = {
+        'document_api_data': base64.b64encode(
+            json.dumps(document_api_data(doc))),
+        # TODO: anything we're actually using in the template ought
+        # to be bundled up into the json object above instead.
+        'document': doc,
+        'contributors': contributors,
+        'contributors_count': contributors_count,
+        'contributors_limit': 6,
+        'has_contributors': has_contributors,
+        'fallback_reason': fallback_reason,
+        'seo_summary': seo_summary,
+        'seo_parent_title': seo_parent_title,
+        'share_text': share_text,
+        'search_url': get_search_url_from_referer(request) or '',
+        'analytics_page_revision': doc.current_revision_id,
+        'analytics_en_slug': en_slug,
+        'other_translations': other_translations,
+        'all_locales': all_locales,
+    }
+    response = render(request, 'wiki/react_document.html', context)
 
     return _add_kuma_revision_header(doc, response)
 

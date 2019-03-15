@@ -1,0 +1,475 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Page snapshot 1`] = `
+.emotion-38 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-top: 5px solid #83d0f2;
+}
+
+.emotion-0 {
+  display: block;
+  height: 48px;
+  width: 219px;
+  overflow: hidden;
+}
+
+.emotion-1 {
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-flex-basis: 4px;
+  -ms-flex-preferred-size: 4px;
+  flex-basis: 4px;
+}
+
+.emotion-7 {
+  position: relative;
+  pointer-events: auto;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 48px;
+  white-space: nowrap;
+  padding: 0 10px;
+  margin: 0;
+  border: none;
+}
+
+.emotion-5:hover {
+  background-color: #eee;
+}
+
+.emotion-5:focus {
+  outline-offset: -3px;
+}
+
+.emotion-3 {
+  font-size: 12px;
+  padding-left: 2px;
+}
+
+.emotion-27 {
+  -webkit-flex: 1 1 0px;
+  -ms-flex: 1 1 0px;
+  flex: 1 1 0px;
+}
+
+.emotion-31 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-bottom: solid black 1px;
+  max-width: 350px;
+  min-width: 120px;
+  -webkit-flex: 2 1 120px;
+  -ms-flex: 2 1 120px;
+  flex: 2 1 120px;
+}
+
+.emotion-29 {
+  vertical-align: -2px;
+  -webkit-flex: 0 0 20px;
+  -ms-flex: 0 0 20px;
+  flex: 0 0 20px;
+}
+
+.emotion-30 {
+  border-width: 0 !important;
+  font-size: 18px;
+  font-weight: bold !important;
+  padding-bottom: 0 !important;
+  -webkit-flex: 0 1 300px;
+  -ms-flex: 0 1 300px;
+  flex: 0 1 300px;
+}
+
+.emotion-32 {
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-flex-basis: 15px;
+  -ms-flex-preferred-size: 15px;
+  flex-basis: 15px;
+}
+
+.emotion-35 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: 48px;
+  padding: 0 8px;
+}
+
+.emotion-35:hover {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  background-color: #eee;
+}
+
+.emotion-35:focus {
+  outline-offset: -3px;
+}
+
+.emotion-34 {
+  margin-left: 5px;
+}
+
+.emotion-41 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #f5f9fa;
+  padding: 16px 0 16px 32px;
+}
+
+.emotion-40 {
+  font-family: x-locale-heading-primary,zillaslab,"Palatino","Palatino Linotype",x-locale-heading-secondary,serif;
+  font-size: 2.8rem;
+  margin: 0;
+}
+
+.emotion-43 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: #fff;
+  background-color: #222;
+  padding: 15px 0 15px 32px;
+}
+
+.emotion-43 li {
+  display: inline-block;
+}
+
+.emotion-43 a {
+  color: #83d0f2;
+  padding-right: 30px;
+  white-space: nowrap;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.emotion-50 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-items: start;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: start;
+  padding: 30px 24px;
+}
+
+.emotion-46 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.emotion-47 {
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-flex-basis: 3%;
+  -ms-flex-preferred-size: 3%;
+  flex-basis: 3%;
+}
+
+.emotion-49 {
+  -webkit-flex: 3;
+  -ms-flex: 3;
+  flex: 3;
+}
+
+.emotion-49 p {
+  max-width: 42rem;
+}
+
+<div>
+  <div
+    className="emotion-38 emotion-39"
+  >
+    <a
+      className="emotion-0"
+      href="/en-US/"
+    >
+      <img
+        alt="MDN Web Docs"
+        src="/static/img/web-docs-sprite.svg"
+      />
+    </a>
+    <div
+      className="emotion-1 emotion-2"
+      width={4}
+    />
+    <div
+      className="emotion-7 emotion-8"
+    >
+      <button
+        className="emotion-5 emotion-6"
+        onClick={[Function]}
+      >
+        Technologies
+        <span
+          className="emotion-3 emotion-4"
+        >
+          ▼
+        </span>
+      </button>
+    </div>
+    <div
+      className="emotion-7 emotion-8"
+    >
+      <button
+        className="emotion-5 emotion-6"
+        onClick={[Function]}
+      >
+        References & Guides
+        <span
+          className="emotion-3 emotion-4"
+        >
+          ▼
+        </span>
+      </button>
+    </div>
+    <div
+      className="emotion-7 emotion-8"
+    >
+      <button
+        className="emotion-5 emotion-6"
+        onClick={[Function]}
+      >
+        Feedback
+        <span
+          className="emotion-3 emotion-4"
+        >
+          ▼
+        </span>
+      </button>
+    </div>
+    <div
+      className="emotion-7 emotion-8"
+    >
+      <button
+        className="emotion-5 emotion-6"
+        onClick={[Function]}
+      >
+        <svg mock />
+        <span
+          className="emotion-3 emotion-4"
+        >
+          ▼
+        </span>
+      </button>
+    </div>
+    <div
+      className="emotion-27 emotion-28"
+    />
+    <form
+      action="/en-US/search"
+      className="emotion-31"
+      id="nav-main-search"
+      method="get"
+      role="search"
+    >
+      <svg mock
+        className="emotion-29"
+      />
+      <input
+        className="emotion-30"
+        id="main-q"
+        name="q"
+        placeholder="Search MDN"
+        type="search"
+      />
+    </form>
+    <div
+      className="emotion-32 emotion-2"
+      width={15}
+    />
+    <a
+      className="emotion-35"
+      data-service="GitHub"
+      href="/users/github/login/?next=/"
+      rel="nofollow"
+    >
+      Sign in
+       
+      <svg mock
+        className="emotion-34"
+      />
+    </a>
+    <div
+      className="emotion-32 emotion-2"
+      width={15}
+    />
+  </div>
+  <div
+    className="emotion-41 emotion-39"
+  >
+    <h1
+      className="emotion-40"
+    >
+      [fake document title]
+    </h1>
+  </div>
+  <div
+    className="emotion-43 emotion-39"
+    dangerouslySetInnerHTML={
+      Object {
+        "__html": "<ol>[fake TOC HTML]</ol>",
+      }
+    }
+  />
+  <div
+    className="emotion-50 emotion-39"
+  >
+    <div
+      className="emotion-46"
+    >
+      <nav
+        className="crumbs"
+        role="navigation"
+      >
+        <ol>
+          <li
+            className="crumb"
+          >
+            <a
+              href="[fake grandparent url]"
+            >
+              <span>
+                [fake grandparent title]
+              </span>
+            </a>
+          </li>
+          <li
+            className="crumb"
+          >
+            <a
+              href="[fake parent url]"
+            >
+              <span>
+                [fake parent title]
+              </span>
+            </a>
+          </li>
+          <li
+            className="crumb"
+          >
+            <span>
+              [fake document title]
+            </span>
+          </li>
+        </ol>
+      </nav>
+      <div
+        className="quick-links emotion-45"
+      >
+        <div
+          className="quick-links-head"
+        >
+          Related Topics
+        </div>
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "[fake quicklinks HTML]",
+            }
+          }
+        />
+      </div>
+    </div>
+    <div
+      className="emotion-47 emotion-2"
+      width="3%"
+    />
+    <article
+      className="text-content emotion-49"
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "[fake body HTML]",
+        }
+      }
+    />
+  </div>
+</div>
+`;
