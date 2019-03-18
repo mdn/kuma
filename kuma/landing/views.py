@@ -6,7 +6,6 @@ from django.shortcuts import redirect, render
 from django.views import static
 from django.views.decorators.cache import never_cache
 from django.views.generic import RedirectView
-from ratelimit.decorators import ratelimit
 
 from kuma.core.decorators import shared_cache_control
 from kuma.feeder.models import Bundle
@@ -23,7 +22,6 @@ def contribute_json(request):
 
 
 @shared_cache_control
-@ratelimit(key='user_or_ip', rate='400/m', block=True)
 def home(request):
     """Home page."""
     updates = list(Bundle.objects.recent_entries(SECTION_HACKS.updates)[:5])
