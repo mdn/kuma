@@ -660,7 +660,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    'VERSION': '2019.01',
+    'VERSION': '2019.02',
     'BASE_DIR': BASE_DIR,
     'TEXT_DOMAIN': 'django',
     # Tells the extract script what files to look for l10n in and what function
@@ -680,10 +680,19 @@ PUENTE = {
             ('assets/ckeditor4/source/plugins/mdn-**/*.js',
              'javascript'),
         ],
+        'react': [
+            ('kuma/javascript/src/**.js', 'javascript'),
+            ('kuma/javascript/src/**.jsx', 'javascript'),
+        ],
     },
     'PROJECT': 'MDN',
     'MSGID_BUGS_ADDRESS': ADMIN_EMAILS[0],
 }
+
+# Combine JavaScript strings into React domain
+PUENTE['DOMAIN_METHODS']['react'] = (
+    PUENTE['DOMAIN_METHODS']['javascript'] +
+    PUENTE['DOMAIN_METHODS']['react'])
 
 STATICI18N_ROOT = 'build/locale'
 STATICI18N_DOMAIN = 'javascript'
