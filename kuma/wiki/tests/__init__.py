@@ -143,7 +143,7 @@ def normalize_html(html):
     return (kuma.wiki.content
             .parse(html)
             .filter(WhitespaceRemovalFilter)
-            .serialize(alphabetical_attributes=True))
+            .serialize())
 
 
 def create_document_editor_group():

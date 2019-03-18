@@ -964,7 +964,7 @@ class FilterEditorSafetyTests(TestCase):
             <svg><circle onload=confirm(3)>
             <h1 class="header1">Header One</h1>
             <p>test</p>
-            <section>
+            <section onclick="alert('hacked!')">
                 <h1 class="header2">Header Two</h1>
                 <p>test</p>
             </section>
@@ -1006,7 +1006,8 @@ class FilterEditorSafetyTests(TestCase):
      ))
 def test_clean_content_allows_simple_tag(tag):
     """clean_content allows simple tags, id attribute."""
-    html = '<%(tag)s id="foo"></%(tag)s>' % {'tag': tag}
+    html = '<{tag} id="{id}"></{tag}>'.format(
+        tag=tag, id='sect1' if tag == 'h5' else 'foo')
     assert clean_content(html) == html
 
 
@@ -1031,16 +1032,28 @@ def test_clean_content_preserves_whitespace():
 
 
 @pytest.mark.parametrize(
-    'html',
-    ('<command id="foo">',
-     '<img align="left" alt="picture of foo" class="foo" dir="rtl" id="foo" src="foo" title="foo">',
-     '<a class="foo" href="foo" id="foo" title="foo">foo</a>',
-     '<div class="foo">foo</div>',
-     '<video class="movie" controls id="some-movie" lang="en-US" src="some-movie.mpg">Fallback</video>',
+    'html,expected',
+    (('<command  id="foo">',
+      '<command id="foo">'),
+     (('<img class="foo"  title="foo" src="foo" align="left" '
+       'alt="picture of foo"  dir="rtl" id="foo">'),
+      ('<img align="left" alt="picture of foo" class="foo" dir="rtl" id="foo" '
+       'src="foo" title="foo">')),
+     ('<a href="foo" title="foo" id="foo"  class="foo">foo</a>',
+      '<a class="foo" href="foo" id="foo" title="foo">foo</a>'),
+     ('<div class="foo" >foo</div>',
+      '<div class="foo">foo</div>'),
+     (('<video  id="some-movie" src="some-movie.mpg" class="movie" '
+       'controls lang="en-US">Fallback</video>'),
+      ('<video class="movie" controls id="some-movie" lang="en-US" '
+       'src="some-movie.mpg">Fallback</video>')),
      ))
-def test_clean_content_allows_some_attributes(html):
-    """clean_content allows attributes, but doesn't preserve order."""
-    assert normalize_html(clean_content(html)) == html
+def test_clean_content_allows_some_attributes(html, expected):
+    """
+    clean_content allows attributes, orders them alphabetically, and
+    normalizes whitespace between them.
+    """
+    assert clean_content(html) == expected
 
 
 def test_clean_content_allows_some_styles():
@@ -1240,7 +1253,7 @@ def test_extractor_code_sample_nbsp_is_converted(root_doc, wiki_user):
     Reported in bug 819999 and 1284781
     """
     content = """
-        <h2 id="with_nbsp">With &amp;nbsp;</h2>
+        <h2 id="With_nbsp">With &amp;nbsp;</h2>
         <pre class="brush: css">
         .widget select,
         .no-widget .select {
@@ -1253,7 +1266,7 @@ def test_extractor_code_sample_nbsp_is_converted(root_doc, wiki_user):
     """
     root_doc.current_revision = Revision.objects.create(
         document=root_doc, content=content, creator=wiki_user)
-    result = root_doc.extract.code_sample('with_nbsp')
+    result = root_doc.extract.code_sample('With_nbsp')
     assert u'\xa0' not in result['css']
     assert '&nbsp;' not in result['css']
 
@@ -1271,7 +1284,7 @@ def test_extractor_code_sample_missing_parts(root_doc, wiki_user, skip_part):
             parts[part] = '<pre class="brush: %s">included</pre>' % part
             expected[part] = 'included'
     content = """
-    <h3 id='sample'>Code Sample</h3>
+    <h3 id='Code_Sample'>Code Sample</h3>
     %(html)s
     %(css)s
     %(js)s
@@ -1279,7 +1292,7 @@ def test_extractor_code_sample_missing_parts(root_doc, wiki_user, skip_part):
 
     root_doc.current_revision = Revision.objects.create(
         document=root_doc, content=content, creator=wiki_user)
-    result = root_doc.extract.code_sample('sample')
+    result = root_doc.extract.code_sample('Code_Sample')
     assert result == expected
 
 

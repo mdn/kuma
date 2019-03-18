@@ -522,12 +522,10 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
                 self.initial['slug'] = self.instance.document.slug
 
             content = self.instance.content
-            parsed_content = kuma.wiki.content.parse(content)
-            parsed_content.injectSectionIDs()
             if self.section_id:
+                parsed_content = kuma.wiki.content.parse(content)
                 parsed_content.extractSection(self.section_id)
-            parsed_content.filterEditorSafety()
-            content = parsed_content.serialize()
+                content = parsed_content.serialize()
             self.initial['content'] = content
 
             self.initial['review_tags'] = list(self.instance

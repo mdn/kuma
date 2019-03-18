@@ -505,29 +505,36 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
                                   u'I am awesome. A link is also cool')
 
 
+@pytest.mark.parametrize('content,expected', [
+    ('<div onclick="alert(\'hacked!\')">click me</div>',
+     '<div>click me</div>'),
+    ('<svg><circle onload=confirm(3)>',
+     '&lt;svg&gt;&lt;circle onload="confirm(3)"&gt;&lt;/circle&gt;&lt;/svg&gt;')
+], ids=('strip', 'escape'))
+def test_editor_safety(root_doc, editor_client, content, expected):
+    """
+    When editing or translating, the content should already have been
+    bleached, so for example, any harmful on* attributes stripped or
+    escaped (see bug 821986).
+    """
+    rev = root_doc.current_revision
+    rev.content = content
+    rev.save()
+    args = (root_doc.slug,)
+    urls = (
+        reverse('wiki.edit', args=args),
+        '%s?tolocale=%s' % (reverse('wiki.translate', args=args), 'fr')
+    )
+    for url in urls:
+        response = editor_client.get(url)
+        assert response.status_code == 200
+        page = pq(response.content)
+        editor_src = page.find('#id_content').text()
+        assert editor_src == expected
+
+
 class DocumentEditingTests(UserTestCase, WikiTestCase):
     """Tests for the document-editing view"""
-
-    def test_editor_safety_filter(self):
-        """Safety filter should be applied before rendering editor
-
-        bug 821986
-        """
-        self.client.login(username='admin', password='testpass')
-
-        r = revision(save=True, content="""
-            <svg><circle onload=confirm(3)>
-        """)
-
-        args = [r.document.slug]
-        urls = (
-            reverse('wiki.edit', args=args),
-            '%s?tolocale=%s' % (reverse('wiki.translate', args=args), 'fr')
-        )
-        for url in urls:
-            page = pq(self.client.get(url).content)
-            editor_src = page.find('#id_content').text()
-            assert 'onload' not in editor_src
 
     def test_create_on_404(self):
         self.client.login(username='admin', password='testpass')

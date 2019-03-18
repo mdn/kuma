@@ -172,19 +172,14 @@ class Extractor(object):
 
 def clean_content(content):
     """Clean content with standard bleaching and filtering."""
-    bleached = bleach.clean(content,
-                            attributes=ALLOWED_ATTRIBUTES,
-                            tags=ALLOWED_TAGS,
-                            styles=ALLOWED_STYLES,
+    bleached = bleach.clean(content, attributes=ALLOWED_ATTRIBUTES,
+                            tags=ALLOWED_TAGS, styles=ALLOWED_STYLES,
                             protocols=ALLOWED_PROTOCOLS)
     parsed = parse(bleached)
-    if settings.ALLOW_ALL_IFRAMES:
-        filtered = parsed
-    else:
-        allowed_iframe_patterns = settings.ALLOWED_IFRAME_PATTERNS
-        filtered = parsed.filterIframeHosts(allowed_iframe_patterns)
-    content_out = filtered.serialize()
-    return content_out
+    parsed.injectSectionIDs()
+    if not settings.ALLOW_ALL_IFRAMES:
+        parsed.filterIframeHosts(settings.ALLOWED_IFRAME_PATTERNS)
+    return parsed.serialize()
 
 
 @newrelic.agent.function_trace()
@@ -300,8 +295,11 @@ class ContentSectionTool(object):
 
         self._serializer = None
         self._default_serializer_options = {
-            'omit_optional_tags': False, 'quote_attr_values': 'always',
-            'escape_lt_in_attrs': True}
+            'omit_optional_tags': False,
+            'quote_attr_values': 'always',
+            'escape_lt_in_attrs': True,
+            'alphabetical_attributes': True,
+        }
         self._serializer_options = None
         self.walker = html5lib.treewalkers.getTreeWalker("etree")
 

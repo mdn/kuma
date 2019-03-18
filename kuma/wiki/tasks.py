@@ -21,6 +21,7 @@ from kuma.core.decorators import skip_in_maintenance_mode
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import chunked
 from kuma.search.models import Index
+from kuma.users.models import User
 
 from .events import first_edit_email
 from .exceptions import PageMoveError
@@ -55,15 +56,13 @@ def render_document(pk, cache_control, base_url, force=False):
 
 @task
 @skip_in_maintenance_mode
-def email_render_document_progress(percent_complete, total):
+def email_document_progress(command_name, percent_complete, total):
     """
-    Task to send email for render_document progress notification.
+    Task to send email for progress notification.
     """
-    subject = ('The command `render_document` is %s%% complete' %
-               percent_complete)
-    message = (
-        'The command `render_document` is %s%% complete out of a total of '
-        '%s documents to render.' % (percent_complete, total))
+    subject = 'The command `{}` is {}% complete'.format(command_name,
+                                                        percent_complete)
+    message = '{} out of a total of {} documents.'.format(subject, total)
     mail_admins(subject=subject, message=message)
 
 
@@ -86,6 +85,36 @@ def render_document_chunk(pks, cache_control='no-cache', base_url=None,
             logger.error(u'Error while rendering document %s with error: %s' %
                          (pk, result))
     logger.info(u'Finished rendering of document chunk')
+
+
+@task
+@skip_in_maintenance_mode
+def clean_document_chunk(doc_pks, user_pk):
+    """
+    Simple task to clean a chunk of documents.
+    """
+    logger = clean_document_chunk.get_logger()
+    logger.info('Starting to clean document chunk: {}'.format(
+        ','.join(str(pk) for pk in doc_pks)))
+    user = User.objects.get(pk=user_pk)
+    num_cleaned = 0
+    for pk in doc_pks:
+        try:
+            doc = Document.objects.get(pk=pk)
+            logger.info('   Cleaning {!r}'.format(doc))
+            rev = doc.clean_current_revision(user)
+        except Exception as e:
+            logger.info('   ...mailing error to admins')
+            subject = 'Error while cleaning document {}'.format(pk)
+            mail_admins(subject=subject, message=str(e))
+        else:
+            if rev is None:
+                logger.info("   ...skipped (it's already clean)")
+            else:
+                num_cleaned += 1
+                logger.info('   ...created {!r}'.format(rev))
+    logger.info('Finished cleaning document chunk ({} of {} '
+                'required cleaning)'.format(num_cleaned, len(doc_pks)))
 
 
 @task

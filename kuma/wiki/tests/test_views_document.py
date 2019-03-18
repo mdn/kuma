@@ -34,10 +34,10 @@ from ..views.utils import calculate_etag
 AuthKey = namedtuple('AuthKey', 'key header')
 
 EMPTY_IFRAME = '<iframe></iframe>'
-SECTION1 = '<h3 id="S1">Section 1</h3><p>This is a page. Deal with it.</p>'
-SECTION2 = '<h3 id="S2">Section 2</h3><p>This is a page. Deal with it.</p>'
-SECTION3 = '<h3 id="S3">Section 3</h3><p>This is a page. Deal with it.</p>'
-SECTION4 = '<h3 id="S4">Section 4</h3><p>This is a page. Deal with it.</p>'
+SECTION1 = '<h3 id="S1">S1</h3><p>This is a page. Deal with it.</p>'
+SECTION2 = '<h3 id="S2">S2</h3><p>This is a page. Deal with it.</p>'
+SECTION3 = '<h3 id="S3">S3</h3><p>This is a page. Deal with it.</p>'
+SECTION4 = '<h3 id="S4">S4</h3><p>This is a page. Deal with it.</p>'
 SECTIONS = SECTION1 + SECTION2 + SECTION3 + SECTION4
 SECTION_CASE_TO_DETAILS = {
     'no-section': (None, SECTIONS),

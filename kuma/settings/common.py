@@ -1428,7 +1428,7 @@ CELERY_ROUTES = {
     'kuma.users.tasks.send_welcome_email': {
         'queue': 'mdn_emails'
     },
-    'kuma.users.tasks.email_render_document_progress': {
+    'kuma.users.tasks.email_document_progress': {
         'queue': 'mdn_emails'
     },
     'kuma.payments.tasks.contribute_thank_you_email': {
@@ -1456,6 +1456,9 @@ CELERY_ROUTES = {
         'queue': 'mdn_wiki'
     },
     'kuma.wiki.tasks.render_document_chunk': {
+        'queue': 'mdn_wiki'
+    },
+    'kuma.wiki.tasks.clean_document_chunk': {
         'queue': 'mdn_wiki'
     },
     'kuma.wiki.tasks.render_stale_documents': {

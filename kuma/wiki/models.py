@@ -324,12 +324,16 @@ class Document(NotificationsMixin, models.Model):
 
     @cache_with_field('body_html')
     def get_body_html(self, *args, **kwargs):
-        html = self.rendered_html and self.rendered_html or self.html
+        html = self.rendered_html or self.html
         sections_to_hide = ('Quick_Links', 'Subnav')
         doc = parse_content(html)
         for sid in sections_to_hide:
             doc = doc.replaceSection(sid, '')
             doc = doc.removeSection(sid)
+        # TODO: There will be no need to "injectSectionIDs" when the code
+        #       that calls "clean_content" on Revision.save is deployed to
+        #       production, AND the current revisions of all docs have had
+        #       their content cleaned with "clean_content".
         doc.injectSectionIDs()
         doc.annotateLinks(base_url=settings.SITE_URL)
         return doc.serialize()
@@ -344,7 +348,11 @@ class Document(NotificationsMixin, models.Model):
             return ''
         if not self.current_revision.toc_depth:
             return ''
-        html = self.rendered_html and self.rendered_html or self.html
+        html = self.rendered_html or self.html
+        # TODO: There will be no need to "injectSectionIDs" when the code
+        #       that calls "clean_content" on Revision.save is deployed to
+        #       production, AND the current revisions of all docs have had
+        #       their content cleaned with "clean_content".
         return (parse_content(html)
                 .injectSectionIDs()
                 .filter(self.TOC_FILTERS[2])
@@ -613,7 +621,11 @@ class Document(NotificationsMixin, models.Model):
         return get_seo_description(src, self.locale, strip_markup)
 
     def build_json_data(self):
-        html = self.rendered_html and self.rendered_html or self.html
+        html = self.rendered_html or self.html
+        # TODO: There will be no need to "injectSectionIDs" when the code
+        #       that calls "clean_content" on Revision.save is deployed to
+        #       production, AND the current revisions of all docs have had
+        #       their content cleaned with "clean_content".
         content = parse_content(html).injectSectionIDs().serialize()
         sections = get_content_sections(content)
 
@@ -1468,6 +1480,58 @@ Full traceback:
 
         return hreflang
 
+    def clean_current_revision(self, user):
+        """
+        If this document's current revision has not yet been cleaned, creates
+        and returns a new revision from the current revision's cleaned content,
+        and then makes the newly-created revision the current revision. The
+        "tidied_content" of the new revision is also updated with a tidied
+        version of the cleaned content, and the review and localization tags
+        are preserved. The given user is set as the creator of the new
+        revision, if one is created.
+        """
+        rev = self.current_revision
+        if not rev:
+            return None
+
+        cleaned_content = clean_content(rev.content)
+
+        if rev.content == cleaned_content:
+            # The content is already clean.
+            return None
+
+        prior_pk = rev.pk
+        prior_creator = rev.creator
+        prior_created = rev.created
+        prior_review_tags = list(rev.review_tags.names())
+        prior_localization_tags = list(rev.localization_tags.names())
+        tidied_and_cleaned_content, _ = tidy_content(cleaned_content)
+
+        with transaction.atomic():
+            rev.pk = None
+            rev.creator = user
+            rev.created = datetime.now()
+            rev.content = cleaned_content
+            rev.tidied_content = tidied_and_cleaned_content
+            if not self.parent:
+                # This is updated only if the document is not a translation,
+                # otherwise its original value is preserved.
+                rev.based_on_id = prior_pk
+            rev.comment = 'Clean prior revision of {} by {}'.format(
+                prior_created, prior_creator)
+            rev.save()
+            if prior_review_tags:
+                rev.review_tags.set(*prior_review_tags)
+            if prior_localization_tags:
+                rev.localization_tags.set(*prior_localization_tags)
+
+        # Populate the model instance with fresh data from database.
+        rev.refresh_from_db()
+
+        # Make this new revision the current one for the document.
+        rev.make_current()
+        return rev
+
 
 class DocumentDeletionLog(models.Model):
     """
@@ -1677,6 +1741,8 @@ class Revision(models.Model):
         if not self.slug:
             self.slug = self.document.slug
 
+        self.content = clean_content(self.content)
+
         super(Revision, self).save(*args, **kwargs)
 
         # When a revision is approved, update document metadata and re-cache
@@ -1690,7 +1756,7 @@ class Revision(models.Model):
         """
         self.document.title = self.title
         self.document.slug = self.slug
-        self.document.html = self.content_cleaned
+        self.document.html = self.content
         self.document.render_max_age = self.render_max_age
         self.document.current_revision = self
 
@@ -1743,6 +1809,13 @@ class Revision(models.Model):
 
     @property
     def content_cleaned(self):
+        """
+        Return content that has been cleaned (i.e., bleached, section ids
+        added, attributes alphabetized, etc.).
+        """
+        # We still need this for the wiki.revision and wiki.translate endpoints
+        # (due to old revisions and "based_on" revisions whose content may have
+        # not been cleaned).
         return clean_content(self.content)
 
     @cached_property

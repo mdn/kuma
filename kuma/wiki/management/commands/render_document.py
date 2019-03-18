@@ -14,7 +14,7 @@ from django.db.models import Q
 
 from kuma.core.utils import chunked
 from kuma.wiki.models import Document, DocumentRenderingInProgress
-from kuma.wiki.tasks import (email_render_document_progress, render_document,
+from kuma.wiki.tasks import (email_document_progress, render_document,
                              render_document_chunk)
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
@@ -118,7 +118,8 @@ class Command(BaseCommand):
                                          force))
             percent_complete = int(ceil((count / total) * 100))
             tasks.append(
-                email_render_document_progress.si(percent_complete, total))
+                email_document_progress.si('render_document', percent_complete,
+                                           total))
 
         # Make it so.
         chain(*tasks).apply_async()

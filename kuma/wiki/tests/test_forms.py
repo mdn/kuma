@@ -92,143 +92,148 @@ class AkismetHistoricalDataTests(UserTestCase):
         assert params == {'content': 'spammy'}
 
 
-class RevisionFormTests(UserTestCase):
+@pytest.mark.parametrize('content,expected', [
+    ('<div onclick="alert(\'hacked!\')">click me</div>',
+     '<div>click me</div>'),
+    ('<svg><circle onload=confirm(3)>',
+     '&lt;svg&gt;&lt;circle onload="confirm(3)"&gt;&lt;/circle&gt;&lt;/svg&gt;')
+], ids=('strip', 'escape'))
+def test_form_onload_attr_filter(root_doc, rf, content, expected):
     """
-    Generic tests for RevisionForm.
-
-    See RevisionFormEditTests, etc. for tests that simulate using the form
-    in a view.
+    For a RevisionForm created from an existing instance, the content should
+    already have been bleached, so for example, any harmful on* attributes
+    stripped or escaped (see bug 821986).
     """
-    rf = RequestFactory()
+    rev = root_doc.current_revision
+    rev.content = content
+    rev.save()
+    request = rf.get('/')
+    rev_form = RevisionForm(instance=rev, request=request)
+    assert rev_form.initial['content'] == expected
 
-    def test_form_onload_attr_filter(self):
-        """
-        RevisionForm should strip out any harmful onload attributes from
-        input markup
 
-        bug 821986
-        """
-        rev = revision(save=True, is_approved=True, content="""
-            <svg><circle onload=confirm(3)>
-        """)
-        request = self.rf.get('/')
-        rev_form = RevisionForm(instance=rev, request=request)
-        self.assertNotIn('onload', rev_form.initial['content'])
+def test_form_loaded_with_section(root_doc, rf):
+    """
+    RevisionForm given section_id should load initial content for only
+    one section
+    """
+    rev = root_doc.current_revision
+    rev.content = """
+        <h1 id="s1">s1</h1>
+        <p>test</p>
+        <p>test</p>
 
-    def test_form_loaded_with_section(self):
-        """
-        RevisionForm given section_id should load initial content for only
-        one section
-        """
-        rev = revision(save=True, is_approved=True, content="""
-            <h1 id="s1">s1</h1>
-            <p>test</p>
-            <p>test</p>
+        <h1 id="s2">s2</h1>
+        <p>test</p>
+        <p>test</p>
 
-            <h1 id="s2">s2</h1>
-            <p>test</p>
-            <p>test</p>
+        <h1 id="s3">s3</h1>
+        <p>test</p>
+        <p>test</p>
+    """
+    rev.save()
+    expected = """
+        <h1 id="s2">s2</h1>
+        <p>test</p>
+        <p>test</p>
+    """
+    request = rf.get('/')
+    rev_form = RevisionForm(instance=rev, section_id='s2', request=request)
+    assert (normalize_html(expected) ==
+            normalize_html(rev_form.initial['content']))
 
-            <h1 id="s3">s3</h1>
-            <p>test</p>
-            <p>test</p>
-        """)
-        expected = """
-            <h1 id="s2">s2</h1>
-            <p>test</p>
-            <p>test</p>
-        """
-        request = self.rf.get('/')
-        rev_form = RevisionForm(instance=rev, section_id='s2', request=request)
-        self.assertEqual(normalize_html(expected),
-                         normalize_html(rev_form.initial['content']))
 
-    def test_form_save_section(self):
-        rev = revision(save=True, is_approved=True, content="""
-            <h1 id="s1">s1</h1>
-            <p>test</p>
-            <p>test</p>
+def test_form_save_section(root_doc, rf):
+    rev = root_doc.current_revision
+    rev.content = """
+        <h1 id="s1">s1</h1>
+        <p>test</p>
+        <p>test</p>
 
-            <h1 id="s2">s2</h1>
-            <p>test</p>
-            <p>test</p>
+        <h1 id="s2">s2</h1>
+        <p>test</p>
+        <p>test</p>
 
-            <h1 id="s3">s3</h1>
-            <p>test</p>
-            <p>test</p>
-        """)
-        replace_content = """
-            <h1 id="s2">New stuff</h1>
-            <p>new stuff</p>
-        """
-        expected = """
-            <h1 id="s1">s1</h1>
-            <p>test</p>
-            <p>test</p>
+        <h1 id="s3">s3</h1>
+        <p>test</p>
+        <p>test</p>
+    """
+    rev.save()
+    replace_content = """
+        <h1 id="s2">New stuff</h1>
+        <p>new stuff</p>
+    """
+    expected = """
+        <h1 id="s1">s1</h1>
+        <p>test</p>
+        <p>test</p>
 
-            <h1 id="s2">New stuff</h1>
-            <p>new stuff</p>
+        <h1 id="New_stuff">New stuff</h1>
+        <p>new stuff</p>
 
-            <h1 id="s3">s3</h1>
-            <p>test</p>
-            <p>test</p>
-        """
-        request = self.rf.get('/')
-        request.user = rev.creator
-        rev_form = RevisionForm(data={'content': replace_content},
-                                instance=rev,
-                                section_id='s2',
-                                request=request)
-        new_rev = rev_form.save(rev.document)
-        self.assertEqual(normalize_html(expected),
-                         normalize_html(new_rev.content))
+        <h1 id="s3">s3</h1>
+        <p>test</p>
+        <p>test</p>
+    """
+    request = rf.get('/')
+    request.user = rev.creator
+    rev_form = RevisionForm(data={'content': replace_content}, instance=rev,
+                            section_id='s2', request=request)
+    new_rev = rev_form.save(rev.document)
+    assert normalize_html(expected) == normalize_html(new_rev.content)
 
-    def test_form_rejects_empty_slugs_with_parent(self):
-        """
-        RevisionForm should reject empty slugs, even if there
-        is a parent slug portion
-        """
-        data = {
-            'slug': '',
-            'title': 'Title',
-            'content': 'Content',
-        }
-        request = self.rf.get('/')
-        request.user = self.user_model.objects.get(username='testuser')
-        rev_form = RevisionForm(data=data,
-                                request=request,
-                                parent_slug='User:groovecoder')
-        self.assertFalse(rev_form.is_valid())
 
-    def test_multiword_tags(self):
-        rev = revision(save=True)
-        request = self.rf.get('/')
-        request.user = rev.creator
-        data = {
-            'content': 'Content',
-            'toc_depth': 1,
-            'tags': '"MDN Meta"',
-        }
-        rev_form = RevisionForm(data=data, instance=rev, request=request)
-        self.assertTrue(rev_form.is_valid())
-        self.assertEqual(rev_form.cleaned_data['tags'], '"MDN Meta"')
+def test_form_rejects_empty_slugs_with_parent(wiki_user, rf):
+    """
+    RevisionForm should reject empty slugs, even if there is a parent slug
+    portion.
+    """
+    data = {
+        'slug': '',
+        'title': 'Title',
+        'content': 'Content',
+    }
+    request = rf.get('/')
+    request.user = wiki_user
+    rev_form = RevisionForm(data=data,
+                            request=request,
+                            parent_slug='User:groovecoder')
+    assert not rev_form.is_valid()
 
-    def test_case_sensitive_tags(self):
-        """
-        RevisionForm should reject new tags that are the same as existing tags
-        that only differ by case.
-        """
-        rev = revision(save=True, tags='"JavaScript"')
-        request = self.rf.get('/')
-        request.user = rev.creator
-        data = {
-            'content': 'Content',
-            'toc_depth': 1,
-            'tags': 'Javascript',  # Note the lower-case "S".
-        }
-        rev_form = RevisionForm(data=data, instance=rev, request=request)
-        self.assertTrue(rev_form.is_valid())
-        self.assertEqual(rev_form.cleaned_data['tags'], '"JavaScript"')
+
+def test_multiword_tags(root_doc, rf):
+    """ Multi-word tags should be handled. """
+    rev = root_doc.current_revision
+    request = rf.get('/')
+    request.user = rev.creator
+    data = {
+        'content': 'Content',
+        'toc_depth': 1,
+        'tags': '"MDN Meta"',
+    }
+    rev_form = RevisionForm(data=data, instance=rev, request=request)
+    assert rev_form.is_valid()
+    assert rev_form.cleaned_data['tags'] == '"MDN Meta"'
+
+
+def test_case_sensitive_tags(root_doc, rf):
+    """
+    RevisionForm should reject new tags that are the same as existing tags
+    except that they only differ by case.
+    """
+    rev = root_doc.current_revision
+    rev.tags = '"JavaScript"'
+    rev.save()
+    request = rf.get('/')
+    request.user = rev.creator
+    data = {
+        'content': 'Content',
+        'toc_depth': 1,
+        'tags': 'Javascript',  # Note the lower-case "S".
+    }
+    rev_form = RevisionForm(data=data, instance=rev, request=request)
+    assert rev_form.is_valid()
+    assert rev_form.cleaned_data['tags'] == '"JavaScript"'
 
 
 @override_config(AKISMET_KEY='forms')
@@ -273,13 +278,13 @@ class RevisionFormEditTests(RevisionFormViewTests):
 
     original = {  # Default attributes of original revision
         'content': (
-            '<h2 id="Summary">Summary</h2>\r\n'
+            '<h2 id="Summary">Summary</h2>\n'
             '<p>The <strong><code>display</code></strong> CSS property'
-            ' specifies the type of rendering box used for an element.</p>\r\n'
-            '<p>{{cssinfo}}</p>\r\n'
-            '<h2 id="Syntax">Syntax</h2>\r\n'
-            '<pre class="brush:css">\r\n'
-            'display: none;\r\n'
+            ' specifies the type of rendering box used for an element.</p>\n'
+            '<p>{{cssinfo}}</p>\n'
+            '<h2 id="Syntax">Syntax</h2>\n'
+            '<pre class="brush:css">'
+            'display: none;\n'
             '</pre>'
         ),
         'slug': 'Web/CSS/display',
@@ -290,13 +295,13 @@ class RevisionFormEditTests(RevisionFormViewTests):
     view_data_extra = {  # Extra data from view, derived from POST
         'form': 'rev',
         'content': (
-            '<h2 id="Summary">Summary</h2>\r\n'
+            '<h2 id="Summary">Summary</h2>\n'
             '<p>The <strong><code>display</code></strong> CSS property'
-            ' specifies the type of rendering box used for an element.</p>\r\n'
-            '<p>{{cssinfo}} and my changes.</p>\r\n'
-            '<h2 id="Syntax">Syntax</h2>\r\n'
-            '<p><a href="http://spam.example.com">Buy my product!</a></p>\r\n'
-            '<pre class="brush:css">display: none;</pre>\r\n'
+            ' specifies the type of rendering box used for an element.</p>\n'
+            '<p>{{cssinfo}} and my changes.</p>\n'
+            '<h2 id="Syntax">Syntax</h2>\n'
+            '<p><a href="http://spam.example.com">Buy my product!</a></p>\n'
+            '<pre class="brush:css">display: none;</pre>\n'
         ),
         'comment': 'Comment',
         'days': '0',
@@ -730,9 +735,9 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
 
     original = {  # Default attributes of original English page
         'content': (
-            '<h2 id="Summary">Summary</h2>\r\n'
+            '<h2 id="Summary">Summary</h2>\n'
             '<p><strong>HyperText Markup Language (HTML)</strong> is the'
-            ' core language of nearly all Web content.</p>\r\n'
+            ' core language of nearly all Web content.</p>\n'
         ),
         'slug': 'Web/Guide/HTML',
         'tags': '"HTML" "Landing" "Web"',
@@ -743,10 +748,10 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
     view_data = {  # Data passed by view, derived from POST
         'comment': u'Traduction initiale',
         'content': (
-            u'<h2 id="Summary">Summary</h2>\r\n'
+            u'<h2 id="Summary">Summary</h2>\n'
             u'<p><strong>HyperText Markup Language (HTML)</strong>, ou'
             u' <em>langage de balisage hypertexte</em>, est le langage au cœur'
-            u' de presque tout contenu Web.</p>\r\n'
+            u' de presque tout contenu Web.</p>\n'
         ),
         'current_rev': '',
         'form': 'both',
@@ -831,9 +836,9 @@ class RevisionFormEditTranslationTests(RevisionFormViewTests):
 
     en_original = {  # Default attributes of original English page
         'content': (
-            '<h2 id="Summary">Summary</h2>\r\n'
+            '<h2 id="Summary">Summary</h2>\n'
             '<p><strong>HyperText Markup Language (HTML)</strong> is the'
-            ' core language of nearly all Web content.</p>\r\n'
+            ' core language of nearly all Web content.</p>\n'
         ),
         'slug': 'Web/Guide/HTML',
         'tags': '"HTML" "Landing" "Web"',
@@ -843,10 +848,10 @@ class RevisionFormEditTranslationTests(RevisionFormViewTests):
 
     fr_original = {  # Default attributes of original French page
         'content': (
-            u'<h2 id="Summary">Summary</h2>\r\n'
+            u'<h2 id="Summary">Summary</h2>\n'
             u'<p><strong>HyperText Markup Language (HTML)</strong>, ou'
             u' <em>langage de balisage hypertexte</em>, est le langage au cœur'
-            u' de presque tout contenu Web.</p>\r\n'
+            u' de presque tout contenu Web.</p>\n'
         ),
         'slug': 'Web/Guide/HTML',
         'tags': '"HTML" "Landing"',
@@ -857,10 +862,10 @@ class RevisionFormEditTranslationTests(RevisionFormViewTests):
     view_data = {  # Data passed by view, derived from POST
         'comment': u'Traduction initiale terminée',
         'content': (
-            u'<h2 id="Summary">Summary</h2>\r\n'
+            u'<h2 id="Summary">Summary</h2>\n'
             u'<p><strong>HyperText Markup Language (HTML)</strong>, ou'
             u' <em>langage de balisage hypertexte</em>, est le langage au cœur'
-            u' de presque tout contenu Web.</p>\r\n'
+            u' de presque tout contenu Web.</p>\n'
             u'<p>La majorité de ce que vous voyez dans votre navigateur est'
             u' décrit en utilisant HTML.<p>'
         ),

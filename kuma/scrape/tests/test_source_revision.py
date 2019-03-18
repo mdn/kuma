@@ -146,7 +146,7 @@ def test_gather_with_prereqs(tagged_doc, client):
     expected_data = {
         'id': tagged_doc.current_revision_id,
         'comment': 'Frist Post!',
-        'content': '<p>The HTML element <code>&lt;input&gt;</code>...',
+        'content': '<p>The HTML element <code>&lt;input&gt;</code>...</p>',
         'created': datetime(2016, 12, 15, 17, 23),
         'creator': {'username': 'creator'},
         'document': tagged_doc,
@@ -190,7 +190,7 @@ def test_gather_second_pass(tagged_doc, client):
     expected_data = {
         'id': tagged_doc.current_revision_id,
         'comment': 'Frist Post!',
-        'content': '<p>The HTML element <code>&lt;input&gt;</code>...',
+        'content': '<p>The HTML element <code>&lt;input&gt;</code>...</p>',
         'created': datetime(2016, 12, 15, 17, 23),
         'creator': {'username': 'creator'},
         'document': tagged_doc,
@@ -234,7 +234,7 @@ def test_gather_document_slug_wins(tagged_doc, client):
     expected_data = {
         'id': tagged_doc.current_revision_id,
         'comment': 'Frist Post!',
-        'content': '<p>The HTML element <code>&lt;input&gt;</code>...',
+        'content': '<p>The HTML element <code>&lt;input&gt;</code>...</p>',
         'created': datetime(2016, 12, 15, 17, 23),
         'creator': {'username': 'creator'},
         'document': tagged_doc,
