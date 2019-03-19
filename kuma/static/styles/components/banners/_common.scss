@@ -1,0 +1,53 @@
+.mdn-cta-container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 130px;
+    text-align: center;
+    z-index: 99;
+
+    .mdn-cta-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .mdn-cta-content-container {
+        flex-basis: 45%;
+        text-align: left;
+    }
+
+    .mdn-cta-title {
+        display: inline-block;
+        margin: 0;
+    }
+
+    .mdn-cta-button-container {
+        margin: 0;
+        flex-basis: 25%;
+    }
+
+    .mdn-cta-button,
+    .mdn-cta-button:link,
+    .mdn-cta-button:visited {
+        display: inline-block;
+        background-color: #3143e2;
+        color: #fff;
+        padding: 15px;
+        border-radius: 56px;
+        text-decoration: none;
+        @include set-font-size(21px);
+        width: 100%;
+    }
+
+    .mdn-cta-close {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+}

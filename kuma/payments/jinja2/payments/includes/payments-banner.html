@@ -10,16 +10,17 @@
 {% set github_next_url = account_login_url + '?next=' + recurring_payment_subscription_url %}
 
 {% translation 'en-US' %}{# Display in English until Q1 2019 #}
-    <div id="contribution-popover-container"
-        class="contribution-banner {% if is_popover %}contribution-popover is-collapsed is-hidden{% endif %}"
-        {% if is_popover %} aria-expanded="false" aria-hidden="true" {% endif %}>
+    <div id="contrib_beta"
+        class="contribution-banner {% if is_popover %}contribution-popover is-collapsed hidden{% endif %}"
+        {% if is_popover %} aria-expanded="false" aria-hidden="true" {% endif %} data-banner="contrib_beta">
 
         {% if is_popover %}
             <div class="contribution-popover-actions">
-                <button id="collapse-popover-button" class="hide-collapse" aria-label="{{ _('Collapse pop over window') }}">{%
-                    include 'includes/icons/arrows/chevron-down.svg' %}</button>
-                <button id="close-popover-button" aria-label="{{ _('Close pop over window') }}">
-                    {% include 'includes/icons/general/close.svg' %}
+                <button id="collapse-popover-button" class="hide-collapse mdn-cta-collapse" aria-labelledby="mdn-cta-minimize-icon">
+                    {{ include_svg('includes/icons/arrows/chevron-down.svg', _('Collapse pop over window'), 'mdn-cta-minimize-icon') }}
+                </button>
+                <button id="close-popover-button" class="mdn-cta-close" aria-labelledby="mdn-cta-close-icon">
+                    {{ include_svg('includes/icons/general/close.svg', _('Close pop over window'), 'mdn-cta-close-icon') }}
                 </button>
             </div>
         {% endif %}

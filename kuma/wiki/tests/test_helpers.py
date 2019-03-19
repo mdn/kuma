@@ -66,6 +66,17 @@ def test_include_svg_replace_title(title):
     assert svg_title.text() == title
 
 
+def test_include_svg_add_title_title_id():
+    """The SVG title and id attribute can be added."""
+    title, title_id = 'New Title', 'title-id'
+    new_svg = include_svg('includes/icons/social/twitter.svg', title, title_id)
+    new_svg = pq(new_svg, namespaces={'svg': 'http://www.w3.org/2000/svg'})
+    svg_title = new_svg('svg|title')
+    svg_title_id = new_svg('svg|title').attr['id']
+    assert svg_title.text() == title
+    assert svg_title_id == title_id
+
+
 def test_revisions_unified_diff_none(root_doc):
     """Passing a None revision does not raise an AttributeError."""
     diff = revisions_unified_diff(None, root_doc.current_revision)

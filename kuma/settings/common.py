@@ -569,6 +569,7 @@ INSTALLED_APPS = (
     # MDN
     'kuma.payments.apps.PaymentsConfig',
     'kuma.core',
+    'kuma.banners',
     'kuma.feeder',
     'kuma.landing',
     'kuma.redirects',
@@ -714,6 +715,12 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/mdn.css',
         'variant': 'datauri',
+    },
+    'banners': {
+        'source_filenames': (
+            'styles/components/banners/base.scss',
+        ),
+        'output_filename': 'build/styles/banners.css',
     },
     'jquery-ui': {
         'source_filenames': (
@@ -954,6 +961,17 @@ PIPELINE_JS = {
             'react.js'
         ),
         'output_filename': 'build/js/react-main.js',
+    },
+    'banners': {
+        'source_filenames': (
+            'js/components/banners/utils/banners-event-util.js',
+            'js/components/banners/utils/banners-state-util.js',
+            'js/components/banners/banners.js',
+        ),
+        'output_filename': 'build/js/banners.js',
+        'extra_context': {
+            'async': True,
+        },
     },
     'users': {
         'source_filenames': (

@@ -8,6 +8,10 @@
   {{ super() }}
 
   {% stylesheet 'home' %}
+
+  {% if waffle.flag('developer_needs') %}
+    {% stylesheet 'banners' %}
+  {% endif %}
 {% endblock %}
 
 {% block extrahead %}
@@ -128,6 +132,12 @@
 </div>
 {% endblock %}
 
+{% if waffle.flag('developer_needs') %}
+    {%- block banners %}
+        {% include "banners/cta-banners.html" %}
+    {% endblock %}
+{% endif %}
+
 {% block contrib_popup %}
     {%- if contribution_popup %}
         {%- with form=contribution_form, is_popover=True %}
@@ -141,6 +151,9 @@
   {% if settings.NEWSLETTER %}
     {% javascript 'newsletter' %}
   {% endif %}
+
+  {% javascript 'banners' %}
+
   {%- if contribution_popup %}
     {% javascript 'payments' %}
   {%- endif %}

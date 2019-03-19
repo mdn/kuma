@@ -1,0 +1,31 @@
+<div
+    id="developer_needs"
+    class="mdn-cta-container hidden"
+    aria-expanded="false"
+    aria-hidden="true"
+    data-banner="developer_needs"
+>
+    <div id="mdn-cta-content" class="mdn-cta-content cta-background-linear">
+        {%- include "banners/includes/developer-needs.html" %}
+    </div>
+    <div class="mdn-cta-controls">
+        <button
+            type="button"
+            id="mdn-cta-collapse"
+            class="mdn-cta-collapse hide-collapse"
+            aria-labelledby="mdn-cta-minimize-icon"
+        >
+            {{ include_svg('includes/icons/arrows/chevron-down.svg', _('Minimize
+            banner'), 'mdn-cta-minimize-icon') }}
+        </button>
+        <button
+            type="button"
+            id="mdn-cta-close"
+            class="mdn-cta-close"
+            aria-labelledby="mdn-cta-close-icon"
+        >
+            {{ include_svg('includes/icons/general/close.svg', _('Close
+            banner'), 'mdn-cta-close-icon') }}
+        </button>
+    </div>
+</div>
