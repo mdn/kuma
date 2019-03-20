@@ -2,18 +2,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import ClientSideNav from './client-side-nav.js';
 import CurrentUser from './current-user.jsx';
-import Header from './header/header.jsx';
+import DocumentProvider from './document-provider.jsx';
+import Page from './page.jsx';
 
-let container = document.getElementById('react-header');
+let container = document.getElementById('react-container');
+
 if (container) {
-    ReactDOM.render(
-        <CurrentUser.Provider>
-            <Header />
-        </CurrentUser.Provider>,
-        container
-    );
+    let script = container.firstElementChild;
+    if (script && script instanceof HTMLScriptElement) {
+        // We expect the script to contain a base64-encoded JSON blob
+        // that contains all the content of this document
+        let data = JSON.parse(atob(script.text));
+        ReactDOM.render(
+            <DocumentProvider initialDocumentData={data}>
+                <CurrentUser.Provider>
+                    <Page />
+                </CurrentUser.Provider>
+            </DocumentProvider>,
+            container
+        );
+    }
 }
-
-ClientSideNav.init();

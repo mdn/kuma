@@ -6,22 +6,13 @@ from django.views.decorators.http import require_GET
 from kuma.wiki.models import Document
 
 
-@never_cache
-@require_GET
-def doc(request, locale, slug):
-    """
-    Return a JSON object that includes document content and metadata
-    for the document specified by the locale and path. Raises a 404
-    error if no such document exists. This is an API with URL
-    /api/v1/doc/<locale>/<path>
-    """
-    document = get_object_or_404(Document, locale=locale, slug=slug)
+def document_api_data(document):
     translations = document.get_other_translations(
         fields=('locale', 'slug', 'title'))
 
-    return JsonResponse({
-        'locale': locale,
-        'slug': slug,
+    return {
+        'locale': document.locale,
+        'slug': document.slug,
         'id': document.id,
         'title': document.title,
         'summary': document.get_summary_html(),
@@ -45,4 +36,17 @@ def doc(request, locale, slug):
                 'title': t.title
             } for t in translations
         ]
-    })
+    }
+
+
+@never_cache
+@require_GET
+def doc(request, locale, slug):
+    """
+    Return a JSON object that includes document content and metadata
+    for the document specified by the locale and path. Raises a 404
+    error if no such document exists. This is an API with URL
+    /api/v1/doc/<locale>/<path>
+    """
+    document = get_object_or_404(Document, locale=locale, slug=slug)
+    return JsonResponse(document_api_data(document))

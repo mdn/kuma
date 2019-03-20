@@ -1,68 +1,67 @@
-{% extends "wiki/react_base.html" %}
-{% block lang %}{{ document.get_hreflang(all_locales) }}{% endblock %}
-{% block title %}{{ page_title(document.title + seo_parent_title) }}{% endblock %}
-
-{% from "wiki/includes/document_macros.html" import build_document_crumbs, get_document_quick_links, document_watch, contributor_links with context %}
-{% from "wiki/includes/buttons.html" import get_document_buttons with context %}
-{% from "wiki/includes/approvals.html" import get_approvals_html with context %}
-
-{% if fallback_reason == 'no_translation' %}
-  {% set help_link = url('wiki.translate', document_path=document.slug, locale=document.locale)|urlparams(tolocale=request.LANGUAGE_CODE) %}
-{% elif fallback_reason == 'translation_not_approved' %}
-  {% set help_link = url('wiki.translate', document_path=document.parent.slug, locale=document.parent.locale)|urlparams(tolocale=request.LANGUAGE_CODE) %}
-{% endif %}
-
-{% set is_archive = (document.slug == 'Archive') or document.slug.startswith('Archive/') %}
-{% set is_logged_in = request.user.is_authenticated %}
 {% set doc_abs_url = document.get_absolute_url() %}
 {% set canonical = doc_abs_url | absolutify %}
 
-{% set doc_edit_url = document.get_edit_url() %}
-{% if not is_logged_in %}
-  {% set doc_edit_url = url('account_login') + '?next=' + (doc_edit_url | urlencode) %}
-{% endif %}
+<!DOCTYPE html>
+<html lang="{{ document.get_hreflang(all_locales) }}" dir="{{ DIR }}">
+<head prefix="og: http://ogp.me/ns#">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <script>(function(d) { d.className = d.className.replace(/\bno-js/, ''); })(document.documentElement);</script>
+  <title>{{ page_title(document.title + seo_parent_title) }}</title>
 
-{% set current_revision = document.current_revision %}
-{% if (is_logged_in and current_revision) and (current_revision.needs_technical_review or current_revision.needs_editorial_review) %}
-  {% set approvals_html = get_approvals_html(document, request.user) %}
-{% endif %}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content=
+    {%- if request.get_host() in settings.ALLOW_ROBOTS_WEB_DOMAINS -%}
+        "index, follow"
+    {%- else -%}
+        "noindex, nofollow"
+    {%- endif -%}
+  >
 
-{% set show_left = quick_links_html or approvals_html %}
+  {% include "includes/preload.html" %}
 
-{% set buttons = get_document_buttons(document, help_link, other_translations) %}
-{% set crumbs = build_document_crumbs(document) %}
+  <link rel="home" href="{{ url('home') }}">
+  <link rel="license" href="#license">
 
+  {% stylesheet 'mdn' %}
+  {% stylesheet 'wiki' %}
 
-{% set content_class = 'column-all' %}
-{% if show_left %}
-  {% set content_class = 'column-main' %}
-{% endif %}
+  {#- If the stylesheet exists, include it. Otherwise, does nothing. #}
+  {% stylesheet 'locale-%s' % LANG %}
 
-{% block robots_value %}
-  {%- if document.is_experiment or fallback_reason or not document_html -%}
-    noindex, nofollow
-  {%- else -%}
-    {{ super() }}
-  {%- endif -%}
-{% endblock %}
+  {% include "includes/google_analytics.html" %}
 
-{% block bodyclass %}document{% endblock %}
-{% block body_attributes %}data-slug="{{ document.slug }}" contextmenu="edit-history-menu" data-search-url="{{ search_url }}"{% endblock body_attributes %}
+  {% include "wiki/includes/perf.html" %}
 
-{% block main_content_id %}document-main{% endblock %}
+  <!-- common social tags -->
+  {% set social_logo = request.build_absolute_uri(static('img/opengraph-logo.png')) %}
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="{{ social_logo }}">
+  <meta property="og:site_name" content="{{ _('MDN Web Docs') }}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:image" content="{{ social_logo }}">
+  <meta name="twitter:site" content="@MozDevNet">
+  <meta name="twitter:creator" content="@MozDevNet">
+  <link rel="search" type="application/opensearchdescription+xml" href="{{ settings.SITE_URL }}/{{ request.LANGUAGE_CODE }}/search/xml" title="{{ _('MDN Web Docs') }}">
 
-{% block site_css %}
-    {{ super() }}
-    {% if is_archive %}
-      {% stylesheet 'archive' %}
-    {% endif %}
-{% endblock %}
+  <!-- third-generation iPad with high-resolution Retina display: -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ static('img/favicon144.png') }}">
+  <!-- iPhone with high-resolution Retina display: -->
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ static('img/favicon114.png') }}">
+  <!-- first- and second-generation iPad: -->
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ static('img/favicon72.png') }}">
+  <!-- non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+  <link rel="apple-touch-icon-precomposed" href="{{ static('img/favicon57.png') }}">
+  <!-- basic favicon -->
+  <link rel="shortcut icon" href="{{ favicon_url() }}">
+  <!--[if IE]>
+  <meta http-equiv="imagetoolbar" content="no">
+  {% javascript 'html5shiv' %}
+  <![endif]-->
 
-{% block extrahead %}
   <link rel="dns-prefetch" href="https://interactive-examples.mdn.mozilla.net" pr="0.75" />
   <link rel="preconnect" href="https://interactive-examples.mdn.mozilla.net" pr="0.75" />
 
-  <link rel="alternate" type="application/json" href="{{ url('wiki.json_slug', document.slug) | absolutify }}">
   <link rel="canonical" href="{{ canonical }}" >
 
   {# Google requires the current page to be referenced as an alternate too for SEO purposes see bug 1449210 #}
@@ -83,258 +82,63 @@
   <meta name="description" content="{{ seo_summary }}">
   <meta name="twitter:description" content="{{ seo_summary }}">
   {% endif %}
-{% endblock %}
+</head>
+<body>
 
-{% block lang_switcher %}
-  {% if (document.is_localizable or document.parent) and other_translations %}
-    <form class="languages go" method="get" action="{{ wiki_url('Web') }}">
-      <label for="language">{{ _('Other languages:') }}</label>
-      <select id="language" class="wiki-l10n" name="next" dir="ltr">
-        <option title="{{ get_locale_localized(document.locale) }}" data-locale="{{ document.locale }}" value="{{ doc_abs_url }}" selected>
-          {{ document.language }} ({{ document.locale }})
-        </option>
-        {% for translation in other_translations %}
-          <option title="{{ get_locale_localized(translation.locale) }}" data-locale="{{ document.locale }}" value="{{ translation.get_absolute_url() }}">
-            {{ translation.language }} ({{ translation.locale }})
-          </option>
-        {%- endfor %}
-      </select>
-      <noscript><button type="submit">{{ _('Go') }}</button></noscript>
-    </form>
-  {% endif %}
-{% endblock %}
+  {% include "includes/config.html" %}
 
-{% block document_head %}
-  <!-- heading -->
-  <div id="wiki-document-head" class="document-head">
-    <div class="center">
-      <div class="document-title">
-        <h1>{{ document.title }}</h1>
-      </div>
-    </div>
+  {{ soapbox_messages(get_soapbox_messages(request.path)) }}
+
+  {#{% include "includes/a11y-nav.html" %}#}
+
+  <!-- Content will go here -->
+  <div id="react-container">
+    <script type="base64-encoded-json">{{ document_api_data }}</script>
   </div>
-  {% if toc_html %}
-  <div id="toc" class="toc">
-    <div class="center">
-      <div class="toc-head">{{ _("Jump to:") }}</div>
-        <ol class="toc-links">
-          {{ toc_html|safe }}
-        </ol>
+
+  {% if settings.NEWSLETTER and settings.NEWSLETTER_ARTICLE %}
+    <div class="newsletter-box">
+      {% include "includes/newsletter.html" %}
     </div>
-  </div>
   {% endif %}
-{% endblock%}
 
-{% block content %}
+  {%- if contribution_popup %}
+      {%- with form=contribution_form, is_popover=True %}
+          {%- include "payments/includes/payments-banner.html" %}
+      {%- endwith %}
+  {%- endif %}
 
-    <div class="wiki-main-content" id="document-main"><div class="center">
-      <!-- start the main content container -->
-        <div id="wiki-column-container" class="{% if show_left %}wiki-left-present{% else %}wiki-left-closed wiki-left-none{% endif %}">
+  <!-- Footer -->
+  <footer id="nav-footer" class="nav-footer">
+    <div class="center">
+        {% include "includes/footer/mdn-footer.html" %}
 
-          <!-- content row with three strips -->
-          <div class="column-container column-container-reverse">
+        {% include "includes/footer/moz-footer.html" %}
 
-            <!-- center: main article content -->
-            <div id="wiki-content" class="{{ content_class }} wiki-column text-content">
+        {% include "includes/lang_switcher.html" %}
 
-              {% if settings.MAINTENANCE_MODE and render_raw_fallback %}
-                <div id="doc-render-raw-fallback" class="warning">
-                {% trans url='/maintenance-mode/' %}
-                  This document has not yet been rendered, and cannot be
-                  rendered while MDN is in <a href="{{ url }}">maintenance
-                  mode</a>. Please check back when maintenance has concluded.
-                {% endtrans %}
-                </div>
-              {% endif %}
+        <ul class="footer-tos">
+          <li><a href="https://www.mozilla.org/about/legal/terms/mozilla">{{ _('Terms') }}</a></li>
+          <li><a href="https://www.mozilla.org/privacy/websites/">{{ _('Privacy') }}</a></li>
+          <li><a href="https://www.mozilla.org/privacy/websites/#cookies">{{ _('Cookies') }}</a></li>
+        </ul>
 
-              {% if is_logged_in and document_html %}
-                {% if render_raw_fallback %}
-                  <div id="doc-render-raw-fallback" class="warning">
-                  {% trans url=doc_abs_url %}
-                    This document is being rendered for the first time by the system.
-                    Please <a href="{{ url }}">reload this page</a> in a few minutes
-                    to see full content.
-                  {% endtrans %}
-                  </div>
-                {% elif document.is_rendering_in_progress %}
-                  <div id="doc-rendering-in-progress" class="warning">
-                  {% trans url=doc_abs_url, started_at=document.render_started_at %}
-                    An update to this document
-                    <abbr title="{{ started_at }}">is currently in progress</abbr>.
-                    If the content below seems stale or if something is missing,
-                    please <a href="{{ url }}">reload this page</a> in a few minutes.
-                  {% endtrans %}
-                  </div>
-                {% elif document.is_rendering_scheduled and not kumascript_errors %}
-                  <div id="doc-rendering-scheduled" class="warning">
-                  {% trans url=doc_abs_url, scheduled_at=document.render_scheduled_at %}
-                    An update to this document
-                    <abbr title="{{ scheduled_at }}">has been scheduled</abbr>.
-                    If the content below seems stale or if something is missing,
-                    please <a href="{{ url }}">reload this page</a> in a few minutes.
-                  {% endtrans %}
-                  </div>
-                {% endif %}
-              {% endif %}
-              {% if document.is_experiment %}
-                <div id="doc-experiment" class="warning">
-                  {{ _("This is an experimental page.") }}
-                </div>
-              {% endif %}
-
-              {% if kumascript_errors %}
-                {% include 'wiki/includes/kumascript_errors.html' %}
-              {% endif %}
-
-              {% if document.parent_id and document.current_revision %}
-                {% if document.current_revision.localization_in_progress %}
-                  {% if not settings.MAINTENANCE_MODE and document.current_revision.translation_age >= 10 %}
-                    <div class="overheadIndicator translationInProgress"><p>{% trans translate_url=doc_edit_url %}
-                      This translation is incomplete. Please help <a href="{{ translate_url }}">translate this article</a> from English.
-                    {% endtrans %}</p></div>
-                  {% else %}
-                    <div class="overheadIndicator translationInProgress"><p>
-                      {{ _('This translation is in progress.') }}
-                    </p></div>
-                  {% endif %}
-                {% endif %}
-              {% endif %}
-              {% if not settings.MAINTENANCE_MODE and fallback_reason %}
-                <div id="doc-pending-fallback" class="warning">
-                  <p><bdi>{% trans help_link=help_link, locale=settings.LOCALES[request.LANGUAGE_CODE].native, parent_language=document.language %}
-                    Our volunteers haven't translated this article into <bdi>{{ locale }}</bdi> yet.
-                    <a href="{{ help_link }}" rel="nofollow">Join us and help get the job done!</a><br>
-                    You can also read the article in <a href="{{ doc_abs_url }}">{{ parent_language }}</a>.
-                  {% endtrans %}</bdi></p>
-                </div>
-              {% endif %}
-
-              <!-- just the article content -->
-              <article id="wikiArticle">
-                {% if not fallback_reason %}
-                  {% if not document_html %}
-                    {{ _("This article doesn't have any content yet.") }}
-                  {% else %}
-                    {{ body_html|safe }}
-                  {% endif %}
-                {% elif fallback_reason == 'no_translation' %}
-                  {{ body_html|safe }}
-                {% elif fallback_reason == 'translation_not_approved' %}
-                  {{ document.parent.html|safe }}
-                {% else %}
-                  {{ _("This article doesn't have approved content yet.") }}
-                {% endif %}
-              </article>
-
-              <!-- contributors -->
-              <div class="wiki-block contributors">
-                <h2 class="offscreen">{{ _('Document Tags and Contributors') }}</h2>
-                {% set tags = document.all_tags_name %}
-                {% include "wiki/includes/document_tag.html" %}
-
-                {% if has_contributors %}
-                  <div class="contributors-sub">
-                    {% include 'includes/icons/user/group.svg' %}
-                    <strong>{{ _('Contributors to this page:') }}</strong>
-                    {{ contributor_links(contributors) }}
-                  </div>
-                {% endif %}
-
-                {% if current_revision.creator %}
-                  <div class="contributors-sub">
-                    {% include 'includes/icons/general/clock.svg' %}
-                    <strong>{{ _('Last updated by:') }}</strong>
-                    <a href="{{ current_revision.creator.get_absolute_url() }}" rel="nofollow">{{ current_revision.creator }}</a>,
-                    {{ datetimeformat(current_revision.created, format='datetime') }}
-                  </div>
-                {% endif %}
-              </div>
-            </div>
-
-            {% if show_left %}
-              <!-- quick links and approvals strip -->
-              <div id="wiki-left" class="column-strip wiki-column">
-
-                <!-- crumbs -->
-                {{ crumbs }}
-
-                {% if quick_links_html %}
-                  <!-- quick links -->
-                  {{ get_document_quick_links(quick_links_html) }}
-                {% endif %}
-
-                <!-- approvals -->
-                {% if approvals_html %}
-                  {{ approvals_html }}
-                {% endif %}
-
-              </div>
-            {% endif %}
-          </div>
+        <div id="license" class="contentinfo">
+          {% trans copyright_url='/en-US/docs/MDN/About#Copyrights_and_licenses', thisyear=thisyear() %}
+            <p>&copy; 2005-{{ thisyear }} Mozilla and individual contributors.</p>
+            <p>Content is available under <a href="{{ copyright_url }}">these licenses</a>.</p>
+          {% endtrans %}
         </div>
-      </div>
-    </div> <!-- ends "main-content" -->
+    </div>
+  </footer>
 
-    {% if settings.NEWSLETTER and settings.NEWSLETTER_ARTICLE %}
-      <div class="newsletter-box">
-        {% include "includes/newsletter.html" %}
-      </div>
-    {% endif %}
-
-  <menu type="context" id="edit-history-menu">
-    <menuitem data-action="{{ doc_edit_url }}" label="{{_('Edit page')}}"></menuitem>
-    <menuitem data-action="{{ url('wiki.document_revisions', document.slug) }}" label="{{_('View page history')}}"></menuitem>
-  </menu>
-{% endblock %}
-
-{% block contrib_popup %}
-    {%- if contribution_popup %}
-        {%- with form=contribution_form, is_popover=True %}
-            {%- include "payments/includes/payments-banner.html" %}
-        {%- endwith %}
-    {%- endif %}
-{% endblock %}
-
-{% block js %}
-
-  {% if waffle.flag('section_edit') %}
-    <script>
-        (function($) {
-            $('#wikiArticle').children('h2[id]').each(function() {
-                var id = $(this).attr('id');
-                var href = '{{ doc_edit_url }}#' + id;
-                var pencil = window.mdnIcons ? window.mdnIcons.getIcon('pencil') : '';
-
-                $('<a>').attr({
-                    href: href,
-                    'class': 'button section-edit only-icon',
-                    'rel': 'nofollow, noindex'
-                })
-                .append(pencil)
-                .append($('<span>'))
-                .find('span')
-                .text(gettext('Edit'))
-                .end()
-                .on('click', function(e) {
-                    e.preventDefault();
-
-                    mdn.analytics.trackEvent({
-                        category: 'Section Edit',
-                        action: id
-                    }, function() {
-                        window.location = href;
-                    });
-                })
-                .appendTo(this);
-            });
-        })(jQuery);
-    </script>
-  {% endif %}
-
-  {% if waffle.flag('sg_task_completion') %}
-    {% javascript 'task-completion' %}
-  {% endif %}
-
+  <!-- site js -->
+  <script src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
+  {% javascript 'react-main' %}
+  <script>
+    if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
+  </script>
+  
   {% if settings.NEWSLETTER and settings.NEWSLETTER_ARTICLE %}
     {% javascript 'newsletter' %}
   {% endif %}
@@ -342,5 +146,5 @@
   {%- if contribution_popup %}
     {% javascript 'payments' %}
   {%- endif %}
-
-{% endblock %}
+</body>
+</html>

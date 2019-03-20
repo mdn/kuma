@@ -950,14 +950,14 @@ PIPELINE_JS = {
     'react-main': {
         'source_filenames': (
             'js/libs/jquery/jquery.js',
-            'js/libs/icons.js',
-            'js/components.js',
+            # 'js/libs/icons.js',
+            # 'js/components.js',
             'js/analytics.js',
-            'js/main.js',
+            # 'js/main.js',
             'js/auth.js',
-            'js/highlight.js',
+            # 'js/highlight.js',
             'js/wiki-compat-trigger.js',
-            'js/lang-switcher.js',
+            # 'js/lang-switcher.js',
             # The react.js file is created by webpack and
             # placed in the kuma/javascript/dist/ directory.
             'react.js'
