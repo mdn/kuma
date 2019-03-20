@@ -38,14 +38,32 @@ export default function DocumentProvider(
     // A one-time effect that runs only on mount, to set up
     // an event handler for client-side navigation
     useEffect(() => {
-        function navigate(localeAndSlug) {
+        function navigate(url, localeAndSlug) {
             body.style.opacity = '0.15';
             fetch(`/api/v1/doc/${localeAndSlug}`)
-                .then(response => response.json())
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        // If we didn't get a good response, throw an error
+                        // that we'll handle in the catch() function below.
+                        throw new Error(
+                            `${response.status}:${response.statusText}`
+                        );
+                    }
+                })
                 .then(json => {
                     window.scrollTo(0, 0);
                     setDocumentData(json);
                     body.style.opacity = '1';
+                })
+                .catch(() => {
+                    // If anything went wrong (most likely a 404 from
+                    // the document API), we give up on client-side nav
+                    // and just try loading the page. This might allow
+                    // error recovery or will at least show the user
+                    // a real 404 page.
+                    window.location = url;
                 });
         }
 
@@ -82,6 +100,7 @@ export default function DocumentProvider(
                 return;
             }
 
+            let url = link.href;
             let parts = link.pathname.split('/');
             if (parts[2] !== 'docs') {
                 return;
@@ -93,16 +112,16 @@ export default function DocumentProvider(
             let slug = parts.slice(3).join('/');
             let localeAndSlug = `${locale}/${slug}`;
             history.pushState(
-                { localeAndSlug },
+                { url, localeAndSlug },
                 '',
-                link.href.replace('/docs/', '/ducks/')
+                url.replace('/docs/', '/ducks/')
             );
-            navigate(localeAndSlug);
+            navigate(url, localeAndSlug);
         });
 
         window.addEventListener('popstate', event => {
             if (event.state) {
-                navigate(event.state.localeAndSlug);
+                navigate(event.state.url, event.state.localeAndSlug);
             }
         });
     }, []);
