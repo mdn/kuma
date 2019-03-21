@@ -59,7 +59,8 @@ const styles = {
         color: '#3d7e9a',
         fontWeight: 'normal',
         ':hover': { textDecoration: 'underline' }
-    })
+    }),
+    editLink: css({ lineHeight: 1 })
 };
 
 export default function Login(): React.Node {
@@ -107,7 +108,7 @@ export default function Login(): React.Node {
                     </li>
                 </Dropdown>
                 <Strut width={8} />
-                <a href={EDITURL} title="Edit this page">
+                <a css={styles.editLink} href={EDITURL} title="Edit this page">
                     <EditIcon alt="Edit this page" />
                 </a>
             </>

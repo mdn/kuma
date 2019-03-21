@@ -40,9 +40,10 @@ test('Login component when user is logged in', () => {
 
     expect(login.toJSON()).toMatchSnapshot();
 
-    // Expect a edit this page link
+    // Expect a edit this page link as the last one
     let root = login.root;
-    let link = root.findByType('a');
+    let links = root.findAllByType('a');
+    let link = links.pop();
     expect(link).toBeDefined();
     expect(link.props.title).toBe('Edit this page');
 

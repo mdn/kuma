@@ -13,14 +13,14 @@ exports[`Header snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  border-top: 5px solid #83d0f2;
+  border-top: 4px solid #83d0f2;
+  height: 64px;
+  box-sizing: border-box;
 }
 
 .emotion-0 {
   display: block;
-  height: 48px;
-  width: 219px;
-  overflow: hidden;
+  height: 60px;
 }
 
 .emotion-1 {
@@ -36,7 +36,7 @@ exports[`Header snapshot 1`] = `
   flex-basis: 4px;
 }
 
-.emotion-7 {
+.emotion-9 {
   position: relative;
   pointer-events: auto;
 }
@@ -53,9 +53,9 @@ exports[`Header snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
-  line-height: 48px;
+  line-height: 32px;
   white-space: nowrap;
   padding: 0 10px;
   margin: 0;
@@ -73,6 +73,30 @@ exports[`Header snapshot 1`] = `
 .emotion-3 {
   font-size: 12px;
   padding-left: 2px;
+}
+
+.emotion-7 {
+  position: absolute;
+  z-index: 100;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: white;
+  border: solid #83d0f2 1.5px;
+  box-shadow: 3px 3px 5px rgba(0,0,0,0.25);
+  padding: 10px;
+  min-width: 100%;
+  display: none;
+}
+
+.emotion-7 li {
+  padding: 5px;
+  white-space: nowrap;
 }
 
 .emotion-27 {
@@ -93,7 +117,9 @@ exports[`Header snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  border-bottom: solid black 1px;
+  padding: 2px 8px;
+  border: solid #888 1px;
+  border-radius: 8px;
   max-width: 350px;
   min-width: 120px;
   -webkit-flex: 2 1 120px;
@@ -102,7 +128,7 @@ exports[`Header snapshot 1`] = `
 }
 
 .emotion-29 {
-  vertical-align: -2px;
+  fill: #333;
   -webkit-flex: 0 0 20px;
   -ms-flex: 0 0 20px;
   flex: 0 0 20px;
@@ -110,9 +136,8 @@ exports[`Header snapshot 1`] = `
 
 .emotion-30 {
   border-width: 0 !important;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold !important;
-  padding-bottom: 0 !important;
   -webkit-flex: 0 1 300px;
   -ms-flex: 0 1 300px;
   flex: 0 1 300px;
@@ -170,9 +195,8 @@ exports[`Header snapshot 1`] = `
     className="emotion-0"
     href="/en-US/"
   >
-    <img
-      alt="MDN Web Docs"
-      src="/static/img/web-docs-sprite.svg"
+    <svg mock
+      alt="MDN Web Docs Logo"
     />
   </a>
   <div
@@ -180,7 +204,7 @@ exports[`Header snapshot 1`] = `
     width={4}
   />
   <div
-    className="emotion-7 emotion-8"
+    className="emotion-9 emotion-10"
   >
     <button
       className="emotion-5 emotion-6"
@@ -193,9 +217,69 @@ exports[`Header snapshot 1`] = `
         ▼
       </span>
     </button>
+    <ul
+      className="dropdown-menu emotion-7 emotion-8"
+    >
+      <li>
+        <a
+          href="//docs/Web/HTML"
+        >
+          HTML
+        </a>
+      </li>
+      <li>
+        <a
+          href="//docs/Web/CSS"
+        >
+          CSS
+        </a>
+      </li>
+      <li>
+        <a
+          href="//docs/Web/JavaScript"
+        >
+          JavaScript
+        </a>
+      </li>
+      <li>
+        <a
+          href="//docs/Web/Guide/Graphics"
+        >
+          Graphics
+        </a>
+      </li>
+      <li>
+        <a
+          href="//docs/Web/HTTP"
+        >
+          HTTP
+        </a>
+      </li>
+      <li>
+        <a
+          href="//docs/Web/API"
+        >
+          APIs / DOM
+        </a>
+      </li>
+      <li>
+        <a
+          href="//docs/Mozilla/Add-ons/WebExtensions"
+        >
+          Browser Extensions
+        </a>
+      </li>
+      <li>
+        <a
+          href="//docs/Web/MathML"
+        >
+          MathML
+        </a>
+      </li>
+    </ul>
   </div>
   <div
-    className="emotion-7 emotion-8"
+    className="emotion-9 emotion-10"
   >
     <button
       className="emotion-5 emotion-6"
@@ -208,9 +292,62 @@ exports[`Header snapshot 1`] = `
         ▼
       </span>
     </button>
+    <ul
+      className="dropdown-menu emotion-7 emotion-8"
+    >
+      <li>
+        <a
+          href="//docs/Learn"
+        >
+          Learn web development
+        </a>
+      </li>
+      <li>
+        <a
+          href="//docs/Web/Tutorials"
+        >
+          Tutorials
+        </a>
+      </li>
+      <li>
+        <a
+          href="//docs/Web/Reference"
+        >
+          References
+        </a>
+      </li>
+      <li>
+        <a
+          href="//docs/Web/Guide"
+        >
+          Developer Guides
+        </a>
+      </li>
+      <li>
+        <a
+          href="//docs/Web/Accessibility"
+        >
+          Accessibility
+        </a>
+      </li>
+      <li>
+        <a
+          href="//docs/Games"
+        >
+          Game development
+        </a>
+      </li>
+      <li>
+        <a
+          href="//docs/Web"
+        >
+          ...more docs
+        </a>
+      </li>
+    </ul>
   </div>
   <div
-    className="emotion-7 emotion-8"
+    className="emotion-9 emotion-10"
   >
     <button
       className="emotion-5 emotion-6"
@@ -223,21 +360,57 @@ exports[`Header snapshot 1`] = `
         ▼
       </span>
     </button>
-  </div>
-  <div
-    className="emotion-7 emotion-8"
-  >
-    <button
-      className="emotion-5 emotion-6"
-      onClick={[Function]}
+    <ul
+      className="dropdown-menu emotion-7 emotion-8"
     >
-      <svg mock />
-      <span
-        className="emotion-3 emotion-4"
-      >
-        ▼
-      </span>
-    </button>
+      <li>
+        <a
+          href="https://support.mozilla.org/"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Get Firefox help
+           🌐
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://stackoverflow.com/"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Get web development help
+           🌐
+        </a>
+      </li>
+      <li>
+        <a
+          href="//docs/MDN/Community"
+        >
+          Join the MDN community
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=http%3A%2F%2Flocalhost%2F"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Report a content problem
+           🌐
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://bugzilla.mozilla.org/form.mdn"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Report a bug
+           🌐
+        </a>
+      </li>
+    </ul>
   </div>
   <div
     className="emotion-27 emotion-28"

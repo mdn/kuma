@@ -13,7 +13,9 @@ exports[`Search snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  border-bottom: solid black 1px;
+  padding: 2px 8px;
+  border: solid #888 1px;
+  border-radius: 8px;
   max-width: 350px;
   min-width: 120px;
   -webkit-flex: 2 1 120px;
@@ -22,7 +24,7 @@ exports[`Search snapshot 1`] = `
 }
 
 .emotion-0 {
-  vertical-align: -2px;
+  fill: #333;
   -webkit-flex: 0 0 20px;
   -ms-flex: 0 0 20px;
   flex: 0 0 20px;
@@ -30,9 +32,8 @@ exports[`Search snapshot 1`] = `
 
 .emotion-1 {
   border-width: 0 !important;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold !important;
-  padding-bottom: 0 !important;
   -webkit-flex: 0 1 300px;
   -ms-flex: 0 1 300px;
   flex: 0 1 300px;
