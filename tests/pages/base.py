@@ -35,7 +35,7 @@ class BasePage(Page):
     MM_BANNER_TEXT = 'MDN is currently in read-only maintenance mode.'
     MM_BANNER_SELECTOR = 'div.maintenance-mode-notice bdi'
     DEFAULT_ANIMATION_DURATION = 0.5  # defined in styles/includes/_vars.scss
-    PAYMENTS_BANNER = (By.ID, 'contribution-popover-container')
+    PAYMENTS_BANNER = (By.ID, 'contrib_beta')
     PAYMENTS_BANNER_CLOSE_BUTTON = (By.ID, 'close-popover-button')
 
     def __init__(self, selenium, base_url, locale='en-US', **url_kwargs):

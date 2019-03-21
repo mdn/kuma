@@ -37,6 +37,7 @@ Flags
 other advanced criteria.
 
 * ``contrib_beta`` - Enable/disable the contributions popup and pages
+* ``developer_needs`` - Enable/disable the developer needs survey banner
 * ``kumaediting`` - Enable/disable wiki editing.
 * ``page_move`` - (deprecated) enable/disable page move feature.
 * ``section_edit`` - Show section edit buttons.

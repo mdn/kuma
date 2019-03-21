@@ -6,57 +6,15 @@
         return;
     }
 
-    /**
-     * Expiration date for how long the contributions modal should be hidden for
-     * after it's been disabled by clicking the close button.
-     * @const
-     */
-    var CONTRIBUTIONS_DISABLED_EXPIRATION =  5 * 24 * 60 * 60 * 1000; // 5 days.
-
-    /**
-     * Runs on page load and checks the localStorage item timestamp to see if
-     * it's expired yet and we can show the popover again.
-     */
-    function checkPopoverDisabled() {
-        if (win.mdn.features.localStorage) {
-            var disabledStorageItem = localStorage.getItem('contributionsPopoverDisabled');
-            var date = new Date().getTime();
-
-            if (disabledStorageItem) {
-                // Parses the stringified storage item
-                disabledStorageItem = JSON.parse(disabledStorageItem);
-
-                if (disabledStorageItem.value
-                        && disabledStorageItem.timestamp + CONTRIBUTIONS_DISABLED_EXPIRATION < date) {
-                    // Remove the item if it has expired.
-                    removeDisabledLocaleStorageItem();
-                    showPopover();
-                }
-            } else {
-                // Show if LS does not exist
-                showPopover();
-            }
-        } else {
-            // Show if LS does not exist
-            showPopover();
-        }
-    }
-
-    /**
-     * Removes 'is-hidden' class and sets the aria-hidden attribute from popover
-     */
-    function showPopover() {
-        popoverBanner.removeClass('is-hidden');
-        popoverBanner.attr('aria-hidden', false);
-    }
-
     var form = $('#contribute-form');
     // Inputs.
     var emailField = form.find('#id_email');
     var nameField = form.find('#id_name');
     var recurringConfirmationCheckbox = form.find('#id_accept_checkbox');
     var customAmountInput = form.find('#id_donation_amount');
-    var defaultAmount = customAmountInput.val() ? customAmountInput : form.find('input[type=\'radio\']:checked');
+    var defaultAmount = customAmountInput.val()
+        ? customAmountInput
+        : form.find('input[type=\'radio\']:checked');
     var amountRadio = form.find('input[name=donation_choices]');
     // Hidden fields.
     var stripePublicKey = form.find('#id_stripe_public_key');
@@ -71,17 +29,27 @@
     var requestUserLogin = doc.getElementById('login-popover');
     var githubRedirectButton = doc.getElementById('github_redirect_payment');
 
-    var hasPaymentSwitch = Boolean(doc.getElementById('dynamic-payment-switch'));
-    var paymentTypeSwitch = doc.querySelectorAll('input[type=radio][name="payment_selector"]');
-    var recurringConfirmationContainer = doc.getElementById('recurring-confirmation-container');
+    var hasPaymentSwitch = Boolean(
+        doc.getElementById('dynamic-payment-switch')
+    );
+    var paymentTypeSwitch = doc.querySelectorAll(
+        'input[type=radio][name="payment_selector"]'
+    );
+    var recurringConfirmationContainer = doc.getElementById(
+        'recurring-confirmation-container'
+    );
 
     var selectedAmount = 0;
     var submitted = false;
 
-    var amountRadioInputs = doc.querySelectorAll('input[data-dynamic-choice-selector]');
-    var paymentChoices = typeof window.payments !== 'undefined' && 'paymentChoices' in window.payments
-        ? win.payments.paymentChoices
-        : null;
+    var amountRadioInputs = doc.querySelectorAll(
+        'input[data-dynamic-choice-selector]'
+    );
+    var paymentChoices =
+        typeof window.payments !== 'undefined' &&
+        'paymentChoices' in window.payments
+            ? win.payments.paymentChoices
+            : null;
 
     /* Following recurring payments flow the user may be redirected back to the form to submit payment.
        We're tracking this with a localstorage item as this should percist across various pages. */
@@ -96,7 +64,9 @@
             return false;
         }
 
-        return Boolean(localStorage.getItem('userAuthenticationOnFormSubmission'));
+        return Boolean(
+            localStorage.getItem('userAuthenticationOnFormSubmission')
+        );
     }
 
     /**
@@ -111,13 +81,15 @@
             source: function(token) {
                 submitted = true;
                 stripeToken.val(token.id);
-                addDisabledLocaleStorageItem();
                 /* Multiply selection to get value in pennies.
                 Following Stripe's convention so this is comparable with analytics. */
-                sessionStorage.setItem('submissionDetails', JSON.stringify({
-                    amount: selectedAmount * 100,
-                    page: isPopoverBanner ? 'Banner' : 'FAQ'
-                }));
+                sessionStorage.setItem(
+                    'submissionDetails',
+                    JSON.stringify({
+                        amount: selectedAmount * 100,
+                        page: isPopoverBanner ? 'Banner' : 'FAQ'
+                    })
+                );
                 form.submit();
             }
         };
@@ -126,10 +98,12 @@
 
     // Ensure we only show the form if js is enabled
     if (win.StripeCheckout) {
-        $('#contribution-popover-container').removeClass('is-hidden');
+        $('#mdn-payments').removeClass('hidden');
     }
 
-    var isPopoverBanner = $('.contribution-banner').hasClass('contribution-popover');
+    var isPopoverBanner = $('.contribution-banner').hasClass(
+        'contribution-popover'
+    );
 
     /* If `isPopoverBanner` is false then this is the contribute page.
      Init the handler immediately */
@@ -138,12 +112,7 @@
     }
 
     if (isPopoverBanner) {
-        var activeElement = null;
         var popoverBanner = $('.contribution-banner');
-        var collapseButton = popoverBanner.find('#collapse-popover-button');
-        var closeButton = popoverBanner.find('#close-popover-button');
-
-        checkPopoverDisabled();
     }
 
     // Set initial form selected amount state
@@ -152,7 +121,9 @@
     }
 
     // Set errors.
-    form.find('.errorlist').prev().addClass('error');
+    form.find('.errorlist')
+        .prev()
+        .addClass('error');
 
     /**
      * Emits an event for recurring payments
@@ -176,7 +147,10 @@
         });
         mdn.analytics.trackEvent({
             category: 'Recurring payments v2',
-            action: event.action + ' - ' + win.payments.isAuthenticated ? 'authenticated' : 'anonymous',
+            action:
+                event.action + ' - ' + win.payments.isAuthenticated
+                    ? 'authenticated'
+                    : 'anonymous',
             label: win.payments.isAuthenticated ? 'authenticated' : 'anonymous',
             value: event.value
         });
@@ -184,7 +158,9 @@
         /* Save the user authentication level so that we can track conversion rates of
            authenticated vs anonymous users at a later stage in the payment flow. */
         if (storeUserForLaterEvents) {
-            var item = win.payments.isAuthenticated ? 'authenticated' : 'anonymous';
+            var item = win.payments.isAuthenticated
+                ? 'authenticated'
+                : 'anonymous';
             localStorage.setItem('userAuthenticationOnFormSubmission', item);
             triggerAnalyticEvents = false;
         }
@@ -221,7 +197,10 @@
         clearFieldError(customAmountInput);
 
         // Validate against minimum value.
-        if (!automatedSelection && (parseInt(event.target.value) < 1 || isNaN(event.target.value))) {
+        if (
+            !automatedSelection &&
+            (parseInt(event.target.value) < 1 || isNaN(event.target.value))
+        ) {
             defaultAmount.prop('checked', true);
             setFieldError(customAmountInput);
         }
@@ -239,23 +218,29 @@
                 });
             }
 
-            $(event.target).parent().addClass('active');
-
+            $(event.target)
+                .parent()
+                .addClass('active');
         } else {
             // Reset radio when selecting custom amount.
             form.find('input[type=\'radio\']:checked').prop('checked', false);
         }
 
-        selectedAmount = mdn.paymentsHandlerUtils.getSelectedAmount(event.target.value);
-        var newValue = mdn.paymentsHandlerUtils.addCurrencyPrefix(selectedAmount);
+        selectedAmount = mdn.paymentsHandlerUtils.getSelectedAmount(
+            event.target.value
+        );
+        var newValue = mdn.paymentsHandlerUtils.addCurrencyPrefix(
+            selectedAmount
+        );
         amountToUpdate.html(newValue);
 
         // Explicitly add `/month` on the payment button for the banner
-        newValue += currrentPaymentForm === 'recurring'
-        && newValue !== ''
-        && isPopoverBanner
-            ? '/month'
-            : '';
+        newValue +=
+            currrentPaymentForm === 'recurring' &&
+            newValue !== '' &&
+            isPopoverBanner
+                ? '/month'
+                : '';
         amountToUpdate[1].textContent = newValue;
     }
 
@@ -265,9 +250,13 @@
      */
     function setFieldError(field) {
         $(field).addClass('error');
-        $(field).next('.errorlist').remove();
+        $(field)
+            .next('.errorlist')
+            .remove();
         var error = $(field).attr('data-error-message');
-        $('<ul class="errorlist"><li>' + error + '</li></ul>').insertAfter($(field));
+        $('<ul class="errorlist"><li>' + error + '</li></ul>').insertAfter(
+            $(field)
+        );
     }
 
     /**
@@ -276,7 +265,9 @@
      */
     function clearFieldError(field) {
         $(field).removeClass('error');
-        $(field).next('.errorlist').remove();
+        $(field)
+            .next('.errorlist')
+            .remove();
     }
 
     /**
@@ -332,10 +323,13 @@
 
         // Send GA Event.
         currrentPaymentForm === 'recurring'
-            ? triggerRecurringPaymentEvent({
-                action: 'Form completed',
-                value: (selectedAmount * 100).toFixed(0)
-            }, true)
+            ? triggerRecurringPaymentEvent(
+                {
+                    action: 'Form completed',
+                    value: (selectedAmount * 100).toFixed(0)
+                },
+                true
+            )
             : triggerOneTimePaymentEvent({
                 action: 'submission',
                 label: isPopoverBanner ? 'On pop over' : 'On FAQ page',
@@ -351,12 +345,16 @@
         if (stripeHandler !== null) {
             // On success open Stripe Checkout modal.
             stripeHandler.open({
-                image: 'https://avatars1.githubusercontent.com/u/7565578?s=280&v=4',
+                image:
+                    'https://avatars1.githubusercontent.com/u/7565578?s=280&v=4',
                 name: 'MDN Web Docs',
                 description: 'Contribute to MDN Web Docs',
                 zipCode: true,
                 allowRememberMe: false,
-                panelLabel: currrentPaymentForm === 'recurring' ? 'Pay {{amount}}/month' : 'Pay',
+                panelLabel:
+                    currrentPaymentForm === 'recurring'
+                        ? 'Pay {{amount}}/month'
+                        : 'Pay',
                 amount: parseInt((selectedAmount * 100).toFixed(0)),
                 email: $(emailField).val(),
                 closed: function() {
@@ -399,13 +397,15 @@
             url: 'https://checkout.stripe.com/checkout.js',
             dataType: 'script',
             cache: true
-        }).done(function() {
-            // Init stripeCheckout handler.
-            stripeHandler = initStripeHandler();
-        }).fail(function(error) {
-            console.error('Failed to load stripe checkout library', error);
-            toggleScriptError();
-        });
+        })
+            .done(function() {
+                // Init stripeCheckout handler.
+                stripeHandler = initStripeHandler();
+            })
+            .fail(function(error) {
+                console.error('Failed to load stripe checkout library', error);
+                toggleScriptError();
+            });
     }
 
     /**
@@ -434,104 +434,21 @@
             popoverBanner.removeClass('is-expanding');
             popoverBanner.attr('aria-expanded', true);
 
-            // store the current activeElement
-            activeElement = document.activeElement;
             // move focus to the secondary header text
             secondaryHeader.focus();
 
             // remove the event listener
             popoverBanner.off('transitionend');
-
-            // listen to minimise button clicks.
-            collapseButton.click(collapseCta);
-
-            $(doc).on('keydown.popoverCloseHandler', function(event) {
-                if (event.keyCode === 27) { // Escape key.
-                    collapseCta();
-                }
-            });
         });
 
         currrentPaymentForm === 'recurring'
             ? triggerRecurringPaymentEvent({
-                action: 'banner expanded',
+                action: 'banner expanded'
             })
             : triggerOneTimePaymentEvent({
                 action: 'banner',
-                label: 'expand',
+                label: 'expand'
             });
-    }
-
-    /**
-     * Collapses popover.
-     */
-    function collapseCta() {
-        collapseButton.off();
-
-        // Remove error if it exists
-        if (formButton.hasClass('disabled')) {
-            toggleScriptError();
-        }
-
-        // Add transitional class for opacity animation.
-        popoverBanner.addClass('is-collapsing');
-        popoverBanner.removeClass('expanded');
-        popoverBanner.attr('aria-expanded', false);
-
-        popoverBanner.on('transitionend', function() {
-            popoverBanner.addClass('is-collapsed');
-            popoverBanner.removeClass('is-collapsing');
-            // remove the event listener
-            popoverBanner.off('transitionend');
-            // move focus back to the previous activeElement
-            activeElement.focus();
-        });
-
-        // Send GA Event.
-        triggerOneTimePaymentEvent({
-            action: 'banner',
-            label: 'collapse',
-        });
-
-        $(doc).off('keydown.popoverCloseHandler');
-    }
-
-    /**
-     * Removes the popover from the page
-     */
-    function disablePopover() {
-        popoverBanner.addClass('is-hidden');
-        popoverBanner.attr('aria-hidden', true);
-
-        // Send GA Event.
-        triggerOneTimePaymentEvent({
-            action: 'banner',
-            label: 'close',
-        });
-        addDisabledLocaleStorageItem();
-    }
-
-    /**
-     * Stores popover hidden state in local storge.
-     */
-    function addDisabledLocaleStorageItem() {
-        if (win.mdn.features.localStorage) {
-            var item = JSON.stringify({
-                value: true,
-                // Sets the timestamp to today so we can check its expiration subsequent each page load.
-                timestamp: new Date().getTime()
-            });
-            localStorage.setItem('contributionsPopoverDisabled', item);
-        }
-    }
-
-    /**
-     * Removed popover hidden state in local storge.
-     */
-    function removeDisabledLocaleStorageItem() {
-        if (win.mdn.features.localStorage) {
-            localStorage.removeItem('contributionsPopoverDisabled');
-        }
     }
 
     /**
@@ -543,7 +460,8 @@
         var gitHubLink = $(this).attr('href');
         var gitHubNext = $(this).data('next');
         var getFormFields = form.serialize();
-        gitHubLink += '&next=' + gitHubNext + '?' + encodeURIComponent(getFormFields);
+        gitHubLink +=
+            '&next=' + gitHubNext + '?' + encodeURIComponent(getFormFields);
         window.location.href = encodeURI(gitHubLink);
     }
 
@@ -569,7 +487,7 @@
         } else {
             triggerOneTimePaymentEvent({
                 action: 'banner',
-                label: 'Invalid amount selected',
+                label: 'Invalid amount selected'
             });
         }
     });
@@ -579,10 +497,6 @@
         recurringConfirmationCheckbox.change(function() {
             clearFieldError(recurringConfirmationCheckbox[0]);
         });
-    }
-
-    if (isPopoverBanner) {
-        closeButton.click(disablePopover);
     }
 
     /**
@@ -622,8 +536,10 @@
             // Visually update the form
             form.get(0).classList.remove('recurring-form');
             popoverBanner.get(0).classList.add('expanded');
-
-        } else if (this.value === 'recurring' && currrentPaymentForm === 'one_time') {
+        } else if (
+            this.value === 'recurring' &&
+            currrentPaymentForm === 'one_time'
+        ) {
             // Switch to recurring payment form only if we're not on the recurring payment form already.
             currrentPaymentForm = 'recurring';
 
@@ -635,7 +551,8 @@
             action = form.get(0).getAttribute('data-recurring-action');
             [].forEach.call(amountRadioInputs, function(radio, i) {
                 radio.setAttribute('value', paymentChoices.recurring[i]);
-                radio.nextSibling.nodeValue = '$' + paymentChoices.recurring[i] + '/mo';
+                radio.nextSibling.nodeValue =
+                    '$' + paymentChoices.recurring[i] + '/mo';
             });
 
             // Identify form as recurring
@@ -648,9 +565,9 @@
         // Ensure the new amount is reflected
         checkedInput = form.find('input[type=\'radio\']:checked')[0];
         if (checkedInput) {
-            onAmountSelect({ target: {value: NaN}}, true);
+            onAmountSelect({ target: { value: NaN } }, true);
         } else if (customAmountInput.get(0).value) {
-            onAmountSelect({target: customAmountInput.get(0)});
+            onAmountSelect({ target: customAmountInput.get(0) });
         }
     }
 
@@ -664,7 +581,8 @@
         if (currrentPaymentForm === 'recurring') {
             [].forEach.call(amountRadioInputs, function(radio, i) {
                 radio.setAttribute('value', paymentChoices.recurring[i]);
-                radio.nextSibling.nodeValue = '$' + paymentChoices.recurring[i] + '/mo';
+                radio.nextSibling.nodeValue =
+                    '$' + paymentChoices.recurring[i] + '/mo';
             });
 
             // Force required checkbox if recurring payment form
@@ -682,16 +600,15 @@
     if (popoverBanner && popoverBanner.is(':visible')) {
         currrentPaymentForm === 'recurring'
             ? triggerRecurringPaymentEvent({
-                action: 'banner shown',
+                action: 'banner shown'
             })
             : triggerOneTimePaymentEvent({
                 action: 'banner',
-                label: 'shown',
+                label: 'shown'
             });
     } else if (!popoverBanner && currrentPaymentForm === 'recurring') {
         triggerRecurringPaymentEvent({
-            action: 'banner shown on FAQ',
+            action: 'banner shown on FAQ'
         });
     }
-
 })(document, window, jQuery);

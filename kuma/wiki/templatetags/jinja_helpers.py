@@ -241,12 +241,17 @@ def wiki_url(path):
 
 @library.global_function
 @lru_cache.lru_cache()
-def include_svg(path, title=None):
-    """Embded an SVG file by path, optionally changing the title."""
+def include_svg(path, title=None, title_id=None):
+    """
+    Embded an SVG file by path, optionally changing the title,
+    and adding an id
+    """
     svg = loader.get_template(path).render()
     if (title):
         svg_parsed = pq(svg, namespaces={'svg': 'http://www.w3.org/2000/svg'})
         svg_parsed('svg|title')[0].text = title
+        if (title_id):
+            svg_parsed('svg|title').attr['id'] = title_id
         svg_out = svg_parsed.outerHtml()
     else:
         svg_out = svg
