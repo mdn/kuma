@@ -273,9 +273,10 @@ exports[`Page snapshot 1`] = `
 }
 
 .emotion-54 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-flex: 0 0 23%;
+  -ms-flex: 0 0 23%;
+  flex: 0 0 23%;
+  max-width: 23%;
 }
 
 .emotion-55 {
@@ -292,9 +293,10 @@ exports[`Page snapshot 1`] = `
 }
 
 .emotion-57 {
-  -webkit-flex: 3;
-  -ms-flex: 3;
-  flex: 3;
+  -webkit-flex: 0 0 74%;
+  -ms-flex: 0 0 74%;
+  flex: 0 0 74%;
+  max-width: 74%;
 }
 
 .emotion-57 p {

@@ -60,13 +60,15 @@ const styles = {
         padding: '30px 24px'
     }),
     article: css({
-        flex: 3,
+        flex: '0 0 74%',
+        maxWidth: '74%',
         '& p': {
             maxWidth: '42rem'
         }
     }),
     sidebar: css({
-        flex: 1
+        flex: '0 0 23%',
+        maxWidth: '23%'
     }),
     breadcrumbs: css({}),
     quicklinks: css({})
