@@ -37,9 +37,13 @@ def test_clean_current_revision_with_no_current(root_doc, wiki_user_2):
     assert root_doc.clean_current_revision(wiki_user_2) is None
 
 
-@pytest.mark.parametrize('case', ('default-language', 'translation'))
-def test_clean_current_revision(root_doc, trans_doc, wiki_user_2, case):
-    doc = trans_doc if case == 'translation' else root_doc
+@pytest.mark.parametrize('is_approved', (True, False))
+@pytest.mark.parametrize('doc_case', ('default-language', 'translation'))
+def test_clean_current_revision(root_doc, trans_doc, wiki_user_2, doc_case,
+                                is_approved):
+    doc = trans_doc if doc_case == 'translation' else root_doc
+    original_doc_slug = doc.slug
+    original_doc_title = doc.title
     current_rev = doc.current_revision
     current_rev.content = (
         '<div onclick="alert(\'hacked!\')">click me</div>'
@@ -61,16 +65,23 @@ def test_clean_current_revision(root_doc, trans_doc, wiki_user_2, case):
     l10n_tags = set(['inprogress'])
     review_tags = set(['editorial', 'technical'])
     current_rev.tags = tags
+    # Let's make the revision's slug and title different from the document
+    # to ensure that they're corrected in the end.
+    current_rev.slug = original_doc_slug + 's'
+    current_rev.title = original_doc_title + 's'
+    current_rev.is_approved = is_approved
     current_rev.localization_tags.set(*l10n_tags)
     current_rev.review_tags.set(*review_tags)
+    prior_pk = current_rev.pk
     prior_creator = current_rev.creator
     prior_created = current_rev.created
-    if case == 'translation':
+    if doc_case == 'translation':
         expected_based_on_pk = current_rev.based_on.pk
     else:
         expected_based_on_pk = current_rev.pk
     rev = doc.clean_current_revision(wiki_user_2)
     assert rev
+    assert rev.pk != prior_pk
     assert rev.creator != prior_creator
     assert rev.creator == wiki_user_2
     assert rev.created > prior_created
@@ -94,6 +105,9 @@ def test_clean_current_revision(root_doc, trans_doc, wiki_user_2, case):
     assert set(t.name for t in rev.review_tags.all()) == review_tags
     assert rev.comment == 'Clean prior revision of {} by {}'.format(
         prior_created, prior_creator)
+    assert rev.slug == original_doc_slug
+    assert rev.title == original_doc_title
+    assert doc.current_revision.pk == rev.pk
 
 
 def test_document_is_not_experiment():
