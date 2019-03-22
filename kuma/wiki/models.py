@@ -1519,6 +1519,13 @@ Full traceback:
                 rev.based_on_id = prior_pk
             rev.comment = 'Clean prior revision of {} by {}'.format(
                 prior_created, prior_creator)
+            # The current revision sometimes has an old slug that's
+            # different than its document's current slug, so let's ensure
+            # that they're the same so we don't trigger unique index errors
+            # when the document is saved within the make_current() call made
+            # within the rev.save() call below, or explicitly further below.
+            rev.slug = self.slug
+            rev.title = self.title
             rev.save()
             if prior_review_tags:
                 rev.review_tags.set(*prior_review_tags)
@@ -1528,8 +1535,10 @@ Full traceback:
         # Populate the model instance with fresh data from database.
         rev.refresh_from_db()
 
-        # Make this new revision the current one for the document.
-        rev.make_current()
+        # Make this new revision the current one for the document if it hasn't
+        # been done already when saving the revision above.
+        if rev.pk != self.current_revision.pk:
+            rev.make_current()
         return rev
 
 
