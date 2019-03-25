@@ -3,7 +3,7 @@
     "dependencies": {
         "html5shiv": "3.6.2",
         "jquery": "2.2.0",
-        "prism": "1.15.0",
+        "prism": "1.16.0",
         "selectivizr": "https://github.com/keithclark/selectivizr.git#1.0.2"
     },
     "install": {
