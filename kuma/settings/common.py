@@ -1051,6 +1051,7 @@ PIPELINE_JS = {
             "js/libs/prism/prism-clike.js",
             "js/libs/prism/prism-javascript.js",
             "js/libs/prism/prism-json.js",
+            "js/libs/prism/prism-jsonp.js",
             "js/libs/prism/prism-css-extras.js",
             "js/libs/prism/prism-rust.js",
             "js/libs/prism/prism-line-highlight.js",
