@@ -1,63 +1,77 @@
-from django.core.exceptions import ValidationError
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
-from . import BannerTestCase
+import pytest
+
 from ..models import Banner
 
 
-class TestBanner(BannerTestCase):
+@pytest.mark.django_db
+def test_add_new_banner():
+    """Test that banner creation succeeds"""
+    sample_banner = {
+        "name": "GreatSuccess",
+        "title": "Active Banner",
+        "main_copy": "Some sample main copy",
+        "button_copy": "Click Me!",
+        "theme": "default",
+        "active": True,
+        "priority": "2"
+    }
+    banner = Banner.objects.create(**sample_banner)
 
-    def test_add_new_banner(self):
-        """Test that banner creation succeeds"""
-        sample_banner = {
-            "banner_name": "GreatSuccess",
-            "banner_title": "Active Banner",
-            "banner_copy": "Some sample main copy",
-            "banner_button_copy": "Click Me!",
-            "banner_theme": "default",
-            "banner_active": "True",
-            "banner_priority": "2"
-        }
-        banner = Banner.objects.create(**sample_banner)
+    assert banner.name == "GreatSuccess"
 
-        self.assertTrue(isinstance(banner, Banner))
-        self.assertEqual(banner.banner_name, "GreatSuccess")
 
-    def test_default_theme_set(self):
-        """Test that theme is set to default if empty"""
-        banner = Banner.objects.get(banner_name="notheme")
+@pytest.mark.django_db
+def test_default_theme_set():
+    """Test that theme is set to default if empty"""
+    sample_banner = {
+        "name": "notheme",
+        "title": "Inactive Banner",
+        "main_copy": "Some sample main copy",
+        "button_copy": "Click Me!",
+        "active": False,
+        "priority": "1"
+    }
+    banner = Banner.objects.create(**sample_banner)
 
-        self.assertTrue(isinstance(banner, Banner))
-        self.assertEqual(banner.banner_theme, "default")
+    assert banner.theme == "default"
 
-    def test_default_priority_set(self):
-        """Test that priority is set to 100 if empty"""
-        banner = Banner.objects.get(banner_name="nopriority")
 
-        self.assertTrue(isinstance(banner, Banner))
-        self.assertEqual(banner.banner_priority, 100)
+@pytest.mark.django_db
+def test_default_priority_set():
+    """Test that priority is set to 100 if empty"""
+    sample_banner = {
+        "name": "nopriority",
+        "title": "Inactive Banner",
+        "main_copy": "Some sample main copy",
+        "button_copy": "Click Me!",
+        "theme": "default",
+        "active": False
+    }
+    banner = Banner.objects.create(**sample_banner)
 
-    def test_activate_banner(self):
-        """Test changing banner state from inactive to active"""
-        banner = Banner.objects.get(banner_name="inactive")
-        self.assertEqual(banner.banner_active, False)
-        banner.banner_active = True
-        banner.save()
+    assert banner.priority == 100
 
-        banner2 = Banner.objects.get(pk=banner.pk)
-        self.assertEqual(banner2.banner_active, True)
 
-    def test_fails_when_max_length_exceeded(self):
-        """Test raises error when field max_length exceeded"""
+@pytest.mark.django_db
+def test_activate_banner():
+    """Test changing banner state from inactive to active"""
+    sample_banner = {
+        "name": "inactive",
+        "title": "Inactive Banner",
+        "main_copy": "Some sample main copy",
+        "button_copy": "Click Me!",
+        "theme": "default",
+        "active": False,
+        "priority": "1"
+    }
+    banner = Banner.objects.create(**sample_banner)
+    assert banner.active is False
 
-        sample_banner = {
-            "banner_name": "This Name Should Cause A ValidationError To Be Raised",
-            "banner_title": "Active Banner",
-            "banner_copy": "Some sample main copy",
-            "banner_button_copy": "Click Me!",
-            "banner_theme": "default",
-            "banner_active": "True",
-            "banner_priority": "2"
-        }
-        with self.assertRaises(ValidationError):
-            banner = Banner(**sample_banner)
-            banner.full_clean()
+    banner.active = True
+    banner.save()
+
+    banner2 = Banner.objects.get(pk=banner.pk)
+    assert banner2.active

@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.contrib import admin
 
 from .models import Banner
@@ -6,15 +9,14 @@ from .models import Banner
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):
     actions = ['activate_all', 'deactivate_all']
-    list_display = ('banner_name', 'banner_active', 'banner_priority')
-    fields = ('banner_name', 'banner_title', 'banner_copy',
-              'banner_button_copy', 'banner_theme', 'banner_active',
-              'banner_priority')
-    search_fields = ('banner_name', 'banner_active')
-    ordering = ('banner_priority',)
+    list_display = ('name', 'active', 'priority')
+    fields = ('name', 'title', 'main_copy', 'button_copy',
+              'theme', 'active', 'priority')
+    search_fields = ('name', 'active')
+    ordering = ('priority',)
 
     def activate_all(self, request, queryset):
-        rows_updated = queryset.update(banner_active=True)
+        rows_updated = queryset.update(active=True)
         if rows_updated == 1:
             message_bit = '1 banner was'
         else:
@@ -22,7 +24,7 @@ class BannerAdmin(admin.ModelAdmin):
         self.message_user(request, '%s successfully marked as active.' % message_bit)
 
     def deactivate_all(self, request, queryset):
-        rows_updated = queryset.update(banner_active=False)
+        rows_updated = queryset.update(active=False)
         if rows_updated == 1:
             message_bit = '1 banner was'
         else:
