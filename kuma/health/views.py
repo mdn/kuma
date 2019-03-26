@@ -83,6 +83,7 @@ def status(request):
             'ALLOWED_HOSTS': settings.ALLOWED_HOSTS,
             'ATTACHMENT_HOST': settings.ATTACHMENT_HOST,
             'ATTACHMENT_ORIGIN': settings.ATTACHMENT_ORIGIN,
+            'BETA_SITE_URL': settings.BETA_SITE_URL,
             'DEBUG': settings.DEBUG,
             'INTERACTIVE_EXAMPLES_BASE': settings.INTERACTIVE_EXAMPLES_BASE,
             'LEGACY_HOSTS': settings.LEGACY_HOSTS,
@@ -91,6 +92,7 @@ def status(request):
             'REVISION_HASH': settings.REVISION_HASH,
             'SITE_URL': settings.SITE_URL,
             'STATIC_URL': settings.STATIC_URL,
+            'WIKI_SITE_URL': settings.WIKI_SITE_URL,
         },
     }
 

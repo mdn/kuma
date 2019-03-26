@@ -140,7 +140,7 @@ export default function DocumentProvider(
             history.pushState(
                 { url, localeAndSlug },
                 '',
-                url.replace('/docs/', '/ducks/')
+                url
             );
             navigate(url, localeAndSlug);
         });

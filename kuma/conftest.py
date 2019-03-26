@@ -3,7 +3,9 @@ from datetime import datetime
 import pytest
 import requests_mock
 from django.conf import settings
+from django.contrib.auth.models import Group
 from django.core.cache import caches
+from django.urls import set_urlconf
 from django.utils.translation import activate
 from waffle.testutils import override_flag
 
@@ -13,6 +15,29 @@ from kuma.wiki.models import Document, Revision
 @pytest.fixture(autouse=True)
 def set_default_language():
     activate('en-US')
+
+
+@pytest.fixture(autouse=True)
+def reset_urlconf():
+    """
+    Reset the default urlconf used by "reverse" to the one provided
+    by settings.ROOT_URLCONF.
+
+    Django resets the default urlconf back to settings.ROOT_URLCONF at
+    the beginning of each request, but if the incoming request has a
+    "urlconf" attribute, the default urlconf is changed to its value for
+    the remainder of the request, so that all subsequent "reverse" calls
+    use that value (unless they explicitly specify a different one). The
+    problem occurs when a test is run that uses the "request.urlconf"
+    mechanism, setting the default urlconf to something other than
+    settings.ROOT_URLCONF, and then subsequent tests make "reverse" calls
+    that fail because they're expecting a default urlconf of
+    settings.ROOT_URLCONF (i.e., they're not explicitly providing a
+    urlconf value to the "reverse" call).
+    """
+    set_urlconf(None)
+    yield
+    set_urlconf(None)
 
 
 @pytest.fixture()
@@ -47,6 +72,11 @@ def constance_config(db, settings):
     wrapper = ConstanceConfigWrapper()
     yield wrapper
     wrapper.finalize()
+
+
+@pytest.fixture
+def beta_testers_group(db):
+    return Group.objects.create(name='Beta Testers')
 
 
 @pytest.fixture
@@ -104,6 +134,30 @@ def root_doc(wiki_user):
         title='Root Document',
         created=datetime(2017, 4, 14, 12, 15))
     return root_doc
+
+
+@pytest.fixture
+def create_revision(root_doc):
+    """A revision that created an English document."""
+    return root_doc.revisions.first()
+
+
+@pytest.fixture
+def trans_doc(create_revision, wiki_user):
+    """Translate the root document into French."""
+    trans_doc = Document.objects.create(
+        locale='fr',
+        parent=create_revision.document,
+        slug='Racine',
+        title='Racine du Document')
+    Revision.objects.create(
+        document=trans_doc,
+        creator=wiki_user,
+        based_on=create_revision,
+        content='<p>Mise en route...</p>',
+        title='Racine du Document',
+        created=datetime(2017, 4, 14, 12, 20))
+    return trans_doc
 
 
 @pytest.fixture

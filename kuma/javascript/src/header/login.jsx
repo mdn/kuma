@@ -64,6 +64,7 @@ export default function Login(): React.Node {
     const { editURL, localeFromURL } = documentData;
     const userData = useContext(CurrentUser.context);
     const PATHNAME = window && window.location ? window.location.pathname : '/';
+    const WIKI_SITE_URL = window && window.mdn ? window.mdn.wikiSiteUrl : '';
 
     // if we don't have the user data yet, don't render anything
     if (!userData) {
@@ -85,7 +86,7 @@ export default function Login(): React.Node {
                 <Dropdown label={label} right={true}>
                     <li>
                         <a
-                            href={`/${localeFromURL}/profiles/${
+                            href={`${WIKI_SITE_URL}/${localeFromURL}/profiles/${
                                 userData.username
                             }`}
                         >
@@ -94,7 +95,7 @@ export default function Login(): React.Node {
                     </li>
                     <li>
                         <a
-                            href={`/${localeFromURL}/profiles/${
+                            href={`${WIKI_SITE_URL}/${localeFromURL}/profiles/${
                                 userData.username
                             }/edit`}
                         >
@@ -103,7 +104,7 @@ export default function Login(): React.Node {
                     </li>
                     <li>
                         <form
-                            action={`/${localeFromURL}/users/signout`}
+                            action={`${WIKI_SITE_URL}/${localeFromURL}/users/signout`}
                             method="post"
                         >
                             <input name="next" type="hidden" value={PATHNAME} />
@@ -123,7 +124,7 @@ export default function Login(): React.Node {
         // Otherwise, show a login prompt
         return (
             <a
-                href={`/users/github/login/?next=${PATHNAME}`}
+                href={`${WIKI_SITE_URL}/users/github/login/?next=${PATHNAME}`}
                 data-service="GitHub"
                 rel="nofollow"
                 css={styles.signInLink}

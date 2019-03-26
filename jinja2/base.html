@@ -1,4 +1,5 @@
-{% set untrusted = settings.ENABLE_RESTRICTIONS_BY_HOST and (request.get_host() in (settings.ATTACHMENT_ORIGIN, settings.ATTACHMENT_HOST)) %}
+{% set beta = settings.ENABLE_RESTRICTIONS_BY_HOST and is_beta(request) %}
+{% set untrusted = settings.ENABLE_RESTRICTIONS_BY_HOST and is_untrusted(request) %}
 
 <!DOCTYPE html>
 <html lang="{% block lang %}{{ LANG }}{% endblock %}" dir="{{ DIR }}" class="no-js">
@@ -103,6 +104,9 @@
     {% include "includes/a11y-nav.html" %}
 
     <!-- Header -->
+    {%- if beta %}
+    <header id="react-header"></header>
+    {%- else %}
     <header id="main-header" class="header-main">
       <a href="{{ url('home') }}" class="logo">{{ _('MDN Web Docs') }}</a>
       <div class="nav-toolbox-wrapper">
@@ -111,6 +115,8 @@
       </div>
       {% include "includes/nav-main-search.html" %}
     </header>
+    {%- endif %} {# if beta #}
+
   {%- endif %} {# if not untrusted #}
 
   <!-- Content will go here -->

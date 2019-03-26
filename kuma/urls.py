@@ -26,7 +26,6 @@ from kuma.search.urls import (
 from kuma.users.urls import lang_urlpatterns as users_lang_urlpatterns
 from kuma.wiki.admin import purge_view
 from kuma.wiki.urls import lang_urlpatterns as wiki_lang_urlpatterns
-from kuma.wiki.urls import react_document_urlpatterns as wiki_react_urlpatterns
 from kuma.wiki.views.document import as_json as document_as_json
 from kuma.wiki.views.legacy import mindtouch_to_kuma_redirect
 
@@ -90,12 +89,6 @@ urlpatterns += i18n_patterns(url(r'^search',
 urlpatterns += i18n_patterns(url(r'^docs.json$', document_as_json,
                                  name='wiki.json'))
 urlpatterns += i18n_patterns(url(r'^docs/', include(wiki_lang_urlpatterns)))
-
-# A special endpoint for our React spike, local and staging only
-if settings.DOMAIN != settings.PRODUCTION_DOMAIN:
-    urlpatterns += i18n_patterns(url(r'^ducks/',
-                                     include(wiki_react_urlpatterns)))
-
 urlpatterns += [url('', include('kuma.attachments.urls'))]
 urlpatterns += i18n_patterns(
     url(r'dashboards/?$', dashboards_index, name='dashboards.index'),
@@ -137,12 +130,6 @@ else:
 
 
 urlpatterns += [
-    # User API service
-    url('^api/v1/', include('kuma.users.api.v1.urls')),
-
-    # Document API service
-    url('^api/v1/', include('kuma.wiki.api.v1.urls')),
-
     # Services and sundry.
     url('', include('kuma.version.urls')),
 

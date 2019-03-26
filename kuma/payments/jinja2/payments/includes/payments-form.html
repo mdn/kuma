@@ -1,3 +1,8 @@
+{% if beta %}
+{% set payment_terms_url = url_for_wiki_site('payment_terms') | absolutify(for_wiki_site=True) %}
+{% else %}
+{% set payment_terms_url = url('payment_terms') %}
+{% endif %}
 <form id="contribute-form"
     class="contribution-form {% if recurring_payment or (is_popover and recurring_payment_enabled) %}recurring-form{% endif %}"
     method="{% if recurring_payment and not request.user.is_authenticated %}get{% else %}post{% endif %}"
@@ -36,7 +41,7 @@
             Payments are not tax deductible. Your payment details will be processed by
             <a href="https://stripe.com/" rel="noopener" target="_blank">Stripe</a>.
             See our
-            <a href="{{ url('payment_terms') }}" target="_blank">payment terms</a>
+            <a href="{{ payment_terms_url }}" target="_blank">payment terms</a>
             and
             <a href="https://www.mozilla.org/en-US/privacy/websites/" rel="noopener" target="_blank">privacy notice</a>.
         </p>
@@ -50,7 +55,7 @@
                     <span class="legal-copy">
                         By clicking this button, I authorize Mozilla to charge
                         this payment method <span data-dynamic-amount>$8</span>
-                        each month, according to the <a href="{{ url('payment_terms') }}">Payment Terms</a>, until
+                        each month, according to the <a href="{{ payment_terms_url }}">Payment Terms</a>, until
                         I cancel my subscription.
                     </span>
                 </label>

@@ -9,6 +9,7 @@ from django.http import (HttpResponseForbidden,
                          HttpResponseRedirect)
 from django.utils.encoding import smart_str
 from django.utils.six.moves.urllib.parse import urlsplit, urlunsplit
+from waffle.middleware import WaffleMiddleware
 from whitenoise.middleware import WhiteNoiseMiddleware
 
 from kuma.wiki.views.legacy import (mindtouch_to_kuma_redirect,
@@ -20,7 +21,7 @@ from .i18n import (activate_language_from_request,
                    get_language,
                    get_language_from_path,
                    get_language_from_request)
-from .utils import is_untrusted, urlparams
+from .utils import is_beta, is_untrusted, urlparams
 from .views import handler403
 
 
@@ -333,6 +334,8 @@ class RestrictedEndpointsMiddleware(MiddlewareBase):
     def __call__(self, request):
         if is_untrusted(request):
             request.urlconf = 'kuma.urls_untrusted'
+        elif is_beta(request):
+            request.urlconf = 'kuma.urls_beta'
         return self.get_response(request)
 
 
@@ -360,3 +363,24 @@ class LegacyDomainRedirectsMiddleware(MiddlewareBase):
             dest_url = urlunsplit(site_parts[:2] + legacy_parts[2:])
             return HttpResponsePermanentRedirect(dest_url)
         return self.get_response(request)
+
+
+class WaffleWithCookieDomainMiddleware(WaffleMiddleware):
+    """
+    The waffle.middleware.WaffleMiddleware class does not yet provide a way
+    way to configure the domain of the cookies it adds to the response. This
+    class is a simple wrapper around the waffle.middleware.WaffleMiddleware
+    class, and it simply sets the domain of all cookies added to the response
+    by waffle.middleware.WaffleMiddleware. The domain is set to the value
+    configured in settings.WAFFLE_COOKIE_DOMAIN.
+    """
+    def process_response(self, request, response):
+        keys_before = frozenset(response.cookies.keys())
+        try:
+            response = super(WaffleWithCookieDomainMiddleware,
+                             self).process_response(request, response)
+        finally:
+            keys_after = frozenset(response.cookies.keys())
+            for key in (keys_after - keys_before):
+                response.cookies[key]['domain'] = settings.WAFFLE_COOKIE_DOMAIN
+        return response

@@ -1,12 +1,19 @@
 {# Set URLs outside of translation block, to keep user's locale #}
+{% if beta %}
+{% set account_login_url = url_for_wiki_site('account_login') | absolutify(for_wiki_site=True) %}
+{% set payments_url = url_for_wiki_site('payments') | absolutify(for_wiki_site=True) %}
+{% set recurring_payment_subscription_url = url_for_wiki_site('recurring_payment_subscription') | absolutify(for_wiki_site=True) %}
+{% set recurring_payment_initial_url = url_for_wiki_site('recurring_payment_initial') | absolutify(for_wiki_site=True) %}
+{% else %}
+{% set account_login_url = url('account_login') %}
 {% set payments_url = url('payments') %}
 {% set recurring_payment_subscription_url = url('recurring_payment_subscription') %}
 {% set recurring_payment_initial_url = url('recurring_payment_initial') %}
+{% endif %}
 {% set default_payment_url = recurring_payment_initial_url if recurring_payment_enabled else payments_url %}
 {% set faq_url = default_payment_url + "#contribute-faqs" %}
 {% set recurring_faq_url = default_payment_url + "#contribute-faqs" %}
 {% set feedback_url = default_payment_url + "#contribute-feedback" %}
-{% set account_login_url = url('account_login') %}
 {% set github_next_url = account_login_url + '?next=' + recurring_payment_subscription_url %}
 
 {% translation 'en-US' %}{# Display in English until Q1 2019 #}
