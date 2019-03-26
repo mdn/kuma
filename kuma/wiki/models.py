@@ -1266,14 +1266,14 @@ Full traceback:
     def language(self):
         return get_language_mapping()[self.locale.lower()]
 
-    def get_absolute_url(self, endpoint='wiki.document'):
+    def get_absolute_url(self, endpoint='wiki.document', **kwargs):
         """
         Build the absolute URL to this document from its full path
         """
-        return reverse(endpoint, locale=self.locale, args=[self.slug])
+        return reverse(endpoint, locale=self.locale, args=[self.slug], **kwargs)
 
     def get_edit_url(self):
-        return self.get_absolute_url(endpoint='wiki.edit')
+        return self.get_absolute_url(endpoint='wiki.edit', urlconf='kuma.urls')
 
     def get_redirect_url(self):
         """
@@ -1680,9 +1680,8 @@ class Revision(models.Model):
 
     def get_absolute_url(self):
         """Build the absolute URL to this revision"""
-        return reverse('wiki.revision',
-                       locale=self.document.locale,
-                       args=[self.document.slug, self.pk])
+        return reverse('wiki.revision', args=[self.document.slug, self.pk],
+                       locale=self.document.locale, urlconf='kuma.urls')
 
     def _based_on_is_clean(self):
         """Return a tuple: (the correct value of based_on, whether the old

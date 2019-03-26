@@ -23,6 +23,7 @@ from pyquery import PyQuery as pq
 from ratelimit.decorators import ratelimit
 
 import kuma.wiki.content
+from kuma.api.v1.views import document_api_data
 from kuma.authkeys.decorators import accepts_auth_key
 from kuma.core.decorators import (block_user_agents,
                                   login_required,
@@ -36,7 +37,6 @@ from kuma.search.store import get_search_url_from_referer
 
 from .utils import calculate_etag, split_slug
 from .. import kumascript
-from ..api.v1.views import document_api_data
 from ..constants import SLUG_CLEANSING_RE
 from ..decorators import (allow_CORS_GET, check_readonly, prevent_indexing,
                           process_document_path)
@@ -787,9 +787,7 @@ def document(request, document_slug, document_locale):
     return _add_kuma_revision_header(doc, response)
 
 
-# This is the handler for the /ducks/ URL that we're using for our React spike
-# To start, it is just a copy of the document() method, using a different
-# template.
+# This handles the /docs/ URL's within the React-based beta domain.
 @shared_cache_control
 @csrf_exempt
 @require_http_methods(['GET', 'HEAD'])

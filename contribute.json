@@ -12,11 +12,10 @@
         "mailing-list": "https://discourse.mozilla.org/c/mdn",
         "irc": "irc://irc.mozilla.org/#mdndev",
         "irc-contacts": [
-            "jgmize",
+            "djf",
+            "espressive",
             "jwhitlock",
-            "metadave",
             "rjohnson",
-            "shobson"
         ]
     },
     "bugs": {
@@ -31,6 +30,7 @@
     },
     "keywords": [
         "python",
+        "node.js",
         "sass",
         "django",
         "html5",

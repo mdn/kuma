@@ -15,9 +15,11 @@ import { Strut } from '../layout.jsx';
 // Instead, we need them to be updated on every client-side navigation
 // and we'll want to pull them out of a context, I think.
 const PATHNAME = window && window.location ? window.location.pathname : '/';
-const LOCALE =
-    window && window.location && window.location.pathname.split('/')[1];
-const EDITURL = PATHNAME.replace('/ducks/', '/docs/') + '$edit';
+const LOCALE = window && window.location ?
+               window.location.pathname.split('/')[1] : 'en-US';
+const WIKI_SITE_URL = window && window.mdn ? window.mdn.wikiSiteUrl : '';
+const EDITURL = WIKI_SITE_URL + PATHNAME + '$edit';
+
 
 const strings = {
     signIn: gettext('Sign in'),
@@ -84,13 +86,16 @@ export default function Login(): React.Node {
             <>
                 <Dropdown label={label} right={true}>
                     <li>
-                        <a href={`/${LOCALE}/profiles/${userData.username}`}>
+                        <a href={`${WIKI_SITE_URL}/${LOCALE}/profiles/${
+                               userData.username
+                           }`}
+                        >
                             {strings.viewProfile}
                         </a>
                     </li>
                     <li>
                         <a
-                            href={`/${LOCALE}/profiles/${
+                            href={`${WIKI_SITE_URL}/${LOCALE}/profiles/${
                                 userData.username
                             }/edit`}
                         >
@@ -98,7 +103,10 @@ export default function Login(): React.Node {
                         </a>
                     </li>
                     <li>
-                        <form action={`/${LOCALE}/users/signout`} method="post">
+                        <form
+                            action={`${WIKI_SITE_URL}/${LOCALE}/users/signout`}
+                            method="post"
+                        >
                             <input name="next" type="hidden" value={PATHNAME} />
                             <button css={styles.signOutButton} type="submit">
                                 {strings.signOut}
@@ -116,7 +124,7 @@ export default function Login(): React.Node {
         // Otherwise, show a login prompt
         return (
             <a
-                href={`/users/github/login/?next=${PATHNAME}`}
+                href={`${WIKI_SITE_URL}/users/github/login/?next=${PATHNAME}`}
                 data-service="GitHub"
                 rel="nofollow"
                 css={styles.signInLink}

@@ -364,6 +364,7 @@ MT_TO_KUMA_LOCALE_MAP = {
     'ka': 'ka',
 }
 
+LANGUAGE_COOKIE_DOMAIN = DOMAIN
 # The number of seconds we are keeping the language preference cookie. (1 year)
 LANGUAGE_COOKIE_AGE = 365 * 24 * 60 * 60
 
@@ -489,7 +490,7 @@ if not MAINTENANCE_MODE:
 MIDDLEWARE += (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'waffle.middleware.WaffleMiddleware',
+    'kuma.core.middleware.WaffleWithCookieDomainMiddleware',
     'kuma.core.middleware.RestrictedEndpointsMiddleware',
 )
 
@@ -1181,11 +1182,16 @@ for override in pipeline_overrides:
     if env_value is not None:
         PIPELINE[override] = env_value
 
-#
 # Session cookies
-SESSION_COOKIE_SECURE = config('SESSION_COOKIE_SECURE',
-                               default=True, cast=bool)
+SESSION_COOKIE_DOMAIN = DOMAIN
+SESSION_COOKIE_SECURE = config('SESSION_COOKIE_SECURE', default=True, cast=bool)
 SESSION_COOKIE_HTTPONLY = True
+
+WAFFLE_SECURE = config('WAFFLE_COOKIE_SECURE', default=True, cast=bool)
+# This is a setting unique to Kuma which specifies the domain
+# that will be used for all of the waffle cookies. It is used by
+# kuma.core.middleware.WaffleWithCookieDomainMiddleware.
+WAFFLE_COOKIE_DOMAIN = DOMAIN
 
 # bug 856061
 ALLOWED_HOSTS = config(
@@ -1209,6 +1215,12 @@ ATTACHMENT_HOST = config('ATTACHMENT_HOST', default=_PROD_ATTACHMENT_HOST)
 ATTACHMENT_SITE_URL = PROTOCOL + ATTACHMENT_HOST
 _PROD_ATTACHMENT_ORIGIN = 'demos-origin.mdn.mozit.cloud'
 ATTACHMENT_ORIGIN = config('ATTACHMENT_ORIGIN', default=_PROD_ATTACHMENT_ORIGIN)
+
+BETA_HOST = config('BETA_HOST', default='beta.' + DOMAIN)
+BETA_ORIGIN = config('BETA_ORIGIN', default='beta.mdn.mozit.cloud')
+BETA_SITE_URL = PROTOCOL + BETA_HOST
+WIKI_HOST = config('WIKI_HOST', default='wiki.' + DOMAIN)
+WIKI_SITE_URL = PROTOCOL + WIKI_HOST
 
 # This should never be false for the production and stage deployments.
 ENABLE_RESTRICTIONS_BY_HOST = config(
@@ -1314,6 +1326,7 @@ EMAIL_FILE_PATH = '/app/tmp/emails'
 CSP_DEFAULT_SRC = ("'none'",)
 CSP_CONNECT_SRC = [
     SITE_URL,
+    BETA_SITE_URL,
 ]
 CSP_FONT_SRC = [
     SITE_URL,
@@ -1324,6 +1337,7 @@ CSP_FRAME_SRC = [
 
 CSP_IMG_SRC = [
     SITE_URL,
+    BETA_SITE_URL,
     "data:",
     PROTOCOL + "i2.wp.com",
     "https://secure.gravatar.com",
@@ -1713,6 +1727,8 @@ LOGGING = {
     }
 }
 
+
+CSRF_COOKIE_DOMAIN = DOMAIN
 CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=True, cast=bool)
 X_FRAME_OPTIONS = 'DENY'
 

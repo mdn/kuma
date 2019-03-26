@@ -43,7 +43,7 @@
       {% endtrans %}
     {% endif %}
 
-    {%- if not untrusted %}
+    {%- if not (beta or untrusted) %}
       <ul class="prose">
       {% if user.username %}
         {% trans logout_url=url('account_logout') %}

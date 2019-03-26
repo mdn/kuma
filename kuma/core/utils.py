@@ -41,6 +41,13 @@ def to_html(pq):
     return pq.html(method='html')
 
 
+def is_beta(request):
+    return request.get_host() in (
+        settings.BETA_ORIGIN,
+        settings.BETA_HOST,
+    )
+
+
 def is_untrusted(request):
     return request.get_host() in (
         settings.ATTACHMENT_ORIGIN,

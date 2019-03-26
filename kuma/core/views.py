@@ -12,7 +12,7 @@ from .i18n import get_kuma_languages
 
 
 @never_cache
-def _error_page(request, status):
+def _error_page(request, status, use_react=False):
     """
     Render error pages with jinja2.
 
@@ -23,7 +23,8 @@ def _error_page(request, status):
         request.user = AnonymousUser()
     if not hasattr(request, 'LANGUAGE_CODE'):
         request.LANGUAGE_CODE = 'en-US'
-    return render(request, '%d.html' % status, status=status)
+    template_name = '{}{}.html'.format('react_' if use_react else '', status)
+    return render(request, template_name, status=status)
 
 
 @never_cache

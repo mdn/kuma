@@ -35,9 +35,10 @@ const styles = {
     })
 };
 
-const LOCALE =
-    window && window.location && window.location.pathname.split('/')[1];
-const URL = LOCALE ? `/${LOCALE}/search` : '/en-US/search';
+const LOCALE = window && window.location ?
+               window.location.pathname.split('/')[1] : 'en-US';
+const WIKI_SITE_URL = window && window.mdn ? window.mdn.wikiSiteUrl : '';
+const URL = `${WIKI_SITE_URL}/${LOCALE}/search`;
 
 export default function Search() {
     return (

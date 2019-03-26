@@ -85,7 +85,7 @@
 </head>
 <body>
 
-  {% include "includes/config.html" %}
+  {% include "includes/react_config.html" %}
 
   {{ soapbox_messages(get_soapbox_messages(request.path)) }}
 
@@ -138,7 +138,7 @@
   <script>
     if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
   </script>
-  
+
   {% if settings.NEWSLETTER and settings.NEWSLETTER_ARTICLE %}
     {% javascript 'newsletter' %}
   {% endif %}

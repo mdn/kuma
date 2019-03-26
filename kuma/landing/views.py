@@ -24,15 +24,24 @@ def contribute_json(request):
 @shared_cache_control
 def home(request):
     """Home page."""
+    return render_home(request, 'landing/homepage.html')
+
+
+@shared_cache_control
+def react_home(request):
+    """React-based home page."""
+    return render_home(request, 'landing/react_homepage.html')
+
+
+def render_home(request, template_name):
+    """Render the home page with the template named "template_name"."""
     updates = list(Bundle.objects.recent_entries(SECTION_HACKS.updates)[:5])
-
     default_filters = Filter.objects.default_filters()
-
     context = {
         'updates': updates,
         'default_filters': default_filters,
     }
-    return render(request, 'landing/homepage.html', context)
+    return render(request, template_name, context)
 
 
 @never_cache

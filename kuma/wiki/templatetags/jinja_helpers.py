@@ -203,12 +203,17 @@ def tojson(value):
 
 
 @library.filter
-def absolutify(url):
+def absolutify(url, for_wiki_site=False):
     """Joins settings.SITE_URL with a URL path."""
     if url.startswith('http'):
         return url
 
-    site = urlsplit(settings.SITE_URL)
+    if for_wiki_site:
+        site_url = settings.WIKI_SITE_URL
+    else:
+        site_url = settings.SITE_URL
+
+    site = urlsplit(site_url)
     parts = urlsplit(url)
     scheme = site.scheme
     netloc = site.netloc

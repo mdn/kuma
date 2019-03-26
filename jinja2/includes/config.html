@@ -7,6 +7,7 @@
 
         {{ waffle.wafflejs() }}
 
+        {%- if not beta %}
         // This needs to be set before ckeditor.js loads
         {%- if settings.CKEDITOR_DEV %}
           {%- set ckeditor_basepath = static('js/libs/ckeditor4/source/ckeditor/') %}
@@ -17,11 +18,13 @@
 
         // Site configuration
         win.mdn.ckeditor = {};
+        {%- endif %}
         win.mdn.features = {};
-        win.mdn.siteUrl = '{{ SITE_URL }}';
-        win.mdn.staticPath = '{{ STATIC_URL }}';
+        win.mdn.siteUrl = '{{ settings.SITE_URL }}';
+        win.mdn.wikiSiteUrl = '{{ settings.WIKI_SITE_URL }}';
+        win.mdn.staticPath = '{{ settings.STATIC_URL }}';
         win.mdn.wiki = {
-            {%- if not untrusted %}
+            {%- if not (beta or untrusted) %}
             autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
             {%- endif %}
         };

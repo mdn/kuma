@@ -1,4 +1,5 @@
-{% set untrusted = settings.ENABLE_RESTRICTIONS_BY_HOST and (request.get_host() in (settings.ATTACHMENT_ORIGIN, settings.ATTACHMENT_HOST)) %}
+{% set beta = settings.ENABLE_RESTRICTIONS_BY_HOST and is_beta(request) %}
+{% set untrusted = settings.ENABLE_RESTRICTIONS_BY_HOST and is_untrusted(request) %}
 
 <!DOCTYPE html>
 <html lang="{% block lang %}{{ LANG }}{% endblock %}" dir="{{ DIR }}" class="no-js">
@@ -88,7 +89,7 @@
         <p>
           <bdi>
             {{ _('MDN is currently in read-only maintenance mode.') }}
-            {%- if not untrusted %}
+            {%- if not (beta or untrusted) %}
             <a href="{{ url('maintenance_mode') }}">{{ _('Learn more') }}</a>.
             {%- endif %}
           </bdi>
