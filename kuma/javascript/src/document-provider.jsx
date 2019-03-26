@@ -21,7 +21,25 @@ export type DocumentData = {
         localizedLanguage: string,
         url: string,
         title: string
-    }>
+    }>,
+    contributors: Array<string>,
+    lastModified: string, // An ISO date
+    lastModifiedBy: string,
+
+    // The localeFromURL is the locale that appears to the user in the
+    // location bar. This may be different than the locale of the
+    // document which is what the `locale` property is. For example,
+    // if the user asks for a Spanish translation that does not exist,
+    // they will see "es" in the URL. But the document hat we display
+    // will have an "en-US" locale.  Unlike all of the properties
+    // defined above, this one does not come from the JSON blob of
+    // document data. Instead, we derive this from the URL and add it
+    // the documentData property that we pass to the context provider
+    // below. Even though this property does not exist in the JSON
+    // blobs we load from the backend, we ensure it exists and is
+    // non-null before the data gets used on the frontend, so this
+    // type is defined as if the property is always present.
+    localeFromURL: string
 };
 
 const context = React.createContext<DocumentData | null>(null);
@@ -131,6 +149,12 @@ export default function DocumentProvider(
             }
         });
     }, []);
+
+    // Get the locale displayed in the URL and add that to the data
+    // that we provide.
+    documentData.localeFromURL =
+        (window && window.location && window.location.pathname.split('/')[1]) ||
+        'en-US';
 
     return (
         <context.Provider value={documentData}>

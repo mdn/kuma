@@ -5,19 +5,12 @@ import { useContext } from 'react';
 import { css } from '@emotion/core';
 
 import CurrentUser from '../current-user.jsx';
+import DocumentProvider from '../document-provider.jsx';
 import Dropdown from './dropdown.jsx';
 import EditIcon from '../icons/pencil.svg';
 import gettext from '../gettext.js';
 import GithubLogo from '../icons/github.svg';
 import { Strut } from '../layout.jsx';
-
-// XXX: PATHNAME and EDITURL are fix to whatever page was initially loaded
-// Instead, we need them to be updated on every client-side navigation
-// and we'll want to pull them out of a context, I think.
-const PATHNAME = window && window.location ? window.location.pathname : '/';
-const LOCALE =
-    window && window.location && window.location.pathname.split('/')[1];
-const EDITURL = PATHNAME.replace('/ducks/', '/docs/') + '$edit';
 
 const strings = {
     signIn: gettext('Sign in'),
@@ -64,7 +57,13 @@ const styles = {
 };
 
 export default function Login(): React.Node {
+    const documentData = useContext(DocumentProvider.context);
+    if (!documentData) {
+        return null;
+    }
+    const { editURL, localeFromURL } = documentData;
     const userData = useContext(CurrentUser.context);
+    const PATHNAME = window && window.location ? window.location.pathname : '/';
 
     // if we don't have the user data yet, don't render anything
     if (!userData) {
@@ -85,13 +84,17 @@ export default function Login(): React.Node {
             <>
                 <Dropdown label={label} right={true}>
                     <li>
-                        <a href={`/${LOCALE}/profiles/${userData.username}`}>
+                        <a
+                            href={`/${localeFromURL}/profiles/${
+                                userData.username
+                            }`}
+                        >
                             {strings.viewProfile}
                         </a>
                     </li>
                     <li>
                         <a
-                            href={`/${LOCALE}/profiles/${
+                            href={`/${localeFromURL}/profiles/${
                                 userData.username
                             }/edit`}
                         >
@@ -99,7 +102,10 @@ export default function Login(): React.Node {
                         </a>
                     </li>
                     <li>
-                        <form action={`/${LOCALE}/users/signout`} method="post">
+                        <form
+                            action={`/${localeFromURL}/users/signout`}
+                            method="post"
+                        >
                             <input name="next" type="hidden" value={PATHNAME} />
                             <button css={styles.signOutButton} type="submit">
                                 {strings.signOut}
@@ -108,7 +114,7 @@ export default function Login(): React.Node {
                     </li>
                 </Dropdown>
                 <Strut width={8} />
-                <a css={styles.editLink} href={EDITURL} title="Edit this page">
+                <a css={styles.editLink} href={editURL} title="Edit this page">
                     <EditIcon alt="Edit this page" />
                 </a>
             </>

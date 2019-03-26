@@ -39,7 +39,11 @@ def document_api_data(document):
                 'url': t.get_absolute_url(),
                 'title': t.title
             } for t in translations
-        ]
+        ],
+        'contributors': [ c['username'] for c in document.contributors ],
+        'lastModified': document.current_revision.created.isoformat(),
+        'lastModifiedBy': (document.current_revision.creator and
+                           str(document.current_revision.creator))
     }
 
 
@@ -52,6 +56,10 @@ def doc(request, locale, slug):
     error if no such document exists. This is an API with URL
     /api/v1/doc/<locale>/<path>
     """
+    # TODO: This API endpoint probably needs to handle redirect documents
+    # and documents that fall back to the en-US locale. See
+    # the document() function in wiki/views/document.py for a model to follow.
+
     # Since we don't have the locale at the start of the path, our
     # locale middleware can't set the translation language correctly
     # and we need to do it explicitly. (We need to know the language

@@ -3,13 +3,17 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { css } from '@emotion/core';
 
+import ClockIcon from './icons/clock.svg';
+import ContributorsIcon from './icons/contributors.svg';
 import DocumentProvider from './document-provider.jsx';
 import gettext from './gettext.js';
 import { Row, Strut } from './layout.jsx';
 import Header from './header/header.jsx';
 
 const strings = {
-    relatedTopics: gettext('Related Topics')
+    relatedTopics: gettext('Related Topics'),
+    contributorsToThisPage: gettext('Contributors to this page:'),
+    lastUpdatedBy: gettext('Last updated by:')
 };
 
 const styles = {
@@ -71,7 +75,30 @@ const styles = {
         maxWidth: '23%'
     }),
     breadcrumbs: css({}),
-    quicklinks: css({})
+    quicklinks: css({}),
+
+    metadata: css({
+        marginTop: 32,
+        fontSize: '0.88889rem',
+        color: '#696969',
+        '& div': {
+            margin: '4px 0'
+        }
+    }),
+    contributorsIcon: css({
+        width: 14,
+        height: 14,
+        marginRight: 5,
+        verticalAlign: 'middle',
+        fill: '#696969'
+    }),
+    clockIcon: css({
+        width: 16,
+        height: 16,
+        marginRight: 5,
+        verticalAlign: 'middle',
+        fill: '#696969'
+    })
 };
 
 function Titlebar() {
@@ -158,12 +185,55 @@ function Quicklinks() {
 function Article() {
     const documentData = useContext(DocumentProvider.context);
     return (
+        // The "text-content" class and "wikiArticle" id are required
+        // because our stylesheets expect them and formatting isn't quite
+        // right without them.
         documentData && (
-            <article
-                className="text-content"
-                css={styles.article}
-                dangerouslySetInnerHTML={{ __html: documentData.bodyHTML }}
-            />
+            <div className="text-content" css={styles.article}>
+                <article
+                    id="wikiArticle"
+                    dangerouslySetInnerHTML={{ __html: documentData.bodyHTML }}
+                />
+                <ArticleMetadata />
+            </div>
+        )
+    );
+}
+
+function ArticleMetadata() {
+    const documentData = useContext(DocumentProvider.context);
+    return (
+        documentData && (
+            <div css={styles.metadata}>
+                <div>
+                    <ContributorsIcon css={styles.contributorsIcon} />{' '}
+                    <strong>{strings.contributorsToThisPage}</strong>{' '}
+                    {documentData.contributors.map((c, i) => (
+                        <span key={c}>
+                            {i > 0 && ', '}
+                            <a
+                                href={`/${
+                                    documentData.localeFromURL
+                                }/profiles/${c}`}
+                                rel="nofollow"
+                            >
+                                {c}
+                            </a>
+                        </span>
+                    ))}
+                </div>
+                <div>
+                    <ClockIcon css={styles.clockIcon} />{' '}
+                    <strong>{strings.lastUpdatedBy}</strong>{' '}
+                    {documentData.lastModifiedBy}{' '}
+                    <time dateTime={documentData.lastModified}>
+                        {new Date(documentData.lastModified)
+                            .toISOString()
+                            .slice(0, -5)
+                            .replace('T', ' ')}
+                    </time>
+                </div>
+            </div>
         )
     );
 }

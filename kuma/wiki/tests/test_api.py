@@ -48,6 +48,9 @@ def test_doc_api(client, trans_doc):
         'title': 'Root Document',
         'url': '/en-US/docs/Root'
     }]
+    assert data['contributors'] == ['wiki_user']
+    assert data['lastModified'] == '2017-04-14T12:20:00'
+    assert data['lastModifiedBy'] == 'wiki_user'
 
     # Also ensure that we get exactly the same data by calling
     # the document_api_data() function directly

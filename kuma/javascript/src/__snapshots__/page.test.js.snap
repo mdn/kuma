@@ -253,7 +253,7 @@ exports[`Page snapshot 1`] = `
   display: none;
 }
 
-.emotion-58 {
+.emotion-61 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -292,15 +292,41 @@ exports[`Page snapshot 1`] = `
   flex-basis: 3%;
 }
 
-.emotion-57 {
+.emotion-60 {
   -webkit-flex: 0 0 74%;
   -ms-flex: 0 0 74%;
   flex: 0 0 74%;
   max-width: 74%;
 }
 
-.emotion-57 p {
+.emotion-60 p {
   max-width: 42rem;
+}
+
+.emotion-59 {
+  margin-top: 32px;
+  font-size: 0.88889rem;
+  color: #696969;
+}
+
+.emotion-59 div {
+  margin: 4px 0;
+}
+
+.emotion-57 {
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
+  vertical-align: middle;
+  fill: #696969;
+}
+
+.emotion-58 {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  vertical-align: middle;
+  fill: #696969;
 }
 
 <div>
@@ -338,56 +364,56 @@ exports[`Page snapshot 1`] = `
       >
         <li>
           <a
-            href="//docs/Web/HTML"
+            href="/en-US/docs/Web/HTML"
           >
             HTML
           </a>
         </li>
         <li>
           <a
-            href="//docs/Web/CSS"
+            href="/en-US/docs/Web/CSS"
           >
             CSS
           </a>
         </li>
         <li>
           <a
-            href="//docs/Web/JavaScript"
+            href="/en-US/docs/Web/JavaScript"
           >
             JavaScript
           </a>
         </li>
         <li>
           <a
-            href="//docs/Web/Guide/Graphics"
+            href="/en-US/docs/Web/Guide/Graphics"
           >
             Graphics
           </a>
         </li>
         <li>
           <a
-            href="//docs/Web/HTTP"
+            href="/en-US/docs/Web/HTTP"
           >
             HTTP
           </a>
         </li>
         <li>
           <a
-            href="//docs/Web/API"
+            href="/en-US/docs/Web/API"
           >
             APIs / DOM
           </a>
         </li>
         <li>
           <a
-            href="//docs/Mozilla/Add-ons/WebExtensions"
+            href="/en-US/docs/Mozilla/Add-ons/WebExtensions"
           >
             Browser Extensions
           </a>
         </li>
         <li>
           <a
-            href="//docs/Web/MathML"
+            href="/en-US/docs/Web/MathML"
           >
             MathML
           </a>
@@ -413,49 +439,49 @@ exports[`Page snapshot 1`] = `
       >
         <li>
           <a
-            href="//docs/Learn"
+            href="/en-US/docs/Learn"
           >
             Learn web development
           </a>
         </li>
         <li>
           <a
-            href="//docs/Web/Tutorials"
+            href="/en-US/docs/Web/Tutorials"
           >
             Tutorials
           </a>
         </li>
         <li>
           <a
-            href="//docs/Web/Reference"
+            href="/en-US/docs/Web/Reference"
           >
             References
           </a>
         </li>
         <li>
           <a
-            href="//docs/Web/Guide"
+            href="/en-US/docs/Web/Guide"
           >
             Developer Guides
           </a>
         </li>
         <li>
           <a
-            href="//docs/Web/Accessibility"
+            href="/en-US/docs/Web/Accessibility"
           >
             Accessibility
           </a>
         </li>
         <li>
           <a
-            href="//docs/Games"
+            href="/en-US/docs/Games"
           >
             Game development
           </a>
         </li>
         <li>
           <a
-            href="//docs/Web"
+            href="/en-US/docs/Web"
           >
             ...more docs
           </a>
@@ -501,7 +527,7 @@ exports[`Page snapshot 1`] = `
         </li>
         <li>
           <a
-            href="//docs/MDN/Community"
+            href="/en-US/docs/MDN/Community"
           >
             Join the MDN community
           </a>
@@ -619,7 +645,7 @@ exports[`Page snapshot 1`] = `
     }
   />
   <div
-    className="emotion-58 emotion-47"
+    className="emotion-61 emotion-47"
   >
     <div
       className="emotion-54"
@@ -681,14 +707,66 @@ exports[`Page snapshot 1`] = `
       className="emotion-55 emotion-2"
       width="3%"
     />
-    <article
-      className="text-content emotion-57"
-      dangerouslySetInnerHTML={
-        Object {
-          "__html": "[fake body HTML]",
+    <div
+      className="text-content emotion-60"
+    >
+      <article
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "[fake body HTML]",
+          }
         }
-      }
-    />
+        id="wikiArticle"
+      />
+      <div
+        className="emotion-59"
+      >
+        <div>
+          <svg mock
+            className="emotion-57"
+          />
+           
+          <strong>
+            Contributors to this page:
+          </strong>
+           
+          <span>
+            <a
+              href="/en-US/profiles/mike"
+              rel="nofollow"
+            >
+              mike
+            </a>
+          </span>
+          <span>
+            , 
+            <a
+              href="/en-US/profiles/ike"
+              rel="nofollow"
+            >
+              ike
+            </a>
+          </span>
+        </div>
+        <div>
+          <svg mock
+            className="emotion-58"
+          />
+           
+          <strong>
+            Last updated by:
+          </strong>
+           
+          ike
+           
+          <time
+            dateTime="2019-01-02T03:04:05"
+          >
+            2019-01-02 11:04:05
+          </time>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;
