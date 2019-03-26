@@ -199,14 +199,14 @@
             <ol id="contribute-monthly-faqs" class="faqs clear">
                 {%- call faq_entry(11, _("How do I manage my monthly payment?")) %}
                     <p>
-                        {% trans url='mailto:%s' % settings.CONTRIBUTION_SUPPORT_EMAIL,
+                        {% trans url='mailto:%s' % settings.CONTRIBUTION_SUPPORT_EMAIL + "?Subject=Manage%20monthly%20payment",
                                  manage_subscription_url=url('recurring_payment_management'),
                                  email=settings.CONTRIBUTION_SUPPORT_EMAIL %}
-                            If you would like to manage your monthly payment,
-                            such as changing your card account details or the amount you pay,
-                            please contact <a href="{{ url }}">{{ email }}</a>. You can cancel
-                            your subscription on the
-                            <a href="{{ manage_subscription_url }}">manage monthly subscriptions</a> page.
+                            If you would like to manage your monthly payment, such as changing
+                            your card account details or the amount you pay, please cancel your
+                            subscription on the <a href="{{ manage_subscription_url }}">manage monthly
+                            subscriptions page</a> and sign up again using the new card details. If
+                            you have any questions please contact <a href="{{ url }}">{{ email }}.</a>
                         {% endtrans %}
                     </p>
                 {% endcall %}

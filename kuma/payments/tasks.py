@@ -9,6 +9,8 @@ from django.utils import translation
 
 from kuma.core.decorators import skip_in_maintenance_mode
 from kuma.core.email_utils import render_email
+from kuma.core.urlresolvers import reverse
+from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
 log = logging.getLogger('kuma.payments.tasks')
@@ -24,6 +26,7 @@ def payments_thank_you_email(username, user_email, recurring=False):
         'support_mail_link': 'mailto:' + settings.CONTRIBUTION_SUPPORT_EMAIL + '?Subject=Recurring%20payment%20support',
         'support_mail': settings.CONTRIBUTION_SUPPORT_EMAIL,
         'recurring_payment': recurring,
+        'recurring_payment_management': absolutify(reverse('recurring_payment_management')),
     }
 
     # TODO: Remove when we ship translations, get legal approval
