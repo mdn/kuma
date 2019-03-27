@@ -75,12 +75,9 @@ Disallow: /*$api
 Disallow: /*$compare
 Disallow: /*$revision
 Disallow: /*$history
-Disallow: /*$edit
 Disallow: /*$children
 Disallow: /*$flag
-Disallow: /*$translate
 Disallow: /*$locales
-Disallow: /*$json
 Disallow: /*$toc
 Disallow: /*$move
 Disallow: /*$quick-review
