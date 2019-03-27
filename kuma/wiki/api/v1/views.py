@@ -40,7 +40,7 @@ def document_api_data(document):
                 'title': t.title
             } for t in translations
         ],
-        'contributors': [ c['username'] for c in document.contributors ],
+        'contributors': [c['username'] for c in document.contributors],
         'lastModified': document.current_revision.created.isoformat(),
         'lastModifiedBy': (document.current_revision.creator and
                            str(document.current_revision.creator))
