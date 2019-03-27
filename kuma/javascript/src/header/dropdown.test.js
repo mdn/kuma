@@ -16,9 +16,12 @@ test('Dropdown closed and open snapshots', () => {
     let closedTree = dropdown.toJSON();
     let closedString = JSON.stringify(closedTree);
 
-    // Expect the menu to be closed and take a snapshot
-    expect(closedString).not.toContain('foo');
-    expect(closedString).not.toContain('bar');
+    // Expect the menu to be closed and take a snapshot.
+    // Even though the menu is closed, we expect the content to
+    // be in the document so web crawlers and screen readers see it
+    expect(closedString).toContain('▼');
+    expect(closedString).toContain('foo');
+    expect(closedString).toContain('bar');
     expect(closedTree).toMatchSnapshot();
 
     // Fake a click on the menu label
@@ -30,8 +33,9 @@ test('Dropdown closed and open snapshots', () => {
     let openString = JSON.stringify(openTree);
 
     // Now expect the menu to be open, and snapshot it in that state
-    expect(openString).toContain('foo');
-    expect(openString).toContain('bar');
+    expect(openString).toContain('▲');
+    expect(closedString).toContain('foo');
+    expect(closedString).toContain('bar');
     expect(openTree).toMatchSnapshot();
 
     // Fake a click on the document body to dismiss the menu

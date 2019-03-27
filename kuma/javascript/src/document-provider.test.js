@@ -29,6 +29,8 @@ export const fakeDocumentData = {
     translations: [
         {
             locale: 'es',
+            language: 'Español',
+            localizedLanguage: 'Spanish',
             url: '[fake spanish url]',
             title: '[fake spanish translation]'
         }

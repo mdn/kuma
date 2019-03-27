@@ -15,7 +15,7 @@ const strings = {
 const styles = {
     titlebar: css({
         backgroundColor: '#f5f9fa',
-        padding: '16px 0 16px 32px'
+        padding: '12px 0 12px 32px'
     }),
     title: css({
         fontFamily:
@@ -26,7 +26,7 @@ const styles = {
     toc: css({
         color: '#fff',
         backgroundColor: '#222',
-        padding: '15px 0 15px 32px',
+        padding: '8px 0 8px 32px',
         '& li': {
             display: 'inline-block'
         },
@@ -36,6 +36,23 @@ const styles = {
             whiteSpace: 'nowrap',
             textDecoration: 'none',
             fontSize: '1rem'
+        },
+
+        '& code': {
+            backgroundColor: 'inherit',
+            color: 'inherit',
+            fontFamily: 'inherit',
+            fontSize: 'inherit',
+            padding: 0
+        },
+
+        // Don't display any nested lists in the TOC
+        // This may not be needed anymore, but there are still documents
+        // on staging that have nested lists in the TOC. Re-rendering those
+        // docs seems to make the nested lists go away, but this is here
+        // just in case
+        '& li ol, li ul': {
+            display: 'none'
         }
     }),
     content: css({
@@ -43,13 +60,15 @@ const styles = {
         padding: '30px 24px'
     }),
     article: css({
-        flex: 3,
+        flex: '0 0 74%',
+        maxWidth: '74%',
         '& p': {
             maxWidth: '42rem'
         }
     }),
     sidebar: css({
-        flex: 1
+        flex: '0 0 23%',
+        maxWidth: '23%'
     }),
     breadcrumbs: css({}),
     quicklinks: css({})

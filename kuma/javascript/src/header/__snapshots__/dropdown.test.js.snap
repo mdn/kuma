@@ -1,63 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Dropdown closed and open snapshots 1`] = `
-.emotion-4 {
-  position: relative;
-  pointer-events: auto;
-}
-
-.emotion-2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  font-size: 18px;
-  font-weight: bold;
-  line-height: 48px;
-  white-space: nowrap;
-  padding: 0 10px;
-  margin: 0;
-  border: none;
-}
-
-.emotion-2:hover {
-  background-color: #eee;
-}
-
-.emotion-2:focus {
-  outline-offset: -3px;
-}
-
-.emotion-0 {
-  font-size: 12px;
-  padding-left: 2px;
-}
-
-<div
-  className="emotion-4 emotion-5"
->
-  <button
-    className="emotion-2 emotion-3"
-    onClick={[Function]}
-  >
-    Test
-    <span
-      className="emotion-0 emotion-1"
-    >
-      ▼
-    </span>
-  </button>
-</div>
-`;
-
-exports[`Dropdown closed and open snapshots 2`] = `
 .emotion-6 {
   position: relative;
   pointer-events: auto;
@@ -75,9 +18,9 @@ exports[`Dropdown closed and open snapshots 2`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
-  line-height: 48px;
+  line-height: 32px;
   white-space: nowrap;
   padding: 0 10px;
   margin: 0;
@@ -109,8 +52,104 @@ exports[`Dropdown closed and open snapshots 2`] = `
   flex-direction: column;
   box-sizing: border-box;
   background-color: white;
-  border: solid black 1px;
-  box-shadow: 3px 3px 5px black;
+  border: solid #83d0f2 1.5px;
+  box-shadow: 3px 3px 5px rgba(0,0,0,0.25);
+  padding: 10px;
+  min-width: 100%;
+  display: none;
+}
+
+.emotion-4 li {
+  padding: 5px;
+  white-space: nowrap;
+}
+
+<div
+  className="emotion-6 emotion-7"
+>
+  <button
+    className="emotion-2 emotion-3"
+    onClick={[Function]}
+  >
+    Test
+    <span
+      className="emotion-0 emotion-1"
+    >
+      ▼
+    </span>
+  </button>
+  <ul
+    className="dropdown-menu emotion-4 emotion-5"
+  >
+    <li>
+      foo
+    </li>
+    <li>
+      bar
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Dropdown closed and open snapshots 2`] = `
+.emotion-6 {
+  position: relative;
+  pointer-events: auto;
+}
+
+.emotion-0 {
+  font-size: 12px;
+  padding-left: 2px;
+}
+
+.emotion-2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 32px;
+  white-space: nowrap;
+  padding: 0 10px;
+  margin: 0;
+  border: none;
+  background-color: #83d0f2;
+}
+
+.emotion-2:hover {
+  background-color: #eee;
+}
+
+.emotion-2:focus {
+  outline-offset: -3px;
+}
+
+.emotion-2:hover {
+  background-color: #83d0f2;
+}
+
+.emotion-4 {
+  position: absolute;
+  z-index: 100;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: white;
+  border: solid #83d0f2 1.5px;
+  box-shadow: 3px 3px 5px rgba(0,0,0,0.25);
   padding: 10px;
   min-width: 100%;
 }

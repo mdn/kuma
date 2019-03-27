@@ -2,7 +2,7 @@ import pytest
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
-
+from kuma.wiki.api.v1 import views
 
 @pytest.mark.parametrize(
     'http_method', ['put', 'post', 'delete', 'options', 'head'])
@@ -43,6 +43,13 @@ def test_doc_api(client, trans_doc):
     assert data['tocHTML'] == trans_doc.get_toc_html()
     assert data['translations'] == [{
         'locale': 'en-US',
+        'language': 'English (US)',
+        'localizedLanguage': u'Anglais am\u00e9ricain',
         'title': 'Root Document',
         'url': '/en-US/docs/Root'
     }]
+
+    # Also ensure that we get exactly the same data by calling
+    # the document_api_data() function directly
+    data2 = views.document_api_data(trans_doc)
+    assert data == data2

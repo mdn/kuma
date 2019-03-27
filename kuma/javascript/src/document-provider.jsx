@@ -15,7 +15,13 @@ export type DocumentData = {
     quickLinksHTML: string,
     tocHTML: string,
     parents: Array<{ url: string, title: string }>,
-    translations: Array<{ locale: string, url: string, title: string }>
+    translations: Array<{
+        locale: string,
+        language: string,
+        localizedLanguage: string,
+        url: string,
+        title: string
+    }>
 };
 
 const context = React.createContext<DocumentData | null>(null);

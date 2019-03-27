@@ -2,16 +2,21 @@
 import * as React from 'react';
 import { css } from '@emotion/core';
 
-import LanguageIcon from '../icons/language.svg';
+import LanguageMenu from './language-menu.jsx';
 import Login from './login.jsx';
-import Logo from './logo.jsx';
+import Logo from '../icons/logo.svg';
 import Dropdown from './dropdown.jsx';
 import { Row, Spring, Strut } from '../layout.jsx';
 import Search from './search.jsx';
 import gettext from '../gettext.js';
 
 const styles = {
-    headerRow: css({ borderTop: '5px solid #83d0f2' })
+    headerRow: css({
+        borderTop: '4px solid #83d0f2',
+        height: 64,
+        boxSizing: 'border-box'
+    }),
+    logo: css({ display: 'block', height: 60 })
 };
 
 const menus = [
@@ -89,7 +94,9 @@ const HOME_URL = LOCALE ? `/${LOCALE}/` : '/en-US/';
 export default function Header(): React.Node {
     return (
         <Row css={styles.headerRow}>
-            <Logo url={HOME_URL} />
+            <a css={styles.logo} href={HOME_URL}>
+                <Logo alt="MDN Web Docs Logo" />
+            </a>
             <Strut width={4} />
             {menus.map((m, index) => (
                 <Dropdown label={m.label} key={index}>
@@ -110,16 +117,7 @@ export default function Header(): React.Node {
                     ))}
                 </Dropdown>
             ))}
-            {
-                // We should have a LanguageMenu component here.
-                // We can get available languages from the $json query.
-                // Maybe do anohter context/provider thing and set the
-                // available set of translations on that, then update
-                // on document load and on every client-side navigation?
-            }
-            <Dropdown label={<LanguageIcon />}>
-                <li>Not yet implemented</li>
-            </Dropdown>
+            <LanguageMenu />
             <Spring />
             <Search />
             {/* search box here */}

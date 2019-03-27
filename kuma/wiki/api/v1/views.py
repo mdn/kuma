@@ -1,5 +1,7 @@
+from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.utils.translation import activate, ugettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
 
@@ -31,6 +33,8 @@ def document_api_data(document):
         ],
         'translations': [
             {
+                'language': t.language,
+                'localizedLanguage': _(settings.LOCALES[t.locale].english),
                 'locale': t.locale,
                 'url': t.get_absolute_url(),
                 'title': t.title
@@ -48,5 +52,11 @@ def doc(request, locale, slug):
     error if no such document exists. This is an API with URL
     /api/v1/doc/<locale>/<path>
     """
+    # Since we don't have the locale at the start of the path, our
+    # locale middleware can't set the translation language correctly
+    # and we need to do it explicitly. (We need to know the language
+    # so that we can provide translated language names for the
+    # translations menu.)
+    activate(locale)
     document = get_object_or_404(Document, locale=locale, slug=slug)
     return JsonResponse(document_api_data(document))

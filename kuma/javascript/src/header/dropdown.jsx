@@ -20,9 +20,9 @@ const MenuLabel = styled.button`
     display: flex;
     flex-direction: row;
     align-items: center;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
-    line-height: 48px;
+    line-height: 32px;
     white-space: nowrap;
     padding: 0 10px;
     margin: 0;
@@ -48,8 +48,8 @@ const Menu = styled.ul`
     flex-direction: column;
     box-sizing: border-box;
     background-color: white;
-    border: solid black 1px;
-    box-shadow: 3px 3px 5px black;
+    border: solid #83d0f2 1.5px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.25);
     padding: 10px;
     min-width: 100%;
     li {
@@ -57,6 +57,18 @@ const Menu = styled.ul`
         white-space: nowrap;
     }
 `;
+
+const styles = {
+    menuLabelOpen: css({
+        backgroundColor: '#83d0f2',
+        '&:hover': {
+            backgroundColor: '#83d0f2'
+        }
+    }),
+
+    menuAttachRight: css({ right: 0 }),
+    menuClosed: css({ display: 'none' })
+};
 
 type DropdownProps = {|
     // The string or component to display. Clicking on this will
@@ -123,27 +135,24 @@ export default function Dropdown(props: DropdownProps) {
         }
     });
 
-    /*
-     * TODO: we're only rendering the children when the menu
-     * is shown. This might be an accessibility issue. Maybe
-     * better to render them always for the benefit of screen
-     * readers but only show them to sighted users when the
-     * menu is open.
-     */
     return (
         <MenuContainer>
-            <MenuLabel onClick={!shown ? () => setShown(true) : null}>
+            <MenuLabel
+                css={shown && styles.menuLabelOpen}
+                onClick={!shown ? () => setShown(true) : null}
+            >
                 {props.label}
                 <Arrow>{shown ? '▲' : '▼'}</Arrow>
             </MenuLabel>
-            {shown && (
-                <Menu
-                    className="dropdown-menu"
-                    css={css(props.right && { right: 0 })}
-                >
-                    {props.children}
-                </Menu>
-            )}
+            <Menu
+                className="dropdown-menu"
+                css={[
+                    props.right && styles.menuAttachRight,
+                    !shown && styles.menuClosed
+                ]}
+            >
+                {props.children}
+            </Menu>
         </MenuContainer>
     );
 }
