@@ -1,3 +1,4 @@
+import mock
 import pytest
 
 from kuma.core.tests import assert_no_cache_header
@@ -22,17 +23,14 @@ def test_doc_api_404(client, root_doc):
     assert_no_cache_header(response)
 
 
-def test_doc_api(client, trans_doc):
+@mock.patch('kuma.wiki.jobs.DocumentContributorsJob.fetch_on_miss', True)
+def test_doc_api(client, trans_doc, cleared_cacheback_cache):
     """On success we get document details in a JSON response."""
 
-    # 'contributors' is a Django @cached_property on the Document model.
-    # Previous tests (or even previous runs of the test suite) can
-    # apparently cause an empty array to end up as the cached value
-    # of the property, which makes this test fail. So if the attribute
-    # exists we delete it, forcing it to be recomputed for this test.
-    if hasattr(trans_doc, 'contributors'):
-        delattr(trans_doc, 'contributors')
-
+    # The fetch_on_miss mock and the cleared_cacheback_cache fixture
+    # are here to ensure that we don't get an old cached value for
+    # the contributors property, and also that we don't use []
+    # while a celery job is running.
     url = reverse('wiki.api.doc', args=[trans_doc.locale, trans_doc.slug])
     response = getattr(client, 'get')(url)
     assert response.status_code == 200
