@@ -3,7 +3,7 @@
     "dependencies": {
         "html5shiv": "3.6.2",
         "jquery": "2.2.0",
-        "prism": "1.15.0",
+        "prism": "1.16.0",
         "selectivizr": "https://github.com/keithclark/selectivizr.git#1.0.2"
     },
     "install": {
@@ -20,6 +20,7 @@
                 "bower_components/prism/components/prism-clike.js",
                 "bower_components/prism/components/prism-javascript.js",
                 "bower_components/prism/components/prism-json.js",
+                "bower_components/prism/components/prism-jsonp.js",
                 "bower_components/prism/components/prism-css-extras.js",
                 "bower_components/prism/components/prism-rust.js",
                 "bower_components/prism/plugins/line-highlight/prism-line-highlight.js",
