@@ -24,6 +24,15 @@ def test_doc_api_404(client, root_doc):
 
 def test_doc_api(client, trans_doc):
     """On success we get document details in a JSON response."""
+
+    # 'contributors' is a Django @cached_property on the Document model.
+    # Previous tests (or even previous runs of the test suite) can
+    # apparently cause an empty array to end up as the cached value
+    # of the property, which makes this test fail. So if the attribute
+    # exists we delete it, forcing it to be recomputed for this test.
+    if hasattr(trans_doc, 'contributors'):
+        delattr(trans_doc, 'contributors')
+
     url = reverse('wiki.api.doc', args=[trans_doc.locale, trans_doc.slug])
     response = getattr(client, 'get')(url)
     assert response.status_code == 200
