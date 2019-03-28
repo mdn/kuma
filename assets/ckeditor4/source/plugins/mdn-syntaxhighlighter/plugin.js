@@ -10,7 +10,9 @@ CKEDITOR.config.mdnSyntaxhighlighter_brushes = [
   { name: 'JSON', brush: 'json' },
   { name: 'PHP', brush: 'php' },
   { name: 'Python', brush: 'python' },
+  { name: 'Rust', brush: 'rust' },
   { name: 'SQL', brush: 'sql' },
+  { name: 'WebAssembly', brush: 'wasm' },
   { name: 'XML', brush: 'xml' }
 ];
 

@@ -1046,6 +1046,7 @@ PIPELINE_JS = {
         'source_filenames': (
             # Custom Prism build
             "js/libs/prism/prism-core.js",
+            "js/libs/prism/prism-bash.js",
             "js/libs/prism/prism-markup.js",
             "js/libs/prism/prism-css.js",
             "js/libs/prism/prism-clike.js",
@@ -1054,6 +1055,7 @@ PIPELINE_JS = {
             "js/libs/prism/prism-jsonp.js",
             "js/libs/prism/prism-css-extras.js",
             "js/libs/prism/prism-rust.js",
+            "js/libs/prism/prism-wasm.js",
             "js/libs/prism/prism-line-highlight.js",
             "js/libs/prism/prism-line-numbers.js",
 
