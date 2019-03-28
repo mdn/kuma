@@ -14,7 +14,7 @@ We are committed to providing the best source of information about web standards
 
 {{_('Managing your payments')}}
 {% trans %}
-If you would like to manage your monthly payment, such as changing your card account details or the amount you pay, please contact {{ support_mail }}.
+If you would like to manage your monthly payment, such as changing your card account details or the amount you pay, please cancel your subscription on {{ recurring_payment_management }} and sign up again using the new card details. If you have any questions please contact {{ support_mail }}.
 {% endtrans %}
 
 {{_('Cancelling your payments')}}
