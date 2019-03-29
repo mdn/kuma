@@ -942,6 +942,7 @@ PIPELINE_JS = {
     'main': {
         'source_filenames': (
             'js/libs/jquery/jquery.js',
+            'js/libs/jquery-ajax-prefilter.js',
             'js/libs/icons.js',
             'js/components.js',
             'js/analytics.js',
@@ -957,6 +958,7 @@ PIPELINE_JS = {
     'react-main': {
         'source_filenames': (
             'js/libs/jquery/jquery.js',
+            'js/libs/jquery-ajax-prefilter.js',
             # 'js/libs/icons.js',
             # 'js/components.js',
             'js/analytics.js',
@@ -1005,6 +1007,7 @@ PIPELINE_JS = {
     'jquery-ui': {
         'source_filenames': (
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
+            'js/libs/jquery-ajax-prefilter.js',
             'js/moz-jquery-plugins.js',
         ),
         'output_filename': 'build/js/jquery-ui.js',
