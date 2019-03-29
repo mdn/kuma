@@ -185,9 +185,11 @@ function Quicklinks() {
 function Article() {
     const documentData = useContext(DocumentProvider.context);
     return (
-        // The "text-content" class and "wikiArticle" id are required
-        // because our stylesheets expect them and formatting isn't quite
-        // right without them.
+        /*
+         * The "text-content" class and "wikiArticle" id are required
+         * because our stylesheets expect them and formatting isn't quite
+         * right without them.
+         */
         documentData && (
             <div className="text-content" css={styles.article}>
                 <article
