@@ -107,21 +107,21 @@ Array [
     >
       <li>
         <a
-          href="//profiles/test-username"
+          href="/en-US/profiles/test-username"
         >
           View profile
         </a>
       </li>
       <li>
         <a
-          href="//profiles/test-username/edit"
+          href="/en-US/profiles/test-username/edit"
         >
           Edit profile
         </a>
       </li>
       <li>
         <form
-          action="//users/signout"
+          action="/en-US/users/signout"
           method="post"
         >
           <input
@@ -162,7 +162,7 @@ Array [
 
 <a
     className="emotion-0"
-    href="/$edit"
+    href="[fake edit url]"
     title="Edit this page"
   >
     <svg mock
@@ -283,21 +283,21 @@ Array [
     >
       <li>
         <a
-          href="//profiles/test-username"
+          href="/en-US/profiles/test-username"
         >
           View profile
         </a>
       </li>
       <li>
         <a
-          href="//profiles/test-username/edit"
+          href="/en-US/profiles/test-username/edit"
         >
           Edit profile
         </a>
       </li>
       <li>
         <form
-          action="//users/signout"
+          action="/en-US/users/signout"
           method="post"
         >
           <input
@@ -338,7 +338,7 @@ Array [
 
 <a
     className="emotion-0"
-    href="/$edit"
+    href="[fake edit url]"
     title="Edit this page"
   >
     <svg mock

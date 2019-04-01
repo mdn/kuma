@@ -34,7 +34,12 @@ export const fakeDocumentData = {
             url: '[fake spanish url]',
             title: '[fake spanish translation]'
         }
-    ]
+    ],
+    contributors: ['mike', 'ike'],
+    lastModified: '2019-01-02T03:04:05',
+    lastModifiedBy: 'ike',
+
+    localeFromURL: ''
 };
 
 describe('DocumentProvider', () => {
@@ -43,6 +48,8 @@ describe('DocumentProvider', () => {
     test('context works', () => {
         const C = DocumentProvider.context.Consumer;
         const contextConsumer = jest.fn();
+        const documentDataClone = JSON.parse(JSON.stringify(fakeDocumentData));
+        documentDataClone.localeFromURL = 'en-US';
 
         create(
             <DocumentProvider initialDocumentData={fakeDocumentData}>
@@ -51,6 +58,6 @@ describe('DocumentProvider', () => {
         );
 
         expect(contextConsumer.mock.calls.length).toBe(1);
-        expect(contextConsumer.mock.calls[0][0]).toEqual(fakeDocumentData);
+        expect(contextConsumer.mock.calls[0][0]).toEqual(documentDataClone);
     });
 });

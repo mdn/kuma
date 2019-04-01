@@ -1,7 +1,9 @@
 //@flow
 import * as React from 'react';
+import { useContext } from 'react';
 import { css } from '@emotion/core';
 
+import DocumentProvider from '../document-provider.jsx';
 import gettext from '../gettext.js';
 import SearchIcon from '../icons/search.svg';
 
@@ -36,16 +38,18 @@ const styles = {
     })
 };
 
-const LOCALE =
-    window && window.location && window.location.pathname.split('/')[1];
-const URL = LOCALE ? `/${LOCALE}/search` : '/en-US/search';
-
 export default function Search() {
+    const documentData = useContext(DocumentProvider.context);
+    if (!documentData) {
+        return null;
+    }
+    const { localeFromURL } = documentData;
+
     return (
         <form
             css={styles.container}
             id="nav-main-search"
-            action={URL}
+            action={`/${localeFromURL}/search`}
             method="get"
             role="search"
         >

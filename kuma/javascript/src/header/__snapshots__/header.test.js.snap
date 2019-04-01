@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Header snapshot 1`] = `
-.emotion-38 {
+.emotion-46 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -99,13 +99,13 @@ exports[`Header snapshot 1`] = `
   white-space: nowrap;
 }
 
-.emotion-27 {
+.emotion-35 {
   -webkit-flex: 1 1 0px;
   -ms-flex: 1 1 0px;
   flex: 1 1 0px;
 }
 
-.emotion-31 {
+.emotion-39 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -127,14 +127,14 @@ exports[`Header snapshot 1`] = `
   flex: 2 1 120px;
 }
 
-.emotion-29 {
+.emotion-37 {
   fill: #333;
   -webkit-flex: 0 0 20px;
   -ms-flex: 0 0 20px;
   flex: 0 0 20px;
 }
 
-.emotion-30 {
+.emotion-38 {
   border-width: 0 !important;
   font-size: 16px;
   font-weight: bold !important;
@@ -143,7 +143,7 @@ exports[`Header snapshot 1`] = `
   flex: 0 1 300px;
 }
 
-.emotion-32 {
+.emotion-40 {
   -webkit-box-flex: 0;
   -webkit-flex-grow: 0;
   -ms-flex-positive: 0;
@@ -156,7 +156,7 @@ exports[`Header snapshot 1`] = `
   flex-basis: 15px;
 }
 
-.emotion-35 {
+.emotion-43 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -174,22 +174,22 @@ exports[`Header snapshot 1`] = `
   padding: 0 8px;
 }
 
-.emotion-35:hover {
+.emotion-43:hover {
   -webkit-text-decoration: none;
   text-decoration: none;
   background-color: #eee;
 }
 
-.emotion-35:focus {
+.emotion-43:focus {
   outline-offset: -3px;
 }
 
-.emotion-34 {
+.emotion-42 {
   margin-left: 5px;
 }
 
 <div
-  className="emotion-38 emotion-39"
+  className="emotion-46 emotion-47"
 >
   <a
     className="emotion-0"
@@ -222,56 +222,56 @@ exports[`Header snapshot 1`] = `
     >
       <li>
         <a
-          href="//docs/Web/HTML"
+          href="/en-US/docs/Web/HTML"
         >
           HTML
         </a>
       </li>
       <li>
         <a
-          href="//docs/Web/CSS"
+          href="/en-US/docs/Web/CSS"
         >
           CSS
         </a>
       </li>
       <li>
         <a
-          href="//docs/Web/JavaScript"
+          href="/en-US/docs/Web/JavaScript"
         >
           JavaScript
         </a>
       </li>
       <li>
         <a
-          href="//docs/Web/Guide/Graphics"
+          href="/en-US/docs/Web/Guide/Graphics"
         >
           Graphics
         </a>
       </li>
       <li>
         <a
-          href="//docs/Web/HTTP"
+          href="/en-US/docs/Web/HTTP"
         >
           HTTP
         </a>
       </li>
       <li>
         <a
-          href="//docs/Web/API"
+          href="/en-US/docs/Web/API"
         >
           APIs / DOM
         </a>
       </li>
       <li>
         <a
-          href="//docs/Mozilla/Add-ons/WebExtensions"
+          href="/en-US/docs/Mozilla/Add-ons/WebExtensions"
         >
           Browser Extensions
         </a>
       </li>
       <li>
         <a
-          href="//docs/Web/MathML"
+          href="/en-US/docs/Web/MathML"
         >
           MathML
         </a>
@@ -297,49 +297,49 @@ exports[`Header snapshot 1`] = `
     >
       <li>
         <a
-          href="//docs/Learn"
+          href="/en-US/docs/Learn"
         >
           Learn web development
         </a>
       </li>
       <li>
         <a
-          href="//docs/Web/Tutorials"
+          href="/en-US/docs/Web/Tutorials"
         >
           Tutorials
         </a>
       </li>
       <li>
         <a
-          href="//docs/Web/Reference"
+          href="/en-US/docs/Web/Reference"
         >
           References
         </a>
       </li>
       <li>
         <a
-          href="//docs/Web/Guide"
+          href="/en-US/docs/Web/Guide"
         >
           Developer Guides
         </a>
       </li>
       <li>
         <a
-          href="//docs/Web/Accessibility"
+          href="/en-US/docs/Web/Accessibility"
         >
           Accessibility
         </a>
       </li>
       <li>
         <a
-          href="//docs/Games"
+          href="/en-US/docs/Games"
         >
           Game development
         </a>
       </li>
       <li>
         <a
-          href="//docs/Web"
+          href="/en-US/docs/Web"
         >
           ...more docs
         </a>
@@ -385,7 +385,7 @@ exports[`Header snapshot 1`] = `
       </li>
       <li>
         <a
-          href="//docs/MDN/Community"
+          href="/en-US/docs/MDN/Community"
         >
           Join the MDN community
         </a>
@@ -413,20 +413,51 @@ exports[`Header snapshot 1`] = `
     </ul>
   </div>
   <div
-    className="emotion-27 emotion-28"
+    className="emotion-9 emotion-10"
+  >
+    <button
+      className="emotion-5 emotion-6"
+      onClick={[Function]}
+    >
+      <svg mock />
+      <span
+        className="emotion-3 emotion-4"
+      >
+        ▼
+      </span>
+    </button>
+    <ul
+      className="dropdown-menu emotion-7 emotion-8"
+    >
+      <li
+        lang="es"
+      >
+        <a
+          href="[fake spanish url]"
+          title="Spanish"
+        >
+          <bdi>
+            Español
+          </bdi>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div
+    className="emotion-35 emotion-36"
   />
   <form
     action="/en-US/search"
-    className="emotion-31"
+    className="emotion-39"
     id="nav-main-search"
     method="get"
     role="search"
   >
     <svg mock
-      className="emotion-29"
+      className="emotion-37"
     />
     <input
-      className="emotion-30"
+      className="emotion-38"
       id="main-q"
       name="q"
       placeholder="Search MDN"
@@ -434,11 +465,11 @@ exports[`Header snapshot 1`] = `
     />
   </form>
   <div
-    className="emotion-32 emotion-2"
+    className="emotion-40 emotion-2"
     width={15}
   />
   <a
-    className="emotion-35"
+    className="emotion-43"
     data-service="GitHub"
     href="/users/github/login/?next=/"
     rel="nofollow"
@@ -446,11 +477,11 @@ exports[`Header snapshot 1`] = `
     Sign in
      
     <svg mock
-      className="emotion-34"
+      className="emotion-42"
     />
   </a>
   <div
-    className="emotion-32 emotion-2"
+    className="emotion-40 emotion-2"
     width={15}
   />
 </div>

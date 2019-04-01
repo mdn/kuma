@@ -1,7 +1,9 @@
 //@flow
 import * as React from 'react';
+import { useContext } from 'react';
 import { css } from '@emotion/core';
 
+import DocumentProvider from '../document-provider.jsx';
 import LanguageMenu from './language-menu.jsx';
 import Login from './login.jsx';
 import Logo from '../icons/logo.svg';
@@ -78,23 +80,22 @@ const menus = [
     }
 ];
 
-function fixurl(url) {
-    if (url.startsWith('https://')) {
-        return url;
-    } else {
-        let locale = window.location.pathname.split('/')[1];
-        return `/${locale}/docs/${url}`;
-    }
-}
-
-const LOCALE =
-    window && window.location && window.location.pathname.split('/')[1];
-const HOME_URL = LOCALE ? `/${LOCALE}/` : '/en-US/';
-
 export default function Header(): React.Node {
+    const documentData = useContext(DocumentProvider.context);
+    if (!documentData) {
+        return null;
+    }
+    const { localeFromURL } = documentData;
+
+    function fixurl(url) {
+        return url.startsWith('https://')
+            ? url
+            : `/${localeFromURL}/docs/${url}`;
+    }
+
     return (
         <Row css={styles.headerRow}>
-            <a css={styles.logo} href={HOME_URL}>
+            <a css={styles.logo} href={`/${localeFromURL}/`}>
                 <Logo alt="MDN Web Docs Logo" />
             </a>
             <Strut width={4} />
