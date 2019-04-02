@@ -105,12 +105,13 @@ localeextract:
 # (including new ones) in Pontoon.
 locale-populate-react:
 	@ mkdir -p locale/compendia
-	for localename in `find locale -mindepth 1 -maxdepth 1 -type d | cut -d/ -f2 | grep -v templates | grep -v compendia`; do \
+	for localename in `find locale -mindepth 1 -maxdepth 1 -type d | cut -d/ -f2 | grep -v templates | grep -v compendia | grep -v .git`; do \
 		rm -f locale/compendia/$$localename.compendium; \
 		msgcat --use-first -o locale/compendia/$$localename.compendium locale/$$localename/LC_MESSAGES/django.po locale/$$localename/LC_MESSAGES/javascript.po; \
 		rm -f locale/$$localename/LC_MESSAGES/react.po; \
 		msgmerge --compendium locale/compendia/$$localename.compendium -o locale/$$localename/LC_MESSAGES/react.po /dev/null locale/templates/LC_MESSAGES/react.pot; \
 	done
+	rm -rf locale/compendia
 
 localecompile:
 	cd locale; ../scripts/compile-mo.sh .

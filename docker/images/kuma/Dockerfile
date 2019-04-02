@@ -9,6 +9,6 @@ COPY --chown=kuma:kuma . /app
 
 # Temporarily enable candidate languages so assets are built for all
 # environments, but still defaults to disabled in production.
+# Also generate react.po translation files for beta.
 RUN ENABLE_CANDIDATE_LANGUAGES=True \
-    make locale-populate-react localecompile build-static \
-    && rm -rf build locale/compendia
+    make locale-populate-react localecompile build-static
