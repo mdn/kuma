@@ -21,8 +21,8 @@ def functional_test(browser, base_dir) {
             if (config.job && config.job.maintenance_mode) {
                 pytest_opts += " --maintenance-mode"
             }
-            // Timeout at 6 minutes for stalled nodes.
-            withEnv(["TIMEOUT=6m",
+            // Timeout at 7 minutes for stalled nodes.
+            withEnv(["TIMEOUT=7m",
                      "BROWSER=${browser}",
                      "PYTEST_OPTS=${pytest_opts}",
                      "BASE_URL=${config.job.base_url}",
@@ -46,8 +46,8 @@ def functional_test(browser, base_dir) {
 def headless_test(base_dir) {
     return {
         node {
-            // Setup the pytest command (timeout at 6 min for stalled nodes).
-            def cmd = "timeout --preserve-status 6m" +
+            // Setup the pytest command (timeout at 7 min for stalled nodes).
+            def cmd = "timeout --preserve-status 7m" +
                       " py.test tests/headless" +
                       " --base-url='${config.job.base_url}'" +
                       " --junit-xml=/app/test_results/headless.xml" +
