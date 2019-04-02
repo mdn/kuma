@@ -86,6 +86,23 @@ localeextract:
 	python manage.py extract
 	python manage.py merge
 
+# The "react" domain contains all the strings from the "javascript" domain,
+# plus some strings duplicated from the "django" domain. While the React
+# pages are in beta, borrow translations from the other two domains.
+# This works by combining (msgcat) the django and javascript domains into a
+# temporary compendium, and then using that as a source of translations
+# (msgmerge). These react.po files are generated but not committed or
+# sent to Pontoon, so new strings are not yet translated.
+#
+# When we're ready to move the new pages out of beta, the copied strings can
+# be committed:
+#
+# 1. Run "make locale-populate-react" one last time
+# 2. Check in /{locale}/react.po files into mdn-l10n, remove from .gitignore
+# 3. Remove this command locale-populate-react
+#
+# We can then treat the "react" domain like others, and translate strings
+# (including new ones) in Pontoon.
 locale-populate-react:
 	@ mkdir -p locale/compendia
 	for localename in `find locale -mindepth 1 -maxdepth 1 -type d | cut -d/ -f2 | grep -v templates | grep -v compendia`; do \
