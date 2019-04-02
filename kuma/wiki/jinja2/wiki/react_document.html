@@ -135,7 +135,7 @@
   </footer>
 
   <!-- site js -->
-  <script src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
+  <script src="{{ react_i18n(request.LANGUAGE_CODE) }}"></script>
   {% javascript 'react-main' %}
   <script>
     if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
