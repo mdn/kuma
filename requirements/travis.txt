@@ -1,7 +1,19 @@
 # this is a standalone requirements file used in .travis.yml to install
 # Travis CI specific requirements
-codecov==1.6.3
-# Keep in sync w/ dev.txt
-tox==2.3.1
-# Keep in sync w/ constraints.txt
-coverage==4.3.4
+
+-r default_and_test.txt
+
+# Run tests in a virtual environment
+# Code: https://github.com/tox-dev/tox
+# Changes: https://tox.readthedocs.io/en/latest/changelog.html
+# Docs: https://tox.readthedocs.io/en/latest/
+tox==2.3.1 \
+    --hash=sha256:1823c93ca378092c10bbde428213d3f5066b30adb09e5c001087a83e3e0a402a \
+    --hash=sha256:bf7fcc140863820700d3ccd65b33820ba747b61c5fe4e2b91bb8c64cb21a47ee
+
+# Upload coverage reports to codecov.io
+# Code: https://github.com/codecov/codecov-python
+# Changes: https://github.com/codecov/codecov-python/blob/master/CHANGELOG.md
+codecov==2.0.15 \
+    --hash=sha256:8ed8b7c6791010d359baed66f84f061bba5bd41174bf324c31311e8737602788 \
+    --hash=sha256:ae00d68e18d8a20e9c3288ba3875ae03db3a8e892115bf9b83ef20507732bed4

@@ -1,5 +1,6 @@
 # These requirements are for development and include the default requirements
 -r default.txt
+-r travis.txt
 
 # Extract messages from Django templates
 # Code: https://github.com/python-babel/django-babel
@@ -52,12 +53,6 @@ pytest-cov==2.4.0 \
 pytest-django==3.1.2 \
     --hash=sha256:038ccc5a9daa1b1b0eb739ab7dce54e495811eca5ea3af4815a2a3ac45152309 \
     --hash=sha256:00995c2999b884a38ae9cd30a8c00ed32b3d38c1041250ea84caf18085589662
-
-# Run tests in a virtual environment
-# Keep in sync w/ travis.txt
-tox==2.3.1 \
-    --hash=sha256:1823c93ca378092c10bbde428213d3f5066b30adb09e5c001087a83e3e0a402a \
-    --hash=sha256:bf7fcc140863820700d3ccd65b33820ba747b61c5fe4e2b91bb8c64cb21a47ee
 
 # Wait until a database (or other) service is able to accept connections.
 # Code: https://github.com/pmac/urlwait
