@@ -174,11 +174,3 @@ lang_urlpatterns = non_document_patterns + [
     url(r'^(?P<document_path>%s)' % DOCUMENT_PATH_RE.pattern,
         include(document_patterns)),
 ]
-
-# These are react-based endpoints for our React spike.
-# They will be triggered by URLs where /docs/ is replaced with /ducks/
-react_document_urlpatterns = [
-    url(r'^(?P<document_path>%s)$' % DOCUMENT_PATH_RE.pattern,
-        views.document.react_document,
-        name='wiki.react_document')
-]

@@ -73,12 +73,6 @@ def moderator_client(client, wiki_moderator):
 
 
 @pytest.fixture
-def create_revision(root_doc):
-    """A revision that created an English document."""
-    return root_doc.revisions.first()
-
-
-@pytest.fixture
 def edit_revision(root_doc, wiki_user):
     """A revision that edits an English document."""
     root_doc.current_revision = Revision.objects.create(
@@ -89,24 +83,6 @@ def edit_revision(root_doc, wiki_user):
         created=datetime(2017, 4, 14, 12, 30))
     root_doc.save()
     return root_doc.current_revision
-
-
-@pytest.fixture
-def trans_doc(create_revision, wiki_user):
-    """Translate the root document into French."""
-    trans_doc = Document.objects.create(
-        locale='fr',
-        parent=create_revision.document,
-        slug='Racine',
-        title='Racine du Document')
-    Revision.objects.create(
-        document=trans_doc,
-        creator=wiki_user,
-        based_on=create_revision,
-        content='<p>Mise en route...</p>',
-        title='Racine du Document',
-        created=datetime(2017, 4, 14, 12, 20))
-    return trans_doc
 
 
 @pytest.fixture

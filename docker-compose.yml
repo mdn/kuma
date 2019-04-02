@@ -23,7 +23,7 @@ services:
       - CSRF_COOKIE_SECURE=False
       - DATABASE_URL=mysql://${DATABASE_USER:-root}:${DATABASE_PASSWORD:-kuma}@mysql:3306/developer_mozilla_org
       - DEBUG=${DEBUG:-True}
-      - DOMAIN=localhost
+      - DOMAIN=${DOMAIN:-localhost}
       - ENABLE_RESTRICTIONS_BY_HOST=${ENABLE_RESTRICTIONS_BY_HOST:-False}
       - ES_URLS=elasticsearch:9200
       - INTERACTIVE_EXAMPLES_BASE=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
@@ -31,8 +31,9 @@ services:
       - REDIS_CACHE_SERVER=redis://redis:6379/3
       - PROTOCOL=http://
       - SESSION_COOKIE_SECURE=False
-      - SITE_URL=http://localhost:8000
+      - SITE_URL=${SITE_URL:-http://localhost:8000}
       - STATIC_URL=${STATIC_URL:-http://localhost:8000/static/}
+      - WAFFLE_COOKIE_SECURE=False
       # Other environment overrides
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=True

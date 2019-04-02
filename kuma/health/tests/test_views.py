@@ -103,15 +103,17 @@ def test_status(client, settings, mock_status_externals):
     # Normalize to docker development settings
     dev_settings = {
         'ALLOWED_HOSTS': ['*'],
-        'ATTACHMENT_HOST': 'localhost:8000',
-        'ATTACHMENT_ORIGIN': 'localhost:8000',
+        'ATTACHMENT_HOST': 'demos:8000',
+        'ATTACHMENT_ORIGIN': 'demos:8000',
         'DEBUG': False,
         'INTERACTIVE_EXAMPLES_BASE': 'https://interactive-examples.mdn.mozilla.net',
         'LEGACY_HOSTS': [],
         'MAINTENANCE_MODE': False,
         'PROTOCOL': 'http://',
         'REVISION_HASH': '3f45719d45f15da73ccc15747c28b80ccc8dfee5',
-        'SITE_URL': 'http://localhost:8000',
+        'SITE_URL': 'http://mdn.localhost:8000',
+        'BETA_SITE_URL': 'http://beta.mdn.localhost:8000',
+        'WIKI_SITE_URL': 'http://wiki.mdn.localhost:8000',
         'STATIC_URL': '/static/',
     }
     for name, value in dev_settings.items():

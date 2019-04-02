@@ -37,7 +37,7 @@
         <p class="notice">{{ _("This user's profile has been banned.") }}</p>
       {% endif %}
 
-      {% if not untrusted and not user.is_authenticated %}
+      {% if not (beta or untrusted) and not user.is_authenticated %}
       {% include "socialaccount/snippets/provider_list.html" %}
       {% endif %}
 

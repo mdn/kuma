@@ -119,3 +119,44 @@ def test_hreflang_basic(base_url):
     html = PyQuery(resp.text)
     assert html.attr('lang') == 'en'
     assert html.find('head > link[hreflang="en"][href="{}"]'.format(url))
+
+
+@pytest.mark.headless
+@pytest.mark.nondestructive
+@pytest.mark.parametrize('uri', ['/api/v1/whoami', '/api/v1/doc/en-US/Web/CSS'])
+def test_beta_endpoints_not_on_wiki(wiki_site_url, uri):
+    """Ensure that these beta endpoints are not provided by the wiki site."""
+    resp = requests.get(wiki_site_url + uri)
+    assert resp.status_code == 404
+
+
+@pytest.mark.headless
+@pytest.mark.nondestructive
+@pytest.mark.parametrize(
+    'uri,expected_keys',
+    [('/api/v1/whoami', ('username', 'is_staff', 'is_authenticated', 'timezone',
+                         'is_beta_tester', 'gravatar_url', 'is_superuser')),
+     ('/api/v1/doc/en-US/Web/CSS', ('locale', 'title', 'slug', 'tocHTML',
+                                    'bodyHTML', 'id', 'quickLinksHTML',
+                                    'parents', 'translations', 'editURL',
+                                    'summary', 'language', 'absoluteURL',
+                                    'redirectURL'))],
+    ids=('whomai', 'doc')
+)
+def test_beta_api_basic(beta_site_url, uri, expected_keys):
+    """Basic test of beta site's api endpoints."""
+    resp = requests.get(beta_site_url + uri)
+    assert resp.status_code == 200
+    assert resp.headers.get('content-type') == 'application/json'
+    data = resp.json()
+    for key in expected_keys:
+        assert key in data
+
+
+@pytest.mark.headless
+@pytest.mark.nondestructive
+def test_api_doc_404(beta_site_url):
+    """Ensure that the beta site's doc api returns 404 for unknown docs."""
+    url = beta_site_url + '/api/v1/doc/en-US/NoSuchPage'
+    resp = requests.get(url)
+    assert resp.status_code == 404

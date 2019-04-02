@@ -6,5 +6,8 @@ from . import views
 urlpatterns = [
     url(r'^doc/(?P<locale>[^/]+)/(?P<slug>.*)$',
         views.doc,
-        name='wiki.api.doc'),
+        name='api.v1.doc'),
+    url(r'^whoami/?$',
+        views.whoami,
+        name='api.v1.whoami'),
 ]

@@ -22,7 +22,9 @@ from statici18n.utils import get_filename
 from urlobject import URLObject
 
 from ..urlresolvers import reverse, split_path
-from ..utils import format_date_time, order_params, urlparams
+from ..utils import (format_date_time, is_beta, is_untrusted, order_params,
+                     urlparams)
+
 
 htmlparser = html_parser.HTMLParser()
 
@@ -34,6 +36,10 @@ library.filter(strip_tags)
 library.filter(defaultfilters.truncatewords)
 library.filter(urlparams)
 library.global_function(statici18n)
+
+
+library.global_function(is_beta)
+library.global_function(is_untrusted)
 
 
 @library.global_function(name='assert')
@@ -58,6 +64,14 @@ def url(viewname, *args, **kwargs):
     """Helper for Django's ``reverse`` in templates."""
     locale = kwargs.pop('locale', None)
     return reverse(viewname, args=args, kwargs=kwargs, locale=locale)
+
+
+@library.global_function
+def url_for_wiki_site(viewname, *args, **kwargs):
+    """Helper for Django's ``reverse`` in templates."""
+    locale = kwargs.pop('locale', None)
+    return reverse(viewname, urlconf='kuma.urls', args=args, kwargs=kwargs,
+                   locale=locale)
 
 
 class Paginator(object):

@@ -44,12 +44,13 @@ export default function Search() {
         return null;
     }
     const { localeFromURL } = documentData;
+    const WIKI_SITE_URL = window && window.mdn ? window.mdn.wikiSiteUrl : '';
 
     return (
         <form
             css={styles.container}
             id="nav-main-search"
-            action={`/${localeFromURL}/search`}
+            action={`${WIKI_SITE_URL}/${localeFromURL}/search`}
             method="get"
             role="search"
         >
