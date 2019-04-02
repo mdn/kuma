@@ -1,0 +1,52 @@
+{% set banners = get_banners() %}
+<div
+    id="developer_needs"
+    class="mdn-cta-container hidden"
+    aria-expanded="false"
+    aria-hidden="true"
+    data-banner="developer_needs"
+>
+    {% if banners|count > 0 %}
+        {% for banner in banners %}
+            <div class="mdn-cta-content {{ banner.theme }}">
+                <div id="developer-needs" class="mdn-cta-content-container">
+                    <h2 class="mdn-cta-title">
+                        {{ _(banner.title) }}
+                    </h2>
+                    <p class="mdn-cta-copy">
+                        {{ _(banner.main_copy) }}
+                    </p>
+                </div>
+                <p class="mdn-cta-button-container">
+                    <a
+                        href="{{ banner.button_url }}"
+                        class="mdn-cta-button"
+                        target="_blank"
+                        rel="external noopener"
+                        >{{ _(banner.button_copy) }}</a
+                    >
+                </p>
+            </div>
+        {% endfor %}
+        <div class="mdn-cta-controls">
+            <button
+                type="button"
+                id="mdn-cta-collapse"
+                class="mdn-cta-collapse hide-collapse"
+                aria-labelledby="mdn-cta-minimize-icon"
+            >
+                {{ include_svg('includes/icons/arrows/chevron-down.svg', _('Minimize
+                banner'), 'mdn-cta-minimize-icon') }}
+            </button>
+            <button
+                type="button"
+                id="mdn-cta-close"
+                class="mdn-cta-close"
+                aria-labelledby="mdn-cta-close-icon"
+            >
+                {{ include_svg('includes/icons/general/close.svg', _('Close
+                banner'), 'mdn-cta-close-icon') }}
+            </button>
+        </div>
+    {% endif %}
+</div>

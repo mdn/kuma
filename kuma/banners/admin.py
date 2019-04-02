@@ -11,7 +11,7 @@ class BannerAdmin(admin.ModelAdmin):
     actions = ['activate_all', 'deactivate_all']
     list_display = ('name', 'active', 'priority')
     fields = ('name', 'title', 'main_copy', 'button_copy',
-              'theme', 'active', 'priority')
+              'button_url', 'theme', 'priority', 'active')
     search_fields = ('name', 'active')
     ordering = ('priority',)
 

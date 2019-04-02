@@ -8,9 +8,9 @@ class Banner(models.Model):
     """
     Defines the model for a single call to action banner
     """
-    THEME_DEFAULT = 'default'
-    THEME_GRADIENT = 'gradient'
-    THEME_DINOHEAD = 'dinohead'
+    THEME_DEFAULT = 'cta-background-default'
+    THEME_GRADIENT = 'cta-background-linear'
+    THEME_DINOHEAD = 'cta-background-dinohead'
     THEMES = (
         (THEME_DEFAULT, 'Default'),
         (THEME_GRADIENT, 'Gradient'),
@@ -20,7 +20,8 @@ class Banner(models.Model):
     title = models.CharField('Banner Title', max_length=100)
     main_copy = models.TextField('Main Copy', max_length=200)
     button_copy = models.CharField('Button Copy', max_length=50)
-    theme = models.CharField('Theme', max_length=20,
+    button_url = models.URLField('URL')
+    theme = models.CharField('Theme', max_length=40,
                              choices=THEMES, default=THEME_DEFAULT)
     active = models.BooleanField('Activate')
     priority = models.PositiveSmallIntegerField('Priority (1-100)',
