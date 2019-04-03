@@ -9,6 +9,12 @@
 .document-title {
     h1 {
         @include set-font-size($mobile-document-title-font-size);
+        /* Needed to make Chrome honor the zero-width spaces */
+        word-break: break-word;
+
+        @media #{$mq-mobile-and-up} {
+            @include set-font-size($h1-font-size);
+        }
     }
 
     em {
@@ -27,13 +33,6 @@
     }
 }
 
-@media #{$mq-mobile-and-up} {
-    .document-title {
-        h1 {
-            @include set-font-size($h1-font-size);
-        }
-    }
-}
 
 @media #{$mq-mobile-and-up} {
     @supports (display: flex) {

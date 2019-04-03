@@ -68,7 +68,6 @@
     */
     $('.document .document-head h1, .quick-links a code, .crumbs span[property=name]').each(function() {
         var $wrapper = $(this);
-        var text = $wrapper.text();
         // don't do anything if there are any child elements, they would be removed
         if ($wrapper.children().length > 0) {
             return;
@@ -80,19 +79,11 @@
          * IF followed by [ . : ( OR capital letter
          * IF followed by 3 letters or [ @ . : (
          */
-        var split = text.split(/([a-z]{3})(?=[[.:(A-Z][@.:(A-Z]{0,}[a-zA-Z]{3})/g);
-        // empty wrapper
-        $wrapper.empty();
-        // put split string back into wrapper
-        $.each(split, function(key, value) {
-            // skip first match and even values (as it matches the 3 charcters before the split)
-            if(key > 0 && key % 2 === 0) {
-                // add <wbr>
-                $wrapper.append('<wbr>');
-            }
-            // add text back, make sure it goes back as text, not code to run
-            $wrapper.append(doc.createTextNode(value));
-        });
+        $wrapper.text(
+            $wrapper.text().replace(
+                /([a-z]{3})(?=[[.:(A-Z][@.:(A-Z]{0,}[a-zA-Z]{3})/g,'$1\u200b'
+            )
+        );
     });
 
     /*

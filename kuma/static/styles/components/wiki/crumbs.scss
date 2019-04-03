@@ -1,6 +1,8 @@
 /*
 wiki article bread crumbs
 ********************************************************************** */
+$crumb-vertical-spacing-tablet: $grid-spacing / 2;
+$crumb-vertical-spacing-desktop: $grid-spacing / 4;
 
 .crumbs {
     border: 1px solid #d7d7d7;
@@ -8,6 +10,17 @@ wiki article bread crumbs
     margin: $grid-spacing 0;
     padding: $grid-spacing 0;
     @include set-font-size($smaller-font-size);
+
+    @media #{$mq-tablet-and-up} {
+        border-top-width: 0;
+        margin-top: 0;
+        padding-bottom: $grid-spacing - $crumb-vertical-spacing-tablet;
+        padding-top: 0;
+    }
+
+    @media #{$mq-small-desktop-and-up} {
+        padding-bottom: $grid-spacing - $crumb-vertical-spacing-desktop;
+    }
 
     li {
         display: inline;
@@ -29,45 +42,29 @@ wiki article bread crumbs
         /* borders increase hit area for mobile without messing with position of arrow */
         border-top: 15px solid transparent;
         border-bottom: 15px solid transparent;
-        line-height: 1;
+        line-height: 1.5;
+        /* Needed to make Chrome honor the zero-width spaces */
+        word-break: break-word;
+
+        @media #{$mq-tablet-and-up} {
+            border-top: none;
+            border-bottom: $crumb-vertical-spacing-tablet solid transparent;
+        }
+
+        @media #{$mq-small-desktop-and-up} {
+            border-bottom: $crumb-vertical-spacing-desktop solid transparent;
+        }
 
         &:after {
-            margin: 10px 5px 3px;
+            margin: 10px 5px 5px;
             vertical-align: bottom;
             @include set-bidi-icon($path-to-svg-arrow-icons + 'chevron-right.svg', $path-to-svg-arrow-icons + 'chevron-left.svg', auto, auto, 8px, 10px);
+            height: 11px;
         }
     }
 
     li:last-child span:after {
         display: none;
-    }
-}
-
-@media #{$mq-tablet-and-up} {
-    $crumb-vertical-spacing: $grid-spacing / 2;
-
-    .crumbs {
-        border-top-width: 0;
-        margin-top: 0;
-        padding-bottom: $grid-spacing - $crumb-vertical-spacing;
-        padding-top: 0;
-
-        span {
-            border-top: none;
-            border-bottom: $crumb-vertical-spacing solid transparent;
-        }
-    }
-}
-
-@media #{$mq-small-desktop-and-up} {
-    $crumb-vertical-spacing: 5px;
-
-    .crumbs {
-        padding-bottom: $grid-spacing - $crumb-vertical-spacing;
-
-        span {
-            border-bottom: $crumb-vertical-spacing solid transparent;
-        }
     }
 }
 
