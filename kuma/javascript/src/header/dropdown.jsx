@@ -20,11 +20,8 @@ const MenuLabel = styled.button`
     display: flex;
     flex-direction: row;
     align-items: center;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 32px;
     white-space: nowrap;
-    padding: 0 10px;
+    padding: 0 5px;
     margin: 0;
     border: none;
     :hover {
@@ -37,7 +34,7 @@ const MenuLabel = styled.button`
 `;
 
 const Arrow = styled.span`
-    font-size: 12px;
+    font-size: '75%';
     padding-left: 2px;
 `;
 

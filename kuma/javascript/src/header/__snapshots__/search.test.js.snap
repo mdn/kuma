@@ -16,11 +16,10 @@ exports[`Search snapshot 1`] = `
   padding: 2px 8px;
   border: solid #888 1px;
   border-radius: 8px;
-  max-width: 350px;
-  min-width: 120px;
-  -webkit-flex: 2 1 120px;
-  -ms-flex: 2 1 120px;
-  flex: 2 1 120px;
+  min-width: 80px;
+  -webkit-flex: 2 1;
+  -ms-flex: 2 1;
+  flex: 2 1;
 }
 
 .emotion-0 {
@@ -34,9 +33,10 @@ exports[`Search snapshot 1`] = `
   border-width: 0 !important;
   font-size: 16px;
   font-weight: bold !important;
-  -webkit-flex: 0 1 300px;
-  -ms-flex: 0 1 300px;
-  flex: 0 1 300px;
+  -webkit-flex: 1 1 100px;
+  -ms-flex: 1 1 100px;
+  flex: 1 1 100px;
+  min-width: 60px;
 }
 
 <form

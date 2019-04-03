@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LanguageMenu snapshot 1`] = `
-.emotion-6 {
+.emotion-7 {
   position: relative;
   pointer-events: auto;
 }
 
-.emotion-2 {
+.emotion-3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -18,29 +18,30 @@ exports[`LanguageMenu snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 32px;
   white-space: nowrap;
-  padding: 0 10px;
+  padding: 0 5px;
   margin: 0;
   border: none;
 }
 
-.emotion-2:hover {
+.emotion-3:hover {
   background-color: #eee;
 }
 
-.emotion-2:focus {
+.emotion-3:focus {
   outline-offset: -3px;
 }
 
 .emotion-0 {
-  font-size: 12px;
+  height: 1.5em;
+}
+
+.emotion-1 {
+  font-size: '75%';
   padding-left: 2px;
 }
 
-.emotion-4 {
+.emotion-5 {
   position: absolute;
   z-index: 100;
   display: -webkit-box;
@@ -59,27 +60,29 @@ exports[`LanguageMenu snapshot 1`] = `
   display: none;
 }
 
-.emotion-4 li {
+.emotion-5 li {
   padding: 5px;
   white-space: nowrap;
 }
 
 <div
-  className="emotion-6 emotion-7"
+  className="emotion-7 emotion-8"
 >
   <button
-    className="emotion-2 emotion-3"
+    className="emotion-3 emotion-4"
     onClick={[Function]}
   >
-    <svg mock />
+    <svg mock
+      className="emotion-0"
+    />
     <span
-      className="emotion-0 emotion-1"
+      className="emotion-1 emotion-2"
     >
       ▼
     </span>
   </button>
   <ul
-    className="dropdown-menu emotion-4 emotion-5"
+    className="dropdown-menu emotion-5 emotion-6"
   >
     <li
       lang="es"

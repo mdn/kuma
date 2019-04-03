@@ -65,7 +65,7 @@ test('Login component when user is logged in', () => {
 
     // Open up the dropdown menu
     act(() => {
-        login.toJSON()[0].children[0].props.onClick();
+        login.toJSON().children[0].children[0].props.onClick();
     });
 
     expect(login.toJSON()).toMatchSnapshot();

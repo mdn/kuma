@@ -1,8 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Login component when user is logged in 1`] = `
-Array [
-  .emotion-8 {
+.emotion-14 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.emotion-14 button {
+  font-size: 1em;
+}
+
+.emotion-8 {
   position: relative;
   pointer-events: auto;
 }
@@ -19,11 +36,8 @@ Array [
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 32px;
   white-space: nowrap;
-  padding: 0 10px;
+  padding: 0 5px;
   margin: 0;
   border: none;
 }
@@ -37,13 +51,12 @@ Array [
 }
 
 .emotion-0 {
-  width: 48px;
-  height: 48px;
+  width: 4em;
   border-radius: 50%;
 }
 
 .emotion-1 {
-  font-size: 12px;
+  font-size: '75%';
   padding-left: 2px;
 }
 
@@ -76,6 +89,7 @@ Array [
   border-width: 0;
   padding: 0;
   color: #3d7e9a;
+  font-size: 1em;
   font-weight: normal;
 }
 
@@ -84,7 +98,31 @@ Array [
   text-decoration: underline;
 }
 
+.emotion-10 {
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-flex-basis: 8px;
+  -ms-flex-preferred-size: 8px;
+  flex-basis: 8px;
+}
+
+.emotion-13 {
+  line-height: 1;
+}
+
+.emotion-12 {
+  width: 1.33em;
+}
+
 <div
+  className="emotion-14 emotion-15"
+>
+  <div
     className="emotion-8 emotion-9"
   >
     <button
@@ -138,8 +176,72 @@ Array [
         </form>
       </li>
     </ul>
-  </div>,
-  .emotion-0 {
+  </div>
+  <div
+    className="emotion-10 emotion-11"
+    width={8}
+  />
+  <a
+    className="emotion-13"
+    href="[fake edit url]"
+    title="Edit this page"
+  >
+    <svg mock
+      alt="Edit this page"
+      className="emotion-12"
+    />
+  </a>
+</div>
+`;
+
+exports[`Login component when user is logged in 2`] = `
+.emotion-14 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.emotion-14 button {
+  font-size: 1em;
+}
+
+.emotion-8 {
+  position: relative;
+  pointer-events: auto;
+}
+
+.emotion-0 {
+  width: 4em;
+  border-radius: 50%;
+}
+
+.emotion-1 {
+  font-size: '75%';
+  padding-left: 2px;
+}
+
+.emotion-5 {
+  border-width: 0;
+  padding: 0;
+  color: #3d7e9a;
+  font-size: 1em;
+  font-weight: normal;
+}
+
+.emotion-5:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.emotion-10 {
   -webkit-box-flex: 0;
   -webkit-flex-grow: 0;
   -ms-flex-positive: 0;
@@ -152,54 +254,12 @@ Array [
   flex-basis: 8px;
 }
 
-<div
-    className="emotion-0 emotion-1"
-    width={8}
-  />,
-  .emotion-0 {
+.emotion-13 {
   line-height: 1;
 }
 
-<a
-    className="emotion-0"
-    href="[fake edit url]"
-    title="Edit this page"
-  >
-    <svg mock
-      alt="Edit this page"
-    />
-  </a>,
-]
-`;
-
-exports[`Login component when user is logged in 2`] = `
-Array [
-  .emotion-8 {
-  position: relative;
-  pointer-events: auto;
-}
-
-.emotion-0 {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-}
-
-.emotion-1 {
-  font-size: 12px;
-  padding-left: 2px;
-}
-
-.emotion-5 {
-  border-width: 0;
-  padding: 0;
-  color: #3d7e9a;
-  font-weight: normal;
-}
-
-.emotion-5:hover {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
+.emotion-12 {
+  width: 1.33em;
 }
 
 .emotion-3 {
@@ -214,11 +274,8 @@ Array [
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 32px;
   white-space: nowrap;
-  padding: 0 10px;
+  padding: 0 5px;
   margin: 0;
   border: none;
   background-color: #83d0f2;
@@ -261,6 +318,9 @@ Array [
 }
 
 <div
+  className="emotion-14 emotion-15"
+>
+  <div
     className="emotion-8 emotion-9"
   >
     <button
@@ -314,38 +374,22 @@ Array [
         </form>
       </li>
     </ul>
-  </div>,
-  .emotion-0 {
-  -webkit-box-flex: 0;
-  -webkit-flex-grow: 0;
-  -ms-flex-positive: 0;
-  flex-grow: 0;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  -webkit-flex-basis: 8px;
-  -ms-flex-preferred-size: 8px;
-  flex-basis: 8px;
-}
-
-<div
-    className="emotion-0 emotion-1"
+  </div>
+  <div
+    className="emotion-10 emotion-11"
     width={8}
-  />,
-  .emotion-0 {
-  line-height: 1;
-}
-
-<a
-    className="emotion-0"
+  />
+  <a
+    className="emotion-13"
     href="[fake edit url]"
     title="Edit this page"
   >
     <svg mock
       alt="Edit this page"
+      className="emotion-12"
     />
-  </a>,
-]
+  </a>
+</div>
 `;
 
 exports[`Login component when user is not logged in 1`] = `
@@ -358,12 +402,12 @@ exports[`Login component when user is not logged in 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  font-size: 18px;
+  font-size: 1.2em;
   font-weight: bold;
   color: black;
   -webkit-text-decoration: none;
   text-decoration: none;
-  line-height: 48px;
+  line-height: 3.2em;
   padding: 0 8px;
 }
 
@@ -378,7 +422,8 @@ exports[`Login component when user is not logged in 1`] = `
 }
 
 .emotion-0 {
-  margin-left: 5px;
+  margin-left: 3px;
+  width: 1.5em;
 }
 
 <a
