@@ -85,7 +85,11 @@
                         {% endwith %}
 
                         {% if not user.is_authenticated %}
+                            {% if beta %}
+                            {% set github_url = provider_login_url('github', process='login') | absolutify(for_wiki_site=True) %}
+                            {% else %}
                             {% set github_url = provider_login_url('github', process='login') %}
+                            {% endif %}
                             <div id="login-popover" class="hidden align-center login-prompt">
                                 <p>{{_('We’ve noticed you’re not logged in to MDN. To complete your monthly payment, we’ll need you to log in first.')}}</p>
                                 <a href="{{ github_url }}" id="github_redirect_payment" class="payment-form-button js-login-link" data-service="GitHub" rel="nofollow" data-next="{{ github_next_url }}">

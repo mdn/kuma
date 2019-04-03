@@ -11,6 +11,7 @@ from jinja2 import contextfunction, escape, Markup
 
 from kuma.core.templatetags.jinja_helpers import datetimeformat
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import override_urlconf
 
 from ..jobs import UserGravatarURLJob
 
@@ -120,7 +121,9 @@ def provider_login_url(context, provider_id, **params):
         if not params['next']:
             del params['next']
     # get the login url and append params as url parameters
-    return Markup(provider.get_login_url(request, **params))
+    with override_urlconf('kuma.urls'):
+        result = Markup(provider.get_login_url(request, **params))
+    return result
 
 
 @library.global_function
