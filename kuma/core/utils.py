@@ -4,6 +4,7 @@ import datetime
 import hashlib
 import logging
 import os
+from contextlib import contextmanager
 from itertools import islice
 
 from babel import dates, localedata
@@ -12,6 +13,7 @@ from django.conf import settings
 from django.core.paginator import EmptyPage, InvalidPage, Paginator
 from django.http import QueryDict
 from django.shortcuts import _get_queryset
+from django.urls import get_urlconf, set_urlconf
 from django.utils.cache import patch_cache_control
 from django.utils.encoding import force_text, smart_bytes
 from django.utils.http import urlencode
@@ -442,3 +444,17 @@ def order_params(original_url):
     new_qs = urlencode(qs)
     new_url = urlunsplit((bits.scheme, bits.netloc, bits.path, new_qs, bits.fragment))
     return new_url
+
+
+@contextmanager
+def override_urlconf(new_urlconf):
+    """
+    Context manager for temporarily overriding the urlconf for the current
+    thread.
+    """
+    original_urlconf = get_urlconf()
+    set_urlconf(new_urlconf)
+    try:
+        yield
+    finally:
+        set_urlconf(original_urlconf)
