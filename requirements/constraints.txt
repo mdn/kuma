@@ -79,6 +79,35 @@ webencodings==0.5.1 \
     --hash=sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78 \
     --hash=sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923
 
+# boto3
+#
+# The low-level, core functionality of boto 3.
+# Code: https://github.com/boto/botocore
+# Changes: https://github.com/boto/botocore/blob/develop/CHANGELOG.rst
+# Docs: https://botocore.amazonaws.com/v1/documentation/api/latest/index.html
+botocore==1.12.130 \
+    --hash=sha256:128130b12f8ba4bf07a673b119135264060eb98f6a4a7419cbd1f2c6dc926827 \
+    --hash=sha256:59376112fdee707927b644dd44a1771861f8fe354a48d596131ced83d7a3c05b
+# Documentation Utilities for Python
+# Docs: http://docutils.sourceforge.net/
+docutils==0.12 \
+    --hash=sha256:c7db717810ab6965f66c8cf0398a98c9d8df982da39b4cd7f162911eb89596fa \
+    --hash=sha256:dcebd4928112631626f4c4d0df59787c748404e66dda952110030ea883d3b8cd
+# JMESPath is a query language for JSON
+# Code: https://github.com/jmespath/jmespath.py
+# Changes: https://github.com/jmespath/jmespath.py/blob/develop/CHANGELOG.rst
+# Docs: https://github.com/jmespath/jmespath.py/blob/develop/README.rst
+jmespath==0.9.4 \
+    --hash=sha256:3720a4b1bd659dd2eecad0666459b9788813e032b83e7ba58578e48254e0a0e6 \
+    --hash=sha256:bde2aef6f44302dfb30320115b17d030798de8c4110e28d5cf6cf91a7a31074c
+# Amazon S3 Transfer Manager for Python
+# Code: https://github.com/boto/s3transfer
+# Changes: https://github.com/boto/s3transfer/blob/develop/CHANGELOG.rst
+# Docs: https://github.com/boto/s3transfer/blob/develop/README.rst
+s3transfer==0.2.0 \
+    --hash=sha256:7b9ad3213bff7d357f888e0fab5101b56fa1a0548ee77d121c3a3dbfbef4cb2e \
+    --hash=sha256:f23d5cb7d862b104401d9021fc82e5fa0e0cf57b7660a1331425aab0c691d021
+
 # celery
 #
 # RabbitMQ client library

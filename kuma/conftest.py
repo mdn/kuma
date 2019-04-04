@@ -9,6 +9,8 @@ from django.urls import set_urlconf
 from django.utils.translation import activate
 from waffle.testutils import override_flag
 
+from kuma.core.urlresolvers import reverse
+from kuma.wiki.constants import REDIRECT_CONTENT
 from kuma.wiki.models import Document, Revision
 
 
@@ -158,6 +160,23 @@ def trans_doc(create_revision, wiki_user):
         title='Racine du Document',
         created=datetime(2017, 4, 14, 12, 20))
     return trans_doc
+
+
+@pytest.fixture
+def redirect_doc(wiki_user, root_doc):
+    """A newly-created top-level English redirect document."""
+    redirect_doc = Document.objects.create(
+        locale='en-US', slug='Redirection', title='Redirect Document')
+    Revision.objects.create(
+        document=redirect_doc,
+        creator=wiki_user,
+        content=REDIRECT_CONTENT % {
+            'href': reverse('wiki.document', args=(root_doc.slug,)),
+            'title': root_doc.title,
+        },
+        title='Redirect Document',
+        created=datetime(2017, 4, 17, 12, 15))
+    return redirect_doc
 
 
 @pytest.fixture

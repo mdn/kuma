@@ -6,6 +6,7 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
 
 from kuma.users.templatetags.jinja_helpers import gravatar_url
+from kuma.wiki.jobs import DocumentContributorsJob
 from kuma.wiki.models import Document
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
@@ -33,9 +34,47 @@ def doc(request, locale, slug):
     return JsonResponse(document_api_data(document))
 
 
-def document_api_data(document):
+def document_api_data(document, ensure_contributors=False):
+    while document.is_redirect:
+        redirect_document = document.get_redirect_document(id_only=False)
+        if redirect_document:
+            document = redirect_document
+        else:
+            locale = document.locale
+            redirect_url = document.get_redirect_url()
+            # For now, if it's not the home page, let's try the wiki site.
+            if redirect_url not in ('/', '/' + locale, '/{}/'.format(locale)):
+                redirect_url = absolutify(redirect_url, for_wiki_site=True)
+            return {
+                'locale': None,
+                'slug': None,
+                'id': None,
+                'title': None,
+                'summary': None,
+                'language': None,
+                'absoluteURL': None,
+                'redirectURL': redirect_url,
+                'editURL': None,
+                'bodyHTML': None,
+                'quickLinksHTML': None,
+                'tocHTML': None,
+                'parents': None,
+                'translations': None,
+                'contributors': None,
+                'lastModified': None,
+                'lastModifiedBy': None
+            }
+
     translations = document.get_other_translations(
         fields=('locale', 'slug', 'title'))
+
+    if ensure_contributors:
+        # This avoids an empty list when using "document.contributors" and
+        # the result has not yet been cached for the document, as well as
+        # the creation of a "cacheback.tasks.refresh_cache" Celery task.
+        contributors = DocumentContributorsJob().fetch(document.pk)
+    else:
+        contributors = document.contributors
 
     return {
         'locale': document.locale,
@@ -45,7 +84,7 @@ def document_api_data(document):
         'summary': document.get_summary_html(),
         'language': document.language,
         'absoluteURL': document.get_absolute_url(),
-        'redirectURL': document.get_redirect_url(),
+        'redirectURL': None,
         'editURL': absolutify(document.get_edit_url(), for_wiki_site=True),
         'bodyHTML': document.get_body_html(),
         'quickLinksHTML': document.get_quick_links_html(),
@@ -65,7 +104,7 @@ def document_api_data(document):
                 'title': t.title
             } for t in translations
         ],
-        'contributors': [c['username'] for c in document.contributors],
+        'contributors': [c['username'] for c in contributors],
         'lastModified': document.current_revision.created.isoformat(),
         'lastModifiedBy': (document.current_revision.creator and
                            str(document.current_revision.creator))

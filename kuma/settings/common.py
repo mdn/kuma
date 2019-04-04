@@ -568,6 +568,7 @@ INSTALLED_APPS = (
     'soapbox',  # must be before kuma.wiki, or RemovedInDjango19Warning
 
     # MDN
+    'kuma.api',
     'kuma.payments.apps.PaymentsConfig',
     'kuma.core',
     'kuma.banners',

@@ -1,3 +1,4 @@
+from datetime import datetime
 from functools import partial
 
 import mock
@@ -7,10 +8,69 @@ from kuma.api.v1.views import document_api_data
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse as core_reverse
 from kuma.users.templatetags.jinja_helpers import gravatar_url
+from kuma.wiki.constants import REDIRECT_CONTENT
+from kuma.wiki.models import Document, Revision
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
 reverse = partial(core_reverse, urlconf='kuma.urls_beta')
+
+
+@pytest.fixture
+def redirect_to_home_page(wiki_user):
+    """
+    A top-level English redirect document that redirects to the home page.
+    """
+    redirect_doc = Document.objects.create(
+        locale='en-US', slug='GoHome', title='Redirect to Home Page')
+    Revision.objects.create(
+        document=redirect_doc,
+        creator=wiki_user,
+        content=REDIRECT_CONTENT % {
+            'href': '/',
+            'title': 'MDN Web Docs',
+        },
+        title='Redirect to Home Page',
+        created=datetime(2015, 7, 4, 11, 15))
+    return redirect_doc
+
+
+@pytest.fixture
+def redirect_to_macros_dashboard(wiki_user):
+    """
+    A top-level English redirect document that redirects to the home page.
+    """
+    redirect_doc = Document.objects.create(
+        locale='en-US', slug='GoMacros', title='Redirect to Macros Dashboard')
+    Revision.objects.create(
+        document=redirect_doc,
+        creator=wiki_user,
+        content=REDIRECT_CONTENT % {
+            'href': '/en-US/dashboards/macros',
+            'title': 'Active macros | MDN',
+        },
+        title='Redirect to Macros Dashboard',
+        created=datetime(2017, 5, 24, 12, 15))
+    return redirect_doc
+
+
+@pytest.fixture
+def redirect_to_redirect_doc(wiki_user_2, redirect_doc):
+    """
+    A top-level English redirect document that redirects to the redirect_doc.
+    """
+    r2r_doc = Document.objects.create(
+        locale='en-US', slug='DoubleRedirect', title='Double Redirect Document')
+    Revision.objects.create(
+        document=r2r_doc,
+        creator=wiki_user_2,
+        content=REDIRECT_CONTENT % {
+            'href': reverse('wiki.document', args=(redirect_doc.slug,)),
+            'title': redirect_doc.title,
+        },
+        title='Double Redirect Document',
+        created=datetime(2016, 4, 17, 12, 15))
+    return r2r_doc
 
 
 @pytest.mark.parametrize(
@@ -73,6 +133,76 @@ def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache):
     # the document_api_data() function directly
     data2 = document_api_data(trans_doc)
     assert data == data2
+
+
+@pytest.mark.parametrize('case', ('normal',
+                                  'redirect',
+                                  'redirect-to-redirect',
+                                  'redirect-to-home-page',
+                                  'redirect-to-wiki'))
+def test_document_api_data(settings, root_doc, trans_doc, redirect_doc,
+                           redirect_to_redirect_doc, redirect_to_home_page,
+                           redirect_to_macros_dashboard, case):
+    expected_data = {
+        'absoluteURL': root_doc.get_absolute_url(),
+        'bodyHTML': root_doc.get_body_html(),
+        'contributors': ['wiki_user'],
+        'editURL': absolutify(root_doc.get_edit_url(), for_wiki_site=True),
+        'id': root_doc.id,
+        'language': root_doc.language,
+        'lastModified': '2017-04-14T12:15:00',
+        'lastModifiedBy': 'wiki_user',
+        'locale': root_doc.locale,
+        'parents': [],
+        'quickLinksHTML': root_doc.get_quick_links_html(),
+        'redirectURL': None,
+        'slug': root_doc.slug,
+        'summary': root_doc.get_summary_html(),
+        'title': root_doc.title,
+        'tocHTML': root_doc.get_toc_html(),
+        'translations': [
+            {
+                'language': trans_doc.language,
+                'localizedLanguage': 'French',
+                'locale': trans_doc.locale,
+                'url': trans_doc.get_absolute_url(),
+                'title': trans_doc.title
+            }
+        ]
+    }
+    if case == 'normal':
+        doc = root_doc
+    elif case == 'redirect':
+        doc = redirect_doc
+    elif case == 'redirect-to-redirect':
+        doc = redirect_to_redirect_doc
+    else:
+        expected_data = {
+            'absoluteURL': None,
+            'bodyHTML': None,
+            'contributors': None,
+            'editURL': None,
+            'id': None,
+            'language': None,
+            'lastModified': None,
+            'lastModifiedBy': None,
+            'locale': None,
+            'parents': None,
+            'quickLinksHTML': None,
+            'slug': None,
+            'summary': None,
+            'title': None,
+            'tocHTML': None,
+            'translations': None
+        }
+        if case == 'redirect-to-home-page':
+            doc = redirect_to_home_page
+            expected_data['redirectURL'] = '/'
+        else:
+            doc = redirect_to_macros_dashboard
+            expected_data['redirectURL'] = (
+                settings.WIKI_SITE_URL + '/en-US/dashboards/macros')
+    assert document_api_data(doc, ensure_contributors=True) == expected_data
 
 
 @pytest.mark.parametrize(
