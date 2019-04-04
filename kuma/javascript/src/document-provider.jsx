@@ -64,9 +64,10 @@ export default function DocumentProvider(
     // A one-time effect that runs only on mount, to set up
     // an event handler for client-side navigation
     useEffect(() => {
+        // This is the function that does client side navigation
         function navigate(url, localeAndSlug) {
             body.style.opacity = '0.15';
-            fetch(`/api/v1/doc/${localeAndSlug}`)
+            fetch(`/api/v1/doc${localeAndSlug}`)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -93,6 +94,7 @@ export default function DocumentProvider(
                 });
         }
 
+        // A click event handler that triggers client-side navigation
         body.addEventListener('click', (e: MouseEvent) => {
             // If this is not a left click, or not a single click, or
             // if there are modifier keys, then this is not a simple
@@ -136,20 +138,31 @@ export default function DocumentProvider(
 
             let locale = parts[1];
             let slug = parts.slice(3).join('/');
-            let localeAndSlug = `${locale}/${slug}`;
-            history.pushState(
-                { url, localeAndSlug },
-                '',
-                url
-            );
+            let localeAndSlug = `/${locale}/${slug}`;
+            history.pushState({ url, localeAndSlug }, '', url);
             navigate(url, localeAndSlug);
         });
 
+        // An event handler that does client-side navigation in response
+        // to the back and forward buttons
         window.addEventListener('popstate', event => {
             if (event.state) {
                 navigate(event.state.url, event.state.localeAndSlug);
             }
         });
+
+        // Finally, after registering those event handlers, we also need
+        // to use history.pushState() to record the URL of the initial page
+        // that just loaded so that the user can return to it via the
+        // back button.
+        history.pushState(
+            {
+                url: window.location.href,
+                localeAndSlug: window.location.pathname.replace('/docs/', '/')
+            },
+            '',
+            window.location.href
+        );
     }, []);
 
     /*
