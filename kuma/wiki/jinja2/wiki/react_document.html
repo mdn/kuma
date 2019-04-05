@@ -99,9 +99,11 @@
   </div>
 
   {% if settings.NEWSLETTER and settings.NEWSLETTER_ARTICLE %}
+  <div class="center">
     <div class="newsletter-box">
       {% include "includes/newsletter.html" %}
     </div>
+  </div>
   {% endif %}
 
   {%- if contribution_popup %}
