@@ -192,33 +192,36 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         parsed = pq(response.content)
         expected_emails = [
             {
-                # BUG: The class should be omitted if empty
-                'li_attrib': {'class': ''},
-                # BUG: The label 'for' should match the radio 'id'
-                'label_attrib': {'for': '_0'},
+                'li_attrib': {},
+                'label_attrib': {'for': 'email_0'},
                 'radio_attrib': {'required': '',
                                  'type': 'radio',
                                  'name': 'email',
                                  'value': 'octocat-private@example.com',
                                  'id': 'email_0'},
+                'verified': True,
             }, {
-                'li_attrib': {'class': ''},
-                'label_attrib': {'for': '_1'},
+                'li_attrib': {},
+                'label_attrib': {'for': 'email_1'},
                 'radio_attrib': {'checked': 'checked',
                                  'required': '',
                                  'type': 'radio',
                                  'name': 'email',
                                  'value': 'octocat@example.com',
                                  'id': 'email_1'},
+                'verified': False,
             }, {
-                # BUG: This should include an email input for "other"
-                'li_attrib': {'class': ''},
-                'label_attrib': {'for': '_2'},
+                'li_attrib': {},
+                'label_attrib': {'class': 'inner other-label',
+                                 'for': 'email_2'},
                 'radio_attrib': {'required': '',
                                  'type': 'radio',
                                  'name': 'email',
                                  'value': '_other',
                                  'id': 'email_2'},
+                'other_attrib': {'type': 'email',
+                                 'name': 'other_email',
+                                 'id': 'id_other_email'}
             },
         ]
         email_lis = parsed.find('ul.choices li')
@@ -227,8 +230,20 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
             actual = {'li_attrib': email_li.attrib}
             email_label = email_li.find('label')
             actual['label_attrib'] = email_label.attrib
-            # BUG: The label should include Verified or Unverified
-            email_radio = email_label.cssselect('input[type=radio]')[0]
+            email_inner = email_li.cssselect('input[type=email]')
+            if email_inner:
+                # The "Other:" element is arranged differently, has an email input
+                actual['other_attrib'] = email_inner[0].attrib
+                email_radio = email_li.cssselect('input[type=radio]')[0]
+            else:
+                # Standard selections from Github include if the email is verified
+                text = email_label.text_content()
+                actual['verified'] = 'Unknown'
+                if 'Verified' in text:
+                    actual['verified'] = True
+                elif 'Unverified' in text:
+                    actual['verified'] = False
+                email_radio = email_label.cssselect('input[type=radio]')[0]
             actual['radio_attrib'] = email_radio.attrib
             assert actual == expected
 
