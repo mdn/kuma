@@ -1262,6 +1262,11 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         assert response.status_code == 200
         assert_no_cache_header(response)
         assert not response.context['matching_accounts']
+        # The template is tested here instead of test_templates.py because
+        # test setup is so painful for login tests.
+        parsed = pq(response.content)
+        li_exists = parsed.find('ul.choices li.exists')
+        assert len(li_exists) == 0
 
         # Create a legacy Persona account with the given email address
         octocat3 = user(username='octocat3', is_active=True,
@@ -1271,6 +1276,14 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                                                       user=octocat3)
         response = self.client.get(self.signup_url)
         assert list(response.context['matching_accounts']) == [social_account]
+        parsed = pq(response.content)
+        # li with class=exists is rendered with a strikeout, to suggest to the
+        # user that signup may fail and they should use account recovery.
+        li_exists = parsed.find('ul.choices li.exists')
+        assert len(li_exists) == 1
+        email_input = li_exists[0].cssselect('input[type=radio]')
+        assert len(email_input) == 1
+        assert email_input[0].attrib['value'] == testemail
 
     def test_account_tokens(self):
         testemail = 'account_token@acme.com'
