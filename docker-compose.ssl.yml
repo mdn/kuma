@@ -3,7 +3,7 @@ services:
   worker: &worker
     environment:
       - ACCOUNT_DEFAULT_HTTP_PROTOCOL=https
-      - ALLOWED_HOSTS=developer.127.0.0.1.nip.io,demos.developer.127.0.0.1.nip.io,api,localhost,web
+      - ALLOWED_HOSTS=developer.127.0.0.1.nip.io,beta.developer.127.0.0.1.nip.io,wiki.developer.127.0.0.1.nip.io,demos.developer.127.0.0.1.nip.io,api,localhost,web
       - ATTACHMENT_HOST=demos.developer.127.0.0.1.nip.io
       - CSRF_COOKIE_SECURE=True
       - DOMAIN=developer.127.0.0.1.nip.io
@@ -13,6 +13,7 @@ services:
       - SITE_ID=2
       - SITE_URL=https://developer.127.0.0.1.nip.io
       - STATIC_URL=https://developer.127.0.0.1.nip.io/static/
+      - WAFFLE_COOKIE_SECURE=True
   api:
     <<: *worker
   web:
@@ -34,4 +35,3 @@ services:
   kumascript:
     environment:
       - LIVE_SAMPLES_URL=https://demos.developer.127.0.0.1.nip.io
-

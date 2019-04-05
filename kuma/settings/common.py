@@ -1734,6 +1734,14 @@ LOGGING = {
 
 CSRF_COOKIE_DOMAIN = DOMAIN
 CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=True, cast=bool)
+# We need to explcitly set the trusted origins, because when CSRF_COOKIE_DOMAIN
+# is explicitly set, as we do above, Django's CsrfViewMiddleware will reject
+# the request unless the domain of the incoming referer header matches not just
+# the CSRF_COOKIE_DOMAIN alone, but the CSRF_COOKIE_DOMAIN with the server port
+# appended as well, and we don't want that behavior (a server port of 8000 is
+# added both in secure local development as well as in K8s stage/production, so
+# that will guarantee a mismatch with the referer).
+CSRF_TRUSTED_ORIGINS = [WIKI_HOST, DOMAIN]
 X_FRAME_OPTIONS = 'DENY'
 
 
