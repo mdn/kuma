@@ -10,7 +10,7 @@ import Dropdown from './dropdown.jsx';
 import EditIcon from '../icons/pencil.svg';
 import gettext from '../gettext.js';
 import GithubLogo from '../icons/github.svg';
-import { Strut } from '../layout.jsx';
+import { Row, Strut } from '../layout.jsx';
 
 const strings = {
     signIn: gettext('Sign in'),
@@ -20,19 +20,23 @@ const strings = {
 };
 
 const styles = {
+    container: css({
+        // Buttons (in the dropdown labels) don't seem to inherit fontsizes
+        // so we need to make this explicit.
+        button: { fontSize: '1em' }
+    }),
     avatar: css({
-        width: 48,
-        height: 48,
+        width: '4em',
         borderRadius: '50%'
     }),
     signInLink: css({
         display: 'flex',
         alignItems: 'center',
-        fontSize: 18,
+        fontSize: '1.2em',
         fontWeight: 'bold',
         color: 'black',
         textDecoration: 'none',
-        lineHeight: '48px',
+        lineHeight: '3.2em',
         padding: '0 8px',
         ':hover': {
             textDecoration: 'none',
@@ -43,17 +47,19 @@ const styles = {
             outlineOffset: -3
         }
     }),
-    icon: css({ marginLeft: 5 }),
+    icon: css({ marginLeft: 3, width: '1.5em' }),
     signOutButton: css({
         // Signing out is a POST operation so we use a form and button
         // but we want the button to look like a regular link.
         borderWidth: 0,
         padding: 0,
         color: '#3d7e9a',
+        fontSize: '1em',
         fontWeight: 'normal',
         ':hover': { textDecoration: 'underline' }
     }),
-    editLink: css({ lineHeight: 1 })
+    editLink: css({ lineHeight: 1 }),
+    editIcon: css({ width: '1.33em' })
 };
 
 export default function Login(): React.Node {
@@ -82,7 +88,7 @@ export default function Login(): React.Node {
             />
         );
         return (
-            <>
+            <Row css={styles.container}>
                 <Dropdown label={label} right={true}>
                     <li>
                         <a
@@ -116,9 +122,9 @@ export default function Login(): React.Node {
                 </Dropdown>
                 <Strut width={8} />
                 <a css={styles.editLink} href={editURL} title="Edit this page">
-                    <EditIcon alt="Edit this page" />
+                    <EditIcon css={styles.editIcon} alt="Edit this page" />
                 </a>
-            </>
+            </Row>
         );
     } else {
         // Otherwise, show a login prompt

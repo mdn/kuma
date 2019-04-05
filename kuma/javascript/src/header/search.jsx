@@ -19,9 +19,8 @@ const styles = {
         padding: '2px 8px',
         border: 'solid #888 1px',
         borderRadius: 8,
-        maxWidth: 350,
-        minWidth: 120,
-        flex: '2 1 120px'
+        minWidth: 80,
+        flex: '2 1'
     }),
     icon: css({
         fill: '#333',
@@ -34,7 +33,8 @@ const styles = {
         borderWidth: '0 !important',
         fontSize: 16,
         fontWeight: 'bold !important',
-        flex: '0 1 300px'
+        flex: '1 1 100px',
+        minWidth: 60
     })
 };
 

@@ -2,6 +2,52 @@
 
 exports[`Header snapshot 1`] = `
 .emotion-46 {
+  border-top: 4px solid #83d0f2;
+  display: grid;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+@media (min-width:1024px) {
+  .emotion-46 {
+    font-size: 15px;
+    grid-template-columns: 274px 500px minmax(80px,1fr) 125px;
+    -webkit-column-gap: 10px;
+    column-gap: 10px;
+    grid-template-areas: "I M S L";
+  }
+}
+
+@media (min-width:750px) and (max-width:1023px) {
+  .emotion-46 {
+    font-size: 12px;
+    grid-template-columns: repeat(10,1fr);
+    -webkit-column-gap: 5px;
+    column-gap: 5px;
+    grid-template-areas: "I I I S S S S S L L" "M M M M M M M M M M";
+  }
+}
+
+@media (max-width:749px) {
+  .emotion-46 {
+    font-size: 10px;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-areas: "I I L L" "S S S S" "M M M M";
+  }
+}
+
+.emotion-1 {
+  display: block;
+  grid-area: I;
+}
+
+.emotion-0 {
+  height: 4em;
+}
+
+.emotion-37 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -13,35 +59,43 @@ exports[`Header snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  border-top: 4px solid #83d0f2;
-  height: 64px;
-  box-sizing: border-box;
+  grid-area: M;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin: 0 5px;
 }
 
-.emotion-0 {
-  display: block;
-  height: 60px;
+@media (min-width:1024px) {
+  .emotion-37 button {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 32px;
+  }
 }
 
-.emotion-1 {
-  -webkit-box-flex: 0;
-  -webkit-flex-grow: 0;
-  -ms-flex-positive: 0;
-  flex-grow: 0;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  -webkit-flex-basis: 4px;
-  -ms-flex-preferred-size: 4px;
-  flex-basis: 4px;
+@media (min-width:750px) and (max-width:1023px) {
+  .emotion-37 button {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 28px;
+  }
 }
 
-.emotion-9 {
+@media (max-width:749px) {
+  .emotion-37 button {
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 24px;
+  }
+}
+
+.emotion-8 {
   position: relative;
   pointer-events: auto;
 }
 
-.emotion-5 {
+.emotion-4 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -53,29 +107,26 @@ exports[`Header snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 32px;
   white-space: nowrap;
-  padding: 0 10px;
+  padding: 0 5px;
   margin: 0;
   border: none;
 }
 
-.emotion-5:hover {
+.emotion-4:hover {
   background-color: #eee;
 }
 
-.emotion-5:focus {
+.emotion-4:focus {
   outline-offset: -3px;
 }
 
-.emotion-3 {
-  font-size: 12px;
+.emotion-2 {
+  font-size: '75%';
   padding-left: 2px;
 }
 
-.emotion-7 {
+.emotion-6 {
   position: absolute;
   z-index: 100;
   display: -webkit-box;
@@ -94,18 +145,28 @@ exports[`Header snapshot 1`] = `
   display: none;
 }
 
-.emotion-7 li {
+.emotion-6 li {
   padding: 5px;
   white-space: nowrap;
 }
 
-.emotion-35 {
+.emotion-26 {
   -webkit-flex: 1 1 0px;
   -ms-flex: 1 1 0px;
   flex: 1 1 0px;
 }
 
-.emotion-39 {
+.emotion-28 {
+  height: 1.5em;
+}
+
+.emotion-42 {
+  grid-area: S;
+  margin: 2px 8px;
+  justify-self: stretch;
+}
+
+.emotion-41 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -120,43 +181,36 @@ exports[`Header snapshot 1`] = `
   padding: 2px 8px;
   border: solid #888 1px;
   border-radius: 8px;
-  max-width: 350px;
-  min-width: 120px;
-  -webkit-flex: 2 1 120px;
-  -ms-flex: 2 1 120px;
-  flex: 2 1 120px;
+  min-width: 80px;
+  -webkit-flex: 2 1;
+  -ms-flex: 2 1;
+  flex: 2 1;
 }
 
-.emotion-37 {
+.emotion-39 {
   fill: #333;
   -webkit-flex: 0 0 20px;
   -ms-flex: 0 0 20px;
   flex: 0 0 20px;
 }
 
-.emotion-38 {
+.emotion-40 {
   border-width: 0 !important;
   font-size: 16px;
   font-weight: bold !important;
-  -webkit-flex: 0 1 300px;
-  -ms-flex: 0 1 300px;
-  flex: 0 1 300px;
+  -webkit-flex: 1 1 100px;
+  -ms-flex: 1 1 100px;
+  flex: 1 1 100px;
+  min-width: 60px;
 }
 
-.emotion-40 {
-  -webkit-box-flex: 0;
-  -webkit-flex-grow: 0;
-  -ms-flex-positive: 0;
-  flex-grow: 0;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  -webkit-flex-basis: 15px;
-  -ms-flex-preferred-size: 15px;
-  flex-basis: 15px;
+.emotion-45 {
+  grid-area: L;
+  justify-self: end;
+  margin-right: 15px;
 }
 
-.emotion-43 {
+.emotion-44 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -165,324 +219,328 @@ exports[`Header snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  font-size: 18px;
+  font-size: 1.2em;
   font-weight: bold;
   color: black;
   -webkit-text-decoration: none;
   text-decoration: none;
-  line-height: 48px;
+  line-height: 3.2em;
   padding: 0 8px;
 }
 
-.emotion-43:hover {
+.emotion-44:hover {
   -webkit-text-decoration: none;
   text-decoration: none;
   background-color: #eee;
 }
 
-.emotion-43:focus {
+.emotion-44:focus {
   outline-offset: -3px;
 }
 
-.emotion-42 {
-  margin-left: 5px;
+.emotion-43 {
+  margin-left: 3px;
+  width: 1.5em;
 }
 
 <div
-  className="emotion-46 emotion-47"
+  className="emotion-46"
 >
   <a
-    className="emotion-0"
+    className="emotion-1"
     href="/en-US/"
   >
     <svg mock
       alt="MDN Web Docs Logo"
+      className="emotion-0"
     />
   </a>
   <div
-    className="emotion-1 emotion-2"
-    width={4}
-  />
-  <div
-    className="emotion-9 emotion-10"
+    className="emotion-37 emotion-38"
   >
-    <button
-      className="emotion-5 emotion-6"
-      onClick={[Function]}
+    <div
+      className="emotion-8 emotion-9"
     >
-      Technologies
-      <span
-        className="emotion-3 emotion-4"
+      <button
+        className="emotion-4 emotion-5"
+        onClick={[Function]}
       >
-        ▼
-      </span>
-    </button>
-    <ul
-      className="dropdown-menu emotion-7 emotion-8"
-    >
-      <li>
-        <a
-          href="/en-US/docs/Web/HTML"
+        Technologies
+        <span
+          className="emotion-2 emotion-3"
         >
-          HTML
-        </a>
-      </li>
-      <li>
-        <a
-          href="/en-US/docs/Web/CSS"
-        >
-          CSS
-        </a>
-      </li>
-      <li>
-        <a
-          href="/en-US/docs/Web/JavaScript"
-        >
-          JavaScript
-        </a>
-      </li>
-      <li>
-        <a
-          href="/en-US/docs/Web/Guide/Graphics"
-        >
-          Graphics
-        </a>
-      </li>
-      <li>
-        <a
-          href="/en-US/docs/Web/HTTP"
-        >
-          HTTP
-        </a>
-      </li>
-      <li>
-        <a
-          href="/en-US/docs/Web/API"
-        >
-          APIs / DOM
-        </a>
-      </li>
-      <li>
-        <a
-          href="/en-US/docs/Mozilla/Add-ons/WebExtensions"
-        >
-          Browser Extensions
-        </a>
-      </li>
-      <li>
-        <a
-          href="/en-US/docs/Web/MathML"
-        >
-          MathML
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div
-    className="emotion-9 emotion-10"
-  >
-    <button
-      className="emotion-5 emotion-6"
-      onClick={[Function]}
-    >
-      References & Guides
-      <span
-        className="emotion-3 emotion-4"
+          ▼
+        </span>
+      </button>
+      <ul
+        className="dropdown-menu emotion-6 emotion-7"
       >
-        ▼
-      </span>
-    </button>
-    <ul
-      className="dropdown-menu emotion-7 emotion-8"
+        <li>
+          <a
+            href="/en-US/docs/Web/HTML"
+          >
+            HTML
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web/CSS"
+          >
+            CSS
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web/JavaScript"
+          >
+            JavaScript
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web/Guide/Graphics"
+          >
+            Graphics
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web/HTTP"
+          >
+            HTTP
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web/API"
+          >
+            APIs / DOM
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Mozilla/Add-ons/WebExtensions"
+          >
+            Browser Extensions
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web/MathML"
+          >
+            MathML
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      className="emotion-8 emotion-9"
     >
-      <li>
-        <a
-          href="/en-US/docs/Learn"
-        >
-          Learn web development
-        </a>
-      </li>
-      <li>
-        <a
-          href="/en-US/docs/Web/Tutorials"
-        >
-          Tutorials
-        </a>
-      </li>
-      <li>
-        <a
-          href="/en-US/docs/Web/Reference"
-        >
-          References
-        </a>
-      </li>
-      <li>
-        <a
-          href="/en-US/docs/Web/Guide"
-        >
-          Developer Guides
-        </a>
-      </li>
-      <li>
-        <a
-          href="/en-US/docs/Web/Accessibility"
-        >
-          Accessibility
-        </a>
-      </li>
-      <li>
-        <a
-          href="/en-US/docs/Games"
-        >
-          Game development
-        </a>
-      </li>
-      <li>
-        <a
-          href="/en-US/docs/Web"
-        >
-          ...more docs
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div
-    className="emotion-9 emotion-10"
-  >
-    <button
-      className="emotion-5 emotion-6"
-      onClick={[Function]}
-    >
-      Feedback
-      <span
-        className="emotion-3 emotion-4"
+      <button
+        className="emotion-4 emotion-5"
+        onClick={[Function]}
       >
-        ▼
-      </span>
-    </button>
-    <ul
-      className="dropdown-menu emotion-7 emotion-8"
-    >
-      <li>
-        <a
-          href="https://support.mozilla.org/"
-          rel="noopener noreferrer"
-          target="_blank"
+        References & Guides
+        <span
+          className="emotion-2 emotion-3"
         >
-          Get Firefox help
-           🌐
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://stackoverflow.com/"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Get web development help
-           🌐
-        </a>
-      </li>
-      <li>
-        <a
-          href="/en-US/docs/MDN/Community"
-        >
-          Join the MDN community
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=http%3A%2F%2Flocalhost%2F"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Report a content problem
-           🌐
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://bugzilla.mozilla.org/form.mdn"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Report a bug
-           🌐
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div
-    className="emotion-9 emotion-10"
-  >
-    <button
-      className="emotion-5 emotion-6"
-      onClick={[Function]}
-    >
-      <svg mock />
-      <span
-        className="emotion-3 emotion-4"
+          ▼
+        </span>
+      </button>
+      <ul
+        className="dropdown-menu emotion-6 emotion-7"
       >
-        ▼
-      </span>
-    </button>
-    <ul
-      className="dropdown-menu emotion-7 emotion-8"
+        <li>
+          <a
+            href="/en-US/docs/Learn"
+          >
+            Learn web development
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web/Tutorials"
+          >
+            Tutorials
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web/Reference"
+          >
+            References
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web/Guide"
+          >
+            Developer Guides
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web/Accessibility"
+          >
+            Accessibility
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Games"
+          >
+            Game development
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web"
+          >
+            ...more docs
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      className="emotion-8 emotion-9"
     >
-      <li
-        lang="es"
+      <button
+        className="emotion-4 emotion-5"
+        onClick={[Function]}
       >
-        <a
-          href="[fake spanish url]"
-          title="Spanish"
+        Feedback
+        <span
+          className="emotion-2 emotion-3"
         >
-          <bdi>
-            Español
-          </bdi>
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div
-    className="emotion-35 emotion-36"
-  />
-  <form
-    action="/en-US/search"
-    className="emotion-39"
-    id="nav-main-search"
-    method="get"
-    role="search"
-  >
-    <svg mock
-      className="emotion-37"
+          ▼
+        </span>
+      </button>
+      <ul
+        className="dropdown-menu emotion-6 emotion-7"
+      >
+        <li>
+          <a
+            href="https://support.mozilla.org/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Get Firefox help
+             🌐
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://stackoverflow.com/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Get web development help
+             🌐
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/MDN/Community"
+          >
+            Join the MDN community
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=http%3A%2F%2Flocalhost%2F"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Report a content problem
+             🌐
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://bugzilla.mozilla.org/form.mdn"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Report a bug
+             🌐
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      className="emotion-26 emotion-27"
     />
-    <input
-      className="emotion-38"
-      id="main-q"
-      name="q"
-      placeholder="Search MDN"
-      type="search"
-    />
-  </form>
+    <div
+      className="emotion-8 emotion-9"
+    >
+      <button
+        className="emotion-4 emotion-5"
+        onClick={[Function]}
+      >
+        <svg mock
+          className="emotion-28"
+        />
+        <span
+          className="emotion-2 emotion-3"
+        >
+          ▼
+        </span>
+      </button>
+      <ul
+        className="dropdown-menu emotion-6 emotion-7"
+      >
+        <li
+          lang="es"
+        >
+          <a
+            href="[fake spanish url]"
+            title="Spanish"
+          >
+            <bdi>
+              Español
+            </bdi>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
   <div
-    className="emotion-40 emotion-2"
-    width={15}
-  />
-  <a
-    className="emotion-43"
-    data-service="GitHub"
-    href="/users/github/login/?next=/"
-    rel="nofollow"
+    className="emotion-42"
   >
-    Sign in
-     
-    <svg mock
-      className="emotion-42"
-    />
-  </a>
+    <form
+      action="/en-US/search"
+      className="emotion-41"
+      id="nav-main-search"
+      method="get"
+      role="search"
+    >
+      <svg mock
+        className="emotion-39"
+      />
+      <input
+        className="emotion-40"
+        id="main-q"
+        name="q"
+        placeholder="Search MDN"
+        type="search"
+      />
+    </form>
+  </div>
   <div
-    className="emotion-40 emotion-2"
-    width={15}
-  />
+    className="emotion-45"
+  >
+    <a
+      className="emotion-44"
+      data-service="GitHub"
+      href="/users/github/login/?next=/"
+      rel="nofollow"
+    >
+      Sign in
+       
+      <svg mock
+        className="emotion-43"
+      />
+    </a>
+  </div>
 </div>
 `;
