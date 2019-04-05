@@ -46,8 +46,8 @@ def functional_test(browser, base_dir) {
 def headless_test(base_dir) {
     return {
         node {
-            // Setup the pytest command (timeout at 7 min for stalled nodes).
-            def cmd = "timeout --preserve-status 7m" +
+            // Setup the pytest command (timeout at 8 min for stalled nodes).
+            def cmd = "timeout --preserve-status 8m" +
                       " py.test tests/headless" +
                       " --base-url='${config.job.base_url}'" +
                       " --junit-xml=/app/test_results/headless.xml" +
