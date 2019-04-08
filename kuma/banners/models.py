@@ -20,7 +20,7 @@ class Banner(models.Model):
     title = models.CharField('Banner Title', max_length=100)
     main_copy = models.TextField('Main Copy', max_length=200)
     button_copy = models.CharField('Button Copy', max_length=50)
-    button_url = models.URLField('URL')
+    button_url = models.URLField('URL', default='https://developer.mozilla.org')
     theme = models.CharField('Theme', max_length=40,
                              choices=THEMES, default=THEME_DEFAULT)
     active = models.BooleanField('Activate')

@@ -8,4 +8,7 @@ from ..models import Banner
 
 @library.global_function
 def get_banners():
-    return Banner.objects.all()
+    """
+    Get all active banners ordered by priority
+    """
+    return list(Banner.objects.filter(active=True).order_by('priority'))

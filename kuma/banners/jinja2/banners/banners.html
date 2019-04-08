@@ -6,7 +6,7 @@
     aria-hidden="true"
     data-banner="developer_needs"
 >
-    {% if banners|count > 0 %}
+    {% if banners %}
         {% for banner in banners %}
             <div class="mdn-cta-content {{ banner.theme }}">
                 <div id="developer-needs" class="mdn-cta-content-container">
