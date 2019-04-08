@@ -249,9 +249,9 @@ gunicorn==19.7.1 \
 # Code: https://github.com/pallets/jinja
 # Changes: http://jinja.pocoo.org/docs/2.10/changelog/
 # Docs: http://jinja.pocoo.org/docs/2.10/
-Jinja2==2.10 \
-    --hash=sha256:74c935a1b8bb9a3947c50a54766a969d4846290e1e788ea44c1392163723c3bd \
-    --hash=sha256:f84be1bb0040caca4cea721fcbbbbd61f9be9464ca236387158b0feea01914a4
+Jinja2==2.10.1 \
+    --hash=sha256:065c4f02ebe7f7cf559e49ee5a95fb800a9e4528727aec6f24402a5374c65013 \
+    --hash=sha256:14dd6caf1527abb21f08f86c784eac40853ba93edb79552aa1e4b8aef1b61c7b
 
 # Serialize pickleable objects to JSON, used in feed processing
 jsonpickle==0.9.2 \
