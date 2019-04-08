@@ -1,7 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Page snapshot 1`] = `
-.emotion-46 {
+Array [
+  .emotion-46 {
   border-top: 4px solid #83d0f2;
   display: grid;
   -webkit-align-items: center;
@@ -243,149 +244,7 @@ exports[`Page snapshot 1`] = `
   width: 1.5em;
 }
 
-.emotion-48 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background-color: #f5f9fa;
-  padding: 12px 0 12px 32px;
-}
-
-.emotion-47 {
-  font-family: x-locale-heading-primary,zillaslab,"Palatino","Palatino Linotype",x-locale-heading-secondary,serif;
-  font-size: 2.8rem;
-  margin: 0;
-}
-
-.emotion-50 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  color: #fff;
-  background-color: #222;
-  padding: 8px 0 8px 32px;
-}
-
-.emotion-50 li {
-  display: inline-block;
-}
-
-.emotion-50 a {
-  color: #83d0f2;
-  padding-right: 30px;
-  white-space: nowrap;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  font-size: 1rem;
-}
-
-.emotion-50 code {
-  background-color: inherit;
-  color: inherit;
-  font-family: inherit;
-  font-size: inherit;
-  padding: 0;
-}
-
-.emotion-50 li ol,
-.emotion-50 li ul {
-  display: none;
-}
-
-.emotion-60 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-align-items: start;
-  -webkit-box-align: start;
-  -ms-flex-align: start;
-  align-items: start;
-  padding: 30px 24px;
-}
-
-.emotion-53 {
-  -webkit-flex: 0 0 23%;
-  -ms-flex: 0 0 23%;
-  flex: 0 0 23%;
-  max-width: 23%;
-}
-
-.emotion-54 {
-  -webkit-box-flex: 0;
-  -webkit-flex-grow: 0;
-  -ms-flex-positive: 0;
-  flex-grow: 0;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  -webkit-flex-basis: 3%;
-  -ms-flex-preferred-size: 3%;
-  flex-basis: 3%;
-}
-
-.emotion-59 {
-  -webkit-flex: 0 0 74%;
-  -ms-flex: 0 0 74%;
-  flex: 0 0 74%;
-  max-width: 74%;
-}
-
-.emotion-59 p {
-  max-width: 42rem;
-}
-
-.emotion-58 {
-  margin-top: 32px;
-  font-size: 0.88889rem;
-  color: #696969;
-}
-
-.emotion-58 div {
-  margin: 4px 0;
-}
-
-.emotion-56 {
-  width: 14px;
-  height: 14px;
-  margin-right: 5px;
-  vertical-align: middle;
-  fill: #696969;
-}
-
-.emotion-57 {
-  width: 16px;
-  height: 16px;
-  margin-right: 5px;
-  vertical-align: middle;
-  fill: #696969;
-}
-
-<div>
-  <div
+<div
     className="emotion-46"
   >
     <a
@@ -684,29 +543,247 @@ exports[`Page snapshot 1`] = `
         />
       </a>
     </div>
-  </div>
-  <div
-    className="emotion-48 emotion-38"
-  >
-    <h1
-      className="emotion-47"
-    >
-      [fake document title]
-    </h1>
-  </div>
-  <div
-    className="emotion-50 emotion-38"
-    dangerouslySetInnerHTML={
-      Object {
-        "__html": "<ol>[fake TOC HTML]</ol>",
-      }
-    }
-  />
-  <div
-    className="emotion-60 emotion-38"
+  </div>,
+  .emotion-11 {
+  display: grid;
+  box-sizing: border-box;
+  grid-template-columns: 1fr 3fr;
+  grid-template-areas: "title title" "toc toc" "side main";
+}
+
+@media (max-width:749px) {
+  .emotion-11 {
+    grid-template-columns: 1fr;
+    grid-template-areas: "title" "main" "side";
+  }
+}
+
+.emotion-1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  grid-area: title;
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: scroll;
+  background-color: #f5f9fa;
+}
+
+.emotion-0 {
+  font-family: x-locale-heading-primary,zillaslab,"Palatino","Palatino Linotype",x-locale-heading-secondary,serif;
+  margin: 0;
+  font-size: 2.8rem;
+  padding: 12px 12px 12px 24px;
+}
+
+@media (max-width:749px) {
+  .emotion-0 {
+    font-size: 1.77rem;
+    padding: 12px;
+  }
+}
+
+.emotion-3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  grid-area: toc;
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: scroll;
+  color: #fff;
+  background-color: #222;
+  padding: 8px 8px 8px 24px;
+}
+
+@media (max-width:749px) {
+  .emotion-3 {
+    display: none;
+  }
+}
+
+.emotion-3 li {
+  display: inline-block;
+}
+
+.emotion-3 a {
+  color: #83d0f2;
+  padding-right: 30px;
+  white-space: nowrap;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.emotion-3 code {
+  background-color: inherit;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0;
+}
+
+.emotion-3 li ol,
+.emotion-3 li ul {
+  display: none;
+}
+
+.emotion-8 {
+  grid-area: main;
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: scroll;
+  padding: 30px 24px 30px 12px;
+}
+
+@media (max-width:749px) {
+  .emotion-8 {
+    padding: 15px 12px;
+  }
+}
+
+.emotion-8 p {
+  max-width: 42rem;
+}
+
+.emotion-7 {
+  margin-top: 32px;
+  font-size: 0.88889rem;
+  color: #696969;
+}
+
+.emotion-7 div {
+  margin: 4px 0;
+}
+
+.emotion-5 {
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
+  vertical-align: middle;
+  fill: #696969;
+}
+
+.emotion-6 {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  vertical-align: middle;
+  fill: #696969;
+}
+
+.emotion-10 {
+  grid-area: side;
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: scroll;
+  padding: 30px 12px 30px 24px;
+}
+
+@media (max-width:749px) {
+  .emotion-10 {
+    padding: 15px 12px;
+  }
+}
+
+<div
+    className="emotion-11"
   >
     <div
-      className="emotion-53"
+      className="emotion-1 emotion-2"
+    >
+      <h1
+        className="emotion-0"
+      >
+        [fake document title]
+      </h1>
+    </div>
+    <div
+      className="emotion-3 emotion-2"
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<ol>[fake TOC HTML]</ol>",
+        }
+      }
+    />
+    <div
+      className="text-content emotion-8"
+    >
+      <article
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "[fake body HTML]",
+          }
+        }
+        id="wikiArticle"
+      />
+      <div
+        className="emotion-7"
+      >
+        <div>
+          <svg mock
+            className="emotion-5"
+          />
+           
+          <strong>
+            Contributors to this page:
+          </strong>
+           
+          <span>
+            <a
+              href="/en-US/profiles/mike"
+              rel="nofollow"
+            >
+              mike
+            </a>
+          </span>
+          <span>
+            , 
+            <a
+              href="/en-US/profiles/ike"
+              rel="nofollow"
+            >
+              ike
+            </a>
+          </span>
+        </div>
+        <div>
+          <svg mock
+            className="emotion-6"
+          />
+           
+          <strong>
+            Last updated by:
+          </strong>
+           
+          ike
+           
+          <time
+            dateTime="2019-01-02T03:04:05"
+          >
+            2019-01-02 11:04:05
+          </time>
+        </div>
+      </div>
+    </div>
+    <div
+      className="emotion-10"
     >
       <nav
         className="crumbs"
@@ -745,7 +822,7 @@ exports[`Page snapshot 1`] = `
         </ol>
       </nav>
       <div
-        className="quick-links emotion-52"
+        className="quick-links emotion-9"
       >
         <div
           className="quick-links-head"
@@ -761,70 +838,6 @@ exports[`Page snapshot 1`] = `
         />
       </div>
     </div>
-    <div
-      className="emotion-54 emotion-55"
-      width="3%"
-    />
-    <div
-      className="text-content emotion-59"
-    >
-      <article
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "[fake body HTML]",
-          }
-        }
-        id="wikiArticle"
-      />
-      <div
-        className="emotion-58"
-      >
-        <div>
-          <svg mock
-            className="emotion-56"
-          />
-           
-          <strong>
-            Contributors to this page:
-          </strong>
-           
-          <span>
-            <a
-              href="/en-US/profiles/mike"
-              rel="nofollow"
-            >
-              mike
-            </a>
-          </span>
-          <span>
-            , 
-            <a
-              href="/en-US/profiles/ike"
-              rel="nofollow"
-            >
-              ike
-            </a>
-          </span>
-        </div>
-        <div>
-          <svg mock
-            className="emotion-57"
-          />
-           
-          <strong>
-            Last updated by:
-          </strong>
-           
-          ike
-           
-          <time
-            dateTime="2019-01-02T03:04:05"
-          >
-            2019-01-02 11:04:05
-          </time>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+  </div>,
+]
 `;
