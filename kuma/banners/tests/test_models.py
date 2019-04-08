@@ -14,7 +14,7 @@ def test_add_new_banner():
         "title": "Active Banner",
         "main_copy": "Some sample main copy",
         "button_copy": "Click Me!",
-        "theme": "default",
+        "theme": "cta-background-default",
         "active": True,
         "priority": "2"
     }
@@ -25,7 +25,7 @@ def test_add_new_banner():
 
 @pytest.mark.django_db
 def test_default_theme_set():
-    """Test that theme is set to default if empty"""
+    """Test that theme is set to cta-background-default if empty"""
     sample_banner = {
         "name": "notheme",
         "title": "Inactive Banner",
@@ -36,7 +36,7 @@ def test_default_theme_set():
     }
     banner = Banner.objects.create(**sample_banner)
 
-    assert banner.theme == "default"
+    assert banner.theme == "cta-background-default"
 
 
 @pytest.mark.django_db
@@ -47,7 +47,7 @@ def test_default_priority_set():
         "title": "Inactive Banner",
         "main_copy": "Some sample main copy",
         "button_copy": "Click Me!",
-        "theme": "default",
+        "theme": "cta-background-default",
         "active": False
     }
     banner = Banner.objects.create(**sample_banner)
@@ -63,7 +63,7 @@ def test_activate_banner():
         "title": "Inactive Banner",
         "main_copy": "Some sample main copy",
         "button_copy": "Click Me!",
-        "theme": "default",
+        "theme": "cta-background-default",
         "active": False,
         "priority": "1"
     }
