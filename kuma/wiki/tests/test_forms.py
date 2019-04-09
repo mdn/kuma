@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
+import unicodedata
 
 import pytest
 import requests_mock
@@ -17,7 +18,7 @@ from kuma.spam.constants import (CHECK_URL, SPAM_ADMIN_FLAG, SPAM_CHECKS_FLAG,
 from kuma.users.tests import UserTestCase
 
 from ..constants import SPAM_TRAINING_SWITCH
-from ..forms import AkismetHistoricalData, RevisionForm, TreeMoveForm
+from ..forms import AkismetHistoricalData, DocumentForm, RevisionForm, TreeMoveForm
 from ..models import DocumentSpamAttempt, Revision, RevisionIP
 from ..tests import document, normalize_html, revision
 
@@ -214,6 +215,67 @@ def test_multiword_tags(root_doc, rf):
     rev_form = RevisionForm(data=data, instance=rev, request=request)
     assert rev_form.is_valid()
     assert rev_form.cleaned_data['tags'] == '"MDN Meta"'
+
+
+def test_revision_form_normalize_unicode(root_doc, rf):
+    """Revision slugs are normalized to NFKC, required for URLs."""
+
+    raw_slug = u'Εφαρμογές'  # "Applications" in Greek (el)
+
+    # In NFC / NFKD, 'έ' is represented by two "decomposed" codepoints
+    #  03B5 (GREEK SMALL LETTER EPSILON)
+    #  0301 (COMBINING ACUTE ACCENT)
+    nfkd_slug = unicodedata.normalize('NFKD', raw_slug)
+
+    # In NFC / NFKC, 'έ' is represented by a "composed" codepoint
+    #  03AD (GREEK SMALL LETTER EPSILON WITH TONOS)
+    nfkc_slug = unicodedata.normalize('NFKC', raw_slug)
+
+    assert nfkd_slug != nfkc_slug
+
+    rev = root_doc.current_revision
+    request = rf.get('/')
+    request.user = rev.creator
+    data = {
+        'content': 'Content',
+        'toc_depth': 1,
+        'slug': nfkd_slug
+    }
+    rev_form = RevisionForm(data=data, instance=rev, request=request)
+    assert rev_form.is_valid()
+    assert rev_form.cleaned_data['slug'] == nfkc_slug
+
+
+def test_document_form_normalize_unicode(root_doc, rf):
+    """Document slugs are normalized to NFC, required for URLs."""
+
+    raw_slug = u'ফায়ারফক্স'  # "Firefox" in Bengali (bn-BD)
+
+    # This slug is the same in NFC, NFD, NFKD, and NFKD. The second character
+    # has these codepoints:
+    # 09af BENGALI LETTER YA (য)
+    # 09bc BENGALI SIGN NUKTA
+    # 09be BENGALI VOWEL SIGN AA (non-breaking spacing mark)
+    nfkc_slug = u'\u09ab\u09be\u09af\u09bc\u09be\u09b0\u09ab\u0995\u09cd\u09b8'
+    assert nfkc_slug == unicodedata.normalize('NFKC', raw_slug)
+
+    # An alternate representation of the second character is:
+    # 09df BENGALI LETTER YYA (য়)
+    # 09be BENGALI VOWEL SIGN AA (non-breaking spacing mark)
+    alt_slug = u'\u09ab\u09be\u09df\u09be\u09b0\u09ab\u0995\u09cd\u09b8'
+    assert alt_slug != nfkc_slug
+
+    rev = root_doc.current_revision
+    request = rf.get('/')
+    request.user = rev.creator
+    data = {
+        'slug': alt_slug,
+        'title': root_doc.title,
+        'locale': root_doc.locale
+    }
+    doc_form = DocumentForm(data=data, instance=root_doc)
+    assert doc_form.is_valid()
+    assert doc_form.cleaned_data['slug'] == nfkc_slug
 
 
 def test_case_sensitive_tags(root_doc, rf):
