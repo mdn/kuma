@@ -179,7 +179,7 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
     def test_signup(self):
         """
         After a new user logs in with GitHub, they signup to pick a username
-        and email to use on MDN. One signup is complete, the sign-in
+        and email to use on MDN. Once signup is complete, the sign-in
         link is replaced by the profile and logout links.
         """
         response = self.github_login()
@@ -241,7 +241,7 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
                 actual['verified'] = 'Unknown'
                 if 'Verified' in text:
                     actual['verified'] = True
-                elif 'Unverified' in text:
+                elif 'Unverified' in text:  # pragma: no cover
                     actual['verified'] = False
                 email_radio = email_label.cssselect('input[type=radio]')[0]
             actual['radio_attrib'] = email_radio.attrib

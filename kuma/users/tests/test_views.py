@@ -1266,7 +1266,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         # test setup is so painful for login tests.
         parsed = pq(response.content)
         li_exists = parsed.find('ul.choices li.exists')
-        assert len(li_exists) == 0
+        assert not li_exists
 
         # Create a legacy Persona account with the given email address
         octocat3 = user(username='octocat3', is_active=True,
@@ -1281,7 +1281,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         # user that signup may fail and they should use account recovery.
         li_exists = parsed.find('ul.choices li.exists')
         assert len(li_exists) == 1
-        email_input = li_exists[0].cssselect('input[type=radio]')
+        email_input = li_exists('input[type=radio]')
         assert len(email_input) == 1
         assert email_input[0].attrib['value'] == testemail
 
