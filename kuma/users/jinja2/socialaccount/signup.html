@@ -133,9 +133,10 @@
                   <ul class="choices">
                   {% set matching_uids = matching_accounts.values_list('uid', flat=True) %}
                   {% for email_choice in form.email %}
-                    {% set id_for_label="%s_%s" % (email_choice.name, loop.index0) %}
-                    <li class="{{ 'exists' if email_choice.choice_value in matching_uids }}">
-                      {% if email_choice.choice_value == form.other_email_value %}
+                    {% set id_for_label="%s_%s" % (form.email.name, loop.index0) %}
+                    {% set choice_value=email_choice.data.value %}
+                    <li {{-' class="exists"'|safe if choice_value in matching_uids }}>
+                      {% if choice_value == form.other_email_value %}
                         {{ email_choice.tag() }}
                         <label for="{{ id_for_label }}" class="inner other-label">{{ _('Other:') }}</label>
                         {{ form.other_email }}
@@ -144,8 +145,8 @@
                       <label for="{{ id_for_label }}">
                         {{ email_choice.tag() }}
                         {{ email_choice.choice_label }}
-                        {%- if email_choice.choice_value in email_addresses %}
-                          {%- if email_addresses[email_choice.choice_value].get('verified', False) %}
+                        {%- if choice_value in email_addresses %}
+                          {%- if email_addresses[choice_value].get('verified', False) %}
                             <strong>{{ _('Verified') }}</strong>
                           {%- else %}
                             {{ _('Unverified') }}
