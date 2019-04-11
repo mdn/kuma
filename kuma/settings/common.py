@@ -455,6 +455,7 @@ _CONTEXT_PROCESSORS = (
 
     'constance.context_processors.config',
     'kuma.payments.context_processors.global_contribution_form',
+    'kuma.banners.context_processors.get_banners',
 )
 
 
