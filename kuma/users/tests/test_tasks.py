@@ -22,7 +22,7 @@ class SendRecoveryEmailTests(TestCase):
         testuser.save()
         send_recovery_email(testuser.pk, email='actual@example.com')
         testuser.refresh_from_db()
-        assert testuser.has_usable_password()
+        assert not testuser.has_usable_password()
         recovery_url = testuser.get_recovery_url()
         assert len(mail.outbox) == 1
         recovery_email = mail.outbox[0]
