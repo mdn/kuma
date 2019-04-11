@@ -1,5 +1,6 @@
 import json
 import logging
+import unicodedata
 from difflib import ndiff
 
 import waffle
@@ -375,6 +376,11 @@ class DocumentForm(forms.ModelForm):
         elif self.parent_slug:
             # Prepend parent slug if given from view
             slug = self.parent_slug + '/' + slug
+
+        # Convert to NFKC, required for URLs (bug 1357416)
+        # http://www.unicode.org/faq/normalization.html
+        slug = unicodedata.normalize('NFKC', slug)
+
         # check both for disallowed characters and match for the allowed
         if (INVALID_DOC_SLUG_CHARS_RE.search(slug) or
                 not DOCUMENT_PATH_RE.search(slug)):
@@ -546,6 +552,10 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
         # Get the cleaned slug
         slug = self.cleaned_data['slug']
+
+        # Convert to NFKC, required for URLs (bug 1357416)
+        # http://www.unicode.org/faq/normalization.html
+        slug = unicodedata.normalize('NFKC', slug)
 
         # first check if the given slug doesn't contain slashes and other
         # characters not allowed in a revision slug component (without parent)
