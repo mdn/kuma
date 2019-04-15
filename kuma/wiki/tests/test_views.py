@@ -17,8 +17,9 @@ from waffle.testutils import override_flag, override_switch
 
 from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.tests import (assert_no_cache_header,
-                             assert_shared_cache_header, get_user,
-                             call_on_commit_immediately)
+                             assert_shared_cache_header,
+                             call_on_commit_immediately,
+                             get_user)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html
 from kuma.spam.constants import (

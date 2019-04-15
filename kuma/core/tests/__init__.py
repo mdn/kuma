@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
-from functools import wraps
 import os
+from functools import wraps
 
 import mock
 from django.conf import settings
