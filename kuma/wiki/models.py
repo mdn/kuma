@@ -43,7 +43,7 @@ from .jobs import DocumentContributorsJob, DocumentTagsJob
 from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        DocumentManager, RevisionIPManager,
                        TaggedDocumentManager)
-from .signals import render_done
+from .signals import render_done, restore_done
 from .templatetags.jinja_helpers import absolutify
 from .utils import get_doc_components_from_url, tidy_content
 
@@ -919,14 +919,15 @@ class Document(NotificationsMixin, models.Model):
     def restore(self):
         """
         Restores a logically deleted document by reverting the deleted
-        boolean to False. Sends pre_save and post_save Django signals to
-        follow ducktyping best practices.
+        boolean to False. Sends the restore_done signal, as well as the
+        pre_save and post_save Django signals.
         """
         if not self.deleted:
             raise Exception("Document is not deleted, cannot be restored.")
         signals.pre_save.send(sender=self.__class__, instance=self)
         Document.deleted_objects.filter(pk=self.pk).update(deleted=False)
         signals.post_save.send(sender=self.__class__, instance=self)
+        restore_done.send(sender=self.__class__, instance=self)
 
     def _post_move_redirects(self, new_slug, user, title):
         """

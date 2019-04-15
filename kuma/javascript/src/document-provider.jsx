@@ -66,7 +66,7 @@ export default function DocumentProvider(
         // This is the function that does client side navigation
         function navigate(url, localeAndSlug) {
             body.style.opacity = '0.15';
-            fetch(`/api/v1/doc${localeAndSlug}`)
+            fetch(`/api/v1/doc${localeAndSlug}`, {redirect:'follow'})
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -79,9 +79,20 @@ export default function DocumentProvider(
                     }
                 })
                 .then(json => {
-                    window.scrollTo(0, 0);
-                    setDocumentData(json);
-                    body.style.opacity = '1';
+                    if (json.redirectURL) {
+                        window.location = json.redirectURL;
+                    } else {
+                        let jsonLocaleAndSlug = `/${json.locale}/${json.slug}`;
+                        if (jsonLocaleAndSlug !== localeAndSlug) {
+                            // This was a redirect.
+                            let jsonURL = json.absoluteURL;
+                            history.replaceState(
+                                { jsonURL, jsonLocaleAndSlug }, '', jsonURL);
+                        }
+                        window.scrollTo(0, 0);
+                        setDocumentData(json);
+                        body.style.opacity = '1';
+                    }
                 })
                 .catch(() => {
                     // If anything went wrong (most likely a 404 from

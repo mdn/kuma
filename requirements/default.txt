@@ -12,6 +12,14 @@ bleach==2.1.4 \
     --hash=sha256:0ee95f6167129859c5dce9b1ca291ebdb5d8cd7e382ca0e237dfd0dad63f63d8 \
     --hash=sha256:24754b9a7d530bf30ce7cbc805bc6cce785660b4a10ff3a43633728438c105ab
 
+# The Amazon Web Services (AWS) Software Development Kit (SDK) for Python
+# Code: https://github.com/boto/boto3
+# Changes: https://github.com/boto/boto3/blob/develop/CHANGELOG.rst
+# Docs: https://boto3.amazonaws.com/v1/documentation/api/latest/index.html
+boto3==1.9.128 \
+    --hash=sha256:5166f26bf364ae56765f79db07a6a3db25ad1b0af2707cafe721505085146f5b \
+    --hash=sha256:9a133736098741ef8016fb22824c99f9bef8f39a0bfbb76f73fe8bf18373f726
+
 # Process tasks in the background
 # Code: https://github.com/celery/celery
 # Changes: http://docs.celeryproject.org/en/latest/history/index.html

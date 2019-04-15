@@ -2,7 +2,7 @@ version: '2.1'
 services:
   worker: &worker
     image: mdnwebdocs/kuma_base
-    command: ./manage.py celery worker --loglevel=INFO --events --beat --autoreload --concurrency=4 -Q mdn_purgeable,mdn_search,mdn_emails,mdn_wiki,celery
+    command: ./manage.py celery worker --loglevel=INFO --events --beat --autoreload --concurrency=4 -Q mdn_purgeable,mdn_search,mdn_emails,mdn_wiki,mdn_api,celery
     user: ${UID:-1000}
     volumes:
       - ./:/app:z
