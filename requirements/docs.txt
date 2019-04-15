@@ -3,7 +3,7 @@
 
 # These should stay synced with other requirements files
 Babel==2.2.0
-Jinja2==2.10
+Jinja2==2.10.1
 MarkupSafe==0.23
 pytz==2018.5
 six==1.11.0
