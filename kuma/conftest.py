@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import mock
 import pytest
 import requests_mock
 from django.conf import settings

@@ -1,7 +1,9 @@
 from __future__ import unicode_literals
 
+from functools import wraps
 import os
 
+import mock
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.messages.storage.fallback import FallbackStorage
@@ -62,3 +64,42 @@ class KumaTestMixin(object):
 
 class KumaTestCase(KumaTestMixin, TestCase):
     pass
+
+
+def call_on_commit_immediately(test_method):
+    """Useful for TestCase test methods, that ultimately depends on
+    `transaction.on_commit()` being called somewhere in the stack. These
+    would normally be not executed when TestCase rolls back.
+    But if the test wants to assert that something inside a
+    `transaction.on_commit()` is called, you're out of luck.
+    That's why this decorator exists. For example:
+
+        # In views.py
+
+        @transaction.atomic
+        def do_something(request):
+            transaction.on_commit(lambda x: do_other_thing)
+            return http.HttpResponse('yay!')
+
+
+        # In test_something.py
+
+        class MyTests(TestCase):
+
+            @call_on_commit_immediately
+            def test_something(self):
+                self.client.get('/do/something')
+
+    In this example, without the decorator the
+    """
+
+    def run_immediately(some_callable):
+        some_callable()
+
+    @wraps(test_method)
+    def inner(*args, **kwargs):
+        with mock.patch('django.db.transaction.on_commit') as mocker:
+            mocker.side_effect = run_immediately
+            return test_method(*args, **kwargs)
+
+    return inner
