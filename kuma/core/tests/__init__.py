@@ -78,7 +78,7 @@ def call_on_commit_immediately(test_method):
 
         @transaction.atomic
         def do_something(request):
-            transaction.on_commit(lambda x: do_other_thing)
+            transaction.on_commit(do_other_thing)
             return http.HttpResponse('yay!')
 
 
@@ -90,7 +90,10 @@ def call_on_commit_immediately(test_method):
             def test_something(self):
                 self.client.get('/do/something')
 
-    In this example, without the decorator the
+    In this example, without the decorator, the `do_other_thing` function
+    would simply never be called. This decorator fixes that but it doesn't
+    guarantee, in tests, that it gets called correctly last after
+    the transaction would have committed.
     """
 
     def run_immediately(some_callable):
