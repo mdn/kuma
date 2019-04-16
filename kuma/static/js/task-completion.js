@@ -33,7 +33,7 @@
         var clickTime = Date.now() + (1000*60)*20; // 20 min from now
         var surveyURL= 'https://www.surveygizmo.com/s3/2980494/do-or-do-not';
         var surveyLink = surveyURL + '?' + '&t='+ clickTime + '&p=' + path;
-        var surveyAttributes = 'id=\'task-link\' target=\'_blank\' href=\'' + surveyLink + '\'';
+        var surveyAttributes = 'id=\'task-link\' target=\'_blank\' rel=\'noopener noreferrer\' href=\'' + surveyLink + '\'';
         var ask = interpolate(gettext('Would you answer 4 questions for us? <a %(url)s>Open the survey in a new tab</a> and fill it out when you are done on the site. Thanks!'), { url : surveyAttributes }, true);
 
 

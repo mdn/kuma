@@ -99,8 +99,8 @@
                 draftWarning += '<div class="readable-line-length">';
                 // long line is long, but breaking it up wrecks it for the localizers
                 draftWarning += gettext('A newer version of this article has been published since this draft was saved. You can restore the draft to view the content, but you will not be able to submit it for publishing.');
-                draftWarning += ' <a href="' + historyUrl + '" target="_blank" class="external-icon">' + gettext('Revision history.') + '</a> ';
-                draftWarning += '<a href="' + publishUrl + '" target="_blank" class="external-icon">' + gettext('Published version') + '</a>';
+                draftWarning += ' <a href="' + historyUrl + '" target="_blank" rel="noopener noreferrer" class="external-icon">' + gettext('Revision history.') + '</a> ';
+                draftWarning += '<a href="' + publishUrl + '" target="_blank" rel="noopener noreferrer" class="external-icon">' + gettext('Published version') + '</a>';
                 draftWarning += '</div>';
 
                 mdn.analytics.trackEvent({
@@ -114,7 +114,7 @@
                 draftWarning += '<div class="readable-line-length">';
                 // long line is long, but breaking it up wrecks it for the localizers
                 draftWarning += gettext('Compare this date to the latest revision date to ensure you\'re not overwriting later changes.');
-                draftWarning += ' <a href="' + historyUrl + '" target="_blank" class="external-icon">' + gettext('Revision history.') + '</a>';
+                draftWarning += ' <a href="' + historyUrl + '" target="_blank" rel="noopener noreferrer" class="external-icon">' + gettext('Revision history.') + '</a>';
                 draftWarning += '</div>';
 
                 mdn.analytics.trackEvent({

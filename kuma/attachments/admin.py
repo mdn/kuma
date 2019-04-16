@@ -39,7 +39,11 @@ class AttachmentAdmin(DisabledDeleteActionMixin, admin.ModelAdmin):
 
     def full_url(self, obj):
         url = obj.get_file_url()
-        return format_html('<a href="{}" target="_blank">{}</a>', url, url)
+        return format_html(
+            '<a href="{}" target="_blank" rel="noopener noreferrer">{}</a>',
+            url,
+            url
+        )
     full_url.short_description = 'Full URL'
 
     def delete_revisions(self, request, revisions):

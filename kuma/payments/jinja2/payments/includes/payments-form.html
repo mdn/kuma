@@ -39,11 +39,11 @@
         {% endif %}
         <p class="legal-copy">
             Payments are not tax deductible. Your payment details will be processed by
-            <a href="https://stripe.com/" rel="noopener" target="_blank">Stripe</a>.
+            <a href="https://stripe.com/" rel="noopener noreferrer" target="_blank">Stripe</a>.
             See our
-            <a href="{{ payment_terms_url }}" target="_blank">payment terms</a>
+            <a href="{{ payment_terms_url }}" rel="noopener noreferrer" target="_blank">payment terms</a>
             and
-            <a href="https://www.mozilla.org/en-US/privacy/websites/" rel="noopener" target="_blank">privacy notice</a>.
+            <a href="https://www.mozilla.org/en-US/privacy/websites/" rel="noopener noreferrer" target="_blank">privacy notice</a>.
         </p>
         <input type="hidden" id="stripe_source_setup" value="1">
         {% set show_checkbox = recurring_payment or (is_popover and recurring_payment_enabled) %}

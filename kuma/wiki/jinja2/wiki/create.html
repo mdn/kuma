@@ -48,7 +48,7 @@
             </li>
           {% if parent_slug %}
             <li class="clear"><label>{{ _('Parent:') }}</label>
-                <a href="{{ parent_path }}" class="metadataDisplay" target="_blank">{{ parent_slug }}</a></li>
+                <a href="{{ parent_path }}" class="metadataDisplay" target="_blank" rel="noopener noreferrer">{{ parent_slug }}</a></li>
           {% endif %}
           {% include 'wiki/includes/document_toc_field.html' %}
         </ul>

@@ -60,12 +60,12 @@
                       <a href="{{ wiki_url('MDN/Community') }}">{{ _('Join the MDN community') }}</a>
                   </li>
                   <li>
-                      <a target="_blank" rel="noopener" href="https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title={{ request.build_absolute_uri()|urlencode }}">{{ _('Report a content problem') }}
+                      <a target="_blank" rel="noopener noreferrer" href="https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title={{ request.build_absolute_uri()|urlencode }}">{{ _('Report a content problem') }}
                           {% include 'includes/icons/general/external-link.svg' %}
                       </a>
                   </li>
                   <li>
-                      <a target="_blank" rel="noopener" href="https://bugzilla.mozilla.org/form.mdn">{{ _('Report a bug') }}
+                      <a target="_blank" rel="noopener noreferrer" href="https://bugzilla.mozilla.org/form.mdn">{{ _('Report a bug') }}
                           {% include 'includes/icons/general/external-link.svg' %}
                       </a>
                   </li>

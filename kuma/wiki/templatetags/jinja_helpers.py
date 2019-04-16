@@ -38,7 +38,7 @@ def bugize_text(content):
     content = regex.sub(
         jinja2.Markup('<a href="https://bugzilla.mozilla.org/'
                       'show_bug.cgi?id=\\2" '
-                      'target="_blank">\\1 \\2</a>'),
+                      'target="_blank" rel="noopener noreferrer">\\1 \\2</a>'),
         content)
     return content
 

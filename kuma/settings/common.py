@@ -492,6 +492,7 @@ MIDDLEWARE += (
     'django.contrib.messages.middleware.MessageMiddleware',
     'kuma.core.middleware.WaffleWithCookieDomainMiddleware',
     'kuma.core.middleware.RestrictedEndpointsMiddleware',
+    'kuma.core.middleware.LinkBlankTargetCheck',
 )
 
 CSP_ENABLE_MIDDLEWARE = config('CSP_ENABLE_MIDDLEWARE',
