@@ -18,7 +18,8 @@ from django.utils.six.moves.urllib.parse import parse_qs, urlparse
 from pyquery import PyQuery as pq
 
 from kuma.core.tests import (assert_no_cache_header,
-                             assert_shared_cache_header)
+                             assert_shared_cache_header,
+                             call_on_commit_immediately)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 from kuma.users.models import User
@@ -675,6 +676,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
                        'form#wiki-page-edit textarea[name="content"]')) == 1
 
     @override_settings(TIDINGS_CONFIRM_ANONYMOUS_WATCHES=False)
+    @call_on_commit_immediately
     def test_new_revision_POST_document_with_current(self):
         """HTTP POST to new revision URL creates the revision on a document.
 

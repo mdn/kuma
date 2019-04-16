@@ -4,6 +4,7 @@ import newrelic.agent
 from csp.decorators import csp_update
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
+from django.db import transaction
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.safestring import mark_safe
@@ -85,6 +86,7 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_async_submit,
 @process_document_path
 @check_readonly
 @prevent_indexing
+@transaction.atomic
 def edit(request, document_slug, document_locale):
     """
     Create a new revision of a wiki document, or edit document metadata.

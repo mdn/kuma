@@ -7,6 +7,7 @@ import waffle
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import transaction
 from django.forms.widgets import CheckboxSelectMultiple
 from django.template.loader import render_to_string
 from django.utils import translation
@@ -829,7 +830,9 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
             # send first edit emails
             if is_first_edit:
-                send_first_edit_email.delay(new_rev.pk)
+                transaction.on_commit(
+                    lambda: send_first_edit_email.delay(new_rev.pk)
+                )
 
             # schedule a document rendering
             document.schedule_rendering('max-age=0')

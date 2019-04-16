@@ -17,7 +17,9 @@ from waffle.testutils import override_flag, override_switch
 
 from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.tests import (assert_no_cache_header,
-                             assert_shared_cache_header, get_user)
+                             assert_shared_cache_header,
+                             call_on_commit_immediately,
+                             get_user)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html
 from kuma.spam.constants import (
@@ -1833,6 +1835,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert rev_ip.referrer == 'http://localhost/'
 
     @pytest.mark.edit_emails
+    @call_on_commit_immediately
     def test_email_for_first_edits(self):
         self.client.login(username='testuser', password='testpass')
         data = new_document_data()

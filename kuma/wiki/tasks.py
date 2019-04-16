@@ -14,7 +14,6 @@ from django.core.mail import mail_admins, send_mail
 from django.db import transaction
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
-from djcelery_transactions import task as transaction_task
 from lxml import etree
 
 from kuma.core.decorators import skip_in_maintenance_mode
@@ -269,7 +268,7 @@ def delete_old_revision_ips(days=30):
     RevisionIP.objects.delete_old(days=days)
 
 
-@transaction_task
+@task
 @skip_in_maintenance_mode
 def send_first_edit_email(revision_pk):
     """ Make an 'edited' notification email for first-time editors """
