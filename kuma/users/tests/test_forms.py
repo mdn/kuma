@@ -4,7 +4,7 @@ import pytest
 from django import forms
 from django.test import RequestFactory
 
-from kuma.core.tests import KumaTestCase
+from kuma.core.tests import call_on_commit_immediately, KumaTestCase
 
 from . import user
 from ..adapters import (KumaAccountAdapter, USERNAME_CHARACTERS,
@@ -169,6 +169,7 @@ class UserRecoveryEmailFormTests(KumaTestCase):
         form.save(request)
         mock_send_email.assert_called_once_with(user1.pk, email, 'en-US')
 
+    @call_on_commit_immediately
     def test_send_confirmed_email(self, mock_send_email):
         email = 'confirmed@example.com'
         user1 = User.objects.create(username='other', email='other@example.com')

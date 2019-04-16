@@ -8,7 +8,7 @@ from django.core import mail
 from django.test import RequestFactory, TestCase
 from waffle.testutils import override_switch
 
-from kuma.core.tests import assert_no_cache_header
+from kuma.core.tests import assert_no_cache_header, call_on_commit_immediately
 from kuma.core.urlresolvers import reverse
 from kuma.users.tasks import send_recovery_email, send_welcome_email
 
@@ -64,6 +64,7 @@ class TestWelcomeEmails(UserTestCase):
         self.assertEqual(1, len(mail.outbox))
 
     @override_switch('welcome_email', True)
+    @call_on_commit_immediately
     def test_welcome_mail_for_verified_email(self):
         testuser = user(username='welcome', email='welcome@tester.com',
                         password='welcome', save=True)
@@ -105,6 +106,7 @@ class TestWelcomeEmails(UserTestCase):
         self.assertTrue('getting started' in queued_messages[0].message)
 
     @override_switch('welcome_email', True)
+    @call_on_commit_immediately
     def test_welcome_mail_for_unverified_email(self):
         testuser = user(username='welcome2', email='welcome2@tester.com',
                         password='welcome2', save=True)

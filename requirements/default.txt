@@ -63,11 +63,6 @@ django-celery==3.2.2 \
     --hash=sha256:1450264db5ec58e45f3f20d8d361e696920352f62481bf56047288cdb38bcc0b \
     --hash=sha256:aaba492bf7777f231ec6b02c80aa3ea68758c39f4723864dd4164589b99ad703
 
-# Submit async tasks at the end of the Django transaction (deprecated?)
-# Code: https://github.com/bradleyayers/django-celery-transactions
-django-celery-transactions==0.3.6 \
-    --hash=sha256:cdf966ec461e9ec736a7bedcf47cb219fc79ea86f2b39191cb258082dd4f4b33
-
 # Store dynamic settings in the database
 # Code: https://github.com/jazzband/django-constance
 # Changes: https://github.com/jazzband/django-constance/blob/master/docs/changes.rst
