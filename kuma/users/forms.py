@@ -196,4 +196,6 @@ class UserRecoveryEmailForm(forms.Form):
         user_pks.update(personas.values_list('pk', flat=True))
         user_pks.update(confirmed.values_list('pk', flat=True))
         for user_pk in sorted(user_pks):
+            # TODO figure out why this isn't a .delay() call.
+            # https://bugzilla.mozilla.org/show_bug.cgi?id=1544925
             send_recovery_email(user_pk, email, request.LANGUAGE_CODE)

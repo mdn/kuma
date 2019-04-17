@@ -3,6 +3,7 @@ from allauth.socialaccount.signals import social_account_removed
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import transaction
 from django.db.models.signals import post_delete, post_save, pre_delete
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
@@ -49,7 +50,9 @@ def on_user_signed_up(sender, request, user, **kwargs):
         # only send if the user has already verified
         # at least one email address
         if user.emailaddress_set.filter(verified=True).exists():
-            send_welcome_email.delay(user.pk, request.LANGUAGE_CODE)
+            transaction.on_commit(
+                lambda: send_welcome_email.delay(user.pk, request.LANGUAGE_CODE)
+            )
 
 
 @receiver(email_confirmed, dispatch_uid='users.email_confirmed')
@@ -64,7 +67,9 @@ def on_email_confirmed(sender, request, email_address, **kwargs):
         user = email_address.user
         previous_emails = user.emailaddress_set.exclude(pk=email_address.pk)
         if not previous_emails.exists():
-            send_welcome_email.delay(user.pk, request.LANGUAGE_CODE)
+            transaction.on_commit(
+                lambda: send_welcome_email.delay(user.pk, request.LANGUAGE_CODE)
+            )
 
 
 @receiver(social_account_removed, dispatch_uid='users.social_account_removed')

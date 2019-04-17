@@ -1,12 +1,12 @@
 import logging
 
+from celery import task
 from constance import config
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.mail import EmailMultiAlternatives, send_mail
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
-from djcelery_transactions import task as transaction_task
 
 from kuma.core.decorators import skip_in_maintenance_mode
 from kuma.core.email_utils import render_email
@@ -22,7 +22,7 @@ WELCOME_EMAIL_STRINGS = [
 ]
 
 
-@transaction_task
+@task
 @skip_in_maintenance_mode
 def send_recovery_email(user_pk, email, locale=None):
     user = get_user_model().objects.get(pk=user_pk)
@@ -37,7 +37,7 @@ def send_recovery_email(user_pk, email, locale=None):
         send_mail(subject, plain, settings.DEFAULT_FROM_EMAIL, [email])
 
 
-@transaction_task
+@task
 @skip_in_maintenance_mode
 def send_welcome_email(user_pk, locale):
     user = get_user_model().objects.get(pk=user_pk)
