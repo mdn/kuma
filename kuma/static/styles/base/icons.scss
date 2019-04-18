@@ -103,12 +103,18 @@ i.icon-info-sign {
     @include set-icon($path-to-svg-notification-icons + 'info-circle.svg', 24px, 30px);
 }
 
-/* icon used by non-standard_inline macro */
 .icon-only-inline {
+    /* icon used by Experimetal_Inline macro */
+    i.icon-beaker {
+        @include set-icon($icon-flask-blue);
+    }
+
+    /* icon used by Non-standard_Inline macro */
     i.icon-warning-sign {
         @include set-icon($icon-exclamation-traingle-yellow);
     }
 
+    /* icon used by Obsolete_Inline macro */
     i.icon-trash {
         @include set-icon($icon-trash-red);
     }
