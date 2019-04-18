@@ -124,7 +124,6 @@ def test_macro_page_count(db, mock_es_client):
 
     es_json = {
         'size': 0,
-        'query': {'match_all': {}},
         'aggs': {'usage': {'terms': {
             'field': 'kumascript_macros',
             'size': 2000}
