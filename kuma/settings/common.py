@@ -1192,6 +1192,11 @@ for override in pipeline_overrides:
 SESSION_COOKIE_DOMAIN = DOMAIN
 SESSION_COOKIE_SECURE = config('SESSION_COOKIE_SECURE', default=True, cast=bool)
 SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_AGE = config(
+    'SESSION_COOKIE_AGE',
+    default=60 * 60 * 24 * 365,
+    cast=int
+)
 
 WAFFLE_SECURE = config('WAFFLE_COOKIE_SECURE', default=True, cast=bool)
 # This is a setting unique to Kuma which specifies the domain
