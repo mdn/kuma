@@ -15,6 +15,7 @@
             "html5shiv": "bower_components/html5shiv/dist/html5shiv.js",
             "prism": [
                 "bower_components/prism/components/prism-core.js",
+                "bower_components/prism/components/prism-bash.js",
                 "bower_components/prism/components/prism-markup.js",
                 "bower_components/prism/components/prism-css.js",
                 "bower_components/prism/components/prism-clike.js",
@@ -23,6 +24,7 @@
                 "bower_components/prism/components/prism-jsonp.js",
                 "bower_components/prism/components/prism-css-extras.js",
                 "bower_components/prism/components/prism-rust.js",
+                "bower_components/prism/components/prism-wasm.js",
                 "bower_components/prism/plugins/line-highlight/prism-line-highlight.js",
                 "bower_components/prism/plugins/line-numbers/prism-line-numbers.js",
 
