@@ -52,7 +52,7 @@
                                 {% set ban_ip_url = url('admin:core_ipban_add')|urlparams(ip=revision_ip.ip) %}
                                 <dl class="revision_ip compact hidden">
                                     <dt>{{ _('IP:') }}</dt>
-                                    <dd>{{ revision_ip.ip }} <br> <a class="dashboard-ban-ip-link" href="{{ ban_ip_url }}" target="_blank">{{ _('Ban IP from Editing') }}</a></dd>
+                                    <dd>{{ revision_ip.ip }} <br> <a class="dashboard-ban-ip-link" href="{{ ban_ip_url }}" target="_blank" rel="noopener">{{ _('Ban IP from Editing') }}</a></dd>
                                     {% if revision_ip.user_agent %}
                                     <dt>{{ _('User agent:') }}</dt>
                                     <dd>{{ revision_ip.user_agent }}</dd>

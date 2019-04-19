@@ -166,7 +166,7 @@
             <h2>{{ _('Thank you for taking the time to improve MDN!') }}</h2>
             <p>
               {% trans url=wiki_url('MDN/Contribute/Editor') %}
-                It looks like this is your first contribution to MDN. You can find answers to common editing questions within our <a target="_blank" href="{{ url }}">Editor Guide</a>.
+                It looks like this is your first contribution to MDN. You can find answers to common editing questions within our <a target="_blank" rel="noopener" href="{{ url }}">Editor Guide</a>.
               {% endtrans %}
             </p>
             <p>{{ _("Don't be afraid to break something, you can always revert your changes.") }}</p>
@@ -195,7 +195,7 @@
               </h3>
               <p>
               {% trans url=wiki_url('MDN/Contribute/Howto/Tag') %}
-                Categorize the article. It will make the article findable under the right filters in the search engine. <a target="_blank" href="{{ url }}">Read the Tagging Guide</a>.
+                Categorize the article. It will make the article findable under the right filters in the search engine. <a target="_blank" rel="noopener" href="{{ url }}">Read the Tagging Guide</a>.
               {% endtrans %}
               </p>
               <input id="tagit_tags" type="text" name="tags" value="{% for tag in tags %}{{ tag.name }},{% endfor %}" maxlength="255" class="tags" />

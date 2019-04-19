@@ -14,7 +14,7 @@
 {% if user and user.has_perm('wiki.change_documentspamattempt') -%}
 <p>
     {% trans akismet_submission_url = url('admin:wiki_documentspamattempt_changelist') + '?review__exact=0' %}
-    If you are a spam moderator, you can <a href="{{ akismet_submission_url }}" target="_blank">mark this submission as ham</a> and try submitting it again.
+    If you are a spam moderator, you can <a href="{{ akismet_submission_url }}" target="_blank" rel="noopener">mark this submission as ham</a> and try submitting it again.
     {% endtrans %}
 </p>
 {% endif -%}

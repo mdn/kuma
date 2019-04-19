@@ -222,7 +222,7 @@ topic_sibling_documents_link.short_description = "Sibling Documents"
 def document_link(obj):
     """Public link to the document"""
     link = obj.get_absolute_url()
-    return ('<a target="_blank" href="%s">'
+    return ('<a target="_blank" rel="noopener" href="%s">'
             '<img src="%simg/icons/link_external.png"> View</a>' %
             (link, settings.STATIC_URL))
 
@@ -520,7 +520,8 @@ class RevisionAkismetSubmissionAdmin(DisabledDeletionMixin, admin.ModelAdmin):
         """Link to the revision public page"""
         if obj.revision_id:
             admin_link = obj.revision.get_absolute_url()
-            return ('<a target="_blank" href="%s">%s</a>' %
+            return ('<a target="_blank" rel="noopener" '
+                    'href="%s">%s</a>' %
                     (admin_link, escape(obj.revision)))
         else:
             return 'None'

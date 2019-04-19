@@ -100,7 +100,7 @@
       {% for attachment in attachments %}
         <tr data-revision-id="{{ attachment.file.current_revision.pk }}">
           <td class="attachment-name-cell">
-            <a href="{{ attachment.file.get_file_url() }}" target="_blank">{{ attachment.file.title }}</a>
+            <a href="{{ attachment.file.get_file_url() }}" target="_blank" rel="noopener">{{ attachment.file.title }}</a>
             <div class="attachment-description">{{ attachment.file.current_revision.description }}</div>
           </td>
           <td>
