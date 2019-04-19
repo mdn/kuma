@@ -681,7 +681,8 @@ Placeholders
     .icon-arrow {
         position: absolute;
         top: 30%;
-        right: 0;
+        @include bidi(((left, auto, right, 0),));
+        @include bidi(((right, 0, left, auto),));
         transition: right .2s;
     }
 

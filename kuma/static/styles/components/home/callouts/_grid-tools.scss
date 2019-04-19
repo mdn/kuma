@@ -67,7 +67,8 @@ Fx-dev callout
             display: inline-block;
             background: transparent url($path-to-images + 'embed/promos/fx-dev-logo.png') 0 0 no-repeat;
             background-size: 32px 33px;
-            margin-right: 5px;
+            @include bidi(((margin-right, 5px, margin-left, 5px),));
+            @include bidi(((margin-right, 5px, margin-left, 0),));
             width: 36px;
             height: 36px;
             vertical-align: middle;
