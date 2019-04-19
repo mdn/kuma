@@ -573,12 +573,23 @@ class Document(NotificationsMixin, models.Model):
             # A timeout of 0 should shortcircuit kumascript usage.
             self.rendered_html, self.rendered_errors = self.html, []
         else:
-            self.rendered_html, errors = kumascript.get(
+            rendered_html, errors = kumascript.get(
                 self,
                 base_url,
                 cache_control=cache_control,
                 timeout=timeout)
-            self.rendered_errors = errors and json.dumps(errors) or None
+            # Kumascript errors happen. Either due to timeouts or other
+            # unpredictable things. If it's the case, we definitely want
+            # to record the kumascript rendering error in our database but
+            # let's not update the renderd HTML.
+            # What it can mean, if this happens, is that the rendered HTML
+            # belongs to the previous run but the rendered errors belongs
+            # to this one.
+            if errors:
+                self.rendered_errors = json.dumps(errors)
+            else:
+                self.rendered_html = rendered_html
+                self.rendered_errors = None
 
         # Regenerate the cached content fields
         self.regenerate_cache_with_fields()
