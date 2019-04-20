@@ -132,9 +132,9 @@ const menus = [
             {
                 label: gettext('Report a content problem'),
                 external: true,
-                url: `https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=${encodeURIComponent(
-                    window.location
-                )}`
+                // See fixurl() for code that replaces the {{SLUG}}
+                url:
+                    'https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title={{SLUG}}'
             },
             {
                 label: gettext('Report a bug'),
@@ -150,12 +150,16 @@ export default function Header(): React.Node {
     if (!documentData) {
         return null;
     }
-    const { localeFromURL } = documentData;
+    const { localeFromURL, slug } = documentData;
 
     function fixurl(url) {
-        return url.startsWith('https://')
-            ? url
-            : `/${localeFromURL}/docs/${url}`;
+        // The "Report a content issue" menu item has a link that requires
+        // the document slug, so we work that in here.
+        url = url.replace('{{SLUG}}', encodeURIComponent(slug));
+        if (!url.startsWith('https://')) {
+            url = `/${localeFromURL}/docs/${url}`;
+        }
+        return url;
     }
 
     return (

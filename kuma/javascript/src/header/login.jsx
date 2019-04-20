@@ -69,8 +69,18 @@ export default function Login(): React.Node {
     }
     const { editURL, localeFromURL } = documentData;
     const userData = useContext(CurrentUser.context);
-    const PATHNAME = window && window.location ? window.location.pathname : '/';
-    const WIKI_SITE_URL = window && window.mdn ? window.mdn.wikiSiteUrl : '';
+
+    const PATHNAME = documentData.absoluteURL;
+
+    // This is available as window.mdn.wikiSiteUrl. But we can't access
+    // that during server-side rendering, so we either need to add that mdn
+    // data to the document data, or we need to derive it from existing
+    // document data somehow
+    // TODO: pass this URL in some more reasonable way
+    const WIKI_SITE_URL = documentData.editURL.substring(
+        0,
+        documentData.editURL.indexOf(documentData.absoluteURL)
+    );
 
     // if we don't have the user data yet, don't render anything
     if (!userData) {

@@ -93,10 +93,7 @@
 
   {#{% include "includes/a11y-nav.html" %}#}
 
-  <!-- Content will go here -->
-  <div id="react-container">
-    <script type="base64-encoded-json">{{ document_api_data }}</script>
-  </div>
+  {{ render_react_app(document_api_data)|safe }}
 
   {% if settings.NEWSLETTER and settings.NEWSLETTER_ARTICLE %}
   <div class="center">
@@ -138,6 +135,7 @@
 
   <!-- site js -->
   <script src="{{ react_i18n(request.LANGUAGE_CODE) }}"></script>
+
   {% javascript 'react-main' %}
   <script>
     if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
