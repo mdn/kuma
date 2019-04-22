@@ -37,6 +37,7 @@ services:
       # Other environment overrides
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=True
+      - PYTHONWARNINGS=${PYTHONWARNINGS:-default}
       - MAINTENANCE_MODE=${MAINTENANCE_MODE:-False}
       - REVISION_HASH=${KUMA_REVISION_HASH:-undefined}
 
