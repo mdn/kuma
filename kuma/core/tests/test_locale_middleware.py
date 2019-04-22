@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import pytest
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from . import assert_shared_cache_header
 

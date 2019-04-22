@@ -3,10 +3,10 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.core.exceptions import MiddlewareNotUsed
-from django.core.urlresolvers import get_script_prefix, resolve, Resolver404
 from django.http import (HttpResponseForbidden,
                          HttpResponsePermanentRedirect,
                          HttpResponseRedirect)
+from django.urls import get_script_prefix, resolve, Resolver404
 from django.utils.encoding import smart_str
 from django.utils.six.moves.urllib.parse import urlsplit, urlunsplit
 from waffle.middleware import WaffleMiddleware
