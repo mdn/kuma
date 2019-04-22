@@ -6,7 +6,7 @@ from apiclient.discovery import build
 from constance import config
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.core.urlresolvers import resolve, Resolver404
+from django.urls import resolve, Resolver404
 from django.utils import translation
 from httplib2 import Http
 from oauth2client.service_account import ServiceAccountCredentials

@@ -6,7 +6,7 @@ from datetime import datetime
 
 import mock
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from kuma.core.utils import order_params
 
