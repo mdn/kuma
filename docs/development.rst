@@ -478,3 +478,16 @@ will still be available at http://localhost:8000/en-US/, but GitHub logins will
 not work.
 
 .. _`Django Admin for Sites`: http://localhost:8000/admin/sites/site/
+
+Enabling ``PYTHONWARNINGS``
+===========================
+
+By default, ``PYTHONWARNINGS`` is not set, leaving it to be ``default``
+(which is like regular ``python`` on the command line). To change its
+value you can edit your ``.env`` file. For example::
+
+    # Unmask all possible Python warnings
+    PYTHONWARNINGS=all
+
+The ``docker-compose.yml`` will read this and start ``gunicorn`` and the
+``celery`` worker with this setting.
