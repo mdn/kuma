@@ -1,7 +1,6 @@
 import collections
 import json
 import operator
-import uuid
 from datetime import datetime, timedelta
 
 from allauth.account.adapter import get_adapter
@@ -13,7 +12,7 @@ from allauth.socialaccount.views import SignupView as BaseSignupView
 from constance import config
 from django import forms
 from django.conf import settings
-from django.contrib.auth import authenticate, get_user_model, login
+from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
 from django.contrib.auth.tokens import default_token_generator
@@ -640,13 +639,7 @@ def recover(request, uidb64=None, token=None):
     except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
         user = None
     if user and default_token_generator.check_token(user, token):
-        temp_pwd = uuid.uuid4().hex
-        user.set_password(temp_pwd)
-        user.save()
-        user = authenticate(username=user.username, password=temp_pwd)
-        user.set_unusable_password()
-        user.save()
-        login(request, user)
+        login(request, user, 'kuma.users.auth_backends.KumaAuthBackend')
         return redirect('users.recover_done')
     return render(request, 'users/recover_failed.html')
 
