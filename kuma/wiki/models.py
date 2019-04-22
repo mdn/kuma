@@ -539,6 +539,9 @@ class Document(NotificationsMixin, models.Model):
         Document.objects.filter(pk=self.pk).update(render_scheduled_at=now)
         self.render_scheduled_at = now
 
+        print("INSIDE schedule_rendering\tself.defer_rendering=", self.defer_rendering)
+        # raise Exception
+
         if self.defer_rendering:
             # Attempt to queue a rendering. If celery.conf.ALWAYS_EAGER is
             # True, this is also an immediate rendering.
@@ -552,6 +555,9 @@ class Document(NotificationsMixin, models.Model):
         """
         Render content using kumascript and any other services necessary.
         """
+
+        print("INSIDE render\tself.is_rendering_in_progress=", self.is_rendering_in_progress)
+
         if settings.MAINTENANCE_MODE:
             return
 
@@ -585,8 +591,11 @@ class Document(NotificationsMixin, models.Model):
             # What it can mean, if this happens, is that the rendered HTML
             # belongs to the previous run but the rendered errors belongs
             # to this one.
+            print("ERRORS?", bool(errors))
             if errors:
                 self.rendered_errors = json.dumps(errors)
+                # This means that it'll ...
+                # self.defer_rendering = True
             else:
                 self.rendered_html = rendered_html
                 self.rendered_errors = None
@@ -599,11 +608,12 @@ class Document(NotificationsMixin, models.Model):
 
         # If this rendering took longer than we'd like, mark it for deferred
         # rendering in the future.
-        timeout = config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT
-        max_duration = timedelta(seconds=timeout)
-        duration = self.last_rendered_at - self.render_started_at
-        if duration >= max_duration:
-            self.defer_rendering = True
+        if not self.defer_rendering:
+            timeout = config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT
+            max_duration = timedelta(seconds=timeout)
+            duration = self.last_rendered_at - self.render_started_at
+            if duration >= max_duration:
+                self.defer_rendering = True
 
         # TODO: Automatically clear the defer_rendering flag if the rendering
         # time falls under the limit? Probably safer to require manual

@@ -851,3 +851,31 @@ def test_hreflang(client, root_doc, locales, expected_results):
         assert html.attr('lang') == expected_result
         assert html.find('head > link[hreflang="{}"][href$="{}"]'.format(
             expected_result, url))
+
+
+def test_render_document_with_cache_control(
+    mock_kumascript_get,
+    constance_config,
+    wiki_user,
+    client
+):
+    """If you're logged in and view the document with Shift-Refresh
+    it should re-render it.
+    """
+
+    assert 0
+
+
+def test_render_document_with_cache_control_with_kumascript_errors(
+    mock_kumascript_get,
+    constance_config,
+    wiki_user,
+    client
+):
+    """If you're logged in and view the document with Shift-Refresh
+    it should re-render it. However, what if we're so unlucky that
+    an error happens. Whatever should happen is that we should have to
+    see the raw content.
+    """
+
+    assert 0
