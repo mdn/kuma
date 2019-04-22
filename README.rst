@@ -18,6 +18,10 @@ Kuma
    :target: https://raw.githubusercontent.com/mozilla/kuma/master/LICENSE
    :alt: License
 
+.. image:: https://img.shields.io/badge/whatsdeployed-stage,prod-green.svg
+   :target: https://whatsdeployed.io/s/HC0/mozilla/kuma
+   :alt: What's deployed on stage,prod?
+
 .. Omit badges from docs
 
 Kuma is the platform that powers `MDN (developer.mozilla.org)
