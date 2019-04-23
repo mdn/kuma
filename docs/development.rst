@@ -236,6 +236,20 @@ around 4 seconds to page load time.
 
 .. _Environment variables: http://12factor.net/config
 
+Customizing number of workers
+=============================
+
+The ``docker-compose.yml`` in git comes with a default setting of
+4 ``celery`` workers and 4 ``gunicorn`` workers. That's pretty resource
+intensive since they prefork. To change the number of ``gunicorn``
+and ``celery`` workers, consider setting this in your ``.env`` file::
+
+    CELERY_WORKERS=2
+    GUNICORN_WORKERS=3
+
+In that example, it will only start 2 ``celery`` workers and 3 ``gunicorn``
+workers just for your environment.
+
 .. _advanced_config_docker:
 
 Customizing the Docker environment

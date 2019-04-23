@@ -2,7 +2,7 @@ version: '2.1'
 services:
   worker: &worker
     image: mdnwebdocs/kuma_base
-    command: ./manage.py celery worker --loglevel=INFO --events --beat --autoreload --concurrency=4 -Q mdn_purgeable,mdn_search,mdn_emails,mdn_wiki,mdn_api,celery
+    command: ./manage.py celery worker --loglevel=INFO --events --beat --autoreload --concurrency=${CELERY_WORKERS:-4}  -Q mdn_purgeable,mdn_search,mdn_emails,mdn_wiki,mdn_api,celery
     user: ${UID:-1000}
     volumes:
       - ./:/app:z
@@ -50,7 +50,7 @@ services:
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:
     <<: *worker
-    command: gunicorn -w 4 --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 --worker-class=meinheld.gmeinheld.MeinheldWorker kuma.wsgi:application
+    command: gunicorn -w ${GUNICORN_WORKERS:-4} --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 --worker-class=meinheld.gmeinheld.MeinheldWorker kuma.wsgi:application
     depends_on:
       - mysql
       - elasticsearch
@@ -63,7 +63,7 @@ services:
   # API is used by KumaScript for content and metadata
   api:
     <<: *worker
-    command: gunicorn -w 4 --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 kuma.wsgi:application
+    command: gunicorn -w ${GUNICORN_WORKERS:-4} --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 kuma.wsgi:application
     depends_on:
       - mysql
       - elasticsearch
