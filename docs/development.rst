@@ -491,3 +491,29 @@ value you can edit your ``.env`` file. For example::
 
 The ``docker-compose.yml`` will read this and start ``gunicorn`` and the
 ``celery`` worker with this setting.
+
+Configuring AWS S3
+==================
+
+The ``publish`` and ``unpublish`` Celery tasks and Django management commands
+require AWS S3 to be configured in order for them to do any real work, that is,
+creating/updating/deleting S3 objects used by the stage/production document API.
+In stage and production, the S3 bucket name as well as the AWS credentials are
+configured via the container environment, which in turn, gets the AWS credentials
+from a Kubernetes ``secrets`` resource. For local development, there is no need
+for any of this configuration. The ``publish`` and ``unpublish`` tasks will
+simply be skipped (although, for verification/debugging purposes, you can see
+the detailed skip messages in the ``worker`` log (
+``docker-compose logs -f worker``).
+
+However, if for testing purposes you'd like
+to locally configure the ``publish`` and ``unpublish`` tasks to use S3, you can
+simply add the following::
+
+    - MDN_API_S3_BUCKET_NAME=<your-s3-bucket-name>
+    - AWS_ACCESS_KEY_ID=<your-aws-access-key>
+    - AWS_SECRET_ACCESS_KEY=<your-aws-secret-key>
+
+to the ``environment`` section of the ``worker`` service within either
+``docker-compose.ssl.yml`` or ``docker-compose.yml``, depending on whether or
+not your serving over SSL/HTTPS.
