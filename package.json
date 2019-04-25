@@ -30,6 +30,9 @@
     "dependencies": {
         "@emotion/core": "^10.0.7",
         "@emotion/styled": "^10.0.7",
+        "express": "^4.16.4",
+        "morgan": "^1.9.1",
+        "newrelic": "^4.13.1",
         "react": "^16.8.4",
         "react-dom": "^16.8.4"
     },
@@ -66,6 +69,7 @@
         "react-test-renderer": "^16.8.4",
         "sass-true": "4.0.0",
         "stylelint": "9.3.0",
+        "supertest": "^4.0.2",
         "svgo": "1.0.5",
         "uglify-js": "2.8.29",
         "webpack": "^4.29.3",

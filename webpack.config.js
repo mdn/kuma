@@ -16,13 +16,8 @@ const path = require('path');
 //
 const nodePath = process.env.NODE_PATH || path.join(__dirname, 'node_modules');
 
-module.exports = {
+const commonConfig = {
     mode: 'production', // Or switch to "development"
-    entry: path.resolve(__dirname, './kuma/javascript/src/index.jsx'),
-    output: {
-        filename: 'react.js',
-        path: path.resolve(__dirname, './kuma/javascript/dist/')
-    },
     module: {
         rules: [
             {
@@ -56,3 +51,26 @@ module.exports = {
         modules: [nodePath]
     }
 };
+
+module.exports = [
+    {
+        target: 'web',
+        entry: path.resolve(__dirname, './kuma/javascript/src/index.jsx'),
+        output: {
+            filename: 'react.js',
+            path: path.resolve(__dirname, './kuma/javascript/dist/')
+        },
+        ...commonConfig
+    },
+    {
+        target: 'node',
+        entry: path.resolve(__dirname, './kuma/javascript/src/ssr.jsx'),
+        output: {
+            filename: 'ssr.js',
+            path: path.resolve(__dirname, './kuma/javascript/dist/'),
+            libraryExport: 'default',
+            libraryTarget: 'commonjs2'
+        },
+        ...commonConfig
+    }
+];

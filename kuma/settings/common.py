@@ -1879,3 +1879,7 @@ if MDN_CONTRIBUTION:
     CSP_FRAME_SRC.append('https://checkout.stripe.com')
     CSP_IMG_SRC.append('https://*.stripe.com')
     CSP_SCRIPT_SRC.append('https://checkout.stripe.com')
+
+# Settings used for communication with the React server side rendering server
+SSR_URL = config('SSR_URL', default='http://localhost:8002/ssr')
+SSR_TIMEOUT = float(config('SSR_TIMEOUT', default='1'))

@@ -56,14 +56,13 @@ export default function DocumentProvider(
 ): React.Node {
     const [documentData, setDocumentData] = useState(props.initialDocumentData);
 
-    if (!document.body) {
-        throw new Error('DocumentProvider rendered before a body exists.');
-    }
-    const body = document.body;
-
     // A one-time effect that runs only on mount, to set up
     // an event handler for client-side navigation
     useEffect(() => {
+        if (!document.body) {
+            throw new Error('DocumentProvider effect ran without body.');
+        }
+        const body = document.body;
         // This is the function that does client side navigation
         function navigate(url, localeAndSlug) {
             body.style.opacity = '0.15';
@@ -168,10 +167,21 @@ export default function DocumentProvider(
     /*
      * Get the locale displayed in the URL and add that to the data
      * that we provide.
+     *
+     * TODO: this is hardcoded as en-US right now. I used to get it
+     * from the URL as the name implies, but that doesn't work for
+     * server side rendering, so I think this needs to be added to the
+     * document API. Maybe call it requestLocale (the locale of the incoming
+     * request url). Note that this may differ from the actual locale
+     * of the document, when a document is not translated and we fall back
+     * to the original english document.
      */
+    documentData.localeFromURL = 'en-US';
+    /*
     documentData.localeFromURL =
         (window && window.location && window.location.pathname.split('/')[1]) ||
         'en-US';
+    */
 
     return (
         <context.Provider value={documentData}>

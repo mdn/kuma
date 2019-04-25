@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import base64
 import json
 
 import newrelic.agent
@@ -875,8 +874,8 @@ def react_document(request, document_slug, document_locale):
 
     # Bundle it all up and, finally, return.
     context = {
-        'document_api_data': base64.b64encode(
-            json.dumps(document_api_data(doc))),
+        'document_api_data': document_api_data(doc),
+
         # TODO: anything we're actually using in the template ought
         # to be bundled up into the json object above instead.
         'document': doc,

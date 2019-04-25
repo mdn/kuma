@@ -40,11 +40,21 @@ services:
       - PYTHONWARNINGS=${PYTHONWARNINGS:-default}
       - MAINTENANCE_MODE=${MAINTENANCE_MODE:-False}
       - REVISION_HASH=${KUMA_REVISION_HASH:-undefined}
+      # For the server side rendering server and the code that connects to it.
+      - SSR_PORT=8000
+      - SSR_URL=http://ssr:8000/ssr
+      - SSR_TIMEOUT=1
 
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:
     <<: *worker
     command: gunicorn -w 4 --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 --worker-class=meinheld.gmeinheld.MeinheldWorker kuma.wsgi:application
+    depends_on:
+      - mysql
+      - elasticsearch
+      - redis
+      - kumascript
+      - ssr
     ports:
       - "8000:8000"
 
@@ -56,9 +66,16 @@ services:
       - mysql
       - elasticsearch
       - redis
-      # Drop kumascript link
     ports:
       - "8001:8000"
+
+  # ssr is a Node server that performs server-side rendering of our React UI
+  ssr:
+    <<: *worker
+    command: node kuma/javascript/ssr-server.js
+    depends_on: []
+    ports:
+      - "8002:8000"
 
   mysql:
     image: mysql:5.6

@@ -448,7 +448,7 @@ Array [
           </li>
           <li>
             <a
-              href="https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=http%3A%2F%2Flocalhost%2F"
+              href="https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=test"
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -533,7 +533,7 @@ Array [
       <a
         className="emotion-44"
         data-service="GitHub"
-        href="/users/github/login/?next=/"
+        href="/users/github/login/?next=[fake absolute url]"
         rel="nofollow"
       >
         Sign in
