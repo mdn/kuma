@@ -7,7 +7,10 @@ services:
     volumes:
       - ./:/app:z
     depends_on:
+      - mysql
+      - elasticsearch
       - redis
+      - kumascript
     environment:
       # Django settings overrides:
       - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
