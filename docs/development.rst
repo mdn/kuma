@@ -506,14 +506,10 @@ simply be skipped (although, for verification/debugging purposes, you can see
 the detailed skip messages in the ``worker`` log (
 ``docker-compose logs -f worker``).
 
-However, if for testing purposes you'd like
-to locally configure the ``publish`` and ``unpublish`` tasks to use S3, you can
-simply add the following::
+However, if for testing purposes you'd like to locally configure the
+``publish`` and ``unpublish`` tasks to use S3, you can simply add the
+following to your ``.env`` file::
 
-    - MDN_API_S3_BUCKET_NAME=<your-s3-bucket-name>
-    - AWS_ACCESS_KEY_ID=<your-aws-access-key>
-    - AWS_SECRET_ACCESS_KEY=<your-aws-secret-key>
-
-to the ``environment`` section of the ``worker`` service within either
-``docker-compose.ssl.yml`` or ``docker-compose.yml``, depending on whether or
-not your serving over SSL/HTTPS.
+    MDN_API_S3_BUCKET_NAME=<your-s3-bucket-name>
+    AWS_ACCESS_KEY_ID=<your-aws-access-key>
+    AWS_SECRET_ACCESS_KEY=<your-aws-secret-key>

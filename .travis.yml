@@ -17,7 +17,7 @@ env:
     global:
         - DATABASE_URL=mysql://root:@127.0.0.1:3306/kuma
         - DJANGO_SETTINGS_MODULE=kuma.settings.travis
-        - DOCKER_COMPOSE_VERSION=1.9.0
+        - DOCKER_COMPOSE_VERSION=1.23.2
         - ES_VERSION=5.6.10
         - ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.10.tar.gz
         - PIPELINE_CLEANCSS_BINARY=$TRAVIS_BUILD_DIR/node_modules/.bin/cleancss

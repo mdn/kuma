@@ -12,14 +12,30 @@ from kuma.wiki.models import Document
 from .v1.views import document_api_data, get_content_based_redirect, get_s3_key
 
 
+_s3_resource = None
 S3_MAX_KEYS_PER_DELETE = 1000
 
 
-def get_s3_bucket():
-    """ Get the S3 bucket name from the environment, otherwise None."""
+def get_s3_resource(config=None):
+    """
+    Get or create the S3 resource. This function is not thread-safe, since it
+    uses the default session, rather than a separate session for each thread.
+    We do not use threads however, so we don't have to handle them.
+    """
+    global _s3_resource
+    if _s3_resource is None:
+        _s3_resource = boto3.resource('s3', config=config)
+    return _s3_resource
+
+
+def get_s3_bucket(config=None):
+    """
+    Get the S3 bucket using the name configured in the environment, otherwise
+    return None.
+    """
     if not settings.MDN_API_S3_BUCKET_NAME:
         return None
-    s3 = boto3.resource('s3')
+    s3 = get_s3_resource(config=config)
     return s3.Bucket(settings.MDN_API_S3_BUCKET_NAME)
 
 
