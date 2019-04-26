@@ -4,6 +4,15 @@
  * of our React UI. The main endpoint is POST /ssr, and it invokes the
  * ssr() function from dist/ssr.js (which is webpacked from src/ssr.jsx).
  */
+
+// Start New Relic logging if it is configured.
+// The require('newrelic') must be the very first require in the
+// file in order for reporting to work correctly.
+if (process.env.NEW_RELIC_LICENSE_KEY && process.env.NEW_RELIC_APP_NAME) {
+    console.log('Starting New Relic logging for the SSR server.');
+    require('newrelic');
+}
+
 const express = require('express'); // Express server framework
 const morgan = require('morgan');
 
@@ -13,12 +22,6 @@ const ssr = require('./dist/ssr.js'); // Function to do server-side rendering
 const PID = process.pid;
 const PORT = parseInt(process.env.SSR_PORT) || 8000;
 const MAX_BODY_SIZE = 1024 * 1024; // 1 megabyte max JSON payload
-
-// Start New Relic logging if it is configured
-if (process.env.NEW_RELIC_LICENSE_KEY && process.env.NEW_RELIC_APP_NAME) {
-    console.log('Starting New Relic logging for KumaScript.');
-    require('newrelic');
-}
 
 // We're using the Express server framework
 const app = express();
