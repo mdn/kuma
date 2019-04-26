@@ -578,6 +578,7 @@ INSTALLED_APPS = (
     'kuma.search.apps.SearchConfig',
     'kuma.users.apps.UserConfig',
     'kuma.wiki.apps.WikiConfig',
+    'kuma.api.apps.APIConfig',
     'kuma.attachments.apps.AttachmentsConfig',
     'allauth',
     'allauth.account',
@@ -1517,6 +1518,12 @@ CELERY_ROUTES = {
     'kuma.feeder.tasks.update_feeds': {
         'queue': 'mdn_purgeable'
     },
+    'kuma.api.tasks.publish': {
+        'queue': 'mdn_api'
+    },
+    'kuma.api.tasks.unpublish': {
+        'queue': 'mdn_api'
+    },
 }
 
 # Wiki rebuild settings
@@ -1883,3 +1890,6 @@ if MDN_CONTRIBUTION:
 # Settings used for communication with the React server side rendering server
 SSR_URL = config('SSR_URL', default='http://localhost:8002/ssr')
 SSR_TIMEOUT = float(config('SSR_TIMEOUT', default='1'))
+
+# Setting for configuring the AWS S3 bucket name used for the document API.
+MDN_API_S3_BUCKET_NAME = config('MDN_API_S3_BUCKET_NAME', default=None)

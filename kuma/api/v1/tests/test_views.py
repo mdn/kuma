@@ -1,16 +1,55 @@
+from __future__ import unicode_literals
+
 from functools import partial
 
-import mock
 import pytest
 
-from kuma.api.v1.views import document_api_data
+from kuma.api.v1.views import (document_api_data, get_content_based_redirect,
+                               get_s3_key)
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse as core_reverse
 from kuma.users.templatetags.jinja_helpers import gravatar_url
+from kuma.wiki.jobs import DocumentContributorsJob
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
 reverse = partial(core_reverse, urlconf='kuma.urls_beta')
+
+
+def test_get_s3_key(root_doc):
+    locale, slug = root_doc.locale, root_doc.slug
+    expected_key = 'api/v1/doc/{}/{}'.format(locale, slug)
+    assert (get_s3_key(root_doc) == get_s3_key(locale=locale, slug=slug) ==
+            expected_key)
+    assert (get_s3_key(root_doc, for_redirect=True) ==
+            get_s3_key(locale=locale, slug=slug, for_redirect=True) ==
+            '/' + expected_key)
+
+
+@pytest.mark.parametrize('case', ('normal',
+                                  'redirect',
+                                  'redirect-to-self',
+                                  'redirect-to-home',
+                                  'redirect-to-wiki'))
+def test_get_content_based_redirect(root_doc, redirect_doc, redirect_to_self,
+                                    redirect_to_home, redirect_to_macros, case):
+    if case == 'normal':
+        doc = root_doc
+        expected = None
+    elif case == 'redirect':
+        doc = redirect_doc
+        expected = (get_s3_key(root_doc, for_redirect=True), True)
+    elif case == 'redirect-to-self':
+        doc = redirect_to_self
+        expected = None
+    elif case == 'redirect-to-home':
+        doc = redirect_to_home
+        expected = ('/en-US/', False)
+    else:
+        doc = redirect_to_macros
+        expected = (
+            absolutify('/en-US/dashboards/macros', for_wiki_site=True), False)
+    assert get_content_based_redirect(doc) == expected
 
 
 @pytest.mark.parametrize(
@@ -32,14 +71,15 @@ def test_doc_api_404(client, api_settings, root_doc):
     assert_no_cache_header(response)
 
 
-@mock.patch('kuma.wiki.jobs.DocumentContributorsJob.fetch_on_miss', True)
-def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache):
+@pytest.mark.parametrize('ensure_contributors', (True, False))
+def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache,
+                 ensure_contributors):
     """On success we get document details in a JSON response."""
+    if ensure_contributors:
+        # Pre-populate the cache for the call to document_api_data()
+        # made within the view that serves the "api.v1.doc" endpoint.
+        DocumentContributorsJob().refresh(trans_doc.pk)
 
-    # The fetch_on_miss mock and the cleared_cacheback_cache fixture
-    # are here to ensure that we don't get an old cached value for
-    # the contributors property, and also that we don't use []
-    # while a celery job is running.
     url = reverse('api.v1.doc', args=[trans_doc.locale, trans_doc.slug])
     response = client.get(url, HTTP_HOST=api_settings.BETA_HOST)
     assert response.status_code == 200
@@ -52,7 +92,7 @@ def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache):
     assert data['title'] == trans_doc.title
     assert data['language'] == trans_doc.language
     assert data['absoluteURL'] == trans_doc.get_absolute_url()
-    assert data['redirectURL'] == trans_doc.get_redirect_url()
+    assert data['redirectURL'] is None
     assert data['editURL'] == absolutify(trans_doc.get_edit_url(),
                                          for_wiki_site=True)
     assert data['bodyHTML'] == trans_doc.get_body_html()
@@ -65,14 +105,105 @@ def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache):
         'title': 'Root Document',
         'url': '/en-US/docs/Root'
     }]
-    assert data['contributors'] == ['wiki_user']
+    assert data['contributors'] == (
+        ['wiki_user'] if ensure_contributors else [])
     assert data['lastModified'] == '2017-04-14T12:20:00'
     assert data['lastModifiedBy'] == 'wiki_user'
 
+    # Clear the cache for a clean slate when calling document_api_data().
+    DocumentContributorsJob().delete(trans_doc.pk)
+
     # Also ensure that we get exactly the same data by calling
     # the document_api_data() function directly
-    data2 = document_api_data(trans_doc)
-    assert data == data2
+    assert data == document_api_data(
+        trans_doc, ensure_contributors=ensure_contributors)
+
+
+@pytest.mark.parametrize('ensure_contributors', (True, False))
+def test_doc_api_for_redirect_to_doc(client, api_settings, root_doc,
+                                     redirect_doc, cleared_cacheback_cache,
+                                     ensure_contributors):
+    """
+    Test the document API when we're requesting data for a document that
+    redirects to another document.
+    """
+    if ensure_contributors:
+        # Pre-populate the cache for the call to document_api_data()
+        # made within the view that serves the "api.v1.doc" endpoint.
+        DocumentContributorsJob().refresh(root_doc.pk)
+
+    url = reverse('api.v1.doc', args=[redirect_doc.locale, redirect_doc.slug])
+    response = client.get(url, HTTP_HOST=api_settings.BETA_HOST, follow=True)
+    assert response.status_code == 200
+    assert_no_cache_header(response)
+
+    data = response.json()
+    assert data['locale'] == root_doc.locale
+    assert data['slug'] == root_doc.slug
+    assert data['id'] == root_doc.id
+    assert data['title'] == root_doc.title
+    assert data['language'] == root_doc.language
+    assert data['absoluteURL'] == root_doc.get_absolute_url()
+    assert data['redirectURL'] is None
+    assert data['editURL'] == absolutify(root_doc.get_edit_url(),
+                                         for_wiki_site=True)
+    assert data['bodyHTML'] == root_doc.get_body_html()
+    assert data['quickLinksHTML'] == root_doc.get_quick_links_html()
+    assert data['tocHTML'] == root_doc.get_toc_html()
+    assert data['translations'] == []
+    assert data['contributors'] == (
+        ['wiki_user'] if ensure_contributors else [])
+    assert data['lastModified'] == '2017-04-14T12:15:00'
+    assert data['lastModifiedBy'] == 'wiki_user'
+
+    # Clear the cache for a clean slate when calling document_api_data().
+    DocumentContributorsJob().delete(root_doc.pk)
+
+    # Also ensure that we get exactly the same data by calling
+    # the document_api_data() function directly
+    assert data == document_api_data(
+        root_doc, ensure_contributors=ensure_contributors)
+
+
+@pytest.mark.parametrize('case', ('redirect-to-home', 'redirect-to-other'))
+def test_doc_api_for_redirect_to_non_doc(client, api_settings, redirect_to_home,
+                                         redirect_to_macros, case):
+    """
+    Test the document API when we're requesting data for a document that
+    redirects to a non-document page (either the home page or another).
+    """
+    if case == 'redirect-to-home':
+        doc = redirect_to_home
+        expected_redirect_url = '/en-US/'
+    else:
+        doc = redirect_to_macros
+        expected_redirect_url = absolutify('/en-US/dashboards/macros',
+                                           for_wiki_site=True)
+    url = reverse('api.v1.doc', args=[doc.locale, doc.slug])
+    response = client.get(url, HTTP_HOST=api_settings.BETA_HOST)
+    assert response.status_code == 200
+    assert_no_cache_header(response)
+
+    data = response.json()
+    assert data['locale'] is None
+    assert data['slug'] is None
+    assert data['id'] is None
+    assert data['title'] is None
+    assert data['language'] is None
+    assert data['absoluteURL'] is None
+    assert data['redirectURL'] == expected_redirect_url
+    assert data['editURL'] is None
+    assert data['bodyHTML'] is None
+    assert data['quickLinksHTML'] is None
+    assert data['tocHTML'] is None
+    assert data['translations'] is None
+    assert data['contributors'] is None
+    assert data['lastModified'] is None
+    assert data['lastModifiedBy'] is None
+
+    # Also ensure that we get exactly the same data by calling
+    # the document_api_data() function directly
+    assert data == document_api_data(redirect_url=expected_redirect_url)
 
 
 @pytest.mark.parametrize(

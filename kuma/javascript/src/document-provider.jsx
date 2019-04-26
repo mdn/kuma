@@ -66,7 +66,7 @@ export default function DocumentProvider(
         // This is the function that does client side navigation
         function navigate(url, localeAndSlug) {
             body.style.opacity = '0.15';
-            fetch(`/api/v1/doc${localeAndSlug}`)
+            fetch(`/api/v1/doc${localeAndSlug}`, { redirect: 'follow' })
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -79,9 +79,28 @@ export default function DocumentProvider(
                     }
                 })
                 .then(json => {
-                    window.scrollTo(0, 0);
-                    setDocumentData(json);
-                    body.style.opacity = '1';
+                    if (json.redirectURL) {
+                        // We've got a redirect to a document that can't be
+                        // handled via the /api/v1/doc/ API, so we just do a
+                        // full page load of that document.
+                        window.location = json.redirectURL;
+                    } else {
+                        let receivedLocaleAndSlug = `/${json.locale}/${
+                            json.slug
+                        }`;
+                        if (receivedLocaleAndSlug !== localeAndSlug) {
+                            // This was a redirect.
+                            let receivedURL = json.absoluteURL;
+                            history.replaceState(
+                                { receivedURL, receivedLocaleAndSlug },
+                                '',
+                                receivedURL
+                            );
+                        }
+                        window.scrollTo(0, 0);
+                        setDocumentData(json);
+                        body.style.opacity = '1';
+                    }
                 })
                 .catch(() => {
                     // If anything went wrong (most likely a 404 from

@@ -2,7 +2,7 @@ version: '2.1'
 services:
   worker: &worker
     image: mdnwebdocs/kuma_base
-    command: ./manage.py celery worker --loglevel=INFO --events --beat --autoreload --concurrency=4 -Q mdn_purgeable,mdn_search,mdn_emails,mdn_wiki,celery
+    command: ./manage.py celery worker --loglevel=INFO --events --beat --autoreload --concurrency=4 -Q mdn_purgeable,mdn_search,mdn_emails,mdn_wiki,mdn_api,celery
     user: ${UID:-1000}
     volumes:
       - ./:/app:z
@@ -17,6 +17,8 @@ services:
       - ALLOW_ALL_IFRAMES=${ALLOW_ALL_IFRAMES:-False}
       - ALLOWED_HOSTS=*
       - ATTACHMENT_HOST=${ATTACHMENT_HOST:-localhost:8000}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
       - BROKER_URL=redis://redis:6379/0
       - CELERY_ALWAYS_EAGER=False
       - CELERY_RESULT_BACKEND=redis://redis:6379/1

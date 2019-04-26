@@ -80,9 +80,10 @@ def get_doc_components_from_url(url, required_locale=None, check_host=True):
         return False
 
     # View imports Model, Model imports utils, utils import Views.
-    from kuma.wiki.views.document import document as document_view
+    from kuma.wiki.views.document import (document as document_view,
+                                          react_document as react_document_view)
 
-    if view != document_view:
+    if view not in (document_view, react_document_view):
         raise NotDocumentView
 
     path = '/' + path

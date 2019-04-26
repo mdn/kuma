@@ -9,9 +9,6 @@ import pytest
 from django.contrib.auth.models import Permission
 from waffle.testutils import override_flag
 
-from kuma.core.urlresolvers import reverse
-
-from ..constants import REDIRECT_CONTENT
 from ..models import Document, DocumentDeletionLog, Revision
 
 
@@ -102,23 +99,6 @@ def trans_edit_revision(trans_doc, edit_revision, wiki_user):
         created=datetime(2017, 4, 14, 20, 25))
     trans_doc.save()
     return trans_doc.current_revision
-
-
-@pytest.fixture
-def redirect_doc(wiki_user, root_doc):
-    """A newly-created top-level English redirect document."""
-    redirect_doc = Document.objects.create(
-        locale='en-US', slug='Redirection', title='Redirect Document')
-    Revision.objects.create(
-        document=redirect_doc,
-        creator=wiki_user,
-        content=REDIRECT_CONTENT % {
-            'href': reverse('wiki.document', args=(root_doc.slug,)),
-            'title': root_doc.title,
-        },
-        title='Redirect Document',
-        created=datetime(2017, 4, 17, 12, 15))
-    return redirect_doc
 
 
 @pytest.fixture
