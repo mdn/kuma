@@ -2,15 +2,15 @@
 import React from 'react';
 import { act, create } from 'react-test-renderer';
 
-import CurrentUser from './current-user.jsx';
+import UserProvider from './user-provider.jsx';
 
-describe('CurrentUser', () => {
+describe('UserProvider', () => {
     test('context works', () => {
-        const P = CurrentUser.context.Provider;
-        const C = CurrentUser.context.Consumer;
+        const P = UserProvider.context.Provider;
+        const C = UserProvider.context.Consumer;
         const contextConsumer = jest.fn();
         const userData = {
-            ...CurrentUser.defaultUserData,
+            ...UserProvider.defaultUserData,
             username: 'testing'
         };
 
@@ -37,16 +37,16 @@ describe('CurrentUser', () => {
     // version of act() that can take async methods will fix the
     // issue.
     test('Provider fetches user data', done => {
-        const P = CurrentUser.Provider;
-        const C = CurrentUser.context.Consumer;
+        const P = UserProvider;
+        const C = UserProvider.context.Consumer;
         const contextConsumer = jest.fn();
         const userData = {
-            ...CurrentUser.defaultUserData,
+            ...UserProvider.defaultUserData,
             username: 'testing',
             isStaff: true
         };
 
-        // In this test we want to verify that CurrentUser.Provider is
+        // In this test we want to verify that UserProvider is
         // fetching user data from an API. So we need to mock fetch().
         global.fetch = jest.fn(() => {
             return Promise.resolve({

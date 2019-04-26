@@ -1,9 +1,9 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
-import CurrentUser from './current-user.jsx';
 import DocumentProvider from './document-provider.jsx';
 import Page from './page.jsx';
+import UserProvider from './user-provider.jsx';
 
 /*
  * This function performs server-side rendering of our UI, given
@@ -12,9 +12,9 @@ import Page from './page.jsx';
 export default function ssr(data) {
     return renderToString(
         <DocumentProvider initialDocumentData={data}>
-            <CurrentUser.Provider>
+            <UserProvider>
                 <Page />
-            </CurrentUser.Provider>
+            </UserProvider>
         </DocumentProvider>
     );
 }

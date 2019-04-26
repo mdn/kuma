@@ -1,18 +1,18 @@
 //@flow
 import React from 'react';
 import { act, create } from 'react-test-renderer';
-import CurrentUser from '../current-user.jsx';
 import DocumentProvider from '../document-provider.jsx';
 import { fakeDocumentData } from '../document-provider.test.js';
 import Dropdown from './dropdown.jsx';
 import Login from './login.jsx';
+import UserProvider from '../user-provider.jsx';
 
 test('Login snapshot before user data is fetched', () => {
     const login = create(
         <DocumentProvider initialDocumentData={fakeDocumentData}>
-            <CurrentUser.context.Provider value={null}>
+            <UserProvider.context.Provider value={null}>
                 <Login />
-            </CurrentUser.context.Provider>
+            </UserProvider.context.Provider>
         </DocumentProvider>
     ).toJSON();
     expect(login).toBe(null);
@@ -21,9 +21,9 @@ test('Login snapshot before user data is fetched', () => {
 test('Login component when user is not logged in', () => {
     const login = create(
         <DocumentProvider initialDocumentData={fakeDocumentData}>
-            <CurrentUser.context.Provider value={CurrentUser.defaultUserData}>
+            <UserProvider.context.Provider value={UserProvider.defaultUserData}>
                 <Login />
-            </CurrentUser.context.Provider>
+            </UserProvider.context.Provider>
         </DocumentProvider>
     ).toJSON();
     expect(login.children[0]).toBe('Sign in');
@@ -33,16 +33,16 @@ test('Login component when user is not logged in', () => {
 test('Login component when user is logged in', () => {
     const login = create(
         <DocumentProvider initialDocumentData={fakeDocumentData}>
-            <CurrentUser.context.Provider
+            <UserProvider.context.Provider
                 value={{
-                    ...CurrentUser.defaultUserData,
+                    ...UserProvider.defaultUserData,
                     isAuthenticated: true,
                     username: 'test-username',
                     gravatarUrl: { small: 'test-url', large: 'test-bigurl' }
                 }}
             >
                 <Login />
-            </CurrentUser.context.Provider>
+            </UserProvider.context.Provider>
         </DocumentProvider>
     );
 

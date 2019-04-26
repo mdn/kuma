@@ -4,13 +4,13 @@ import { useContext } from 'react';
 
 import { css } from '@emotion/core';
 
-import CurrentUser from '../current-user.jsx';
 import DocumentProvider from '../document-provider.jsx';
 import Dropdown from './dropdown.jsx';
 import EditIcon from '../icons/pencil.svg';
 import gettext from '../gettext.js';
 import GithubLogo from '../icons/github.svg';
 import { Row, Strut } from '../layout.jsx';
+import UserProvider from '../user-provider.jsx';
 
 const strings = {
     signIn: gettext('Sign in'),
@@ -68,7 +68,7 @@ export default function Login(): React.Node {
         return null;
     }
     const { editURL, localeFromURL } = documentData;
-    const userData = useContext(CurrentUser.context);
+    const userData = useContext(UserProvider.context);
 
     const PATHNAME = documentData.absoluteURL;
 

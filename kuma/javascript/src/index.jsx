@@ -2,9 +2,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import CurrentUser from './current-user.jsx';
 import DocumentProvider from './document-provider.jsx';
 import Page from './page.jsx';
+import UserProvider from './user-provider.jsx';
 
 let container = document.getElementById('react-container');
 
@@ -21,9 +21,9 @@ if (container) {
     // This is the React UI for a page of documentation
     let page = (
         <DocumentProvider initialDocumentData={data}>
-            <CurrentUser.Provider>
+            <UserProvider>
                 <Page />
-            </CurrentUser.Provider>
+            </UserProvider>
         </DocumentProvider>
     );
 
