@@ -67,7 +67,7 @@ export default function Login(): React.Node {
     if (!documentData) {
         return null;
     }
-    const { editURL, localeFromURL } = documentData;
+    const { editURL, requestLocale } = documentData;
     const userData = useContext(UserProvider.context);
 
     const PATHNAME = documentData.absoluteURL;
@@ -102,7 +102,7 @@ export default function Login(): React.Node {
                 <Dropdown label={label} right={true}>
                     <li>
                         <a
-                            href={`${WIKI_SITE_URL}/${localeFromURL}/profiles/${
+                            href={`${WIKI_SITE_URL}/${requestLocale}/profiles/${
                                 userData.username
                             }`}
                         >
@@ -111,7 +111,7 @@ export default function Login(): React.Node {
                     </li>
                     <li>
                         <a
-                            href={`${WIKI_SITE_URL}/${localeFromURL}/profiles/${
+                            href={`${WIKI_SITE_URL}/${requestLocale}/profiles/${
                                 userData.username
                             }/edit`}
                         >
@@ -120,7 +120,7 @@ export default function Login(): React.Node {
                     </li>
                     <li>
                         <form
-                            action={`${WIKI_SITE_URL}/${localeFromURL}/users/signout`}
+                            action={`${WIKI_SITE_URL}/${requestLocale}/users/signout`}
                             method="post"
                         >
                             <input name="next" type="hidden" value={PATHNAME} />

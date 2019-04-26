@@ -93,7 +93,7 @@
 
   {#{% include "includes/a11y-nav.html" %}#}
 
-  {{ render_react_app(document_api_data)|safe }}
+  {{ render_react_app(document_api_data, request_locale)|safe }}
 
   {% if settings.NEWSLETTER and settings.NEWSLETTER_ARTICLE %}
   <div class="center">

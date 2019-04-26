@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 import App from './app.jsx';
 
 let container = document.getElementById('react-container');
-
 if (container) {
     // The HTML page that loads this code is expected to have an inline
     // script that sets this window._document_data property to an object

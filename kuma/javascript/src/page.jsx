@@ -266,7 +266,7 @@ function ArticleMetadata() {
                             {i > 0 && ', '}
                             <a
                                 href={`/${
-                                    documentData.localeFromURL
+                                    documentData.requestLocale
                                 }/profiles/${c}`}
                                 rel="nofollow"
                             >
