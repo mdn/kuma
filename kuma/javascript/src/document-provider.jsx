@@ -65,7 +65,7 @@ export default function DocumentProvider(
         const body = document.body;
         // This is the function that does client side navigation
         function navigate(url, localeAndSlug) {
-            body.style.opacity = '0.15';
+            document.querySelector('#page-layout').classList.add('opaque');
             fetch(`/api/v1/doc${localeAndSlug}`, { redirect: 'follow' })
                 .then(response => {
                     if (response.ok) {
@@ -99,7 +99,7 @@ export default function DocumentProvider(
                         }
                         window.scrollTo(0, 0);
                         setDocumentData(json);
-                        body.style.opacity = '1';
+                        document.querySelector('#page-layout').classList.remove('opaque');
                     }
                 })
                 .catch(() => {

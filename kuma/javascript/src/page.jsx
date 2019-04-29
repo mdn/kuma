@@ -295,7 +295,18 @@ export default function Page() {
     return (
         <>
             <Header />
-            <div css={styles.pageLayout}>
+            <style>{`
+                #page-layout {
+                    opacity: 1;
+                    transition: opacity .2s ease-in-out;
+                }
+                #page-layout.opaque {
+                    opacity: 0.0;
+                    transition: opacity .2s ease-in-out;
+                }
+                `}
+            </style>
+            <div css={styles.pageLayout} id="page-layout">
                 <Titlebar />
                 <TOC />
                 <Article />
