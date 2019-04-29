@@ -898,7 +898,7 @@ KumaScript macros, CSS class names, and HTML attributes, to allow
 .. _`internal search`: https://developer.mozilla.org/en-US/search
 .. _strip_tags: https://docs.djangoproject.com/en/1.11/ref/utils/#django.utils.html.strip_tags
 .. _`security advisory`: https://www.djangoproject.com/weblog/2014/mar/22/strip-tags-advisory/
-.. _`HTML Strip Char Filter`: https://www.elastic.co/guide/en/elasticsearch/reference/5.6/analysis-htmlstrip-charfilter.html
+.. _`HTML Strip Char Filter`: https://www.elastic.co/guide/en/elasticsearch/reference/6.7/analysis-htmlstrip-charfilter.html
 .. _`advanced search queries`: https://developer.mozilla.org/en-US/docs/MDN/Contribute/Tools/Search
 
 

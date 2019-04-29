@@ -16,8 +16,8 @@ is released).
 
 Kuma's goal is to update to the last minor version of the previous major
 release, so we expect to update every 12 to 18 months. Kuma is running on
-ElasticSearch 5.6.10 in development and production, which is planned to be
-supported until March 2019.
+ElasticSearch 6.7.1 in development and production, which is planned to be
+supported until September 2020.
 
 The Kuma search tests use the configured Elasticsearch, and can be run inside
 the ``web`` Docker container to confirm the engine works::
