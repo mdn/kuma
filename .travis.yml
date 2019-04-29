@@ -18,8 +18,8 @@ env:
         - DATABASE_URL=mysql://root:@127.0.0.1:3306/kuma
         - DJANGO_SETTINGS_MODULE=kuma.settings.travis
         - DOCKER_COMPOSE_VERSION=1.23.2
-        - ES_VERSION=5.6.10
-        - ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.10.tar.gz
+        - ES_VERSION=6.7.1
+        - ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.7.1.tar.gz
         - PIPELINE_CLEANCSS_BINARY=$TRAVIS_BUILD_DIR/node_modules/.bin/cleancss
         - PIPELINE_CLEANCSS_ARGUMENTS="-O1 --skip-rebase"
         - PIPELINE_CSS_COMPRESSOR=kuma.core.pipeline.cleancss.CleanCSSCompressor

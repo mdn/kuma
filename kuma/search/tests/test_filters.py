@@ -128,22 +128,12 @@ def fake_view(request, selected_filters=None):
 def test_base_search(db):
     '''WikiDocumentType.search() searches all documents by default.'''
     search = WikiDocumentType.search()
-    expected = {
-        'query': {
-            'match_all': {}
-        }
-    }
-    assert search.to_dict() == expected
+    assert search.to_dict() == {}
 
 
 def test_base_search_mocked_es(mock_search):
     '''Mocked WikiDocumentType.search() returns same search query.'''
-    expected = {
-        'query': {
-            'match_all': {}
-        }
-    }
-    assert mock_search.to_dict() == expected
+    assert mock_search.to_dict() == {}
 
 
 def test_language_filter_backend_fr(rf, mock_search):
@@ -202,7 +192,7 @@ def test_language_filter_backend_all(rf, mock_search):
     request = rf.get('/en-US/search?q=article&locale=*')
     request.LANGUAGE_CODE = 'en-US'
     search = backend.filter_queryset(request, mock_search, None)
-    assert search.to_dict() == {'query': {'match_all': {}}}
+    assert search.to_dict() == {}
 
 
 def test_search_query_backend(rf, mock_search):
@@ -243,7 +233,7 @@ def test_search_query_backend_empty(rf, mock_search):
     request = rf.get('/en-US/search?q=')
     request.user = AnonymousUser()
     search = backend.filter_queryset(request, mock_search, fake_view(request))
-    assert search.to_dict() == {'query': {'match_all': {}}}
+    assert search.to_dict() == {}
 
 
 def test_search_query_backend_as_admin(rf, mock_search, admin_user):
@@ -252,8 +242,7 @@ def test_search_query_backend_as_admin(rf, mock_search, admin_user):
     request = rf.get('/en-US/search?q=')
     request.user = admin_user
     search = backend.filter_queryset(request, mock_search, fake_view(request))
-    assert search.to_dict() == {'explain': True,
-                                'query': {'match_all': {}}}
+    assert search.to_dict() == {'explain': True}
 
 
 @pytest.mark.parametrize('param',
@@ -301,7 +290,7 @@ def test_keyword_query_ignores_unknown_index(rf, mock_search):
     backend = KeywordQueryBackend()
     request = rf.get('/en-US/search?topic=test')
     search = backend.filter_queryset(request, mock_search, fake_view(request))
-    assert search.to_dict() == {'query': {'match_all': {}}}
+    assert search.to_dict() == {}
 
 
 def test_tag_group_filter_backend(rf, mock_search):
@@ -311,7 +300,6 @@ def test_tag_group_filter_backend(rf, mock_search):
     view = fake_view(request, selected_filters=['tagged'])
     search = backend.filter_queryset(request, mock_search, view)
     expected = {
-        'query': {'match_all': {}},
         'post_filter': {'term': {'tags': 'tagged'}},
         'aggs': {
             'addons': {'filter': {'terms': {'tags': ['Add-ons',
@@ -329,7 +317,6 @@ def test_tag_group_filter_backend_multiple_tags_or_operator(rf, mock_search):
     view = fake_view(request, selected_filters=['addons'])
     search = backend.filter_queryset(request, mock_search, view)
     expected = {
-        'query': {'match_all': {}},
         'post_filter': {'bool': {'should': [
             {'term': {'tags': 'Add-ons'}},
             {'term': {'tags': 'Extensions'}}]}},
@@ -349,7 +336,6 @@ def test_tag_group_filter_backend_multiple_tags_and_operator(rf, mock_search):
     view = fake_view(request, selected_filters=['brown-dogs'])
     search = backend.filter_queryset(request, mock_search, view)
     expected = {
-        'query': {'match_all': {}},
         'post_filter': {'bool': {'must': [
             {'term': {'tags': 'Brown'}},
             {'term': {'tags': 'Dog'}}]}},
@@ -369,7 +355,6 @@ def test_tag_group_filter_backend_multiple_groups(rf, mock_search):
     view = fake_view(request, selected_filters=['addons', 'css'])
     search = backend.filter_queryset(request, mock_search, view)
     expected = {
-        'query': {'match_all': {}},
         'post_filter': {'bool': {'should': [
             {'term': {'tags': 'CSS'}},
             {'term': {'tags': 'Add-ons'}},
@@ -391,7 +376,6 @@ def test_tag_group_filter_backend_no_groups(rf, mock_search):
     view = fake_view(request, selected_filters=[])
     search = backend.filter_queryset(request, mock_search, view)
     expected = {
-        'query': {'match_all': {}},
         'aggs': {
             'addons': {'filter': {'terms': {'tags': ['Add-ons',
                                                      'Extensions']}}},
@@ -407,7 +391,6 @@ def test_highlight_filter_backend(rf, mock_search):
     request = rf.get('/en-US/search?highlight=1')
     search = backend.filter_queryset(request, mock_search, fake_view(request))
     expected = {
-        'query': {'match_all': {}},
         'highlight': {'fields': {'content': {}, 'summary': {}},
                       'order': 'score',
                       'post_tags': ['</mark>'],
@@ -420,7 +403,7 @@ def test_highlight_filter_backend_no_highlight(rf, mock_search):
     backend = HighlightFilterBackend()
     request = rf.get('/en-US/search')
     search = backend.filter_queryset(request, mock_search, fake_view(request))
-    assert search.to_dict() == {'query': {'match_all': {}}}
+    assert search.to_dict() == {}
 
 
 class FilterTexts(ElasticTestCase):

@@ -11,7 +11,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
             '-c', '--chunk',
-            help='Chunk size when reindexing (default 100). Lower is better'
+            help='Chunk size when reindexing (default 1000). Lower is better'
                  'for slow computers with little memory',
             type=int,
             dest='chunk_size',

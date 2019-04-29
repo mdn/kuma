@@ -216,9 +216,19 @@ futures==3.0.5 \
 # Code: https://github.com/elastic/elasticsearch-py
 # Changes: https://elasticsearch-py.readthedocs.io/en/master/Changelog.html
 # Docs: https://elasticsearch-py.readthedocs.io/en/master/
-elasticsearch==5.5.0 \
-    --hash=sha256:a9d1dabc18c2b593b1be5c85b697af2bbfb094a7d9cca21c48ac323257e3e7a0 \
-    --hash=sha256:d03379ef519dde70b3b842deb0df576520a7a4735abe1d5ec3f32f8e66899be2
+elasticsearch==6.3.1 \
+    --hash=sha256:7546cc08e3899716e12fe67d12d7cfe9a64647014d1134b014c3c392b63cad42 \
+    --hash=sha256:aada5cfdc4a543c47098eb3aca6663848ef5d04b4324935ced441debc11ec98b
+
+# elasticsearch-dsl
+#
+# Required by elasticsearch-dsl but only needed because we're on Python 2.7
+# Code: https://github.com/phihag/ipaddress
+ipaddress==1.0.22 \
+    --hash=sha256:64b28eec5e78e7510698f6d4da08800a5c575caa4a286c93d651c5d3ff7b6794 \
+    --hash=sha256:b146c751ea45cad6188dd6cf2d9b757f6f4f8d6ffb96a023e6f2e26eea02a72c
+
+
 # Extensions to datetime module
 # Code: https://github.com/dateutil/dateutil/
 # Changes: https://dateutil.readthedocs.io/en/stable/changelog.html

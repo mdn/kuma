@@ -25,7 +25,7 @@ from .constants import EXPERIMENT_TITLE_PREFIX
 log = logging.getLogger('kuma.wiki.search')
 
 
-class WikiDocumentType(document.DocType):
+class WikiDocumentType(document.Document):
     excerpt_fields = ['summary', 'content']
     exclude_slugs = ['Talk:', 'User:', 'User_talk:', 'Template_talk:',
                      'Project_talk:', EXPERIMENT_TITLE_PREFIX]
@@ -70,7 +70,7 @@ class WikiDocumentType(document.DocType):
 
     @classmethod
     def from_django(cls, obj):
-        is_root_document = (obj.slug.count('/') == 1)
+        is_root_document = obj.slug.count('/') == 1
         doc = {
             'id': obj.id,
             'boost': 4.0 if is_root_document else 1.0,
