@@ -14,34 +14,33 @@ services:
     environment:
       # Django settings overrides:
       - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
-      - ALLOW_ALL_IFRAMES=${ALLOW_ALL_IFRAMES:-False}
+      # - ALLOW_ALL_IFRAMES=${ALLOW_ALL_IFRAMES:-False}
       - ALLOWED_HOSTS=*
       - ATTACHMENT_HOST=${ATTACHMENT_HOST:-localhost:8000}
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
+      # - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
+      # - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
       - BROKER_URL=redis://redis:6379/0
-      - CELERY_ALWAYS_EAGER=False
+      # - CELERY_ALWAYS_EAGER=False
       - CELERY_RESULT_BACKEND=redis://redis:6379/1
       - CSRF_COOKIE_SECURE=False
       - DATABASE_URL=mysql://${DATABASE_USER:-root}:${DATABASE_PASSWORD:-kuma}@mysql:3306/developer_mozilla_org
-      - DEBUG=${DEBUG:-True}
-      - DOMAIN=${DOMAIN:-localhost}
+      # - DEBUG=${DEBUG:-True}
+      # - DOMAIN=${DOMAIN:-localhost}
       - ENABLE_RESTRICTIONS_BY_HOST=${ENABLE_RESTRICTIONS_BY_HOST:-False}
       - ES_URLS=elasticsearch:9200
-      - INTERACTIVE_EXAMPLES_BASE=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
+      # - INTERACTIVE_EXAMPLES_BASE=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
       - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}
       - REDIS_CACHE_SERVER=redis://redis:6379/3
       - PROTOCOL=http://
       - SESSION_COOKIE_SECURE=False
-      - SITE_URL=${SITE_URL:-http://localhost:8000}
-      - STATIC_URL=${STATIC_URL:-http://localhost:8000/static/}
+      # - SITE_URL=${SITE_URL:-http://localhost:8000}
+      # - STATIC_URL=${STATIC_URL:-http://localhost:8000/static/}
       - WAFFLE_COOKIE_SECURE=False
       # Other environment overrides
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=True
-      - PYTHONWARNINGS=${PYTHONWARNINGS:-default}
-      - MAINTENANCE_MODE=${MAINTENANCE_MODE:-False}
-      - REVISION_HASH=${KUMA_REVISION_HASH:-undefined}
+      # - MAINTENANCE_MODE=${MAINTENANCE_MODE:-False}
+      # - REVISION_HASH=${KUMA_REVISION_HASH:-undefined}
       # For the server side rendering server and the code that connects to it.
       - SSR_PORT=8000
       - SSR_URL=http://ssr:8000/ssr
