@@ -11,12 +11,15 @@ services:
       - elasticsearch
       - redis
       - kumascript
+    env_file:
+      - .env
     environment:
       # Django settings overrides:
       - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
       # - ALLOW_ALL_IFRAMES=${ALLOW_ALL_IFRAMES:-False}
       - ALLOWED_HOSTS=*
-      - ATTACHMENT_HOST=${ATTACHMENT_HOST:-localhost:8000}
+      # - ATTACHMENT_HOST=${ATTACHMENT_HOST:-localhost:8000}
+      - ATTACHMENT_HOST=localhost:8000
       # - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
       # - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
       - BROKER_URL=redis://redis:6379/0
@@ -26,7 +29,7 @@ services:
       - DATABASE_URL=mysql://${DATABASE_USER:-root}:${DATABASE_PASSWORD:-kuma}@mysql:3306/developer_mozilla_org
       # - DEBUG=${DEBUG:-True}
       # - DOMAIN=${DOMAIN:-localhost}
-      - ENABLE_RESTRICTIONS_BY_HOST=${ENABLE_RESTRICTIONS_BY_HOST:-False}
+      - ENABLE_RESTRICTIONS_BY_HOST=False
       - ES_URLS=elasticsearch:9200
       # - INTERACTIVE_EXAMPLES_BASE=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
       - KUMASCRIPT_URL_TEMPLATE=http://kumascript:9080/docs/{path}

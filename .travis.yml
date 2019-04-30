@@ -16,7 +16,7 @@ services:
 env:
     global:
         - DATABASE_URL=mysql://root:@127.0.0.1:3306/kuma
-        - DJANGO_SETTINGS_MODULE=kuma.settings.travis
+        - DJANGO_SETTINGS_MODULE=kuma.settings
         - DOCKER_COMPOSE_VERSION=1.23.2
         - ES_VERSION=6.7.1
         - ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.7.1.tar.gz
@@ -77,7 +77,8 @@ install:
     # Wait for ElasticSearch to be ready
     - if [[ "$INSTALL_ELASTICSEARCH" == "1" ]]; then wget -q --waitretry=1 --retry-connrefused -T 10 -O - http://127.0.0.1:9200; fi;
 script:
-    - tox -v
+    # - tox -v
+    - tox -e pytest  # TEMPORARY
 after_failure:
     - dmesg | tail
 notifications:
