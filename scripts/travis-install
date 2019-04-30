@@ -53,3 +53,6 @@ then
     chmod +x $DOCKER_COMPOSE_FILE
     sudo cp $DOCKER_COMPOSE_FILE /usr/local/bin/docker-compose
 fi
+
+# Make the .env.travis file available
+cp .env.travis .env
