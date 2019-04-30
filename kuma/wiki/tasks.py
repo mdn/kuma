@@ -401,7 +401,7 @@ def index_documents(ids, index_pk, reraise=False):
 
     objects = Document.objects.filter(id__in=ids)
     documents = []
-    for obj in objects:
+    for obj in objects.select_related('parent').prefetch_related('tags'):
         try:
             documents.append(cls.from_django(obj))
         except Exception:
