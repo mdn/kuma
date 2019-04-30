@@ -80,7 +80,7 @@ class WikiDocumentType(document.Document):
             'locale': obj.locale,
             'modified': obj.modified,
             'content': strip_tags(obj.rendered_html or ''),
-            'tags': list(obj.tags.names()),
+            'tags': [o.name for o in obj.tags.all()],
             'kumascript_macros': cls.case_insensitive_keywords(
                 obj.extract.macro_names()),
             'css_classnames': cls.case_insensitive_keywords(
