@@ -16,7 +16,7 @@ services:
 env:
     global:
         - DATABASE_URL=mysql://root:@127.0.0.1:3306/kuma
-        - DJANGO_SETTINGS_MODULE=kuma.settings
+        - DJANGO_SETTINGS_MODULE=kuma.settings.testing
         - DOCKER_COMPOSE_VERSION=1.23.2
         - ES_VERSION=6.7.1
         - ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.7.1.tar.gz
