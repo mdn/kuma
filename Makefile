@@ -49,8 +49,6 @@ webpack:
 compilejsi18n:
 	@ echo "## Generating JavaScript translation catalogs ##"
 	@ mkdir -p build/locale
-	@ echo "What's up with DJANGO_SETTINGS_MODULE??????"
-	@ echo "${DJANGO_SETTINGS_MODULE}"
 	@ python manage.py compilejsi18n
 
 compile-react-i18n:

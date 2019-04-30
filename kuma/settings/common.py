@@ -440,9 +440,6 @@ SECRET_KEY = config('SECRET_KEY',
                     default='#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z')
 
 
-print("SECRET_KEY SET TO:", SECRET_KEY)#TEMPORARY
-
-
 _CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.template.context_processors.debug',
