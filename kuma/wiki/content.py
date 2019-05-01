@@ -75,6 +75,9 @@ class Extractor(object):
         """
         Extract a unique set of KumaScript macro names used in the content
         """
+        if not self.document.html:
+            # No document.html, then there's no point bothering to parse it.
+            return []
         text_items = []
         for token in parse(self.document.html).stream:
             if token['type'] in ('Characters', 'SpaceCharacters'):
@@ -89,6 +92,7 @@ class Extractor(object):
         Extract the unique set of class names used in the content
         """
         if not self.document.rendered_html:
+            # No point parsing it because we won't find anything!
             return []
         classnames = set()
         for element in pq(self.document.rendered_html).find('*'):
@@ -102,6 +106,9 @@ class Extractor(object):
         """
         Extract the unique set of HTML attributes used in the content
         """
+        if not self.document.rendered_html:
+            # No point parsing it because we won't find anything!
+            return []
         attribs = []
         for token in parse(self.document.rendered_html).stream:
             if token['type'] == 'StartTag':
@@ -183,11 +190,6 @@ def clean_content(content):
 
 
 @newrelic.agent.function_trace()
-def parse(src, is_full_document=False):
-    return ContentSectionTool(src, is_full_document)
-
-
-@newrelic.agent.function_trace()
 def get_content_sections(src=''):
     """
     Gets sections in a document
@@ -217,10 +219,13 @@ def get_seo_description(content, locale=None, strip_markup=True):
         # Try constraining the search for summary to an explicit "Summary"
         # section, if any.
         # This line is ~20x times slower than doing the PyQuery analysis.
-        summary_section = (parse(content).extractSection('Summary')
-                           .serialize())
-        if summary_section:
-            content = summary_section
+        # Both `parse()` and `.serialize()` are slow and expensive.
+        # That's why we're careful to avoid it if we can.
+        if 'Summary' in content:
+            summary_section = (parse(content).extractSection('Summary')
+                               .serialize())
+            if summary_section:
+                content = summary_section
 
         # Need to add a BR to the page content otherwise pyQuery wont find
         # a <p></p> element if it's the only element in the doc_html
@@ -1138,3 +1143,11 @@ class IframeHostFilter(html5lib_Filter):
                     continue
             return True
         return False
+
+
+_content_section_tool = ContentSectionTool()
+
+
+@newrelic.agent.function_trace()
+def parse(src, is_full_document=False):
+    return _content_section_tool.parse(src, is_full_document)
