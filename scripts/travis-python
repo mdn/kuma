@@ -1,0 +1,50 @@
+#!/bin/bash
+set -e  # Exit on non-zero status
+set -u  # Treat unset variables as an error
+
+# First install docker-compose (right version of it)
+if [ -x $(command -v docker-compose) ]
+then
+    echo "Overwriting existing docker-compose."
+    docker-compose -v
+else
+    echo "Installing docker-compose ${DOCKER_COMPOSE_VERSION}."
+fi
+mkdir -p downloads
+DOCKER_COMPOSE_FILE=downloads/docker-compose-${DOCKER_COMPOSE_VERSION}
+if [ ! -f $DOCKER_COMPOSE_FILE ]
+then
+    time wget -q --waitretry=1 --retry-connrefused -T 10 \
+        -O downloads/docker-compose-${DOCKER_COMPOSE_VERSION} \
+        https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m`
+fi
+chmod +x $DOCKER_COMPOSE_FILE
+sudo cp $DOCKER_COMPOSE_FILE /usr/local/bin/docker-compose
+
+
+# Now build the Docker container
+
+time VERSION=latest make build-base
+time VERSION=latest make build-kuma
+
+time docker-compose --version
+time docker-compose up -d
+# Hang tight until MySQL appears to be working
+time docker-compose exec -T web urlwait mysql://root:kuma@mysql:3306/developer_mozilla_org 30
+# Hang tight until Elasticsearch appears to be working
+time docker-compose exec -T web urlwait http://elasticsearch:9200 30
+
+# echo "docker-compose exec -T web make webpack"
+# docker-compose exec -T web make webpack
+time docker-compose exec -T web make clean
+time docker-compose exec -T web make localecompile
+time docker-compose exec -T web make build-static
+time docker-compose exec -T web make pylint
+time docker-compose exec -T web ./manage.py migrate
+# time docker-compose exec -T web make test
+time docker-compose exec -T web make coveragetest
+# time docker-compose exec -T web make coveragetesthtml
+
+# This one is deliberately commented out because of this bug:
+# https://bugzilla.mozilla.org/show_bug.cgi?id=1548669
+#docker-compose exec -T web ./manage.py makemigrations --check --dry-run

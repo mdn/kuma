@@ -16,7 +16,7 @@
         "build-watch": "gulp",
         "webpack": "webpack",
         "webpack-watch": "webpack -w",
-        "stylelint": "./node_modules/.bin/stylelint \"kuma/static/styles/**/*.scss\"",
+        "stylelint": "stylelint \"kuma/static/styles/**/*.scss\"",
         "eslint": "eslint --ext .js --ext .jsx kuma/",
         "optim:svg": "svgo jinja2/includes/icons/* --disable={removeViewBox,removeTitle} --multipass --pretty",
         "precommit": "npm run eslint && npm run stylelint",

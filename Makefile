@@ -34,7 +34,9 @@ test:
 	py.test $(target)
 
 coveragetest: clean
-	py.test --cov=$(target) $(target)
+	# py.test --cov=$(target) --no-cov-on-fail $(target)
+	@ echo "TEMPORARITLY RUNNING WITH -x"
+	@ py.test -x --cov=$(target) --no-cov-on-fail $(target)
 
 coveragetesthtml: coveragetest
 	coverage html
@@ -180,8 +182,14 @@ bash: up
 shell_plus: up
 	docker-compose exec web ./manage.py shell_plus
 
-lint:
+pylint:
 	flake8 kuma docs tests
+
+jslint:
+	npm run eslint
+	npm run stylelint
+
+lint: pylint jslint
 
 npmrefresh:
 	cd /tools
