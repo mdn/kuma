@@ -66,7 +66,7 @@ class Index(models.Model):
         return '%s-%s' % (settings.ES_INDEX_PREFIX, self.name)
 
     def populate(self):
-        return WikiDocumentType.reindex_all(index=self, chunk_size=500)
+        return WikiDocumentType.reindex_all(index=self, chunk_size=250)
 
     def record_outdated(self, instance):
         if self.successor:
