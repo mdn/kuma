@@ -99,4 +99,3 @@ def delete_document(request, document_slug, document_locale):
         'prevent': prevent,
     }
     return render(request, 'wiki/confirm_document_delete.html', context)
-

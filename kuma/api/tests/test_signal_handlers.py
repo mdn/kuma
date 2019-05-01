@@ -5,7 +5,6 @@ from kuma.wiki.models import Document
 from kuma.wiki.signals import render_done
 
 
-
 @mock.patch('kuma.api.signal_handlers.publish')
 def test_render_signal(publish_mock, root_doc):
     """The document is published on the render_done signal."""

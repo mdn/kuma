@@ -9,10 +9,8 @@ from kuma.users.models import User
 from kuma.users.tests import UserTestCase
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
-from ..models import Document, DocumentDeletionLog, DocumentSpamAttempt
-from ..tasks import (build_sitemaps,
-                     delete_logs_for_purged_documents,
-                     delete_old_documentspamattempt_data)
+from ..models import Document, DocumentSpamAttempt
+from ..tasks import (build_sitemaps, delete_old_documentspamattempt_data)
 
 
 def test_sitemaps(tmpdir, settings, doc_hierarchy):
@@ -100,4 +98,3 @@ class DeleteOldDocumentSpamAttemptData(UserTestCase):
         assert old_unreviewed_dsa.data is None
         assert old_unreviewed_dsa.review == (
             DocumentSpamAttempt.REVIEW_UNAVAILABLE)
-

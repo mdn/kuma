@@ -4,24 +4,18 @@ from string import ascii_lowercase
 
 from django.conf import settings
 from django.contrib import admin, messages
-from django.contrib.admin.views.decorators import staff_member_required
-from django.http import HttpResponseRedirect
 from django.template.defaultfilters import truncatechars
-from django.template.response import TemplateResponse
 from django.utils import timezone
 from django.utils.html import escape, format_html, format_html_join
 from django.utils.safestring import mark_safe
 from django.utils.text import Truncator
-from django.views.decorators.cache import never_cache
 from waffle import flag_is_active
 
 from kuma.core.admin import DisabledDeletionMixin
-from kuma.core.decorators import login_required, permission_required
 from kuma.core.urlresolvers import reverse
 from kuma.spam import constants
 from kuma.spam.akismet import Akismet, AkismetError
 
-from .decorators import check_readonly
 from .forms import RevisionAkismetSubmissionAdminForm
 from .models import (Document, DocumentDeletionLog, DocumentSpamAttempt,
                      DocumentTag, EditorToolbar, Revision,
@@ -341,9 +335,8 @@ class DocumentSpamAttemptAdmin(admin.ModelAdmin):
     list_display = [
         'id', 'user', 'title_short', 'slug_short', 'doc_short', 'review']
     list_display_links = ['id', 'title_short', 'slug_short']
-    list_filter = [
-        'created', 'review' , 'document__locale']
-    list_editable = ('review',)
+    list_filter = ['created', 'review', 'document__locale']
+    list_editable = 'review'
     ordering = ['-created']
     search_fields = ['title', 'slug', 'user__username']
     raw_id_fields = ['user', 'document']

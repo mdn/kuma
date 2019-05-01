@@ -63,4 +63,3 @@ def test_delete_post(root_doc, moderator_client):
     assert len(DocumentDeletionLog.objects.filter(locale=root_doc.locale,
                                                   slug=root_doc.slug,
                                                   reason='test')) == 1
-

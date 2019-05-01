@@ -11,7 +11,6 @@ from datetime import datetime
 import mock
 import pytest
 import requests_mock
-from django.contrib.auth.models import Permission
 from django.test.client import BOUNDARY, encode_multipart, MULTIPART_CONTENT
 from django.utils.http import quote_etag
 from django.utils.six.moves.urllib.parse import quote, urlparse

@@ -11,7 +11,6 @@ from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models, transaction
-from django.db.models import signals
 from django.utils.decorators import available_attrs
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
@@ -894,7 +893,6 @@ class Document(NotificationsMixin, models.Model):
 
     def delete(self, *args, **kwargs):
         super(Document, self).delete(*args, **kwargs)
-
 
     def _post_move_redirects(self, new_slug, user, title):
         """

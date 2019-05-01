@@ -78,6 +78,7 @@ class DocumentManager(BaseDocumentManager):
     def get_queryset(self):
         return super(DocumentManager, self).get_queryset()
 
+
 class DocumentAdminManager(BaseDocumentManager):
     """
     A manager used only in the admin site, which does not perform any filtering

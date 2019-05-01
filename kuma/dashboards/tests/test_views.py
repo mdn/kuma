@@ -19,8 +19,7 @@ from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html, urlparams
 from kuma.dashboards.forms import RevisionDashboardForm
 from kuma.users.tests import create_document, SampleRevisionsMixin, UserTestCase
-from kuma.wiki.models import (Document, DocumentDeletionLog,
-                              DocumentSpamAttempt, Revision,
+from kuma.wiki.models import (Document, DocumentSpamAttempt, Revision,
                               RevisionAkismetSubmission)
 
 
