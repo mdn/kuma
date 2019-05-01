@@ -193,10 +193,8 @@ def test_unpublish_no_s3_bucket_configured(root_doc):
 def test_unpublish(get_s3_bucket_mock, root_doc, case):
     """Test the unpublish task for a single document."""
     if case in ('deleted', 'purged'):
-        root_doc.deleted = True
-        root_doc.save()
         if case == 'purged':
-            root_doc.purge()
+            root_doc.delete()
     log_mock = mock.Mock()
     s3_bucket_mock = get_mocked_s3_bucket()
     get_s3_bucket_mock.return_value = s3_bucket_mock

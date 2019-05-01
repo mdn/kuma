@@ -67,12 +67,6 @@ document_patterns = [
     url(r'^\$delete$',
         views.delete.delete_document,
         name='wiki.delete_document'),
-    url(r'^\$restore$',
-        views.delete.restore_document,
-        name='wiki.restore_document'),
-    url(r'^\$purge$',
-        views.delete.purge_document,
-        name='wiki.purge_document'),
 
     # Un/Subscribe to document edit notifications.
     url(r'^\$subscribe$',

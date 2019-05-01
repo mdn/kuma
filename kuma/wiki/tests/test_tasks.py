@@ -101,13 +101,3 @@ class DeleteOldDocumentSpamAttemptData(UserTestCase):
         assert old_unreviewed_dsa.review == (
             DocumentSpamAttempt.REVIEW_UNAVAILABLE)
 
-
-def test_delete_logs_for_purged_documents(root_doc, wiki_user):
-    ddl1 = DocumentDeletionLog.objects.create(
-        locale=root_doc.locale, slug=root_doc.slug, user=wiki_user,
-        reason='Doomed.')
-    root_doc.delete()  # Soft-delete it
-    DocumentDeletionLog.objects.create(
-        locale='en-US', slug='HardDeleted', user=wiki_user, reason='Purged.')
-    delete_logs_for_purged_documents()
-    assert list(DocumentDeletionLog.objects.all()) == [ddl1]

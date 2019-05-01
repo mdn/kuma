@@ -6,7 +6,7 @@
 
     <h1>{{ _('Document Deleted') }}</h1>
     <p>
-      {{- assert(user.has_perm('wiki.restore_document'),
+      {{- assert(user.has_perm('wiki.delete_document'),
                  'Deletion log details are only for moderators.') }}
       {% trans url=deletion_log.user.get_absolute_url(), username=deletion_log.user, when=datetimeformat(deletion_log.timestamp, format='longdatetime')  -%}
         This document was deleted by <a href="{{ url }}">{{ username }}</a> on {{ when }}.
@@ -16,15 +16,6 @@
     <h2>{{ _('Reason for Deletion') }}</h2>
     <p>{{ deletion_log.reason }}</p>
 
-    <p><a href="{{ url('wiki.restore_document', deletion_log.slug) }}" class="button">{{ _('Restore this document') }}</a></p>
-
-    {% if user.has_perm('wiki.purge_document') -%}
-      <form action="{{ url('wiki.purge_document', deletion_log.slug) }}" method="post">
-        {% csrf_token %}
-        <input type="hidden" name="confirm" value="true" />
-        <button class="button" type="submit">{{ _('Purge this document') }}</button>
-      </form>
-    {% endif -%}
   </article>
 
 {% endblock %}

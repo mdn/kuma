@@ -495,8 +495,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         assert_no_cache_header(resp)
 
         # Test that the document was deleted successfully
-        deleted_doc = Document.admin_objects.filter(pk=new_document.pk).first()
-        assert deleted_doc.deleted
+        assert not Document.admin_objects.filter(pk=new_document.pk).exists()
 
     def test_post_reverts_page(self):
         """POSTing to ban_user_and_cleanup url with revisions to a document."""

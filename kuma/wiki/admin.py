@@ -36,47 +36,6 @@ def repair_breadcrumbs(self, request, queryset):
 repair_breadcrumbs.short_description = "Repair translation breadcrumbs"
 
 
-def purge_documents(self, request, queryset):
-    redirect_url = '/admin/wiki/document/purge/?ids=%s'
-    selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
-    return HttpResponseRedirect(redirect_url % ','.join(selected))
-
-
-purge_documents.short_description = "Permanently purge deleted documents"
-
-
-@never_cache
-@login_required
-@staff_member_required
-@permission_required('wiki.purge_document')
-@check_readonly
-def purge_view(request):
-    """
-    Interstitial admin view for purging multiple Documents.
-    """
-    selected = request.GET.get('ids', '').split(',')
-    to_purge = Document.deleted_objects.filter(id__in=selected)
-    if request.method == 'POST':
-        if request.POST.get('confirm_purge', False):
-            purged = 0
-            for doc in to_purge:
-                doc.purge()
-                purged += 1
-            messages.info(request, "%s document(s) were purged." % purged)
-        return HttpResponseRedirect('/admin/wiki/document/')
-    return TemplateResponse(request,
-                            'admin/wiki/purge_documents.html',
-                            {'to_purge': to_purge})
-
-
-def restore_documents(self, request, queryset):
-    for doc in queryset:
-        doc.restore()
-
-
-restore_documents.short_description = "Restore deleted documents"
-
-
 def enable_deferred_rendering_for_documents(self, request, queryset):
     queryset.update(defer_rendering=True)
     self.message_user(request, 'Enabled deferred rendering for %s Documents' %
@@ -320,9 +279,8 @@ class DocumentAdmin(DisabledDeletionMixin, admin.ModelAdmin):
                force_render_documents,
                enable_deferred_rendering_for_documents,
                disable_deferred_rendering_for_documents,
-               repair_breadcrumbs,
-               purge_documents,
-               restore_documents)
+               repair_breadcrumbs)
+
     fieldsets = (
         (None, {
             'fields': ('locale', 'title')
@@ -348,7 +306,7 @@ class DocumentAdmin(DisabledDeletionMixin, admin.ModelAdmin):
                     document_nav_links,
                     revision_links,)
     list_display_links = ('id', 'slug',)
-    list_filter = ('defer_rendering', 'is_localizable', 'locale', 'deleted')
+    list_filter = ('defer_rendering', 'is_localizable', 'locale')
     raw_id_fields = ('parent', 'parent_topic',)
     readonly_fields = ('id', 'current_revision')
     search_fields = ('title', 'slug', 'html', 'current_revision__tags')
@@ -356,8 +314,8 @@ class DocumentAdmin(DisabledDeletionMixin, admin.ModelAdmin):
     def get_queryset(self, request):
         """
         The Document class has multiple managers which perform
-        different filtering based on deleted status; we want the
-        special admin-only one that doesn't filter.
+        different filtering; we want the special admin-only one
+        that doesn't filter.
         """
         return Document.admin_objects.all()
 
@@ -384,7 +342,7 @@ class DocumentSpamAttemptAdmin(admin.ModelAdmin):
         'id', 'user', 'title_short', 'slug_short', 'doc_short', 'review']
     list_display_links = ['id', 'title_short', 'slug_short']
     list_filter = [
-        'created', 'review', 'document__deleted', 'document__locale']
+        'created', 'review' , 'document__locale']
     list_editable = ('review',)
     ordering = ['-created']
     search_fields = ['title', 'slug', 'user__username']

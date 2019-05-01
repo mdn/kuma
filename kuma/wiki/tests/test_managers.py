@@ -40,16 +40,6 @@ def archive_doc(wiki_user):
     return doc
 
 
-def test_get_queryset(root_doc):
-    """Managers are customized for including / excluding deleted documents."""
-    deleted_doc = Document.objects.create(locale='en-US', slug='Deleted',
-                                          title='Deleted Document',
-                                          deleted=True)
-    assert Document.admin_objects.all().count() == 2
-    assert list(Document.objects.all()) == [root_doc]
-    assert list(Document.deleted_objects.all()) == [deleted_doc]
-
-
 def test_get_natural_key(root_doc):
     """The locale + slug is the natural key for Documents."""
     assert root_doc.natural_key() == (root_doc.locale, root_doc.slug)

@@ -52,9 +52,7 @@ def wiki_moderator(db, django_user_model):
         email='moderator@example.com',
         date_joined=datetime(2018, 8, 21, 18, 19))
     moderator.user_permissions.add(
-        Permission.objects.get(codename='purge_document'),
         Permission.objects.get(codename='delete_document'),
-        Permission.objects.get(codename='restore_document')
     )
     return moderator
 

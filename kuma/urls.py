@@ -23,7 +23,6 @@ from kuma.search.urls import (
     lang_base_urlpatterns as search_lang_base_urlpatterns,
     lang_urlpatterns as search_lang_urlpatterns)
 from kuma.users.urls import lang_urlpatterns as users_lang_urlpatterns
-from kuma.wiki.admin import purge_view
 from kuma.wiki.urls import lang_urlpatterns as wiki_lang_urlpatterns
 from kuma.wiki.views.document import as_json as document_as_json
 from kuma.wiki.views.legacy import mindtouch_to_kuma_redirect
@@ -64,9 +63,6 @@ if settings.MAINTENANCE_MODE:
 else:
     # Django admin:
     urlpatterns += [
-        url(r'^admin/wiki/document/purge/',
-            purge_view,
-            name='wiki.admin_bulk_purge'),
         # We don't worry about decorating the views within django.contrib.admin
         # with "never_cache", since most have already been decorated, and the
         # remaining can be safely cached.

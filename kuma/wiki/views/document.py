@@ -568,26 +568,6 @@ def _document_redirect_to_create(document_slug, document_locale, slug_dict):
 
 
 @newrelic.agent.function_trace()
-@prevent_indexing
-def _document_deleted(request, deletion_logs):
-    """
-    When a Document has been deleted return a 404.
-
-    If the user can restore documents, then return a 404 but also include the
-    template with the form to restore the document.
-    """
-    if request.user and request.user.has_perm('wiki.restore_document'):
-        deletion_log = deletion_logs.order_by('-pk')[0]
-        context = {'deletion_log': deletion_log}
-        response = render(request, 'wiki/deletion_log.html', context,
-                          status=404)
-        add_never_cache_headers(response)
-        return response
-
-    raise Http404
-
-
-@newrelic.agent.function_trace()
 def _document_raw(doc_html):
     """
     Display a raw Document.
@@ -623,12 +603,6 @@ def document(request, document_slug, document_locale):
             locale=document_locale,
             slug=document_slug
         )
-        if deletion_log_entries.exists():
-            # Show deletion log and restore / purge for soft-deleted docs
-            deleted_doc = Document.deleted_objects.filter(
-                locale=document_locale, slug=document_slug)
-            if deleted_doc.exists():
-                return _document_deleted(request, deletion_log_entries)
 
         # We can throw a 404 immediately if the request type is HEAD.
         # TODO: take a shortcut if the document was found?

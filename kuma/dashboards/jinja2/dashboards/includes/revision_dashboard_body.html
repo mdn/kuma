@@ -35,7 +35,6 @@
                         <br />
                         <span class="locale">{{ revision.document.locale }}</span>
                         {% if not previous_id %}<span class="new">{{ _('new') }}</span>{% endif %}
-                        {% if revision.document.deleted %}<span class="deleted">{{ _('deleted') }}</span>{% endif %}
                     </td>
                     <td class="dashboard-title">
                         <a href="{{ revision_url }}">{{ revision.title }}</a>

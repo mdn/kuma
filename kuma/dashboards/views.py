@@ -111,8 +111,7 @@ def revisions(request):
 
     # prefetch_related needs to come after all filters have been applied to qs
     revisions = revisions.prefetch_related('creator__bans').prefetch_related(
-        Prefetch('document', queryset=Document.admin_objects.only(
-                 'deleted', 'locale', 'slug')))
+        Prefetch('document', queryset=Document.admin_objects.only('locale', 'slug')))
 
     show_spam_submission = (
         request.user.is_authenticated and

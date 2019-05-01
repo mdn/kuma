@@ -40,10 +40,10 @@ from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, NotDocumentView,
                          PageMoveError, SlugCollision, UniqueCollision)
 from .jobs import DocumentContributorsJob, DocumentTagsJob
-from .managers import (DeletedDocumentManager, DocumentAdminManager,
+from .managers import (DocumentAdminManager,
                        DocumentManager, RevisionIPManager,
                        TaggedDocumentManager)
-from .signals import render_done, restore_done
+from .signals import render_done
 from .templatetags.jinja_helpers import absolutify
 from .utils import get_doc_components_from_url, tidy_content
 
@@ -284,9 +284,6 @@ class Document(NotificationsMixin, models.Model):
     # Time after which this document needs re-rendering
     render_expires = models.DateTimeField(blank=True, null=True, db_index=True)
 
-    # Whether this page is deleted.
-    deleted = models.BooleanField(default=False, db_index=True)
-
     # Last modified time for the document. Should be equal-to or greater than
     # the current revision's created field
     modified = models.DateTimeField(auto_now=True, null=True, db_index=True)
@@ -311,12 +308,9 @@ class Document(NotificationsMixin, models.Model):
         permissions = (
             ('view_document', 'Can view document'),
             ('move_tree', 'Can move a tree of documents'),
-            ('purge_document', 'Can permanently delete document'),
-            ('restore_document', 'Can restore deleted document'),
         )
 
     objects = DocumentManager()
-    deleted_objects = DeletedDocumentManager()
     admin_objects = DocumentAdminManager()
 
     def __str__(self):
@@ -899,35 +893,8 @@ class Document(NotificationsMixin, models.Model):
         super(Document, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-        if self.is_redirect or 'purge' in kwargs:
-            if 'purge' in kwargs:
-                kwargs.pop('purge')
-            return super(Document, self).delete(*args, **kwargs)
-        signals.pre_delete.send(sender=self.__class__,
-                                instance=self)
-        if not self.deleted:
-            Document.objects.filter(pk=self.pk).update(deleted=True)
+        super(Document, self).delete(*args, **kwargs)
 
-        signals.post_delete.send(sender=self.__class__, instance=self)
-
-    def purge(self):
-        if not self.deleted:
-            raise Exception("Attempt to purge non-deleted document %s: %s" %
-                            (self.id, self.title))
-        self.delete(purge=True)
-
-    def restore(self):
-        """
-        Restores a logically deleted document by reverting the deleted
-        boolean to False. Sends the restore_done signal, as well as the
-        pre_save and post_save Django signals.
-        """
-        if not self.deleted:
-            raise Exception("Document is not deleted, cannot be restored.")
-        signals.pre_save.send(sender=self.__class__, instance=self)
-        Document.deleted_objects.filter(pk=self.pk).update(deleted=False)
-        signals.post_save.send(sender=self.__class__, instance=self)
-        restore_done.send(sender=self.__class__, instance=self)
 
     def _post_move_redirects(self, new_slug, user, title):
         """

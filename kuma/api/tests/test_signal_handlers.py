@@ -2,14 +2,8 @@ import mock
 import pytest
 
 from kuma.wiki.models import Document
-from kuma.wiki.signals import render_done, restore_done
+from kuma.wiki.signals import render_done
 
-
-@mock.patch('kuma.api.signal_handlers.publish')
-def test_restore_signal(publish_mock, root_doc):
-    """The document is published on the restore_done signal."""
-    restore_done.send(sender=Document, instance=root_doc)
-    publish_mock.delay.assert_called_once_with([root_doc.pk])
 
 
 @mock.patch('kuma.api.signal_handlers.publish')

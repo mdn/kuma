@@ -30,8 +30,7 @@ def on_render_done(sender, instance, **kwargs):
     """
     A signal handler to update the given document's json field.
     """
-    if not instance.deleted:
-        build_json_data_for_document.delay(instance.pk, stale=False)
+    build_json_data_for_document.delay(instance.pk, stale=False)
 
 
 @receiver(post_save, sender=Revision, dispatch_uid='wiki.revision.post_save')

@@ -232,26 +232,6 @@ def test_revisions_creator_overrides_known_authors_filter(
         assert username == 'wiki_user_3'
 
 
-def test_revisions_deleted_document(dashboard_revisions, user_client,
-                                    wiki_user):
-    """The revisions dashboard includes deleted documents."""
-    del_doc = dashboard_revisions[0].document
-    DocumentDeletionLog.objects.create(
-        slug=del_doc.slug, locale=del_doc.locale, user=wiki_user,
-        reason='Testing deleted docs.')
-    del_doc.delete()
-
-    response = user_client.get(reverse('dashboards.revisions'))
-    assert response.status_code == 200
-    page = pq(response.content)
-    rev_rows = page.find('.dashboard-row')
-    assert rev_rows.length == len(dashboard_revisions) == 3 * REVS_PER_USER
-
-    # Deleted document has a "deleted" tag
-    assert pq(rev_rows[0]).find('span.deleted')
-    assert not pq(rev_rows[1]).find('span.deleted')
-
-
 @mock.patch('kuma.dashboards.utils.analytics_upageviews')
 class SpamDashTest(SampleRevisionsMixin, UserTestCase):
     fixtures = UserTestCase.fixtures + ['wiki/documents.json']

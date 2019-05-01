@@ -35,8 +35,7 @@ def test_should_not_update_excluded_slug(mock_doc, slug):
     assert not WikiDocumentType.should_update(mock_doc)
 
 
-@pytest.mark.parametrize(
-    'flag', ('is_redirect', 'deleted'))
+@pytest.mark.parametrize('flag', 'is_redirect')
 def test_should_not_update_excluded_flags(mock_doc, flag):
     """Do not update the search index if some flags are set."""
     setattr(mock_doc, flag, True)

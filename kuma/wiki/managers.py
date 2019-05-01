@@ -47,8 +47,7 @@ class BaseDocumentManager(models.Manager):
             docs = docs.filter(parent_topic__isnull=True)
 
         # Only include fields needed for a list of links to docs
-        docs = docs.only('id', 'locale', 'slug', 'deleted', 'title',
-                         'summary_text')
+        docs = docs.only('id', 'locale', 'slug', 'title', 'summary_text')
         return docs
 
     def _filter_by_revision_flag(self, revision_tag, locale=None, tag=None,
@@ -76,32 +75,19 @@ class BaseDocumentManager(models.Manager):
 
 
 class DocumentManager(BaseDocumentManager):
-    """
-    The actual manager, which filters to show only non-deleted pages.
-    """
     def get_queryset(self):
-        return super(DocumentManager, self).get_queryset().filter(deleted=False)
-
-
-class DeletedDocumentManager(BaseDocumentManager):
-    """
-    Specialized manager for working with deleted pages.
-    """
-    def get_queryset(self):
-        return super(DeletedDocumentManager, self).get_queryset().filter(deleted=True)
-
+        return super(DocumentManager, self).get_queryset()
 
 class DocumentAdminManager(BaseDocumentManager):
     """
-    A manager used only in the admin site, which does not perform any
-    filtering based on deleted status.
+    A manager used only in the admin site, which does not perform any filtering
     """
 
 
 class TaggedDocumentManager(models.Manager):
     def get_queryset(self):
         base_qs = super(TaggedDocumentManager, self).get_queryset()
-        return base_qs.filter(content_object__deleted=False)
+        return base_qs
 
 
 class RevisionIPManager(models.Manager):

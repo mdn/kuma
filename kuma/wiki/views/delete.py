@@ -6,7 +6,6 @@ from django.views.decorators.cache import never_cache
 
 from kuma.core.decorators import (block_user_agents, login_required,
                                   permission_required)
-from kuma.core.urlresolvers import reverse
 
 from ..decorators import check_readonly, process_document_path
 from ..forms import DocumentDeletionForm
@@ -101,54 +100,3 @@ def delete_document(request, document_slug, document_locale):
     }
     return render(request, 'wiki/confirm_document_delete.html', context)
 
-
-@never_cache
-@block_user_agents
-@login_required
-@permission_required('wiki.restore_document')
-@check_readonly
-@process_document_path
-def restore_document(request, document_slug, document_locale):
-    """
-    Restore a deleted Document.
-    """
-    document = get_object_or_404(Document.deleted_objects.all(),
-                                 slug=document_slug,
-                                 locale=document_locale)
-    document.restore()
-    return redirect(document)
-
-
-@never_cache
-@block_user_agents
-@login_required
-@permission_required('wiki.purge_document')
-@check_readonly
-@process_document_path
-def purge_document(request, document_slug, document_locale):
-    """
-    Permanently purge a deleted Document.
-    """
-    document = get_object_or_404(Document.deleted_objects.all(),
-                                 slug=document_slug,
-                                 locale=document_locale)
-    deletion_log_entries = DocumentDeletionLog.objects.filter(
-        locale=document_locale,
-        slug=document_slug
-    )
-    if deletion_log_entries.exists():
-        deletion_log = deletion_log_entries.order_by('-pk')[0]
-    else:
-        deletion_log = {}
-
-    if request.method == 'POST' and 'confirm' in request.POST:
-        document.purge()
-        return redirect(reverse('wiki.document',
-                                args=(document_slug,),
-                                locale=document_locale))
-    else:
-        return render(request,
-                      'wiki/confirm_purge.html',
-                      {'document': document,
-                       'deletion_log': deletion_log,
-                       })

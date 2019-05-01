@@ -708,61 +708,6 @@ def test_watch_unwatch(user_client, wiki_user, root_doc, endpoint, event):
         'Watch was not destroyed'
 
 
-def test_deleted_doc_anon(deleted_doc, client):
-    """Requesting a deleted doc returns 404"""
-    response = client.get(deleted_doc.get_absolute_url())
-    assert response.status_code == 404
-    content = response.content.decode(response.charset)
-    assert "This document was deleted" not in content
-    assert 'Reason for Deletion' not in content
-
-
-def test_deleted_doc_user(deleted_doc, user_client):
-    """Requesting a deleted doc returns 404, deletion message"""
-    response = user_client.get(deleted_doc.get_absolute_url())
-    assert response.status_code == 404
-    content = response.content.decode(response.charset)
-    assert "This document was deleted" not in content
-    assert 'Reason for Deletion' not in content
-    assert 'Restore this document' not in content
-    assert 'Purge this document' not in content
-
-
-def test_deleted_doc_moderator(deleted_doc, moderator_client):
-    """Requesting deleted doc as moderator returns 404 with action buttons."""
-    response = moderator_client.get(deleted_doc.get_absolute_url())
-    assert response.status_code == 404
-    content = response.content.decode(response.charset)
-    assert 'Reason for Deletion' in content
-    full_description = (
-        'This document was deleted by'
-        ' <a href="/en-US/profiles/moderator">moderator</a>'
-        ' on <time datetime="2018-08-21T17:22:00-07:00">'
-        'August 21, 2018 at 5:22:00 PM PDT</time>.')
-    assert full_description in content
-    assert 'Restore this document' in content
-    assert 'Purge this document' in content
-
-
-def test_deleted_doc_no_purge_permdeleted(deleted_doc, wiki_moderator,
-                                          moderator_client):
-    """Requesting deleted doc without purge perm removes purge button."""
-    wiki_moderator.user_permissions.remove(
-        Permission.objects.get(codename='purge_document'))
-    response = moderator_client.get(deleted_doc.get_absolute_url())
-    assert response.status_code == 404
-    content = response.content.decode(response.charset)
-    assert 'Reason for Deletion' in content
-    full_description = (
-        'This document was deleted by'
-        ' <a href="/en-US/profiles/moderator">moderator</a>'
-        ' on <time datetime="2018-08-21T17:22:00-07:00">'
-        'August 21, 2018 at 5:22:00 PM PDT</time>.')
-    assert full_description in content
-    assert 'Restore this document' in content
-    assert 'Purge this document' not in content
-
-
 @mock.patch('kuma.wiki.kumascript.get')
 def test_redirect_suppression(mock_kumascript_get, constance_config, client,
                               root_doc, redirect_doc):
