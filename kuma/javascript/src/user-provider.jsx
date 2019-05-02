@@ -27,7 +27,9 @@ const defaultUserData: UserData = {
 
 const context = React.createContext<?UserData>(defaultUserData);
 
-function Provider(props: { children: React.Node }): React.Node {
+export default function UserProvider(props: {
+    children: React.Node
+}): React.Node {
     const [userData, setUserData] = useState<?UserData>(null);
     useEffect(() => {
         fetch('/api/v1/whoami')
@@ -50,4 +52,5 @@ function Provider(props: { children: React.Node }): React.Node {
     );
 }
 
-export default { context, defaultUserData, Provider };
+UserProvider.context = context;
+UserProvider.defaultUserData = defaultUserData;

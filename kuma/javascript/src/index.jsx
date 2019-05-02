@@ -2,12 +2,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import CurrentUser from './current-user.jsx';
-import DocumentProvider from './document-provider.jsx';
-import Page from './page.jsx';
+import App from './app.jsx';
 
 let container = document.getElementById('react-container');
-
 if (container) {
     // The HTML page that loads this code is expected to have an inline
     // script that sets this window._document_data property to an object
@@ -19,24 +16,18 @@ if (container) {
     window._document_data = null; // eslint-disable-line camelcase
 
     // This is the React UI for a page of documentation
-    let page = (
-        <DocumentProvider initialDocumentData={data}>
-            <CurrentUser.Provider>
-                <Page />
-            </CurrentUser.Provider>
-        </DocumentProvider>
-    );
+    let app = <App initialDocumentData={data} />;
 
     if (container.firstElementChild) {
         // If the container element is not empty, then it was presumably
         // rendered on the server, and we just need to hydrate it now.
-        ReactDOM.hydrate(page, container);
+        ReactDOM.hydrate(app, container);
     } else {
         // Otherwise, if the container is empty, then we need to do a full
         // client-side render. The goal is that pages should always be
         // server-side rendered when first loaded (for speed and SEO). But
         // this is here for robustness in case there are errors during
         // server side rendering.
-        ReactDOM.render(page, container);
+        ReactDOM.render(app, container);
     }
 }

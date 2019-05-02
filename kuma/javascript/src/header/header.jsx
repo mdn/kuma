@@ -150,21 +150,21 @@ export default function Header(): React.Node {
     if (!documentData) {
         return null;
     }
-    const { localeFromURL, slug } = documentData;
+    const { requestLocale, slug } = documentData;
 
     function fixurl(url) {
         // The "Report a content issue" menu item has a link that requires
         // the document slug, so we work that in here.
         url = url.replace('{{SLUG}}', encodeURIComponent(slug));
         if (!url.startsWith('https://')) {
-            url = `/${localeFromURL}/docs/${url}`;
+            url = `/${requestLocale}/docs/${url}`;
         }
         return url;
     }
 
     return (
         <div css={styles.header}>
-            <a css={styles.logoContainer} href={`/${localeFromURL}/`}>
+            <a css={styles.logoContainer} href={`/${requestLocale}/`}>
                 <Logo css={styles.logo} alt="MDN Web Docs Logo" />
             </a>
             <Row css={styles.menus}>

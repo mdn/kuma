@@ -4,13 +4,13 @@ import { useContext } from 'react';
 
 import { css } from '@emotion/core';
 
-import CurrentUser from '../current-user.jsx';
 import DocumentProvider from '../document-provider.jsx';
 import Dropdown from './dropdown.jsx';
 import EditIcon from '../icons/pencil.svg';
 import gettext from '../gettext.js';
 import GithubLogo from '../icons/github.svg';
 import { Row, Strut } from '../layout.jsx';
+import UserProvider from '../user-provider.jsx';
 
 const strings = {
     signIn: gettext('Sign in'),
@@ -67,8 +67,8 @@ export default function Login(): React.Node {
     if (!documentData) {
         return null;
     }
-    const { editURL, localeFromURL } = documentData;
-    const userData = useContext(CurrentUser.context);
+    const { editURL, requestLocale } = documentData;
+    const userData = useContext(UserProvider.context);
 
     const PATHNAME = documentData.absoluteURL;
 
@@ -102,7 +102,7 @@ export default function Login(): React.Node {
                 <Dropdown label={label} right={true}>
                     <li>
                         <a
-                            href={`${WIKI_SITE_URL}/${localeFromURL}/profiles/${
+                            href={`${WIKI_SITE_URL}/${requestLocale}/profiles/${
                                 userData.username
                             }`}
                         >
@@ -111,7 +111,7 @@ export default function Login(): React.Node {
                     </li>
                     <li>
                         <a
-                            href={`${WIKI_SITE_URL}/${localeFromURL}/profiles/${
+                            href={`${WIKI_SITE_URL}/${requestLocale}/profiles/${
                                 userData.username
                             }/edit`}
                         >
@@ -120,7 +120,7 @@ export default function Login(): React.Node {
                     </li>
                     <li>
                         <form
-                            action={`${WIKI_SITE_URL}/${localeFromURL}/users/signout`}
+                            action={`${WIKI_SITE_URL}/${requestLocale}/users/signout`}
                             method="post"
                         >
                             <input name="next" type="hidden" value={PATHNAME} />

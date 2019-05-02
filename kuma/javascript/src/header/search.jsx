@@ -43,7 +43,7 @@ export default function Search() {
     if (!documentData) {
         return null;
     }
-    const { localeFromURL } = documentData;
+    const { requestLocale } = documentData;
 
     // This is available as window.mdn.wikiSiteUrl. But we can't access
     // that during server-side rendering, so we either need to add that mdn
@@ -59,7 +59,7 @@ export default function Search() {
         <form
             css={styles.container}
             id="nav-main-search"
-            action={`${WIKI_SITE_URL}/${localeFromURL}/search`}
+            action={`${WIKI_SITE_URL}/${requestLocale}/search`}
             method="get"
             role="search"
         >

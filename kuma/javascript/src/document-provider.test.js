@@ -5,6 +5,7 @@ import { create } from 'react-test-renderer';
 import DocumentProvider from './document-provider.jsx';
 
 export const fakeDocumentData = {
+    requestLocale: 'en-US',
     locale: 'en-US',
     slug: 'test',
     id: 42,
@@ -37,9 +38,7 @@ export const fakeDocumentData = {
     ],
     contributors: ['mike', 'ike'],
     lastModified: '2019-01-02T03:04:05',
-    lastModifiedBy: 'ike',
-
-    localeFromURL: ''
+    lastModifiedBy: 'ike'
 };
 
 describe('DocumentProvider', () => {
@@ -49,7 +48,6 @@ describe('DocumentProvider', () => {
         const C = DocumentProvider.context.Consumer;
         const contextConsumer = jest.fn();
         const documentDataClone = JSON.parse(JSON.stringify(fakeDocumentData));
-        documentDataClone.localeFromURL = 'en-US';
 
         create(
             <DocumentProvider initialDocumentData={fakeDocumentData}>

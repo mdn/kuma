@@ -27,21 +27,23 @@ export type DocumentData = {
     lastModifiedBy: string,
 
     /*
-     * The localeFromURL is the locale that appears to the user in the
-     * location bar. This may be different than the locale of the
-     * document which is what the `locale` property is. For example,
-     * if the user asks for a Spanish translation that does not exist,
-     * they will see "es" in the URL. But the document that we display
-     * will have an "en-US" locale.  Unlike all of the properties
-     * defined above, this one does not come from the JSON blob of
-     * document data. Instead, we derive this from the URL and add it
-     * to the documentData property that we pass to the context provider
-     * below. Even though this property does not exist in the JSON
-     * blobs we load from the backend, we ensure it exists and is
-     * non-null before the data gets used on the frontend, so this
-     * type is defined as if the property is always present.
+     * The document data tells us the  locale of the document that has
+     * been returned  to us. But  that is not  always the same  as the
+     * locale of  the document that  the user requested. (If  the user
+     * requests a Spanish  document, but we don't  have a translation,
+     * the server will send us  the original english document intead.)
+     * In  various places  in the  UX  we need  to link  to URLs  that
+     * include a locale.  Generally, if the user is  visiting the page
+     * /locale/docs/slug, then we want the  links on that page to link
+     * to other pages in the  same locale. This requestLocale property
+     * is intended  to refer to  that locale.  When the page  is first
+     * loaded, the  window._document_data that  gets encoded  into the
+     * HTML will always have this property  set. But it may not be set
+     * when we  use fetch()  to query  a blob of  JSON. In  that case,
+     * we'll need to add it based  on the locale of whatever URL we're
+     * following.
      */
-    localeFromURL: string
+    requestLocale: string
 };
 
 const context = React.createContext<DocumentData | null>(null);
@@ -97,6 +99,13 @@ export default function DocumentProvider(
                                 receivedURL
                             );
                         }
+
+                        // If the returned JSON does not include requestLocale
+                        // then add it based on the request we just made.
+                        if (!json.requestLocale) {
+                            json.requestLocale = localeAndSlug.split('/')[1];
+                        }
+
                         window.scrollTo(0, 0);
                         setDocumentData(json);
                         body.style.opacity = '1';
@@ -182,25 +191,6 @@ export default function DocumentProvider(
             window.location.href
         );
     }, []);
-
-    /*
-     * Get the locale displayed in the URL and add that to the data
-     * that we provide.
-     *
-     * TODO: this is hardcoded as en-US right now. I used to get it
-     * from the URL as the name implies, but that doesn't work for
-     * server side rendering, so I think this needs to be added to the
-     * document API. Maybe call it requestLocale (the locale of the incoming
-     * request url). Note that this may differ from the actual locale
-     * of the document, when a document is not translated and we fall back
-     * to the original english document.
-     */
-    documentData.localeFromURL = 'en-US';
-    /*
-    documentData.localeFromURL =
-        (window && window.location && window.location.pathname.split('/')[1]) ||
-        'en-US';
-    */
 
     return (
         <context.Provider value={documentData}>
