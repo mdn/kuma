@@ -873,7 +873,7 @@ def react_document(request, document_slug, document_locale):
                    set(trans.locale for trans in other_translations))
 
     # Get the JSON data for this document
-    document_data = document_api_data(doc)
+    document_data = document_api_data(doc, ensure_contributors=True)
     # And add another property to specify the requested locale
     # (which may not be the same as the locale of the document)
     document_data['requestLocale'] = document_locale
