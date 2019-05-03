@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 import json
+import time
 
 import boto3
 from celery import task
@@ -26,6 +27,23 @@ def get_s3_resource(config=None):
     if _s3_resource is None:
         _s3_resource = boto3.resource('s3', config=config)
     return _s3_resource
+
+
+# The global cloudfront client object to be lazily defined
+_cloudfront_client = None
+
+
+def get_cloudfront_client(config=None):
+    """
+    Get or create the CloudFront client. This function is not
+    thread-safe, since it uses the default session, rather than
+    a separate session for each thread.
+    We do not use threads however, so we don't have to handle them.
+    """
+    global _cloudfront_client
+    if _cloudfront_client is None:
+        _cloudfront_client = boto3.client('cloudfront', config=config)
+    return _cloudfront_client
 
 
 def get_s3_bucket(config=None):
@@ -71,6 +89,8 @@ def unpublish(doc_locale_slug_pairs, log=None, completion_message=None):
     if completion_message:
         log.info(completion_message)
 
+    cdn_cache_invalidate.delay(doc_locale_slug_pairs)
+
 
 @task
 def publish(doc_pks, log=None, completion_message=None):
@@ -86,12 +106,21 @@ def publish(doc_pks, log=None, completion_message=None):
             'Skipping publish of {!r}: no S3 bucket configured'.format(doc_pks))
         return
 
+    # Use this to turn the document IDs into
+    # pair tuples of (locale, slug)
+    doc_locale_slug_pairs = []
+
     for pk in doc_pks:
         try:
             doc = Document.objects.get(pk=pk)
         except Document.DoesNotExist:
             log.error('Document with pk={} does not exist'.format(pk))
             continue
+
+        # Build up this list for the benefit of triggering a
+        # CDN cache invalidation.
+        doc_locale_slug_pairs.append((doc.locale, doc.slug))
+
         kwargs = dict(
             ACL='public-read',
             Key=get_s3_key(doc),
@@ -114,3 +143,50 @@ def publish(doc_pks, log=None, completion_message=None):
 
     if completion_message:
         log.info(completion_message)
+
+    cdn_cache_invalidate.delay(doc_locale_slug_pairs)
+
+
+@task
+def cdn_cache_invalidate(doc_locale_slug_pairs, log=None):
+    """
+    Independent of a document being updated, added, or removed, trigger
+    an attempt to purge it from the CDN.
+    """
+    if not log:
+        log = cdn_cache_invalidate.get_logger()
+
+    client = get_cloudfront_client()
+    for label, conf in settings.MDN_CLOUDFRONT_DISTRIBUTIONS.items():
+        if not conf['id']:
+            log.info('No Distribution ID available for CloudFront {!r}'.format(
+                label
+            ))
+            continue
+        paths = [
+            conf['transform'](locale, slug)
+            for locale, slug in doc_locale_slug_pairs
+        ]
+        # In case the transform function decided to "opt-out" on a particular
+        # (locale, slug) it might return a falsy value.
+        paths = [x for x in paths if x]
+
+        if paths:
+            invalidation = client.create_invalidation(
+                DistributionId=conf['id'],
+                InvalidationBatch={
+                    'Paths': {
+                        'Quantity': len(paths),
+                        'Items': paths
+                    },
+                    'CallerReference': str(time.time())
+                }
+            )
+            log.info(
+                'Issued cache invalidation for {!r} in {} distribution'
+                ' (received with {})'.format(
+                    paths,
+                    label,
+                    invalidation['ResponseMetadata']['HTTPStatusCode']
+                )
+            )

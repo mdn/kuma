@@ -1495,6 +1495,9 @@ CELERY_TASK_ROUTES = {
     'kuma.api.tasks.unpublish': {
         'queue': 'mdn_api'
     },
+    'kuma.api.tasks.cdn_cache_invalidate': {
+        'queue': 'mdn_api'
+    },
 }
 
 # Wiki rebuild settings
@@ -1861,3 +1864,26 @@ SSR_TIMEOUT = float(config('SSR_TIMEOUT', default='1'))
 
 # Setting for configuring the AWS S3 bucket name used for the document API.
 MDN_API_S3_BUCKET_NAME = config('MDN_API_S3_BUCKET_NAME', default=None)
+
+# When we potentially have multiple CDN distributions that do different
+# things.
+# Inside kuma, when a document is considered "changed", we trigger
+# worker tasks that do things such as publishing/unpublishing to S3.
+# Quite agnostic from *how* that works, this list of distributions,
+# if they have an 'id', gets called for each (locale, slug) to
+# turn that into CloudFront "paths".
+# Note that the 'id' is optional because its ultimate value might
+# or not might not be in the environment.
+MDN_CLOUDFRONT_DISTRIBUTIONS = {
+    'api': {
+        'id': config('MDN_CLOUDFRONT_API_DISTRIBUTIONID', default=None),
+        # TODO We should have a (Django) system check that checks that this
+        # transform callable works. For example, it *has* to start with a '/'.
+        'transform': lambda locale, slug: '/api/v1/doc/' + locale + '/' + slug
+    },
+    # TODO We should have an entry here for the existing website.
+    # At the time of writing we conservatively set the TTL to 5 min.
+    # If this CloudFront invalidation really works, we can bump that 5 min
+    # to ~60min and put configuration here for it too.
+
+}
