@@ -891,9 +891,6 @@ class Document(NotificationsMixin, models.Model):
 
         super(Document, self).save(*args, **kwargs)
 
-    def delete(self, *args, **kwargs):
-        super(Document, self).delete(*args, **kwargs)
-
     def _post_move_redirects(self, new_slug, user, title):
         """
         Create and return a Document and a Revision to serve as
