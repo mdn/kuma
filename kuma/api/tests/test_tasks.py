@@ -5,9 +5,23 @@ import json
 import mock
 import pytest
 
-from kuma.api.tasks import publish, unpublish
+from kuma.api.tasks import cdn_cache_invalidate, publish, unpublish
 from kuma.api.v1.views import document_api_data, get_s3_key
 from kuma.wiki.templatetags.jinja_helpers import absolutify
+
+
+@pytest.fixture
+def mocked_get_cloudfront_client():
+    """Mock the *not* thread-safe get_cloudfront_client() function.
+
+    The reason for get_cloudfront_client() being not-thread-safe is sane.
+    See its doc string.
+
+    By mocking the whole function get avoid that thread-safety problem
+    entirely.
+    """
+    with mock.patch('kuma.api.tasks.get_cloudfront_client') as mocked:
+        yield mocked
 
 
 def get_mocked_s3_bucket():
@@ -292,3 +306,60 @@ def test_unpublish_multiple_chunked(get_s3_bucket_mock, root_doc, redirect_doc,
         mock.call('Unpublished {}'.format(s3_keys[-1])),
         mock.call('Done!')
     ])
+
+
+def test_cdn_cache_invalidate_not_configured(
+    settings,
+    mocked_get_cloudfront_client
+):
+    """When the settings.MDN_CLOUDFRONT_DISTRIBUTIONS isn't set, no
+    calls should be make to the boto3 CloudFront client.
+    """
+    # By default, for all testing, the MDN_CLOUDFRONT_DISTRIBUTIONS
+    # should be set to an empty dict. Just sanity-check that.
+    assert not settings.MDN_CLOUDFRONT_DISTRIBUTIONS
+
+    pairs = [('sv-SE', 'Learn/stuff')]
+    cdn_cache_invalidate(pairs)
+
+    mocked_get_cloudfront_client().assert_not_called()
+
+
+def test_cdn_cache_invalidate_configured(
+    settings,
+    mocked_get_cloudfront_client
+):
+    """When explicitly enabling a MDN_CLOUDFRONT_DISTRIBUTIONS we should
+    expect its 'transform' function to be called.
+    """
+    transform_calls_made = []
+
+    def transformer(locale, slug):
+        transform_calls_made.append([locale, slug])
+        return '/' + locale + '/' + slug + '/'
+
+    settings.MDN_CLOUDFRONT_DISTRIBUTIONS = {
+        'mything': {
+            'id': 'XYZABC123',
+            'transform': transformer,
+        },
+        'unconfigured': {
+            'id': None,
+            'transform': lambda x, y: None
+        }
+    }
+
+    pairs = [('sv-SE', 'Learn/stuff')]
+    cdn_cache_invalidate(pairs)
+    assert transform_calls_made == [[u'sv-SE', u'Learn/stuff']]
+
+    mocked_get_cloudfront_client().create_invalidation.assert_called_with(
+        DistributionId=u'XYZABC123',
+        InvalidationBatch={
+            u'Paths': {
+                u'Items': [u'/sv-SE/Learn/stuff/'],
+                u'Quantity': 1
+            },
+            u'CallerReference': mock.ANY
+        }
+    )
