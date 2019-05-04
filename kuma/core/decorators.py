@@ -17,6 +17,9 @@ from .urlresolvers import reverse
 from .utils import add_shared_cache_control
 
 
+HOUR = 60 * 60
+
+
 def shared_cache_control(func=None, **kwargs):
     """
     Decorator to set Cache-Control header for shared caches like CDNs.
@@ -42,6 +45,9 @@ def shared_cache_control(func=None, **kwargs):
     if func:
         return _shared_cache_controller(func)
     return _shared_cache_controller
+
+
+beta_shared_cache_control = shared_cache_control(s_maxage=HOUR)
 
 
 def user_access_decorator(redirect_func, redirect_url_func, deny_func=None,

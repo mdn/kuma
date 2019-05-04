@@ -7,7 +7,7 @@ from django.views import static
 from django.views.decorators.cache import never_cache
 from django.views.generic import RedirectView
 
-from kuma.core.decorators import shared_cache_control
+from kuma.core.decorators import beta_shared_cache_control, shared_cache_control
 from kuma.feeder.models import Bundle
 from kuma.feeder.sections import SECTION_HACKS
 from kuma.search.models import Filter
@@ -15,7 +15,6 @@ from kuma.search.models import Filter
 from .utils import favicon_url
 
 
-@shared_cache_control
 def contribute_json(request):
     return static.serve(request, 'contribute.json',
                         document_root=settings.ROOT)
@@ -27,7 +26,7 @@ def home(request):
     return render_home(request, 'landing/homepage.html')
 
 
-@shared_cache_control
+@beta_shared_cache_control
 def react_home(request):
     """React-based home page."""
     return render_home(request, 'landing/react_homepage.html')
@@ -118,7 +117,6 @@ Disallow: /
 '''
 
 
-@shared_cache_control
 def robots_txt(request):
     """Serve robots.txt that allows or forbids robots."""
     host = request.get_host()

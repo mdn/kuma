@@ -24,7 +24,8 @@ from ratelimit.decorators import ratelimit
 import kuma.wiki.content
 from kuma.api.v1.views import document_api_data
 from kuma.authkeys.decorators import accepts_auth_key
-from kuma.core.decorators import (block_user_agents,
+from kuma.core.decorators import (beta_shared_cache_control,
+                                  block_user_agents,
                                   login_required,
                                   permission_required,
                                   redirect_in_maintenance_mode,
@@ -787,7 +788,7 @@ def document(request, document_slug, document_locale):
 
 
 # This handles the /docs/ URL's within the React-based beta domain.
-@shared_cache_control
+@beta_shared_cache_control
 @csrf_exempt
 @require_http_methods(['GET', 'HEAD'])
 @allow_CORS_GET

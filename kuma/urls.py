@@ -5,10 +5,10 @@ from django.contrib import admin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.decorators.cache import never_cache
-from django.views.decorators.http import require_safe
 from django.views.generic import RedirectView
 from django.views.static import serve
 
+import kuma.views
 from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
 from kuma.core.decorators import shared_cache_control
@@ -29,15 +29,7 @@ from kuma.wiki.views.document import as_json as document_as_json
 from kuma.wiki.views.legacy import mindtouch_to_kuma_redirect
 
 
-@shared_cache_control
-@require_safe
-def serve_from_media_root(request, path):
-    """
-    A convenience function which also makes it easy to override the
-    settings within tests.
-    """
-    return serve(request, path, document_root=settings.MEDIA_ROOT)
-
+serve_from_media_root = shared_cache_control(kuma.views.serve_from_media_root)
 
 admin.autodiscover()
 
@@ -132,7 +124,7 @@ urlpatterns += [
     # Services and sundry.
     url('', include('kuma.version.urls')),
 
-    # Serve sitemap files for AWS (these are never hit in SCL3).
+    # Serve sitemap files.
     url(r'^sitemap.xml$',
         serve_from_media_root,
         {'path': 'sitemap.xml'},
