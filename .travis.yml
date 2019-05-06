@@ -27,6 +27,7 @@ matrix:
             - set -e
             - scripts/ci-python
             - scripts/ci-localerefresh
+            - ls -l .coverage
             - bash <(curl -s https://codecov.io/bash)
         - language: node_js
           node_js: 10
