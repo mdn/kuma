@@ -2,4 +2,7 @@
 set -e  # Exit on non-zero status
 set -u  # Treat unset variables as an error
 
-docker-compose exec -T web make jslint
+# Travis automatically discovers that this is npm
+# based on the existence of a `package.json` & `package-lock.json`
+# so it automatically executes `npm ci`. So we don't need `npm install`
+make jslint

@@ -42,7 +42,7 @@ docker-compose exec -T web make clean
 # Needed for Django's check_for_language
 docker-compose exec -T web make localecompile
 docker-compose exec -T web make build-static
-docker-compose exec -T web make pythonlint
+docker-compose exec -T web make pylint
 docker-compose exec -T web ./manage.py migrate
 docker-compose exec -T web make coveragetest
 
