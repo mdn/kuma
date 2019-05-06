@@ -27,9 +27,9 @@ matrix:
             - set -e
             - scripts/ci-python
             - scripts/ci-localerefresh
+            - bash <(curl -s https://codecov.io/bash)
         - language: node_js
           node_js: 10
           cache: npm
           script:
             - scripts/ci-jslint
-            - bash <(curl -s https://codecov.io/bash)
