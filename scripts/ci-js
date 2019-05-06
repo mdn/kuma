@@ -5,4 +5,13 @@ set -u  # Treat unset variables as an error
 # Travis automatically discovers that this is npm
 # based on the existence of a `package.json` & `package-lock.json`
 # so it automatically executes `npm ci`. So we don't need `npm install`
+
+# Note! The reason why this is done *outside* docker-compose is that
+# `eslint` can't cope with the fact that `node_modules` isn't in `./`.
+# Inside docker we move $NODE_PATH to /tool/node_modules and when
+# you attempt to run `eslint` with the source files, it will fail
+# because it can't find dependencies.
+# In conclusion, only do this bash script for testing non-runtime things
+# like linting. JavaScript unit test running related tasks do not
+# belong in this file.
 make jslint
