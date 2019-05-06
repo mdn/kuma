@@ -31,5 +31,5 @@ matrix:
           node_js: 10
           cache: npm
           script:
-            - scripts/ci-js
+            - scripts/ci-jslint
             - bash <(curl -s https://codecov.io/bash)
