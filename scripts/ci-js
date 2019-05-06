@@ -1,0 +1,9 @@
+#!/bin/bash
+set -e  # Exit on non-zero status
+set -u  # Treat unset variables as an error
+
+# XXX I think Travis automatically discovers that this is npm
+# based on the existence of a `package.json` & `package-lock.json`
+# so it automatically executes `npm ci`
+#npm install
+make jslint
