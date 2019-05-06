@@ -34,9 +34,7 @@ test:
 	py.test $(target)
 
 coveragetest: clean
-	# py.test --cov=$(target) --no-cov-on-fail $(target)
-	@ echo "TEMPORARITLY RUNNING WITH -x"
-	@ py.test -x --cov=$(target) --no-cov-on-fail $(target)
+	py.test --cov=$(target) --no-cov-on-fail $(target)
 
 coveragetesthtml: coveragetest
 	coverage html

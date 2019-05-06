@@ -25,6 +25,9 @@ sudo cp $DOCKER_COMPOSE_FILE /usr/local/bin/docker-compose
 # Now build the Docker container
 
 VERSION=latest make build-base
+
+# This "make build-kuma" step is done here only to test that the kuma docker
+# image can be built without error, not because it's needed by docker-compose.
 VERSION=latest make build-kuma
 
 docker-compose --version
@@ -35,6 +38,8 @@ docker-compose exec -T web urlwait mysql://root:kuma@mysql:3306/developer_mozill
 docker-compose exec -T web urlwait http://elasticsearch:9200 30
 
 docker-compose exec -T web make clean
+
+# Needed for Django's check_for_language
 docker-compose exec -T web make localecompile
 docker-compose exec -T web make build-static
 docker-compose exec -T web make pylint
