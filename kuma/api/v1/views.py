@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.utils.translation import activate, ugettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
+from waffle.models import Flag, Sample, Switch
 
 from kuma.core.urlresolvers import reverse
 from kuma.users.templatetags.jinja_helpers import gravatar_url
@@ -133,6 +134,19 @@ def document_api_data(doc=None, ensure_contributors=False, redirect_url=None):
     }
 
 
+# Get all waffle flags, switches and samples in advance. Each call to
+# the whoami API will query the current value of each of them. This code
+# for querying the models and then querying the setting for each
+# model is copied from waffle.views._generate_waffle_js.
+#
+# Note that if we upgrade django-waffle, version 15 introduces a pluggable
+# flag model, and the approved way to query all flags will then become:
+#    all_waffle_flags = get_waffle_flag_model().get_all()
+all_waffle_flags = Flag.get_all()
+all_waffle_switches = Switch.get_all()
+all_waffle_samples = Sample.get_all()
+
+
 @never_cache
 @require_GET
 def whoami(request):
@@ -167,4 +181,12 @@ def whoami(request):
                 'large': None,
             }
         }
+
+    # Add waffle data to the data
+    data['waffle'] = {
+        'flags': {f.name: f.is_active(request) for f in all_waffle_flags},
+        'switches': {s.name: s.is_active() for s in all_waffle_switches},
+        'samples': {s.name: s.is_active() for s in all_waffle_samples},
+    }
+
     return JsonResponse(data)

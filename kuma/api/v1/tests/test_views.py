@@ -217,6 +217,7 @@ def test_whoami_disallowed_methods(client, api_settings, http_method):
     assert_no_cache_header(response)
 
 
+@pytest.mark.django_db
 @pytest.mark.parametrize('timezone', ('US/Eastern', 'US/Pacific'))
 def test_whoami_anonymous(client, api_settings, timezone):
     """Test response for anonymous users."""
@@ -225,7 +226,20 @@ def test_whoami_anonymous(client, api_settings, timezone):
     response = client.get(url, HTTP_HOST=api_settings.BETA_HOST)
     assert response.status_code == 200
     assert response['content-type'] == 'application/json'
-    assert response.json() == {
+    json = response.json()
+
+    # pytest restrictions on using the db during tests means that
+    # we don't know what flags, switches and samples we expect to
+    # receive in the response. This test assumes that waffle works
+    # correctly, so all we are doing here is validating that the
+    # response includes dicts in the expected places.
+    assert type(json['waffle']['flags']) == dict
+    assert type(json['waffle']['switches']) == dict
+    assert type(json['waffle']['samples']) == dict
+
+    # Now check the rest of the response data
+    del json['waffle']
+    assert json == {
         'username': None,
         'timezone': timezone,
         'is_authenticated': False,
@@ -240,6 +254,7 @@ def test_whoami_anonymous(client, api_settings, timezone):
     assert_no_cache_header(response)
 
 
+@pytest.mark.django_db
 @pytest.mark.parametrize(
     'timezone,is_staff,is_superuser,is_beta_tester',
     [('US/Eastern', False, False, False),
@@ -259,7 +274,20 @@ def test_whoami(user_client, api_settings, wiki_user, beta_testers_group,
     response = user_client.get(url, HTTP_HOST=api_settings.BETA_HOST)
     assert response.status_code == 200
     assert response['content-type'] == 'application/json'
-    assert response.json() == {
+    json = response.json()
+
+    # pytest restrictions on using the db during tests means that
+    # we don't know what flags, switches and samples we expect to
+    # receive in the response. This test assumes that waffle works
+    # correctly, so all we are doing here is validating that the
+    # response includes dicts in the expected places.
+    assert type(json['waffle']['flags']) == dict
+    assert type(json['waffle']['switches']) == dict
+    assert type(json['waffle']['samples']) == dict
+
+    # Now check the rest of the response data
+    del json['waffle']
+    assert json == {
         'username': wiki_user.username,
         'timezone': timezone,
         'is_authenticated': True,
