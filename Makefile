@@ -180,14 +180,14 @@ bash: up
 shell_plus: up
 	docker-compose exec web ./manage.py shell_plus
 
-pylint:
+pythonlint:
 	flake8 kuma docs tests
 
 jslint:
 	npm run eslint
 	npm run stylelint
 
-lint: pylint jslint
+lint: pythonlint jslint
 
 npmrefresh:
 	cd /tools
