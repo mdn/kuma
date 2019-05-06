@@ -2,8 +2,7 @@
 set -e  # Exit on non-zero status
 set -u  # Treat unset variables as an error
 
-# XXX I think Travis automatically discovers that this is npm
+# Travis automatically discovers that this is npm
 # based on the existence of a `package.json` & `package-lock.json`
-# so it automatically executes `npm ci`
-#npm install
+# so it automatically executes `npm ci`. So we don't need `npm install`
 make jslint
