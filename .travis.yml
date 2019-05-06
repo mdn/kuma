@@ -12,7 +12,7 @@ matrix:
           python: 3.6
           cache: pip
           script:
-            - scripts/travis-docs
+            - scripts/ci-docs
         - language: python
           python: 2.7
           env:
@@ -25,12 +25,12 @@ matrix:
               - static
           script:
             - set -e
-            - scripts/travis-python
-            - scripts/travis-localerefresh
+            - scripts/ci-python
+            - scripts/ci-localerefresh
           after_success:
             - bash <(curl -s https://codecov.io/bash)
         - language: node_js
           node_js: 10
           cache: npm
           script:
-            - scripts/travis-js
+            - scripts/ci-js
