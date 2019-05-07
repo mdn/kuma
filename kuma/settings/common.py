@@ -1879,7 +1879,7 @@ MDN_CLOUDFRONT_DISTRIBUTIONS = {
         'id': config('MDN_CLOUDFRONT_API_DISTRIBUTIONID', default=None),
         # TODO We should have a (Django) system check that checks that this
         # transform callable works. For example, it *has* to start with a '/'.
-        'transform': lambda locale, slug: '/api/v1/doc/' + locale + '/' + slug
+        'transform_function': 'kuma.api.v1.views.get_cdn_key'
     },
     # TODO We should have an entry here for the existing website.
     # At the time of writing we conservatively set the TTL to 5 min.

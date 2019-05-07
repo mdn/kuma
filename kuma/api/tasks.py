@@ -6,6 +6,7 @@ import time
 import boto3
 from celery import task
 from django.conf import settings
+from django.utils.module_loading import import_string
 
 from kuma.core.utils import chunked
 from kuma.wiki.models import Document
@@ -147,6 +148,17 @@ def publish(doc_pks, log=None, completion_message=None):
     cdn_cache_invalidate.delay(doc_locale_slug_pairs)
 
 
+def api_doc_path_transform(locale, slug):
+    """Return the URL has it's known to the CDN based on a locale and slug.
+    This function can be named in settings.MDN_CLOUDFRONT_DISTRIBUTIONS
+    and imported dynamically.
+
+    For the API, the S3 key is entirely handled by the get_s3_key() function
+    but with the exception that we must prefix with a '/'.
+    """
+    return '/' + get_s3_key(locale, slug)
+
+
 @task
 def cdn_cache_invalidate(doc_locale_slug_pairs, log=None):
     """
@@ -163,14 +175,14 @@ def cdn_cache_invalidate(doc_locale_slug_pairs, log=None):
                 label
             ))
             continue
+        transform_function = import_string(conf['transform_function'])
         paths = [
-            conf['transform'](locale, slug)
+            transform_function(locale, slug)
             for locale, slug in doc_locale_slug_pairs
         ]
         # In case the transform function decided to "opt-out" on a particular
         # (locale, slug) it might return a falsy value.
         paths = [x for x in paths if x]
-
         if paths:
             invalidation = client.create_invalidation(
                 DistributionId=conf['id'],

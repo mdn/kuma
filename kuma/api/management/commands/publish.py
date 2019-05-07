@@ -38,11 +38,25 @@ class Command(BaseCommand):
             default=1000,
             help='Partition the work into tasks, with each task handling this '
                  'many documents (default=1000)')
+        parser.add_argument(
+            '--skip-cache-invaldation',
+            help=(
+                'No cache invalidation after publishing. By default True '
+                'if --all flag is used.'
+            ),
+            action='store_true')
 
     def handle(self, *args, **options):
+        skip_cache_invalidation = (
+            options['all'] or options['skip_cache_invalidation']
+        )
         Logger = namedtuple('Logger', 'info, error')
         log = Logger(info=self.stdout.write, error=self.stderr.write)
         if options['all'] or options['locale']:
+            if options['locale'] and options['all']:
+                raise CommandError(
+                    'Specifying --locale with --all is the same as --all'
+                )
             filters = {}
             if options['locale'] and not options['all']:
                 locale = options['locale']
@@ -62,7 +76,11 @@ class Command(BaseCommand):
             tasks = []
             for i, chunk in enumerate(chunked(doc_pks, chunk_size)):
                 message = 'Published chunk #{} of {}'.format(i + 1, num_tasks)
-                tasks.append(publish.si(chunk, completion_message=message))
+                tasks.append(publish.si(
+                    chunk,
+                    completion_message=message,
+                    skip_cache_invalidation=skip_cache_invalidation
+                ))
             if num_tasks == 1:
                 msg = ('Launching a single task handling '
                        'all {} documents.'.format(num_docs))
@@ -91,4 +109,8 @@ class Command(BaseCommand):
                     log.error(msg.format(locale, slug))
                 else:
                     doc_pks.append(doc_pk)
-            publish(doc_pks, log=log)
+            publish(
+                doc_pks,
+                log=log,
+                skip_cache_invalidation=skip_cache_invalidation
+            )

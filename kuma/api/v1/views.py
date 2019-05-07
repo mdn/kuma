@@ -56,6 +56,12 @@ def get_s3_key(doc=None, locale=None, slug=None, for_redirect=False):
     return key.lstrip('/')
 
 
+def get_cdn_key(locale, slug):
+    """Given a document (or locale and slug), return the "key" as this
+    is called in the CDN."""
+    return '/' + get_s3_key(locale=locale, slug=slug)
+
+
 def get_content_based_redirect(document):
     """
     Returns None if the document is not a content-based redirect, otherwise a
