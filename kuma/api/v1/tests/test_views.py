@@ -226,20 +226,20 @@ def test_whoami_anonymous(client, api_settings, timezone):
     response = client.get(url, HTTP_HOST=api_settings.BETA_HOST)
     assert response.status_code == 200
     assert response['content-type'] == 'application/json'
-    json = response.json()
+    data = response.json()
 
     # pytest restrictions on using the db during tests means that
     # we don't know what flags, switches and samples we expect to
     # receive in the response. This test assumes that waffle works
     # correctly, so all we are doing here is validating that the
     # response includes dicts in the expected places.
-    assert type(json['waffle']['flags']) == dict
-    assert type(json['waffle']['switches']) == dict
-    assert type(json['waffle']['samples']) == dict
+    assert type(data['waffle']['flags']) == dict
+    assert type(data['waffle']['switches']) == dict
+    assert type(data['waffle']['samples']) == dict
 
     # Now check the rest of the response data
-    del json['waffle']
-    assert json == {
+    del data['waffle']
+    assert data == {
         'username': None,
         'timezone': timezone,
         'is_authenticated': False,
@@ -274,20 +274,20 @@ def test_whoami(user_client, api_settings, wiki_user, beta_testers_group,
     response = user_client.get(url, HTTP_HOST=api_settings.BETA_HOST)
     assert response.status_code == 200
     assert response['content-type'] == 'application/json'
-    json = response.json()
+    data = response.json()
 
     # pytest restrictions on using the db during tests means that
     # we don't know what flags, switches and samples we expect to
     # receive in the response. This test assumes that waffle works
     # correctly, so all we are doing here is validating that the
     # response includes dicts in the expected places.
-    assert type(json['waffle']['flags']) == dict
-    assert type(json['waffle']['switches']) == dict
-    assert type(json['waffle']['samples']) == dict
+    assert type(data['waffle']['flags']) == dict
+    assert type(data['waffle']['switches']) == dict
+    assert type(data['waffle']['samples']) == dict
 
     # Now check the rest of the response data
-    del json['waffle']
-    assert json == {
+    del data['waffle']
+    assert data == {
         'username': wiki_user.username,
         'timezone': timezone,
         'is_authenticated': True,

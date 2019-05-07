@@ -134,19 +134,6 @@ def document_api_data(doc=None, ensure_contributors=False, redirect_url=None):
     }
 
 
-# Get all waffle flags, switches and samples in advance. Each call to
-# the whoami API will query the current value of each of them. This code
-# for querying the models and then querying the setting for each
-# model is copied from waffle.views._generate_waffle_js.
-#
-# Note that if we upgrade django-waffle, version 15 introduces a pluggable
-# flag model, and the approved way to query all flags will then become:
-#    all_waffle_flags = get_waffle_flag_model().get_all()
-all_waffle_flags = Flag.get_all()
-all_waffle_switches = Switch.get_all()
-all_waffle_samples = Sample.get_all()
-
-
 @never_cache
 @require_GET
 def whoami(request):
@@ -182,11 +169,20 @@ def whoami(request):
             }
         }
 
-    # Add waffle data to the data
+    # Add waffle data to the dict we're going to be returning.
+    # This is what the waffle.wafflejs() template tag does, but we're
+    # doing it via an API instead of hardcoding the settings into
+    # the HTML page. See also from waffle.views._generate_waffle_js.
+    #
+    # Note that if we upgrade django-waffle, version 15 introduces a
+    # pluggable flag model, and the approved way to get all flag
+    # objects will then become:
+    #    get_waffle_flag_model().get_all()
+    #
     data['waffle'] = {
-        'flags': {f.name: f.is_active(request) for f in all_waffle_flags},
-        'switches': {s.name: s.is_active() for s in all_waffle_switches},
-        'samples': {s.name: s.is_active() for s in all_waffle_samples},
+        'flags': {f.name: f.is_active(request) for f in Flag.get_all()},
+        'switches': {s.name: s.is_active() for s in Switch.get_all()},
+        'samples': {s.name: s.is_active() for s in Sample.get_all()},
     }
 
     return JsonResponse(data)
