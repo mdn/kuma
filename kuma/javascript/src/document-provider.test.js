@@ -12,7 +12,6 @@ export const fakeDocumentData = {
     title: '[fake document title]',
     summary: '[fake document summary]',
     absoluteURL: '[fake absolute url]',
-    redirectURL: '',
     editURL: '[fake edit url]',
     bodyHTML: '[fake body HTML]',
     quickLinksHTML: '[fake quicklinks HTML]',

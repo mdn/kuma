@@ -9,7 +9,6 @@ export type DocumentData = {
     title: string,
     summary: string,
     absoluteURL: string,
-    redirectURL: string,
     editURL: string,
     bodyHTML: string,
     quickLinksHTML: string,
@@ -87,12 +86,12 @@ export default function DocumentProvider(
                         // full page load of that document.
                         window.location = json.redirectURL;
                     } else {
-                        let receivedLocaleAndSlug = `/${json.locale}/${
-                            json.slug
-                        }`;
+                        let documentData = json.documentData;
+                        const { locale, slug, absoluteURL } = documentData;
+                        let receivedLocaleAndSlug = `/${locale}/${slug}`;
                         if (receivedLocaleAndSlug !== localeAndSlug) {
                             // This was a redirect.
-                            let receivedURL = json.absoluteURL;
+                            const receivedURL = absoluteURL;
                             history.replaceState(
                                 { receivedURL, receivedLocaleAndSlug },
                                 '',
@@ -100,14 +99,15 @@ export default function DocumentProvider(
                             );
                         }
 
-                        // If the returned JSON does not include requestLocale
-                        // then add it based on the request we just made.
-                        if (!json.requestLocale) {
-                            json.requestLocale = localeAndSlug.split('/')[1];
-                        }
+                        // The returned JSON never includes the "requestLocale"
+                        // (it is only included in the "initialDocumentData"),
+                        // so insert it into the "documentData" here.
+                        documentData.requestLocale = localeAndSlug.split(
+                            '/'
+                        )[1];
 
                         window.scrollTo(0, 0);
-                        setDocumentData(json);
+                        setDocumentData(documentData);
                         body.style.opacity = '1';
                     }
                 })
