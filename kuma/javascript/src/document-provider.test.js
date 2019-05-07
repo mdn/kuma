@@ -37,7 +37,7 @@ export const fakeDocumentData = {
         }
     ],
     contributors: ['mike', 'ike'],
-    lastModified: '2019-01-02T03:04:05',
+    lastModified: '2019-01-02T03:04:05Z',
     lastModifiedBy: 'ike'
 };
 
