@@ -23,13 +23,11 @@ matrix:
               - downloads
               - build
               - static
-          install:
-            - pip install codecov
           script:
             - set -e
             - scripts/ci-python
             - scripts/ci-localerefresh
-          after_success: codecov
+            - bash <(curl -s https://codecov.io/bash)
         - language: node_js
           node_js: 10
           cache: npm

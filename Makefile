@@ -34,7 +34,7 @@ test:
 	py.test $(target)
 
 coveragetest: clean
-	py.test --cov=$(target) --no-cov-on-fail $(target)
+	py.test --cov=$(target) --no-cov-on-fail --cover-xml $(target)
 
 coveragetesthtml: coveragetest
 	coverage html
