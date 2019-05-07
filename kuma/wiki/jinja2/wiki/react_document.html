@@ -31,7 +31,37 @@
   {#- If the stylesheet exists, include it. Otherwise, does nothing. #}
   {% stylesheet 'locale-%s' % LANG %}
 
-  {% include "includes/google_analytics.html" %}
+{#- This is the react-specific version of includes/google_analytics.html #}
+{#- The user and waffle-related stuff has been moved to the client side. #}
+<script>
+    // Mozilla DNT Helper
+    {% include "js/libs/mozilla.dnthelper.min.js" %}
+    {%- if config.GOOGLE_ANALYTICS_ACCOUNT != '0' %}
+    {%- set GA_FILE = 'analytics_debug' if settings.DEBUG else 'analytics' %}
+    // only load GA if DNT is not enabled
+    if (Mozilla && !Mozilla.dntEnabled()) {
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/{{ GA_FILE }}.js','ga');
+        ga('create', '{{ config.GOOGLE_ANALYTICS_ACCOUNT }}', 'mozilla.org');
+        ga('set', 'anonymizeIp', true);
+
+        {#- TODO: delete or move to the client side #}
+        {%- if analytics_page_revision %}
+            // dimension12 == 'Page Revision'
+            ga('set', 'dimension12', '{{ analytics_page_revision }}');
+        {%- endif %}
+
+        {#- TODO: delete or move to the client side #}
+        {%- if analytics_en_slug %}
+            // dimension17 == 'English Slug'
+            ga('set', 'dimension17', '{{analytics_en_slug}}');
+        {%- endif %}
+    }
+    {%- endif %}
+</script>
+
 
   {% include "wiki/includes/perf.html" %}
 

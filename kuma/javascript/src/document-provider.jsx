@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 
+import GAProvider from './ga-provider.jsx';
 import LocaleProvider from './locale-provider.jsx';
 
 export type DocumentData = {
@@ -40,6 +41,7 @@ export default function DocumentProvider(
 ): React.Node {
     const locale = useContext(LocaleProvider.context);
     const [documentData, setDocumentData] = useState(props.initialDocumentData);
+    const ga = useContext(GAProvider.context);
 
     // A one-time effect that runs only on mount, to set up
     // an event handler for client-side navigation
@@ -89,6 +91,24 @@ export default function DocumentProvider(
                         window.scrollTo(0, 0);
                         setDocumentData(documentData);
                         body.style.opacity = '1';
+
+                        // Tell Google Analytics about this navigation.
+                        // We use 'dimension3' to mean client-side navigate
+                        ga('set', 'dimension3', 'Yes');
+
+                        // TODO: get page_revision in document data
+                        // and send it as dimension 12, if that is something
+                        // that Kadir still wants to analyze
+
+                        // TODO: get en_slug and send that as dimension17
+                        // even when the document language is not en. Right
+                        // now dimension17 is only being set for english
+                        // documents
+                        if (documentData.locale === 'en-US') {
+                            ga('set', 'dimension17', documentData.slug);
+                        }
+
+                        ga('send', 'pageload');
                     }
                 })
                 .catch(() => {
