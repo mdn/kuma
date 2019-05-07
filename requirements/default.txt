@@ -91,9 +91,9 @@ django_csp==3.4 \
 # Code: https://github.com/twidi/django-decorator-include
 # Changes: https://github.com/twidi/django-decorator-include/blob/develop/CHANGELOG.rst#changelog
 # Docs: https://github.com/twidi/django-decorator-include#django-decorator-include
-django-decorator-include==1.3 \
-    --hash=sha256:2dcbbb028723f242f2280d7c475cce59b69db967722ed80ccc9dc7729ca2e802 \
-    --hash=sha256:fd172a88de1dd38e19ddb0d91525ab7240139a3b11687bf1ea2eb775549fd073
+django-decorator-include==1.4.1 \
+    --hash=sha256:5514ab61381613959b40321dc97daca3e0449b04b65dac8373534a030f1238fc \
+    --hash=sha256:715d00054bcbebd5f65575a7bd97d4823c1a459ed283a8c499f5a8b25cc75099
 
 # Add CreationDateTimeField, management commands
 # Code: https://github.com/django-extensions/django-extensions
