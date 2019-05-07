@@ -34,7 +34,10 @@ test:
 	py.test $(target)
 
 coveragetest: clean
-	py.test --cov=$(target) --no-cov-on-fail --cover-xml $(target)
+	py.test --cov=$(target) --no-cov-on-fail $(target)
+	# Generate the coverage.xml file from the .coverage file
+	# so we don't need to `pip install codecov`.
+	coverage xml
 
 coveragetesthtml: coveragetest
 	coverage html
