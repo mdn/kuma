@@ -34,7 +34,10 @@ test:
 	py.test $(target)
 
 coveragetest: clean
-	py.test --cov=$(target) $(target)
+	py.test --cov=$(target) --no-cov-on-fail $(target)
+	# Generate the coverage.xml file from the .coverage file
+	# so we don't need to `pip install codecov`.
+	coverage xml
 
 coveragetesthtml: coveragetest
 	coverage html
@@ -180,8 +183,14 @@ bash: up
 shell_plus: up
 	docker-compose exec web ./manage.py shell_plus
 
-lint:
+pythonlint:
 	flake8 kuma docs tests
+
+jslint:
+	npm run eslint
+	npm run stylelint
+
+lint: pythonlint jslint
 
 npmrefresh:
 	cd /tools

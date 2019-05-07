@@ -10,7 +10,6 @@ Kuma.  The files are:
 * ``docs.txt`` - Requirements for building docs in `Read the Docs`_.
 * ``dev.txt`` - Requirements for Docker or native development.
 * ``test.txt`` - Requirements to run functional tests.
-* ``travis.txt`` - Requirements for testing in TravisCI.
 
 These files have two audiences:
 

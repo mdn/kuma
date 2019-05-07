@@ -123,4 +123,3 @@ ENV NODE_PATH=/tools/node_modules
 USER kuma
 WORKDIR /app
 EXPOSE 8000
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--timeout=120", "--worker-class=meinheld.gmeinheld.MeinheldWorker", "kuma.wsgi:application"]

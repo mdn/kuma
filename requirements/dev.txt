@@ -1,6 +1,5 @@
 # These requirements are for development and include the default requirements
 -r default.txt
--r travis.txt
 
 # Extract messages from Django templates
 # Code: https://github.com/python-babel/django-babel

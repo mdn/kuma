@@ -1,0 +1,51 @@
+#!/bin/bash
+set -e  # Exit on non-zero status
+set -u  # Treat unset variables as an error
+
+# First install docker-compose (right version of it)
+if [ -x $(command -v docker-compose) ]
+then
+    echo "Overwriting existing docker-compose."
+    docker-compose -v
+else
+    echo "Installing docker-compose ${DOCKER_COMPOSE_VERSION}."
+fi
+mkdir -p downloads
+DOCKER_COMPOSE_FILE=downloads/docker-compose-${DOCKER_COMPOSE_VERSION}
+if [ ! -f $DOCKER_COMPOSE_FILE ]
+then
+    wget -q --waitretry=1 --retry-connrefused -T 10 \
+        -O downloads/docker-compose-${DOCKER_COMPOSE_VERSION} \
+        https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m`
+fi
+chmod +x $DOCKER_COMPOSE_FILE
+sudo cp $DOCKER_COMPOSE_FILE /usr/local/bin/docker-compose
+
+
+# Now build the Docker container
+
+VERSION=latest make build-base
+
+# This "make build-kuma" step is done here only to test that the kuma docker
+# image can be built without error, not because it's needed by docker-compose.
+VERSION=latest make build-kuma
+
+docker-compose --version
+docker-compose up -d
+# Hang tight until MySQL appears to be working
+docker-compose exec -T web urlwait mysql://root:kuma@mysql:3306/developer_mozilla_org 30
+# Hang tight until Elasticsearch appears to be working
+docker-compose exec -T web urlwait http://elasticsearch:9200 30
+
+docker-compose exec -T web make clean
+
+# Needed for Django's check_for_language
+docker-compose exec -T web make localecompile
+docker-compose exec -T web make build-static
+docker-compose exec -T web make pythonlint
+docker-compose exec -T web ./manage.py migrate
+docker-compose exec -T web make coveragetest
+
+# This one is deliberately commented out because of this bug:
+# https://bugzilla.mozilla.org/show_bug.cgi?id=1548669
+#docker-compose exec -T web ./manage.py makemigrations --check --dry-run

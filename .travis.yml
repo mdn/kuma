@@ -1,89 +1,35 @@
-sudo: required
 branches:
     only:
         - master
-        - potato-1490727
-cache:
-    pip: True
-    directories:
-      - node_modules
-      - downloads
 language: python
+python:
+    - "2.7"
 services:
     - docker
-    - mysql
-    - redis
-env:
-    global:
-        - DATABASE_URL=mysql://root:@127.0.0.1:3306/kuma
-        - DJANGO_SETTINGS_MODULE=kuma.settings.travis
-        - DOCKER_COMPOSE_VERSION=1.23.2
-        - ES_VERSION=6.7.1
-        - ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.7.1.tar.gz
-        - PIPELINE_CLEANCSS_BINARY=$TRAVIS_BUILD_DIR/node_modules/.bin/cleancss
-        - PIPELINE_CLEANCSS_ARGUMENTS="-O1 --skip-rebase"
-        - PIPELINE_CSS_COMPRESSOR=kuma.core.pipeline.cleancss.CleanCSSCompressor
-        - PIPELINE_JS_COMPRESSOR=pipeline.compressors.uglifyjs.UglifyJSCompressor
-        - PIPELINE_SASS_BINARY=$TRAVIS_BUILD_DIR/node_modules/.bin/node-sass
-        - PIPELINE_UGLIFYJS_BINARY=$TRAVIS_BUILD_DIR/node_modules/.bin/uglifyjs
-
 matrix:
     include:
-        - python: "2.7"
+        - language: python
+          python: 3.6
+          cache: pip
+          script:
+            - scripts/ci-docs
+        - language: python
+          python: 2.7
           env:
-            TOXENV=pytest
-            CREATE_DB=kuma
-            INSTALL_ELASTICSEARCH=1
-            INSTALL_NPM_TOOLS=1
-        - python: "2.7"
-          env:
-            TOXENV=flake8
-        - python: "2.7"
-          env:
-            TOXENV=docs
-        - python: "2.7"
-          env:
-            TOXENV=locales
-            CREATE_DB=kuma
-            INSTALL_NPM_TOOLS=1
-        - python: "2.7"
-          env:
-            TOXENV=docker
-            INSTALL_DOCKER_COMPOSE=1
             UID=0
-        - python: "2.7"
-          env:
-            TOXENV=assetlint
-            INSTALL_NPM_TOOLS=1
-        - python: "3.6"
-          env:
-            TOXENV=pytest3
-            CREATE_DB=kuma
-            INSTALL_ELASTICSEARCH=1
-            INSTALL_NPM_TOOLS=1
-    allow_failures:
-        - python: "3.6"
-          env:
-            TOXENV=pytest3
-            CREATE_DB=kuma
-            INSTALL_ELASTICSEARCH=1
-            INSTALL_NPM_TOOLS=1
-install:
-    - nvm install 10
-    - nvm use 10
-    - scripts/travis-install
-    - pip install -U pip
-    - pip install -r requirements/travis.txt
-    # Wait for ElasticSearch to be ready
-    - if [[ "$INSTALL_ELASTICSEARCH" == "1" ]]; then wget -q --waitretry=1 --retry-connrefused -T 10 -O - http://127.0.0.1:9200; fi;
-script:
-    - tox -v
-after_failure:
-    - dmesg | tail
-notifications:
-    irc:
-        channels:
-            - "irc.mozilla.org#mdndev"
-        on_success: always
-        on_failure: always
-        use_notice: true
+            DOCKER_COMPOSE_VERSION=1.23.2
+          cache:
+            directories:
+              - downloads
+              - build
+              - static
+          script:
+            - set -e
+            - scripts/ci-python
+            - scripts/ci-localerefresh
+            - bash <(curl -s https://codecov.io/bash)
+        - language: node_js
+          node_js: 10
+          cache: npm
+          script:
+            - scripts/ci-jslint

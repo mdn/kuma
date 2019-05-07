@@ -9,7 +9,7 @@
 Babel==2.2.0 \
     --hash=sha256:fed07cbcdcb3de79b53a8220eebed21c93f8dbb3dbce1d9c6b1c4b09e8aecf2b \
     --hash=sha256:d8cb4c0e78148aee89560f9fe21587aa57739c975bb89ff66b1e842cc697428f
-# Used by pytest, tox
+# Used by pytest
 py==1.4.33 \
     --hash=sha256:81b5e37db3cc1052de438375605fb5d3b3e97f950f415f9143f04697c684d7eb \
     --hash=sha256:1f9a981438f2acc20470b301a07a496375641f902320f70e31916fe3377385a9
@@ -541,7 +541,6 @@ lxml==4.2.5 \
     --hash=sha256:fa39ea60d527fbdd94215b5e5552f1c6a912624521093f1384a491a8ad89ad8b
 
 # pytest-cov
-# Keep in sync with travis.txt
 coverage==4.3.4 \
     --hash=sha256:e1fb21a807aa0b5cc79806d8ef09078acaa83f994e15f0f7277489ca8eda51b7 \
     --hash=sha256:8a82664931a071399d703d65af2521e2202b34f2d8db20fa22a922fec0339022 \
@@ -649,10 +648,6 @@ idna==2.7 \
     --hash=sha256:684a38a6f903c1d71d6d5fac066b58d7768af4de2b832e426ec79c30daa94a16
 
 
-# tox
-virtualenv==15.0.1 \
-    --hash=sha256:13ce1079910a6bc60e2ce1d79813a99f30b2fd1e571427fcde1fabb0ff4c436c \
-    --hash=sha256:1a74278b8adb383ce4c7619e33c753b1eb7b58dc1e449601c096ca4b76125f84
 pluggy==0.3.1 \
     --hash=sha256:48096d7015b8d87a83fc064e8b5cc61ea2e235f1b86dd67889d8d53257f350c6 \
     --hash=sha256:159cc783e056c07da6552aa5aef6b1e6c0064b4f18bd49c531fd2d40aafb0ea3
