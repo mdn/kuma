@@ -325,6 +325,17 @@ def test_cdn_cache_invalidate_not_configured(
     mocked_get_cloudfront_client().assert_not_called()
 
 
+# When configuring the MDN_CLOUDFRONT_DISTRIBUTIONS you need to specify
+# the dotted path to the transform function. So this function needs to
+# be possible to import by Django.
+transform_calls_made = []
+
+
+def transformer(locale, slug):
+    transform_calls_made.append([locale, slug])
+    return '/' + locale + '/' + slug + '/'
+
+
 def test_cdn_cache_invalidate_configured(
     settings,
     mocked_get_cloudfront_client
@@ -332,26 +343,27 @@ def test_cdn_cache_invalidate_configured(
     """When explicitly enabling a MDN_CLOUDFRONT_DISTRIBUTIONS we should
     expect its 'transform' function to be called.
     """
-    transform_calls_made = []
-
-    def transformer(locale, slug):
-        transform_calls_made.append([locale, slug])
-        return '/' + locale + '/' + slug + '/'
 
     settings.MDN_CLOUDFRONT_DISTRIBUTIONS = {
         'mything': {
             'id': 'XYZABC123',
-            'transform': transformer,
+            'transform_function': (
+                'kuma.api.tests.test_tasks.transformer'
+            )
         },
         'unconfigured': {
             'id': None,
-            'transform': lambda x, y: None
+            'transform_function': 'wont.be.used'
         }
     }
 
     pairs = [('sv-SE', 'Learn/stuff')]
     cdn_cache_invalidate(pairs)
     assert transform_calls_made == [[u'sv-SE', u'Learn/stuff']]
+
+    # When used, we need to reset it because it's a module global mutable
+    # specific to this test module.
+    del transform_calls_made[:]
 
     mocked_get_cloudfront_client().create_invalidation.assert_called_with(
         DistributionId=u'XYZABC123',
