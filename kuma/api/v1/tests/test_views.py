@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from functools import partial
 
 import pytest
+from waffle.models import Flag, Sample, Switch
 
 from kuma.api.v1.views import (document_api_data, get_content_based_redirect,
                                get_s3_key)
@@ -221,25 +222,21 @@ def test_whoami_disallowed_methods(client, api_settings, http_method):
 @pytest.mark.parametrize('timezone', ('US/Eastern', 'US/Pacific'))
 def test_whoami_anonymous(client, api_settings, timezone):
     """Test response for anonymous users."""
+    # Create some fake waffle objects
+    Flag.objects.create(name='section_edit', authenticated=True)
+    Flag.objects.create(name='flag_all', everyone=True)
+    Flag.objects.create(name='flag_none', percent=0)
+    Switch.objects.create(name="switch_on", active=True)
+    Switch.objects.create(name="switch_off", active=False)
+    Sample.objects.create(name="sample_never", percent=0)
+    Sample.objects.create(name="sample_always", percent=100)
+
     api_settings.TIME_ZONE = timezone
     url = reverse('api.v1.whoami')
     response = client.get(url, HTTP_HOST=api_settings.BETA_HOST)
     assert response.status_code == 200
     assert response['content-type'] == 'application/json'
-    data = response.json()
-
-    # pytest restrictions on using the db during tests means that
-    # we don't know what flags, switches and samples we expect to
-    # receive in the response. This test assumes that waffle works
-    # correctly, so all we are doing here is validating that the
-    # response includes dicts in the expected places.
-    assert type(data['waffle']['flags']) == dict
-    assert type(data['waffle']['switches']) == dict
-    assert type(data['waffle']['samples']) == dict
-
-    # Now check the rest of the response data
-    del data['waffle']
-    assert data == {
+    assert response.json() == {
         'username': None,
         'timezone': timezone,
         'is_authenticated': False,
@@ -249,6 +246,21 @@ def test_whoami_anonymous(client, api_settings, timezone):
         'gravatar_url': {
             'small': None,
             'large': None,
+        },
+        'waffle': {
+            'flags': {
+                'section_edit': False,
+                'flag_all': True,
+                'flag_none': False,
+            },
+            'switches': {
+                'switch_on': True,
+                'switch_off': False
+            },
+            'samples': {
+                'sample_always': True,
+                'sample_never': False
+            }
         }
     }
     assert_no_cache_header(response)
@@ -263,6 +275,15 @@ def test_whoami_anonymous(client, api_settings, timezone):
 def test_whoami(user_client, api_settings, wiki_user, beta_testers_group,
                 timezone, is_staff, is_superuser, is_beta_tester):
     """Test responses for logged-in users."""
+    # Create some fake waffle objects
+    Flag.objects.create(name='section_edit', authenticated=True)
+    Flag.objects.create(name='flag_all', everyone=True)
+    Flag.objects.create(name='flag_none', percent=0, superusers=False)
+    Switch.objects.create(name="switch_on", active=True)
+    Switch.objects.create(name="switch_off", active=False)
+    Sample.objects.create(name="sample_never", percent=0)
+    Sample.objects.create(name="sample_always", percent=100)
+
     wiki_user.timezone = timezone
     wiki_user.is_staff = is_staff
     wiki_user.is_superuser = is_superuser
@@ -274,20 +295,7 @@ def test_whoami(user_client, api_settings, wiki_user, beta_testers_group,
     response = user_client.get(url, HTTP_HOST=api_settings.BETA_HOST)
     assert response.status_code == 200
     assert response['content-type'] == 'application/json'
-    data = response.json()
-
-    # pytest restrictions on using the db during tests means that
-    # we don't know what flags, switches and samples we expect to
-    # receive in the response. This test assumes that waffle works
-    # correctly, so all we are doing here is validating that the
-    # response includes dicts in the expected places.
-    assert type(data['waffle']['flags']) == dict
-    assert type(data['waffle']['switches']) == dict
-    assert type(data['waffle']['samples']) == dict
-
-    # Now check the rest of the response data
-    del data['waffle']
-    assert data == {
+    assert response.json() == {
         'username': wiki_user.username,
         'timezone': timezone,
         'is_authenticated': True,
@@ -297,6 +305,21 @@ def test_whoami(user_client, api_settings, wiki_user, beta_testers_group,
         'gravatar_url': {
             'small': gravatar_url(wiki_user.email, size=50),
             'large': gravatar_url(wiki_user.email, size=200),
+        },
+        'waffle': {
+            'flags': {
+                'section_edit': True,
+                'flag_all': True,
+                'flag_none': False,
+            },
+            'switches': {
+                'switch_on': True,
+                'switch_off': False
+            },
+            'samples': {
+                'sample_always': True,
+                'sample_never': False
+            }
         }
     }
     assert_no_cache_header(response)
