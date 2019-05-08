@@ -7,8 +7,8 @@ from dateutil import parser
 from django.core.exceptions import ImproperlyConfigured
 from six.moves import xrange
 
-from kuma.wiki.models import (DocumentDeletionLog, DocumentSpamAttempt,
-                              Revision, RevisionAkismetSubmission)
+from kuma.wiki.models import (DocumentSpamAttempt, Revision,
+                              RevisionAkismetSubmission)
 from kuma.wiki.utils import analytics_upageviews
 
 
