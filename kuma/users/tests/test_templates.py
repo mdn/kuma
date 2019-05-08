@@ -599,20 +599,15 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # The "Actions taken" section
         banned_user = page.find('#banned-user li').text()
         revisions_reverted = page.find('#revisions-reverted li')
-        revisions_deleted = page.find('#revisions-deleted li')
         revisions_submitted_as_spam = page.find('#revisions-reported-as-spam li')
         revisions_reverted_section = page.find('#revisions-reverted')
-        revisions_deleted_section = page.find('#revisions-deleted')
         revisions_submitted_as_spam_section = page.find('#revisions-followup')
         assert banned_user == self.testuser.username
         assert len(revisions_reverted) == 0
-        assert len(revisions_deleted) == 0
         assert len(revisions_submitted_as_spam) == 0
 
         expected_text = 'The user did not have any revisions that were reverted.'
         assert expected_text in revisions_reverted_section.text()
-        expected_text = 'The user did not have any revisions that were deleted.'
-        assert expected_text in revisions_deleted_section.text()
         expected_text = 'None.'
         assert expected_text in revisions_submitted_as_spam_section.text()
 
@@ -661,11 +656,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         for rev in revisions_reported_as_spam:
             revisions_reported_as_spam_text += rev.text_content()
         revisions_reverted = page.find('#revisions-reverted li')
-        revisions_deleted = page.find('#revisions-deleted li')
         assert banned_user == self.testuser.username
         assert len(revisions_reported_as_spam) == len(revisions_created)
         assert len(revisions_reverted) == 0
-        assert len(revisions_deleted) == len(revisions_created)
         # The title for each of the created revisions shows up in the template
         for revision in revisions_created:
             assert revision.title in revisions_reported_as_spam_text
@@ -719,11 +712,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         banned_user = page.find('#banned-user li').text()
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
         revisions_reverted = page.find('#revisions-reverted li')
-        revisions_deleted = page.find('#revisions-deleted li')
         assert banned_user == self.testuser.username
         assert len(revisions_reported_as_spam) == 1
         assert len(revisions_reverted) == 1
-        assert len(revisions_deleted) == 0
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
@@ -769,11 +760,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         banned_user = page.find('#banned-user li').text()
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
         revisions_reverted = page.find('#revisions-reverted li')
-        revisions_deleted = page.find('#revisions-deleted li')
         assert banned_user == self.testuser.username
         assert len(revisions_reported_as_spam) == 0
         assert len(revisions_reverted) == 1
-        assert len(revisions_deleted) == 0
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
@@ -822,11 +811,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         banned_user = page.find('#banned-user li').text()
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
         revisions_reverted = page.find('#revisions-reverted li')
-        revisions_deleted = page.find('#revisions-deleted li')
         assert banned_user == self.testuser.username
         assert len(revisions_reported_as_spam) == 0
         assert len(revisions_reverted) == 0
-        assert len(revisions_deleted) == 0
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
@@ -882,11 +869,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         banned_user = page.find('#banned-user li').text()
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
         revisions_reverted = page.find('#revisions-reverted li')
-        revisions_deleted = page.find('#revisions-deleted li')
         assert banned_user == self.testuser.username
         assert len(revisions_reported_as_spam) == 0
         assert len(revisions_reverted) == 0
-        assert len(revisions_deleted) == 0
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
@@ -961,7 +946,6 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         banned_user = page.find('#banned-user li').text()
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
         revisions_reverted = page.find('#revisions-reverted li')
-        revisions_deleted = page.find('#revisions-deleted li')
         assert banned_user == self.testuser.username
         assert len(revisions_reported_as_spam) == 3
         # The revisions shown are revs_doc_1[0], revs_doc_2[1], and revs_doc_3[2]
@@ -971,7 +955,6 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
                     [revs_doc_1[0].title, revs_doc_2[1].title,
                      revs_doc_3[2].title])
         assert len(revisions_reverted) == 0
-        assert len(revisions_deleted) == 1
 
         # The "Needs follow up" section
         not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
@@ -1187,11 +1170,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         # 'Actions taken' section
 
-        revisions_deleted = page.find('#revisions-deleted li')
         revisions_reverted = page.find('#revisions-reverted li')
 
-        # No new documents by the spammer, so none deleted
-        assert len(revisions_deleted) == 0
         # Document was not reverted, since there was a newer non-spam rev
         assert len(revisions_reverted) == 0
 
@@ -1252,11 +1232,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         # 'Actions taken' section
 
-        revisions_deleted = page.find('#revisions-deleted li')
         revisions_reverted = page.find('#revisions-reverted li')
 
-        # No new documents by the spammer, so none deleted
-        assert len(revisions_deleted) == 0
         # Only one set of reverted revisions
         assert len(revisions_reverted) == 1
 
@@ -1318,11 +1295,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         # 'Actions taken' section
 
-        revisions_deleted = page.find('#revisions-deleted li')
         revisions_reverted = page.find('#revisions-reverted li')
 
-        # No new documents by the spammer, so none deleted
-        assert len(revisions_deleted) == 0
         # Only one set of reverted revisions
         assert len(revisions_reverted) == 1
 
@@ -1376,11 +1350,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         # 'Actions taken' section
 
-        revisions_deleted = page.find('#revisions-deleted li')
         revisions_reverted = page.find('#revisions-reverted li')
 
-        # The document failed to be deleted
-        assert len(revisions_deleted) == 0
         # It wouldn't have been reverted anyway
         assert len(revisions_reverted) == 0
 
@@ -1438,11 +1409,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         # 'Actions taken' section
 
-        revisions_deleted = page.find('#revisions-deleted li')
         revisions_reverted = page.find('#revisions-reverted li')
 
-        # The document wouldn't have been deleted
-        assert len(revisions_deleted) == 0
         # It failed to be reverted
         assert len(revisions_reverted) == 0
 

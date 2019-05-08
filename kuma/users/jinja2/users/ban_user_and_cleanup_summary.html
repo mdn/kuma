@@ -46,22 +46,6 @@
       {% endif %}
     </div><!-- /#revisions-reported-as-spam -->
 
-    <h5>{{ _('Deleted:')}}</h5>
-    <div id="revisions-deleted">
-      {% if actions_taken.revisions_deleted_list %}
-        <ul>
-          {% for revision in actions_taken.revisions_deleted_list %}
-            <li>
-              <a href="{{ revision.document.get_absolute_url() }}">
-                {{ revision.document.title }}
-              </a>
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-      <p>{{ _('The user did not have any revisions that were deleted.') }}</p>
-      {% endif %}
-    </div><!-- /#revisions-deleted -->
 
     <h5>{{ _('Reverted:')}}</h5>
     <div id="revisions-reverted">

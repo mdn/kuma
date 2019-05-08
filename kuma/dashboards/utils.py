@@ -237,17 +237,7 @@ def spam_dashboard_recent_events(start=None, end=None):
 
         # How long was it active?
         if len(revisions) == 1:
-            if document.deleted:
-                try:
-                    entry = DocumentDeletionLog.objects.filter(
-                        locale=document.locale, slug=document.slug
-                    ).latest('id')
-                    time_active_raw = entry.timestamp - revision.created
-                    time_active = int(time_active_raw.total_seconds())
-                except DocumentDeletionLog.DoesNotExist:
-                    time_active = 'Deleted'
-            else:
-                time_active = 'Current'
+            time_active = 'Current'
         else:
             next_rev = revisions[1]
             time_active_raw = next_rev.created - revision.created
