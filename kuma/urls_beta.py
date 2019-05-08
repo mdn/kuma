@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls import include, url
-from django.views.static import serve
 from django.views.generic import RedirectView
+from django.views.static import serve
 
 from kuma.core import views as core_views
 from kuma.core.decorators import beta_shared_cache_control, shared_cache_control
