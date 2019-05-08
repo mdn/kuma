@@ -336,7 +336,7 @@ class DocumentSpamAttemptAdmin(admin.ModelAdmin):
         'id', 'user', 'title_short', 'slug_short', 'doc_short', 'review']
     list_display_links = ['id', 'title_short', 'slug_short']
     list_filter = ['created', 'review', 'document__locale']
-    list_editable = 'review'
+    list_editable = ['review']
     ordering = ['-created']
     search_fields = ['title', 'slug', 'user__username']
     raw_id_fields = ['user', 'document']
