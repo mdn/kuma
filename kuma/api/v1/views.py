@@ -87,50 +87,55 @@ def document_api_data(doc=None, ensure_contributors=False, redirect_url=None):
     """
     Returns the JSON data for the document for the document API.
     """
-    if doc:
-        job = DocumentContributorsJob()
-        # If "ensure_contributors" is True, we need the contributors since the
-        # result will likely be cached, so we'll set "fetch_on_miss" and wait
-        # for the result if it's not already available or stale.
-        job.fetch_on_miss = ensure_contributors
-        contributors = [c['username'] for c in job.get(doc.pk)]
-    else:
-        contributors = None
+    if redirect_url:
+        return {
+            'documentData': None,
+            'redirectURL': redirect_url,
+        }
+
+    job = DocumentContributorsJob()
+    # If "ensure_contributors" is True, we need the contributors since the
+    # result will likely be cached, so we'll set "fetch_on_miss" and wait
+    # for the result if it's not already available or stale.
+    job.fetch_on_miss = ensure_contributors
+    contributors = [c['username'] for c in job.get(doc.pk)]
 
     return {
-        'locale': doc and doc.locale,
-        'slug': doc and doc.slug,
-        'id': doc and doc.id,
-        'title': doc and doc.title,
-        'summary': doc and doc.get_summary_html(),
-        'language': doc and doc.language,
-        'absoluteURL': doc and doc.get_absolute_url(),
-        'redirectURL': redirect_url,
-        'editURL': doc and absolutify(doc.get_edit_url(), for_wiki_site=True),
-        'bodyHTML': doc and doc.get_body_html(),
-        'quickLinksHTML': doc and doc.get_quick_links_html(),
-        'tocHTML': doc and doc.get_toc_html(),
-        'parents': doc and [
-            {
-                'url': d.get_absolute_url(),
-                'title': d.title
-            } for d in doc.parents
-        ],
-        'translations': doc and [
-            {
-                'language': t.language,
-                'localizedLanguage': _(settings.LOCALES[t.locale].english),
-                'locale': t.locale,
-                'url': t.get_absolute_url(),
-                'title': t.title
-            } for t in doc.get_other_translations(
-                fields=('locale', 'slug', 'title'))
-        ],
-        'contributors': contributors,
-        'lastModified': (doc and doc.current_revision and
-                         doc.current_revision.created.isoformat()),
-        'lastModifiedBy': (doc and doc.current_revision and
-                           str(doc.current_revision.creator))
+        'documentData': {
+            'locale': doc.locale,
+            'slug': doc.slug,
+            'id': doc.id,
+            'title': doc.title,
+            'summary': doc.get_summary_html(),
+            'language': doc.language,
+            'absoluteURL': doc.get_absolute_url(),
+            'editURL': absolutify(doc.get_edit_url(), for_wiki_site=True),
+            'bodyHTML': doc.get_body_html(),
+            'quickLinksHTML': doc.get_quick_links_html(),
+            'tocHTML': doc.get_toc_html(),
+            'parents': [
+                {
+                    'url': d.get_absolute_url(),
+                    'title': d.title
+                } for d in doc.parents
+            ],
+            'translations': [
+                {
+                    'language': t.language,
+                    'localizedLanguage': _(settings.LOCALES[t.locale].english),
+                    'locale': t.locale,
+                    'url': t.get_absolute_url(),
+                    'title': t.title
+                } for t in doc.get_other_translations(
+                    fields=('locale', 'slug', 'title'))
+            ],
+            'contributors': contributors,
+            'lastModified': (doc.current_revision and
+                             doc.current_revision.created.isoformat()),
+            'lastModifiedBy': (doc.current_revision and
+                               str(doc.current_revision.creator))
+        },
+        'redirectURL': None,
     }
 
 

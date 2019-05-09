@@ -873,25 +873,16 @@ def react_document(request, document_slug, document_locale):
                    set(trans.locale for trans in other_translations))
 
     # Get the JSON data for this document
-    document_data = document_api_data(doc, ensure_contributors=True)
+    doc_api_data = document_api_data(doc, ensure_contributors=True)
+    document_data = doc_api_data['documentData']
 
     # And add another property to specify the requested locale
     # (which may not be the same as the locale of the document)
-    #
-    # TODO(djf):
-    # As Peter points out, it isn't really right to mix request
-    # variables with document variables like this. Also, Ryan and I
-    # have discussed handlig redirects with a different datastructure
-    # than the document data, so I suggest that we change the dict
-    # returned by document_api_data to look like this:
-    #   { 'documentData': dict or None, 'redirectURL': string or None }
-    # and then we can add requestLocale to that dict without mixing
-    # up the two kinds of data.
     document_data['requestLocale'] = document_locale
 
     # Bundle it all up and, finally, return.
     context = {
-        'document_api_data': document_data,
+        'document_data': document_data,
 
         # TODO: anything we're actually using in the template ought
         # to be bundled up into the json object above instead.

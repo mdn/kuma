@@ -87,29 +87,31 @@ def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache,
     assert_no_cache_header(response)
 
     data = response.json()
-    assert data['locale'] == trans_doc.locale
-    assert data['slug'] == trans_doc.slug
-    assert data['id'] == trans_doc.id
-    assert data['title'] == trans_doc.title
-    assert data['language'] == trans_doc.language
-    assert data['absoluteURL'] == trans_doc.get_absolute_url()
+    assert data['documentData']
     assert data['redirectURL'] is None
-    assert data['editURL'] == absolutify(trans_doc.get_edit_url(),
-                                         for_wiki_site=True)
-    assert data['bodyHTML'] == trans_doc.get_body_html()
-    assert data['quickLinksHTML'] == trans_doc.get_quick_links_html()
-    assert data['tocHTML'] == trans_doc.get_toc_html()
-    assert data['translations'] == [{
+    doc_data = data['documentData']
+    assert doc_data['locale'] == trans_doc.locale
+    assert doc_data['slug'] == trans_doc.slug
+    assert doc_data['id'] == trans_doc.id
+    assert doc_data['title'] == trans_doc.title
+    assert doc_data['language'] == trans_doc.language
+    assert doc_data['absoluteURL'] == trans_doc.get_absolute_url()
+    assert doc_data['editURL'] == absolutify(trans_doc.get_edit_url(),
+                                             for_wiki_site=True)
+    assert doc_data['bodyHTML'] == trans_doc.get_body_html()
+    assert doc_data['quickLinksHTML'] == trans_doc.get_quick_links_html()
+    assert doc_data['tocHTML'] == trans_doc.get_toc_html()
+    assert doc_data['translations'] == [{
         'locale': 'en-US',
         'language': 'English (US)',
         'localizedLanguage': u'Anglais am\u00e9ricain',
         'title': 'Root Document',
         'url': '/en-US/docs/Root'
     }]
-    assert data['contributors'] == (
+    assert doc_data['contributors'] == (
         ['wiki_user'] if ensure_contributors else [])
-    assert data['lastModified'] == '2017-04-14T12:20:00'
-    assert data['lastModifiedBy'] == 'wiki_user'
+    assert doc_data['lastModified'] == '2017-04-14T12:20:00'
+    assert doc_data['lastModifiedBy'] == 'wiki_user'
 
     # Clear the cache for a clean slate when calling document_api_data().
     DocumentContributorsJob().delete(trans_doc.pk)
@@ -139,23 +141,25 @@ def test_doc_api_for_redirect_to_doc(client, api_settings, root_doc,
     assert_no_cache_header(response)
 
     data = response.json()
-    assert data['locale'] == root_doc.locale
-    assert data['slug'] == root_doc.slug
-    assert data['id'] == root_doc.id
-    assert data['title'] == root_doc.title
-    assert data['language'] == root_doc.language
-    assert data['absoluteURL'] == root_doc.get_absolute_url()
+    assert data['documentData']
     assert data['redirectURL'] is None
-    assert data['editURL'] == absolutify(root_doc.get_edit_url(),
-                                         for_wiki_site=True)
-    assert data['bodyHTML'] == root_doc.get_body_html()
-    assert data['quickLinksHTML'] == root_doc.get_quick_links_html()
-    assert data['tocHTML'] == root_doc.get_toc_html()
-    assert data['translations'] == []
-    assert data['contributors'] == (
+    doc_data = data['documentData']
+    assert doc_data['locale'] == root_doc.locale
+    assert doc_data['slug'] == root_doc.slug
+    assert doc_data['id'] == root_doc.id
+    assert doc_data['title'] == root_doc.title
+    assert doc_data['language'] == root_doc.language
+    assert doc_data['absoluteURL'] == root_doc.get_absolute_url()
+    assert doc_data['editURL'] == absolutify(root_doc.get_edit_url(),
+                                             for_wiki_site=True)
+    assert doc_data['bodyHTML'] == root_doc.get_body_html()
+    assert doc_data['quickLinksHTML'] == root_doc.get_quick_links_html()
+    assert doc_data['tocHTML'] == root_doc.get_toc_html()
+    assert doc_data['translations'] == []
+    assert doc_data['contributors'] == (
         ['wiki_user'] if ensure_contributors else [])
-    assert data['lastModified'] == '2017-04-14T12:15:00'
-    assert data['lastModifiedBy'] == 'wiki_user'
+    assert doc_data['lastModified'] == '2017-04-14T12:15:00'
+    assert doc_data['lastModifiedBy'] == 'wiki_user'
 
     # Clear the cache for a clean slate when calling document_api_data().
     DocumentContributorsJob().delete(root_doc.pk)
@@ -186,21 +190,8 @@ def test_doc_api_for_redirect_to_non_doc(client, api_settings, redirect_to_home,
     assert_no_cache_header(response)
 
     data = response.json()
-    assert data['locale'] is None
-    assert data['slug'] is None
-    assert data['id'] is None
-    assert data['title'] is None
-    assert data['language'] is None
-    assert data['absoluteURL'] is None
+    assert data['documentData'] is None
     assert data['redirectURL'] == expected_redirect_url
-    assert data['editURL'] is None
-    assert data['bodyHTML'] is None
-    assert data['quickLinksHTML'] is None
-    assert data['tocHTML'] is None
-    assert data['translations'] is None
-    assert data['contributors'] is None
-    assert data['lastModified'] is None
-    assert data['lastModifiedBy'] is None
 
     # Also ensure that we get exactly the same data by calling
     # the document_api_data() function directly
