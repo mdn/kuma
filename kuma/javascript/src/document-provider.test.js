@@ -5,7 +5,6 @@ import { create } from 'react-test-renderer';
 import DocumentProvider from './document-provider.jsx';
 
 export const fakeDocumentData = {
-    requestLocale: 'en-US',
     locale: 'en-US',
     slug: 'test',
     id: 42,

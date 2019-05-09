@@ -9,7 +9,7 @@ from django_jinja import library
 
 
 @library.global_function
-def render_react_app(data, ssr=True):
+def render_react_app(document_data, request_data, ssr=True):
     """
     Render a script tag to define the data and any other HTML tags needed
     to enable the display of a React-based UI. By default, this does
@@ -20,6 +20,11 @@ def render_react_app(data, ssr=True):
     Note that we are not defining a generic Jinja template tag here.
     The code in this file is specific to Kuma's React-based UI.
     """
+    data = {
+        'documentData': document_data,
+        'requestData': request_data
+    }
+
     if ssr:
         return server_side_render(data)
     else:
@@ -40,7 +45,7 @@ def _render(html, state):
     # Now return the HTML and the state as a single string
     return (
         u'<div id="react-container">{}</div>\n'
-        u'<script>window._document_data = {};</script>\n'
+        u'<script>window._react_data = {};</script>\n'
     ).format(html, serializedState)
 
 
@@ -81,9 +86,10 @@ def server_side_render(data):
         # biggest parts (the HTML strings) of that data, so we can delete
         # those from the data now. We do this in a copy of the original
         # dict because the data structure belongs to our caller, not to us.
-        state = data.copy()
-        state.update(bodyHTML='', tocHTML='', quickLinksHTML='')
-        return _render(response.text, state)
+        data = data.copy()
+        data['documentData'] = data['documentData'].copy()
+        data['documentData'].update(bodyHTML='', tocHTML='', quickLinksHTML='')
+        return _render(response.text, data)
 
     except requests.exceptions.ConnectionError:
         print("Connection error contacting SSR server.")

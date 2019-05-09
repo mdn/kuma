@@ -31,11 +31,18 @@ def test_server_side_render(mock_dumps, mock_requests, settings):
     toc = 'table of contents'
     links = 'sidebar'
     contributors = ['a', 'b']
-    data = {
+    document_data = {
         'bodyHTML': body,
         'tocHTML': toc,
         'quickLinksHTML': links,
         'contributors': contributors
+    }
+    request_data = {
+        'locale': 'en-US'
+    }
+    data = {
+        'documentData': document_data,
+        'requestData': request_data
     }
 
     # This will be the output sent by the mock Node server
@@ -45,14 +52,14 @@ def test_server_side_render(mock_dumps, mock_requests, settings):
     mock_requests.post(settings.SSR_URL, text=mock_html)
 
     # Run the template tag
-    output = ssr.render_react_app(data)
+    output = ssr.render_react_app(document_data, request_data)
 
     # Make sure the output is as expected
     # The HTML attributes in the data should not be repeated in the output
-    data.update(bodyHTML='', tocHTML='', quickLinksHTML='')
+    document_data.update(bodyHTML='', tocHTML='', quickLinksHTML='')
     assert output == (
         u'<div id="react-container">{}</div>\n'
-        u'<script>window._document_data = {};</script>\n'
+        u'<script>window._react_data = {};</script>\n'
     ).format(mock_html, json.dumps(data))
 
 
@@ -60,11 +67,18 @@ def test_server_side_render(mock_dumps, mock_requests, settings):
 def test_client_side_render(mock_dumps):
     """For client-side rendering expect a script json data and an empty div."""
     mock_dumps.side_effect = sorted_json_dumps
-    data = {'x': 'one', 'y': 2, 'z': ['a', 'b']}
-    output = ssr.render_react_app(data, ssr=False)
+    document_data = {'x': 'one', 'y': 2, 'z': ['a', 'b']}
+    request_data = {
+        'locale': 'en-US'
+    }
+    data = {
+        'documentData': document_data,
+        'requestData': request_data
+    }
+    output = ssr.render_react_app(document_data, request_data, ssr=False)
     assert output == (
         u'<div id="react-container"></div>\n'
-        u'<script>window._document_data = {};</script>\n'
+        u'<script>window._react_data = {};</script>\n'
     ).format(json.dumps(data))
 
 
@@ -77,5 +91,9 @@ def test_failed_server_side_render(mock_dumps, failure_class,
     """If SSR fails, we should do client-side rendering instead."""
     mock_dumps.side_effect = sorted_json_dumps
     mock_requests.post(settings.SSR_URL, exc=failure_class('message'))
-    data = {'x': 'one', 'y': 2, 'z': ['a', 'b']}
-    assert ssr.render_react_app(data) == ssr.render_react_app(data, ssr=False)
+    document_data = {'x': 'one', 'y': 2, 'z': ['a', 'b']}
+    request_data = {
+        'locale': 'en-US'
+    }
+    assert (ssr.render_react_app(document_data, request_data) ==
+            ssr.render_react_app(document_data, request_data, ssr=False))
