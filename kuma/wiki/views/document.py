@@ -877,13 +877,18 @@ def react_document(request, document_slug, document_locale):
     doc_api_data = document_api_data(doc, ensure_contributors=True)
     document_data = doc_api_data['documentData']
 
-    # And add another property to specify the requested locale
-    # (which may not be the same as the locale of the document)
-    document_data['requestLocale'] = document_locale
+    # Create another object of request-related data to pass to jinja
+    request_data = {
+        # Despite its name, the document_locale argument is the locale
+        # of the request, and is not always (in the case of missing
+        # translations) the same as the locale of the document.
+        'locale': document_locale
+    }
 
     # Bundle it all up and, finally, return.
     context = {
         'document_data': document_data,
+        'request_data': request_data,
 
         # TODO: anything we're actually using in the template ought
         # to be bundled up into the json object above instead.

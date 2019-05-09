@@ -5,6 +5,7 @@ import { css } from '@emotion/core';
 
 import DocumentProvider from '../document-provider.jsx';
 import LanguageMenu from './language-menu.jsx';
+import LocaleProvider from '../locale-provider.jsx';
 import Login from './login.jsx';
 import Logo from '../icons/logo.svg';
 import Dropdown from './dropdown.jsx';
@@ -147,24 +148,24 @@ const menus = [
 
 export default function Header(): React.Node {
     const documentData = useContext(DocumentProvider.context);
+    const locale = useContext(LocaleProvider.context);
     if (!documentData) {
         return null;
     }
-    const { requestLocale, slug } = documentData;
 
     function fixurl(url) {
         // The "Report a content issue" menu item has a link that requires
         // the document slug, so we work that in here.
-        url = url.replace('{{SLUG}}', encodeURIComponent(slug));
+        url = url.replace('{{SLUG}}', encodeURIComponent(documentData.slug));
         if (!url.startsWith('https://')) {
-            url = `/${requestLocale}/docs/${url}`;
+            url = `/${locale}/docs/${url}`;
         }
         return url;
     }
 
     return (
         <div css={styles.header}>
-            <a css={styles.logoContainer} href={`/${requestLocale}/`}>
+            <a css={styles.logoContainer} href={`/${locale}/`}>
                 <Logo css={styles.logo} alt="MDN Web Docs Logo" />
             </a>
             <Row css={styles.menus}>

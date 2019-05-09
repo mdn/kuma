@@ -5,6 +5,7 @@ import { css } from '@emotion/core';
 
 import DocumentProvider from '../document-provider.jsx';
 import gettext from '../gettext.js';
+import LocaleProvider from '../locale-provider.jsx';
 import SearchIcon from '../icons/search.svg';
 
 const strings = {
@@ -39,11 +40,12 @@ const styles = {
 };
 
 export default function Search() {
+    const locale = useContext(LocaleProvider.context);
     const documentData = useContext(DocumentProvider.context);
     if (!documentData) {
         return null;
     }
-    const { absoluteURL, editURL, requestLocale } = documentData;
+    const { absoluteURL, editURL } = documentData;
 
     // This is available as window.mdn.wikiSiteUrl. But we can't access
     // that during server-side rendering, so we either need to add that mdn
@@ -56,7 +58,7 @@ export default function Search() {
         <form
             css={styles.container}
             id="nav-main-search"
-            action={`${WIKI_SITE_URL}/${requestLocale}/search`}
+            action={`${WIKI_SITE_URL}/${locale}/search`}
             method="get"
             role="search"
         >

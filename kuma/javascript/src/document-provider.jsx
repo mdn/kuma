@@ -1,6 +1,8 @@
 // @flow
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
+
+import LocaleProvider from './locale-provider.jsx';
 
 export type DocumentData = {
     locale: string,
@@ -23,26 +25,7 @@ export type DocumentData = {
     }>,
     contributors: Array<string>,
     lastModified: string, // An ISO date
-    lastModifiedBy: string,
-
-    /*
-     * The document data tells us the  locale of the document that has
-     * been returned  to us. But  that is not  always the same  as the
-     * locale of  the document that  the user requested. (If  the user
-     * requests a Spanish  document, but we don't  have a translation,
-     * the server will send us  the original english document intead.)
-     * In  various places  in the  UX  we need  to link  to URLs  that
-     * include a locale.  Generally, if the user is  visiting the page
-     * /locale/docs/slug, then we want the  links on that page to link
-     * to other pages in the  same locale. This requestLocale property
-     * is intended  to refer to  that locale.  When the page  is first
-     * loaded, the  window._document_data that  gets encoded  into the
-     * HTML will always have this property  set. But it may not be set
-     * when we  use fetch()  to query  a blob of  JSON. In  that case,
-     * we'll need to add it based  on the locale of whatever URL we're
-     * following.
-     */
-    requestLocale: string
+    lastModifiedBy: string
 };
 
 const context = React.createContext<DocumentData | null>(null);
@@ -55,6 +38,7 @@ type DocumentProviderProps = {
 export default function DocumentProvider(
     props: DocumentProviderProps
 ): React.Node {
+    const locale = useContext(LocaleProvider.context);
     const [documentData, setDocumentData] = useState(props.initialDocumentData);
 
     // A one-time effect that runs only on mount, to set up
@@ -64,10 +48,11 @@ export default function DocumentProvider(
             throw new Error('DocumentProvider effect ran without body.');
         }
         const body = document.body;
+
         // This is the function that does client side navigation
-        function navigate(url, localeAndSlug) {
+        function navigate(url, slug) {
             body.style.opacity = '0.15';
-            fetch(`/api/v1/doc${localeAndSlug}`, { redirect: 'follow' })
+            fetch(`/api/v1/doc/${locale}/${slug}`, { redirect: 'follow' })
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -87,24 +72,19 @@ export default function DocumentProvider(
                         window.location = json.redirectURL;
                     } else {
                         let documentData = json.documentData;
-                        const { locale, slug, absoluteURL } = documentData;
-                        let receivedLocaleAndSlug = `/${locale}/${slug}`;
-                        if (receivedLocaleAndSlug !== localeAndSlug) {
-                            // This was a redirect.
-                            const receivedURL = absoluteURL;
+                        // If the slug of the received document is different
+                        // than the slug we requested, then we were redirected
+                        // and we need to fix up the URL in the location bar
+                        if (documentData.slug !== slug) {
                             history.replaceState(
-                                { receivedURL, receivedLocaleAndSlug },
+                                {
+                                    url: documentData.absoluteURL,
+                                    slug: documentData.slug
+                                },
                                 '',
-                                receivedURL
+                                documentData.absoluteURL
                             );
                         }
-
-                        // The returned JSON never includes the "requestLocale"
-                        // (it is only included in the "initialDocumentData"),
-                        // so insert it into the "documentData" here.
-                        documentData.requestLocale = localeAndSlug.split(
-                            '/'
-                        )[1];
 
                         window.scrollTo(0, 0);
                         setDocumentData(documentData);
@@ -157,24 +137,35 @@ export default function DocumentProvider(
 
             let url = link.href;
             let parts = link.pathname.split('/');
+
+            // If the link is not to a /docs/ URL then we can't handle
+            // it via client-side navigation.
             if (parts[2] !== 'docs') {
                 return;
             }
 
+            // If the locale in the URL is not the same as the current
+            // locale then we can't do client-side navigation because
+            // we don't have the right strings loaded.
+            if (parts[1] !== locale) {
+                return;
+            }
+
+            // If we get here, then we should be good-to-go for client
+            // side navigation. Calling preventDefault() ensures that the
+            // browser will not actually follow the link.
             e.preventDefault();
 
-            let locale = parts[1];
             let slug = parts.slice(3).join('/');
-            let localeAndSlug = `/${locale}/${slug}`;
-            history.pushState({ url, localeAndSlug }, '', url);
-            navigate(url, localeAndSlug);
+            history.pushState({ url, slug }, '', url);
+            navigate(url, slug);
         });
 
         // An event handler that does client-side navigation in response
         // to the back and forward buttons
         window.addEventListener('popstate', event => {
             if (event.state) {
-                navigate(event.state.url, event.state.localeAndSlug);
+                navigate(event.state.url, event.state.slug);
             }
         });
 
@@ -185,7 +176,10 @@ export default function DocumentProvider(
         history.pushState(
             {
                 url: window.location.href,
-                localeAndSlug: window.location.pathname.replace('/docs/', '/')
+                slug: window.location.pathname
+                    .split('/')
+                    .slice(3) // strip "/<locale>/docs/"
+                    .join('/')
             },
             '',
             window.location.href

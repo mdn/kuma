@@ -8,5 +8,7 @@ import App from './app.jsx';
  * a JSON object of document data. It is used by ../ssr-server.js
  */
 export default function ssr(data) {
-    return renderToString(<App initialDocumentData={data} />);
+    return renderToString(
+        <App documentData={data.documentData} requestData={data.requestData} />
+    );
 }

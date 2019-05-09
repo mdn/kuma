@@ -9,6 +9,7 @@ import Dropdown from './dropdown.jsx';
 import EditIcon from '../icons/pencil.svg';
 import gettext from '../gettext.js';
 import GithubLogo from '../icons/github.svg';
+import LocaleProvider from '../locale-provider.jsx';
 import { Row, Strut } from '../layout.jsx';
 import UserProvider from '../user-provider.jsx';
 
@@ -63,11 +64,12 @@ const styles = {
 };
 
 export default function Login(): React.Node {
+    const locale = useContext(LocaleProvider.context);
     const documentData = useContext(DocumentProvider.context);
     if (!documentData) {
         return null;
     }
-    const { absoluteURL, editURL, requestLocale } = documentData;
+    const { absoluteURL, editURL } = documentData;
     const userData = useContext(UserProvider.context);
 
     const PATHNAME = absoluteURL;
@@ -99,7 +101,7 @@ export default function Login(): React.Node {
                 <Dropdown label={label} right={true}>
                     <li>
                         <a
-                            href={`${WIKI_SITE_URL}/${requestLocale}/profiles/${
+                            href={`${WIKI_SITE_URL}/${locale}/profiles/${
                                 userData.username
                             }`}
                         >
@@ -108,7 +110,7 @@ export default function Login(): React.Node {
                     </li>
                     <li>
                         <a
-                            href={`${WIKI_SITE_URL}/${requestLocale}/profiles/${
+                            href={`${WIKI_SITE_URL}/${locale}/profiles/${
                                 userData.username
                             }/edit`}
                         >
@@ -117,7 +119,7 @@ export default function Login(): React.Node {
                     </li>
                     <li>
                         <form
-                            action={`${WIKI_SITE_URL}/${requestLocale}/users/signout`}
+                            action={`${WIKI_SITE_URL}/${locale}/users/signout`}
                             method="post"
                         >
                             <input name="next" type="hidden" value={PATHNAME} />

@@ -7,6 +7,7 @@ import ClockIcon from './icons/clock.svg';
 import ContributorsIcon from './icons/contributors.svg';
 import DocumentProvider from './document-provider.jsx';
 import gettext from './gettext.js';
+import LocaleProvider from './locale-provider.jsx';
 import { Row } from './layout.jsx';
 import Header from './header/header.jsx';
 
@@ -254,6 +255,7 @@ function Article() {
 }
 
 function ArticleMetadata() {
+    const locale = useContext(LocaleProvider.context);
     const documentData = useContext(DocumentProvider.context);
     return (
         documentData && (
@@ -264,12 +266,7 @@ function ArticleMetadata() {
                     {documentData.contributors.map((c, i) => (
                         <span key={c}>
                             {i > 0 && ', '}
-                            <a
-                                href={`/${
-                                    documentData.requestLocale
-                                }/profiles/${c}`}
-                                rel="nofollow"
-                            >
+                            <a href={`/${locale}/profiles/${c}`} rel="nofollow">
                                 {c}
                             </a>
                         </span>

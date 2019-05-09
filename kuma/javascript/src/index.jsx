@@ -9,14 +9,16 @@ if (container) {
     // The HTML page that loads this code is expected to have an inline
     // script that sets this window._document_data property to an object
     // with all the data needed to hydrate or render the UI.
-    let data = window._document_data;
+    let data = window._react_data;
 
     // Remove the global reference to this data object so that it can
     // be garbage collected once it is no longer in use.
-    window._document_data = null; // eslint-disable-line camelcase
+    window._react_data = null; // eslint-disable-line camelcase
 
     // This is the React UI for a page of documentation
-    let app = <App initialDocumentData={data} />;
+    let app = (
+        <App documentData={data.documentData} requestData={data.requestData} />
+    );
 
     if (container.firstElementChild) {
         // If the container element is not empty, then it was presumably
