@@ -95,9 +95,5 @@ def test_failed_server_side_render(mock_dumps, failure_class,
     request_data = {
         'locale': 'en-US'
     }
-    data = {
-        'documentData': document_data,
-        'requestData': request_data
-    }
     assert (ssr.render_react_app(document_data, request_data) ==
             ssr.render_react_app(document_data, request_data, ssr=False))
