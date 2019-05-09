@@ -1,0 +1,26 @@
+actions:
+  flake8:
+    run: flake8 {files}
+    include: "*.py"
+
+  eslint:
+    run: $(npm bin)/eslint {files}
+    fix: $(npm bin)/eslint --fix {files}
+    include:
+      - "*.js"
+      - "*.jsx"
+
+  stylelint:
+    run: $(npm bin)/stylelint {files}
+    fix: $(npm bin)/stylelint --fix {files}
+    include:
+      - "*.css"
+      - "*.scss"
+
+shortcuts:
+  all:
+    flags:
+      - use-tracked-files
+      - include-untracked
+    options:
+      action: flake8
