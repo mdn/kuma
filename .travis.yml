@@ -38,6 +38,7 @@ matrix:
               - static
           script:
             - set -e
+            - cp .env.travis .env
             - scripts/ci-python
             - scripts/ci-jest
             - scripts/ci-localerefresh
