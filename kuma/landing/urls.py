@@ -7,6 +7,9 @@ from kuma.core.decorators import shared_cache_control
 from . import views
 
 
+MONTH = 60 * 60 * 24 * 30
+
+
 lang_urlpatterns = [
     url(r'^$',
         views.home,
@@ -24,12 +27,12 @@ lang_urlpatterns = [
 
 urlpatterns = [
     url(r'^contribute\.json$',
-        views.contribute_json,
+        shared_cache_control(views.contribute_json),
         name='contribute_json'),
     url(r'^robots.txt$',
-        views.robots_txt,
+        shared_cache_control(views.robots_txt),
         name='robots_txt'),
     url(r'^favicon.ico$',
-        shared_cache_control(views.FaviconRedirect.as_view()),
+        shared_cache_control(views.FaviconRedirect.as_view(), s_maxage=MONTH),
         name='favicon_ico'),
 ]

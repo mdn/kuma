@@ -1334,6 +1334,7 @@ CSP_DEFAULT_SRC = ("'none'",)
 CSP_CONNECT_SRC = [
     SITE_URL,
     BETA_SITE_URL,
+    WIKI_SITE_URL,
 ]
 CSP_FONT_SRC = [
     SITE_URL,
@@ -1349,7 +1350,8 @@ CSP_IMG_SRC = [
     PROTOCOL + "i2.wp.com",
     "https://secure.gravatar.com",
     "https://www.google-analytics.com",
-    _PROD_ATTACHMENT_SITE_URL
+    _PROD_ATTACHMENT_SITE_URL,
+    WIKI_SITE_URL,
 ]
 if ATTACHMENT_SITE_URL not in (_PROD_ATTACHMENT_SITE_URL, SITE_URL):
     CSP_IMG_SRC.append(ATTACHMENT_SITE_URL)
@@ -1360,11 +1362,13 @@ CSP_SCRIPT_SRC = [
     "static.codepen.io",
     # TODO fix things so that we don't need this
     "'unsafe-inline'",
+    WIKI_SITE_URL,
 ]
 CSP_STYLE_SRC = [
     SITE_URL,
     # TODO fix things so that we don't need this
     "'unsafe-inline'",
+    WIKI_SITE_URL,
 ]
 CSP_REPORT_ONLY = config('CSP_REPORT_ONLY', default=False, cast=bool)
 CSP_REPORT_ENABLE = config('CSP_REPORT_ENABLE', default=False, cast=bool)
