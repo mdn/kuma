@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.utils.translation import activate, ugettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
+from waffle.models import Flag, Sample, Switch
 
 from kuma.core.urlresolvers import reverse
 from kuma.users.templatetags.jinja_helpers import gravatar_url
@@ -167,4 +168,21 @@ def whoami(request):
                 'large': None,
             }
         }
+
+    # Add waffle data to the dict we're going to be returning.
+    # This is what the waffle.wafflejs() template tag does, but we're
+    # doing it via an API instead of hardcoding the settings into
+    # the HTML page. See also from waffle.views._generate_waffle_js.
+    #
+    # Note that if we upgrade django-waffle, version 15 introduces a
+    # pluggable flag model, and the approved way to get all flag
+    # objects will then become:
+    #    get_waffle_flag_model().get_all()
+    #
+    data['waffle'] = {
+        'flags': {f.name: f.is_active(request) for f in Flag.get_all()},
+        'switches': {s.name: s.is_active() for s in Switch.get_all()},
+        'samples': {s.name: s.is_active() for s in Sample.get_all()},
+    }
+
     return JsonResponse(data)

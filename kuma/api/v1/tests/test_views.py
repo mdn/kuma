@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from functools import partial
 
 import pytest
+from waffle.models import Flag, Sample, Switch
 
 from kuma.api.v1.views import (document_api_data, get_content_based_redirect,
                                get_s3_key)
@@ -217,9 +218,19 @@ def test_whoami_disallowed_methods(client, api_settings, http_method):
     assert_no_cache_header(response)
 
 
+@pytest.mark.django_db
 @pytest.mark.parametrize('timezone', ('US/Eastern', 'US/Pacific'))
 def test_whoami_anonymous(client, api_settings, timezone):
     """Test response for anonymous users."""
+    # Create some fake waffle objects
+    Flag.objects.create(name='section_edit', authenticated=True)
+    Flag.objects.create(name='flag_all', everyone=True)
+    Flag.objects.create(name='flag_none', percent=0)
+    Switch.objects.create(name="switch_on", active=True)
+    Switch.objects.create(name="switch_off", active=False)
+    Sample.objects.create(name="sample_never", percent=0)
+    Sample.objects.create(name="sample_always", percent=100)
+
     api_settings.TIME_ZONE = timezone
     url = reverse('api.v1.whoami')
     response = client.get(url, HTTP_HOST=api_settings.BETA_HOST)
@@ -235,11 +246,27 @@ def test_whoami_anonymous(client, api_settings, timezone):
         'gravatar_url': {
             'small': None,
             'large': None,
+        },
+        'waffle': {
+            'flags': {
+                'section_edit': False,
+                'flag_all': True,
+                'flag_none': False,
+            },
+            'switches': {
+                'switch_on': True,
+                'switch_off': False
+            },
+            'samples': {
+                'sample_always': True,
+                'sample_never': False
+            }
         }
     }
     assert_no_cache_header(response)
 
 
+@pytest.mark.django_db
 @pytest.mark.parametrize(
     'timezone,is_staff,is_superuser,is_beta_tester',
     [('US/Eastern', False, False, False),
@@ -248,6 +275,15 @@ def test_whoami_anonymous(client, api_settings, timezone):
 def test_whoami(user_client, api_settings, wiki_user, beta_testers_group,
                 timezone, is_staff, is_superuser, is_beta_tester):
     """Test responses for logged-in users."""
+    # Create some fake waffle objects
+    Flag.objects.create(name='section_edit', authenticated=True)
+    Flag.objects.create(name='flag_all', everyone=True)
+    Flag.objects.create(name='flag_none', percent=0, superusers=False)
+    Switch.objects.create(name="switch_on", active=True)
+    Switch.objects.create(name="switch_off", active=False)
+    Sample.objects.create(name="sample_never", percent=0)
+    Sample.objects.create(name="sample_always", percent=100)
+
     wiki_user.timezone = timezone
     wiki_user.is_staff = is_staff
     wiki_user.is_superuser = is_superuser
@@ -269,6 +305,21 @@ def test_whoami(user_client, api_settings, wiki_user, beta_testers_group,
         'gravatar_url': {
             'small': gravatar_url(wiki_user.email, size=50),
             'large': gravatar_url(wiki_user.email, size=200),
+        },
+        'waffle': {
+            'flags': {
+                'section_edit': True,
+                'flag_all': True,
+                'flag_none': False,
+            },
+            'switches': {
+                'switch_on': True,
+                'switch_off': False
+            },
+            'samples': {
+                'sample_always': True,
+                'sample_never': False
+            }
         }
     }
     assert_no_cache_header(response)
