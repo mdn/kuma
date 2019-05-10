@@ -228,8 +228,15 @@ def get_seo_description(content, locale=None, strip_markup=True):
                 content = summary_section
 
         # Need to add a BR to the page content otherwise pyQuery wont find
-        # a <p></p> element if it's the only element in the doc_html
-        seo_analyze_doc_html = content + '<br />'
+        # a <p></p> element if it's the only element in the doc_html.
+
+        # Note, PyQuery is magically clumsy in that it will try a download
+        # if the first and only argument looks like a URL.
+        # It does that by looking for args[0] being a string and
+        # containing 'http://' or 'https://'.
+        # Adding an empty space, no matter what the content is will fool
+        # PyQuery.
+        seo_analyze_doc_html = ' ' + content + '<br />'
         page = pq(seo_analyze_doc_html)
 
         # Look for the SEO summary class first
