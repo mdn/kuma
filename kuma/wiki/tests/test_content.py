@@ -1373,3 +1373,21 @@ def test_empty_paragraph_content():
         that point. The French translation is a test to be sure that it
         works well.</div><p></p>"""
     assert get_seo_description(content, 'en-US', False) == ''
+
+
+def test_content_is_a_url(mock_requests):
+    # Note! the `mock_requests` fixture is just there to make absolutely
+    # sure the whole test doesn't ever use requests.get().
+    # My not setting up expectations, and if it got used,
+    # these tests would raise a `NoMockAddress` exception.
+
+    url = u'https://developer.mozilla.org'
+    assert get_seo_description(url, 'en-US', False) == ''
+
+    # Doesn't matter if it's http or https
+    assert get_seo_description(url.replace('s:/', ':/'), 'en-US', False) == ''
+
+    # If the content, afterwards, has real paragraphs, then the first
+    # line becomes the seo description
+    real_line = u'\n<p>This is the second line</p>'
+    assert get_seo_description(url + real_line, 'en-US', False) == url
