@@ -123,10 +123,9 @@ def test_hreflang_basic(base_url):
 
 @pytest.mark.headless
 @pytest.mark.nondestructive
-@pytest.mark.parametrize('uri', ['/api/v1/whoami', '/api/v1/doc/en-US/Web/CSS'])
-def test_beta_endpoints_not_on_wiki(wiki_site_url, uri):
-    """Ensure that these beta endpoints are not provided by the wiki site."""
-    resp = requests.get(wiki_site_url + uri)
+def test_beta_endpoint_not_on_wiki(wiki_site_url):
+    """Ensure that this beta endpoint is not provided by the wiki site."""
+    resp = requests.get(wiki_site_url + '/api/v1/whoami')
     assert resp.status_code == 404
 
 
@@ -136,10 +135,16 @@ def test_beta_endpoints_not_on_wiki(wiki_site_url, uri):
     'uri,expected_keys',
     [('/api/v1/whoami', ('username', 'is_staff', 'is_authenticated', 'timezone',
                          'is_beta_tester', 'gravatar_url', 'is_superuser')),
-     ('/api/v1/doc/en-US/Web/CSS', ('locale', 'title', 'slug', 'tocHTML',
-                                    'bodyHTML', 'id', 'quickLinksHTML',
-                                    'parents', 'translations', 'editURL',
-                                    'summary', 'language', 'absoluteURL',
+     ('/api/v1/doc/en-US/Web/CSS', (('documentData', ('locale', 'title', 'slug',
+                                                      'tocHTML', 'bodyHTML',
+                                                      'id', 'quickLinksHTML',
+                                                      'parents', 'translations',
+                                                      'editURL', 'summary',
+                                                      'language',
+                                                      'contributors',
+                                                      'lastModified',
+                                                      'lastModifiedBy',
+                                                      'absoluteURL')),
                                     'redirectURL'))],
     ids=('whomai', 'doc')
 )
@@ -149,8 +154,14 @@ def test_beta_api_basic(beta_site_url, uri, expected_keys):
     assert resp.status_code == 200
     assert resp.headers.get('content-type') == 'application/json'
     data = resp.json()
-    for key in expected_keys:
+    for item in expected_keys:
+        if isinstance(item, tuple):
+            key, sub_keys = item
+        else:
+            key, sub_keys = item, ()
         assert key in data
+        for sub_key in sub_keys:
+            assert sub_key in data[key]
 
 
 @pytest.mark.headless
