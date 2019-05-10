@@ -5,7 +5,8 @@ import logging
 import re
 
 import dateutil
-from pyquery import PyQuery as pq
+
+from kuma.core.utils import safer_pyquery as pq
 
 from .base import DocumentBaseSource, Source
 
@@ -170,4 +171,5 @@ class RevisionSource(Source):
         source_elem = parsed.find('div#doc-source pre')[0]
         data['content'] = source_elem.text
 
+        return data
         return data

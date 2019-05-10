@@ -15,11 +15,12 @@ from django.http import QueryDict
 from django.shortcuts import _get_queryset
 from django.urls import get_urlconf, set_urlconf
 from django.utils.cache import patch_cache_control
-from django.utils.encoding import force_text, smart_bytes
+from django.utils.encoding import force_bytes, force_text, smart_bytes
 from django.utils.http import urlencode
 from django.utils.six import text_type
 from django.utils.translation import ugettext_lazy as _
 from polib import pofile
+from pyquery import PyQuery as pq
 from pytz import timezone
 from six.moves.urllib.parse import parse_qsl, ParseResult, urlparse, urlsplit, urlunsplit
 from taggit.utils import split_strip
@@ -458,3 +459,43 @@ def override_urlconf(new_urlconf):
         yield
     finally:
         set_urlconf(original_urlconf)
+
+
+def safer_pyquery(*args, **kwargs):
+    """
+    PyQuery is magically clumsy in how it handles its arguments. A more
+    ideal and explicit constructor would be:
+
+        >>> from pyquery import PyQuery as pq
+        >>> parsed = pq(html=my_html_string)
+        >>> parsed = pq(url=definitely_a_url_string)
+
+    But instead, you're expected to use it like this:
+
+        >>> from pyquery import PyQuery as pq
+        >>> parsed = pq(my_html_string)
+        >>> parsed = pq(definitely_a_url_string)
+
+    ...and PyQuery attempts to be smart and look at that first argument
+    and if it looks like a URL, it first calls `requests.get()` on it.
+
+    This function is a thin wrapper on that constructor that prevents
+    that dangerous code to ever get a chance.
+
+    NOTE! As of May 10 2019, this risk exists the the latest release of
+    PyQuery. Hopefully it will be fixed but it would a massively disruptive
+    change and thus unlikely to happen any time soon.
+    """
+
+    if isinstance(args[0], unicode):
+        if args[0].split('://', 1)[0] in ('http', 'https'):
+            args = (' {}'.format(args[0]),) + args[1:]
+    elif isinstance(args[0], str):
+        # If the input is a byte string, deal with it a byte string.
+        # Since this file is using __future__.unicode_literals and
+        # type and quoted string automatically becomes a unicode string.
+        # In this case force it all to stay as byte strings.
+        if args[0].split(force_bytes('://'), 1)[0] in (force_bytes('http'), force_bytes('https')):
+            args = (force_bytes(' ') + args[0],) + args[1:]
+
+    return pq(*tuple(args), **kwargs)

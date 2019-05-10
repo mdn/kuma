@@ -16,7 +16,6 @@ from django.utils.decorators import available_attrs
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext, ugettext_lazy as _
-from pyquery import PyQuery
 from six.moves.urllib.parse import urlparse
 from taggit.managers import TaggableManager
 from taggit.models import ItemBase, TagBase
@@ -26,6 +25,7 @@ from tidings.models import NotificationsMixin
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.i18n import get_language_mapping
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import safer_pyquery as PyQuery
 from kuma.spam.models import AkismetSubmission, SpamAttempt
 
 from . import kumascript

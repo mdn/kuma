@@ -14,10 +14,10 @@ from django.utils.html import conditional_escape
 from django.utils.six.moves.urllib.parse import urlsplit, urlunparse
 from django.utils.translation import ugettext
 from django_jinja import library
-from pyquery import PyQuery as pq
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import order_params, urlparams
+from kuma.core.utils import safer_pyquery as pq
 
 from ..constants import DIFF_WRAP_COLUMN
 from ..content import clean_content
