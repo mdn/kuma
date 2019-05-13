@@ -12,9 +12,7 @@
     "pinDigests": true
   },
   "docker-compose": {
-    "digest": {
-      "enabled": false
-    }
+    "enabled": false
   },
   "python": {
     "enabled": false
