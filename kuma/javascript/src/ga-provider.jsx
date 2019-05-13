@@ -1,12 +1,8 @@
 // @flow
 import * as React from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-type GAOptions = { [string]: any };
-type GAFunction = (
-    string,
-    string | GAOptions,
-    ...Array<string | number | GAOptions>
-) => void;
+type GAFunction = (...any) => void;
 
 const noop: GAFunction = () => {};
 
@@ -38,8 +34,24 @@ export default function GAProvider(props: {
     } else {
         ga = noop;
     }
-
     return <context.Provider value={ga}>{props.children}</context.Provider>;
 }
 
+// This is a custom hook to return the GA client id. It returns the
+// emtpy string until (and unless) it can determine that id from the GA object.
+function useClientId() {
+    const [clientId, setClientId] = useState<string>('');
+    const ga = useContext(GAProvider.context);
+    useEffect(() => {
+        ga(tracker => {
+            setClientId(tracker.get('clientId'));
+        });
+    }, [ga]);
+
+    return clientId;
+}
+
+// Export both the context object and the custom hook as properties
+// of the GAProvider component
 GAProvider.context = context;
+GAProvider.useClientId = useClientId;
