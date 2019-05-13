@@ -2,5 +2,6 @@
 set -e  # Exit on non-zero status
 set -u  # Treat unset variables as an error
 
-# Run test based on what's defined in `package.json`
-npm test
+# Run test based on what's defined in `package.json` in the docker container
+docker-compose exec -T web npm test
+
