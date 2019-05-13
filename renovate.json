@@ -1,6 +1,6 @@
 {
   "extends": [
-    "config:base",
+    "config:base"
   ],
   "ignorePaths": [
     "assets/ckeditor4/source/plugins/descriptionlist/package.json",
