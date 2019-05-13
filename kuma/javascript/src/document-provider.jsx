@@ -8,6 +8,7 @@ import LocaleProvider from './locale-provider.jsx';
 export type DocumentData = {
     locale: string,
     slug: string,
+    enSlug: string, // For non-english documents, the original english slug
     id: number,
     title: string,
     summary: string,
@@ -93,18 +94,15 @@ export default function DocumentProvider(
                         body.style.opacity = '1';
 
                         // Tell Google Analytics about this navigation.
-                        // We use 'dimension3' to mean client-side navigate
-                        ga('set', 'dimension3', 'Yes');
+                        // We use 'dimension19' to mean client-side navigate
+                        ga('set', 'dimension19', 'Yes');
 
-                        // TODO: get page_revision in document data
-                        // and send it as dimension 12, if that is something
-                        // that Kadir still wants to analyze
-
-                        // TODO: get en_slug and send that as dimension17
-                        // even when the document language is not en. Right
-                        // now dimension17 is only being set for english
-                        // documents
-                        if (documentData.locale === 'en-US') {
+                        // If the document data includes enSlug, or if the
+                        // document is in english, then pass the slug to
+                        // google analytics as dimension 17.
+                        if (documentData.enSlug) {
+                            ga('set', 'dimension17', documentData.enSlug);
+                        } else if (documentData.locale === 'en-US') {
                             ga('set', 'dimension17', documentData.slug);
                         }
 

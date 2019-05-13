@@ -100,10 +100,19 @@ def document_api_data(doc=None, ensure_contributors=False, redirect_url=None):
     job.fetch_on_miss = ensure_contributors
     contributors = [c['username'] for c in job.get(doc.pk)]
 
+    # The original english slug for this document, for google analytics
+    if doc.locale == 'en-US':
+        en_slug = doc.slug
+    elif doc.parent_id and doc.parent.locale == 'en-US':
+        en_slug = doc.parent.slug
+    else:
+        en_slug = ''
+
     return {
         'documentData': {
             'locale': doc.locale,
             'slug': doc.slug,
+            'enSlug': en_slug,
             'id': doc.id,
             'title': doc.title,
             'summary': doc.get_summary_html(),
