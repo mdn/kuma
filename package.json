@@ -65,7 +65,7 @@
         "jest-emotion": "^10.0.7",
         "node-sass": "4.12.0",
         "prettier": "^1.16.4",
-        "react-svg-loader": "3.0.0",
+        "react-svg-loader": "3.0.1",
         "react-test-renderer": "^16.8.4",
         "sass-true": "4.0.0",
         "stylelint": "9.3.0",
