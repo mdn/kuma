@@ -1,8 +1,6 @@
 {
   "extends": [
     "config:base",
-    "docker-compose:disable",
-    "python:disable"
   ],
   "ignorePaths": [
     "assets/ckeditor4/source/plugins/descriptionlist/package.json",
@@ -12,6 +10,14 @@
   "masterIssue": true,
   "dockerfile": {
     "pinDigests": true
+  },
+  "docker-compose": {
+    "digest": {
+      "enabled": false
+    }
+  },
+  "python": {
+    "enabled": false
   },
   "rebaseStalePrs": true,
   "timezone": "UTC",
