@@ -2,11 +2,13 @@
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 
+import GAProvider from './ga-provider.jsx';
 import LocaleProvider from './locale-provider.jsx';
 
 export type DocumentData = {
     locale: string,
     slug: string,
+    enSlug: string, // For non-english documents, the original english slug
     id: number,
     title: string,
     summary: string,
@@ -40,6 +42,7 @@ export default function DocumentProvider(
 ): React.Node {
     const locale = useContext(LocaleProvider.context);
     const [documentData, setDocumentData] = useState(props.initialDocumentData);
+    const ga = useContext(GAProvider.context);
 
     // A one-time effect that runs only on mount, to set up
     // an event handler for client-side navigation
@@ -89,6 +92,21 @@ export default function DocumentProvider(
                         window.scrollTo(0, 0);
                         setDocumentData(documentData);
                         body.style.opacity = '1';
+
+                        // Tell Google Analytics about this navigation.
+                        // We use 'dimension19' to mean client-side navigate
+                        ga('set', 'dimension19', 'Yes');
+
+                        // If the document data includes enSlug, or if the
+                        // document is in english, then pass the slug to
+                        // google analytics as dimension 17.
+                        if (documentData.enSlug) {
+                            ga('set', 'dimension17', documentData.enSlug);
+                        } else if (documentData.locale === 'en-US') {
+                            ga('set', 'dimension17', documentData.slug);
+                        }
+
+                        ga('send', 'pageview');
                     }
                 })
                 .catch(() => {

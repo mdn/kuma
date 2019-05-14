@@ -1,7 +1,11 @@
 //@flow
+/* eslint-disable camelcase */
 import React from 'react';
 import { act, create } from 'react-test-renderer';
 
+import DocumentProvider from './document-provider.jsx';
+import { fakeDocumentData } from './document-provider.test.js';
+import GAProvider from './ga-provider.jsx';
 import UserProvider from './user-provider.jsx';
 
 describe('UserProvider', () => {
@@ -36,14 +40,23 @@ describe('UserProvider', () => {
     // https://github.com/facebook/react/issues/14769 and hopefully a
     // version of act() that can take async methods will fix the
     // issue.
-    test('Provider fetches user data', done => {
+    test('Provider fetches user data and waffle flags', done => {
         const P = UserProvider;
         const C = UserProvider.context.Consumer;
         const contextConsumer = jest.fn();
+
+        const waffleFlags = {
+            flags: { section_edit: true },
+            switches: { bar: false },
+            samples: {}
+        };
+
         const userData = {
             ...UserProvider.defaultUserData,
             username: 'testing',
-            isStaff: true
+            isAuthenticated: true,
+            isStaff: true,
+            waffle: waffleFlags
         };
 
         // In this test we want to verify that UserProvider is
@@ -52,42 +65,59 @@ describe('UserProvider', () => {
             return Promise.resolve({
                 json: () =>
                     Promise.resolve({
-                        // We expect the server to send JSON data
-                        // using snake_case
-                        /* eslint-disable camelcase */
                         username: 'testing',
-                        is_authenticated: false,
+                        is_authenticated: true,
                         is_beta_tester: false,
                         is_staff: true,
                         is_super_user: false,
                         timezone: null,
-                        gravatar_url: { small: null, large: null }
-                        /* eslint-enable camelcase */
+                        gravatar_url: { small: null, large: null },
+                        waffle: waffleFlags
                     })
             });
         });
 
+        let gaMock = (window.ga = jest.fn());
+
         act(() => {
             create(
-                <P>
-                    <C>{contextConsumer}</C>
-                </P>
+                <GAProvider>
+                    <DocumentProvider initialDocumentData={fakeDocumentData}>
+                        <P>
+                            <C>{contextConsumer}</C>
+                        </P>
+                    </DocumentProvider>
+                </GAProvider>
             );
         });
 
         // To start, we expect the contextConsumer function to be called
         // with the default null value. And we expect our fetch() mock to
         // be called when the component is first mounted, too.
+        // At this point we don't expect any GA calls
         expect(contextConsumer).toHaveBeenCalledTimes(1);
         expect(contextConsumer).toHaveBeenCalledWith(null);
         expect(global.fetch).toHaveBeenCalledTimes(1);
         expect(global.fetch).toHaveBeenCalledWith('/api/v1/whoami');
+        expect(gaMock).toHaveBeenCalledTimes(0);
 
         // After the fetch succeeds, we expect contextConsumer to be
-        // called again with the fetched userdata
+        // called again with the fetched userdata. And we expect some
+        // data to have been sent to the ga() function
         process.nextTick(() => {
             expect(contextConsumer).toHaveBeenCalledTimes(2);
             expect(contextConsumer.mock.calls[1][0]).toEqual(userData);
+            expect(gaMock).toHaveBeenCalledTimes(5);
+            expect(gaMock.mock.calls[0]).toEqual(['set', 'dimension1', 'Yes']);
+            expect(gaMock.mock.calls[1]).toEqual(['set', 'dimension18', 'Yes']);
+            expect(gaMock.mock.calls[2]).toEqual(['set', 'dimension9', 'Yes']);
+            expect(gaMock.mock.calls[3]).toEqual([
+                'set',
+                'dimension17',
+                'fake/en/slug'
+            ]);
+            expect(gaMock.mock.calls[4][0]).toEqual('send');
+            expect(gaMock.mock.calls[4][1].hitType).toEqual('pageview');
             done();
         });
     });
