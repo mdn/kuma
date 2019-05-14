@@ -172,4 +172,3 @@ class RevisionSource(Source):
         data['content'] = source_elem.text
 
         return data
-        return data

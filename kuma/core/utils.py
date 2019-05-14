@@ -498,4 +498,4 @@ def safer_pyquery(*args, **kwargs):
         if args[0].split(force_bytes('://'), 1)[0] in (force_bytes('http'), force_bytes('https')):
             args = (force_bytes(' ') + args[0],) + args[1:]
 
-    return pq(*tuple(args), **kwargs)
+    return pq(*args, **kwargs)
