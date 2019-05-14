@@ -2,7 +2,8 @@
 from __future__ import absolute_import, unicode_literals
 
 import dateutil
-from pyquery import PyQuery as pq
+
+from kuma.core.utils import safer_pyquery as pq
 
 from .base import Source
 

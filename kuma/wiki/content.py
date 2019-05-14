@@ -12,10 +12,10 @@ from django.utils.six.moves.urllib.parse import (unquote, urlencode, urlparse,
 from django.utils.translation import ugettext
 from html5lib.filters.base import Filter as html5lib_Filter
 from lxml import etree
-from pyquery import PyQuery as pq
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import order_params, to_html
+from kuma.core.utils import safer_pyquery as pq
 
 from .constants import (ALLOWED_ATTRIBUTES, ALLOWED_PROTOCOLS,
                         ALLOWED_STYLES, ALLOWED_TAGS)
@@ -229,14 +229,7 @@ def get_seo_description(content, locale=None, strip_markup=True):
 
         # Need to add a BR to the page content otherwise pyQuery wont find
         # a <p></p> element if it's the only element in the doc_html.
-
-        # Note, PyQuery is magically clumsy in that it will try a download
-        # if the first and only argument looks like a URL.
-        # It does that by looking for args[0] being a string and
-        # containing 'http://' or 'https://'.
-        # Adding an empty space, no matter what the content is will fool
-        # PyQuery.
-        seo_analyze_doc_html = ' ' + content + '<br />'
+        seo_analyze_doc_html = content + '<br />'
         page = pq(seo_analyze_doc_html)
 
         # Look for the SEO summary class first

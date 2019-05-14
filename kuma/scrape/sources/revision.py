@@ -5,7 +5,8 @@ import logging
 import re
 
 import dateutil
-from pyquery import PyQuery as pq
+
+from kuma.core.utils import safer_pyquery as pq
 
 from .base import DocumentBaseSource, Source
 

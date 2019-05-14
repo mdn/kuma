@@ -6,7 +6,8 @@ import logging
 
 from django.conf import settings
 from django.utils.six.moves.urllib.parse import urlparse
-from pyquery import PyQuery as pq
+
+from kuma.core.utils import safer_pyquery as pq
 
 from .base import Source
 
