@@ -2,7 +2,10 @@ version: '2.1'
 services:
   worker: &worker
     image: mdnwebdocs/kuma_base
-    command: ./manage.py celery worker --loglevel=INFO --events --beat --autoreload --concurrency=${CELERY_WORKERS:-4}  -Q mdn_purgeable,mdn_search,mdn_emails,mdn_wiki,mdn_api,celery
+    # Note, in production you'll want to run a separate process with
+    # just `celery -A kuma.celery:app beat ...`. But for docker-compose
+    # it's fine to run it from the regular worker.
+    command: celery -A kuma.celery:app worker -l info --beat --concurrency=${CELERY_WORKERS:-4}  -Q mdn_purgeable,mdn_search,mdn_emails,mdn_wiki,mdn_api,celery
     user: ${UID:-1000}
     volumes:
       - ./:/app:z
