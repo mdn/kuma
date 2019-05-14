@@ -22,7 +22,7 @@ These files have two audiences:
 
 Hash-Checking Mode
 ------------------
-For the production and development requirements, we use pip 8.x's
+For the production and development requirements, we use pip's
 `Hash-Checking Mode`_, which checks that downloaded packages match one of the
 given hashes, ensuring that there are no man-in-the-middle attacks.  When
 hashes are used, all requirements, including those installed as dependencies,
@@ -40,6 +40,13 @@ Or, to update to the latest version of a package::
 
 It is still up to you to install the requirements, and to specify any
 requirements of your requirements, in ``constraints.txt``.
+
+hashin_ can be installed on your host system or you can temporarily install
+it inside the docker container like this::
+
+    docker-compose exec --user 0 web bash
+    pip install hashin
+    hashin --help
 
 Requirements format
 -------------------
