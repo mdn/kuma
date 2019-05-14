@@ -46,18 +46,6 @@
         })(window,document,'script','https://www.google-analytics.com/{{ GA_FILE }}.js','ga');
         ga('create', '{{ config.GOOGLE_ANALYTICS_ACCOUNT }}', 'mozilla.org');
         ga('set', 'anonymizeIp', true);
-
-        {#- TODO: delete or move to the client side #}
-        {%- if analytics_page_revision %}
-            // dimension12 == 'Page Revision'
-            ga('set', 'dimension12', '{{ analytics_page_revision }}');
-        {%- endif %}
-
-        {#- TODO: delete or move to the client side #}
-        {%- if analytics_en_slug %}
-            // dimension17 == 'English Slug'
-            ga('set', 'dimension17', '{{analytics_en_slug}}');
-        {%- endif %}
     }
     {%- endif %}
 </script>

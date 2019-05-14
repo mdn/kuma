@@ -106,7 +106,7 @@ export default function DocumentProvider(
                             ga('set', 'dimension17', documentData.slug);
                         }
 
-                        ga('send', 'pageload');
+                        ga('send', 'pageview');
                     }
                 })
                 .catch(() => {

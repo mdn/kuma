@@ -7,7 +7,7 @@ import DocumentProvider from './document-provider.jsx';
 export const fakeDocumentData = {
     locale: 'en-US',
     slug: 'test',
-    enSlug: 'test',
+    enSlug: 'fake/en/slug',
     id: 42,
     title: '[fake document title]',
     summary: '[fake document summary]',

@@ -3,6 +3,8 @@
 import React from 'react';
 import { act, create } from 'react-test-renderer';
 
+import DocumentProvider from './document-provider.jsx';
+import { fakeDocumentData } from './document-provider.test.js';
 import GAProvider from './ga-provider.jsx';
 import UserProvider from './user-provider.jsx';
 
@@ -80,9 +82,11 @@ describe('UserProvider', () => {
         act(() => {
             create(
                 <GAProvider>
-                    <P>
-                        <C>{contextConsumer}</C>
-                    </P>
+                    <DocumentProvider initialDocumentData={fakeDocumentData}>
+                        <P>
+                            <C>{contextConsumer}</C>
+                        </P>
+                    </DocumentProvider>
                 </GAProvider>
             );
         });
@@ -103,12 +107,17 @@ describe('UserProvider', () => {
         process.nextTick(() => {
             expect(contextConsumer).toHaveBeenCalledTimes(2);
             expect(contextConsumer.mock.calls[1][0]).toEqual(userData);
-            expect(gaMock).toHaveBeenCalledTimes(4);
+            expect(gaMock).toHaveBeenCalledTimes(5);
             expect(gaMock.mock.calls[0]).toEqual(['set', 'dimension1', 'Yes']);
             expect(gaMock.mock.calls[1]).toEqual(['set', 'dimension18', 'Yes']);
             expect(gaMock.mock.calls[2]).toEqual(['set', 'dimension9', 'Yes']);
-            expect(gaMock.mock.calls[3][0]).toEqual('send');
-            expect(gaMock.mock.calls[3][1].hitType).toEqual('pageview');
+            expect(gaMock.mock.calls[3]).toEqual([
+                'set',
+                'dimension17',
+                'fake/en/slug'
+            ]);
+            expect(gaMock.mock.calls[4][0]).toEqual('send');
+            expect(gaMock.mock.calls[4][1].hitType).toEqual('pageview');
             done();
         });
     });

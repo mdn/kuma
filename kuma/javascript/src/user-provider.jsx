@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 
+import DocumentProvider from './document-provider.jsx';
 import GAProvider from './ga-provider.jsx';
 
 export type UserData = {
@@ -43,6 +44,7 @@ export default function UserProvider(props: {
     children: React.Node
 }): React.Node {
     const [userData, setUserData] = useState<?UserData>(null);
+    const documentData = useContext(DocumentProvider.context);
     const ga = useContext(GAProvider.context);
 
     useEffect(() => {
@@ -69,7 +71,7 @@ export default function UserProvider(props: {
 
                 // Once the user data has loaded, set some Google
                 // Analytics variables and then send the initial
-                // pageload event to GA.
+                // pageview event to GA.
                 if (userData.isAuthenticated) {
                     ga('set', 'dimension1', 'Yes');
                     if (userData.isBetaTester) {
@@ -82,6 +84,11 @@ export default function UserProvider(props: {
 
                 if (userData.waffle.flags.section_edit) {
                     ga('set', 'dimension9', 'Yes');
+                }
+
+                if (documentData && documentData.enSlug) {
+                    // dimension17 == 'English Slug'
+                    ga('set', 'dimension17', documentData.enSlug);
                 }
 
                 // We only fetch user data once, right after the initial page
