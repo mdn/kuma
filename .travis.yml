@@ -9,11 +9,13 @@ services:
 matrix:
     include:
         - language: python
+          name: "Documentation"
           python: 3.6
           cache: pip
           script:
             - scripts/ci-docs
         - language: python
+          name: "Tests + Python linting"
           python: 2.7
           env:
             UID=0
@@ -26,9 +28,11 @@ matrix:
           script:
             - set -e
             - scripts/ci-python
+            - scripts/ci-jest
             - scripts/ci-localerefresh
             - bash <(curl -s https://codecov.io/bash)
         - language: node_js
+          name: "Javascript linting"
           node_js: 10
           cache: npm
           script:
