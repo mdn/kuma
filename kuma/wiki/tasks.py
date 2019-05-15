@@ -320,9 +320,6 @@ def build_locale_sitemap(locale):
     queryset = Document.objects.filter(
         locale=locale,
         is_redirect=False,
-        # TODO(peterbe) Needs to consolidate with
-        # https://github.com/mozilla/kuma/pull/5377
-        deleted=False,
     ).exclude(
         html=''
     )
