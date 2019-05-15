@@ -6,10 +6,12 @@ import logging
 import os
 from itertools import islice
 from urllib.parse import parse_qsl, ParseResult, urlparse, urlsplit, urlunsplit
+from smtplib import SMTPServerDisconnected
 
 from babel import dates, localedata
 from celery import chain, chord
 from django.conf import settings
+from django.core.mail import EmailMultiAlternatives, get_connection
 from django.core.paginator import EmptyPage, InvalidPage, Paginator
 from django.http import QueryDict
 from django.shortcuts import _get_queryset, redirect
@@ -20,6 +22,7 @@ from django.utils.translation import ugettext_lazy as _
 from polib import pofile
 from pyquery import PyQuery as pq
 from pytz import timezone
+from redo import retrying
 from taggit.utils import split_strip
 
 from .exceptions import DateTimeFormatError
@@ -489,3 +492,54 @@ def safer_pyquery(*args, **kwargs):
         args = (f' {args[0]}',) + args[1:]
 
     return pq(*args, **kwargs)
+
+
+def send_mail_retrying(subject, message, from_email, recipient_list,
+                       fail_silently=False, auth_user=None, auth_password=None,
+                       connection=None, html_message=None,
+                       **kwargs):
+    """Copied verbatim from django.core.mail.send_mail but with the override
+    that we're using our EmailMultiAlternativesRetrying class instead.
+    See its doc string for its full documentation.
+
+    The only difference is that this function allows for setting your
+    own custom 'retrying' keyword argument.
+    """
+    connection = connection or get_connection(
+        username=auth_user,
+        password=auth_password,
+        fail_silently=fail_silently,
+    )
+    mail = EmailMultiAlternativesRetrying(
+        subject, message, from_email, recipient_list, connection=connection
+    )
+    if html_message:
+        mail.attach_alternative(html_message, 'text/html')
+
+    return mail.send(**kwargs)
+
+
+class EmailMultiAlternativesRetrying(EmailMultiAlternatives):
+    """
+    Thin wrapper on django.core.mail.EmailMultiAlternatives that adds
+    a retrying functionality. By default, the only override is that
+    we're very explicit about the of exceptions we treat as retry'able.
+    The list of exceptions we use to trigger a retry are:
+
+        * smtplib.SMTPServerDisconnected
+
+    Only list exceptions that have been known to happen and are safe.
+    """
+
+    def send(self, *args, **kwargs):
+        # See https://github.com/mozilla-releng/redo
+        # for a list of the default options to the redo.retry function
+        # which the redo.retrying context manager wraps.
+        retry_options = kwargs.pop('retrying', {
+            'retry_exceptions': (SMTPServerDisconnected,),
+            # The default in redo is 60 seconds. Let's tone that down.
+            'sleeptime': 3,
+        })
+        parent_method = super(EmailMultiAlternativesRetrying, self).send
+        with retrying(parent_method, **retry_options) as method:
+            return method(*args, **kwargs)

@@ -1,9 +1,11 @@
 
 
 import pytest
+from django.core import mail
+from django.core.mail.backends.locmem import EmailBackend
 from django.utils.encoding import force_bytes
 
-from kuma.core.utils import order_params, safer_pyquery, smart_int
+from kuma.core.utils import EmailMultiAlternativesRetrying, order_params, safer_pyquery, send_mail_retrying, smart_int
 
 
 def test_smart_int():
@@ -69,3 +71,57 @@ def test_safer_pyquery(mock_requests):
     </html>
     """)
     assert parsed('a[href]').text() == 'URL'
+
+
+class SomeException(Exception):
+    """Just a custom exception class."""
+
+
+class SMTPFlakyEmailBackend(EmailBackend):
+    """doc string"""
+    def send_messages(self, messages):
+        self._attempts = getattr(self, '_attempts', 0) + 1
+        if self._attempts < 2:
+            raise SomeException('Oh noes!')
+        return super(SMTPFlakyEmailBackend, self).send_messages(messages)
+
+
+def test_send_mail_retrying(settings):
+    settings.EMAIL_BACKEND = 'kuma.core.tests.test_utils.SMTPFlakyEmailBackend'
+
+    send_mail_retrying(
+        'Subject',
+        'Message',
+        'from@example.com',
+        ['to@example.com'],
+        retrying={
+            'retry_exceptions': (SomeException,),
+            # Overriding defaults to avoid the test being slow.
+            'sleeptime': 0.02,
+            'jitter': 0.01,
+        }
+    )
+    sent = mail.outbox[-1]
+    # sanity check
+    assert sent.subject == 'Subject'
+
+
+def test_EmailMultiAlternativesRetrying(settings):
+    settings.EMAIL_BACKEND = 'kuma.core.tests.test_utils.SMTPFlakyEmailBackend'
+
+    email = EmailMultiAlternativesRetrying(
+        'Multi Subject',
+        'Content',
+        'from@example.com',
+        ['to@example.com'],
+    )
+    email.attach_alternative('<p>Content</p>', 'text/html')
+    email.send(retrying={
+        'retry_exceptions': (SomeException,),
+        # Overriding defaults to avoid the test being slow.
+        'sleeptime': 0.02,
+        'jitter': 0.01,
+    })
+    sent = mail.outbox[-1]
+    # sanity check
+    assert sent.subject == 'Multi Subject'

@@ -10,7 +10,7 @@ from celery import chain, chord, task
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sitemaps import GenericSitemap
-from django.core.mail import mail_admins, send_mail
+from django.core.mail import mail_admins
 from django.db import transaction
 from django.db.models import Q
 from django.template.loader import render_to_string
@@ -19,7 +19,7 @@ from lxml import etree
 
 from kuma.core.decorators import skip_in_maintenance_mode
 from kuma.core.urlresolvers import reverse
-from kuma.core.utils import chunked
+from kuma.core.utils import chunked, send_mail_retrying
 from kuma.search.models import Index
 from kuma.users.models import User
 
@@ -180,10 +180,12 @@ def move_page(locale, slug, new_slug, user_id):
             %(locale)s, but no such document exists.
         """ % {'slug': slug, 'locale': locale}
         logging.error(message)
-        send_mail('Page move failed',
-                  textwrap.dedent(message),
-                  settings.DEFAULT_FROM_EMAIL,
-                  [user.email])
+        send_mail_retrying(
+            'Page move failed',
+            textwrap.dedent(message),
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email]
+        )
         transaction.set_autocommit(True)
         return
 
@@ -202,10 +204,12 @@ def move_page(locale, slug, new_slug, user_id):
             %(message)s
         """ % {'slug': slug, 'locale': locale, 'message': e.message}
         logging.error(message)
-        send_mail('Page move failed',
-                  textwrap.dedent(message),
-                  settings.DEFAULT_FROM_EMAIL,
-                  [user.email])
+        send_mail_retrying(
+            'Page move failed',
+            textwrap.dedent(message),
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email]
+        )
         transaction.set_autocommit(True)
         return
     except Exception as e:
@@ -219,10 +223,12 @@ def move_page(locale, slug, new_slug, user_id):
             %(info)s
         """ % {'slug': slug, 'locale': locale, 'info': e}
         logging.error(message)
-        send_mail('Page move failed',
-                  textwrap.dedent(message),
-                  settings.DEFAULT_FROM_EMAIL,
-                  [user.email])
+        send_mail_retrying(
+            'Page move failed',
+            textwrap.dedent(message),
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email]
+        )
         transaction.set_autocommit(True)
         return
 
@@ -261,10 +267,12 @@ def move_page(locale, slug, new_slug, user_id):
     """) % {'slug': slug, 'locale': locale, 'full_url': full_url,
             'locale_urls': '\n'.join(other_locale_urls)}
 
-    send_mail(subject,
-              message,
-              settings.DEFAULT_FROM_EMAIL,
-              [user.email])
+    send_mail_retrying(
+        subject,
+        message,
+        settings.DEFAULT_FROM_EMAIL,
+        [user.email]
+    )
 
 
 @task
