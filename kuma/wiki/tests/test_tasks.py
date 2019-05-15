@@ -1,15 +1,27 @@
 from __future__ import with_statement
 
 import os
+import random
 import re
 from datetime import datetime
+
+from six.moves.urllib.parse import urlparse
 
 from kuma.core.urlresolvers import reverse
 from kuma.users.models import User
 from kuma.users.tests import UserTestCase
+from kuma.wiki.constants import (
+    EXPERIMENT_TITLE_PREFIX,
+    LEGACY_MINDTOUCH_NAMESPACES
+)
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
-from ..models import Document, DocumentDeletionLog, DocumentSpamAttempt
+from ..models import (
+    Document,
+    DocumentDeletionLog,
+    DocumentSpamAttempt,
+    Revision
+)
 from ..tasks import (build_sitemaps,
                      delete_logs_for_purged_documents,
                      delete_old_documentspamattempt_data)
@@ -65,6 +77,114 @@ def test_sitemaps(tmpdir, settings, doc_hierarchy):
         assert set(actual_lastmods) == expected_lastmods
 
     assert set(actual_index_locs) == expected_index_locs
+
+
+def test_sitemaps_excluded_documents(tmpdir, settings, wiki_user):
+    """
+    Test the build of the sitemaps.
+    """
+    settings.SITE_URL = 'https://example.com'
+    settings.MEDIA_ROOT = str(tmpdir.mkdir('media'))
+    # Simplify the test
+    settings.LANGUAGES = [
+        (code, english)
+        for code, english in settings.LANGUAGES
+        if code in ('en-US', 'sv-SE')
+    ]
+
+    top_doc = Document.objects.create(
+        locale='en-US',
+        slug='top',
+        title='Top Document'
+    )
+    Revision.objects.create(
+        document=top_doc,
+        creator=wiki_user,
+        content='<p>Top...</p>',
+        title='Top Document',
+        created=datetime(2017, 4, 24, 13, 49)
+    )
+
+    # Make one that has a legacy slug
+    legacy_slug = '{}:something'.format(
+        random.choice(LEGACY_MINDTOUCH_NAMESPACES)
+    )
+    legacy_doc = Document.objects.create(
+        locale='en-US',
+        slug=legacy_slug,
+        title='A Legacy Document'
+    )
+    Revision.objects.create(
+        document=legacy_doc,
+        creator=wiki_user,
+        content='<p>Legacy...</p>',
+        title='Legacy Document',
+        created=datetime(2017, 4, 24, 13, 49)
+    )
+
+    # Add an "experiment" document
+    experiment_slug = EXPERIMENT_TITLE_PREFIX + 'myexperiment'
+    experiment_doc = Document.objects.create(
+        locale='en-US',
+        slug=experiment_slug,
+        title='An Experiment Document'
+    )
+    Revision.objects.create(
+        document=experiment_doc,
+        creator=wiki_user,
+        content='<p>Experiment...</p>',
+        title='Experiment Document',
+        created=datetime(2017, 4, 24, 13, 49)
+    )
+
+    # Add a document with no HTML content
+    no_html_slug = 'a-fine-slug'
+    no_html_doc = Document.objects.create(
+        locale='en-US',
+        slug=no_html_slug,
+        title='A Lonely Title'
+    )
+    Revision.objects.create(
+        document=no_html_doc,
+        creator=wiki_user,
+        content='',  # Note!
+        title='Just A Title',
+        created=datetime(2017, 4, 24, 13, 49)
+    )
+    assert not no_html_doc.html
+
+    # Add a document without a revision
+    no_revision_slug = 'no-revision-slug'
+    experiment_doc = Document.objects.create(
+        locale='en-US',
+        slug=no_revision_slug,
+        title='Has no revision yet'
+    )
+
+    build_sitemaps()
+
+    all_locs = []
+    # Python 3 has support for `glob('**/*.xml')` but for Python 2,
+    # we'll have to use os.walk().
+    for root, dirs, files in os.walk(settings.MEDIA_ROOT):
+        for file in files:
+            with open(os.path.join(root, file)) as f:
+                content = f.read()
+                all_locs.extend(re.findall('<loc>(.*?)</loc>', content))
+
+    # Exclude the inter-linking sitemaps
+    all_locs = [loc for loc in all_locs if not loc.endswith('.xml')]
+
+    # The all_locs will have one for each locale but we definitely shouldn't
+    # have any of the slugs that we know shouldn't be included
+    assert not [loc for loc in all_locs if legacy_slug in loc]
+    assert not [loc for loc in all_locs if experiment_slug in loc]
+    assert not [loc for loc in all_locs if no_revision_slug in loc]
+    assert not [loc for loc in all_locs if no_html_slug in loc]
+    # Just for sanity, we now check exactly which slugs we expect in entirety.
+    assert set([urlparse(loc).path for loc in all_locs]) == set([
+        '/en-US/', '/en-US/docs/top', '/sv-SE/'
+    ])
 
 
 class DeleteOldDocumentSpamAttemptData(UserTestCase):
