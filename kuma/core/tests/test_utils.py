@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 import pytest
-from django.test import TestCase
 from django.urls import get_urlconf, set_urlconf
 from django.utils.encoding import force_bytes
 
@@ -14,23 +13,23 @@ from kuma.core.utils import (
 )
 
 
-class SmartIntTestCase(TestCase):
-    def test_sanity(self):
-        assert 10 == smart_int('10')
-        assert 10 == smart_int('10.5')
+def test_smart_int():
+    # Sanity check
+    assert 10 == smart_int('10')
+    assert 10 == smart_int('10.5')
 
-    def test_int(self):
-        assert 10 == smart_int(10)
+    # Test int
+    assert 10 == smart_int(10)
 
-    def test_invalid_string(self):
-        assert 0 == smart_int('invalid')
+    # Invalid string
+    assert 0 == smart_int('invalid')
 
-    def test_empty_string(self):
-        assert 0 == smart_int('')
+    # Empty string
+    assert 0 == smart_int('')
 
-    def test_wrong_type(self):
-        assert 0 == smart_int(None)
-        assert 10 == smart_int([], 10)
+    # Wrong type
+    assert 0 == smart_int(None)
+    assert 10 == smart_int([], 10)
 
 
 @pytest.mark.parametrize(
