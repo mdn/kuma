@@ -1099,6 +1099,27 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         resp = self.github_login()
         self.assertRedirects(resp, self.signup_url)
 
+    def test_login_500_on_token(self):
+        resp = self.github_login(token_status_code=500)
+        # No redirect!
+        assert resp.status_code == 200
+        doc = pq(resp.content)
+        assert 'Account Sign In Failure' in doc.find('h1').text()
+
+    def test_login_500_on_getting_profile(self):
+        resp = self.github_login(profile_status_code=500)
+        # No redirect!
+        assert resp.status_code == 200
+        doc = pq(resp.content)
+        assert 'Account Sign In Failure' in doc.find('h1').text()
+
+    def test_login_500_on_getting_email_addresses(self):
+        resp = self.github_login(email_status_code=500)
+        # No redirect!
+        assert resp.status_code == 200
+        doc = pq(resp.content)
+        assert 'Account Sign In Failure' in doc.find('h1').text()
+
     @override_config(RECAPTCHA_PRIVATE_KEY='private_key',
                      RECAPTCHA_PUBLIC_KEY='public_key')
     def test_signin_captcha(self):

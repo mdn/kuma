@@ -125,7 +125,11 @@ class SocialTestMixin(object):
 
     def github_login(
             self, token_data=None, profile_data=None, email_data=None,
-            process='login'):
+            process='login',
+            token_status_code=200,
+            profile_status_code=200,
+            email_status_code=200,
+        ):
         """
         Mock a login to GitHub and return the response.
 
@@ -134,6 +138,9 @@ class SocialTestMixin(object):
         profile_data - GitHub profile data, or None for default
         email_data - GitHub email data, or None for default
         process - 'login', 'connect', or 'redirect'
+        token_status_code - HTTP code for posting token (default 200)
+        profile_status_code - HTTP code for getting profile (default 200)
+        email_status_code - HTTP code for getting email addresses (default 200)
         """
         login_url = reverse('github_login')
         callback_url = reverse('github_callback')
@@ -157,15 +164,20 @@ class SocialTestMixin(object):
             mock_requests.post(
                 GitHubOAuth2Adapter.access_token_url,
                 json=token_data or self.github_token_data,
-                headers={'content-type': 'application/json'})
+                headers={'content-type': 'application/json'},
+                status_code=token_status_code)
             # The authenticated user's profile data
             mock_requests.get(
                 GitHubOAuth2Adapter.profile_url,
-                json=profile_data or self.github_profile_data)
+                json=profile_data or self.github_profile_data,
+                status_code=profile_status_code)
             # The user's emails, which could be an empty list
             if email_data is None:
                 email_data = self.github_email_data
-            mock_requests.get(GitHubOAuth2Adapter.emails_url, json=email_data)
+            mock_requests.get(
+                GitHubOAuth2Adapter.emails_url,
+                json=email_data,
+                status_code=email_status_code)
 
             # Simulate the callback from Github
             data = {'code': 'github_code', 'state': state}
