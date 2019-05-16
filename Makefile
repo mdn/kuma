@@ -57,7 +57,7 @@ compilejsi18n:
 compile-react-i18n:
 	@ echo "## Generating React translation catalogs ##"
 	@ mkdir -p build/locale
-	@ python manage.py compilejsi18n -d react
+	@ python manage.py compilejsi18n -d react -f json
 
 collectstatic:
 	@ echo "## Compiling (Sass), collecting, and building static files ##"

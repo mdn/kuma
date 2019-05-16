@@ -6,16 +6,9 @@ import { css } from '@emotion/core';
 import ClockIcon from './icons/clock.svg';
 import ContributorsIcon from './icons/contributors.svg';
 import DocumentProvider from './document-provider.jsx';
-import gettext from './gettext.js';
-import LocaleProvider from './locale-provider.jsx';
+import { getLocale, gettext } from './l10n.js';
 import { Row } from './layout.jsx';
 import Header from './header/header.jsx';
-
-const strings = {
-    relatedTopics: gettext('Related Topics'),
-    contributorsToThisPage: gettext('Contributors to this page:'),
-    lastUpdatedBy: gettext('Last updated by:')
-};
 
 // A media query that identifies screens narrower than a tablet
 const NARROW = '@media (max-width: 749px)';
@@ -223,7 +216,9 @@ function Quicklinks() {
     return (
         documentData && (
             <div className="quick-links" css={styles.quicklinks}>
-                <div className="quick-links-head">{strings.relatedTopics}</div>
+                <div className="quick-links-head">
+                    {gettext('Related Topics')}
+                </div>
                 <div
                     dangerouslySetInnerHTML={{
                         __html: documentData.quickLinksHTML
@@ -255,14 +250,14 @@ function Article() {
 }
 
 function ArticleMetadata() {
-    const locale = useContext(LocaleProvider.context);
+    const locale = getLocale();
     const documentData = useContext(DocumentProvider.context);
     return (
         documentData && (
             <div css={styles.metadata}>
                 <div>
                     <ContributorsIcon css={styles.contributorsIcon} />{' '}
-                    <strong>{strings.contributorsToThisPage}</strong>{' '}
+                    <strong>{gettext('Contributors to this page:')}</strong>{' '}
                     {documentData.contributors.map((c, i) => (
                         <span key={c}>
                             {i > 0 && ', '}
@@ -274,7 +269,7 @@ function ArticleMetadata() {
                 </div>
                 <div>
                     <ClockIcon css={styles.clockIcon} />{' '}
-                    <strong>{strings.lastUpdatedBy}</strong>{' '}
+                    <strong>{gettext('Last updated by:')}</strong>{' '}
                     {documentData.lastModifiedBy}{' '}
                     <time dateTime={documentData.lastModified}>
                         {new Date(documentData.lastModified)

@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './app.jsx';
+import { localize } from './l10n.js';
 
 let container = document.getElementById('react-container');
 if (container) {
@@ -15,10 +16,11 @@ if (container) {
     // be garbage collected once it is no longer in use.
     window._react_data = null; // eslint-disable-line camelcase
 
+    // Store the string catalog so that l10n.gettext() can do translations
+    localize(data.requestData.locale, data.localizationData);
+
     // This is the React UI for a page of documentation
-    let app = (
-        <App documentData={data.documentData} requestData={data.requestData} />
-    );
+    let app = <App documentData={data.documentData} />;
 
     if (container.firstElementChild) {
         // If the container element is not empty, then it was presumably
