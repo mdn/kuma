@@ -1,3 +1,52 @@
+.contribution-page-header {
+    background-image: $payment-background-gradient;
+    min-width: 320px;
+    overflow: hidden;
+    position: relative;
+
+    .column-container {
+        box-sizing: border-box;
+        margin: 0 auto;
+        max-height: 100%;
+        max-width: $payment-header-max-width;
+        padding: $payment-header-padding;
+        position: relative;
+        transition: padding .3s ease;
+
+        > .column-half {
+            box-sizing: border-box;
+
+            .container {
+                margin: 0 auto;
+                max-width: $payment-column-max-width;
+            }
+        }
+
+        @media #{$mq-mobile-and-down} {
+            padding: $payment-header-padding-mobile;
+        }
+    }
+
+    /* Mozilla dino background image. */
+    .backdrop-image {
+        display: none;
+
+        @media #{$mq-small-desktop-and-up} {
+            bottom: -150px;
+            left: auto;
+            position: absolute;
+            right: 0;
+            z-index: -1;
+        }
+    }
+}
+
+.payment-terms-container {
+    margin: 0 auto;
+    padding: 16px 86px;
+    max-width: 1320px;
+}
+
 .contributions-page {
     .section {
         display: flex;
@@ -16,8 +65,7 @@
             .faqs {
                 display: block;
 
-                .faq,
-                .faq-feedback {
+                .faq {
                     margin: 30px 0;
                 }
             }
@@ -46,35 +94,12 @@
         }
     }
 
-    .faq-feedback {
-        margin: 2em;
-        position: relative;
-
-        textarea {
-            border-color: #333;
-            box-sizing: border-box;
-            display: block;
-            margin: 0;
-            min-height: 200px;
-            padding-bottom: 2em;
-            resize: none;
-            width: 100%;
-        }
-
-        button[type='submit'] {
-            border: none;
-            bottom: 5px;
-            position: absolute;
-            right: 5px;
-        }
-    }
-
     .faqs {
         flex: 60%;
 
         a {
-            border-bottom: 1px solid $payment-form-button-color;
-            color: $payment-form-button-color;
+            border-bottom: 1px solid $payment-faq-base-color;
+            color: $payment-faq-base-color;
             padding-bottom: 1px;
             text-decoration: none;
         }
@@ -82,7 +107,7 @@
         .faq {
             background-color: #fff;
             border: 2px solid $text-color;
-            border-radius: $payment-form-border-radius;
+            border-radius: $payment-faq-border-radius;
             margin: 2em;
             padding: 48px;
             position: relative;
@@ -113,36 +138,6 @@
                 display: block;
                 font-weight: 700;
             }
-
-            .feedback {
-                border: none;
-            }
-
-            button {
-                background: #fff;
-                border-color: $text-color;
-                border-radius: 50px;
-                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .3);
-                display: inline-block;
-                height: 60px;
-                margin: 1em .5em 0 0;
-                padding: 1em;
-                width: 60px;
-
-                &.active {
-                    background: #333;
-                    border-color: #333;
-                    color: #fff;
-                }
-
-                .icon {
-                    pointer-events: none;
-                }
-            }
-
-            .icon-thumbs-down {
-                transform: scaleX(-1);
-            }
         }
 
         h3 {
@@ -150,9 +145,5 @@
             font-weight: normal;
             margin-top: 0;
         }
-    }
-    .feedback-confirmation {
-        float: right;
-        color: $blue;
     }
 }

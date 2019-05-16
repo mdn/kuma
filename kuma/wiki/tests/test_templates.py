@@ -202,19 +202,6 @@ class DocumentTests(UserTestCase, WikiTestCase):
         response = self.client.get(urlparams(d.get_absolute_url()))
         self.assertNotContains(response, 'Redirected from ')
 
-    @mock.patch('kuma.payments.context_processors.enabled')
-    def test_does_not_include_csrf(self, mock_enabled):
-        """
-        The document should not include CSRF tokens, since it causes
-        problems when used with a CDN like CloudFront (see bugzilla #1456165).
-        """
-        mock_enabled.return_value = True
-        self.client.login(username='testuser', password='testpass')
-        d = document(save=True)
-        resp = self.client.get(d.get_absolute_url())
-        doc = pq(resp.content)
-        assert not doc('input[name="csrfmiddlewaretoken"]')
-
     def test_non_localizable_translate_disabled(self):
         """Non localizable document doesn't show tab for 'Localize'."""
         self.client.login(username='testuser', password='testpass')

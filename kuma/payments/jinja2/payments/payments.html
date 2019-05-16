@@ -16,27 +16,25 @@
 {% endblock %}
 
 {% block document_head %}
-    {% with form=form, is_popover=False, recurring_payment=recurring_payment %}
-        {% include "payments/includes/payments-banner.html" %}
-    {% endwith %}
+    <div class="contribution-page-header payment-confirmation">
+        <div class="column-container">
+            <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="" role="presentation" />
+            <div class="column">
+                <div class="column-half">
+                    <h1 class="highlight highlight-spanned">
+                        <span class="highlight-span">{{_('Thank you for supporting MDN.')}}</span>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% macro faq_entry(number, title) %}
     <li class="faq">
         <h3>{{ title }}</h3>
         <span class="faq-number">{{ number }}</span>
-            {{ caller() }}
-        <span class="small">{{_('Was this useful?')}}</span>
-        <div class="vote-button-group">
-            <button class="thumbs-up" data-faq="{{ number}}"
-                    aria-label="{{ _('Yes, this answered my question') }}">
-                {% include 'includes/icons/emojis/thumbs-up.svg' %}
-            </button>
-            <button class="thumbs-down" data-faq="{{ number }}"
-                    aria-label="{{ _('No, this did not answer my question') }}">
-                {% include 'includes/icons/emojis/thumbs-down.svg' %}
-            </button>
-        </div>
+        {{ caller() }}
     </li>
 {%- endmacro %}
 
@@ -212,12 +210,12 @@
                 {% endcall %}
                 {%- call faq_entry(12, _("How do I apply for a refund or cancel my payment?")) %}
                     <p>
-                        {% trans url='mailto:%s' % settings.CONTRIBUTION_SUPPORT_EMAIL,
-                                 email=settings.CONTRIBUTION_SUPPORT_EMAIL %}
+                        {% trans manage_subscription_url=url('recurring_payment_management') %}
                             If you would like to cancel your monthly payment or apply for a refund,
-                            you are free to do so at any point. Please contact
-                            <a href="{{ url }}">{{ email }}</a> to cancel. If you choose to cancel, we will not
-                            charge your payment card for subsequent months.
+                            you are free to do so at any point. Please cancel your subscription on
+                            the <a href="{{ manage_subscription_url }}">manage monthly subscriptions
+                            page</a>. If you choose to cancel, we will not charge your payment card
+                            for subsequent months.
                         {% endtrans %}
                     </p>
                 {% endcall %}
@@ -237,18 +235,6 @@
                     </p>
                 {% endcall %}
             </ol>
-        </section>
-        <section class="section">
-            <div class="index">
-                <h2>{{_('Feedback')}}</h2>
-            </div>
-            <div id="contribute-feedback" class="faqs clear feedback">
-                <form id="faq-feedback" class="faq-feedback">
-                    <textarea data-action="FAQ Any other questions" placeholder="{{_('Your feedback goes here')}}" name="faq-feedback" id="contribution-feedback" cols="30" rows="2"></textarea>
-                    <button type="submit"> {{_('Send')}} {% include 'includes/icons/arrows/arrow.svg' %}</button>
-                    <span class="feedback-confirmation hidden" aria-hidden="true">{{_('Thank you for submitting your feedback.')}}</span>
-                </form>
-            </div>
         </section>
     </main>
 {% endblock %}

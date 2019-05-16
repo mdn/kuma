@@ -138,14 +138,6 @@
     {% endblock %}
 {% endif %}
 
-{% block contrib_popup %}
-    {%- if contribution_popup %}
-        {%- with form=contribution_form, is_popover=True %}
-            {%- include "payments/includes/payments-banner.html" %}
-        {%- endwith %}
-    {%- endif %}
-{% endblock %}
-
 {% block js %}
   {{ super() }}
   {% if settings.NEWSLETTER %}
