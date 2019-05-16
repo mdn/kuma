@@ -8,7 +8,6 @@ from mock import MagicMock, patch
 
 from ..middleware import (
     ForceAnonymousSessionMiddleware,
-    LegacyDomainRedirectsMiddleware,
     RestrictedEndpointsMiddleware,
     RestrictedWhiteNoiseMiddleware,
     SetRemoteAddrFromForwardedFor,
@@ -120,68 +119,6 @@ def test_restricted_whitenoise_middleware(rf, settings):
         settings.ENABLE_RESTRICTIONS_BY_HOST = False
         request = rf.get('/foo', HTTP_HOST='demos')
         assert middleware(request) is sentinel
-
-
-@pytest.mark.parametrize('host', ['old1', 'old2', 'old3', 'new'])
-@pytest.mark.parametrize('site_url', ['http://new', 'https://new'])
-def test_legacy_domain_redirects_middleware(rf, settings, site_url, host):
-    path = '/foo/bar?x=3&y=yes'
-    settings.SITE_URL = site_url
-    settings.LEGACY_HOSTS = ['old1', 'old2', 'old3']
-    settings.ALLOWED_HOSTS.extend(['new'] + settings.LEGACY_HOSTS)
-
-    middleware = LegacyDomainRedirectsMiddleware(lambda req: None)
-    request = rf.get(path, HTTP_HOST=host)
-    response = middleware(request)
-
-    if host in settings.LEGACY_HOSTS:
-        assert response.status_code == 301
-        assert 'Location' in response
-        assert response['Location'] == site_url + path
-    else:
-        assert response is None
-
-
-@pytest.mark.parametrize('dest_path',
-                         ('//example.com/test',
-                          '////example.com/test',
-                          'http://example.com/test',
-                          'https://example.com/test'))
-@pytest.mark.parametrize('site_url', ('http://new', 'https://new'))
-def test_legacy_domain_redirects_middleware_rejects_url_paths(
-        rf, settings, dest_path, site_url):
-    '''The middleware rejects paths formated with full URLs.'''
-    settings.SITE_URL = site_url
-    settings.LEGACY_HOSTS = ['old']
-    settings.ALLOWED_HOSTS.extend(['new', 'old'])
-
-    middleware = LegacyDomainRedirectsMiddleware(lambda req: None)
-    request = rf.get(dest_path, HTTP_HOST='old')
-    response = middleware(request)
-
-    assert response.status_code == 301
-    assert response['Location'] == site_url + '/test'
-
-
-@pytest.mark.parametrize('site_url', ('http://new', 'https://new'))
-def test_legacy_domain_redirects_middleware_double_url_path(
-        rf, settings, site_url):
-    '''
-    The middleware doesn't fully reject double-encoded URLs.
-
-    This results in a 404 on developer.mozilla.org, not a redirect.
-    '''
-    settings.SITE_URL = site_url
-    settings.LEGACY_HOSTS = ['old']
-    settings.ALLOWED_HOSTS.extend(['new', 'old'])
-
-    path = 'http://example.com//http://example.com/test'
-    middleware = LegacyDomainRedirectsMiddleware(lambda req: None)
-    request = rf.get(path, HTTP_HOST='old')
-    response = middleware(request)
-
-    assert response.status_code == 301
-    assert response['Location'] == site_url + '//example.com/test'
 
 
 def test_waffle_cookie_domain_middleware(rf, settings):

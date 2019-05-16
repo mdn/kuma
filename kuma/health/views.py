@@ -86,7 +86,6 @@ def status(request):
             'BETA_SITE_URL': settings.BETA_SITE_URL,
             'DEBUG': settings.DEBUG,
             'INTERACTIVE_EXAMPLES_BASE': settings.INTERACTIVE_EXAMPLES_BASE,
-            'LEGACY_HOSTS': settings.LEGACY_HOSTS,
             'MAINTENANCE_MODE': settings.MAINTENANCE_MODE,
             'PROTOCOL': settings.PROTOCOL,
             'REVISION_HASH': settings.REVISION_HASH,
