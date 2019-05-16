@@ -8,7 +8,7 @@ from django.http import (HttpResponseForbidden,
                          HttpResponseRedirect)
 from django.urls import get_script_prefix, resolve, Resolver404
 from django.utils.encoding import smart_str
-from django.utils.six.moves.urllib.parse import urlsplit, urlunsplit
+from django.utils.six.moves.urllib.parse import urlsplit
 from waffle.middleware import WaffleMiddleware
 from whitenoise.middleware import WhiteNoiseMiddleware
 
@@ -348,21 +348,6 @@ class RestrictedWhiteNoiseMiddleware(WhiteNoiseMiddleware):
         return super(RestrictedWhiteNoiseMiddleware, self).process_request(
             request
         )
-
-
-class LegacyDomainRedirectsMiddleware(MiddlewareBase):
-    """Permanently redirects all requests from legacy domains."""
-
-    def __call__(self, request):
-        if request.get_host() in settings.LEGACY_HOSTS:
-            site_parts = urlsplit(settings.SITE_URL)
-            legacy_parts = urlsplit(request.get_full_path())
-
-            # Construct the destination URL with the scheme and domain from the
-            # SITE_URL, and the path, querystring, etc from the legacy URL.
-            dest_url = urlunsplit(site_parts[:2] + legacy_parts[2:])
-            return HttpResponsePermanentRedirect(dest_url)
-        return self.get_response(request)
 
 
 class WaffleWithCookieDomainMiddleware(WaffleMiddleware):

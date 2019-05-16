@@ -460,7 +460,6 @@ _CONTEXT_PROCESSORS = (
 
 MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
-    'kuma.core.middleware.LegacyDomainRedirectsMiddleware',
     'kuma.core.middleware.RestrictedWhiteNoiseMiddleware',
     # must come before LocaleMiddleware
     'redirect_urls.middleware.RedirectsMiddleware',
@@ -1206,8 +1205,6 @@ ALLOWED_HOSTS = config(
     default='developer-local.allizom.org, mdn-local.mozillademos.org',
     cast=Csv()
 )
-
-LEGACY_HOSTS = config('LEGACY_HOSTS', default='', cast=Csv())
 
 # Maximum length of the filename. Forms should use this and raise
 # ValidationError if the length is exceeded.
