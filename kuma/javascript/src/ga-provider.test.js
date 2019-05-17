@@ -1,6 +1,6 @@
 //@flow
 import React from 'react';
-import { create } from 'react-test-renderer';
+import { act, create } from 'react-test-renderer';
 
 import GAProvider from './ga-provider.jsx';
 
@@ -43,5 +43,64 @@ describe('GAProvider', () => {
         expect(window.ga).toBe(undefined);
         expect(contextConsumer.mock.calls.length).toBe(1);
         expect(typeof contextConsumer.mock.calls[0][0]).toBe('function');
+    });
+});
+
+// Test our custom clientId hook
+describe('GAProvider.useClientId', () => {
+    beforeEach(() => {
+        delete window.ga;
+    });
+
+    test('hook returns "" if there is no ga function', () => {
+        function Test() {
+            const clientId = GAProvider.useClientId();
+            expect(clientId).toBe('');
+            return null;
+        }
+
+        create(
+            <GAProvider>
+                <Test />
+            </GAProvider>
+        );
+    });
+
+    test('hook works if there is a ga function', done => {
+        const mockTrackerObject = {
+            get(p) {
+                return p === 'clientId' ? 'mockClientId' : '';
+            }
+        };
+
+        function mockGA(f) {
+            act(() => {
+                f(mockTrackerObject);
+            });
+        }
+        window.ga = mockGA;
+
+        let numCalls = 0;
+
+        function Test() {
+            const clientId = GAProvider.useClientId();
+            switch (numCalls) {
+                case 0:
+                    expect(clientId).toBe('');
+                    numCalls++;
+                    break;
+                case 1:
+                    expect(clientId).toBe('mockClientId');
+                    done();
+            }
+            return null;
+        }
+
+        create(
+            <GAProvider>
+                <Test />
+            </GAProvider>
+        );
+        act(() => {});
     });
 });

@@ -10,6 +10,7 @@ import gettext from './gettext.js';
 import LocaleProvider from './locale-provider.jsx';
 import { Row } from './layout.jsx';
 import Header from './header/header.jsx';
+import TaskCompletionSurvey from './task-completion-survey.jsx';
 
 const strings = {
     relatedTopics: gettext('Related Topics'),
@@ -292,6 +293,7 @@ export default function Page() {
     return (
         <>
             <Header />
+            <TaskCompletionSurvey />
             <div css={styles.pageLayout}>
                 <Titlebar />
                 <TOC />
