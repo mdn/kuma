@@ -13,6 +13,7 @@ from django.http import Http404
 from django.test import RequestFactory
 from pyquery import PyQuery as pq
 from pytz import timezone, utc
+from requests.exceptions import ProxyError, SSLError
 from waffle.models import Flag
 
 from kuma.core.tests import assert_no_cache_header
@@ -1129,6 +1130,39 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         assert resp.status_code == 200
         doc = pq(resp.content)
         assert 'Account Sign In Failure' in doc.find('h1').text()
+
+    def test_login_SSLError_on_getting_profile(self):
+        resp = self.github_login(profile_exc=SSLError)
+        # No redirect!
+        assert resp.status_code == 200
+        doc = pq(resp.content)
+        assert 'Account Sign In Failure' in doc.find('h1').text()
+
+    def test_login_ProxyError_on_getting_email_addresses(self):
+        resp = self.github_login(email_exc=ProxyError)
+        # No redirect!
+        assert resp.status_code == 200
+        doc = pq(resp.content)
+        assert 'Account Sign In Failure' in doc.find('h1').text()
+
+    @override_config(RECAPTCHA_PRIVATE_KEY='private_key',
+                     RECAPTCHA_PUBLIC_KEY='public_key')
+    def test_signin_captcha(self):
+        resp = self.github_login()
+        self.assertRedirects(resp, self.signup_url)
+
+        data = {'website': '',
+                'username': 'octocat',
+                'email': 'octo.cat@github-inc.com',
+                'terms': True,
+                'g-recaptcha-response': 'FAILED'}
+
+        with mock.patch('captcha.client.request') as request_mock:
+            request_mock.return_value.read.return_value = '{"success": null}'
+            response = self.client.post(self.signup_url, data=data, follow=True)
+        assert response.status_code == 200
+        assert (response.context['form'].errors ==
+                {'captcha': [u'Incorrect, please try again.']})
 
     def test_matching_user(self):
         self.github_login()
