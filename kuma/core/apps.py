@@ -6,6 +6,7 @@ from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 
 from kuma.celery import app
+from .checks import register
 
 
 class CoreConfig(AppConfig):
@@ -18,6 +19,7 @@ class CoreConfig(AppConfig):
 
     def ready(self):
         """Configure kuma.core after models are loaded."""
+        register()
 
         # Clean up expired sessions every 60 minutes
         from kuma.core.tasks import clean_sessions

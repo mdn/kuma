@@ -98,6 +98,7 @@ DATABASES = {
 
 
 SILENCED_SYSTEM_CHECKS = [
+    # TODO(peterb) Document/describe what this is and why its silenced.
     'django_mysql.W003',
 
     # As of django-recaptcha==2.0.4 it checks that you have set either
