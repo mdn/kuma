@@ -629,11 +629,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         assert len(already_spam) == 0
         assert len(not_spam) == 0
 
-    @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
-    def test_revisions_posted_different_docs(self, mock_form):
+    def test_revisions_posted_different_docs(self):
         """If user has made revisions and reviewer checked them to be reverted."""
-        # Mock the RevisionAkismetSubmissionSpamForm.is_valid() method
-        mock_form.return_value = True
         # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
         # Don't specify document so a new one is created for each revision
         revisions_created = self.create_revisions(
@@ -684,15 +681,12 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         assert len(already_spam) == 0
         assert len(not_spam) == 0
 
-    @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
-    def test_revisions_posted_same_doc(self, mock_form):
+    def test_revisions_posted_same_doc(self):
         """
         Only 1 revision per document should be shown on the summary page.  All
         revisions here are spam except for the original, so this document will
         be reverted.
         """
-        # Mock the RevisionAkismetSubmissionSpamForm.is_valid() method
-        mock_form.return_value = True
         # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
         revisions_created = self.create_revisions(
             num=3,
@@ -735,12 +729,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         assert len(already_spam) == 0
         assert len(not_spam) == 0
 
-    @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
-    def test_revisions_not_submitted_to_akismet(self, mock_form):
+    def test_revisions_not_submitted_to_akismet(self):
         """If revision not submitted to Akismet, summary template states this."""
-        # Mock the RevisionAkismetSubmissionSpamForm.is_valid() method
-        mock_form.return_value = False
-
         # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
         revisions_created = self.create_revisions(
             num=3,
@@ -761,7 +751,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         revisions_reported_as_spam = page.find('#revisions-reported-as-spam li')
         revisions_reverted = page.find('#revisions-reverted li')
         assert banned_user == self.testuser.username
-        assert len(revisions_reported_as_spam) == 0
+        assert len(revisions_reported_as_spam) == 1
         assert len(revisions_reverted) == 1
 
         # The "Needs follow up" section
@@ -770,7 +760,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         could_not_revert = page.find('#not-reverted li')
         # TODO: Add in Phase V
         # new_actions = page.find('#new-actions-by-user li')
-        assert len(not_submitted_to_akismet) == 1
+        assert len(not_submitted_to_akismet) == 0
         assert len(could_not_delete) == 0
         assert len(could_not_revert) == 0
         # TODO: Add in Phase V
@@ -782,12 +772,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         assert len(already_spam) == 0
         assert len(not_spam) == 0
 
-    @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
-    def test_no_revision_ids_posted(self, mock_form):
+    def test_no_revision_ids_posted(self):
         """POSTing without checking any revisions as spam."""
-        # Mock the RevisionAkismetSubmissionSpamForm.is_valid() method
-        mock_form.return_value = True
-
         # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
         self.create_revisions(
             num=3,
@@ -835,12 +821,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # The latest revision from each of the two documents should show up as 'not spam'
         assert len(not_spam) == 2
 
-    @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
-    def test_all_revisions_already_spam(self, mock_form):
+    def test_all_revisions_already_spam(self):
         """POSTing with all of user's revisions being marked as already spam."""
-        # Mock the RevisionAkismetSubmissionSpamForm.is_valid() method
-        mock_form.return_value = True
-
         # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
         revisions_created_self_document = self.create_revisions(
             num=3,
@@ -893,12 +875,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         assert len(already_spam) == 2
         assert len(not_spam) == 0
 
-    @patch('kuma.wiki.forms.RevisionAkismetSubmissionSpamForm.is_valid')
-    def test_some_revision_ids_posted(self, mock_form):
+    def test_some_revision_ids_posted(self):
         """POSTing having marked only some revisions as spam."""
-        # Mock the RevisionAkismetSubmissionSpamForm.is_valid() method
-        mock_form.return_value = True
-
         # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
         self.create_revisions(
             num=3,
@@ -957,12 +935,10 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         assert len(revisions_reverted) == 0
 
         # The "Needs follow up" section
-        not_submitted_to_akismet = page.find('#not-submitted-to-akismet li')
         could_not_delete = page.find('#not-deleted li')
         could_not_revert = page.find('#not-reverted li')
         # TODO: Add in Phase V
         # new_actions = page.find('#new-actions-by-user li')
-        assert len(not_submitted_to_akismet) == 0
         assert len(could_not_delete) == 0
         assert len(could_not_revert) == 0
         # TODO: Add in Phase V
