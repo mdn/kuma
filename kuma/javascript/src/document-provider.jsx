@@ -12,6 +12,8 @@ export type DocumentData = {
     id: number,
     title: string,
     summary: string,
+    language: string,
+    hrefLang: string,
     absoluteURL: string,
     editURL: string,
     bodyHTML: string,
@@ -21,6 +23,7 @@ export type DocumentData = {
     translations: Array<{
         locale: string,
         language: string,
+        hrefLang: string,
         localizedLanguage: string,
         url: string,
         title: string
