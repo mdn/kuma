@@ -852,27 +852,6 @@ def react_document(request, document_slug, document_locale):
     seo_parent_title = _get_seo_parent_title(
         doc, slug_dict, document_locale)
 
-    # Record the English slug in Google Analytics,
-    # to associate translations
-    if doc.locale == 'en-US':
-        en_slug = doc.slug
-    elif doc.parent_id and doc.parent.locale == 'en-US':
-        en_slug = doc.parent.slug
-    else:
-        en_slug = ''
-
-    share_text = ugettext(
-        'I learned about %(title)s on MDN.') % {"title": doc.title}
-
-    contributors = doc.contributors
-    contributors_count = len(contributors)
-    has_contributors = contributors_count > 0
-    other_translations = doc.get_other_translations(
-        fields=['title', 'locale', 'slug', 'parent']
-    )
-    all_locales = (set([doc.locale]) |
-                   set(trans.locale for trans in other_translations))
-
     # Get the JSON data for this document
     doc_api_data = document_api_data(doc, ensure_contributors=True)
     document_data = doc_api_data['documentData']
@@ -892,20 +871,9 @@ def react_document(request, document_slug, document_locale):
 
         # TODO: anything we're actually using in the template ought
         # to be bundled up into the json object above instead.
-        'document': doc,
-        'contributors': contributors,
-        'contributors_count': contributors_count,
-        'contributors_limit': 6,
-        'has_contributors': has_contributors,
         'fallback_reason': fallback_reason,
         'seo_summary': seo_summary,
         'seo_parent_title': seo_parent_title,
-        'share_text': share_text,
-        'search_url': get_search_url_from_referer(request) or '',
-        'analytics_page_revision': doc.current_revision_id,
-        'analytics_en_slug': en_slug,
-        'other_translations': other_translations,
-        'all_locales': all_locales,
     }
     response = render(request, 'wiki/react_document.html', context)
 
