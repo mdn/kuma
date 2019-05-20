@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 
 import GAProvider from './ga-provider.jsx';
 import { getLocale } from './l10n.js';
+import { navigateStart, navigateFetchComplete } from './perf.js';
 
 export type DocumentData = {
     locale: string,
@@ -68,6 +69,7 @@ export default function DocumentProvider(
 
         // This is the function that does client side navigation
         function navigate(url, slug) {
+            navigateStart();
             body.style.opacity = '0.15';
             // The fallback is for the case when we request a non-English
             // document that doesn't exist. In that case, before we abandon
@@ -95,6 +97,9 @@ export default function DocumentProvider(
                         // full page load of that document.
                         window.location = json.redirectURL;
                     } else {
+                        // Make a note of how long it took to fetch data.
+                        navigateFetchComplete();
+
                         let documentData = json.documentData;
                         // If the slug of the received document is different
                         // than the slug we requested, then we were redirected

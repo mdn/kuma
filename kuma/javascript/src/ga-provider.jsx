@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 
-type GAFunction = (...any) => void;
+export type GAFunction = (...any) => void;
 
 const noop: GAFunction = () => {};
 
