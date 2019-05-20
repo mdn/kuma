@@ -95,6 +95,7 @@ def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache,
     assert doc_data['id'] == trans_doc.id
     assert doc_data['title'] == trans_doc.title
     assert doc_data['language'] == trans_doc.language
+    assert doc_data['hrefLang'] == 'fr'
     assert doc_data['absoluteURL'] == trans_doc.get_absolute_url()
     assert doc_data['editURL'] == absolutify(trans_doc.get_edit_url(),
                                              for_wiki_site=True)
@@ -104,6 +105,7 @@ def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache,
     assert doc_data['translations'] == [{
         'locale': 'en-US',
         'language': 'English (US)',
+        'hrefLang': 'en',
         'localizedLanguage': u'Anglais am\u00e9ricain',
         'title': 'Root Document',
         'url': '/en-US/docs/Root'
@@ -149,6 +151,7 @@ def test_doc_api_for_redirect_to_doc(client, api_settings, root_doc,
     assert doc_data['id'] == root_doc.id
     assert doc_data['title'] == root_doc.title
     assert doc_data['language'] == root_doc.language
+    assert doc_data['hrefLang'] == 'en'
     assert doc_data['absoluteURL'] == root_doc.get_absolute_url()
     assert doc_data['editURL'] == absolutify(root_doc.get_edit_url(),
                                              for_wiki_site=True)

@@ -11,6 +11,8 @@ export const fakeDocumentData = {
     id: 42,
     title: '[fake document title]',
     summary: '[fake document summary]',
+    language: 'English (US)',
+    hrefLang: 'en',
     absoluteURL: '[fake absolute url]',
     editURL: '[fake edit url]',
     bodyHTML: '[fake body HTML]',
@@ -30,6 +32,7 @@ export const fakeDocumentData = {
         {
             locale: 'es',
             language: 'Español',
+            hrefLang: 'es',
             localizedLanguage: 'Spanish',
             url: '[fake spanish url]',
             title: '[fake spanish translation]'
