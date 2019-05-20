@@ -162,9 +162,9 @@ django-redirect-urls==1.0 \
 # Provide a caching provider to use Redis as a cache in Django
 # Code: https://github.com/niwinz/django-redis
 # Docs: http://niwinz.github.io/django-redis/latest/
-django-redis==4.9.0 \
-    --hash=sha256:15b47faef6aefaa3f47135a2aeb67372da300e4a4cf06809c66ab392686a2155 \
-    --hash=sha256:a90343c33a816073b735f0bed878eaeec4f83b75fcc0dce2432189b8ea130424
+django-redis==4.10.0 \
+    --hash=sha256:af0b393864e91228dd30d8c85b5c44d670b5524cb161b7f9e41acc98b6e5ace7 \
+    --hash=sha256:f46115577063d00a890867c6964ba096057f07cb756e78e0503b89cd18e4e083
 
 # RESTful API framework, used by search
 # Code: https://github.com/encode/django-rest-framework
@@ -315,9 +315,9 @@ raven==6.9.0 \
     --hash=sha256:95f44f3ea2c1b176d5450df4becdb96c15bf2632888f9ab193e9dd22300ce46a
 
 # Modern caching server, to replace memcached in AWS
-redis==2.10.5 \
-    --hash=sha256:97156b37d7cda4e7d8658be1148c983984e1a975090ba458cc7e244025191dbd \
-    --hash=sha256:5dfbae6acfc54edf0a7a415b99e0b21c0a3c27a7f787b292eea727b1facc5533
+redis==3.2.1 \
+    --hash=sha256:6946b5dca72e86103edc8033019cc3814c031232d339d5f4533b02ea85685175 \
+    --hash=sha256:8ca418d2ddca1b1a850afa1680a7d2fd1f3322739271de4b704e0d4668449273
 
 # Mock HTTP requests for tests
 requests-mock==0.7.0 \
