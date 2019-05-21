@@ -19,11 +19,15 @@ def sorted_json_dumps(o):
 real_json_dumps = json.dumps
 
 
+@pytest.mark.parametrize('locale', ['en-US', 'es'])
 @mock.patch('json.dumps')
-def test_server_side_render(mock_dumps, mock_requests, settings):
+@mock.patch('kuma.wiki.templatetags.ssr.get_localization_data')
+def test_server_side_render(mock_get_l10n_data, mock_dumps, locale,
+                            mock_requests, settings):
     """For server-side rendering expect a div with some content and
        a script with less data than we'd get for client-side rendering
     """
+
     mock_dumps.side_effect = sorted_json_dumps
 
     # This is the input to the mock Node server
@@ -38,9 +42,14 @@ def test_server_side_render(mock_dumps, mock_requests, settings):
         'contributors': contributors
     }
     request_data = {
-        'locale': 'en-US'
+        'locale': locale
     }
+
+    localization_data = {'catalog': {'s': locale}}
+    mock_get_l10n_data.side_effect = lambda l: localization_data
+
     data = {
+        'localizationData': localization_data,
         'documentData': document_data,
         'requestData': request_data
     }
@@ -52,7 +61,7 @@ def test_server_side_render(mock_dumps, mock_requests, settings):
     mock_requests.post(settings.SSR_URL, text=mock_html)
 
     # Run the template tag
-    output = ssr.render_react_app(document_data, request_data)
+    output = ssr.render_react_app(locale, document_data, request_data)
 
     # Make sure the output is as expected
     # The HTML attributes in the data should not be repeated in the output
@@ -64,18 +73,24 @@ def test_server_side_render(mock_dumps, mock_requests, settings):
 
 
 @mock.patch('json.dumps')
-def test_client_side_render(mock_dumps):
+@mock.patch('kuma.wiki.templatetags.ssr.get_localization_data')
+def test_client_side_render(mock_get_l10n_data, mock_dumps):
     """For client-side rendering expect a script json data and an empty div."""
+    localization_data = {'catalog': {'s': 't'}}
+    mock_get_l10n_data.side_effect = lambda l: localization_data
+
     mock_dumps.side_effect = sorted_json_dumps
     document_data = {'x': 'one', 'y': 2, 'z': ['a', 'b']}
     request_data = {
         'locale': 'en-US'
     }
     data = {
+        'localizationData': localization_data,
         'documentData': document_data,
         'requestData': request_data
     }
-    output = ssr.render_react_app(document_data, request_data, ssr=False)
+    output = ssr.render_react_app('en-US', document_data, request_data,
+                                  ssr=False)
     assert output == (
         u'<div id="react-container"></div>\n'
         u'<script>window._react_data = {};</script>\n'
@@ -86,14 +101,19 @@ def test_client_side_render(mock_dumps):
     requests.exceptions.ConnectionError,
     requests.exceptions.ReadTimeout])
 @mock.patch('json.dumps')
-def test_failed_server_side_render(mock_dumps, failure_class,
+@mock.patch('kuma.wiki.templatetags.ssr.get_localization_data')
+def test_failed_server_side_render(mock_get_l10n_data,
+                                   mock_dumps, failure_class,
                                    mock_requests, settings):
     """If SSR fails, we should do client-side rendering instead."""
+    localization_data = {'catalog': {'s': 't'}}
+    mock_get_l10n_data.side_effect = lambda l: localization_data
     mock_dumps.side_effect = sorted_json_dumps
     mock_requests.post(settings.SSR_URL, exc=failure_class('message'))
     document_data = {'x': 'one', 'y': 2, 'z': ['a', 'b']}
     request_data = {
         'locale': 'en-US'
     }
-    assert (ssr.render_react_app(document_data, request_data) ==
-            ssr.render_react_app(document_data, request_data, ssr=False))
+    assert (ssr.render_react_app('en-US', document_data, request_data) ==
+            ssr.render_react_app('en-US', document_data, request_data,
+                                 ssr=False))

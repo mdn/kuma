@@ -4,14 +4,13 @@ import { useContext } from 'react';
 import { css } from '@emotion/core';
 
 import DocumentProvider from '../document-provider.jsx';
+import { getLocale, gettext } from '../l10n.js';
 import LanguageMenu from './language-menu.jsx';
-import LocaleProvider from '../locale-provider.jsx';
 import Login from './login.jsx';
 import Logo from '../icons/logo.svg';
 import Dropdown from './dropdown.jsx';
 import { Row, Spring } from '../layout.jsx';
 import Search from './search.jsx';
-import gettext from '../gettext.js';
 
 const DESKTOP = '@media (min-width: 1024px)';
 const TABLET = '@media (min-width: 750px) and (max-width: 1023px)';
@@ -89,56 +88,56 @@ const styles = {
 
 const menus = [
     {
-        label: gettext('Technologies'),
+        label: 'Technologies',
         items: [
-            { url: 'Web/HTML', label: gettext('HTML') },
-            { url: 'Web/CSS', label: gettext('CSS') },
-            { url: 'Web/JavaScript', label: gettext('JavaScript') },
-            { url: 'Web/Guide/Graphics', label: gettext('Graphics') },
-            { url: 'Web/HTTP', label: gettext('HTTP') },
-            { url: 'Web/API', label: gettext('APIs / DOM') },
+            { url: 'Web/HTML', label: 'HTML' },
+            { url: 'Web/CSS', label: 'CSS' },
+            { url: 'Web/JavaScript', label: 'JavaScript' },
+            { url: 'Web/Guide/Graphics', label: 'Graphics' },
+            { url: 'Web/HTTP', label: 'HTTP' },
+            { url: 'Web/API', label: 'APIs / DOM' },
             {
                 url: 'Mozilla/Add-ons/WebExtensions',
-                label: gettext('Browser Extensions')
+                label: 'Browser Extensions'
             },
-            { url: 'Web/MathML', label: gettext('MathML') }
+            { url: 'Web/MathML', label: 'MathML' }
         ]
     },
     {
-        label: gettext('References & Guides'),
+        label: 'References & Guides',
         items: [
-            { url: 'Learn', label: gettext('Learn web development') },
-            { url: 'Web/Tutorials', label: gettext('Tutorials') },
-            { url: 'Web/Reference', label: gettext('References') },
-            { url: 'Web/Guide', label: gettext('Developer Guides') },
-            { url: 'Web/Accessibility', label: gettext('Accessibility') },
-            { url: 'Games', label: gettext('Game development') },
-            { url: 'Web', label: gettext('...more docs') }
+            { url: 'Learn', label: 'Learn web development' },
+            { url: 'Web/Tutorials', label: 'Tutorials' },
+            { url: 'Web/Reference', label: 'References' },
+            { url: 'Web/Guide', label: 'Developer Guides' },
+            { url: 'Web/Accessibility', label: 'Accessibility' },
+            { url: 'Games', label: 'Game development' },
+            { url: 'Web', label: '...more docs' }
         ]
     },
     {
-        label: gettext('Feedback'),
+        label: 'Feedback',
         items: [
             {
                 url: 'https://support.mozilla.org/',
-                label: gettext('Get Firefox help'),
+                label: 'Get Firefox help',
                 external: true
             },
             {
                 url: 'https://stackoverflow.com/',
-                label: gettext('Get web development help'),
+                label: 'Get web development help',
                 external: true
             },
-            { url: 'MDN/Community', label: gettext('Join the MDN community') },
+            { url: 'MDN/Community', label: 'Join the MDN community' },
             {
-                label: gettext('Report a content problem'),
+                label: 'Report a content problem',
                 external: true,
                 // See fixurl() for code that replaces the {{SLUG}}
                 url:
                     'https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title={{SLUG}}'
             },
             {
-                label: gettext('Report a bug'),
+                label: 'Report a bug',
                 external: true,
                 url: 'https://bugzilla.mozilla.org/form.mdn'
             }
@@ -148,7 +147,7 @@ const menus = [
 
 export default function Header(): React.Node {
     const documentData = useContext(DocumentProvider.context);
-    const locale = useContext(LocaleProvider.context);
+    const locale = getLocale();
     if (!documentData) {
         return null;
     }
@@ -170,7 +169,7 @@ export default function Header(): React.Node {
             </a>
             <Row css={styles.menus}>
                 {menus.map((m, index) => (
-                    <Dropdown label={m.label} key={index}>
+                    <Dropdown label={gettext(m.label)} key={index}>
                         {m.items.map((item, index) => (
                             <li key={index}>
                                 {item.external ? (
@@ -179,10 +178,12 @@ export default function Header(): React.Node {
                                         rel="noopener noreferrer"
                                         href={fixurl(item.url)}
                                     >
-                                        {item.label} &#x1f310;
+                                        {gettext(item.label)} &#x1f310;
                                     </a>
                                 ) : (
-                                    <a href={fixurl(item.url)}>{item.label}</a>
+                                    <a href={fixurl(item.url)}>
+                                        {gettext(item.label)}
+                                    </a>
                                 )}
                             </li>
                         ))}

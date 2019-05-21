@@ -1,15 +1,31 @@
 from __future__ import print_function
 
 import json
+import os
 
 import requests
 import requests.exceptions
 from django.conf import settings
+from django.utils import lru_cache
 from django_jinja import library
 
 
+@lru_cache.lru_cache()
+def get_localization_data(locale):
+    """
+    Read the frontend string catalog for the specified locale, parse
+    it as JSON, and return the resulting dict. The returned values
+    are cached so that we don't have to read files all the time.
+    """
+    path = os.path.join(settings.BASE_DIR,
+                        'static', 'jsi18n',
+                        locale, 'react.json')
+    with open(path, 'r') as f:
+        return json.load(f)
+
+
 @library.global_function
-def render_react_app(document_data, request_data, ssr=True):
+def render_react_app(locale, document_data, request_data, ssr=True):
     """
     Render a script tag to define the data and any other HTML tags needed
     to enable the display of a React-based UI. By default, this does
@@ -21,6 +37,7 @@ def render_react_app(document_data, request_data, ssr=True):
     The code in this file is specific to Kuma's React-based UI.
     """
     data = {
+        'localizationData': get_localization_data(locale),
         'documentData': document_data,
         'requestData': request_data
     }

@@ -4,13 +4,8 @@ import { useContext } from 'react';
 import { css } from '@emotion/core';
 
 import DocumentProvider from '../document-provider.jsx';
-import gettext from '../gettext.js';
-import LocaleProvider from '../locale-provider.jsx';
+import { getLocale, gettext } from '../l10n.js';
 import SearchIcon from '../icons/search.svg';
-
-const strings = {
-    placeholder: gettext('Search MDN')
-};
 
 const styles = {
     container: css({
@@ -40,7 +35,7 @@ const styles = {
 };
 
 export default function Search() {
-    const locale = useContext(LocaleProvider.context);
+    const locale = getLocale();
     const documentData = useContext(DocumentProvider.context);
     if (!documentData) {
         return null;
@@ -69,7 +64,7 @@ export default function Search() {
                 type="search"
                 id="main-q"
                 name="q"
-                placeholder={strings.placeholder}
+                placeholder={gettext('Search MDN')}
             />
         </form>
     );

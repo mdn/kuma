@@ -7,18 +7,10 @@ import { css } from '@emotion/core';
 import DocumentProvider from '../document-provider.jsx';
 import Dropdown from './dropdown.jsx';
 import EditIcon from '../icons/pencil.svg';
-import gettext from '../gettext.js';
+import { getLocale, gettext } from '../l10n.js';
 import GithubLogo from '../icons/github.svg';
-import LocaleProvider from '../locale-provider.jsx';
 import { Row, Strut } from '../layout.jsx';
 import UserProvider from '../user-provider.jsx';
-
-const strings = {
-    signIn: gettext('Sign in'),
-    viewProfile: gettext('View profile'),
-    editProfile: gettext('Edit profile'),
-    signOut: gettext('Sign out')
-};
 
 const styles = {
     container: css({
@@ -64,7 +56,7 @@ const styles = {
 };
 
 export default function Login(): React.Node {
-    const locale = useContext(LocaleProvider.context);
+    const locale = getLocale();
     const documentData = useContext(DocumentProvider.context);
     if (!documentData) {
         return null;
@@ -96,26 +88,19 @@ export default function Login(): React.Node {
                 alt={userData.username}
             />
         );
+        let viewProfileLink = `${WIKI_SITE_URL}/${locale}/profiles/${
+            userData.username
+        }`;
+        let editProfileLink = `${viewProfileLink}/edit`;
+
         return (
             <Row css={styles.container}>
                 <Dropdown label={label} right={true}>
                     <li>
-                        <a
-                            href={`${WIKI_SITE_URL}/${locale}/profiles/${
-                                userData.username
-                            }`}
-                        >
-                            {strings.viewProfile}
-                        </a>
+                        <a href={viewProfileLink}>{gettext('View profile')}</a>
                     </li>
                     <li>
-                        <a
-                            href={`${WIKI_SITE_URL}/${locale}/profiles/${
-                                userData.username
-                            }/edit`}
-                        >
-                            {strings.editProfile}
-                        </a>
+                        <a href={editProfileLink}>{gettext('Edit profile')}</a>
                     </li>
                     <li>
                         <form
@@ -124,7 +109,7 @@ export default function Login(): React.Node {
                         >
                             <input name="next" type="hidden" value={PATHNAME} />
                             <button css={styles.signOutButton} type="submit">
-                                {strings.signOut}
+                                {gettext('Sign out')}
                             </button>
                         </form>
                     </li>
@@ -144,7 +129,7 @@ export default function Login(): React.Node {
                 rel="nofollow"
                 css={styles.signInLink}
             >
-                {strings.signIn} <GithubLogo css={styles.icon} />
+                {gettext('Sign in')} <GithubLogo css={styles.icon} />
             </a>
         );
     }

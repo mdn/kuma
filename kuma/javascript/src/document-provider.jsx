@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 
 import GAProvider from './ga-provider.jsx';
-import LocaleProvider from './locale-provider.jsx';
+import { getLocale } from './l10n.js';
 
 export type DocumentData = {
     locale: string,
@@ -40,7 +40,7 @@ type DocumentProviderProps = {
 export default function DocumentProvider(
     props: DocumentProviderProps
 ): React.Node {
-    const locale = useContext(LocaleProvider.context);
+    const locale = getLocale();
     const [documentData, setDocumentData] = useState(props.initialDocumentData);
     const ga = useContext(GAProvider.context);
 
