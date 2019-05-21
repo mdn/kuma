@@ -5,7 +5,7 @@ import pytest
 from pages.article import ArticlePage
 from utils.urls import assert_valid_url
 
-ARTICLE_NAME = 'Send feedback (about|on) MDN'
+ARTICLE_NAME = 'Send feedback about MDN Web Docs'
 
 
 @pytest.mark.smoke
