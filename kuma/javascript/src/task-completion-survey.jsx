@@ -6,9 +6,8 @@ import css from '@emotion/css';
 import CloseIcon from './icons/close.svg';
 import DocumentProvider from './document-provider.jsx';
 import GAProvider from './ga-provider.jsx';
-import LocaleProvider from './locale-provider.jsx';
+import { getLocale, gettext } from './l10n.js';
 import UserProvider from './user-provider.jsx';
-import gettext from './gettext.js';
 
 const styles = {
     notification: css({
@@ -85,9 +84,9 @@ export default function TaskCompletionSurvey() {
     const documentData = useContext(DocumentProvider.context);
     const ga = useContext(GAProvider.context);
     const clientId = GAProvider.useClientId();
-    const locale = useContext(LocaleProvider.context);
     const userData = useContext(UserProvider.context);
     const [isDismissed, setDismissed] = useState(false);
+    const locale = getLocale();
 
     // Show the notification if...
     const shouldShow =
