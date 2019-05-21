@@ -52,10 +52,28 @@ export default function DocumentProvider(
         }
         const body = document.body;
 
+        function fetchWithFallback(url1: string, url2: string) {
+            const fetchConfig = { redirect: 'follow' };
+            return fetch(url1, fetchConfig).then(response => {
+                if (response.ok || !url2 || url2 === url1) {
+                    return response;
+                } else {
+                    return fetch(url2, fetchConfig);
+                }
+            });
+        }
+
         // This is the function that does client side navigation
         function navigate(url, slug) {
             body.style.opacity = '0.15';
-            fetch(`/api/v1/doc/${locale}/${slug}`, { redirect: 'follow' })
+            // The fallback is for the case when we request a non-English
+            // document that doesn't exist. In that case, before we abandon
+            // client-side navigation, we'll try falling-back to the English
+            // document.
+            fetchWithFallback(
+                `/api/v1/doc/${locale}/${slug}`,
+                `/api/v1/doc/en-US/${slug}`
+            )
                 .then(response => {
                     if (response.ok) {
                         return response.json();
