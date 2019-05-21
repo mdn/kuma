@@ -13,9 +13,24 @@
     <meta property="og:title" content="{{ social_title }}">
 {% endblock %}
 
+{% block document_head %}
+    <div class="contribution-page-header payment-confirmation">
+        <div class="column-container">
+            <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="" role="presentation" />
+            <div class="column">
+                <div class="column-half">
+                    <h1 class="highlight highlight-spanned">
+                        <span class="highlight-span">{{_('MDN Web Docs payment terms')}}</span>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
 
 {% block content %}
-    <div>
+    <div class="payment-terms-container">
         <h2>Payment terms</h2>
         <p>
             Mozilla (that’s us) operates MDN Web Docs.

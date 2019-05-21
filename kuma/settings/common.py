@@ -454,7 +454,6 @@ _CONTEXT_PROCESSORS = (
     'kuma.core.context_processors.next_url',
 
     'constance.context_processors.config',
-    'kuma.payments.context_processors.global_contribution_form',
 )
 
 
@@ -1024,21 +1023,9 @@ PIPELINE_JS = {
     },
     'payments': {
         'source_filenames': (
-            'js/components/payments/focus-visible.js',
-            'js/components/payments/payments-handler-utils.js',
-            'js/components/payments/payments-handler.js',
-            'js/components/payments/payments-faq.js',
-            'js/tooltip.js',
             'js/components/payments/payments-manage.js',
         ),
         'output_filename': 'build/js/payments.js',
-    },
-    'payments-confirmation': {
-        'source_filenames': (
-            'js/components/payments/payments-faq.js',
-            'js/components/payments/payments-confirmation.js',
-        ),
-        'output_filename': 'build/js/payments-confirmation.js',
     },
     'framebuster': {
         'source_filenames': (
@@ -1423,7 +1410,6 @@ CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND',
 CELERY_ACCEPT_CONTENT = ['pickle']
 
 CELERY_IMPORTS = (
-    'kuma.payments.tasks',
     'kuma.search.tasks',
     'tidings.events',
 )
@@ -1478,9 +1464,6 @@ CELERY_ROUTES = {
         'queue': 'mdn_emails'
     },
     'kuma.users.tasks.email_document_progress': {
-        'queue': 'mdn_emails'
-    },
-    'kuma.payments.tasks.contribute_thank_you_email': {
         'queue': 'mdn_emails'
     },
     'kuma.wiki.tasks.send_first_edit_email': {
@@ -1877,9 +1860,6 @@ STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY', default='')
 STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
 STRIPE_PRODUCT_ID = config('STRIPE_PRODUCT_ID', default='')
 MDN_CONTRIBUTION = config('MDN_CONTRIBUTION', False, cast=bool)
-MDN_CONTRIBUTION_CONFIRMATION_EMAIL = config('MDN_CONTRIBUTION_CONFIRMATION_EMAIL', False, cast=bool)
-CONTRIBUTION_FORM_CHOICES = [32, 64, 128]
-RECURRING_PAYMENT_FORM_CHOICES = [4, 8, 16]
 CONTRIBUTION_SUPPORT_EMAIL = config('CONTRIBUTION_SUPPORT_EMAIL',
                                     default='mdn-support@mozilla.com')
 if MDN_CONTRIBUTION:
