@@ -5,12 +5,14 @@ import json
 import boto3
 from celery import task
 from django.conf import settings
+from django.template.loader import render_to_string
 
 from kuma.core.utils import chunked
 from kuma.wiki.models import Document
+from kuma.wiki.views.document import get_seo_parent_title
+from kuma.wiki.views.utils import split_slug
 
 from .v1.views import document_api_data, get_content_based_redirect, get_s3_key
-
 
 _s3_resource = None
 S3_MAX_KEYS_PER_DELETE = 1000
@@ -37,6 +39,53 @@ def get_s3_bucket(config=None):
         return None
     s3 = get_s3_resource(config=config)
     return s3.Bucket(settings.MDN_API_S3_BUCKET_NAME)
+
+
+# If an english document does not have its own translation, we'll publish
+# pre-rendered HTML for all of these locales. Other, lesser-used locales
+# will be rendered on demand.
+PRIORITY_LOCALES = (
+    'fr',
+    'es',
+    'zh-CN',
+    'ru',
+    'ja',
+    'pt-BR',
+    'de',
+    'ko',
+    'zh-TW',
+    'pl',
+    'it',
+)
+
+
+# TODO: also need to handle the unpublish case
+def publish_html_for_locale(doc, locale, data, s3_bucket, log):
+    context = {
+        'document_data': data['documentData'],
+        'request_data': {
+            'locale': locale
+        },
+        'seo_summary': doc.get_summary_text(),
+        'seo_parent_title': get_seo_parent_title(
+            doc, split_slug(doc.slug), locale),
+        # the render() function used in document.py must pass settings
+        # automatically. We've got to pass it explicitly here.
+        'settings': settings,
+    }
+    # TODO: this does not work because react_document.html references
+    # the request object in a number of places. Need to refactor that
+    # so that any request-related data is in the context object.
+    html = render_to_string('wiki/react_document.html', context)
+    kwargs = dict(
+        ACL='public-read',
+        Key='{}/docs/{}'.format(locale, doc.slug),
+        ContentType='application/html',
+        ContentLanguage=locale,
+        Body=html
+    )
+    s3_object = s3_bucket.put_object(**kwargs)
+    log.info('Published {!r}'.format(s3_object))
 
 
 @task
@@ -111,6 +160,20 @@ def publish(doc_pks, log=None, completion_message=None):
             kwargs.update(Body=json.dumps(data))
         s3_object = s3_bucket.put_object(**kwargs)
         log.info('Published {!r}'.format(s3_object))
+
+        if not redirect:  # not sure how to handle the redirect case
+            # First, publish the HTML for the locale of the document
+            publish_html_for_locale(doc, doc.locale, data, s3_bucket, log)
+
+            # Next, if the document is in English, then publish it for
+            # any of the priority locales for which it does not have
+            # its own translation
+            if doc.locale == 'en-US':
+                translations = set([t.locale for t in data.translations])
+                for locale in PRIORITY_LOCALES:
+                    if locale not in translations:
+                        publish_html_for_locale(doc, locale, data,
+                                                s3_bucket, log)
 
     if completion_message:
         log.info(completion_message)

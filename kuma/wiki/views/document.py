@@ -113,7 +113,7 @@ def _make_doc_structure(document, level, expand, depth):
     return result
 
 
-def _get_seo_parent_title(document, slug_dict, document_locale):
+def get_seo_parent_title(document, slug_dict, document_locale):
     """
     Get parent-title information for SEO purposes.
     """
@@ -716,7 +716,7 @@ def document(request, document_slug, document_locale):
         seo_summary = doc.get_summary_text()
 
         # Get the additional title information, if necessary.
-        seo_parent_title = _get_seo_parent_title(
+        seo_parent_title = get_seo_parent_title(
             original_doc, slug_dict, document_locale)
 
         # Retrieve pre-parsed content hunks
@@ -849,7 +849,7 @@ def react_document(request, document_slug, document_locale):
     seo_summary = doc.get_summary_text()
 
     # Get the additional title information, if necessary.
-    seo_parent_title = _get_seo_parent_title(
+    seo_parent_title = get_seo_parent_title(
         doc, slug_dict, document_locale)
 
     # Get the JSON data for this document
