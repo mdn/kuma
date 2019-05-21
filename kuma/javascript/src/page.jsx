@@ -1,15 +1,22 @@
 // @flow
 import * as React from 'react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { css } from '@emotion/core';
 
 import ClockIcon from './icons/clock.svg';
 import ContributorsIcon from './icons/contributors.svg';
 import DocumentProvider from './document-provider.jsx';
+import GAProvider from './ga-provider.jsx';
 import { getLocale, gettext } from './l10n.js';
 import { Row } from './layout.jsx';
 import Header from './header/header.jsx';
 import TaskCompletionSurvey from './task-completion-survey.jsx';
+import { navigateRenderComplete } from './perf.js';
+
+import type { DocumentData } from './document-provider.jsx';
+type DocumentProps = {
+    document: DocumentData
+};
 
 // A media query that identifies screens narrower than a tablet
 const NARROW = '@media (max-width: 749px)';
@@ -147,138 +154,142 @@ const styles = {
     })
 };
 
-function Titlebar() {
-    const documentData = useContext(DocumentProvider.context);
-
+function Titlebar({ document }: DocumentProps) {
     return (
-        documentData && (
-            <Row css={styles.titlebar}>
-                <h1 css={styles.title}>{documentData.title}</h1>
-            </Row>
-        )
+        <Row css={styles.titlebar}>
+            <h1 css={styles.title}>{document.title}</h1>
+        </Row>
     );
 }
 
-function TOC() {
-    const documentData = useContext(DocumentProvider.context);
-
+function TOC({ document }: DocumentProps) {
     return (
-        documentData && (
-            <Row
-                css={styles.toc}
-                dangerouslySetInnerHTML={{
-                    __html: `<ol>${documentData.tocHTML}</ol>`
-                }}
-            />
-        )
+        <Row
+            css={styles.toc}
+            dangerouslySetInnerHTML={{
+                __html: `<ol>${document.tocHTML}</ol>`
+            }}
+        />
     );
 }
 
-function Sidebar() {
-    const documentData = useContext(DocumentProvider.context);
-
+function Sidebar({ document }: DocumentProps) {
     return (
-        documentData && (
-            <div css={styles.sidebar}>
-                <Breadcrumbs />
-                <Quicklinks />
-            </div>
-        )
+        <div css={styles.sidebar}>
+            <Breadcrumbs document={document} />
+            <Quicklinks document={document} />
+        </div>
     );
 }
 
-function Breadcrumbs() {
-    const documentData = useContext(DocumentProvider.context);
-
+function Breadcrumbs({ document }: DocumentProps) {
     // The <span> elements below aren't needed except that the stylesheets
     // are set up to expect them.
     return (
-        documentData && (
-            <nav className="crumbs" role="navigation">
-                <ol>
-                    {documentData.parents.map(p => (
-                        <li className="crumb" key={p.url}>
-                            <a href={p.url}>
-                                <span>{p.title}</span>
-                            </a>
-                        </li>
-                    ))}
-                    <li className="crumb">
-                        <span>{documentData.title}</span>
+        <nav className="crumbs" role="navigation">
+            <ol>
+                {document.parents.map(p => (
+                    <li className="crumb" key={p.url}>
+                        <a href={p.url}>
+                            <span>{p.title}</span>
+                        </a>
                     </li>
-                </ol>
-            </nav>
-        )
+                ))}
+                <li className="crumb">
+                    <span>{document.title}</span>
+                </li>
+            </ol>
+        </nav>
     );
 }
 
-function Quicklinks() {
-    const documentData = useContext(DocumentProvider.context);
+function Quicklinks({ document }: DocumentProps) {
     return (
-        documentData && (
-            <div className="quick-links" css={styles.quicklinks}>
-                <div className="quick-links-head">
-                    {gettext('Related Topics')}
-                </div>
-                <div
-                    dangerouslySetInnerHTML={{
-                        __html: documentData.quickLinksHTML
-                    }}
-                />
-            </div>
-        )
+        <div className="quick-links" css={styles.quicklinks}>
+            <div className="quick-links-head">{gettext('Related Topics')}</div>
+            <div
+                dangerouslySetInnerHTML={{
+                    __html: document.quickLinksHTML
+                }}
+            />
+        </div>
     );
 }
 
-function Article() {
-    const documentData = useContext(DocumentProvider.context);
+function Article({ document }: DocumentProps) {
     return (
         /*
          * The "text-content" class and "wikiArticle" id are required
          * because our stylesheets expect them and formatting isn't quite
          * right without them.
          */
-        documentData && (
-            <div className="text-content" css={styles.article}>
-                <article
-                    id="wikiArticle"
-                    dangerouslySetInnerHTML={{ __html: documentData.bodyHTML }}
-                />
-                <ArticleMetadata />
-            </div>
-        )
+        <div className="text-content" css={styles.article}>
+            <article
+                id="wikiArticle"
+                dangerouslySetInnerHTML={{ __html: document.bodyHTML }}
+            />
+            <ArticleMetadata document={document} />
+        </div>
     );
 }
 
-function ArticleMetadata() {
+function ArticleMetadata({ document }: DocumentProps) {
     const locale = getLocale();
-    const documentData = useContext(DocumentProvider.context);
     return (
-        documentData && (
-            <div css={styles.metadata}>
-                <div>
-                    <ContributorsIcon css={styles.contributorsIcon} />{' '}
-                    <strong>{gettext('Contributors to this page:')}</strong>{' '}
-                    {documentData.contributors.map((c, i) => (
-                        <span key={c}>
-                            {i > 0 && ', '}
-                            <a href={`/${locale}/profiles/${c}`} rel="nofollow">
-                                {c}
-                            </a>
-                        </span>
-                    ))}
-                </div>
-                <div>
-                    <ClockIcon css={styles.clockIcon} />{' '}
-                    <strong>{gettext('Last updated by:')}</strong>{' '}
-                    {documentData.lastModifiedBy}{' '}
-                    <time dateTime={documentData.lastModified}>
-                        {new Date(documentData.lastModified)
-                            .toISOString()
-                            .slice(0, -5)
-                            .replace('T', ' ')}
-                    </time>
-                </div>
+        <div css={styles.metadata}>
+            <div>
+                <ContributorsIcon css={styles.contributorsIcon} />{' '}
+                <strong>{gettext('Contributors to this page:')}</strong>{' '}
+                {document.contributors.map((c, i) => (
+                    <span key={c}>
+                        {i > 0 && ', '}
+                        <a href={`/${locale}/profiles/${c}`} rel="nofollow">
+                            {c}
+                        </a>
+                    </span>
+                ))}
+            </div>
+            <div>
+                <ClockIcon css={styles.clockIcon} />{' '}
+                <strong>{gettext('Last updated by:')}</strong>{' '}
+                {document.lastModifiedBy}{' '}
+                <time dateTime={document.lastModified}>
+                    {new Date(document.lastModified)
+                        .toISOString()
+                        .slice(0, -5)
+                        .replace('T', ' ')}
+                </time>
+            </div>
+        </div>
+    );
+}
+
+function Document() {
+    const document = useContext(DocumentProvider.context);
+    const ga = useContext(GAProvider.context);
+
+    /*
+     * Register an effect that runs every time we see a new document URL.
+     * The effect sends a Google Analytics timing event to record how long
+     * it took from the start of the navigation until the new document is
+     * rendered.
+     *
+     * Effects don't run during server-side-rendering, but that is fine
+     * because we only want to send the GA event for client-side navigation.
+     * Calling navigateRenderComplete() will have no effect if
+     * navigateStart() was not previously called.
+     */
+    useEffect(() => {
+        navigateRenderComplete(ga);
+    }, [document && document.absoluteURL]);
+
+    return (
+        document && (
+            <div css={styles.pageLayout}>
+                <Titlebar document={document} />
+                <TOC document={document} />
+                <Article document={document} />
+                <Sidebar document={document} />
             </div>
         )
     );
@@ -289,12 +300,7 @@ export default function Page() {
         <>
             <Header />
             <TaskCompletionSurvey />
-            <div css={styles.pageLayout}>
-                <Titlebar />
-                <TOC />
-                <Article />
-                <Sidebar />
-            </div>
+            <Document />
         </>
     );
 }
