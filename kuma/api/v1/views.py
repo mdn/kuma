@@ -108,6 +108,11 @@ def document_api_data(doc=None, ensure_contributors=False, redirect_url=None):
     else:
         en_slug = ''
 
+    other_translations = doc.get_other_translations(
+        fields=('locale', 'slug', 'title'))
+    available_locales = (
+        set([doc.locale]) | set(t.locale for t in other_translations))
+
     return {
         'documentData': {
             'locale': doc.locale,
@@ -117,6 +122,7 @@ def document_api_data(doc=None, ensure_contributors=False, redirect_url=None):
             'title': doc.title,
             'summary': doc.get_summary_html(),
             'language': doc.language,
+            'hrefLang': doc.get_hreflang(available_locales),
             'absoluteURL': doc.get_absolute_url(),
             'editURL': absolutify(doc.get_edit_url(), for_wiki_site=True),
             'bodyHTML': doc.get_body_html(),
@@ -131,12 +137,12 @@ def document_api_data(doc=None, ensure_contributors=False, redirect_url=None):
             'translations': [
                 {
                     'language': t.language,
+                    'hrefLang': t.get_hreflang(available_locales),
                     'localizedLanguage': _(settings.LOCALES[t.locale].english),
                     'locale': t.locale,
                     'url': t.get_absolute_url(),
                     'title': t.title
-                } for t in doc.get_other_translations(
-                    fields=('locale', 'slug', 'title'))
+                } for t in other_translations
             ],
             'contributors': contributors,
             'lastModified': (doc.current_revision and

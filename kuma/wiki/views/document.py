@@ -799,12 +799,10 @@ def react_document(request, document_slug, document_locale):
     """
     View a wiki document.
     """
-    fallback_reason = None
     slug_dict = split_slug(document_slug)
 
     # Is there a document at this slug, in this locale?
-    doc, fallback_reason = _get_doc_and_fallback_reason(document_locale,
-                                                        document_slug)
+    doc, _ = _get_doc_and_fallback_reason(document_locale, document_slug)
 
     if doc is None:
         # We can throw a 404 immediately if the request type is HEAD.
@@ -813,7 +811,7 @@ def react_document(request, document_slug, document_locale):
             raise Http404
 
         # Check if we should fall back to default locale.
-        fallback_doc, fallback_reason, redirect_url = _default_locale_fallback(
+        fallback_doc, _, redirect_url = _default_locale_fallback(
             request, document_slug, document_locale)
         if fallback_doc is not None:
             doc = fallback_doc
@@ -849,29 +847,7 @@ def react_document(request, document_slug, document_locale):
     seo_summary = doc.get_summary_text()
 
     # Get the additional title information, if necessary.
-    seo_parent_title = _get_seo_parent_title(
-        doc, slug_dict, document_locale)
-
-    # Record the English slug in Google Analytics,
-    # to associate translations
-    if doc.locale == 'en-US':
-        en_slug = doc.slug
-    elif doc.parent_id and doc.parent.locale == 'en-US':
-        en_slug = doc.parent.slug
-    else:
-        en_slug = ''
-
-    share_text = ugettext(
-        'I learned about %(title)s on MDN.') % {"title": doc.title}
-
-    contributors = doc.contributors
-    contributors_count = len(contributors)
-    has_contributors = contributors_count > 0
-    other_translations = doc.get_other_translations(
-        fields=['title', 'locale', 'slug', 'parent']
-    )
-    all_locales = (set([doc.locale]) |
-                   set(trans.locale for trans in other_translations))
+    seo_parent_title = _get_seo_parent_title(doc, slug_dict, document_locale)
 
     # Get the JSON data for this document
     doc_api_data = document_api_data(doc, ensure_contributors=True)
@@ -892,20 +868,8 @@ def react_document(request, document_slug, document_locale):
 
         # TODO: anything we're actually using in the template ought
         # to be bundled up into the json object above instead.
-        'document': doc,
-        'contributors': contributors,
-        'contributors_count': contributors_count,
-        'contributors_limit': 6,
-        'has_contributors': has_contributors,
-        'fallback_reason': fallback_reason,
         'seo_summary': seo_summary,
         'seo_parent_title': seo_parent_title,
-        'share_text': share_text,
-        'search_url': get_search_url_from_referer(request) or '',
-        'analytics_page_revision': doc.current_revision_id,
-        'analytics_en_slug': en_slug,
-        'other_translations': other_translations,
-        'all_locales': all_locales,
     }
     response = render(request, 'wiki/react_document.html', context)
 

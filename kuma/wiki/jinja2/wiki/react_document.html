@@ -1,15 +1,14 @@
 {% set beta = settings.ENABLE_RESTRICTIONS_BY_HOST and is_beta(request) %}
 {% set untrusted = settings.ENABLE_RESTRICTIONS_BY_HOST and is_untrusted(request) %}
-{% set doc_abs_url = document.get_absolute_url() %}
-{% set canonical = doc_abs_url | absolutify %}
+{% set canonical = document_data['absoluteURL'] | absolutify %}
 
 <!DOCTYPE html>
-<html lang="{{ document.get_hreflang(all_locales) }}" dir="{{ DIR }}">
+<html lang="{{ document_data['hrefLang'] }}" dir="{{ DIR }}">
 <head prefix="og: http://ogp.me/ns#">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <script>(function(d) { d.className = d.className.replace(/\bno-js/, ''); })(document.documentElement);</script>
-  <title>{{ page_title(document.title + seo_parent_title) }}</title>
+  <title>{{ page_title(document_data['title'] + seo_parent_title) }}</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content=
@@ -85,18 +84,16 @@
   <link rel="canonical" href="{{ canonical }}" >
 
   {# Google requires the current page to be referenced as an alternate too for SEO purposes see bug 1449210 #}
-  <link rel="alternate" hreflang="{{ document.get_hreflang(all_locales) }}" href="{{ document.get_absolute_url() | absolutify }}" title="{{ document.title }}">
-  {% if other_translations %}
-    {% for translation in other_translations %}
-      <link rel="alternate" hreflang="{{ translation.get_hreflang(all_locales) }}" href="{{ translation.get_absolute_url() | absolutify }}" title="{{ translation.title }}">
-    {% endfor %}
-  {% endif %}
+  <link rel="alternate" hreflang="{{ document_data['hrefLang'] }}" href="{{ canonical }}" title="{{ document_data['title'] }}">
+  {% for translation in document_data['translations'] %}
+    <link rel="alternate" hreflang="{{ translation['hrefLang'] }}" href="{{ translation['url'] | absolutify }}" title="{{ translation['title'] }}">
+  {% endfor %}
 
   <!-- document-specific social tags -->
-  <meta property="og:title" content="{{ document.title }}">
+  <meta property="og:title" content="{{ document_data['title'] }}">
   <meta property="og:url" content="{{ canonical }}">
   <meta name="twitter:url" content="{{ canonical }}">
-  <meta name="twitter:title" content="{{ document.title }}">
+  <meta name="twitter:title" content="{{ document_data['title'] }}">
   {% if seo_summary %}
   <meta property="og:description" content="{{ seo_summary }}">
   <meta name="description" content="{{ seo_summary }}">
