@@ -238,10 +238,3 @@
         </section>
     </main>
 {% endblock %}
-
-{% block js %}
-  {%- if contribution_enabled %}
-    <script src="https://checkout.stripe.com/checkout.js"></script>
-    {% javascript 'payments' %}
-  {%- endif %}
-{% endblock %}

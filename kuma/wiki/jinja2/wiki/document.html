@@ -335,9 +335,4 @@
   {% if settings.NEWSLETTER and settings.NEWSLETTER_ARTICLE %}
     {% javascript 'newsletter' %}
   {% endif %}
-
-  {%- if contribution_popup %}
-    {% javascript 'payments' %}
-  {%- endif %}
-
 {% endblock %}
