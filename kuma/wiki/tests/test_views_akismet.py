@@ -129,22 +129,3 @@ def test_spam_no_permission(create_revision, wiki_user, user_client,
     # Check that the Akismet endpoints were not called.
     assert not akismet_mock_requests.called
 
-
-@pytest.mark.spam
-def test_spam_revision_does_not_exist(create_revision, akismet_wiki_user,
-                                      user_client, enable_akismet_submissions,
-                                      akismet_mock_requests):
-    revision_id = create_revision.id
-    create_revision.delete()
-
-    url = reverse('wiki.submit_akismet_spam')
-    response = user_client.post(url, data={'revision': revision_id})
-    assert response.status_code == 400
-    assert_no_cache_header(response)
-
-    # No RevisionAkismetSubmission record should exist.
-    ras = RevisionAkismetSubmission.objects.filter(revision_id=revision_id)
-    assert ras.count() == 0
-
-    # Check that the Akismet endpoints were not called.
-    assert not akismet_mock_requests.called
