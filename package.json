@@ -32,7 +32,7 @@
         "@emotion/styled": "^10.0.7",
         "express": "^4.16.4",
         "morgan": "^1.9.1",
-        "newrelic": "^4.13.1",
+        "newrelic": "^5.9.0",
         "react": "^16.8.4",
         "react-dom": "^16.8.4"
     },
