@@ -393,10 +393,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         assert_no_cache_header(resp)
 
         # All of self.testuser's revisions have been submitted
-        testuser_submissions = RevisionAkismetSubmission.objects.filter(revision__creator=self.testuser.id)
-        assert testuser_submissions.count() == num_revisions
-        for submission in testuser_submissions:
-            assert submission.revision in revisions_created
+        testuser_submissions = RevisionAkismetSubmission.objects.filter(revision__isnull=True)
+        assert not testuser_submissions.exists()
         # Akismet endpoints were called twice for each revision
         assert mock_requests.called
         assert mock_requests.call_count == 2 * num_revisions

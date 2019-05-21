@@ -1872,8 +1872,7 @@ class RevisionAkismetSubmission(AkismetSubmission):
         null=True,
         blank=True,
         verbose_name=_('Revision'),
-        # don't delete the akismet submission but set the revision to null
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
     )
 
     class Meta:
