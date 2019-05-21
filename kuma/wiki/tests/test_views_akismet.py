@@ -128,4 +128,3 @@ def test_spam_no_permission(create_revision, wiki_user, user_client,
 
     # Check that the Akismet endpoints were not called.
     assert not akismet_mock_requests.called
-
