@@ -21,7 +21,6 @@ from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html
 from kuma.spam.akismet import Akismet
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
-from kuma.spam.models import AkismetSubmission
 from kuma.wiki.models import (Document, DocumentDeletionLog, Revision,
                               RevisionAkismetSubmission)
 from kuma.wiki.templatetags.jinja_helpers import absolutify
