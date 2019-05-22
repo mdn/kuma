@@ -3,20 +3,18 @@
 import { localize, getLocale, gettext, ngettext, interpolate } from './l10n.js';
 
 describe('getLocale', () => {
-    let emptyData = { catalog: {}, plural: null };
-
     it('default value', () => {
         expect(getLocale()).toBe('en-US');
     });
     it('value can be set with localize()', () => {
-        localize('en-pt', emptyData);
+        localize('en-pt', {}, null);
         expect(getLocale()).toBe('en-pt');
-        localize('en-uk', emptyData);
+        localize('en-uk', {}, null);
         expect(getLocale()).toBe('en-uk');
-        localize('', emptyData);
+        localize('', {});
         expect(getLocale()).toBe('en-US');
         // $FlowFixMe$: purposely testing bad data
-        localize(null, emptyData);
+        localize(null, {});
         expect(getLocale()).toBe('en-US');
     });
 });
@@ -35,13 +33,7 @@ describe('gettext', () => {
         expect(gettext('foo!')).toBe('foo!');
         expect(gettext('__bar&&##')).toBe('__bar&&##');
 
-        // $FlowFixMe$: purposely testing bad data
         localize('test', {});
-        expect(gettext('')).toBe('');
-        expect(gettext('foo!')).toBe('foo!');
-        expect(gettext('__bar&&##')).toBe('__bar&&##');
-
-        localize('test', { catalog: {}, plural: null });
         expect(gettext('')).toBe('');
         expect(gettext('foo!')).toBe('foo!');
         expect(gettext('__bar&&##')).toBe('__bar&&##');
@@ -49,18 +41,16 @@ describe('gettext', () => {
 
     it('works with a django-style string catalog', () => {
         localize('test', {
-            catalog: {
-                '': 'translated empty string',
-                'foo!': 'bar!',
-                '__bar&&##': 'gibberish',
-                singular: ['one', 'many'],
-                // This should not happen, but I want to test that we
-                // handle it if data is bad.
-                // $FlowFixMe$ (purposeful type error we're supressing)
-                'null string': null
-            },
-            plural: null
+            '': 'translated empty string',
+            'foo!': 'bar!',
+            '__bar&&##': 'gibberish',
+            singular: ['one', 'many'],
+            // This should not happen, but I want to test that we
+            // handle it if data is bad.
+            // $FlowFixMe$ (purposeful type error we're supressing)
+            'null string': null
         });
+
         expect(gettext('')).toBe('translated empty string');
         expect(gettext('foo!')).toBe('bar!');
         expect(gettext('__bar&&##')).toBe('gibberish');
@@ -87,26 +77,21 @@ describe('ngettext', () => {
         expect(ngettext('s', 'p', 2)).toBe('p');
         expect(ngettext('s', 'p', 3)).toBe('p');
 
-        // $FlowFixMe$: purposely testing bad data
         localize('test', {});
         expect(ngettext('s', 'p', 1)).toBe('s');
         expect(ngettext('s', 'p', 2)).toBe('p');
         expect(ngettext('s', 'p', 3)).toBe('p');
 
-        localize('test', {
-            catalog: { t: 'translation' },
-            plural: '(n >=1 && n <= 4) ? n-1 : 4'
-        });
+        localize('test', { t: 'translation' }, n =>
+            n >= 1 && n <= 4 ? n - 1 : 4
+        );
         expect(ngettext('s', 'p', 1)).toBe('s');
         expect(ngettext('s', 'p', 2)).toBe('p');
         expect(ngettext('s', 'p', 3)).toBe('p');
     });
 
     it('Uses english pluralization rules by default', () => {
-        localize('test', {
-            catalog: { s: ['singular', 'plural'] },
-            plural: null
-        });
+        localize('test', { s: ['singular', 'plural'] }, null);
         expect(ngettext('s', 'p', 0)).toBe('plural');
         expect(ngettext('s', 'p', 1)).toBe('singular');
         expect(ngettext('s', 'p', 2)).toBe('plural');
@@ -116,10 +101,9 @@ describe('ngettext', () => {
     });
 
     it('Supports custom pluralization rules', () => {
-        localize('test', {
-            catalog: { s: ['one', 'two', 'three', 'four', 'many'] },
-            plural: '(n >=1 && n <= 4) ? n-1 : 4'
-        });
+        localize('test', { s: ['one', 'two', 'three', 'four', 'many'] }, n =>
+            n >= 1 && n <= 4 ? n - 1 : 4
+        );
         expect(ngettext('s', 'p', 1)).toBe('one');
         expect(ngettext('s', 'p', 2)).toBe('two');
         expect(ngettext('s', 'p', 3)).toBe('three');
@@ -130,10 +114,7 @@ describe('ngettext', () => {
     });
 
     it('Returns singular if no plural forms available', () => {
-        localize('test', {
-            catalog: { s: 't' },
-            plural: '(n >=1 && n <= 4) ? n-1 : 4'
-        });
+        localize('test', { s: 't' }, n => (n >= 1 && n <= 4 ? n - 1 : 4));
         expect(ngettext('s', 'p', 1)).toBe('t');
         expect(ngettext('s', 'p', 2)).toBe('t');
         expect(ngettext('s', 'p', 3)).toBe('t');

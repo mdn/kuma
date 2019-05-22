@@ -34,7 +34,7 @@ describe('TaskCompletionSurvey', () => {
         mockUserData.waffle.flags[WAFFLE_FLAG] = true;
         localStorage.clear();
 
-        localize(mockLocale, { catalog: {}, plural: null });
+        localize(mockLocale, {}, null);
 
         const tcs = create(
             <GAProvider.context.Provider value={mockGA2}>
