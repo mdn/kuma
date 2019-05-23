@@ -1,4 +1,8 @@
 .mdn-cta-container {
+    .mdn-cta-content {
+        box-shadow: 5px 0 9px #c7c7c7;
+    }
+
     .mdn-cta-content-container {
         margin: 0 auto;
         max-width: 70%;
@@ -27,15 +31,15 @@
 
         @media #{$mq-large-desktop-and-up} {
             position: absolute;
-            left: -75px;
+            left: -90px;
             display: inline-block;
             content: '';
             background: transparent
                 url('../../../img/banners/developer-needs/icon-survey.svg') 0 0
                 no-repeat;
-            background-size: 62px;
-            width: 62px;
-            height: 62px;
+            background-size: 75px;
+            width: 75px;
+            height: 75px;
         }
     }
 
@@ -95,15 +99,15 @@ html[dir='rtl'] {
         @media #{$mq-large-desktop-and-up} {
             position: absolute;
             top: 0;
-            right: -75px;
+            right: -90px;
             display: inline-block;
             content: '';
             background: transparent
                 url('../../../img/banners/developer-needs/icon-survey.svg') 0 0
                 no-repeat;
-            background-size: 62px;
-            width: 62px;
-            height: 62px;
+            background-size: 75px;
+            width: 75px;
+            height: 75px;
         }
     }
 

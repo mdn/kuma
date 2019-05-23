@@ -40,6 +40,7 @@
         position: relative;
         display: inline-block;
         margin: 0;
+        font-weight: normal;
     }
 
     .mdn-cta-copy {
@@ -68,15 +69,12 @@
         border-radius: 56px;
         text-decoration: none;
         @include set-font-size(21px);
+        font-weight: bold;
         width: 70%;
 
         @media #{$mq-tablet-and-up} {
             padding: 15px;
             max-width: 50%;
-        }
-
-        @media #{$mq-small-desktop-and-up} {
-            max-width: 70%;
         }
     }
 
