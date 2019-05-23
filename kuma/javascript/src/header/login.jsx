@@ -8,7 +8,6 @@ import DocumentProvider from '../document-provider.jsx';
 import Dropdown from './dropdown.jsx';
 import EditIcon from '../icons/pencil.svg';
 import { getLocale, gettext } from '../l10n.js';
-import GithubLogo from '../icons/github.svg';
 import { Row, Strut } from '../layout.jsx';
 import UserProvider from '../user-provider.jsx';
 
@@ -25,12 +24,12 @@ const styles = {
     signInLink: css({
         display: 'flex',
         alignItems: 'center',
-        fontSize: '1.2em',
+        fontSize: '1em',
         fontWeight: 'bold',
         color: 'black',
         textDecoration: 'none',
-        lineHeight: '3.2em',
-        padding: '0 8px',
+        marginRight: 16,
+        marginLeft: 24,
         ':hover': {
             textDecoration: 'none',
             backgroundColor: '#eee'
@@ -40,7 +39,6 @@ const styles = {
             outlineOffset: -3
         }
     }),
-    icon: css({ marginLeft: 3, width: '1.5em' }),
     signOutButton: css({
         // Signing out is a POST operation so we use a form and button
         // but we want the button to look like a regular link.
@@ -129,7 +127,7 @@ export default function Login(): React.Node {
                 rel="nofollow"
                 css={styles.signInLink}
             >
-                {gettext('Sign in')} <GithubLogo css={styles.icon} />
+                {gettext('Sign in')}
             </a>
         );
     }

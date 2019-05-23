@@ -13,8 +13,11 @@ const styles = {
         flexDirection: 'row',
         alignItems: 'center',
         padding: '2px 8px',
-        border: 'solid #888 1px',
-        borderRadius: 8,
+        border: 'solid 2px #333',
+        borderRadius: 20,
+        backgroundColor: '#fafafa',
+        boxSizing: 'border-box',
+        height: 40,
         minWidth: 80,
         flex: '2 1'
     }),
@@ -27,10 +30,11 @@ const styles = {
         // stuff in the stylesheets. If we can simplify the
         // stylesheets, then maybe we can remove the importants
         borderWidth: '0 !important',
-        fontSize: 16,
-        fontWeight: 'bold !important',
+        fontSize: 14,
         flex: '1 1 100px',
-        minWidth: 60
+        minWidth: 60,
+        color: '#000',
+        backgroundColor: '#fafafa !important'
     })
 };
 

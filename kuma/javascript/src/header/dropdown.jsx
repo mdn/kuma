@@ -22,7 +22,7 @@ const MenuLabel = styled.button`
     align-items: center;
     white-space: nowrap;
     padding: 0 5px;
-    margin: 0;
+    margin: 0 10px;
     border: none;
     :hover {
         background-color: #eee;
@@ -34,7 +34,7 @@ const MenuLabel = styled.button`
 `;
 
 const Arrow = styled.span`
-    font-size: '75%';
+    font-size: 75%;
     padding-left: 2px;
 `;
 

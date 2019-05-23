@@ -5,11 +5,10 @@ import { css } from '@emotion/core';
 
 import DocumentProvider from '../document-provider.jsx';
 import { getLocale, gettext } from '../l10n.js';
-import LanguageMenu from './language-menu.jsx';
 import Login from './login.jsx';
 import Logo from '../icons/logo.svg';
 import Dropdown from './dropdown.jsx';
-import { Row, Spring } from '../layout.jsx';
+import { Row } from '../layout.jsx';
 import Search from './search.jsx';
 
 const DESKTOP = '@media (min-width: 1024px)';
@@ -17,14 +16,18 @@ const TABLET = '@media (min-width: 750px) and (max-width: 1023px)';
 const PHONE = '@media (max-width: 749px)';
 
 const styles = {
+    loadingBar: css({
+        height: 5,
+        width: '100%',
+        backgroundImage: 'linear-gradient(-271deg, #206584, #83d0f2)'
+    }),
     header: css({
-        borderTop: '4px solid #83d0f2',
         display: 'grid',
         alignItems: 'center',
+        height: 68,
         [DESKTOP]: {
             fontSize: 15,
-            gridTemplateColumns: '274px 500px minmax(80px, 1fr) 125px',
-            columnGap: '10px',
+            gridTemplateColumns: '231px 1fr 320px auto',
             gridTemplateAreas: '"I M S L"' // Icon Menus Search Login
         },
 
@@ -44,25 +47,28 @@ const styles = {
 
     logoContainer: css({
         display: 'block',
-        gridArea: 'I'
+        gridArea: 'I',
+        width: 200,
+        height: 44,
+        marginLeft: 16,
+        marginRight: 24
     }),
     logo: css({
-        // header style sets 1em to 15, 12, or 10px
-        height: '4em'
+        width: 200,
+        height: 44
     }),
     menus: css({
         gridArea: 'M',
         flexWrap: 'wrap',
-        margin: '0 5px',
         button: {
             [DESKTOP]: {
-                fontSize: 16,
+                fontSize: 15,
                 fontWeight: 'bold',
                 lineHeight: '32px'
             },
 
             [TABLET]: {
-                fontSize: 14,
+                fontSize: 15,
                 fontWeight: 'bold',
                 lineHeight: '28px'
             },
@@ -76,13 +82,11 @@ const styles = {
     }),
     search: css({
         gridArea: 'S',
-        margin: '2px 8px',
         justifySelf: 'stretch'
     }),
     login: css({
         gridArea: 'L',
-        justifySelf: 'end',
-        marginRight: 15
+        justifySelf: 'end'
     })
 };
 
@@ -163,41 +167,42 @@ export default function Header(): React.Node {
     }
 
     return (
-        <div css={styles.header}>
-            <a css={styles.logoContainer} href={`/${locale}/`}>
-                <Logo css={styles.logo} alt="MDN Web Docs Logo" />
-            </a>
-            <Row css={styles.menus}>
-                {menus.map((m, index) => (
-                    <Dropdown label={gettext(m.label)} key={index}>
-                        {m.items.map((item, index) => (
-                            <li key={index}>
-                                {item.external ? (
-                                    <a
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        href={fixurl(item.url)}
-                                    >
-                                        {gettext(item.label)} &#x1f310;
-                                    </a>
-                                ) : (
-                                    <a href={fixurl(item.url)}>
-                                        {gettext(item.label)}
-                                    </a>
-                                )}
-                            </li>
-                        ))}
-                    </Dropdown>
-                ))}
-                <Spring />
-                <LanguageMenu />
-            </Row>
-            <div css={styles.search}>
-                <Search />
+        <>
+            <div css={styles.loadingBar} />
+            <div css={styles.header}>
+                <a css={styles.logoContainer} href={`/${locale}/`}>
+                    <Logo css={styles.logo} alt="MDN Web Docs Logo" />
+                </a>
+                <Row css={styles.menus}>
+                    {menus.map((m, index) => (
+                        <Dropdown label={gettext(m.label)} key={index}>
+                            {m.items.map((item, index) => (
+                                <li key={index}>
+                                    {item.external ? (
+                                        <a
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            href={fixurl(item.url)}
+                                        >
+                                            {gettext(item.label)} &#x1f310;
+                                        </a>
+                                    ) : (
+                                        <a href={fixurl(item.url)}>
+                                            {gettext(item.label)}
+                                        </a>
+                                    )}
+                                </li>
+                            ))}
+                        </Dropdown>
+                    ))}
+                </Row>
+                <div css={styles.search}>
+                    <Search />
+                </div>
+                <div css={styles.login}>
+                    <Login />
+                </div>
             </div>
-            <div css={styles.login}>
-                <Login />
-            </div>
-        </div>
+        </>
     );
 }
