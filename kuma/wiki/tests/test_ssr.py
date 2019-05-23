@@ -45,14 +45,8 @@ def test_server_side_render(mock_get_l10n_data, mock_dumps, locale,
         'locale': locale
     }
 
-    localization_data = {'catalog': {'s': locale}}
+    localization_data = {'catalog': {'s': locale}, 'plural': None}
     mock_get_l10n_data.side_effect = lambda l: localization_data
-
-    data = {
-        'localizationData': localization_data,
-        'documentData': document_data,
-        'requestData': request_data
-    }
 
     # This will be the output sent by the mock Node server
     mock_html = '<p>{}</p><p>{}</p><p>{}</p><p>{}</p>'.format(
@@ -66,6 +60,11 @@ def test_server_side_render(mock_get_l10n_data, mock_dumps, locale,
     # Make sure the output is as expected
     # The HTML attributes in the data should not be repeated in the output
     document_data.update(bodyHTML='', tocHTML='', quickLinksHTML='')
+    data = {
+        'stringCatalog': localization_data['catalog'],
+        'documentData': document_data,
+        'requestData': request_data
+    }
     assert output == (
         u'<div id="react-container">{}</div>\n'
         u'<script>window._react_data = {};</script>\n'
@@ -74,9 +73,39 @@ def test_server_side_render(mock_get_l10n_data, mock_dumps, locale,
 
 @mock.patch('json.dumps')
 @mock.patch('kuma.wiki.templatetags.ssr.get_localization_data')
+def test_plural_function(mock_get_l10n_data, mock_dumps,
+                         mock_requests, settings):
+    """For server-side rendering, if the locale data includes a plural
+       expression, expect the output to include a plural function.
+    """
+
+    mock_dumps.side_effect = sorted_json_dumps
+
+    # This is the input to the mock Node server
+    document_data = {'x': 'one', 'y': 2, 'z': ['a', 'b']}
+    request_data = {'locale': 'es'}
+
+    localization_data = {'catalog': {'s': 't'}, 'plural': 'n!=1'}
+    mock_get_l10n_data.side_effect = lambda l: localization_data
+
+    # This will be the output sent by the mock Node server
+    mock_requests.post(settings.SSR_URL, text='mock html')
+
+    # Run the template tag
+    output = ssr.render_react_app('es', document_data, request_data)
+
+    expected = '<script>window._react_data = {pluralFunction:function(n){'
+
+    # Make sure the output is as expected
+    assert expected in output
+    assert localization_data['plural'] in output
+
+
+@mock.patch('json.dumps')
+@mock.patch('kuma.wiki.templatetags.ssr.get_localization_data')
 def test_client_side_render(mock_get_l10n_data, mock_dumps):
     """For client-side rendering expect a script json data and an empty div."""
-    localization_data = {'catalog': {'s': 't'}}
+    localization_data = {'catalog': {'s': 't'}, 'plural': None}
     mock_get_l10n_data.side_effect = lambda l: localization_data
 
     mock_dumps.side_effect = sorted_json_dumps
@@ -85,7 +114,7 @@ def test_client_side_render(mock_get_l10n_data, mock_dumps):
         'locale': 'en-US'
     }
     data = {
-        'localizationData': localization_data,
+        'stringCatalog': localization_data['catalog'],
         'documentData': document_data,
         'requestData': request_data
     }
@@ -106,7 +135,7 @@ def test_failed_server_side_render(mock_get_l10n_data,
                                    mock_dumps, failure_class,
                                    mock_requests, settings):
     """If SSR fails, we should do client-side rendering instead."""
-    localization_data = {'catalog': {'s': 't'}}
+    localization_data = {'catalog': {'s': 't'}, 'plural': None}
     mock_get_l10n_data.side_effect = lambda l: localization_data
     mock_dumps.side_effect = sorted_json_dumps
     mock_requests.post(settings.SSR_URL, exc=failure_class('message'))

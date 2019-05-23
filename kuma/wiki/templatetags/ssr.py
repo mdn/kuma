@@ -36,8 +36,11 @@ def render_react_app(locale, document_data, request_data, ssr=True):
     Note that we are not defining a generic Jinja template tag here.
     The code in this file is specific to Kuma's React-based UI.
     """
+    localization_data = get_localization_data(locale)
+
     data = {
-        'localizationData': get_localization_data(locale),
+        'stringCatalog': localization_data['catalog'],
+        'pluralExpression': localization_data['plural'],
         'documentData': document_data,
         'requestData': request_data
     }
@@ -54,10 +57,35 @@ def _render(html, state):
     form of the state dict, in the format expected by the client-side code
     in kuma/javascript/src/index.jsx.
     """
+    # We're going to need this below, but we don't want to keep it around
+    pluralExpression = state['pluralExpression']
+    del state['pluralExpression']
+
     # Serialize the state object to JSON and be sure the string
     # "</script>" does not appear in it, since we are going to embed it
     # within an HTML <script> tag.
     serializedState = json.dumps(state).replace('</', '<\\/')
+
+    # In addition to the JSON-serialized data structure, we also want
+    # to pass the pluralForm() function required for the ngettext()
+    # localization function. Functions can't be included in JSON, but
+    # they are part of JavaScript, and our serializedState string is
+    # embedded in an HTML <script> tag, so it can include arbitrary
+    # JavaScript, not just JSON. The reason that we need to do this
+    # is that Django provides us with a JS expression as a string and
+    # we need to convert it into JS code. If we don't do it here with
+    # string manipulation, then we need to use eval() or `new Function()`
+    # on the client-side and that causes a CSP violation.
+    if pluralExpression:
+        # A JavaScript function expression as a Python string
+        js_function_text = (
+            'function(n){{var v=({});return(v===true)?1:((v===false)?0:v);}}'
+            .format(pluralExpression)
+        )
+        # Splice it into the JSON-formatted data string
+        serializedState = (
+            '{pluralFunction:' + js_function_text + ',' + serializedState[1:]
+        )
 
     # Now return the HTML and the state as a single string
     return (

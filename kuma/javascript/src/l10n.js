@@ -14,71 +14,48 @@
  * @flow
  */
 
-// This is the type of the localization data that Django creates for a locale.
-type LocaleData = {
-    catalog: { [string]: string | Array<string> },
-    plural: ?string
-    // The data that Django passes to us also has a formats object
-    // containing template strings for date and time formatting and
-    // defining things like the thousands separator. We don't currently
-    // use them, so they are omitted from this type definition.
-};
+// This is the type of the string catalog that Django creates for a locale.
+type StringCatalog = { [string]: string | Array<string> };
 
 // The "plural index" function takes a count as its input and returns
 // a number that is an index into an array of plural forms. This default
 // function is suitable for English, but some languages have more than
 // one plural form and require more complicated rules.
-type PluralIndexFunc = number => number;
+type PluralFunction = number => number;
 
 /*
  * These are default values for the state variables that define the
  * current localization.
  */
 const defaultLocale = 'en-US';
-const defaultLocaleData: LocaleData = {
-    catalog: {},
-    plural: null
-};
-const defaultPluralIdx: PluralIndexFunc = n => (+n === 1 ? 0 : 1);
+const defaultStringCatalog: StringCatalog = {};
+const defaultPluralFunction: PluralFunction = n => (+n === 1 ? 0 : 1);
 
 /*
- * The currentLocale, currentLocaleData, and currentPluralIdx variables
- * hold the current state for this module. Their initial values are the
- * defaults above, which are suitable for untranslated English text.
- * The localize() function defines new values for each of them.
+ * The currentLocale, currentStringCatalog, and currentPluralFunction
+ * variables hold the current state for this module. Their initial
+ * values are the defaults above, which are suitable for untranslated
+ * English text.  The localize() function defines new values for each
+ * of them.
  */
 let currentLocale = defaultLocale;
-let currentLocaleData: LocaleData = defaultLocaleData;
-let currentPluralIdx: PluralIndexFunc = defaultPluralIdx;
+let currentStringCatalog: StringCatalog = defaultStringCatalog;
+let currentPluralFunction: PluralFunction = defaultPluralFunction;
 
 /**
  * This function sets up localization for the specified locale.
- * The data argument should be an object in the form returned by
+ * The catalog argument should be a string catalog in the form returned by
  * the JSONCatalog class in
  * https://github.com/django/django/blob/master/django/views/i18n.py
  */
-export function localize(locale: string, data: LocaleData): void {
+export function localize(
+    locale: ?string,
+    catalog: ?StringCatalog,
+    pluralFunction: ?PluralFunction
+): void {
     currentLocale = locale || defaultLocale;
-    currentLocaleData = data || defaultLocaleData;
-
-    // Now define the function that converts numbers to plural forms
-    if (!currentLocaleData.plural) {
-        currentPluralIdx = defaultPluralIdx;
-    } else {
-        // Based on the JS code in
-        // https://github.com/django/django/blob/master/django/views/i18n.py
-        let f = new Function(
-            'n', // Don't change this! The data.plural expression uses it.
-            `let v = ${currentLocaleData.plural};
-             if (v === true) return 1;
-             else if (v === false) return 0;
-             else return v;`
-        );
-
-        // Flow doesn't understand the Function() constructor so we have
-        // to cast through any to our desired function type.
-        currentPluralIdx = ((f: any): PluralIndexFunc);
-    }
+    currentStringCatalog = catalog || defaultStringCatalog;
+    currentPluralFunction = pluralFunction || defaultPluralFunction;
 }
 
 // Return the locale string most recently passed to localize().
@@ -93,19 +70,17 @@ export function getLocale() {
  * untranslated English string instead.
  */
 export function gettext(english: string): string {
-    if (currentLocaleData && currentLocaleData.catalog) {
-        let translation = currentLocaleData.catalog[english];
-        if (Array.isArray(translation)) {
-            // If there are multiple forms, return the singular
-            return translation[0];
-        } else if (typeof translation === 'string') {
-            // If we got a string return it
-            return translation;
-        }
+    let translation = currentStringCatalog[english];
+    if (Array.isArray(translation)) {
+        // If there are multiple forms, return the first
+        return translation[0];
+    } else if (typeof translation === 'string') {
+        // If we got a string return it
+        return translation;
+    } else {
+        // If we didn't find a translation, just return the english.
+        return english;
     }
-    // If we don't have data, or didn't find a translation,
-    // just return the untranslated string
-    return english;
 }
 
 /**
@@ -121,23 +96,21 @@ export function ngettext(
     count: number | string
 ) {
     count = +count; // If we were passed a string, convert to number
-    if (currentLocaleData && currentLocaleData.catalog) {
-        let translation = currentLocaleData.catalog[singular];
+    let translation = currentStringCatalog[singular];
 
-        if (Array.isArray(translation)) {
-            // If we got an array of translations, figure out which one
-            // to use for this specific count
-            return translation[currentPluralIdx(count)];
-        } else if (typeof translation === 'string') {
-            // If we only got one string, just return it, regardless
-            // of the count
-            return translation;
-        }
+    if (Array.isArray(translation)) {
+        // If we got an array of translations, figure out which one
+        // to use for this specific count
+        return translation[currentPluralFunction(count)];
+    } else if (typeof translation === 'string') {
+        // If we only got one string, just return it, regardless
+        // of the count
+        return translation;
+    } else {
+        // If there is no data, or no translation found, then return
+        // the english singular or plural.
+        return count === 1 ? singular : plural;
     }
-
-    // If there is no data, or no translation found, then return
-    // the english singular or plural.
-    return count === 1 ? singular : plural;
 }
 
 /**

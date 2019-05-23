@@ -17,7 +17,7 @@ if (container) {
     window._react_data = null; // eslint-disable-line camelcase
 
     // Store the string catalog so that l10n.gettext() can do translations
-    localize(data.requestData.locale, data.localizationData);
+    localize(data.requestData.locale, data.stringCatalog, data.pluralFunction);
 
     // This is the React UI for a page of documentation
     let app = <App documentData={data.documentData} />;
