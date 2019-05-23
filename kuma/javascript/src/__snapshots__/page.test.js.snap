@@ -2,27 +2,34 @@
 
 exports[`Page snapshot 1`] = `
 Array [
-  .emotion-46 {
-  border-top: 4px solid #83d0f2;
+  .emotion-0 {
+  height: 5px;
+  width: 100%;
+  background-image: linear-gradient(-271deg,#206584,#83d0f2);
+}
+
+<div
+    className="emotion-0"
+  />,
+  .emotion-34 {
   display: grid;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  height: 68px;
 }
 
 @media (min-width:1024px) {
-  .emotion-46 {
+  .emotion-34 {
     font-size: 15px;
-    grid-template-columns: 274px 500px minmax(80px,1fr) 125px;
-    -webkit-column-gap: 10px;
-    column-gap: 10px;
+    grid-template-columns: 231px 1fr 320px auto;
     grid-template-areas: "I M S L";
   }
 }
 
 @media (min-width:750px) and (max-width:1023px) {
-  .emotion-46 {
+  .emotion-34 {
     font-size: 12px;
     grid-template-columns: repeat(10,1fr);
     -webkit-column-gap: 5px;
@@ -32,7 +39,7 @@ Array [
 }
 
 @media (max-width:749px) {
-  .emotion-46 {
+  .emotion-34 {
     font-size: 10px;
     grid-template-columns: repeat(4,1fr);
     grid-template-areas: "I I L L" "S S S S" "M M M M";
@@ -42,13 +49,18 @@ Array [
 .emotion-1 {
   display: block;
   grid-area: I;
+  width: 200px;
+  height: 44px;
+  margin-left: 16px;
+  margin-right: 24px;
 }
 
 .emotion-0 {
-  height: 4em;
+  width: 200px;
+  height: 44px;
 }
 
-.emotion-37 {
+.emotion-26 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -64,27 +76,26 @@ Array [
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  margin: 0 5px;
 }
 
 @media (min-width:1024px) {
-  .emotion-37 button {
-    font-size: 16px;
+  .emotion-26 button {
+    font-size: 15px;
     font-weight: bold;
     line-height: 32px;
   }
 }
 
 @media (min-width:750px) and (max-width:1023px) {
-  .emotion-37 button {
-    font-size: 14px;
+  .emotion-26 button {
+    font-size: 15px;
     font-weight: bold;
     line-height: 28px;
   }
 }
 
 @media (max-width:749px) {
-  .emotion-37 button {
+  .emotion-26 button {
     font-size: 12px;
     font-weight: normal;
     line-height: 24px;
@@ -110,7 +121,7 @@ Array [
   align-items: center;
   white-space: nowrap;
   padding: 0 5px;
-  margin: 0;
+  margin: 0 10px;
   border: none;
 }
 
@@ -123,7 +134,7 @@ Array [
 }
 
 .emotion-2 {
-  font-size: '75%';
+  font-size: 75%;
   padding-left: 2px;
 }
 
@@ -142,6 +153,7 @@ Array [
   border: solid #83d0f2 1.5px;
   box-shadow: 3px 3px 5px rgba(0,0,0,0.25);
   padding: 10px;
+  margin: 0 10px;
   min-width: 100%;
   display: none;
 }
@@ -151,23 +163,12 @@ Array [
   white-space: nowrap;
 }
 
-.emotion-26 {
-  -webkit-flex: 1 1 0px;
-  -ms-flex: 1 1 0px;
-  flex: 1 1 0px;
-}
-
-.emotion-28 {
-  height: 1.5em;
-}
-
-.emotion-42 {
+.emotion-31 {
   grid-area: S;
-  margin: 2px 8px;
   justify-self: stretch;
 }
 
-.emotion-41 {
+.emotion-30 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -180,38 +181,41 @@ Array [
   -ms-flex-align: center;
   align-items: center;
   padding: 2px 8px;
-  border: solid #888 1px;
-  border-radius: 8px;
+  border: solid 2px #333;
+  border-radius: 20px;
+  background-color: #fafafa;
+  box-sizing: border-box;
+  height: 40px;
   min-width: 80px;
   -webkit-flex: 2 1;
   -ms-flex: 2 1;
   flex: 2 1;
 }
 
-.emotion-39 {
+.emotion-28 {
   fill: #333;
   -webkit-flex: 0 0 20px;
   -ms-flex: 0 0 20px;
   flex: 0 0 20px;
 }
 
-.emotion-40 {
+.emotion-29 {
   border-width: 0 !important;
-  font-size: 16px;
-  font-weight: bold !important;
+  font-size: 14px;
   -webkit-flex: 1 1 100px;
   -ms-flex: 1 1 100px;
   flex: 1 1 100px;
   min-width: 60px;
+  color: #000;
+  background-color: #fafafa !important;
 }
 
-.emotion-45 {
+.emotion-33 {
   grid-area: L;
   justify-self: end;
-  margin-right: 15px;
 }
 
-.emotion-44 {
+.emotion-32 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -220,32 +224,27 @@ Array [
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: bold;
   color: black;
   -webkit-text-decoration: none;
   text-decoration: none;
-  line-height: 3.2em;
-  padding: 0 8px;
+  margin-right: 16px;
+  margin-left: 24px;
 }
 
-.emotion-44:hover {
+.emotion-32:hover {
   -webkit-text-decoration: none;
   text-decoration: none;
   background-color: #eee;
 }
 
-.emotion-44:focus {
+.emotion-32:focus {
   outline-offset: -3px;
 }
 
-.emotion-43 {
-  margin-left: 3px;
-  width: 1.5em;
-}
-
 <div
-    className="emotion-46"
+    className="emotion-34"
   >
     <a
       className="emotion-1"
@@ -257,7 +256,7 @@ Array [
       />
     </a>
     <div
-      className="emotion-37 emotion-38"
+      className="emotion-26 emotion-27"
     >
       <div
         className="emotion-8 emotion-9"
@@ -468,58 +467,22 @@ Array [
           </li>
         </ul>
       </div>
-      <div
-        className="emotion-26 emotion-27"
-      />
-      <div
-        className="emotion-8 emotion-9"
-      >
-        <button
-          className="emotion-4 emotion-5"
-          onClick={[Function]}
-        >
-          <svg mock
-            className="emotion-28"
-          />
-          <span
-            className="emotion-2 emotion-3"
-          >
-            ▼
-          </span>
-        </button>
-        <ul
-          className="dropdown-menu emotion-6 emotion-7"
-        >
-          <li
-            lang="es"
-          >
-            <a
-              href="[fake spanish url]"
-              title="Spanish"
-            >
-              <bdi>
-                Español
-              </bdi>
-            </a>
-          </li>
-        </ul>
-      </div>
     </div>
     <div
-      className="emotion-42"
+      className="emotion-31"
     >
       <form
         action="/en-US/search"
-        className="emotion-41"
+        className="emotion-30"
         id="nav-main-search"
         method="get"
         role="search"
       >
         <svg mock
-          className="emotion-39"
+          className="emotion-28"
         />
         <input
-          className="emotion-40"
+          className="emotion-29"
           id="main-q"
           name="q"
           placeholder="Search MDN"
@@ -528,19 +491,15 @@ Array [
       </form>
     </div>
     <div
-      className="emotion-45"
+      className="emotion-33"
     >
       <a
-        className="emotion-44"
+        className="emotion-32"
         data-service="GitHub"
         href="/users/github/login/?next=[fake absolute url]"
         rel="nofollow"
       >
         Sign in
-         
-        <svg mock
-          className="emotion-43"
-        />
       </a>
     </div>
   </div>,

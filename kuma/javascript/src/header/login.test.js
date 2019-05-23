@@ -48,19 +48,14 @@ test('Login component when user is logged in', () => {
 
     expect(login.toJSON()).toMatchSnapshot();
 
-    // Expect a edit this page link as the last one
-    let root = login.root;
-    let links = root.findAllByType('a');
-    let link = links.pop();
-    expect(link).toBeDefined();
-    expect(link.props.title).toBe('Edit this page');
-
     // Expect a Dropdown element
+    let root = login.root;
     let dropdown = root.findByType(Dropdown);
     expect(dropdown).toBeDefined();
 
     // Whose label prop is an image with the expected src and alt attributes
-    expect(dropdown.props.label.props.src).toEqual('test-url');
+    expect(dropdown.props.label.props.srcSet).toContain('test-url');
+    expect(dropdown.props.label.props.srcSet).toContain('test-bigurl');
     expect(dropdown.props.label.props.alt).toEqual('test-username');
 
     // Open up the dropdown menu

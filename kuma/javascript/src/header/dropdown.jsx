@@ -48,6 +48,7 @@ const Menu = styled.ul`
     border: solid #83d0f2 1.5px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.25);
     padding: 10px;
+    margin: 0 10px;
     min-width: 100%;
     li {
         padding: 5px;
@@ -77,6 +78,8 @@ type DropdownProps = {|
     // the left side of the label and allow it to extend beyond the
     // right edge of the label.
     right?: boolean,
+    // If true, we won't show the arrow next to the menu
+    hideArrow?: boolean,
     children: React.Node
 |};
 
@@ -139,7 +142,7 @@ export default function Dropdown(props: DropdownProps) {
                 onClick={!shown ? () => setShown(true) : null}
             >
                 {props.label}
-                <Arrow>{shown ? '▲' : '▼'}</Arrow>
+                {!props.hideArrow && <Arrow>{shown ? '▲' : '▼'}</Arrow>}
             </MenuLabel>
             <Menu
                 className="dropdown-menu"

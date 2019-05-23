@@ -6,9 +6,8 @@ import { css } from '@emotion/core';
 
 import DocumentProvider from '../document-provider.jsx';
 import Dropdown from './dropdown.jsx';
-import EditIcon from '../icons/pencil.svg';
 import { getLocale, gettext } from '../l10n.js';
-import { Row, Strut } from '../layout.jsx';
+import { Row } from '../layout.jsx';
 import UserProvider from '../user-provider.jsx';
 
 const styles = {
@@ -18,7 +17,8 @@ const styles = {
         button: { fontSize: '1em' }
     }),
     avatar: css({
-        width: '4em',
+        width: 40,
+        height: 40,
         borderRadius: '50%'
     }),
     signInLink: css({
@@ -78,10 +78,13 @@ export default function Login(): React.Node {
 
     if (userData.isAuthenticated && userData.username) {
         // If we have user data and the user is logged in, show their
-        // profile pic.
+        // profile pic, defaulting to the dino head if the gravatar
+        // URLs don't work.
         let label = (
             <img
-                src={userData.gravatarUrl.small}
+                srcSet={`${userData.gravatarUrl.large || ''} 200w ${userData
+                    .gravatarUrl.small || ''} 50w`}
+                src={'/static/img/avatar.png'}
                 css={styles.avatar}
                 alt={userData.username}
             />
@@ -93,7 +96,7 @@ export default function Login(): React.Node {
 
         return (
             <Row css={styles.container}>
-                <Dropdown label={label} right={true}>
+                <Dropdown label={label} right={true} hideArrow={true}>
                     <li>
                         <a href={viewProfileLink}>{gettext('View profile')}</a>
                     </li>
@@ -112,10 +115,6 @@ export default function Login(): React.Node {
                         </form>
                     </li>
                 </Dropdown>
-                <Strut width={8} />
-                <a css={styles.editLink} href={editURL} title="Edit this page">
-                    <EditIcon css={styles.editIcon} alt="Edit this page" />
-                </a>
             </Row>
         );
     } else {
