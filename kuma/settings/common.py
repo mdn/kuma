@@ -959,6 +959,7 @@ PIPELINE_JS = {
         'source_filenames': (
             'js/libs/jquery/jquery.js',
             'js/libs/jquery-ajax-prefilter.js',
+            'js/utils/post-message-handler.js',
             # 'js/libs/icons.js',
             # 'js/components.js',
             'js/analytics.js',
