@@ -38,19 +38,25 @@ const styles = {
         gridArea: 'title',
         boxSizing: 'border-box',
         width: '100%',
+        height: 106,
+        paddingLeft: 24,
         overflowX: 'scroll',
-        backgroundColor: '#f5f9fa'
+        backgroundColor: '#f5f9fa',
+        border: 'solid 1px #dce3e5',
+        [NARROW]: {
+            // Reduce titlebar size on narrow screens
+            height: 60,
+            paddingLeft: 16
+        }
     }),
     title: css({
         fontFamily:
             'x-locale-heading-primary, zillaslab, "Palatino", "Palatino Linotype", x-locale-heading-secondary, serif',
-        margin: 0,
-        fontSize: '2.8rem',
-        padding: '12px 12px 12px 24px',
+        fontSize: 45,
+        fontWeight: 'bold',
         [NARROW]: {
             // Reduce the H1 size on narrow screens
-            fontSize: '1.77rem',
-            padding: 12
+            fontSize: 28
         }
     }),
     toc: css({
