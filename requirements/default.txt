@@ -275,8 +275,8 @@ mysqlclient==1.3.13 \
 # Report performance metrics and exceptions to New Relic
 # Docs: https://docs.newrelic.com/docs/agents/python-agent/
 # Changes: https://docs.newrelic.com/docs/release-notes/agent-release-notes/python-release-notes
-newrelic==4.18.0.118 \
-    --hash=sha256:3cd496022c6906ee3cdbf27c67ec3e03922830bfebbca4549ef6f2e58cf719e2
+newrelic==3.2.1.93 \
+    --hash=sha256:e60204f6d6b41741021d078ad5145414c759ff2482e2136ce22c9957654d9ca7
 
 # Compile .po files into .mo files, used in locale/compile-mo.sh
 polib==1.1.0 \
