@@ -14,6 +14,9 @@ const MenuContainer = styled.div`
     // on the entire document when the menu is up, but we need to be
     // able to click on the menu items themselves
     pointer-events: auto;
+
+    // This adjusts for the 5px left padding
+    margin-left: -5px;
 `;
 
 const MenuLabel = styled.button`
@@ -22,7 +25,6 @@ const MenuLabel = styled.button`
     align-items: center;
     white-space: nowrap;
     padding: 0 5px;
-    margin: 0 10px;
     border: none;
     :hover {
         background-color: #eee;
@@ -48,7 +50,6 @@ const Menu = styled.ul`
     border: solid #83d0f2 1.5px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.25);
     padding: 10px;
-    margin: 0 10px;
     min-width: 100%;
     li {
         padding: 5px;

@@ -8,7 +8,7 @@ import { getLocale, gettext } from '../l10n.js';
 import Login from './login.jsx';
 import Logo from '../icons/logo.svg';
 import Dropdown from './dropdown.jsx';
-import { Row } from '../layout.jsx';
+import { Row, Strut } from '../layout.jsx';
 import Search from './search.jsx';
 
 const DESKTOP = '@media (min-width: 1024px)';
@@ -24,18 +24,18 @@ const styles = {
     header: css({
         display: 'grid',
         alignItems: 'center',
-        height: 68,
+        fontSize: 15,
+        margin: '0 16px',
         [DESKTOP]: {
-            fontSize: 15,
-            gridTemplateColumns: '231px 1fr 320px auto',
+            height: 68,
+            gridTemplateColumns: '221px 5fr minmax(250px, 2fr) auto',
             gridTemplateAreas: '"I M S L"' // Icon Menus Search Login
         },
 
         [TABLET]: {
-            fontSize: 12,
-            gridTemplateColumns: 'repeat(10, 1fr)',
-            columnGap: '5px',
-            gridTemplateAreas: '"I I I S S S S S L L" "M M M M M M M M M M"'
+            height: 122,
+            gridTemplateColumns: 'minmax(206px,1fr) 300px auto',
+            gridTemplateAreas: '"I S L" "R R R" "M M M"'
         },
 
         [PHONE]: {
@@ -50,34 +50,32 @@ const styles = {
         gridArea: 'I',
         width: 200,
         height: 44,
-        marginLeft: 16,
         marginRight: 24
     }),
     logo: css({
         width: 200,
         height: 44
     }),
+    rule: css({
+        // In tablet layout this rule separates the header menus below
+        // from the logo and search box above. It is not included in
+        // desktop layouts
+        display: 'none',
+        gridArea: 'R',
+        height: 2,
+        width: '100%',
+        backgroundColor: '#dce3e5',
+        [TABLET]: {
+            display: 'block'
+        }
+    }),
     menus: css({
         gridArea: 'M',
         flexWrap: 'wrap',
+        fontSize: 15,
+        fontWeight: 'bold',
         button: {
-            [DESKTOP]: {
-                fontSize: 15,
-                fontWeight: 'bold',
-                lineHeight: '32px'
-            },
-
-            [TABLET]: {
-                fontSize: 15,
-                fontWeight: 'bold',
-                lineHeight: '28px'
-            },
-
-            [PHONE]: {
-                fontSize: 12,
-                fontWeight: 'normal',
-                lineHeight: '24px'
-            }
+            lineHeight: '32px'
         }
     }),
     search: css({
@@ -173,27 +171,36 @@ export default function Header(): React.Node {
                 <a css={styles.logoContainer} href={`/${locale}/`}>
                     <Logo css={styles.logo} alt="MDN Web Docs Logo" />
                 </a>
+                {
+                    // The div below is used as a horizontal rule. We aren't
+                    // using a semantic <hr/> element because our document
+                    // stylesheets define a bunch of styles on <hr>.
+                }
+                <div css={styles.rule} />
                 <Row css={styles.menus}>
                     {menus.map((m, index) => (
-                        <Dropdown label={gettext(m.label)} key={index}>
-                            {m.items.map((item, index) => (
-                                <li key={index}>
-                                    {item.external ? (
-                                        <a
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            href={fixurl(item.url)}
-                                        >
-                                            {gettext(item.label)} &#x1f310;
-                                        </a>
-                                    ) : (
-                                        <a href={fixurl(item.url)}>
-                                            {gettext(item.label)}
-                                        </a>
-                                    )}
-                                </li>
-                            ))}
-                        </Dropdown>
+                        <React.Fragment key={index}>
+                            <Dropdown label={gettext(m.label)}>
+                                {m.items.map((item, index) => (
+                                    <li key={index}>
+                                        {item.external ? (
+                                            <a
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                href={fixurl(item.url)}
+                                            >
+                                                {gettext(item.label)} &#x1f310;
+                                            </a>
+                                        ) : (
+                                            <a href={fixurl(item.url)}>
+                                                {gettext(item.label)}
+                                            </a>
+                                        )}
+                                    </li>
+                                ))}
+                            </Dropdown>
+                            {index < menus.length - 1 && <Strut width={16} />}
+                        </React.Fragment>
                     ))}
                 </Row>
                 <div css={styles.search}>

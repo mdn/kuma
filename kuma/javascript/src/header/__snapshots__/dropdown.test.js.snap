@@ -4,6 +4,7 @@ exports[`Dropdown closed and open snapshots 1`] = `
 .emotion-6 {
   position: relative;
   pointer-events: auto;
+  margin-left: -5px;
 }
 
 .emotion-2 {
@@ -20,7 +21,6 @@ exports[`Dropdown closed and open snapshots 1`] = `
   align-items: center;
   white-space: nowrap;
   padding: 0 5px;
-  margin: 0 10px;
   border: none;
 }
 
@@ -52,7 +52,6 @@ exports[`Dropdown closed and open snapshots 1`] = `
   border: solid #83d0f2 1.5px;
   box-shadow: 3px 3px 5px rgba(0,0,0,0.25);
   padding: 10px;
-  margin: 0 10px;
   min-width: 100%;
   display: none;
 }
@@ -93,6 +92,7 @@ exports[`Dropdown closed and open snapshots 2`] = `
 .emotion-6 {
   position: relative;
   pointer-events: auto;
+  margin-left: -5px;
 }
 
 .emotion-0 {
@@ -114,7 +114,6 @@ exports[`Dropdown closed and open snapshots 2`] = `
   align-items: center;
   white-space: nowrap;
   padding: 0 5px;
-  margin: 0 10px;
   border: none;
   background-color: #83d0f2;
 }
@@ -146,7 +145,6 @@ exports[`Dropdown closed and open snapshots 2`] = `
   border: solid #83d0f2 1.5px;
   box-shadow: 3px 3px 5px rgba(0,0,0,0.25);
   padding: 10px;
-  margin: 0 10px;
   min-width: 100%;
 }
 

@@ -14,7 +14,8 @@ const styles = {
     container: css({
         // Buttons (in the dropdown labels) don't seem to inherit fontsizes
         // so we need to make this explicit.
-        button: { fontSize: '1em' }
+        button: { fontSize: '1em' },
+        marginLeft: 24
     }),
     avatar: css({
         width: 40,
@@ -27,9 +28,8 @@ const styles = {
         fontSize: '1em',
         fontWeight: 'bold',
         color: 'black',
-        textDecoration: 'none',
-        marginRight: 16,
         marginLeft: 24,
+        textDecoration: 'none',
         ':hover': {
             textDecoration: 'none',
             backgroundColor: '#eee'
