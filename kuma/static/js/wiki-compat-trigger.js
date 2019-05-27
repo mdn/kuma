@@ -32,6 +32,17 @@
                 cache: true
             }).then(function() {
                 $('.bc-table').mozCompatTable();
+
+                // Load signaling feature
+                const compatSignalJS = mdn.assets.js['wiki-compat-signal'][0];
+
+                $.ajax({
+                    url: compatSignalJS,
+                    dataType: 'script',
+                    cache: true
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    console.error('Failed to load BC signal JS: ' + textStatus + ': ', errorThrown);
+                });
             });
 
         }).appendTo(doc.head);
