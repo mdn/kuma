@@ -2025,3 +2025,22 @@ class DocumentSpamAttempt(SpamAttempt):
 
     def __str__(self):
         return u'%s (%s)' % (self.slug, self.title)
+
+
+class BCSignal(models.Model):
+    """Model to keep track of the BC signals."""
+    document = models.ForeignKey(
+        Document,
+        related_name='bc_signals',
+        null=True,
+        blank=True,
+        verbose_name=_('Document (optional)'),
+        on_delete=models.SET_NULL
+    )
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return u'BC Signal: {}'.format(self.document.slug)
+
+    class Meta:
+        verbose_name = 'BC Signal'
