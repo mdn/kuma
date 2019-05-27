@@ -23,7 +23,7 @@ from kuma.spam.akismet import Akismet, AkismetError
 
 from .decorators import check_readonly
 from .forms import RevisionAkismetSubmissionAdminForm
-from .models import (Document, DocumentDeletionLog, DocumentSpamAttempt,
+from .models import (BCSignal, Document, DocumentDeletionLog, DocumentSpamAttempt,
                      DocumentTag, EditorToolbar, Revision,
                      RevisionAkismetSubmission, RevisionIP)
 
@@ -593,3 +593,8 @@ class EditorToolbarAdmin(admin.ModelAdmin):
     list_display = ['name', 'creator', 'default']
     list_filters = ['default']
     raw_id_fields = ['creator']
+
+
+@admin.register(BCSignal)
+class BCSignalAdmin(admin.ModelAdmin):
+    list_display = ['pk', 'document', 'submitted_at']
