@@ -8,7 +8,6 @@ import DocumentProvider from './document-provider.jsx';
 import GAProvider from './ga-provider.jsx';
 import { gettext } from './l10n.js';
 import LanguageMenu from './header/language-menu.jsx';
-import { Row } from './layout.jsx';
 import Header from './header/header.jsx';
 import TaskCompletionSurvey from './task-completion-survey.jsx';
 import { navigateRenderComplete } from './perf.js';
@@ -22,20 +21,12 @@ type DocumentProps = {
 const NARROW = '@media (max-width: 749px)';
 
 const styles = {
-    pageLayout: css({
-        display: 'grid',
-        boxSizing: 'border-box',
-        gridTemplateColumns: '1fr 3fr',
-        gridTemplateAreas: '"title title" "crumbs crumbs"  "side main"',
-        [NARROW]: {
-            // If we're narrower than a tablet, put the sidebar at the
-            // bottom and drop the toc line.
-            gridTemplateColumns: '1fr',
-            gridTemplateAreas: '"title" "crumbs" "main" "side"'
-        }
-    }),
-    titlebar: css({
-        gridArea: 'title',
+    // Titlebar styles
+    titlebarContainer: css({
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
         boxSizing: 'border-box',
         width: '100%',
         minHeight: 106,
@@ -50,6 +41,12 @@ const styles = {
             padding: '8px 16px'
         }
     }),
+    titlebar: css({
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%',
+        maxWidth: 1352
+    }),
     title: css({
         fontFamily:
             'x-locale-heading-primary, zillaslab, "Palatino", "Palatino Linotype", x-locale-heading-secondary, serif',
@@ -60,21 +57,28 @@ const styles = {
             fontSize: 28
         }
     }),
-    breadcrumbsRow: css({
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        gridArea: 'crumbs',
+
+    // Breadcrumbs styles
+    breadcrumbsContainer: css({
         boxSizing: 'border-box',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
         width: '100%',
         minHeight: 40,
         padding: '4px 16px 4px 24px',
         borderBottom: 'solid 1px #dce3e5',
         backgroundColor: '#fff'
     }),
-    breadcrumbs: css({
+    breadcrumbsRow: css({
         display: 'flex',
         flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
+        maxWidth: 1360
+    }),
+    breadcrumbs: css({
         flex: '1 1'
     }),
     crumb: css({
@@ -89,6 +93,22 @@ const styles = {
         fontWeight: 'bold',
         fontSize: 18,
         margin: '0 8px'
+    }),
+
+    // Content styles: the sidebar and main article content
+    contentLayout: css({
+        display: 'grid',
+        boxSizing: 'border-box',
+        maxWidth: 1400,
+        margin: '0 auto',
+        gridTemplateColumns: '25% 75%',
+        gridTemplateAreas: '"side main"',
+        [NARROW]: {
+            // If we're narrower than a tablet, put the sidebar at the
+            // bottom and drop the toc line.
+            gridTemplateColumns: '1fr',
+            gridTemplateAreas: '"main" "side"'
+        }
     }),
     sidebar: css({
         gridArea: 'side',
@@ -111,9 +131,11 @@ const styles = {
 
 function Titlebar({ document }: DocumentProps) {
     return (
-        <Row css={styles.titlebar}>
-            <h1 css={styles.title}>{document.title}</h1>
-        </Row>
+        <div css={styles.titlebarContainer}>
+            <div css={styles.titlebar}>
+                <h1 css={styles.title}>{document.title}</h1>
+            </div>
+        </div>
     );
 }
 
@@ -140,28 +162,39 @@ function Breadcrumbs({ document }: DocumentProps) {
     // The <span> elements below aren't needed except that the stylesheets
     // are set up to expect them.
     return (
-        <div css={styles.breadcrumbsRow}>
-            <nav css={styles.breadcrumbs} role="navigation">
-                <ol>
-                    {document.parents.map(p => (
-                        <li css={styles.crumb} key={p.url}>
-                            <a href={p.url}>
-                                <span>{p.title}</span>
-                            </a>
-                            <Chevron />
+        <div css={styles.breadcrumbsContainer}>
+            <div css={styles.breadcrumbsRow}>
+                <nav css={styles.breadcrumbs} role="navigation">
+                    <ol>
+                        {document.parents.map(p => (
+                            <li css={styles.crumb} key={p.url}>
+                                <a href={p.url}>
+                                    <span>{p.title}</span>
+                                </a>
+                                <Chevron />
+                            </li>
+                        ))}
+                        <li css={styles.crumb}>
+                            <span>{document.title}</span>
                         </li>
-                    ))}
-                    <li css={styles.crumb}>
-                        <span>{document.title}</span>
-                    </li>
-                </ol>
-            </nav>
-            <LanguageMenu />
+                    </ol>
+                </nav>
+                <LanguageMenu />
+            </div>
         </div>
     );
 }
 
-function Document() {
+function Content({ document }: DocumentProps) {
+    return (
+        <div css={styles.contentLayout}>
+            <Article document={document} />
+            <Sidebar document={document} />
+        </div>
+    );
+}
+
+export default function Page() {
     const document = useContext(DocumentProvider.context);
     const ga = useContext(GAProvider.context);
 
@@ -182,22 +215,13 @@ function Document() {
 
     return (
         document && (
-            <div css={styles.pageLayout}>
+            <>
+                <Header />
+                <TaskCompletionSurvey />
                 <Titlebar document={document} />
                 <Breadcrumbs document={document} />
-                <Article document={document} />
-                <Sidebar document={document} />
-            </div>
+                <Content document={document} />
+            </>
         )
-    );
-}
-
-export default function Page() {
-    return (
-        <>
-            <Header />
-            <TaskCompletionSurvey />
-            <Document />
-        </>
     );
 }
