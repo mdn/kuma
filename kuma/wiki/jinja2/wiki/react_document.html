@@ -144,9 +144,9 @@
     </div>
   </footer>
 
+  <!-- strings used by javascript modules. Hopefully we can remove soon -->
+  <script src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
   <!-- site js -->
-  <script src="{{ react_i18n(request.LANGUAGE_CODE) }}"></script>
-
   {% javascript 'react-main' %}
   <script>
     if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
