@@ -6,31 +6,30 @@ import { css } from '@emotion/core';
 
 import DocumentProvider from '../document-provider.jsx';
 import Dropdown from './dropdown.jsx';
-import EditIcon from '../icons/pencil.svg';
 import { getLocale, gettext } from '../l10n.js';
-import GithubLogo from '../icons/github.svg';
-import { Row, Strut } from '../layout.jsx';
+import { Row } from '../layout.jsx';
 import UserProvider from '../user-provider.jsx';
 
 const styles = {
     container: css({
         // Buttons (in the dropdown labels) don't seem to inherit fontsizes
         // so we need to make this explicit.
-        button: { fontSize: '1em' }
+        button: { fontSize: '1em' },
+        marginLeft: 24
     }),
     avatar: css({
-        width: '4em',
+        width: 40,
+        height: 40,
         borderRadius: '50%'
     }),
     signInLink: css({
         display: 'flex',
         alignItems: 'center',
-        fontSize: '1.2em',
+        fontSize: '1em',
         fontWeight: 'bold',
         color: 'black',
+        marginLeft: 24,
         textDecoration: 'none',
-        lineHeight: '3.2em',
-        padding: '0 8px',
         ':hover': {
             textDecoration: 'none',
             backgroundColor: '#eee'
@@ -40,7 +39,6 @@ const styles = {
             outlineOffset: -3
         }
     }),
-    icon: css({ marginLeft: 3, width: '1.5em' }),
     signOutButton: css({
         // Signing out is a POST operation so we use a form and button
         // but we want the button to look like a regular link.
@@ -80,10 +78,13 @@ export default function Login(): React.Node {
 
     if (userData.isAuthenticated && userData.username) {
         // If we have user data and the user is logged in, show their
-        // profile pic.
+        // profile pic, defaulting to the dino head if the gravatar
+        // URLs don't work.
         let label = (
             <img
-                src={userData.gravatarUrl.small}
+                srcSet={`${userData.gravatarUrl.large || ''} 200w ${userData
+                    .gravatarUrl.small || ''} 50w`}
+                src={'/static/img/avatar.png'}
                 css={styles.avatar}
                 alt={userData.username}
             />
@@ -95,7 +96,7 @@ export default function Login(): React.Node {
 
         return (
             <Row css={styles.container}>
-                <Dropdown label={label} right={true}>
+                <Dropdown label={label} right={true} hideArrow={true}>
                     <li>
                         <a href={viewProfileLink}>{gettext('View profile')}</a>
                     </li>
@@ -114,10 +115,6 @@ export default function Login(): React.Node {
                         </form>
                     </li>
                 </Dropdown>
-                <Strut width={8} />
-                <a css={styles.editLink} href={editURL} title="Edit this page">
-                    <EditIcon css={styles.editIcon} alt="Edit this page" />
-                </a>
             </Row>
         );
     } else {
@@ -129,7 +126,7 @@ export default function Login(): React.Node {
                 rel="nofollow"
                 css={styles.signInLink}
             >
-                {gettext('Sign in')} <GithubLogo css={styles.icon} />
+                {gettext('Sign in')}
             </a>
         );
     }

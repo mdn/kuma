@@ -14,6 +14,9 @@ const MenuContainer = styled.div`
     // on the entire document when the menu is up, but we need to be
     // able to click on the menu items themselves
     pointer-events: auto;
+
+    // This adjusts for the 5px left padding
+    margin-left: -5px;
 `;
 
 const MenuLabel = styled.button`
@@ -22,7 +25,6 @@ const MenuLabel = styled.button`
     align-items: center;
     white-space: nowrap;
     padding: 0 5px;
-    margin: 0;
     border: none;
     :hover {
         background-color: #eee;
@@ -34,7 +36,7 @@ const MenuLabel = styled.button`
 `;
 
 const Arrow = styled.span`
-    font-size: '75%';
+    font-size: 75%;
     padding-left: 2px;
 `;
 
@@ -77,6 +79,8 @@ type DropdownProps = {|
     // the left side of the label and allow it to extend beyond the
     // right edge of the label.
     right?: boolean,
+    // If true, we won't show the arrow next to the menu
+    hideArrow?: boolean,
     children: React.Node
 |};
 
@@ -139,7 +143,7 @@ export default function Dropdown(props: DropdownProps) {
                 onClick={!shown ? () => setShown(true) : null}
             >
                 {props.label}
-                <Arrow>{shown ? '▲' : '▼'}</Arrow>
+                {!props.hideArrow && <Arrow>{shown ? '▲' : '▼'}</Arrow>}
             </MenuLabel>
             <Menu
                 className="dropdown-menu"

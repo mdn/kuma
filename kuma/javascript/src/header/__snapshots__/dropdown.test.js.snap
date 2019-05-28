@@ -4,6 +4,7 @@ exports[`Dropdown closed and open snapshots 1`] = `
 .emotion-6 {
   position: relative;
   pointer-events: auto;
+  margin-left: -5px;
 }
 
 .emotion-2 {
@@ -20,7 +21,6 @@ exports[`Dropdown closed and open snapshots 1`] = `
   align-items: center;
   white-space: nowrap;
   padding: 0 5px;
-  margin: 0;
   border: none;
 }
 
@@ -33,7 +33,7 @@ exports[`Dropdown closed and open snapshots 1`] = `
 }
 
 .emotion-0 {
-  font-size: '75%';
+  font-size: 75%;
   padding-left: 2px;
 }
 
@@ -92,10 +92,11 @@ exports[`Dropdown closed and open snapshots 2`] = `
 .emotion-6 {
   position: relative;
   pointer-events: auto;
+  margin-left: -5px;
 }
 
 .emotion-0 {
-  font-size: '75%';
+  font-size: 75%;
   padding-left: 2px;
 }
 
@@ -113,7 +114,6 @@ exports[`Dropdown closed and open snapshots 2`] = `
   align-items: center;
   white-space: nowrap;
   padding: 0 5px;
-  margin: 0;
   border: none;
   background-color: #83d0f2;
 }

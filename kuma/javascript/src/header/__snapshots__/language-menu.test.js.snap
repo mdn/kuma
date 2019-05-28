@@ -4,6 +4,7 @@ exports[`LanguageMenu snapshot 1`] = `
 .emotion-7 {
   position: relative;
   pointer-events: auto;
+  margin-left: -5px;
 }
 
 .emotion-3 {
@@ -20,7 +21,6 @@ exports[`LanguageMenu snapshot 1`] = `
   align-items: center;
   white-space: nowrap;
   padding: 0 5px;
-  margin: 0;
   border: none;
 }
 
@@ -33,11 +33,11 @@ exports[`LanguageMenu snapshot 1`] = `
 }
 
 .emotion-0 {
-  height: 1.5em;
+  height: 20px;
 }
 
 .emotion-1 {
-  font-size: '75%';
+  font-size: 75%;
   padding-left: 2px;
 }
 
@@ -57,6 +57,7 @@ exports[`LanguageMenu snapshot 1`] = `
   box-shadow: 3px 3px 5px rgba(0,0,0,0.25);
   padding: 10px;
   min-width: 100%;
+  right: 0;
   display: none;
 }
 

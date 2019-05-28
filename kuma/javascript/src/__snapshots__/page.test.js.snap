@@ -2,37 +2,43 @@
 
 exports[`Page snapshot 1`] = `
 Array [
-  .emotion-46 {
-  border-top: 4px solid #83d0f2;
+  .emotion-0 {
+  height: 5px;
+  width: 100%;
+  background-image: linear-gradient(-271deg,#206584,#83d0f2);
+}
+
+<div
+    className="emotion-0"
+  />,
+  .emotion-39 {
   display: grid;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  font-size: 15px;
+  margin: 0 16px;
 }
 
 @media (min-width:1024px) {
-  .emotion-46 {
-    font-size: 15px;
-    grid-template-columns: 274px 500px minmax(80px,1fr) 125px;
-    -webkit-column-gap: 10px;
-    column-gap: 10px;
+  .emotion-39 {
+    height: 68px;
+    grid-template-columns: 221px 5fr minmax(250px,2fr) auto;
     grid-template-areas: "I M S L";
   }
 }
 
 @media (min-width:750px) and (max-width:1023px) {
-  .emotion-46 {
-    font-size: 12px;
-    grid-template-columns: repeat(10,1fr);
-    -webkit-column-gap: 5px;
-    column-gap: 5px;
-    grid-template-areas: "I I I S S S S S L L" "M M M M M M M M M M";
+  .emotion-39 {
+    height: 122px;
+    grid-template-columns: minmax(206px,1fr) 300px auto;
+    grid-template-areas: "I S L" "R R R" "M M M";
   }
 }
 
 @media (max-width:749px) {
-  .emotion-46 {
+  .emotion-39 {
     font-size: 10px;
     grid-template-columns: repeat(4,1fr);
     grid-template-areas: "I I L L" "S S S S" "M M M M";
@@ -42,13 +48,31 @@ Array [
 .emotion-1 {
   display: block;
   grid-area: I;
+  width: 200px;
+  height: 44px;
+  margin-right: 24px;
 }
 
 .emotion-0 {
-  height: 4em;
+  width: 200px;
+  height: 44px;
 }
 
-.emotion-37 {
+.emotion-2 {
+  display: none;
+  grid-area: R;
+  height: 2px;
+  width: 100%;
+  background-color: #dce3e5;
+}
+
+@media (min-width:750px) and (max-width:1023px) {
+  .emotion-2 {
+    display: block;
+  }
+}
+
+.emotion-31 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -64,39 +88,21 @@ Array [
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  margin: 0 5px;
+  font-size: 15px;
+  font-weight: bold;
 }
 
-@media (min-width:1024px) {
-  .emotion-37 button {
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 32px;
-  }
+.emotion-31 button {
+  line-height: 32px;
 }
 
-@media (min-width:750px) and (max-width:1023px) {
-  .emotion-37 button {
-    font-size: 14px;
-    font-weight: bold;
-    line-height: 28px;
-  }
-}
-
-@media (max-width:749px) {
-  .emotion-37 button {
-    font-size: 12px;
-    font-weight: normal;
-    line-height: 24px;
-  }
-}
-
-.emotion-8 {
+.emotion-9 {
   position: relative;
   pointer-events: auto;
+  margin-left: -5px;
 }
 
-.emotion-4 {
+.emotion-5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -110,24 +116,23 @@ Array [
   align-items: center;
   white-space: nowrap;
   padding: 0 5px;
-  margin: 0;
   border: none;
 }
 
-.emotion-4:hover {
+.emotion-5:hover {
   background-color: #eee;
 }
 
-.emotion-4:focus {
+.emotion-5:focus {
   outline-offset: -3px;
 }
 
-.emotion-2 {
-  font-size: '75%';
+.emotion-3 {
+  font-size: 75%;
   padding-left: 2px;
 }
 
-.emotion-6 {
+.emotion-7 {
   position: absolute;
   z-index: 100;
   display: -webkit-box;
@@ -146,28 +151,30 @@ Array [
   display: none;
 }
 
-.emotion-6 li {
+.emotion-7 li {
   padding: 5px;
   white-space: nowrap;
 }
 
-.emotion-26 {
-  -webkit-flex: 1 1 0px;
-  -ms-flex: 1 1 0px;
-  flex: 1 1 0px;
+.emotion-11 {
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-flex-basis: 16px;
+  -ms-flex-preferred-size: 16px;
+  flex-basis: 16px;
 }
 
-.emotion-28 {
-  height: 1.5em;
-}
-
-.emotion-42 {
+.emotion-36 {
   grid-area: S;
-  margin: 2px 8px;
   justify-self: stretch;
 }
 
-.emotion-41 {
+.emotion-35 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -180,38 +187,41 @@ Array [
   -ms-flex-align: center;
   align-items: center;
   padding: 2px 8px;
-  border: solid #888 1px;
-  border-radius: 8px;
+  border: solid 2px #333;
+  border-radius: 20px;
+  background-color: #fafafa;
+  box-sizing: border-box;
+  height: 40px;
   min-width: 80px;
   -webkit-flex: 2 1;
   -ms-flex: 2 1;
   flex: 2 1;
 }
 
-.emotion-39 {
+.emotion-33 {
   fill: #333;
   -webkit-flex: 0 0 20px;
   -ms-flex: 0 0 20px;
   flex: 0 0 20px;
 }
 
-.emotion-40 {
+.emotion-34 {
   border-width: 0 !important;
-  font-size: 16px;
-  font-weight: bold !important;
+  font-size: 14px;
   -webkit-flex: 1 1 100px;
   -ms-flex: 1 1 100px;
   flex: 1 1 100px;
   min-width: 60px;
+  color: #000;
+  background-color: #fafafa !important;
 }
 
-.emotion-45 {
+.emotion-38 {
   grid-area: L;
   justify-self: end;
-  margin-right: 15px;
 }
 
-.emotion-44 {
+.emotion-37 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -220,32 +230,26 @@ Array [
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: bold;
   color: black;
+  margin-left: 24px;
   -webkit-text-decoration: none;
   text-decoration: none;
-  line-height: 3.2em;
-  padding: 0 8px;
 }
 
-.emotion-44:hover {
+.emotion-37:hover {
   -webkit-text-decoration: none;
   text-decoration: none;
   background-color: #eee;
 }
 
-.emotion-44:focus {
+.emotion-37:focus {
   outline-offset: -3px;
 }
 
-.emotion-43 {
-  margin-left: 3px;
-  width: 1.5em;
-}
-
 <div
-    className="emotion-46"
+    className="emotion-39"
   >
     <a
       className="emotion-1"
@@ -257,24 +261,27 @@ Array [
       />
     </a>
     <div
-      className="emotion-37 emotion-38"
+      className="emotion-2"
+    />
+    <div
+      className="emotion-31 emotion-32"
     >
       <div
-        className="emotion-8 emotion-9"
+        className="emotion-9 emotion-10"
       >
         <button
-          className="emotion-4 emotion-5"
+          className="emotion-5 emotion-6"
           onClick={[Function]}
         >
           Technologies
           <span
-            className="emotion-2 emotion-3"
+            className="emotion-3 emotion-4"
           >
             ▼
           </span>
         </button>
         <ul
-          className="dropdown-menu emotion-6 emotion-7"
+          className="dropdown-menu emotion-7 emotion-8"
         >
           <li>
             <a
@@ -335,21 +342,25 @@ Array [
         </ul>
       </div>
       <div
-        className="emotion-8 emotion-9"
+        className="emotion-11 emotion-12"
+        width={16}
+      />
+      <div
+        className="emotion-9 emotion-10"
       >
         <button
-          className="emotion-4 emotion-5"
+          className="emotion-5 emotion-6"
           onClick={[Function]}
         >
           References & Guides
           <span
-            className="emotion-2 emotion-3"
+            className="emotion-3 emotion-4"
           >
             ▼
           </span>
         </button>
         <ul
-          className="dropdown-menu emotion-6 emotion-7"
+          className="dropdown-menu emotion-7 emotion-8"
         >
           <li>
             <a
@@ -403,21 +414,25 @@ Array [
         </ul>
       </div>
       <div
-        className="emotion-8 emotion-9"
+        className="emotion-11 emotion-12"
+        width={16}
+      />
+      <div
+        className="emotion-9 emotion-10"
       >
         <button
-          className="emotion-4 emotion-5"
+          className="emotion-5 emotion-6"
           onClick={[Function]}
         >
           Feedback
           <span
-            className="emotion-2 emotion-3"
+            className="emotion-3 emotion-4"
           >
             ▼
           </span>
         </button>
         <ul
-          className="dropdown-menu emotion-6 emotion-7"
+          className="dropdown-menu emotion-7 emotion-8"
         >
           <li>
             <a
@@ -468,58 +483,22 @@ Array [
           </li>
         </ul>
       </div>
-      <div
-        className="emotion-26 emotion-27"
-      />
-      <div
-        className="emotion-8 emotion-9"
-      >
-        <button
-          className="emotion-4 emotion-5"
-          onClick={[Function]}
-        >
-          <svg mock
-            className="emotion-28"
-          />
-          <span
-            className="emotion-2 emotion-3"
-          >
-            ▼
-          </span>
-        </button>
-        <ul
-          className="dropdown-menu emotion-6 emotion-7"
-        >
-          <li
-            lang="es"
-          >
-            <a
-              href="[fake spanish url]"
-              title="Spanish"
-            >
-              <bdi>
-                Español
-              </bdi>
-            </a>
-          </li>
-        </ul>
-      </div>
     </div>
     <div
-      className="emotion-42"
+      className="emotion-36"
     >
       <form
         action="/en-US/search"
-        className="emotion-41"
+        className="emotion-35"
         id="nav-main-search"
         method="get"
         role="search"
       >
         <svg mock
-          className="emotion-39"
+          className="emotion-33"
         />
         <input
-          className="emotion-40"
+          className="emotion-34"
           id="main-q"
           name="q"
           placeholder="Search MDN"
@@ -528,33 +507,65 @@ Array [
       </form>
     </div>
     <div
-      className="emotion-45"
+      className="emotion-38"
     >
       <a
-        className="emotion-44"
+        className="emotion-37"
         data-service="GitHub"
         href="/users/github/login/?next=[fake absolute url]"
         rel="nofollow"
       >
         Sign in
-         
-        <svg mock
-          className="emotion-43"
-        />
       </a>
     </div>
   </div>,
-  .emotion-11 {
+  .emotion-16 {
+  position: relative;
+  pointer-events: auto;
+  margin-left: -5px;
+}
+
+.emotion-12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  white-space: nowrap;
+  padding: 0 5px;
+  border: none;
+}
+
+.emotion-12:hover {
+  background-color: #eee;
+}
+
+.emotion-12:focus {
+  outline-offset: -3px;
+}
+
+.emotion-10 {
+  font-size: 75%;
+  padding-left: 2px;
+}
+
+.emotion-25 {
   display: grid;
   box-sizing: border-box;
   grid-template-columns: 1fr 3fr;
-  grid-template-areas: "title title" "toc toc" "side main";
+  grid-template-areas: "title title" "crumbs crumbs" "side main";
 }
 
 @media (max-width:749px) {
-  .emotion-11 {
+  .emotion-25 {
     grid-template-columns: 1fr;
-    grid-template-areas: "title" "main" "side";
+    grid-template-areas: "title" "crumbs" "main" "side";
   }
 }
 
@@ -573,25 +584,34 @@ Array [
   grid-area: title;
   box-sizing: border-box;
   width: 100%;
+  min-height: 106px;
+  padding: 12px 24px;
   overflow-x: scroll;
   background-color: #f5f9fa;
+  border-bottom: solid 1px #dce3e5;
+  border-top: solid 1px #dce3e5;
+}
+
+@media (max-width:749px) {
+  .emotion-1 {
+    min-height: 60px;
+    padding: 8px 16px;
+  }
 }
 
 .emotion-0 {
   font-family: x-locale-heading-primary,zillaslab,"Palatino","Palatino Linotype",x-locale-heading-secondary,serif;
-  margin: 0;
-  font-size: 2.8rem;
-  padding: 12px 12px 12px 24px;
+  font-size: 45px;
+  font-weight: bold;
 }
 
 @media (max-width:749px) {
   .emotion-0 {
-    font-size: 1.77rem;
-    padding: 12px;
+    font-size: 28px;
   }
 }
 
-.emotion-3 {
+.emotion-18 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -603,48 +623,74 @@ Array [
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  grid-area: toc;
+  grid-area: crumbs;
   box-sizing: border-box;
   width: 100%;
-  overflow-x: scroll;
-  color: #fff;
-  background-color: #222;
-  padding: 8px 8px 8px 24px;
-}
-
-@media (max-width:749px) {
-  .emotion-3 {
-    display: none;
-  }
-}
-
-.emotion-3 li {
-  display: inline-block;
-}
-
-.emotion-3 a {
-  color: #83d0f2;
-  padding-right: 30px;
-  white-space: nowrap;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  font-size: 1rem;
-}
-
-.emotion-3 code {
-  background-color: inherit;
-  color: inherit;
-  font-family: inherit;
-  font-size: inherit;
-  padding: 0;
-}
-
-.emotion-3 li ol,
-.emotion-3 li ul {
-  display: none;
+  min-height: 40px;
+  padding: 4px 16px 4px 24px;
+  border-bottom: solid 1px #dce3e5;
+  background-color: #fff;
 }
 
 .emotion-8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex: 1 1;
+  -ms-flex: 1 1;
+  flex: 1 1;
+}
+
+.emotion-4 {
+  display: inline;
+  font-size: 14px;
+}
+
+.emotion-4a {
+  color: #3d7e9a;
+}
+
+.emotion-3 {
+  font-family: zillaslab,serif;
+  font-weight: bold;
+  font-size: 18px;
+  margin: 0 8px;
+}
+
+.emotion-9 {
+  height: 20px;
+}
+
+.emotion-14 {
+  position: absolute;
+  z-index: 100;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: white;
+  border: solid #83d0f2 1.5px;
+  box-shadow: 3px 3px 5px rgba(0,0,0,0.25);
+  padding: 10px;
+  min-width: 100%;
+  right: 0;
+  display: none;
+}
+
+.emotion-14 li {
+  padding: 5px;
+  white-space: nowrap;
+}
+
+.emotion-22 {
   grid-area: main;
   box-sizing: border-box;
   width: 100%;
@@ -653,26 +699,26 @@ Array [
 }
 
 @media (max-width:749px) {
-  .emotion-8 {
+  .emotion-22 {
     padding: 15px 12px;
   }
 }
 
-.emotion-8 p {
+.emotion-22 p {
   max-width: 42rem;
 }
 
-.emotion-7 {
+.emotion-21 {
   margin-top: 32px;
   font-size: 0.88889rem;
   color: #696969;
 }
 
-.emotion-7 div {
+.emotion-21 div {
   margin: 4px 0;
 }
 
-.emotion-5 {
+.emotion-19 {
   width: 14px;
   height: 14px;
   margin-right: 5px;
@@ -680,7 +726,7 @@ Array [
   fill: #696969;
 }
 
-.emotion-6 {
+.emotion-20 {
   width: 16px;
   height: 16px;
   margin-right: 5px;
@@ -688,7 +734,7 @@ Array [
   fill: #696969;
 }
 
-.emotion-10 {
+.emotion-24 {
   grid-area: side;
   box-sizing: border-box;
   width: 100%;
@@ -697,13 +743,17 @@ Array [
 }
 
 @media (max-width:749px) {
-  .emotion-10 {
+  .emotion-24 {
     padding: 15px 12px;
   }
 }
 
+.emotion-23 {
+  font-size: 20px;
+}
+
 <div
-    className="emotion-11"
+    className="emotion-25"
   >
     <div
       className="emotion-1 emotion-2"
@@ -715,15 +765,90 @@ Array [
       </h1>
     </div>
     <div
-      className="emotion-3 emotion-2"
-      dangerouslySetInnerHTML={
-        Object {
-          "__html": "<ol>[fake TOC HTML]</ol>",
-        }
-      }
-    />
+      className="emotion-18"
+    >
+      <nav
+        className="emotion-8"
+        role="navigation"
+      >
+        <ol>
+          <li
+            className="emotion-4"
+          >
+            <a
+              href="[fake grandparent url]"
+            >
+              <span>
+                [fake grandparent title]
+              </span>
+            </a>
+            <span
+              className="emotion-3"
+            >
+              ›
+            </span>
+          </li>
+          <li
+            className="emotion-4"
+          >
+            <a
+              href="[fake parent url]"
+            >
+              <span>
+                [fake parent title]
+              </span>
+            </a>
+            <span
+              className="emotion-3"
+            >
+              ›
+            </span>
+          </li>
+          <li
+            className="emotion-4"
+          >
+            <span>
+              [fake document title]
+            </span>
+          </li>
+        </ol>
+      </nav>
+      <div
+        className="emotion-16 emotion-17"
+      >
+        <button
+          className="emotion-12 emotion-13"
+          onClick={[Function]}
+        >
+          <svg mock
+            className="emotion-9"
+          />
+          <span
+            className="emotion-10 emotion-11"
+          >
+            ▼
+          </span>
+        </button>
+        <ul
+          className="dropdown-menu emotion-14 emotion-15"
+        >
+          <li
+            lang="es"
+          >
+            <a
+              href="[fake spanish url]"
+              title="Spanish"
+            >
+              <bdi>
+                Español
+              </bdi>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
     <div
-      className="text-content emotion-8"
+      className="text-content emotion-22"
     >
       <article
         dangerouslySetInnerHTML={
@@ -734,11 +859,11 @@ Array [
         id="wikiArticle"
       />
       <div
-        className="emotion-7"
+        className="emotion-21"
       >
         <div>
           <svg mock
-            className="emotion-5"
+            className="emotion-19"
           />
            
           <strong>
@@ -765,7 +890,7 @@ Array [
         </div>
         <div>
           <svg mock
-            className="emotion-6"
+            className="emotion-20"
           />
            
           <strong>
@@ -783,60 +908,20 @@ Array [
       </div>
     </div>
     <div
-      className="emotion-10"
+      className="quick-links emotion-24"
     >
-      <nav
-        className="crumbs"
-        role="navigation"
-      >
-        <ol>
-          <li
-            className="crumb"
-          >
-            <a
-              href="[fake grandparent url]"
-            >
-              <span>
-                [fake grandparent title]
-              </span>
-            </a>
-          </li>
-          <li
-            className="crumb"
-          >
-            <a
-              href="[fake parent url]"
-            >
-              <span>
-                [fake parent title]
-              </span>
-            </a>
-          </li>
-          <li
-            className="crumb"
-          >
-            <span>
-              [fake document title]
-            </span>
-          </li>
-        </ol>
-      </nav>
       <div
-        className="quick-links emotion-9"
+        className="quick-links-head emotion-23"
       >
-        <div
-          className="quick-links-head"
-        >
-          Related Topics
-        </div>
-        <div
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "[fake quicklinks HTML]",
-            }
-          }
-        />
+        Related Topics
       </div>
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "[fake quicklinks HTML]",
+          }
+        }
+      />
     </div>
   </div>,
 ]

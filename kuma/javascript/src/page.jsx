@@ -8,6 +8,7 @@ import ContributorsIcon from './icons/contributors.svg';
 import DocumentProvider from './document-provider.jsx';
 import GAProvider from './ga-provider.jsx';
 import { getLocale, gettext } from './l10n.js';
+import LanguageMenu from './header/language-menu.jsx';
 import { Row } from './layout.jsx';
 import Header from './header/header.jsx';
 import TaskCompletionSurvey from './task-completion-survey.jsx';
@@ -26,75 +27,69 @@ const styles = {
         display: 'grid',
         boxSizing: 'border-box',
         gridTemplateColumns: '1fr 3fr',
-        gridTemplateAreas: '"title title"  "toc toc"  "side main"',
+        gridTemplateAreas: '"title title" "crumbs crumbs"  "side main"',
         [NARROW]: {
             // If we're narrower than a tablet, put the sidebar at the
             // bottom and drop the toc line.
             gridTemplateColumns: '1fr',
-            gridTemplateAreas: '"title" "main" "side"'
+            gridTemplateAreas: '"title" "crumbs" "main" "side"'
         }
     }),
     titlebar: css({
         gridArea: 'title',
         boxSizing: 'border-box',
         width: '100%',
+        minHeight: 106,
+        padding: '12px 24px',
         overflowX: 'scroll',
-        backgroundColor: '#f5f9fa'
+        backgroundColor: '#f5f9fa',
+        borderBottom: 'solid 1px #dce3e5',
+        borderTop: 'solid 1px #dce3e5',
+        [NARROW]: {
+            // Reduce titlebar size on narrow screens
+            minHeight: 60,
+            padding: '8px 16px'
+        }
     }),
     title: css({
         fontFamily:
             'x-locale-heading-primary, zillaslab, "Palatino", "Palatino Linotype", x-locale-heading-secondary, serif',
-        margin: 0,
-        fontSize: '2.8rem',
-        padding: '12px 12px 12px 24px',
+        fontSize: 45,
+        fontWeight: 'bold',
         [NARROW]: {
             // Reduce the H1 size on narrow screens
-            fontSize: '1.77rem',
-            padding: 12
+            fontSize: 28
         }
     }),
-    toc: css({
-        gridArea: 'toc',
+    breadcrumbsRow: css({
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gridArea: 'crumbs',
         boxSizing: 'border-box',
         width: '100%',
-        overflowX: 'scroll',
-        color: '#fff',
-        backgroundColor: '#222',
-        padding: '8px 8px 8px 24px',
-        [NARROW]: {
-            // We don't display the TOC bar on small screens.
-            // Leaving it out of the grid is not enough, though:
-            // we also have to explicitly hide it.
-            display: 'none'
-        },
-
-        '& li': {
-            display: 'inline-block'
-        },
-        '& a': {
-            color: '#83d0f2',
-            paddingRight: 30,
-            whiteSpace: 'nowrap',
-            textDecoration: 'none',
-            fontSize: '1rem'
-        },
-
-        '& code': {
-            backgroundColor: 'inherit',
-            color: 'inherit',
-            fontFamily: 'inherit',
-            fontSize: 'inherit',
-            padding: 0
-        },
-
-        // Don't display any nested lists in the TOC
-        // This may not be needed anymore, but there are still documents
-        // on staging that have nested lists in the TOC. Re-rendering those
-        // docs seems to make the nested lists go away, but this is here
-        // just in case
-        '& li ol, li ul': {
-            display: 'none'
+        minHeight: 40,
+        padding: '4px 16px 4px 24px',
+        borderBottom: 'solid 1px #dce3e5',
+        backgroundColor: '#fff'
+    }),
+    breadcrumbs: css({
+        display: 'flex',
+        flexDirection: 'row',
+        flex: '1 1'
+    }),
+    crumb: css({
+        display: 'inline',
+        fontSize: 14,
+        '&a': {
+            color: '#3d7e9a'
         }
+    }),
+    chevron: css({
+        fontFamily: 'zillaslab,serif',
+        fontWeight: 'bold',
+        fontSize: 18,
+        margin: '0 8px'
     }),
     article: css({
         gridArea: 'main',
@@ -127,9 +122,9 @@ const styles = {
             padding: '15px 12px'
         }
     }),
-    breadcrumbs: css({}),
-    quicklinks: css({}),
-
+    related: css({
+        fontSize: 20
+    }),
     metadata: css({
         marginTop: 32,
         fontSize: '0.88889rem',
@@ -162,56 +157,46 @@ function Titlebar({ document }: DocumentProps) {
     );
 }
 
-function TOC({ document }: DocumentProps) {
+function Sidebar({ document }: DocumentProps) {
     return (
-        <Row
-            css={styles.toc}
-            dangerouslySetInnerHTML={{
-                __html: `<ol>${document.tocHTML}</ol>`
-            }}
-        />
+        <div className="quick-links" css={styles.sidebar}>
+            <div css={styles.related} className="quick-links-head">
+                {gettext('Related Topics')}
+            </div>
+            <div
+                dangerouslySetInnerHTML={{
+                    __html: document.quickLinksHTML
+                }}
+            />
+        </div>
     );
 }
 
-function Sidebar({ document }: DocumentProps) {
-    return (
-        <div css={styles.sidebar}>
-            <Breadcrumbs document={document} />
-            <Quicklinks document={document} />
-        </div>
-    );
+function Chevron() {
+    return <span css={styles.chevron}>›</span>;
 }
 
 function Breadcrumbs({ document }: DocumentProps) {
     // The <span> elements below aren't needed except that the stylesheets
     // are set up to expect them.
     return (
-        <nav className="crumbs" role="navigation">
-            <ol>
-                {document.parents.map(p => (
-                    <li className="crumb" key={p.url}>
-                        <a href={p.url}>
-                            <span>{p.title}</span>
-                        </a>
+        <div css={styles.breadcrumbsRow}>
+            <nav css={styles.breadcrumbs} role="navigation">
+                <ol>
+                    {document.parents.map(p => (
+                        <li css={styles.crumb} key={p.url}>
+                            <a href={p.url}>
+                                <span>{p.title}</span>
+                            </a>
+                            <Chevron />
+                        </li>
+                    ))}
+                    <li css={styles.crumb}>
+                        <span>{document.title}</span>
                     </li>
-                ))}
-                <li className="crumb">
-                    <span>{document.title}</span>
-                </li>
-            </ol>
-        </nav>
-    );
-}
-
-function Quicklinks({ document }: DocumentProps) {
-    return (
-        <div className="quick-links" css={styles.quicklinks}>
-            <div className="quick-links-head">{gettext('Related Topics')}</div>
-            <div
-                dangerouslySetInnerHTML={{
-                    __html: document.quickLinksHTML
-                }}
-            />
+                </ol>
+            </nav>
+            <LanguageMenu />
         </div>
     );
 }
@@ -287,7 +272,7 @@ function Document() {
         document && (
             <div css={styles.pageLayout}>
                 <Titlebar document={document} />
-                <TOC document={document} />
+                <Breadcrumbs document={document} />
                 <Article document={document} />
                 <Sidebar document={document} />
             </div>

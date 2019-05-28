@@ -9,7 +9,7 @@ import LanguageIcon from '../icons/language.svg';
 
 const styles = {
     icon: css({
-        height: '1.5em'
+        height: 20
     })
 };
 
@@ -18,7 +18,7 @@ export default function LanguageMenu(): React.Node {
 
     return (
         documentData && (
-            <Dropdown label={<LanguageIcon css={styles.icon} />}>
+            <Dropdown label={<LanguageIcon css={styles.icon} />} right={true}>
                 {documentData.translations.map(t => (
                     <li key={t.locale} lang={t.locale}>
                         <a href={t.url} title={t.localizedLanguage}>

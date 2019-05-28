@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Login component when user is logged in 1`] = `
-.emotion-14 {
+.emotion-8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -13,18 +13,20 @@ exports[`Login component when user is logged in 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  margin-left: 24px;
 }
 
-.emotion-14 button {
+.emotion-8 button {
   font-size: 1em;
 }
 
-.emotion-8 {
+.emotion-6 {
   position: relative;
   pointer-events: auto;
+  margin-left: -5px;
 }
 
-.emotion-3 {
+.emotion-1 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -38,29 +40,24 @@ exports[`Login component when user is logged in 1`] = `
   align-items: center;
   white-space: nowrap;
   padding: 0 5px;
-  margin: 0;
   border: none;
 }
 
-.emotion-3:hover {
+.emotion-1:hover {
   background-color: #eee;
 }
 
-.emotion-3:focus {
+.emotion-1:focus {
   outline-offset: -3px;
 }
 
 .emotion-0 {
-  width: 4em;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
 }
 
-.emotion-1 {
-  font-size: '75%';
-  padding-left: 2px;
-}
-
-.emotion-6 {
+.emotion-4 {
   position: absolute;
   z-index: 100;
   display: -webkit-box;
@@ -80,12 +77,12 @@ exports[`Login component when user is logged in 1`] = `
   display: none;
 }
 
-.emotion-6 li {
+.emotion-4 li {
   padding: 5px;
   white-space: nowrap;
 }
 
-.emotion-5 {
+.emotion-3 {
   border-width: 0;
   padding: 0;
   color: #3d7e9a;
@@ -93,55 +90,30 @@ exports[`Login component when user is logged in 1`] = `
   font-weight: normal;
 }
 
-.emotion-5:hover {
+.emotion-3:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.emotion-10 {
-  -webkit-box-flex: 0;
-  -webkit-flex-grow: 0;
-  -ms-flex-positive: 0;
-  flex-grow: 0;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  -webkit-flex-basis: 8px;
-  -ms-flex-preferred-size: 8px;
-  flex-basis: 8px;
-}
-
-.emotion-13 {
-  line-height: 1;
-}
-
-.emotion-12 {
-  width: 1.33em;
-}
-
 <div
-  className="emotion-14 emotion-15"
+  className="emotion-8 emotion-9"
 >
   <div
-    className="emotion-8 emotion-9"
+    className="emotion-6 emotion-7"
   >
     <button
-      className="emotion-3 emotion-4"
+      className="emotion-1 emotion-2"
       onClick={[Function]}
     >
       <img
         alt="test-username"
         className="emotion-0"
-        src="test-url"
+        src="/static/img/avatar.png"
+        srcSet="test-bigurl 200w test-url 50w"
       />
-      <span
-        className="emotion-1 emotion-2"
-      >
-        ▼
-      </span>
     </button>
     <ul
-      className="dropdown-menu emotion-6 emotion-7"
+      className="dropdown-menu emotion-4 emotion-5"
     >
       <li>
         <a
@@ -168,7 +140,7 @@ exports[`Login component when user is logged in 1`] = `
             value="[fake absolute url]"
           />
           <button
-            className="emotion-5"
+            className="emotion-3"
             type="submit"
           >
             Sign out
@@ -177,25 +149,11 @@ exports[`Login component when user is logged in 1`] = `
       </li>
     </ul>
   </div>
-  <div
-    className="emotion-10 emotion-11"
-    width={8}
-  />
-  <a
-    className="emotion-13"
-    href="[fake edit url]"
-    title="Edit this page"
-  >
-    <svg mock
-      alt="Edit this page"
-      className="emotion-12"
-    />
-  </a>
 </div>
 `;
 
 exports[`Login component when user is logged in 2`] = `
-.emotion-14 {
+.emotion-8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -207,28 +165,26 @@ exports[`Login component when user is logged in 2`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  margin-left: 24px;
 }
 
-.emotion-14 button {
+.emotion-8 button {
   font-size: 1em;
 }
 
-.emotion-8 {
+.emotion-6 {
   position: relative;
   pointer-events: auto;
+  margin-left: -5px;
 }
 
 .emotion-0 {
-  width: 4em;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
 }
 
-.emotion-1 {
-  font-size: '75%';
-  padding-left: 2px;
-}
-
-.emotion-5 {
+.emotion-3 {
   border-width: 0;
   padding: 0;
   color: #3d7e9a;
@@ -236,33 +192,12 @@ exports[`Login component when user is logged in 2`] = `
   font-weight: normal;
 }
 
-.emotion-5:hover {
+.emotion-3:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.emotion-10 {
-  -webkit-box-flex: 0;
-  -webkit-flex-grow: 0;
-  -ms-flex-positive: 0;
-  flex-grow: 0;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  -webkit-flex-basis: 8px;
-  -ms-flex-preferred-size: 8px;
-  flex-basis: 8px;
-}
-
-.emotion-13 {
-  line-height: 1;
-}
-
-.emotion-12 {
-  width: 1.33em;
-}
-
-.emotion-3 {
+.emotion-1 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -276,24 +211,23 @@ exports[`Login component when user is logged in 2`] = `
   align-items: center;
   white-space: nowrap;
   padding: 0 5px;
-  margin: 0;
   border: none;
   background-color: #83d0f2;
 }
 
-.emotion-3:hover {
+.emotion-1:hover {
   background-color: #eee;
 }
 
-.emotion-3:focus {
+.emotion-1:focus {
   outline-offset: -3px;
 }
 
-.emotion-3:hover {
+.emotion-1:hover {
   background-color: #83d0f2;
 }
 
-.emotion-6 {
+.emotion-4 {
   position: absolute;
   z-index: 100;
   display: -webkit-box;
@@ -312,34 +246,30 @@ exports[`Login component when user is logged in 2`] = `
   right: 0;
 }
 
-.emotion-6 li {
+.emotion-4 li {
   padding: 5px;
   white-space: nowrap;
 }
 
 <div
-  className="emotion-14 emotion-15"
+  className="emotion-8 emotion-9"
 >
   <div
-    className="emotion-8 emotion-9"
+    className="emotion-6 emotion-7"
   >
     <button
-      className="emotion-3 emotion-4"
+      className="emotion-1 emotion-2"
       onClick={null}
     >
       <img
         alt="test-username"
         className="emotion-0"
-        src="test-url"
+        src="/static/img/avatar.png"
+        srcSet="test-bigurl 200w test-url 50w"
       />
-      <span
-        className="emotion-1 emotion-2"
-      >
-        ▲
-      </span>
     </button>
     <ul
-      className="dropdown-menu emotion-6 emotion-7"
+      className="dropdown-menu emotion-4 emotion-5"
     >
       <li>
         <a
@@ -366,7 +296,7 @@ exports[`Login component when user is logged in 2`] = `
             value="[fake absolute url]"
           />
           <button
-            className="emotion-5"
+            className="emotion-3"
             type="submit"
           >
             Sign out
@@ -375,25 +305,11 @@ exports[`Login component when user is logged in 2`] = `
       </li>
     </ul>
   </div>
-  <div
-    className="emotion-10 emotion-11"
-    width={8}
-  />
-  <a
-    className="emotion-13"
-    href="[fake edit url]"
-    title="Edit this page"
-  >
-    <svg mock
-      alt="Edit this page"
-      className="emotion-12"
-    />
-  </a>
 </div>
 `;
 
 exports[`Login component when user is not logged in 1`] = `
-.emotion-1 {
+.emotion-0 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -402,40 +318,30 @@ exports[`Login component when user is not logged in 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: bold;
   color: black;
+  margin-left: 24px;
   -webkit-text-decoration: none;
   text-decoration: none;
-  line-height: 3.2em;
-  padding: 0 8px;
 }
 
-.emotion-1:hover {
+.emotion-0:hover {
   -webkit-text-decoration: none;
   text-decoration: none;
   background-color: #eee;
 }
 
-.emotion-1:focus {
+.emotion-0:focus {
   outline-offset: -3px;
 }
 
-.emotion-0 {
-  margin-left: 3px;
-  width: 1.5em;
-}
-
 <a
-  className="emotion-1"
+  className="emotion-0"
   data-service="GitHub"
   href="/users/github/login/?next=[fake absolute url]"
   rel="nofollow"
 >
   Sign in
-   
-  <svg mock
-    className="emotion-0"
-  />
 </a>
 `;
