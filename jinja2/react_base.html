@@ -152,7 +152,7 @@
     <!--[if lte IE 8]>{% javascript 'selectivizr' %}<![endif]-->
 
     {{ providers_media_js() }}
-    <!-- strings used by javascript modules. Hopefully we can remove soon -->
+    {# Strings used by javascript modules. Hopefully we can remove soon. #}
     <script src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
     {% javascript 'react-main' %}
     <script>
