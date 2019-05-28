@@ -3,11 +3,10 @@ import * as React from 'react';
 import { useContext, useEffect } from 'react';
 import { css } from '@emotion/core';
 
-import ClockIcon from './icons/clock.svg';
-import ContributorsIcon from './icons/contributors.svg';
+import Article from './article.jsx';
 import DocumentProvider from './document-provider.jsx';
 import GAProvider from './ga-provider.jsx';
-import { getLocale, gettext } from './l10n.js';
+import { gettext } from './l10n.js';
 import LanguageMenu from './header/language-menu.jsx';
 import { Row } from './layout.jsx';
 import Header from './header/header.jsx';
@@ -91,23 +90,6 @@ const styles = {
         fontSize: 18,
         margin: '0 8px'
     }),
-    article: css({
-        gridArea: 'main',
-        boxSizing: 'border-box',
-        width: '100%',
-        overflowX: 'scroll',
-        // Less padding on the left because the sidebar also has
-        // padding on the right
-        padding: '30px 24px 30px 12px',
-        [NARROW]: {
-            // Except on small screens the sidebar is below, so we
-            // need the same (but overall smaller) padding on both sides.
-            padding: '15px 12px'
-        },
-        '& p': {
-            maxWidth: '42rem'
-        }
-    }),
     sidebar: css({
         gridArea: 'side',
         boxSizing: 'border-box',
@@ -124,28 +106,6 @@ const styles = {
     }),
     related: css({
         fontSize: 20
-    }),
-    metadata: css({
-        marginTop: 32,
-        fontSize: '0.88889rem',
-        color: '#696969',
-        '& div': {
-            margin: '4px 0'
-        }
-    }),
-    contributorsIcon: css({
-        width: 14,
-        height: 14,
-        marginRight: 5,
-        verticalAlign: 'middle',
-        fill: '#696969'
-    }),
-    clockIcon: css({
-        width: 16,
-        height: 16,
-        marginRight: 5,
-        verticalAlign: 'middle',
-        fill: '#696969'
     })
 };
 
@@ -197,54 +157,6 @@ function Breadcrumbs({ document }: DocumentProps) {
                 </ol>
             </nav>
             <LanguageMenu />
-        </div>
-    );
-}
-
-function Article({ document }: DocumentProps) {
-    return (
-        /*
-         * The "text-content" class and "wikiArticle" id are required
-         * because our stylesheets expect them and formatting isn't quite
-         * right without them.
-         */
-        <div className="text-content" css={styles.article}>
-            <article
-                id="wikiArticle"
-                dangerouslySetInnerHTML={{ __html: document.bodyHTML }}
-            />
-            <ArticleMetadata document={document} />
-        </div>
-    );
-}
-
-function ArticleMetadata({ document }: DocumentProps) {
-    const locale = getLocale();
-    return (
-        <div css={styles.metadata}>
-            <div>
-                <ContributorsIcon css={styles.contributorsIcon} />{' '}
-                <strong>{gettext('Contributors to this page:')}</strong>{' '}
-                {document.contributors.map((c, i) => (
-                    <span key={c}>
-                        {i > 0 && ', '}
-                        <a href={`/${locale}/profiles/${c}`} rel="nofollow">
-                            {c}
-                        </a>
-                    </span>
-                ))}
-            </div>
-            <div>
-                <ClockIcon css={styles.clockIcon} />{' '}
-                <strong>{gettext('Last updated by:')}</strong>{' '}
-                {document.lastModifiedBy}{' '}
-                <time dateTime={document.lastModified}>
-                    {new Date(document.lastModified)
-                        .toISOString()
-                        .slice(0, -5)
-                        .replace('T', ' ')}
-                </time>
-            </div>
         </div>
     );
 }

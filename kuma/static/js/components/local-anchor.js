@@ -1,6 +1,9 @@
 /**
  * Find all level two and three headings, and append a link
  * element that links directly to the heading
+ *
+ * See also the React version of this code in the addAnchors() function
+ * of kuma/javascript/src/article.jsx
  */
 
 (function() {

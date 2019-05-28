@@ -708,6 +708,12 @@ Array [
   max-width: 42rem;
 }
 
+.emotion-22 a.sectionLink {
+  font-size: 24px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
 .emotion-21 {
   margin-top: 32px;
   font-size: 0.88889rem;
