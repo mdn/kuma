@@ -22,8 +22,22 @@ exports[`Login component when user is logged in 1`] = `
 
 .emotion-6 {
   position: relative;
-  pointer-events: auto;
   margin-left: -5px;
+}
+
+.emotion-6:hover .dropdown-menu-label {
+  color: #3d7e9a;
+}
+
+.emotion-6:hover .dropdown-menu-label a {
+  color: #3d7e9a;
+}
+
+.emotion-6:hover .dropdown-menu {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .emotion-1 {
@@ -39,16 +53,21 @@ exports[`Login component when user is logged in 1`] = `
   -ms-flex-align: center;
   align-items: center;
   white-space: nowrap;
-  padding: 0 5px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #333;
+  padding: 0 5px 5px 5px;
   border: none;
-}
-
-.emotion-1:hover {
-  background-color: #eee;
 }
 
 .emotion-1:focus {
   outline-offset: -3px;
+}
+
+.emotion-1 a {
+  color: #333;
+  -webkit-text-decoration: none;
+  text-decoration: none;
 }
 
 .emotion-0 {
@@ -59,196 +78,48 @@ exports[`Login component when user is logged in 1`] = `
 
 .emotion-4 {
   position: absolute;
-  z-index: 100;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  box-sizing: border-box;
-  background-color: white;
-  border: solid #83d0f2 1.5px;
-  box-shadow: 3px 3px 5px rgba(0,0,0,0.25);
-  padding: 10px;
-  min-width: 100%;
-  right: 0;
   display: none;
-}
-
-.emotion-4 li {
-  padding: 5px;
-  white-space: nowrap;
-}
-
-.emotion-3 {
-  border-width: 0;
-  padding: 0;
-  color: #3d7e9a;
-  font-size: 1em;
-  font-weight: normal;
-}
-
-.emotion-3:hover {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-<div
-  className="emotion-8 emotion-9"
->
-  <div
-    className="emotion-6 emotion-7"
-  >
-    <button
-      className="emotion-1 emotion-2"
-      onClick={[Function]}
-    >
-      <img
-        alt="test-username"
-        className="emotion-0"
-        src="/static/img/avatar.png"
-        srcSet="test-bigurl 200w test-url 50w"
-      />
-    </button>
-    <ul
-      className="dropdown-menu emotion-4 emotion-5"
-    >
-      <li>
-        <a
-          href="/en-US/profiles/test-username"
-        >
-          View profile
-        </a>
-      </li>
-      <li>
-        <a
-          href="/en-US/profiles/test-username/edit"
-        >
-          Edit profile
-        </a>
-      </li>
-      <li>
-        <form
-          action="/en-US/users/signout"
-          method="post"
-        >
-          <input
-            name="next"
-            type="hidden"
-            value="[fake absolute url]"
-          />
-          <button
-            className="emotion-3"
-            type="submit"
-          >
-            Sign out
-          </button>
-        </form>
-      </li>
-    </ul>
-  </div>
-</div>
-`;
-
-exports[`Login component when user is logged in 2`] = `
-.emotion-8 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  margin-left: 24px;
-}
-
-.emotion-8 button {
-  font-size: 1em;
-}
-
-.emotion-6 {
-  position: relative;
-  pointer-events: auto;
-  margin-left: -5px;
-}
-
-.emotion-0 {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
-.emotion-3 {
-  border-width: 0;
-  padding: 0;
-  color: #3d7e9a;
-  font-size: 1em;
-  font-weight: normal;
-}
-
-.emotion-3:hover {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-.emotion-1 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  white-space: nowrap;
-  padding: 0 5px;
-  border: none;
-  background-color: #83d0f2;
-}
-
-.emotion-1:hover {
-  background-color: #eee;
-}
-
-.emotion-1:focus {
-  outline-offset: -3px;
-}
-
-.emotion-1:hover {
-  background-color: #83d0f2;
-}
-
-.emotion-4 {
-  position: absolute;
   z-index: 100;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
   box-sizing: border-box;
   background-color: white;
-  border: solid #83d0f2 1.5px;
-  box-shadow: 3px 3px 5px rgba(0,0,0,0.25);
-  padding: 10px;
+  box-shadow: 0 2px 8px 0 rgba(12,12,13,0.1);
+  border: solid 1px #d8dfe2;
+  border-radius: 4px;
+  padding: 4px 0;
   min-width: 100%;
-  right: 0;
 }
 
 .emotion-4 li {
-  padding: 5px;
+  padding: 6px 16px;
   white-space: nowrap;
+  color: #3d7e9a;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.emotion-4 li:hover {
+  color: #fff;
+  background-color: #3d7e9a;
+}
+
+.emotion-4 li:hover a {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: #fff;
+}
+
+.emotion-4 li:hover button {
+  color: #fff;
+  background-color: #3d7e9a !important;
+}
+
+.emotion-3 {
+  border-width: 0;
+  padding: 0;
+  color: #3d7e9a;
 }
 
 <div
@@ -257,9 +128,8 @@ exports[`Login component when user is logged in 2`] = `
   <div
     className="emotion-6 emotion-7"
   >
-    <button
-      className="emotion-1 emotion-2"
-      onClick={null}
+    <div
+      className="dropdown-menu-label emotion-1 emotion-2"
     >
       <img
         alt="test-username"
@@ -267,9 +137,15 @@ exports[`Login component when user is logged in 2`] = `
         src="/static/img/avatar.png"
         srcSet="test-bigurl 200w test-url 50w"
       />
-    </button>
+    </div>
     <ul
       className="dropdown-menu emotion-4 emotion-5"
+      onClick={[Function]}
+      style={
+        Object {
+          "right": 0,
+        }
+      }
     >
       <li>
         <a

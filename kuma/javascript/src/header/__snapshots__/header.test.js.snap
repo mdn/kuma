@@ -98,8 +98,22 @@ Array [
 
 .emotion-9 {
   position: relative;
-  pointer-events: auto;
   margin-left: -5px;
+}
+
+.emotion-9:hover .dropdown-menu-label {
+  color: #3d7e9a;
+}
+
+.emotion-9:hover .dropdown-menu-label a {
+  color: #3d7e9a;
+}
+
+.emotion-9:hover .dropdown-menu {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .emotion-5 {
@@ -115,16 +129,21 @@ Array [
   -ms-flex-align: center;
   align-items: center;
   white-space: nowrap;
-  padding: 0 5px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #333;
+  padding: 0 5px 5px 5px;
   border: none;
-}
-
-.emotion-5:hover {
-  background-color: #eee;
 }
 
 .emotion-5:focus {
   outline-offset: -3px;
+}
+
+.emotion-5 a {
+  color: #333;
+  -webkit-text-decoration: none;
+  text-decoration: none;
 }
 
 .emotion-3 {
@@ -134,26 +153,42 @@ Array [
 
 .emotion-7 {
   position: absolute;
+  display: none;
   z-index: 100;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
   box-sizing: border-box;
   background-color: white;
-  border: solid #83d0f2 1.5px;
-  box-shadow: 3px 3px 5px rgba(0,0,0,0.25);
-  padding: 10px;
+  box-shadow: 0 2px 8px 0 rgba(12,12,13,0.1);
+  border: solid 1px #d8dfe2;
+  border-radius: 4px;
+  padding: 4px 0;
   min-width: 100%;
-  display: none;
 }
 
 .emotion-7 li {
-  padding: 5px;
+  padding: 6px 16px;
   white-space: nowrap;
+  color: #3d7e9a;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.emotion-7 li:hover {
+  color: #fff;
+  background-color: #3d7e9a;
+}
+
+.emotion-7 li:hover a {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: #fff;
+}
+
+.emotion-7 li:hover button {
+  color: #fff;
+  background-color: #3d7e9a !important;
 }
 
 .emotion-11 {
@@ -269,19 +304,23 @@ Array [
       <div
         className="emotion-9 emotion-10"
       >
-        <button
-          className="emotion-5 emotion-6"
-          onClick={[Function]}
+        <div
+          className="dropdown-menu-label emotion-5 emotion-6"
         >
-          Technologies
+          <a
+            href="/en-US/docs/Web"
+          >
+            Technologies
+          </a>
           <span
             className="emotion-3 emotion-4"
           >
             ▼
           </span>
-        </button>
+        </div>
         <ul
           className="dropdown-menu emotion-7 emotion-8"
+          onClick={[Function]}
         >
           <li>
             <a
@@ -348,19 +387,23 @@ Array [
       <div
         className="emotion-9 emotion-10"
       >
-        <button
-          className="emotion-5 emotion-6"
-          onClick={[Function]}
+        <div
+          className="dropdown-menu-label emotion-5 emotion-6"
         >
-          References & Guides
+          <a
+            href="/en-US/docs/Learn"
+          >
+            References & Guides
+          </a>
           <span
             className="emotion-3 emotion-4"
           >
             ▼
           </span>
-        </button>
+        </div>
         <ul
           className="dropdown-menu emotion-7 emotion-8"
+          onClick={[Function]}
         >
           <li>
             <a
@@ -420,19 +463,23 @@ Array [
       <div
         className="emotion-9 emotion-10"
       >
-        <button
-          className="emotion-5 emotion-6"
-          onClick={[Function]}
+        <div
+          className="dropdown-menu-label emotion-5 emotion-6"
         >
-          Feedback
+          <a
+            href="/en-US/docs/MDN/Feedback"
+          >
+            Feedback
+          </a>
           <span
             className="emotion-3 emotion-4"
           >
             ▼
           </span>
-        </button>
+        </div>
         <ul
           className="dropdown-menu emotion-7 emotion-8"
+          onClick={[Function]}
         >
           <li>
             <a

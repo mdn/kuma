@@ -91,6 +91,7 @@ const styles = {
 const menus = [
     {
         label: 'Technologies',
+        url: 'Web',
         items: [
             { url: 'Web/HTML', label: 'HTML' },
             { url: 'Web/CSS', label: 'CSS' },
@@ -107,6 +108,7 @@ const menus = [
     },
     {
         label: 'References & Guides',
+        url: 'Learn',
         items: [
             { url: 'Learn', label: 'Learn web development' },
             { url: 'Web/Tutorials', label: 'Tutorials' },
@@ -119,6 +121,7 @@ const menus = [
     },
     {
         label: 'Feedback',
+        url: 'MDN/Feedback',
         items: [
             {
                 url: 'https://support.mozilla.org/',
@@ -180,7 +183,13 @@ export default function Header(): React.Node {
                 <Row css={styles.menus}>
                     {menus.map((m, index) => (
                         <React.Fragment key={index}>
-                            <Dropdown label={gettext(m.label)}>
+                            <Dropdown
+                                label={
+                                    <a href={fixurl(m.url)}>
+                                        {gettext(m.label)}
+                                    </a>
+                                }
+                            >
                                 {m.items.map((item, index) => (
                                     <li key={index}>
                                         {item.external ? (
