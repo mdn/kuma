@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 
 import datetime
 import json
-import os.path
 
 import jinja2
 from django.conf import settings
@@ -18,7 +17,6 @@ from django_jinja import library
 from pytz import timezone, utc
 from soapbox.models import Message
 from statici18n.templatetags.statici18n import statici18n
-from statici18n.utils import get_filename
 from urlobject import URLObject
 
 from ..urlresolvers import reverse, split_path
@@ -204,16 +202,3 @@ def get_locale_localized(locale):
     language = settings.LOCALES[locale].english
 
     return _(language)
-
-
-@library.global_function
-def react_i18n(locale):
-    """
-    Return the path to the internationalization file for React code.
-
-    This is similar to statici18n, but uses 'react' domain instead of
-    STATICI18N_DOMAIN.
-    """
-    filename = get_filename(locale, 'react')
-    filepath = os.path.join(settings.STATICI18N_OUTPUT_DIR, filename)
-    return static(filepath)
