@@ -9,6 +9,7 @@ export type UserData = {
     username: ?string,
     isAuthenticated: boolean,
     isBetaTester: boolean,
+    isContributor?: boolean, // This is not implemented on backend yet
     isStaff: boolean,
     isSuperuser: boolean,
     timezone: ?string,
