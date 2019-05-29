@@ -202,7 +202,7 @@ export default function Page() {
      * Register an effect that runs every time we see a new document URL.
      * The effect sends a Google Analytics timing event to record how long
      * it took from the start of the navigation until the new document is
-     * rendered.
+     * rendered. And then it turns off the loading indicator for the page
      *
      * Effects don't run during server-side-rendering, but that is fine
      * because we only want to send the GA event for client-side navigation.
@@ -211,6 +211,13 @@ export default function Page() {
      */
     useEffect(() => {
         navigateRenderComplete(ga);
+
+        // Client side navigation is typically so fast that the loading
+        // animation might not even be noticed, so we artificially prolong
+        // the effect with setTimeout()
+        setTimeout(() => {
+            DocumentProvider.setLoading(false);
+        }, 200);
     }, [document && document.absoluteURL]);
 
     return (
