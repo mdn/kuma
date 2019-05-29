@@ -12,6 +12,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.sitemaps import GenericSitemap
 from django.core.mail import mail_admins, send_mail
 from django.db import transaction
+from django.db.models import Q
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 from lxml import etree
@@ -22,6 +23,7 @@ from kuma.core.utils import chunked
 from kuma.search.models import Index
 from kuma.users.models import User
 
+from .constants import EXPERIMENT_TITLE_PREFIX, LEGACY_MINDTOUCH_NAMESPACES
 from .events import first_edit_email
 from .exceptions import PageMoveError
 from .models import (Document, DocumentDeletionLog,
@@ -311,19 +313,59 @@ def build_locale_sitemap(locale):
     ]
     make = [('sitemap_other.xml', other_urls)]
 
-    # Add the document URL's within this locale.
-    queryset = Document.objects.filter_for_list(locale=locale)
-    if queryset.exists():
-        sitemap = WikiSitemap({
-            'queryset': queryset,
-            'date_field': 'modified',
-        })
-        for page in range(1, sitemap.paginator.num_pages + 1):
-            urls = sitemap.get_urls(page=page)
-            if page == 1:
-                name = 'sitemap.xml'
-            else:
-                name = 'sitemap_%s.xml' % page
+    # We *could* use the `Document.objects.filter_for_list()` manager
+    # but it has a list of `.only()` columns which isn't right,
+    # it has a list of hardcoded slug prefixes, and it forces an order by
+    # on 'slug' which is slow and not needed in this context.
+    queryset = Document.objects.filter(
+        locale=locale,
+        is_redirect=False,
+    ).exclude(
+        html=''
+    )
+    # Be explicit about exactly only the columns we need.
+    queryset = queryset.only('id', 'locale', 'slug', 'modified')
+
+    # The logic for rendering a page will do various checks on each
+    # document to evaluate if it should be excluded from robots.
+    # Ie. in a jinja template it does...
+    #  `{% if reasons... %}noindex, nofollow{% endif %}`
+    # Some of those evaluations are complex and depend on the request.
+    # That's too complex here but we can at least do some low-hanging
+    # fruit filtering.
+    queryset = queryset.exclude(
+        current_revision__isnull=True,
+    )
+    q = Q(slug__startswith=EXPERIMENT_TITLE_PREFIX)
+    for legacy_mindtouch_namespace in LEGACY_MINDTOUCH_NAMESPACES:
+        q |= Q(slug__startswith='{}:'.format(legacy_mindtouch_namespace))
+    queryset = queryset.exclude(q)
+
+    # We have to make the queryset ordered. Otherwise the GenericSitemap
+    # generator might throw this perfectly valid warning:
+    #
+    #    UnorderedObjectListWarning:
+    #     Pagination may yield inconsistent results with an unordered
+    #     object_list: <class 'kuma.wiki.models.Document'> QuerySet.
+    #
+    # Any order is fine. Use something definitely indexed. It's needed for
+    # paginator used by GenericSitemap.
+    queryset = queryset.order_by('id')
+
+    # To avoid an extra query to see if the queryset is empty, let's just
+    # start iterator and create the sitemap on the first found page.
+    # Note, how we check if 'urls' became truthy before adding it.
+    sitemap = WikiSitemap({
+        'queryset': queryset,
+        'date_field': 'modified',
+    })
+    for page in range(1, sitemap.paginator.num_pages + 1):
+        urls = sitemap.get_urls(page=page)
+        if page == 1:
+            name = 'sitemap.xml'
+        else:
+            name = 'sitemap_%s.xml' % page
+        if urls:
             make.append((name, urls))
 
     # Make the sitemap files.
