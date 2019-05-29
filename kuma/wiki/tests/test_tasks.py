@@ -1,7 +1,6 @@
 from __future__ import with_statement
 
 import os
-import random
 import re
 from datetime import datetime
 
@@ -105,22 +104,21 @@ def test_sitemaps_excluded_documents(tmpdir, settings, wiki_user):
         created=datetime(2017, 4, 24, 13, 49)
     )
 
-    # Make one that has a legacy slug
-    legacy_slug = '{}:something'.format(
-        random.choice(LEGACY_MINDTOUCH_NAMESPACES)
-    )
-    legacy_doc = Document.objects.create(
-        locale='en-US',
-        slug=legacy_slug,
-        title='A Legacy Document'
-    )
-    Revision.objects.create(
-        document=legacy_doc,
-        creator=wiki_user,
-        content='<p>Legacy...</p>',
-        title='Legacy Document',
-        created=datetime(2017, 4, 24, 13, 49)
-    )
+    # Make one document for every mindtouch legacy namespace.
+    for namespace in LEGACY_MINDTOUCH_NAMESPACES:
+        legacy_slug = '{}:something'.format(namespace)
+        legacy_doc = Document.objects.create(
+            locale='en-US',
+            slug=legacy_slug,
+            title='A Legacy Document'
+        )
+        Revision.objects.create(
+            document=legacy_doc,
+            creator=wiki_user,
+            content='<p>Legacy...</p>',
+            title='Legacy Document',
+            created=datetime(2017, 4, 24, 13, 49)
+        )
 
     # Add an "experiment" document
     experiment_slug = EXPERIMENT_TITLE_PREFIX + 'myexperiment'
@@ -182,6 +180,8 @@ def test_sitemaps_excluded_documents(tmpdir, settings, wiki_user):
     assert not [loc for loc in all_locs if no_revision_slug in loc]
     assert not [loc for loc in all_locs if no_html_slug in loc]
     # Just for sanity, we now check exactly which slugs we expect in entirety.
+    # Note that this automatically asserts that all the legacy docs
+    # created above don't get returned.
     assert set([urlparse(loc).path for loc in all_locs]) == set([
         '/en-US/', '/en-US/docs/top', '/sv-SE/'
     ])
