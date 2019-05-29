@@ -173,13 +173,7 @@ def test_sitemaps_excluded_documents(tmpdir, settings, wiki_user):
     # Exclude the inter-linking sitemaps
     all_locs = [loc for loc in all_locs if not loc.endswith('.xml')]
 
-    # The all_locs will have one for each locale but we definitely shouldn't
-    # have any of the slugs that we know shouldn't be included
-    assert not [loc for loc in all_locs if legacy_slug in loc]
-    assert not [loc for loc in all_locs if experiment_slug in loc]
-    assert not [loc for loc in all_locs if no_revision_slug in loc]
-    assert not [loc for loc in all_locs if no_html_slug in loc]
-    # Just for sanity, we now check exactly which slugs we expect in entirety.
+    # Now check exactly which slugs we expect in entirety.
     # Note that this automatically asserts that all the legacy docs
     # created above don't get returned.
     assert set([urlparse(loc).path for loc in all_locs]) == set([
