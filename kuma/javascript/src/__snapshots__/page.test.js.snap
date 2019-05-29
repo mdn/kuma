@@ -519,13 +519,83 @@ Array [
       </a>
     </div>
   </div>,
-  .emotion-16 {
+  .emotion-2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 106px;
+  padding: 12px 24px;
+  overflow-x: scroll;
+  background-color: #f5f9fa;
+  border-bottom: solid 1px #dce3e5;
+  border-top: solid 1px #dce3e5;
+}
+
+@media (max-width:749px) {
+  .emotion-2 {
+    min-height: 60px;
+    padding: 8px 16px;
+  }
+}
+
+.emotion-1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+  max-width: 1352px;
+}
+
+.emotion-0 {
+  font-family: x-locale-heading-primary,zillaslab,"Palatino","Palatino Linotype",x-locale-heading-secondary,serif;
+  font-size: 45px;
+  font-weight: bold;
+}
+
+@media (max-width:749px) {
+  .emotion-0 {
+    font-size: 28px;
+  }
+}
+
+<div
+    className="emotion-2"
+  >
+    <div
+      className="emotion-1"
+    >
+      <h1
+        className="emotion-0"
+      >
+        [fake document title]
+      </h1>
+    </div>
+  </div>,
+  .emotion-13 {
   position: relative;
   pointer-events: auto;
   margin-left: -5px;
 }
 
-.emotion-12 {
+.emotion-9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -542,89 +612,36 @@ Array [
   border: none;
 }
 
-.emotion-12:hover {
+.emotion-9:hover {
   background-color: #eee;
 }
 
-.emotion-12:focus {
+.emotion-9:focus {
   outline-offset: -3px;
 }
 
-.emotion-10 {
+.emotion-7 {
   font-size: 75%;
   padding-left: 2px;
 }
 
-.emotion-25 {
-  display: grid;
+.emotion-16 {
   box-sizing: border-box;
-  grid-template-columns: 1fr 3fr;
-  grid-template-areas: "title title" "crumbs crumbs" "side main";
-}
-
-@media (max-width:749px) {
-  .emotion-25 {
-    grid-template-columns: 1fr;
-    grid-template-areas: "title" "crumbs" "main" "side";
-  }
-}
-
-.emotion-1 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  grid-area: title;
-  box-sizing: border-box;
-  width: 100%;
-  min-height: 106px;
-  padding: 12px 24px;
-  overflow-x: scroll;
-  background-color: #f5f9fa;
-  border-bottom: solid 1px #dce3e5;
-  border-top: solid 1px #dce3e5;
-}
-
-@media (max-width:749px) {
-  .emotion-1 {
-    min-height: 60px;
-    padding: 8px 16px;
-  }
-}
-
-.emotion-0 {
-  font-family: x-locale-heading-primary,zillaslab,"Palatino","Palatino Linotype",x-locale-heading-secondary,serif;
-  font-size: 45px;
-  font-weight: bold;
-}
-
-@media (max-width:749px) {
-  .emotion-0 {
-    font-size: 28px;
-  }
-}
-
-.emotion-18 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  grid-area: crumbs;
-  box-sizing: border-box;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   width: 100%;
   min-height: 40px;
   padding: 4px 16px 4px 24px;
@@ -632,7 +649,7 @@ Array [
   background-color: #fff;
 }
 
-.emotion-8 {
+.emotion-15 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -640,32 +657,41 @@ Array [
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1360px;
+}
+
+.emotion-5 {
   -webkit-flex: 1 1;
   -ms-flex: 1 1;
   flex: 1 1;
 }
 
-.emotion-4 {
+.emotion-1 {
   display: inline;
   font-size: 14px;
 }
 
-.emotion-4a {
+.emotion-1a {
   color: #3d7e9a;
 }
 
-.emotion-3 {
+.emotion-0 {
   font-family: zillaslab,serif;
   font-weight: bold;
   font-size: 18px;
   margin: 0 8px;
 }
 
-.emotion-9 {
+.emotion-6 {
   height: 20px;
 }
 
-.emotion-14 {
+.emotion-11 {
   position: absolute;
   z-index: 100;
   display: -webkit-box;
@@ -685,101 +711,24 @@ Array [
   display: none;
 }
 
-.emotion-14 li {
+.emotion-11 li {
   padding: 5px;
   white-space: nowrap;
 }
 
-.emotion-22 {
-  grid-area: main;
-  box-sizing: border-box;
-  width: 100%;
-  overflow-x: scroll;
-  padding: 30px 24px 30px 12px;
-}
-
-@media (max-width:749px) {
-  .emotion-22 {
-    padding: 15px 12px;
-  }
-}
-
-.emotion-22 p {
-  max-width: 42rem;
-}
-
-.emotion-22 a.sectionLink {
-  font-size: 24px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.emotion-21 {
-  margin-top: 32px;
-  font-size: 0.88889rem;
-  color: #696969;
-}
-
-.emotion-21 div {
-  margin: 4px 0;
-}
-
-.emotion-19 {
-  width: 14px;
-  height: 14px;
-  margin-right: 5px;
-  vertical-align: middle;
-  fill: #696969;
-}
-
-.emotion-20 {
-  width: 16px;
-  height: 16px;
-  margin-right: 5px;
-  vertical-align: middle;
-  fill: #696969;
-}
-
-.emotion-24 {
-  grid-area: side;
-  box-sizing: border-box;
-  width: 100%;
-  overflow-x: scroll;
-  padding: 30px 12px 30px 24px;
-}
-
-@media (max-width:749px) {
-  .emotion-24 {
-    padding: 15px 12px;
-  }
-}
-
-.emotion-23 {
-  font-size: 20px;
-}
-
 <div
-    className="emotion-25"
+    className="emotion-16"
   >
     <div
-      className="emotion-1 emotion-2"
-    >
-      <h1
-        className="emotion-0"
-      >
-        [fake document title]
-      </h1>
-    </div>
-    <div
-      className="emotion-18"
+      className="emotion-15"
     >
       <nav
-        className="emotion-8"
+        className="emotion-5"
         role="navigation"
       >
         <ol>
           <li
-            className="emotion-4"
+            className="emotion-1"
           >
             <a
               href="[fake grandparent url]"
@@ -789,13 +738,13 @@ Array [
               </span>
             </a>
             <span
-              className="emotion-3"
+              className="emotion-0"
             >
               ›
             </span>
           </li>
           <li
-            className="emotion-4"
+            className="emotion-1"
           >
             <a
               href="[fake parent url]"
@@ -805,13 +754,13 @@ Array [
               </span>
             </a>
             <span
-              className="emotion-3"
+              className="emotion-0"
             >
               ›
             </span>
           </li>
           <li
-            className="emotion-4"
+            className="emotion-1"
           >
             <span>
               [fake document title]
@@ -820,23 +769,23 @@ Array [
         </ol>
       </nav>
       <div
-        className="emotion-16 emotion-17"
+        className="emotion-13 emotion-14"
       >
         <button
-          className="emotion-12 emotion-13"
+          className="emotion-9 emotion-10"
           onClick={[Function]}
         >
           <svg mock
-            className="emotion-9"
+            className="emotion-6"
           />
           <span
-            className="emotion-10 emotion-11"
+            className="emotion-7 emotion-8"
           >
             ▼
           </span>
         </button>
         <ul
-          className="dropdown-menu emotion-14 emotion-15"
+          className="dropdown-menu emotion-11 emotion-12"
         >
           <li
             lang="es"
@@ -853,8 +802,96 @@ Array [
         </ul>
       </div>
     </div>
+  </div>,
+  .emotion-6 {
+  display: grid;
+  box-sizing: border-box;
+  max-width: 1400px;
+  margin: 0 auto;
+  grid-template-columns: 25% 75%;
+  grid-template-areas: "side main";
+}
+
+@media (max-width:749px) {
+  .emotion-6 {
+    grid-template-columns: 1fr;
+    grid-template-areas: "main" "side";
+  }
+}
+
+.emotion-3 {
+  grid-area: main;
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: scroll;
+  padding: 30px 24px 30px 12px;
+}
+
+@media (max-width:749px) {
+  .emotion-3 {
+    padding: 15px 12px;
+  }
+}
+
+.emotion-3 p {
+  max-width: 42rem;
+}
+
+.emotion-3 a.sectionLink {
+  font-size: 24px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.emotion-2 {
+  margin-top: 32px;
+  font-size: 0.88889rem;
+  color: #696969;
+}
+
+.emotion-2 div {
+  margin: 4px 0;
+}
+
+.emotion-0 {
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
+  vertical-align: middle;
+  fill: #696969;
+}
+
+.emotion-1 {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  vertical-align: middle;
+  fill: #696969;
+}
+
+.emotion-5 {
+  grid-area: side;
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: scroll;
+  padding: 30px 12px 30px 24px;
+}
+
+@media (max-width:749px) {
+  .emotion-5 {
+    padding: 15px 12px;
+  }
+}
+
+.emotion-4 {
+  font-size: 20px;
+}
+
+<div
+    className="emotion-6"
+  >
     <div
-      className="text-content emotion-22"
+      className="text-content emotion-3"
     >
       <article
         dangerouslySetInnerHTML={
@@ -865,11 +902,11 @@ Array [
         id="wikiArticle"
       />
       <div
-        className="emotion-21"
+        className="emotion-2"
       >
         <div>
           <svg mock
-            className="emotion-19"
+            className="emotion-0"
           />
            
           <strong>
@@ -896,7 +933,7 @@ Array [
         </div>
         <div>
           <svg mock
-            className="emotion-20"
+            className="emotion-1"
           />
            
           <strong>
@@ -914,10 +951,10 @@ Array [
       </div>
     </div>
     <div
-      className="quick-links emotion-24"
+      className="quick-links emotion-5"
     >
       <div
-        className="quick-links-head emotion-23"
+        className="quick-links-head emotion-4"
       >
         Related Topics
       </div>
