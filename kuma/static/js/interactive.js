@@ -62,7 +62,11 @@
                     category: 'Interactive Examples',
                     action: 'Time to iframe fetch start',
                     label:
-                        mdn.utils.randomString(5) + '-' + new Date().getTime(),
+                        Math.random() // 5 random letters and digits
+                            .toString(36)
+                            .slice(-5) +
+                        '-' +
+                        new Date().getTime(),
                     value: timeToIframeFetchStart
                 });
 
