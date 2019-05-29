@@ -3,8 +3,22 @@
 exports[`LanguageMenu snapshot 1`] = `
 .emotion-7 {
   position: relative;
-  pointer-events: auto;
   margin-left: -5px;
+}
+
+.emotion-7:hover .dropdown-menu-label {
+  color: #3d7e9a;
+}
+
+.emotion-7:hover .dropdown-menu-label a {
+  color: #3d7e9a;
+}
+
+.emotion-7:hover .dropdown-menu {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .emotion-3 {
@@ -20,16 +34,21 @@ exports[`LanguageMenu snapshot 1`] = `
   -ms-flex-align: center;
   align-items: center;
   white-space: nowrap;
-  padding: 0 5px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #333;
+  padding: 0 5px 5px 5px;
   border: none;
-}
-
-.emotion-3:hover {
-  background-color: #eee;
 }
 
 .emotion-3:focus {
   outline-offset: -3px;
+}
+
+.emotion-3 a {
+  color: #333;
+  -webkit-text-decoration: none;
+  text-decoration: none;
 }
 
 .emotion-0 {
@@ -43,35 +62,49 @@ exports[`LanguageMenu snapshot 1`] = `
 
 .emotion-5 {
   position: absolute;
+  display: none;
   z-index: 100;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
   box-sizing: border-box;
   background-color: white;
-  border: solid #83d0f2 1.5px;
-  box-shadow: 3px 3px 5px rgba(0,0,0,0.25);
-  padding: 10px;
+  box-shadow: 0 2px 8px 0 rgba(12,12,13,0.1);
+  border: solid 1px #d8dfe2;
+  border-radius: 4px;
+  padding: 4px 0;
   min-width: 100%;
-  right: 0;
-  display: none;
 }
 
 .emotion-5 li {
-  padding: 5px;
+  padding: 6px 16px;
   white-space: nowrap;
+  color: #3d7e9a;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.emotion-5 li:hover {
+  color: #fff;
+  background-color: #3d7e9a;
+}
+
+.emotion-5 li:hover a {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: #fff;
+}
+
+.emotion-5 li:hover button {
+  color: #fff;
+  background-color: #3d7e9a !important;
 }
 
 <div
   className="emotion-7 emotion-8"
 >
-  <button
-    className="emotion-3 emotion-4"
-    onClick={[Function]}
+  <div
+    className="dropdown-menu-label emotion-3 emotion-4"
   >
     <svg mock
       className="emotion-0"
@@ -81,9 +114,15 @@ exports[`LanguageMenu snapshot 1`] = `
     >
       ▼
     </span>
-  </button>
+  </div>
   <ul
     className="dropdown-menu emotion-5 emotion-6"
+    onClick={[Function]}
+    style={
+      Object {
+        "right": 0,
+      }
+    }
   >
     <li
       lang="es"

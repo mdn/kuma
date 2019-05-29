@@ -1,6 +1,6 @@
 //@flow
 import React from 'react';
-import { act, create } from 'react-test-renderer';
+import { create } from 'react-test-renderer';
 import DocumentProvider from '../document-provider.jsx';
 import { fakeDocumentData } from '../document-provider.test.js';
 import Dropdown from './dropdown.jsx';
@@ -57,13 +57,6 @@ test('Login component when user is logged in', () => {
     expect(dropdown.props.label.props.srcSet).toContain('test-url');
     expect(dropdown.props.label.props.srcSet).toContain('test-bigurl');
     expect(dropdown.props.label.props.alt).toEqual('test-username');
-
-    // Open up the dropdown menu
-    act(() => {
-        login.toJSON().children[0].children[0].props.onClick();
-    });
-
-    expect(login.toJSON()).toMatchSnapshot();
 
     let string = JSON.stringify(login.toJSON());
     expect(string).toContain('View profile');

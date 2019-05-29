@@ -44,10 +44,7 @@ const styles = {
         // but we want the button to look like a regular link.
         borderWidth: 0,
         padding: 0,
-        color: '#3d7e9a',
-        fontSize: '1em',
-        fontWeight: 'normal',
-        ':hover': { textDecoration: 'underline' }
+        color: '#3d7e9a'
     }),
     editLink: css({ lineHeight: 1 }),
     editIcon: css({ width: '1.33em' })

@@ -1,7 +1,6 @@
 //@flow
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { css } from '@emotion/core';
+import { useRef } from 'react';
 import styled from '@emotion/styled';
 
 const MenuContainer = styled.div`
@@ -10,28 +9,39 @@ const MenuContainer = styled.div`
     // label position when it is shown.
     position: relative;
 
-    // We need an explicit pointer-events since we set it to none
-    // on the entire document when the menu is up, but we need to be
-    // able to click on the menu items themselves
-    pointer-events: auto;
-
     // This adjusts for the 5px left padding
     margin-left: -5px;
+
+    :hover {
+        & .dropdown-menu-label {
+            color: #3d7e9a;
+        }
+        & .dropdown-menu-label a {
+            color: #3d7e9a;
+        }
+        & .dropdown-menu {
+            display: flex;
+        }
+    }
 `;
 
-const MenuLabel = styled.button`
+const MenuLabel = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
     white-space: nowrap;
-    padding: 0 5px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #333;
+    padding: 0 5px 5px 5px;
     border: none;
-    :hover {
-        background-color: #eee;
-    }
     :focus {
         // The default focus outline doesn't look right in Chrome without this
         outline-offset: -3px;
+    }
+    & a {
+        color: #333;
+        text-decoration: none;
     }
 `;
 
@@ -42,35 +52,43 @@ const Arrow = styled.span`
 
 const Menu = styled.ul`
     position: absolute;
+    display: none;
     z-index: 100;
-    display: flex;
     flex-direction: column;
     box-sizing: border-box;
     background-color: white;
-    border: solid #83d0f2 1.5px;
-    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.25);
-    padding: 10px;
+    box-shadow: 0 2px 8px 0 rgba(12, 12, 13, 0.1);
+    border: solid 1px #d8dfe2;
+    border-radius: 4px;
+    padding: 4px 0;
     min-width: 100%;
     li {
-        padding: 5px;
+        padding: 6px 16px;
         white-space: nowrap;
+        color: #3d7e9a;
+        font-size: 15px;
+        font-weight: bold;
+
+        :hover {
+            color: #fff;
+            background-color: #3d7e9a;
+
+            /* If the menu item is a link, override the default link styles */
+            & a {
+                text-decoration: none;
+                color: #fff;
+            }
+            /* Special case for button menu items */
+            & button {
+                color: #fff;
+                background-color: #3d7e9a !important;
+            }
+        }
     }
 `;
 
-const styles = {
-    menuLabelOpen: css({
-        backgroundColor: '#83d0f2',
-        '&:hover': {
-            backgroundColor: '#83d0f2'
-        }
-    }),
-
-    menuAttachRight: css({ right: 0 }),
-    menuClosed: css({ display: 'none' })
-};
-
 type DropdownProps = {|
-    // The string or component to display. Clicking on this will
+    // The string or component to display. Hovering over this will
     // display the menu
     label: string | React.Node,
     // If set to true, the menu will be anchored to the right edge of
@@ -84,73 +102,33 @@ type DropdownProps = {|
     children: React.Node
 |};
 
+/*
+ * This function explicitly hides a menu so that we can exit the CSS
+ * :hover state after the user clicks on a link in the menu. Without this
+ * the menu would remain visible after a click.
+ */
+function dismissMenu(menu) {
+    if (menu) {
+        menu.style.display = 'none';
+        setTimeout(() => {
+            menu.style.display = null;
+        }, 100);
+    }
+}
+
 export default function Dropdown(props: DropdownProps) {
-    const [shown, setShown] = useState(false);
-
-    // If the menu is showing, then register capturing event
-    // handlers for hiding it and also return a function to
-    // deregister those handlers.
-    useEffect(() => {
-        function handler(e) {
-            if (e.type === 'click' || e.key === 'Escape') {
-                // We defer the setShown() call to ensure that the link
-                // or button in the menu is still visible when the event
-                // is dispatched on it. Otherwise the default action
-                // (such as form submission) might not happen.
-                setTimeout(() => setShown(false));
-
-                // If the browser supports the closest() method and if
-                // that method tells us that the event was not inside
-                // the menu then just swallow the event and don't let
-                // anyone else see it.
-                if (
-                    e.target &&
-                    e.target.closest &&
-                    e.target.closest('ul.dropdown-menu') === null
-                ) {
-                    e.preventDefault();
-                    e.stopImmediatePropagation();
-                }
-            }
-        }
-
-        if (shown) {
-            window.addEventListener('click', handler, true);
-            window.addEventListener('keydown', handler, true);
-            if (document.documentElement) {
-                // Make the entire document transparent to mouse events
-                // so that all events go directly to the html element
-                // except for elements (like our menus) that have explictly
-                // set pointerEvents to auto. This prevents links in the
-                // document from highlighting on hover while a menu is
-                // displayed, for example.
-                document.documentElement.style.pointerEvents = 'none';
-            }
-            return () => {
-                window.removeEventListener('click', handler, true);
-                window.removeEventListener('keydown', handler, true);
-                if (document.documentElement) {
-                    document.documentElement.style.pointerEvents = 'auto';
-                }
-            };
-        }
-    });
-
+    let menu = useRef(null);
     return (
         <MenuContainer>
-            <MenuLabel
-                css={shown && styles.menuLabelOpen}
-                onClick={!shown ? () => setShown(true) : null}
-            >
+            <MenuLabel className="dropdown-menu-label">
                 {props.label}
-                {!props.hideArrow && <Arrow>{shown ? '▲' : '▼'}</Arrow>}
+                {!props.hideArrow && <Arrow>▼</Arrow>}
             </MenuLabel>
             <Menu
+                ref={menu}
+                onClick={() => dismissMenu(menu.current)}
                 className="dropdown-menu"
-                css={[
-                    props.right && styles.menuAttachRight,
-                    !shown && styles.menuClosed
-                ]}
+                style={props.right && { right: 0 }}
             >
                 {props.children}
             </Menu>
