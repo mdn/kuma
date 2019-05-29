@@ -79,7 +79,7 @@ export default function Login(): React.Node {
         // URLs don't work.
         let label = (
             <img
-                srcSet={`${userData.gravatarUrl.large || ''} 200w ${userData
+                srcSet={`${userData.gravatarUrl.large || ''} 200w, ${userData
                     .gravatarUrl.small || ''} 50w`}
                 src={'/static/img/avatar.png'}
                 css={styles.avatar}

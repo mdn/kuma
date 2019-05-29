@@ -135,7 +135,7 @@ exports[`Login component when user is logged in 1`] = `
         alt="test-username"
         className="emotion-0"
         src="/static/img/avatar.png"
-        srcSet="test-bigurl 200w test-url 50w"
+        srcSet="test-bigurl 200w, test-url 50w"
       />
     </div>
     <ul
