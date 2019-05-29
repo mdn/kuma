@@ -77,6 +77,8 @@ following, using the desired URL::
 
     ./manage.py scrape_document https://developer.mozilla.org/en-US/docs/Web/CSS/display
 
+You can also pass in multiple URLs instead of doing one URL at a time.
+
 Scraping a document includes:
 
 - The parent documents (such as ``Web`` and ``Web/CSS`` for ``Web/CSS/display``)
