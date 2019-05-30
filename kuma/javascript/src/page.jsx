@@ -5,12 +5,15 @@ import { css } from '@emotion/core';
 
 import Article from './article.jsx';
 import DocumentProvider from './document-provider.jsx';
+import EditIcon from './icons/pencil.svg';
 import GAProvider from './ga-provider.jsx';
 import { gettext } from './l10n.js';
+import HistoryIcon from './icons/clock.svg';
 import LanguageMenu from './header/language-menu.jsx';
 import Header from './header/header.jsx';
 import TaskCompletionSurvey from './task-completion-survey.jsx';
 import { navigateRenderComplete } from './perf.js';
+import UserProvider from './user-provider.jsx';
 
 import type { DocumentData } from './document-provider.jsx';
 type DocumentProps = {
@@ -44,10 +47,12 @@ const styles = {
     titlebar: css({
         display: 'flex',
         flexDirection: 'row',
+        alignItems: 'center',
         width: '100%',
         maxWidth: 1352
     }),
     title: css({
+        flex: '1 1',
         fontFamily:
             'x-locale-heading-primary, zillaslab, "Palatino", "Palatino Linotype", x-locale-heading-secondary, serif',
         fontSize: 45,
@@ -56,6 +61,31 @@ const styles = {
             // Reduce the H1 size on narrow screens
             fontSize: 28
         }
+    }),
+
+    editAndHistoryButtons: css({
+        display: 'flex',
+        flexDirection: 'row',
+        flex: '0 0'
+    }),
+    editButton: css({
+        height: 32,
+        border: 'solid 2px #3d7e9a',
+        color: '#3d7e9a', // for the text
+        fill: '#3d7e9a', // for the icon
+        backgroundColor: '#fff',
+        whiteSpace: 'nowrap',
+        fontSize: 15,
+        fontWeight: 'bold',
+        padding: '0 18px'
+    }),
+    historyButton: css({
+        width: 32,
+        height: 32,
+        border: 'solid 2px #333',
+        backgroundColor: '#fff',
+        padding: 5,
+        marginLeft: 8
     }),
 
     // Breadcrumbs styles
@@ -129,11 +159,51 @@ const styles = {
     })
 };
 
-function Titlebar({ document }: DocumentProps) {
+function EditAndHistoryButtons({ document }: DocumentProps) {
+    let editURL = document.editURL;
+    return (
+        <div css={styles.editAndHistoryButtons}>
+            <button
+                css={styles.editButton}
+                onClick={() => {
+                    window.location = editURL;
+                }}
+            >
+                <EditIcon width={13} height={13} /> {gettext('Edit')}
+            </button>
+            <button
+                css={styles.historyButton}
+                aria-label={gettext('History')}
+                onClick={() => {
+                    window.location = editURL.replace('$edit', '$history');
+                }}
+            >
+                <HistoryIcon width={18} height={18} />
+            </button>
+        </div>
+    );
+}
+
+export function Titlebar({ document }: DocumentProps) {
+    const userData = useContext(UserProvider.context);
+
+    // If we have user data, and the user is logged in, and they
+    // are a contributor (or, if we don't know whether they are
+    // a contributor because the backend does not support that yet)
+    // then we want to show Edit and History buttons on the
+    // right side of the titlebar.
+    let showEditAndHistory =
+        userData &&
+        userData.isAuthenticated &&
+        (userData.isContributor === undefined || userData.isContributor);
+
     return (
         <div css={styles.titlebarContainer}>
             <div css={styles.titlebar}>
                 <h1 css={styles.title}>{document.title}</h1>
+                {showEditAndHistory && (
+                    <EditAndHistoryButtons document={document} />
+                )}
             </div>
         </div>
     );
