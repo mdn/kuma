@@ -34,7 +34,8 @@ export type DocumentData = {
     lastModifiedBy: string
 };
 
-const context = React.createContext<DocumentData | null>(null);
+const documentContext = React.createContext<DocumentData | null>(null);
+const loadingContext = React.createContext<boolean>(false);
 
 type DocumentProviderProps = {
     children: React.Node,
@@ -46,7 +47,11 @@ export default function DocumentProvider(
 ): React.Node {
     const locale = getLocale();
     const [documentData, setDocumentData] = useState(props.initialDocumentData);
+    const [loading, setLoading] = useState(true);
     const ga = useContext(GAProvider.context);
+
+    // Make the setLoading() function available to users of DocumentProvider
+    DocumentProvider.setLoading = setLoading;
 
     // A one-time effect that runs only on mount, to set up
     // an event handler for client-side navigation
@@ -69,8 +74,8 @@ export default function DocumentProvider(
 
         // This is the function that does client side navigation
         function navigate(url, slug) {
+            setLoading(true);
             navigateStart();
-            body.style.opacity = '0.15';
             // The fallback is for the case when we request a non-English
             // document that doesn't exist. In that case, before we abandon
             // client-side navigation, we'll try falling-back to the English
@@ -117,7 +122,6 @@ export default function DocumentProvider(
 
                         window.scrollTo(0, 0);
                         setDocumentData(documentData);
-                        body.style.opacity = '1';
 
                         // Tell Google Analytics about this navigation.
                         // We use 'dimension19' to mean client-side navigate
@@ -231,10 +235,13 @@ export default function DocumentProvider(
     }, []);
 
     return (
-        <context.Provider value={documentData}>
-            {props.children}
-        </context.Provider>
+        <documentContext.Provider value={documentData}>
+            <loadingContext.Provider value={loading}>
+                {props.children}
+            </loadingContext.Provider>
+        </documentContext.Provider>
     );
 }
 
-DocumentProvider.context = context;
+DocumentProvider.context = documentContext;
+DocumentProvider.loadingContext = loadingContext;

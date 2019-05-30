@@ -1,7 +1,7 @@
 //@flow
 import * as React from 'react';
 import { useContext } from 'react';
-import { css } from '@emotion/core';
+import { css, keyframes } from '@emotion/core';
 
 import DocumentProvider from '../document-provider.jsx';
 import { getLocale, gettext } from '../l10n.js';
@@ -15,11 +15,27 @@ const DESKTOP = '@media (min-width: 1024px)';
 const TABLET = '@media (min-width: 750px) and (max-width: 1023px)';
 const PHONE = '@media (max-width: 749px)';
 
+const slidein = keyframes`
+  from { transform: translate(-90%, 0); }
+  to { transform: translate(0, 0); }
+`;
+
+const throb = keyframes`
+  from { opacity: 1.0; }
+  to { opacity: 0.5; }
+`;
+
 const styles = {
     loadingBar: css({
+        position: 'fixed',
+        display: 'none',
         height: 5,
         width: '100%',
         backgroundImage: 'linear-gradient(-271deg, #206584, #83d0f2)'
+    }),
+    loadingAnimation: css({
+        display: 'block',
+        animation: `${slidein} 0.5s, ${throb} 1s infinite alternate`
     }),
     header: css({
         display: 'grid',
@@ -152,6 +168,7 @@ const menus = [
 
 export default function Header(): React.Node {
     const documentData = useContext(DocumentProvider.context);
+    const loading = useContext(DocumentProvider.loadingContext);
     const locale = getLocale();
     if (!documentData) {
         return null;
@@ -169,7 +186,9 @@ export default function Header(): React.Node {
 
     return (
         <>
-            <div css={styles.loadingBar} />
+            <div
+                css={[styles.loadingBar, loading && styles.loadingAnimation]}
+            />
             <div css={styles.header}>
                 <a css={styles.logoContainer} href={`/${locale}/`}>
                     <Logo css={styles.logo} alt="MDN Web Docs Logo" />
