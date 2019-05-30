@@ -1,27 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LanguageMenu snapshot 1`] = `
-.emotion-7 {
+.emotion-6 {
   position: relative;
   margin-left: -5px;
 }
 
-.emotion-7:hover .dropdown-menu-label {
+.emotion-6:hover .dropdown-menu-label {
   color: #3d7e9a;
 }
 
-.emotion-7:hover .dropdown-menu-label a {
+.emotion-6:hover .dropdown-menu-label a {
   color: #3d7e9a;
 }
 
-.emotion-7:hover .dropdown-menu {
+.emotion-6:hover .dropdown-menu {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 
-.emotion-3 {
+.emotion-2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -41,26 +41,22 @@ exports[`LanguageMenu snapshot 1`] = `
   border: none;
 }
 
-.emotion-3:focus {
+.emotion-2:focus {
   outline-offset: -3px;
 }
 
-.emotion-3 a {
+.emotion-2 a {
   color: #333;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
 .emotion-0 {
-  height: 20px;
-}
-
-.emotion-1 {
   font-size: 75%;
   padding-left: 2px;
 }
 
-.emotion-5 {
+.emotion-4 {
   position: absolute;
   display: none;
   z-index: 100;
@@ -76,47 +72,42 @@ exports[`LanguageMenu snapshot 1`] = `
   min-width: 100%;
 }
 
-.emotion-5 li {
+.emotion-4 li a,
+.emotion-4 li button {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
   padding: 6px 16px;
   white-space: nowrap;
   color: #3d7e9a;
   font-size: 15px;
   font-weight: bold;
+  text-align: start;
 }
 
-.emotion-5 li:hover {
+.emotion-4 li a:hover,
+.emotion-4 li button:hover {
   color: #fff;
   background-color: #3d7e9a;
-}
-
-.emotion-5 li:hover a {
   -webkit-text-decoration: none;
   text-decoration: none;
-  color: #fff;
-}
-
-.emotion-5 li:hover button {
-  color: #fff;
-  background-color: #3d7e9a !important;
 }
 
 <div
-  className="emotion-7 emotion-8"
+  className="emotion-6 emotion-7"
 >
   <div
-    className="dropdown-menu-label emotion-3 emotion-4"
+    className="dropdown-menu-label emotion-2 emotion-3"
   >
-    <svg mock
-      className="emotion-0"
-    />
+    English
     <span
-      className="emotion-1 emotion-2"
+      className="emotion-0 emotion-1"
     >
       ▼
     </span>
   </div>
   <ul
-    className="dropdown-menu emotion-5 emotion-6"
+    className="dropdown-menu emotion-4 emotion-5"
     onClick={[Function]}
     style={
       Object {

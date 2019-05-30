@@ -196,28 +196,25 @@ Array [
   min-width: 100%;
 }
 
-.emotion-7 li {
+.emotion-7 li a,
+.emotion-7 li button {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
   padding: 6px 16px;
   white-space: nowrap;
   color: #3d7e9a;
   font-size: 15px;
   font-weight: bold;
+  text-align: start;
 }
 
-.emotion-7 li:hover {
+.emotion-7 li a:hover,
+.emotion-7 li button:hover {
   color: #fff;
   background-color: #3d7e9a;
-}
-
-.emotion-7 li:hover a {
   -webkit-text-decoration: none;
   text-decoration: none;
-  color: #fff;
-}
-
-.emotion-7 li:hover button {
-  color: #fff;
-  background-color: #3d7e9a !important;
 }
 
 .emotion-11 {

@@ -92,28 +92,25 @@ exports[`Login component when user is logged in 1`] = `
   min-width: 100%;
 }
 
-.emotion-4 li {
+.emotion-4 li a,
+.emotion-4 li button {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
   padding: 6px 16px;
   white-space: nowrap;
   color: #3d7e9a;
   font-size: 15px;
   font-weight: bold;
+  text-align: start;
 }
 
-.emotion-4 li:hover {
+.emotion-4 li a:hover,
+.emotion-4 li button:hover {
   color: #fff;
   background-color: #3d7e9a;
-}
-
-.emotion-4 li:hover a {
   -webkit-text-decoration: none;
   text-decoration: none;
-  color: #fff;
-}
-
-.emotion-4 li:hover button {
-  color: #fff;
-  background-color: #3d7e9a !important;
 }
 
 .emotion-3 {

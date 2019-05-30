@@ -196,28 +196,25 @@ Array [
   min-width: 100%;
 }
 
-.emotion-7 li {
+.emotion-7 li a,
+.emotion-7 li button {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
   padding: 6px 16px;
   white-space: nowrap;
   color: #3d7e9a;
   font-size: 15px;
   font-weight: bold;
+  text-align: start;
 }
 
-.emotion-7 li:hover {
+.emotion-7 li a:hover,
+.emotion-7 li button:hover {
   color: #fff;
   background-color: #3d7e9a;
-}
-
-.emotion-7 li:hover a {
   -webkit-text-decoration: none;
   text-decoration: none;
-  color: #fff;
-}
-
-.emotion-7 li:hover button {
-  color: #fff;
-  background-color: #3d7e9a !important;
 }
 
 .emotion-11 {
@@ -672,27 +669,27 @@ Array [
       </h1>
     </div>
   </div>,
-  .emotion-13 {
+  .emotion-12 {
   position: relative;
   margin-left: -5px;
 }
 
-.emotion-13:hover .dropdown-menu-label {
+.emotion-12:hover .dropdown-menu-label {
   color: #3d7e9a;
 }
 
-.emotion-13:hover .dropdown-menu-label a {
+.emotion-12:hover .dropdown-menu-label a {
   color: #3d7e9a;
 }
 
-.emotion-13:hover .dropdown-menu {
+.emotion-12:hover .dropdown-menu {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 
-.emotion-9 {
+.emotion-8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -712,22 +709,22 @@ Array [
   border: none;
 }
 
-.emotion-9:focus {
+.emotion-8:focus {
   outline-offset: -3px;
 }
 
-.emotion-9 a {
+.emotion-8 a {
   color: #333;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.emotion-7 {
+.emotion-6 {
   font-size: 75%;
   padding-left: 2px;
 }
 
-.emotion-11 {
+.emotion-10 {
   position: absolute;
   display: none;
   z-index: 100;
@@ -743,31 +740,28 @@ Array [
   min-width: 100%;
 }
 
-.emotion-11 li {
+.emotion-10 li a,
+.emotion-10 li button {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
   padding: 6px 16px;
   white-space: nowrap;
   color: #3d7e9a;
   font-size: 15px;
   font-weight: bold;
+  text-align: start;
 }
 
-.emotion-11 li:hover {
+.emotion-10 li a:hover,
+.emotion-10 li button:hover {
   color: #fff;
   background-color: #3d7e9a;
-}
-
-.emotion-11 li:hover a {
   -webkit-text-decoration: none;
   text-decoration: none;
-  color: #fff;
 }
 
-.emotion-11 li:hover button {
-  color: #fff;
-  background-color: #3d7e9a !important;
-}
-
-.emotion-16 {
+.emotion-15 {
   box-sizing: border-box;
   display: -webkit-box;
   display: -webkit-flex;
@@ -791,7 +785,7 @@ Array [
   background-color: #fff;
 }
 
-.emotion-15 {
+.emotion-14 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -829,15 +823,11 @@ Array [
   margin: 0 8px;
 }
 
-.emotion-6 {
-  height: 20px;
-}
-
 <div
-    className="emotion-16"
+    className="emotion-15"
   >
     <div
-      className="emotion-15"
+      className="emotion-14"
     >
       <nav
         className="emotion-5"
@@ -886,22 +876,20 @@ Array [
         </ol>
       </nav>
       <div
-        className="emotion-13 emotion-14"
+        className="emotion-12 emotion-13"
       >
         <div
-          className="dropdown-menu-label emotion-9 emotion-10"
+          className="dropdown-menu-label emotion-8 emotion-9"
         >
-          <svg mock
-            className="emotion-6"
-          />
+          English
           <span
-            className="emotion-7 emotion-8"
+            className="emotion-6 emotion-7"
           >
             ▼
           </span>
         </div>
         <ul
-          className="dropdown-menu emotion-11 emotion-12"
+          className="dropdown-menu emotion-10 emotion-11"
           onClick={[Function]}
           style={
             Object {
