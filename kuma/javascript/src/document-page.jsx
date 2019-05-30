@@ -8,7 +8,7 @@ import UserProvider from './user-provider.jsx';
 
 import type DocumentData from './document-provider.jsx';
 
-export default function App(props: { documentData: DocumentData }) {
+export default function DocumentPage(props: { documentData: DocumentData }) {
     return (
         <GAProvider>
             <DocumentProvider initialDocumentData={props.documentData}>

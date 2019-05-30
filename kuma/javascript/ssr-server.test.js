@@ -2,8 +2,8 @@ const request = require('supertest');
 const app = require('./ssr-server.js');
 
 // This is a fake ssr() functiona
-function mockssr(data) {
-    return `<${JSON.stringify(data)}>`;
+function mockssr(name, data) {
+    return `<${name} ${JSON.stringify(data)}>`;
 }
 // We're mocking the ssr module with the mock function
 jest.mock('./dist/ssr.js', () => mockssr);
@@ -45,15 +45,15 @@ describe('ssr-server routes', () => {
             .expect(404)
     );
 
-    it.each(['/ssr', '/ssr/'])('POST %s calls ssr()', path => {
+    it.each(['foo', 'bar'])('POST /ssr/%s calls ssr()', name => {
         const data = { foo: 1 };
         return request(app)
-            .post(path)
+            .post(`/ssr/${name}`)
             .send(data)
             .expect(200)
             .expect('Content-Type', 'text/plain; charset=utf-8')
             .expect(response => {
-                expect(response.text).toBe(mockssr(data));
+                expect(response.text).toBe(mockssr(name, data));
             });
     });
 });

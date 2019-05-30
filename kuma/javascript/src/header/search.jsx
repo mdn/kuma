@@ -1,9 +1,8 @@
 //@flow
 import * as React from 'react';
-import { useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { css } from '@emotion/core';
 
-import DocumentProvider from '../document-provider.jsx';
 import { getLocale, gettext } from '../l10n.js';
 import SearchIcon from '../icons/search.svg';
 
@@ -39,25 +38,30 @@ const styles = {
 };
 
 export default function Search() {
+    // In order to render the action attribute of the form, we need
+    // to know the URL fo the wiki site (which has the /search endpoint).
+    // Kuma passes this to us as window.mdn.wikiSiteUrl, but we can't
+    // use the window object when server-side rendering. So we have to
+    // do this useState(), useEffect() hack to re-render the component
+    // once the document has loaded and we can correctly construct the
+    // search URL.
+    //
+    // TODO: we should probably add the /search endpoint to the readonly
+    // site rather than keeping it only on the wiki site. Then this hack
+    // won't be necessary.
+    const [wikiURL, setWikiURL] = useState('');
+    useEffect(() => {
+        window.addEventListener('load', () => {
+            setWikiURL(window.mdn.wikiSiteUrl);
+        });
+    }, []);
     const locale = getLocale();
-    const documentData = useContext(DocumentProvider.context);
-    if (!documentData) {
-        return null;
-    }
-    const { absoluteURL, editURL } = documentData;
-
-    // This is available as window.mdn.wikiSiteUrl. But we can't access
-    // that during server-side rendering, so we either need to add that mdn
-    // data to the document data, or we need to derive it from existing
-    // document data somehow
-    // TODO: pass this URL in some more reasonable way
-    const WIKI_SITE_URL = editURL.substring(0, editURL.indexOf(absoluteURL));
 
     return (
         <form
             css={styles.container}
             id="nav-main-search"
-            action={`${WIKI_SITE_URL}/${locale}/search`}
+            action={`${wikiURL}/${locale}/search`}
             method="get"
             role="search"
         >
