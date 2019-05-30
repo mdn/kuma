@@ -925,7 +925,7 @@ Array [
       </div>
     </div>
   </div>,
-  .emotion-6 {
+  .emotion-8 {
   display: grid;
   box-sizing: border-box;
   max-width: 1400px;
@@ -935,7 +935,7 @@ Array [
 }
 
 @media (max-width:749px) {
-  .emotion-6 {
+  .emotion-8 {
     grid-template-columns: 1fr;
     grid-template-areas: "main" "side";
   }
@@ -991,7 +991,7 @@ Array [
   fill: #696969;
 }
 
-.emotion-5 {
+.emotion-7 {
   grid-area: side;
   box-sizing: border-box;
   width: 100%;
@@ -1000,17 +1000,33 @@ Array [
 }
 
 @media (max-width:749px) {
-  .emotion-5 {
+  .emotion-7 {
     padding: 15px 12px;
   }
 }
 
+.emotion-5 {
+  background-color: #f8f8f8;
+  border: solid 1px #dce3e5;
+  border-top: solid 4px #83d0f2;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 24px;
+}
+
+.emotion-5 ul {
+  list-style: none;
+  padding-left: 10px;
+}
+
 .emotion-4 {
+  font-family: x-locale-heading-primary,zillaslab,"Palatino","Palatino Linotype",x-locale-heading-secondary,serif;
   font-size: 20px;
+  margin-bottom: 4px;
 }
 
 <div
-    className="emotion-6"
+    className="emotion-8"
   >
     <div
       className="text-content emotion-3"
@@ -1073,20 +1089,40 @@ Array [
       </div>
     </div>
     <div
-      className="quick-links emotion-5"
+      className="emotion-7"
     >
       <div
-        className="quick-links-head emotion-4"
+        className="emotion-5"
       >
-        Related Topics
+        <div
+          className="emotion-4"
+        >
+          On this Page
+        </div>
+        <ul
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "[fake TOC HTML]",
+            }
+          }
+        />
       </div>
       <div
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "[fake quicklinks HTML]",
+        className="quick-links"
+      >
+        <div
+          className="quick-links-head emotion-4"
+        >
+          Related Topics
+        </div>
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "[fake quicklinks HTML]",
+            }
           }
-        }
-      />
+        />
+      </div>
     </div>
   </div>,
 ]

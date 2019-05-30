@@ -154,8 +154,23 @@ const styles = {
             padding: '15px 12px'
         }
     }),
-    related: css({
-        fontSize: 20
+    toc: css({
+        backgroundColor: '#f8f8f8',
+        border: 'solid 1px #dce3e5',
+        borderTop: 'solid 4px #83d0f2',
+        borderRadius: 4,
+        padding: 10,
+        marginBottom: 24,
+        '& ul': {
+            listStyle: 'none',
+            paddingLeft: 10
+        }
+    }),
+    sidebarHeading: css({
+        fontFamily:
+            'x-locale-heading-primary, zillaslab, "Palatino", "Palatino Linotype", x-locale-heading-secondary, serif',
+        fontSize: 20,
+        marginBottom: 4
     })
 };
 
@@ -210,16 +225,40 @@ export function Titlebar({ document }: DocumentProps) {
 }
 
 function Sidebar({ document }: DocumentProps) {
+    // TODO(djf): We may want to omit the "On this Page" section from
+    // the sidebar for pages with slugs like /Web/*/*/*: those are
+    // mostly HTML and CSS reference pages with repetitive TOCs. The
+    // TOC would afford quick access to the BCD table, but might not
+    // be useful for much else. For Learn/ slugs, however, the TOC is
+    // likely to be much more informative. I think a decision is still
+    // needed here.  For now, we show the TOC on all pages, but this
+    // may need to change to be based on the document.slug.
+    let showTOC = true;
+
     return (
-        <div className="quick-links" css={styles.sidebar}>
-            <div css={styles.related} className="quick-links-head">
-                {gettext('Related Topics')}
+        <div css={styles.sidebar}>
+            {showTOC && (
+                <div css={styles.toc}>
+                    <div css={styles.sidebarHeading}>
+                        {gettext('On this Page')}
+                    </div>
+                    <ul
+                        dangerouslySetInnerHTML={{
+                            __html: document.tocHTML
+                        }}
+                    />
+                </div>
+            )}
+            <div className="quick-links">
+                <div css={styles.sidebarHeading} className="quick-links-head">
+                    {gettext('Related Topics')}
+                </div>
+                <div
+                    dangerouslySetInnerHTML={{
+                        __html: document.quickLinksHTML
+                    }}
+                />
             </div>
-            <div
-                dangerouslySetInnerHTML={{
-                    __html: document.quickLinksHTML
-                }}
-            />
         </div>
     );
 }
