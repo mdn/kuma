@@ -62,27 +62,23 @@ const Menu = styled.ul`
     border-radius: 4px;
     padding: 4px 0;
     min-width: 100%;
-    li {
+    & li a,
+    & li button {
+        display: inline-block;
+        box-sizing: border-box;
+        width: 100%;
         padding: 6px 16px;
         white-space: nowrap;
         color: #3d7e9a;
         font-size: 15px;
         font-weight: bold;
+        /* buttons have centered text by default */
+        text-align: start;
 
         :hover {
             color: #fff;
             background-color: #3d7e9a;
-
-            /* If the menu item is a link, override the default link styles */
-            & a {
-                text-decoration: none;
-                color: #fff;
-            }
-            /* Special case for button menu items */
-            & button {
-                color: #fff;
-                background-color: #3d7e9a !important;
-            }
+            text-decoration: none;
         }
     }
 `;
