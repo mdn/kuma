@@ -4,7 +4,6 @@ import { useContext } from 'react';
 
 import { css } from '@emotion/core';
 
-import DocumentProvider from '../document-provider.jsx';
 import Dropdown from './dropdown.jsx';
 import { getLocale, gettext } from '../l10n.js';
 import { Row } from '../layout.jsx';
@@ -52,26 +51,21 @@ const styles = {
 
 export default function Login(): React.Node {
     const locale = getLocale();
-    const documentData = useContext(DocumentProvider.context);
-    if (!documentData) {
-        return null;
-    }
-    const { absoluteURL, editURL } = documentData;
     const userData = useContext(UserProvider.context);
 
-    const PATHNAME = absoluteURL;
-
-    // This is available as window.mdn.wikiSiteUrl. But we can't access
-    // that during server-side rendering, so we either need to add that mdn
-    // data to the document data, or we need to derive it from existing
-    // document data somehow
-    // TODO: pass this URL in some more reasonable way
-    const WIKI_SITE_URL = editURL.substring(0, editURL.indexOf(absoluteURL));
-
     // if we don't have the user data yet, don't render anything
-    if (!userData) {
+    if (!userData || typeof window === 'undefined') {
         return null;
     }
+
+    // In order to render links properly, we need to know our own
+    // URL and the URL of the editable wiki site. We get these from
+    // window.location and from window.mdn. Neither of those are
+    // available during server side rendering, but this code will
+    // never run during server side rendering because we won't have
+    // user data then.
+    const LOCATION = window.location.href;
+    const WIKI_URL = window.mdn ? window.mdn.wikiSiteUrl : '';
 
     if (userData.isAuthenticated && userData.username) {
         // If we have user data and the user is logged in, show their
@@ -86,7 +80,7 @@ export default function Login(): React.Node {
                 alt={userData.username}
             />
         );
-        let viewProfileLink = `${WIKI_SITE_URL}/${locale}/profiles/${
+        let viewProfileLink = `${WIKI_URL}/${locale}/profiles/${
             userData.username
         }`;
         let editProfileLink = `${viewProfileLink}/edit`;
@@ -102,10 +96,10 @@ export default function Login(): React.Node {
                     </li>
                     <li>
                         <form
-                            action={`${WIKI_SITE_URL}/${locale}/users/signout`}
+                            action={`${WIKI_URL}/${locale}/users/signout`}
                             method="post"
                         >
-                            <input name="next" type="hidden" value={PATHNAME} />
+                            <input name="next" type="hidden" value={LOCATION} />
                             <button css={styles.signOutButton} type="submit">
                                 {gettext('Sign out')}
                             </button>
@@ -118,7 +112,7 @@ export default function Login(): React.Node {
         // Otherwise, show a login prompt
         return (
             <a
-                href={`${WIKI_SITE_URL}/users/github/login/?next=${PATHNAME}`}
+                href={`${WIKI_URL}/users/github/login/?next=${LOCATION}`}
                 data-service="GitHub"
                 rel="nofollow"
                 css={styles.signInLink}

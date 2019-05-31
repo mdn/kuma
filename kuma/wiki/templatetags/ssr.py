@@ -25,7 +25,7 @@ def get_localization_data(locale):
 
 
 @library.global_function
-def render_react_app(locale, document_data, request_data, ssr=True):
+def render_react(component_name, locale, document_data, ssr=True):
     """
     Render a script tag to define the data and any other HTML tags needed
     to enable the display of a React-based UI. By default, this does
@@ -39,19 +39,19 @@ def render_react_app(locale, document_data, request_data, ssr=True):
     localization_data = get_localization_data(locale)
 
     data = {
+        'locale': locale,
         'stringCatalog': localization_data['catalog'],
         'pluralExpression': localization_data['plural'],
         'documentData': document_data,
-        'requestData': request_data
     }
 
     if ssr:
-        return server_side_render(data)
+        return server_side_render(component_name, data)
     else:
-        return client_side_render(data)
+        return client_side_render(component_name, data)
 
 
-def _render(html, state):
+def _render(component_name, html, state):
     """A utility function used by both client side and server side rendering.
     Returns a string that includes the specified HTML and a serialized
     form of the state dict, in the format expected by the client-side code
@@ -89,20 +89,20 @@ def _render(html, state):
 
     # Now return the HTML and the state as a single string
     return (
-        u'<div id="react-container">{}</div>\n'
+        u'<div id="react-container" data-component-name="{}">{}</div>\n'
         u'<script>window._react_data = {};</script>\n'
-    ).format(html, serializedState)
+    ).format(component_name, html, serializedState)
 
 
-def client_side_render(data):
+def client_side_render(component_name, data):
     """
     Output an empty <div> and a script with complete state so that
     the UI can be rendered on the client-side.
     """
-    return _render('', data)
+    return _render(component_name, '', data)
 
 
-def server_side_render(data):
+def server_side_render(component_name, data):
     """
     Pre-render the React UI to HTML and output it in a <div>, and then
     also pass the necessary serialized state in a <script> so that
@@ -111,7 +111,7 @@ def server_side_render(data):
     If any exceptions are thrown during the server-side rendering, we
     fall back to client-side rendering instead.
     """
-    url = settings.SSR_URL
+    url = '{}/{}'.format(settings.SSR_URL, component_name)
     timeout = settings.SSR_TIMEOUT
 
     # Try server side rendering
@@ -126,21 +126,25 @@ def server_side_render(data):
 
         # Even though we've got fully rendered HTML now, we still need to
         # send the document data along with it so that React can sync its
-        # state on the client side with what is in the HTML.  Fortunately,
-        # however, it turns out not to be necessary to duplicate the
-        # biggest parts (the HTML strings) of that data, so we can delete
-        # those from the data now. We do this in a copy of the original
-        # dict because the data structure belongs to our caller, not to us.
-        data = data.copy()
-        data['documentData'] = data['documentData'].copy()
-        data['documentData'].update(bodyHTML='', tocHTML='', quickLinksHTML='')
-        return _render(response.text, data)
+        # state on the client side with what is in the HTML. When rendering
+        # a document page, the data includes long strings of HTML that
+        # we can get away without duplicating. So as an optimization when
+        # component_name is "document", we're going to make a copy of the
+        # data (because the original belongs to our caller) and delete those
+        # strings from the copy.
+        if component_name == 'document':
+            data = data.copy()
+            data['documentData'] = data['documentData'].copy()
+            data['documentData'].update(bodyHTML='',
+                                        tocHTML='',
+                                        quickLinksHTML='')
+        return _render(component_name, response.text, data)
 
     except requests.exceptions.ConnectionError:
         print("Connection error contacting SSR server.")
         print("Falling back to client side rendering.")
-        return client_side_render(data)
+        return client_side_render(component_name, data)
     except requests.exceptions.ReadTimeout:
         print("Timeout contacting SSR server.")
         print("Falling back to client side rendering.")
-        return client_side_render(data)
+        return client_side_render(component_name, data)

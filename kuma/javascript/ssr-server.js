@@ -58,9 +58,9 @@ app.get('/readiness/?', (req, res) => {
  * text/plain instead of text/html to make it clear that the response should
  * not be parsed, escaped, or displayed as HTML.
  */
-app.post('/ssr/?', (req, res) => {
+app.post('/ssr/:componentName', (req, res) => {
     res.set({ 'Content-Type': 'text/plain; charset=utf-8' }).send(
-        ssr(req.body)
+        ssr(req.params.componentName, req.body)
     );
 });
 

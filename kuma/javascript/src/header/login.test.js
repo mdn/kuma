@@ -1,30 +1,24 @@
 //@flow
 import React from 'react';
 import { create } from 'react-test-renderer';
-import DocumentProvider from '../document-provider.jsx';
-import { fakeDocumentData } from '../document-provider.test.js';
 import Dropdown from './dropdown.jsx';
 import Login from './login.jsx';
 import UserProvider from '../user-provider.jsx';
 
 test('Login snapshot before user data is fetched', () => {
     const login = create(
-        <DocumentProvider initialDocumentData={fakeDocumentData}>
-            <UserProvider.context.Provider value={null}>
-                <Login />
-            </UserProvider.context.Provider>
-        </DocumentProvider>
+        <UserProvider.context.Provider value={null}>
+            <Login />
+        </UserProvider.context.Provider>
     ).toJSON();
     expect(login).toBe(null);
 });
 
 test('Login component when user is not logged in', () => {
     const login = create(
-        <DocumentProvider initialDocumentData={fakeDocumentData}>
-            <UserProvider.context.Provider value={UserProvider.defaultUserData}>
-                <Login />
-            </UserProvider.context.Provider>
-        </DocumentProvider>
+        <UserProvider.context.Provider value={UserProvider.defaultUserData}>
+            <Login />
+        </UserProvider.context.Provider>
     ).toJSON();
     expect(login.children[0]).toBe('Sign in');
     expect(login).toMatchSnapshot();
@@ -32,18 +26,16 @@ test('Login component when user is not logged in', () => {
 
 test('Login component when user is logged in', () => {
     const login = create(
-        <DocumentProvider initialDocumentData={fakeDocumentData}>
-            <UserProvider.context.Provider
-                value={{
-                    ...UserProvider.defaultUserData,
-                    isAuthenticated: true,
-                    username: 'test-username',
-                    gravatarUrl: { small: 'test-url', large: 'test-bigurl' }
-                }}
-            >
-                <Login />
-            </UserProvider.context.Provider>
-        </DocumentProvider>
+        <UserProvider.context.Provider
+            value={{
+                ...UserProvider.defaultUserData,
+                isAuthenticated: true,
+                username: 'test-username',
+                gravatarUrl: { small: 'test-url', large: 'test-bigurl' }
+            }}
+        >
+            <Login />
+        </UserProvider.context.Provider>
     );
 
     expect(login.toJSON()).toMatchSnapshot();

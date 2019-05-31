@@ -170,14 +170,14 @@ export default function Header(): React.Node {
     const documentData = useContext(DocumentProvider.context);
     const loading = useContext(DocumentProvider.loadingContext);
     const locale = getLocale();
-    if (!documentData) {
-        return null;
-    }
 
     function fixurl(url) {
         // The "Report a content issue" menu item has a link that requires
-        // the document slug, so we work that in here.
-        url = url.replace('{{SLUG}}', encodeURIComponent(documentData.slug));
+        // the document slug, so we work that in here. If there is no
+        // document data, then we're on the home page and just use '/locale'
+        let slug = documentData ? documentData.slug : `/${locale}`;
+
+        url = url.replace('{{SLUG}}', encodeURIComponent(slug));
         if (!url.startsWith('https://')) {
             url = `/${locale}/docs/${url}`;
         }
