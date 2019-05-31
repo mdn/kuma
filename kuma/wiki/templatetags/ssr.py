@@ -25,7 +25,7 @@ def get_localization_data(locale):
 
 
 @library.global_function
-def render_react(component_name, locale, document_data, ssr=True):
+def render_react(component_name, locale, url, document_data, ssr=True):
     """
     Render a script tag to define the data and any other HTML tags needed
     to enable the display of a React-based UI. By default, this does
@@ -42,6 +42,7 @@ def render_react(component_name, locale, document_data, ssr=True):
         'locale': locale,
         'stringCatalog': localization_data['catalog'],
         'pluralExpression': localization_data['plural'],
+        'url': url,
         'documentData': document_data,
     }
 

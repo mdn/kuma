@@ -2,7 +2,6 @@
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 
-import DocumentProvider from './document-provider.jsx';
 import GAProvider from './ga-provider.jsx';
 
 export type UserData = {
@@ -45,7 +44,6 @@ export default function UserProvider(props: {
     children: React.Node
 }): React.Node {
     const [userData, setUserData] = useState<?UserData>(null);
-    const documentData = useContext(DocumentProvider.context);
     const ga = useContext(GAProvider.context);
 
     useEffect(() => {
@@ -87,16 +85,15 @@ export default function UserProvider(props: {
                     ga('set', 'dimension9', 'Yes');
                 }
 
-                if (documentData && documentData.enSlug) {
-                    // dimension17 == 'English Slug'
-                    ga('set', 'dimension17', documentData.enSlug);
-                }
-
-                // We only fetch user data once, right after the initial page
-                // load, so when that user data arrives it is time to send
-                // the initial 'pageview' event for the initial load. See
-                // document-provider.jsx for code that sends 'pageview'
-                // events for client-side navigation.
+                // We only fetch user data once, right after the
+                // initial page load, so when that user data arrives
+                // it is time to send the initial 'pageview' event for
+                // the initial load. See router.jsx for code that
+                // sends 'pageview' events for client-side navigation.
+                //
+                // TODO: the Router component might be sending pageview
+                // for the initial load as well, and we need to work
+                // that out.
                 ga('send', {
                     hitType: 'pageview',
                     hitCallback: () => {
@@ -107,7 +104,7 @@ export default function UserProvider(props: {
                         // the location bar
                         if (window.location.search.includes('utm_')) {
                             window.history.replaceState(
-                                {},
+                                window.location.pathname,
                                 '',
                                 window.location.pathname
                             );

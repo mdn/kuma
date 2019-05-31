@@ -10,4 +10,7 @@ urlpatterns = [
     url(r'^whoami/?$',
         views.whoami,
         name='api.v1.whoami'),
+    url(r'^search/(?P<locale>[^/]+)/?$',
+        views.search,
+        name='api.v1.search'),
 ]

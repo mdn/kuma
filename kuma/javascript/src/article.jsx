@@ -7,7 +7,7 @@ import ClockIcon from './icons/clock.svg';
 import ContributorsIcon from './icons/contributors.svg';
 import { getLocale, gettext } from './l10n.js';
 
-import type { DocumentData } from './document-provider.jsx';
+import type { DocumentData } from './document.jsx';
 type DocumentProps = {
     document: DocumentData
 };
@@ -89,8 +89,16 @@ function addAnchors(article) {
 
 export default function Article({ document }: DocumentProps) {
     const article = useRef(null);
-    useEffect(() => article.current && highlightSections(article.current));
-    useEffect(() => article.current && addAnchors(article.current));
+    useEffect(() => {
+        if (article.current) {
+            highlightSections(article.current);
+        }
+    }, [document]);
+    useEffect(() => {
+        if (article.current) {
+            addAnchors(article.current);
+        }
+    }, [document]);
 
     return (
         /*

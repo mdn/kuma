@@ -1,45 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Page snapshot 1`] = `
+exports[`Document snapshot 1`] = `
 Array [
-  @keyframes animation-0 {
-  from {
-    -webkit-transform: translate(-90%,0);
-    -ms-transform: translate(-90%,0);
-    transform: translate(-90%,0);
-  }
-
-  to {
-    -webkit-transform: translate(0,0);
-    -ms-transform: translate(0,0);
-    transform: translate(0,0);
-  }
-}
-
-@keyframes animation-1 {
-  from {
-    opacity: 1.0;
-  }
-
-  to {
-    opacity: 0.5;
-  }
-}
-
-.emotion-0 {
-  position: fixed;
-  display: none;
-  height: 5px;
-  width: 100%;
-  background-image: linear-gradient(-271deg,#206584,#83d0f2);
-  display: block;
-  -webkit-animation: animation-0 0.5s,animation-1 1s infinite alternate;
-  animation: animation-0 0.5s,animation-1 1s infinite alternate;
-}
-
-<div
-    className="emotion-0"
-  />,
   .emotion-39 {
   display: grid;
   -webkit-align-items: center;
@@ -585,7 +547,7 @@ Array [
       <a
         className="emotion-37"
         data-service="GitHub"
-        href="/users/github/login/?next=/"
+        href="/users/github/login/?next=http://localhost/"
         rel="nofollow"
       >
         Sign in
@@ -648,10 +610,6 @@ Array [
   font-family: x-locale-heading-primary,zillaslab,"Palatino","Palatino Linotype",x-locale-heading-secondary,serif;
   font-size: 45px;
   font-weight: bold;
-  -webkit-hyphens: auto;
-  -moz-hyphens: auto;
-  -ms-hyphens: auto;
-  hyphens: auto;
 }
 
 @media (max-width:749px) {
@@ -814,10 +772,6 @@ Array [
 .emotion-1 {
   display: inline;
   font-size: 14px;
-  -webkit-hyphens: auto;
-  -moz-hyphens: auto;
-  -ms-hyphens: auto;
-  hyphens: auto;
 }
 
 .emotion-1a {

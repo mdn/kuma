@@ -1,8 +1,7 @@
 //@flow
 import React from 'react';
 import { act, create } from 'react-test-renderer';
-import DocumentProvider from './document-provider.jsx';
-import { fakeDocumentData } from './document-provider.test.js';
+import { fakeDocumentData } from './document.test.js';
 import GAProvider from './ga-provider.jsx';
 import { localize } from './l10n.js';
 import UserProvider from './user-provider.jsx';
@@ -38,11 +37,9 @@ describe('TaskCompletionSurvey', () => {
 
         const tcs = create(
             <GAProvider.context.Provider value={mockGA2}>
-                <DocumentProvider.context.Provider value={mockDocumentData}>
-                    <UserProvider.context.Provider value={mockUserData}>
-                        <TaskCompletionSurvey />
-                    </UserProvider.context.Provider>
-                </DocumentProvider.context.Provider>
+                <UserProvider.context.Provider value={mockUserData}>
+                    <TaskCompletionSurvey document={mockDocumentData} />
+                </UserProvider.context.Provider>
             </GAProvider.context.Provider>
         );
 
@@ -81,11 +78,9 @@ describe('TaskCompletionSurvey', () => {
 
         const tcs = create(
             <GAProvider.context.Provider value={mockGA2}>
-                <DocumentProvider.context.Provider value={mockDocumentData}>
-                    <UserProvider.context.Provider value={mockUserData}>
-                        <TaskCompletionSurvey />
-                    </UserProvider.context.Provider>
-                </DocumentProvider.context.Provider>
+                <UserProvider.context.Provider value={mockUserData}>
+                    <TaskCompletionSurvey document={mockDocumentData} />
+                </UserProvider.context.Provider>
             </GAProvider.context.Provider>
         );
 
@@ -99,11 +94,9 @@ describe('TaskCompletionSurvey', () => {
 
         const tcs = create(
             <GAProvider.context.Provider value={mockGA2}>
-                <DocumentProvider.context.Provider value={mockDocumentData}>
-                    <UserProvider.context.Provider value={mockUserData}>
-                        <TaskCompletionSurvey />
-                    </UserProvider.context.Provider>
-                </DocumentProvider.context.Provider>
+                <UserProvider.context.Provider value={mockUserData}>
+                    <TaskCompletionSurvey document={mockDocumentData} />
+                </UserProvider.context.Provider>
             </GAProvider.context.Provider>
         );
 
@@ -117,11 +110,9 @@ describe('TaskCompletionSurvey', () => {
 
         const tcs = create(
             <GAProvider.context.Provider value={mockGA2}>
-                <DocumentProvider.context.Provider value={mockDocumentData}>
-                    <UserProvider.context.Provider value={mockUserData}>
-                        <TaskCompletionSurvey />
-                    </UserProvider.context.Provider>
-                </DocumentProvider.context.Provider>
+                <UserProvider.context.Provider value={mockUserData}>
+                    <TaskCompletionSurvey document={mockDocumentData} />
+                </UserProvider.context.Provider>
             </GAProvider.context.Provider>
         );
 
@@ -135,11 +126,9 @@ describe('TaskCompletionSurvey', () => {
 
         const tcs = create(
             <GAProvider.context.Provider value={mockGA2}>
-                <DocumentProvider.context.Provider value={mockDocumentData}>
-                    <UserProvider.context.Provider value={mockUserData}>
-                        <TaskCompletionSurvey />
-                    </UserProvider.context.Provider>
-                </DocumentProvider.context.Provider>
+                <UserProvider.context.Provider value={mockUserData}>
+                    <TaskCompletionSurvey document={mockDocumentData} />
+                </UserProvider.context.Provider>
             </GAProvider.context.Provider>
         );
 
@@ -169,11 +158,9 @@ describe('TaskCompletionSurvey', () => {
 
         const tcs = create(
             <GAProvider.context.Provider value={mockGA2}>
-                <DocumentProvider.context.Provider value={mockDocumentData}>
-                    <UserProvider.context.Provider value={mockUserData}>
-                        <TaskCompletionSurvey />
-                    </UserProvider.context.Provider>
-                </DocumentProvider.context.Provider>
+                <UserProvider.context.Provider value={mockUserData}>
+                    <TaskCompletionSurvey document={mockDocumentData} />
+                </UserProvider.context.Provider>
             </GAProvider.context.Provider>
         );
 

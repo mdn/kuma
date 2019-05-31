@@ -1,22 +1,45 @@
 // @flow
 import * as React from 'react';
-import { useContext, useEffect } from 'react';
 import { css } from '@emotion/core';
 
 import Article from './article.jsx';
-import DocumentProvider from './document-provider.jsx';
-import EditIcon from './icons/pencil.svg';
-import GAProvider from './ga-provider.jsx';
 import { gettext } from './l10n.js';
-import HistoryIcon from './icons/clock.svg';
 import LanguageMenu from './header/language-menu.jsx';
 import Header from './header/header.jsx';
 import TaskCompletionSurvey from './task-completion-survey.jsx';
-import { navigateRenderComplete } from './perf.js';
-import UserProvider from './user-provider.jsx';
+import Titlebar from './titlebar.jsx';
 
-import type { DocumentData } from './document-provider.jsx';
-type DocumentProps = {
+import type Route from './router.jsx';
+
+export type DocumentData = {
+    locale: string,
+    slug: string,
+    enSlug: string, // For non-english documents, the original english slug
+    id: number,
+    title: string,
+    summary: string,
+    language: string,
+    hrefLang: string,
+    absoluteURL: string,
+    editURL: string,
+    bodyHTML: string,
+    quickLinksHTML: string,
+    tocHTML: string,
+    parents: Array<{ url: string, title: string }>,
+    translations: Array<{
+        locale: string,
+        language: string,
+        hrefLang: string,
+        localizedLanguage: string,
+        url: string,
+        title: string
+    }>,
+    contributors: Array<string>,
+    lastModified: string, // An ISO date
+    lastModifiedBy: string
+};
+
+export type DocumentProps = {
     document: DocumentData
 };
 
@@ -24,71 +47,6 @@ type DocumentProps = {
 const NARROW = '@media (max-width: 749px)';
 
 const styles = {
-    // Titlebar styles
-    titlebarContainer: css({
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        boxSizing: 'border-box',
-        width: '100%',
-        minHeight: 106,
-        padding: '12px 24px',
-        overflowX: 'scroll',
-        backgroundColor: '#f5f9fa',
-        borderBottom: 'solid 1px #dce3e5',
-        borderTop: 'solid 1px #dce3e5',
-        [NARROW]: {
-            // Reduce titlebar size on narrow screens
-            minHeight: 60,
-            padding: '8px 16px'
-        }
-    }),
-    titlebar: css({
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: '100%',
-        maxWidth: 1352
-    }),
-    title: css({
-        flex: '1 1',
-        fontFamily:
-            'x-locale-heading-primary, zillaslab, "Palatino", "Palatino Linotype", x-locale-heading-secondary, serif',
-        fontSize: 45,
-        fontWeight: 'bold',
-        hyphens: 'auto',
-        [NARROW]: {
-            // Reduce the H1 size on narrow screens
-            fontSize: 28
-        }
-    }),
-
-    editAndHistoryButtons: css({
-        display: 'flex',
-        flexDirection: 'row',
-        flex: '0 0'
-    }),
-    editButton: css({
-        height: 32,
-        border: 'solid 2px #3d7e9a',
-        color: '#3d7e9a', // for the text
-        fill: '#3d7e9a', // for the icon
-        backgroundColor: '#fff',
-        whiteSpace: 'nowrap',
-        fontSize: 15,
-        fontWeight: 'bold',
-        padding: '0 18px'
-    }),
-    historyButton: css({
-        width: 32,
-        height: 32,
-        border: 'solid 2px #333',
-        backgroundColor: '#fff',
-        padding: 5,
-        marginLeft: 8
-    }),
-
     // Breadcrumbs styles
     breadcrumbsContainer: css({
         boxSizing: 'border-box',
@@ -185,56 +143,6 @@ const styles = {
     })
 };
 
-function EditAndHistoryButtons({ document }: DocumentProps) {
-    let editURL = document.editURL;
-    return (
-        <div css={styles.editAndHistoryButtons}>
-            <button
-                css={styles.editButton}
-                onClick={() => {
-                    window.location = editURL;
-                }}
-            >
-                <EditIcon width={13} height={13} /> {gettext('Edit')}
-            </button>
-            <button
-                css={styles.historyButton}
-                aria-label={gettext('History')}
-                onClick={() => {
-                    window.location = editURL.replace('$edit', '$history');
-                }}
-            >
-                <HistoryIcon width={18} height={18} />
-            </button>
-        </div>
-    );
-}
-
-export function Titlebar({ document }: DocumentProps) {
-    const userData = useContext(UserProvider.context);
-
-    // If we have user data, and the user is logged in, and they
-    // are a contributor (or, if we don't know whether they are
-    // a contributor because the backend does not support that yet)
-    // then we want to show Edit and History buttons on the
-    // right side of the titlebar.
-    let showEditAndHistory =
-        userData &&
-        userData.isAuthenticated &&
-        (userData.isContributor === undefined || userData.isContributor);
-
-    return (
-        <div css={styles.titlebarContainer}>
-            <div css={styles.titlebar}>
-                <h1 css={styles.title}>{document.title}</h1>
-                {showEditAndHistory && (
-                    <EditAndHistoryButtons document={document} />
-                )}
-            </div>
-        </div>
-    );
-}
-
 function Sidebar({ document }: DocumentProps) {
     // TODO(djf): We may want to omit the "On this Page" section from
     // the sidebar for pages with slugs like /Web/*/*/*: those are
@@ -301,7 +209,7 @@ function Breadcrumbs({ document }: DocumentProps) {
                         </li>
                     </ol>
                 </nav>
-                <LanguageMenu />
+                <LanguageMenu document={document} />
             </div>
         </div>
     );
@@ -316,41 +224,132 @@ function Content({ document }: DocumentProps) {
     );
 }
 
-export default function Page() {
-    const document = useContext(DocumentProvider.context);
-    const ga = useContext(GAProvider.context);
-
-    /*
-     * Register an effect that runs every time we see a new document URL.
-     * The effect sends a Google Analytics timing event to record how long
-     * it took from the start of the navigation until the new document is
-     * rendered. And then it turns off the loading indicator for the page
-     *
-     * Effects don't run during server-side-rendering, but that is fine
-     * because we only want to send the GA event for client-side navigation.
-     * Calling navigateRenderComplete() will have no effect if
-     * navigateStart() was not previously called.
-     */
-    useEffect(() => {
-        navigateRenderComplete(ga);
-
-        // Client side navigation is typically so fast that the loading
-        // animation might not even be noticed, so we artificially prolong
-        // the effect with setTimeout()
-        setTimeout(() => {
-            DocumentProvider.setLoading(false);
-        }, 200);
-    }, [document && document.absoluteURL]);
-
+function DocumentPage({ document }: DocumentProps) {
     return (
-        document && (
-            <>
-                <Header />
-                <TaskCompletionSurvey />
-                <Titlebar document={document} />
-                <Breadcrumbs document={document} />
-                <Content document={document} />
-            </>
-        )
+        <>
+            <Header document={document} />
+            <TaskCompletionSurvey document={document} />
+            <Titlebar title={document.title} document={document} />
+            <Breadcrumbs document={document} />
+            <Content document={document} />
+        </>
     );
 }
+
+type Props = { data: ?DocumentData };
+
+export default function Document({ data }: Props) {
+    if (data) {
+        return <DocumentPage document={data} />;
+    } else {
+        return null;
+    }
+}
+
+// Like fetch(), but if the first URL doesn't work, try the second instead.
+function fetchWithFallback(url1: string, url2: string) {
+    const fetchConfig = { redirect: 'follow' };
+    return fetch(url1, fetchConfig).then(response => {
+        if (response.ok || !url2 || url2 === url1) {
+            return response;
+        } else {
+            return fetch(url2, fetchConfig);
+        }
+    });
+}
+
+// In order to use new URL() with relative URLs, we need an absolute base
+// URL. If we're running in the browser we can use our current page URL.
+// But if we're doing SSR, we just have to make something up.
+const BASEURL =
+    typeof window !== 'undefined' && window.location
+        ? window.location.origin
+        : 'http://ssr.hack';
+
+type DocumentRouteData = {
+    locale: string,
+    slug: string
+};
+
+// This Route object tells the Router component how to convert
+// /docs/ URLs into Document components. See router.jsx for details.
+export const DocumentRoute: Route = {
+    component: Document,
+
+    match(url: string): ?DocumentRouteData {
+        let path = new URL(url, BASEURL).pathname;
+        let m = path.match(/^\/([^/]+)\/docs\/(.*)$/);
+        if (m && m[1] && m[2]) {
+            return {
+                locale: m[1],
+                slug: m[2]
+            };
+        } else {
+            // Returning null means we can't handle the url
+            return null;
+        }
+    },
+
+    fetch({ locale, slug }: DocumentRouteData): Promise<DocumentData> {
+        // The fallback is for the case when we request a non-English
+        // document that doesn't exist. In that case, before we abandon
+        // client-side navigation, we'll try falling-back to the English
+        // document.
+        return fetchWithFallback(
+            `/api/v1/doc/${locale}/${slug}`,
+            `/api/v1/doc/en-US/${slug}`
+        )
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    // If we didn't get a good response, throw an error
+                    // that we'll handle in the catch() function below.
+                    throw new Error(
+                        `${response.status}:${response.statusText}`
+                    );
+                }
+            })
+            .then(json => {
+                if (json && json.redirectURL) {
+                    // We've got a redirect to a document that can't be
+                    // handled via the /api/v1/doc/ API, so we just do a
+                    // full page load of that document.
+                    window.location = json.redirectURL;
+                    // Reloading the page means that this return doesn't
+                    // really matter, but flow gets confused if we don't
+                    // return some kind of "document data" here
+                    return {};
+                } else if (json && json.documentData) {
+                    let documentData = json.documentData;
+
+                    // If the slug of the received document is different
+                    // than the slug we requested, then we were redirected
+                    // and we need to fix up the URL in the location bar
+                    if (documentData.slug !== slug) {
+                        let url = documentData.absoluteURL;
+                        history.replaceState(url, '', url);
+                    }
+
+                    return documentData;
+                } else {
+                    throw new Error('Invalid response from document API');
+                }
+            });
+    },
+
+    title(matchedData, fetchedData) {
+        return fetchedData.title;
+    },
+
+    gaHook(ga, matchedData, fetchedData) {
+        // If the document data includes enSlug, or if the
+        // document is in english, then pass the slug to
+        // google analytics as dimension 17.
+        if (fetchedData.enSlug) {
+            ga('set', 'dimension17', fetchedData.enSlug);
+        } else if (fetchedData.locale === 'en-US') {
+            ga('set', 'dimension17', fetchedData.slug);
+        }
+    }
+};

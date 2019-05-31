@@ -30,7 +30,8 @@
 
 {% block document_head %}
 
-{{ render_react("landing", request.LANGUAGE_CODE, None)|safe }}
+{{ render_react("landing", request.LANGUAGE_CODE, request.get_full_path(),
+                None)|safe }}
 
 <!-- top search area -->
 <div class="home-masthead">

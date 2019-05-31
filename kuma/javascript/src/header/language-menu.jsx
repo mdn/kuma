@@ -1,14 +1,16 @@
 //@flow
 import * as React from 'react';
-import { useContext } from 'react';
 
-import DocumentProvider from '../document-provider.jsx';
 import Dropdown from './dropdown.jsx';
 import { gettext } from '../l10n.js';
 
-export default function LanguageMenu(): React.Node {
-    const document = useContext(DocumentProvider.context);
+import type { DocumentData } from '../document.jsx';
 
+type Props = {
+    document: ?DocumentData
+};
+
+export default function LanguageMenu({ document }: Props): React.Node {
     // If there aren't any translations available, don't display anyhing
     if (!document || document.translations.length === 0) {
         return null;

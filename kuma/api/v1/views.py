@@ -10,6 +10,7 @@ from kuma.core.urlresolvers import reverse
 from kuma.users.templatetags.jinja_helpers import gravatar_url
 from kuma.wiki.jobs import DocumentContributorsJob
 from kuma.wiki.models import Document
+from kuma.wiki.search import WikiDocumentType
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
@@ -206,3 +207,18 @@ def whoami(request):
     }
 
     return JsonResponse(data)
+
+
+@never_cache
+@require_GET
+def search(request, locale):
+    qs = request.GET.get('q')
+    search = (WikiDocumentType.search()
+              .filter('term', locale=locale)
+              .source(['slug', 'title', 'summary'])
+              .query('multi_match', type="phrase",
+                     query=qs,
+                     fields=['title^7', 'summary^2', 'content']))
+
+    response = search.execute()
+    return JsonResponse(response.to_dict())

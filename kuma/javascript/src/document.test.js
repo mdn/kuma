@@ -1,8 +1,7 @@
 //@flow
 import React from 'react';
 import { create } from 'react-test-renderer';
-
-import DocumentProvider from './document-provider.jsx';
+import Document from './document.jsx';
 
 export const fakeDocumentData = {
     locale: 'en-US',
@@ -43,21 +42,7 @@ export const fakeDocumentData = {
     lastModifiedBy: 'ike'
 };
 
-describe('DocumentProvider', () => {
-    // TODO: DocumentProvider also implements client-side navigation.
-    // I haven't figured out how to write a test for that yet, however.
-    test('context works', () => {
-        const C = DocumentProvider.context.Consumer;
-        const contextConsumer = jest.fn();
-        const documentDataClone = JSON.parse(JSON.stringify(fakeDocumentData));
-
-        create(
-            <DocumentProvider initialDocumentData={fakeDocumentData}>
-                <C>{contextConsumer}</C>
-            </DocumentProvider>
-        );
-
-        expect(contextConsumer.mock.calls.length).toBe(1);
-        expect(contextConsumer.mock.calls[0][0]).toEqual(documentDataClone);
-    });
+test('Document snapshot', () => {
+    const document = create(<Document data={fakeDocumentData} />);
+    expect(document.toJSON()).toMatchSnapshot();
 });
