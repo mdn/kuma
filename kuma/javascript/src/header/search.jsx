@@ -39,7 +39,7 @@ const styles = {
 
 export default function Search() {
     // In order to render the action attribute of the form, we need
-    // to know the URL fo the wiki site (which has the /search endpoint).
+    // to know the URL of the wiki site (which has the /search endpoint).
     // Kuma passes this to us as window.mdn.wikiSiteUrl, but we can't
     // use the window object when server-side rendering. So we have to
     // do this useState(), useEffect() hack to re-render the component

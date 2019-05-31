@@ -59,7 +59,7 @@ export default function Login(): React.Node {
     }
 
     // In order to render links properly, we need to know our own
-    // URL and the URL fo the editable wiki site. We get these from
+    // URL and the URL of the editable wiki site. We get these from
     // window.location and from window.mdn. Neither of those are
     // available during server side rendering, but this code will
     // never run during server side rendering because we won't have
