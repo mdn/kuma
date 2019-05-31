@@ -604,7 +604,7 @@ def _document_raw(doc_html):
 @allow_CORS_GET
 @process_document_path
 @newrelic.agent.function_trace()
-@ratelimit(key='user_or_ip', rate='800/m', block=True)
+@ratelimit(key='user_or_ip', rate='1200/m', block=True)
 def document(request, document_slug, document_locale):
     """
     View a wiki document.
@@ -794,7 +794,7 @@ def document(request, document_slug, document_locale):
 @allow_CORS_GET
 @process_document_path
 @newrelic.agent.function_trace()
-@ratelimit(key='user_or_ip', rate='400/m', block=True)
+@ratelimit(key='user_or_ip', rate='1200/m', block=True)
 def react_document(request, document_slug, document_locale):
     """
     View a wiki document.
