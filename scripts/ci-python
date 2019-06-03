@@ -36,6 +36,8 @@ docker-compose up -d
 docker-compose exec -T web urlwait mysql://root:kuma@mysql:3306/developer_mozilla_org 30
 # Hang tight until Elasticsearch appears to be working
 docker-compose exec -T web urlwait http://elasticsearch:9200 30
+# Assert Celery started up successfully, by pinging it from the 'web' container.
+docker-compose exec web celery -A kuma.celery:app inspect ping
 
 docker-compose exec -T web make clean
 

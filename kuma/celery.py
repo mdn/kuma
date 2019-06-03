@@ -22,3 +22,9 @@ app.autodiscover_tasks()
 @app.task(bind=True)
 def debug_task(self):
     print('Request: {0!r}'.format(self.request))
+
+
+@app.task()
+def debug_task_returning(a, b):
+    """Useful to see if the results backend is working."""
+    return a + b
