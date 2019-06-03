@@ -39,14 +39,16 @@ log = logging.getLogger('kuma.wiki.tasks')
 
 @task(rate_limit='60/m')
 @skip_in_maintenance_mode
-def render_document(pk, cache_control, base_url, force=False):
+def render_document(pk, cache_control, base_url, force=False,
+                    invalidate_cdn_cache=True):
     """Simple task wrapper for the render() method of the Document model"""
     document = Document.objects.get(pk=pk)
     if force:
         document.render_started_at = None
 
     try:
-        document.render(cache_control, base_url)
+        document.render(cache_control, base_url,
+                        invalidate_cdn_cache=invalidate_cdn_cache)
     except DocumentRenderingInProgress:
         pass
     except Exception as e:
@@ -70,7 +72,7 @@ def email_document_progress(command_name, percent_complete, total):
 @task
 @skip_in_maintenance_mode
 def render_document_chunk(pks, cache_control='no-cache', base_url=None,
-                          force=False):
+                          force=False, invalidate_cdn_cache=False):
     """
     Simple task to render a chunk of documents instead of one per each
     """
@@ -81,7 +83,8 @@ def render_document_chunk(pks, cache_control='no-cache', base_url=None,
     for pk in pks:
         # calling the task without delay here since we want to localize
         # the processing of the chunk in one process
-        result = render_document(pk, cache_control, base_url, force=force)
+        result = render_document(pk, cache_control, base_url, force=force,
+                                 invalidate_cdn_cache=invalidate_cdn_cache)
         if result:
             logger.error(u'Error while rendering document %s with error: %s' %
                          (pk, result))

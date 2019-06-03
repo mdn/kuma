@@ -551,7 +551,8 @@ class Document(NotificationsMixin, models.Model):
             # Attempt an immediate rendering.
             self.render(cache_control, base_url)
 
-    def render(self, cache_control=None, base_url=None, timeout=None):
+    def render(self, cache_control=None, base_url=None, timeout=None,
+               invalidate_cdn_cache=True):
         """
         Render content using kumascript and any other services necessary.
         """
@@ -610,7 +611,8 @@ class Document(NotificationsMixin, models.Model):
 
         self.save()
 
-        render_done.send(sender=self.__class__, instance=self)
+        render_done.send(sender=self.__class__, instance=self,
+                         invalidate_cdn_cache=invalidate_cdn_cache)
 
     def get_summary(self, strip_markup=True, use_rendered=True):
         """

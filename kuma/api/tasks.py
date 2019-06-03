@@ -59,7 +59,8 @@ def get_s3_bucket(config=None):
 
 
 @task
-def unpublish(doc_locale_slug_pairs, log=None, completion_message=None):
+def unpublish(doc_locale_slug_pairs, log=None, completion_message=None,
+              invalidate_cdn_cache=True):
     """
     Delete one or more documents from the S3 bucket serving the document API.
     """
@@ -90,11 +91,13 @@ def unpublish(doc_locale_slug_pairs, log=None, completion_message=None):
     if completion_message:
         log.info(completion_message)
 
-    cdn_cache_invalidate.delay(doc_locale_slug_pairs)
+    if invalidate_cdn_cache:
+        request_cdn_cache_invalidation.delay(doc_locale_slug_pairs)
 
 
 @task
-def publish(doc_pks, log=None, completion_message=None):
+def publish(doc_pks, log=None, completion_message=None,
+            invalidate_cdn_cache=True):
     """
     Publish one or more documents to the S3 bucket serving the document API.
     """
@@ -107,9 +110,9 @@ def publish(doc_pks, log=None, completion_message=None):
             'Skipping publish of {!r}: no S3 bucket configured'.format(doc_pks))
         return
 
-    # Use this to turn the document IDs into
-    # pair tuples of (locale, slug)
-    doc_locale_slug_pairs = []
+    if invalidate_cdn_cache:
+        # Use this to turn the document IDs into pairs of (locale, slug).
+        doc_locale_slug_pairs = []
 
     for pk in doc_pks:
         try:
@@ -118,9 +121,10 @@ def publish(doc_pks, log=None, completion_message=None):
             log.error('Document with pk={} does not exist'.format(pk))
             continue
 
-        # Build up this list for the benefit of triggering a
-        # CDN cache invalidation.
-        doc_locale_slug_pairs.append((doc.locale, doc.slug))
+        if invalidate_cdn_cache:
+            # Build up this list for the benefit of triggering a
+            # CDN cache invalidation.
+            doc_locale_slug_pairs.append((doc.locale, doc.slug))
 
         kwargs = dict(
             ACL='public-read',
@@ -145,28 +149,18 @@ def publish(doc_pks, log=None, completion_message=None):
     if completion_message:
         log.info(completion_message)
 
-    cdn_cache_invalidate.delay(doc_locale_slug_pairs)
-
-
-def api_doc_path_transform(locale, slug):
-    """Return the URL has it's known to the CDN based on a locale and slug.
-    This function can be named in settings.MDN_CLOUDFRONT_DISTRIBUTIONS
-    and imported dynamically.
-
-    For the API, the S3 key is entirely handled by the get_s3_key() function
-    but with the exception that we must prefix with a '/'.
-    """
-    return '/' + get_s3_key(locale, slug)
+    if invalidate_cdn_cache and doc_locale_slug_pairs:
+        request_cdn_cache_invalidation.delay(doc_locale_slug_pairs)
 
 
 @task
-def cdn_cache_invalidate(doc_locale_slug_pairs, log=None):
+def request_cdn_cache_invalidation(doc_locale_slug_pairs, log=None):
     """
-    Independent of a document being updated, added, or removed, trigger
-    an attempt to purge it from the CDN.
+    Trigger an attempt to purge the given documents from one or more
+    of the configured CloudFront distributions.
     """
     if not log:
-        log = cdn_cache_invalidate.get_logger()
+        log = request_cdn_cache_invalidation.get_logger()
 
     client = get_cloudfront_client()
     for label, conf in settings.MDN_CLOUDFRONT_DISTRIBUTIONS.items():
@@ -176,10 +170,10 @@ def cdn_cache_invalidate(doc_locale_slug_pairs, log=None):
             ))
             continue
         transform_function = import_string(conf['transform_function'])
-        paths = [
+        paths = (
             transform_function(locale, slug)
             for locale, slug in doc_locale_slug_pairs
-        ]
+        )
         # In case the transform function decided to "opt-out" on a particular
         # (locale, slug) it might return a falsy value.
         paths = [x for x in paths if x]

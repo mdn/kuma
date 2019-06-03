@@ -58,6 +58,13 @@ class Command(BaseCommand):
             '--defer',
             help='Defer rendering by chaining tasks via celery',
             action='store_true')
+        parser.add_argument(
+            '--skip-cdn-invalidation',
+            help=(
+                'No CDN cache invalidation after publishing. Forced to True '
+                'if the --all flag is used.'
+            ),
+            action='store_true')
 
     def handle(self, *args, **options):
         base_url = options['baseurl'] or absolutify('')
@@ -88,6 +95,7 @@ class Command(BaseCommand):
             paths = options['paths']
             if not paths:
                 raise CommandError('Need at least one document path to render')
+            invalidate_cdn_cache = not options['skip_cdn_invalidation']
             for path in paths:
                 if path.startswith('/'):
                     path = path[1:]
@@ -98,13 +106,17 @@ class Command(BaseCommand):
                 doc = Document.objects.get(locale=locale, slug=slug)
                 log.info(u'Rendering %s (%s)' % (doc, doc.get_absolute_url()))
                 try:
-                    render_document(doc.pk, cache_control, base_url, force)
+                    render_document(
+                        doc.pk, cache_control, base_url, force,
+                        invalidate_cdn_cache=invalidate_cdn_cache
+                    )
                     log.debug(u'DONE.')
                 except DocumentRenderingInProgress:
                     log.error(
                         u'Rendering is already in progress for this document.')
 
-    def chain_render_docs(self, docs, cache_control, base_url, force):
+    def chain_render_docs(self, docs, cache_control, base_url, force,
+                          invalidate_cdn_cache=False):
         tasks = []
         count = 0
         total = len(docs)
@@ -115,7 +127,7 @@ class Command(BaseCommand):
             count += len(chunk)
             tasks.append(
                 render_document_chunk.si(chunk, cache_control, base_url,
-                                         force))
+                                         force, invalidate_cdn_cache))
             percent_complete = int(ceil((count / total) * 100))
             tasks.append(
                 email_document_progress.si('render_document', percent_complete,

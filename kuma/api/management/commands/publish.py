@@ -39,17 +39,14 @@ class Command(BaseCommand):
             help='Partition the work into tasks, with each task handling this '
                  'many documents (default=1000)')
         parser.add_argument(
-            '--skip-cache-invaldation',
+            '--skip-cdn-invalidation',
             help=(
-                'No cache invalidation after publishing. By default True '
-                'if --all flag is used.'
+                'No CDN cache invalidation after publishing. Forced to True '
+                'if either the --all or --locale flag is used.'
             ),
             action='store_true')
 
     def handle(self, *args, **options):
-        skip_cache_invalidation = (
-            options['all'] or options['skip_cache_invalidation']
-        )
         Logger = namedtuple('Logger', 'info, error')
         log = Logger(info=self.stdout.write, error=self.stderr.write)
         if options['all'] or options['locale']:
@@ -58,12 +55,11 @@ class Command(BaseCommand):
                     'Specifying --locale with --all is the same as --all'
                 )
             filters = {}
-            if options['locale'] and not options['all']:
+            if options['locale']:
                 locale = options['locale']
                 log.info('Publishing all documents in locale {}'.format(locale))
                 filters.update(locale=locale)
             else:
-                locale = None
                 log.info('Publishing all documents')
             chunk_size = max(options['chunk_size'], 1)
             docs = Document.objects.filter(**filters)
@@ -79,7 +75,7 @@ class Command(BaseCommand):
                 tasks.append(publish.si(
                     chunk,
                     completion_message=message,
-                    skip_cache_invalidation=skip_cache_invalidation
+                    invalidate_cdn_cache=False
                 ))
             if num_tasks == 1:
                 msg = ('Launching a single task handling '
@@ -112,5 +108,5 @@ class Command(BaseCommand):
             publish(
                 doc_pks,
                 log=log,
-                skip_cache_invalidation=skip_cache_invalidation
+                invalidate_cdn_cache=(not options['skip_cdn_invalidation'])
             )

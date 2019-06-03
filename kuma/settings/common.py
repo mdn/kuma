@@ -1495,7 +1495,7 @@ CELERY_TASK_ROUTES = {
     'kuma.api.tasks.unpublish': {
         'queue': 'mdn_api'
     },
-    'kuma.api.tasks.cdn_cache_invalidate': {
+    'kuma.api.tasks.request_cdn_cache_invalidation': {
         'queue': 'mdn_api'
     },
 }

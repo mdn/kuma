@@ -5,7 +5,7 @@ import json
 import mock
 import pytest
 
-from kuma.api.tasks import cdn_cache_invalidate, publish, unpublish
+from kuma.api.tasks import publish, request_cdn_cache_invalidation, unpublish
 from kuma.api.v1.views import document_api_data, get_s3_key
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
@@ -17,8 +17,7 @@ def mocked_get_cloudfront_client():
     The reason for get_cloudfront_client() being not-thread-safe is sane.
     See its doc string.
 
-    By mocking the whole function get avoid that thread-safety problem
-    entirely.
+    Avoid that thread-safety problem entirely by mocking the whole function.
     """
     with mock.patch('kuma.api.tasks.get_cloudfront_client') as mocked:
         yield mocked
@@ -70,13 +69,20 @@ def test_publish_no_s3_bucket_configured(root_doc):
         'Skipping publish of {!r}: no S3 bucket configured'.format(doc_pks))
 
 
+@pytest.mark.parametrize('invalidate_cdn_cache', (True, False))
 @mock.patch('kuma.api.tasks.get_s3_bucket')
-def test_publish_standard(get_s3_bucket_mock, root_doc):
+def test_publish_standard(get_s3_bucket_mock, root_doc, invalidate_cdn_cache):
     """Test the publish task for a standard (non-redirect) document."""
     log_mock = mock.Mock()
     get_s3_bucket_mock.return_value = s3_bucket_mock = get_mocked_s3_bucket()
     publish.get_logger = mock.Mock(return_value=log_mock)
-    publish([root_doc.pk])
+    with mock.patch('kuma.api.tasks.request_cdn_cache_invalidation') as mocked:
+        publish([root_doc.pk], invalidate_cdn_cache=invalidate_cdn_cache)
+        if invalidate_cdn_cache:
+            mocked.delay.assert_called_once_with(
+                [(root_doc.locale, root_doc.slug)])
+        else:
+            mocked.delay.assert_not_called()
     s3_bucket_mock.put_object.assert_called_once_with(
         ACL='public-read',
         Key=get_s3_key(root_doc),
@@ -99,7 +105,8 @@ def test_publish_redirect(get_s3_bucket_mock, root_doc, redirect_doc):
     s3_bucket_mock.put_object.assert_called_once_with(
         ACL='public-read',
         Key=get_s3_key(redirect_doc),
-        WebsiteRedirectLocation=get_s3_key(root_doc, for_redirect=True),
+        WebsiteRedirectLocation=get_s3_key(
+            root_doc, prefix_with_forward_slash=True),
         ContentType='application/json',
         ContentLanguage=redirect_doc.locale
     )
@@ -170,7 +177,8 @@ def test_publish_multiple(get_s3_bucket_mock, root_doc, redirect_doc,
         mock.call(
             ACL='public-read',
             Key=get_s3_key(redirect_doc),
-            WebsiteRedirectLocation=get_s3_key(root_doc, for_redirect=True),
+            WebsiteRedirectLocation=get_s3_key(
+                root_doc, prefix_with_forward_slash=True),
             ContentType='application/json',
             ContentLanguage=redirect_doc.locale
         ),
@@ -203,8 +211,9 @@ def test_unpublish_no_s3_bucket_configured(root_doc):
 
 
 @pytest.mark.parametrize('case', ('un-deleted', 'deleted', 'purged'))
+@pytest.mark.parametrize('invalidate_cdn_cache', (True, False))
 @mock.patch('kuma.api.tasks.get_s3_bucket')
-def test_unpublish(get_s3_bucket_mock, root_doc, case):
+def test_unpublish(get_s3_bucket_mock, root_doc, invalidate_cdn_cache, case):
     """Test the unpublish task for a single document."""
     if case in ('deleted', 'purged'):
         root_doc.deleted = True
@@ -215,7 +224,14 @@ def test_unpublish(get_s3_bucket_mock, root_doc, case):
     s3_bucket_mock = get_mocked_s3_bucket()
     get_s3_bucket_mock.return_value = s3_bucket_mock
     unpublish.get_logger = mock.Mock(return_value=log_mock)
-    unpublish([(root_doc.locale, root_doc.slug)])
+    with mock.patch('kuma.api.tasks.request_cdn_cache_invalidation') as mocked:
+        unpublish([(root_doc.locale, root_doc.slug)],
+                  invalidate_cdn_cache=invalidate_cdn_cache)
+        if invalidate_cdn_cache:
+            mocked.delay.assert_called_once_with(
+                [(root_doc.locale, root_doc.slug)])
+        else:
+            mocked.delay.assert_not_called()
     s3_key = get_s3_key(root_doc)
     s3_bucket_mock.delete_objects.assert_called_once_with(
         Delete={
@@ -308,7 +324,7 @@ def test_unpublish_multiple_chunked(get_s3_bucket_mock, root_doc, redirect_doc,
     ])
 
 
-def test_cdn_cache_invalidate_not_configured(
+def test_request_cdn_cache_invalidation_not_configured(
     settings,
     mocked_get_cloudfront_client
 ):
@@ -320,7 +336,7 @@ def test_cdn_cache_invalidate_not_configured(
     assert not settings.MDN_CLOUDFRONT_DISTRIBUTIONS
 
     pairs = [('sv-SE', 'Learn/stuff')]
-    cdn_cache_invalidate(pairs)
+    request_cdn_cache_invalidation(pairs)
 
     mocked_get_cloudfront_client().assert_not_called()
 
@@ -336,7 +352,7 @@ def transformer(locale, slug):
     return '/' + locale + '/' + slug + '/'
 
 
-def test_cdn_cache_invalidate_configured(
+def test_request_cdn_cache_invalidation_configured(
     settings,
     mocked_get_cloudfront_client
 ):
@@ -358,7 +374,7 @@ def test_cdn_cache_invalidate_configured(
     }
 
     pairs = [('sv-SE', 'Learn/stuff')]
-    cdn_cache_invalidate(pairs)
+    request_cdn_cache_invalidation(pairs)
     assert transform_calls_made == [[u'sv-SE', u'Learn/stuff']]
 
     # When used, we need to reset it because it's a module global mutable
