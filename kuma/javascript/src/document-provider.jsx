@@ -120,6 +120,13 @@ export default function DocumentProvider(
                             );
                         }
 
+                        // Update the page title. This is supposed to be
+                        // part of the History.pushState url, but it was
+                        // never implemented. Page titles are not often
+                        // visible in tabs, but they are visible in the
+                        // back and forward menus.
+                        document.title = documentData.title || 'MDN';
+
                         window.scrollTo(0, 0);
                         setDocumentData(documentData);
 
@@ -218,10 +225,14 @@ export default function DocumentProvider(
         });
 
         // Finally, after registering those event handlers, we also need
-        // to use history.pushState() to record the URL of the initial page
-        // that just loaded so that the user can return to it via the
-        // back button.
-        history.pushState(
+        // to use history.replaceState() to associate a state object with
+        // the page we just loaded so that the user can return to it via
+        // the back button.
+        //
+        // TODO: note that we wouldn't need to do this if we didn't
+        // bother with a state object and instead just parsed the locale
+        // and slug from window.location.pathname as needed.
+        history.replaceState(
             {
                 url: window.location.href,
                 slug: window.location.pathname
