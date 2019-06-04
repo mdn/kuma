@@ -13,6 +13,7 @@ def test_contributors(db, cleared_cacheback_cache, settings, wiki_user_3,
     Tests basic operation, ordering, caching, and handling of banned and
     inactive contributors.
     """
+    print(settings.CELERY_ALWAYS_EAGER)
     settings.MAINTENANCE_MODE = (mode == "maintenance-mode")
 
     fixture = root_doc_with_mixed_contributors
@@ -21,8 +22,11 @@ def test_contributors(db, cleared_cacheback_cache, settings, wiki_user_3,
     job = DocumentContributorsJob()
     # Set this to true so we bypass the Celery task queue.
     job.fetch_on_miss = True
+    # This will force
+    # job.fetch_on_stale_threshold = 0#job.lifetime + job.refresh_timeout - 1
     contributors = job.get(root_doc.pk)
 
+    print("CONTRIBUTORS:", [x['id'] for x in contributors])
     if settings.MAINTENANCE_MODE:
         assert not contributors
         return
@@ -38,7 +42,14 @@ def test_contributors(db, cleared_cacheback_cache, settings, wiki_user_3,
 
     # The freshly un-banned user is now among the contributors because the
     # cache has been invalidated.
-    assert banned_user.pk in set(c['id'] for c in job.get(root_doc.pk))
+    # Remember, `job.get` returns a generator so consume it to be able
+    # to do the "in" test.
+    res=job.get(root_doc.pk)
+    print("RES", type(res), repr(res))
+    got = set(c['id'] for c in job.get(root_doc.pk))
+    print("GOT:", got)
+    print("BANNED USER", banned_user.pk)
+    assert banned_user.pk in got
 
     # Another revision should invalidate the job's cache.
     root_doc.current_revision = Revision.objects.create(
@@ -54,3 +65,6 @@ def test_contributors(db, cleared_cacheback_cache, settings, wiki_user_3,
     # by the freshly un-banned user, and then the rest.
     assert ([c['id'] for c in job.get(root_doc.pk)] ==
             ([wiki_user_3.pk, banned_user.pk] + valid_contrib_ids))
+
+
+    assert 0
