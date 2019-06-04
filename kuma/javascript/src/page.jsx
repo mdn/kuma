@@ -162,16 +162,16 @@ const styles = {
     toc: css({
         backgroundColor: '#fcfcfc',
         border: 'solid 1px #dce3e5',
-        padding: '8px 13px',
+        padding: '8px 8px 0px 13px',
         margin: '0 12px 20px -1px',
         '& ul': {
             listStyle: 'none',
-            paddingLeft: 13
+            paddingLeft: 12
         },
         '& li': {
             fontSize: 14,
-            lineHeight: 1.5,
-            margin: '5px 0'
+            lineHeight: '20px',
+            margin: '10px 0'
         }
     }),
     sidebarHeading: css({
