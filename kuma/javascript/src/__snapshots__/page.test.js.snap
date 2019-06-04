@@ -913,7 +913,7 @@ Array [
       </div>
     </div>
   </div>,
-  .emotion-8 {
+  .emotion-9 {
   display: grid;
   box-sizing: border-box;
   max-width: 1400px;
@@ -923,7 +923,7 @@ Array [
 }
 
 @media (max-width:749px) {
-  .emotion-8 {
+  .emotion-9 {
     grid-template-columns: 1fr;
     grid-template-areas: "main" "side";
   }
@@ -979,7 +979,7 @@ Array [
   fill: #696969;
 }
 
-.emotion-7 {
+.emotion-8 {
   grid-area: side;
   box-sizing: border-box;
   width: 100%;
@@ -988,33 +988,44 @@ Array [
 }
 
 @media (max-width:749px) {
-  .emotion-7 {
+  .emotion-8 {
     padding: 15px 12px;
   }
 }
 
-.emotion-5 {
-  background-color: #f8f8f8;
-  border: solid 1px #dce3e5;
-  border-top: solid 4px #83d0f2;
-  border-radius: 4px;
-  padding: 10px;
-  margin-bottom: 24px;
-}
-
-.emotion-5 ul {
-  list-style: none;
-  padding-left: 10px;
-}
-
 .emotion-4 {
+  height: 4px;
+  margin: 0 12px 0 -1px;
+  background-image: linear-gradient(-272deg,#206584,#83d0f2);
+}
+
+.emotion-6 {
+  background-color: #fcfcfc;
+  border: solid 1px #dce3e5;
+  padding: 8px 8px 0px 13px;
+  margin: 0 12px 20px -1px;
+}
+
+.emotion-6 ul {
+  list-style: none;
+  padding-left: 12px;
+}
+
+.emotion-6 li {
+  font-size: 14px;
+  line-height: 20px;
+  margin: 10px 0;
+}
+
+.emotion-5 {
   font-family: x-locale-heading-primary,zillaslab,"Palatino","Palatino Linotype",x-locale-heading-secondary,serif;
   font-size: 20px;
-  margin-bottom: 4px;
+  height: 24px;
+  margin-bottom: 16px;
 }
 
 <div
-    className="emotion-8"
+    className="emotion-9"
   >
     <div
       className="text-content emotion-3"
@@ -1077,13 +1088,16 @@ Array [
       </div>
     </div>
     <div
-      className="emotion-7"
+      className="emotion-8"
     >
       <div
-        className="emotion-5"
+        className="emotion-4"
+      />
+      <div
+        className="emotion-6"
       >
         <div
-          className="emotion-4"
+          className="emotion-5"
         >
           On this Page
         </div>
@@ -1099,7 +1113,7 @@ Array [
         className="quick-links"
       >
         <div
-          className="quick-links-head emotion-4"
+          className="quick-links-head emotion-5"
         >
           Related Topics
         </div>

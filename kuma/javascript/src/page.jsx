@@ -154,23 +154,32 @@ const styles = {
             padding: '15px 12px'
         }
     }),
+    tocHeader: css({
+        height: 4,
+        margin: '0 12px 0 -1px',
+        backgroundImage: 'linear-gradient(-272deg, #206584, #83d0f2)'
+    }),
     toc: css({
-        backgroundColor: '#f8f8f8',
+        backgroundColor: '#fcfcfc',
         border: 'solid 1px #dce3e5',
-        borderTop: 'solid 4px #83d0f2',
-        borderRadius: 4,
-        padding: 10,
-        marginBottom: 24,
+        padding: '8px 8px 0px 13px',
+        margin: '0 12px 20px -1px',
         '& ul': {
             listStyle: 'none',
-            paddingLeft: 10
+            paddingLeft: 12
+        },
+        '& li': {
+            fontSize: 14,
+            lineHeight: '20px',
+            margin: '10px 0'
         }
     }),
     sidebarHeading: css({
         fontFamily:
             'x-locale-heading-primary, zillaslab, "Palatino", "Palatino Linotype", x-locale-heading-secondary, serif',
         fontSize: 20,
-        marginBottom: 4
+        height: 24,
+        marginBottom: 16
     })
 };
 
@@ -231,23 +240,25 @@ function Sidebar({ document }: DocumentProps) {
     // TOC would afford quick access to the BCD table, but might not
     // be useful for much else. For Learn/ slugs, however, the TOC is
     // likely to be much more informative. I think a decision is still
-    // needed here.  For now, we show the TOC on all pages, but this
-    // may need to change to be based on the document.slug.
-    let showTOC = true;
+    // needed here. For now, we show the TOC on all pages that have one.
+    let showTOC = !!document.tocHTML;
 
     return (
         <div css={styles.sidebar}>
             {showTOC && (
-                <div css={styles.toc}>
-                    <div css={styles.sidebarHeading}>
-                        {gettext('On this Page')}
+                <>
+                    <div css={styles.tocHeader} />
+                    <div css={styles.toc}>
+                        <div css={styles.sidebarHeading}>
+                            {gettext('On this Page')}
+                        </div>
+                        <ul
+                            dangerouslySetInnerHTML={{
+                                __html: document.tocHTML
+                            }}
+                        />
                     </div>
-                    <ul
-                        dangerouslySetInnerHTML={{
-                            __html: document.tocHTML
-                        }}
-                    />
-                </div>
+                </>
             )}
             <div className="quick-links">
                 <div css={styles.sidebarHeading} className="quick-links-head">
