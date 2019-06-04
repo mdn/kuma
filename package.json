@@ -23,10 +23,6 @@
         "test": "jest --testPathIgnorePatterns tests/sass",
         "format": "prettier --write kuma/javascript/src/**/*{.js,jsx}"
     },
-    "engines": {
-        "node": ">=10.0.0",
-        "npm": ">=6.0.0"
-    },
     "dependencies": {
         "@emotion/core": "^10.0.7",
         "@emotion/styled": "^10.0.7",
