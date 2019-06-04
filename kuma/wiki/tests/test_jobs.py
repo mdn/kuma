@@ -13,7 +13,10 @@ def test_contributors(db, cleared_cacheback_cache, settings, wiki_user_3,
     Tests basic operation, ordering, caching, and handling of banned and
     inactive contributors.
     """
-    print(settings.CELERY_ALWAYS_EAGER)
+    from kuma.celery import app
+    assert app.conf['task_always_eager'], 'task_always_eager'
+
+    # mode="normal-mode" # TEMP
     settings.MAINTENANCE_MODE = (mode == "maintenance-mode")
 
     fixture = root_doc_with_mixed_contributors
@@ -26,7 +29,6 @@ def test_contributors(db, cleared_cacheback_cache, settings, wiki_user_3,
     # job.fetch_on_stale_threshold = 0#job.lifetime + job.refresh_timeout - 1
     contributors = job.get(root_doc.pk)
 
-    print("CONTRIBUTORS:", [x['id'] for x in contributors])
     if settings.MAINTENANCE_MODE:
         assert not contributors
         return
@@ -38,17 +40,20 @@ def test_contributors(db, cleared_cacheback_cache, settings, wiki_user_3,
     banned_user = fixture.contributors.banned.user
 
     # Delete the ban.
+    from django.core.cache import cache
+    # print(dir(cache))
+    cache_keys_before = cache.keys('*')
     fixture.contributors.banned.ban.delete()
+    cache_keys_after = cache.keys('*')
+    # assert len(cache_keys_after) < len(cache_keys_before), "CACHE DIDN'T REDUCE!"
+    # print("CACHE KEYS AFTER:")
+    # print(cache.keys('*'))
 
     # The freshly un-banned user is now among the contributors because the
     # cache has been invalidated.
-    # Remember, `job.get` returns a generator so consume it to be able
-    # to do the "in" test.
-    res=job.get(root_doc.pk)
-    print("RES", type(res), repr(res))
-    got = set(c['id'] for c in job.get(root_doc.pk))
-    print("GOT:", got)
-    print("BANNED USER", banned_user.pk)
+
+    contributors = job.get(root_doc.pk)
+    got = set(c['id'] for c in contributors)
     assert banned_user.pk in got
 
     # Another revision should invalidate the job's cache.
@@ -63,6 +68,8 @@ def test_contributors(db, cleared_cacheback_cache, settings, wiki_user_3,
 
     # The new contributor shows up and is first, followed
     # by the freshly un-banned user, and then the rest.
+    contributors = job.get(root_doc.pk)
+    print("CONTRIBUTORS 3:", [x['id'] for x in contributors])
     assert ([c['id'] for c in job.get(root_doc.pk)] ==
             ([wiki_user_3.pk, banned_user.pk] + valid_contrib_ids))
 

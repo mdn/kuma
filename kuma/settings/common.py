@@ -1377,14 +1377,14 @@ if CSP_REPORT_ENABLE:
 CELERY_BROKER_URL = config('BROKER_URL',
                            default='redis://0.0.0.0:6379/0')
 
-CELERY_ALWAYS_EAGER = config('CELERY_ALWAYS_EAGER', False, cast=bool)
+CELERY_TASK_ALWAYS_EAGER = config('CELERY_TASK_ALWAYS_EAGER', False, cast=bool)
 CELERY_SEND_TASK_ERROR_EMAILS = True
-CELERYD_CONCURRENCY = config('CELERYD_CONCURRENCY', default=4, cast=int)
+CELERY_WORKER_CONCURRENCY = config('CELERY_WORKER_CONCURRENCY', default=4, cast=int)
 
 # Maximum tasks run before auto-restart of child process,
 # to mitigate memory leaks. None / 0 means unlimited tasks
-CELERYD_MAX_TASKS_PER_CHILD = config(
-    'CELERYD_MAX_TASKS_PER_CHILD',
+CELERY_WORKER_MAX_TASKS_PER_CHILD = config(
+    'CELERY_WORKER_MAX_TASKS_PER_CHILD',
     default=0,
     cast=int
 ) or None
@@ -1398,13 +1398,13 @@ CELERY_IMPORTS = (
     'tidings.events',
 )
 
-CELERY_ANNOTATIONS = {
+CELERY_TASK_ANNOTATIONS = {
     'cacheback.tasks.refresh_cache': {
         'rate_limit': '120/m',
     }
 }
 
-CELERY_ROUTES = {
+CELERY_TASK_ROUTES = {
     'cacheback.tasks.refresh_cache': {
         'queue': 'mdn_purgeable'
     },

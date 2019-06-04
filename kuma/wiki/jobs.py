@@ -30,7 +30,6 @@ class DocumentContributorsJob(KumaJob):
         return super(DocumentContributorsJob, self).get(*args, **kwargs)
 
     def fetch(self, pk):
-        print("INSIDE FETCH!", pk)
         from .models import Document
         User = get_user_model()
 
