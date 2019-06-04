@@ -1002,19 +1002,19 @@ Array [
 .emotion-6 {
   background-color: #fcfcfc;
   border: solid 1px #dce3e5;
-  padding: 8px 13px;
+  padding: 8px 8px 0px 13px;
   margin: 0 12px 20px -1px;
 }
 
 .emotion-6 ul {
   list-style: none;
-  padding-left: 13px;
+  padding-left: 12px;
 }
 
 .emotion-6 li {
   font-size: 14px;
-  line-height: 1.5;
-  margin: 5px 0;
+  line-height: 20px;
+  margin: 10px 0;
 }
 
 .emotion-5 {
