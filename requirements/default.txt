@@ -44,9 +44,9 @@ dennis==0.9 \
 # Code: https://github.com/django/django
 # Changes: https://docs.djangoproject.com/en/2.1/releases/
 # Docs: https://docs.djangoproject.com
-Django==1.11.20 \
-    --hash=sha256:0a73696e0ac71ee6177103df984f9c1e07cd297f080f8ec4dc7c6f3fb74395b5 \
-    --hash=sha256:43a99da08fee329480d27860d68279945b7d8bf7b537388ee2c8938c709b2041
+Django==1.11.21 \
+    --hash=sha256:aae1b776d78cc3f492afda405b9b9d322b27761442997456c158687d7a0610a1 \
+    --hash=sha256:ba723e524facffa2a9d8c2e9116db871e16b9207e648e1d3e4af8aae1167b029
 
 # 3rd party logins like Github
 # Code: https://github.com/pennersr/django-allauth
