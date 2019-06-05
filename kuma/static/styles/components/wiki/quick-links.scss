@@ -12,33 +12,29 @@
     overflow: hidden;
     @include set-font-size($smaller-font-size);
 
+    li > em,
+    li > s,
     a {
         display: inline-block;
         max-width: 100%;
         position: relative;
         overflow: hidden;
         text-overflow: ellipsis;
-        margin-bottom: 10px;
+    }
 
-        /* 404 link */
-        &.new {
-            color: $error;
-        }
+    /* 404 link */
+    a.new {
+        color: $error;
     }
 
     li {
         line-height: 1.2;
-        padding-bottom: $grid-spacing / 2;
-
-        > em {
-            margin-bottom: 10px;
-            display: inline-block;
-        }
+        padding-bottom: $grid-spacing;
     }
 
     li li {
         @include bidi(((padding-left, $grid-spacing, padding-right, 0),));
-        padding-bottom: 0;
+        padding-bottom: $grid-spacing / 2;
 
         &:first-child {
             padding-top: $grid-spacing / 2;
