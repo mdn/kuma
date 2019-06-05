@@ -212,6 +212,10 @@ inline indicators aka badges
 - inline-block, smaller font
 ====================================================================== */
 
+.inlineIndicator {
+    padding: .25rem;
+}
+
 .inlineIndicator,
 .indicatorInHeadline {
     @extend %indicator-inline;
