@@ -1390,8 +1390,17 @@ CELERY_WORKER_MAX_TASKS_PER_CHILD = config(
 ) or None
 
 
-# TODO: Default serializer in Celery 4.0 is JSON, need to switch
-CELERY_ACCEPT_CONTENT = ['pickle', 'json']
+# Sadly, kuma depends on pickle being the default serializer.
+# In Celery 4, the default is now JSON.
+# It's probably too late to switch all tasks to work with either.
+# Just remember, avoid passing types that are non-trivial and is
+# different in pickle vs json. Keep things simple. Even if it means
+# you have to do type conversions in the tasks' code.
+CELERY_ACCEPT_CONTENT = ['pickle']
+CELERY_TASK_SERIALIZER = 'pickle'
+CELERY_RESULT_SERIALIZER = 'pickle'
+CELERY_EVENT_SERIALIZER = 'pickle'
+
 
 CELERY_IMPORTS = (
     'kuma.search.tasks',

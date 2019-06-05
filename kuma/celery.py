@@ -14,7 +14,6 @@ app = Celery('kuma')
 # - namespace='CELERY' means all celery-related configuration keys
 #   should have a `CELERY_` prefix.
 app.config_from_object('django.conf:settings', namespace='CELERY')
-# assert app.conf['task_always_eager'], 'task_always_eager'
 
 # Load task modules from all registered Django app configs.
 app.autodiscover_tasks()
@@ -27,5 +26,10 @@ def debug_task(self):
 
 @app.task()
 def debug_task_returning(a, b):
-    """Useful to see if the results backend is working."""
-    return a + b
+    """Useful to see if the results backend is working.
+    And it also checks that called with a `datetime.date`
+    it gets that as parameters in the task."""
+    import datetime
+    assert isinstance(a, datetime.date), type(a)
+    assert isinstance(b, datetime.date), type(b)
+    return a < b

@@ -18,7 +18,7 @@ CACHES['default']['TIMEOUT'] = 60 * 60 * 24
 
 MEDIA_URL = config('MEDIA_URL', default='https://developer.cdn.mozilla.net/media/')
 
-CELERY_ALWAYS_EAGER = config('CELERY_ALWAYS_EAGER', False, cast=bool)
+CELERY_TASK_ALWAYS_EAGER = config('CELERY_TASK_ALWAYS_EAGER', False, cast=bool)
 CELERYD_MAX_TASKS_PER_CHILD = config(
     'CELERYD_MAX_TASKS_PER_CHILD',
     default=500,
