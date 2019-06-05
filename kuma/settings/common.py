@@ -8,14 +8,10 @@ from os.path import dirname
 
 import dj_database_url
 import dj_email_url
-# import djcelery
 from decouple import config, Csv
 from six.moves.urllib.parse import parse_qs, urlencode, urlsplit, urlunsplit
 
 _Language = namedtuple(u'Language', u'english native')
-
-# Set up django-celery
-# djcelery.setup_loader()
 
 
 def path(*parts):
