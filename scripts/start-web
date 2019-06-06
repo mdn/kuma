@@ -10,9 +10,10 @@ set -u  # Treat unset variables as an error
 # print something verbose instead. Doing this prevents the chicken-and-egg
 # problem in that you probably need the docker-compose service to start
 # so that you can address the problems at all.
+# By the way, this is the reason why this bash script doesn't use `set -e`.
 
 function make_stink {
-    eval $@ && exit 0
+    eval $@ && return
     exit_code=$?
 
     >&2 echo ""
