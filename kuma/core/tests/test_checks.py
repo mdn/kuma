@@ -1,6 +1,7 @@
 import json
 import os
 
+import mock
 from django.core.checks import Error, Warning
 
 from kuma.core import checks
@@ -12,16 +13,13 @@ def test_react_i18n_check(tmpdir, settings):
     os.makedirs(os.path.join(base_dir, 'static', 'jsi18n', 'sv-SE'))
     os.makedirs(os.path.join(base_dir, 'static', 'jsi18n', 'en-US'))
 
-    # Because we'll reuse this a lot
-    general_hint = "Run 'make compile-react-i18n'"
-
     # Missing the react.json files
     errors = checks.react_i18n_check(None)
     assert len(errors) == 2
     sv_path = os.path.join(base_dir, 'static', 'jsi18n', 'sv-SE', 'react.json')
     assert errors[0] == Error(
         'Locale file {} does not exist'.format(sv_path),
-        hint=general_hint,
+        hint=mock.ANY,
         id=checks.ERROR_MISSING_I18N_FILE
     )
     # Create both but make one of them weird
@@ -51,7 +49,7 @@ def test_react_i18n_check(tmpdir, settings):
     assert len(errors) == 1
     assert errors[0] == Warning(
         'Locale file {} is missing keys {!r}'.format(sv_path, ['catalog']),
-        hint=general_hint,
+        hint=mock.ANY,
         id=checks.WARNING_MISSING_I18N_DATA
     )
 
