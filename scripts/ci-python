@@ -31,13 +31,15 @@ VERSION=latest make build-base
 VERSION=latest make build-kuma
 
 docker-compose --version
+echo "... ABOUT TO START docker-compose UP -d ..."
 docker-compose up -d
+echo "... docker-compose UP HAS NOT STARTED. HOPEFULLY ..."
 # Hang tight until MySQL appears to be working
 docker-compose exec -T web urlwait mysql://root:kuma@mysql:3306/developer_mozilla_org 30
 # Hang tight until Elasticsearch appears to be working
 docker-compose exec -T web urlwait http://elasticsearch:9200 30
 # Assert Celery started up successfully, by pinging it from the 'web' container.
-docker-compose exec web celery -A kuma.celery:app inspect ping
+# docker-compose exec web celery -A kuma.celery:app inspect ping
 
 docker-compose exec -T web make clean
 
@@ -49,3 +51,6 @@ docker-compose exec -T web ./manage.py migrate
 docker-compose exec -T web make coveragetest
 # This checks that running `./manage.py makemigrations` wasn't forgotten
 docker-compose exec -T web ./manage.py makemigrations --check --dry-run
+
+# TEMPORARY THING
+docker-compose exec web celery -A kuma.celery:app inspect ping
