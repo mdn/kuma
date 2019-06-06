@@ -170,9 +170,9 @@ django-redis==4.10.0 \
 # Code: https://github.com/encode/django-rest-framework
 # Changes: http://www.django-rest-framework.org/topics/release-notes/
 # Docs: http://www.django-rest-framework.org
-djangorestframework==3.6.4 \
-    --hash=sha256:0f9bfbac702f3376dfb2db4971ad8af4e066bfa35393b1b85e085f7e8b91189a \
-    --hash=sha256:de8ac68b3cf6dd41b98e01dcc92dc0022a5958f096eafc181a17fa975d18ca42
+djangorestframework==3.9.4 \
+    --hash=sha256:376f4b50340a46c15ae15ddd0c853085f4e66058f97e4dbe7d43ed62f5e60651 \
+    --hash=sha256:c12869cfd83c33d579b17b3cb28a2ae7322a53c3ce85580c2a2ebe4e3f56c4fb
 
 # Publish site-wide announcements without deployments
 django-soapbox==1.5 \
