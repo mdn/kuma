@@ -64,8 +64,8 @@ export default function Login(): React.Node {
     // available during server side rendering, but this code will
     // never run during server side rendering because we won't have
     // user data then.
-    const LOCATION = window.location.href;
-    const WIKI_URL = window.mdn ? window.mdn.wikiSiteUrl : '';
+    const LOCATION = window.location.pathname;
+    const WIKI = window.mdn ? window.mdn.wikiSiteUrl : '';
 
     if (userData.isAuthenticated && userData.username) {
         // If we have user data and the user is logged in, show their
@@ -80,9 +80,7 @@ export default function Login(): React.Node {
                 alt={userData.username}
             />
         );
-        let viewProfileLink = `${WIKI_URL}/${locale}/profiles/${
-            userData.username
-        }`;
+        let viewProfileLink = `${WIKI}/${locale}/profiles/${userData.username}`;
         let editProfileLink = `${viewProfileLink}/edit`;
 
         return (
@@ -95,10 +93,7 @@ export default function Login(): React.Node {
                         <a href={editProfileLink}>{gettext('Edit profile')}</a>
                     </li>
                     <li>
-                        <form
-                            action={`${WIKI_URL}/${locale}/users/signout`}
-                            method="post"
-                        >
+                        <form action={`/${locale}/users/signout`} method="post">
                             <input name="next" type="hidden" value={LOCATION} />
                             <button css={styles.signOutButton} type="submit">
                                 {gettext('Sign out')}
@@ -112,7 +107,7 @@ export default function Login(): React.Node {
         // Otherwise, show a login prompt
         return (
             <a
-                href={`${WIKI_URL}/users/github/login/?next=${LOCATION}`}
+                href={`/users/github/login/?next=${LOCATION}`}
                 data-service="GitHub"
                 rel="nofollow"
                 css={styles.signInLink}

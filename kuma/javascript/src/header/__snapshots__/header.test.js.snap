@@ -585,7 +585,7 @@ Array [
       <a
         className="emotion-37"
         data-service="GitHub"
-        href="/users/github/login/?next=http://localhost/"
+        href="/users/github/login/?next=/"
         rel="nofollow"
       >
         Sign in

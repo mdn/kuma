@@ -166,7 +166,7 @@ exports[`Login component when user is logged in 1`] = `
           <input
             name="next"
             type="hidden"
-            value="http://localhost/"
+            value="/"
           />
           <button
             className="emotion-3"
@@ -212,7 +212,7 @@ exports[`Login component when user is not logged in 1`] = `
 <a
   className="emotion-0"
   data-service="GitHub"
-  href="/users/github/login/?next=http://localhost/"
+  href="/users/github/login/?next=/"
   rel="nofollow"
 >
   Sign in
