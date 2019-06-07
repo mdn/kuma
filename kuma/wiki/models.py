@@ -1267,14 +1267,16 @@ Full traceback:
     def language(self):
         return get_language_mapping()[self.locale.lower()]
 
-    def get_absolute_url(self, endpoint='wiki.document', **kwargs):
+    def get_absolute_url(self, endpoint='wiki.document', urlconf='kuma.urls',
+                         **kwargs):
         """
         Build the absolute URL to this document from its full path
         """
-        return reverse(endpoint, locale=self.locale, args=[self.slug], **kwargs)
+        return reverse(endpoint, locale=self.locale, args=[self.slug],
+                       urlconf=urlconf, **kwargs)
 
     def get_edit_url(self):
-        return self.get_absolute_url(endpoint='wiki.edit', urlconf='kuma.urls')
+        return self.get_absolute_url(endpoint='wiki.edit')
 
     def get_redirect_url(self):
         """
