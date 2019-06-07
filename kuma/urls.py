@@ -9,6 +9,7 @@ from django.views.generic import RedirectView
 from django.views.static import serve
 
 import kuma.views
+from kuma.api.v1 import views as api_v1_views
 from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
 from kuma.core.decorators import shared_cache_control
@@ -142,6 +143,12 @@ urlpatterns += [
         name='users.honeypot'),
     # We use our own views for setting language in cookies. But to just align with django, set it like this.
     url(r'^i18n/setlang/', core_views.set_language, name='set-language-cookie'),
+]
+
+# Include API view for signaling feature
+urlpatterns += [
+    url(r'^api/v1/bc-signal/?$',
+        api_v1_views.bc_signal, name='api.v1.bc_signal')
 ]
 
 if settings.SERVE_MEDIA:
