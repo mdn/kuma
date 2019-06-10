@@ -1,4 +1,4 @@
-FROM python:2.7-slim@sha256:686bc67cbebf4c4fb0d96d55650d8704d00ccb6b9c6bdd0bee5fad48b827a6cb
+FROM python:2.7-slim@sha256:58b8f53af8d228fe1a99364afd393e1b225d4d8af88c2d0f9f81b62164031953
 
 WORKDIR /app
 
