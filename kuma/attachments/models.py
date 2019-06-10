@@ -4,6 +4,7 @@ from datetime import datetime
 from django.conf import settings
 from django.db import models
 from django.db.utils import IntegrityError
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from django_mysql.models import Model as MySQLModel
@@ -11,6 +12,7 @@ from django_mysql.models import Model as MySQLModel
 from .utils import attachment_upload_to, full_attachment_url
 
 
+@python_2_unicode_compatible
 class Attachment(models.Model):
     """
     An attachment which can be inserted into one or more wiki documents.
@@ -43,7 +45,7 @@ class Attachment(models.Model):
             ("disallow_add_attachment", "Cannot upload attachment"),
         )
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def get_file_url(self):
@@ -91,6 +93,7 @@ class Attachment(models.Model):
         return document_attachment
 
 
+@python_2_unicode_compatible
 class AttachmentRevision(models.Model):
     """
     A revision of an attachment.
@@ -141,7 +144,7 @@ class AttachmentRevision(models.Model):
         verbose_name = _('attachment revision')
         verbose_name_plural = _('attachment revisions')
 
-    def __unicode__(self):
+    def __str__(self):
         return (u'%s (file: "%s", ID: #%s)' %
                 (self.title, self.filename, self.pk))
 
@@ -207,6 +210,7 @@ class AttachmentRevision(models.Model):
         return self.attachment.revisions.exclude(pk=self.pk)
 
 
+@python_2_unicode_compatible
 class TrashedAttachment(MySQLModel):
 
     file = models.FileField(
@@ -235,7 +239,7 @@ class TrashedAttachment(MySQLModel):
         verbose_name = _('Trashed attachment')
         verbose_name_plural = _('Trashed attachments')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.filename
 
     @property

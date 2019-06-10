@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import datetime
 
 from constance import config
@@ -6,7 +8,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.tokens import default_token_generator
 from django.core import validators
 from django.db import models
-from django.utils.encoding import force_bytes
+from django.utils.encoding import force_bytes, python_2_unicode_compatible
 from django.utils.functional import cached_property
 from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import ugettext_lazy as _
@@ -17,6 +19,7 @@ from kuma.core.urlresolvers import reverse
 from .constants import USERNAME_REGEX
 
 
+@python_2_unicode_compatible
 class UserBan(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              related_name="bans",
@@ -30,7 +33,7 @@ class UserBan(models.Model):
     date = models.DateField(default=datetime.date.today)
     is_active = models.BooleanField(default=True, help_text="(Is ban active)")
 
-    def __unicode__(self):
+    def __str__(self):
         message = _(u'%(banned_user)s banned by %(banned_by)s') % {
             'banned_user': self.user, 'banned_by': self.by}
         if not self.is_active:
