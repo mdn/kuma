@@ -10,7 +10,6 @@ from django.utils.encoding import force_bytes
 from django.utils.functional import cached_property
 from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import ugettext_lazy as _
-from sundial.zones import COMMON_GROUPED_CHOICES
 
 from kuma.core.managers import NamespacedTaggableManager
 from kuma.core.urlresolvers import reverse
@@ -47,8 +46,11 @@ class User(AbstractUser):
         verbose_name=_(u'Timezone'),
         max_length=42,
         blank=True,
-        choices=COMMON_GROUPED_CHOICES,
         default=settings.TIME_ZONE,
+        # Note the deliberate omission of the `choices=` here.
+        # That's because there's no good way to list all possible
+        # timezones as a 2-D tuple. The *name* of the timezone rarely
+        # changes but the human-friendly description of it easily does.
     )
     locale = models.CharField(
         max_length=7,
