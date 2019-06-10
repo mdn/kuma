@@ -7,6 +7,7 @@ import bleach
 import html5lib
 import newrelic.agent
 from django.conf import settings
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.six.moves.urllib.parse import (unquote, urlencode, urlparse,
                                                  urlsplit)
 from django.utils.translation import ugettext
@@ -290,6 +291,7 @@ def filter_out_noinclude(src):
     return to_html(doc)
 
 
+@python_2_unicode_compatible
 class ContentSectionTool(object):
 
     def __init__(self, src=None, is_full_document=False):
@@ -339,7 +341,7 @@ class ContentSectionTool(object):
             stream = self.stream
         return u"".join(self._get_serializer(**options).serialize(stream))
 
-    def __unicode__(self):
+    def __str__(self):
         return self.serialize()
 
     def filter(self, filter_cls):
