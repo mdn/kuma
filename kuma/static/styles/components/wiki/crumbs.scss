@@ -43,8 +43,9 @@ $crumb-vertical-spacing-desktop: $grid-spacing / 4;
         border-top: 15px solid transparent;
         border-bottom: 15px solid transparent;
         line-height: 1.5;
-        /* Needed to make Chrome honor the zero-width spaces */
-        word-break: break-word;
+
+        /* Hyphenate long titles like CanvasRenderingContext2D if needed*/
+        hyphens: auto;
 
         @media #{$mq-tablet-and-up} {
             border-top: none;

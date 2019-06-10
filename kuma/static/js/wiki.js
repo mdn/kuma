@@ -60,33 +60,6 @@
     });
 
     /*
-        Add intelligent break points to:
-        - long article titles in document head
-        - left nav
-        - breadcrumbs
-        Don't use this on anything that might have child elements
-    */
-    $('.document .document-head h1, .quick-links a code, .crumbs span[property=name]').each(function() {
-        var $wrapper = $(this);
-        // don't do anything if there are any child elements, they would be removed
-        if ($wrapper.children().length > 0) {
-            return;
-        }
-
-        /*
-         * split on 3 lowercase characters in a row (try to avoid breaking acronyms)
-         *     - splitting here is a bit of a hack to get around lack of look behind in jS
-         * IF followed by [ . : ( OR capital letter
-         * IF followed by 3 letters or [ @ . : (
-         */
-        $wrapper.text(
-            $wrapper.text().replace(
-                /([a-z]{3})(?=[[.:(A-Z][@.:(A-Z]{0,}[a-zA-Z]{3})/g,'$1\u200b'
-            )
-        );
-    });
-
-    /*
         Syntax highlighting scripts
     */
     if ($('article pre').length && ('querySelectorAll' in doc)) {
