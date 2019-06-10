@@ -59,7 +59,7 @@ inline indicators aka badges
         (border-left, 4px solid, border-right, none),
     ));
     border-radius: 2px;
-    padding: .45em $inline-horizontal-padding .3em;
+    padding: .45em $inline-horizontal-padding;
     background-color: $light-background-color;
     font-family: $tiny-font-family;
     font-size: $tiny-font-size;
@@ -70,6 +70,8 @@ inline indicators aka badges
 /* icon styling for indicators needs to be seperate because .spec
    extend %indicator-inline into some :before content */
 %indicator-inline-icon {
+    @extend %indicator-with-icon;
+
     &:before {
         display: inline-block;
         @include bidi((
