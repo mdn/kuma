@@ -6,7 +6,6 @@ set -u  # Treat unset variables as an error
 # each and every one of these. Otherwise it causes to build-static again.
 ## docker-compose exec -T web make localerefresh
 docker-compose exec -T web make localeextract
-docker-compose exec -T web make locale-populate-react
 docker-compose exec -T web make localetest
 docker-compose exec -T web make localecompile
 
