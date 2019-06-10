@@ -2,6 +2,12 @@
 
 import { localize, getLocale, gettext, ngettext, interpolate } from './l10n.js';
 
+// We don't actually want the strings in this file to be extracted
+// for localization, so we're going to use non-standard aliases
+// for gettext and ngettext.
+const gtext = gettext;
+const ngtext = ngettext;
+
 describe('getLocale', () => {
     it('default value', () => {
         expect(getLocale()).toBe('en-US');
@@ -21,22 +27,22 @@ describe('getLocale', () => {
 
 describe('gettext', () => {
     it('by default returns the input string', () => {
-        expect(gettext('')).toBe('');
-        expect(gettext('foo!')).toBe('foo!');
-        expect(gettext('__bar&&##')).toBe('__bar&&##');
+        expect(gtext('')).toBe('');
+        expect(gtext('foo!')).toBe('foo!');
+        expect(gtext('__bar&&##')).toBe('__bar&&##');
     });
 
     it('returns the input string when no data or bad data', () => {
         // $FlowFixMe$: purposely testing bad data
         localize('test', null);
-        expect(gettext('')).toBe('');
-        expect(gettext('foo!')).toBe('foo!');
-        expect(gettext('__bar&&##')).toBe('__bar&&##');
+        expect(gtext('')).toBe('');
+        expect(gtext('foo!')).toBe('foo!');
+        expect(gtext('__bar&&##')).toBe('__bar&&##');
 
         localize('test', {});
-        expect(gettext('')).toBe('');
-        expect(gettext('foo!')).toBe('foo!');
-        expect(gettext('__bar&&##')).toBe('__bar&&##');
+        expect(gtext('')).toBe('');
+        expect(gtext('foo!')).toBe('foo!');
+        expect(gtext('__bar&&##')).toBe('__bar&&##');
     });
 
     it('works with a django-style string catalog', () => {
@@ -51,73 +57,73 @@ describe('gettext', () => {
             'null string': null
         });
 
-        expect(gettext('')).toBe('translated empty string');
-        expect(gettext('foo!')).toBe('bar!');
-        expect(gettext('__bar&&##')).toBe('gibberish');
-        expect(gettext('singular')).toBe('one');
-        expect(gettext('null string')).toBe('null string');
-        expect(gettext('missing')).toBe('missing');
+        expect(gtext('')).toBe('translated empty string');
+        expect(gtext('foo!')).toBe('bar!');
+        expect(gtext('__bar&&##')).toBe('gibberish');
+        expect(gtext('singular')).toBe('one');
+        expect(gtext('null string')).toBe('null string');
+        expect(gtext('missing')).toBe('missing');
     });
 });
 
 describe('ngettext', () => {
     it('with no catalog, returns supplied singular or plural', () => {
-        expect(ngettext('s', 'p', 0)).toBe('p');
-        expect(ngettext('s', 'p', 1)).toBe('s');
-        expect(ngettext('s', 'p', 2)).toBe('p');
-        expect(ngettext('s', 'p', 20)).toBe('p');
-        expect(ngettext('s', 'p', -1)).toBe('p');
-        expect(ngettext('s', 'p', 6.02e23)).toBe('p');
+        expect(ngtext('s', 'p', 0)).toBe('p');
+        expect(ngtext('s', 'p', 1)).toBe('s');
+        expect(ngtext('s', 'p', 2)).toBe('p');
+        expect(ngtext('s', 'p', 20)).toBe('p');
+        expect(ngtext('s', 'p', -1)).toBe('p');
+        expect(ngtext('s', 'p', 6.02e23)).toBe('p');
     });
 
     it('Returns untranslated text when no translation available', () => {
         // $FlowFixMe$: purposely testing bad data
         localize('test', null);
-        expect(ngettext('s', 'p', 1)).toBe('s');
-        expect(ngettext('s', 'p', 2)).toBe('p');
-        expect(ngettext('s', 'p', 3)).toBe('p');
+        expect(ngtext('s', 'p', 1)).toBe('s');
+        expect(ngtext('s', 'p', 2)).toBe('p');
+        expect(ngtext('s', 'p', 3)).toBe('p');
 
         localize('test', {});
-        expect(ngettext('s', 'p', 1)).toBe('s');
-        expect(ngettext('s', 'p', 2)).toBe('p');
-        expect(ngettext('s', 'p', 3)).toBe('p');
+        expect(ngtext('s', 'p', 1)).toBe('s');
+        expect(ngtext('s', 'p', 2)).toBe('p');
+        expect(ngtext('s', 'p', 3)).toBe('p');
 
         localize('test', { t: 'translation' }, n =>
             n >= 1 && n <= 4 ? n - 1 : 4
         );
-        expect(ngettext('s', 'p', 1)).toBe('s');
-        expect(ngettext('s', 'p', 2)).toBe('p');
-        expect(ngettext('s', 'p', 3)).toBe('p');
+        expect(ngtext('s', 'p', 1)).toBe('s');
+        expect(ngtext('s', 'p', 2)).toBe('p');
+        expect(ngtext('s', 'p', 3)).toBe('p');
     });
 
     it('Uses english pluralization rules by default', () => {
         localize('test', { s: ['singular', 'plural'] }, null);
-        expect(ngettext('s', 'p', 0)).toBe('plural');
-        expect(ngettext('s', 'p', 1)).toBe('singular');
-        expect(ngettext('s', 'p', 2)).toBe('plural');
-        expect(ngettext('s', 'p', 20)).toBe('plural');
-        expect(ngettext('s', 'p', -1)).toBe('plural');
-        expect(ngettext('s', 'p', 6.02e23)).toBe('plural');
+        expect(ngtext('s', 'p', 0)).toBe('plural');
+        expect(ngtext('s', 'p', 1)).toBe('singular');
+        expect(ngtext('s', 'p', 2)).toBe('plural');
+        expect(ngtext('s', 'p', 20)).toBe('plural');
+        expect(ngtext('s', 'p', -1)).toBe('plural');
+        expect(ngtext('s', 'p', 6.02e23)).toBe('plural');
     });
 
     it('Supports custom pluralization rules', () => {
         localize('test', { s: ['one', 'two', 'three', 'four', 'many'] }, n =>
             n >= 1 && n <= 4 ? n - 1 : 4
         );
-        expect(ngettext('s', 'p', 1)).toBe('one');
-        expect(ngettext('s', 'p', 2)).toBe('two');
-        expect(ngettext('s', 'p', 3)).toBe('three');
-        expect(ngettext('s', 'p', 4)).toBe('four');
-        expect(ngettext('s', 'p', 0)).toBe('many');
-        expect(ngettext('s', 'p', -1)).toBe('many');
-        expect(ngettext('s', 'p', 20)).toBe('many');
+        expect(ngtext('s', 'p', 1)).toBe('one');
+        expect(ngtext('s', 'p', 2)).toBe('two');
+        expect(ngtext('s', 'p', 3)).toBe('three');
+        expect(ngtext('s', 'p', 4)).toBe('four');
+        expect(ngtext('s', 'p', 0)).toBe('many');
+        expect(ngtext('s', 'p', -1)).toBe('many');
+        expect(ngtext('s', 'p', 20)).toBe('many');
     });
 
     it('Returns singular if no plural forms available', () => {
         localize('test', { s: 't' }, n => (n >= 1 && n <= 4 ? n - 1 : 4));
-        expect(ngettext('s', 'p', 1)).toBe('t');
-        expect(ngettext('s', 'p', 2)).toBe('t');
-        expect(ngettext('s', 'p', 3)).toBe('t');
+        expect(ngtext('s', 'p', 1)).toBe('t');
+        expect(ngtext('s', 'p', 2)).toBe('t');
+        expect(ngtext('s', 'p', 3)).toBe('t');
     });
 });
 
