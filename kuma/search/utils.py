@@ -1,6 +1,7 @@
 import logging
 
 import elasticsearch
+import six
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import status
 from rest_framework.response import Response
@@ -62,7 +63,7 @@ class QueryURLObject(URLObject):
                 default = [item or '' for item in default]
                 if len(default) == 1:
                     default = default[0]
-            if isinstance(default, basestring):
+            if isinstance(default, six.string_types):
                 default = default.strip()
             # make sure the parameter name and value aren't empty
             if param and default:

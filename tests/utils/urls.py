@@ -1,4 +1,5 @@
 import requests
+import six
 from braceexpand import braceexpand
 from six.moves.urllib.parse import parse_qs, unquote, urlparse
 
@@ -112,7 +113,7 @@ def assert_valid_url(url, location=None, status_code=requests.codes.moved_perman
         if query:
             # all query values must be lists
             for k, v in query.items():
-                if isinstance(v, basestring):
+                if isinstance(v, six.string_types):
                     query[k] = [v]
             # parse the QS from resp location header and compare to query arg
             # since order doesn't matter.
