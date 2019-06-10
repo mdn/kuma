@@ -4,6 +4,7 @@ from textwrap import dedent
 import mock
 import pytest
 import requests_mock
+import six
 from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount
 from constance.test.utils import override_config
@@ -1049,7 +1050,7 @@ def test_bug_698126_l10n(wiki_user, user_client):
     for field in response.context['user_form'].fields:
         # if label is localized it's a lazy proxy object
         lbl = response.context['user_form'].fields[field].label
-        assert not isinstance(lbl, basestring), 'Field %s is a string!' % field
+        assert not isinstance(lbl, six.string_types), 'Field %s is a string!' % field
 
 
 def test_user_edit_github_is_public(wiki_user, wiki_user_github_account,

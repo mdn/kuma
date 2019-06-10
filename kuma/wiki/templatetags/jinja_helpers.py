@@ -4,6 +4,7 @@ import json
 import re
 
 import jinja2
+import six
 from constance import config
 from cssselect.parser import SelectorSyntaxError
 from django.conf import settings
@@ -177,7 +178,7 @@ def _recursive_escape(value, esc=conditional_escape):
                            for (k, v) in value.iteritems())
     elif isinstance(value, (list, tuple)):
         return type(value)(_recursive_escape(v) for v in value)
-    elif isinstance(value, basestring):
+    elif isinstance(value, six.string_types):
         return esc(value)
     elif isinstance(value, (int, long, float)) or value in (True, False, None):
         return value
