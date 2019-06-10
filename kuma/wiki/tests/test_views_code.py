@@ -87,18 +87,19 @@ def test_code_sample_host_allowed(code_sample_doc, settings, client):
 
 # The pytest-django urls marker also resets urlconf caches after the test
 @pytest.mark.urls(settings.ROOT_URLCONF)
-def test_code_sample_host_restricted_host(code_sample_doc, settings, client):
+def test_code_sample_host_restricted_host(code_sample_doc, constance_config,
+                                          settings, client):
     """Users are allowed to view samples on the attachment domain."""
-    # Render the document, which will be a sync operation, before applying
-    # host restrictions.
-    code_sample_doc.get_rendered()
-
     url = reverse('wiki.code_sample',
                   args=[code_sample_doc.slug, 'sample1'])
     host = 'sampleserver'
     settings.ALLOWED_HOSTS.append(host)
     settings.ATTACHMENT_HOST = host
     settings.ENABLE_RESTRICTIONS_BY_HOST = True
+    # Setting the KUMASCRIPT_TIMEOUT to a non-zero value forces kumascript
+    # rendering so we ensure that path is tested for these requests that use
+    # a restricted urlconf environment.
+    constance_config.KUMASCRIPT_TIMEOUT = 1
     response = client.get(url, HTTP_HOST=host)
     assert response.status_code == 200
     assert 'public' in response['Cache-Control']
