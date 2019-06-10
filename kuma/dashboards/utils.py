@@ -5,7 +5,6 @@ from collections import Counter, defaultdict
 
 from dateutil import parser
 from django.core.exceptions import ImproperlyConfigured
-from six.moves import xrange
 
 from kuma.wiki.models import (DocumentDeletionLog, DocumentSpamAttempt,
                               Revision, RevisionAkismetSubmission)
@@ -29,11 +28,11 @@ def date_range(start, end):
     if getattr(end, 'date', None) is not None:
         end = end.date()
     days = (end - start).days + 1
-    return (start + datetime.timedelta(days=d) for d in xrange(days))
+    return (start + datetime.timedelta(days=d) for d in range(days))
 
 
 def chunker(seq, size):
-    for i in xrange(0, len(seq), size):
+    for i in range(0, len(seq), size):
         yield seq[i:i + size]
 
 
