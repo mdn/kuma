@@ -57,10 +57,6 @@ def test_server_side_render(mock_get_l10n_data, mock_dumps, locale,
     output = ssr.render_react('document', locale, document_data)
 
     # Make sure the output is as expected
-    # The HTML attributes in the data should not be repeated in the output
-    # But note that this is a special case that depends on the first argument
-    # to render_react() being "document"
-    document_data.update(bodyHTML='', tocHTML='', quickLinksHTML='')
     data = {
         'locale': locale,
         'stringCatalog': localization_data['catalog'],
