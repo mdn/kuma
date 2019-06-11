@@ -57,6 +57,7 @@ const styles = {
             'x-locale-heading-primary, zillaslab, "Palatino", "Palatino Linotype", x-locale-heading-secondary, serif',
         fontSize: 45,
         fontWeight: 'bold',
+        hyphens: 'auto',
         [NARROW]: {
             // Reduce the H1 size on narrow screens
             fontSize: 28
@@ -114,6 +115,7 @@ const styles = {
     crumb: css({
         display: 'inline',
         fontSize: 14,
+        hyphens: 'auto',
         '&a': {
             color: '#3d7e9a'
         }

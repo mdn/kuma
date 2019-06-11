@@ -648,6 +648,10 @@ Array [
   font-family: x-locale-heading-primary,zillaslab,"Palatino","Palatino Linotype",x-locale-heading-secondary,serif;
   font-size: 45px;
   font-weight: bold;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
 }
 
 @media (max-width:749px) {
@@ -810,6 +814,10 @@ Array [
 .emotion-1 {
   display: inline;
   font-size: 14px;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
 }
 
 .emotion-1a {

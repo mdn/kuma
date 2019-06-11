@@ -9,8 +9,8 @@
 .document-title {
     h1 {
         @include set-font-size($mobile-document-title-font-size);
-        /* Needed to make Chrome honor the zero-width spaces */
-        word-break: break-word;
+        /* Hyphenate long titles like CanvasRenderingContext2D if needed*/
+        hyphens: auto;
 
         @media #{$mq-mobile-and-up} {
             @include set-font-size($h1-font-size);
