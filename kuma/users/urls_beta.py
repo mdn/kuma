@@ -19,9 +19,6 @@ for provider in providers.registry.get_list():
         urlpatterns += prov_urlpatterns
 
 users_patterns = [
-    url(r'^signup/?$',
-        redirect_in_maintenance_mode(account_views.signup),
-        name='account_signup'),
     url(r'^signin/?$',
         redirect_in_maintenance_mode(account_views.login),
         name='account_login'),
