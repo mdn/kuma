@@ -1,5 +1,7 @@
+from decorator_include import decorator_include
 from django.conf import settings
 from django.conf.urls import include, url
+from django.views.decorators.cache import never_cache
 from django.views.generic import RedirectView
 from django.views.static import serve
 
@@ -7,6 +9,7 @@ from kuma.core import views as core_views
 from kuma.core.decorators import beta_shared_cache_control, shared_cache_control
 from kuma.core.urlresolvers import i18n_patterns
 from kuma.landing.urls_beta import lang_urlpatterns as landing_lang_urlpatterns
+from kuma.users.urls_beta import lang_urlpatterns as users_lang_urlpatterns
 from kuma.views import serve_from_media_root
 
 
@@ -49,6 +52,13 @@ urlpatterns += [
     url(r'^(?P<path>@api/deki/files/.+)$', redirect_to_attachments_domain,
         name='attachments.mindtouch_file_redirect'),
 ]
+
+# Add the signin and signout urls
+urlpatterns += [url('users/', include('kuma.users.urls_beta'))]
+urlpatterns += i18n_patterns(url('',
+                                 decorator_include(never_cache,
+                                                   users_lang_urlpatterns)))
+
 
 if getattr(settings, 'DEBUG_TOOLBAR_INSTALLED', False):
     import debug_toolbar
