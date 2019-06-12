@@ -193,14 +193,18 @@ describe('Document Route works as expected', () => {
     });
 
     test('getTitle() returns the fetched document title', () => {
-        expect(route.getTitle({}, fakeDocumentData)).toBe(
-            fakeDocumentData.title
-        );
+        expect(
+            route.getTitle({ locale: 'en-US', slug: 'slug' }, fakeDocumentData)
+        ).toBe(fakeDocumentData.title);
     });
 
     test('analyticsHook() calls ga with enSlug', () => {
         let ga = jest.fn();
-        route.analyticsHook(ga, {}, fakeDocumentData);
+        route.analyticsHook(
+            ga,
+            { locale: 'en-US', slug: 'slug' },
+            fakeDocumentData
+        );
         expect(ga.mock.calls[0][0]).toBe('set');
         expect(ga.mock.calls[0][1]).toBe('dimension17');
         expect(ga.mock.calls[0][2]).toBe(fakeDocumentData.enSlug);
