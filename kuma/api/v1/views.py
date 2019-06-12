@@ -217,7 +217,7 @@ def search(request, locale):
     for documents matching the value of the q parameter.
     """
     # TODO: for non-English locales we need to modify this to search
-    # both English and the specified locale and return the results of 
+    # both English and the specified locale and return the results of
     # both searches to the user.
     #
     # TODO: I'm betting that a simple search like this will be faster
