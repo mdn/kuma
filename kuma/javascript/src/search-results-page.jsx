@@ -12,7 +12,7 @@ type SearchRouteParams = {
     query: string
 };
 
-type SearchResults = Array<{
+export type SearchResults = Array<{
     slug: string,
     title: string,
     summary: string,

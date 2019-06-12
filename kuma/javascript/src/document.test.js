@@ -49,6 +49,7 @@ export const fakeDocumentData = {
 
 describe('Document component renders all of its parts', () => {
     const document = create(<Document data={fakeDocumentData} />);
+    const snapshot = JSON.stringify(document.toJSON());
     const root = document.root;
 
     // The document should have exactly one Header
@@ -63,14 +64,11 @@ describe('Document component renders all of its parts', () => {
         expect(root.findAllByType(TaskCompletionSurvey).length).toBe(1);
     });
 
-    // The document should have one Titlebar, which should have one
-    // h1 element, which should contain the document title.
+    // The document should have one Titlebar, with the document title.
     test('titlebar', () => {
         const titlebars = root.findAllByType(Titlebar);
         expect(titlebars.length).toBe(1);
-        const headings = titlebars[0].findAllByType('h1');
-        expect(headings.length).toBe(1);
-        expect(headings[0].children[0]).toBe(fakeDocumentData.title);
+        expect(titlebars[0].props.title).toBe(fakeDocumentData.title);
     });
 
     // The document has one breadcrumbs element with links to the
@@ -101,14 +99,19 @@ describe('Document component renders all of its parts', () => {
 
     // And make sure that our various strings of HTML appear in the document
     test('html strings', () => {
-        const snapshot = JSON.stringify(document.toJSON());
         expect(snapshot).toContain(fakeDocumentData.tocHTML);
         expect(snapshot).toContain(fakeDocumentData.quickLinksHTML);
         expect(snapshot).toContain(fakeDocumentData.bodyHTML);
     });
+
+    test('contributor names appear', () => {
+        for (let c of fakeDocumentData.contributors) {
+            expect(snapshot).toContain(c);
+        }
+    });
 });
 
-describe('Document Route works as expected', () => {
+describe('DocumentRoute', () => {
     const route = new DocumentRoute('en-US');
 
     test('getComponent()', () => {
