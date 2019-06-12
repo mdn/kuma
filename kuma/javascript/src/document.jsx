@@ -144,7 +144,7 @@ const styles = {
     })
 };
 
-function Sidebar({ document }: DocumentProps) {
+export function Sidebar({ document }: DocumentProps) {
     // TODO(djf): We may want to omit the "On this Page" section from
     // the sidebar for pages with slugs like /Web/*/*/*: those are
     // mostly HTML and CSS reference pages with repetitive TOCs. The
@@ -189,7 +189,7 @@ function Chevron() {
     return <span css={styles.chevron}>›</span>;
 }
 
-function Breadcrumbs({ document }: DocumentProps) {
+export function Breadcrumbs({ document }: DocumentProps) {
     // The <span> elements below aren't needed except that the stylesheets
     // are set up to expect them.
     return (
