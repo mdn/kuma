@@ -6,10 +6,11 @@ import Article from './article.jsx';
 import { gettext } from './l10n.js';
 import LanguageMenu from './header/language-menu.jsx';
 import Header from './header/header.jsx';
+import Route from './route.js';
 import TaskCompletionSurvey from './task-completion-survey.jsx';
 import Titlebar from './titlebar.jsx';
 
-import type Route from './router.jsx';
+import type { GAFunction } from './ga-provider.jsx';
 
 export type DocumentData = {
     locale: string,
@@ -248,12 +249,11 @@ export default function Document({ data }: Props) {
 
 // Like fetch(), but if the first URL doesn't work, try the second instead.
 function fetchWithFallback(url1: string, url2: string) {
-    const fetchConfig = { redirect: 'follow' };
-    return fetch(url1, fetchConfig).then(response => {
+    return fetch(url1).then(response => {
         if (response.ok || !url2 || url2 === url1) {
             return response;
         } else {
-            return fetch(url2, fetchConfig);
+            return fetch(url2);
         }
     });
 }
@@ -266,31 +266,42 @@ const BASEURL =
         ? window.location.origin
         : 'http://ssr.hack';
 
-type DocumentRouteData = {
+type DocumentRouteParams = {
     locale: string,
     slug: string
 };
 
-// This Route object tells the Router component how to convert
+// This Route subclass tells the Router component how to convert
 // /docs/ URLs into Document components. See router.jsx for details.
-export const DocumentRoute: Route = {
-    component: Document,
+export class DocumentRoute extends Route<DocumentRouteParams, DocumentData> {
+    locale: string;
 
-    match(url: string): ?DocumentRouteData {
+    constructor(locale: string) {
+        super();
+        this.locale = locale;
+    }
+
+    getComponent() {
+        return Document;
+    }
+
+    match(url: string): ?DocumentRouteParams {
         let path = new URL(url, BASEURL).pathname;
-        let m = path.match(/^\/([^/]+)\/docs\/(.*)$/);
-        if (m && m[1] && m[2]) {
-            return {
-                locale: m[1],
-                slug: m[2]
-            };
-        } else {
-            // Returning null means we can't handle the url
+        // Require locales to match because we only have one set
+        // of translation strings loaded currently. If the user switches
+        // locales we want to do a full page reload so we get new strings.
+        let expectedPrefix = `/${this.locale}/docs/`;
+        if (!path.startsWith(expectedPrefix)) {
             return null;
         }
-    },
 
-    fetch({ locale, slug }: DocumentRouteData): Promise<DocumentData> {
+        return {
+            locale: this.locale,
+            slug: path.substring(expectedPrefix.length)
+        };
+    }
+
+    fetch({ locale, slug }: DocumentRouteParams): Promise<DocumentData> {
         // The fallback is for the case when we request a non-English
         // document that doesn't exist. In that case, before we abandon
         // client-side navigation, we'll try falling-back to the English
@@ -304,7 +315,7 @@ export const DocumentRoute: Route = {
                     return response.json();
                 } else {
                     // If we didn't get a good response, throw an error
-                    // that we'll handle in the catch() function below.
+                    // for the Router component to handle
                     throw new Error(
                         `${response.status}:${response.statusText}`
                     );
@@ -336,20 +347,24 @@ export const DocumentRoute: Route = {
                     throw new Error('Invalid response from document API');
                 }
             });
-    },
+    }
 
-    title(matchedData, fetchedData) {
-        return fetchedData.title;
-    },
+    getTitle(params: DocumentRouteParams, data: DocumentData) {
+        return data.title;
+    }
 
-    gaHook(ga, matchedData, fetchedData) {
+    analyticsHook(
+        ga: GAFunction,
+        params: DocumentRouteParams,
+        data: DocumentData
+    ) {
         // If the document data includes enSlug, or if the
         // document is in english, then pass the slug to
         // google analytics as dimension 17.
-        if (fetchedData.enSlug) {
-            ga('set', 'dimension17', fetchedData.enSlug);
-        } else if (fetchedData.locale === 'en-US') {
-            ga('set', 'dimension17', fetchedData.slug);
+        if (data.enSlug) {
+            ga('set', 'dimension17', data.enSlug);
+        } else if (data.locale === 'en-US') {
+            ga('set', 'dimension17', data.slug);
         }
     }
-};
+}

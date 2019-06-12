@@ -1,6 +1,6 @@
 /**
- * The Router component defined in this file managers client side
- * navigation within the single-page app portions of MDN.  Use the
+ * The Router component defined in this file manages client side
+ * navigation within the single-page app portions of MDN. Use the
  * Router with an array of Route objects that describe the kinds of
  * pages (for example document pages and search results pages) that
  * the router should handle.
@@ -20,81 +20,17 @@ import * as React from 'react';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { css, keyframes } from '@emotion/core';
 
+import type { ComponentType } from 'react';
+
+import Route from './route.js';
+import type { RouteParams, RouteData, RouteComponentProps } from './route.js';
+
 import GAProvider from './ga-provider.jsx';
-import type GAFunction from './ga-provider.jsx';
 import {
     navigateStart,
     navigateFetchComplete,
     navigateRenderComplete
 } from './perf.js';
-
-/**
- * A Route object describes one kind of page that we know how to handle
- * as part of the MDN single-page app. Currently ./routes.js defines two
- * routes: one for document pages and one for search results.
- */
-export type Route = {
-    // The match() method of a route takes a url as its input and
-    // returns null if it can't handle that URL, or a RouteData object
-    // if it can handle the url. The RouteData object typically consists
-    // of properties (such as locale and slug) that are extracted from
-    // the URL.
-    //
-    // TODO: add a locale parameter to the match() function.
-    // we should only allow matches for locales that we have strings for.
-    // So cross-locale links should not be done client-side.
-    match: string => ?RouteData,
-
-    // The fetch() method of a route takes a RouteData object as its
-    // input and returns a Promise for an asynchronous fetch for data
-    // needed to render the page
-    fetch: (matchedData: RouteData) => Promise<any>,
-
-    // After match() and fetch() are called, and the Promise returned
-    // by fetch has resolved, the router will call this function with
-    // the matched and fetched data values in order to get a title for
-    // the page it is about to render, and it will set that title on
-    // document.title
-    title: (matchedData: RouteData, fetchedData: any) => string,
-
-    // After match() and fetch() are called, and the Promise returned
-    // by fetch has resolved, the router will call this function, if
-    // it is defined with the matched and fetched data values in order
-    // give the route an opportunity to set Google Analytics variables
-    // (with `ga("set", ...)`) before the router calls
-    // ga("send", "pageview")
-    gaHook?: (ga: GAFunction, matchedData: RouteData, fetchedData: any) => void,
-
-    // The component property of a Route is the React component that
-    // will be used to render the page for this route. This component
-    // will be invoked with the RouteData returned by match() and the
-    // data asynchronously returned by fetch() as its props:
-    //
-    //   <route.component {...matchedData} data={fetchedData}/>
-    //
-    component: React$Node
-};
-
-/**
- * The match() method of a Route returns an object with values
- * such as locales, slugs and query strings parsed from a URL.
- * This RouteData type represents the type of that return value.
- * We also call it "matchedData" to distinguish it from the fetched
- * data returned by the fetch() method.
- */
-export type RouteData = {
-    [string]: string
-};
-
-// These are the props that we pass to the <Router> component
-type RouterProps = {
-    // These are the routes it can handle
-    routes: Array<Route>,
-    // The URL of the initial page to render
-    initialURL: string,
-    // The fetchedData for the initial page, if we have it.
-    initialData: any
-};
 
 // These are CSS animations for the loading bar
 const slidein = keyframes`
@@ -121,6 +57,16 @@ const styles = {
     })
 };
 
+// These are the props that we pass to the <Router> component
+type RouterProps = {
+    // These are the routes it can handle
+    routes: Array<Route<RouteParams, RouteData>>,
+    // The URL of the initial page to render
+    initialURL: string,
+    // The data for the initial page, if we have it.
+    initialData: any
+};
+
 export default function Router({
     routes,
     initialURL,
@@ -134,15 +80,15 @@ export default function Router({
         // The URL of the page that is being displayed
         url: string,
         // The Route object that handles that URL
-        route: Route,
+        route: Route<RouteParams, RouteData>,
         // The component to be used to render this page
-        component: ?React$Node,
+        component: ?ComponentType<RouteComponentProps>,
         // Data extracted by Route.match() from the URL. The properties
         // of this object will become props of the component.
-        matchedData: ?RouteData,
+        params: ?RouteParams,
         // Data fetched asynchronously by the Route.fetch() function.
         // This value will be passed to the component as the data prop.
-        fetchedData: ?any
+        data: ?RouteData
     };
 
     // Router state: this is the data we'll use below to render the page
@@ -150,8 +96,8 @@ export default function Router({
         url: null,
         route: null,
         component: null,
-        matchedData: null,
-        fetchedData: null
+        params: null,
+        data: null
     });
 
     // We also need to access the current page state from our event
@@ -184,8 +130,8 @@ export default function Router({
     // rendered with new (non-null) data. One effect deals with
     // analytics and the other stops the loading animation. Both
     // functions are defined at the bottom of the component.
-    useEffect(recordAndReportAnalytics, [pageState.fetchedData]);
-    useEffect(stopLoading, [pageState.fetchedData]);
+    useEffect(recordAndReportAnalytics, [pageState.data]);
+    useEffect(stopLoading, [pageState.data]);
 
     // When the page is first loaded, and this function is called for
     // the first time, we won't have a route defined in our state. In
@@ -220,8 +166,8 @@ export default function Router({
             />
             {pageState.component && (
                 <pageState.component
-                    {...pageState.matchedData}
-                    data={pageState.fetchedData}
+                    {...pageState.params}
+                    data={pageState.data}
                 />
             )}
         </>
@@ -285,9 +231,9 @@ export default function Router({
             let newPageState = {
                 url: url,
                 route: route,
-                component: route.component,
-                matchedData: match,
-                fetchedData: null
+                component: route.getComponent(),
+                params: match,
+                data: null
             };
 
             // If we were called with initial data, then we already
@@ -295,7 +241,7 @@ export default function Router({
             // setPageState() right away to cause the component to
             // rerender.  And in this case we're done.
             if (data) {
-                newPageState.fetchedData = data;
+                newPageState.data = data;
                 setPageState(newPageState);
                 return true;
             }
@@ -347,12 +293,15 @@ export default function Router({
                     window.scrollTo(0, 0);
 
                     // 3) Ask the route what our page title is
-                    // and set that title on the document
-                    document.title = route.title(match, data) || 'MDN';
+                    // and set that title on the document, if it returns one
+                    let title = route.getTitle(match, data);
+                    if (title) {
+                        document.title = title;
+                    }
 
                     // 4: call setPageState() to cause the Router to
                     //    rerender and display the new page.
-                    newPageState.fetchedData = data;
+                    newPageState.data = data;
                     setPageState(newPageState);
 
                     // 5: When the page has finished rendering, the
@@ -526,7 +475,7 @@ export default function Router({
     // the data arrives.
     function recordAndReportAnalytics() {
         let pageState = pageStateRef.current;
-        if (!pageState.fetchedData) {
+        if (!pageState.data) {
             return;
         }
 
@@ -535,13 +484,7 @@ export default function Router({
         navigateRenderComplete(ga);
 
         // Set any Google Analytics variables specific to this route
-        if (pageState.route.gaHook) {
-            pageState.route.gaHook(
-                ga,
-                pageState.matchedData,
-                pageState.fetchedData
-            );
-        }
+        pageState.route.analyticsHook(ga, pageState.params, pageState.data);
 
         // Tell Google Analytics about this navigation.
         // We use 'dimension19' to mean client-side navigate
@@ -556,7 +499,7 @@ export default function Router({
     // do anything and waits until non-null data arrives.
     function stopLoading() {
         let pageState = pageStateRef.current;
-        if (!pageState.fetchedData) {
+        if (!pageState.data) {
             return;
         }
 
