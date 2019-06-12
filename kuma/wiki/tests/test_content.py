@@ -1126,6 +1126,22 @@ def test_clean_content_allow_all_iframes(settings):
     assert clean_content(html) == html
 
 
+def test_clean_removes_empty_paragraphs():
+    """bug 1553512: fix the insertion of blank paragraphs when pasting text"""
+    content = """
+        <p>Hi there.</p>
+        <p></p>
+        <p>Goodbye</p>
+        </p>
+    """
+    expected = """
+        <p>Hi there.</p>
+        <p>Goodbye</p>
+    """
+    result = clean_content(content)
+    assert normalize_html(expected) == normalize_html(result)
+
+
 def test_extractor_css_classnames(root_doc, wiki_user):
     """The Extractor can return the CSS class names in use."""
     classes = ('foobar', 'barfoo', 'bazquux')

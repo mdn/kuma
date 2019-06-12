@@ -56,6 +56,7 @@
       // Other plugins.
       'descriptionlist,tablesort,texzilla,wordcount';
 
+    config.fillEmptyBlocks = false;
     config.removeButtons = 'Cut,Copy,PasteFromWord,Language';
     config.toolbarGroups = [
       { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },

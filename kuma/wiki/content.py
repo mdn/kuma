@@ -183,6 +183,8 @@ def clean_content(content):
     bleached = bleach.clean(content, attributes=ALLOWED_ATTRIBUTES,
                             tags=ALLOWED_TAGS, styles=ALLOWED_STYLES,
                             protocols=ALLOWED_PROTOCOLS)
+    # remove empty paragraphs
+    bleached = bleached.replace('<p></p>', '')
     parsed = parse(bleached)
     parsed.injectSectionIDs()
     if not settings.ALLOW_ALL_IFRAMES:
