@@ -68,7 +68,7 @@ input.newsletter-input-email {
         top: 30%;
         @include bidi(((right, 10px, left, 10px),));
         @include bidi(((left, auto, right, 10px),));
-        transition: right .2s;
+        @include bidi(((transition, right .2s, left .2s),));
     }
 
     &:hover,
@@ -76,7 +76,8 @@ input.newsletter-input-email {
         text-decoration: none;
 
         .icon-arrow {
-            right: 5px;
+            @include bidi(((right, 5px, left, 10px),));
+            @include bidi(((left, auto, right, 15px),));
         }
     }
 }
