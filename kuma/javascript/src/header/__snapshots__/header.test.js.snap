@@ -1,46 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Header snapshot 1`] = `
-Array [
-  @keyframes animation-0 {
-  from {
-    -webkit-transform: translate(-90%,0);
-    -ms-transform: translate(-90%,0);
-    transform: translate(-90%,0);
-  }
-
-  to {
-    -webkit-transform: translate(0,0);
-    -ms-transform: translate(0,0);
-    transform: translate(0,0);
-  }
-}
-
-@keyframes animation-1 {
-  from {
-    opacity: 1.0;
-  }
-
-  to {
-    opacity: 0.5;
-  }
-}
-
-.emotion-0 {
-  position: fixed;
-  display: none;
-  height: 5px;
-  width: 100%;
-  background-image: linear-gradient(-271deg,#206584,#83d0f2);
-  display: block;
-  -webkit-animation: animation-0 0.5s,animation-1 1s infinite alternate;
-  animation: animation-0 0.5s,animation-1 1s infinite alternate;
-}
-
-<div
-    className="emotion-0"
-  />,
-  .emotion-39 {
+.emotion-39 {
   display: grid;
   -webkit-align-items: center;
   -webkit-box-align: center;
@@ -310,287 +271,286 @@ Array [
 }
 
 <div
-    className="emotion-39"
+  className="emotion-39"
+>
+  <a
+    className="emotion-1"
+    href="/en-US/"
   >
-    <a
-      className="emotion-1"
-      href="/en-US/"
-    >
-      <svg mock
-        alt="MDN Web Docs Logo"
-        className="emotion-0"
-      />
-    </a>
+    <svg mock
+      alt="MDN Web Docs Logo"
+      className="emotion-0"
+    />
+  </a>
+  <div
+    className="emotion-2"
+  />
+  <div
+    className="emotion-31 emotion-32"
+  >
     <div
-      className="emotion-2"
+      className="emotion-9 emotion-10"
+    >
+      <div
+        className="dropdown-menu-label emotion-5 emotion-6"
+      >
+        <a
+          href="/en-US/docs/Web"
+        >
+          Technologies
+        </a>
+        <span
+          className="emotion-3 emotion-4"
+        >
+          ▼
+        </span>
+      </div>
+      <ul
+        className="dropdown-menu emotion-7 emotion-8"
+        onClick={[Function]}
+      >
+        <li>
+          <a
+            href="/en-US/docs/Web/HTML"
+          >
+            HTML
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web/CSS"
+          >
+            CSS
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web/JavaScript"
+          >
+            JavaScript
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web/Guide/Graphics"
+          >
+            Graphics
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web/HTTP"
+          >
+            HTTP
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web/API"
+          >
+            APIs / DOM
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Mozilla/Add-ons/WebExtensions"
+          >
+            Browser Extensions
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web/MathML"
+          >
+            MathML
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      className="emotion-11 emotion-12"
+      width={16}
     />
     <div
-      className="emotion-31 emotion-32"
+      className="emotion-9 emotion-10"
     >
       <div
-        className="emotion-9 emotion-10"
+        className="dropdown-menu-label emotion-5 emotion-6"
       >
-        <div
-          className="dropdown-menu-label emotion-5 emotion-6"
+        <a
+          href="/en-US/docs/Learn"
         >
-          <a
-            href="/en-US/docs/Web"
-          >
-            Technologies
-          </a>
-          <span
-            className="emotion-3 emotion-4"
-          >
-            ▼
-          </span>
-        </div>
-        <ul
-          className="dropdown-menu emotion-7 emotion-8"
-          onClick={[Function]}
+          References & Guides
+        </a>
+        <span
+          className="emotion-3 emotion-4"
         >
-          <li>
-            <a
-              href="/en-US/docs/Web/HTML"
-            >
-              HTML
-            </a>
-          </li>
-          <li>
-            <a
-              href="/en-US/docs/Web/CSS"
-            >
-              CSS
-            </a>
-          </li>
-          <li>
-            <a
-              href="/en-US/docs/Web/JavaScript"
-            >
-              JavaScript
-            </a>
-          </li>
-          <li>
-            <a
-              href="/en-US/docs/Web/Guide/Graphics"
-            >
-              Graphics
-            </a>
-          </li>
-          <li>
-            <a
-              href="/en-US/docs/Web/HTTP"
-            >
-              HTTP
-            </a>
-          </li>
-          <li>
-            <a
-              href="/en-US/docs/Web/API"
-            >
-              APIs / DOM
-            </a>
-          </li>
-          <li>
-            <a
-              href="/en-US/docs/Mozilla/Add-ons/WebExtensions"
-            >
-              Browser Extensions
-            </a>
-          </li>
-          <li>
-            <a
-              href="/en-US/docs/Web/MathML"
-            >
-              MathML
-            </a>
-          </li>
-        </ul>
+          ▼
+        </span>
       </div>
-      <div
-        className="emotion-11 emotion-12"
-        width={16}
-      />
-      <div
-        className="emotion-9 emotion-10"
+      <ul
+        className="dropdown-menu emotion-7 emotion-8"
+        onClick={[Function]}
       >
-        <div
-          className="dropdown-menu-label emotion-5 emotion-6"
-        >
+        <li>
           <a
             href="/en-US/docs/Learn"
           >
-            References & Guides
+            Learn web development
           </a>
-          <span
-            className="emotion-3 emotion-4"
-          >
-            ▼
-          </span>
-        </div>
-        <ul
-          className="dropdown-menu emotion-7 emotion-8"
-          onClick={[Function]}
-        >
-          <li>
-            <a
-              href="/en-US/docs/Learn"
-            >
-              Learn web development
-            </a>
-          </li>
-          <li>
-            <a
-              href="/en-US/docs/Web/Tutorials"
-            >
-              Tutorials
-            </a>
-          </li>
-          <li>
-            <a
-              href="/en-US/docs/Web/Reference"
-            >
-              References
-            </a>
-          </li>
-          <li>
-            <a
-              href="/en-US/docs/Web/Guide"
-            >
-              Developer Guides
-            </a>
-          </li>
-          <li>
-            <a
-              href="/en-US/docs/Web/Accessibility"
-            >
-              Accessibility
-            </a>
-          </li>
-          <li>
-            <a
-              href="/en-US/docs/Games"
-            >
-              Game development
-            </a>
-          </li>
-          <li>
-            <a
-              href="/en-US/docs/Web"
-            >
-              ...more docs
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div
-        className="emotion-11 emotion-12"
-        width={16}
-      />
-      <div
-        className="emotion-9 emotion-10"
-      >
-        <div
-          className="dropdown-menu-label emotion-5 emotion-6"
-        >
+        </li>
+        <li>
           <a
-            href="/en-US/docs/MDN/Feedback"
+            href="/en-US/docs/Web/Tutorials"
           >
-            Feedback
+            Tutorials
           </a>
-          <span
-            className="emotion-3 emotion-4"
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web/Reference"
           >
-            ▼
-          </span>
-        </div>
-        <ul
-          className="dropdown-menu emotion-7 emotion-8"
-          onClick={[Function]}
+            References
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web/Guide"
+          >
+            Developer Guides
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web/Accessibility"
+          >
+            Accessibility
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Games"
+          >
+            Game development
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/Web"
+          >
+            ...more docs
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      className="emotion-11 emotion-12"
+      width={16}
+    />
+    <div
+      className="emotion-9 emotion-10"
+    >
+      <div
+        className="dropdown-menu-label emotion-5 emotion-6"
+      >
+        <a
+          href="/en-US/docs/MDN/Feedback"
         >
-          <li>
-            <a
-              href="https://support.mozilla.org/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Get Firefox help
-               🌐
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://stackoverflow.com/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Get web development help
-               🌐
-            </a>
-          </li>
-          <li>
-            <a
-              href="/en-US/docs/MDN/Community"
-            >
-              Join the MDN community
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=test"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Report a content problem
-               🌐
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://bugzilla.mozilla.org/form.mdn"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Report a bug
-               🌐
-            </a>
-          </li>
-        </ul>
+          Feedback
+        </a>
+        <span
+          className="emotion-3 emotion-4"
+        >
+          ▼
+        </span>
       </div>
-    </div>
-    <div
-      className="emotion-36"
-    >
-      <form
-        action="/en-US/search"
-        className="emotion-35"
-        id="nav-main-search"
-        method="get"
-        role="search"
+      <ul
+        className="dropdown-menu emotion-7 emotion-8"
+        onClick={[Function]}
       >
-        <svg mock
-          className="emotion-33"
-        />
-        <input
-          className="emotion-34"
-          id="main-q"
-          name="q"
-          placeholder="Search MDN"
-          type="search"
-        />
-      </form>
+        <li>
+          <a
+            href="https://support.mozilla.org/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Get Firefox help
+             🌐
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://stackoverflow.com/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Get web development help
+             🌐
+          </a>
+        </li>
+        <li>
+          <a
+            href="/en-US/docs/MDN/Community"
+          >
+            Join the MDN community
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=test"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Report a content problem
+             🌐
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://bugzilla.mozilla.org/form.mdn"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Report a bug
+             🌐
+          </a>
+        </li>
+      </ul>
     </div>
-    <div
-      className="emotion-38"
+  </div>
+  <div
+    className="emotion-36"
+  >
+    <form
+      action="/en-US/search"
+      className="emotion-35"
+      id="nav-main-search"
+      method="get"
+      role="search"
     >
-      <a
-        className="emotion-37"
-        data-service="GitHub"
-        href="/users/github/login/?next=/"
-        rel="nofollow"
-      >
-        Sign in
-      </a>
-    </div>
-  </div>,
-]
+      <svg mock
+        className="emotion-33"
+      />
+      <input
+        className="emotion-34"
+        id="main-q"
+        name="q"
+        placeholder="Search MDN"
+        type="search"
+      />
+    </form>
+  </div>
+  <div
+    className="emotion-38"
+  >
+    <a
+      className="emotion-37"
+      data-service="GitHub"
+      href="/users/github/login/?next=/[fake%20absolute%20url]"
+      rel="nofollow"
+    >
+      Sign in
+    </a>
+  </div>
+</div>
 `;

@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import DocumentPage from './document-page.jsx';
+import SinglePageApp from './single-page-app.jsx';
 import LandingPage from './landing-page.jsx';
 import { localize } from './l10n.js';
 
@@ -23,13 +23,27 @@ if (container) {
     localize(data.locale, data.stringCatalog, data.pluralFunction);
 
     let app = null;
+    // This switch statement is duplicated in ssr.jsx. Anything changed
+    // here should also be changed there. TODO: refactor this!
     switch (componentName) {
-        case 'document':
-            // This is the React UI for a page of documentation
-            app = <DocumentPage documentData={data.documentData} />;
+        case 'SPA':
+            // Ideally, we want as much as possible of MDN to be part
+            // of the single page app so that we can get client-side
+            // navigation between pages. Currently the single page app
+            // handles document pages and search results
+            app = (
+                <SinglePageApp
+                    initialURL={data.url}
+                    initialData={data.documentData}
+                />
+            );
             break;
         case 'landing':
             // This is the React UI for the MDN homepage.
+            // The homepage has a React-based header, but most of the
+            // content is still based on Jinja templates, so we can't
+            // currently make it part of the single page app and have
+            // to handle it as a special case here.
             app = <LandingPage />;
             break;
         case 'default':

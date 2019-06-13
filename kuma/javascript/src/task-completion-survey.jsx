@@ -4,10 +4,11 @@ import { useContext, useEffect, useState } from 'react';
 import css from '@emotion/css';
 
 import CloseIcon from './icons/close.svg';
-import DocumentProvider from './document-provider.jsx';
 import GAProvider from './ga-provider.jsx';
 import { getLocale, gettext } from './l10n.js';
 import UserProvider from './user-provider.jsx';
+
+import type { DocumentData } from './document.jsx';
 
 const styles = {
     notification: css({
@@ -80,8 +81,11 @@ function isEmbargoed() {
     }
 }
 
-export default function TaskCompletionSurvey() {
-    const documentData = useContext(DocumentProvider.context);
+type Props = {
+    document: ?DocumentData
+};
+
+export default function TaskCompletionSurvey(props: Props) {
     const ga = useContext(GAProvider.context);
     const clientId = GAProvider.useClientId();
     const userData = useContext(UserProvider.context);
@@ -128,9 +132,9 @@ export default function TaskCompletionSurvey() {
     // Use a future timestamp because we're asking the user to open
     // the survey now and fill it out later.  20 minutes is a guess.
     surveyURL += `?t=${Date.now() + 1000 * 60 * 20}`;
-    if (documentData) {
+    if (props.document) {
         surveyURL += `&p=${encodeURIComponent(
-            `/${locale}/docs/${documentData.slug}`
+            `/${locale}/docs/${props.document.slug}`
         )}`;
     }
     // When we are first displayed we won't have the GA client ID, but the

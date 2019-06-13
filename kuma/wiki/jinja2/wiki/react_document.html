@@ -112,7 +112,8 @@
 
   {#{% include "includes/a11y-nav.html" %}#}
 
-  {{ render_react("document", request.LANGUAGE_CODE, document_data)|safe }}
+  {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(),
+                  document_data)|safe }}
 
   {% if settings.NEWSLETTER and settings.NEWSLETTER_ARTICLE %}
   <div class="center">

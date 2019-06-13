@@ -54,11 +54,13 @@ def test_server_side_render(mock_get_l10n_data, mock_dumps, locale,
     mock_requests.post(url, text=mock_html)
 
     # Run the template tag
-    output = ssr.render_react('document', locale, document_data)
+    path = '/en-US/docs/foo'
+    output = ssr.render_react('document', locale, path, document_data)
 
     # Make sure the output is as expected
     data = {
         'locale': locale,
+        'url': path,
         'stringCatalog': localization_data['catalog'],
         'documentData': document_data,
     }
@@ -90,7 +92,8 @@ def test_plural_function(mock_get_l10n_data, mock_dumps,
     mock_requests.post(url, text='mock html')
 
     # Run the template tag
-    output = ssr.render_react('page', 'es', document_data)
+    path = '/en-US/docs/foo'
+    output = ssr.render_react('page', 'es', path, document_data)
 
     expected = '<script>window._react_data = {pluralFunction:function(n){'
 
@@ -108,12 +111,14 @@ def test_client_side_render(mock_get_l10n_data, mock_dumps):
 
     mock_dumps.side_effect = sorted_json_dumps
     document_data = {'x': 'one', 'y': 2, 'z': ['a', 'b']}
+    path = '/en-US/docs/foo'
     data = {
         'locale': 'en-US',
+        'url': path,
         'stringCatalog': localization_data['catalog'],
         'documentData': document_data,
     }
-    output = ssr.render_react('page', 'en-US', document_data, ssr=False)
+    output = ssr.render_react('page', 'en-US', path, document_data, ssr=False)
     assert output == (
         u'<div id="react-container" data-component-name="{}"></div>\n'
         u'<script>window._react_data = {};</script>\n'
@@ -135,5 +140,6 @@ def test_failed_server_side_render(mock_get_l10n_data,
     url = '{}/{}'.format(settings.SSR_URL, 'page')
     mock_requests.post(url, exc=failure_class('message'))
     document_data = {'x': 'one', 'y': 2, 'z': ['a', 'b']}
-    assert (ssr.render_react('page', 'en-US', document_data) ==
-            ssr.render_react('page', 'en-US', document_data, ssr=False))
+    path = '/en-US/docs/foo'
+    assert (ssr.render_react('page', 'en-US', path, document_data) ==
+            ssr.render_react('page', 'en-US', path, document_data, ssr=False))

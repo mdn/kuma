@@ -10,6 +10,7 @@ from kuma.core.urlresolvers import reverse
 from kuma.users.templatetags.jinja_helpers import gravatar_url
 from kuma.wiki.jobs import DocumentContributorsJob
 from kuma.wiki.models import Document
+from kuma.wiki.search import WikiDocumentType
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
@@ -206,3 +207,35 @@ def whoami(request):
     }
 
     return JsonResponse(data)
+
+
+@never_cache
+@require_GET
+def search(request, locale):
+    """ An API endpoint to return search results as a JSON blob.
+    This endpoint makes a relatively simple ElasticSearch query
+    for documents matching the value of the q parameter.
+    """
+    # TODO: for non-English locales we need to modify this to search
+    # both English and the specified locale and return the results of
+    # both searches to the user.
+    #
+    # TODO: I'm betting that a simple search like this will be faster
+    # and just as good as the more complex searches implemented by the
+    # code in kuma/search/. Peter disagrees and thinks that we might
+    # eventually want to make this endpoint use code from kuma/search/.
+    # An alternative is to just abandon this API endpoint and have
+    # the frontend call wiki.d.m.o/locale/search.json?q=query. On the
+    # other hand, if we're ever going to implement any kind of
+    # search-as-you-type interface, we'll need a super-fast custom
+    # endpoint like this one.
+    qs = request.GET.get('q')
+    search = (WikiDocumentType.search()
+              .filter('term', locale=locale)
+              .source(['slug', 'title', 'summary', 'tags'])
+              .query('multi_match', type="phrase",
+                     query=qs,
+                     fields=['title^7', 'summary^2', 'content']))
+
+    response = search.execute()
+    return JsonResponse(response.to_dict())

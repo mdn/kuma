@@ -12,7 +12,6 @@ from kuma.landing.urls_beta import lang_urlpatterns as landing_lang_urlpatterns
 from kuma.users.urls_beta import lang_urlpatterns as users_lang_urlpatterns
 from kuma.views import serve_from_media_root
 
-
 handler403 = core_views.handler403
 handler404 = core_views.handler404
 handler500 = core_views.handler500
@@ -36,6 +35,9 @@ urlpatterns = [
 urlpatterns += i18n_patterns(url('', include(landing_lang_urlpatterns)))
 # The beta docs URL's (all of which are locale-based)
 urlpatterns += i18n_patterns(url(r'^docs/', include('kuma.wiki.urls_beta')))
+# The beta search URL
+urlpatterns += i18n_patterns(url(r'^search$', include('kuma.search.urls_beta')))
+
 # The version, sitemap, humans, and file-attachment URL's (all non-locale-based)
 urlpatterns += [
     url('', include('kuma.version.urls')),

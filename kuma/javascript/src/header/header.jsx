@@ -1,9 +1,7 @@
 //@flow
 import * as React from 'react';
-import { useContext } from 'react';
-import { css, keyframes } from '@emotion/core';
+import { css } from '@emotion/core';
 
-import DocumentProvider from '../document-provider.jsx';
 import { getLocale, gettext } from '../l10n.js';
 import Login from './login.jsx';
 import Logo from '../icons/logo.svg';
@@ -11,32 +9,13 @@ import Dropdown from './dropdown.jsx';
 import { Row, Strut } from '../layout.jsx';
 import Search from './search.jsx';
 
+import type { DocumentData } from '../document.jsx';
+
 const DESKTOP = '@media (min-width: 1024px)';
 const TABLET = '@media (min-width: 750px) and (max-width: 1023px)';
 const PHONE = '@media (max-width: 749px)';
 
-const slidein = keyframes`
-  from { transform: translate(-90%, 0); }
-  to { transform: translate(0, 0); }
-`;
-
-const throb = keyframes`
-  from { opacity: 1.0; }
-  to { opacity: 0.5; }
-`;
-
 const styles = {
-    loadingBar: css({
-        position: 'fixed',
-        display: 'none',
-        height: 5,
-        width: '100%',
-        backgroundImage: 'linear-gradient(-271deg, #206584, #83d0f2)'
-    }),
-    loadingAnimation: css({
-        display: 'block',
-        animation: `${slidein} 0.5s, ${throb} 1s infinite alternate`
-    }),
     header: css({
         display: 'grid',
         alignItems: 'center',
@@ -166,16 +145,18 @@ const menus = [
     }
 ];
 
-export default function Header(): React.Node {
-    const documentData = useContext(DocumentProvider.context);
-    const loading = useContext(DocumentProvider.loadingContext);
+type Props = {
+    document?: ?DocumentData
+};
+
+export default function Header(props: Props): React.Node {
     const locale = getLocale();
 
     function fixurl(url) {
         // The "Report a content issue" menu item has a link that requires
         // the document slug, so we work that in here. If there is no
         // document data, then we're on the home page and just use '/locale'
-        let slug = documentData ? documentData.slug : `/${locale}`;
+        let slug = props.document ? props.document.slug : `/${locale}`;
 
         url = url.replace('{{SLUG}}', encodeURIComponent(slug));
         if (!url.startsWith('https://')) {
@@ -185,59 +166,52 @@ export default function Header(): React.Node {
     }
 
     return (
-        <>
-            <div
-                css={[styles.loadingBar, loading && styles.loadingAnimation]}
-            />
-            <div css={styles.header}>
-                <a css={styles.logoContainer} href={`/${locale}/`}>
-                    <Logo css={styles.logo} alt="MDN Web Docs Logo" />
-                </a>
-                {
-                    // The div below is used as a horizontal rule. We aren't
-                    // using a semantic <hr/> element because our document
-                    // stylesheets define a bunch of styles on <hr>.
-                }
-                <div css={styles.rule} />
-                <Row css={styles.menus}>
-                    {menus.map((m, index) => (
-                        <React.Fragment key={index}>
-                            <Dropdown
-                                label={
-                                    <a href={fixurl(m.url)}>
-                                        {gettext(m.label)}
-                                    </a>
-                                }
-                            >
-                                {m.items.map((item, index) => (
-                                    <li key={index}>
-                                        {item.external ? (
-                                            <a
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                href={fixurl(item.url)}
-                                            >
-                                                {gettext(item.label)} &#x1f310;
-                                            </a>
-                                        ) : (
-                                            <a href={fixurl(item.url)}>
-                                                {gettext(item.label)}
-                                            </a>
-                                        )}
-                                    </li>
-                                ))}
-                            </Dropdown>
-                            {index < menus.length - 1 && <Strut width={16} />}
-                        </React.Fragment>
-                    ))}
-                </Row>
-                <div css={styles.search}>
-                    <Search />
-                </div>
-                <div css={styles.login}>
-                    <Login />
-                </div>
+        <div css={styles.header}>
+            <a css={styles.logoContainer} href={`/${locale}/`}>
+                <Logo css={styles.logo} alt="MDN Web Docs Logo" />
+            </a>
+            {
+                // The div below is used as a horizontal rule. We aren't
+                // using a semantic <hr/> element because our document
+                // stylesheets define a bunch of styles on <hr>.
+            }
+            <div css={styles.rule} />
+            <Row css={styles.menus}>
+                {menus.map((m, index) => (
+                    <React.Fragment key={index}>
+                        <Dropdown
+                            label={
+                                <a href={fixurl(m.url)}>{gettext(m.label)}</a>
+                            }
+                        >
+                            {m.items.map((item, index) => (
+                                <li key={index}>
+                                    {item.external ? (
+                                        <a
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            href={fixurl(item.url)}
+                                        >
+                                            {gettext(item.label)} &#x1f310;
+                                        </a>
+                                    ) : (
+                                        <a href={fixurl(item.url)}>
+                                            {gettext(item.label)}
+                                        </a>
+                                    )}
+                                </li>
+                            ))}
+                        </Dropdown>
+                        {index < menus.length - 1 && <Strut width={16} />}
+                    </React.Fragment>
+                ))}
+            </Row>
+            <div css={styles.search}>
+                <Search />
             </div>
-        </>
+            <div css={styles.login}>
+                <Login />
+            </div>
+        </div>
     );
 }

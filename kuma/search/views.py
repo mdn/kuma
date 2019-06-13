@@ -143,3 +143,11 @@ def plugin(request):
     return render(request, 'search/plugin.html', {
         'locale': request.LANGUAGE_CODE
     }, content_type='application/opensearchdescription+xml')
+
+
+# This handles the /<locale>/search URL for the React version of the site.
+def react_search(request):
+    """
+    Render the React-based search UX
+    """
+    return render(request, 'search/react.html', {})

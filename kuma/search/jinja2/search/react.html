@@ -1,0 +1,17 @@
+{% extends "react_base.html" %}
+{% set title = _('Search') %}
+{% set query = request.GET.get('q') %}
+{% block title %}
+  {% if query %}
+    {{ page_title(_('Search Results for "%(query)s"', query=query)) }}
+  {% else %}
+    {{ page_title(_('Search')) }}
+  {% endif %}
+{% endblock %}
+
+{% block robots_value %}noindex, nofollow{% endblock %}
+
+{% block document_head %}
+{{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(),
+                None, False)|safe }}
+{% endblock %}
