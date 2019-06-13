@@ -681,8 +681,9 @@ Placeholders
     .icon-arrow {
         position: absolute;
         top: 30%;
-        right: 0;
-        transition: right .2s;
+        @include bidi(((left, auto, right, 0),));
+        @include bidi(((right, 0, left, auto),));
+        @include bidi(((transition, right .2s, left .2s),));
     }
 
     &:hover,
@@ -690,7 +691,8 @@ Placeholders
         text-decoration: none;
 
         .icon-arrow {
-            right: -5px;
+            @include bidi(((right, -5px, left, 10px),));
+            @include bidi(((left, auto, right, 10px),));
         }
     }
 
