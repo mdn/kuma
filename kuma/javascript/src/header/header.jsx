@@ -146,7 +146,8 @@ const menus = [
 ];
 
 type Props = {
-    document?: ?DocumentData
+    document?: ?DocumentData,
+    searchQuery?: string
 };
 
 export default function Header(props: Props): React.Node {
@@ -207,7 +208,7 @@ export default function Header(props: Props): React.Node {
                 ))}
             </Row>
             <div css={styles.search}>
-                <Search />
+                <Search initialQuery={props.searchQuery || ''} />
             </div>
             <div css={styles.login}>
                 <Login />

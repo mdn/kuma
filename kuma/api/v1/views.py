@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.utils.translation import activate, ugettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
+from elasticsearch_dsl import Q, query
 from waffle.models import Flag, Sample, Switch
 
 from kuma.core.urlresolvers import reverse
@@ -216,10 +217,6 @@ def search(request, locale):
     This endpoint makes a relatively simple ElasticSearch query
     for documents matching the value of the q parameter.
     """
-    # TODO: for non-English locales we need to modify this to search
-    # both English and the specified locale and return the results of
-    # both searches to the user.
-    #
     # TODO: I'm betting that a simple search like this will be faster
     # and just as good as the more complex searches implemented by the
     # code in kuma/search/. Peter disagrees and thinks that we might
@@ -229,13 +226,25 @@ def search(request, locale):
     # other hand, if we're ever going to implement any kind of
     # search-as-you-type interface, we'll need a super-fast custom
     # endpoint like this one.
-    qs = request.GET.get('q')
-    search = (WikiDocumentType.search()
-              .filter('term', locale=locale)
-              .source(['slug', 'title', 'summary', 'tags'])
-              .query('multi_match', type="phrase",
-                     query=qs,
-                     fields=['title^7', 'summary^2', 'content']))
+    query_string = request.GET.get('q')
+    if locale == 'en-US':
+        search = (WikiDocumentType.search()
+                  .filter('term', locale=locale)
+                  .source(['slug', 'title', 'summary', 'tags'])
+                  .query('multi_match', query=query_string,
+                         fields=['title^7', 'summary^2', 'content']))
+    else:
+        search = (WikiDocumentType.search()
+                  .filter('terms', locale=[locale, 'en-US'])
+                  .source(['slug', 'title', 'summary', 'tags', 'locale'])
+                  .query(query.Bool(
+                      must=Q('multi_match', query=query_string,
+                             fields=['title^7', 'summary^2', 'content']),
+                      should=[
+                          # boost the score if the document is translated
+                          Q('term', locale={'value': locale, 'boost': 8}),
+                      ])))
 
-    response = search.execute()
+    # Return as many as 40 matches, since we're not implementing pagination yet
+    response = search[0:40].execute()
     return JsonResponse(response.to_dict())

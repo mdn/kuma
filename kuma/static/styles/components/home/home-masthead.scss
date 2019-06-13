@@ -45,4 +45,11 @@ homepage masthead (search, feature callouts)
             background-size: auto 200px;
         }
     }
+
+    .home-masthead-no-search {
+        // When we remove the search box from the masthead
+        // (as in the React-based beta site) we want a smaller
+        // minimum height
+        min-height: 350px;
+    }
 }

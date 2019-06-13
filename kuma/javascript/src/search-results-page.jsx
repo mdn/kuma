@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { css } from '@emotion/core';
 
-import { gettext } from './l10n.js';
+import { gettext, interpolate } from './l10n.js';
 import Header from './header/header.jsx';
 import Route from './route.js';
 import Titlebar from './titlebar.jsx';
@@ -20,14 +20,40 @@ export type SearchResults = Array<{
 }>;
 
 const styles = {
-    searchResult: css({
-        padding: '8px 24px',
-        maxWidth: 600,
-        marginLeft: 'auto',
-        marginRight: 'auto'
+    results: css({
+        margin: '0 24px'
     }),
-    searchResultLink: css({}),
-    searchResultSummary: css({})
+    container: css({
+        display: 'flex',
+        flexDirection: 'row',
+        maxWidth: 1200,
+        margin: '20px auto'
+    }),
+    result: css({
+        flex: '2 1 500px'
+    }),
+    link: css({
+        fontWeight: 'bold'
+    }),
+    summary: css({}),
+    url: css({
+        fontSize: 12
+    }),
+    tags: css({
+        flex: '1 0 250px',
+        paddingLeft: 30,
+        alignSelf: 'center'
+    }),
+    tag: css({
+        whiteSpace: 'nowrap',
+        fontSize: 12,
+        lineHeight: 1.2,
+        backgroundColor: '#f5f9fa',
+        border: 'solid 1px #dce3e5',
+        borderRadius: 5,
+        padding: '2px 4px',
+        marginRight: 8
+    })
 };
 
 type Props = {
@@ -39,25 +65,47 @@ type Props = {
 export default function SearchResultsPage({ locale, query, data }: Props) {
     return (
         <>
-            <Header />
-            <Titlebar title={`${gettext('Search Results')}: ${query}`} />
-            {data &&
-                data.map(hit => {
-                    let url = `/${locale}/docs/${hit.slug}`;
-                    // TODO: This design is a placeholder only.
-                    // We should display the link URL like the wiki site does.
-                    // And maybe try displaying tags as well.
-                    return (
-                        <div css={styles.searchResult} key={hit.slug}>
-                            <a css={styles.searchResultLink} href={url}>
-                                {hit.title}
-                            </a>
-                            <div css={styles.searchResultSummary}>
-                                {hit.summary}
+            <Header searchQuery={query} />
+            <Titlebar title={`${gettext('Results')}: ${query}`} />
+            <div css={styles.results}>
+                {data &&
+                    data.map(hit => {
+                        let path = `/${locale}/docs/${hit.slug}`;
+                        let url =
+                            window && window.origin
+                                ? `${window.origin}${path}`
+                                : path;
+                        return (
+                            <div css={styles.container} key={hit.slug}>
+                                <div css={styles.result}>
+                                    <div>
+                                        <a css={styles.link} href={path}>
+                                            {hit.title}
+                                        </a>
+                                    </div>
+                                    <div css={styles.url}>{url}</div>
+                                    <div css={styles.summary}>
+                                        {hit.summary}
+                                    </div>
+                                </div>
+                                <div css={styles.tags}>
+                                    {hit.tags
+                                        .filter(tag => !tag.startsWith('Needs'))
+                                        .map(tag => (
+                                            <>
+                                                <span
+                                                    css={styles.tag}
+                                                    key={tag}
+                                                >
+                                                    {tag}
+                                                </span>{' '}
+                                            </>
+                                        ))}
+                                </div>
                             </div>
-                        </div>
-                    );
-                })}
+                        );
+                    })}
+            </div>
         </>
     );
 }
@@ -131,6 +179,12 @@ export class SearchRoute extends Route<SearchRouteParams, SearchResults> {
     }
 
     getTitle({ query }: SearchRouteParams): string {
-        return `Search results for: ${query} | MDN`;
+        return `${interpolate(
+            gettext('Search results for "%(query)s"'),
+            {
+                query
+            },
+            true
+        )} | MDN`;
     }
 }

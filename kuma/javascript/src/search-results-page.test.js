@@ -39,7 +39,7 @@ describe('SearchResultsPage component', () => {
     test('titlebar', () => {
         const titlebars = root.findAllByType(Titlebar);
         expect(titlebars.length).toBe(1);
-        expect(titlebars[0].props.title).toBe('Search Results: qq');
+        expect(titlebars[0].props.title).toBe('Results: qq');
     });
 
     // The final form of the search results page isn't decided yet
@@ -122,7 +122,7 @@ describe('SearchRoute', () => {
 
     test('getTitle()', () => {
         expect(route.getTitle({ locale: '', query: 'qq' })).toBe(
-            'Search results for: qq | MDN'
+            'Search results for "qq" | MDN'
         );
     });
 });
