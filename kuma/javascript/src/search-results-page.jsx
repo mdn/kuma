@@ -12,12 +12,15 @@ type SearchRouteParams = {
     query: string
 };
 
-export type SearchResults = Array<{
-    slug: string,
-    title: string,
-    summary: string,
-    tags: Array<string>
-}>;
+export type SearchResults = {
+    results: ?Array<{
+        slug: string,
+        title: string,
+        summary: string,
+        tags: Array<string>
+    }>,
+    error: ?any
+};
 
 const styles = {
     results: css({
@@ -53,6 +56,11 @@ const styles = {
         borderRadius: 5,
         padding: '2px 4px',
         marginRight: 8
+    }),
+    error: css({
+        margin: 16,
+        padding: 16,
+        border: 'solid red 2px'
     })
 };
 
@@ -69,7 +77,8 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
             <Titlebar title={`${gettext('Results')}: ${query}`} />
             <div css={styles.results}>
                 {data &&
-                    data.map(hit => {
+                    data.results &&
+                    data.results.map(hit => {
                         let path = `/${locale}/docs/${hit.slug}`;
                         let url =
                             window && window.origin
@@ -92,19 +101,21 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
                                     {hit.tags
                                         .filter(tag => !tag.startsWith('Needs'))
                                         .map(tag => (
-                                            <>
-                                                <span
-                                                    css={styles.tag}
-                                                    key={tag}
-                                                >
+                                            <React.Fragment key={tag}>
+                                                <span css={styles.tag}>
                                                     {tag}
                                                 </span>{' '}
-                                            </>
+                                            </React.Fragment>
                                         ))}
                                 </div>
                             </div>
                         );
                     })}
+                {data && data.error && (
+                    <div css={styles.error}>
+                        <h2>{data.error.toString()}</h2>
+                    </div>
+                )}
             </div>
         </>
     );
@@ -144,38 +155,38 @@ export class SearchRoute extends Route<SearchRouteParams, SearchResults> {
         return { locale: this.locale, query: q };
     }
 
-    // TODO:
-    // Need to think through error handling here. If response.ok is false
-    // what do we do?  If the promise is rejected the router will
-    // fall back to a regular full document load, but that is likely to
-    // make the same query and fail in the same way possibly causing
-    // an infinite loop!
-    //
-    // Perhaps we need to define some different types of errors that
-    // we can throw. One would cause a full document load rather than
-    // client side nav. Another type of error would display some kind of
-    // client-side "oops" page. Does the router need to be able to display
-    // error messages?
-    //
-    // Maybe this route shouldn't have a fetch method at all. Better maybe
-    // to always render a search results page immediately, with a spinner
-    // and then do the query with useEffect() from that page component?
-    // That would mean a change to the router to allow routes that don't
-    // have a fetch method. But it would give the search page better
-    // control over how it handles its own errors.
-    //
-    // Doing that would also mean that the Route would have to handle
-    // all of its own analytics... Router won't know how long fetching
-    // takes and when the page is actually complete. So maybe this is
-    // not a good idea. (Though some routes might want to be able to
-    // specify that they always do a preliminary render before the fetch?)
-    //
     fetch({ query }: SearchRouteParams): Promise<SearchResults> {
         let encoded = encodeURIComponent(query);
         let url = `/api/v1/search/${this.locale}?q=${encoded}`;
-        return fetch(url)
-            .then(response => response.json())
-            .then(results => results && results.hits.hits.map(h => h._source));
+        return (
+            fetch(url)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error(
+                            `${response.status} ${
+                                response.statusText
+                            } fetching ${url}`
+                        );
+                    }
+                })
+                .then(
+                    results =>
+                        results && {
+                            results: results.hits.hits.map(h => h._source),
+                            error: null
+                        }
+                )
+                // If anything goes wrong while we're fetching, just
+                // return the error we got and let the search results
+                // page display it.  If we don't do this and let the
+                // error propagate to the router the router will fall
+                // back on a full page reload. But for this route that
+                // will just cause the error again and will result in
+                // an infinite reload loop.
+                .catch(error => ({ error, results: null }))
+        );
     }
 
     getTitle({ query }: SearchRouteParams): string {
