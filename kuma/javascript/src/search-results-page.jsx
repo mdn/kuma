@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { css } from '@emotion/core';
 
-import { gettext } from './l10n.js';
+import { gettext, interpolate } from './l10n.js';
 import Header from './header/header.jsx';
 import Route from './route.js';
 import Titlebar from './titlebar.jsx';
@@ -66,7 +66,7 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
     return (
         <>
             <Header searchQuery={query} />
-            <Titlebar title={`${gettext('Search Results')}: ${query}`} />
+            <Titlebar title={`${gettext('Results')}: ${query}`} />
             <div css={styles.results}>
                 {data &&
                     data.map(hit => {
@@ -179,6 +179,12 @@ export class SearchRoute extends Route<SearchRouteParams, SearchResults> {
     }
 
     getTitle({ query }: SearchRouteParams): string {
-        return `Search results for: ${query} | MDN`;
+        return `${interpolate(
+            gettext('Search results for "%(query)s"'),
+            {
+                query
+            },
+            true
+        )} | MDN`;
     }
 }
