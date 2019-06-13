@@ -65,7 +65,7 @@ type Props = {
 export default function SearchResultsPage({ locale, query, data }: Props) {
     return (
         <>
-            <Header />
+            <Header searchQuery={query} />
             <Titlebar title={`${gettext('Search Results')}: ${query}`} />
             <div css={styles.results}>
                 {data &&
