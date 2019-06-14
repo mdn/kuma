@@ -713,6 +713,29 @@ def pipeline_one_scss(slug, **kwargs):
 
 
 PIPELINE_CSS = {
+    # Combines the mdn, wiki and wiki-compat-tables styles into
+    # one bundle for use by pages that are part of the new
+    # single page app.
+    'react-mdn': {
+        'source_filenames': (
+            'styles/main.scss',
+            'styles/wiki.scss',
+            'styles/diff.scss',
+
+            # Custom build of our Prism theme
+            'styles/libs/prism/prism.css',
+            'styles/libs/prism/prism-line-highlight.css',
+            'styles/libs/prism/prism-line-numbers.css',
+
+            'js/prism-mdn/components/prism-json.css',
+            'styles/wiki-syntax.scss',
+
+            'styles/wiki-compat-tables.scss',
+        ),
+        'output_filename': 'build/styles/react-mdn.css',
+        'variant': 'datauri',
+    },
+
     'mdn': {
         'source_filenames': (
             'styles/main.scss',
@@ -952,17 +975,30 @@ PIPELINE_JS = {
     },
     'react-main': {
         'source_filenames': (
-            'js/libs/jquery/jquery.js',
-            'js/libs/jquery-ajax-prefilter.js',
+            # TODO: these are the last legacy files from the wiki site
+            # that we're still using on the React-based pages. Ideally
+            # we should just move these to the React code so webpack
+            # can deal with them.
             'js/utils/post-message-handler.js',
-            # 'js/libs/icons.js',
-            # 'js/components.js',
             'js/analytics.js',
-            # 'js/main.js',
-            'js/auth.js',
-            # 'js/highlight.js',
-            'js/wiki-compat-trigger.js',
-            # 'js/lang-switcher.js',
+
+            # Custom Prism build
+            # TODO: the prism.js file should be imported dynamcally
+            # when we need it instead of being hardcoded in here.
+            "js/libs/prism/prism-core.js",
+            "js/libs/prism/prism-bash.js",
+            "js/libs/prism/prism-markup.js",
+            "js/libs/prism/prism-css.js",
+            "js/libs/prism/prism-clike.js",
+            "js/libs/prism/prism-javascript.js",
+            "js/libs/prism/prism-json.js",
+            "js/libs/prism/prism-jsonp.js",
+            "js/libs/prism/prism-css-extras.js",
+            "js/libs/prism/prism-rust.js",
+            "js/libs/prism/prism-wasm.js",
+            "js/libs/prism/prism-line-highlight.js",
+            "js/libs/prism/prism-line-numbers.js",
+
             # The react.js file is created by webpack and
             # placed in the kuma/javascript/dist/ directory.
             'react.js'

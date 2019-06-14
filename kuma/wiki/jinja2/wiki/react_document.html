@@ -24,8 +24,7 @@
   <link rel="home" href="{{ url('home') }}">
   <link rel="license" href="#license">
 
-  {% stylesheet 'mdn' %}
-  {% stylesheet 'wiki' %}
+  {% stylesheet 'react-mdn' %}
 
   {#- If the stylesheet exists, include it. Otherwise, does nothing. #}
   {% stylesheet 'locale-%s' % LANG %}
@@ -147,8 +146,6 @@
     </div>
   </footer>
 
-  {# strings used by javascript modules. Hopefully we can remove soon #}
-  <script src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
   <!-- site js -->
   {% javascript 'react-main' %}
   <script>
