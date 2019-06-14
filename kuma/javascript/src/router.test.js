@@ -32,16 +32,25 @@ class TestRoute extends Route<TestRouteParams, TestRouteData> {
     }
 }
 
+// TODO: maybe I should just mock the perf.* methods here
+// and write separate tests for perf.js
 global.performance = {};
 global.performance.clearMarks = jest.fn();
 global.performance.clearMeasures = jest.fn();
 global.performance.mark = jest.fn();
 global.performance.measure = jest.fn();
+global.performance.getEntriesByName = jest.fn(() => [{ duration: 100 }]);
+
 window.scrollTo = jest.fn();
 // $FlowFixMe
 history.pushState = jest.fn();
 // $FlowFixMe
 document.body.addEventListener = jest.fn();
+
+window.LUX = {
+    init: jest.fn(),
+    send: jest.fn()
+};
 
 test('Router', done => {
     jest.useFakeTimers();
@@ -142,6 +151,10 @@ test('Router', done => {
     // by any of the simulated clicks above
     expect(loadingBar.props.className).not.toContain('loadingAnimation');
 
+    // Expect neither of the LUX calls to have been called
+    expect(window.LUX.init.mock.calls.length).toBe(0);
+    expect(window.LUX.send.mock.calls.length).toBe(0);
+
     // Now simulate a click on a link to a url we can route to
     // and expect to see client side navigation
     act(() => {
@@ -154,6 +167,10 @@ test('Router', done => {
     // and we should also have called preventDefault on the event
     expect(history.pushState.mock.calls[0][0]).toBe('/test/2');
     expect(preventDefault).toHaveBeenCalledTimes(1);
+
+    // We should also have called LUX.init() but not send() at this point
+    expect(window.LUX.init.mock.calls.length).toBe(1);
+    expect(window.LUX.send.mock.calls.length).toBe(0);
 
     // Expect the loading animation to have been triggered
     expect(loadingBar.props.className).toContain('loadingAnimation');
@@ -170,6 +187,12 @@ test('Router', done => {
         component = router.root.findByType(TestComponent);
         expect(component.props.path).toBe('/test/2');
         expect(component.props.data.uppercase).toBe('/TEST/2');
+
+        // Wait for effects to run after the render
+        act(() => {});
+
+        // And LUX.send() should have been called by now
+        expect(window.LUX.send.mock.calls.length).toBe(1);
 
         done();
     });

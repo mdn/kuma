@@ -15,6 +15,14 @@ export function navigateStart() {
         performance.clearMeasures(FETCH);
         performance.clearMeasures(RENDER);
         performance.mark(START);
+
+        if (
+            typeof window === 'object' &&
+            window.LUX &&
+            typeof window.LUX.init === 'function'
+        ) {
+            window.LUX.init();
+        }
     } catch (e) {
         console.error(e);
     }
@@ -36,6 +44,14 @@ export function navigateRenderComplete(ga: GAFunction) {
 
         try {
             performance.measure(RENDER, START);
+
+            if (
+                typeof window === 'object' &&
+                window.LUX &&
+                typeof window.LUX.send === 'function'
+            ) {
+                window.LUX.send();
+            }
 
             let fetchTime = performance.getEntriesByName(FETCH)[0].duration;
             let renderTime = performance.getEntriesByName(RENDER)[0].duration;
