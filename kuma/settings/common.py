@@ -718,6 +718,29 @@ def pipeline_one_scss(slug, **kwargs):
 
 
 PIPELINE_CSS = {
+    # Combines the mdn, wiki and wiki-compat-tables styles into
+    # one bundle for use by pages that are part of the new
+    # single page app.
+    'react-mdn': {
+        'source_filenames': (
+            'styles/main.scss',
+            'styles/wiki.scss',
+            'styles/diff.scss',
+
+            # Custom build of our Prism theme
+            'styles/libs/prism/prism.css',
+            'styles/libs/prism/prism-line-highlight.css',
+            'styles/libs/prism/prism-line-numbers.css',
+
+            'js/prism-mdn/components/prism-json.css',
+            'styles/wiki-syntax.scss',
+
+            'styles/wiki-compat-tables.scss',
+        ),
+        'output_filename': 'build/styles/react-mdn.css',
+        'variant': 'datauri',
+    },
+
     'mdn': {
         'source_filenames': (
             'styles/main.scss',
@@ -966,7 +989,7 @@ PIPELINE_JS = {
             # 'js/main.js',
             'js/auth.js',
             # 'js/highlight.js',
-            'js/wiki-compat-trigger.js',
+            # 'js/wiki-compat-trigger.js',
             # 'js/lang-switcher.js',
             # The react.js file is created by webpack and
             # placed in the kuma/javascript/dist/ directory.

@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useEffect, useRef } from 'react';
 import { css } from '@emotion/core';
 
+import { activateBCDTables } from './bcd.js';
 import ClockIcon from './icons/clock.svg';
 import ContributorsIcon from './icons/contributors.svg';
 import { getLocale, gettext } from './l10n.js';
@@ -35,6 +36,17 @@ const styles = {
         '& a.sectionLink': {
             fontSize: 24,
             textDecoration: 'none'
+        },
+
+        // Styles for BCD tables, overriding the stylesheets
+        '& table.bc-table button.bc-history-link': {
+            ':focus': {
+                outline: '#83d0f2 solid 3px',
+                outlineOffset: -3
+            },
+            ':hover': {
+                backgroundColor: '#83d0f2 !important'
+            }
         }
     }),
     metadata: css({
@@ -97,6 +109,11 @@ export default function Article({ document }: DocumentProps) {
     useEffect(() => {
         if (article.current) {
             addAnchors(article.current);
+        }
+    }, [document]);
+    useEffect(() => {
+        if (article.current) {
+            activateBCDTables(article.current);
         }
     }, [document]);
 
