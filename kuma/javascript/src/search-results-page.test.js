@@ -7,7 +7,7 @@ import SearchResultsPage, { SearchRoute } from './search-results-page.jsx';
 import Titlebar from './titlebar.jsx';
 import type { SearchResults } from './search-results-page.jsx';
 
-const fakeSearchResults: SearchResults = [
+const fakeResults = [
     {
         slug: 'slug1',
         title: 'title1',
@@ -21,6 +21,11 @@ const fakeSearchResults: SearchResults = [
         tags: ['tag2.1', 'tag2.2']
     }
 ];
+
+const fakeSearchResults: SearchResults = {
+    results: fakeResults,
+    error: null
+};
 
 describe('SearchResultsPage component', () => {
     const page = create(
@@ -46,11 +51,29 @@ describe('SearchResultsPage component', () => {
     // but we expect the strings of the fake search data to appear
     // in the page somewhere
     test('results', () => {
-        for (const hit of fakeSearchResults) {
+        for (const hit of fakeResults) {
             expect(snapshot).toContain(hit.title);
             expect(snapshot).toContain(hit.summary);
             expect(snapshot).toContain(hit.slug);
         }
+    });
+});
+
+describe('SearchResultsPage with error', () => {
+    const error = new Error('SearchError');
+
+    const page = create(
+        <SearchResultsPage
+            locale="en-US"
+            query="qq"
+            data={{ error, results: null }}
+        />
+    );
+    const snapshot = JSON.stringify(page.toJSON());
+
+    test('Page displays error message', () => {
+        // The page should contain the error message
+        expect(snapshot).toContain(error.toString());
     });
 });
 
@@ -105,7 +128,9 @@ describe('SearchRoute', () => {
                         // ElasticSearch buries the results in layers of
                         // other stuff that we fake out here
                         hits: {
-                            hits: fakeSearchResults.map(r => ({ _source: r }))
+                            hits: fakeResults.map(r => ({
+                                _source: r
+                            }))
                         }
                     })
             });
