@@ -7,6 +7,7 @@ import { activateBCDTables } from './bcd.js';
 import ClockIcon from './icons/clock.svg';
 import ContributorsIcon from './icons/contributors.svg';
 import { getLocale, gettext } from './l10n.js';
+import { highlightSyntax } from './prism.js';
 
 import type { DocumentData } from './document.jsx';
 type DocumentProps = {
@@ -101,19 +102,16 @@ function addAnchors(article) {
 
 export default function Article({ document }: DocumentProps) {
     const article = useRef(null);
+
+    // Each time we display an article we need to patch it up
+    // in various ways.
     useEffect(() => {
-        if (article.current) {
-            highlightSections(article.current);
-        }
-    }, [document]);
-    useEffect(() => {
-        if (article.current) {
-            addAnchors(article.current);
-        }
-    }, [document]);
-    useEffect(() => {
-        if (article.current) {
-            activateBCDTables(article.current);
+        let rootElement = article.current;
+        if (rootElement) {
+            highlightSections(rootElement);
+            addAnchors(rootElement);
+            highlightSyntax(rootElement);
+            activateBCDTables(rootElement);
         }
     }, [document]);
 

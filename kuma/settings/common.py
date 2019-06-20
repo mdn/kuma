@@ -991,6 +991,24 @@ PIPELINE_JS = {
             # 'js/highlight.js',
             # 'js/wiki-compat-trigger.js',
             # 'js/lang-switcher.js',
+
+            # Custom Prism build
+            # TODO: the prism.js file should be imported dynamcally
+            # when we need it instead of being hardcoded in here.
+            "js/libs/prism/prism-core.js",
+            "js/libs/prism/prism-bash.js",
+            "js/libs/prism/prism-markup.js",
+            "js/libs/prism/prism-css.js",
+            "js/libs/prism/prism-clike.js",
+            "js/libs/prism/prism-javascript.js",
+            "js/libs/prism/prism-json.js",
+            "js/libs/prism/prism-jsonp.js",
+            "js/libs/prism/prism-css-extras.js",
+            "js/libs/prism/prism-rust.js",
+            "js/libs/prism/prism-wasm.js",
+            "js/libs/prism/prism-line-highlight.js",
+            "js/libs/prism/prism-line-numbers.js",
+
             # The react.js file is created by webpack and
             # placed in the kuma/javascript/dist/ directory.
             'react.js'
