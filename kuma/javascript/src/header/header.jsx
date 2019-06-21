@@ -85,59 +85,59 @@ const styles = {
 
 const menus = [
     {
-        label: 'Technologies',
+        label: gettext('Technologies'),
         url: 'Web',
         items: [
-            { url: 'Web/HTML', label: 'HTML' },
-            { url: 'Web/CSS', label: 'CSS' },
-            { url: 'Web/JavaScript', label: 'JavaScript' },
-            { url: 'Web/Guide/Graphics', label: 'Graphics' },
-            { url: 'Web/HTTP', label: 'HTTP' },
-            { url: 'Web/API', label: 'APIs / DOM' },
+            { url: 'Web/HTML', label: gettext('HTML') },
+            { url: 'Web/CSS', label: gettext('CSS') },
+            { url: 'Web/JavaScript', label: gettext('JavaScript') },
+            { url: 'Web/Guide/Graphics', label: gettext('Graphics') },
+            { url: 'Web/HTTP', label: gettext('HTTP') },
+            { url: 'Web/API', label: gettext('APIs / DOM') },
             {
                 url: 'Mozilla/Add-ons/WebExtensions',
-                label: 'Browser Extensions'
+                label: gettext('Browser Extensions')
             },
-            { url: 'Web/MathML', label: 'MathML' }
+            { url: 'Web/MathML', label: gettext('MathML') }
         ]
     },
     {
-        label: 'References & Guides',
+        label: gettext('References & Guides'),
         url: 'Learn',
         items: [
-            { url: 'Learn', label: 'Learn web development' },
-            { url: 'Web/Tutorials', label: 'Tutorials' },
-            { url: 'Web/Reference', label: 'References' },
-            { url: 'Web/Guide', label: 'Developer Guides' },
-            { url: 'Web/Accessibility', label: 'Accessibility' },
-            { url: 'Games', label: 'Game development' },
-            { url: 'Web', label: '...more docs' }
+            { url: 'Learn', label: gettext('Learn web development') },
+            { url: 'Web/Tutorials', label: gettext('Tutorials') },
+            { url: 'Web/Reference', label: gettext('References') },
+            { url: 'Web/Guide', label: gettext('Developer Guides') },
+            { url: 'Web/Accessibility', label: gettext('Accessibility') },
+            { url: 'Games', label: gettext('Game development') },
+            { url: 'Web', label: gettext('...more docs') }
         ]
     },
     {
-        label: 'Feedback',
+        label: gettext('Feedback'),
         url: 'MDN/Feedback',
         items: [
             {
                 url: 'https://support.mozilla.org/',
-                label: 'Get Firefox help',
+                label: gettext('Get Firefox help'),
                 external: true
             },
             {
                 url: 'https://stackoverflow.com/',
-                label: 'Get web development help',
+                label: gettext('Get web development help'),
                 external: true
             },
-            { url: 'MDN/Community', label: 'Join the MDN community' },
+            { url: 'MDN/Community', label: gettext('Join the MDN community') },
             {
-                label: 'Report a content problem',
+                label: gettext('Report a content problem'),
                 external: true,
                 // See fixurl() for code that replaces the {{SLUG}}
                 url:
                     'https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title={{SLUG}}'
             },
             {
-                label: 'Report a bug',
+                label: gettext('Report a bug'),
                 external: true,
                 url: 'https://bugzilla.mozilla.org/form.mdn'
             }
@@ -193,11 +193,11 @@ export default function Header(props: Props): React.Node {
                                             rel="noopener noreferrer"
                                             href={fixurl(item.url)}
                                         >
-                                            {gettext(item.label)} &#x1f310;
+                                            {item.label} &#x1f310;
                                         </a>
                                     ) : (
                                         <a href={fixurl(item.url)}>
-                                            {gettext(item.label)}
+                                            {item.label}
                                         </a>
                                     )}
                                 </li>
