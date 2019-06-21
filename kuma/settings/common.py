@@ -980,17 +980,12 @@ PIPELINE_JS = {
     },
     'react-main': {
         'source_filenames': (
-            'js/libs/jquery/jquery.js',
-            'js/libs/jquery-ajax-prefilter.js',
+            # TODO: these are the last legacy files from the wiki site
+            # that we're still using on the React-based pages. Ideally
+            # we should just move these to the React code so webpack
+            # can deal with them.
             'js/utils/post-message-handler.js',
-            # 'js/libs/icons.js',
-            # 'js/components.js',
             'js/analytics.js',
-            # 'js/main.js',
-            'js/auth.js',
-            # 'js/highlight.js',
-            # 'js/wiki-compat-trigger.js',
-            # 'js/lang-switcher.js',
 
             # Custom Prism build
             # TODO: the prism.js file should be imported dynamcally

@@ -5,23 +5,18 @@
 
     var newsletterForm = doc.getElementById('newsletterForm');
     var isHidden = false;
-    var isArticle = false;
+    var isArticle = window.location.pathname.indexOf('/docs/') !== -1;
 
     if(!newsletterForm) {
         return;
     } else {
         // check for local storage
-        if(mdn.features.localStorage) {
+        if(mdn.features.localStorage !== false) {
             // if hidden by local storage
             isHidden = localStorage.getItem('newsletterHide') === 'true' ? true : false;
         }
 
-        // check for article
-        if(doc.querySelector('#wikiArticle')) {
-            isArticle = true;
-        }
-
-        if(!mdn.features.localStorage || !isArticle) {
+        if(mdn.features.localStorage === false || !isArticle) {
             newsletter();
         } else if(isArticle && !isHidden) {
             newsletter();
@@ -59,7 +54,7 @@
                 errorList.appendChild(item);
             }
             newsletterErrors.appendChild(errorList);
-            $(newsletterErrors).removeClass('hidden');
+            newsletterErrors.classList.remove('hidden');
             // track an error happened
             mdn.analytics.trackEvent({
                 'category': 'newsletter',
@@ -71,11 +66,11 @@
         // show success message
         function newsletterThanks() {
             // hide form
-            $(newsletterForm).addClass('hidden');
+            newsletterForm.classList.add('hidden');
             // show thanks message
-            $('#newsletterThanks').removeClass('hidden');
+            doc.querySelector('#newsletterThanks').classList.remove('hidden');
             // hide close button, analytics get confusing if it stays
-            $('#newsletterHide').addClass('hidden');
+            doc.querySelector('#newsletterHide').classList.add('hidden');
             // track success
             mdn.analytics.trackEvent({
                 'category': 'newsletter',
@@ -111,7 +106,7 @@
 
             // new submission, clear old errors
             errorArray = [];
-            $(newsletterErrors).addClass('hidden');
+            newsletterErrors.classList.add('hidden');
             while (newsletterErrors.firstChild) {
                 newsletterErrors.removeChild(newsletterErrors.firstChild);
             }
@@ -172,7 +167,7 @@
         newsletterForm.addEventListener('submit', newsletterSubscribe, false);
 
         newsletterEmailInput.addEventListener('focus', function() {
-            $(newsletterPrivacy).removeClass('hidden');
+            newsletterPrivacy.classList.remove('hidden');
             mdn.analytics.trackEvent({
                 'category': 'newsletter',
                 'action': 'prompt',
@@ -182,16 +177,14 @@
     }
 
     function newsletterAddHideButton() {
-        var $hideButton = $('#newsletterHide');
-        // show button
-        $hideButton.removeClass('hidden');
-        // add listener
-        $hideButton.on('click', newsletterHandleHideClick);
+        var hideButton = doc.querySelector('#newsletterHide');
+        hideButton.classList.remove('hidden');
+        hideButton.addEventListener('click', newsletterHandleHideClick);
     }
 
     function newsletterHide() {
-        var $newsletterBox = $('.newsletter-box');
-        $newsletterBox.addClass('hidden');
+        var newsletterBox = doc.querySelector('.newsletter-box');
+        newsletterBox.classList.add('hidden');
     }
 
     function newsletterSaveHide() {
