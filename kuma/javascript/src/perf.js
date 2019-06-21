@@ -11,11 +11,8 @@ let navigating = false;
 export function navigateStart() {
     navigating = true;
     try {
-        performance.clearMarks(START);
-        performance.clearMeasures(FETCH);
-        performance.clearMeasures(RENDER);
-        performance.mark(START);
-
+        // If we're using Speedcurve's LUX analytics, tell it that we're
+        // starting a new client-side navigation
         if (
             typeof window === 'object' &&
             window.LUX &&
@@ -23,6 +20,16 @@ export function navigateStart() {
         ) {
             window.LUX.init();
         }
+
+        // The LUX init call above also appears to clear everthing
+        // But just to be sure we will explicitly clear the custom
+        // marks and measures that we care about.
+        performance.clearMarks(START);
+        performance.clearMeasures(FETCH);
+        performance.clearMeasures(RENDER);
+
+        // Record the start time for a client-side navigation
+        performance.mark(START);
     } catch (e) {
         console.error(e);
     }
@@ -31,6 +38,8 @@ export function navigateStart() {
 export function navigateFetchComplete() {
     if (navigating) {
         try {
+            // Record the time it takes to fetch page data during a
+            // client-side navigation
             performance.measure(FETCH, START);
         } catch (e) {
             console.error(e);
@@ -43,8 +52,11 @@ export function navigateRenderComplete(ga: GAFunction) {
         navigating = false;
 
         try {
+            // Record the time it takes to fetch page data and re-render
+            // the page during client-side navigation
             performance.measure(RENDER, START);
 
+            // Send LUX data to Speedcurve to record the client-side navigation
             if (
                 typeof window === 'object' &&
                 window.LUX &&
