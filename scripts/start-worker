@@ -3,8 +3,8 @@ set -e  # Exit on non-zero status
 set -u  # Treat unset variables as an error
 
 # This will make sure we don't even attempt to start the worker
-# until the $BROKER_URL (i.e. Redis) is up and running.
-urlwait ${BROKER_URL} 10
+# until the $CELERY_BROKER_URL (i.e. Redis) is up and running.
+urlwait ${CELERY_BROKER_URL} 10
 
 # Note, in production you'll want to run a separate process with
 # just `celery -A kuma.celery:app beat ...`. But for docker-compose

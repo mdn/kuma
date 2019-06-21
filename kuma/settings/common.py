@@ -1368,9 +1368,7 @@ if CSP_REPORT_ENABLE:
                                      bits.fragment))
 
 # Celery (asynchronous tasks)
-# XXX Can't change the old name 'BROKER_URL' to 'CELERY_BROKER_URL' in
-# fear of breaking the existing Stage/Prod environments.
-CELERY_BROKER_URL = config('BROKER_URL',
+CELERY_BROKER_URL = config('CELERY_BROKER_URL',
                            default='redis://0.0.0.0:6379/0')
 
 CELERY_TASK_ALWAYS_EAGER = config('CELERY_TASK_ALWAYS_EAGER', False, cast=bool)

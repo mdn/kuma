@@ -19,7 +19,7 @@ services:
       - ATTACHMENT_HOST=${ATTACHMENT_HOST:-localhost:8000}
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
-      - BROKER_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_TASK_ALWAYS_EAGER=False
       - CELERY_RESULT_BACKEND=redis://redis:6379/1
       - CSRF_COOKIE_SECURE=False
