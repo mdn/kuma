@@ -111,6 +111,14 @@ export default function Router({
     let pageStateRef = useRef(null);
     pageStateRef.current = pageState;
 
+    // The recordAndReportAnalytics effect function below needs to be
+    // able to distinguish initial page loads from subsequent client-side
+    // navigations, so we need a flag that starts off true and becomes
+    // false after the first page load is complete. But since this is a
+    // functional component, not a class-based component, we can't just
+    // use a property of the component instance and need to use a ref.
+    let initialPageLoad = useRef(true);
+
     // When loading is true we display a loading bar animation
     const [loading, setLoading] = useState(true);
 
@@ -479,16 +487,26 @@ export default function Router({
             return;
         }
 
+        // Set any Google Analytics variables specific to this route
+        pageState.route.analyticsHook(ga, pageState.params, pageState.data);
+
+        // We want to run the code above for the initial page load
+        // and all subsequent client-side navigations. But the code below
+        // should only run after client-side navigation. Analytics for
+        // the initial page load depend on user data, and we send the
+        // data for initial page load from an effect function in
+        // user-provider.jsx.
+        if (initialPageLoad.current) {
+            initialPageLoad.current = false;
+            return;
+        }
+
         // Record the time since navigateStart() and send both the fetch
         // and render times to Google Analytics
         navigateRenderComplete(ga);
 
-        // Set any Google Analytics variables specific to this route
-        pageState.route.analyticsHook(ga, pageState.params, pageState.data);
-
         // Tell Google Analytics about this navigation.
         // We use 'dimension19' to mean client-side navigate
-        // TODO: Need to ensure this is not set to yes on the initial page load.
         ga('set', 'dimension19', 'Yes');
         ga('send', 'pageview');
     }

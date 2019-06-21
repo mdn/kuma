@@ -90,10 +90,6 @@ export default function UserProvider(props: {
                 // it is time to send the initial 'pageview' event for
                 // the initial load. See router.jsx for code that
                 // sends 'pageview' events for client-side navigation.
-                //
-                // TODO: the Router component might be sending pageview
-                // for the initial load as well, and we need to work
-                // that out.
                 ga('send', {
                     hitType: 'pageview',
                     hitCallback: () => {
