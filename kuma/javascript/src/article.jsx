@@ -5,7 +5,8 @@ import { css } from '@emotion/core';
 
 import ClockIcon from './icons/clock.svg';
 import ContributorsIcon from './icons/contributors.svg';
-import { getLocale, gettext } from './l10n.js';
+import { gettext } from './l10n.js';
+import TagsIcon from './icons/tags.svg';
 
 import type { DocumentData } from './document.jsx';
 type DocumentProps = {
@@ -45,19 +46,32 @@ const styles = {
             margin: '4px 0'
         }
     }),
-    contributorsIcon: css({
-        width: 14,
-        height: 14,
-        marginRight: 5,
-        verticalAlign: 'middle',
-        fill: '#696969'
-    }),
-    clockIcon: css({
+    metadataIcon: css({
         width: 16,
         height: 16,
         marginRight: 5,
         verticalAlign: 'middle',
         fill: '#696969'
+    }),
+    tags: css({
+        display: 'inline',
+        // Our main.css stylesheet has a ".text-content ul" style we need
+        // to override with the !important below
+        paddingLeft: '0px !important',
+
+        // These tag styles also appear in search-results-page.jsx
+        // We should probably keep the two designs in sync
+        '& li': {
+            display: 'inline-block',
+            whiteSpace: 'nowrap',
+            fontSize: 12,
+            lineHeight: 1.2,
+            backgroundColor: '#f5f9fa',
+            border: 'solid 1px #dce3e5',
+            borderRadius: 5,
+            padding: '2px 4px',
+            marginRight: 8
+        }
     })
 };
 
@@ -117,23 +131,34 @@ export default function Article({ document }: DocumentProps) {
 }
 
 function ArticleMetadata({ document }: DocumentProps) {
-    const locale = getLocale();
     return (
         <div css={styles.metadata}>
             <div>
-                <ContributorsIcon css={styles.contributorsIcon} />{' '}
+                <TagsIcon css={styles.metadataIcon} />{' '}
+                <strong>{gettext('Tags:')}</strong>{' '}
+                <ul css={styles.tags}>
+                    {document.tags.map(c => (
+                        <li key={c}>{c}</li>
+                    ))}
+                </ul>
+            </div>
+            <div>
+                <ContributorsIcon css={styles.metadataIcon} />{' '}
                 <strong>{gettext('Contributors to this page:')}</strong>{' '}
-                {document.contributors.map((c, i) => (
+                {/*
+                 * TODO: once we implement profile pages on the beta site
+                 * these contributor names should turn into links
+                 * <a href={`/${locale}/profiles/${c}`} rel="nofollow">{c}</a>
+                 */
+                document.contributors.map((c, i) => (
                     <span key={c}>
                         {i > 0 && ', '}
-                        <a href={`/${locale}/profiles/${c}`} rel="nofollow">
-                            {c}
-                        </a>
+                        {c}
                     </span>
                 ))}
             </div>
             <div>
-                <ClockIcon css={styles.clockIcon} />{' '}
+                <ClockIcon css={styles.metadataIcon} />{' '}
                 <strong>{gettext('Last updated by:')}</strong>{' '}
                 {document.lastModifiedBy}{' '}
                 <time dateTime={document.lastModified}>
