@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Header snapshot 1`] = `
-.emotion-39 {
+.emotion-40 {
   display: grid;
   -webkit-align-items: center;
   -webkit-box-align: center;
@@ -12,7 +12,7 @@ exports[`Header snapshot 1`] = `
 }
 
 @media (min-width:1024px) {
-  .emotion-39 {
+  .emotion-40 {
     height: 68px;
     grid-template-columns: 221px 5fr minmax(250px,2fr) auto;
     grid-template-areas: "I M S L";
@@ -20,7 +20,7 @@ exports[`Header snapshot 1`] = `
 }
 
 @media (min-width:750px) and (max-width:1023px) {
-  .emotion-39 {
+  .emotion-40 {
     height: 122px;
     grid-template-columns: minmax(206px,1fr) 300px auto;
     grid-template-areas: "I S L" "R R R" "M M M";
@@ -28,7 +28,7 @@ exports[`Header snapshot 1`] = `
 }
 
 @media (max-width:749px) {
-  .emotion-39 {
+  .emotion-40 {
     font-size: 10px;
     grid-template-columns: repeat(4,1fr);
     grid-template-areas: "I I L L" "S S S S" "M M M M";
@@ -270,8 +270,38 @@ exports[`Header snapshot 1`] = `
   outline-offset: -3px;
 }
 
+.emotion-39 {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 99px;
+  height: 99px;
+  z-index: 100;
+  -webkit-transform: translate(-49.5px,-49.5px) rotate(-45deg);
+  -ms-transform: translate(-49.5px,-49.5px) rotate(-45deg);
+  transform: translate(-49.5px,-49.5px) rotate(-45deg);
+  background-color: rgba(255,255,0,0.75);
+  border: solid black 2px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.0;
+  font-size: 13px;
+  padding-top: 65px;
+}
+
+.emotion-39:hover {
+  background-color: rgba(255,255,0,1);
+}
+
+.emotion-39 a {
+  color: black;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
 <div
-  className="emotion-39"
+  className="emotion-40"
 >
   <a
     className="emotion-1"
@@ -550,6 +580,19 @@ exports[`Header snapshot 1`] = `
       rel="nofollow"
     >
       Sign in
+    </a>
+  </div>
+  <div
+    className="emotion-39"
+  >
+    <a
+      href="https://bugzilla.mozilla.org/show_bug.cgi?id=1561020"
+      rel="noopener noreferrer nofollow"
+      target="_blank"
+    >
+      Give
+      <br />
+      Feedback
     </a>
   </div>
 </div>

@@ -213,6 +213,47 @@ export default function Header(props: Props): React.Node {
             <div css={styles.login}>
                 <Login />
             </div>
+
+            {/* Remove this div when we're done asking for feedback */}
+            <div
+                css={css({
+                    boxSizing: 'border-box',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: 99,
+                    height: 99,
+                    zIndex: 100,
+                    transform: 'translate(-49.5px, -49.5px) rotate(-45deg)',
+                    backgroundColor: 'rgba(255,255,0,0.75)',
+                    border: 'solid black 2px',
+
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                    lineHeight: '1.0',
+                    fontSize: 13,
+                    paddingTop: 65,
+
+                    ':hover': {
+                        backgroundColor: 'rgba(255,255,0,1)'
+                    },
+
+                    '& a': {
+                        color: 'black',
+                        textDecoration: 'none'
+                    }
+                })}
+            >
+                <a
+                    href="https://bugzilla.mozilla.org/show_bug.cgi?id=1561020"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                >
+                    Give
+                    <br />
+                    Feedback
+                </a>
+            </div>
         </div>
     );
 }
