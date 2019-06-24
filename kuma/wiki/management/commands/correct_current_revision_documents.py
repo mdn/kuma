@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import urllib
 
+from dateutil import parser
 from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.db import transaction
@@ -18,6 +19,12 @@ class Command(BaseCommand):
     This script tries to solve this but it tries to be as generic as possible
     because the problem could re-appear.
     Generally we hope to not have to run this (manually) on a recurring basis.
+
+    The original commit that started this problem landed on master
+    on April 16 2019.
+    https://github.com/mozilla/kuma/commit/3177d761775c1a14244f144845c5045f05891b38
+    If there are other documents before then, it might be outside the scope
+    of this.
     """
 
     help = (
@@ -30,13 +37,29 @@ class Command(BaseCommand):
         parser.add_argument(
             '--edit',
             action='store_true',
-            dest='edit',
             default=False,
             help='Actually edit the current revision of documents found')
+        parser.add_argument(
+            '--include-archive',
+            action='store_true',
+            default=False,
+            help='By default /docs/Archive are excluded. This includes them.')
         parser.add_argument(
             '--baseurl',
             help='Base URL to site',
             default=settings.SITE_URL)
+        parser.add_argument(
+            '--start-date',
+            help=(
+                'Start date for document.modified (default: not set). '
+                'Note that the possible bug that caused all of this was '
+                'landed on April 16 2019.'))
+        parser.add_argument(
+            '--end-date',
+            help=(
+                'End date for document.modified (default: not set) '
+                'Note that the problem that started all of this landed in '
+                'master on April 22 2019'))
         parser.add_argument('slugsearch', nargs='*')
 
     @transaction.atomic()
@@ -50,6 +73,10 @@ class Command(BaseCommand):
                     reverse(name, locale=doc.locale, args=(doc.slug,) + args)))
 
         documents = Document.objects.all()
+
+        if not options['include_archive']:
+            documents = documents.exclude(slug__startswith='Archive/')
+
         if options['slugsearch']:
             q = Q()
             for slugsearch in options['slugsearch']:
@@ -59,16 +86,30 @@ class Command(BaseCommand):
                 list(documents.values_list('slug', flat=True))
             ))
 
-        newest = Revision.objects.filter(
+        revisions = Revision.objects.all()
+        if options['start_date']:
+            start_date = parser.parse(options['start_date'])
+            revisions = revisions.filter(created__gte=start_date)
+            self.stdout.write('Filtering revisions modified >= {}\n'.format(
+                start_date))
+        if options['end_date']:
+            end_date = parser.parse(options['end_date'])
+            revisions = revisions.filter(created__lte=end_date)
+            self.stdout.write('Filtering revisions modified <= {}\n'.format(
+                end_date))
+
+        newest = revisions.filter(
             document=OuterRef('pk')
         ).order_by('-created')
         documents = documents.annotate(
             newest_revision_id=Subquery(newest.values('pk')[:1])
         )
+        count_found = 0
         for document in documents.exclude(
             current_revision_id=F('newest_revision_id')
         ):
-            self.stdout.write('DOCUMENT: {}'.format(get_url(document)))
+            self.stdout.write('DOCUMENT: {} (last modified {})'.format(
+                get_url(document), document.modified.strftime('%Y-%m-%d')))
             self.stdout.write('\tHistory: {}'.format(
                 get_url(document, 'wiki.document_revisions')
             ))
@@ -91,3 +132,8 @@ class Command(BaseCommand):
                     break
                 first = False
             self.stdout.write('\n')
+            count_found += 1
+
+        self.stdout.write('\nFound {:,} documents in total.'.format(
+            count_found
+        ))
