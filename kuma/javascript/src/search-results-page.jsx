@@ -17,7 +17,9 @@ export type SearchResults = {
         slug: string,
         title: string,
         summary: string,
-        tags: Array<string>
+        tags: Array<string>,
+        score: number,
+        excerpt: string
     }>,
     error: ?any
 };
@@ -39,6 +41,11 @@ const styles = {
         fontWeight: 'bold'
     }),
     summary: css({}),
+    excerpt: css({
+        padding: 8,
+        fontStyle: 'italic',
+        fontSize: 12
+    }),
     url: css({
         fontSize: 12
     }),
@@ -96,6 +103,12 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
                                     <div css={styles.summary}>
                                         {hit.summary}
                                     </div>
+                                    <div
+                                        css={styles.excerpt}
+                                        dangerouslySetInnerHTML={{
+                                            __html: hit.excerpt
+                                        }}
+                                    />
                                 </div>
                                 <div css={styles.tags}>
                                     {hit.tags
@@ -171,13 +184,27 @@ export class SearchRoute extends Route<SearchRouteParams, SearchResults> {
                         );
                     }
                 })
-                .then(
-                    results =>
-                        results && {
-                            results: results.hits.hits.map(h => h._source),
-                            error: null
-                        }
-                )
+                .then(results => {
+                    if (
+                        !results ||
+                        !results.hits ||
+                        !Array.isArray(results.hits.hits)
+                    ) {
+                        throw new Error('Search API returned unexpected data');
+                    }
+                    return {
+                        results: results.hits.hits.map(hit => {
+                            let score = hit._score;
+                            let excerpt =
+                                hit.highlight &&
+                                hit.highlight.content &&
+                                hit.highlight.content[0];
+
+                            return { ...hit._source, score, excerpt };
+                        }),
+                        error: null
+                    };
+                })
                 // If anything goes wrong while we're fetching, just
                 // return the error we got and let the search results
                 // page display it.  If we don't do this and let the

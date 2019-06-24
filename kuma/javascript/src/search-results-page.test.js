@@ -12,13 +12,17 @@ const fakeResults = [
         slug: 'slug1',
         title: 'title1',
         summary: 'summary1',
-        tags: ['tag1.1', 'tag1.2']
+        tags: ['tag1.1', 'tag1.2'],
+        score: 10,
+        excerpt: 'Test <mark>result</mark>'
     },
     {
         slug: 'slug2',
         title: 'title2',
         summary: 'summary2',
-        tags: ['tag2.1', 'tag2.2']
+        tags: ['tag2.1', 'tag2.2'],
+        score: 5,
+        excerpt: 'Test <mark>results</mark>'
     }
 ];
 
@@ -55,6 +59,7 @@ describe('SearchResultsPage component', () => {
             expect(snapshot).toContain(hit.title);
             expect(snapshot).toContain(hit.summary);
             expect(snapshot).toContain(hit.slug);
+            expect(snapshot).toContain(hit.excerpt);
         }
     });
 });
@@ -129,7 +134,16 @@ describe('SearchRoute', () => {
                         // other stuff that we fake out here
                         hits: {
                             hits: fakeResults.map(r => ({
-                                _source: r
+                                _source: {
+                                    slug: r.slug,
+                                    title: r.title,
+                                    summary: r.summary,
+                                    tags: r.tags
+                                },
+                                _score: r.score,
+                                highlight: {
+                                    content: [r.excerpt]
+                                }
                             }))
                         }
                     })
