@@ -77,6 +77,21 @@ describe('SearchResultsPage with error', () => {
     });
 });
 
+describe('SearchResultsPage with no results found', () => {
+    const page = create(
+        <SearchResultsPage
+            locale="en-US"
+            query="qq"
+            data={{ error: null, results: [] }}
+        />
+    );
+    const snapshot = JSON.stringify(page.toJSON());
+
+    test('Page displays no results message', () => {
+        expect(snapshot).toContain('No matching documents found.');
+    });
+});
+
 describe('SearchRoute', () => {
     const route = new SearchRoute('en-US');
     test('getComponent()', () => {
