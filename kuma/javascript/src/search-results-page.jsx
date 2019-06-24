@@ -57,6 +57,11 @@ const styles = {
         padding: '2px 4px',
         marginRight: 8
     }),
+    noresults: css({
+        fontWeight: 'bold',
+        maxWidth: 1200,
+        margin: '20px auto'
+    }),
     error: css({
         margin: 16,
         padding: 16,
@@ -111,6 +116,11 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
                             </div>
                         );
                     })}
+                {data && data.results && data.results.length === 0 && (
+                    <div css={styles.noresults}>
+                        {gettext('No matching documents found.')}
+                    </div>
+                )}
                 {data && data.error && (
                     <div css={styles.error}>
                         <h2>{data.error.toString()}</h2>
