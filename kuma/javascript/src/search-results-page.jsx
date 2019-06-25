@@ -19,7 +19,7 @@ export type SearchResults = {
         summary: string,
         tags: Array<string>,
         score: number,
-        excerpt: string
+        excerpts: Array<string>
     }>,
     error: ?any
 };
@@ -40,11 +40,24 @@ const styles = {
     link: css({
         fontWeight: 'bold'
     }),
-    summary: css({}),
+    summary: css({
+        marginBottom: 8
+    }),
     excerpt: css({
-        padding: 8,
+        padding: '2px 24px',
         fontStyle: 'italic',
-        fontSize: 12
+        fontSize: 12,
+
+        '& mark': {
+            fontWeight: 'bold',
+            backgroundColor: 'inherit'
+        },
+        ':before': {
+            content: '"..."'
+        },
+        ':after': {
+            content: '"..."'
+        }
     }),
     url: css({
         fontSize: 12
@@ -103,12 +116,15 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
                                     <div css={styles.summary}>
                                         {hit.summary}
                                     </div>
-                                    <div
-                                        css={styles.excerpt}
-                                        dangerouslySetInnerHTML={{
-                                            __html: hit.excerpt
-                                        }}
-                                    />
+                                    {hit.excerpts.map((excerpt, i) => (
+                                        <div
+                                            css={styles.excerpt}
+                                            key={i}
+                                            dangerouslySetInnerHTML={{
+                                                __html: excerpt
+                                            }}
+                                        />
+                                    ))}
                                 </div>
                                 <div css={styles.tags}>
                                     {hit.tags
@@ -195,12 +211,13 @@ export class SearchRoute extends Route<SearchRouteParams, SearchResults> {
                     return {
                         results: results.hits.hits.map(hit => {
                             let score = hit._score;
-                            let excerpt =
-                                hit.highlight &&
-                                hit.highlight.content &&
-                                hit.highlight.content[0];
+                            let excerpts =
+                                (hit.highlight && hit.highlight.content) || [];
+                            if (excerpts && excerpts.length > 3) {
+                                excerpts = excerpts.slice(0, 3);
+                            }
 
-                            return { ...hit._source, score, excerpt };
+                            return { ...hit._source, score, excerpts };
                         }),
                         error: null
                     };

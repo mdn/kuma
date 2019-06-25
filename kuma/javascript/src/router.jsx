@@ -317,13 +317,21 @@ export default function Router({
                     //    effect functions below will be invoked to
                     //    finish up the client-side navigation process.
                 })
-                .catch(() => {
+                .catch(e => {
                     // If anything went wrong (such as a 404 when
                     // fetching data), we give up on client-side nav
                     // and just try loading the page. This may allow
                     // error recovery or will at least show the user
-                    // a real 404 page.
-                    window.location = url;
+                    // a real 404 page. Note, however that if this url
+                    // is the same as the initial URL, then this was
+                    // probably a hard load in the first place and we
+                    // don't want to try again because we'll just get
+                    // into a loop.
+                    if (url !== initialURL) {
+                        window.location = url;
+                    } else {
+                        console.error('Error while routing', e);
+                    }
                 });
 
             // Finally, return true to indicate that we found a

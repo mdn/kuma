@@ -246,7 +246,7 @@ def search(request, locale):
                       ])))
 
     # Add excerpts with search results highlighted
-    search = search.highlight(*WikiDocumentType.excerpt_fields)
+    search = search.highlight('content')
     search = search.highlight_options(order='score',
                                       pre_tags=['<mark>'],
                                       post_tags=['</mark>'])
