@@ -600,7 +600,7 @@ INSTALLED_APPS = (
     'django_mysql',
 
     # other
-    'kuma.humans',
+    'kuma.humans.apps.HumansConfig',
     'redirect_urls',
 )
 
