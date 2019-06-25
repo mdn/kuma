@@ -57,6 +57,3 @@ def test_contributors(db, cleared_cacheback_cache, settings, wiki_user_3,
     contributors = job.get(root_doc.pk)
     got = set(c['id'] for c in contributors)
     assert got == set([wiki_user_3.pk, banned_user.pk] + valid_contrib_ids)
-
-    assert ([c['id'] for c in job.get(root_doc.pk)] ==
-            ([wiki_user_3.pk, banned_user.pk] + valid_contrib_ids))
