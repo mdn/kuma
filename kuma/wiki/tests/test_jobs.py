@@ -55,5 +55,8 @@ def test_contributors(db, cleared_cacheback_cache, settings, wiki_user_3,
     # The new contributor shows up and is first, followed
     # by the freshly un-banned user, and then the rest.
     contributors = job.get(root_doc.pk)
+    got = set(c['id'] for c in contributors)
+    assert wiki_user_3.pk in got
+
     assert ([c['id'] for c in job.get(root_doc.pk)] ==
             ([wiki_user_3.pk, banned_user.pk] + valid_contrib_ids))
