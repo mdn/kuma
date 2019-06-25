@@ -58,40 +58,25 @@ In Docker, the worker process runs in the ``worker`` service / container.
 
 Broker
 ------
-Celery requires a `message broker`_ for task communication. There are two stable,
-production-ready alternatives:
 
-* Redis_ is an in-memory data structure store, used as database, cache and
-  message broker.  Many projects use it for multiple roles in the same
-  deployment. With Celery 3.1, it is now recommended as a `stable broker`_,
-  with some caveats_. It is used in the Docker environment.
-* RabbitMQ_ is an AMQP_ message broker written in Erlang_. The Celery team has
-  recommended it for a long time, and the docs describe it as
-  "feature-complete, stable, durable and easy to install". It is used in the
-  production environment.
+Kuma uses Redis_ as the `message broker`_. There are some caveats_ to be aware of.
+Redis_ is used both in local development and in production.
 
-.. _AMQP: https://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol
-.. _Celery: http://celeryproject.org/
-.. _Erlang: https://en.wikipedia.org/wiki/Erlang_(programming_language)
-.. _RabbitMQ: https://www.rabbitmq.com
 .. _Redis: http://redis.io
 .. _caveats: http://docs.celeryproject.org/en/latest/getting-started/brokers/redis.html
 .. _message broker: http://docs.celeryproject.org/en/latest/getting-started/first-steps-with-celery.html#choosing-a-broker
-.. _stable broker: http://docs.celeryproject.org/en/latest/getting-started/brokers/index.html
 
 Result store
 ------------
 When a task completes, it returns processed data and task states to a
 `results store`_. Kuma doesn't use returned data, but it does use returned task
-state to coordinate multi-step tasks.
+state to coordinate multi-step tasks. In particular for `chord tasks`_ such
+as building a sitemap of sitemaps after each locales' sitemap is built.
 
-Kuma uses a database-backed task store provided by django-celery_, a deprecated
-integration project for Django and Celery.  The work to replace this is tracked
-in `bug 1268257`_.
+Referring to logging to see message about completion of Celery worker tasks.
 
-.. _bug 1268257: https://bugzilla.mozilla.org/show_bug.cgi?id=1268257
-.. _django-celery: https://github.com/celery/django-celery
 .. _results store: http://docs.celeryproject.org/en/latest/getting-started/first-steps-with-celery.html#keeping-results
+.. _chord tasks: https://docs.celeryproject.org/en/latest/userguide/canvas.html#chords
 
 Periodic tasks scheduler
 ------------------------
@@ -103,39 +88,20 @@ In Docker, it runs in the ``worker`` container by starting the celery process
 with ``--beat``.  In production, there are several task workers, and the
 ``celery beat`` process is run directly on just one worker.
 
-The schedules themselves are configured using the deprecated `django-celery`_
-database backend.  The work to replace this is tracked in `bug 1268256`_.
+All scheduled periodic tasks are configured in code. As a pattern, each
+Django app (e.g. ``kuma.wiki``) that has tasks to run periodically are
+wired up within the ``ready`` method of each app's app config class
+(e.g. ``kuma.wiki.apps.WikiConfig``).
 
 .. _celery beat: http://docs.celeryproject.org/en/latest/userguide/periodic-tasks.html
-.. _bug 1268256: https://bugzilla.mozilla.org/show_bug.cgi?id=1268256
 
-Monitoring
-----------
-Celery task workers generate events to communicate task and worker health.  The
-``celerycam`` service, provided by the deprecated django-celery_ project,
-captures these events and stores them in the database.  Switching to a
-supported project, like Flower_, is tracked in bug 1268281.
-
-It is not part of the default Docker services, but can be started inside the
-``worker`` service container with::
-
-    ./manage.py celerycam --freq=2.0
-
-In production, ``celerycam`` is run directly on one worker.
-
-For more options, see the `Monitoring and Management Guide`_ in the Celery
-documentation.
-
-.. _bug 1268281: https://bugzilla.mozilla.org/show_bug.cgi?id=1268281
-.. _Flower: http://flower.readthedocs.io/en/latest/
-.. _Monitoring and Management Guide: http://docs.celeryproject.org/en/latest/userguide/monitoring.htm
 
 Configuring and running Celery
 ==============================
 We set some reasonable defaults for Celery in ``kuma/settings/common.py``. These can be
 overridden by the environment variables, including:
 
-- CELERY_ALWAYS_EAGER_
+- ``CELERY_TASK_ALWAYS_EAGER``
 
   Default: ``False`` (Docker), ``True`` (tests).
 
@@ -145,7 +111,7 @@ overridden by the environment variables, including:
   there are some tasks that fail or have different results in the two modes,
   mostly due to database transactions.
 
-- CELERYD_CONCURRENCY_
+- ``CELERY_WORKER_CONCURRENCY``
 
   Default: ``4``.
 
@@ -156,9 +122,6 @@ overridden by the environment variables, including:
 The worker can also be adjusted at the command line. For example, this could
 run inside the ``worker`` service container::
 
-    ./manage.py celeryd --log-level=DEBUG -c 10
+    celery -A kuma.celery:app worker --log-level=DEBUG -c 10
 
 This would start Celery with 10 worker threads and a log level of ``DEBUG``.
-
-.. _CELERY_ALWAYS_EAGER: http://docs.celeryproject.org/en/latest/configuration.html#celery-always-eager
-.. _CELERYD_CONCURRENCY: http://docs.celeryproject.org/en/latest/configuration.html#celeryd-concurrency

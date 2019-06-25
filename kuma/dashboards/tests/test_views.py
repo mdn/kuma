@@ -312,7 +312,8 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         self.client.login(username='admin', password='testpass')
         # The first response will say that the report is being processed
         response = self.client.get(reverse('dashboards.spam'))
-        assert 200 == response.status_code
+        self.assertContains(
+            response, "The report is being processed", status_code=200)
 
         response2 = self.client.get(reverse('dashboards.spam'))
 

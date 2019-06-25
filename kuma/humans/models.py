@@ -21,7 +21,6 @@ class HumansTXT(object):
     def generate_file(self):
         githubbers = self.get_github(json.load(urlopen(GITHUB_REPOS)))
         path = os.path.join(settings.HUMANSTXT_ROOT, "humans.txt")
-
         with open(path, 'w') as target:
             self.write_to_file(githubbers, target,
                                "Contributors on GitHub", "Developer")

@@ -38,7 +38,9 @@ def test_contributors(db, cleared_cacheback_cache, settings, wiki_user_3,
 
     # The freshly un-banned user is now among the contributors because the
     # cache has been invalidated.
-    assert banned_user.pk in set(c['id'] for c in job.get(root_doc.pk))
+    contributors = job.get(root_doc.pk)
+    got = set(c['id'] for c in contributors)
+    assert banned_user.pk in got
 
     # Another revision should invalidate the job's cache.
     root_doc.current_revision = Revision.objects.create(
@@ -52,5 +54,6 @@ def test_contributors(db, cleared_cacheback_cache, settings, wiki_user_3,
 
     # The new contributor shows up and is first, followed
     # by the freshly un-banned user, and then the rest.
-    assert ([c['id'] for c in job.get(root_doc.pk)] ==
-            ([wiki_user_3.pk, banned_user.pk] + valid_contrib_ids))
+    contributors = job.get(root_doc.pk)
+    got = set(c['id'] for c in contributors)
+    assert got == set([wiki_user_3.pk, banned_user.pk] + valid_contrib_ids)

@@ -3,7 +3,7 @@ from .local import *  # noqa
 DEBUG = False
 ENABLE_RESTRICTIONS_BY_HOST = False
 TEMPLATES[0]['OPTIONS']['debug'] = True  # Enable recording of templates
-CELERY_ALWAYS_EAGER = True
+CELERY_TASK_ALWAYS_EAGER = True
 CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
 ES_LIVE_INDEX = config('ES_LIVE_INDEX', default=False, cast=bool)
 

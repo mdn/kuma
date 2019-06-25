@@ -8,14 +8,10 @@ from os.path import dirname
 
 import dj_database_url
 import dj_email_url
-import djcelery
 from decouple import config, Csv
 from six.moves.urllib.parse import parse_qs, urlencode, urlsplit, urlunsplit
 
 _Language = namedtuple(u'Language', u'english native')
-
-# Set up django-celery
-djcelery.setup_loader()
 
 
 def path(*parts):
@@ -567,9 +563,9 @@ INSTALLED_APPS = (
 
     # MDN
     'kuma.payments.apps.PaymentsConfig',
-    'kuma.core',
+    'kuma.core.apps.CoreConfig',
     'kuma.banners',
-    'kuma.feeder',
+    'kuma.feeder.apps.FeederConfig',
     'kuma.landing',
     'kuma.redirects',
     'kuma.scrape',
@@ -592,7 +588,6 @@ INSTALLED_APPS = (
     'waffle',
     'kuma.authkeys',
     'tidings',
-    'djcelery',
     'taggit',
     'honeypot',
     'cacheback',
@@ -605,7 +600,7 @@ INSTALLED_APPS = (
     'django_mysql',
 
     # other
-    'kuma.humans',
+    'kuma.humans.apps.HumansConfig',
     'redirect_urls',
 )
 
@@ -1373,55 +1368,46 @@ if CSP_REPORT_ENABLE:
                                      bits.fragment))
 
 # Celery (asynchronous tasks)
-BROKER_URL = config('BROKER_URL',
-                    default='amqp://kuma:kuma@developer-local:5672/kuma')
+CELERY_BROKER_URL = config('CELERY_BROKER_URL',
+                           default='redis://0.0.0.0:6379/0')
 
-CELERY_ALWAYS_EAGER = config('CELERY_ALWAYS_EAGER', True, cast=bool)
+CELERY_TASK_ALWAYS_EAGER = config('CELERY_TASK_ALWAYS_EAGER', False, cast=bool)
 CELERY_SEND_TASK_ERROR_EMAILS = True
-CELERY_SEND_EVENTS = True
-CELERY_SEND_TASK_SENT_EVENT = True
-CELERY_TRACK_STARTED = True
-CELERYD_CONCURRENCY = config('CELERYD_CONCURRENCY', default=4, cast=int)
+CELERY_WORKER_CONCURRENCY = config('CELERY_WORKER_CONCURRENCY', default=4, cast=int)
 
 # Maximum tasks run before auto-restart of child process,
 # to mitigate memory leaks. None / 0 means unlimited tasks
-CELERYD_MAX_TASKS_PER_CHILD = config(
-    'CELERYD_MAX_TASKS_PER_CHILD',
+CELERY_WORKER_MAX_TASKS_PER_CHILD = config(
+    'CELERY_WORKER_MAX_TASKS_PER_CHILD',
     default=0,
     cast=int
 ) or None
 
-if MAINTENANCE_MODE:
-    # In maintenance mode, we're going to avoid using the database, and
-    # use Celery's default beat-scheduler as well as Redis for storing
-    # any results. In both normal and maintenance mode we use djcelery's
-    # loader (see djcelery.setup_loader() above) so we, among other things,
-    # acquire the Celery settings from among Django's settings.
-    CELERYBEAT_SCHEDULER = 'celery.beat.PersistentScheduler'
-    DEFAULT_CELERY_RESULT_BACKEND = CACHES['default']['LOCATION']
 
-else:
-    CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
-    DEFAULT_CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
-
-CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND',
-                               default=DEFAULT_CELERY_RESULT_BACKEND)
-
-# TODO: Default serializer in Celery 4.0 is JSON, need to switch
+# Sadly, kuma depends on pickle being the default serializer.
+# In Celery 4, the default is now JSON.
+# It's probably too late to switch all tasks to work with either.
+# Just remember, avoid passing types that are non-trivial and is
+# different in pickle vs json. Keep things simple. Even if it means
+# you have to do type conversions in the tasks' code.
 CELERY_ACCEPT_CONTENT = ['pickle']
+CELERY_TASK_SERIALIZER = 'pickle'
+CELERY_RESULT_SERIALIZER = 'pickle'
+CELERY_EVENT_SERIALIZER = 'pickle'
+
 
 CELERY_IMPORTS = (
     'kuma.search.tasks',
     'tidings.events',
 )
 
-CELERY_ANNOTATIONS = {
+CELERY_TASK_ANNOTATIONS = {
     'cacheback.tasks.refresh_cache': {
         'rate_limit': '120/m',
     }
 }
 
-CELERY_ROUTES = {
+CELERY_TASK_ROUTES = {
     'cacheback.tasks.refresh_cache': {
         'queue': 'mdn_purgeable'
     },

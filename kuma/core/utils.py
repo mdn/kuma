@@ -252,7 +252,7 @@ def chunked(iterable, n):
 
 def chord_flow(pre_task, tasks, post_task):
 
-    if settings.CELERY_ALWAYS_EAGER:
+    if settings.CELERY_TASK_ALWAYS_EAGER:
         # Eager mode and chords don't get along. So we serialize
         # the tasks as a workaround.
         tasks.insert(0, pre_task)
