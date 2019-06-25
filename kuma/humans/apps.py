@@ -9,7 +9,7 @@ from kuma.celery import app
 
 class HumansConfig(AppConfig):
     """
-    The Django App Config class to store information about the feeder app
+    The Django App Config class to store information about the humans app
     and do startup time things.
     """
     name = 'kuma.humans'
