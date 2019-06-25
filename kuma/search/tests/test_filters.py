@@ -429,7 +429,8 @@ class FilterTexts(ElasticTestCase):
         doc = Document.objects.get(pk=1)
         doc.rendered_html = '<html><body class="eval">foo()</body></html>'
         doc.save()
-        render_done.send(sender=Document, instance=doc)
+        render_done.send(
+            sender=Document, instance=doc, invalidate_cdn_cache=False)
         self.refresh()
 
         class View(SearchView):

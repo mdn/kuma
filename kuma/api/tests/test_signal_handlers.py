@@ -12,11 +12,14 @@ def test_restore_signal(publish_mock, root_doc):
     publish_mock.delay.assert_called_once_with([root_doc.pk])
 
 
+@pytest.mark.parametrize('invalidate_cdn_cache', (True, False))
 @mock.patch('kuma.api.signal_handlers.publish')
-def test_render_signal(publish_mock, root_doc):
+def test_render_signal(publish_mock, root_doc, invalidate_cdn_cache):
     """The document is published on the render_done signal."""
-    render_done.send(sender=Document, instance=root_doc)
-    publish_mock.delay.assert_called_once_with([root_doc.pk])
+    render_done.send(sender=Document, instance=root_doc,
+                     invalidate_cdn_cache=invalidate_cdn_cache)
+    publish_mock.delay.assert_called_once_with(
+        [root_doc.pk], invalidate_cdn_cache=invalidate_cdn_cache)
 
 
 @pytest.mark.parametrize('case', ('normal', 'redirect'))

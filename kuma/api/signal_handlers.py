@@ -21,13 +21,13 @@ def on_restore_done(sender, instance, **kwargs):
 
 @receiver(render_done, sender=Document,
           dispatch_uid='api.document.render_done.publish')
-def on_render_done(sender, instance, **kwargs):
+def on_render_done(sender, instance, invalidate_cdn_cache, **kwargs):
     """
     A signal handler to publish the document to the document API after it
     has been rendered.
     """
     if not instance.deleted:
-        publish.delay([instance.pk])
+        publish.delay([instance.pk], invalidate_cdn_cache=invalidate_cdn_cache)
 
 
 @receiver(post_delete, sender=Document,

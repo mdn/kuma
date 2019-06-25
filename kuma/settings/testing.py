@@ -71,3 +71,7 @@ PIPELINE['COMPILERS'] = ('pipeline.compilers.sass.SASSCompiler',)
 # a 10x speedup on Docker on MacOS.
 WHITENOISE_AUTOREFRESH = True
 WHITENOISE_USE_FINDERS = True
+
+# This makes sure we our tests never actually use the real settings for
+# this.
+MDN_CLOUDFRONT_DISTRIBUTIONS = {}

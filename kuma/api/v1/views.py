@@ -46,14 +46,20 @@ def doc(request, locale, slug):
     return JsonResponse(document_api_data(document))
 
 
-def get_s3_key(doc=None, locale=None, slug=None, for_redirect=False):
+def get_s3_key(doc=None, locale=None, slug=None,
+               prefix_with_forward_slash=False):
     if doc:
         locale, slug = doc.locale, doc.slug
     key = reverse('api.v1.doc', args=(locale, slug), urlconf='kuma.urls_beta')
-    if for_redirect:
+    if prefix_with_forward_slash:
         # Redirects within an S3 bucket must be prefixed with "/".
         return key
     return key.lstrip('/')
+
+
+def get_cdn_key(locale, slug):
+    """Given a document's locale and slug, return the "key" for the CDN."""
+    return get_s3_key(locale=locale, slug=slug, prefix_with_forward_slash=True)
 
 
 def get_content_based_redirect(document):
@@ -70,7 +76,10 @@ def get_content_based_redirect(document):
         redirect_document = document.get_redirect_document(id_only=False)
         if redirect_document:
             # This is a redirect to another document.
-            return (get_s3_key(redirect_document, for_redirect=True), True)
+            return (
+                get_s3_key(redirect_document, prefix_with_forward_slash=True),
+                True
+            )
         # This is a redirect to non-document page. For now, if it's the home
         # page, return a relative path (so we stay on the read-only domain),
         # otherwise return the full URL for the wiki site.

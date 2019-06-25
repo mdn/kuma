@@ -282,6 +282,22 @@ def test_document_get_redirect_document(root_doc):
     assert old_doc.get_redirect_document() == root_doc
 
 
+@pytest.mark.parametrize('invalidate_cdn_cache', (True, False))
+@mock.patch('kuma.wiki.models.render_done')
+def test_document_render_invalidate_cdn_cache(mock_render_done, root_doc,
+                                              invalidate_cdn_cache):
+    """
+    The "invalidate_cdn_cache" argument to render is passed through
+    as one of the arguments that the "render_done" signal provides.
+    """
+    root_doc.render(invalidate_cdn_cache=invalidate_cdn_cache)
+    mock_render_done.send.assert_called_once_with(
+        sender=root_doc.__class__,
+        instance=root_doc,
+        invalidate_cdn_cache=invalidate_cdn_cache
+    )
+
+
 class UserDocumentTests(UserTestCase):
     """Document tests which need the users fixture"""
 
