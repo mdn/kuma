@@ -245,6 +245,12 @@ def search(request, locale):
                           Q('term', locale={'value': locale, 'boost': 8}),
                       ])))
 
+    # Add excerpts with search results highlighted
+    search = search.highlight('content')
+    search = search.highlight_options(order='score',
+                                      pre_tags=['<mark>'],
+                                      post_tags=['</mark>'])
+
     # Return as many as 40 matches, since we're not implementing pagination yet
     response = search[0:40].execute()
     return JsonResponse(response.to_dict())
