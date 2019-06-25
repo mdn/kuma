@@ -1876,7 +1876,7 @@ MDN_API_S3_BUCKET_NAME = config('MDN_API_S3_BUCKET_NAME', default=None)
 # or not might not be in the environment.
 MDN_CLOUDFRONT_DISTRIBUTIONS = {
     'api': {
-        'id': config('MDN_CLOUDFRONT_API_DISTRIBUTIONID', default=None),
+        'id': config('MDN_API_CLOUDFRONT_DISTRIBUTIONID', default=None),
         # TODO We should have a (Django) system check that checks that this
         # transform callable works. For example, it *has* to start with a '/'.
         'transform_function': 'kuma.api.v1.views.get_cdn_key'
