@@ -214,46 +214,44 @@ export default function Header(props: Props): React.Node {
                 <Login />
             </div>
 
-            {/* Remove this div when we're done asking for feedback */}
-            <div
+            {
+                // Display a "Beta Feedback" banner.
+                // When we're done with beta testing, remove this <a> tag
+                // by reverting https://github.com/mozilla/kuma/pull/5511
+            }
+            <a
+                href="https://bugzilla.mozilla.org/show_bug.cgi?id=1561020"
+                target="_blank"
+                rel="noopener noreferrer nofollow"
                 css={css({
                     boxSizing: 'border-box',
                     position: 'absolute',
+                    display: 'block',
                     top: 0,
                     left: 0,
                     width: 99,
                     height: 99,
                     zIndex: 100,
                     transform: 'translate(-49.5px, -49.5px) rotate(-45deg)',
-                    backgroundColor: 'rgba(255,255,0,0.75)',
-                    border: 'solid black 2px',
-
+                    backgroundColor: 'rgba(255,255,0,0.85)',
+                    border: 'solid black 1px',
+                    boxShadow: '0px 3px 10px #000',
                     fontWeight: 'bold',
                     textAlign: 'center',
                     lineHeight: '1.0',
-                    fontSize: 13,
-                    paddingTop: 65,
-
+                    fontSize: 12.5,
+                    paddingTop: 68,
+                    color: 'black',
                     ':hover': {
-                        backgroundColor: 'rgba(255,255,0,1)'
-                    },
-
-                    '& a': {
-                        color: 'black',
+                        backgroundColor: '#ff0',
                         textDecoration: 'none'
                     }
                 })}
             >
-                <a
-                    href="https://bugzilla.mozilla.org/show_bug.cgi?id=1561020"
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
-                >
-                    Give
-                    <br />
-                    Feedback
-                </a>
-            </div>
+                Beta
+                <br />
+                Feedback
+            </a>
         </div>
     );
 }
