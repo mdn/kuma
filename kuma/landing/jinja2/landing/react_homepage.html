@@ -8,10 +8,6 @@
   {{ super() }}
 
   {% stylesheet 'home' %}
-
-  {% if waffle.flag('developer_needs') %}
-    {% stylesheet 'banners' %}
-  {% endif %}
 {% endblock %}
 
 {% block extrahead %}
@@ -121,17 +117,9 @@
 </div>
 {% endblock %}
 
-{% if waffle.flag('developer_needs') %}
-    {%- block banners %}
-        {% include "banners/cta-banners.html" %}
-    {% endblock %}
-{% endif %}
-
 {% block js %}
   {{ super() }}
   {% if settings.NEWSLETTER %}
     {% javascript 'newsletter' %}
   {% endif %}
-
-  {% javascript 'banners' %}
 {% endblock %}
