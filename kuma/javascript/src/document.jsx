@@ -35,6 +35,7 @@ export type DocumentData = {
         url: string,
         title: string
     }>,
+    tags: Array<string>,
     contributors: Array<string>,
     lastModified: string, // An ISO date
     lastModifiedBy: string
