@@ -172,16 +172,21 @@ export function Sidebar({ document }: DocumentProps) {
                     </div>
                 </>
             )}
-            <div className="quick-links">
-                <div css={styles.sidebarHeading} className="quick-links-head">
-                    {gettext('Related Topics')}
+            {document.quickLinksHTML && (
+                <div className="quick-links">
+                    <div
+                        css={styles.sidebarHeading}
+                        className="quick-links-head"
+                    >
+                        {gettext('Related Topics')}
+                    </div>
+                    <div
+                        dangerouslySetInnerHTML={{
+                            __html: document.quickLinksHTML
+                        }}
+                    />
                 </div>
-                <div
-                    dangerouslySetInnerHTML={{
-                        __html: document.quickLinksHTML
-                    }}
-                />
-            </div>
+            )}
         </div>
     );
 }
