@@ -12,13 +12,17 @@ const ieSelector = 'iframe.interactive';
 
 // This is the origin we expect for the iframes.
 const ieOrigin =
-    (window && window.mdn && window.mdn.interactiveEditor.editorUrl) ||
+    (typeof window !== 'undefined' &&
+        window.mdn &&
+        window.mdn.interactiveEditor.editorUrl) ||
     'https://interactive-examples.mdn.mozilla.net';
 
 // This is our media query breakpoint. If this media query does not
 // match, then we want interactive examples to use "small viewport" layout.
 const mediaQuery =
-    window.matchMedia && window.matchMedia('(min-width: 63.9385em)');
+    typeof window !== 'undefined' &&
+    window.matchMedia &&
+    window.matchMedia('(min-width: 63.9385em)');
 
 // This function is intended to be used as a one-time useEffect() hook
 // It sets up a listener for the media query so that when we switch
