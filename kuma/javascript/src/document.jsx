@@ -223,8 +223,10 @@ export function Breadcrumbs({ document }: DocumentProps) {
 }
 
 function Content({ document }: DocumentProps) {
+    // The wiki-left-present class below is needed for correct BCD layout
+    // See kuma/static/styles/components/compat-tables/bc-table.scss
     return (
-        <div css={styles.contentLayout}>
+        <div css={styles.contentLayout} className="wiki-left-present">
             <Article document={document} />
             <Sidebar document={document} />
         </div>
