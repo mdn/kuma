@@ -28,11 +28,7 @@
 
   {% block site_css %}
 
-    {% stylesheet 'mdn' %}
-
-    {% for style in styles %}
-      {% stylesheet style %}
-    {% endfor %}
+    {% stylesheet 'react-mdn' %}
   {% endblock %}
 
   {%- if settings.MAINTENANCE_MODE %}
@@ -153,8 +149,6 @@
     <!--[if lte IE 8]>{% javascript 'selectivizr' %}<![endif]-->
 
     {{ providers_media_js() }}
-    {# Strings used by javascript modules. Hopefully we can remove soon. #}
-    <script src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
     {% javascript 'react-main' %}
     <script>
     if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();

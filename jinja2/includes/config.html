@@ -31,6 +31,9 @@
             autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
             {%- endif %}
         };
+
+        {#- This is stuff not needed by the React-based site #}
+        {%- if not beta %}
         win.mdn.assets = {
             css: {
                 'editor-content': [
@@ -45,6 +48,7 @@
                 'wiki-compat-tables': [{% javascript 'wiki-compat-tables' %}]
             }
         };
+        {%- endif %}
 
         win.mdn.notifications = [];
 

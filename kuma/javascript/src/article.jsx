@@ -3,9 +3,13 @@ import * as React from 'react';
 import { useEffect, useRef } from 'react';
 import { css } from '@emotion/core';
 
+import { activateBCDTables } from './bcd.js';
+import { addLiveExampleButtons } from './live-examples.js';
 import ClockIcon from './icons/clock.svg';
 import ContributorsIcon from './icons/contributors.svg';
 import { gettext } from './l10n.js';
+import { highlightSyntax } from './prism.js';
+import * as InteractiveExamples from './interactive-examples.js';
 import TagsIcon from './icons/tags.svg';
 
 import type { DocumentData } from './document.jsx';
@@ -36,6 +40,17 @@ const styles = {
         '& a.sectionLink': {
             fontSize: 24,
             textDecoration: 'none'
+        },
+
+        // Styles for BCD tables, overriding the stylesheets
+        '& table.bc-table button.bc-history-link': {
+            ':focus': {
+                outline: '#83d0f2 solid 3px',
+                outlineOffset: -3
+            },
+            ':hover': {
+                backgroundColor: '#83d0f2 !important'
+            }
         }
     }),
     metadata: css({
@@ -103,14 +118,25 @@ function addAnchors(article) {
 
 export default function Article({ document }: DocumentProps) {
     const article = useRef(null);
+
+    // This is a one-time effect we need to call the first time an article
+    // is rendered, to ensure that interactive examples resize themselves
+    // if the browser width changes.
+    useEffect(InteractiveExamples.makeResponsive, []);
+
+    // Each time we display an article we need to patch it up
+    // in various ways.
     useEffect(() => {
-        if (article.current) {
-            highlightSections(article.current);
-        }
-    }, [document]);
-    useEffect(() => {
-        if (article.current) {
-            addAnchors(article.current);
+        let rootElement = article.current;
+        if (rootElement) {
+            InteractiveExamples.setLayout(rootElement);
+            // Keep addLiveExampleButtons() before addAnchors() so the
+            // example title doesn't end up with a link in it on codepen.
+            addLiveExampleButtons(rootElement);
+            highlightSections(rootElement);
+            addAnchors(rootElement);
+            highlightSyntax(rootElement);
+            activateBCDTables(rootElement);
         }
     }, [document]);
 

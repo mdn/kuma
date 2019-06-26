@@ -1,4 +1,15 @@
-(function(win, doc, $) {
+/**
+ * This file creates a global window.mdn.analytics object that defines
+ * various functions that send data to google analytics. Some of these
+ * functions are used on both the wiki domain and the new readonly domain.
+ *
+ * TODO: some of the functions here are unused on the readonly domain
+ * so we should probably have a different, smaller, version of this file
+ * for use on that domain. Ideally we should review the data we are sending
+ * and if we still care about it, we should integrate the code into the
+ * new React codebase.
+ */
+(function(win, doc) {
     'use strict';
 
     // Adding to globally available mdn object
@@ -127,25 +138,29 @@
         trackOutboundLinks: function(target) {
             target = target || document.body;
 
-            $(target).on('click', 'a', function (e) {
-                var $this = $(this);
+            target.addEventListener('click', function(e) {
+                var link = e.target.closest('a');
+                if (!link) {
+                    // If the click was not on a link there is nothing to track
+                    return;
+                }
 
                 // bug 1222864 - prevent links to data: uris
-                if (this.href.toLowerCase().indexOf('data') === 0) {
+                if (link.href.toLowerCase().indexOf('data') === 0) {
                     e.preventDefault();
                     analytics.trackError('XSS Attempt', 'data href');
                     return;
                 }
 
                 // If we explicitly say not to track something, don't
-                if($this.hasClass('no-track')) {
+                if (link.classList.contains('no-track')) {
                     return;
                 }
 
-                var host = this.hostname;
+                var host = link.hostname;
                 if(host && host !== location.hostname) {
-                    var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
-                    var href = this.href;
+                    var newTab = (link.target === '_blank' || e.metaKey || e.ctrlKey);
+                    var href = link.href;
                     var callback = function() {
                         win.location = href;
                     };
@@ -171,7 +186,7 @@
             // is a same page anchor
             var isAnchor = (url.indexOf('#') === 0);
             // isBlank
-            var isBlank = $(event.target).attr('target') === '_blank';
+            var isBlank = event.target.target === '_blank';
 
             if(newTab || isAnchor || isBlank) {
                 mdn.analytics.trackEvent(data);
@@ -191,7 +206,7 @@
         trackClientErrors: function() {
 
             // javascript & jQuery errors
-            $(win).on('error', function(e) {
+            win.addEventListener('error', function(e) {
                 // probably javascript
                 if(e.originalEvent) {
                     var originalEvent = e.originalEvent;
@@ -205,16 +220,22 @@
                 }
             });
 
-            // jQuery ajax errors
-            $(doc).ajaxError(function(e, request, settings) {
-                analytics.trackError('AJAX Error', settings.url , JSON.stringify({
-                    result: e.result,
-                    status: request.status,
-                    statusText: request.statusText,
-                    crossDomain: settings.crossDomain,
-                    dataType: settings.dataType })
-                );
-            });
+            // If the global jQuery object is defined, then we're on
+            // the wiki site and are using jQuery, so we should track
+            // any jQuery Ajax errors that occur. But if jQuery is not
+            // defined, then we're on the new readonly site are not using
+            // the jQuery Ajax library, so there is nothing to track
+            if (win && win.jQuery) {
+                jQuery(doc).ajaxError(function(e, request, settings) {
+                    analytics.trackError('AJAX Error', settings.url, JSON.stringify({
+                        result: e.result,
+                        status: request.status,
+                        statusText: request.statusText,
+                        crossDomain: settings.crossDomain,
+                        dataType: settings.dataType })
+                    );
+                });
+            }
         },
 
         /*
@@ -230,4 +251,4 @@
             });
         }
     };
-})(window, document, jQuery);
+})(window, document);
