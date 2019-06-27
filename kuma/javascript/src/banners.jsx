@@ -5,12 +5,18 @@
  * description and button call-to-action text of the banner, as well
  * as the URL of the page that clicking on the call-to-action button
  * takes the user to. The Banner component is not exported,
- * however. Instead, we export a Banners component that takes an array
- * of BannerProps objects describing one or more banners. The Banners
- * component finds the first banner that is enabled by Waffle and has
- * not been dismissed by the user and displays that banner. Or, if
- * none of the specified banners is enabled, or if all enabled banners
- * have been recently dismissed, then it displays nothing.
+ * however. Instead, we export a Banners component that pages should
+ * use. The Banners component takes an array of BannerProp objects as
+ * a property, and also defines its own internal default array of
+ * banner objects that is uses if no properties are passed. It loops
+ * through the array looking for the first banner that is enabled by
+ * Waffle and has not been dismissed by the user. If it finds such a
+ * banner, it displays it with a <Banner>. Otherwise, if none of the
+ * specified banners is enabled, or if all enabled banners have been
+ * recently dismissed, then it displays nothing.
+ *
+ * When we want to change the set of banners displayed on MDN, we
+ * can just edit the array of BannerProps objects in Banners() below.
  *
  * This file is a React port of the code in the following files:
  *
@@ -46,7 +52,7 @@
  * @flow
  */
 import * as React from 'react';
-import { useContext, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 
 import CloseIcon from './icons/close.svg';
 import { gettext } from './l10n.js';
@@ -168,11 +174,30 @@ function Banner(props: BannerProps) {
     );
 }
 
-type BannersProps = {
-    banners: Array<BannerProps>
-};
+type BannersProps = { banners?: Array<BannerProps> };
 
 export default function Banners(props: BannersProps) {
+    // This is the data structure that defines the default list of banners
+    // that we need to consider displaying. To change the set of banners
+    // displayed on MDN pages, just edit this data structure.
+    //
+    // It is defined here inside of the component so that the
+    // gettext() calls are made after our string catalog is ready. But
+    // we do it inside a useMemo() function so that the localization
+    // only happens once.
+    const defaultBanners = useMemo(() => [
+        {
+            id: 'developer_needs',
+            title: gettext('MDN Survey'),
+            copy: gettext(
+                'Help us understand the top 10 needs of Web developers and designers.'
+            ),
+            cta: gettext('Take the survey'),
+            url:
+                'https://qsurvey.mozilla.com/s3/Developer-Needs-Assessment-2019'
+        }
+    ]);
+
     const userData = useContext(UserProvider.context);
 
     // If we have user data the loop through the specified banners
@@ -180,7 +205,8 @@ export default function Banners(props: BannersProps) {
     // and has not been recently dismissed by the user. We render
     // the first such banner that we find, or render nothing.
     if (userData) {
-        for (const banner of props.banners) {
+        let bannersList = props.banners || defaultBanners;
+        for (const banner of bannersList) {
             if (userData.waffle.flags[banner.id]) {
                 if (!isEmbargoed(banner.id)) {
                     return <Banner {...banner} />;

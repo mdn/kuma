@@ -3,6 +3,7 @@ import * as React from 'react';
 import { css } from '@emotion/core';
 
 import Article from './article.jsx';
+import Banners from './banners.jsx';
 import { gettext } from './l10n.js';
 import LanguageMenu from './header/language-menu.jsx';
 import Header from './header/header.jsx';
@@ -237,10 +238,11 @@ function DocumentPage({ document }: DocumentProps) {
     return (
         <>
             <Header document={document} />
-            <TaskCompletionSurvey document={document} />
             <Titlebar title={document.title} document={document} />
             <Breadcrumbs document={document} />
             <Content document={document} />
+            <TaskCompletionSurvey document={document} />
+            <Banners />
         </>
     );
 }
