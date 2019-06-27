@@ -1,9 +1,31 @@
 // @flow
 import * as React from 'react';
 
+import Banners from './banners.jsx';
 import GAProvider from './ga-provider.jsx';
+import { gettext } from './l10n.js';
 import Header from './header/header.jsx';
 import UserProvider from './user-provider.jsx';
+
+import type BannerProps from './banners.jsx';
+
+// The landing page will display the first of the banners listed here that:
+//
+// 1) is enabled by its waffle flag
+// 2) has not been recently dismissed by the user
+//
+// To add a new banner, simply add a new element to the array.
+const banners: Array<BannerProps> = [
+    {
+        id: 'developer_needs',
+        title: gettext('MDN Survey'),
+        copy: gettext(
+            'Help us understand the top 10 needs of Web developers and designers.'
+        ),
+        cta: gettext('Take the survey'),
+        url: 'https://qsurvey.mozilla.com/s3/Developer-Needs-Assessment-2019'
+    }
+];
 
 /**
  * This is the React component that we use for the React homepage.
@@ -16,6 +38,7 @@ export default function LandingPage() {
         <GAProvider>
             <UserProvider>
                 <Header />
+                <Banners banners={banners} />
             </UserProvider>
         </GAProvider>
     );
