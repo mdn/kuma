@@ -13,14 +13,17 @@ export function navigateStart() {
     try {
         // If we're using Speedcurve's LUX analytics, tell it that we're
         // starting a new client-side navigation
-        if (
-            typeof window === 'object' &&
-            window.LUX &&
-            typeof window.LUX.init === 'function'
-        ) {
-            window.LUX.init();
+        try {
+            if (
+                typeof window === 'object' &&
+                window.LUX &&
+                typeof window.LUX.init === 'function'
+            ) {
+                window.LUX.init();
+            }
+        } catch (e) {
+            console.error('LUX.init() error:', e);
         }
-
         // The LUX init call above also appears to clear everthing
         // But just to be sure we will explicitly clear the custom
         // marks and measures that we care about.
@@ -57,12 +60,16 @@ export function navigateRenderComplete(ga: GAFunction) {
             performance.measure(RENDER, START);
 
             // Send LUX data to Speedcurve to record the client-side navigation
-            if (
-                typeof window === 'object' &&
-                window.LUX &&
-                typeof window.LUX.send === 'function'
-            ) {
-                window.LUX.send();
+            try {
+                if (
+                    typeof window === 'object' &&
+                    window.LUX &&
+                    typeof window.LUX.send === 'function'
+                ) {
+                    window.LUX.send();
+                }
+            } catch (e) {
+                console.error('LUX.send() error:', e);
             }
 
             let fetchTime = performance.getEntriesByName(FETCH)[0].duration;
