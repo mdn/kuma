@@ -9,10 +9,6 @@ def test_help():
     with pytest.raises(CommandError) as excinfo:
         call_command('ihavepower', stdout=StringIO())
 
-    # if PY2:
-    #     assert str(excinfo.value) == 'Error: too few arguments'
-    # else:
-    #     assert str(excinfo.value) == 'Error: the following arguments are required: username'
     assert str(excinfo.value) == 'Error: the following arguments are required: username'
 
 

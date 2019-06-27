@@ -469,13 +469,6 @@ class LinkAnnotationFilter(html5lib_Filter):
                     # If present, discard the hash anchor
                     href_path, _, _ = href_path.partition('#')
 
-                # Handle any URL-encoded UTF-8 characters in the path
-                # if PY2:
-                #     href_path = href_path.encode('utf-8', 'ignore')
-                #     href_path = unquote(href_path)
-                #     href_path = href_path.decode('utf-8', 'ignore')
-                # else:
-                #     href_path = unquote(href_path)
                 href_path = unquote(href_path)
 
                 # Try to sort out the locale and slug through some of our
