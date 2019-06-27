@@ -213,9 +213,7 @@ export default function Header(props: Props): React.Node {
             <Row css={styles.menus}>
                 {menus.map((m, index) => (
                     <React.Fragment key={index}>
-                        <Dropdown
-                            label={<a href={m.url}>{gettext(m.label)}</a>}
-                        >
+                        <Dropdown label={<a href={m.url}>{m.label}</a>}>
                             {m.items.map((item, index) => (
                                 <li key={index}>
                                     {item.external ? (
