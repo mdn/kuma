@@ -184,9 +184,8 @@ export default function Header(props: Props): React.Node {
                     {
                         label: gettext('Report a content problem'),
                         external: true,
-                        url: `https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=${encodeURIComponent(
-                            props.document ? props.document.slug : '/' + locale
-                        )}`
+                        url:
+                            'https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title={{PATH}}'
                     },
                     {
                         label: gettext('Report a bug'),
@@ -197,6 +196,12 @@ export default function Header(props: Props): React.Node {
             }
         ],
         [locale]
+    );
+
+    // One of the menu items has a URL that we need to substitute
+    // the current document path into. Compute that now.
+    let path = encodeURIComponent(
+        `/${locale}` + (props.document ? `/docs/${props.document.slug}` : '')
     );
 
     return (
@@ -220,7 +225,10 @@ export default function Header(props: Props): React.Node {
                                         <a
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            href={item.url}
+                                            href={item.url.replace(
+                                                '{{PATH}}',
+                                                path
+                                            )}
                                         >
                                             {item.label} &#x1f310;
                                         </a>
