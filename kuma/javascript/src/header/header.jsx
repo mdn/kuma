@@ -1,5 +1,6 @@
 //@flow
 import * as React from 'react';
+import { useMemo } from 'react';
 import { css } from '@emotion/core';
 
 import { getLocale, gettext } from '../l10n.js';
@@ -83,68 +84,6 @@ const styles = {
     })
 };
 
-const menus = [
-    {
-        label: gettext('Technologies'),
-        url: 'Web',
-        items: [
-            { url: 'Web/HTML', label: gettext('HTML') },
-            { url: 'Web/CSS', label: gettext('CSS') },
-            { url: 'Web/JavaScript', label: gettext('JavaScript') },
-            { url: 'Web/Guide/Graphics', label: gettext('Graphics') },
-            { url: 'Web/HTTP', label: gettext('HTTP') },
-            { url: 'Web/API', label: gettext('APIs / DOM') },
-            {
-                url: 'Mozilla/Add-ons/WebExtensions',
-                label: gettext('Browser Extensions')
-            },
-            { url: 'Web/MathML', label: gettext('MathML') }
-        ]
-    },
-    {
-        label: gettext('References & Guides'),
-        url: 'Learn',
-        items: [
-            { url: 'Learn', label: gettext('Learn web development') },
-            { url: 'Web/Tutorials', label: gettext('Tutorials') },
-            { url: 'Web/Reference', label: gettext('References') },
-            { url: 'Web/Guide', label: gettext('Developer Guides') },
-            { url: 'Web/Accessibility', label: gettext('Accessibility') },
-            { url: 'Games', label: gettext('Game development') },
-            { url: 'Web', label: gettext('...more docs') }
-        ]
-    },
-    {
-        label: gettext('Feedback'),
-        url: 'MDN/Feedback',
-        items: [
-            {
-                url: 'https://support.mozilla.org/',
-                label: gettext('Get Firefox help'),
-                external: true
-            },
-            {
-                url: 'https://stackoverflow.com/',
-                label: gettext('Get web development help'),
-                external: true
-            },
-            { url: 'MDN/Community', label: gettext('Join the MDN community') },
-            {
-                label: gettext('Report a content problem'),
-                external: true,
-                // See fixurl() for code that replaces the {{SLUG}}
-                url:
-                    'https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title={{SLUG}}'
-            },
-            {
-                label: gettext('Report a bug'),
-                external: true,
-                url: 'https://bugzilla.mozilla.org/form.mdn'
-            }
-        ]
-    }
-];
-
 type Props = {
     document?: ?DocumentData,
     searchQuery?: string
@@ -153,18 +92,112 @@ type Props = {
 export default function Header(props: Props): React.Node {
     const locale = getLocale();
 
-    function fixurl(url) {
-        // The "Report a content issue" menu item has a link that requires
-        // the document slug, so we work that in here. If there is no
-        // document data, then we're on the home page and just use '/locale'
-        let slug = props.document ? props.document.slug : `/${locale}`;
-
-        url = url.replace('{{SLUG}}', encodeURIComponent(slug));
-        if (!url.startsWith('https://')) {
-            url = `/${locale}/docs/${url}`;
-        }
-        return url;
-    }
+    // The menus array includes objects that define the set of
+    // menus displayed by this header component. The data structure
+    // is defined here during rendering so that the gettext() calls
+    // happen after the string catalog is available. And we're using
+    // useMemo() so that localization only happens when the locale
+    // changes.
+    const menus = useMemo(
+        () => [
+            {
+                label: gettext('Technologies'),
+                url: `/${locale}/docs/Web`,
+                items: [
+                    { url: `/${locale}/docs/Web/HTML`, label: gettext('HTML') },
+                    { url: `/${locale}/docs/Web/CSS`, label: gettext('CSS') },
+                    {
+                        url: `/${locale}/docs/Web/JavaScript`,
+                        label: gettext('JavaScript')
+                    },
+                    {
+                        url: `/${locale}/docs/Web/Guide/Graphics`,
+                        label: gettext('Graphics')
+                    },
+                    { url: `/${locale}/docs/Web/HTTP`, label: gettext('HTTP') },
+                    {
+                        url: `/${locale}/docs/Web/API`,
+                        label: gettext('APIs / DOM')
+                    },
+                    {
+                        url: `/${locale}/docs/Mozilla/Add-ons/WebExtensions`,
+                        label: gettext('Browser Extensions')
+                    },
+                    {
+                        url: `/${locale}/docs/Web/MathML`,
+                        label: gettext('MathML')
+                    }
+                ]
+            },
+            {
+                label: gettext('References & Guides'),
+                url: `/${locale}/docs/Learn`,
+                items: [
+                    {
+                        url: `/${locale}/docs/Learn`,
+                        label: gettext('Learn web development')
+                    },
+                    {
+                        url: `/${locale}/docs/Web/Tutorials`,
+                        label: gettext('Tutorials')
+                    },
+                    {
+                        url: `/${locale}/docs/Web/Reference`,
+                        label: gettext('References')
+                    },
+                    {
+                        url: `/${locale}/docs/Web/Guide`,
+                        label: gettext('Developer Guides')
+                    },
+                    {
+                        url: `/${locale}/docs/Web/Accessibility`,
+                        label: gettext('Accessibility')
+                    },
+                    {
+                        url: `/${locale}/docs/Games`,
+                        label: gettext('Game development')
+                    },
+                    {
+                        url: `/${locale}/docs/Web`,
+                        label: gettext('...more docs')
+                    }
+                ]
+            },
+            {
+                label: gettext('Feedback'),
+                url: `/${locale}/docs/MDN/Feedback`,
+                items: [
+                    {
+                        url: 'https://support.mozilla.org/',
+                        label: gettext('Get Firefox help'),
+                        external: true
+                    },
+                    {
+                        url: 'https://stackoverflow.com/',
+                        label: gettext('Get web development help'),
+                        external: true
+                    },
+                    {
+                        url: `/${locale}/docs/MDN/Community`,
+                        label: gettext('Join the MDN community')
+                    },
+                    {
+                        label: gettext('Report a content problem'),
+                        external: true,
+                        url: `https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=${encodeURIComponent(
+                            props.document ? props.document.slug : '/' + locale
+                        )}`
+                    },
+                    {
+                        label: gettext('Report a bug'),
+                        external: true,
+                        url: 'https://bugzilla.mozilla.org/form.mdn'
+                    }
+                ]
+            }
+        ],
+        [locale]
+    );
 
     return (
         <div css={styles.header}>
@@ -181,9 +214,7 @@ export default function Header(props: Props): React.Node {
                 {menus.map((m, index) => (
                     <React.Fragment key={index}>
                         <Dropdown
-                            label={
-                                <a href={fixurl(m.url)}>{gettext(m.label)}</a>
-                            }
+                            label={<a href={m.url}>{gettext(m.label)}</a>}
                         >
                             {m.items.map((item, index) => (
                                 <li key={index}>
@@ -191,14 +222,12 @@ export default function Header(props: Props): React.Node {
                                         <a
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            href={fixurl(item.url)}
+                                            href={item.url}
                                         >
                                             {item.label} &#x1f310;
                                         </a>
                                     ) : (
-                                        <a href={fixurl(item.url)}>
-                                            {item.label}
-                                        </a>
+                                        <a href={item.url}>{item.label}</a>
                                     )}
                                 </li>
                             ))}
