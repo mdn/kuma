@@ -1375,6 +1375,7 @@ if ATTACHMENT_SITE_URL not in (_PROD_ATTACHMENT_SITE_URL, SITE_URL):
 CSP_SCRIPT_SRC = [
     SITE_URL,
     "www.google-analytics.com",
+    "cdn.speedcurve.com",
     "static.codepen.io",
     # TODO fix things so that we don't need this
     "'unsafe-inline'",
