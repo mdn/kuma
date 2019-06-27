@@ -185,18 +185,21 @@ export default function Banners(props: BannersProps) {
     // gettext() calls are made after our string catalog is ready. But
     // we do it inside a useMemo() function so that the localization
     // only happens once.
-    const defaultBanners = useMemo(() => [
-        {
-            id: 'developer_needs',
-            title: gettext('MDN Survey'),
-            copy: gettext(
-                'Help us understand the top 10 needs of Web developers and designers.'
-            ),
-            cta: gettext('Take the survey'),
-            url:
-                'https://qsurvey.mozilla.com/s3/Developer-Needs-Assessment-2019'
-        }
-    ]);
+    const defaultBanners = useMemo(
+        () => [
+            {
+                id: 'developer_needs',
+                title: gettext('MDN Survey'),
+                copy: gettext(
+                    'Help us understand the top 10 needs of Web developers and designers.'
+                ),
+                cta: gettext('Take the survey'),
+                url:
+                    'https://qsurvey.mozilla.com/s3/Developer-Needs-Assessment-2019'
+            }
+        ],
+        [] // This tells useMemo() to only compute this once.
+    );
 
     const userData = useContext(UserProvider.context);
 
