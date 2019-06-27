@@ -4,7 +4,6 @@ from textwrap import dedent
 import mock
 import pytest
 import requests_mock
-import six
 from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount
 from constance.test.utils import override_config

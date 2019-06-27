@@ -13,7 +13,7 @@ from django.core.paginator import EmptyPage, InvalidPage, Paginator
 from django.http import QueryDict
 from django.shortcuts import _get_queryset, redirect
 from django.utils.cache import patch_cache_control
-from django.utils.encoding import force_bytes, force_text, smart_bytes
+from django.utils.encoding import force_text, smart_bytes
 from django.utils.http import urlencode
 from django.utils.six import text_type
 from django.utils.translation import ugettext_lazy as _

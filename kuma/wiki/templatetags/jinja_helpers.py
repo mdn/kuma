@@ -4,7 +4,6 @@ import json
 import re
 
 import jinja2
-import six
 from constance import config
 from cssselect.parser import SelectorSyntaxError
 from django.conf import settings

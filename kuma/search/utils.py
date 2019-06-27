@@ -1,6 +1,5 @@
 import logging
 
-import six
 from django.utils.translation import ugettext_lazy as _
 from urlobject import URLObject
 

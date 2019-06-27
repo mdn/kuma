@@ -1,9 +1,9 @@
 """Shared interface for data sources."""
-from __future__ import absolute_import, unicode_literals
+from __future__ import absolute_import
 
 import re
 
-from django.utils.six import (binary_type, PY3, python_2_unicode_compatible,
+from django.utils.six import (binary_type, python_2_unicode_compatible,
                               text_type)
 from django.utils.six.moves.urllib.parse import unquote
 
@@ -143,24 +143,12 @@ class Source(object):
 
     def decode_href(self, href):
         """Convert URL-escaped href attributes to unicode."""
-        if PY3:  # pragma: no cover
-            # TODO: Remove the PY3 condition once we don't run Python 2 anymore
-            # In Python 3, unquote returns unicode
-            if isinstance(href, binary_type):
-                uhref = href.decode('ascii')
-            else:
-                uhref = href
-            decoded = unquote(uhref)
-            assert isinstance(decoded, text_type)
+        if isinstance(href, binary_type):
+            uhref = href.decode('ascii')
         else:
-            # In Python 2, unquote takes and returns binary
-            if isinstance(href, binary_type):
-                bhref = href
-            else:
-                bhref = href.encode('utf-8')
-            decoded = unquote(bhref)
-            assert isinstance(decoded, binary_type)
-            decoded = decoded.decode('utf8')
+            uhref = href
+        decoded = unquote(uhref)
+        assert isinstance(decoded, text_type)
         return decoded
 
     def gather(self, requester, storage):
@@ -236,7 +224,7 @@ class DocumentBaseSource(Source):
     def __init__(self, path, **options):
         super(DocumentBaseSource, self).__init__(path, **options)
         if path != unquote(path):
-            raise ValueError('URL-encoded path "%s"' % path)
+            raise ValueError(f'URL-encoded path {path!r}')
         try:
             self.locale, self.slug = self.locale_and_slug(path)
         except ValueError:
@@ -248,7 +236,7 @@ class DocumentBaseSource(Source):
         if match:
             return match.groups()
         else:
-            raise ValueError('Not a valid document path "%s"' % path)
+            raise ValueError(f'Not a valid document path {path!r}')
 
     @property
     def parent_slug(self):
@@ -258,4 +246,4 @@ class DocumentBaseSource(Source):
     @property
     def parent_path(self):
         if self.parent_slug:
-            return '/%s/docs/%s' % (self.locale, self.parent_slug)
+            return f'/{self.locale}/docs/{self.parent_slug}'

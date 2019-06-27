@@ -62,7 +62,7 @@ def _post(content, env_vars, cache_control=None, timeout=None):
 
     try:
         response = requests.post(url,
-                                 data=content,#.encode('utf8'),
+                                 data=content,
                                  headers=headers,
                                  timeout=timeout)
     except (ConnectionError, ReadTimeout) as err:

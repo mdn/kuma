@@ -99,6 +99,14 @@ DATABASES = {
 
 SILENCED_SYSTEM_CHECKS = [
     'django_mysql.W003',
+
+    # As of django-recaptcha==2.0.4 it checks that you have set either
+    # settings.RECAPTCHA_PRIVATE_KEY or settings.RECAPTCHA_PUBLIC_KEY.
+    # If you haven't it assumes to use the default test keys (from Google).
+    # We don't set either of these keys so they think we haven't thought
+    # about using real values. However, we use django-constance for this
+    # and not django.conf.settings so the warning doesn't make sense to us.
+    'captcha.recaptcha_test_key_error',
 ]
 
 # Cache Settings
