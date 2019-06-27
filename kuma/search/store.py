@@ -62,7 +62,7 @@ def ref_from_url(url):
 
     locale = translation.get_language()
 
-    for value in [query, page, locale] + filters:
+    for value in [query, page, locale] + list(filters):
         md5.update(smart_bytes(value))
 
     return md5.hexdigest()[:16]

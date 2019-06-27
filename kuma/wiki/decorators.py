@@ -1,9 +1,6 @@
 from __future__ import unicode_literals
 
-try:
-    from functools import wraps
-except ImportError:
-    from django.utils.functional import wraps
+from functools import wraps
 
 import newrelic.agent
 from django.http import Http404, HttpResponsePermanentRedirect
