@@ -526,7 +526,7 @@ exports[`Header snapshot 1`] = `
         </li>
         <li>
           <a
-            href="https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=test"
+            href="https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=%2Fen-US%2Fdocs%2Ftest"
             rel="noopener noreferrer"
             target="_blank"
           >
