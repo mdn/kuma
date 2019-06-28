@@ -213,7 +213,11 @@ export default function Router({
      * need to make an asynchronous fetch. This second data argument
      * is important for server-side rendering.
      */
-    function route(url: string, data: ?any = null): boolean {
+    function route(
+        url: string,
+        data: ?any = null,
+        popstate: boolean = false
+    ): boolean {
         let pageState = pageStateRef.current;
 
         // If we are already displaying the requested URL, then
@@ -297,8 +301,17 @@ export default function Router({
                     // 1) Note how much time passed since navigateStart()
                     navigateFetchComplete();
 
-                    // 2) Scroll back up to the top of the page
-                    window.scrollTo(0, 0);
+                    // 2) If we're navigating to a new page (i.e. if this
+                    // call is not in response to a popstate event) then
+                    // scroll back up to the top of the page so the user
+                    // can read the new document from the beginning. On
+                    // the other hand, if we're routing in response to
+                    // the browser's Back or Forward buttons, then we let
+                    // the brower take care of restoring the user's scroll
+                    // position automatically.
+                    if (!popstate) {
+                        window.scrollTo(0, 0);
+                    }
 
                     // 3) Ask the route what our page title is
                     // and set that title on the document, if it returns one
@@ -481,7 +494,7 @@ export default function Router({
             // triggered when the user clicks on internal hash-only
             // links. And in that case we don't want to call route()
             if (event.state) {
-                route(event.state);
+                route(event.state, null, true);
             }
         });
 
