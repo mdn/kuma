@@ -352,6 +352,19 @@ export class DocumentRoute extends Route<DocumentRouteParams, DocumentData> {
                         history.replaceState(url, '', url);
                     }
 
+                    // The tags property was added to the doc API recently
+                    // and the cached JSON blobs may not be updated yet.
+                    // So if we receive data with no tags property, we
+                    // have to add one set to an empty array for backward
+                    // compatibility.
+                    //
+                    // NOTE: as a general matter, because of our S3
+                    // cache we need to do this every time we update
+                    // the doc API to ensure backward compatibility.
+                    if (!documentData.tags) {
+                        documentData.tags = [];
+                    }
+
                     return documentData;
                 } else {
                     throw new Error('Invalid response from document API');
