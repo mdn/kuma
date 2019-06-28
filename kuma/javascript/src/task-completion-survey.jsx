@@ -120,7 +120,7 @@ export default function TaskCompletionSurvey(props: Props) {
                 nonInteraction: true
             });
         }
-    }, [shouldShow]);
+    }, [shouldShow, ga]);
 
     // If we're not going to show anything, we can just return now.
     if (!shouldShow) {

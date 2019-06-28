@@ -51,6 +51,7 @@
         "eslint-plugin-jsx-a11y": "^6.2.1",
         "eslint-plugin-prettier": "^3.0.1",
         "eslint-plugin-react": "^7.12.4",
+        "eslint-plugin-react-hooks": "1.6.1",
         "flow-bin": "^0.92.1",
         "gulp": "3.9.1",
         "gulp-sass": "4.0.1",
