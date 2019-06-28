@@ -327,6 +327,16 @@ export default function Router({
                     // probably a hard load in the first place and we
                     // don't want to try again because we'll just get
                     // into a loop.
+                    //
+                    // NOTE: when something does go wrong and we fall
+                    // back on loading the page, it means that any
+                    // error message printed to the console is
+                    // immediately erased, which makes debugging these
+                    // situations difficult, especially in
+                    // production. The Firefox dev tools debugger
+                    // allows you to set a breakpoint on beforeunload
+                    // events which allows us to examine the stack and
+                    // find out what the caught exception is.
                     if (url !== initialURL) {
                         window.location = url;
                     } else {
