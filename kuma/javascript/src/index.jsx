@@ -32,10 +32,17 @@ if (container) {
             // navigation between pages. Currently the single page app
             // handles document pages and search results
             app = (
-                <SinglePageApp
-                    initialURL={data.url}
-                    initialData={data.documentData}
-                />
+                /* StrictMode is a tool for highlighting potential problems
+                   in an application. Like Fragment, StrictMode does not
+                   render any visible UI. It activates additional checks and
+                   warnings for its descendants. 
+                   @see https://reactjs.org/docs/strict-mode.html */
+                <React.StrictMode>
+                    <SinglePageApp
+                        initialURL={data.url}
+                        initialData={data.documentData}
+                    />
+                </React.StrictMode>
             );
             break;
         case 'landing':
@@ -44,7 +51,11 @@ if (container) {
             // content is still based on Jinja templates, so we can't
             // currently make it part of the single page app and have
             // to handle it as a special case here.
-            app = <LandingPage />;
+            app = (
+                <React.StrictMode>
+                    <LandingPage />
+                </React.StrictMode>
+            );
             break;
         case 'default':
             throw new Error(
