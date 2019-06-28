@@ -50,7 +50,7 @@ export default function Search(props: Props) {
         if (inputfield.current && props.initialQuery) {
             inputfield.current.value = props.initialQuery;
         }
-    }, []);
+    }, [props.initialQuery]);
 
     return (
         <form

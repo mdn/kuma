@@ -108,7 +108,7 @@ export default function UserProvider(props: {
                     }
                 });
             });
-    }, []); // empty array means we only fetch on mount, not on every render
+    }, [ga]); // only fetch on mount, or if `ga` changes
 
     return (
         <context.Provider value={userData}>{props.children}</context.Provider>
