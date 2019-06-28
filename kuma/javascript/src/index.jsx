@@ -56,7 +56,15 @@ if (container) {
         if (container.firstElementChild) {
             // If the container element is not empty, then it was presumably
             // rendered on the server, and we just need to hydrate it now.
-            ReactDOM.hydrate(app, container);
+            //
+            // If we're running under google translate, however, we skip
+            // the hydration step because the mismatched origins cause
+            // errors and cause all the content to disappear when React
+            // unmounts the components. It is better for the end user in
+            // this case to just get a static HTML page. See Bug 1562293.
+            if (window.origin !== 'https://translate.googleusercontent.com') {
+                ReactDOM.hydrate(app, container);
+            }
         } else {
             // Otherwise, if the container is empty, then we need to do a full
             // client-side render. The goal is that pages should always be
