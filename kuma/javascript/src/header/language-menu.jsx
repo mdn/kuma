@@ -2,7 +2,7 @@
 import * as React from 'react';
 
 import Dropdown from './dropdown.jsx';
-import { gettext } from '../l10n.js';
+import { gettext  } from '../l10n.js';
 
 import type { DocumentData } from '../document.jsx';
 
