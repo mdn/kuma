@@ -162,6 +162,7 @@ pythonlint:
 jslint:
 	npm run eslint
 	npm run stylelint
+	npm run pretty
 
 lint: pythonlint jslint
 
