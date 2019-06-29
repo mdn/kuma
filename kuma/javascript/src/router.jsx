@@ -33,10 +33,17 @@ import {
 } from './perf.js';
 
 // These are CSS animations for the loading bar
+// The slidein animation runs for 500ms, but doesn't do anything
+// for the first 100ms, so when client-side navigation is really fast
+// the user won't even see a flash of the progress bar starting.
 const slidein = keyframes`
-  from { transform: translate(-90%, 0); }
-  to { transform: translate(0, 0); }
+  0% { transform: translate(-100%, 0); }
+  20% { transform: translate(-100%, 0); }
+  100% { transform: translate(0, 0); }
 `;
+// When client side navigation takes an unexpectedly long time
+// this color throbbing animation takes over once the progress par
+// has slid in.
 const throb = keyframes`
   from { opacity: 1.0; }
   to { opacity: 0.5; }
@@ -552,11 +559,6 @@ export default function Router({
             return;
         }
 
-        // Client side navigation is typically so fast that the loading
-        // animation might not even be noticed, so we artificially prolong
-        // the effect with setTimeout()
-        setTimeout(() => {
-            setLoading(false);
-        }, 200);
+        setLoading(false);
     }
 }
