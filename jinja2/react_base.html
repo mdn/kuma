@@ -100,10 +100,6 @@
     {{ soapbox_messages(get_soapbox_messages(request.path)) }}
   {%- endif %}
 
-  {%- if not untrusted %}
-    {% include "includes/a11y-nav.html" %}
-  {%- endif %} {# if not untrusted #}
-
   <!-- Content will go here -->
   <main id="content">
       {% block document_head %}{% endblock %}

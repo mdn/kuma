@@ -109,8 +109,6 @@
 
   {{ soapbox_messages(get_soapbox_messages(request.path)) }}
 
-  {#{% include "includes/a11y-nav.html" %}#}
-
   {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(),
                   document_data)|safe }}
 
