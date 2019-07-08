@@ -62,11 +62,8 @@ const styles = {
         }
     }),
     metadataIcon: css({
-        width: 16,
-        height: 16,
         marginRight: 5,
-        verticalAlign: 'middle',
-        fill: '#696969'
+        verticalAlign: 'middle'
     }),
     tags: css({
         display: 'inline',
@@ -160,7 +157,10 @@ function ArticleMetadata({ document }: DocumentProps) {
     return (
         <div css={styles.metadata}>
             <div>
-                <TagsIcon css={styles.metadataIcon} />{' '}
+                <TagsIcon
+                    css={styles.metadataIcon}
+                    className="icon icon-tags"
+                />{' '}
                 <strong>{gettext('Tags:')}</strong>{' '}
                 <ul css={styles.tags}>
                     {document.tags.map(c => (
@@ -169,7 +169,10 @@ function ArticleMetadata({ document }: DocumentProps) {
                 </ul>
             </div>
             <div>
-                <ContributorsIcon css={styles.metadataIcon} />{' '}
+                <ContributorsIcon
+                    css={styles.metadataIcon}
+                    className="icon icon-group"
+                />{' '}
                 <strong>{gettext('Contributors to this page:')}</strong>{' '}
                 {/*
                  * TODO: once we implement profile pages on the beta site
@@ -184,7 +187,10 @@ function ArticleMetadata({ document }: DocumentProps) {
                 ))}
             </div>
             <div>
-                <ClockIcon css={styles.metadataIcon} />{' '}
+                <ClockIcon
+                    css={styles.metadataIcon}
+                    className="icon icon-clock"
+                />{' '}
                 <strong>{gettext('Last updated by:')}</strong>{' '}
                 {document.lastModifiedBy}{' '}
                 <time dateTime={document.lastModified}>

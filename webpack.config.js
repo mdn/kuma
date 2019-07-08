@@ -41,7 +41,12 @@ const commonConfig = {
                             svgo: {
                                 // Disable this one svgo plugin because it
                                 // strips the role attribute from our svgs
-                                plugins: [{ removeUnknownsAndDefaults: false }]
+                                plugins: [
+                                    {
+                                        removeUnknownsAndDefaults: false,
+                                        removeViewBox: false
+                                    }
+                                ]
                             }
                         }
                     }
