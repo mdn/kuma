@@ -5,8 +5,13 @@ from django.utils.translation import activate, ugettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
 from elasticsearch_dsl import Q, query
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from waffle.decorators import waffle_flag
 from waffle.models import Flag, Sample, Switch
 
+from kuma.api.v1.serializers import BCSignalSerializer
 from kuma.core.urlresolvers import reverse
 from kuma.users.templatetags.jinja_helpers import gravatar_url
 from kuma.wiki.jobs import DocumentContributorsJob
@@ -264,3 +269,13 @@ def search(request, locale):
     # Return as many as 40 matches, since we're not implementing pagination yet
     response = search[0:40].execute()
     return JsonResponse(response.to_dict())
+
+
+@waffle_flag('bc-signals')
+@api_view(['POST'])
+def bc_signal(request):
+    serializer = BCSignalSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -4,6 +4,10 @@ Table layout
 - requires .bc-table-{$num} modifier to display columns correctly
 ********************************************************************** */
 
+table.bc-table {
+    margin-bottom: 0;
+}
+
 .text-content table.bc-table {
     /* specificity to over-ride .text-content styles */
     width: 100%;

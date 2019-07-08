@@ -13,4 +13,7 @@ urlpatterns = [
     url(r'^search/(?P<locale>[^/]+)/?$',
         views.search,
         name='api.v1.search'),
+    url(r'^bc-signal/?$',
+        views.bc_signal,
+        name='api.v1.bc_signal'),
 ]
