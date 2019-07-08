@@ -227,7 +227,13 @@ function Content({ document }: DocumentProps) {
     // The wiki-left-present class below is needed for correct BCD layout
     // See kuma/static/styles/components/compat-tables/bc-table.scss
     return (
-        <div css={styles.contentLayout} className="wiki-left-present">
+        /* adding aria-live here to mark this as a live region to
+          ensure a screen reader will read the new content after navigation */
+        <div
+            css={styles.contentLayout}
+            className="wiki-left-present"
+            aria-live="assertive"
+        >
             <Article document={document} />
             <Sidebar document={document} />
         </div>

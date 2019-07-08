@@ -146,6 +146,7 @@ export default function Router({
     // analytics and the other stops the loading animation. Both
     // functions are defined at the bottom of the component.
     useEffect(recordAndReportAnalytics, [pageState.data]);
+    useEffect(resetFocus, [pageState.data]);
     useEffect(stopLoading, [pageState.data]);
 
     // When the page is first loaded, and this function is called for
@@ -512,6 +513,16 @@ export default function Router({
         // browser to be able to go back to it by client-side navigation
         // we need to set its state.
         history.replaceState(initialURL, '', initialURL);
+    }
+
+    /**
+     * Reset focus to the window after navigation
+     */
+    function resetFocus() {
+        let documentTitle = document.querySelector('a[class*="logoContainer"]');
+        if (documentTitle) {
+            documentTitle.focus();
+        }
     }
 
     // This is an effect function that runs after a new page (with new
