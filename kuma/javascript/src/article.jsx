@@ -5,15 +5,16 @@ import { css } from '@emotion/core';
 
 import { activateBCDSignals, activateBCDTables } from './bcd.js';
 import { addLiveExampleButtons } from './live-examples.js';
-import ClockIcon from './icons/clock.svg';
-import ContributorsIcon from './icons/contributors.svg';
 import { gettext } from './l10n.js';
 import { highlightSyntax } from './prism.js';
 import * as InteractiveExamples from './interactive-examples.js';
 import TagsIcon from './icons/tags.svg';
 import UserProvider from './user-provider.jsx';
 
-import sectionAnchor from './section-link.jsx';
+import Contributors from './contributors.jsx';
+import LastModifiedBy from './last-modified-by.jsx';
+import sectionAnchor from './section-anchor.jsx';
+
 import type { DocumentData } from './document.jsx';
 type DocumentProps = {
     document: DocumentData
@@ -61,10 +62,6 @@ const styles = {
         '& div': {
             margin: '4px 0'
         }
-    }),
-    metadataIcon: css({
-        marginRight: 5,
-        verticalAlign: 'middle'
     }),
     tags: css({
         display: 'inline',
@@ -169,6 +166,9 @@ export default function Article({ document }: DocumentProps) {
 }
 
 function ArticleMetadata({ document }: DocumentProps) {
+    const url = new URL(document.editURL);
+    const profileBaseURL = `${url.protocol}//${url.host}/profiles/`;
+
     return (
         <div css={styles.metadata}>
             <div>
@@ -183,38 +183,15 @@ function ArticleMetadata({ document }: DocumentProps) {
                     ))}
                 </ul>
             </div>
-            <div>
-                <ContributorsIcon
-                    css={styles.metadataIcon}
-                    className="icon icon-group"
-                />{' '}
-                <strong>{gettext('Contributors to this page:')}</strong>{' '}
-                {/*
-                 * TODO: once we implement profile pages on the beta site
-                 * these contributor names should turn into links
-                 * <a href={`/${locale}/profiles/${c}`} rel="nofollow">{c}</a>
-                 */
-                document.contributors.map((c, i) => (
-                    <span key={c}>
-                        {i > 0 && ', '}
-                        {c}
-                    </span>
-                ))}
-            </div>
-            <div>
-                <ClockIcon
-                    css={styles.metadataIcon}
-                    className="icon icon-clock"
-                />{' '}
-                <strong>{gettext('Last updated by:')}</strong>{' '}
-                {document.lastModifiedBy}{' '}
-                <time dateTime={document.lastModified}>
-                    {new Date(document.lastModified)
-                        .toISOString()
-                        .slice(0, -5)
-                        .replace('T', ' ')}
-                </time>
-            </div>
+            <Contributors
+                contributors={document.contributors}
+                profileBaseURL={profileBaseURL}
+            />
+            <LastModifiedBy
+                lastModifiedBy={document.lastModifiedBy}
+                lastModified={document.lastModified}
+                profileBaseURL={profileBaseURL}
+            />
         </div>
     );
 }

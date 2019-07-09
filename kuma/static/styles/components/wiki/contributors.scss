@@ -1,3 +1,5 @@
+@import '../../includes/mixins';
+
 /*
 contributors block at the bottom of the article
 ********************************************************************** */
@@ -15,5 +17,31 @@ contributors block at the bottom of the article
 @media print {
     .contributors {
         display: none;
+    }
+}
+
+/*
+React contributors block at the bottom of the article
+********************************************************************** */
+.contributors-sub {
+    header {
+        display: inline;
+    }
+
+    h4 {
+        display: inline-block;
+        margin: 5px;
+        @include set-font-size(21px);
+    }
+
+    ul {
+        display: inline;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            display: inline;
+        }
     }
 }
