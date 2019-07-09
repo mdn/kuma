@@ -190,29 +190,12 @@ export class SearchRoute extends Route<SearchRouteParams, SearchResults> {
                     if (
                         !results ||
                         !results.hits ||
-                        !Array.isArray(results.hits.hits)
+                        !Array.isArray(results.hits)
                     ) {
                         throw new Error('Search API returned unexpected data');
                     }
                     return {
-                        results: results.hits.hits.map(hit => {
-                            let score = hit._score;
-                            let excerpts =
-                                (hit.highlight && hit.highlight.content) || [];
-
-                            // Sometimes ElasticSearch returns excerpts that
-                            // are thousands of bytes long without any spaces
-                            // and we don't want to display those
-                            if (excerpts) {
-                                excerpts = excerpts.filter(e => e.length < 256);
-                            }
-
-                            // And we only want to display the top 3 excerpts
-                            if (excerpts && excerpts.length > 3) {
-                                excerpts = excerpts.slice(0, 3);
-                            }
-                            return { ...hit._source, score, excerpts };
-                        }),
+                        results: results.hits,
                         error: null
                     };
                 })

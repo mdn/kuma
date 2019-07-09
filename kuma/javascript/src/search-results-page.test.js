@@ -145,21 +145,13 @@ describe('SearchRoute', () => {
                 ok: true,
                 json: () =>
                     Promise.resolve({
-                        // ElasticSearch buries the results in layers of
-                        // other stuff that we fake out here
-                        hits: {
-                            hits: fakeResults.map(r => ({
-                                _source: {
-                                    slug: r.slug,
-                                    title: r.title,
-                                    summary: r.summary
-                                },
-                                _score: r.score,
-                                highlight: {
-                                    content: r.excerpts
-                                }
-                            }))
-                        }
+                        hits: fakeResults.map(r => ({
+                            slug: r.slug,
+                            title: r.title,
+                            summary: r.summary,
+                            score: r.score,
+                            excerpts: r.excerpts
+                        }))
                     })
             });
         });

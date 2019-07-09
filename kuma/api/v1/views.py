@@ -254,7 +254,10 @@ def search(request, locale):
     # other hand, if we're ever going to implement any kind of
     # search-as-you-type interface, we'll need a super-fast custom
     # endpoint like this one.
-    query_string = request.GET.get('q')
+    query_string = request.GET.get('q', '').strip()
+    if not query_string:
+        return JsonResponse({'error': _("No query string 'q'")}, status=400)
+
     if locale == 'en-US':
         search = (WikiDocumentType.search()
                   .filter('term', locale=locale)
@@ -281,7 +284,31 @@ def search(request, locale):
 
     # Return as many as 40 matches, since we're not implementing pagination yet
     response = search[0:40].execute()
-    return JsonResponse(response.to_dict())
+
+    hits = []
+    for hit in response:
+        # Be explicit about what to return.
+        # Only include things the React component might and will use.
+        hit_dict = hit.to_dict()
+        # Not every document has 'tags' so set this default.
+        hit_dict.setdefault('tags', [])
+        # 'locale' might get returned from hit.to_dict(). Remove it if there.
+        hit_dict.pop('locale', None)
+        # This one comes from the meta
+        hit_dict['score'] = hit.meta.score,
+        try:
+            # Turn it into a plain list instead of an <type AbstractList>
+            excerpts = list(hit.meta.highlight.content)
+        except AttributeError:
+            # No highlighting matches at all means no 'hit.meta.highlight'.
+            excerpts = []
+        hit_dict['excerpts'] = excerpts
+        hits.append(hit_dict)
+
+    # TODO(peterbe) One day we might want to display, like Google does,
+    # the total number of documents that matched.
+    # That piece of information is available in `response.hits.total`.
+    return JsonResponse({'hits': hits})
 
 
 @waffle_flag('bc-signals')

@@ -3,12 +3,15 @@ from __future__ import unicode_literals
 from functools import partial
 
 import pytest
+from django.conf import settings
+from django.test import override_settings
 from waffle.models import Flag, Sample, Switch
 
 from kuma.api.v1.views import (document_api_data, get_content_based_redirect,
                                get_s3_key)
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse as core_reverse
+from kuma.search.tests import ElasticTestCase
 from kuma.users.templatetags.jinja_helpers import gravatar_url
 from kuma.wiki.jobs import DocumentContributorsJob
 from kuma.wiki.templatetags.jinja_helpers import absolutify
@@ -331,3 +334,53 @@ def test_whoami(user_client, api_settings, wiki_user, beta_testers_group,
         }
     }
     assert_no_cache_header(response)
+
+
+# NOTE(peterbe) These are manually cloned from the pytest fixture in
+# kuma.api.conftest. The reason why is because we have to use the
+# ElasticTestCase class for Elasticsearch fixtures. So we can't use the
+# regular pytest fixtures and that's why we have to replicate these tricks.
+@override_settings(
+    BETA_HOST='beta.mdn.dev',
+    ALLOWED_HOSTS=settings.ALLOWED_HOSTS + [settings.BETA_HOST],
+    ENABLE_RESTRICTIONS_BY_HOST=True)
+class APISearchIntegration(ElasticTestCase):
+
+    fixtures = ElasticTestCase.fixtures + ['wiki/documents.json']
+
+    def test_search_en_US(self):
+        url = reverse('api.v1.search', args=['en-US'])
+        response = self.client.get(url, HTTP_HOST=settings.BETA_HOST)
+        assert response.status_code == 400
+        assert response['content-type'] == 'application/json'
+        assert response.json() == {
+            'error': "No query string 'q'"
+        }
+
+        response = self.client.get(
+            url, {'q': 'nothingexpectedfound'}, HTTP_HOST=settings.BETA_HOST)
+        assert response.status_code == 200
+        assert response['content-type'] == 'application/json'
+        assert response.json() == {'hits': []}
+
+        response = self.client.get(
+            url, {'q': 'article'}, HTTP_HOST=settings.BETA_HOST)
+        assert response.status_code == 200
+        assert response['content-type'] == 'application/json'
+        hits = response.json()['hits']
+        assert hits
+        expected_keys = set(
+            ['score', 'excerpts', 'summary', 'title', 'slug', 'tags'])
+        for hit in hits:
+            assert set(hit.keys()) == expected_keys
+
+        # Search in French and use a title matches some of the known fixture
+        # documents.
+        url = reverse('api.v1.search', args=['fr'])
+        response = self.client.get(
+            url, {'q': 'Le Title'}, HTTP_HOST=settings.BETA_HOST)
+        assert response.status_code == 200
+        hits = response.json()['hits']
+        assert hits
+        for hit in hits:
+            assert set(hit.keys()) == expected_keys
