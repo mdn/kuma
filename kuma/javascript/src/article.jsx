@@ -25,7 +25,6 @@ const styles = {
         gridArea: 'main',
         boxSizing: 'border-box',
         width: '100%',
-        overflowX: 'scroll',
         // Less padding on the left because the sidebar also has
         // padding on the right
         padding: '30px 24px 30px 12px',

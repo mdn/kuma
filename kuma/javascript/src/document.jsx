@@ -107,7 +107,6 @@ const styles = {
         gridArea: 'side',
         boxSizing: 'border-box',
         width: '100%',
-        overflowX: 'scroll',
         // Less padding on the right because the article area
         // has padding on the left, too.
         padding: '30px 12px 30px 24px',
