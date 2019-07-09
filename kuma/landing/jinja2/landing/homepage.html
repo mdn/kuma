@@ -144,5 +144,7 @@
     {% javascript 'newsletter' %}
   {% endif %}
 
-  {% javascript 'banners' %}
+  {% if waffle.flag('developer_needs') %}
+    {% javascript 'banners' %}
+  {% endif %}
 {% endblock %}
