@@ -303,11 +303,11 @@ exports[`Header snapshot 1`] = `
   className="emotion-40"
 >
   <a
+    aria-label="MDN Web Docs"
     className="emotion-1"
     href="/en-US/"
   >
     <svg mock
-      alt="MDN Web Docs Logo"
       className="emotion-0"
     />
   </a>
