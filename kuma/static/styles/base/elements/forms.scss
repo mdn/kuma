@@ -48,6 +48,10 @@ input[type='search'] {
 
 label {
     cursor: pointer;
+
+    &.visually-hidden {
+        @include visually-hidden();
+    }
 }
 
 /* disabling of elements */

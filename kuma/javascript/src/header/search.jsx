@@ -62,6 +62,9 @@ export default function Search(props: Props) {
         >
             <SearchIcon css={styles.icon} />
 
+            <label htmlFor="main-q" className="visually-hidden">
+                {gettext('Search MDN')}
+            </label>
             <input
                 css={styles.input}
                 ref={inputfield}

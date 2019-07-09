@@ -53,6 +53,12 @@ exports[`Search snapshot 1`] = `
   <svg mock
     className="emotion-0"
   />
+  <label
+    className="visually-hidden"
+    htmlFor="main-q"
+  >
+    Search MDN
+  </label>
   <input
     className="emotion-1"
     id="main-q"

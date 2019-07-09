@@ -560,6 +560,12 @@ exports[`Header snapshot 1`] = `
       <svg mock
         className="emotion-33"
       />
+      <label
+        className="visually-hidden"
+        htmlFor="main-q"
+      >
+        Search MDN
+      </label>
       <input
         className="emotion-34"
         id="main-q"
