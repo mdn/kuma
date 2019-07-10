@@ -6,6 +6,7 @@
     padding: $first-content-top-padding 0 $last-content-bottom-padding 0;
 }
 
+div[class*='titlebar'],
 .document-title {
     h1 {
         @include set-font-size($mobile-document-title-font-size);
