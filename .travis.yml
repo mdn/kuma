@@ -30,7 +30,6 @@ matrix:
             - scripts/ci-python
             - scripts/ci-jest
             - scripts/ci-localerefresh
-            - bash <(curl -s https://codecov.io/bash)
         - language: node_js
           name: "Javascript linting"
           node_js: 10

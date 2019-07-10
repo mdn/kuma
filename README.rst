@@ -6,10 +6,6 @@ Kuma
    :target: https://travis-ci.org/mozilla/kuma
    :alt: Build Status
 
-.. image:: https://codecov.io/github/mozilla/kuma/coverage.svg?branch=master
-   :target: https://codecov.io/github/mozilla/kuma?branch=master
-   :alt: Code Coverage Status
-
 .. image:: https://requires.io/github/mozilla/kuma/requirements.svg?branch=master
    :target: https://requires.io/github/mozilla/kuma/requirements/?branch=master
    :alt: Requirements Status
