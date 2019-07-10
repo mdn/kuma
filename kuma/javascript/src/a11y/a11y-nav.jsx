@@ -17,7 +17,7 @@ export default function A11yNav() {
                 </a>
             </li>
             <li>
-                <a id="skip-search" href="#q">
+                <a id="skip-search" href="#main-q">
                     {gettext('Skip to search')}
                 </a>
             </li>
