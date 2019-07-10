@@ -41,6 +41,17 @@ class DocumentContributorsJob(KumaJob):
         if not recent_creator_ids:
             return self.empty()
 
+        # If a document has repeated revisions by the same user, the *list*
+        # of IDs is not distinct.
+        # We can't use `recent_creator_ids = list(set(recent_creator_ids))`
+        # since that would break the order.
+        # The fastest way to "uniqify" a list, whilst preserving the order,
+        # in Python 2 is this way:
+        # (See https://www.peterbe.com/plog/uniqifiers-benchmark)
+        seen = set()
+        recent_creator_ids = [
+            x for x in recent_creator_ids if x not in seen and not seen.add(x)]
+
         # then return the ordered results given the ID list, MySQL only syntax
         select = collections.OrderedDict([
             ('ordered_ids',
