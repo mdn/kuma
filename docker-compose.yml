@@ -19,7 +19,7 @@ services:
 
       - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
       - ALLOWED_HOSTS=*
-      - BROKER_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/1
       - CSRF_COOKIE_SECURE=False
       - DATABASE_URL=mysql://${DATABASE_USER:-root}:${DATABASE_PASSWORD:-kuma}@mysql:3306/developer_mozilla_org
