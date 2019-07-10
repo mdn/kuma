@@ -145,7 +145,12 @@ export default function Article({ document }: DocumentProps) {
          * because our stylesheets expect them and formatting isn't quite
          * right without them.
          */
-        <div ref={article} className="text-content" css={styles.article}>
+        <div
+            id="content"
+            ref={article}
+            className="text-content"
+            css={styles.article}
+        >
             <article
                 id="wikiArticle"
                 dangerouslySetInnerHTML={{ __html: document.bodyHTML }}

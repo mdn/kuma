@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { css } from '@emotion/core';
 
+import A11yNav from './a11y/a11y-nav.jsx';
 import Article from './article.jsx';
 import Banners from './banners.jsx';
 import { gettext } from './l10n.js';
@@ -242,6 +243,7 @@ function Content({ document }: DocumentProps) {
 function DocumentPage({ document }: DocumentProps) {
     return (
         <>
+            <A11yNav />
             <Header document={document} />
             <Titlebar title={document.title} document={document} />
             <Breadcrumbs document={document} />

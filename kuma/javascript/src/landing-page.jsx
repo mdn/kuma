@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
 
+import A11yNav from './a11y/a11y-nav.jsx';
 import Banners from './banners.jsx';
 import GAProvider from './ga-provider.jsx';
 import Header from './header/header.jsx';
@@ -16,6 +17,7 @@ export default function LandingPage() {
     return (
         <GAProvider>
             <UserProvider>
+                <A11yNav />
                 <Header />
                 <Banners />
             </UserProvider>
