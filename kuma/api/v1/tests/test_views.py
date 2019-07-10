@@ -103,6 +103,7 @@ def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache,
     assert doc_data['absoluteURL'] == trans_doc.get_absolute_url()
     assert doc_data['editURL'] == absolutify(trans_doc.get_edit_url(),
                                              for_wiki_site=True)
+    assert doc_data['translateURL'] is None
     assert doc_data['bodyHTML'] == trans_doc.get_body_html()
     assert doc_data['quickLinksHTML'] == trans_doc.get_quick_links_html()
     assert doc_data['tocHTML'] == trans_doc.get_toc_html()
@@ -159,6 +160,15 @@ def test_doc_api_for_redirect_to_doc(client, api_settings, root_doc,
     assert doc_data['absoluteURL'] == root_doc.get_absolute_url()
     assert doc_data['editURL'] == absolutify(root_doc.get_edit_url(),
                                              for_wiki_site=True)
+    assert doc_data['translateURL'] == absolutify(
+        reverse(
+            'wiki.select_locale',
+            args=(root_doc.slug,),
+            locale=root_doc.locale,
+            urlconf='kuma.urls'
+        ),
+        for_wiki_site=True
+    )
     assert doc_data['bodyHTML'] == root_doc.get_body_html()
     assert doc_data['quickLinksHTML'] == root_doc.get_quick_links_html()
     assert doc_data['tocHTML'] == root_doc.get_toc_html()

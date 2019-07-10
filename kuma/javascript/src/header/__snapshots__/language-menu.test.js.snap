@@ -127,6 +127,15 @@ exports[`LanguageMenu snapshot 1`] = `
         </bdi>
       </a>
     </li>
+    <li>
+      <a
+        href="[fake translate url]"
+        id="translations-add"
+        rel="nofollow"
+      >
+        Add a translation
+      </a>
+    </li>
   </ul>
 </div>
 `;

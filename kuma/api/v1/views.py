@@ -141,6 +141,19 @@ def document_api_data(doc=None, ensure_contributors=False, redirect_url=None):
             'hrefLang': doc.get_hreflang(available_locales),
             'absoluteURL': doc.get_absolute_url(),
             'editURL': absolutify(doc.get_edit_url(), for_wiki_site=True),
+            'translateURL': (
+                absolutify(
+                    reverse(
+                        'wiki.select_locale',
+                        args=(doc.slug,),
+                        locale=doc.locale,
+                        urlconf='kuma.urls'
+                    ),
+                    for_wiki_site=True
+                )
+                if doc.is_localizable else
+                None
+            ),
             'bodyHTML': doc.get_body_html(),
             'quickLinksHTML': doc.get_quick_links_html(),
             'tocHTML': doc.get_toc_html(),

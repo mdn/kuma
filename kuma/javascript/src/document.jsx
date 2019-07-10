@@ -24,6 +24,7 @@ export type DocumentData = {
     hrefLang: string,
     absoluteURL: string,
     editURL: string,
+    translateURL: string,
     bodyHTML: string,
     quickLinksHTML: string,
     tocHTML: string,
