@@ -15,7 +15,10 @@ export default function sectionAnchor(heading) {
     anchor.href = `#${heading.id}`;
     anchor.classList.add('section-link');
     // heading.innerText is the current heading and will already be translated
-    anchor.setAttribute('aria-label', gettext('Link to ') + heading.innerText);
+    anchor.setAttribute(
+        'aria-label',
+        `${gettext('Link to')} ${heading.innerText}`
+    );
     // render the SVG into the anchor element
     render(<Anchor />, anchor);
     return anchor;
