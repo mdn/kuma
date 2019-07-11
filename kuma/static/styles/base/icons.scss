@@ -160,7 +160,8 @@ i.icon-info-sign {
 
 /* community and clock icon size for contributors section */
 .contributors-sub .icon-group,
-.contributors-sub .icon-clock {
+.contributors-sub .icon-clock,
+div[class*='metadata'] .icon-group {
     margin-right: 5px;
     width: 14px;
     height: 14px;
@@ -168,7 +169,8 @@ i.icon-info-sign {
 }
 
 /* clock icon size for contributors section */
-.contributors-sub .icon-clock {
+.contributors-sub .icon-clock,
+div[class*='metadata'] .icon-clock {
     width: 16px;
     height: 16px;
 }
@@ -263,6 +265,15 @@ button[type='submit'] .icon-check-mark {
 /* icons inside the hacks section on homepage */
 .column-hacks .icon-arrow {
     vertical-align: text-bottom;
+}
+
+/* TODO: Need to remove the need for this be removing the
+   styling added from the React side */
+div[class*='editAndHistoryButtons'] {
+    div[class*='historyButton'] {
+        padding-top: 2px;
+        padding-bottom: 0;
+    }
 }
 
 /* specific styling for icons on mobile */

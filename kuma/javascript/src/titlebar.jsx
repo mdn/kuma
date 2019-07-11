@@ -73,8 +73,6 @@ const styles = {
         padding: '0 18px'
     }),
     historyButton: css({
-        width: 32,
-        height: 32,
         border: 'solid 2px #333',
         backgroundColor: '#fff',
         padding: 5,
