@@ -1,5 +1,6 @@
 // @flow
 import { gettext } from './l10n.js';
+import { getCookie } from './utils.js';
 
 /**
  * This file contains functions for working with the BCD tables
@@ -259,6 +260,64 @@ export function activateBCDTables(root: HTMLElement) {
                     currentlyOpenCell = null;
                 }
             });
+        }
+    }
+}
+
+export function activateBCDSignals(root: HTMLElement, slug, locale, userData) {
+    /**
+     * Creates and returns the signal element HTML
+     * @returns signal element HTML
+     */
+    function signalElem() {
+        const extContainer = document.createElement('div');
+        const separator = document.createElement('hr');
+        const container = document.createElement('div');
+        const signalLink = document.createElement('a');
+        signalLink.textContent = gettext('Flag as incorrect');
+        const signalApiUrl = '/api/v1/bc-signal';
+
+        const payload = {
+            slug: slug,
+            locale: locale
+        };
+
+        signalLink.addEventListener('click', function() {
+            fetch(signalApiUrl, {
+                method: 'POST',
+                body: JSON.stringify(payload),
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(function() {
+                    signalLink.textContent = gettext(
+                        'Thank you for letting us know!'
+                    );
+                })
+                .catch(function() {
+                    signalLink.textContent = gettext('Something went wrong!');
+                })
+                .then(function() {
+                    setTimeout(function() {
+                        container.classList.add('slideUp');
+                    }, 1000);
+                });
+        });
+
+        container.setAttribute('class', 'signal-link-container');
+        extContainer.setAttribute('class', 'signal-link-ext-container');
+        container.appendChild(separator);
+        container.appendChild(signalLink);
+        extContainer.appendChild(container);
+        return extContainer;
+    }
+
+    if (userData && userData.waffle.flags['bc-signals']) {
+        var bcTable = document.querySelector('.bc-table');
+        if (bcTable) {
+            bcTable.insertAdjacentElement('afterend', signalElem());
         }
     }
 }

@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { css } from '@emotion/core';
 
-import { activateBCDTables } from './bcd.js';
+import { activateBCDSignals, activateBCDTables } from './bcd.js';
 import { addLiveExampleButtons } from './live-examples.js';
 import ClockIcon from './icons/clock.svg';
 import ContributorsIcon from './icons/contributors.svg';
@@ -11,6 +11,7 @@ import { gettext } from './l10n.js';
 import { highlightSyntax } from './prism.js';
 import * as InteractiveExamples from './interactive-examples.js';
 import TagsIcon from './icons/tags.svg';
+import UserProvider from './user-provider.jsx';
 
 import sectionAnchor from './section-link.jsx';
 import type { DocumentData } from './document.jsx';
@@ -111,6 +112,7 @@ function addAnchors(article) {
 
 export default function Article({ document }: DocumentProps) {
     const article = useRef(null);
+    const userData = useContext(UserProvider.context);
 
     // This is a one-time effect we need to call the first time an article
     // is rendered, to ensure that interactive examples resize themselves
@@ -132,6 +134,18 @@ export default function Article({ document }: DocumentProps) {
             activateBCDTables(rootElement);
         }
     }, [document]);
+
+    useEffect(() => {
+        let rootElement = article.current;
+        if (rootElement) {
+            activateBCDSignals(
+                rootElement,
+                document.slug,
+                document.locale,
+                userData
+            );
+        }
+    }, [document, userData]);
 
     return (
         /*
