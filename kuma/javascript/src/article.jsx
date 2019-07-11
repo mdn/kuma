@@ -12,6 +12,7 @@ import { highlightSyntax } from './prism.js';
 import * as InteractiveExamples from './interactive-examples.js';
 import TagsIcon from './icons/tags.svg';
 
+import sectionAnchor from './section-link.jsx';
 import type { DocumentData } from './document.jsx';
 type DocumentProps = {
     document: DocumentData
@@ -104,11 +105,7 @@ function highlightSections(article) {
 // kuma/static/js/components/local-anchor.js
 function addAnchors(article) {
     for (let heading of article.querySelectorAll('h2[id], h3[id]')) {
-        let anchor = document.createElement('a');
-        anchor.href = `#${heading.id}`;
-        anchor.classList.add('sectionLink');
-        anchor.textContent = ' \uD83D\uDD17'; // Unicode link emoji
-        heading.insertAdjacentElement('beforeend', anchor);
+        heading.insertAdjacentElement('beforeend', sectionAnchor(heading));
     }
 }
 

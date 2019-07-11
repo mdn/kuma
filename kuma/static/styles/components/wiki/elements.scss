@@ -24,11 +24,12 @@ article {
         }
     }
 
-    .local-anchor {
+    .local-anchor,
+    .section-link {
         .icon {
             color: $link-color;
-            width: 16px;
-            height: 16px;
+            width: 21px;
+            height: 21px;
             /* ensure svg will never be target of mouse event */
             pointer-events: none;
             @include bidi(((margin-left, ($grid-spacing / 2 ), margin-right, 0),));
