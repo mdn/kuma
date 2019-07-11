@@ -54,24 +54,38 @@ export function setLayout(root: HTMLElement) {
     if (mediaQuery && !mediaQuery.matches) {
         for (let iframe of root.querySelectorAll(ieSelector)) {
             if (iframe instanceof HTMLIFrameElement) {
-                // NOTE: if we just do the postMessage() right away the
-                // message probably won't get through because the iframe
-                // won't have loaded enough to be listening for messages.
-                // So instead we wait until the iframe is ready.  It is
-                // possible (though it seems unlikely) that the iframe
-                // could finish loading before this effect function gets
-                // called. If that happens we would miss the load event
-                // and never send the message. This doesn't seem like a
-                // problem in local testing, but if we don't reliably get
-                // the right layout in production then we might want to
-                // combine this load event handler with a setTimeout() call
-                // so that we post the message on load or after 1 second.
+                let messagePosted = false;
+                /* NOTE: if we just do the postMessage() right away the
+                 * message probably won't get through because the iframe
+                 * won't have loaded enough to be listening for messages.
+                 * So instead we wait until the iframe is ready.
+                 */
                 iframe.addEventListener('load', () => {
-                    iframe.contentWindow.postMessage(
-                        { smallViewport: true },
-                        ieOrigin
-                    );
+                    if (!messagePosted) {
+                        iframe.contentWindow.postMessage(
+                            { smallViewport: true },
+                            ieOrigin
+                        );
+                        messagePosted = true;
+                    }
                 });
+
+                /* It is possible that the iframe could finish loading
+                 * before this effect function gets called. If that
+                 * happens we would miss the load event and never send
+                 * the message. So we also add a setTimeout() call here,
+                 */
+                setTimeout(() => {
+                    /* and should the above fail, we will post
+                       the message after a second have elapsed. */
+                    if (!messagePosted) {
+                        iframe.contentWindow.postMessage(
+                            { smallViewport: true },
+                            ieOrigin
+                        );
+                        messagePosted = true;
+                    }
+                }, 1000);
             }
         }
     }

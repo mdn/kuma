@@ -101,7 +101,7 @@ const styles = {
         [NARROW]: {
             // If we're narrower than a tablet, put the sidebar at the
             // bottom and drop the toc line.
-            gridTemplateColumns: '1fr',
+            gridTemplateColumns: '100%',
             gridTemplateAreas: '"main" "side"'
         }
     }),
