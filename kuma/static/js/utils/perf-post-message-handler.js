@@ -15,10 +15,12 @@ function handlePerfMarks(perfData) {
         });
 
         /* If Analytics has loaded, go ahead with tracking
-           Checking for ".create" due to Ghostery mocking of ga */
-        if (ga && ga.create) {
+           Checking for ".create" due to Ghostery mocking of ga.
+           Use "window.ga" otherwise you'd get a
+           "ReferenceError: ga is not defined" error. */
+        if (window.ga && window.ga.create) {
             // Send event to GA
-            ga('send', {
+            window.ga('send', {
                 hitType: 'timing',
                 timingCategory: 'RUM - Interactive Examples',
                 timingVar: perfData.measureName,
