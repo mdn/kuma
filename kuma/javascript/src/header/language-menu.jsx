@@ -11,8 +11,12 @@ type Props = {
 };
 
 export default function LanguageMenu({ document }: Props): React.Node {
-    // If there aren't any translations available, don't display anyhing
-    if (!document || document.translations.length === 0) {
+    // If there are no translations available and there is no translateURL,
+    // don't display anything.
+    if (
+        !document ||
+        !(document.translations.length > 0 || document.translateURL)
+    ) {
         return null;
     }
 
@@ -34,6 +38,17 @@ export default function LanguageMenu({ document }: Props): React.Node {
                     </a>
                 </li>
             ))}
+            {document.translateURL && (
+                <li>
+                    <a
+                        href={document.translateURL}
+                        rel="nofollow"
+                        id="translations-add"
+                    >
+                        {gettext('Add a translation')}
+                    </a>
+                </li>
+            )}
         </Dropdown>
     );
 }

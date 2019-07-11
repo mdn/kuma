@@ -19,6 +19,7 @@ export const fakeDocumentData = {
     hrefLang: 'en',
     absoluteURL: '[fake absolute url]',
     editURL: '[fake edit url]',
+    translateURL: '[fake translate url]',
     bodyHTML: '[fake body HTML]',
     quickLinksHTML: '[fake quicklinks HTML]',
     tocHTML: '[fake TOC HTML]',
