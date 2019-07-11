@@ -1,19 +1,19 @@
-# -*- coding: utf-8 -*-
-import elasticsearch
-import pytest
+# # -*- coding: utf-8 -*-
+# import elasticsearch
+# import pytest
 
-from kuma.core.tests import assert_no_cache_header, assert_shared_cache_header
-from kuma.core.urlresolvers import reverse
+# from kuma.core.tests import assert_no_cache_header, assert_shared_cache_header
+# from kuma.core.urlresolvers import reverse
 
-from . import ElasticTestCase
-from ..models import Filter, FilterGroup, Index
-from ..pagination import SearchPagination
-from ..views import SearchView
+# from . import ElasticTestCase
+# from ..models import Filter, FilterGroup, Index
+# from ..pagination import SearchPagination
+# from ..views import SearchView
 
 
-class ViewTests(ElasticTestCase):
-    fixtures = ElasticTestCase.fixtures + ['wiki/documents.json',
-                                           'search/filters.json']
+# class ViewTests(ElasticTestCase):
+#     fixtures = ElasticTestCase.fixtures + ['wiki/documents.json',
+#                                            'search/filters.json']
 
 #     def test_search_filters(self):
 #         response = self.client.get('/en-US/search?q=article')
