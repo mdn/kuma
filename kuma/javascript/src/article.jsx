@@ -117,20 +117,19 @@ export default function Article({ document }: DocumentProps) {
         }
     }, [document, userData]);
 
+    const isArchive =
+        document.slug === 'Archive' || document.slug.startsWith('Archive/');
+
     return (
         /*
          * The "text-content" class and "wikiArticle" id are required
          * because our stylesheets expect them and formatting isn't quite
          * right without them.
          */
-        <div
-            id="content"
-            ref={article}
-            className="text-content"
-            css={styles.article}
-        >
+        <div id="content" ref={article} css={styles.article}>
             <article
                 id="wikiArticle"
+                className={isArchive ? 'archive-content' : null}
                 dangerouslySetInnerHTML={{ __html: document.bodyHTML }}
             />
             <ArticleMetadata document={document} />

@@ -892,13 +892,6 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/samples.css',
     },
-    # special styling for archived pages
-    'archive': {
-        'source_filenames': (
-            'styles/archive.scss',
-        ),
-        'output_filename': 'build/styles/archive.css',
-    },
 }
 
 # Locales with locale-specific fonts
