@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e  # Exit on non-zero status
+set -u  # Treat unset variables as an error
+
+docker-compose exec -T web flow
