@@ -6,10 +6,10 @@ import { gettext } from './l10n.js';
 import ClockIcon from './icons/clock.svg';
 
 type LastModifiedByProps = {
-    documentLocale: String,
-    lastModifiedBy: String,
-    lastModified: String,
-    profileBaseURL: String
+    documentLocale: string,
+    lastModifiedBy: string,
+    lastModified: string,
+    profileBaseURL: string
 };
 
 export default function LastModifiedBy({

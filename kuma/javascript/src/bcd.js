@@ -2,6 +2,8 @@
 import { gettext } from './l10n.js';
 import { getCookie } from './utils.js';
 
+import type { UserData } from './user-provider.jsx';
+
 /**
  * This file contains functions for working with the BCD tables
  * contained in the HTML of an Article component. The tables are not
@@ -264,7 +266,12 @@ export function activateBCDTables(root: HTMLElement) {
     }
 }
 
-export function activateBCDSignals(root: HTMLElement, slug, locale, userData) {
+export function activateBCDSignals(
+    // root: HTMLElement,
+    slug: string,
+    locale: string,
+    userData: ?UserData
+) {
     /**
      * Creates and returns the signal element HTML
      * @returns signal element HTML

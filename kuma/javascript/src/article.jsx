@@ -136,7 +136,6 @@ export default function Article({ document }: DocumentProps) {
         let rootElement = article.current;
         if (rootElement) {
             activateBCDSignals(
-                rootElement,
                 document.slug,
                 document.locale,
                 userData
@@ -172,10 +171,7 @@ function ArticleMetadata({ document }: DocumentProps) {
     return (
         <div css={styles.metadata}>
             <div>
-                <TagsIcon
-                    css={styles.metadataIcon}
-                    className="icon icon-tags"
-                />{' '}
+                <TagsIcon className="icon icon-tags" />{' '}
                 <strong>{gettext('Tags:')}</strong>{' '}
                 <ul css={styles.tags}>
                     {document.tags.map(c => (
