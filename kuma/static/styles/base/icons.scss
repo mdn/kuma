@@ -267,15 +267,6 @@ button[type='submit'] .icon-check-mark {
     vertical-align: text-bottom;
 }
 
-/* TODO: Need to remove the need for this be removing the
-   styling added from the React side */
-div[class*='editAndHistoryButtons'] {
-    div[class*='historyButton'] {
-        padding-top: 2px;
-        padding-bottom: 0;
-    }
-}
-
 /* specific styling for icons on mobile */
 @media #{$mq-mobile-and-down} {
     .column-hacks .icon-star,
