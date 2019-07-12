@@ -267,7 +267,6 @@ export function activateBCDTables(root: HTMLElement) {
 }
 
 export function activateBCDSignals(
-    // root: HTMLElement,
     slug: string,
     locale: string,
     userData: ?UserData
