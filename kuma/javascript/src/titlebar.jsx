@@ -25,7 +25,6 @@ const styles = {
         width: '100%',
         minHeight: 106,
         padding: '12px 24px',
-        overflowX: 'scroll',
         backgroundColor: '#f5f9fa',
         borderBottom: 'solid 1px #dce3e5',
         borderTop: 'solid 1px #dce3e5',
