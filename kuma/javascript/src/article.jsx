@@ -191,6 +191,7 @@ function ArticleMetadata({ document }: DocumentProps) {
                 lastModifiedBy={document.lastModifiedBy}
                 lastModified={document.lastModified}
                 profileBaseURL={profileBaseURL}
+                documentLocale={document.locale}
             />
         </div>
     );
