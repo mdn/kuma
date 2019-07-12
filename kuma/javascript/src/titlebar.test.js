@@ -16,7 +16,7 @@ describe('Titlebar', () => {
         expect(heading.props.children).toBe('test_title!');
     });
 
-    test('Titlebar shows edit and history buttons', () => {
+    test('Titlebar shows edit button', () => {
         let titlebar;
         let buttons;
 
@@ -38,7 +38,7 @@ describe('Titlebar', () => {
         buttons = titlebar.root.findAll(instance => instance.type === 'button');
         expect(buttons.length).toBe(0);
 
-        // User logged in and contributor, expect two buttons
+        // User logged in and contributor, expect one button
         titlebar = create(
             <UserProvider.context.Provider
                 value={{
@@ -57,7 +57,7 @@ describe('Titlebar', () => {
             </UserProvider.context.Provider>
         );
         buttons = titlebar.root.findAll(instance => instance.type === 'button');
-        expect(buttons.length).toBe(2);
+        expect(buttons.length).toBe(1);
 
         // Make the mock window.location property writeable
         // NOTE: This is a little brittle since it assumes that titlebar.jsx
@@ -67,11 +67,8 @@ describe('Titlebar', () => {
             value: null
         });
 
-        // Clicking first button sets window.location.href to editURL
-        // Clicking the second button sets it to the history URL instead
+        // Clicking the button sets window.location.href to editURL
         buttons[0].props.onClick();
         expect(window.location).toBe('foobar$edit');
-        buttons[1].props.onClick();
-        expect(window.location).toBe('foobar$history');
     });
 });
