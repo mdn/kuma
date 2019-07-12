@@ -18,7 +18,6 @@ export default function LastModifiedBy({
     lastModified,
     profileBaseURL
 }: LastModifiedByProps) {
-
     // This fortunately works because the 'lastModified' date string is
     // predictable and always of the same format. It's not a proper ISO
     // string but it's close.
