@@ -1786,8 +1786,6 @@ ABSOLUTE_URL_OVERRIDES = {
     'users.user': get_user_url
 }
 
-USE_X_FORWARDED_HOST = True
-
 # Set header X-XSS-Protection: 1; mode=block
 SECURE_BROWSER_XSS_FILTER = True
 
