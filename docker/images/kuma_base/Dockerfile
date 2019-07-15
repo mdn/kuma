@@ -37,7 +37,7 @@ RUN set -x \
         libjpeg-dev \
         libmagic-dev \
         default-libmysqlclient-dev \
-        mysql-client \
+        default-mysql-client \
     && rm -rf /var/lib/apt/lists/*
 
 # ----------------------------------------------------------------------------
