@@ -1,4 +1,4 @@
-FROM python:2.7-slim@sha256:1405fa2f8e9a232e2f60cafbb2b06ca2f1e0f577f4b4c397c361d6dba59fd24e
+FROM python:2.7-slim@sha256:4697f69e6d6dfc1d1c00ff3c201f16cf1840b59d12088fca34d1523c99b7d468
 
 # Set the environment variables
 ENV NODE_VERSION=10.14.2 \
@@ -37,7 +37,7 @@ RUN set -x \
         libjpeg-dev \
         libmagic-dev \
         default-libmysqlclient-dev \
-        mysql-client \
+        default-mysql-client \
     && rm -rf /var/lib/apt/lists/*
 
 # ----------------------------------------------------------------------------
