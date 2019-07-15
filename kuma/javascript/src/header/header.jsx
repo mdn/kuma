@@ -206,8 +206,12 @@ export default function Header(props: Props): React.Node {
 
     return (
         <div css={styles.header}>
-            <a css={styles.logoContainer} href={`/${locale}/`}>
-                <Logo css={styles.logo} alt="MDN Web Docs Logo" />
+            <a
+                css={styles.logoContainer}
+                href={`/${locale}/`}
+                aria-label={gettext('MDN Web Docs')}
+            >
+                <Logo css={styles.logo} />
             </a>
             {
                 // The div below is used as a horizontal rule. We aren't
