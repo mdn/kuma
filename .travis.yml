@@ -37,3 +37,4 @@ matrix:
           cache: npm
           script:
             - scripts/ci-jslint
+            - scripts/ci-flow

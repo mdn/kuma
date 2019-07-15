@@ -6,8 +6,8 @@ import { gettext } from './l10n.js';
 import ContributorsIcon from './icons/contributors.svg';
 
 type ContributorProps = {
-    contributors: Array,
-    profileBaseURL: String
+    contributors: string[],
+    profileBaseURL: string
 };
 
 export default function Contributors({
