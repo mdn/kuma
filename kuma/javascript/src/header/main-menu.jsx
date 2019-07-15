@@ -128,32 +128,36 @@ export default function MainMenu(mdnDocument: Object) {
             /* currentTarget instanceof 'HTMLButtonElement' is added
                to keep Flow happy: https://github.com/facebook/flow/issues/218#issuecomment-74119319 */
             if (
-                currentTarget instanceof 'HTMLButtonElement' &&
+                currentTarget instanceof HTMLButtonElement &&
                 currentTarget.classList.contains('top-level-entry')
             ) {
-                currentTarget.nextElementSibling.setAttribute(
-                    'aria-hidden',
-                    false
-                );
+                if (currentTarget.nextElementSibling) {
+                    currentTarget.nextElementSibling.setAttribute(
+                        'aria-hidden',
+                        'false'
+                    );
+                }
             }
         });
 
         menu.addEventListener('mouseout', (event: MouseEvent) => {
             let currentTarget = event.target;
             if (
-                currentTarget instanceof 'HTMLButtonElement' &&
+                currentTarget instanceof HTMLButtonElement &&
                 currentTarget.classList.contains('top-level-entry')
             ) {
-                currentTarget.nextElementSibling.setAttribute(
-                    'aria-hidden',
-                    true
-                );
+                if (currentTarget.nextElementSibling) {
+                    currentTarget.nextElementSibling.setAttribute(
+                        'aria-hidden',
+                        'false'
+                    );
+                }
             }
         });
     }
 
     /**
-     * Handles mouse and keyboard events on desktop devices
+     * Handles touch events on mobile devices
      * @param {Object} menu - The current HTML nav element
      */
     function mobileInteractionHandlers(menu) {
@@ -161,18 +165,33 @@ export default function MainMenu(mdnDocument: Object) {
             event.stopImmediatePropagation();
             let currentTarget = event.target;
             if (
-                currentTarget instanceof 'HTMLButtonElement' &&
+                currentTarget instanceof HTMLButtonElement &&
                 currentTarget.classList.contains('top-level-entry')
             ) {
                 let subMenu = currentTarget.nextElementSibling;
-                let currentAriaState = subMenu.getAttribute('aria-hidden');
-                let newAriaState = currentAriaState === 'true' ? false : true;
-                currentTarget.nextElementSibling.setAttribute(
-                    'aria-hidden',
-                    newAriaState
-                );
+
+                if (subMenu) {
+                    let currentAriaState = subMenu.getAttribute('aria-hidden');
+                    let newAriaState =
+                        currentAriaState === 'true' ? 'false' : 'true';
+                    subMenu.setAttribute('aria-hidden', newAriaState);
+                    subMenu.classList.toggle('show');
+                }
             }
         });
+    }
+
+    /**
+     * Hide the visible submenu in main navigation
+     */
+    function hideSubMenus() {
+        let visibleSubMenu = document.querySelector(
+            'li ul[aria-hidden="false"]'
+        );
+        if (visibleSubMenu) {
+            visibleSubMenu.setAttribute('aria-hidden', 'true');
+            visibleSubMenu.classList.toggle('show');
+        }
     }
 
     useEffect(() => {
@@ -182,6 +201,10 @@ export default function MainMenu(mdnDocument: Object) {
             if (mediaQuery.matches) {
                 desktopInteractionHandlers(menu);
             } else {
+                /* Because the header is not rerendered during client-side
+                   navigation, we call this function to ensure the currrently
+                   visible submenu is hidden when a link it triggered */
+                hideSubMenus();
                 mobileInteractionHandlers(menu);
             }
         }

@@ -113,25 +113,17 @@ New main navigation menu
     .top-level-entry-container {
         position: relative;
 
-        ul[aria-hidden='true'] {
-            display: none;
-        }
-
-        ul[aria-hidden='false'] {
-            display: block;
-        }
-
         @media #{$mq-tablet-and-up} {
             &:hover ul,
             &:focus-within ul {
-                display: inherit;
-
-                @media #{$mq-tablet-and-up} {
-                    display: block;
-                    position: absolute;
-                    width: max-content;
-                }
+                display: block;
+                position: absolute;
+                width: max-content;
             }
+        }
+
+        ul.show {
+            display: block;
         }
 
         button {
