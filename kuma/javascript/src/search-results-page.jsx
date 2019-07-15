@@ -47,6 +47,9 @@ const styles = {
         padding: '2px 24px',
         fontStyle: 'italic',
         fontSize: 12,
+        // Sometimes elasticsearch gives us excerpts with no spaces
+        // and we have to force the words to wrap.
+        overflowWrap: 'anywhere',
 
         '& mark': {
             fontWeight: 'bold',
@@ -223,10 +226,18 @@ export class SearchRoute extends Route<SearchRouteParams, SearchResults> {
                             let score = hit._score;
                             let excerpts =
                                 (hit.highlight && hit.highlight.content) || [];
+
+                            // Sometimes ElasticSearch returns excerpts that
+                            // are thousands of bytes long without any spaces
+                            // and we don't want to display those
+                            if (excerpts) {
+                                excerpts = excerpts.filter(e => e.length < 256);
+                            }
+
+                            // And we only want to display the top 3 excerpts
                             if (excerpts && excerpts.length > 3) {
                                 excerpts = excerpts.slice(0, 3);
                             }
-
                             return { ...hit._source, score, excerpts };
                         }),
                         error: null
