@@ -720,7 +720,6 @@ PIPELINE_CSS = {
         'source_filenames': (
             'styles/main.scss',
             'styles/wiki.scss',
-            'styles/diff.scss',
 
             # Custom build of our Prism theme
             'styles/libs/prism/prism.css',
