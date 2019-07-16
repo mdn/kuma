@@ -3,8 +3,9 @@ import * as React from 'react';
 import { useMemo, useEffect } from 'react';
 
 import { getLocale, gettext } from '../l10n.js';
+import type { DocumentData } from '../document.jsx';
 
-export default function MainMenu(mdnDocument: Object) {
+export default function MainMenu(mdnDocument: DocumentData) {
     const locale = getLocale();
 
     // The menus array includes objects that define the set of
@@ -119,72 +120,57 @@ export default function MainMenu(mdnDocument: Object) {
     );
 
     /**
-     * Handles mouse and keyboard events on desktop devices
-     * @param {Object} menu - The current HTML nav element
+     * Handles all interaction events
+     * @param {Object} event - The Event object
      */
-    function desktopInteractionHandlers(menu) {
-        menu.addEventListener('mouseover', (event: MouseEvent) => {
-            let currentTarget = event.target;
-            /* currentTarget instanceof 'HTMLButtonElement' is added
-               to keep Flow happy: https://github.com/facebook/flow/issues/218#issuecomment-74119319 */
-            if (
-                currentTarget instanceof HTMLButtonElement &&
-                currentTarget.classList.contains('top-level-entry')
-            ) {
+    function interactionHandler(event: Event) {
+        let mediaQuery = window.matchMedia('(min-width: 47.9375em)');
+        let currentTarget = event.target;
+
+        /* currentTarget instanceof 'HTMLButtonElement' is added
+           to keep Flow happy: https://github.com/facebook/flow/issues/218#issuecomment-74119319 */
+        if (
+            mediaQuery.matches &&
+            (event.type === 'mouseover' || event.type === 'mouseout') &&
+            currentTarget instanceof HTMLButtonElement &&
+            currentTarget.classList.contains('top-level-entry')
+        ) {
+            if (event.type === 'mouseover') {
                 if (currentTarget.nextElementSibling) {
                     currentTarget.nextElementSibling.setAttribute(
                         'aria-hidden',
                         'false'
                     );
                 }
-            }
-        });
-
-        menu.addEventListener('mouseout', (event: MouseEvent) => {
-            let currentTarget = event.target;
-            if (
-                currentTarget instanceof HTMLButtonElement &&
-                currentTarget.classList.contains('top-level-entry')
-            ) {
+            } else if (event.type === 'mouseout') {
                 if (currentTarget.nextElementSibling) {
                     currentTarget.nextElementSibling.setAttribute(
                         'aria-hidden',
-                        'false'
+                        'true'
                     );
                 }
             }
-        });
-    }
+        } else if (
+            event.type === 'touchstart' &&
+            currentTarget instanceof HTMLButtonElement &&
+            currentTarget.classList.contains('top-level-entry')
+        ) {
+            let subMenu = currentTarget.nextElementSibling;
 
-    /**
-     * Handles touch events on mobile devices
-     * @param {Object} menu - The current HTML nav element
-     */
-    function mobileInteractionHandlers(menu) {
-        menu.addEventListener('touchend', (event: TouchEvent) => {
-            event.stopImmediatePropagation();
-            let currentTarget = event.target;
-            if (
-                currentTarget instanceof HTMLButtonElement &&
-                currentTarget.classList.contains('top-level-entry')
-            ) {
-                let subMenu = currentTarget.nextElementSibling;
-
-                if (subMenu) {
-                    let currentAriaState = subMenu.getAttribute('aria-hidden');
-                    let newAriaState =
-                        currentAriaState === 'true' ? 'false' : 'true';
-                    subMenu.setAttribute('aria-hidden', newAriaState);
-                    subMenu.classList.toggle('show');
-                }
+            if (subMenu) {
+                let currentAriaState = subMenu.getAttribute('aria-hidden');
+                let newAriaState =
+                    currentAriaState === 'true' ? 'false' : 'true';
+                subMenu.setAttribute('aria-hidden', newAriaState);
+                subMenu.classList.toggle('show');
             }
-        });
+        }
     }
 
     /**
      * Hide the visible submenu in main navigation
      */
-    function hideSubMenus() {
+    function hideVisibleSubMenu() {
         let visibleSubMenu = document.querySelector(
             'li ul[aria-hidden="false"]'
         );
@@ -195,18 +181,10 @@ export default function MainMenu(mdnDocument: Object) {
     }
 
     useEffect(() => {
-        let menu = document.getElementById('header-main-nav');
-        var mediaQuery = window.matchMedia('(min-width: 47.9375em)');
-        if (menu) {
-            if (mediaQuery.matches) {
-                desktopInteractionHandlers(menu);
-            } else {
-                /* Because the header is not rerendered during client-side
-                   navigation, we call this function to ensure the currrently
-                   visible submenu is hidden when a link it triggered */
-                hideSubMenus();
-                mobileInteractionHandlers(menu);
-            }
+        const mediaQuery = window.matchMedia('(min-width: 47.9375em)');
+
+        if (!mediaQuery.matches) {
+            hideVisibleSubMenu();
         }
     });
 
@@ -217,10 +195,21 @@ export default function MainMenu(mdnDocument: Object) {
     );
 
     return (
-        <nav id="header-main-nav" className="main-nav" role="navigation">
+        <nav
+            onMouseOver={interactionHandler}
+            onFocus={interactionHandler}
+            onMouseOut={interactionHandler}
+            onBlur={interactionHandler}
+            onTouchStart={interactionHandler}
+            className="main-nav"
+            role="navigation"
+        >
             <ul>
-                {menus.map((menuEntry, index) => (
-                    <li key={index} className="top-level-entry-container">
+                {menus.map(menuEntry => (
+                    <li
+                        key={menuEntry.label}
+                        className="top-level-entry-container"
+                    >
                         <button
                             type="button"
                             className="top-level-entry"
@@ -235,9 +224,9 @@ export default function MainMenu(mdnDocument: Object) {
                             </span>
                         </button>
                         <ul aria-hidden="true">
-                            {menuEntry.items.map((item, index) => (
+                            {menuEntry.items.map(item => (
                                 <li
-                                    key={index}
+                                    key={item.url}
                                     data-item={menuEntry.label}
                                     role="menuitem"
                                 >
