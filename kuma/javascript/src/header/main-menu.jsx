@@ -186,7 +186,7 @@ export default function MainMenu(mdnDocument: DocumentData) {
         if (!mediaQuery.matches) {
             hideVisibleSubMenu();
         }
-    });
+    }, [mdnDocument]);
 
     // One of the menu items has a URL that we need to substitute
     // the current mdnDocument path into. Compute that now.
