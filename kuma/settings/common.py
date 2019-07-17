@@ -1167,6 +1167,13 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/selectivizr.js',
     },
+    'perf': {
+        'source_filenames': (
+            'js/utils/perf.js',
+            'js/utils/perf-post-message-handler.js',
+        ),
+        'output_filename': 'build/js/perf.min.js',
+    },
 }
 
 PIPELINE = {
