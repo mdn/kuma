@@ -8,7 +8,8 @@ INTERNAL_IPS = ('127.0.0.1', '192.168.10.1', '172.18.0.1')
 # Default DEBUG to True, and recompute derived settings
 DEBUG = config('DEBUG', default=True, cast=bool)
 DEBUG_TOOLBAR = config('DEBUG_TOOLBAR', default=False, cast=bool)
-DEBUG_PROPAGATE_EXCEPTIONS = DEBUG
+DEBUG_PROPAGATE_EXCEPTIONS = config(
+    'DEBUG_PROPAGATE_EXCEPTIONS', default=DEBUG, cast=bool)
 PIPELINE['PIPELINE_ENABLED'] = config('PIPELINE_ENABLED', not DEBUG, cast=bool)
 PIPELINE['PIPELINE_COLLECTOR_ENABLED'] = config('PIPELINE_COLLECTOR_ENABLED',
                                                 not DEBUG, cast=bool)
