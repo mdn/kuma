@@ -1,6 +1,6 @@
 //@flow
 import * as React from 'react';
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 import { gettext } from '../l10n.js';
 import type { DocumentData } from '../document.jsx';
@@ -25,119 +25,116 @@ const _MainMenu = ({ document, locale }: Props) => {
     // happen after the string catalog is available. And we're using
     // useMemo() so that localization only happens when the locale
     // changes.
-    const menus = useMemo(
-        () => [
-            {
-                label: gettext('Technologies'),
-                items: [
-                    {
-                        url: `/${locale}/docs/Web`,
-                        label: gettext('Technologies Overview')
-                    },
-                    {
-                        url: `/${locale}/docs/Web/HTML`,
-                        label: gettext('HTML')
-                    },
-                    {
-                        url: `/${locale}/docs/Web/CSS`,
-                        label: gettext('CSS')
-                    },
-                    {
-                        url: `/${locale}/docs/Web/JavaScript`,
-                        label: gettext('JavaScript')
-                    },
-                    {
-                        url: `/${locale}/docs/Web/Guide/Graphics`,
-                        label: gettext('Graphics')
-                    },
-                    {
-                        url: `/${locale}/docs/Web/HTTP`,
-                        label: gettext('HTTP')
-                    },
-                    {
-                        url: `/${locale}/docs/Web/API`,
-                        label: gettext('APIs / DOM')
-                    },
-                    {
-                        url: `/${locale}/docs/Mozilla/Add-ons/WebExtensions`,
-                        label: gettext('Browser Extensions')
-                    },
-                    {
-                        url: `/${locale}/docs/Web/MathML`,
-                        label: gettext('MathML')
-                    }
-                ]
-            },
-            {
-                label: gettext('References & Guides'),
-                items: [
-                    {
-                        url: `/${locale}/docs/Learn`,
-                        label: gettext('Learn web development')
-                    },
-                    {
-                        url: `/${locale}/docs/Web/Tutorials`,
-                        label: gettext('Tutorials')
-                    },
-                    {
-                        url: `/${locale}/docs/Web/Reference`,
-                        label: gettext('References')
-                    },
-                    {
-                        url: `/${locale}/docs/Web/Guide`,
-                        label: gettext('Developer Guides')
-                    },
-                    {
-                        url: `/${locale}/docs/Web/Accessibility`,
-                        label: gettext('Accessibility')
-                    },
-                    {
-                        url: `/${locale}/docs/Games`,
-                        label: gettext('Game development')
-                    },
-                    {
-                        url: `/${locale}/docs/Web`,
-                        label: gettext('...more docs')
-                    }
-                ]
-            },
-            {
-                label: gettext('Feedback'),
-                items: [
-                    {
-                        url: `/${locale}/docs/MDN/Feedback`,
-                        label: gettext('Send Feedback')
-                    },
-                    {
-                        url: 'https://support.mozilla.org/',
-                        label: gettext('Get Firefox help'),
-                        external: true
-                    },
-                    {
-                        url: 'https://stackoverflow.com/',
-                        label: gettext('Get web development help'),
-                        external: true
-                    },
-                    {
-                        url: `/${locale}/docs/MDN/Community`,
-                        label: gettext('Join the MDN community')
-                    },
-                    {
-                        label: gettext('Report a content problem'),
-                        external: true,
-                        url:
-                            'https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title={{PATH}}'
-                    },
-                    {
-                        label: gettext('Report a bug'),
-                        external: true,
-                        url: 'https://bugzilla.mozilla.org/form.mdn'
-                    }
-                ]
-            }
-        ],
-        [locale]
-    );
+    const menus = [
+        {
+            label: gettext('Technologies'),
+            items: [
+                {
+                    url: `/${locale}/docs/Web`,
+                    label: gettext('Technologies Overview')
+                },
+                {
+                    url: `/${locale}/docs/Web/HTML`,
+                    label: gettext('HTML')
+                },
+                {
+                    url: `/${locale}/docs/Web/CSS`,
+                    label: gettext('CSS')
+                },
+                {
+                    url: `/${locale}/docs/Web/JavaScript`,
+                    label: gettext('JavaScript')
+                },
+                {
+                    url: `/${locale}/docs/Web/Guide/Graphics`,
+                    label: gettext('Graphics')
+                },
+                {
+                    url: `/${locale}/docs/Web/HTTP`,
+                    label: gettext('HTTP')
+                },
+                {
+                    url: `/${locale}/docs/Web/API`,
+                    label: gettext('APIs / DOM')
+                },
+                {
+                    url: `/${locale}/docs/Mozilla/Add-ons/WebExtensions`,
+                    label: gettext('Browser Extensions')
+                },
+                {
+                    url: `/${locale}/docs/Web/MathML`,
+                    label: gettext('MathML')
+                }
+            ]
+        },
+        {
+            label: gettext('References & Guides'),
+            items: [
+                {
+                    url: `/${locale}/docs/Learn`,
+                    label: gettext('Learn web development')
+                },
+                {
+                    url: `/${locale}/docs/Web/Tutorials`,
+                    label: gettext('Tutorials')
+                },
+                {
+                    url: `/${locale}/docs/Web/Reference`,
+                    label: gettext('References')
+                },
+                {
+                    url: `/${locale}/docs/Web/Guide`,
+                    label: gettext('Developer Guides')
+                },
+                {
+                    url: `/${locale}/docs/Web/Accessibility`,
+                    label: gettext('Accessibility')
+                },
+                {
+                    url: `/${locale}/docs/Games`,
+                    label: gettext('Game development')
+                },
+                {
+                    url: `/${locale}/docs/Web`,
+                    label: gettext('...more docs')
+                }
+            ]
+        },
+        {
+            label: gettext('Feedback'),
+            items: [
+                {
+                    url: `/${locale}/docs/MDN/Feedback`,
+                    label: gettext('Send Feedback')
+                },
+                {
+                    url: 'https://support.mozilla.org/',
+                    label: gettext('Get Firefox help'),
+                    external: true
+                },
+                {
+                    url: 'https://stackoverflow.com/',
+                    label: gettext('Get web development help'),
+                    external: true
+                },
+                {
+                    url: `/${locale}/docs/MDN/Community`,
+                    label: gettext('Join the MDN community')
+                },
+                {
+                    label: gettext('Report a content problem'),
+                    external: true,
+                    url:
+                        'https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title={{PATH}}'
+                },
+                {
+                    label: gettext('Report a bug'),
+                    external: true,
+                    url: 'https://bugzilla.mozilla.org/form.mdn'
+                }
+            ]
+        }
+    ];
 
     // For Desktop, we don't need any JavaScript to make the menu behave
     // nicely. But for mobile, we're using the onTouchStart event to
