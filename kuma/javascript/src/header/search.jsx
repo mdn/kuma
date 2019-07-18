@@ -32,6 +32,7 @@ const styles = {
         fontSize: 14,
         flex: '1 1 100px',
         minWidth: 60,
+        maxWidth: 320,
         color: '#000',
         backgroundColor: '#fafafa !important'
     })

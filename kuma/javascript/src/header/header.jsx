@@ -76,7 +76,8 @@ const styles = {
     }),
     search: css({
         gridArea: 'S',
-        justifySelf: 'stretch'
+        justifySelf: 'stretch',
+        overflow: 'hidden'
     }),
     login: css({
         gridArea: 'L',
