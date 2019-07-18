@@ -3,9 +3,8 @@ import * as React from 'react';
 import { useMemo, useEffect } from 'react';
 
 import { getLocale, gettext } from '../l10n.js';
-import type { DocumentData } from '../document.jsx';
 
-export default function MainMenu(mdnDocument: DocumentData) {
+export default function MainMenu(mdnDocument: Object) {
     const locale = getLocale();
 
     // The menus array includes objects that define the set of

@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { css } from '@emotion/core';
 
-import { getLocale } from '../l10n.js';
+import { getLocale, gettext } from '../l10n.js';
 import Login from './login.jsx';
 import Logo from '../icons/logo.svg';
 import MainMenu from './main-menu.jsx';
