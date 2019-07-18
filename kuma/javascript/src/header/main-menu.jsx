@@ -129,38 +129,14 @@ export default function MainMenu(mdnDocument: Object) {
         /* currentTarget instanceof 'HTMLButtonElement' is added
            to keep Flow happy: https://github.com/facebook/flow/issues/218#issuecomment-74119319 */
         if (
-            mediaQuery.matches &&
-            (event.type === 'mouseover' || event.type === 'mouseout') &&
-            currentTarget instanceof HTMLButtonElement &&
-            currentTarget.classList.contains('top-level-entry')
-        ) {
-            if (event.type === 'mouseover') {
-                if (currentTarget.nextElementSibling) {
-                    currentTarget.nextElementSibling.setAttribute(
-                        'aria-hidden',
-                        'false'
-                    );
-                }
-            } else if (event.type === 'mouseout') {
-                if (currentTarget.nextElementSibling) {
-                    currentTarget.nextElementSibling.setAttribute(
-                        'aria-hidden',
-                        'true'
-                    );
-                }
-            }
-        } else if (
+            (!mediaQuery.matches,
             event.type === 'touchstart' &&
-            currentTarget instanceof HTMLButtonElement &&
-            currentTarget.classList.contains('top-level-entry')
+                currentTarget instanceof HTMLButtonElement &&
+                currentTarget.classList.contains('top-level-entry'))
         ) {
             let subMenu = currentTarget.nextElementSibling;
 
             if (subMenu) {
-                let currentAriaState = subMenu.getAttribute('aria-hidden');
-                let newAriaState =
-                    currentAriaState === 'true' ? 'false' : 'true';
-                subMenu.setAttribute('aria-hidden', newAriaState);
                 subMenu.classList.toggle('show');
             }
         }
@@ -170,12 +146,9 @@ export default function MainMenu(mdnDocument: Object) {
      * Hide the visible submenu in main navigation
      */
     function hideVisibleSubMenu() {
-        let visibleSubMenu = document.querySelector(
-            'li ul[aria-hidden="false"]'
-        );
+        let visibleSubMenu = document.querySelector('ul.show');
         if (visibleSubMenu) {
-            visibleSubMenu.setAttribute('aria-hidden', 'true');
-            visibleSubMenu.classList.toggle('show');
+            visibleSubMenu.classList.remove('show');
         }
     }
 
@@ -222,7 +195,7 @@ export default function MainMenu(mdnDocument: Object) {
                                 ▼
                             </span>
                         </button>
-                        <ul aria-hidden="true">
+                        <ul>
                             {menuEntry.items.map(item => (
                                 <li
                                     key={item.url}
