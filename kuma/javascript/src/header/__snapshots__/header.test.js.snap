@@ -211,9 +211,7 @@ exports[`Header snapshot 1`] = `
             ▼
           </span>
         </button>
-        <ul
-          aria-hidden="true"
-        >
+        <ul>
           <li
             data-item="Technologies"
             role="menuitem"
@@ -322,9 +320,7 @@ exports[`Header snapshot 1`] = `
             ▼
           </span>
         </button>
-        <ul
-          aria-hidden="true"
-        >
+        <ul>
           <li
             data-item="References & Guides"
             role="menuitem"
@@ -413,9 +409,7 @@ exports[`Header snapshot 1`] = `
             ▼
           </span>
         </button>
-        <ul
-          aria-hidden="true"
-        >
+        <ul>
           <li
             data-item="Feedback"
             role="menuitem"

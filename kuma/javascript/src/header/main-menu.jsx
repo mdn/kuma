@@ -122,7 +122,7 @@ export default function MainMenu(mdnDocument: Object) {
      * Handles all interaction events
      * @param {Object} event - The Event object
      */
-    function interactionHandler(event: Event) {
+    function interactionHandler(event: SyntheticEvent<HTMLButtonElement>) {
         let mediaQuery = window.matchMedia('(min-width: 47.9375em)');
         let currentTarget = event.target;
 
@@ -134,10 +134,12 @@ export default function MainMenu(mdnDocument: Object) {
                 currentTarget instanceof HTMLButtonElement &&
                 currentTarget.classList.contains('top-level-entry'))
         ) {
-            let subMenu = currentTarget.nextElementSibling;
+            if (currentTarget instanceof HTMLButtonElement) {
+                let subMenu = currentTarget.nextElementSibling;
 
-            if (subMenu) {
-                subMenu.classList.toggle('show');
+                if (subMenu) {
+                    subMenu.classList.toggle('show');
+                }
             }
         }
     }
