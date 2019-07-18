@@ -681,7 +681,11 @@ class SectionIDFilter(html5lib_Filter):
                 # treat it as a manual override by the author and make
                 # that value be the ID.
                 if (None, 'name') in attrs:
-                    attrs[(None, u'id')] = attrs[(None, 'name')]
+                    # Sanitize the "name" attribute with self.slugify to
+                    # prevent the injection of spaces (which are illegal
+                    # for the "id" attribute) or any of the non-URL-safe
+                    # characters listed above.
+                    attrs[(None, u'id')] = self.slugify(attrs[(None, 'name')])
                     token['data'] = attrs
                     yield token
                     continue
