@@ -18,6 +18,7 @@ const _MainMenu = ({ document, locale }: Props) => {
     // there's no mouse hover so for that we use a piece of state to
     // record onTouchStart events.
     const [showSubMenu, setShowSubMenu] = useState(null);
+    // console.log('RENDERING _MainMenu', showSubMenu);
 
     // The menus array includes objects that define the set of
     // menus displayed by this header component. The data structure
@@ -152,7 +153,13 @@ const _MainMenu = ({ document, locale }: Props) => {
         if (showSubMenu) {
             setShowSubMenu(null);
         }
-    }, [showSubMenu]);
+        // TODO: react-hooks/exhaustive-deps will say to include showSubMenu
+        // in list of dependencies. But if you do that, you won't be able
+        // to distinguish between a new mount (navigating to a new document
+        // for example) and the menu having been shown.
+        // We only want this effect to run when the component is re-rendered
+        // with a new 'document'.
+    }, [document]); // eslint-disable-line react-hooks/exhaustive-deps
 
     // One of the menu items has a URL that we need to substitute
     // the current document path into. Compute that now.
