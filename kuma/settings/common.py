@@ -1172,7 +1172,10 @@ PIPELINE_JS = {
             'js/utils/perf.js',
             'js/utils/perf-post-message-handler.js',
         ),
-        'output_filename': 'build/js/perf.min.js',
+        'output_filename': 'build/js/perf.js',
+        'extra_context': {
+            'async': True,
+        },
     },
 }
 
