@@ -2,9 +2,6 @@
 import React from 'react';
 import { create } from 'react-test-renderer';
 
-// Must be imported before the tested file
-import './__mocks__/matchMedia.js';
-
 import Header from './header/header.jsx';
 import SearchResultsPage, { SearchRoute } from './search-results-page.jsx';
 import Titlebar from './titlebar.jsx';

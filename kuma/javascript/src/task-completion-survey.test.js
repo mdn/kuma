@@ -8,9 +8,6 @@ import UserProvider from './user-provider.jsx';
 
 import TaskCompletionSurvey from './task-completion-survey.jsx';
 
-// Must be imported before the tested file
-import './__mocks__/matchMedia.js';
-
 const mockLocale = 'mock-locale';
 const mockDocumentData = { ...fakeDocumentData, slug: 'mock/slug' };
 const mockUserData = { ...UserProvider.defaultUserData };

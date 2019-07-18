@@ -96,7 +96,7 @@ export default function Header(props: Props): React.Node {
                 // stylesheets define a bunch of styles on <hr>.
             }
             <div css={styles.rule} />
-            <MainMenu document={props.document} />
+            <MainMenu document={props.document} locale={locale} />
             <div css={styles.search}>
                 <Search initialQuery={props.searchQuery || ''} />
             </div>

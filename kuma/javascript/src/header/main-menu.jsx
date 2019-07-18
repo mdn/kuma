@@ -1,11 +1,23 @@
 //@flow
 import * as React from 'react';
-import { useMemo, useEffect } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 
-import { getLocale, gettext } from '../l10n.js';
+import { gettext } from '../l10n.js';
+import type { DocumentData } from '../document.jsx';
 
-export default function MainMenu(mdnDocument: Object) {
-    const locale = getLocale();
+type Props = {
+    document?: ?DocumentData,
+    locale: string
+};
+
+// To avoid problems with flow and React.memo(), define the component
+// in this plain way first. See bottom of file for the final memo() and export.
+const _MainMenu = ({ document, locale }: Props) => {
+    // The CSS that supports this is sufficiently smart to understand
+    // hovering over the top-level menu items and stuff. But for mobile,
+    // there's no mouse hover so for that we use a piece of state to
+    // record onTouchStart events.
+    const [showSubMenu, setShowSubMenu] = useState(null);
 
     // The menus array includes objects that define the set of
     // menus displayed by this header component. The data structure
@@ -22,8 +34,14 @@ export default function MainMenu(mdnDocument: Object) {
                         url: `/${locale}/docs/Web`,
                         label: gettext('Technologies Overview')
                     },
-                    { url: `/${locale}/docs/Web/HTML`, label: gettext('HTML') },
-                    { url: `/${locale}/docs/Web/CSS`, label: gettext('CSS') },
+                    {
+                        url: `/${locale}/docs/Web/HTML`,
+                        label: gettext('HTML')
+                    },
+                    {
+                        url: `/${locale}/docs/Web/CSS`,
+                        label: gettext('CSS')
+                    },
                     {
                         url: `/${locale}/docs/Web/JavaScript`,
                         label: gettext('JavaScript')
@@ -32,7 +50,10 @@ export default function MainMenu(mdnDocument: Object) {
                         url: `/${locale}/docs/Web/Guide/Graphics`,
                         label: gettext('Graphics')
                     },
-                    { url: `/${locale}/docs/Web/HTTP`, label: gettext('HTTP') },
+                    {
+                        url: `/${locale}/docs/Web/HTTP`,
+                        label: gettext('HTTP')
+                    },
                     {
                         url: `/${locale}/docs/Web/API`,
                         label: gettext('APIs / DOM')
@@ -118,66 +139,29 @@ export default function MainMenu(mdnDocument: Object) {
         [locale]
     );
 
-    /**
-     * Handles all interaction events
-     * @param {Object} event - The Event object
-     */
-    function interactionHandler(event: SyntheticEvent<HTMLButtonElement>) {
-        let mediaQuery = window.matchMedia('(min-width: 47.9375em)');
-        let currentTarget = event.target;
-
-        /* currentTarget instanceof 'HTMLButtonElement' is added
-           to keep Flow happy: https://github.com/facebook/flow/issues/218#issuecomment-74119319 */
-        if (
-            (!mediaQuery.matches,
-            event.type === 'touchstart' &&
-                currentTarget instanceof HTMLButtonElement &&
-                currentTarget.classList.contains('top-level-entry'))
-        ) {
-            if (currentTarget instanceof HTMLButtonElement) {
-                let subMenu = currentTarget.nextElementSibling;
-
-                if (subMenu) {
-                    subMenu.classList.toggle('show');
-                }
-            }
-        }
-    }
-
-    /**
-     * Hide the visible submenu in main navigation
-     */
-    function hideVisibleSubMenu() {
-        let visibleSubMenu = document.querySelector('ul.show');
-        if (visibleSubMenu) {
-            visibleSubMenu.classList.remove('show');
-        }
-    }
-
+    // For Desktop, we don't need any JavaScript to make the menu behave
+    // nicely. But for mobile, we're using the onTouchStart event to
+    // update state that tells the menu to start with className="show".
+    // However, if that mobile user opened a menu (with onTouchStart) and
+    // decided to click on of the links, there's no good chance to now
+    // hide what was forcibly shown. So we use the first mount effect to
+    // make it so that it hides the menu if it was shown.
+    // To a mobile user, the effect is that after their click (on a sub-menu
+    // item) has completed, it manually closes the menu.
     useEffect(() => {
-        const mediaQuery = window.matchMedia('(min-width: 47.9375em)');
-
-        if (!mediaQuery.matches) {
-            hideVisibleSubMenu();
+        if (showSubMenu) {
+            setShowSubMenu(null);
         }
-    }, [mdnDocument]);
+    }, [showSubMenu]);
 
     // One of the menu items has a URL that we need to substitute
-    // the current mdnDocument path into. Compute that now.
+    // the current document path into. Compute that now.
     let path = encodeURIComponent(
-        `/${locale}` + (mdnDocument ? `/docs/${mdnDocument.slug}` : '')
+        `/${locale}` + (document ? `/docs/${document.slug}` : '')
     );
 
     return (
-        <nav
-            onMouseOver={interactionHandler}
-            onFocus={interactionHandler}
-            onMouseOut={interactionHandler}
-            onBlur={interactionHandler}
-            onTouchStart={interactionHandler}
-            className="main-nav"
-            role="navigation"
-        >
+        <nav className="main-nav" role="navigation">
             <ul>
                 {menus.map(menuEntry => (
                     <li
@@ -188,6 +172,16 @@ export default function MainMenu(mdnDocument: Object) {
                             type="button"
                             className="top-level-entry"
                             aria-haspopup="true"
+                            onTouchStart={() => {
+                                // Ultimately, because there's no :hover on
+                                // mobile, we have to compensate for that using
+                                // JavaScript.
+                                setShowSubMenu(
+                                    showSubMenu === menuEntry.label
+                                        ? null
+                                        : menuEntry.label
+                                );
+                            }}
                         >
                             {menuEntry.label}
                             <span
@@ -197,7 +191,11 @@ export default function MainMenu(mdnDocument: Object) {
                                 ▼
                             </span>
                         </button>
-                        <ul>
+                        <ul
+                            className={
+                                menuEntry.label === showSubMenu ? 'show' : null
+                            }
+                        >
                             {menuEntry.items.map(item => (
                                 <li
                                     key={item.url}
@@ -226,4 +224,7 @@ export default function MainMenu(mdnDocument: Object) {
             </ul>
         </nav>
     );
-}
+};
+
+const MainMenu = memo<Props>(_MainMenu);
+export default MainMenu;

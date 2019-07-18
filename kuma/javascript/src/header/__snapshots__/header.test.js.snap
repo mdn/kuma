@@ -187,11 +187,6 @@ exports[`Header snapshot 1`] = `
   />
   <nav
     className="main-nav"
-    onBlur={[Function]}
-    onFocus={[Function]}
-    onMouseOut={[Function]}
-    onMouseOver={[Function]}
-    onTouchStart={[Function]}
     role="navigation"
   >
     <ul>
@@ -201,6 +196,7 @@ exports[`Header snapshot 1`] = `
         <button
           aria-haspopup="true"
           className="top-level-entry"
+          onTouchStart={[Function]}
           type="button"
         >
           Technologies
@@ -211,7 +207,9 @@ exports[`Header snapshot 1`] = `
             ▼
           </span>
         </button>
-        <ul>
+        <ul
+          className={null}
+        >
           <li
             data-item="Technologies"
             role="menuitem"
@@ -310,6 +308,7 @@ exports[`Header snapshot 1`] = `
         <button
           aria-haspopup="true"
           className="top-level-entry"
+          onTouchStart={[Function]}
           type="button"
         >
           References & Guides
@@ -320,7 +319,9 @@ exports[`Header snapshot 1`] = `
             ▼
           </span>
         </button>
-        <ul>
+        <ul
+          className={null}
+        >
           <li
             data-item="References & Guides"
             role="menuitem"
@@ -399,6 +400,7 @@ exports[`Header snapshot 1`] = `
         <button
           aria-haspopup="true"
           className="top-level-entry"
+          onTouchStart={[Function]}
           type="button"
         >
           Feedback
@@ -409,7 +411,9 @@ exports[`Header snapshot 1`] = `
             ▼
           </span>
         </button>
-        <ul>
+        <ul
+          className={null}
+        >
           <li
             data-item="Feedback"
             role="menuitem"
@@ -461,7 +465,7 @@ exports[`Header snapshot 1`] = `
             role="menuitem"
           >
             <a
-              href="https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=%2Fen-US%2Fdocs%2Fundefined"
+              href="https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=%2Fen-US%2Fdocs%2Ftest"
               rel="noopener noreferrer"
               target="_blank"
             >
