@@ -737,7 +737,6 @@ PIPELINE_CSS = {
             'styles/components/banners/base.scss'
         ),
         'output_filename': 'build/styles/react-mdn.css',
-        'variant': 'datauri',
     },
 
     'mdn': {
@@ -745,7 +744,6 @@ PIPELINE_CSS = {
             'styles/main.scss',
         ),
         'output_filename': 'build/styles/mdn.css',
-        'variant': 'datauri',
     },
     'banners': {
         'source_filenames': (
@@ -766,7 +764,6 @@ PIPELINE_CSS = {
             'styles/home.scss',
         ),
         'output_filename': 'build/styles/home.css',
-        'variant': 'datauri',
     },
     'search': {
         'source_filenames': (
