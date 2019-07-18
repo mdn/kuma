@@ -44,7 +44,6 @@ export const fakeDocumentData = {
             title: '[fake spanish translation]'
         }
     ],
-    tags: ['tag1', 'tag number 2'],
     contributors: ['mike', 'ike'],
     lastModified: '2019-01-02T03:04:05Z',
     lastModifiedBy: 'ike'
@@ -110,12 +109,6 @@ describe('Document component renders all of its parts', () => {
     test('contributor names appear', () => {
         for (let c of fakeDocumentData.contributors) {
             expect(snapshot).toContain(c);
-        }
-    });
-
-    test('tags appear', () => {
-        for (let t of fakeDocumentData.tags) {
-            expect(snapshot).toContain(t);
         }
     });
 });
