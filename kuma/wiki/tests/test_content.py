@@ -114,9 +114,10 @@ class InjectSectionIDsTests(TestCase):
             <p>test</p>
             <section>
                 <h1 class="header2">Header Two</h1>
+                <h1 name="Header: X" class="header3">Header Three</h1>
                 <p>test</p>
             </section>
-            <h2 name="Constants" class="hasname">This title does not match the name</h2>
+            <h2 name="C~o:n;s/t%a$n=t@s" class="hasname">This is ignored</h2>
             <p>test</p>
 
             <h1 id="i-already-have-an-id" class="hasid">This text clobbers the ID</h1>
@@ -140,6 +141,7 @@ class InjectSectionIDsTests(TestCase):
         expected = (
             ('header1', 'Header_One'),
             ('header2', 'Header_Two'),
+            ('header3', 'Header_X'),
             ('hasname', 'Constants'),
             ('hasid', 'This_text_clobbers_the_ID'),
             ('Quick_Links', 'Quick_Links'),
