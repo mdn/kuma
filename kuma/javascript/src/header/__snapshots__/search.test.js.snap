@@ -39,6 +39,7 @@ exports[`Search snapshot 1`] = `
   -ms-flex: 1 1 100px;
   flex: 1 1 100px;
   min-width: 60px;
+  max-width: 320px;
   color: #000;
   background-color: #fafafa !important;
 }
