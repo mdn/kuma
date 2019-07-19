@@ -1940,3 +1940,11 @@ MDN_CLOUDFRONT_DISTRIBUTIONS = {
     # to ~60min and put configuration here for it too.
 
 }
+
+# We use django-cacheback for a bunch of tasks. By default, when cacheback,
+# has called the `.fetch` of a job class, it calls `cache.set(key, ...)`
+# and then it immediately does `cache.get(key)` just to see that the `.set`
+# worked.
+# See https://bugzilla.mozilla.org/show_bug.cgi?id=1567587 for some more
+# details about why we don't want or need this.
+CACHEBACK_VERIFY_CACHE_WRITE = False
