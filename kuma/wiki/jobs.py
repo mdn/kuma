@@ -5,7 +5,6 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 
 from kuma.core.jobs import GenerationJob, KumaJob
-from kuma.users.templatetags.jinja_helpers import gravatar_url
 
 
 class DocumentContributorsJob(KumaJob):
@@ -57,17 +56,11 @@ class DocumentContributorsJob(KumaJob):
             ('ordered_ids',
              'FIELD(id,%s)' % ','.join(map(str, recent_creator_ids))),
         ])
-        contributors = (User.objects.filter(id__in=recent_creator_ids,
-                                            is_active=True)
-                                    .extra(select=select,
-                                           order_by=['ordered_ids'])
-                                    .values('id', 'username', 'email'))
-        result = []
-        for contributor in contributors:
-            contributor['gravatar_34'] = gravatar_url(contributor['email'],
-                                                      size=34)
-            result.append(contributor)
-        return result
+        return list(User.objects.filter(id__in=recent_creator_ids,
+                                        is_active=True)
+                                .extra(select=select,
+                                       order_by=['ordered_ids'])
+                                .values('id', 'username', 'email'))
 
     def empty(self):
         # the empty result needs to be an empty list instead of None
