@@ -17,7 +17,6 @@ export type SearchResults = {
         slug: string,
         title: string,
         summary: string,
-        tags: Array<string>,
         score: number,
         excerpts: Array<string>
     }>,
@@ -64,21 +63,6 @@ const styles = {
     }),
     url: css({
         fontSize: 12
-    }),
-    tags: css({
-        flex: '1 0 250px',
-        paddingLeft: 30,
-        alignSelf: 'center'
-    }),
-    tag: css({
-        whiteSpace: 'nowrap',
-        fontSize: 12,
-        lineHeight: 1.2,
-        backgroundColor: '#f5f9fa',
-        border: 'solid 1px #dce3e5',
-        borderRadius: 5,
-        padding: '2px 4px',
-        marginRight: 8
     }),
     noresults: css({
         fontWeight: 'bold',
@@ -133,17 +117,6 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
                                             }}
                                         />
                                     ))}
-                                </div>
-                                <div css={styles.tags}>
-                                    {hit.tags
-                                        .filter(tag => !tag.startsWith('Needs'))
-                                        .map(tag => (
-                                            <React.Fragment key={tag}>
-                                                <span css={styles.tag}>
-                                                    {tag}
-                                                </span>{' '}
-                                            </React.Fragment>
-                                        ))}
                                 </div>
                             </div>
                         );
