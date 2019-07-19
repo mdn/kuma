@@ -5,10 +5,8 @@ import { css } from '@emotion/core';
 
 import { activateBCDSignals, activateBCDTables } from './bcd.js';
 import { addLiveExampleButtons } from './live-examples.js';
-import { gettext } from './l10n.js';
 import { highlightSyntax } from './prism.js';
 import * as InteractiveExamples from './interactive-examples.js';
-import TagsIcon from './icons/tags.svg';
 import UserProvider from './user-provider.jsx';
 
 import Contributors from './contributors.jsx';
@@ -61,26 +59,6 @@ const styles = {
         color: '#696969',
         '& div': {
             margin: '4px 0'
-        }
-    }),
-    tags: css({
-        display: 'inline',
-        // Our main.css stylesheet has a ".text-content ul" style we need
-        // to override with the !important below
-        paddingLeft: '0px !important',
-
-        // These tag styles also appear in search-results-page.jsx
-        // We should probably keep the two designs in sync
-        '& li': {
-            display: 'inline-block',
-            whiteSpace: 'nowrap',
-            fontSize: 12,
-            lineHeight: 1.2,
-            backgroundColor: '#f5f9fa',
-            border: 'solid 1px #dce3e5',
-            borderRadius: 5,
-            padding: '2px 4px',
-            marginRight: 8
         }
     })
 };
@@ -166,15 +144,6 @@ function ArticleMetadata({ document }: DocumentProps) {
 
     return (
         <div css={styles.metadata}>
-            <div>
-                <TagsIcon className="icon icon-tags" />{' '}
-                <strong>{gettext('Tags:')}</strong>{' '}
-                <ul css={styles.tags}>
-                    {document.tags.map(c => (
-                        <li key={c}>{c}</li>
-                    ))}
-                </ul>
-            </div>
             <Contributors
                 contributors={document.contributors}
                 profileBaseURL={profileBaseURL}
