@@ -18,7 +18,6 @@ const _MainMenu = ({ document, locale }: Props) => {
     // there's no mouse hover so for that we use a piece of state to
     // record onTouchStart events.
     const [showSubMenu, setShowSubMenu] = useState(null);
-    // console.log('RENDERING _MainMenu', showSubMenu);
 
     // The menus array includes objects that define the set of
     // menus displayed by this header component. The data structure
