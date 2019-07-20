@@ -103,14 +103,14 @@ div.signal-link-container {
 }
 
 .prev-step-btn {
-      display: flex;
-      align-items: center;
-      border-color: #333;
-      color: #333;
+    display: flex;
+    align-items: center;
+    border-color: #333;
+    color: #333;
 
-      @media #{$mq-tablet-and-down} {
-          display: none;
-      }
+    @media #{$mq-tablet-and-down} {
+        display: none;
+    }
 }
 
 .next-step-btn {
@@ -239,7 +239,7 @@ div.bc-signal-block {
         }
     }
 
-    .right-block-main-text a>span.icon-external-link {
+    .right-block-main-text a > span.icon-external-link {
         background-image: url('/static/general/external-link.svg') center no-repeat;
         background-size: 12px;
         width: 12px;

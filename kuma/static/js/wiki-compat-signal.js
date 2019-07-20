@@ -103,11 +103,11 @@
         }
 
         // The commented rows need to be uncommented when the back end part will be implemented
-        //const selectRow = document.getElementById('select-row');
-        //const row = selectRow.options[selectRow.selectedIndex].value;
-        //const briefExplanation = document.getElementById('brief-explanation').value;
-        //const supportingMaterial = document.getElementById('supporting-material').value;
-        //const screenshot = document.getElementById('upload-screenshot').files[0];
+        // const selectRow = document.getElementById('select-row');
+        // const row = selectRow.options[selectRow.selectedIndex].value;
+        // const briefExplanation = document.getElementById('brief-explanation').value;
+        // const supportingMaterial = document.getElementById('supporting-material').value;
+        // const screenshot = document.getElementById('upload-screenshot').files[0];
 
         const signalApiUrl = '/api/v1/bc-signal';
         const payload = {
