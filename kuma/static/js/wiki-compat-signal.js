@@ -102,11 +102,12 @@
             browsers.push(browser.innerText);
         }
 
-        const selectRow = document.getElementById('select-row');
-        const row = selectRow.options[selectRow.selectedIndex].value;
-        const briefExplanation = document.getElementById('brief-explanation').value;
-        const supportingMaterial = document.getElementById('supporting-material').value;
-        const screenshot = document.getElementById('upload-screenshot').files[0];
+        // The commented rows need to be uncommented when the back end part will be implemented
+        //const selectRow = document.getElementById('select-row');
+        //const row = selectRow.options[selectRow.selectedIndex].value;
+        //const briefExplanation = document.getElementById('brief-explanation').value;
+        //const supportingMaterial = document.getElementById('supporting-material').value;
+        //const screenshot = document.getElementById('upload-screenshot').files[0];
 
         const signalApiUrl = '/api/v1/bc-signal';
         const payload = {
@@ -466,7 +467,7 @@
         const signalStepOneBlock = document.createElement('div');
         const controls = document.createElement('div');
         const stepsButtonBlock = document.createElement('div');
-        const nextStepButtonIcon = document.createElement('span');
+        //const nextStepButtonIcon = document.createElement('span');
         nextStepButton = document.createElement('button');
 
         signalStepOneBlock.className = 'inner-step';
@@ -633,7 +634,6 @@
     }
 
 
-    console.log(mdnIcons.getIcon('arrow-left'));
     bcTable = document.querySelector('.bc-table');
     bcTable.insertAdjacentElement('afterend', signalElem());
     bcTable.insertAdjacentElement('afterend', signalStepsBlock());
