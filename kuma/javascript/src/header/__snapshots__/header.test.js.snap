@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Header snapshot 1`] = `
-.emotion-40 {
+.emotion-10 {
   display: grid;
   -webkit-align-items: center;
   -webkit-box-align: center;
@@ -12,7 +12,7 @@ exports[`Header snapshot 1`] = `
 }
 
 @media (min-width:1024px) {
-  .emotion-40 {
+  .emotion-10 {
     height: 68px;
     grid-template-columns: 221px 5fr minmax(250px,2fr) auto;
     grid-template-areas: "I M S L";
@@ -20,7 +20,7 @@ exports[`Header snapshot 1`] = `
 }
 
 @media (min-width:750px) and (max-width:1023px) {
-  .emotion-40 {
+  .emotion-10 {
     height: 122px;
     grid-template-columns: minmax(206px,1fr) 300px auto;
     grid-template-areas: "I S L" "R R R" "M M M";
@@ -28,7 +28,7 @@ exports[`Header snapshot 1`] = `
 }
 
 @media (max-width:749px) {
-  .emotion-40 {
+  .emotion-10 {
     font-size: 10px;
     grid-template-columns: repeat(4,1fr);
     grid-template-areas: "I I L L" "S S S S" "M M M M";
@@ -62,142 +62,13 @@ exports[`Header snapshot 1`] = `
   }
 }
 
-.emotion-31 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  grid-area: M;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  font-size: 15px;
-  font-weight: bold;
-}
-
-.emotion-31 button {
-  line-height: 32px;
-}
-
-.emotion-9 {
-  position: relative;
-  margin-left: -5px;
-}
-
-.emotion-9:hover .dropdown-menu-label {
-  color: #3d7e9a;
-}
-
-.emotion-9:hover .dropdown-menu-label a {
-  color: #3d7e9a;
-}
-
-.emotion-9:hover .dropdown-menu {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.emotion-5 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  white-space: nowrap;
-  font-size: 15px;
-  font-weight: bold;
-  color: #333;
-  padding: 0 5px 5px 5px;
-  border: none;
-}
-
-.emotion-5:focus {
-  outline-offset: -3px;
-}
-
-.emotion-5 a {
-  color: #333;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.emotion-3 {
-  font-size: 75%;
-  padding-left: 2px;
-}
-
-.emotion-7 {
-  position: absolute;
-  display: none;
-  z-index: 100;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  box-sizing: border-box;
-  background-color: white;
-  box-shadow: 0 2px 8px 0 rgba(12,12,13,0.1);
-  border: solid 1px #d8dfe2;
-  border-radius: 4px;
-  padding: 4px 0;
-  min-width: 100%;
-}
-
-.emotion-7 li a,
-.emotion-7 li button {
-  display: inline-block;
-  box-sizing: border-box;
-  width: 100%;
-  padding: 6px 16px;
-  white-space: nowrap;
-  color: #3d7e9a;
-  font-size: 15px;
-  font-weight: bold;
-  text-align: start;
-}
-
-.emotion-7 li a:hover,
-.emotion-7 li button:hover {
-  color: #fff;
-  background-color: #3d7e9a;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.emotion-11 {
-  -webkit-box-flex: 0;
-  -webkit-flex-grow: 0;
-  -ms-flex-positive: 0;
-  flex-grow: 0;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  -webkit-flex-basis: 16px;
-  -ms-flex-preferred-size: 16px;
-  flex-basis: 16px;
-}
-
-.emotion-36 {
+.emotion-6 {
   grid-area: S;
   justify-self: stretch;
   overflow: hidden;
 }
 
-.emotion-35 {
+.emotion-5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -221,14 +92,14 @@ exports[`Header snapshot 1`] = `
   flex: 2 1;
 }
 
-.emotion-33 {
+.emotion-3 {
   fill: #333;
   -webkit-flex: 0 0 20px;
   -ms-flex: 0 0 20px;
   flex: 0 0 20px;
 }
 
-.emotion-34 {
+.emotion-4 {
   border-width: 0 !important;
   font-size: 14px;
   -webkit-flex: 1 1 100px;
@@ -240,12 +111,12 @@ exports[`Header snapshot 1`] = `
   background-color: #fafafa !important;
 }
 
-.emotion-38 {
+.emotion-8 {
   grid-area: L;
   justify-self: end;
 }
 
-.emotion-37 {
+.emotion-7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -262,17 +133,17 @@ exports[`Header snapshot 1`] = `
   text-decoration: none;
 }
 
-.emotion-37:hover {
+.emotion-7:hover {
   -webkit-text-decoration: none;
   text-decoration: none;
   background-color: #eee;
 }
 
-.emotion-37:focus {
+.emotion-7:focus {
   outline-offset: -3px;
 }
 
-.emotion-39 {
+.emotion-9 {
   box-sizing: border-box;
   position: absolute;
   display: block;
@@ -295,14 +166,14 @@ exports[`Header snapshot 1`] = `
   color: black;
 }
 
-.emotion-39:hover {
+.emotion-9:hover {
   background-color: #ff0;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
 <div
-  className="emotion-40"
+  className="emotion-10"
 >
   <a
     aria-label="MDN Web Docs"
@@ -316,251 +187,323 @@ exports[`Header snapshot 1`] = `
   <div
     className="emotion-2"
   />
-  <div
-    className="emotion-31 emotion-32"
+  <nav
+    className="main-nav"
+    role="navigation"
   >
-    <div
-      className="emotion-9 emotion-10"
-    >
-      <div
-        className="dropdown-menu-label emotion-5 emotion-6"
+    <ul>
+      <li
+        className="top-level-entry-container"
       >
-        <a
-          href="/en-US/docs/Web"
+        <button
+          aria-haspopup="true"
+          className="top-level-entry"
+          onTouchStart={[Function]}
+          type="button"
         >
           Technologies
-        </a>
-        <span
-          className="emotion-3 emotion-4"
+          <span
+            aria-hidden="true"
+            className="main-menu-arrow"
+          >
+            ▼
+          </span>
+        </button>
+        <ul
+          className={null}
         >
-          ▼
-        </span>
-      </div>
-      <ul
-        className="dropdown-menu emotion-7 emotion-8"
-        onClick={[Function]}
+          <li
+            data-item="Technologies"
+            role="menuitem"
+          >
+            <a
+              href="/en-US/docs/Web"
+            >
+              Technologies Overview
+            </a>
+          </li>
+          <li
+            data-item="Technologies"
+            role="menuitem"
+          >
+            <a
+              href="/en-US/docs/Web/HTML"
+            >
+              HTML
+            </a>
+          </li>
+          <li
+            data-item="Technologies"
+            role="menuitem"
+          >
+            <a
+              href="/en-US/docs/Web/CSS"
+            >
+              CSS
+            </a>
+          </li>
+          <li
+            data-item="Technologies"
+            role="menuitem"
+          >
+            <a
+              href="/en-US/docs/Web/JavaScript"
+            >
+              JavaScript
+            </a>
+          </li>
+          <li
+            data-item="Technologies"
+            role="menuitem"
+          >
+            <a
+              href="/en-US/docs/Web/Guide/Graphics"
+            >
+              Graphics
+            </a>
+          </li>
+          <li
+            data-item="Technologies"
+            role="menuitem"
+          >
+            <a
+              href="/en-US/docs/Web/HTTP"
+            >
+              HTTP
+            </a>
+          </li>
+          <li
+            data-item="Technologies"
+            role="menuitem"
+          >
+            <a
+              href="/en-US/docs/Web/API"
+            >
+              APIs / DOM
+            </a>
+          </li>
+          <li
+            data-item="Technologies"
+            role="menuitem"
+          >
+            <a
+              href="/en-US/docs/Mozilla/Add-ons/WebExtensions"
+            >
+              Browser Extensions
+            </a>
+          </li>
+          <li
+            data-item="Technologies"
+            role="menuitem"
+          >
+            <a
+              href="/en-US/docs/Web/MathML"
+            >
+              MathML
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li
+        className="top-level-entry-container"
       >
-        <li>
-          <a
-            href="/en-US/docs/Web/HTML"
-          >
-            HTML
-          </a>
-        </li>
-        <li>
-          <a
-            href="/en-US/docs/Web/CSS"
-          >
-            CSS
-          </a>
-        </li>
-        <li>
-          <a
-            href="/en-US/docs/Web/JavaScript"
-          >
-            JavaScript
-          </a>
-        </li>
-        <li>
-          <a
-            href="/en-US/docs/Web/Guide/Graphics"
-          >
-            Graphics
-          </a>
-        </li>
-        <li>
-          <a
-            href="/en-US/docs/Web/HTTP"
-          >
-            HTTP
-          </a>
-        </li>
-        <li>
-          <a
-            href="/en-US/docs/Web/API"
-          >
-            APIs / DOM
-          </a>
-        </li>
-        <li>
-          <a
-            href="/en-US/docs/Mozilla/Add-ons/WebExtensions"
-          >
-            Browser Extensions
-          </a>
-        </li>
-        <li>
-          <a
-            href="/en-US/docs/Web/MathML"
-          >
-            MathML
-          </a>
-        </li>
-      </ul>
-    </div>
-    <div
-      className="emotion-11 emotion-12"
-      width={16}
-    />
-    <div
-      className="emotion-9 emotion-10"
-    >
-      <div
-        className="dropdown-menu-label emotion-5 emotion-6"
-      >
-        <a
-          href="/en-US/docs/Learn"
+        <button
+          aria-haspopup="true"
+          className="top-level-entry"
+          onTouchStart={[Function]}
+          type="button"
         >
           References & Guides
-        </a>
-        <span
-          className="emotion-3 emotion-4"
+          <span
+            aria-hidden="true"
+            className="main-menu-arrow"
+          >
+            ▼
+          </span>
+        </button>
+        <ul
+          className={null}
         >
-          ▼
-        </span>
-      </div>
-      <ul
-        className="dropdown-menu emotion-7 emotion-8"
-        onClick={[Function]}
+          <li
+            data-item="References & Guides"
+            role="menuitem"
+          >
+            <a
+              href="/en-US/docs/Learn"
+            >
+              Learn web development
+            </a>
+          </li>
+          <li
+            data-item="References & Guides"
+            role="menuitem"
+          >
+            <a
+              href="/en-US/docs/Web/Tutorials"
+            >
+              Tutorials
+            </a>
+          </li>
+          <li
+            data-item="References & Guides"
+            role="menuitem"
+          >
+            <a
+              href="/en-US/docs/Web/Reference"
+            >
+              References
+            </a>
+          </li>
+          <li
+            data-item="References & Guides"
+            role="menuitem"
+          >
+            <a
+              href="/en-US/docs/Web/Guide"
+            >
+              Developer Guides
+            </a>
+          </li>
+          <li
+            data-item="References & Guides"
+            role="menuitem"
+          >
+            <a
+              href="/en-US/docs/Web/Accessibility"
+            >
+              Accessibility
+            </a>
+          </li>
+          <li
+            data-item="References & Guides"
+            role="menuitem"
+          >
+            <a
+              href="/en-US/docs/Games"
+            >
+              Game development
+            </a>
+          </li>
+          <li
+            data-item="References & Guides"
+            role="menuitem"
+          >
+            <a
+              href="/en-US/docs/Web"
+            >
+              ...more docs
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li
+        className="top-level-entry-container"
       >
-        <li>
-          <a
-            href="/en-US/docs/Learn"
-          >
-            Learn web development
-          </a>
-        </li>
-        <li>
-          <a
-            href="/en-US/docs/Web/Tutorials"
-          >
-            Tutorials
-          </a>
-        </li>
-        <li>
-          <a
-            href="/en-US/docs/Web/Reference"
-          >
-            References
-          </a>
-        </li>
-        <li>
-          <a
-            href="/en-US/docs/Web/Guide"
-          >
-            Developer Guides
-          </a>
-        </li>
-        <li>
-          <a
-            href="/en-US/docs/Web/Accessibility"
-          >
-            Accessibility
-          </a>
-        </li>
-        <li>
-          <a
-            href="/en-US/docs/Games"
-          >
-            Game development
-          </a>
-        </li>
-        <li>
-          <a
-            href="/en-US/docs/Web"
-          >
-            ...more docs
-          </a>
-        </li>
-      </ul>
-    </div>
-    <div
-      className="emotion-11 emotion-12"
-      width={16}
-    />
-    <div
-      className="emotion-9 emotion-10"
-    >
-      <div
-        className="dropdown-menu-label emotion-5 emotion-6"
-      >
-        <a
-          href="/en-US/docs/MDN/Feedback"
+        <button
+          aria-haspopup="true"
+          className="top-level-entry"
+          onTouchStart={[Function]}
+          type="button"
         >
           Feedback
-        </a>
-        <span
-          className="emotion-3 emotion-4"
+          <span
+            aria-hidden="true"
+            className="main-menu-arrow"
+          >
+            ▼
+          </span>
+        </button>
+        <ul
+          className={null}
         >
-          ▼
-        </span>
-      </div>
-      <ul
-        className="dropdown-menu emotion-7 emotion-8"
-        onClick={[Function]}
-      >
-        <li>
-          <a
-            href="https://support.mozilla.org/"
-            rel="noopener noreferrer"
-            target="_blank"
+          <li
+            data-item="Feedback"
+            role="menuitem"
           >
-            Get Firefox help
-             🌐
-          </a>
-        </li>
-        <li>
-          <a
-            href="https://stackoverflow.com/"
-            rel="noopener noreferrer"
-            target="_blank"
+            <a
+              href="/en-US/docs/MDN/Feedback"
+            >
+              Send Feedback
+            </a>
+          </li>
+          <li
+            data-item="Feedback"
+            role="menuitem"
           >
-            Get web development help
-             🌐
-          </a>
-        </li>
-        <li>
-          <a
-            href="/en-US/docs/MDN/Community"
+            <a
+              href="https://support.mozilla.org/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Get Firefox help
+               🌐
+            </a>
+          </li>
+          <li
+            data-item="Feedback"
+            role="menuitem"
           >
-            Join the MDN community
-          </a>
-        </li>
-        <li>
-          <a
-            href="https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=%2Fen-US%2Fdocs%2Ftest"
-            rel="noopener noreferrer"
-            target="_blank"
+            <a
+              href="https://stackoverflow.com/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Get web development help
+               🌐
+            </a>
+          </li>
+          <li
+            data-item="Feedback"
+            role="menuitem"
           >
-            Report a content problem
-             🌐
-          </a>
-        </li>
-        <li>
-          <a
-            href="https://bugzilla.mozilla.org/form.mdn"
-            rel="noopener noreferrer"
-            target="_blank"
+            <a
+              href="/en-US/docs/MDN/Community"
+            >
+              Join the MDN community
+            </a>
+          </li>
+          <li
+            data-item="Feedback"
+            role="menuitem"
           >
-            Report a bug
-             🌐
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
+            <a
+              href="https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=%2Fen-US%2Fdocs%2Ftest"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Report a content problem
+               🌐
+            </a>
+          </li>
+          <li
+            data-item="Feedback"
+            role="menuitem"
+          >
+            <a
+              href="https://bugzilla.mozilla.org/form.mdn"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Report a bug
+               🌐
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
   <div
-    className="emotion-36"
+    className="emotion-6"
   >
     <form
       action="/en-US/search"
-      className="emotion-35"
+      className="emotion-5"
       id="nav-main-search"
       method="get"
       role="search"
     >
       <svg mock
-        className="emotion-33"
+        className="emotion-3"
       />
       <label
         className="visually-hidden"
@@ -569,7 +512,7 @@ exports[`Header snapshot 1`] = `
         Search MDN
       </label>
       <input
-        className="emotion-34"
+        className="emotion-4"
         id="main-q"
         name="q"
         placeholder="Search MDN"
@@ -578,10 +521,10 @@ exports[`Header snapshot 1`] = `
     </form>
   </div>
   <div
-    className="emotion-38"
+    className="emotion-8"
   >
     <a
-      className="emotion-37"
+      className="emotion-7"
       data-service="GitHub"
       href="/users/github/login/?next=/[fake%20absolute%20url]"
       rel="nofollow"
@@ -590,7 +533,7 @@ exports[`Header snapshot 1`] = `
     </a>
   </div>
   <a
-    className="emotion-39"
+    className="emotion-9"
     href="https://bugzilla.mozilla.org/show_bug.cgi?id=1561020"
     rel="noopener noreferrer nofollow"
     target="_blank"
