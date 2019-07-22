@@ -258,13 +258,13 @@ def search(request, locale):
     if locale == 'en-US':
         search = (WikiDocumentType.search()
                   .filter('term', locale=locale)
-                  .source(['slug', 'title', 'summary', 'tags'])
+                  .source(['slug', 'title', 'summary'])
                   .query('multi_match', query=query_string,
                          fields=['title^7', 'summary^2', 'content']))
     else:
         search = (WikiDocumentType.search()
                   .filter('terms', locale=[locale, 'en-US'])
-                  .source(['slug', 'title', 'summary', 'tags', 'locale'])
+                  .source(['slug', 'title', 'summary', 'locale'])
                   .query(query.Bool(
                       must=Q('multi_match', query=query_string,
                              fields=['title^7', 'summary^2', 'content']),

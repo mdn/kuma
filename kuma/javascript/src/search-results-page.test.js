@@ -12,7 +12,6 @@ const fakeResults = [
         slug: 'slug1',
         title: 'title1',
         summary: 'summary1',
-        tags: ['tag1.1', 'tag1.2'],
         score: 10,
         excerpts: ['Test <mark>result</mark>', 'Excerpt <mark>2</mark>']
     },
@@ -20,7 +19,6 @@ const fakeResults = [
         slug: 'slug2',
         title: 'title2',
         summary: 'summary2',
-        tags: ['tag2.1', 'tag2.2'],
         score: 5,
         excerpts: []
     }
@@ -154,8 +152,7 @@ describe('SearchRoute', () => {
                                 _source: {
                                     slug: r.slug,
                                     title: r.title,
-                                    summary: r.summary,
-                                    tags: r.tags
+                                    summary: r.summary
                                 },
                                 _score: r.score,
                                 highlight: {
