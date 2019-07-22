@@ -117,6 +117,9 @@ export default function Article({ document }: DocumentProps) {
         }
     }, [document, userData]);
 
+    const isArchive =
+        document.slug === 'Archive' || document.slug.startsWith('Archive/');
+
     return (
         /*
          * The "text-content" class and "wikiArticle" id are required
@@ -126,7 +129,9 @@ export default function Article({ document }: DocumentProps) {
         <div
             id="content"
             ref={article}
-            className="text-content"
+            className={
+                isArchive ? 'text-content archive-content' : 'text-content'
+            }
             css={styles.article}
         >
             <article

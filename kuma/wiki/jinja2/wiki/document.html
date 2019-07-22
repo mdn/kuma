@@ -53,10 +53,6 @@
 
 {% block site_css %}
     {{ super() }}
-    {% if is_archive %}
-      {% stylesheet 'archive' %}
-    {% endif %}
-
     {% if waffle.flag('developer_needs') %}
       {% stylesheet 'banners' %}
     {% endif %}
@@ -219,7 +215,7 @@
               {% endif %}
 
               <!-- just the article content -->
-              <article id="wikiArticle">
+              <article id="wikiArticle"{%- if is_archive %} class="archive-content"{% endif -%}>
                 {% if not fallback_reason %}
                   {% if not document_html %}
                     {{ _("This article doesn't have any content yet.") }}
