@@ -14,6 +14,8 @@ div.signal-link-container {
         background-color: #3d7e9a;
         margin: 0;
         max-width: 100%;
+        height: 8px;
+        cursor: default;
     }
 
     & > a {
@@ -21,14 +23,14 @@ div.signal-link-container {
         background-color: #3d7e9a;
         color: #fff;
         padding-right: 15px;
-        padding-left: 15px;
         border: 0;
         border-bottom-left-radius: 4px;
         border-bottom-right-radius: 4px;
         font-weight: bold;
-        text-align: center;
         height: 35px;
         min-width: 230px;
+        padding-left: 5rem;
+        text-align: right;
     }
 
     &.slideUp {
@@ -102,11 +104,35 @@ div.signal-link-container {
     }
 }
 
+.next-step-btn,
 .prev-step-btn {
     display: flex;
     align-items: center;
+    font-weight: normal;
+
+    & > span {
+        display: inline-block;
+        width: 16px;
+        height: 15px;
+        margin-top: -1px;
+    }
+
+    @media #{$mq-tablet-and-down} {
+        display: none;
+    }
+}
+
+.prev-step-btn {
     border-color: #333;
     color: #333;
+
+    & > span {
+        background: url('/static/arrows/arrow.svg') center no-repeat;
+        background-size: 14px 15px;
+        transform: rotate(180deg);
+        margin-right: 8px;
+        margin-top: 0;
+    }
 
     @media #{$mq-tablet-and-down} {
         display: none;
@@ -114,14 +140,9 @@ div.signal-link-container {
 }
 
 .next-step-btn {
-    display: flex;
-    align-items: center;
 
     & > span {
-        background: url('/static/arrows/arrow-right.svg') center no-repeat;
-        display: inline-block;
-        width: 16px;
-        height: 15px;
+        background: url('/static/arrows/arrow-right-blue.svg') center no-repeat;
         background-size: 14px 15px;
         margin-left: 8px;
     }
@@ -133,10 +154,14 @@ div.signal-link-container {
 
 div.bc-signal-block {
     background-color: $blue-light;
-    padding-top: 8px;
-    display: none;
     box-sizing: border-box;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .3s ease-out, padding-top .1s ease .3s;
 
+    &:not(.complete) {
+        padding-top: 0;
+    }
 
     .left-block {
         box-sizing: border-box;
@@ -474,8 +499,13 @@ div.bc-signal-block {
         padding: 0 32px;
     }
 
+    div.bc-signal-block {
+        transition: max-height .8s ease-out, padding-top .1s ease .7s;
+    }
+
     div.bc-signal-block.open {
-        display: block;
+        max-height: 1800px;
+        transition: max-height .8s ease-out, padding-top 0s ease-out 0s;
     }
 
     textarea#brief-explanation,
@@ -492,20 +522,27 @@ div.bc-signal-block {
 
 @media #{$mq-small-desktop-and-up} {
     div.bc-signal-block {
-        min-height: 520px;
-
         &.open {
+            padding-top: 8px;
+            max-height: 700px;
             display: flex;
             align-items: stretch;
+            transition: max-height .3s ease-out, padding-top 0s ease-out 0s;
         }
     }
 
-    div.bc-signal-block.complete.open {
-        box-sizing: border-box;
-        padding: 53px 100px;
+    div.bc-signal-block.complete {
+        padding: 0 100px;
+        transition: max-height .3s ease-out, padding .1s ease .18s;
         display: flex;
-        justify-content: center;
         align-items: center;
+
+        &.open {
+            padding: 53px 100px;
+            box-sizing: border-box;
+            display: flex;
+            transition: max-height .3s ease-out, padding-top 0s ease-out 0s;
+        }
     }
 
     .control {

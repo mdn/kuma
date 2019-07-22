@@ -467,7 +467,7 @@
         const signalStepOneBlock = document.createElement('div');
         const controls = document.createElement('div');
         const stepsButtonBlock = document.createElement('div');
-        //const nextStepButtonIcon = document.createElement('span');
+        const nextStepButtonIcon = document.createElement('span');
         nextStepButton = document.createElement('button');
 
         signalStepOneBlock.className = 'inner-step';
@@ -478,8 +478,9 @@
 
         nextStepButton.addEventListener('click', function () {toStep(2);});
         nextStepButton.innerHTML = 'Next step (2 of 2)';
-        // nextStepButton.appendChild(document.createTextNode());
-        // nextStepButton.appendChild(document.createElement(arrowLeftIcon));
+
+        nextStepButtonIcon.className = 'icon-next';
+        nextStepButton.appendChild(nextStepButtonIcon);
 
         stepsButtonBlock.appendChild(nextStepButton);
         controls.appendChild(createSelectBrowserControl());
@@ -502,14 +503,14 @@
         sendReportButton = document.createElement('button');
 
         signalStepTwoBlock.id = 'step-2';
-        sendReportButton.className = 'button neutral disabled main-btn';
+        sendReportButton.className = 'button neutral disabled main-btn scroll-to-signal';
         sendReportButton.innerText = 'Send report';
         signalStepTwoBlock.className = 'inner-step';
         controls.className = 'controls';
         stepsButtonBlock.className = 'navigation-buttons reverse';
         goBackButton.className = 'button prev-step-btn btn-dark';
 
-        goBackButton.innerHTML = '<span class="icon"></span>Previous step';
+        goBackButton.innerHTML = '<span class="icon-back"></span>Previous step';
 
         sendReportButton.addEventListener('click', sendReport);
         goBackButton.addEventListener('click', function () {toStep(1);});
@@ -588,7 +589,7 @@
             <p>
                 <a href="https://github.com/mdn/browser-compat-data" target="_blank">
                     https://github.com/mdn/browser-compat-data
-                    <span class="icon-external-link"></span>
+                    <span class="external external-icon"></span>
                 </a>
             </p>
         `;
@@ -607,8 +608,55 @@
         bcSignalCompleteBlock.appendChild(completeLeftBlock);
         bcSignalCompleteBlock.appendChild(completeRightBlock);
 
+        const scrollElems = document.querySelectorAll('.scroll-to-signal');
+        const scrollTo = bcSignalCompleteBlock;
+
+        for(let i = 0; i < scrollElems.length; i++){
+            const elem = scrollElems[i];
+
+            elem.addEventListener('click',function(e) {
+                e.preventDefault();
+                if (window.innerWidth >= 1024) {
+                    return;
+                }
+                const scrollEndElem = scrollTo;
+
+                requestAnimationFrame((timestamp) => {
+                    const stamp = timestamp || new Date().getTime();
+                    const duration = 1200;
+                    const start = stamp;
+
+                    const startScrollOffset = window.pageYOffset;
+                    const scrollEndElemTop = scrollEndElem.getBoundingClientRect().top;
+
+                    scrollToElem(start, stamp, duration, scrollEndElemTop, startScrollOffset);
+                });
+            });
+        }
+
         return bcSignalCompleteBlock;
     }
+
+    /**
+     * Scrolls to a specified element
+     */
+    const scrollToElem = (startTime, currentTime, duration, scrollEndElemTop, startScrollOffset) => {
+        const easeInCubic = function (t) { return t*t*t; };
+        const runtime = currentTime - startTime;
+        let progress = runtime / duration;
+
+        progress = Math.min(progress, 1);
+
+        const ease = easeInCubic(progress);
+
+        window.scroll(0, startScrollOffset + (scrollEndElemTop * ease));
+        if(runtime < duration){
+            requestAnimationFrame((timestamp) => {
+                const currentTime = timestamp || new Date().getTime();
+                scrollToElem(startTime, currentTime, duration, scrollEndElemTop, startScrollOffset);
+            });
+        }
+    };
 
     /**
      * Creates and returns the signal element HTML
@@ -620,6 +668,8 @@
         const container = document.createElement('div');
         const signalLink = document.createElement('a');
         signalLink.textContent = 'What are we missing ?';
+        signalLink.setAttribute('class', 'scroll-to-signal');
+        signalLink.href = '#';
 
         signalLink.addEventListener('click', function() {
             toggleBcSignalBlock();
