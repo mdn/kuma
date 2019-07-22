@@ -183,15 +183,6 @@ export function Breadcrumbs({ document }: DocumentProps) {
 }
 
 function Content({ document }: DocumentProps) {
-    // TODO(djf): We may want to omit the "On this Page" section from
-    // the sidebar for pages with slugs like /Web/*/*/*: those are
-    // mostly HTML and CSS reference pages with repetitive TOCs. The
-    // TOC would afford quick access to the BCD table, but might not
-    // be useful for much else. For Learn/ slugs, however, the TOC is
-    // likely to be much more informative. I think a decision is still
-    // needed here. For now, we show the TOC on all pages that have one.
-    let showTOC = !!document.tocHTML;
-
     // The wiki-left-present class below is needed for correct BCD layout
     // See kuma/static/styles/components/compat-tables/bc-table.scss
     return (
@@ -202,7 +193,7 @@ function Content({ document }: DocumentProps) {
             className="wiki-left-present"
             aria-live="assertive"
         >
-            {showTOC && <TOC html={document.tocHTML} />}
+            {!!document.tocHTML && <TOC html={document.tocHTML} />}
             <Article document={document} />
             <Sidebar document={document} />
         </div>
