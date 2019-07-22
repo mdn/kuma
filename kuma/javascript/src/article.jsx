@@ -126,10 +126,16 @@ export default function Article({ document }: DocumentProps) {
          * because our stylesheets expect them and formatting isn't quite
          * right without them.
          */
-        <div id="content" ref={article} css={styles.article}>
+        <div
+            id="content"
+            ref={article}
+            className={
+                isArchive ? 'text-content archive-content' : 'text-content'
+            }
+            css={styles.article}
+        >
             <article
                 id="wikiArticle"
-                className={isArchive ? 'archive-content' : null}
                 dangerouslySetInnerHTML={{ __html: document.bodyHTML }}
             />
             <ArticleMetadata document={document} />
