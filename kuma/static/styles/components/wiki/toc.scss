@@ -113,3 +113,49 @@ $emify-tablet-height: (680px / 16px) * 1em;
         }
     }
 }
+
+/*
+On This Page component
+====================================================================== */
+/* Because of the blanket styling of all aside elements
+ here[1], we need to override those here to get an unstyled
+ aside element. [1] kuma/static/styles/base/elements/sectioning.scss
+ TODO: Do not apply such broad style rules to all elements of a type */
+.document-toc-container {
+    float: none;
+    background-color: unset;
+    margin: 0;
+    padding-top: 0;
+    width: unset;
+}
+
+.document-toc {
+    background-color: $toc-background-color;
+    margin-top: 30px;
+    border: solid 1px $toc-border-color;
+
+    &:before {
+        display: block;
+        background-image: linear-gradient(-272deg, $toc-gradient-start-color, $toc-gradient-end-color);
+        content: '';
+        height: 4px;
+    }
+
+    h2 {
+        margin: 15px 0;
+        @include bidi(((padding-left, 10px, padding-right, 0),));
+        font-weight: 400;
+        @include set-font-size(24px);
+    }
+
+    ul {
+        @include bidi(((padding-left, 20px, padding-right, 0),));
+        list-style: none;
+        @include set-font-size(16px);
+
+        li {
+            margin: 10px 0;
+            line-height: 1.2;
+        }
+    }
+}

@@ -11,6 +11,7 @@ import Header from './header/header.jsx';
 import Route from './route.js';
 import TaskCompletionSurvey from './task-completion-survey.jsx';
 import Titlebar from './titlebar.jsx';
+import TOC from './toc.jsx';
 
 import type { GAFunction } from './ga-provider.jsx';
 
@@ -96,12 +97,13 @@ const styles = {
         maxWidth: 1400,
         margin: '0 auto',
         gridTemplateColumns: '25% 75%',
-        gridTemplateAreas: '"side main"',
+        gridTemplateRows: 'max-content 1fr',
+        gridTemplateAreas: '"document-toc-container main" "side main"',
         [NARROW]: {
             // If we're narrower than a tablet, put the sidebar at the
             // bottom and drop the toc line.
             gridTemplateColumns: '100%',
-            gridTemplateAreas: '"main" "side"'
+            gridTemplateAreas: '"main" "document-toc-container" "side"'
         }
     }),
     sidebar: css({
@@ -117,26 +119,6 @@ const styles = {
             padding: '15px 12px'
         }
     }),
-    tocHeader: css({
-        height: 4,
-        margin: '0 12px 0 -1px',
-        backgroundImage: 'linear-gradient(-272deg, #206584, #83d0f2)'
-    }),
-    toc: css({
-        backgroundColor: '#fcfcfc',
-        border: 'solid 1px #dce3e5',
-        padding: '8px 8px 0px 13px',
-        margin: '0 12px 20px -1px',
-        '& ul': {
-            listStyle: 'none',
-            paddingLeft: 12
-        },
-        '& li': {
-            fontSize: 14,
-            lineHeight: '20px',
-            margin: '10px 0'
-        }
-    }),
     sidebarHeading: css({
         fontFamily:
             'x-locale-heading-primary, zillaslab, "Palatino", "Palatino Linotype", x-locale-heading-secondary, serif',
@@ -147,32 +129,8 @@ const styles = {
 };
 
 export function Sidebar({ document }: DocumentProps) {
-    // TODO(djf): We may want to omit the "On this Page" section from
-    // the sidebar for pages with slugs like /Web/*/*/*: those are
-    // mostly HTML and CSS reference pages with repetitive TOCs. The
-    // TOC would afford quick access to the BCD table, but might not
-    // be useful for much else. For Learn/ slugs, however, the TOC is
-    // likely to be much more informative. I think a decision is still
-    // needed here. For now, we show the TOC on all pages that have one.
-    let showTOC = !!document.tocHTML;
-
     return (
         <div css={styles.sidebar}>
-            {showTOC && (
-                <>
-                    <div css={styles.tocHeader} />
-                    <div css={styles.toc}>
-                        <div css={styles.sidebarHeading}>
-                            {gettext('On this Page')}
-                        </div>
-                        <ul
-                            dangerouslySetInnerHTML={{
-                                __html: document.tocHTML
-                            }}
-                        />
-                    </div>
-                </>
-            )}
             {document.quickLinksHTML && (
                 <div className="quick-links">
                     <div
@@ -234,6 +192,7 @@ function Content({ document }: DocumentProps) {
             className="wiki-left-present"
             aria-live="assertive"
         >
+            {!!document.tocHTML && <TOC html={document.tocHTML} />}
             <Article document={document} />
             <Sidebar document={document} />
         </div>
