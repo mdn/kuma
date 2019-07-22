@@ -49,6 +49,10 @@ div.signal-link-container {
 .upload-screenshot-control {
     display: inline-block;
 
+    @media #{$mq-tablet-and-down} {
+        margin-top: 10px;
+    }
+
     .uploaded-screenshot-block {
         display: flex;
         align-items: center;
@@ -101,6 +105,10 @@ div.signal-link-container {
         & > .main-btn {
             width: 200px;
         }
+
+        &.mob-reduced-space {
+            margin: 10px 0;
+        }
     }
 }
 
@@ -142,7 +150,7 @@ div.signal-link-container {
 .next-step-btn {
 
     & > span {
-        background: url('/static/arrows/arrow-right-blue.svg') center no-repeat;
+        background: url('/static/img/arrow-right-blue.svg') center no-repeat;
         background-size: 14px 15px;
         margin-left: 8px;
     }
@@ -284,6 +292,8 @@ div.bc-signal-block {
         justify-content: center;
         width: 24px;
         height: 24px;
+        min-width: 24px;
+        min-height: 24px;
         border-radius: 50%;
         padding: 2px 3px;
         font-family: Arial;
@@ -302,8 +312,10 @@ div.bc-signal-block {
         }
 
         &.inline {
-            padding: 6px 10px;
-            display: inline;
+            display: inline-flex;
+            width: 24px;
+            height: 24px;
+            padding: 0;
 
             @media #{$mq-small-desktop-and-up} {
                 display: none;
@@ -336,7 +348,13 @@ div.bc-signal-block {
     }
 
     .control-wrap {
-        width: 100%;
+        width: 90%;
+
+        &.upload-element {
+            @media #{$mq-small-desktop-and-up} {
+                display: flex;
+            }
+        }
     }
 
     .control-header {
@@ -348,9 +366,16 @@ div.bc-signal-block {
         letter-spacing: normal;
         color: #333333;
         margin-bottom: 8px;
+        line-height: 1.31;
 
         &.has-control {
             float: left;
+        }
+
+        &.with-optional-label {
+            @media #{$mq-tablet-and-down} {
+                display: flex;
+            }
         }
     }
 
@@ -410,6 +435,8 @@ div.bc-signal-block {
     textarea#brief-explanation,
     textarea#supporting-material {
         box-sizing: border-box;
+        border-color: $blue;
+        height: 72px;
     }
 
     span.optional-text {
@@ -561,5 +588,6 @@ div.bc-signal-block {
     textarea#brief-explanation,
     textarea#supporting-material {
         width: 500px;
+        max-width: 100%;
     }
 }

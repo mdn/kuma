@@ -176,6 +176,13 @@
         if (controlObj.inline) {
             controlHeader.className += ' has-control';
         }
+        if (controlObj.optional) {
+            controlHeader.className += ' with-optional-label';
+        }
+        if (controlObj.additionalClasses && controlObj.additionalClasses !== '') {
+            controlInnerWrapper.className += ' '+controlObj.additionalClasses;
+        }
+
         controlDescription.className = 'control-description';
 
         controlHeader.appendChild(createStepNumLabel(controlObj.index, true));
@@ -396,8 +403,9 @@
             description: '',
             el: uploadScreenshotBlock,
             index: 5,
-            inline: true,
-            optional: true
+            inline: false,
+            optional: true,
+            additionalClasses: 'upload-element'
         });
     }
 
@@ -473,7 +481,7 @@
         signalStepOneBlock.className = 'inner-step';
         signalStepOneBlock.id = 'step-1';
         controls.className = 'controls';
-        stepsButtonBlock.className = 'navigation-buttons reverse';
+        stepsButtonBlock.className = 'navigation-buttons reverse mob-reduced-space';
         nextStepButton.className = 'button neutral disabled next-step-btn';
 
         nextStepButton.addEventListener('click', function () {toStep(2);});
@@ -623,7 +631,7 @@
 
                 requestAnimationFrame((timestamp) => {
                     const stamp = timestamp || new Date().getTime();
-                    const duration = 1200;
+                    const duration = 800;
                     const start = stamp;
 
                     const startScrollOffset = window.pageYOffset;
