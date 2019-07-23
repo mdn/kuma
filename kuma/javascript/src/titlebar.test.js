@@ -16,9 +16,9 @@ describe('Titlebar', () => {
         expect(heading.props.children).toBe('test_title!');
     });
 
-    test('Titlebar shows edit button', () => {
+    test('Titlebar shows edit in wiki link', () => {
         let titlebar;
-        let buttons;
+        let editLink;
 
         // No user data; expect no buttons
         titlebar = create(
@@ -26,8 +26,8 @@ describe('Titlebar', () => {
                 <Titlebar title="test" document={fakeDocumentData} />
             </UserProvider.context.Provider>
         );
-        buttons = titlebar.root.findAll(instance => instance.type === 'button');
-        expect(buttons.length).toBe(0);
+        editLink = titlebar.root.findAll(instance => instance.type === 'a');
+        expect(editLink.length).toBe(0);
 
         // User not logged in, expect no buttons
         titlebar = create(
@@ -35,8 +35,8 @@ describe('Titlebar', () => {
                 <Titlebar title="test" document={fakeDocumentData} />
             </UserProvider.context.Provider>
         );
-        buttons = titlebar.root.findAll(instance => instance.type === 'button');
-        expect(buttons.length).toBe(0);
+        editLink = titlebar.root.findAll(instance => instance.type === 'a');
+        expect(editLink.length).toBe(0);
 
         // User logged in and contributor, expect one button
         titlebar = create(
@@ -56,19 +56,8 @@ describe('Titlebar', () => {
                 />
             </UserProvider.context.Provider>
         );
-        buttons = titlebar.root.findAll(instance => instance.type === 'button');
-        expect(buttons.length).toBe(1);
-
-        // Make the mock window.location property writeable
-        // NOTE: This is a little brittle since it assumes that titlebar.jsx
-        // is setting window.location and not window.location.href, for example.
-        Object.defineProperty(window, 'location', {
-            writable: true,
-            value: null
-        });
-
-        // Clicking the button sets window.location.href to editURL
-        buttons[0].props.onClick();
-        expect(window.location).toBe('foobar$edit');
+        editLink = titlebar.root.findAll(instance => instance.type === 'a');
+        expect(editLink.length).toBe(1);
+        expect(editLink[0].props.href).toBe('foobar');
     });
 });
