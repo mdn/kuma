@@ -173,7 +173,6 @@ def document_api_data(doc=None, ensure_contributors=False, redirect_url=None):
                     'title': t.title
                 } for t in other_translations
             ],
-            'tags': doc.all_tags_name,
             'contributors': contributors,
             'lastModified': (doc.current_revision and
                              doc.current_revision.created.isoformat()),
