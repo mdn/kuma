@@ -185,7 +185,14 @@ def request_cdn_cache_invalidation(doc_locale_slug_pairs, log=None):
                         'Quantity': len(paths),
                         'Items': paths
                     },
-                    'CallerReference': str(time.time())
+                    # The 'CallerReference' just needs to be a unique string.
+                    # By using a timestamp we get slightly more information
+                    # than using a UUID or a random string. But it needs to
+                    # be sufficiently "different" that's why we use 6
+                    # significant figures to avoid the unlikely chance that
+                    # this code gets executed concurrently within a small
+                    # time window.
+                    'CallerReference': '{:.6f}'.format(time.time())
                 }
             )
             log.info(
