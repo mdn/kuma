@@ -51,32 +51,18 @@ const styles = {
             // Reduce the H1 size on narrow screens
             fontSize: 28
         }
-    }),
-
-    editButton: css({
-        height: 32,
-        border: 'solid 2px #3d7e9a',
-        color: '#3d7e9a', // for the text
-        fill: '#3d7e9a', // for the icon
-        backgroundColor: '#fff',
-        whiteSpace: 'nowrap',
-        fontSize: 15,
-        fontWeight: 'bold',
-        padding: '0 18px'
     })
 };
 
 function EditButton({ document }: DocumentProps) {
-    let editURL = document.editURL;
+    /* we want to omit the trailing `$edit` from the URL
+       to ensure users are not sent into edit mode immediately 
+       https://bugzilla.mozilla.org/show_bug.cgi?id=1567720#c1 */
+    let editURL = document.editURL.split('$')[0];
     return (
-        <button
-            css={styles.editButton}
-            onClick={() => {
-                window.location = editURL;
-            }}
-        >
-            <EditIcon width={13} height={13} /> {gettext('Edit')}
-        </button>
+        <a className="button neutral" href={editURL} rel="nofollow">
+            <EditIcon /> {gettext('Edit in wiki')}
+        </a>
     );
 }
 
