@@ -36,8 +36,9 @@ export default function LastModifiedBy({
                 <h4>{gettext('Last updated by:')}</h4>
             </header>
             <a href={`${profileBaseURL}${lastModifiedBy}`} rel="nofollow">
-                {`${lastModifiedBy}, `}
+                {`${lastModifiedBy}`}
             </a>
+            {', '}
             <time dateTime={lastModified}>
                 {lastModifiedDate.toLocaleString(
                     documentLocale,
