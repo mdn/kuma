@@ -290,12 +290,8 @@ def search(request, locale):
         # Be explicit about what to return.
         # Only include things the React component might and will use.
         hit_dict = hit.to_dict()
-        # Not every document has 'tags' so set this default.
-        hit_dict.setdefault('tags', [])
         # 'locale' might get returned from hit.to_dict(). Remove it if there.
         hit_dict.pop('locale', None)
-        # This one comes from the meta
-        hit_dict['score'] = hit.meta.score,
         try:
             # Turn it into a plain list instead of an <type AbstractList>
             excerpts = list(hit.meta.highlight.content)

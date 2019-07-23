@@ -370,7 +370,7 @@ class APISearchIntegration(ElasticTestCase):
         hits = response.json()['hits']
         assert hits
         expected_keys = set(
-            ['score', 'excerpts', 'summary', 'title', 'slug', 'tags'])
+            ['excerpts', 'summary', 'title', 'slug'])
         for hit in hits:
             assert set(hit.keys()) == expected_keys
 
