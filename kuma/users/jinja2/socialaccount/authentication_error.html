@@ -8,23 +8,19 @@
 <p>{{ _("An error occurred while attempting to sign in with your account.") }}</p>
 
 {#
-    When you're doing local development it really helps to see what the
-    error was.
+  When you're doing local development it really helps to see what the
+  error was.
 #}
 {% if settings.DEBUG %}
   <h3>Auth Error</h3>
-  <ul>
-      {#
-        The 'auth_error' context variable comes from
-        allauth.helpers.render_authentication_error() view function.
-      #}
-      {% for key in auth_error %}
-        <li>
-            <b>{{ key }}:</b>
-            {{ auth_error[key] }}
-        </li>
-      {% endfor %}
-  </ul>
+  {#
+    The 'auth_error' context variable comes from
+    allauth.helpers.render_authentication_error() view function.
+    By printing the whole dict object, Jinja will repr() all objects
+    which is important if an object's __str__ results in something that
+    becomes invisible.
+  #}
+  <pre>{{ auth_error }}</pre>
 {% endif %}
 
 {% endblock %}
