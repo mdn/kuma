@@ -45,7 +45,12 @@ export function navigateFetchComplete() {
             // client-side navigation
             performance.measure(FETCH, START);
         } catch (e) {
-            console.error(e);
+            console.error(
+                `Error in performance.measure(${JSON.stringify({
+                    FETCH,
+                    START
+                })}) (error: ${e.toString()})`
+            );
         }
     }
 }
@@ -58,23 +63,44 @@ export function navigateRenderComplete(ga: GAFunction) {
             // Record the time it takes to fetch page data and re-render
             // the page during client-side navigation
             performance.measure(RENDER, START);
+        } catch (e) {
+            console.error(
+                `Error in performance.measure(${JSON.stringify({
+                    FETCH,
+                    START
+                })}) (error: ${e.toString()})`
+            );
+        }
 
-            // Send LUX data to Speedcurve to record the client-side navigation
-            try {
-                if (
-                    typeof window === 'object' &&
-                    window.LUX &&
-                    typeof window.LUX.send === 'function'
-                ) {
-                    window.LUX.send();
-                }
-            } catch (e) {
-                console.error('LUX.send() error:', e);
+        // Send LUX data to Speedcurve to record the client-side navigation
+        try {
+            if (
+                typeof window === 'object' &&
+                window.LUX &&
+                typeof window.LUX.send === 'function'
+            ) {
+                window.LUX.send();
             }
+        } catch (e) {
+            console.error('LUX.send() error:', e);
+        }
 
-            let fetchTime = performance.getEntriesByName(FETCH)[0].duration;
-            let renderTime = performance.getEntriesByName(RENDER)[0].duration;
+        let fetchTime;
+        let renderTime;
+        try {
+            fetchTime = performance.getEntriesByName(FETCH)[0].duration;
+            renderTime = performance.getEntriesByName(RENDER)[0].duration;
+        } catch (e) {
+            console.error(
+                `Error in performance.getEntriesByName() (${JSON.stringify({
+                    FETCH,
+                    RENDER
+                })}) (error: ${e.toString()})`
+            );
+            return;
+        }
 
+        try {
             ga('send', {
                 hitType: 'timing',
                 timingCategory: 'Client side navigation',
@@ -89,7 +115,12 @@ export function navigateRenderComplete(ga: GAFunction) {
                 timingValue: Math.round(renderTime)
             });
         } catch (e) {
-            console.error(e);
+            console.error(
+                `Error sending to ga (${JSON.stringify({
+                    fetchTime,
+                    renderTime
+                })}) (error: ${e.toString()})`
+            );
         }
     }
 }
