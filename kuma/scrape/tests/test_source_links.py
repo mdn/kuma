@@ -22,7 +22,7 @@ def test_init_slash():
 
 
 def test_init_full_url():
-    url = 'https://developer.mozilla.org/en-US/docs/Web/CSS'
+    url = 'https://wiki.developer.mozilla.org/en-US/docs/Web/CSS'
     source = LinksSource(url)
     assert source.path == '/en-US/docs/Web/CSS'
     assert source.locale == 'en-US'

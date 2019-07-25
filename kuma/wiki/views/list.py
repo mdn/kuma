@@ -3,7 +3,8 @@ from django.shortcuts import get_list_or_404, get_object_or_404, render
 from django.views.decorators.http import require_GET
 from ratelimit.decorators import ratelimit
 
-from kuma.core.decorators import block_user_agents, shared_cache_control
+from kuma.core.decorators import (block_user_agents, ensure_wiki_domain,
+                                  shared_cache_control)
 from kuma.core.utils import paginate
 
 from ..constants import DOCUMENTS_PER_PAGE
@@ -12,6 +13,7 @@ from ..models import (Document, DocumentTag, LocalizationTag, ReviewTag,
                       Revision)
 
 
+@ensure_wiki_domain
 @shared_cache_control
 @block_user_agents
 @require_GET
@@ -39,6 +41,7 @@ def documents(request, tag=None):
     return render(request, 'wiki/list/documents.html', context)
 
 
+@ensure_wiki_domain
 @shared_cache_control
 @block_user_agents
 @require_GET
@@ -52,6 +55,7 @@ def tags(request):
     return render(request, 'wiki/list/tags.html', {'tags': tags})
 
 
+@ensure_wiki_domain
 @shared_cache_control
 @block_user_agents
 @require_GET
@@ -73,6 +77,7 @@ def needs_review(request, tag=None):
     return render(request, 'wiki/list/needs_review.html', context)
 
 
+@ensure_wiki_domain
 @shared_cache_control
 @block_user_agents
 @require_GET
@@ -94,6 +99,7 @@ def with_localization_tag(request, tag=None):
     return render(request, 'wiki/list/with_localization_tags.html', context)
 
 
+@ensure_wiki_domain
 @shared_cache_control
 @block_user_agents
 @require_GET
@@ -112,6 +118,7 @@ def with_errors(request):
     return render(request, 'wiki/list/documents.html', context)
 
 
+@ensure_wiki_domain
 @shared_cache_control
 @block_user_agents
 @require_GET
@@ -128,6 +135,7 @@ def without_parent(request):
     return render(request, 'wiki/list/documents.html', context)
 
 
+@ensure_wiki_domain
 @shared_cache_control
 @block_user_agents
 @require_GET
@@ -144,6 +152,7 @@ def top_level(request):
     return render(request, 'wiki/list/documents.html', context)
 
 
+@ensure_wiki_domain
 @shared_cache_control
 @block_user_agents
 @require_GET

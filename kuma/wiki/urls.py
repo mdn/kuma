@@ -3,7 +3,8 @@ from django.views.generic import RedirectView
 
 from kuma.attachments.feeds import AttachmentsFeed
 from kuma.attachments.views import edit_attachment
-from kuma.core.decorators import shared_cache_control
+from kuma.core.decorators import ensure_wiki_domain, shared_cache_control
+
 
 from . import feeds, views
 from .constants import DOCUMENT_PATH_RE
@@ -136,10 +137,10 @@ non_document_patterns = [
 
     # Legacy KumaScript macro list, when they were stored in Kuma database
     url(r'^templates$',
-        shared_cache_control(s_maxage=60 * 60 * 24 * 30)(
+        ensure_wiki_domain(shared_cache_control(s_maxage=60 * 60 * 24 * 30)(
             RedirectView.as_view(pattern_name='dashboards.macros',
                                  permanent=True)
-        )),
+        ))),
 
     # Akismet Revision
     url(r'^submit_akismet_spam$',

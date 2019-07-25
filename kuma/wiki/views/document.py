@@ -26,13 +26,14 @@ from kuma.api.v1.views import document_api_data
 from kuma.authkeys.decorators import accepts_auth_key
 from kuma.core.decorators import (beta_shared_cache_control,
                                   block_user_agents,
+                                  ensure_wiki_domain,
                                   login_required,
                                   permission_required,
                                   redirect_in_maintenance_mode,
                                   shared_cache_control,
                                   superuser_required)
 from kuma.core.urlresolvers import reverse
-from kuma.core.utils import to_html, urlparams
+from kuma.core.utils import is_wiki, redirect_to_wiki, to_html, urlparams
 from kuma.search.store import get_search_url_from_referer
 
 from .utils import calculate_etag, split_slug
@@ -350,6 +351,7 @@ def children(request, document_slug, document_locale):
     return JsonResponse(result)
 
 
+@ensure_wiki_domain
 @never_cache
 @block_user_agents
 @require_http_methods(['GET', 'POST'])
@@ -401,6 +403,7 @@ def move(request, document_slug, document_locale):
     })
 
 
+@ensure_wiki_domain
 @never_cache
 @block_user_agents
 @process_document_path
@@ -414,6 +417,7 @@ def repair_breadcrumbs(request, document_slug, document_locale):
     return redirect(doc.get_absolute_url())
 
 
+@ensure_wiki_domain
 @shared_cache_control
 @require_GET
 @allow_CORS_GET
@@ -480,9 +484,9 @@ def as_json(request, document_slug=None, document_locale=None):
                       .serialize())
 
     stale = True
-    if request.user.is_authenticated:
-        # A logged-in user can demand fresh data with a shift-refresh
-        # Shift-Reload sends Cache-Control: no-cache
+    if is_wiki(request) and request.user.is_authenticated:
+        # From the Wiki domain, a logged-in user can demand fresh data with
+        # a shift-reload (which sends "Cache-Control: no-cache").
         ua_cc = request.META.get('HTTP_CACHE_CONTROL')
         if ua_cc == 'no-cache':
             stale = False
@@ -491,6 +495,7 @@ def as_json(request, document_slug=None, document_locale=None):
     return JsonResponse(data)
 
 
+@ensure_wiki_domain
 @never_cache
 @csrf_exempt
 @block_user_agents
@@ -517,6 +522,7 @@ def subscribe(request, document_slug, document_locale):
         return redirect(document)
 
 
+@ensure_wiki_domain
 @never_cache
 @csrf_exempt
 @block_user_agents
@@ -598,7 +604,6 @@ def _document_raw(doc_html):
     return response
 
 
-@shared_cache_control
 @csrf_exempt
 @require_http_methods(['GET', 'HEAD'])
 @allow_CORS_GET
@@ -606,10 +611,17 @@ def _document_raw(doc_html):
 @newrelic.agent.function_trace()
 @ratelimit(key='user_or_ip', rate='1200/m', block=True)
 def document(request, document_slug, document_locale):
+    if is_wiki(request):
+        return wiki_document(request, document_slug, document_locale)
+
+    return react_document(request, document_slug, document_locale)
+
+
+@shared_cache_control
+def wiki_document(request, document_slug, document_locale):
     """
     View a wiki document.
     """
-    fallback_reason = None
     slug_dict = split_slug(document_slug)
 
     # Is there a document at this slug, in this locale?
@@ -789,16 +801,15 @@ def document(request, document_slug, document_locale):
 
 # This handles the /docs/ URL's within the React-based beta domain.
 @beta_shared_cache_control
-@csrf_exempt
-@require_http_methods(['GET', 'HEAD'])
-@allow_CORS_GET
-@process_document_path
-@newrelic.agent.function_trace()
-@ratelimit(key='user_or_ip', rate='1200/m', block=True)
 def react_document(request, document_slug, document_locale):
     """
     View a wiki document.
     """
+    # This view supports the "redirect" query parameter only. If any other
+    # query parameter is used, redirect to the wiki domain.
+    if any(param != 'redirect' for param in request.GET):
+        return redirect_to_wiki(request)
+
     slug_dict = split_slug(document_slug)
 
     # Is there a document at this slug, in this locale?
@@ -867,6 +878,7 @@ def react_document(request, document_slug, document_locale):
     return _add_kuma_revision_header(doc, response)
 
 
+@ensure_wiki_domain
 @shared_cache_control
 @csrf_exempt
 @require_http_methods(['GET', 'HEAD', 'PUT'])

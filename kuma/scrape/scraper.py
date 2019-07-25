@@ -101,7 +101,7 @@ class Scraper(object):
         'user': UserSource,
     }
 
-    def __init__(self, host='developer.mozilla.org', ssl=True):
+    def __init__(self, host='wiki.developer.mozilla.org', ssl=True):
         """Initialize Scraper."""
         self.requester = Requester(host, ssl)
         self.sources = OrderedDict()

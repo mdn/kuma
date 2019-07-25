@@ -21,7 +21,7 @@ class ScrapeCommand(BaseCommand):
             path = bits.path
             ssl = (bits.scheme == 'https')
         else:
-            host = 'developer.mozilla.org'
+            host = 'wiki.developer.mozilla.org'
             ssl = True
             path = url_or_path
         return host, ssl, path

@@ -6,7 +6,7 @@ from . import mock_requester, mock_storage
 from ..sources import DocumentChildrenSource
 
 # Partial data from
-# https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5$children
+# https://wiki.developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5$children
 child_data = {
     'locale': 'en-US',
     'slug': 'Web/Guide/HTML/HTML5',

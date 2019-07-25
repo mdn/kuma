@@ -11,7 +11,8 @@ from django.views.decorators.cache import never_cache
 
 import kuma.wiki.content
 from kuma.attachments.forms import AttachmentRevisionForm
-from kuma.core.decorators import block_user_agents, login_required
+from kuma.core.decorators import (block_user_agents, ensure_wiki_domain,
+                                  login_required)
 from kuma.core.i18n import get_language_mapping
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import get_object_or_none, smart_int, urlparams
@@ -23,6 +24,7 @@ from ..forms import DocumentForm, RevisionForm
 from ..models import Document, Revision
 
 
+@ensure_wiki_domain
 @never_cache
 @block_user_agents
 @login_required
@@ -37,6 +39,7 @@ def select_locale(request, document_slug, document_locale):
     return render(request, 'wiki/select_locale.html', {'document': doc})
 
 
+@ensure_wiki_domain
 @never_cache
 @block_user_agents
 @login_required

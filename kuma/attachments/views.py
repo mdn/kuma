@@ -7,7 +7,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.cache import cache_control, never_cache
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 
-from kuma.core.decorators import login_required, shared_cache_control
+from kuma.core.decorators import (ensure_wiki_domain, login_required,
+                                  shared_cache_control)
 from kuma.core.utils import is_untrusted
 from kuma.wiki.decorators import process_document_path
 from kuma.wiki.models import Document
@@ -58,6 +59,7 @@ def mindtouch_file_redirect(request, file_id, filename):
     return redirect(attachment.get_file_url(), permanent=True)
 
 
+@ensure_wiki_domain
 @never_cache
 @xframe_options_sameorigin
 @login_required

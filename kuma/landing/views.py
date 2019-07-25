@@ -7,7 +7,10 @@ from django.views import static
 from django.views.decorators.cache import never_cache
 from django.views.generic import RedirectView
 
-from kuma.core.decorators import beta_shared_cache_control, shared_cache_control
+from kuma.core.decorators import (beta_shared_cache_control,
+                                  ensure_wiki_domain,
+                                  shared_cache_control)
+from kuma.core.utils import is_wiki
 from kuma.feeder.models import Bundle
 from kuma.feeder.sections import SECTION_HACKS
 from kuma.search.models import Filter
@@ -16,20 +19,20 @@ from .utils import favicon_url
 
 
 def contribute_json(request):
-    return static.serve(request, 'contribute.json',
-                        document_root=settings.ROOT)
+    cache_control = (shared_cache_control
+                     if is_wiki(request) else
+                     beta_shared_cache_control)
+    return cache_control(static.serve)(
+        request, 'contribute.json', document_root=settings.ROOT)
 
 
-@shared_cache_control
 def home(request):
     """Home page."""
-    return render_home(request, 'landing/homepage.html')
-
-
-@beta_shared_cache_control
-def react_home(request):
-    """React-based home page."""
-    return render_home(request, 'landing/react_homepage.html')
+    if is_wiki(request):
+        return shared_cache_control(render_home)(
+            request, 'landing/homepage.html')
+    return beta_shared_cache_control(render_home)(
+        request, 'landing/react_homepage.html')
 
 
 def render_home(request, template_name):
@@ -43,6 +46,7 @@ def render_home(request, template_name):
     return render(request, template_name, context)
 
 
+@ensure_wiki_domain
 @never_cache
 def maintenance_mode(request):
     if settings.MAINTENANCE_MODE:
@@ -51,6 +55,7 @@ def maintenance_mode(request):
         return redirect('home')
 
 
+@ensure_wiki_domain
 @shared_cache_control
 def promote_buttons(request):
     """Bug 646192: MDN affiliate buttons"""
@@ -119,6 +124,14 @@ Disallow: /
 
 def robots_txt(request):
     """Serve robots.txt that allows or forbids robots."""
+    cache_control = (shared_cache_control
+                     if is_wiki(request) else
+                     beta_shared_cache_control)
+    return cache_control(serve_robots_txt)(request)
+
+
+def serve_robots_txt(request):
+    """Select and serve the robots.txt response."""
     host = request.get_host()
     if host in settings.ALLOW_ROBOTS_DOMAINS:
         robots = ""

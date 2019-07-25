@@ -5,7 +5,8 @@ from django.shortcuts import redirect, render
 from django.views.decorators.cache import never_cache
 
 from kuma.attachments.forms import AttachmentRevisionForm
-from kuma.core.decorators import block_user_agents, login_required
+from kuma.core.decorators import (block_user_agents, ensure_wiki_domain,
+                                  login_required)
 from kuma.core.urlresolvers import reverse
 
 from ..constants import DEV_DOC_REQUEST_FORM, REVIEW_FLAG_TAGS_DEFAULT
@@ -14,6 +15,7 @@ from ..forms import DocumentForm, RevisionForm
 from ..models import Document, Revision
 
 
+@ensure_wiki_domain
 @newrelic.agent.function_trace()
 @never_cache
 @block_user_agents

@@ -16,7 +16,7 @@ from django.views.decorators.http import require_GET
 from django.views.decorators.vary import vary_on_headers
 
 from kuma.core.decorators import login_required
-from kuma.core.decorators import shared_cache_control
+from kuma.core.decorators import ensure_wiki_domain, shared_cache_control
 from kuma.core.utils import paginate
 from kuma.wiki.kumascript import macro_usage
 from kuma.wiki.models import Document, Revision
@@ -26,13 +26,14 @@ from .forms import RevisionDashboardForm
 from .jobs import SpamDashboardHistoricalStats
 
 
+@ensure_wiki_domain
 @shared_cache_control
 def index(request):
     """Index of dashboards."""
-
     return render(request, 'dashboards/index.html')
 
 
+@ensure_wiki_domain
 @never_cache
 @require_GET
 @login_required
@@ -181,6 +182,7 @@ def topic_lookup(request):
                         content_type='application/json; charset=utf-8')
 
 
+@ensure_wiki_domain
 @never_cache
 @require_GET
 @login_required
@@ -201,6 +203,7 @@ def spam(request):
     return render(request, 'dashboards/spam.html', data)
 
 
+@ensure_wiki_domain
 @shared_cache_control
 @require_GET
 def macros(request):

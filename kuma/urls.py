@@ -8,11 +8,9 @@ from django.views.decorators.cache import never_cache
 from django.views.generic import RedirectView
 from django.views.static import serve
 
-import kuma.views
-from kuma.api.v1 import views as api_v1_views
 from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
-from kuma.core.decorators import shared_cache_control
+from kuma.core.decorators import ensure_wiki_domain, shared_cache_control
 from kuma.core.urlresolvers import i18n_patterns
 from kuma.dashboards.urls import lang_urlpatterns as dashboards_lang_urlpatterns
 from kuma.dashboards.views import index as dashboards_index
@@ -24,13 +22,16 @@ from kuma.search.urls import (
     lang_base_urlpatterns as search_lang_base_urlpatterns,
     lang_urlpatterns as search_lang_urlpatterns)
 from kuma.users.urls import lang_urlpatterns as users_lang_urlpatterns
+from kuma.views import serve_from_media_root
 from kuma.wiki.admin import purge_view
 from kuma.wiki.urls import lang_urlpatterns as wiki_lang_urlpatterns
 from kuma.wiki.views.document import as_json as document_as_json
 from kuma.wiki.views.legacy import mindtouch_to_kuma_redirect
 
 
-serve_from_media_root = shared_cache_control(kuma.views.serve_from_media_root)
+DAY = 60 * 60 * 24
+WEEK = DAY * 7
+MONTH = DAY * 30
 
 admin.autodiscover()
 
@@ -39,12 +40,14 @@ handler404 = core_views.handler404
 handler500 = core_views.handler500
 
 urlpatterns = [url('', include('kuma.health.urls'))]
+# The non-locale-based landing URL's
 urlpatterns += [url('', include('kuma.landing.urls'))]
+# The locale-based landing URL's
 urlpatterns += i18n_patterns(url('', include(landing_lang_urlpatterns)))
 urlpatterns += i18n_patterns(
     url(
         r'^events',
-        shared_cache_control(RedirectView.as_view(
+        shared_cache_control(s_maxage=MONTH)(RedirectView.as_view(
             url='https://mozilla.org/contribute/events',
             permanent=False
         )),
@@ -95,7 +98,7 @@ urlpatterns += i18n_patterns(
 )
 urlpatterns += i18n_patterns(
     url(r'^contribute/$',
-        RedirectView.as_view(url=reverse_lazy('payments')),
+        ensure_wiki_domain(RedirectView.as_view(url=reverse_lazy('payments'))),
         name='redirect-to-payments'),
 )
 urlpatterns += i18n_patterns(url(r'^payments/',
@@ -109,20 +112,24 @@ if settings.MAINTENANCE_MODE:
         # Redirect if we try to use the "tidings" unsubscribe.
         url(
             r'^unsubscribe/.*',
-            never_cache(RedirectView.as_view(
+            ensure_wiki_domain(never_cache(RedirectView.as_view(
                 pattern_name='maintenance_mode',
                 permanent=False
-            ))
+            )))
         )
     )
 else:
     urlpatterns += i18n_patterns(
-        url(r'^', decorator_include(never_cache, 'tidings.urls')),
+        # The first argument to "decorator_include" can be an iterable
+        # of view decorators, which are applied in reverse order.
+        url(r'^', decorator_include((ensure_wiki_domain, never_cache),
+                                    'tidings.urls')),
     )
 
 
 urlpatterns += [
     # Services and sundry.
+    url('^api/', include('kuma.api.urls')),
     url('', include('kuma.version.urls')),
 
     # Serve sitemap files.
@@ -134,34 +141,22 @@ urlpatterns += [
 
     # Serve the humans.txt file.
     url(r'^humans.txt$',
-        shared_cache_control(serve),
+        shared_cache_control(s_maxage=DAY)(serve),
         {'document_root': settings.HUMANSTXT_ROOT, 'path': 'humans.txt'}),
 
     url(r'^miel$',
-        shared_cache_control(s_maxage=60 * 60 * 24 * 7)(render),
+        shared_cache_control(s_maxage=WEEK)(render),
         {'template_name': '500.html', 'status': 500},
         name='users.honeypot'),
     # We use our own views for setting language in cookies. But to just align with django, set it like this.
     url(r'^i18n/setlang/', core_views.set_language, name='set-language-cookie'),
 ]
 
-# Include API view for signaling feature
-urlpatterns += [
-    url(r'^api/v1/bc-signal/?$',
-        api_v1_views.bc_signal, name='api.v1.bc_signal')
-]
-
-if settings.SERVE_MEDIA:
-    media_url = settings.MEDIA_URL.lstrip('/').rstrip('/')
-    urlpatterns += [
-        url(r'^%s/(?P<path>.*)$' % media_url, serve_from_media_root),
-    ]
-
 if settings.SERVE_LEGACY and settings.LEGACY_ROOT:
     urlpatterns.append(
         url(
             r'^(?P<path>(diagrams|presentations|samples)/.+)$',
-            shared_cache_control(s_maxage=60 * 60 * 24 * 30)(serve),
+            shared_cache_control(s_maxage=MONTH)(serve),
             {'document_root': settings.LEGACY_ROOT}
         )
     )

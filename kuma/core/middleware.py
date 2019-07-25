@@ -21,7 +21,7 @@ from .i18n import (activate_language_from_request,
                    get_language,
                    get_language_from_path,
                    get_language_from_request)
-from .utils import is_beta, is_untrusted, urlparams
+from .utils import is_untrusted, urlparams
 from .views import handler403
 
 
@@ -334,8 +334,6 @@ class RestrictedEndpointsMiddleware(MiddlewareBase):
     def __call__(self, request):
         if is_untrusted(request):
             request.urlconf = 'kuma.urls_untrusted'
-        elif is_beta(request):
-            request.urlconf = 'kuma.urls_beta'
         return self.get_response(request)
 
 
