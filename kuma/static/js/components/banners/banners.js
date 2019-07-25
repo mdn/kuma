@@ -4,7 +4,7 @@
     /**
      * This manages the display of CTA(Call to Action) banners on MDN
      * Web Docs. The logic for when to show, or not show, a banner
-     * is defined in `utils\banners-state-util.js`
+     * is defined in `utils/banners-state-util.js`
      */
     var mdnCtaBanner = {
         /**
@@ -13,15 +13,18 @@
          * @param {Array} bannersArray - An array of active banner ids
          */
         show: function(bannersArray) {
-            for (var i = 0, l = bannersArray.length; i < l; i++) {
-                var bannerId = bannersArray[i];
+            bannersArray.forEach(function maybeCloseBanner(bannerId) {
                 if (window.mdnBannersStateUtil.isBannerActive(bannerId)) {
                     var activeBanner = document.getElementById(bannerId);
-                    activeBanner.classList.remove('hidden');
-                    window.mdnBannerEvents.attachEvents(activeBanner);
-                    return;
+                    // If, for some other reason (e.g. archived pages),
+                    // the banner, by that ID, is not in the DOM, then
+                    // don't bother.
+                    if (activeBanner) {
+                        activeBanner.classList.remove('hidden');
+                        window.mdnBannerEvents.attachEvents(activeBanner);
+                    }
                 }
-            }
+            });
         }
     };
 
