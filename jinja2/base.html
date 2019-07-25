@@ -107,6 +107,9 @@
   {%- if not untrusted %}
     {% include "includes/a11y-nav.html" %}
 
+    {# Banner shown on wiki.d.m.o to clearly distinguish it from pages on d.m.o #}
+    {% block wiki_notice %}{% endblock %}
+
     <!-- Header -->
     {%- if beta %}
     <header id="react-header"></header>

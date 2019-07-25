@@ -773,6 +773,7 @@ PIPELINE_CSS = {
     },
     'wiki': {
         'source_filenames': (
+            'styles/components/banners/wiki-notice.scss',
             'styles/wiki.scss',
             'styles/diff.scss',
 
