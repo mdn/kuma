@@ -55,7 +55,7 @@ def get_s3_key(doc=None, locale=None, slug=None,
                prefix_with_forward_slash=False):
     if doc:
         locale, slug = doc.locale, doc.slug
-    key = reverse('api.v1.doc', args=(locale, slug), urlconf='kuma.urls_beta')
+    key = reverse('api.v1.doc', args=(locale, slug))
     if prefix_with_forward_slash:
         # Redirects within an S3 bucket must be prefixed with "/".
         return key
@@ -147,7 +147,6 @@ def document_api_data(doc=None, ensure_contributors=False, redirect_url=None):
                         'wiki.select_locale',
                         args=(doc.slug,),
                         locale=doc.locale,
-                        urlconf='kuma.urls'
                     ),
                     for_wiki_site=True
                 )

@@ -64,14 +64,6 @@ def url(viewname, *args, **kwargs):
     return reverse(viewname, args=args, kwargs=kwargs, locale=locale)
 
 
-@library.global_function
-def url_for_wiki_site(viewname, *args, **kwargs):
-    """Helper for Django's ``reverse`` in templates."""
-    locale = kwargs.pop('locale', None)
-    return reverse(viewname, urlconf='kuma.urls', args=args, kwargs=kwargs,
-                   locale=locale)
-
-
 class Paginator(object):
 
     def __init__(self, pager):

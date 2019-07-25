@@ -85,8 +85,6 @@ def test_code_sample_host_allowed(code_sample_doc, settings, client):
     assert 'max-age=86400' in response['Cache-Control']
 
 
-# The pytest-django urls marker also resets urlconf caches after the test
-@pytest.mark.urls(settings.ROOT_URLCONF)
 def test_code_sample_host_restricted_host(code_sample_doc, constance_config,
                                           settings, client):
     """Users are allowed to view samples on the attachment domain."""

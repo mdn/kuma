@@ -26,7 +26,7 @@ def redirect_to_self(wiki_user):
         creator=wiki_user,
         content=REDIRECT_CONTENT % {
             'href': reverse('wiki.document', locale=doc.locale,
-                            args=(doc.slug,), urlconf='kuma.urls_beta'),
+                            args=(doc.slug,)),
             'title': doc.title,
         },
         title='Redirect to Self',
