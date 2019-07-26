@@ -10,7 +10,7 @@ Styles for Romaniaian
 
 @font-face {
     font-family: x-locale-body;
-    font-display: 'fallback';
+    font-display: 'swap';
     font-weight: normal;
     font-style: normal;
     src: url('#{$path-to-locale-fonts}#{"ro/opensans-regular-ro-subset.woff2"}') format('woff2'),
@@ -19,7 +19,7 @@ Styles for Romaniaian
 
 @font-face {
     font-family: x-locale-body;
-    font-display: 'optional';
+    font-display: 'swap';
     font-weight: bold;
     font-style: normal;
     src: url('#{$path-to-locale-fonts}#{"ro/opensans-bold-ro-subset.woff2"}') format('woff2'),
@@ -28,7 +28,7 @@ Styles for Romaniaian
 
 @font-face {
     font-family: x-locale-body;
-    font-display: 'fallback';
+    font-display: 'swap';
     font-weight: normal;
     font-style: italic;
     src: url('#{$path-to-locale-fonts}#{"ro/opensans-italic-ro-subset.woff2"}') format('woff2'),
@@ -37,7 +37,7 @@ Styles for Romaniaian
 
 @font-face {
     font-family: x-locale-body;
-    font-display: 'optional';
+    font-display: 'swap';
     font-weight: bold;
     font-style: italic;
     src: url('#{$path-to-locale-fonts}#{"ro/opensans-bolditalic-ro-subset.woff2"}') format('woff2'),

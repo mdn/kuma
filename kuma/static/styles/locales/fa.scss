@@ -5,28 +5,28 @@ Styles for Farsi
 
 @font-face {
     font-family: x-locale-heading-primary;
-    font-display: 'fallback';
+    font-display: 'swap';
     font-weight: normal;
     src: url('#{$path-to-locale-fonts}#{"ar/DroidNaskh-Regular.woff"}') format('woff');
 }
 
 @font-face {
     font-family: x-locale-heading-primary;
-    font-display: 'optional';
+    font-display: 'swap';
     font-weight: bold;
     src: url('#{$path-to-locale-fonts}#{"ar/DroidNaskh-Bold.woff"}') format('woff');
 }
 
 @font-face {
     font-family: x-locale-body;
-    font-display: 'fallback';
+    font-display: 'swap';
     font-weight: normal;
     src: url('#{$path-to-locale-fonts}#{"ar/DroidNaskh-Regular.woff"}') format('woff');
 }
 
 @font-face {
     font-family: x-locale-body;
-    font-display: 'optional';
+    font-display: 'swap';
     font-weight: bold;
     src: url('#{$path-to-locale-fonts}#{"ar/DroidNaskh-Bold.woff"}') format('woff');
 }

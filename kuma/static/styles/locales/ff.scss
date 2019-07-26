@@ -7,7 +7,7 @@ Styles for Fulah
 
 @font-face {
     font-family: x-locale-body;
-    font-display: 'fallback';
+    font-display: 'swap';
     font-weight: normal;
     src: url('#{$path-to-locale-fonts}#{"ff/mplus-2c-regular-fulah-subset.woff"}') format('woff');
 }
