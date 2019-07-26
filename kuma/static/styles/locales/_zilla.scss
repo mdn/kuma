@@ -2,7 +2,7 @@
 
 @font-face {
     font-family: zillaslab;
-    font-display: 'fallback';
+    font-display: 'swap';
     src: url('#{$path-to-locale-fonts}#{"ZillaSlab-Regular.subset.woff2"}') format('woff2'),
          url('#{$path-to-locale-fonts}#{"ZillaSlab-Regular.subset.woff"}') format('woff');
     font-weight: normal;
@@ -11,7 +11,7 @@
 
 @font-face {
     font-family: zillaslab;
-    font-display: 'optional';
+    font-display: 'swap';
     src: url('#{$path-to-locale-fonts}#{"ZillaSlab-Bold.subset.woff2"}') format('woff2'),
          url('#{$path-to-locale-fonts}#{"ZillaSlab-Bold.subset.woff"}') format('woff');
     font-weight: bold;
