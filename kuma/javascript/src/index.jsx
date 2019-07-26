@@ -80,19 +80,4 @@ if (container) {
             ReactDOM.render(app, container);
         }
     }
-
-    // Finally, here is some other miscellaneous code that we need to run.
-    // The idea is that this is code needed to make the non-React parts of
-    // the UX work correctly. If we end up with more than a couple of things
-    // here, we should refactor them into a separate module
-
-    // An event handler to make the language selector menu
-    // in the footer work correctly.
-    // See also kuma/static/js/main.js where similar code appears to
-    // make the menu work on the wiki domain
-    for (let menu of document.querySelectorAll('select.autosubmit')) {
-        menu.addEventListener('change', function() {
-            this.form.submit();
-        });
-    }
 }
