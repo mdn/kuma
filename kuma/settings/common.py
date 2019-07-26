@@ -1772,7 +1772,7 @@ CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=True, cast=bool)
 # appended as well, and we don't want that behavior (a server port of 8000 is
 # added both in secure local development as well as in K8s stage/production, so
 # that will guarantee a mismatch with the referer).
-CSRF_TRUSTED_ORIGINS = [WIKI_HOST, DOMAIN]
+CSRF_TRUSTED_ORIGINS = [WIKI_HOST, DOMAIN, BETA_HOST]
 X_FRAME_OPTIONS = 'DENY'
 
 
