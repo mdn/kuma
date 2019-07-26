@@ -31,17 +31,6 @@ Main header, wraps all components of logo, main, and secondary navigation
     }
 }
 
-a[class*='logoContainer'] {
-    outline: none;
-
-    /* do not remove the outline for keyboard users */
-    /* stylelint-disable selector-pseudo-class-no-unknown */
-    &:focus-visible {
-        outline: unset;
-    }
-    /* stylelint-enable */
-}
-
 .logo {
     position: relative;
     z-index: $logo-z;
