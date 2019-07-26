@@ -104,7 +104,9 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
                                             {hit.title}
                                         </a>
                                     </div>
-                                    <div css={styles.url}>{url}</div>
+                                    <div css={styles.url}>
+                                        <a href={path}>{url}</a>
+                                    </div>
                                     <div css={styles.summary}>
                                         {hit.summary}
                                     </div>
