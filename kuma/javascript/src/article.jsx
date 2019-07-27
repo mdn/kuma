@@ -114,7 +114,9 @@ export default function Article({ document }: DocumentProps) {
     useEffect(() => {
         let rootElement = article.current;
         if (rootElement) {
-            activateBCDSignals(document.slug, document.locale, userData);
+            if (userData) {
+                activateBCDSignals(document.slug, document.locale, userData);
+            }
         }
     }, [document, userData]);
 
