@@ -1,5 +1,6 @@
 // @flow
 import { gettext } from './l10n.js';
+import { getCookie } from './utils.js';
 
 import type { UserData } from './user-provider.jsx';
 
@@ -303,9 +304,14 @@ export function activateBCDSignals(
             bcSignalStep = step;
             stepsInfoSpan.innerText = `Step ${bcSignalStep} of ${bcSignalSteps}`;
 
-            document.getElementById(`step-${bcSignalStep}`).classList.add('active');
-            if (prevStep) {
-                document.getElementById(`step-${prevStep}`).classList.remove('active');
+            const stepId = document && document.getElementById(`step-${bcSignalStep}`);
+            if(stepId && stepId.classList) {
+                stepId.classList.add('active');
+            }
+
+            const prevStepId = document && document.getElementById(`step-${prevStep}`);
+            if (prevStep && prevStepId && prevStepId.classList) {
+                prevStepId.classList.remove('active');
             }
         }
     };
@@ -317,11 +323,31 @@ export function activateBCDSignals(
         for (const browser of document.querySelectorAll('.browser.selected')) {
             browser.classList.remove('selected');
         }
-        document.getElementById('brief-explanation').value = '';
-        document.getElementById('supporting-material').value = '';
-        document.getElementById('upload-screenshot').value = '';
-        document.querySelector('label[for="upload-screenshot"]').style.display = 'inline-block';
-        document.querySelector('.uploaded-screenshot-block').style.display = 'none';
+
+        const brief = document && document.getElementById('brief-explanation');
+        if(brief && brief instanceof HTMLInputElement && brief.value) {
+            brief.value = '';
+        }
+        const material = document && document.getElementById('supporting-material');
+        if(material && material instanceof HTMLInputElement && material.value) {
+            material.value = '';
+        }
+
+        const screenshot = document && document.getElementById('upload-screenshot');
+        if(screenshot && screenshot instanceof HTMLInputElement && screenshot.value) {
+            screenshot.value = '';
+        }
+
+        const label = document && document.querySelector('label[for="upload-screenshot"]');
+        if(label && label.style && label.style.display) {
+            label.style.display = 'inline-block';
+        }
+
+        const uploaded = document && document.querySelector('.uploaded-screenshot-block');
+        if(uploaded && uploaded.style && uploaded.style.display) {
+            uploaded.style.display = 'none';
+        }
+
         nextStepButton.classList.add('disabled');
         sendReportButton.classList.add('disabled');
     };
@@ -330,10 +356,20 @@ export function activateBCDSignals(
      * Validates required control inputs and sets corresponding classes to navigation buttons
      */
     const validateControls = () => {
-        const selectRow = document.getElementById('select-row');
+        const selectRow = document && document.getElementById('select-row');
         const selectedBrowsersLength = document.querySelectorAll('.browser.selected').length;
-        const selectedTableRow = selectRow.options[selectRow.selectedIndex].value;
-        const briefExplanation = document.getElementById('brief-explanation').value.trim();
+        let selectedTableRow;
+        if(selectRow &&
+            selectRow instanceof HTMLSelectElement &&
+            selectRow.options[selectRow.selectedIndex] &&
+            selectRow.options[selectRow.selectedIndex] instanceof HTMLOptionElement &&
+            selectRow.options[selectRow.selectedIndex].value) {
+            selectedTableRow = selectRow.options[selectRow.selectedIndex].value;
+        }
+        const briefExplanation = document && document.getElementById('brief-explanation');
+        if(briefExplanation && briefExplanation instanceof HTMLInputElement && briefExplanation.value && briefExplanation.value instanceof String) {
+            briefExplanation.value.trim();
+        }
 
         if (selectedBrowsersLength && selectedTableRow) {
             nextStepButton.classList.remove('disabled');
@@ -397,7 +433,7 @@ export function activateBCDSignals(
             method: 'POST',
             body: JSON.stringify(payload),
             headers: {
-                'X-CSRFToken': mdn.utils.getCookie('csrftoken'),
+                'X-CSRFToken': getCookie('csrftoken'),
                 'Content-Type': 'application/json'
             }
         }).then(() => {
@@ -419,13 +455,13 @@ export function activateBCDSignals(
      */
     const createStepNumLabel = (number, inline) => {
         const stepNumLabel = document.createElement('span');
-        let klass = 'step-num';
+        let stepClass = 'step-num';
         if (inline) {
-            klass += ' inline';
+            stepClass += ' inline';
         }
 
-        stepNumLabel.className = klass;
-        stepNumLabel.innerText = number;
+        stepNumLabel.className = stepClass;
+        stepNumLabel.innerText = `${number}`;
         return stepNumLabel;
     };
 
@@ -815,7 +851,7 @@ export function activateBCDSignals(
         bcSignalBlock.className = 'column-container bc-signal-block';
 
         bcSignalBlock.appendChild(createLeftBlock());
-        bcSignalBlock.appendChild(createFormControlBlock(bcSignalStep));
+        bcSignalBlock.appendChild(createFormControlBlock());
 
         return bcSignalBlock;
     };
@@ -892,7 +928,7 @@ export function activateBCDSignals(
         for(let i = 0; i < scrollElems.length; i++){
             const elem = scrollElems[i];
 
-            elem.addEventListener('click', (e) => {
+            elem.addEventListener('click', (e/*: MouseEvent*/) => {
                 e.preventDefault();
                 if (window.innerWidth >= 1024) {
                     return;
@@ -961,9 +997,10 @@ export function activateBCDSignals(
         return extContainer;
     };
 
-
-    bcTable = document.querySelector('.bc-table');
-    bcTable.insertAdjacentElement('afterend', signalElem());
-    bcTable.insertAdjacentElement('afterend', signalStepsBlock());
-    bcTable.insertAdjacentElement('afterend', signalCompleteBlock());
+    bcTable = document && document.querySelector('.bc-table');
+    if(bcTable && bcTable.insertAdjacentElement){
+        bcTable.insertAdjacentElement('afterend', signalElem());
+        bcTable.insertAdjacentElement('afterend', signalStepsBlock());
+        bcTable.insertAdjacentElement('afterend', signalCompleteBlock());
+    }
 }
