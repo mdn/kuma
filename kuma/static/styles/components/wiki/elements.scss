@@ -10,6 +10,11 @@ article {
             text-decoration: underline;
         }
 
+        &:active {
+            color: $blue-dark;
+            font-weight: bold;
+        }
+
         &[name] {
             &:hover,
             &:focus,
