@@ -298,18 +298,20 @@ export function activateBCDSignals(
      * Moves user to a step, by settings displaying related blocks
      * @param {Number} step - Step index to be shown
      */
-    const toStep = (step) => {
+    const toStep = step => {
         if (step !== bcSignalStep) {
             const prevStep = bcSignalStep;
             bcSignalStep = step;
             stepsInfoSpan.innerText = `Step ${bcSignalStep} of ${bcSignalSteps}`;
 
-            const stepId = document && document.getElementById(`step-${bcSignalStep}`);
-            if(stepId && stepId.classList) {
+            const stepId =
+                document && document.getElementById(`step-${bcSignalStep}`);
+            if (stepId && stepId.classList) {
                 stepId.classList.add('active');
             }
 
-            const prevStepId = document && document.getElementById(`step-${prevStep}`);
+            const prevStepId =
+                document && document.getElementById(`step-${prevStep}`);
             if (prevStep && prevStepId && prevStepId.classList) {
                 prevStepId.classList.remove('active');
             }
@@ -325,26 +327,39 @@ export function activateBCDSignals(
         }
 
         const brief = document && document.getElementById('brief-explanation');
-        if(brief && brief instanceof HTMLInputElement && brief.value) {
+        if (brief && brief instanceof HTMLInputElement && brief.value) {
             brief.value = '';
         }
-        const material = document && document.getElementById('supporting-material');
-        if(material && material instanceof HTMLInputElement && material.value) {
+        const material =
+            document && document.getElementById('supporting-material');
+        if (
+            material &&
+            material instanceof HTMLInputElement &&
+            material.value
+        ) {
             material.value = '';
         }
 
-        const screenshot = document && document.getElementById('upload-screenshot');
-        if(screenshot && screenshot instanceof HTMLInputElement && screenshot.value) {
+        const screenshot =
+            document && document.getElementById('upload-screenshot');
+        if (
+            screenshot &&
+            screenshot instanceof HTMLInputElement &&
+            screenshot.value
+        ) {
             screenshot.value = '';
         }
 
-        const label = document && document.querySelector('label[for="upload-screenshot"]');
-        if(label && label.style && label.style.display) {
+        const label =
+            document &&
+            document.querySelector('label[for="upload-screenshot"]');
+        if (label && label.style && label.style.display) {
             label.style.display = 'inline-block';
         }
 
-        const uploaded = document && document.querySelector('.uploaded-screenshot-block');
-        if(uploaded && uploaded.style && uploaded.style.display) {
+        const uploaded =
+            document && document.querySelector('.uploaded-screenshot-block');
+        if (uploaded && uploaded.style && uploaded.style.display) {
             uploaded.style.display = 'none';
         }
 
@@ -357,17 +372,28 @@ export function activateBCDSignals(
      */
     const validateControls = () => {
         const selectRow = document && document.getElementById('select-row');
-        const selectedBrowsersLength = document.querySelectorAll('.browser.selected').length;
+        const selectedBrowsersLength = document.querySelectorAll(
+            '.browser.selected'
+        ).length;
         let selectedTableRow;
-        if(selectRow &&
+        if (
+            selectRow &&
             selectRow instanceof HTMLSelectElement &&
             selectRow.options[selectRow.selectedIndex] &&
-            selectRow.options[selectRow.selectedIndex] instanceof HTMLOptionElement &&
-            selectRow.options[selectRow.selectedIndex].value) {
+            selectRow.options[selectRow.selectedIndex] instanceof
+                HTMLOptionElement &&
+            selectRow.options[selectRow.selectedIndex].value
+        ) {
             selectedTableRow = selectRow.options[selectRow.selectedIndex].value;
         }
-        const briefExplanation = document && document.getElementById('brief-explanation');
-        if(briefExplanation && briefExplanation instanceof HTMLInputElement && briefExplanation.value && briefExplanation.value instanceof String) {
+        const briefExplanation =
+            document && document.getElementById('brief-explanation');
+        if (
+            briefExplanation &&
+            briefExplanation instanceof HTMLInputElement &&
+            briefExplanation.value &&
+            briefExplanation.value instanceof String
+        ) {
             briefExplanation.value.trim();
         }
 
@@ -403,7 +429,9 @@ export function activateBCDSignals(
      */
     const sendReport = () => {
         const browsers = [];
-        for (const browser of document.querySelectorAll('.browser.selected > .browser-name')) {
+        for (const browser of document.querySelectorAll(
+            '.browser.selected > .browser-name'
+        )) {
             browsers.push(browser.innerText);
         }
 
@@ -418,7 +446,7 @@ export function activateBCDSignals(
         const payload = {
             slug,
             locale,
-            userData,
+            userData
             // 'browsers': browsers,
             // 'row': row,
             // 'brief_explanation': briefExplanation,
@@ -436,15 +464,18 @@ export function activateBCDSignals(
                 'X-CSRFToken': getCookie('csrftoken'),
                 'Content-Type': 'application/json'
             }
-        }).then(() => {
-            // signalLink.textContent = 'Thank you for letting us know!';
-        }).catch(() => {
-            // signalLink.textContent = 'Something went wrong!';
-        }).then(() => {
-            // setTimeout(function() {
-            //     container.classList.add('slideUp');
-            // }, 1000);
-        });
+        })
+            .then(() => {
+                // signalLink.textContent = 'Thank you for letting us know!';
+            })
+            .catch(() => {
+                // signalLink.textContent = 'Something went wrong!';
+            })
+            .then(() => {
+                // setTimeout(function() {
+                //     container.classList.add('slideUp');
+                // }, 1000);
+            });
     };
 
     /**
@@ -470,7 +501,7 @@ export function activateBCDSignals(
      * @param {Object} controlObj - Object containing element that needs to be wrapped and related params
      * @returns Form control as a `HTMLElement`
      */
-    const createFormControl = (controlObj) => {
+    const createFormControl = controlObj => {
         const control = document.createElement('div');
         const controlInnerWrapper = document.createElement('div');
         const controlHeader = document.createElement('div');
@@ -485,8 +516,11 @@ export function activateBCDSignals(
         if (controlObj.optional) {
             controlHeader.className += ' with-optional-label';
         }
-        if (controlObj.additionalClasses && controlObj.additionalClasses !== '') {
-            controlInnerWrapper.className += ' '+controlObj.additionalClasses;
+        if (
+            controlObj.additionalClasses &&
+            controlObj.additionalClasses !== ''
+        ) {
+            controlInnerWrapper.className += ' ' + controlObj.additionalClasses;
         }
 
         controlDescription.className = 'control-description';
@@ -523,14 +557,22 @@ export function activateBCDSignals(
      */
     const createSelectBrowserControl = () => {
         const headerText = 'Which browsers are affected?';
-        const descriptionText = 'Please select the browser or browsers which are affected.';
+        const descriptionText =
+            'Please select the browser or browsers which are affected.';
 
         const browserControlBlock = document.createElement('div');
         browserControlBlock.className = 'select-browser-block';
-        const browsers = document.querySelectorAll('.bc-table th[class^=\'bc-browser-\']');
+        const browsers = document.querySelectorAll(
+            '.bc-table th[class^="bc-browser-"]'
+        );
         for (const elem of browsers) {
-            const browserBgStyle = window.getComputedStyle(elem.querySelector('span'), ':before').getPropertyValue('background-image');
-            const browserLogoSrc = browserBgStyle.replace('url(','').replace(')','').replace(/"/gi, '');
+            const browserBgStyle = window
+                .getComputedStyle(elem.querySelector('span'), ':before')
+                .getPropertyValue('background-image');
+            const browserLogoSrc = browserBgStyle
+                .replace('url(', '')
+                .replace(')', '')
+                .replace(/"/gi, '');
             const browserName = elem.innerText;
             const browserBlock = document.createElement('div');
             const browserLogoWrapper = document.createElement('div');
@@ -552,7 +594,7 @@ export function activateBCDSignals(
             browserBlock.appendChild(browserLogoWrapper);
             browserBlock.appendChild(browserNameBlock);
 
-            browserBlock.addEventListener('click', function () {
+            browserBlock.addEventListener('click', function() {
                 this.classList.toggle('selected');
                 validateControls();
             });
@@ -605,7 +647,8 @@ export function activateBCDSignals(
      */
     const createBriefExplanationControl = () => {
         const headerText = 'Can you provide a brief explanation?';
-        const descriptionText = 'Briefly outline the issue you are highlighting.';
+        const descriptionText =
+            'Briefly outline the issue you are highlighting.';
 
         const textAreaControl = document.createElement('textarea');
         textAreaControl.className = 'control-input';
@@ -668,16 +711,19 @@ export function activateBCDSignals(
         uploadedScreenshotBlock.className = 'uploaded-screenshot-block';
         screenshotFileName.className = 'uploaded-filename';
         uploadScreenshotBlock.className = 'upload-screenshot-control';
-        deleteScreenshotButton.className = 'button neutral delete-screenshot-btn';
+        deleteScreenshotButton.className =
+            'button neutral delete-screenshot-btn';
         innerButtonSpan.className = 'icon-remove';
         inputTypeFileControl.setAttribute('type', 'file');
         inputTypeFileControl.id = 'upload-screenshot';
         inputTypeFileControl.style.display = 'none';
 
-
-        inputTypeFileControl.addEventListener('change', function () {
+        inputTypeFileControl.addEventListener('change', function() {
             const value = this.value;
-            const startIndex = (value.indexOf('\\') >= 0 ? value.lastIndexOf('\\') : value.lastIndexOf('/'));
+            const startIndex =
+                value.indexOf('\\') >= 0
+                    ? value.lastIndexOf('\\')
+                    : value.lastIndexOf('/');
             let filename = value.substring(startIndex);
 
             if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
@@ -695,7 +741,9 @@ export function activateBCDSignals(
         });
 
         inputTypeFileControlLabel.appendChild(inputTypeFileControl);
-        inputTypeFileControlLabel.appendChild(document.createTextNode('Upload'));
+        inputTypeFileControlLabel.appendChild(
+            document.createTextNode('Upload')
+        );
         deleteScreenshotButton.appendChild(innerButtonSpan);
         uploadedScreenshotBlock.appendChild(screenshotFileName);
         uploadedScreenshotBlock.appendChild(deleteScreenshotButton);
@@ -736,7 +784,7 @@ export function activateBCDSignals(
         closeButton.addEventListener('click', toggleBcSignalBlock);
 
         leftBlockHeader.innerText = 'Tell us what’s wrong with this table';
-        leftBlockDescription.innerHTML =  `
+        leftBlockDescription.innerHTML = `
             Our goal is to provide accurate, real values for all our compatibility data tables. Notifying MDN of
             inaccurate data or supplying new data pushes us further towards our goal of providing
             <b>100% real values</b> to the developer community. <br /><b>Thank you for helping.</b>
@@ -760,7 +808,8 @@ export function activateBCDSignals(
         const stepsInfo = document.createElement('h3');
         stepsInfoSpan = document.createElement('span');
 
-        formControlBlockWrapper.className = 'column-7 right-block form-control-block';
+        formControlBlockWrapper.className =
+            'column-7 right-block form-control-block';
         stepsInfo.className = 'highlight-spanned';
         stepsInfoSpan.className = 'highlight-span';
 
@@ -787,10 +836,13 @@ export function activateBCDSignals(
         signalStepOneBlock.className = 'inner-step';
         signalStepOneBlock.id = 'step-1';
         controls.className = 'controls';
-        stepsButtonBlock.className = 'navigation-buttons reverse mob-reduced-space';
+        stepsButtonBlock.className =
+            'navigation-buttons reverse mob-reduced-space';
         nextStepButton.className = 'button neutral disabled next-step-btn';
 
-        nextStepButton.addEventListener('click', () => {toStep(2);});
+        nextStepButton.addEventListener('click', () => {
+            toStep(2);
+        });
         nextStepButton.innerHTML = 'Next step (2 of 2)';
 
         nextStepButtonIcon.className = 'icon-next';
@@ -817,7 +869,8 @@ export function activateBCDSignals(
         sendReportButton = document.createElement('button');
 
         signalStepTwoBlock.id = 'step-2';
-        sendReportButton.className = 'button neutral disabled main-btn scroll-to-signal';
+        sendReportButton.className =
+            'button neutral disabled main-btn scroll-to-signal';
         sendReportButton.innerText = 'Send report';
         signalStepTwoBlock.className = 'inner-step';
         controls.className = 'controls';
@@ -827,7 +880,9 @@ export function activateBCDSignals(
         goBackButton.innerHTML = '<span class="icon-back"></span>Previous step';
 
         sendReportButton.addEventListener('click', sendReport);
-        goBackButton.addEventListener('click', () => {toStep(1);});
+        goBackButton.addEventListener('click', () => {
+            toStep(1);
+        });
 
         stepsButtonBlock.appendChild(sendReportButton);
         stepsButtonBlock.appendChild(goBackButton);
@@ -876,7 +931,8 @@ export function activateBCDSignals(
         closeButton.className = 'button close-btn';
         navigationButtons.className = 'navigation-buttons';
         closeButtonWrapper.className = 'close-button-wrapper';
-        bcSignalCompleteBlock.className = 'column-container bc-signal-block complete';
+        bcSignalCompleteBlock.className =
+            'column-container bc-signal-block complete';
         completeImageTextBlock.className = 'complete-left-block-header';
         completeLeftBlock.className = 'column-half left-block';
         completeRightTextBlock.className = 'right-block-header';
@@ -925,25 +981,32 @@ export function activateBCDSignals(
         const scrollElems = document.querySelectorAll('.scroll-to-signal');
         const scrollTo = bcSignalCompleteBlock;
 
-        for(let i = 0; i < scrollElems.length; i++){
+        for (let i = 0; i < scrollElems.length; i++) {
             const elem = scrollElems[i];
 
-            elem.addEventListener('click', (e/*: MouseEvent*/) => {
+            elem.addEventListener('click', (e /*: MouseEvent*/) => {
                 e.preventDefault();
                 if (window.innerWidth >= 1024) {
                     return;
                 }
                 const scrollEndElem = scrollTo;
 
-                requestAnimationFrame((timestamp) => {
+                requestAnimationFrame(timestamp => {
                     const stamp = timestamp || new Date().getTime();
                     const duration = 100;
                     const start = stamp;
 
                     const startScrollOffset = window.pageYOffset;
-                    const scrollEndElemTop = scrollEndElem.getBoundingClientRect().top;
+                    const scrollEndElemTop = scrollEndElem.getBoundingClientRect()
+                        .top;
 
-                    scrollToElem(start, stamp, duration, scrollEndElemTop, startScrollOffset);
+                    scrollToElem(
+                        start,
+                        stamp,
+                        duration,
+                        scrollEndElemTop,
+                        startScrollOffset
+                    );
                 });
             });
         }
@@ -954,8 +1017,14 @@ export function activateBCDSignals(
     /**
      * Scrolls to a specified element
      */
-    const scrollToElem = (startTime, currentTime, duration, scrollEndElemTop, startScrollOffset) => {
-        const easeInCubic = (t) => t*t*t;
+    const scrollToElem = (
+        startTime,
+        currentTime,
+        duration,
+        scrollEndElemTop,
+        startScrollOffset
+    ) => {
+        const easeInCubic = t => t * t * t;
         const runtime = currentTime - startTime;
         let progress = runtime / duration;
 
@@ -963,11 +1032,17 @@ export function activateBCDSignals(
 
         const ease = easeInCubic(progress);
 
-        window.scroll(0, startScrollOffset + (scrollEndElemTop * ease));
-        if(runtime < duration){
-            requestAnimationFrame((timestamp) => {
+        window.scroll(0, startScrollOffset + scrollEndElemTop * ease);
+        if (runtime < duration) {
+            requestAnimationFrame(timestamp => {
                 const currentTime = timestamp || new Date().getTime();
-                scrollToElem(startTime, currentTime, duration, scrollEndElemTop, startScrollOffset);
+                scrollToElem(
+                    startTime,
+                    currentTime,
+                    duration,
+                    scrollEndElemTop,
+                    startScrollOffset
+                );
             });
         }
     };
@@ -998,7 +1073,7 @@ export function activateBCDSignals(
     };
 
     bcTable = document && document.querySelector('.bc-table');
-    if(bcTable && bcTable.insertAdjacentElement){
+    if (bcTable && bcTable.insertAdjacentElement) {
         bcTable.insertAdjacentElement('afterend', signalElem());
         bcTable.insertAdjacentElement('afterend', signalStepsBlock());
         bcTable.insertAdjacentElement('afterend', signalCompleteBlock());

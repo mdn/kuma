@@ -70,9 +70,7 @@ function highlightSections(article) {
     let sections = article.querySelectorAll('#wikiArticle h3, #wikiArticle h5');
     for (let section of sections) {
         section.classList.add('highlight-spanned');
-        section.innerHTML = `<span class="highlight-span">${
-            section.innerHTML
-        }</span>`;
+        section.innerHTML = `<span class="highlight-span">${section.innerHTML}</span>`;
     }
 }
 
@@ -113,7 +111,7 @@ export default function Article({ document }: DocumentProps) {
     useEffect(() => {
         let rootElement = article.current;
         if (rootElement) {
-            if(userData) {
+            if (userData) {
                 activateBCDSignals(document.slug, document.locale, userData);
             }
         }
