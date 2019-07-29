@@ -11,8 +11,8 @@ article {
         }
 
         &:active {
-            color: $blue-dark;
-            font-weight: bold;
+            background-color: $blue-dark;
+            color: #fff;
         }
 
         &[name] {
