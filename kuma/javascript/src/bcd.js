@@ -532,7 +532,7 @@ export function activateBCDSignals(
         controlInnerWrapper.appendChild(controlHeader);
         controlInnerWrapper.appendChild(controlDescription);
 
-        if (controlObj.optional) {
+        if (controlObj.optional && !controlObj.optionalLabelHidden) {
             const optional = document.createElement('span');
             optional.className = 'optional-text';
             optional.innerText = 'Optional';
@@ -662,7 +662,9 @@ export function activateBCDSignals(
             header: headerText,
             description: descriptionText,
             el: textAreaControl,
-            index: 3
+            index: 3,
+            optional: true,
+            optionalLabelHidden: true
         });
     };
 

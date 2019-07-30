@@ -171,6 +171,12 @@ div.bc-signal-block {
         padding-top: 0;
     }
 
+    &.complete.open {
+        @media #{$mq-tablet-and-down} {
+            transition: none;
+        }
+    }
+
     .left-block {
         box-sizing: border-box;
         padding: 32px;
@@ -475,6 +481,13 @@ div.bc-signal-block {
             height: 48px;
             margin: 0 auto;
             border: solid 2px #979797;
+            transition: border-color .1s;
+        }
+
+        &:hover {
+            .browser-logo {
+                border-color: #3d7e9a;
+            }
         }
 
         & > .browser-logo > img {
