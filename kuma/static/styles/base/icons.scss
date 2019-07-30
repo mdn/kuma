@@ -12,10 +12,9 @@
 }
 
 label #{$selector-icon}:first-child {
-    @include bidi((
-        (margin-left, 0, $icon-margin),
-        (margin-right, $icon-margin, 0),
-    ));
+    @include bidi(
+        ((margin-left, 0, $icon-margin), (margin-right, $icon-margin, 0))
+    );
 }
 
 .icon {
@@ -88,7 +87,9 @@ i.icon-beaker {
 
 /* icon used by NonStandardBadge macro */
 i.icon-warning-sign {
-    @include set-icon($path-to-svg-notification-icons + 'exclamation-triangle.svg');
+    @include set-icon(
+        $path-to-svg-notification-icons + 'exclamation-triangle.svg'
+    );
     vertical-align: bottom;
 }
 
@@ -100,7 +101,11 @@ i.icon-trash {
 
 /* used with .notification-img */
 i.icon-info-sign {
-    @include set-icon($path-to-svg-notification-icons + 'info-circle.svg', 24px, 30px);
+    @include set-icon(
+        $path-to-svg-notification-icons + 'info-circle.svg',
+        24px,
+        30px
+    );
 }
 
 .icon-only-inline {
@@ -151,11 +156,6 @@ i.icon-info-sign {
 .page-attachments .icon-question-mark,
 .page-attachments .icon-paperclip {
     vertical-align: bottom;
-}
-
-/* tags icon on the bottom of wiki pages */
-.tag-attach-list .icon-tags {
-    vertical-align: middle;
 }
 
 /* community and clock icon size for contributors section */
@@ -256,7 +256,7 @@ button[type='submit'] .icon-check-mark {
     .icon-undo,
     .icon-play,
     .icon-pencil,
-    .icon-book, {
+    .icon-book {
         float: left;
         margin-right: 5px;
     }
