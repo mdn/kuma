@@ -12,7 +12,7 @@ Main navigation menu
     z-index: $main-nav-z;
 
     @media #{$mq-tablet-and-up} {
-        min-height: $logo-height + ($grid-spacing * 2);  // logo height + grid spacing *2
+        min-height: $logo-height + ($grid-spacing * 2); // logo height + grid spacing *2
     }
 
     @media #{$mq-small-desktop-and-up} {
@@ -46,95 +46,5 @@ html:not(.no-js) .nav-main-item > a {
 
     @media #{$mq-small-desktop-and-up} {
         @include large-inline-nav-item();
-    }
-}
-
-/*
-New main navigation menu
-********************************************************************** */
-.main-nav {
-    grid-area: M;
-    @include set-font-size(18px);
-
-    & > ul {
-        display: block;
-
-        @media #{$mq-tablet-and-up} {
-            display: flex;
-            position: relative;
-            justify-content: space-evenly;
-            font-weight: bold;
-            z-index: $main-nav-z;
-        }
-
-        .main-menu-arrow {
-            padding-left: 2px;
-            font-size: 75%;
-        }
-    }
-
-    li ul {
-        display: none;
-        background-color: #fff;
-        margin: 0;
-        padding: 4px 0;
-
-        @media #{$mq-tablet-and-up} {
-            box-shadow: $main-nav-box-shadow;
-            border: $main-menu-border;
-            border-radius: $main-menu-border-radius;
-        }
-
-        a {
-            display: block;
-            padding: 6px 16px;
-            width: 100%;
-
-            &:hover {
-                background-color: $main-menu-item-background-color;
-                color: #fff;
-                text-decoration: none;
-            }
-
-            @media #{$mq-tablet-and-up} {
-                width: unset;
-            }
-        }
-
-        li {
-            width: 100%;
-
-            @media #{$mq-tablet-and-up} {
-                width: unset;
-            }
-        }
-    }
-
-    .top-level-entry-container {
-        position: relative;
-
-        @media #{$mq-tablet-and-up} {
-            &:hover ul,
-            &:focus-within ul {
-                display: block;
-                position: absolute;
-                width: max-content;
-            }
-        }
-
-        ul.show {
-            display: block;
-        }
-
-        button {
-            border: none;
-            width: 100%;
-            text-align: left;
-            padding: 10px;
-
-            @media #{$mq-tablet-and-up} {
-                width: unset;
-            }
-        }
     }
 }
