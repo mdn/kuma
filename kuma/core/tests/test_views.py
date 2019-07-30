@@ -236,10 +236,10 @@ def test_ratelimit_429(client, db):
     assert_no_cache_header(response)
 
 
-def test_error_handler_minimal_request(rf, db, constance_config):
+def test_error_handler_minimal_request(rf, db, settings):
     '''Error page renders if middleware hasn't added request members.'''
     # Setup conditions for adding analytics with a flag check
-    constance_config.GOOGLE_ANALYTICS_ACCOUNT = 'UA-00000000-0'
+    settings.GOOGLE_ANALYTICS_ACCOUNT = 'UA-00000000-0'
     Flag.objects.create(name='section_edit', authenticated=True)
 
     # Create minimal request

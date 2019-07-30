@@ -75,3 +75,6 @@ WHITENOISE_USE_FINDERS = True
 # This makes sure we our tests never actually use the real settings for
 # this.
 MDN_CLOUDFRONT_DISTRIBUTIONS = {}
+
+# Never rely on the .env
+GOOGLE_ANALYTICS_ACCOUNT = None
