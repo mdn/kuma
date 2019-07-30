@@ -1,0 +1,7 @@
+{% set url = settings.SITE_URL + request.path %}
+<div class="mdn-wiki-notice">
+    <h3>{{ _('You are on the <strong>editable</strong> version of MDN Web Docs') }}</h3>
+    <p>{{ _('View as an MDN Web Docs user:') }}
+        <a href="{{ url }}">{{ url }}</a>
+    </p>
+</div>

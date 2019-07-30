@@ -85,6 +85,12 @@
   {% endif %}
 {% endblock %}
 
+{% block wiki_notice %}
+    {% if request.get_host().startswith('wiki.') %}
+        {% include "wiki/includes/wiki-notice.html" %}
+    {% endif %}
+{% endblock %}
+
 {% block lang_switcher %}
   {% if (document.is_localizable or document.parent) and other_translations %}
     <form class="languages go" method="get" action="{{ wiki_url('Web') }}">
