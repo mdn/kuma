@@ -1,1 +1,24 @@
-kuma/javascript/src/flow-typed/
+# exclude everything by default
+*.*
+# exclude these directories
+kuma/javascript/dist/
+/node_modules/
+/static/
+/assets/
+/build/
+/docs/
+/kumascript/
+/htmlcov/
+/tests/sass/
+kuma/static/js/libs/
+# We might some day soon format these with prettier too
+/kuma/static/js/
+
+# white-list files we want to process
+!*.js
+!*.jsx
+
+# Exceptions to specific .js files
+gulpfile.js
+ckeditor_config.js
+jest_v24.x.x.js

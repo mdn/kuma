@@ -21,8 +21,8 @@
         "optim:svg": "svgo jinja2/includes/icons/* --disable={removeViewBox,removeTitle} --multipass --pretty",
         "precommit": "npm run eslint && npm run stylelint && npm run pretty",
         "test": "jest --testPathIgnorePatterns tests/sass",
-        "format": "prettier --write kuma/javascript/src/**/*{.js,jsx}",
-        "pretty": "prettier --check kuma/javascript/src/**/*{.js,jsx}"
+        "format": "prettier --write **/*{.js,jsx}",
+        "pretty": "prettier --check **/*{.js,jsx}"
     },
     "dependencies": {
         "@emotion/core": "^10.0.7",
@@ -62,7 +62,7 @@
         "jest": "^24.1.0",
         "jest-emotion": "^10.0.7",
         "node-sass": "4.12.0",
-        "prettier": "^1.16.4",
+        "prettier": "1.18.2",
         "react-svg-loader": "3.0.1",
         "react-test-renderer": "^16.8.4",
         "sass-true": "4.0.0",
