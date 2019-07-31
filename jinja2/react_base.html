@@ -118,6 +118,10 @@
 
           {% include "includes/footer/moz-footer.html" %}
 
+          {% block lang_switcher %}
+            {% include "includes/lang_switcher.html" %}
+          {% endblock %}
+
           {% block footer_copyright %}
             <ul class="footer-tos">
               <li><a href="https://www.mozilla.org/about/legal/terms/mozilla">{{ _('Terms') }}</a></li>
