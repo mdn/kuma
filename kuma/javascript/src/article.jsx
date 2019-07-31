@@ -63,23 +63,27 @@ const styles = {
     })
 };
 
-// This is an effect function that runs every time the article is rendered.
-// This is the React version of the code in kuma/static/js/highlight.js
-// which is used on the wiki domain
-function highlightSections(article) {
-    let sections = article.querySelectorAll('#wikiArticle h3, #wikiArticle h5');
-    for (let section of sections) {
-        section.classList.add('highlight-spanned');
-        section.innerHTML = `<span class="highlight-span">${section.innerHTML}</span>`;
-    }
-}
-
-// This is an effect function that runs every time the article is rendered.
-// This is the React version of the pre-React code in
-// kuma/static/js/components/local-anchor.js
+/* This is an effect function that runs every time the article is rendered.
+   This is the React version of the pre-React code in
+   kuma/static/js/components/local-anchor.js */
 function addAnchors(article) {
     for (let heading of article.querySelectorAll('h2[id], h3[id]')) {
-        heading.insertAdjacentElement('beforeend', sectionAnchor(heading));
+        // do not add the widget to headings that are hidden
+        if (!heading.classList.contains('offscreen')) {
+            /* we add the widget to a different place in the DOM
+               for H2 elements than for H3 elements */
+            if (heading.tagName === 'H2') {
+                heading.insertAdjacentElement(
+                    'beforeend',
+                    sectionAnchor(heading)
+                );
+            } else {
+                heading.insertAdjacentElement(
+                    'afterend',
+                    sectionAnchor(heading)
+                );
+            }
+        }
     }
 }
 
@@ -101,7 +105,6 @@ export default function Article({ document }: DocumentProps) {
             // Keep addLiveExampleButtons() before addAnchors() so the
             // example title doesn't end up with a link in it on codepen.
             addLiveExampleButtons(rootElement);
-            highlightSections(rootElement);
             addAnchors(rootElement);
             highlightSyntax(rootElement);
             activateBCDTables(rootElement);

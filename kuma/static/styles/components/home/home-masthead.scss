@@ -27,6 +27,12 @@ homepage masthead (search, feature callouts)
     }
 }
 
+.home-masthead-no-search {
+    h1 {
+        @extend %highlight;
+    }
+}
+
 
 @media #{$mq-tablet-and-up} {
     .home-masthead {

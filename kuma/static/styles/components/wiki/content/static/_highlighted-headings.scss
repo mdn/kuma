@@ -1,8 +1,9 @@
-.highlight {
-    @extend %highlight;
-}
-
 article {
+    h3[id],
+    h5[id] {
+        display: inline-block;
+    }
+
     h3,
     h5 {
         background-color: $text-color;

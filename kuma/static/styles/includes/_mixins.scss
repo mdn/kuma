@@ -475,17 +475,9 @@ These are not dynamic but serve as mixins
 
 @mixin heading-2-section() {
     position: relative;
-    margin-top: $grid-spacing * 5 + $section-border-width;
-
-    &:before {
-        @include bidi(((left, 0, right, auto),));
-        border-top: $section-border;
-        content: '';
-        display: block;
-        position: absolute;
-        top: $grid-spacing * 2.5 * -1;
-        width: 100%;
-    }
+    margin-top: $grid-spacing * 3;
+    padding-top: $grid-spacing * 2;
+    border-top: $section-border;
 }
 
 @mixin callout() {
