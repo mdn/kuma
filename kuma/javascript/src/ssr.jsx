@@ -19,9 +19,7 @@ export default function ssr(componentName, data) {
         // violate CSP. But we're running in Node here, so it is okay.
         pluralFunction = new Function(
             'n',
-            `let v=(${
-                data.pluralExpression
-            });return(v===true)?1:((v===false)?0:v);`
+            `let v=(${data.pluralExpression});return(v===true)?1:((v===false)?0:v);`
         );
     }
     localize(data.locale, data.stringCatalog, pluralFunction);
