@@ -336,29 +336,6 @@ export function activateBCDSignals(
             material.value = '';
         }
 
-        const screenshot =
-            document && document.getElementById('upload-screenshot');
-        if (
-            screenshot &&
-            screenshot instanceof HTMLInputElement &&
-            screenshot.value
-        ) {
-            screenshot.value = '';
-        }
-
-        const label =
-            document &&
-            document.querySelector('label[for="upload-screenshot"]');
-        if (label && label.style && label.style.display) {
-            label.style.display = 'inline-block';
-        }
-
-        const uploaded =
-            document && document.querySelector('.uploaded-screenshot-block');
-        if (uploaded && uploaded.style && uploaded.style.display) {
-            uploaded.style.display = 'none';
-        }
-
         nextStepButton.classList.add('disabled');
         sendReportButton.classList.add('disabled');
     };
@@ -442,7 +419,6 @@ export function activateBCDSignals(
         // const row = selectRow.options[selectRow.selectedIndex].value;
         // const briefExplanation = document.getElementById('brief-explanation').value;
         // const supportingMaterial = document.getElementById('supporting-material').value;
-        // const screenshot = document.getElementById('upload-screenshot').files[0];
 
         const signalApiUrl = '/api/v1/bc-signal';
         const payload = {
@@ -517,13 +493,6 @@ export function activateBCDSignals(
         }
         if (controlObj.optional) {
             controlHeader.className += ' with-optional-label';
-        }
-
-        if (
-            controlObj.additionalClasses &&
-            controlObj.additionalClasses !== ''
-        ) {
-            controlInnerWrapper.className += ' ' + controlObj.additionalClasses;
         }
 
         controlDescription.className = 'control-description';
@@ -697,78 +666,6 @@ export function activateBCDSignals(
     };
 
     /**
-     * Builds and creates screenshot upload control with event listener
-     * @returns Screenshot upload control as a `HTMLElement`
-     */
-    const createUploadScreenshotControl = () => {
-        const uploadScreenshotBlock = document.createElement('div');
-        const uploadedScreenshotBlock = document.createElement('div');
-        const headerText = 'Can you provide a screenshot?';
-
-        const inputTypeFileControlLabel = document.createElement('label');
-        const inputTypeFileControl = document.createElement('input');
-        const screenshotFileName = document.createElement('span');
-        const deleteScreenshotButton = document.createElement('button');
-        const innerButtonSpan = document.createElement('span');
-
-        inputTypeFileControlLabel.setAttribute('for', 'upload-screenshot');
-        inputTypeFileControlLabel.className = 'button neutral';
-        uploadedScreenshotBlock.className = 'uploaded-screenshot-block';
-        screenshotFileName.className = 'uploaded-filename';
-        uploadScreenshotBlock.className = 'upload-screenshot-control';
-        deleteScreenshotButton.className =
-            'button neutral delete-screenshot-btn';
-        innerButtonSpan.className = 'icon-remove';
-        inputTypeFileControl.setAttribute('type', 'file');
-        inputTypeFileControl.id = 'upload-screenshot';
-        inputTypeFileControl.style.display = 'none';
-
-        inputTypeFileControl.addEventListener('change', function() {
-            const value = this.value;
-            const startIndex =
-                value.indexOf('\\') >= 0
-                    ? value.lastIndexOf('\\')
-                    : value.lastIndexOf('/');
-            let filename = value.substring(startIndex);
-
-            if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
-                filename = filename.substring(1);
-                inputTypeFileControlLabel.style.display = 'none';
-                screenshotFileName.innerText = filename;
-                uploadedScreenshotBlock.style.display = 'flex';
-            }
-        });
-
-        deleteScreenshotButton.addEventListener('click', () => {
-            inputTypeFileControl.value = '';
-            inputTypeFileControlLabel.style.display = 'inline-block';
-            uploadedScreenshotBlock.style.display = 'none';
-        });
-
-        inputTypeFileControlLabel.appendChild(inputTypeFileControl);
-        inputTypeFileControlLabel.appendChild(
-            document.createTextNode('Upload')
-        );
-        deleteScreenshotButton.appendChild(innerButtonSpan);
-        uploadedScreenshotBlock.appendChild(screenshotFileName);
-        uploadedScreenshotBlock.appendChild(deleteScreenshotButton);
-        uploadedScreenshotBlock.style.display = 'none';
-
-        uploadScreenshotBlock.appendChild(inputTypeFileControlLabel);
-        uploadScreenshotBlock.appendChild(uploadedScreenshotBlock);
-
-        return createFormControl({
-            header: headerText,
-            description: '',
-            el: uploadScreenshotBlock,
-            index: 5,
-            inline: false,
-            optional: true,
-            additionalClasses: 'upload-element'
-        });
-    };
-
-    /**
      * Builds and creates left block with image, header and description
      * @returns Left block as a `HTMLElement`
      */
@@ -863,7 +760,7 @@ export function activateBCDSignals(
     };
 
     /**
-     * Builds and returns form second step with brieft description, supporting material and screenshot upload controls
+     * Builds and returns form second step with brieft description and supporting material controls
      * @returns Form second step as a `HTMLElement`
      */
     const signalStepTwoBlock = () => {
@@ -894,7 +791,6 @@ export function activateBCDSignals(
 
         controls.appendChild(createBriefExplanationControl());
         controls.appendChild(createSupportingMaterialControl());
-        controls.appendChild(createUploadScreenshotControl());
 
         signalStepTwoBlock.appendChild(controls);
         signalStepTwoBlock.appendChild(stepsButtonBlock);

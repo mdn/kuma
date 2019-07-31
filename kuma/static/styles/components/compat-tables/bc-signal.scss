@@ -45,51 +45,6 @@ div.signal-link-container {
     }
 }
 
-
-.upload-screenshot-control {
-    display: inline-block;
-
-    @media #{$mq-tablet-and-down} {
-        margin-top: 10px;
-    }
-
-    .uploaded-screenshot-block {
-        display: flex;
-        align-items: center;
-
-        @media #{$mq-tablet-and-down} {
-            display: block;
-        }
-    }
-
-    span.uploaded-filename {
-        font-family: Arial;
-        font-size: 14px;
-        font-weight: normal;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
-        text-align: center;
-        color: #333333;
-        margin-right: 10px;
-    }
-
-    .delete-screenshot-btn {
-        width: 32px;
-        height: 32px;
-        padding: 0;
-        border-color: #333;
-
-        & > span.icon-remove {
-            width: 16px;
-            height: 20px;
-            display: inline-block;
-            background: url('/static/img/icn-remove.svg') center no-repeat;
-        }
-    }
-}
-
 .navigation-buttons {
     display: flex;
     justify-content: space-between;
@@ -355,12 +310,6 @@ div.bc-signal-block {
 
     .control-wrap {
         width: 90%;
-
-        &.upload-element {
-            @media #{$mq-small-desktop-and-up} {
-                display: flex;
-            }
-        }
     }
 
     .control-header {
