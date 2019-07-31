@@ -895,20 +895,6 @@ PIPELINE_CSS = {
     },
 }
 
-# Locales with locale-specific fonts
-LOCALE_USE_CUSTOM = [
-    'ar',
-    'az',
-    'fa',
-    'ff',
-    'ja',
-    'ko',
-    'ro',
-    'zh-CN',
-    'zh-TW',
-]
-LOCALE_CSS = {locale: 'locales/%s' % locale for locale in LOCALE_USE_CUSTOM}
-
 # Locales that are well supported by the Zilla family
 LOCALE_USE_ZILLA = [
     'ca',
@@ -940,15 +926,6 @@ LOCALE_USE_ZILLA = [
     'sw',
     'tl',
 ]
-LOCALE_CSS.update({locale: 'locales/en-US' for locale in LOCALE_USE_ZILLA})
-
-# Omitted locales get the browser-default fonts
-for locale, slug in LOCALE_CSS.items():
-    key = 'locale-%s' % locale
-    PIPELINE_CSS[key] = pipeline_scss(key, [slug])
-    editor_key = 'editor-locale-%s' % locale
-    PIPELINE_CSS[editor_key] = pipeline_scss(
-        editor_key, [slug], template_name='pipeline/javascript-array.jinja')
 
 
 PIPELINE_JS = {

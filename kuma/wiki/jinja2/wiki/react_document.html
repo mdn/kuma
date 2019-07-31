@@ -26,8 +26,7 @@
 
   {% stylesheet 'react-mdn' %}
 
-  {#- If the stylesheet exists, include it. Otherwise, does nothing. #}
-  {% stylesheet 'locale-%s' % LANG %}
+  {% include "includes/zilla.html" %}
 
 {#- This is the react-specific version of includes/google_analytics.html #}
 {#- The user and waffle-related stuff has been moved to the client side. #}
@@ -104,7 +103,6 @@
   {% endif %}
 </head>
 <body>
-
   {% include "includes/config.html" %}
 
   {{ soapbox_messages(get_soapbox_messages(request.path)) }}
