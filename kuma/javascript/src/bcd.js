@@ -327,16 +327,12 @@ export function activateBCDSignals(
         }
 
         const brief = document && document.getElementById('brief-explanation');
-        if (brief && brief instanceof HTMLInputElement && brief.value) {
+        if (brief && brief instanceof HTMLTextAreaElement && brief.value) {
             brief.value = '';
         }
         const material =
             document && document.getElementById('supporting-material');
-        if (
-            material &&
-            material instanceof HTMLInputElement &&
-            material.value
-        ) {
+        if (material && material instanceof HTMLTextAreaElement) {
             material.value = '';
         }
 
@@ -390,9 +386,9 @@ export function activateBCDSignals(
             document && document.getElementById('brief-explanation');
         if (
             briefExplanation &&
-            briefExplanation instanceof HTMLInputElement &&
+            briefExplanation instanceof HTMLTextAreaElement &&
             briefExplanation.value &&
-            briefExplanation.value instanceof String
+            typeof briefExplanation.value === 'string'
         ) {
             briefExplanation.value.trim();
         }
@@ -400,7 +396,13 @@ export function activateBCDSignals(
         if (selectedBrowsersLength && selectedTableRow) {
             nextStepButton.classList.remove('disabled');
 
-            if (briefExplanation) {
+            if (
+                briefExplanation &&
+                briefExplanation instanceof HTMLTextAreaElement &&
+                briefExplanation.value &&
+                typeof briefExplanation.value === 'string' &&
+                briefExplanation.value.length > 0
+            ) {
                 sendReportButton.classList.remove('disabled');
             } else {
                 sendReportButton.classList.add('disabled');
@@ -516,6 +518,7 @@ export function activateBCDSignals(
         if (controlObj.optional) {
             controlHeader.className += ' with-optional-label';
         }
+
         if (
             controlObj.additionalClasses &&
             controlObj.additionalClasses !== ''
