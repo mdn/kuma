@@ -798,7 +798,6 @@ def wiki_document(request, document_slug, document_locale):
     return _add_kuma_revision_header(doc, response)
 
 
-# This handles the /docs/ URL's within the React-based beta domain.
 def react_document(request, document_slug, document_locale):
     """
     View a wiki document.
