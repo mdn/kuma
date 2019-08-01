@@ -35,8 +35,7 @@
     {% stylesheet 'maintenance-mode-global' %}
   {%- endif %}
 
-  {#- If the stylesheet exists, include it. Otherwise, does nothing. #}
-  {% stylesheet 'locale-%s' % LANG %}
+  {% include "includes/zilla.html" %}
 
   {% block site_analytics %}
     {% include "includes/google_analytics.html" %}
