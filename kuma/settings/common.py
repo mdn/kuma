@@ -718,8 +718,8 @@ PIPELINE_CSS = {
     # single page app.
     'react-mdn': {
         'source_filenames': (
-            'styles/main-shared.scss',
-            'styles/wiki-shared.scss',
+            'styles/minimalist/main.scss',
+            'styles/minimalist/document.scss',
 
             # Custom build of our Prism theme
             'styles/libs/prism/prism.css',

@@ -3,76 +3,57 @@ Main CSS file for MDN.  Holds the site structure and key styles.
 ********************************************************************** */
 
 /* columns */
-@import 'structure/columns';
-@import 'structure/cols';
+@import '../../components/structure/columns';
+@import '../../components/structure/cols';
 
 /*
 Pre-header
 ====================================================================== */
 
 /* soapbox notice */
-@import 'structure/global-notice';
+@import '../../components/structure/global-notice';
 
 /* keyboard/screen reader skip link menu */
-@import 'structure/nav-access';
+@import '../../components/structure/nav-access';
 
 /*
 Header
 ====================================================================== */
-
-@import 'structure/page-header/main-header';
-@import 'structure/page-header/submenu';
-
-/*
-Main navigation and toolbox wrapper
-====================================================================== */
-@import 'structure/page-header/nav-toolbox-wrapper';
-
-/*
-Toolbox
-- login widget
-- profile (logged in) links
--------------------------------------------------------------- */
-
-@import 'structure/page-header/toolbox';
-@import 'structure/page-header/login';
+@import '../structure/header';
 
 /*
 Main Navigation
-- menus & submenus
-- search bar
 -------------------------------------------------------------- */
 
-@import 'structure/page-header/static/main-nav';
-@import 'structure/page-header/nav-main-search';
+@import '../components/main-nav';
 
 /*
 Search form
 - in page search form
 -------------------------------------------------------------- */
-@import 'structure/search-form';
+@import '../../components/structure/search-form';
 
 /*
 Document Head
 ====================================================================== */
 
-@import 'structure/document-head';
+@import '../../components/structure/document-head';
 
 /*
 Footer
 ====================================================================== */
 
-@import 'structure/nav-footer';
-@import 'structure/contentinfo';
+@import '../structure/footer';
+@import '../../components/structure/contentinfo';
 
 /*
 Misc - needs sorting
 ====================================================================== */
 
-@import 'structure/archive';
-@import 'structure/socialaccount-providers';
-@import 'structure/feature-test-element';
-@import 'structure/pagination';
+@import '../../components/structure/archive';
+@import '../../components/structure/socialaccount-providers';
+@import '../../components/structure/feature-test-element';
+@import '../../components/structure/pagination';
 
 #wikiArticle > p:first-child:empty {
     display: none; /* bug 1305178: hide empty first paragraph */

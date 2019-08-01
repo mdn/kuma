@@ -1,74 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Header snapshot 1`] = `
-.emotion-10 {
-  display: grid;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  font-size: 15px;
-  margin: 0 16px;
-}
-
-@media (min-width:1024px) {
-  .emotion-10 {
-    height: 68px;
-    grid-template-columns: 221px 5fr minmax(250px,2fr) auto;
-    grid-template-areas: "I M S L";
-  }
-}
-
-@media (min-width:750px) and (max-width:1023px) {
-  .emotion-10 {
-    height: 122px;
-    grid-template-columns: minmax(206px,1fr) 300px auto;
-    grid-template-areas: "I S L" "R R R" "M M M";
-  }
-}
-
-@media (max-width:749px) {
-  .emotion-10 {
-    font-size: 10px;
-    grid-template-columns: repeat(4,1fr);
-    grid-template-areas: "I I L L" "S S S S" "M M M M";
-  }
-}
-
-.emotion-1 {
-  display: block;
-  grid-area: I;
-  width: 200px;
-  height: 44px;
-  margin-right: 24px;
-}
-
-.emotion-0 {
-  width: 200px;
-  height: 44px;
-}
-
 .emotion-2 {
-  display: none;
-  grid-area: R;
-  height: 2px;
-  width: 100%;
-  background-color: #dce3e5;
-}
-
-@media (min-width:750px) and (max-width:1023px) {
-  .emotion-2 {
-    display: block;
-  }
-}
-
-.emotion-6 {
   grid-area: S;
-  justify-self: stretch;
-  overflow: hidden;
-}
-
-.emotion-5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -92,14 +26,14 @@ exports[`Header snapshot 1`] = `
   flex: 2 1;
 }
 
-.emotion-3 {
+.emotion-0 {
   fill: #333;
   -webkit-flex: 0 0 20px;
   -ms-flex: 0 0 20px;
   flex: 0 0 20px;
 }
 
-.emotion-4 {
+.emotion-1 {
   border-width: 0 !important;
   font-size: 14px;
   -webkit-flex: 1 1 100px;
@@ -111,12 +45,7 @@ exports[`Header snapshot 1`] = `
   background-color: #fafafa !important;
 }
 
-.emotion-8 {
-  grid-area: L;
-  justify-self: end;
-}
-
-.emotion-7 {
+.emotion-3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -133,17 +62,17 @@ exports[`Header snapshot 1`] = `
   text-decoration: none;
 }
 
-.emotion-7:hover {
+.emotion-3:hover {
   -webkit-text-decoration: none;
   text-decoration: none;
   background-color: #eee;
 }
 
-.emotion-7:focus {
+.emotion-3:focus {
   outline-offset: -3px;
 }
 
-.emotion-9 {
+.emotion-4 {
   box-sizing: border-box;
   position: absolute;
   display: block;
@@ -166,27 +95,22 @@ exports[`Header snapshot 1`] = `
   color: black;
 }
 
-.emotion-9:hover {
+.emotion-4:hover {
   background-color: #ff0;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-<div
-  className="emotion-10"
+<header
+  className="page-header"
 >
   <a
     aria-label="MDN Web Docs"
-    className="emotion-1"
+    className="logo"
     href="/en-US/"
   >
-    <svg mock
-      className="emotion-0"
-    />
+    <svg mock />
   </a>
-  <div
-    className="emotion-2"
-  />
   <nav
     className="main-nav"
     role="navigation"
@@ -492,48 +416,40 @@ exports[`Header snapshot 1`] = `
       </li>
     </ul>
   </nav>
-  <div
-    className="emotion-6"
+  <form
+    action="/en-US/search"
+    className="header-search emotion-2"
+    id="nav-main-search"
+    method="get"
+    role="search"
   >
-    <form
-      action="/en-US/search"
-      className="emotion-5"
-      id="nav-main-search"
-      method="get"
-      role="search"
+    <svg mock
+      className="emotion-0"
+    />
+    <label
+      className="visually-hidden"
+      htmlFor="main-q"
     >
-      <svg mock
-        className="emotion-3"
-      />
-      <label
-        className="visually-hidden"
-        htmlFor="main-q"
-      >
-        Search MDN
-      </label>
-      <input
-        className="emotion-4"
-        id="main-q"
-        name="q"
-        placeholder="Search MDN"
-        type="search"
-      />
-    </form>
-  </div>
-  <div
-    className="emotion-8"
-  >
-    <a
-      className="emotion-7"
-      data-service="GitHub"
-      href="/users/github/login/?next=/[fake%20absolute%20url]"
-      rel="nofollow"
-    >
-      Sign in
-    </a>
-  </div>
+      Search MDN
+    </label>
+    <input
+      className="emotion-1"
+      id="main-q"
+      name="q"
+      placeholder="Search MDN"
+      type="search"
+    />
+  </form>
   <a
-    className="emotion-9"
+    className="emotion-3"
+    data-service="GitHub"
+    href="/users/github/login/?next=/[fake%20absolute%20url]"
+    rel="nofollow"
+  >
+    Sign in
+  </a>
+  <a
+    className="emotion-4"
     href="https://bugzilla.mozilla.org/show_bug.cgi?id=1561020"
     rel="noopener noreferrer nofollow"
     target="_blank"
@@ -542,5 +458,5 @@ exports[`Header snapshot 1`] = `
     <br />
     Feedback
   </a>
-</div>
+</header>
 `;

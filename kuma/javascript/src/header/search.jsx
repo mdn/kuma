@@ -8,6 +8,7 @@ import SearchIcon from '../icons/search.svg';
 
 const styles = {
     container: css({
+        gridArea: 'S',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
@@ -55,6 +56,7 @@ export default function Search(props: Props) {
 
     return (
         <form
+            className="header-search"
             css={styles.container}
             id="nav-main-search"
             action={`/${locale}/search`}

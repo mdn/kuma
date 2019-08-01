@@ -11,6 +11,8 @@ import UserProvider from '../user-provider.jsx';
 
 const styles = {
     container: css({
+        gridArea: 'L',
+        justifySelf: 'end',
         // Buttons (in the dropdown labels) don't seem to inherit fontsizes
         // so we need to make this explicit.
         button: { fontSize: '1em' },

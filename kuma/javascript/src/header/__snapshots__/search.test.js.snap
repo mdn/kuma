@@ -2,6 +2,7 @@
 
 exports[`Search snapshot 1`] = `
 .emotion-2 {
+  grid-area: S;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -46,7 +47,7 @@ exports[`Search snapshot 1`] = `
 
 <form
   action="/en-US/search"
-  className="emotion-2"
+  className="header-search emotion-2"
   id="nav-main-search"
   method="get"
   role="search"

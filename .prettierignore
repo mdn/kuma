@@ -17,6 +17,7 @@ kuma/static/js/libs/
 # white-list files we want to process
 !*.js
 !*.jsx
+!/kuma/static/styles/minimalist/**/*.scss
 
 # Exceptions to specific .js files
 gulpfile.js

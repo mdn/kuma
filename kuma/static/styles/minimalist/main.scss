@@ -1,0 +1,24 @@
+@import '../includes/vars';
+@import 'vars/vars-paths';
+@import '../includes/mixins';
+
+/*
+Main stylesheet for the site, standalone
+********************************************************************** */
+
+/* stylesheets used only in main  */
+@import '../base/elements';
+@import '../base/icons';
+
+/* components also used elsewhere */
+@import '../components/components';
+@import '../components/content';
+@import '../components/cta';
+@import 'base/structure';
+@import '../components/form';
+@import 'utils/highlighted-headings';
+@import '../components/tags';
+@import '../components/errorlist';
+@import '../components/compact';
+@import '../components/newsletter';
+@import '../components/payments';

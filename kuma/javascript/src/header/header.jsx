@@ -10,70 +10,6 @@ import Search from './search.jsx';
 
 import type { DocumentData } from '../document.jsx';
 
-const DESKTOP = '@media (min-width: 1024px)';
-const TABLET = '@media (min-width: 750px) and (max-width: 1023px)';
-const PHONE = '@media (max-width: 749px)';
-
-const styles = {
-    header: css({
-        display: 'grid',
-        alignItems: 'center',
-        fontSize: 15,
-        margin: '0 16px',
-        [DESKTOP]: {
-            height: 68,
-            gridTemplateColumns: '221px 5fr minmax(250px, 2fr) auto',
-            gridTemplateAreas: '"I M S L"' // Icon Menus Search Login
-        },
-
-        [TABLET]: {
-            height: 122,
-            gridTemplateColumns: 'minmax(206px,1fr) 300px auto',
-            gridTemplateAreas: '"I S L" "R R R" "M M M"'
-        },
-
-        [PHONE]: {
-            fontSize: 10,
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gridTemplateAreas: '"I I L L" "S S S S" "M M M M"'
-        }
-    }),
-
-    logoContainer: css({
-        display: 'block',
-        gridArea: 'I',
-        width: 200,
-        height: 44,
-        marginRight: 24
-    }),
-    logo: css({
-        width: 200,
-        height: 44
-    }),
-    rule: css({
-        // In tablet layout this rule separates the header menus below
-        // from the logo and search box above. It is not included in
-        // desktop layouts
-        display: 'none',
-        gridArea: 'R',
-        height: 2,
-        width: '100%',
-        backgroundColor: '#dce3e5',
-        [TABLET]: {
-            display: 'block'
-        }
-    }),
-    search: css({
-        gridArea: 'S',
-        justifySelf: 'stretch',
-        overflow: 'hidden'
-    }),
-    login: css({
-        gridArea: 'L',
-        justifySelf: 'end'
-    })
-};
-
 type Props = {
     document?: ?DocumentData,
     searchQuery?: string
@@ -83,27 +19,17 @@ export default function Header(props: Props): React.Node {
     const locale = getLocale();
 
     return (
-        <div css={styles.header}>
+        <header className="page-header">
             <a
-                css={styles.logoContainer}
                 href={`/${locale}/`}
+                className="logo"
                 aria-label={gettext('MDN Web Docs')}
             >
-                <Logo css={styles.logo} />
+                <Logo />
             </a>
-            {
-                // The div below is used as a horizontal rule. We aren't
-                // using a semantic <hr/> element because our document
-                // stylesheets define a bunch of styles on <hr>.
-            }
-            <div css={styles.rule} />
             <MainMenu document={props.document} locale={locale} />
-            <div css={styles.search}>
-                <Search initialQuery={props.searchQuery || ''} />
-            </div>
-            <div css={styles.login}>
-                <Login />
-            </div>
+            <Search initialQuery={props.searchQuery || ''} />
+            <Login />
 
             {
                 // Display a "Beta Feedback" banner.
@@ -143,6 +69,6 @@ export default function Header(props: Props): React.Node {
                 <br />
                 Feedback
             </a>
-        </div>
+        </header>
     );
 }
