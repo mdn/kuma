@@ -479,7 +479,6 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
     )
 
     comment = StrippedCharField(
-        max_length=255,
         required=False,
         label=_(u'Comment:')
     )

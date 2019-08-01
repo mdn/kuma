@@ -1671,7 +1671,7 @@ class Revision(models.Model):
     render_max_age = models.IntegerField(blank=True, null=True)
 
     created = models.DateTimeField(default=datetime.now, db_index=True)
-    comment = models.CharField(max_length=255)
+    comment = models.TextField()
     creator = models.ForeignKey(settings.AUTH_USER_MODEL,
                                 related_name='created_revisions',
                                 on_delete=models.PROTECT)
