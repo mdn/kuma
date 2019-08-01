@@ -5,7 +5,6 @@ import urllib
 import mock
 import pytest
 from constance import config
-from constance.test import override_config
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser, Group
 from django.contrib.sites.models import Site
@@ -320,8 +319,8 @@ _PIPELINE['JAVASCRIPT']['experiment-test'] = {
 
 
 @override_settings(CONTENT_EXPERIMENTS=_TEST_CONTENT_EXPERIMENTS,
-                   PIPELINE=_PIPELINE)
-@override_config(GOOGLE_ANALYTICS_ACCOUNT='fake')
+                   PIPELINE=_PIPELINE,
+                   GOOGLE_ANALYTICS_ACCOUNT='fake')
 class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
 
     # src attribute of the content experiment <script> tag
@@ -389,7 +388,7 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
         assert not doc('#edit-button')
 
 
-@override_config(GOOGLE_ANALYTICS_ACCOUNT='fake')
+@override_settings(GOOGLE_ANALYTICS_ACCOUNT='fake')
 class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
 
     ga_create = "ga('create', 'fake', 'mozilla.org');"

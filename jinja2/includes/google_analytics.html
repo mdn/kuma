@@ -1,7 +1,7 @@
 <script>
     // Mozilla DNT Helper
     {% include "js/libs/mozilla.dnthelper.min.js" %}
-    {%- if config.GOOGLE_ANALYTICS_ACCOUNT != '0' %}
+    {%- if settings.GOOGLE_ANALYTICS_ACCOUNT %}
     {%- set GA_FILE = 'analytics_debug' if settings.DEBUG else 'analytics' %}
     // only load GA if DNT is not enabled
     if (Mozilla && !Mozilla.dntEnabled()) {
@@ -10,7 +10,7 @@
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','https://www.google-analytics.com/{{ GA_FILE }}.js','ga');
 
-        ga('create', '{{ config.GOOGLE_ANALYTICS_ACCOUNT }}', 'mozilla.org');
+        ga('create', '{{ settings.GOOGLE_ANALYTICS_ACCOUNT }}', 'mozilla.org');
         ga('set', 'anonymizeIp', true);
 
         {% if request.user and request.user.is_authenticated %}

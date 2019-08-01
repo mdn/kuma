@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from constance import config
 from django.conf import settings
 from django.utils import translation
 from six.moves.urllib.parse import urlparse
@@ -20,6 +21,19 @@ def global_settings(request):
                 netloc='username:secret@' + parsed.netloc.split('@')[-1]
             )
         return parsed.geturl()
+
+    # TODO: Ideally, GOOGLE_ANALYTICS_ACCOUNT is only set in settings (from
+    # an environment variable) but for safe transition, we rely on
+    # constance if it hasn't been put into settings yet.
+    # Once we know with confidence, that GOOGLE_ANALYTICS_ACCOUNT is set
+    # and a valid value in the environment (for production!) then we
+    # can delete these lines of code.
+    # See https://bugzilla.mozilla.org/show_bug.cgi?id=1570076
+    google_analytics_account = getattr(
+        settings, 'GOOGLE_ANALYTICS_ACCOUNT', None)
+    if google_analytics_account is None:
+        if config.GOOGLE_ANALYTICS_ACCOUNT != '0':
+            settings.GOOGLE_ANALYTICS_ACCOUNT = config.GOOGLE_ANALYTICS_ACCOUNT
 
     return {
         'settings': settings,

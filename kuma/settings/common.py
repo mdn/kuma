@@ -1613,9 +1613,12 @@ CONSTANCE_CONFIG = dict(
          r')'),
         'Regex comprised of domain names that are allowed for IFRAME SRCs'
     ),
+    # TODO: Delete this line once we know that the production environment
+    # definitely has 'GOOGLE_ANALYTICS_ACCOUNT' set.
+    # See https://bugzilla.mozilla.org/show_bug.cgi?id=1570076
     GOOGLE_ANALYTICS_ACCOUNT=(
         '0',
-        'Google Analytics Tracking Account Number (0 to disable)',
+        '(This is deprecated and will disappear)',
     ),
     GOOGLE_ANALYTICS_CREDENTIALS=(
         '{}',
@@ -1671,6 +1674,9 @@ CONSTANCE_CONFIG = dict(
         'Email address to request admin intervention'
     ),
 )
+
+# Google Analytics Tracking Account Number (0 to disable)
+GOOGLE_ANALYTICS_ACCOUNT = config('GOOGLE_ANALYTICS_ACCOUNT', default=None)
 
 KUMASCRIPT_URL_TEMPLATE = config('KUMASCRIPT_URL_TEMPLATE',
                                  default='http://localhost:9080/docs/{path}')

@@ -6,15 +6,15 @@ from kuma.core.urlresolvers import reverse
 from kuma.search.models import Filter, FilterGroup
 
 
-def test_google_analytics_disabled(constance_config, client):
-    constance_config.GOOGLE_ANALYTICS_ACCOUNT = '0'
+def test_google_analytics_disabled(db, settings, client):
+    settings.GOOGLE_ANALYTICS_ACCOUNT = None
     response = client.get(reverse('home'), follow=True)
     assert 200 == response.status_code
     assert b"ga('create" not in response.content
 
 
-def test_google_analytics_enabled(constance_config, client):
-    constance_config.GOOGLE_ANALYTICS_ACCOUNT = 'UA-99999999-9'
+def test_google_analytics_enabled(db, settings, client):
+    settings.GOOGLE_ANALYTICS_ACCOUNT = 'UA-99999999-9'
     response = client.get(reverse('home'), follow=True)
     assert 200 == response.status_code
     assert b"ga('create" in response.content
