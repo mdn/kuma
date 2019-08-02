@@ -15,6 +15,15 @@ matrix:
           script:
             - scripts/ci-docs
         - language: python
+          name: "Python linting"
+          python: 3.6
+          cache: pip
+          script:
+            - set -x
+            # Make sure these match what's in requirements/dev.txt!
+            - pip install flake8==3.7.3 flake8-import-order==0.18
+            - flake8 kuma docs tests
+        - language: python
           name: "Tests + Python linting"
           python: 2.7
           env:
