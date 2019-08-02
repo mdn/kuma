@@ -16,7 +16,7 @@ matrix:
             - scripts/ci-docs
         - language: python
           name: "Python linting"
-          python: 3.6
+          python: 2.7
           cache: pip
           script:
             - set -x
