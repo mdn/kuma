@@ -190,7 +190,8 @@ function Content({ document }: DocumentProps) {
         <div
             css={styles.contentLayout}
             className="wiki-left-present"
-            aria-live="assertive"
+            // See https://bugzilla.mozilla.org/show_bug.cgi?id=1570043
+            // aria-live="assertive"
         >
             {!!document.tocHTML && <TOC html={document.tocHTML} />}
             <Article document={document} />

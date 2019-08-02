@@ -1,6 +1,6 @@
 //@flow
 import * as React from 'react';
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 
 import { gettext } from '../l10n.js';
 import type { DocumentData } from '../document.jsx';
@@ -148,17 +148,19 @@ const _MainMenu = ({ document, locale }: Props) => {
     // make it so that it hides the menu if it was shown.
     // To a mobile user, the effect is that after their click (on a sub-menu
     // item) has completed, it manually closes the menu.
-    useEffect(() => {
-        if (showSubMenu) {
-            setShowSubMenu(null);
-        }
-        // TODO: react-hooks/exhaustive-deps will say to include showSubMenu
-        // in list of dependencies. But if you do that, you won't be able
-        // to distinguish between a new mount (navigating to a new document
-        // for example) and the menu having been shown.
-        // We only want this effect to run when the component is re-rendered
-        // with a new 'document'.
-    }, [document]); // eslint-disable-line react-hooks/exhaustive-deps
+    // See https://bugzilla.mozilla.org/show_bug.cgi?id=1570043
+    // for why this is commented out.
+    // useEffect(() => {
+    //     if (showSubMenu) {
+    //         setShowSubMenu(null);
+    //     }
+    //     // TODO: react-hooks/exhaustive-deps will say to include showSubMenu
+    //     // in list of dependencies. But if you do that, you won't be able
+    //     // to distinguish between a new mount (navigating to a new document
+    //     // for example) and the menu having been shown.
+    //     // We only want this effect to run when the component is re-rendered
+    //     // with a new 'document'.
+    // }, [document]); // eslint-disable-line react-hooks/exhaustive-deps
 
     // One of the menu items has a URL that we need to substitute
     // the current document path into. Compute that now.

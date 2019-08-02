@@ -1,3 +1,7 @@
+/* eslint-disable */
+// ^ this is because of the disabling of client-side navigation is
+// temporarily disabled.
+
 /**
  * The Router component defined in this file manages client side
  * navigation within the single-page app portions of MDN. Use the
@@ -137,9 +141,12 @@ export default function Router({
     // links, form submissions and the back and forward handlers.
     // To keep the code clean, these effect function are defined below
     // after the rendering code and its return statement
-    useEffect(interceptClickEvents, []);
-    useEffect(interceptFormSubmissions, []);
-    useEffect(handleBackAndForwardButtons, []);
+    // TODO: This is commented out in an effort to disable
+    // client-side navigation.
+    // See https://bugzilla.mozilla.org/show_bug.cgi?id=1570043
+    // useEffect(interceptClickEvents, []);
+    // useEffect(interceptFormSubmissions, []);
+    // useEffect(handleBackAndForwardButtons, []);
 
     // These are effect functions that are run each time a page is
     // rendered with new (non-null) data. One effect deals with
