@@ -24,7 +24,7 @@ matrix:
             - pip install flake8==3.7.3 flake8-import-order==0.18
             - flake8 kuma docs tests
         - language: python
-          name: "Tests + Python linting"
+          name: "Python testing"
           python: 2.7
           env:
             UID=0
