@@ -35,6 +35,8 @@
     {% endfor %}
   {% endblock %}
 
+  {% include "includes/zilla.html" %}
+
   {%- if settings.MAINTENANCE_MODE %}
     {% stylesheet 'maintenance-mode-global' %}
   {%- endif %}
