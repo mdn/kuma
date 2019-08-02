@@ -1,5 +1,4 @@
 import pytest
-from django.conf import settings
 from waffle.testutils import override_switch
 
 from kuma.attachments.models import Attachment

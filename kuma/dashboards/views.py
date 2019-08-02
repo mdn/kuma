@@ -15,8 +15,8 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
 from django.views.decorators.vary import vary_on_headers
 
-from kuma.core.decorators import login_required
-from kuma.core.decorators import ensure_wiki_domain, shared_cache_control
+from kuma.core.decorators import (ensure_wiki_domain, login_required,
+                                  shared_cache_control)
 from kuma.core.utils import paginate
 from kuma.wiki.kumascript import macro_usage
 from kuma.wiki.models import Document, Revision

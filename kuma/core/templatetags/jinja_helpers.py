@@ -20,7 +20,7 @@ from statici18n.templatetags.statici18n import statici18n
 from urlobject import URLObject
 
 from ..urlresolvers import reverse, split_path
-from ..utils import (format_date_time, is_wiki, is_untrusted, order_params,
+from ..utils import (format_date_time, is_untrusted, is_wiki, order_params,
                      urlparams)
 
 
