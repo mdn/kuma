@@ -37,7 +37,7 @@ from kuma.search.store import get_search_url_from_referer
 
 from .utils import calculate_etag, split_slug
 from .. import kumascript
-from ..constants import SLUG_CLEANSING_RE
+from ..constants import SLUG_CLEANSING_RE, WIKI_ONLY_DOCUMENT_QUERY_PARAMS
 from ..decorators import (allow_CORS_GET, check_readonly, prevent_indexing,
                           process_document_path)
 from ..events import EditDocumentEvent, EditDocumentInTreeEvent
@@ -802,9 +802,9 @@ def react_document(request, document_slug, document_locale):
     """
     View a wiki document.
     """
-    # This view supports the "redirect" query parameter only. If any other
-    # query parameter is used, redirect to the wiki domain.
-    if any(param != 'redirect' for param in request.GET):
+    # If any query parameter is used that is only supported by the wiki view,
+    # redirect to the wiki domain.
+    if frozenset(request.GET) & WIKI_ONLY_DOCUMENT_QUERY_PARAMS:
         return redirect_to_wiki(request)
 
     slug_dict = split_slug(document_slug)

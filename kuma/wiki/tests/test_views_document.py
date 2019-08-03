@@ -763,21 +763,16 @@ def test_deleted_doc_no_purge_permdeleted(deleted_doc, wiki_moderator,
     assert 'Purge this document' not in content
 
 
-@mock.patch('kuma.wiki.kumascript.get')
-def test_redirect_suppression(mock_kumascript_get, constance_config, client,
-                              root_doc, redirect_doc):
+@pytest.mark.parametrize('case', ('DOMAIN', 'BETA_HOST', 'WIKI_HOST'))
+def test_redirect_suppression(client, host_settings, root_doc, redirect_doc,
+                              case):
     """The document view shouldn't redirect when passed redirect=no."""
-    constance_config.KUMASCRIPT_TIMEOUT = 1
-    mock_kumascript_get.return_value = (redirect_doc.html, None)
-    url = redirect_doc.get_absolute_url() + '?redirect=no'
-    response = client.get(url, follow=True)
+    host = getattr(host_settings, case)
+    url = redirect_doc.get_absolute_url()
+    response = client.get(url, HTTP_HOST=host)
+    assert response.status_code == 301
+    response = client.get(url + '?redirect=no', HTTP_HOST=host)
     assert response.status_code == 200
-    assert not response.redirect_chain
-    content = response.content.decode(response.charset)
-    body = pq(content).find('#wikiArticle')
-    assert body.text() == 'REDIRECT {}'.format(root_doc.title)
-    assert body.find(
-        'a[href="{}"][class="redirect"]'.format(root_doc.get_absolute_url()))
 
 
 @pytest.mark.parametrize(

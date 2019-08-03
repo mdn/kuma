@@ -74,12 +74,10 @@ def test_force_anonymous_session_middleware(rf, settings):
 
 @pytest.mark.parametrize(
     'host,key,expected',
-    (('beta', 'BETA_HOST', None),
-     ('wiki', 'WIKI_HOST', None),
-     ('beta-origin', 'BETA_ORIGIN', None),
+    (('wiki', 'WIKI_HOST', None),
      ('demos', 'ATTACHMENT_HOST', 'kuma.urls_untrusted'),
      ('demos-origin', 'ATTACHMENT_ORIGIN', 'kuma.urls_untrusted')),
-    ids=('beta', 'wiki', 'beta-origin', 'attachment', 'attachment-origin')
+    ids=('wiki', 'attachment', 'attachment-origin')
 )
 def test_restricted_endpoints_middleware(rf, settings, host, key, expected):
     setattr(settings, key, host)

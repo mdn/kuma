@@ -17,25 +17,14 @@ def cleared_cache():
     cache.clear()
 
 
-@pytest.fixture
-def host_settings(settings):
-    settings.DOMAIN = 'mdn.dev'
-    settings.ALLOWED_HOSTS.append(settings.DOMAIN)
-    settings.ALLOWED_HOSTS.append(settings.BETA_HOST)
-    settings.ALLOWED_HOSTS.append(settings.WIKI_HOST)
-    return settings
-
-
-@pytest.mark.parametrize('case', ('BETA_HOST', 'DOMAIN', 'WIKI_HOST'))
-def test_contribute_json(client, db, host_settings, case):
-    host = getattr(host_settings, case)
-    response = client.get(reverse('contribute_json'), HTTP_HOST=host)
+def test_contribute_json(client, db):
+    response = client.get(reverse('contribute_json'))
     assert response.status_code == 200
     assert_shared_cache_header(response)
     assert response['Content-Type'].startswith('application/json')
 
 
-@pytest.mark.parametrize('case', ('BETA_HOST', 'DOMAIN', 'WIKI_HOST'))
+@pytest.mark.parametrize('case', ('DOMAIN', 'BETA_HOST', 'WIKI_HOST'))
 def test_home(client, db, host_settings, case):
     host = getattr(host_settings, case)
     response = client.get(reverse('home', locale='en-US'), HTTP_HOST=host)
