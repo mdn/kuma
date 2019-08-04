@@ -17,6 +17,8 @@ from kuma.wiki.models import Document, Revision
 @pytest.fixture
 def host_settings(settings):
     settings.DOMAIN = 'mdn.dev'
+    settings.BETA_HOST = 'beta.mdn.dev'
+    settings.WIKI_HOST = 'wiki.mdn.dev'
     settings.ALLOWED_HOSTS.append(settings.DOMAIN)
     settings.ALLOWED_HOSTS.append(settings.BETA_HOST)
     settings.ALLOWED_HOSTS.append(settings.WIKI_HOST)

@@ -846,3 +846,32 @@ def test_hreflang(client, root_doc, locales, expected_results):
         assert html.attr('lang') == expected_result
         assert html.find('head > link[hreflang="{}"][href$="{}"]'.format(
             expected_result, url))
+
+
+@pytest.mark.parametrize(
+    'param,status',
+    (('utm_source=docs.com', 200),
+     ('redirect=no', 200),
+     ('nocreate=1', 200),
+     ('edit_links=1', 301),
+     ('include=1', 301),
+     ('macros=1', 301),
+     ('nomacros=1', 301),
+     ('raw=1', 301),
+     ('section=junk', 301),
+     ('summary=1', 301)))
+@mock.patch('kuma.wiki.kumascript.get')
+def test_wiki_only_query_params(mock_kumascript_get, constance_config, client,
+                                host_settings, root_doc, param, status):
+    """
+    The document view should ensure the wiki domain when using specific query
+    parameters.
+    """
+    constance_config.KUMASCRIPT_TIMEOUT = 1
+    mock_kumascript_get.return_value = (root_doc.html, None)
+    url = root_doc.get_absolute_url() + '?{}'.format(param)
+    response = client.get(url, HTTP_HOST=host_settings.BETA_HOST, follow=False)
+    assert response.status_code == status
+    if status == 301:
+        assert (response['location'] ==
+                'http://{}{}'.format(host_settings.WIKI_HOST, url))
