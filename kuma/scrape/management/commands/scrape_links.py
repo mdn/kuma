@@ -14,7 +14,7 @@ class Command(ScrapeCommand):
         parser.add_argument('url',
                             metavar='URL_OR_PATH',
                             nargs='?',
-                            default='https://developer.mozilla.org/en-US/',
+                            default='https://wiki.developer.mozilla.org/en-US/',
                             help='URL or path to a wiki page')
         parser.add_argument('--revisions',
                             dest='revisions',

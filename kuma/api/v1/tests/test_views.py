@@ -1,20 +1,15 @@
 from __future__ import unicode_literals
 
-from functools import partial
-
 import pytest
 from waffle.models import Flag, Sample, Switch
 
 from kuma.api.v1.views import (document_api_data, get_content_based_redirect,
                                get_s3_key)
 from kuma.core.tests import assert_no_cache_header
-from kuma.core.urlresolvers import reverse as core_reverse
+from kuma.core.urlresolvers import reverse
 from kuma.users.templatetags.jinja_helpers import gravatar_url
 from kuma.wiki.jobs import DocumentContributorsJob
 from kuma.wiki.templatetags.jinja_helpers import absolutify
-
-
-reverse = partial(core_reverse, urlconf='kuma.urls_beta')
 
 
 def test_get_s3_key(root_doc):
@@ -165,7 +160,6 @@ def test_doc_api_for_redirect_to_doc(client, api_settings, root_doc,
             'wiki.select_locale',
             args=(root_doc.slug,),
             locale=root_doc.locale,
-            urlconf='kuma.urls'
         ),
         for_wiki_site=True
     )

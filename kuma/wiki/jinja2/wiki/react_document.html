@@ -1,5 +1,6 @@
-{% set beta = settings.ENABLE_RESTRICTIONS_BY_HOST and is_beta(request) %}
-{% set untrusted = settings.ENABLE_RESTRICTIONS_BY_HOST and is_untrusted(request) %}
+// Set "wiki" and "untrusted" for the benefit of Jinja includes that need them.
+{% set wiki = False %}
+{% set untrusted = False %}
 {% set canonical = document_data['absoluteURL'] | absolutify %}
 
 <!DOCTYPE html>

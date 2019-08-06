@@ -11,7 +11,6 @@ from kuma.wiki.models import Document, Revision
 def api_settings(settings):
     settings.BETA_HOST = 'beta.mdn.dev'
     settings.ALLOWED_HOSTS.append(settings.BETA_HOST)
-    settings.ENABLE_RESTRICTIONS_BY_HOST = True
     return settings
 
 
@@ -27,7 +26,7 @@ def redirect_to_self(wiki_user):
         creator=wiki_user,
         content=REDIRECT_CONTENT % {
             'href': reverse('wiki.document', locale=doc.locale,
-                            args=(doc.slug,), urlconf='kuma.urls_beta'),
+                            args=(doc.slug,)),
             'title': doc.title,
         },
         title='Redirect to Self',

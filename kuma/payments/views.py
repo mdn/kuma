@@ -10,7 +10,7 @@ from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 from stripe.error import StripeError
 
-from kuma.core.decorators import login_required
+from kuma.core.decorators import ensure_wiki_domain, login_required
 
 from .utils import (cancel_stripe_customer_subscription,
                     enabled,
@@ -31,18 +31,21 @@ def skip_if_disabled(func):
 
 
 @skip_if_disabled
+@ensure_wiki_domain
 @never_cache
 def contribute(request):
     return render(request, 'payments/payments.html')
 
 
 @skip_if_disabled
+@ensure_wiki_domain
 @never_cache
 def payment_terms(request):
     return render(request, 'payments/terms.html')
 
 
 @skip_if_disabled
+@ensure_wiki_domain
 @login_required
 @never_cache
 def recurring_payment_management(request):

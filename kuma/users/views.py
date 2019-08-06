@@ -33,7 +33,8 @@ from honeypot.decorators import verify_honeypot_value
 from six.moves import reduce
 from taggit.utils import parse_tags
 
-from kuma.core.decorators import login_required, redirect_in_maintenance_mode
+from kuma.core.decorators import (ensure_wiki_domain, login_required,
+                                  redirect_in_maintenance_mode)
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import (Document, DocumentDeletionLog, Revision,
                               RevisionAkismetSubmission)
@@ -62,6 +63,7 @@ INTEREST_SUGGESTIONS = [
 ]
 
 
+@ensure_wiki_domain
 @permission_required('users.add_userban')
 def ban_user(request, username):
     """
@@ -98,6 +100,7 @@ def ban_user(request, username):
                    'common_reasons': common_reasons})
 
 
+@ensure_wiki_domain
 @permission_required('users.add_userban')
 def ban_user_and_cleanup(request, username):
     """
@@ -125,6 +128,7 @@ def ban_user_and_cleanup(request, username):
                    'on_ban_page': True})
 
 
+@ensure_wiki_domain
 @require_POST
 @permission_required('users.add_userban')
 def ban_user_and_cleanup_summary(request, username):

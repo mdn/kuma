@@ -9,6 +9,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
 
 from kuma.core.decorators import shared_cache_control
+from kuma.core.utils import is_wiki
 from kuma.wiki.search import WikiDocumentType
 
 from .filters import (get_filters, HighlightFilterBackend, KeywordQueryBackend,
@@ -21,6 +22,22 @@ from .renderers import ExtendedTemplateHTMLRenderer
 from .serializers import (DocumentSerializer, FacetedFilterSerializer,
                           FilterWithGroupSerializer, SearchQuerySerializer)
 from .utils import QueryURLObject
+
+
+# Since the search endpoint accepts user input (via query parameters) and its
+# response is compressed, use rate limiting to mitigate the BREACH attack
+# (see http://breachattack.com/). It still needs to allow a user to click
+# the filter switches (bug 1426968).
+# Alternate: forbid gzip by setting Content-Encoding: identity
+@never_cache
+@ratelimit(key='user_or_ip', rate='25/m', block=True)
+def search(request, *args, **kwargs):
+    """
+    The search view.
+    """
+    if is_wiki(request):
+        return wiki_search(request, *args, **kwargs)
+    return render(request, 'search/react.html', {})
 
 
 class SearchView(ListAPIView):
@@ -127,14 +144,7 @@ class SearchView(ListAPIView):
         return FacetedFilterSerializer(sorted_filters, many=True).data
 
 
-# Since the search endpoint accepts user input (via query parameters) and its
-# response is compressed, use rate limiting to mitigate the BREACH attack
-# (see http://breachattack.com/). It still needs to allow a user to click
-# the filter switches (bug 1426968).
-# Alternate: forbid gzip by setting Content-Encoding: identity
-search = never_cache(ratelimit(key='user_or_ip', rate='25/m', block=True)(
-    SearchView.as_view()
-))
+wiki_search = SearchView.as_view()
 
 
 @shared_cache_control(s_maxage=60 * 60 * 24 * 7)
@@ -143,11 +153,3 @@ def plugin(request):
     return render(request, 'search/plugin.html', {
         'locale': request.LANGUAGE_CODE
     }, content_type='application/opensearchdescription+xml')
-
-
-# This handles the /<locale>/search URL for the React version of the site.
-def react_search(request):
-    """
-    Render the React-based search UX
-    """
-    return render(request, 'search/react.html', {})

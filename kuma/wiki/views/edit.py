@@ -17,7 +17,7 @@ from ratelimit.decorators import ratelimit
 import kuma.wiki.content
 from kuma.attachments.forms import AttachmentRevisionForm
 from kuma.core.decorators import (block_banned_ips, block_user_agents,
-                                  login_required)
+                                  ensure_wiki_domain, login_required)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 
@@ -74,6 +74,7 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_async_submit,
     return render(request, 'wiki/edit.html', context)
 
 
+@ensure_wiki_domain
 @newrelic.agent.function_trace()
 @never_cache
 @block_user_agents

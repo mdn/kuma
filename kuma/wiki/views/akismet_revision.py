@@ -6,12 +6,14 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
+from kuma.core.decorators import ensure_wiki_domain
 from kuma.core.utils import format_date_time
 
 from ..forms import RevisionAkismetSubmissionSpamForm
 from ..models import RevisionAkismetSubmission
 
 
+@ensure_wiki_domain
 @never_cache
 @csrf_exempt
 @require_POST

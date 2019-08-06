@@ -5,13 +5,15 @@ from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_GET
 
-from kuma.core.decorators import block_user_agents, shared_cache_control
+from kuma.core.decorators import (block_user_agents, ensure_wiki_domain,
+                                  shared_cache_control)
 
 from ..constants import ALLOWED_TAGS, REDIRECT_CONTENT
 from ..decorators import allow_CORS_GET
 from ..models import Document, EditorToolbar
 
 
+@ensure_wiki_domain
 @shared_cache_control
 @require_GET
 def ckeditor_config(request):

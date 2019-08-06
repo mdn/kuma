@@ -10,8 +10,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 from ratelimit.decorators import ratelimit
 
-from kuma.core.decorators import (block_user_agents, login_required,
-                                  shared_cache_control)
+from kuma.core.decorators import (block_user_agents, ensure_wiki_domain,
+                                  login_required, shared_cache_control)
 from kuma.core.utils import smart_int
 
 from .. import kumascript
@@ -20,6 +20,7 @@ from ..models import Document, Revision
 from ..templatetags.jinja_helpers import format_comment
 
 
+@ensure_wiki_domain
 @newrelic.agent.function_trace()
 @shared_cache_control
 @block_user_agents
@@ -41,6 +42,7 @@ def revision(request, document_slug, document_locale, revision_id):
     return render(request, 'wiki/revision.html', context)
 
 
+@ensure_wiki_domain
 @never_cache
 @login_required
 @require_POST
@@ -79,6 +81,7 @@ def preview(request):
     return render(request, 'wiki/preview.html', context)
 
 
+@ensure_wiki_domain
 @shared_cache_control
 @block_user_agents
 @require_GET
@@ -126,6 +129,7 @@ def compare(request, document_slug, document_locale):
     return render(request, template, context)
 
 
+@ensure_wiki_domain
 @never_cache
 @csrf_exempt
 @login_required

@@ -7,7 +7,8 @@ from django.views import static
 from django.views.decorators.cache import never_cache
 from django.views.generic import RedirectView
 
-from kuma.core.decorators import beta_shared_cache_control, shared_cache_control
+from kuma.core.decorators import ensure_wiki_domain, shared_cache_control
+from kuma.core.utils import is_wiki
 from kuma.feeder.models import Bundle
 from kuma.feeder.sections import SECTION_HACKS
 from kuma.search.models import Filter
@@ -15,20 +16,16 @@ from kuma.search.models import Filter
 from .utils import favicon_url
 
 
+@shared_cache_control
 def contribute_json(request):
-    return static.serve(request, 'contribute.json',
-                        document_root=settings.ROOT)
+    return static.serve(request, 'contribute.json', document_root=settings.ROOT)
 
 
 @shared_cache_control
 def home(request):
     """Home page."""
-    return render_home(request, 'landing/homepage.html')
-
-
-@beta_shared_cache_control
-def react_home(request):
-    """React-based home page."""
+    if is_wiki(request):
+        return render_home(request, 'landing/homepage.html')
     return render_home(request, 'landing/react_homepage.html')
 
 
@@ -43,6 +40,7 @@ def render_home(request, template_name):
     return render(request, template_name, context)
 
 
+@ensure_wiki_domain
 @never_cache
 def maintenance_mode(request):
     if settings.MAINTENANCE_MODE:
@@ -51,6 +49,7 @@ def maintenance_mode(request):
         return redirect('home')
 
 
+@ensure_wiki_domain
 @shared_cache_control
 def promote_buttons(request):
     """Bug 646192: MDN affiliate buttons"""
@@ -117,6 +116,7 @@ Disallow: /
 '''
 
 
+@shared_cache_control
 def robots_txt(request):
     """Serve robots.txt that allows or forbids robots."""
     host = request.get_host()
