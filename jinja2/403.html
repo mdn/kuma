@@ -43,7 +43,7 @@
       {% endtrans %}
     {% endif %}
 
-    {%- if wiki %}
+    {%- if not untrusted %}
       <ul class="prose">
       {% if user.username %}
         {% trans logout_url=url('account_logout') %}
@@ -55,7 +55,7 @@
         {% endtrans %}
       {% endif %}
       </ul>
-    {%- endif %} {# if wiki #}
+    {%- endif %} {# if not untrusted #}
     {% endblock %}
 
     {% block tumbeast_attribution -%}

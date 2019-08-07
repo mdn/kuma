@@ -6,7 +6,7 @@
         'use strict';
 
         {#- This stuff is not needed by the React-based site #}
-        {%- if wiki %}
+        {%- if wiki or untrusted %}
             {#- With React, waffle flags are returned by the /whoami API. #}
             {{ waffle.wafflejs() }}
 
@@ -27,13 +27,13 @@
         win.mdn.wikiSiteUrl = '{{ settings.WIKI_SITE_URL }}';
         win.mdn.staticPath = '{{ settings.STATIC_URL }}';
         win.mdn.wiki = {
-            {%- if wiki %}
+            {%- if not untrusted %}
             autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
             {%- endif %}
         };
 
         {#- This is stuff not needed by the React-based site #}
-        {%- if wiki %}
+        {%- if wiki or untrusted %}
         win.mdn.assets = {
             css: {
                 'editor-content': [
