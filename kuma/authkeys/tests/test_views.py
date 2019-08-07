@@ -1,9 +1,12 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.test import TestCase
 from pyquery import PyQuery as pq
+import pytest
 
-from kuma.core.tests import assert_no_cache_header
+from kuma.core.tests import assert_no_cache_header, assert_redirect_to_wiki
+
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import user
 
@@ -57,7 +60,7 @@ class KeyViewsTest(RefetchingUserTestCase):
         url = reverse('authkeys.new')
 
         # Check out the creation page, look for the form.
-        resp = self.client.get(url)
+        resp = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -68,7 +71,8 @@ class KeyViewsTest(RefetchingUserTestCase):
         assert keys.count() == 0
 
         # Okay, create it.
-        resp = self.client.post(url, data, follow=False)
+        resp = self.client.post(url, data, follow=False,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -92,7 +96,7 @@ class KeyViewsTest(RefetchingUserTestCase):
     def test_list_key(self):
         """The current user's keys should be shown, but only that user's"""
         url = reverse('authkeys.list')
-        resp = self.client.get(url)
+        resp = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -120,7 +124,7 @@ class KeyViewsTest(RefetchingUserTestCase):
         for qs, offset in (('', 0), ('?page=2', ITEMS_PER_PAGE)):
             url = '%s%s' % (reverse('authkeys.history', args=(self.key1.pk,)),
                             qs)
-            resp = self.client.get(url)
+            resp = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
             assert resp.status_code == 200
             assert_no_cache_header(resp)
             page = pq(resp.content)
@@ -139,23 +143,23 @@ class KeyViewsTest(RefetchingUserTestCase):
     def test_delete_key(self):
         """User should be able to delete own keys, but no one else's"""
         url = reverse('authkeys.delete', args=(self.key3.pk,))
-        resp = self.client.get(url)
+        resp = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 403
         assert_no_cache_header(resp)
 
-        resp = self.client.post(url, follow=False)
+        resp = self.client.post(url, follow=False, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 403
         assert_no_cache_header(resp)
 
         url = reverse('authkeys.delete', args=(self.key1.pk,))
-        resp = self.client.get(url)
+        resp = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
         page = pq(resp.content)
         assert page.find('.description').text() == self.key1.description
 
-        resp = self.client.post(url, follow=False)
+        resp = self.client.post(url, follow=False, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert_no_cache_header(resp)
 
@@ -175,7 +179,7 @@ class KeyViewsPermissionTest(RefetchingUserTestCase):
 
     def test_new_key_requires_permission(self):
         url = reverse('authkeys.new')
-        resp = self.client.get(url)
+        resp = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 403
         assert_no_cache_header(resp)
 
@@ -183,7 +187,7 @@ class KeyViewsPermissionTest(RefetchingUserTestCase):
         self.user.user_permissions.add(perm)
         self._cache_bust_user_perms()
 
-        resp = self.client.get(url)
+        resp = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -192,12 +196,12 @@ class KeyViewsPermissionTest(RefetchingUserTestCase):
         self.key1.save()
 
         url = reverse('authkeys.delete', args=(self.key1.pk,))
-        resp = self.client.get(url)
+        resp = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 403
         assert_no_cache_header(resp)
         self._cache_bust_user_perms()
 
-        resp = self.client.get(url)
+        resp = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 403
         assert_no_cache_header(resp)
 
@@ -205,6 +209,14 @@ class KeyViewsPermissionTest(RefetchingUserTestCase):
         self.user.user_permissions.add(perm)
         self._cache_bust_user_perms()
 
-        resp = self.client.get(url)
+        resp = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
+
+
+@pytest.mark.parametrize('endpoint', ['new', 'list', 'history', 'delete'])
+def test_redirect(client, endpoint):
+    url = reverse('authkeys.{}'.format(endpoint),
+                  args=(1,) if endpoint in ('history', 'delete') else ())
+    response = client.get(url)
+    assert_redirect_to_wiki(response, url)

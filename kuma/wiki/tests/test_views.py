@@ -89,7 +89,7 @@ class ViewTests(UserTestCase, WikiTestCase):
         url = reverse('wiki.toc', args=[slug])
 
         with override_switch('application_ACAO', True):
-            resp = self.client.get(url)
+            resp = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_shared_cache_header(resp)
         assert resp['Access-Control-Allow-Origin'] == '*'
@@ -211,7 +211,8 @@ class ViewTests(UserTestCase, WikiTestCase):
             <p>Quux xyzzy</p>
         """)
         resp = self.client.get('%s?raw&summary' %
-                               rev.document.get_absolute_url())
+                               rev.document.get_absolute_url(),
+                               HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_shared_cache_header(resp)
         assert resp.content == b'Foo bar <a href="http://example.com">baz</a>'
@@ -228,7 +229,8 @@ class ViewTests(UserTestCase, WikiTestCase):
         ]
         flag_is_active.return_value = True
         rev = revision(is_approved=True, save=True, content='some content')
-        resp = self.client.get(rev.document.get_absolute_url())
+        resp = self.client.get(rev.document.get_absolute_url(),
+                               HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_shared_cache_header(resp)
         page = pq(resp.content)
@@ -243,7 +245,8 @@ class ViewTests(UserTestCase, WikiTestCase):
             <a href="#" onload=alert(3)>Hahaha</a>
             <svg><svg onload=alert(3);>
         """)
-        resp = self.client.get(rev.get_absolute_url())
+        resp = self.client.get(rev.get_absolute_url(),
+                               HTTP_HOST=settings.WIKI_HOST)
         page = pq(resp.content)
         ct = to_html(page.find('#wikiArticle'))
         assert '<svg>' not in ct
@@ -253,7 +256,8 @@ class ViewTests(UserTestCase, WikiTestCase):
         doc = document(title='Testing Article', slug='Article', save=True)
         r = revision(save=True, document=doc, is_approved=True)
 
-        resp = self.client.get(r.get_absolute_url())
+        resp = self.client.get(r.get_absolute_url(),
+                               HTTP_HOST=settings.WIKI_HOST)
         page = pq(resp.content)
 
         assert b'Revision Source' in resp.content
@@ -277,7 +281,7 @@ class ReadOnlyTests(UserTestCase, WikiTestCase):
         self.kumaediting_flag.save()
 
         self.client.login(username='testuser', password='testpass')
-        resp = self.client.get(self.edit_url)
+        resp = self.client.get(self.edit_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert resp['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(resp)
@@ -289,14 +293,14 @@ class ReadOnlyTests(UserTestCase, WikiTestCase):
         self.kumaediting_flag.save()
 
         self.client.login(username='testuser', password='testpass')
-        resp = self.client.get(self.edit_url)
+        resp = self.client.get(self.edit_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 403
         assert b'The wiki is in read-only mode.' in resp.content
         assert_no_cache_header(resp)
         self.client.logout()
 
         self.client.login(username='admin', password='testpass')
-        resp = self.client.get(self.edit_url)
+        resp = self.client.get(self.edit_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert resp['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(resp)
@@ -335,7 +339,7 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
     def test_basic_view(self, mock_kumascript_get):
         """When kumascript timeout is non-zero, the service should be used"""
         mock_kumascript_get.return_value = (self.doc.html, None)
-        self.client.get(self.url, follow=False)
+        self.client.get(self.url, follow=False, HTTP_HOST=settings.WIKI_HOST)
         assert mock_kumascript_get.called, "kumascript should have been used"
 
     @override_config(KUMASCRIPT_TIMEOUT=0.0)
@@ -343,7 +347,7 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
     def test_disabled(self, mock_kumascript_get):
         """When disabled, the kumascript service should not be used"""
         mock_kumascript_get.return_value = (self.doc.html, None)
-        self.client.get(self.url, follow=False)
+        self.client.get(self.url, follow=False, HTTP_HOST=settings.WIKI_HOST)
         assert not mock_kumascript_get.called, "kumascript should not have been used"
 
     @override_config(KUMASCRIPT_TIMEOUT=0.0)
@@ -359,21 +363,24 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
     @mock.patch('kuma.wiki.kumascript.get')
     def test_nomacros(self, mock_kumascript_get):
         mock_kumascript_get.return_value = (self.doc.html, None)
-        self.client.get('%s?nomacros' % self.url, follow=False)
+        self.client.get('%s?nomacros' % self.url, follow=False,
+                        HTTP_HOST=settings.WIKI_HOST)
         assert not mock_kumascript_get.called, "kumascript should not have been used"
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get')
     def test_raw(self, mock_kumascript_get):
         mock_kumascript_get.return_value = (self.doc.html, None)
-        self.client.get('%s?raw' % self.url, follow=False)
+        self.client.get('%s?raw' % self.url, follow=False,
+                        HTTP_HOST=settings.WIKI_HOST)
         assert not mock_kumascript_get.called, "kumascript should not have been used"
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get')
     def test_raw_macros(self, mock_kumascript_get):
         mock_kumascript_get.return_value = (self.doc.html, None)
-        self.client.get('%s?raw&macros' % self.url, follow=False)
+        self.client.get('%s?raw&macros' % self.url, follow=False,
+                        HTTP_HOST=settings.WIKI_HOST)
         assert mock_kumascript_get.called, "kumascript should have been used"
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=600)
@@ -384,7 +391,8 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         mock_requests.post(requests_mock.ANY, content=content.encode('utf8'))
 
         self.client.login(username='admin', password='testpass')
-        resp = self.client.post(reverse('wiki.preview'), {'content': content})
+        resp = self.client.post(reverse('wiki.preview'), {'content': content},
+                                HTTP_HOST=settings.WIKI_HOST)
         assert_no_cache_header(resp)
         # No UnicodeDecodeError
         mock_requests.request_history[0].body.decode('utf8')
@@ -405,7 +413,8 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
 
         self.client.login(username='admin', password='testpass')
         resp = self.client.post(reverse('wiki.preview'),
-                                {'doc_id': self.doc.id})
+                                {'doc_id': self.doc.id},
+                                HTTP_HOST=settings.WIKI_HOST)
         assert_no_cache_header(resp)
 
 
@@ -426,7 +435,8 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
             doc = document(save=True, slug=slug, title=title,
                            locale=settings.WIKI_DEFAULT_LANGUAGE)
             revision(save=True, document=doc)
-            response = self.client.get(reverse('wiki.document', args=[slug]))
+            response = self.client.get(reverse('wiki.document', args=[slug]),
+                                       HTTP_HOST=settings.WIKI_HOST)
             page = pq(response.content)
 
             assert page.find('head > title').text() in aught_titles
@@ -457,11 +467,13 @@ class DocumentSEOTests(UserTestCase, WikiTestCase):
             # Create the doc
             data = new_document_data()
             data.update({'title': 'blah', 'slug': slug, 'content': content})
-            response = self.client.post(reverse('wiki.create'), data)
+            response = self.client.post(reverse('wiki.create'), data,
+                                        HTTP_HOST=settings.WIKI_HOST)
             assert 302 == response.status_code
 
             # Connect to newly created page
-            response = self.client.get(reverse('wiki.document', args=[slug]))
+            response = self.client.get(reverse('wiki.document', args=[slug]),
+                                       HTTP_HOST=settings.WIKI_HOST)
             page = pq(response.content)
             meta_content = page.find('meta[name=description]').attr('content')
             assert str(meta_content) == str(aught_preview)
@@ -528,7 +540,7 @@ def test_editor_safety(root_doc, editor_client, content, expected):
         '%s?tolocale=%s' % (reverse('wiki.translate', args=args), 'fr')
     )
     for url in urls:
-        response = editor_client.get(url)
+        response = editor_client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         page = pq(response.content)
         editor_src = page.find('#id_content').text()
@@ -551,7 +563,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Ensure redirect to create new page on attempt to visit non-existent
         # child page.
-        resp = self.client.get(url)
+        resp = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert_no_cache_header(resp)
         assert 'public' not in resp['Cache-Control']
@@ -563,18 +575,20 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # kumascript and raw content API.
         for p_name in ('raw', 'include', 'nocreate'):
             sub_url = '%s?%s=1' % (url, p_name)
-            resp = self.client.get(sub_url)
+            resp = self.client.get(sub_url, HTTP_HOST=settings.WIKI_HOST)
             assert resp.status_code == 404
 
         # Ensure root level documents work, not just children
-        response = self.client.get(reverse('wiki.document', args=['noExist']))
+        response = self.client.get(reverse('wiki.document', args=['noExist']),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert 'public' not in response['Cache-Control']
         assert 'no-cache' in resp['Cache-Control']
         assert 'docs/new' in response['Location']
 
         response = self.client.get(reverse('wiki.document',
-                                           args=['Template:NoExist']))
+                                           args=['Template:NoExist']),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert 'public' not in response['Cache-Control']
         assert 'no-cache' in resp['Cache-Control']
@@ -595,7 +609,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # Try to create a child with the old slug
         child_full_slug = doc_first_slug + "/" + "children_document"
         url = reverse('wiki.document', args=[child_full_slug])
-        response = self.client.get(url)
+        response = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert 'public' not in response['Cache-Control']
         assert 'no-cache' in response['Cache-Control']
@@ -617,12 +631,12 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert doc.get_redirect_document() is None
 
         doc_url = doc.get_absolute_url()
-        response = self.client.get(doc_url)
+        response = self.client.get(doc_url, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 301
         assert response['Location'] == '/'
 
         subpage_url = doc_url + '/SubPage'
-        response = self.client.get(subpage_url)
+        response = self.client.get(subpage_url, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 404
 
     @pytest.mark.retitle
@@ -647,7 +661,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                      'form-type': 'rev'})
         data['slug'] = ''
         url = reverse('wiki.edit', args=[doc.slug])
-        response = self.client.post(url, data)
+        response = self.client.post(url, data, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -680,7 +694,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                      'form-type': 'rev'})
         data['slug'] = ''
         url = reverse('wiki.edit', args=[d.slug])
-        response = self.client.post(url, data)
+        response = self.client.post(url, data, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -702,7 +716,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         response = self.client.post('%s?iframe=1' %
                                     reverse('wiki.edit',
                                             args=[rev.document.slug]),
-                                    data)
+                                    data, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -722,13 +736,15 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # Create a new doc.
         data = new_document_data()
         data.update({"slug": exist_slug})
-        resp = self.client.post(reverse('wiki.create'), data)
+        resp = self.client.post(reverse('wiki.create'), data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
 
         # Create another new doc.
         data = new_document_data()
         data.update({"slug": 'some-new-title'})
-        resp = self.client.post(reverse('wiki.create'), data)
+        resp = self.client.post(reverse('wiki.create'), data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
 
         # Now, post an update with duplicate slug
@@ -737,7 +753,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             'slug': exist_slug
         })
         resp = self.client.post(reverse('wiki.edit', args=['some-new-title']),
-                                data)
+                                data, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert resp['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(resp)
@@ -761,7 +777,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # Create a new doc.
         data = new_document_data()
         data.update({"title": exist_title, "slug": exist_slug})
-        resp = self.client.post(reverse('wiki.create'), data)
+        resp = self.client.post(reverse('wiki.create'), data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
 
         # Change title and slug
@@ -769,7 +786,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                      'title': changed_title,
                      'slug': changed_slug})
         resp = self.client.post(reverse('wiki.edit', args=[exist_slug]),
-                                data)
+                                data, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert resp['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(resp)
@@ -779,7 +796,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                      'title': exist_title,
                      'slug': exist_slug})
         resp = self.client.post(reverse('wiki.edit', args=[changed_slug]),
-                                data)
+                                data, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
 
     def test_slug_revamp(self):
@@ -806,7 +823,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         child_url = (reverse('wiki.create') +
                      '?parent=' +
                      str(parent_doc.id))
-        response = self.client.post(child_url, child_data)
+        response = self.client.post(child_url, child_data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         # grab new revision ID
         child = Document.objects.get(locale='en-US', slug='length/length')
@@ -818,7 +836,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         child_data['form-type'] = 'rev'
         child_data['slug'] = ''
         edit_url = reverse('wiki.edit', args=['length/length'])
-        response = self.client.post(edit_url, child_data)
+        response = self.client.post(edit_url, child_data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -834,7 +853,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         child_data['slug'] = 'length'
         translate_url = reverse('wiki.document', args=[child_data['slug']])
         response = self.client.post(translate_url + '$translate?tolocale=es',
-                                    child_data)
+                                    child_data, HTTP_HOST=settings.WIKI_HOST)
         assert 302 == response.status_code
         url = reverse('wiki.document', args=[child_data['slug']], locale='es')
         params = {'rev_saved': ''}
@@ -843,7 +862,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         translate_url = reverse('wiki.document', args=['length/length'])
         response = self.client.post(translate_url + '$translate?tolocale=es',
-                                    child_data)
+                                    child_data, HTTP_HOST=settings.WIKI_HOST)
         assert 302 == response.status_code
         slug = 'length/' + child_data['slug']
         url = reverse('wiki.document', args=[slug], locale='es')
@@ -876,7 +895,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         translate_url = reverse('wiki.edit',
                                 args=[de_child_doc.slug],
                                 locale='de')
-        response = self.client.post(translate_url, post_data)
+        response = self.client.post(translate_url, post_data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -909,7 +929,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         post_data['toc_depth'] = r.toc_depth
         translate_url = reverse('wiki.document', args=[original_slug])
         translate_url += '$translate?tolocale=' + foreign_locale
-        response = self.client.post(translate_url, post_data)
+        response = self.client.post(translate_url, post_data,
+                                    HTTP_HOST=settings.WIKI_HOST)
 
         doc_url = reverse('wiki.document', args=[foreign_slug], locale=foreign_locale)
         params = {'rev_saved': ''}
@@ -945,7 +966,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         translation_data['form'] = 'both'
         translate_url = reverse('wiki.document', args=[en_slug])
         translate_url += '$translate?tolocale=' + es_locale
-        response = self.client.post(translate_url, translation_data)
+        response = self.client.post(translate_url, translation_data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         # Sanity to make sure the translate succeeded.
         doc_url = reverse('wiki.document', args=[es_slug], locale=es_locale)
         params = {'rev_saved': ''}
@@ -993,7 +1015,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         parent_data['form'] = 'both'
         translate_url = reverse('wiki.document', args=[original_slug])
         translate_url += '$translate?tolocale=' + foreign_locale
-        response = self.client.post(translate_url, parent_data)
+        response = self.client.post(translate_url, parent_data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         doc_url = reverse('wiki.document', args=[foreign_slug], locale=foreign_locale)
         params = {'rev_saved': ''}
         doc_url = '%s?%s' % (doc_url, urlencode(params))
@@ -1002,7 +1025,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # Go to edit the translation, ensure the the slug is correct
         response = self.client.get(reverse('wiki.edit',
                                            args=[foreign_slug],
-                                           locale=foreign_locale))
+                                           locale=foreign_locale),
+                                   HTTP_HOST=settings.WIKI_HOST)
         page = pq(response.content)
         assert page.find('input[name=slug]')[0].value == foreign_slug
 
@@ -1027,7 +1051,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         translate_url = reverse('wiki.document',
                                 args=[original_slug + '/' + child_slug])
         translate_url += '$translate?tolocale=' + foreign_locale
-        response = self.client.post(translate_url, child_data)
+        response = self.client.post(translate_url, child_data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         slug = foreign_slug + '/' + child_data['slug']
         doc_url = reverse('wiki.document', args=[slug], locale=foreign_locale)
         params = {'rev_saved': ''}
@@ -1040,19 +1065,21 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # Create english doc
         self.client.login(username='admin', password='testpass')
         data = new_document_data()
-        self.client.post(reverse('wiki.create'), data)
+        self.client.post(reverse('wiki.create'), data,
+                                 HTTP_HOST=settings.WIKI_HOST)
         en_d = Document.objects.get(locale=data['locale'], slug=data['slug'])
 
         # Create french doc
         data.update({'locale': 'fr',
                      'title': 'A Tést Articlé',
                      'content': "C'ést bon."})
-        self.client.post(reverse('wiki.create', locale='fr'), data)
+        self.client.post(reverse('wiki.create', locale='fr'), data,
+                         HTTP_HOST=settings.WIKI_HOST)
         fr_d = Document.objects.get(locale=data['locale'], slug=data['slug'])
 
         # Check edit doc page for choose parent box
         url = reverse('wiki.edit', args=[fr_d.slug], locale='fr')
-        response = self.client.get(url)
+        response = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -1060,14 +1087,14 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Set the parent
         data.update({'form-type': 'rev', 'parent_id': en_d.id})
-        resp = self.client.post(url, data)
+        resp = self.client.post(url, data, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert resp['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(resp)
         assert 'fr/docs/a-test-article' in resp['Location']
 
         # Check the languages drop-down
-        resp = self.client.get(resp['Location'])
+        resp = self.client.get(resp['Location'], HTTP_HOST=settings.WIKI_HOST)
         translations = pq(resp.content)('ul#translations li')
         assert 'English (US)' in translations.text()
 
@@ -1075,17 +1102,19 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         """Allow users to change "translation source" settings"""
         self.client.login(username='admin', password='testpass')
         data = new_document_data()
-        self.client.post(reverse('wiki.create'), data)
+        self.client.post(reverse('wiki.create'), data,
+                         HTTP_HOST=settings.WIKI_HOST)
         parent = Document.objects.get(locale=data['locale'], slug=data['slug'])
 
         data.update({'title': 'Another Test Article',
                      'content': "Yahoooo!",
                      'parent_id': parent.id})
-        self.client.post(reverse('wiki.create'), data)
+        self.client.post(reverse('wiki.create'), data,
+                         HTTP_HOST=settings.WIKI_HOST)
         child = Document.objects.get(locale=data['locale'], slug=data['slug'])
 
         url = reverse('wiki.edit', args=[child.slug])
-        response = self.client.get(url)
+        response = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -1105,8 +1134,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # Update the document with some other tags
         data = new_document_data()
         data.update({'form-type': 'rev', 'tags': ', '.join(ts2)})
-        response = self.client.post(
-            reverse('wiki.edit', args=[doc.slug]), data)
+        response = self.client.post(reverse('wiki.edit', args=[doc.slug]), data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -1128,14 +1157,15 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         data = new_document_data()
         del data['slug']
         data.update({'form-type': 'rev', 'tags': ', '.join(ts2)})
-        response = self.client.post(
-            reverse('wiki.edit', args=[doc.slug]), data)
+        response = self.client.post(reverse('wiki.edit', args=[doc.slug]), data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
 
         # Check document is showing the new tags
-        response = self.client.get(doc.get_absolute_url(), follow=True)
+        response = self.client.get(doc.get_absolute_url(), follow=True,
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
 
         page = pq(response.content)
@@ -1152,7 +1182,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # Create a new doc with one review tag
         data = new_document_data()
         data.update({'review_tags': ['technical']})
-        response = self.client.post(reverse('wiki.create'), data)
+        response = self.client.post(reverse('wiki.create'), data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
 
         # Ensure there's now a doc with that expected tag in its newest
@@ -1168,7 +1199,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             'review_tags': ['editorial', 'technical'],
         })
         response = self.client.post(reverse('wiki.edit', args=[doc.slug]),
-                                    data)
+                                    data, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert_no_cache_header(response)
 
@@ -1182,7 +1213,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Now, ensure that review form appears for the review tags.
         response = self.client.get(reverse('wiki.document', args=[doc.slug]),
-                                   data)
+                                   data, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         # Since the client is logged-in, the response should not be cached.
         assert_no_cache_header(response)
@@ -1195,17 +1226,20 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         doc_selector = "ul.document-list li a:contains('{}')".format(doc.title)
 
         # Ensure the page appears on the listing pages
-        response = self.client.get(reverse('wiki.list_review'))
+        response = self.client.get(reverse('wiki.list_review'),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert_shared_cache_header(response)
         assert pq(response.content).find(doc_selector).length == 1
         response = self.client.get(reverse('wiki.list_review_tag',
-                                           args=('technical',)))
+                                           args=('technical',)),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert_shared_cache_header(response)
         assert pq(response.content).find(doc_selector).length == 1
         response = self.client.get(reverse('wiki.list_review_tag',
-                                           args=('editorial',)))
+                                           args=('editorial',)),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert_shared_cache_header(response)
         assert pq(response.content).find(doc_selector).length == 1
@@ -1213,13 +1247,16 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # Also, ensure that the page appears in the proper feeds
         # HACK: Too lazy to parse the XML. Lazy lazy.
         response = self.client.get(reverse('wiki.feeds.list_review',
-                                           args=('atom',)))
+                                           args=('atom',)),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert doc_entry.encode('utf-8') in response.content
         response = self.client.get(reverse('wiki.feeds.list_review_tag',
-                                           args=('atom', 'technical', )))
+                                           args=('atom', 'technical', )),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert doc_entry.encode('utf-8') in response.content
         response = self.client.get(reverse('wiki.feeds.list_review_tag',
-                                           args=('atom', 'editorial', )))
+                                           args=('atom', 'editorial', )),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert doc_entry.encode('utf-8') in response.content
 
         # Post an edit that removes the technical review tag.
@@ -1227,29 +1264,32 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             'form-type': 'rev',
             'review_tags': ['editorial', ]
         })
-        response = self.client.post(reverse('wiki.edit',
-                                            args=[doc.slug]), data)
+        response = self.client.post(reverse('wiki.edit', args=[doc.slug]), data,
+                                    HTTP_HOST=settings.WIKI_HOST)
 
         # Ensure only one of the tags' warning boxes appears, now.
-        response = self.client.get(reverse('wiki.document',
-                                           args=[doc.slug]), data)
+        response = self.client.get(reverse('wiki.document', args=[doc.slug]),
+                                   data, HTTP_HOST=settings.WIKI_HOST)
         page = pq(response.content)
         assert page.find('.page-meta.reviews').length == 1
         assert page.find('#id_request_technical').length == 0
         assert page.find('#id_request_editorial').length == 1
 
         # Ensure the page appears on the listing pages
-        response = self.client.get(reverse('wiki.list_review'))
+        response = self.client.get(reverse('wiki.list_review'),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert_shared_cache_header(response)
         assert pq(response.content).find(doc_selector).length == 1
         response = self.client.get(reverse('wiki.list_review_tag',
-                                           args=('technical',)))
+                                           args=('technical',)),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert_shared_cache_header(response)
         assert pq(response.content).find(doc_selector).length == 0
         response = self.client.get(reverse('wiki.list_review_tag',
-                                           args=('editorial',)))
+                                           args=('editorial',)),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert_shared_cache_header(response)
         assert pq(response.content).find(doc_selector).length == 1
@@ -1257,13 +1297,16 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # Also, ensure that the page appears in the proper feeds
         # HACK: Too lazy to parse the XML. Lazy lazy.
         response = self.client.get(reverse('wiki.feeds.list_review',
-                                           args=('atom',)))
+                                           args=('atom',)),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert doc_entry in response.content
         response = self.client.get(reverse('wiki.feeds.list_review_tag',
-                                           args=('atom', 'technical', )))
+                                           args=('atom', 'technical', )),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert doc_entry not in response.content
         response = self.client.get(reverse('wiki.feeds.list_review_tag',
-                                           args=('atom', 'editorial', )))
+                                           args=('atom', 'editorial', )),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert doc_entry in response.content
 
     @pytest.mark.review_tags
@@ -1303,7 +1346,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             slug = 'test-quick-review-%s' % data_dict['name']
             data = new_document_data()
             data.update({'review_tags': ['editorial', 'technical'], 'slug': slug})
-            resp = self.client.post(reverse('wiki.create'), data)
+            resp = self.client.post(reverse('wiki.create'), data,
+                                    HTTP_HOST=settings.WIKI_HOST)
 
             doc = Document.objects.get(slug=slug)
             rev = doc.revisions.order_by('-id').all()[0]
@@ -1311,7 +1355,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                                  args=[doc.slug])
 
             params = dict(data_dict['params'], revision_id=rev.id)
-            resp = self.client.post(review_url, params)
+            resp = self.client.post(review_url, params,
+                                    HTTP_HOST=settings.WIKI_HOST)
             assert resp.status_code == 302
             assert_no_cache_header(resp)
             doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
@@ -1331,21 +1376,20 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Post a new document.
         data = new_document_data()
-        resp = self.client.post(reverse('wiki.create'), data)
+        resp = self.client.post(reverse('wiki.create'), data,
+                                HTTP_HOST=settings.WIKI_HOST)
         doc = Document.objects.get(slug=data['slug'])
         # This is the url to post new revisions for the rest of this test
         posting_url = reverse('wiki.edit', args=[doc.slug])
 
         # Edit #1 starts...
-        resp = self.client.get(
-            reverse('wiki.edit', args=[doc.slug])
-        )
+        resp = self.client.get(reverse('wiki.edit', args=[doc.slug]),
+                               HTTP_HOST=settings.WIKI_HOST)
         page = pq(resp.content)
         rev_id1 = page.find('input[name="current_rev"]').attr('value')
         # Edit #2 starts...
-        resp = self.client.get(
-            reverse('wiki.edit', args=[doc.slug])
-        )
+        resp = self.client.get(reverse('wiki.edit', args=[doc.slug]),
+                               HTTP_HOST=settings.WIKI_HOST)
         page = pq(resp.content)
         rev_id2 = page.find('input[name="current_rev"]').attr('value')
 
@@ -1381,12 +1425,14 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         if is_ajax:
             resp = self.client.post(
                 posting_url,
-                data, HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+                data, HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                HTTP_HOST=settings.WIKI_HOST
             )
             assert resp.status_code == 200
             assert not json.loads(resp.content)['error']
         else:
-            resp = self.client.post(posting_url, data)
+            resp = self.client.post(posting_url, data,
+                                    HTTP_HOST=settings.WIKI_HOST)
             assert resp.status_code == 302
 
         assert resp['X-Robots-Tag'] == 'noindex'
@@ -1402,10 +1448,12 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             resp = self.client.post(
                 posting_url,
                 data,
-                HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+                HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                HTTP_HOST=settings.WIKI_HOST
             )
         else:
-            resp = self.client.post(posting_url, data)
+            resp = self.client.post(posting_url, data,
+                                    HTTP_HOST=settings.WIKI_HOST)
 
         # The url of the document's history
         locale = translate_locale if translate_locale else doc.locale
@@ -1483,7 +1531,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             )
 
         # Get the rev id
-        resp = self.client.get(posting_url)
+        resp = self.client.get(posting_url, HTTP_HOST=settings.WIKI_HOST)
         page = pq(resp.content)
         rev_id = page.find('input[name="current_rev"]').attr('value')
 
@@ -1496,7 +1544,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         resp = self.client.post(
             posting_url,
             data,
-            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+            HTTP_HOST=settings.WIKI_HOST
         )
 
         spam_message = render_to_string('wiki/includes/spam_error.html')
@@ -1509,7 +1558,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Post a new document.
         data = new_document_data()
-        resp = self.client.post(reverse('wiki.create'), data)
+        resp = self.client.post(reverse('wiki.create'), data,
+                                HTTP_HOST=settings.WIKI_HOST)
         doc = Document.objects.get(slug=data['slug'])
         # This is the url to post new revisions for the rest of this test
         if translate_locale:
@@ -1523,11 +1573,12 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                 'wiki.translate',
                 args=[data['slug']]
             ) + '?tolocale={}'.format(translate_locale)
-            self.client.post(translate_url, data, follow=True)
+            self.client.post(translate_url, data, follow=True,
+                             HTTP_HOST=settings.WIKI_HOST)
             data.update({'locale': translate_locale})
 
         # Edit #1
-        resp = self.client.get(posting_url)
+        resp = self.client.get(posting_url, HTTP_HOST=settings.WIKI_HOST)
         page = pq(resp.content)
         rev_id1 = page.find('input[name="current_rev"]').attr('value')
 
@@ -1540,11 +1591,12 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         resp1 = self.client.post(
             posting_url,
             data,
-            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+            HTTP_HOST=settings.WIKI_HOST
         )
 
         # Edit #2
-        resp = self.client.get(posting_url)
+        resp = self.client.get(posting_url, HTTP_HOST=settings.WIKI_HOST)
         page = pq(resp.content)
         rev_id2 = page.find('input[name="current_rev"]').attr('value')
 
@@ -1557,7 +1609,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         resp2 = self.client.post(
             posting_url,
             data,
-            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+            HTTP_HOST=settings.WIKI_HOST
         )
 
         # For Ajax requests the response is a JsonResponse
@@ -1594,7 +1647,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         data['toc_depth'] = 0
         data['slug'] = doc.slug
         data['title'] = doc.title
-        resp = self.client.post(reverse('wiki.edit', args=[doc.slug]), data)
+        resp = self.client.post(reverse('wiki.edit', args=[doc.slug]), data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert resp['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(resp)
@@ -1616,7 +1670,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         data['slug'] = rev.document.slug
         data['title'] = rev.document.title
         resp = self.client.post(reverse('wiki.edit', args=[rev.document.slug]),
-                                data)
+                                data, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert resp['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(resp)
@@ -1638,7 +1692,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         data = new_document_data()
         data['title'] = 'Replicated local storage'
         data['parent_topic'] = doc.id
-        resp = self.client.post(reverse('wiki.create'), data)
+        resp = self.client.post(reverse('wiki.create'), data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert resp['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(resp)
@@ -1677,7 +1732,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         resp = self.client.get(reverse('wiki.repair_breadcrumbs',
                                        args=[french_bottom.slug],
-                                       locale='fr'))
+                                       locale='fr'),
+                               HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert_no_cache_header(resp)
         assert french_bottom.get_absolute_url() in resp['Location']
@@ -1699,7 +1755,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
         url = reverse('wiki.edit', args=(d2.slug,), locale=d2.locale)
 
-        resp = self.client.get(url)
+        resp = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert resp['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(resp)
@@ -1719,14 +1775,16 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Test that the 'discard' button on an edit goes to the original page
         doc = _create_doc('testdiscarddoc', settings.WIKI_DEFAULT_LANGUAGE)
-        response = self.client.get(reverse('wiki.edit', args=[doc.slug]))
+        response = self.client.get(reverse('wiki.edit', args=[doc.slug]),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert (pq(response.content).find('.btn-discard').attr('href') ==
                 reverse('wiki.document', args=[doc.slug]))
 
         # Test that the 'discard button on a new translation goes
         # to the en-US page'
         response = self.client.get(reverse('wiki.translate', args=[doc.slug]),
-                                   {'tolocale': 'es'})
+                                   {'tolocale': 'es'},
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert (pq(response.content).find('.btn-discard').attr('href') ==
                 reverse('wiki.document', args=[doc.slug]))
 
@@ -1735,7 +1793,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         foreign_doc = _create_doc('testdiscarddoc', 'es')
         response = self.client.get(reverse('wiki.edit',
                                            args=[foreign_doc.slug],
-                                           locale=foreign_doc.locale))
+                                           locale=foreign_doc.locale),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert (pq(response.content).find('.btn-discard').attr('href') ==
                 reverse('wiki.document', args=[foreign_doc.slug],
                         locale=foreign_doc.locale))
@@ -1749,7 +1808,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         data = new_document_data()
         data['title'] = 'A Test Article For Reverting'
         data['slug'] = 'test-article-for-reverting'
-        response = self.client.post(reverse('wiki.create'), data)
+        response = self.client.post(reverse('wiki.create'), data,
+                                    HTTP_HOST=settings.WIKI_HOST)
 
         doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
                                    slug='test-article-for-reverting')
@@ -1758,13 +1818,14 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         data['content'] = 'Not lorem ipsum anymore'
         data['comment'] = 'Nobody likes Latin anyway'
 
-        response = self.client.post(reverse('wiki.edit',
-                                            args=[doc.slug]), data)
+        response = self.client.post(reverse('wiki.edit', args=[doc.slug]), data,
+                                    HTTP_HOST=settings.WIKI_HOST)
 
         mock_kumascript_get.reset_mock()
         response = self.client.post(reverse('wiki.revert_document',
                                             args=[doc.slug, rev.id]),
-                                    {'revert': True, 'comment': 'Blah blah'})
+                                    {'revert': True, 'comment': 'Blah blah'},
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert_no_cache_header(response)
         assert mock_kumascript_get.called, "kumascript should have been used"
@@ -1776,7 +1837,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         rev = doc.revisions.order_by('-id').all()[1]
         response = self.client.post(reverse('wiki.revert_document',
                                             args=[doc.slug, rev.id]),
-                                    {'revert': True})
+                                    {'revert': True},
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         rev = doc.revisions.order_by('-id').all()[0]
         assert ': ' not in rev.comment
@@ -1790,7 +1852,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
 
         resp = self.client.post(reverse('wiki.revert_document',
-                                        args=[doc.slug, prev_rev_id]))
+                                        args=[doc.slug, prev_rev_id]),
+                                HTTP_HOST=settings.WIKI_HOST)
 
         assert resp.status_code == 200
         assert_no_cache_header(resp)
@@ -1802,7 +1865,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         slug = 'test-article-for-storing-revision-ip'
         data.update({'title': 'A Test Article For Storing Revision IP',
                      'slug': slug})
-        self.client.post(reverse('wiki.create'), data)
+        self.client.post(reverse('wiki.create'), data,
+                         HTTP_HOST=settings.WIKI_HOST)
 
         doc = Document.objects.get(locale='en-US', slug=slug)
 
@@ -1813,7 +1877,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         resp = self.client.post(reverse('wiki.edit', args=[doc.slug]),
                                 data,
                                 HTTP_USER_AGENT='Mozilla Firefox',
-                                HTTP_REFERER='http://localhost/')
+                                HTTP_REFERER='http://localhost/',
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert resp['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(resp)
@@ -1826,7 +1891,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             self.client.post(reverse('wiki.edit', args=[doc.slug]),
                              data,
                              HTTP_USER_AGENT='Mozilla Firefox',
-                             HTTP_REFERER='http://localhost/')
+                             HTTP_REFERER='http://localhost/',
+                             HTTP_HOST=settings.WIKI_HOST)
         assert RevisionIP.objects.all().count() == 1
         rev = doc.revisions.order_by('-id').all()[0]
         rev_ip = RevisionIP.objects.get(revision=rev)
@@ -1842,7 +1908,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         slug = 'test-article-for-storing-revision-ip'
         data.update({'title': 'A Test Article For First Edit Emails',
                      'slug': slug})
-        self.client.post(reverse('wiki.create'), data)
+        self.client.post(reverse('wiki.create'), data,
+                         HTTP_HOST=settings.WIKI_HOST)
         assert len(mail.outbox) == 1
 
         doc = Document.objects.get(
@@ -1852,7 +1919,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                      'content': 'This edit should not send an email',
                      'comment': 'This edit should not send an email'})
 
-        resp = self.client.post(reverse('wiki.edit', args=[doc.slug]), data)
+        resp = self.client.post(reverse('wiki.edit', args=[doc.slug]), data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert resp['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(resp)
@@ -1865,7 +1933,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         self.client.post(reverse('wiki.edit',
                                  args=[doc.slug]),
-                         data)
+                         data, HTTP_HOST=settings.WIKI_HOST)
         assert len(mail.outbox) == 2
 
         def _check_message_for_headers(message, username):
@@ -1901,7 +1969,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                      'content': 'This edit should send an email',
                      'comment': 'This edit should send an email'})
         resp = self.client.post(reverse('wiki.edit', args=[rev.document.slug]),
-                                data)
+                                data, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert resp['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(resp)
@@ -1929,7 +1997,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                      'comment': 'This edit should send 2 emails'})
         self.client.post(reverse('wiki.edit',
                                  args=[rev.document.slug]),
-                         data)
+                         data, HTTP_HOST=settings.WIKI_HOST)
         self.assertEquals(2, len(mail.outbox))
         message = mail.outbox[0]
         assert testuser2.email in message.to
@@ -1959,7 +2027,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                      'content': 'This edit should send an email',
                      'comment': 'This edit should send an email'})
         resp = self.client.post(reverse('wiki.edit', args=[child_doc.slug]),
-                                data)
+                                data, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert resp['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(resp)
@@ -1987,7 +2055,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                      'comment': 'This edit should send an email'})
         self.client.post(reverse('wiki.edit',
                                  args=[grandchild_doc.slug]),
-                         data)
+                         data, HTTP_HOST=settings.WIKI_HOST)
         assert len(mail.outbox) == 1
         message = mail.outbox[0]
         assert testuser2.email in message.to
@@ -2014,7 +2082,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                      'comment': 'This edit should send an email'})
         self.client.post(reverse('wiki.edit',
                                  args=[child_doc.slug]),
-                         data)
+                         data, HTTP_HOST=settings.WIKI_HOST)
         assert len(mail.outbox) == 1
         message = mail.outbox[0]
         assert testuser2.email in message.to
@@ -2055,7 +2123,8 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             response = self.client.get('%s?raw=true' %
                                        reverse('wiki.document',
                                                args=[rev.document.slug]),
-                                       HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                                       HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                                       HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         # Since the client is logged-in, the response should not be cached.
         assert_no_cache_header(response)
@@ -2075,7 +2144,8 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         response = self.client.get('%s?raw=true' %
                                    reverse('wiki.document',
                                            args=[rev.document.slug]),
-                                   HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                                   HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         # Since the client is logged-in, the response should not be cached.
         assert_no_cache_header(response)
@@ -2113,7 +2183,8 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         response = self.client.get('%s?raw=true&edit_links=true' %
                                    reverse('wiki.document',
                                            args=[rev.document.slug]),
-                                   HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                                   HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         # Since the client is logged-in, the response should not be cached.
         assert_no_cache_header(response)
@@ -2143,7 +2214,8 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         response = self.client.get('%s?section=s2&raw=true' %
                                    reverse('wiki.document',
                                            args=[rev.document.slug]),
-                                   HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                                   HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         # Since the client is logged-in, the response should not be cached.
         assert_no_cache_header(response)
@@ -2175,7 +2247,8 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
                                     {"form-type": "rev",
                                      "slug": rev.document.slug,
                                      "content": replace},
-                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -2199,7 +2272,8 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         response = self.client.get('%s?raw=true' %
                                    reverse('wiki.document',
                                            args=[rev.document.slug]),
-                                   HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                                   HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         # Since the client is logged-in, the response should not be cached.
         assert_no_cache_header(response)
@@ -2254,7 +2328,8 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         resp = self.client.get('%s?section=s1' %
                                reverse('wiki.edit',
                                        args=[rev.document.slug]),
-                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                               HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                               HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert resp['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(resp)
@@ -2265,7 +2340,8 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         resp = self.client.get('%s?section=s2' %
                                reverse('wiki.edit',
                                        args=[rev.document.slug]),
-                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                               HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                               HTTP_HOST=settings.WIKI_HOST)
         page = pq(resp.content)
         rev_id2 = page.find('input[name="current_rev"]').attr('value')
 
@@ -2280,7 +2356,8 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
                                 reverse('wiki.edit',
                                         args=[rev.document.slug]),
                                 data,
-                                HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                                HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert resp['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(resp)
@@ -2297,7 +2374,8 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         resp = self.client.post('%s?section=s1&raw=true' %
                                 reverse('wiki.edit', args=[rev.document.slug]),
                                 data,
-                                HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                                HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                                HTTP_HOST=settings.WIKI_HOST)
         # No conflict, but we should get a 205 Reset as an indication that the
         # page needs a refresh.
         assert resp.status_code == 205
@@ -2306,7 +2384,8 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         response = self.client.get('%s?raw=true' %
                                    reverse('wiki.document',
                                            args=[rev.document.slug]),
-                                   HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                                   HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         # Since the client is logged-in, the response should not be cached.
         assert_no_cache_header(response)
@@ -2353,14 +2432,16 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         # Edit #1 starts...
         resp = self.client.get('%s?section=s2' %
                                reverse('wiki.edit', args=[rev.document.slug]),
-                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                               HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                               HTTP_HOST=settings.WIKI_HOST)
         page = pq(resp.content)
         rev_id1 = page.find('input[name="current_rev"]').attr('value')
 
         # Edit #2 starts...
         resp = self.client.get('%s?section=s2' %
                                reverse('wiki.edit', args=[rev.document.slug]),
-                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                               HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                               HTTP_HOST=settings.WIKI_HOST)
         page = pq(resp.content)
         rev_id2 = page.find('input[name="current_rev"]').attr('value')
 
@@ -2373,7 +2454,8 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         })
         resp = self.client.post('%s?section=s2&raw=true' %
                                 reverse('wiki.edit', args=[rev.document.slug]),
-                                data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                                data, HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                                HTTP_HOST=settings.WIKI_HOST)
         assert not json.loads(resp.content)['error']
 
         # Edit #1 submits, but since it's the same section, there's a collision
@@ -2384,7 +2466,8 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         })
         resp = self.client.post('%s?section=s2&raw=true' %
                                 reverse('wiki.edit', args=[rev.document.slug]),
-                                data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                                data, HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                                HTTP_HOST=settings.WIKI_HOST)
         assert 200 == resp.status_code
         # We receive the midair collission message
         history_url = reverse(
@@ -2418,7 +2501,8 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         resp = self.client.get('%s?raw&include' %
                                reverse('wiki.document',
                                        args=[rev.document.slug]),
-                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                               HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                               HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_shared_cache_header(resp)
         assert (normalize_html(expected) ==
@@ -2451,7 +2535,8 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         self.client.post('%s?section=s2&raw=true' %
                          reverse('wiki.edit', args=[rev.document.slug]),
                          {"form-type": "rev", "slug": rev.document.slug, "content": replace},
-                         follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                         follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                         HTTP_HOST=settings.WIKI_HOST)
         changed = Document.objects.get(pk=rev.document.id).current_revision
         assert rev.id != changed.id
         assert 1 == changed.toc_depth
@@ -2484,7 +2569,8 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         self.client.post('%s?section=s2&raw=true' %
                          reverse('wiki.edit', args=[rev.document.slug]),
                          {"form-type": "rev", "slug": rev.document.slug, "content": replace},
-                         follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                         follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+                         HTTP_HOST=settings.WIKI_HOST)
         changed = Document.objects.get(pk=rev.document.id).current_revision
         assert rev.id != changed.id
         assert set(tags_to_save) == set(t.name for t in changed.review_tags.all())
@@ -2542,7 +2628,8 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
         d = document(locale='zh-CN')
         d.save()
         mt_url = '/{locale}/{slug}'.format(locale=d.locale, slug=d.slug)
-        resp = self.client.get(mt_url, follow=True)
+        resp = self.client.get(mt_url, follow=True,
+                               HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
 
         # Check the last redirect chain url is correct document url
@@ -2556,7 +2643,7 @@ class MindTouchRedirectTests(UserTestCase, WikiTestCase):
         d.title = 'HTML 5'
         d.save()
         mt_url = '/en-US/%s?view=edit' % (d.slug,)
-        resp = self.client.get(mt_url)
+        resp = self.client.get(mt_url, HTTP_HOST=settings.WIKI_HOST)
         assert 301 == resp.status_code
         expected_url = d.get_absolute_url('wiki.edit')
         assert resp['Location'] == expected_url
@@ -2586,7 +2673,8 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
     def test_rendered_content(self, mock_kumascript_get):
         """Document view should serve up rendered content when available"""
         mock_kumascript_get.return_value = (self.rendered_content, None)
-        resp = self.client.get(self.url, follow=False)
+        resp = self.client.get(self.url, follow=False,
+                               HTTP_HOST=settings.WIKI_HOST)
         p = pq(resp.content)
         txt = p.find('#wikiArticle').text()
         assert self.rendered_content in txt
@@ -2613,7 +2701,8 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         # Only for logged-in users, ensure the render-in-progress warning is
         # displayed.
         self.client.login(username='testuser', password='testpass')
-        resp = self.client.get(self.url, follow=False)
+        resp = self.client.get(self.url, follow=False,
+                               HTTP_HOST=settings.WIKI_HOST)
         p = pq(resp.content)
         assert 1 == p.find('#doc-rendering-in-progress').length
 
@@ -2631,7 +2720,8 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         self.doc.save()
 
         # Now, ensure that raw content is shown in the view.
-        resp = self.client.get(self.url, follow=False)
+        resp = self.client.get(self.url, follow=False,
+                               HTTP_HOST=settings.WIKI_HOST)
         p = pq(resp.content)
         txt = p.find('#wikiArticle').text()
         assert self.rendered_content not in txt
@@ -2641,7 +2731,8 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         # Only for logged-in users, ensure that a warning is displayed about
         # the fallback
         self.client.login(username='testuser', password='testpass')
-        resp = self.client.get(self.url, follow=False)
+        resp = self.client.get(self.url, follow=False,
+                               HTTP_HOST=settings.WIKI_HOST)
         p = pq(resp.content)
         assert 1 == p.find('#doc-render-raw-fallback').length
 
@@ -2660,7 +2751,7 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         })
 
         edit_url = reverse('wiki.edit', args=[self.doc.slug])
-        resp = self.client.post(edit_url, data)
+        resp = self.client.post(edit_url, data, HTTP_HOST=settings.WIKI_HOST)
         assert 302 == resp.status_code
         assert mock_document_schedule_rendering.called
 
@@ -2672,7 +2763,8 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         })
         translate_url = (reverse('wiki.translate', args=[data['slug']]) +
                          '?tolocale=fr')
-        response = self.client.post(translate_url, data)
+        response = self.client.post(translate_url, data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -2706,7 +2798,7 @@ class PageMoveTests(UserTestCase, WikiTestCase):
         with override_flag('page_move', True):
             resp = self.client.post(reverse('wiki.move',
                                             args=(parent_doc.slug,)),
-                                    data=data)
+                                    data=data, HTTP_HOST=settings.WIKI_HOST)
 
         assert resp.status_code == 200
         assert_no_cache_header(resp)

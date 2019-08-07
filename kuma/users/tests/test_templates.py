@@ -4,7 +4,9 @@ import pytest
 from allauth.account.models import EmailAddress
 from constance import config as constance_config
 from constance.test.utils import override_config
+from django.conf import settings
 from django.db import IntegrityError
+from django.http import HttpResponse
 from mock import patch
 from pyquery import PyQuery as pq
 from waffle.testutils import override_switch
@@ -138,33 +140,16 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         profile_data = self.github_profile_data.copy()
         profile_data['login'] = self.existing_username
         profile_data['email'] = self.existing_email
-        response = self.github_login(profile_data=profile_data)
+
+        # The "github_login" method mocks requests, so when the "render_react"
+        # call is made for the home page, it'll fail because there's no mock
+        # address defined for that SSR request. For the purpose of this test,
+        # we don't care about the content of the home page, so let's explicitly
+        # mock the "render_home" call.
+        with patch('kuma.landing.views.render_home') as mock_render_home:
+            mock_render_home.return_value = HttpResponse()
+            response = self.github_login(profile_data=profile_data)
         assert response.status_code == 200
-
-        user_url = reverse('users.user_detail',
-                           kwargs={'username': self.existing_username})
-        logout_url = reverse('account_logout')
-        home_url = reverse('home')
-        signout_url = urlparams(logout_url)
-        parsed = pq(response.content)
-
-        login_info = parsed.find('.login')
-        # Check login user url is there
-        user_link = login_info.children('.user-url')
-        assert user_link.attr['href'] == user_url
-
-        form = login_info.find('form')
-        # There should be signout link in the form action
-        expected = signout_url.replace('%2F', '/')  # decode slashes
-        assert form.attr['action'] == expected
-        assert form.attr['method'] == 'post'
-        # Check next url is provided as input field
-        next_input = form.children("input[name='next']")
-        assert next_input.val() == home_url
-        # Ensure CSRF protection has not been added, since it creates problems
-        # when used with a CDN like CloudFront (see bugzilla #1456165).
-        csrf_input = form.children("input[name='csrfmiddlewaretoken']")
-        assert not csrf_input
 
     def test_signin_form_present(self):
         """When not authenticated, the GitHub login link is present."""
@@ -257,7 +242,10 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         response = self.client.post(signup_url, data=data)
         assert response.status_code == 302
         assert_no_cache_header(response)
-        response = self.client.get(response['Location'], follow=True)
+
+        # The rest of this test simply gets and checks the wiki home page.
+        response = self.client.get(response['Location'], follow=True,
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
 
         user_url = reverse('users.user_detail', kwargs={'username': username})
@@ -296,7 +284,7 @@ class BanTestCase(UserTestCase):
         ban_url = reverse('users.ban_user',
                           kwargs={'username': testuser.username})
 
-        resp = self.client.get(ban_url)
+        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -320,7 +308,7 @@ class BanTestCase(UserTestCase):
         ban_url = reverse('users.ban_user',
                           kwargs={'username': testuser.username})
 
-        resp = self.client.get(ban_url)
+        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -342,7 +330,8 @@ class BanTestCase(UserTestCase):
         ban_url = reverse('users.ban_user',
                           kwargs={'username': testuser.username})
 
-        resp = self.client.get(ban_url, follow=True)
+        resp = self.client.get(ban_url, follow=True,
+                               HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -369,7 +358,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': self.testuser.username})
 
-        resp = self.client.get(ban_url)
+        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -392,7 +381,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': self.testuser.username})
 
-        resp = self.client.get(ban_url)
+        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -421,7 +410,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': self.testuser.username})
 
-        resp = self.client.get(ban_url)
+        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -447,7 +436,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         # be no link to ban for other reasons
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': self.testuser.username})
-        resp = self.client.get(ban_url)
+        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -475,7 +464,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
 
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': self.testuser2.username})
-        resp = self.client.get(ban_url)
+        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -510,7 +499,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': self.testuser.username})
 
-        resp = self.client.get(ban_url)
+        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -541,7 +530,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': self.testuser2.username})
 
-        resp = self.client.get(ban_url)
+        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -569,7 +558,7 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
 
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': self.testuser2.username})
-        resp = self.client.get(ban_url)
+        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -591,7 +580,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         self.client.login(username='admin', password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
-        resp = self.client.post(ban_url)
+        resp = self.client.post(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -649,7 +638,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-id': [rev.id for rev in revisions_created]}
-        resp = self.client.post(ban_url, data=data)
+        resp = self.client.post(ban_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -710,7 +700,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-id': [rev.id for rev in revisions_created]}
-        resp = self.client.post(ban_url, data=data)
+        resp = self.client.post(ban_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -760,7 +751,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-id': [rev.id for rev in revisions_created]}
-        resp = self.client.post(ban_url, data=data)
+        resp = self.client.post(ban_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -813,7 +805,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-id': []}
-        resp = self.client.post(ban_url, data=data)
+        resp = self.client.post(ban_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -873,7 +866,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             rev.id for rev in revisions_created_new_document
         ]
         data = {'revision-already-spam': revisions_created_ids}
-        resp = self.client.post(ban_url, data=data)
+        resp = self.client.post(ban_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -952,7 +946,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             revs_doc_3[0].id, revs_doc_3[1].id, revs_doc_3[2].id
         ]
         data = {'revision-id': posted_ids}
-        resp = self.client.post(ban_url, data=data)
+        resp = self.client.post(ban_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -1027,7 +1022,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-id': [rev_doc1.id], 'revision-already-spam': [rev_doc2.id]}
-        resp = self.client.post(ban_url, data=data)
+        resp = self.client.post(ban_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -1073,7 +1069,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-already-spam': [revisions_already_spam[0].id]}
-        resp = self.client.post(ban_url, data=data)
+        resp = self.client.post(ban_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -1131,7 +1128,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-already-spam': [testuser_revisions[0].id]}
-        resp = self.client.post(ban_url, data=data)
+        resp = self.client.post(ban_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -1180,7 +1178,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-id': [rev.id for rev in spam_revisions]}
-        resp = self.client.post(ban_url, data=data)
+        resp = self.client.post(ban_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -1245,7 +1244,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-id': [rev.id for rev in spam_revisions]}
-        resp = self.client.post(ban_url, data=data)
+        resp = self.client.post(ban_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -1311,7 +1311,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         ban_url = reverse('users.ban_user_and_cleanup_summary',
                           kwargs={'username': self.testuser.username})
         data = {'revision-id': [rev.id for rev in spam_revisions]}
-        resp = self.client.post(ban_url, data=data)
+        resp = self.client.post(ban_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
         page = pq(resp.content)
@@ -1366,7 +1367,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             dl_mock.side_effect = IntegrityError()
 
             data = {'revision-id': [rev.id for rev in spam_revision]}
-            resp = self.client.post(ban_url, data=data)
+            resp = self.client.post(ban_url, data=data,
+                                    HTTP_HOST=settings.WIKI_HOST)
 
         assert resp.status_code == 200
         assert_no_cache_header(resp)
@@ -1430,7 +1432,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             revert_mock.side_effect = IntegrityError()
 
             data = {'revision-id': [rev.id for rev in spam_revisions]}
-            resp = self.client.post(ban_url, data=data)
+            resp = self.client.post(ban_url, data=data,
+                                    HTTP_HOST=settings.WIKI_HOST)
 
         assert resp.status_code == 200
         assert_no_cache_header(resp)

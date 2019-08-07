@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 from datetime import datetime
 
+from django.conf import settings
 import mock
 import pytest
 
@@ -42,7 +43,7 @@ def test_gather_no_prereqs(tagged_doc, client):
     """On the first call, multiple items are requested from storage."""
     doc_path = tagged_doc.get_absolute_url()
     rev_path = doc_path + '$revision/%d' % tagged_doc.current_revision_id
-    html = client.get(rev_path).content
+    html = client.get(rev_path, HTTP_HOST=settings.WIKI_HOST).content
     source = RevisionSource(rev_path)
     requester = mock_requester(content=html)
     storage = mock_storage(spec=[
@@ -83,7 +84,7 @@ def test_gather_existing_doc(tagged_doc, client):
     """If only the doc is present, then full gather is performed."""
     doc_path = tagged_doc.get_absolute_url()
     rev_path = doc_path + '$revision/%d' % tagged_doc.current_revision_id
-    html = client.get(rev_path).content
+    html = client.get(rev_path, HTTP_HOST=settings.WIKI_HOST).content
     source = RevisionSource(rev_path)
     requester = mock_requester(content=html)
     storage = mock_storage(spec=[
@@ -128,7 +129,7 @@ def test_gather_with_prereqs(tagged_doc, client):
     """On the first call, multiple items are requested from storage."""
     doc_path = tagged_doc.get_absolute_url()
     rev_path = doc_path + '$revision/%d' % tagged_doc.current_revision_id
-    html = client.get(rev_path).content
+    html = client.get(rev_path, HTTP_HOST=settings.WIKI_HOST).content
     source = RevisionSource(rev_path)
     source.state = source.STATE_PREREQ
     requester = mock_requester(requester_spec=[])
@@ -164,7 +165,7 @@ def test_gather_second_pass(tagged_doc, client):
     """A revision will request a document on the second pass."""
     doc_path = tagged_doc.get_absolute_url()
     rev_path = doc_path + '$revision/%d' % tagged_doc.current_revision_id
-    html = client.get(rev_path).content
+    html = client.get(rev_path, HTTP_HOST=settings.WIKI_HOST).content
     source = RevisionSource(rev_path)
     requester = mock_requester(requester_spec=[])
     storage = mock_storage(spec=[
@@ -213,7 +214,7 @@ def test_gather_document_slug_wins(tagged_doc, client):
     orig_doc_path = tagged_doc.get_absolute_url()
     orig_rev_path = orig_doc_path + ('$revision/%d' %
                                      tagged_doc.current_revision_id)
-    html = client.get(orig_rev_path).content
+    html = client.get(orig_rev_path, HTTP_HOST=settings.WIKI_HOST).content
     tagged_doc.slug = 'Other'
     doc_path = tagged_doc.get_absolute_url()
     rev_path = doc_path + '$revision/%d' % tagged_doc.current_revision_id
@@ -254,7 +255,7 @@ def test_gather_older_revision(root_doc, client):
     old_rev = root_doc.revisions.order_by('id')[0]
     assert old_rev != root_doc.current_revision
     rev_path = doc_path + '$revision/%d' % old_rev.id
-    html = client.get(rev_path).content
+    html = client.get(rev_path, HTTP_HOST=settings.WIKI_HOST).content
     source = RevisionSource(rev_path)
     source.state = source.STATE_PREREQ
     requester = mock_requester(requester_spec=[])
@@ -306,7 +307,7 @@ def test_gather_based_on_is_needed(translated_doc, client):
     rev_path = rev.get_absolute_url()
     based_on_path = rev.based_on.get_absolute_url()
     source = RevisionSource(rev_path, based_on=based_on_path)
-    html = client.get(rev_path).content
+    html = client.get(rev_path, HTTP_HOST=settings.WIKI_HOST).content
     requester = mock_requester(requester_spec=[])
     storage = mock_storage(spec=[
         'get_document', 'get_revision', 'get_document_metadata',
@@ -327,7 +328,7 @@ def test_gather_based_on_is_available(translated_doc, client):
     rev_path = rev.get_absolute_url()
     based_on_path = rev.based_on.get_absolute_url()
     source = RevisionSource(rev_path, based_on=based_on_path)
-    html = client.get(rev_path).content
+    html = client.get(rev_path, HTTP_HOST=settings.WIKI_HOST).content
     requester = mock_requester(requester_spec=[])
     storage = mock_storage(spec=[
         'get_document', 'get_revision', 'get_document_metadata',

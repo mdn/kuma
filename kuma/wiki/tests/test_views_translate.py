@@ -1,4 +1,5 @@
 import pytest
+from django.conf import settings
 from django.contrib.auth.models import Permission
 from pyquery import PyQuery as pq
 
@@ -25,7 +26,7 @@ def test_translate_get(root_doc, trans_doc_client):
     url = reverse('wiki.translate', args=(root_doc.slug,))
     url += '?tolocale=Fr'
 
-    response = trans_doc_client.get(url)
+    response = trans_doc_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert response['X-Robots-Tag'] == 'noindex'
     assert_no_cache_header(response)
@@ -58,7 +59,7 @@ def test_translate_post(root_doc, trans_doc_client):
     url = reverse('wiki.translate', args=(root_doc.slug,))
     url += '?tolocale=fr'
 
-    response = trans_doc_client.post(url, data)
+    response = trans_doc_client.post(url, data, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
     assert response['X-Robots-Tag'] == 'noindex'
     assert_no_cache_header(response)

@@ -274,7 +274,9 @@ export class SearchRoute extends Route<
                         return response.json();
                     } else {
                         throw new Error(
-                            `${response.status} ${response.statusText} fetching ${url}`
+                            `${response.status} ${
+                                response.statusText
+                            } fetching ${url}`
                         );
                     }
                 })

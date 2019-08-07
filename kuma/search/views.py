@@ -4,6 +4,7 @@ from operator import attrgetter
 from django.shortcuts import render
 from django.utils.translation import ugettext
 from django.views.decorators.cache import never_cache
+from django.views.decorators.http import require_GET
 from ratelimit.decorators import ratelimit
 from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
@@ -30,6 +31,7 @@ from .utils import QueryURLObject
 # the filter switches (bug 1426968).
 # Alternate: forbid gzip by setting Content-Encoding: identity
 @never_cache
+@require_GET
 @ratelimit(key='user_or_ip', rate='25/m', block=True)
 def search(request, *args, **kwargs):
     """

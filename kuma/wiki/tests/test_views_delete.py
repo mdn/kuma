@@ -1,3 +1,4 @@
+from django.conf import settings
 import pytest
 
 from kuma.core.tests import assert_no_cache_header
@@ -14,7 +15,7 @@ def test_login(root_doc, client, endpoint):
     if endpoint == 'revert_document':
         args.append(root_doc.current_revision.id)
     url = reverse('wiki.{}'.format(endpoint), args=args)
-    response = client.get(url)
+    response = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
     assert 'en-US/users/signin?' in response['Location']
     assert_no_cache_header(response)
@@ -29,7 +30,7 @@ def test_permission(root_doc, editor_client, endpoint):
     """
     args = [root_doc.slug]
     url = reverse('wiki.{}'.format(endpoint), args=args)
-    response = editor_client.get(url)
+    response = editor_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 403
     assert_no_cache_header(response)
 
@@ -41,21 +42,21 @@ def test_read_only_mode(root_doc, user_client, endpoint):
     if endpoint == 'revert_document':
         args.append(root_doc.current_revision.id)
     url = reverse('wiki.{}'.format(endpoint), args=args)
-    response = user_client.get(url)
+    response = user_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 403
     assert_no_cache_header(response)
 
 
 def test_delete_get(root_doc, moderator_client):
     url = reverse('wiki.delete_document', args=[root_doc.slug])
-    response = moderator_client.get(url)
+    response = moderator_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert_no_cache_header(response)
 
 
 def test_purge_get(deleted_doc, moderator_client):
     url = reverse('wiki.purge_document', args=[deleted_doc.slug])
-    response = moderator_client.get(url)
+    response = moderator_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert_no_cache_header(response)
     assert 'This document was deleted by' in response.content.decode('utf-8')
@@ -64,7 +65,7 @@ def test_purge_get(deleted_doc, moderator_client):
 def test_purge_get_no_log(deleted_doc, moderator_client):
     url = reverse('wiki.purge_document', args=[deleted_doc.slug])
     DocumentDeletionLog.objects.all().delete()
-    response = moderator_client.get(url)
+    response = moderator_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert_no_cache_header(response)
     assert 'deleted, for unknown reasons' in response.content.decode('utf-8')
@@ -75,7 +76,7 @@ def test_restore_get(root_doc, moderator_client):
     with pytest.raises(Document.DoesNotExist):
         Document.objects.get(slug=root_doc.slug, locale=root_doc.locale)
     url = reverse('wiki.restore_document', args=[root_doc.slug])
-    response = moderator_client.get(url)
+    response = moderator_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
     assert response['Location'].endswith(root_doc.get_absolute_url())
     assert_no_cache_header(response)
@@ -85,14 +86,15 @@ def test_restore_get(root_doc, moderator_client):
 def test_revert_get(root_doc, moderator_client):
     url = reverse('wiki.revert_document',
                   args=[root_doc.slug, root_doc.current_revision.id])
-    response = moderator_client.get(url)
+    response = moderator_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert_no_cache_header(response)
 
 
 def test_delete_post(root_doc, moderator_client):
     url = reverse('wiki.delete_document', args=[root_doc.slug])
-    response = moderator_client.post(url, data=dict(reason='test'))
+    response = moderator_client.post(url, data=dict(reason='test'),
+                                     HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
     assert response['Location'].endswith(root_doc.get_absolute_url())
     assert_no_cache_header(response)
@@ -108,7 +110,8 @@ def test_delete_post(root_doc, moderator_client):
 def test_purge_post(root_doc, moderator_client):
     root_doc.delete()
     url = reverse('wiki.purge_document', args=[root_doc.slug])
-    response = moderator_client.post(url, data=dict(confirm='true'))
+    response = moderator_client.post(url, data=dict(confirm='true'),
+                                     HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
     assert response['Location'].endswith(root_doc.get_absolute_url())
     assert_no_cache_header(response)
@@ -122,7 +125,8 @@ def test_revert_post(edit_revision, moderator_client):
     first_revision = root_doc.revisions.first()
     url = reverse('wiki.revert_document',
                   args=[root_doc.slug, first_revision.id])
-    response = moderator_client.post(url, data=dict(comment='test'))
+    response = moderator_client.post(url, data=dict(comment='test'),
+                                     HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
     assert response['Location'].endswith(reverse('wiki.document_revisions',
                                                  args=[root_doc.slug]))

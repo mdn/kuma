@@ -1,6 +1,7 @@
 import json
 
 import pytest
+from django.conf import settings
 from django.utils.six.moves.urllib.parse import urlencode
 from waffle.testutils import override_switch
 
@@ -15,13 +16,14 @@ from kuma.core.urlresolvers import reverse
 def test_disallowed_methods(db, client, http_method, endpoint):
     """HTTP methods other than GET & HEAD are not allowed."""
     url = reverse('wiki.{}'.format(endpoint))
-    response = getattr(client, http_method)(url)
+    response = getattr(client, http_method)(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 405
     assert_shared_cache_header(response)
 
 
 def test_ckeditor_config(db, client):
-    response = client.get(reverse('wiki.ckeditor_config'))
+    response = client.get(reverse('wiki.ckeditor_config'),
+                          HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert_shared_cache_header(response)
     assert response['Content-Type'] == 'application/x-javascript'

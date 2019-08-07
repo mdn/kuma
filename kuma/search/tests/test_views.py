@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.conf import settings
 import elasticsearch
 import pytest
 
@@ -16,7 +17,8 @@ class ViewTests(ElasticTestCase):
                                            'search/filters.json']
 
     def test_search_filters(self):
-        response = self.client.get('/en-US/search?q=article')
+        response = self.client.get('/en-US/search?q=article',
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert_no_cache_header(response)
         content = response.content.decode('utf-8')
@@ -211,19 +213,22 @@ class ViewTests(ElasticTestCase):
 
     def test_tokenize_camelcase_titles(self):
         for q in ('get', 'element', 'by', 'id'):
-            response = self.client.get('/en-US/search', {'q': q})
+            response = self.client.get('/en-US/search', {'q': q},
+                                       HTTP_HOST=settings.WIKI_HOST)
             assert response.status_code == 200
             assert 'camel-case-test' in response.content
 
     def test_index(self):
         self.client.login(username='admin', password='testpass')
-        response = self.client.get('/en-US/search')
+        response = self.client.get('/en-US/search',
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         expected = 'Search index: %s' % Index.objects.get_current().name
         assert expected in response.content.decode(response.charset)
 
     def test_score(self):
-        response = self.client.get('/en-US/search.json')
+        response = self.client.get('/en-US/search.json',
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert len(response.data['documents']) > 0
         for document in response.data['documents']:

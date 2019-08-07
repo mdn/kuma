@@ -1,4 +1,5 @@
 import pytest
+from django.conf import settings
 from django.contrib.auth.models import Permission
 from pyquery import PyQuery as pq
 
@@ -62,13 +63,15 @@ def add_doc_client(editor_client, wiki_user, permission_add_document):
 
 
 def test_check_read_only_mode(user_client):
-    response = user_client.get(reverse('wiki.create'))
+    response = user_client.get(reverse('wiki.create'),
+                               HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 403
     assert_no_cache_header(response)
 
 
 def test_user_add_document_permission(editor_client):
-    response = editor_client.get(reverse('wiki.create'))
+    response = editor_client.get(reverse('wiki.create'),
+                                 HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 403
     assert response['X-Robots-Tag'] == 'noindex'
     assert_no_cache_header(response)
@@ -76,7 +79,8 @@ def test_user_add_document_permission(editor_client):
 
 @pytest.mark.toc
 def test_get(add_doc_client):
-    response = add_doc_client.get(reverse('wiki.create'))
+    response = add_doc_client.get(reverse('wiki.create'),
+                                  HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert response['X-Robots-Tag'] == 'noindex'
     assert_no_cache_header(response)
@@ -111,7 +115,7 @@ def test_create_valid(add_doc_client):
         toc_depth=1,
     )
     url = reverse('wiki.create')
-    resp = add_doc_client.post(url, data)
+    resp = add_doc_client.post(url, data, HTTP_HOST=settings.WIKI_HOST)
     assert resp.status_code == 302
     assert resp['X-Robots-Tag'] == 'noindex'
     assert_no_cache_header(resp)
@@ -146,7 +150,7 @@ def test_create_invalid(add_doc_client, slug):
         toc_depth=1,
     )
     url = reverse('wiki.create')
-    resp = add_doc_client.post(url, data)
+    resp = add_doc_client.post(url, data, HTTP_HOST=settings.WIKI_HOST)
     assert resp.status_code == 200
     assert resp['X-Robots-Tag'] == 'noindex'
     assert_no_cache_header(resp)
@@ -175,7 +179,7 @@ def test_create_child_valid(root_doc, add_doc_client, slug):
     url = reverse('wiki.create')
     url += '?parent={}'.format(root_doc.id)
     full_slug = '{}/{}'.format(root_doc.slug, slug)
-    resp = add_doc_client.post(url, data)
+    resp = add_doc_client.post(url, data, HTTP_HOST=settings.WIKI_HOST)
     assert resp.status_code == 302
     assert resp['X-Robots-Tag'] == 'noindex'
     assert_no_cache_header(resp)
@@ -216,7 +220,7 @@ def test_create_child_invalid(root_doc, add_doc_client, slug):
     url = reverse('wiki.create')
     url += '?parent={}'.format(root_doc.id)
     full_slug = '{}/{}'.format(root_doc.slug, slug)
-    resp = add_doc_client.post(url, data)
+    resp = add_doc_client.post(url, data, HTTP_HOST=settings.WIKI_HOST)
     assert resp.status_code == 200
     assert resp['X-Robots-Tag'] == 'noindex'
     assert_no_cache_header(resp)
@@ -230,7 +234,7 @@ def test_create_child_invalid(root_doc, add_doc_client, slug):
 def test_clone_get(root_doc, add_doc_client):
     url = reverse('wiki.create')
     url += '?clone={}'.format(root_doc.id)
-    response = add_doc_client.get(url)
+    response = add_doc_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert response['X-Robots-Tag'] == 'noindex'
     assert_no_cache_header(response)
