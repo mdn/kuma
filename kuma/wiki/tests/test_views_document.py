@@ -812,7 +812,7 @@ def test_redirects_only_internal(mock_kumascript_get, constance_config,
         created=datetime(2018, 4, 18, 12, 15))
     mock_kumascript_get.return_value = (redirect_doc.html, None)
     url = redirect_doc.get_absolute_url()
-    response = client.get(url, follow=True)
+    response = client.get(url, follow=True, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert not response.redirect_chain
     content = response.content.decode(response.charset)
@@ -836,7 +836,7 @@ def test_self_redirect_supression(mock_kumascript_get, constance_config,
         title='Self Redirect Document',
         created=datetime(2018, 4, 19, 12, 15))
     mock_kumascript_get.return_value = (redirect_doc.html, None)
-    response = client.get(url, follow=True)
+    response = client.get(url, follow=True, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert not response.redirect_chain
     content = response.content.decode(response.charset)

@@ -648,7 +648,7 @@ def test_lookups_require_login(root_doc, client, endpoint):
 @pytest.mark.parametrize('mode', ['ajax', 'non-ajax'])
 @pytest.mark.parametrize('endpoint', ['user_lookup', 'topic_lookup'])
 def test_lookup(root_doc, wiki_user_2, wiki_user_3, user_client, mode, endpoint):
-    qs, headers = '', {}
+    qs, headers = '', {'HTTP_HOST': settings.WIKI_HOST}
     if mode == 'ajax':
         if endpoint == 'topic_lookup':
             qs = '?topic=root'

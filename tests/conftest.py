@@ -99,7 +99,8 @@ def is_local_url(base_url):
     Returns True if the system-under-test is the local development
     instance (localhost).
     """
-    return base_url and (urlsplit(base_url).hostname == 'localhost')
+    return (base_url and
+            urlsplit(base_url).hostname.split('.')[-1] == 'localhost')
 
 
 @pytest.fixture(scope='session')
@@ -126,6 +127,11 @@ def is_maintenance_mode(kuma_status):
 @pytest.fixture(scope='session')
 def is_behind_cdn(kuma_status):
     return 'x-amz-cf-id' in kuma_status['response']['headers']
+
+
+@pytest.fixture(scope='session')
+def site_url(kuma_status):
+    return kuma_status['settings']['SITE_URL']
 
 
 @pytest.fixture(scope='session')

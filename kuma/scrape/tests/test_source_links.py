@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 
 from datetime import datetime
 
+from django.conf import settings
+
 from kuma.wiki.models import Revision
 
 from . import mock_requester, mock_storage
@@ -37,7 +39,7 @@ def test_init_non_english():
 
 def test_gather_homepage(client, db):
     source = LinksSource('/')
-    html = client.get('/en-US/').content
+    html = client.get('/en-US/', HTTP_HOST=settings.WIKI_HOST).content
     requester = mock_requester(content=html)
     storage = mock_storage()
     resources = source.gather(requester, storage)
@@ -80,7 +82,7 @@ def test_gather_ignores_links(client, root_doc, simple_user):
         created=datetime(2017, 6, 5))
     new_rev.save()
     base_path = root_doc.get_absolute_url()
-    html = client.get(base_path).content
+    html = client.get(base_path, HTTP_HOST=settings.WIKI_HOST).content
 
     source = LinksSource(base_path)
     requester = mock_requester(content=html)

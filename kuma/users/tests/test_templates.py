@@ -145,9 +145,9 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         # call is made for the home page, it'll fail because there's no mock
         # address defined for that SSR request. For the purpose of this test,
         # we don't care about the content of the home page, so let's explicitly
-        # mock the "render_home" call.
-        with patch('kuma.landing.views.render_home') as mock_render_home:
-            mock_render_home.return_value = HttpResponse()
+        # mock the "render" call.
+        with patch('kuma.landing.views.render') as mock_render:
+            mock_render.return_value = HttpResponse()
             response = self.github_login(profile_data=profile_data)
         assert response.status_code == 200
 
