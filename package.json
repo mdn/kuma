@@ -21,8 +21,8 @@
         "optim:svg": "svgo jinja2/includes/icons/* --disable={removeViewBox,removeTitle} --multipass --pretty",
         "precommit": "npm run eslint && npm run stylelint && npm run pretty",
         "test": "jest --testPathIgnorePatterns tests/sass",
-        "format": "prettier --write **/*{.js,jsx}",
-        "pretty": "prettier --check **/*{.js,jsx}"
+        "format": "prettier --write **/*{.js,.jsx,.scss}",
+        "pretty": "prettier --check **/*{.js,.jsx,.scss}"
     },
     "dependencies": {
         "@emotion/core": "^10.0.7",

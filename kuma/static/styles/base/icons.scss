@@ -1,5 +1,5 @@
-@import 'includes/svg_data_uri_icons';
-@import 'includes/mixins_indicators';
+@import '../includes/svg_data_uri_icons';
+@import '../includes/mixins_indicators';
 
 #{$selector-icon} {
     cursor: default;

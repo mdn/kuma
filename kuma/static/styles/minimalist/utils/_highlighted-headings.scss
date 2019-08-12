@@ -23,8 +23,9 @@ article {
         }
 
         code {
-            background-color: rgba(255, 255, 255, .4) !important; /* stylelint-disable-line declaration-no-important */
-            color: #fff !important; /* stylelint-disable-line declaration-no-important */
+            /* stylelint-disable declaration-no-important */
+            background-color: rgba(255, 255, 255, 0.4) !important;
+            color: #fff !important;
         }
     }
 }
