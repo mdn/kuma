@@ -66,7 +66,7 @@ def test_server_side_render(mock_get_l10n_data, mock_dumps, locale,
     }
     assert output == (
         u'<div id="react-container" data-component-name="{}">{}</div>\n'
-        u'<script>window._react_data = {};</script>\n'
+        u'<script id="react-data" type="application/json">{}</script>\n'
     ).format('document', mock_html, json.dumps(data))
 
 
@@ -95,7 +95,7 @@ def test_plural_function(mock_get_l10n_data, mock_dumps,
     path = '/en-US/docs/foo'
     output = ssr.render_react('page', 'es', path, document_data)
 
-    expected = '<script>window._react_data = {pluralFunction:function(n){'
+    expected = '<script>window._pluralFunction = function(n){'
 
     # Make sure the output is as expected
     assert expected in output
@@ -121,7 +121,7 @@ def test_client_side_render(mock_get_l10n_data, mock_dumps):
     output = ssr.render_react('page', 'en-US', path, document_data, ssr=False)
     assert output == (
         u'<div id="react-container" data-component-name="{}"></div>\n'
-        u'<script>window._react_data = {};</script>\n'
+        u'<script id="react-data" type="application/json">{}</script>\n'
     ).format('page', json.dumps(data))
 
 

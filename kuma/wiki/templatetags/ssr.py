@@ -58,14 +58,7 @@ def _render(component_name, html, state):
     form of the state dict, in the format expected by the client-side code
     in kuma/javascript/src/index.jsx.
     """
-    # We're going to need this below, but we don't want to keep it around
-    pluralExpression = state['pluralExpression']
-    del state['pluralExpression']
-
-    # Serialize the state object to JSON and be sure the string
-    # "</script>" does not appear in it, since we are going to embed it
-    # within an HTML <script> tag.
-    serializedState = json.dumps(state).replace('</', '<\\/')
+    inline_javascript = []
 
     # In addition to the JSON-serialized data structure, we also want
     # to pass the pluralForm() function required for the ngettext()
@@ -77,22 +70,30 @@ def _render(component_name, html, state):
     # we need to convert it into JS code. If we don't do it here with
     # string manipulation, then we need to use eval() or `new Function()`
     # on the client-side and that causes a CSP violation.
+    pluralExpression = state.pop('pluralExpression')
     if pluralExpression:
         # A JavaScript function expression as a Python string
         js_function_text = (
             'function(n){{var v=({});return(v===true)?1:((v===false)?0:v);}}'
             .format(pluralExpression)
         )
-        # Splice it into the JSON-formatted data string
-        serializedState = (
-            '{pluralFunction:' + js_function_text + ',' + serializedState[1:]
+        inline_javascript.append(
+            'window._pluralFunction = {};'.format(
+                js_function_text
+            )
         )
 
-    # Now return the HTML and the state as a single string
+    inline_script_tag_html = ''
+    if inline_javascript:
+        inline_script_tag_html = u'<script>{}</script>\n'.format(
+            '\n'.join(inline_javascript))
     return (
         u'<div id="react-container" data-component-name="{}">{}</div>\n'
-        u'<script>window._react_data = {};</script>\n'
-    ).format(component_name, html, serializedState)
+        u'{}'
+        u'<script id="react-data" type="application/json">{}</script>\n'
+    ).format(
+        component_name, html, inline_script_tag_html,
+        json.dumps(state).replace('</', '<\\/'))
 
 
 def client_side_render(component_name, data):

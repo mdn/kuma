@@ -13,14 +13,12 @@ if (container) {
     // The HTML page that loads this code is expected to have an inline
     // script that sets this window._document_data property to an object
     // with all the data needed to hydrate or render the UI.
-    let data = window._react_data;
-
-    // Remove the global reference to this data object so that it can
-    // be garbage collected once it is no longer in use.
-    window._react_data = null; // eslint-disable-line camelcase
+    // let data = window._react_data;
+    let data = JSON.parse(document.getElementById('react-data').textContent);
+    let pluralFunction = window._pluralFunction;
 
     // Store the string catalog so that l10n.gettext() can do translations
-    localize(data.locale, data.stringCatalog, data.pluralFunction);
+    localize(data.locale, data.stringCatalog, pluralFunction);
 
     let app = null;
     // This switch statement is duplicated in ssr.jsx. Anything changed
