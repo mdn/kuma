@@ -125,7 +125,7 @@ def document_api_data(doc=None, ensure_contributors=False, redirect_url=None):
         en_slug = ''
 
     other_translations = doc.get_other_translations(
-        fields=('locale', 'slug', 'title'))
+        fields=('locale', 'slug', 'title', 'parent'))
     available_locales = (
         set([doc.locale]) | set(t.locale for t in other_translations))
 
