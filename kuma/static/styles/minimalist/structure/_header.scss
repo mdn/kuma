@@ -7,13 +7,13 @@
     grid-template-areas: 'I I L L' 'S S S S' 'M M M M';
 
     @media #{$mq-tablet-and-up} {
-        grid-template-columns: minmax(206px, 1fr) 300px auto;
+        grid-template-columns: minmax(206px, 1fr) 300px 70px;
         grid-template-areas: 'I S L' 'R R R' 'M M M';
         height: 122px;
     }
 
     @media #{$mq-small-desktop-and-up} {
-        grid-template-columns: 221px 5fr minmax(250px, 2fr) auto;
+        grid-template-columns: 221px 5fr minmax(250px, 2fr) 70px;
         grid-template-areas: 'I M S L';
         height: 68px;
         font-size: 16px;
