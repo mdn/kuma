@@ -1,12 +1,11 @@
+import pytest
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.test import TestCase
 from pyquery import PyQuery as pq
-import pytest
 
 from kuma.core.tests import assert_no_cache_header, assert_redirect_to_wiki
-
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import user
 

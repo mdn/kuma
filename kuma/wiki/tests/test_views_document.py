@@ -13,7 +13,6 @@ import pytest
 import requests_mock
 from django.conf import settings
 from django.contrib.auth.models import Permission
-from django.http import HttpResponse
 from django.test.client import BOUNDARY, encode_multipart, MULTIPART_CONTENT
 from django.utils.http import quote_etag
 from django.utils.six.moves.urllib.parse import quote, urlparse

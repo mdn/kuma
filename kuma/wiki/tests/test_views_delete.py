@@ -1,5 +1,5 @@
-from django.conf import settings
 import pytest
+from django.conf import settings
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse

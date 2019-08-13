@@ -1066,7 +1066,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
         data = new_document_data()
         self.client.post(reverse('wiki.create'), data,
-                                 HTTP_HOST=settings.WIKI_HOST)
+                         HTTP_HOST=settings.WIKI_HOST)
         en_d = Document.objects.get(locale=data['locale'], slug=data['slug'])
 
         # Create french doc

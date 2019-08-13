@@ -1,9 +1,9 @@
 from __future__ import unicode_literals
 
-from django.conf import settings
 import mock
 import pytest
 import stripe
+from django.conf import settings
 
 from kuma.core.tests import assert_no_cache_header, assert_redirect_to_wiki
 from kuma.core.urlresolvers import reverse

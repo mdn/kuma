@@ -4,9 +4,9 @@ from __future__ import unicode_literals
 
 from datetime import datetime
 
-from django.conf import settings
 import mock
 import pytest
+from django.conf import settings
 
 from kuma.wiki.models import Document, Revision
 

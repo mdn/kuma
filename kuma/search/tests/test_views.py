@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from django.conf import settings
 import elasticsearch
 import pytest
+from django.conf import settings
 
 from kuma.core.tests import assert_no_cache_header, assert_shared_cache_header
 from kuma.core.urlresolvers import reverse
