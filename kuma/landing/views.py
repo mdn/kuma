@@ -24,19 +24,16 @@ def contribute_json(request):
 @shared_cache_control
 def home(request):
     """Home page."""
+    context = {}
+    # Need for both wiki and react homepage
+    context['updates'] = list(
+        Bundle.objects.recent_entries(SECTION_HACKS.updates)[:5])
+
+    # The default template name
+    template_name = 'landing/react_homepage.html'
     if is_wiki(request):
-        return render_home(request, 'landing/homepage.html')
-    return render_home(request, 'landing/react_homepage.html')
-
-
-def render_home(request, template_name):
-    """Render the home page with the template named "template_name"."""
-    updates = list(Bundle.objects.recent_entries(SECTION_HACKS.updates)[:5])
-    default_filters = Filter.objects.default_filters()
-    context = {
-        'updates': updates,
-        'default_filters': default_filters,
-    }
+        template_name = 'landing/homepage.html'
+        context['default_filters'] = Filter.objects.default_filters()
     return render(request, template_name, context)
 
 
