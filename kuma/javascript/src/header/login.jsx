@@ -12,11 +12,10 @@ import UserProvider from '../user-provider.jsx';
 const styles = {
     container: css({
         gridArea: 'L',
-        justifySelf: 'end',
+        justifySelf: 'center',
         // Buttons (in the dropdown labels) don't seem to inherit fontsizes
         // so we need to make this explicit.
-        button: { fontSize: '1em' },
-        marginLeft: 24
+        button: { fontSize: '1em' }
     }),
     avatar: css({
         width: 40,
@@ -26,6 +25,7 @@ const styles = {
     signInLink: css({
         display: 'flex',
         alignItems: 'center',
+        justifySelf: 'center',
         fontSize: '1em',
         fontWeight: 'bold',
         color: 'black',
