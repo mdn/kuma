@@ -14,8 +14,7 @@ exports[`Login component when user is logged in 1`] = `
   -ms-flex-align: center;
   align-items: center;
   grid-area: L;
-  justify-self: end;
-  margin-left: 24px;
+  justify-self: center;
 }
 
 .emotion-8 button {
@@ -193,6 +192,7 @@ exports[`Login component when user is not logged in 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  justify-self: center;
   font-size: 1em;
   font-weight: bold;
   color: black;
