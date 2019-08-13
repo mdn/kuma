@@ -89,6 +89,7 @@ def assert_cached(url, expected_status_code=200, is_behind_cdn=True,
     return response
 
 
+@pytest.mark.headless
 @pytest.mark.nondestructive
 @pytest.mark.parametrize(
     'slug,status', [('/_kuma_status.json', 200),
@@ -125,6 +126,7 @@ def test_not_cached(site_url, is_behind_cdn, slug, status):
     assert_not_cached(site_url + slug, status, is_behind_cdn)
 
 
+@pytest.mark.headless
 @pytest.mark.nondestructive
 @pytest.mark.parametrize(
     'slug,status', [('/miel', 500),
@@ -156,6 +158,7 @@ def test_cached(site_url, is_behind_cdn, is_local_url, slug, status):
     assert_cached(site_url + slug, status, is_behind_cdn)
 
 
+@pytest.mark.headless
 @pytest.mark.nondestructive
 @pytest.mark.parametrize(
     'zone', ['Add-ons', 'Apps', 'Firefox', 'Learn', 'Marketplace'])
@@ -172,6 +175,7 @@ def test_no_locale_cached_302(site_url, is_behind_cdn, slug, zone):
     assert response.headers['location'].startswith('/docs/')
 
 
+@pytest.mark.headless
 @pytest.mark.nondestructive
 def test_document_with_cookie_and_param(site_url, is_behind_cdn, is_local_url):
     """
