@@ -146,6 +146,7 @@ def revisions(request):
 @shared_cache_control
 @vary_on_headers('X-Requested-With')
 @require_GET
+@login_required
 def user_lookup(request):
     """Returns partial username matches"""
     userlist = []
@@ -156,8 +157,8 @@ def user_lookup(request):
             matches = (get_user_model().objects
                        .filter(username__istartswith=user)
                        .order_by('username'))
-            for match in matches:
-                userlist.append({'label': match.username})
+            for username in matches.values_list('username', flat=True):
+                userlist.append({'label': username})
 
     data = json.dumps(userlist)
     return HttpResponse(data, content_type='application/json; charset=utf-8')
@@ -166,6 +167,7 @@ def user_lookup(request):
 @shared_cache_control
 @vary_on_headers('X-Requested-With')
 @require_GET
+@login_required
 def topic_lookup(request):
     """Returns partial topic matches"""
     topiclist = []
@@ -173,9 +175,10 @@ def topic_lookup(request):
     if request.is_ajax():
         topic = request.GET.get('topic', '')
         if topic:
-            matches = Document.objects.filter(slug__icontains=topic)
-            for match in matches:
-                topiclist.append({'label': match.slug})
+            matches = (Document.objects.filter(slug__icontains=topic)
+                       .order_by('slug'))
+            for slug in matches.values_list('slug', flat=True)[:20]:
+                topiclist.append({'label': slug})
 
     data = json.dumps(topiclist)
     return HttpResponse(data,
