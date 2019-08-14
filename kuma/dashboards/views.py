@@ -157,7 +157,7 @@ def user_lookup(request):
             matches = (get_user_model().objects
                        .filter(username__istartswith=user)
                        .order_by('username'))
-            for username in matches.values_list('username', flat=True):
+            for username in matches.values_list('username', flat=True)[:20]:
                 userlist.append({'label': username})
 
     data = json.dumps(userlist)
