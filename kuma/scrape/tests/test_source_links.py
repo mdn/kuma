@@ -95,7 +95,6 @@ def test_gather_ignores_links(client, root_doc, simple_user):
     assert expected in resources
 
     for doc, path, options in resources:
-        assert base_path not in path
         assert "Relative/Link" not in path
         assert "#later" not in path
         assert user_profile_url not in path
