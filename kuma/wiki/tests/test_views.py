@@ -2688,7 +2688,8 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         self.doc.render_started_at = datetime.datetime.now()
         self.doc.save()
 
-        resp = self.client.get(self.url, follow=False)
+        resp = self.client.get(self.url, follow=False,
+                               HTTP_HOST=settings.WIKI_HOST)
         p = pq(resp.content)
         txt = p.find('#wikiArticle').text()
 
