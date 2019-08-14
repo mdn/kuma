@@ -7,6 +7,7 @@ import Breadcrumbs from './breadcrumbs.jsx';
 import Document, { DocumentRoute, Sidebar } from './document.jsx';
 import Header from './header/header.jsx';
 import Newsletter from './newsletter.jsx';
+import Footer from './footer.jsx';
 import TaskCompletionSurvey from './task-completion-survey.jsx';
 import Titlebar from './titlebar.jsx';
 
@@ -103,6 +104,12 @@ describe('Document component renders all of its parts', () => {
     test('newsletter', () => {
         const newsletter = root.findAllByType(Newsletter);
         expect(newsletter.length).toBe(1);
+    });
+
+    // And one footer element
+    test('footer', () => {
+        const footer = root.findAllByType(Footer);
+        expect(footer.length).toBe(1);
     });
 
     // And make sure that our various strings of HTML appear in the document
