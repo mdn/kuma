@@ -1,8 +1,8 @@
 h2 > .collapse-trigger {
     /* over-ride button styles */
     @include set-font-size($collapse-trigger-mobile-font-size);
-    background-color: inherit;
-    border: inherit;
+    background-color: transparent;
+    border: none;
     color: inherit;
     display: inline-block;
     font-family: inherit;
