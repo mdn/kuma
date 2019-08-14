@@ -113,7 +113,6 @@
     {% block wiki_notice %}{% endblock %}
 
     <!-- Header -->
-    {%- if wiki %}
     <header id="main-header" class="header-main">
       <a href="{{ url('home') }}" class="logo">{{ _('MDN Web Docs') }}</a>
       <div class="nav-toolbox-wrapper">
@@ -122,9 +121,6 @@
       </div>
       {% include "includes/nav-main-search.html" %}
     </header>
-    {%- else %}
-    <header id="react-header"></header>
-    {%- endif %} {# if wiki #}
 
   {%- endif %} {# if not untrusted #}
 

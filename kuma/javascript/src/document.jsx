@@ -205,9 +205,11 @@ function DocumentPage({ document }: DocumentProps) {
         <>
             <A11yNav />
             <Header document={document} />
-            <Titlebar title={document.title} document={document} />
-            <Breadcrumbs document={document} />
-            <Content document={document} />
+            <main role="main">
+                <Titlebar title={document.title} document={document} />
+                <Breadcrumbs document={document} />
+                <Content document={document} />
+            </main>
             <TaskCompletionSurvey document={document} />
             <Banners />
         </>

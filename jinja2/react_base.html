@@ -92,6 +92,9 @@
     {{ soapbox_messages(get_soapbox_messages(request.path)) }}
   {%- endif %}
 
+  <!-- Header -->
+  {% block pageheader %}{% endblock %}
+
   <!-- Content will go here -->
   <main id="content">
       {% block document_head %}{% endblock %}

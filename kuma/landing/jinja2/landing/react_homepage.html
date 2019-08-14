@@ -24,10 +24,12 @@
 
 {% endblock %}
 
-{% block document_head %}
-
+{% block pageheader %}
 {{ render_react("landing", request.LANGUAGE_CODE, request.get_full_path(),
                 None)|safe }}
+{% endblock %}
+
+{% block document_head %}
 
 <!-- top search area -->
 <div id="content" class="home-masthead home-masthead-no-search">
