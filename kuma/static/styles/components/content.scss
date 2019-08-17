@@ -228,10 +228,8 @@ We cannot put these styles in the base/elements/ files because they don't apply 
     ====================================================================== */
 
     /*
-     * Don't allow empty paragraphs by CKEditor.
-     * But do allow empty divs created by the Prism syntax highlighter.
+     * Allow empty divs created by the Prism syntax highlighter.
      */
-    p:empty,
     div:not(.line-highlight):empty {
         display: none;
     }
