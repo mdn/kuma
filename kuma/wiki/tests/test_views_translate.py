@@ -23,7 +23,7 @@ def test_translate_get(root_doc, trans_doc_client):
     """Test GET on the translate view."""
 
     url = reverse('wiki.translate', args=(root_doc.slug,))
-    url += '?tolocale=fr'
+    url += '?tolocale=Fr'
 
     response = trans_doc_client.get(url)
     assert response.status_code == 200
@@ -31,6 +31,17 @@ def test_translate_get(root_doc, trans_doc_client):
     assert_no_cache_header(response)
     page = pq(response.content)
     assert page.find('input[name=slug]')[0].value == root_doc.slug
+
+
+def test_translate_get_invalid_locale(root_doc, trans_doc_client):
+    """Test GET on the translate view but with an invalid 'tolocale'
+    query string parameter."""
+
+    url = reverse('wiki.translate', args=(root_doc.slug,))
+    url += '?tolocale=XxX'
+
+    response = trans_doc_client.get(url)
+    assert response.status_code == 404
 
 
 def test_translate_post(root_doc, trans_doc_client):
