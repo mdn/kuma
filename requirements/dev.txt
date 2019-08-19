@@ -59,6 +59,6 @@ urlwait==0.4 \
 # Code: https://github.com/pallets/werkzeug
 # Changes: https://github.com/pallets/werkzeug/blob/master/CHANGES.rst
 # Docs: http://werkzeug.pocoo.org/docs/0.14/
-Werkzeug==0.14.1 \
-    --hash=sha256:d5da73735293558eb1651ee2fddc4d0dedcfa06538b8813a2e20011583c9e49b \
-    --hash=sha256:c3fd7a7d41976d9f44db327260e263132466836cef6f91512889ed60ad26557c
+Werkzeug==0.15.5 \
+    --hash=sha256:87ae4e5b5366da2347eb3116c0e6c681a0e939a33b2805e2c0cbd282664932c4 \
+    --hash=sha256:a13b74dd3c45f758d4ebdb224be8f1ab8ef58b3c0ffc1783a8c7d9f4f50227e6
