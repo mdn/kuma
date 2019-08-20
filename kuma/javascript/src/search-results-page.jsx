@@ -40,7 +40,8 @@ const styles = {
         fontWeight: 'bold'
     }),
     summary: css({
-        marginBottom: 8
+        marginBottom: 8,
+        maxWidth: '42rem'
     }),
     excerpt: css({
         padding: '2px 24px',
