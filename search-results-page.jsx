@@ -60,7 +60,7 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
         if (results) {
             if (results.previous || results.next) {
                 pagerNode = (
-                    <div className="result-container results-more">
+                    <div className="results-more">
                         <div>
                             {results.previous && (
                                 <a
@@ -113,50 +113,46 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
                 );
             });
 
+            console.warn(data.results);
+
             resultsMetaNode = (
-                <div class="result-container">
-                    <p class="result-meta">
-                        {interpolate(
-                            ngettext(
-                                '%(count)s document found for "%(query)s" in %(locale)s.',
-                                '%(count)s documents found for "%(query)s" in %(locale)s.',
-                                results.count
-                            ),
+                <div class="result-meta">
+                    {interpolate(
+                        ngettext(
+                            '%(count)s document found for "%(query)s" in %(locale)s.',
+                            '%(count)s documents found for "%(query)s" in %(locale)s.',
+                            results.count
+                        ),
+                        {
+                            count: results.count.toLocaleString(),
+                            // XXX this 'locale' is something like 'en-US'
+                            // need to turn that into "English (US)".
+                            locale: locale,
+                            query: results.query
+                        },
+                        true
+                    )}{' '}
+                    {!!results.count &&
+                        !results.previous &&
+                        !results.next &&
+                        gettext('Showing all results.')}
+                    {!!data.results.count &&
+                        (data.results.previous || data.results.next) &&
+                        interpolate(
+                            gettext('Showing results %(start)s to %(end)s.'),
                             {
-                                count: results.count.toLocaleString(),
-                                // XXX this 'locale' is something like 'en-US'
-                                // need to turn that into "English (US)".
-                                locale: locale,
-                                query: results.query
+                                start: results.start,
+                                end: results.end
                             },
                             true
-                        )}{' '}
-                        {!!results.count &&
-                            !results.previous &&
-                            !results.next &&
-                            gettext('Showing all results.')}
-                        {!!data.results.count &&
-                            (data.results.previous || data.results.next) &&
-                            interpolate(
-                                gettext(
-                                    'Showing results %(start)s to %(end)s.'
-                                ),
-                                {
-                                    start: results.start,
-                                    end: results.end
-                                },
-                                true
-                            )}
-                    </p>
+                        )}
                 </div>
             );
 
             if (results.count === 0) {
                 noResultsNode = (
-                    <div class="result-container">
-                        <div className="no-results">
-                            {gettext('No matching documents found.')}
-                        </div>
+                    <div className="no-results">
+                        {gettext('No matching documents found.')}
                     </div>
                 );
             }
@@ -164,10 +160,8 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
 
         if (data.error) {
             errorNode = (
-                <div class="result-container">
-                    <div className="error">
-                        <h2>{data.error.toString()}</h2>
-                    </div>
+                <div className="error">
+                    <h2>{data.error.toString()}</h2>
                 </div>
             );
         }

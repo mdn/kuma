@@ -7,25 +7,54 @@ import SearchResultsPage, { SearchRoute } from './search-results-page.jsx';
 import Titlebar from './titlebar.jsx';
 import type { SearchResults } from './search-results-page.jsx';
 
-const fakeResults = [
-    {
-        slug: 'slug1',
-        title: 'title1',
-        summary: 'summary1',
-        score: 10,
-        excerpts: ['Test <mark>result</mark>', 'Excerpt <mark>2</mark>']
-    },
-    {
-        slug: 'slug2',
-        title: 'title2',
-        summary: 'summary2',
-        score: 5,
-        excerpts: []
-    }
-];
+const fakeResults = {
+    count: 2,
+    documents: [
+        {
+            slug: 'slug1',
+            title: 'title1',
+            locale: 'en-US',
+            excerpt: 'Test <mark>result</mark> Excerpt <mark>2</mark>'
+        },
+        {
+            slug: 'slug2',
+            title: 'title2',
+            locale: 'en-US',
+            excerpt: 'empty'
+        }
+    ],
+    start: 0,
+    end: 10,
+    filters: {},
+    locale: 'en-US',
+    next: null,
+    page: 1,
+    pages: 0,
+    previous: null,
+    query: 'q'
+};
+
+const fakeEmptyResults = {
+    count: 0,
+    documents: [],
+    start: 0,
+    end: 0,
+    filters: {},
+    locale: 'en-US',
+    next: null,
+    page: 0,
+    pages: 0,
+    previous: null,
+    query: 'empty'
+};
 
 const fakeSearchResults: SearchResults = {
     results: fakeResults,
+    error: null
+};
+
+const fakeEmptySearchResults: SearchResults = {
+    results: fakeEmptyResults,
     error: null
 };
 
@@ -53,13 +82,11 @@ describe('SearchResultsPage component', () => {
     // but we expect the strings of the fake search data to appear
     // in the page somewhere
     test('results', () => {
-        for (const hit of fakeResults) {
-            expect(snapshot).toContain(hit.title);
-            expect(snapshot).toContain(hit.summary);
-            expect(snapshot).toContain(hit.slug);
-            for (const excerpt of hit.excerpts) {
-                expect(snapshot).toContain(excerpt);
-            }
+        console.warn('fakeResults:', fakeResults);
+        for (const document of fakeResults.documents) {
+            expect(snapshot).toContain(document.title);
+            expect(snapshot).toContain(document.slug);
+            expect(snapshot).toContain(document.excerpt);
         }
     });
 });
@@ -67,12 +94,9 @@ describe('SearchResultsPage component', () => {
 describe('SearchResultsPage with error', () => {
     const error = new Error('SearchError');
 
+    const data = { error, results: fakeEmptyResults };
     const page = create(
-        <SearchResultsPage
-            locale="en-US"
-            query="qq"
-            data={{ error, results: null }}
-        />
+        <SearchResultsPage locale="en-US" query="qq" data={data} />
     );
     const snapshot = JSON.stringify(page.toJSON());
 
@@ -87,7 +111,7 @@ describe('SearchResultsPage with no results found', () => {
         <SearchResultsPage
             locale="en-US"
             query="qq"
-            data={{ error: null, results: [] }}
+            data={fakeEmptySearchResults}
         />
     );
     const snapshot = JSON.stringify(page.toJSON());
@@ -143,38 +167,23 @@ describe('SearchRoute', () => {
         global.fetch = jest.fn(() => {
             return Promise.resolve({
                 ok: true,
-                json: () =>
-                    Promise.resolve({
-                        // ElasticSearch buries the results in layers of
-                        // other stuff that we fake out here
-                        hits: {
-                            hits: fakeResults.map(r => ({
-                                _source: {
-                                    slug: r.slug,
-                                    title: r.title,
-                                    summary: r.summary
-                                },
-                                _score: r.score,
-                                highlight: {
-                                    content: r.excerpts
-                                }
-                            }))
-                        }
-                    })
+                json: () => Promise.resolve(fakeResults)
             });
         });
 
-        route.fetch({ locale: 'en-US', query: 'foo bar#' }).then(results => {
-            expect(results).toEqual(fakeSearchResults);
-            expect(global.fetch.mock.calls[0][0]).toBe(
-                '/api/v1/search/en-US?q=foo%20bar%23'
-            );
-            done();
-        });
+        route
+            .fetch({ locale: 'en-US', query: 'foo bar#', page: null })
+            .then(results => {
+                expect(results).toEqual(fakeSearchResults);
+                expect(global.fetch.mock.calls[0][0]).toBe(
+                    '/api/v1/search/en-US?q=foo%20bar%23'
+                );
+                done();
+            });
     });
 
     test('getTitle()', () => {
-        expect(route.getTitle({ locale: '', query: 'qq' })).toBe(
+        expect(route.getTitle({ locale: '', query: 'qq', page: null })).toBe(
             'Search results for "qq" | MDN'
         );
     });

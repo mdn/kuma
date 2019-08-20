@@ -4,10 +4,11 @@ from django.shortcuts import get_object_or_404
 from django.utils.translation import activate, ugettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
-from elasticsearch_dsl import Q, query
-from rest_framework import status
+from rest_framework import serializers, status
 from rest_framework.decorators import api_view
+from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
+
 from waffle.decorators import waffle_flag
 from waffle.models import Flag, Sample, Switch
 
@@ -15,7 +16,13 @@ from kuma.api.v1.serializers import BCSignalSerializer
 from kuma.core.urlresolvers import reverse
 from kuma.users.templatetags.jinja_helpers import gravatar_url
 from kuma.wiki.models import Document
-from kuma.wiki.search import WikiDocumentType
+from kuma.search.filters import (
+    HighlightFilterBackend,
+    KeywordQueryBackend,
+    LanguageFilterBackend,
+    SearchQueryBackend,
+    TagGroupFilterBackend)
+from kuma.search.views import SearchView
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
@@ -226,50 +233,43 @@ def whoami(request):
     return JsonResponse(data)
 
 
-@never_cache
-@require_GET
-def search(request, locale):
-    """ An API endpoint to return search results as a JSON blob.
-    This endpoint makes a relatively simple ElasticSearch query
-    for documents matching the value of the q parameter.
+class APIDocumentSerializer(serializers.Serializer):
+    title = serializers.CharField(read_only=True, max_length=255)
+    slug = serializers.CharField(read_only=True, max_length=255)
+    locale = serializers.CharField(read_only=True, max_length=7)
+    excerpt = serializers.ReadOnlyField(source='get_excerpt')
+
+
+class APILanguageFilterBackend(LanguageFilterBackend):
+    """Override of kuma.search.filters:LanguageFilterBackend that is almost
+    exactly the same except the locale comes from custom code rather than
+    via kuma.core.i18n.get_language_from_request because that can't be used
+    in the API.
+
+    Basically, it's the same exact functionality but ...
     """
-    # TODO: I'm betting that a simple search like this will be faster
-    # and just as good as the more complex searches implemented by the
-    # code in kuma/search/. Peter disagrees and thinks that we might
-    # eventually want to make this endpoint use code from kuma/search/.
-    # An alternative is to just abandon this API endpoint and have
-    # the frontend call wiki.d.m.o/locale/search.json?q=query. On the
-    # other hand, if we're ever going to implement any kind of
-    # search-as-you-type interface, we'll need a super-fast custom
-    # endpoint like this one.
-    query_string = request.GET.get('q')
-    if locale == 'en-US':
-        search = (WikiDocumentType.search()
-                  .filter('term', locale=locale)
-                  .source(['slug', 'title', 'summary'])
-                  .query('multi_match', query=query_string,
-                         fields=['title^7', 'summary^2', 'content']))
-    else:
-        search = (WikiDocumentType.search()
-                  .filter('terms', locale=[locale, 'en-US'])
-                  .source(['slug', 'title', 'summary', 'locale'])
-                  .query(query.Bool(
-                      must=Q('multi_match', query=query_string,
-                             fields=['title^7', 'summary^2', 'content']),
-                      should=[
-                          # boost the score if the document is translated
-                          Q('term', locale={'value': locale, 'boost': 8}),
-                      ])))
 
-    # Add excerpts with search results highlighted
-    search = search.highlight('content')
-    search = search.highlight_options(order='score',
-                                      pre_tags=['<mark>'],
-                                      post_tags=['</mark>'])
+    def filter_queryset(self, request, queryset, view):
 
-    # Return as many as 40 matches, since we're not implementing pagination yet
-    response = search[0:40].execute()
-    return JsonResponse(response.to_dict())
+        locale = request.GET.get('locale', None)
+        request.LANGUAGE_CODE = locale
+        return super(APILanguageFilterBackend, self).filter_queryset(
+            request, queryset, view)
+
+
+class APISearchView(SearchView):
+    serializer_class = APIDocumentSerializer
+    renderer_classes = [JSONRenderer]
+    filter_backends = (
+        SearchQueryBackend,
+        KeywordQueryBackend,
+        TagGroupFilterBackend,
+        APILanguageFilterBackend,
+        HighlightFilterBackend,
+    )
+
+
+search = never_cache(APISearchView.as_view())
 
 
 @waffle_flag('bc-signals')

@@ -159,7 +159,7 @@ def get_language_from_request(request):
     * Use LANGUAGE_CODE as the fallback language code, instead of passing it
       through get_supported_language_variant first.
     """
-    # Kuma: Always use the URL's langauge (force check_path=True)
+    # Kuma: Always use the URL's language (force check_path=True)
     lang_code = get_language_from_path(request.path_info)
     if lang_code is not None:
         return lang_code
@@ -226,6 +226,7 @@ def activate_language_from_request(request):
     language = get_language_from_request(request)
     translation.activate(language)
     request.LANGUAGE_CODE = get_language()
+    print("HI THERE! I JUST SET request.LANGUAGE_CODE==", request.LANGUAGE_CODE)
 
 
 class TranslationExtension(Extension):

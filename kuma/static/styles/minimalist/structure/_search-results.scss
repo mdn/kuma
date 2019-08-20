@@ -25,8 +25,12 @@
             margin-bottom: 10px;
         }
 
+        p.result-meta {
+            font-style: italic;
+        }
+
         .result-excerpt {
-            padding: 2px 24px;
+            padding: 2px;
             font-style: italic;
             font-size: $tiny-font-size;
             /* Sometimes elasticsearch gives us excerpts with no spaces
