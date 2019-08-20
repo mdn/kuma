@@ -22,9 +22,9 @@ from ..models import User, UserBan
 
 class SignupTests(UserTestCase, SocialTestMixin):
     profile_create_strings = (
-        'Create your MDN profile to continue',
+        'Create your MDN profile',
         'choose a username',
-        'having trouble',
+        'Have trouble',
         'I agree',
         'to Mozilla',
         'Terms',
@@ -51,9 +51,9 @@ class SignupTests(UserTestCase, SocialTestMixin):
         # re-enable registration
         with override_switch('registration_disabled', False):
             response = self.github_login()
-        test_strings = ['Create your MDN profile to continue',
+        test_strings = ['Create your MDN profile',
                         'choose a username',
-                        'having trouble']
+                        'Have trouble']
         for test_string in test_strings:
             self.assertContains(response, test_string)
         session = response.context['request'].session

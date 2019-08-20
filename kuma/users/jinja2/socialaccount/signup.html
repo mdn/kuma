@@ -1,6 +1,6 @@
 {% extends "socialaccount/base.html" %}
 
-{% set title = _('Create your MDN profile to continue') %}
+{% set title = _('Create your MDN profile') %}
 
 {% set classes = 'register' %}
 
@@ -17,7 +17,7 @@
   <div class="wrap">
     <section id="content-main" role="main">
       <article id="browser_register" class="readable-line-length center">
-          <h1>{{ _('Create your MDN profile to continue') }}</h1>
+          <h1>{{ _('Create your MDN profile') }}</h1>
           {% if matching_accounts.exists() and provider.id == 'github' %}
             <div class="notification warning" data-level="warning">
               {% trans %}
@@ -51,36 +51,9 @@
                 </div>
               {% endif %}
               <p>{% trans provider_name=provider.name %}
-              Thanks for signing in to MDN with {{ provider_name }}. You have
-              one more step to join MDN: <strong>create your MDN
-              profile</strong>.
+              Thanks for signing in to MDN with {{ provider_name }}. To finish setting up your
+              MDN Web Docs account, please choose a username and email address.
               {% endtrans %}<p>
-
-              <p>{% trans %}
-              You can access everything on the MDN website even without an MDN
-              profile. However, by joining MDN, you'll be able to edit docs and
-              have your own profile page.
-              {% endtrans %}</p>
-
-              <p>{% if form.email.field.widget.input_type == 'hidden' %}
-                  {% trans %}
-                  To set up your MDN profile, please <strong>choose a username</strong>.
-                  Your username will be displayed on MDN to identify any
-                  contributions that you make.
-                  {% endtrans %}
-              {% else %}
-                  {% trans %}
-                  To set up your MDN profile, please <strong>choose a username and email address</strong>.
-                  Your username will be displayed on MDN to identify any
-                  contributions that you make.
-                  {% endtrans %}
-              {% endif %}
-              </p>
-
-              <p>{% trans bug_href='https://bugzilla.mozilla.org/enter_bug.cgi?format=__standard__&component=Account%20Help&product=developer.mozilla.org&status_whiteboard=%5Btrouble-logging-in%5D' %}
-              If you're <strong>having trouble</strong> signing in or creating
-              an MDN profile, <strong><a href="{{ bug_href }}" rel="external">let us know</a></strong>.
-              {% endtrans %}</p>
 
           {% if form.errors %}
             {% for error in form.non_field_errors() %}
@@ -106,7 +79,7 @@
                   </ul>
                 {% endif %}
                 {{ form.username }}
-                <p class="field-explanation"><small>{{ _("Please enter the name you'd like to display to other users to identify your contributions.") }}</small></p>
+                <p class="field-explanation"><small>{{ _("This will be the name displayed on MDN Web Docs to identify your contributions.") }}</small></p>
               </li>
               {# The email field is hidden if only one email is provided #}
               {% if form.email.field.widget.input_type == 'hidden' %}
@@ -158,7 +131,7 @@
                   {% endfor %}
                   </ul>
                   <p class="field-explanation"><small>
-                      {{ _('What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="%(privacy_url)s">privacy policy</a>.', privacy_url='//www.mozilla.org/privacy/websites/')|safe }}
+                      {{ _('This will be the email address MDN Web Docs messages and notifications will be sent to. This will <strong>not</strong> be displayed on MDN Web Docs and will be used in accordance with our <a href="%(privacy_url)s">privacy policy</a>.', privacy_url='//www.mozilla.org/privacy/websites/')|safe }}
                   </small></p>
                 </li>
               {% endif %}
@@ -189,19 +162,17 @@
                         </label>
 
                       </li>
-                      <li id="github_url_public">
-                        <label for="{{ form.is_github_url_public.id_for_label }}">
-                          {{ form.is_github_url_public }} {{ form.is_github_url_public.label }}
-                        </label>
-                      </li>
                   </ol>
                 </fieldset>
               </li>
 
               <li class="submit">
-                <button class="positive" type="submit" name="create">{{ _('Create my MDN profile') }}</button>
+                <button class="positive" type="submit" name="create">{{ _('Create profile') }}</button>
               </li>
             </ul>
+            <p>{% trans bug_href='https://bugzilla.mozilla.org/enter_bug.cgi?format=__standard__&component=Account%20Help&product=developer.mozilla.org&status_whiteboard=%5Btrouble-logging-in%5D' %}
+                Have trouble creating an account? <a href="{{ bug_href }}" rel="external">Let us help</a>.
+               {% endtrans %}</p>
           </fieldset>
         </form>
 
