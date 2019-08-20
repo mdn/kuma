@@ -54,3 +54,17 @@ $bg-bad: mix($negative, #fff, 5%);
         }
     }
 }
+
+.copy-btn {
+    @include indicator-svg-icon($path-to-svg-general-icons + 'copy.svg');
+}
+
+.copy-btn:hover::before {
+    display: inline-block;
+}
+
+.copy-btn::before {
+    display: none;
+    position: absolute;
+    left: 96%;
+}

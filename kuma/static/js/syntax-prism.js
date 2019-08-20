@@ -10,6 +10,17 @@
     // Style all as HTML initially
     var defaultBrush = 'html';
 
+    var copyHandler = function () {
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+
+        var ran = document.createRange();
+        ran.selectNodeContents(this);
+        selection.addRange(ran);
+
+        document.execCommand('copy');
+    };
+
     // Treat and highlight PRE elements!
     $('article pre:not(.twopartsyntaxbox):not(.syntaxbox)').each(function() {
         var $pre = $(this);
@@ -41,6 +52,8 @@
             $pre.addClass('line-numbers');
         }
 
+        $pre.addClass('copy-btn');
+
         // Format <pre> content for Prism highlighting
         $pre.html(
             '<code class="' +
@@ -57,6 +70,8 @@
         if (lineSearch && lineSearch[1]) {
             $pre.attr('data-line', lineSearch[1]);
         }
+
+        $pre.before().click(copyHandler);
     });
 
     Prism.highlightAll();
