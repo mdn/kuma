@@ -5,20 +5,12 @@ homepage masthead (search, feature callouts)
 .home-masthead {
     @include clearfix();
     position: relative;
-    background-color: $accent-light;
+    background: $accent-light url($path-to-images + 'home-masthead-background.svg') 40% 0 no-repeat;
     box-sizing: border-box;
     padding-top: ($grid-spacing * 2);
     padding-bottom: ($grid-spacing * 2);
     text-align: center;
     overflow: hidden;
-
-    .masthead-background {
-        position: absolute;
-        top: 20px;
-        left: 100px;
-        width: 80%;
-        height: 80%;
-    }
 
     h1 {
         @include set-font-size(42px);
