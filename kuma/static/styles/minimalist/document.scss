@@ -18,6 +18,7 @@ Utitlity classes (reused in a variety of contexts)
 ====================================================================== */
 @import '../components/wiki/document-list';
 @import '../components/wiki/external-icon';
+@import 'structure/containers';
 
 /*
 Components that may appear on most wiki pages
@@ -47,7 +48,7 @@ Article meta
 - contains breadcrumbs and page buttons.
 -------------------------------------------------------------- */
 @import '../components/wiki/article-head';
-@import '../components/wiki/crumbs';
+@import 'components/breadcrumbs';
 @import '../components/wiki/page-buttons';
 
 /*

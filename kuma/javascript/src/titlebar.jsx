@@ -38,7 +38,7 @@ const styles = {
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',
-        maxWidth: 1352
+        maxWidth: 1400
     }),
     title: css({
         flex: '1 1',
@@ -56,7 +56,7 @@ const styles = {
 
 function EditButton({ document }: DocumentProps) {
     /* we want to omit the trailing `$edit` from the URL
-       to ensure users are not sent into edit mode immediately 
+       to ensure users are not sent into edit mode immediately
        https://bugzilla.mozilla.org/show_bug.cgi?id=1567720#c1 */
     let editURL = document.editURL.split('$')[0];
     return (

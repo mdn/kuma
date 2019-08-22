@@ -1,0 +1,14 @@
+.full-width-row-container {
+    border-bottom: solid 1px $grey-light;
+    width: 100%;
+}
+
+.max-content-width-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 auto;
+    padding: 12px 24px;
+    max-width: 1400px;
+    min-height: 40px;
+}
