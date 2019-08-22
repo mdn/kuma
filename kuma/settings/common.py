@@ -726,7 +726,6 @@ PIPELINE_CSS = {
             'styles/libs/prism/prism-line-highlight.css',
             'styles/libs/prism/prism-line-numbers.css',
 
-            'js/prism-mdn/components/prism-json.css',
             'styles/wiki-syntax.scss',
 
             # Styles for BCD tables
