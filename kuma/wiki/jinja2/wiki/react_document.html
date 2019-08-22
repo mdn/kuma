@@ -102,6 +102,10 @@
   <meta name="description" content="{{ seo_summary }}">
   <meta name="twitter:description" content="{{ seo_summary }}">
   {% endif %}
+  
+  {% block printstyle %}
+    {% stylesheet 'print' %}
+  {% endblock %}
 </head>
 <body>
   {% include "includes/config.html" %}

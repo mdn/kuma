@@ -25,7 +25,6 @@
   <link rel="license" href="#license">
 
   {% block site_css %}
-
     {% stylesheet 'react-mdn' %}
   {% endblock %}
 
@@ -73,6 +72,10 @@
   <![endif]-->
 
   {% block extrahead %}{% endblock %}
+  
+  {% block printstyle %}
+    {% stylesheet 'print' %}
+  {% endblock %}
 </head>
 <body {% block body_attributes %}{% endblock %} class="{% block bodyclass %}{% endblock %}{% if settings.MAINTENANCE_MODE %} maintenance-mode{% endif %}"{% if request.user and request.user.is_authenticated %} data-login-service="{{ request.session.sociallogin_provider }}"{% endif %}>
 

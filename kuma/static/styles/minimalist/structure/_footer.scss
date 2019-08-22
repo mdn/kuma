@@ -181,9 +181,3 @@ $logo-sprite-url: '../../img/web-docs-sprite.svg';
         margin-bottom: $grid-spacing;
     }
 }
-
-@media print {
-    .nav-footer {
-        display: none;
-    }
-}
