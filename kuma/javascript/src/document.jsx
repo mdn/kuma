@@ -5,6 +5,7 @@ import { css } from '@emotion/core';
 import A11yNav from './a11y/a11y-nav.jsx';
 import Article from './article.jsx';
 import Banners from './banners.jsx';
+import Breadcrumbs from './breadcrumbs.jsx';
 import { gettext } from './l10n.js';
 import LanguageMenu from './header/language-menu.jsx';
 import Header from './header/header.jsx';
@@ -51,46 +52,8 @@ export type DocumentProps = {
 // A media query that identifies screens narrower than a tablet
 const NARROW = '@media (max-width: 749px)';
 
+// Content styles: the sidebar and main article content
 const styles = {
-    // Breadcrumbs styles
-    breadcrumbsContainer: css({
-        boxSizing: 'border-box',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        minHeight: 40,
-        padding: '4px 16px 4px 24px',
-        borderBottom: 'solid 1px #dce3e5',
-        backgroundColor: '#fff'
-    }),
-    breadcrumbsRow: css({
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: '100%',
-        maxWidth: 1360
-    }),
-    breadcrumbs: css({
-        flex: '1 1'
-    }),
-    crumb: css({
-        display: 'inline',
-        fontSize: 14,
-        hyphens: 'auto',
-        '&a': {
-            color: '#3d7e9a'
-        }
-    }),
-    chevron: css({
-        fontFamily: 'zillaslab,serif',
-        fontWeight: 'bold',
-        fontSize: 18,
-        margin: '0 8px'
-    }),
-
-    // Content styles: the sidebar and main article content
     contentLayout: css({
         display: 'grid',
         boxSizing: 'border-box',
@@ -150,37 +113,6 @@ export function Sidebar({ document }: DocumentProps) {
     );
 }
 
-function Chevron() {
-    return <span css={styles.chevron}>›</span>;
-}
-
-export function Breadcrumbs({ document }: DocumentProps) {
-    // The <span> elements below aren't needed except that the stylesheets
-    // are set up to expect them.
-    return (
-        <div css={styles.breadcrumbsContainer}>
-            <div css={styles.breadcrumbsRow}>
-                <nav css={styles.breadcrumbs} role="navigation">
-                    <ol>
-                        {document.parents.map(p => (
-                            <li css={styles.crumb} key={p.url}>
-                                <a href={p.url}>
-                                    <span>{p.title}</span>
-                                </a>
-                                <Chevron />
-                            </li>
-                        ))}
-                        <li css={styles.crumb}>
-                            <span>{document.title}</span>
-                        </li>
-                    </ol>
-                </nav>
-                <LanguageMenu document={document} />
-            </div>
-        </div>
-    );
-}
-
 function Content({ document }: DocumentProps) {
     // The wiki-left-present class below is needed for correct BCD layout
     // See kuma/static/styles/components/compat-tables/bc-table.scss
@@ -207,7 +139,12 @@ function DocumentPage({ document }: DocumentProps) {
             <Header document={document} />
             <main role="main">
                 <Titlebar title={document.title} document={document} />
-                <Breadcrumbs document={document} />
+                <div className="full-width-row-container">
+                    <div className="max-content-width-container">
+                        <Breadcrumbs document={document} />
+                        <LanguageMenu document={document} />
+                    </div>
+                </div>
                 <Content document={document} />
             </main>
             <TaskCompletionSurvey document={document} />

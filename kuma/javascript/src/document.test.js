@@ -3,7 +3,8 @@ import React from 'react';
 import { create } from 'react-test-renderer';
 
 import Article from './article.jsx';
-import Document, { Breadcrumbs, DocumentRoute, Sidebar } from './document.jsx';
+import Breadcrumbs from './breadcrumbs.jsx';
+import Document, { DocumentRoute, Sidebar } from './document.jsx';
 import Header from './header/header.jsx';
 import TaskCompletionSurvey from './task-completion-survey.jsx';
 import Titlebar from './titlebar.jsx';
@@ -83,7 +84,7 @@ describe('Document component renders all of its parts', () => {
             let parent = fakeDocumentData.parents[i];
             let link = links[i];
             expect(link.props.href).toBe(parent.url);
-            expect(link.children[0].children[0]).toBe(parent.title);
+            expect(link.children[0]).toBe(parent.title);
         }
     });
 
