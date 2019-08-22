@@ -38,7 +38,7 @@ const styles = {
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',
-        maxWidth: 1400
+        maxWidth: 1352
     }),
     title: css({
         flex: '1 1',
