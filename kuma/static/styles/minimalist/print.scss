@@ -1,69 +1,30 @@
 @import '../includes/vars';
 @import './mixins/print-mixins';
 
-@media print {
-    header {
+header,
+.notification-tray,
+.global-notice,
+.nav-footer,
+.contributors,
+.crumbs,
+.breadcrumbs,
+a.edit-section,
+.page-buttons,
+.open-in-host-container,
+.newsletter-box,
+#page-attachments,
+#offline-dialog-content,
+#wiki-left {
+    display: none;
+}
+
+.center {
+    @include remove-center-spacing();
+}
+
+/* hide print button on tablets since they are less likely to be hooked up to a printer */
+@media #{$mq-tablet-and-down} {
+    .page-print {
         display: none;
-    }
-
-    .center {
-        @include remove-center-spacing();
-    }
-
-    .notification-tray {
-        display: none;
-    }
-
-    .newsletter-box {
-        display: none;
-    }
-
-    .global-notice {
-        display: none;
-    }
-
-    .nav-footer {
-        display: none;
-    }
-
-    .contributors {
-        display: none;
-    }
-
-    .crumbs,
-    .breadcrumbs {
-        display: none;
-    }
-
-    a.edit-section {
-        display: none;
-    }
-
-    #page-attachments {
-        display: none;
-    }
-
-    #offline-dialog-content {
-        display: none;
-    }
-
-    .page-buttons {
-        display: none;
-    }
-
-    .open-in-host-container {
-        display: none;
-    }
-
-    /* hide sections not important to the article */
-    #wiki-left {
-        display: none;
-    }
-
-    /* hide print button on tablets since they are less likely to be hooked up to a printer */
-    @media #{$mq-tablet-and-down} {
-        .page-print {
-            display: none;
-        }
     }
 }
