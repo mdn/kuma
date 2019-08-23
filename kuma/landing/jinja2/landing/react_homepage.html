@@ -8,6 +8,10 @@
   {{ super() }}
 
   {% stylesheet 'home' %}
+
+  {% if waffle.flag('developer_needs') %}
+    {% stylesheet 'banners' %}
+  {% endif %}
 {% endblock %}
 
 {% block extrahead %}

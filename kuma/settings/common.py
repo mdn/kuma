@@ -730,10 +730,6 @@ PIPELINE_CSS = {
 
             # Styles for BCD tables
             'styles/wiki-compat-tables.scss',
-
-            # Styles for call-to-action banners
-            # See kuma/javascript/src/banners.jsx
-            'styles/components/banners/base.scss'
         ),
         'output_filename': 'build/styles/react-mdn.css',
     },
