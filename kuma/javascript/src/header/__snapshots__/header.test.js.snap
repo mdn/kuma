@@ -405,11 +405,11 @@ exports[`Header snapshot 1`] = `
             role="menuitem"
           >
             <a
-              href="https://bugzilla.mozilla.org/form.mdn"
+              href="https://github.com/mozilla/kuma/issues/new"
               rel="noopener noreferrer"
               target="_blank"
             >
-              Report a bug
+              Report an issue
                🌐
             </a>
           </li>
