@@ -21,7 +21,7 @@
     },
     "bugs": {
         "list": "https://mzl.la/2onLvZ8",
-        "report": "https://bugzilla.mozilla.org/form.mdn",
+        "report": "https://github.com/mozilla/kuma/issues/new",
         "mentored": "https://mzl.la/2BFx4Ie",
         "goodfirstbug": "https://mzl.la/2ojEGaW"
     },

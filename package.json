@@ -10,7 +10,7 @@
     "author": "Mozilla",
     "license": "MPL",
     "bugs": {
-        "url": "https://bugzilla.mozilla.org/"
+        "url": "https://github.com/mozilla/kuma/issues"
     },
     "scripts": {
         "build-watch": "gulp",

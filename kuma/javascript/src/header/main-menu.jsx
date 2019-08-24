@@ -129,9 +129,9 @@ const _MainMenu = ({ document, locale }: Props) => {
                             'https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title={{PATH}}'
                     },
                     {
-                        label: gettext('Report a bug'),
+                        label: gettext('Report an issue'),
                         external: true,
-                        url: 'https://bugzilla.mozilla.org/form.mdn'
+                        url: 'https://github.com/mozilla/kuma/issues/new'
                     }
                 ]
             }

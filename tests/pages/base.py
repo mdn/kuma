@@ -88,7 +88,7 @@ class BasePage(Page):
             'https://github.com/mdn/sprints/issues/new?template='
             'issue-template.md&projects=mdn/sprints/2&labels=user-report'
             '&title=')
-        report_bug_form_url = 'https://bugzilla.mozilla.org/form.mdn'
+        report_bug_form_url = 'https://github.com/mozilla/kuma/issues/new'
         # locators
         SIGNIN_SELECTOR = '#toolbox .login-link'
 
