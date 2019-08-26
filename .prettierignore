@@ -23,3 +23,5 @@ kuma/static/js/libs/
 gulpfile.js
 ckeditor_config.js
 jest_v24.x.x.js
+# temporarily added this ignore
+kuma/static/styles/minimalist/iconography/_indicators.scss
