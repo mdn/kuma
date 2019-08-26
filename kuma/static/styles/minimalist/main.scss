@@ -8,7 +8,7 @@ Main stylesheet for the site, standalone
 
 /* stylesheets used only in main  */
 @import '../base/elements';
-@import '../base/icons';
+@import 'iconography/icons';
 
 /* components also used elsewhere */
 @import '../components/components';

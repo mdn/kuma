@@ -25,3 +25,4 @@ ckeditor_config.js
 jest_v24.x.x.js
 # temporarily added this ignore
 kuma/static/styles/minimalist/iconography/_indicators.scss
+kuma/static/styles/minimalist/iconography/_icons.scss
