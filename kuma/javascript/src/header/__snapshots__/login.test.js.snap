@@ -1,144 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Login component when user is logged in 1`] = `
-.emotion-8 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  grid-area: L;
-  justify-self: center;
-}
-
-.emotion-8 button {
-  font-size: 1em;
-}
-
-.emotion-6 {
-  position: relative;
-  margin-left: -5px;
-}
-
-.emotion-6:hover .dropdown-menu-label {
-  color: #3d7e9a;
-}
-
-.emotion-6:hover .dropdown-menu-label a {
-  color: #3d7e9a;
-}
-
-.emotion-6:hover .dropdown-menu {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.emotion-1 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  white-space: nowrap;
-  font-size: 15px;
-  font-weight: bold;
-  color: #333;
-  padding: 0 5px 5px 5px;
-  border: none;
-}
-
-.emotion-1:focus {
-  outline-offset: -3px;
-}
-
-.emotion-1 a {
-  color: #333;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.emotion-0 {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
-.emotion-4 {
-  position: absolute;
-  display: none;
-  z-index: 100;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  box-sizing: border-box;
-  background-color: white;
-  box-shadow: 0 2px 8px 0 rgba(12,12,13,0.1);
-  border: solid 1px #d8dfe2;
-  border-radius: 4px;
-  padding: 4px 0;
-  min-width: 100%;
-}
-
-.emotion-4 li a,
-.emotion-4 li button {
-  display: inline-block;
-  box-sizing: border-box;
-  width: 100%;
-  padding: 6px 16px;
-  white-space: nowrap;
-  color: #3d7e9a;
-  font-size: 15px;
-  font-weight: bold;
-  text-align: start;
-}
-
-.emotion-4 li a:hover,
-.emotion-4 li button:hover {
-  color: #fff;
-  background-color: #3d7e9a;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.emotion-3 {
-  border-width: 0;
-  padding: 0;
-  color: #3d7e9a;
-}
-
 <div
-  className="emotion-8 emotion-9"
+  className="auth-container"
 >
   <div
-    className="emotion-6 emotion-7"
+    className="dropdown-container"
   >
-    <div
-      className="dropdown-menu-label emotion-1 emotion-2"
+    <button
+      className="dropdown-menu-label"
+      type="button"
     >
       <img
         alt="test-username"
-        className="emotion-0"
+        className="avatar"
         src="/static/img/avatar.png"
         srcSet="test-bigurl 200w, test-url 50w"
       />
-    </div>
+    </button>
     <ul
-      className="dropdown-menu emotion-4 emotion-5"
-      onClick={[Function]}
+      className="dropdown-menu-items"
       style={
         Object {
           "right": 0,
@@ -170,7 +51,7 @@ exports[`Login component when user is logged in 1`] = `
             value="/"
           />
           <button
-            className="emotion-3"
+            className="signout-button"
             type="submit"
           >
             Sign out
@@ -183,36 +64,8 @@ exports[`Login component when user is logged in 1`] = `
 `;
 
 exports[`Login component when user is not logged in 1`] = `
-.emotion-0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  justify-self: center;
-  font-size: 1em;
-  font-weight: bold;
-  color: black;
-  margin-left: 24px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.emotion-0:hover {
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  background-color: #eee;
-}
-
-.emotion-0:focus {
-  outline-offset: -3px;
-}
-
 <a
-  className="emotion-0"
+  className="signin-link"
   data-service="GitHub"
   href="/users/github/login/?next=/"
   rel="nofollow"

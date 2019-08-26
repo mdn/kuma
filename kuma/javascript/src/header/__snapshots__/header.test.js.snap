@@ -1,107 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Header snapshot 1`] = `
-.emotion-2 {
-  grid-area: S;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding: 2px 8px;
-  border: solid 2px #333;
-  border-radius: 20px;
-  background-color: #fafafa;
-  box-sizing: border-box;
-  height: 40px;
-  min-width: 80px;
-  -webkit-flex: 2 1;
-  -ms-flex: 2 1;
-  flex: 2 1;
-}
-
-.emotion-0 {
-  fill: #333;
-  -webkit-flex: 0 0 20px;
-  -ms-flex: 0 0 20px;
-  flex: 0 0 20px;
-}
-
-.emotion-1 {
-  border-width: 0 !important;
-  font-size: 14px;
-  -webkit-flex: 1 1 100px;
-  -ms-flex: 1 1 100px;
-  flex: 1 1 100px;
-  min-width: 60px;
-  max-width: 320px;
-  color: #000;
-  background-color: #fafafa !important;
-}
-
-.emotion-3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  justify-self: center;
-  font-size: 1em;
-  font-weight: bold;
-  color: black;
-  margin-left: 24px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.emotion-3:hover {
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  background-color: #eee;
-}
-
-.emotion-3:focus {
-  outline-offset: -3px;
-}
-
-.emotion-4 {
-  box-sizing: border-box;
-  position: absolute;
-  display: block;
-  top: 0;
-  left: 0;
-  width: 99px;
-  height: 99px;
-  z-index: 100;
-  -webkit-transform: translate(-49.5px,-49.5px) rotate(-45deg);
-  -ms-transform: translate(-49.5px,-49.5px) rotate(-45deg);
-  transform: translate(-49.5px,-49.5px) rotate(-45deg);
-  background-color: rgba(255,255,0,0.85);
-  border: solid black 1px;
-  box-shadow: 0px 3px 10px #000;
-  font-weight: bold;
-  text-align: center;
-  line-height: 1.0;
-  font-size: 12.5px;
-  padding-top: 68px;
-  color: black;
-}
-
-.emotion-4:hover {
-  background-color: #ff0;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
 <header
   className="page-header"
 >
@@ -419,13 +318,13 @@ exports[`Header snapshot 1`] = `
   </nav>
   <form
     action="/en-US/search"
-    className="header-search emotion-2"
+    className="header-search"
     id="nav-main-search"
     method="get"
     role="search"
   >
     <svg mock
-      className="emotion-0"
+      className="search-icon"
     />
     <label
       className="visually-hidden"
@@ -434,7 +333,7 @@ exports[`Header snapshot 1`] = `
       Search MDN
     </label>
     <input
-      className="emotion-1"
+      className="search-input-field"
       id="main-q"
       name="q"
       placeholder="Search MDN"
@@ -442,7 +341,7 @@ exports[`Header snapshot 1`] = `
     />
   </form>
   <a
-    className="emotion-3"
+    className="signin-link"
     data-service="GitHub"
     href="/users/github/login/?next=/[fake%20absolute%20url]"
     rel="nofollow"
@@ -450,7 +349,7 @@ exports[`Header snapshot 1`] = `
     Sign in
   </a>
   <a
-    className="emotion-4"
+    className="beta-notice"
     href="https://bugzilla.mozilla.org/show_bug.cgi?id=1561020"
     rel="noopener noreferrer nofollow"
     target="_blank"

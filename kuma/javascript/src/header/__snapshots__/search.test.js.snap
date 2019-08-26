@@ -1,59 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Search snapshot 1`] = `
-.emotion-2 {
-  grid-area: S;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding: 2px 8px;
-  border: solid 2px #333;
-  border-radius: 20px;
-  background-color: #fafafa;
-  box-sizing: border-box;
-  height: 40px;
-  min-width: 80px;
-  -webkit-flex: 2 1;
-  -ms-flex: 2 1;
-  flex: 2 1;
-}
-
-.emotion-0 {
-  fill: #333;
-  -webkit-flex: 0 0 20px;
-  -ms-flex: 0 0 20px;
-  flex: 0 0 20px;
-}
-
-.emotion-1 {
-  border-width: 0 !important;
-  font-size: 14px;
-  -webkit-flex: 1 1 100px;
-  -ms-flex: 1 1 100px;
-  flex: 1 1 100px;
-  min-width: 60px;
-  max-width: 320px;
-  color: #000;
-  background-color: #fafafa !important;
-}
-
 <form
   action="/en-US/search"
-  className="header-search emotion-2"
+  className="header-search"
   id="nav-main-search"
   method="get"
   role="search"
 >
   <svg mock
-    className="emotion-0"
+    className="search-icon"
   />
   <label
     className="visually-hidden"
@@ -62,7 +18,7 @@ exports[`Search snapshot 1`] = `
     Search MDN
   </label>
   <input
-    className="emotion-1"
+    className="search-input-field"
     id="main-q"
     name="q"
     placeholder="Search MDN"
