@@ -16,7 +16,7 @@
             position: relative;
             justify-content: space-evenly;
             font-weight: bold;
-            z-index: $main-nav-z;
+            z-index: $menu-zindex;
         }
 
         .main-menu-arrow {
@@ -32,9 +32,9 @@
         padding: 4px 0;
 
         @media #{$mq-tablet-and-up} {
-            box-shadow: $main-nav-box-shadow;
-            border: $main-menu-border;
-            border-radius: $main-menu-border-radius;
+            box-shadow: $menu-box-shadow;
+            border: $menu-border;
+            border-radius: $menu-border-radius;
         }
 
         a {
@@ -43,7 +43,7 @@
             width: 100%;
 
             &:hover {
-                background-color: $main-menu-item-background-color;
+                background-color: $dropdown-item-background-color;
                 color: #fff;
                 text-decoration: none;
             }

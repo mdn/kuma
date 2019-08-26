@@ -22,7 +22,6 @@
 //@flow
 import * as React from 'react';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { css, keyframes } from '@emotion/core';
 
 import type { ComponentType } from 'react';
 
@@ -35,38 +34,6 @@ import {
     navigateFetchComplete,
     navigateRenderComplete
 } from './perf.js';
-
-// These are CSS animations for the loading bar
-// The slidein animation runs for 500ms, but doesn't do anything
-// for the first 100ms, so when client-side navigation is really fast
-// the user won't even see a flash of the progress bar starting.
-const slidein = keyframes`
-  0% { transform: translate(-100%, 0); }
-  20% { transform: translate(-100%, 0); }
-  100% { transform: translate(0, 0); }
-`;
-// When client side navigation takes an unexpectedly long time
-// this color throbbing animation takes over once the progress par
-// has slid in.
-const throb = keyframes`
-  from { opacity: 1.0; }
-  to { opacity: 0.5; }
-`;
-
-// These are CSS styles for the loading bar
-const styles = {
-    loadingBar: css({
-        position: 'fixed',
-        display: 'none',
-        height: 5,
-        width: '100%',
-        backgroundImage: 'linear-gradient(-271deg, #206584, #83d0f2)'
-    }),
-    loadingAnimation: css({
-        display: 'block',
-        animation: `${slidein} 0.5s, ${throb} 1s infinite alternate`
-    })
-};
 
 // These are the props that we pass to the <Router> component
 type RouterProps = {
@@ -184,7 +151,9 @@ export default function Router({
     return (
         <>
             <div
-                css={[styles.loadingBar, loading && styles.loadingAnimation]}
+                className={
+                    loading ? 'loading-bar loading-animation' : 'loading-bar'
+                }
             />
             {pageState.component && (
                 <pageState.component

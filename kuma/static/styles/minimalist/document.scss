@@ -43,6 +43,9 @@ Components that may appear on most wiki pages
 @import '../components/wiki/mega';
 @import '../components/wiki/interactive';
 
+@import 'components/dropdown';
+@import 'components/titlebar';
+
 /*
 Article meta
 - contains breadcrumbs and page buttons.
@@ -73,6 +76,9 @@ Styling for article content
 @import '../components/wiki/customcss';
 @import '../components/wiki/sample-code';
 @import '../components/wiki/section-edit';
+
+@import 'structure/article';
+@import 'structure/sidebar';
 
 /*
 Delete, move or revert pages.

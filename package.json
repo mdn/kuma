@@ -25,8 +25,6 @@
         "pretty": "prettier --check **/*{.js,.jsx,.scss}"
     },
     "dependencies": {
-        "@emotion/core": "^10.0.7",
-        "@emotion/styled": "^10.0.7",
         "express": "^4.16.4",
         "morgan": "^1.9.1",
         "newrelic": "^5.9.0",
@@ -39,10 +37,8 @@
         "@babel/preset-env": "^7.3.1",
         "@babel/preset-flow": "^7.0.0",
         "@babel/preset-react": "^7.0.0",
-        "@emotion/babel-preset-css-prop": "^10.0.7",
         "babel-eslint": "^10.0.1",
         "babel-loader": "^8.0.5",
-        "babel-plugin-emotion": "^10.0.7",
         "clean-css-cli": "4.2.1",
         "eslint": "5.1.0",
         "eslint-config-prettier": "^4.0.0",
@@ -60,7 +56,6 @@
         "gulp-watch": "5.0.1",
         "husky": "0.14.3",
         "jest": "^24.1.0",
-        "jest-emotion": "^10.0.7",
         "node-sass": "4.12.0",
         "prettier": "1.18.2",
         "react-svg-loader": "3.0.1",
