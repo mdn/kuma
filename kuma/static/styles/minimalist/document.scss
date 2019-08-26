@@ -23,7 +23,7 @@ Utitlity classes (reused in a variety of contexts)
 /*
 Components that may appear on most wiki pages
 ====================================================================== */
-@import '../components/wiki/structure';
+@import 'base/structure';
 @import '../components/wiki/wiki-block';
 @import '../components/wiki/quick-links';
 @import '../components/wiki/reviews';
