@@ -298,12 +298,3 @@ article page modifications
         }
     }
 }
-
-/*
-Don't print it on article pages
--------------------------------------------------------------- */
-@media print {
-    .newsletter-box {
-        display: none;
-    }
-}

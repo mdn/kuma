@@ -68,9 +68,3 @@ $crumb-vertical-spacing-desktop: $grid-spacing / 4;
         display: none;
     }
 }
-
-@media print {
-    .crumbs {
-        display: none;
-    }
-}

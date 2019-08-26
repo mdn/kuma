@@ -85,6 +85,10 @@
   {% endif %}
 {% endblock %}
 
+{% block printstyle %}
+  {% stylesheet 'print' %}
+{% endblock %}
+
 {% block wiki_notice %}
     {% if request.get_host().startswith('wiki.') %}
         {% include "wiki/includes/wiki-notice.html" %}

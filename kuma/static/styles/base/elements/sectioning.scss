@@ -76,9 +76,3 @@ hr {
     margin: $grid-spacing 0;
     @include restrict-line-length();
 }
-
-@media print {
-    header {
-        display: none;
-    }
-}

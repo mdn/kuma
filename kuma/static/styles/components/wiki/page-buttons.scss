@@ -23,13 +23,6 @@ edit, language, settings, save, and cancel buttons
     }
 }
 
-@media print {
-    .page-buttons {
-        display: none;
-    }
-}
-
-
 .move-page {
     #page-buttons {
         right: auto;

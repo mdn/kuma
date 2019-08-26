@@ -89,9 +89,3 @@ $border-value: 1px solid #e0e0dc;
         }
     }
 }
-
-@media print {
-    #page-attachments {
-        display: none;
-    }
-}

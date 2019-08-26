@@ -14,10 +14,3 @@ global notices (via soapbox)
         @include prevent-last-child-spacing(p, margin-bottom);
     }
 }
-
-
-@media print {
-    .global-notice {
-        display: none;
-    }
-}

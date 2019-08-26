@@ -239,9 +239,3 @@ $notification-button-padding: 2px 5px 3px;
         margin-bottom: 8px;
     }
 }
-
-@media print {
-    .notification-tray {
-        display: none;
-    }
-}

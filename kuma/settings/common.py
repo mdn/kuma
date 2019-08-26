@@ -733,7 +733,6 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/react-mdn.css',
     },
-
     'mdn': {
         'source_filenames': (
             'styles/main.scss',
@@ -759,6 +758,15 @@ PIPELINE_CSS = {
             'styles/home.scss',
         ),
         'output_filename': 'build/styles/home.css',
+    },
+    'print': {
+        'source_filenames': (
+            'styles/minimalist/print.scss',
+        ),
+        'output_filename': 'build/styles/print.css',
+        'extra_context': {
+            'media': 'print',
+        },
     },
     'search': {
         'source_filenames': (

@@ -34,10 +34,6 @@ Utility classes
     .wiki-main-content & {
         @include remove-center-spacing();
     }
-
-    @media print {
-        @include remove-center-spacing();
-    }
 }
 
 /* simple hiding of elements */
