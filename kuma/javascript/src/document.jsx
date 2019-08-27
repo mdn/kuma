@@ -1,6 +1,5 @@
 // @flow
 import * as React from 'react';
-import { css } from '@emotion/core';
 
 import A11yNav from './a11y/a11y-nav.jsx';
 import Article from './article.jsx';
@@ -49,57 +48,12 @@ export type DocumentProps = {
     document: DocumentData
 };
 
-// A media query that identifies screens narrower than a tablet
-const NARROW = '@media (max-width: 749px)';
-
-// Content styles: the sidebar and main article content
-const styles = {
-    contentLayout: css({
-        display: 'grid',
-        boxSizing: 'border-box',
-        maxWidth: 1400,
-        margin: '0 auto',
-        gridTemplateColumns: '25% 75%',
-        gridTemplateRows: 'max-content 1fr',
-        gridTemplateAreas: '"document-toc-container main" "side main"',
-        [NARROW]: {
-            // If we're narrower than a tablet, put the sidebar at the
-            // bottom and drop the toc line.
-            gridTemplateColumns: '100%',
-            gridTemplateAreas: '"main" "document-toc-container" "side"'
-        }
-    }),
-    sidebar: css({
-        gridArea: 'side',
-        boxSizing: 'border-box',
-        width: '100%',
-        // Less padding on the right because the article area
-        // has padding on the left, too.
-        padding: '30px 12px 30px 24px',
-        [NARROW]: {
-            // Except that on small screens the sidebar is at the bottom and
-            // so we need the same padding (but less of it) on both sides.
-            padding: '15px 12px'
-        }
-    }),
-    sidebarHeading: css({
-        fontFamily:
-            'x-locale-heading-primary, zillaslab, "Palatino", "Palatino Linotype", x-locale-heading-secondary, serif',
-        fontSize: 20,
-        height: 24,
-        marginBottom: 16
-    })
-};
-
 export function Sidebar({ document }: DocumentProps) {
     return (
-        <div css={styles.sidebar}>
+        <div className="sidebar">
             {document.quickLinksHTML && (
                 <div className="quick-links">
-                    <div
-                        css={styles.sidebarHeading}
-                        className="quick-links-head"
-                    >
+                    <div className="quick-links-head sidebar-heading">
                         {gettext('Related Topics')}
                     </div>
                     <div
@@ -120,8 +74,7 @@ function Content({ document }: DocumentProps) {
         /* adding aria-live here to mark this as a live region to
           ensure a screen reader will read the new content after navigation */
         <div
-            css={styles.contentLayout}
-            className="wiki-left-present"
+            className="wiki-left-present content-layout"
             // See https://bugzilla.mozilla.org/show_bug.cgi?id=1570043
             // aria-live="assertive"
         >
