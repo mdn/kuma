@@ -1,0 +1,25 @@
+.beta-notice {
+    box-sizing: border-box;
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 0, 0.85);
+    color: $text-color;
+    padding-top: 68px;
+    border: solid $grey-vdark 1px;
+    box-shadow: 0 3px 10px $grey-vdark;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1;
+    font-size: 12.5px;
+    width: 99px;
+    height: 99px;
+    transform: translate(-49.5px, -49.5px) rotate(-45deg);
+    z-index: 100;
+
+    &:hover {
+        background-color: rgba(255, 255, 0, 1);
+        text-decoration: none;
+    }
+}
