@@ -1,7 +1,6 @@
 // @flow
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
-import css from '@emotion/css';
 
 import CloseIcon from './icons/close.svg';
 import GAProvider from './ga-provider.jsx';
@@ -9,35 +8,6 @@ import { getLocale, gettext } from './l10n.js';
 import UserProvider from './user-provider.jsx';
 
 import type { DocumentData } from './document.jsx';
-
-const styles = {
-    notification: css({
-        position: 'fixed',
-        display: 'flex',
-        flexDirection: 'row',
-        top: 15,
-        right: 15,
-        width: 300,
-        padding: 15,
-        paddingRight: 8,
-        zIndex: 999999,
-        fontSize: 16,
-        backgroundColor: '#e4f0f5',
-        color: '#333',
-        border: 'solid #3d7e9a 2px',
-        borderRadius: 2,
-        boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.25)'
-    }),
-    dismissButton: css({
-        alignSelf: 'start',
-        padding: 0,
-        borderWidth: 0,
-        backgroundColor: 'inherit'
-    }),
-    dismissIcon: css({
-        height: 18
-    })
-};
 
 // This is the name of the waffle flag that controls this notification
 const WAFFLE_FLAG = 'sg_task_completion';
@@ -169,7 +139,7 @@ export default function TaskCompletionSurvey(props: Props) {
     }
 
     return (
-        <div css={styles.notification}>
+        <div className="notification">
             <div>
                 {gettext('Would you answer 4 questions for us?')}{' '}
                 <a
@@ -185,11 +155,11 @@ export default function TaskCompletionSurvey(props: Props) {
                 )}
             </div>
             <button
-                css={styles.dismissButton}
+                className="dismiss-button"
                 onClick={dismiss}
                 aria-label={gettext('Dismiss')}
             >
-                <CloseIcon css={styles.dismissIcon} />
+                <CloseIcon className="dismiss-icon" />
             </button>
         </div>
     );
