@@ -1,0 +1,48 @@
+.auth-container {
+    grid-area: L;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-self: center;
+
+    /* Buttons (in the dropdown labels) don't seem to inherit font sizes
+        so we need to make this explicit. */
+    button {
+        font-size: 1rem;
+    }
+
+    .signout-button {
+        /* Signing out is a POST operation so we use a form and button
+           but we want the button to look like a regular link. */
+        color: $link-color;
+        padding: 0;
+        border-width: 0;
+    }
+}
+
+.signin-link {
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    font-size: 1rem;
+    font-weight: bold;
+    color: $text-color;
+    margin-left: 24px;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: none;
+        background-color: $grey-light;
+    }
+
+    &:focus {
+        /* Focus outline extends beyond header in Chrome without this */
+        outline-offset: -3px;
+    }
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}

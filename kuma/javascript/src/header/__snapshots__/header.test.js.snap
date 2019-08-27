@@ -45,34 +45,6 @@ exports[`Header snapshot 1`] = `
   background-color: #fafafa !important;
 }
 
-.emotion-3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  justify-self: center;
-  font-size: 1em;
-  font-weight: bold;
-  color: black;
-  margin-left: 24px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.emotion-3:hover {
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  background-color: #eee;
-}
-
-.emotion-3:focus {
-  outline-offset: -3px;
-}
-
 <header
   className="page-header"
 >
@@ -413,7 +385,7 @@ exports[`Header snapshot 1`] = `
     />
   </form>
   <a
-    className="emotion-3"
+    className="signin-link"
     data-service="GitHub"
     href="/users/github/login/?next=/[fake%20absolute%20url]"
     rel="nofollow"
