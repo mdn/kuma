@@ -1,6 +1,5 @@
 // @flow
 import * as React from 'react';
-import { css } from '@emotion/core';
 
 import { gettext, interpolate } from './l10n.js';
 import Header from './header/header.jsx';
@@ -23,59 +22,6 @@ export type SearchResults = {
     error: ?any
 };
 
-const styles = {
-    results: css({
-        margin: '0 24px'
-    }),
-    container: css({
-        display: 'flex',
-        flexDirection: 'row',
-        maxWidth: 1200,
-        margin: '20px auto'
-    }),
-    result: css({
-        flex: '2 1 500px'
-    }),
-    link: css({
-        fontWeight: 'bold'
-    }),
-    summary: css({
-        marginBottom: 8
-    }),
-    excerpt: css({
-        padding: '2px 24px',
-        fontStyle: 'italic',
-        fontSize: 12,
-        // Sometimes elasticsearch gives us excerpts with no spaces
-        // and we have to force the words to wrap.
-        overflowWrap: 'anywhere',
-
-        '& mark': {
-            fontWeight: 'bold',
-            backgroundColor: 'inherit'
-        },
-        ':before': {
-            content: '"..."'
-        },
-        ':after': {
-            content: '"..."'
-        }
-    }),
-    url: css({
-        fontSize: 12
-    }),
-    noresults: css({
-        fontWeight: 'bold',
-        maxWidth: 1200,
-        margin: '20px auto'
-    }),
-    error: css({
-        margin: 16,
-        padding: 16,
-        border: 'solid red 2px'
-    })
-};
-
 type Props = {
     locale: string,
     query: string,
@@ -87,7 +33,7 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
         <>
             <Header searchQuery={query} />
             <Titlebar title={`${gettext('Results')}: ${query}`} />
-            <div css={styles.results}>
+            <div className="search-results">
                 {data &&
                     data.results &&
                     data.results.map(hit => {
@@ -97,22 +43,22 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
                                 ? `${window.origin}${path}`
                                 : path;
                         return (
-                            <div css={styles.container} key={hit.slug}>
-                                <div css={styles.result}>
+                            <div className="result-container" key={hit.slug}>
+                                <div className="result">
                                     <div>
-                                        <a css={styles.link} href={path}>
+                                        <a className="result-title" href={path}>
                                             {hit.title}
                                         </a>
                                     </div>
-                                    <div css={styles.url}>
+                                    <div className="result-url">
                                         <a href={path}>{url}</a>
                                     </div>
-                                    <div css={styles.summary}>
+                                    <div className="result-summary">
                                         {hit.summary}
                                     </div>
                                     {hit.excerpts.map((excerpt, i) => (
                                         <div
-                                            css={styles.excerpt}
+                                            className="result-excerpt"
                                             key={i}
                                             dangerouslySetInnerHTML={{
                                                 __html: excerpt
@@ -124,12 +70,12 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
                         );
                     })}
                 {data && data.results && data.results.length === 0 && (
-                    <div css={styles.noresults}>
+                    <div className="no-results">
                         {gettext('No matching documents found.')}
                     </div>
                 )}
                 {data && data.error && (
-                    <div css={styles.error}>
+                    <div className="error">
                         <h2>{data.error.toString()}</h2>
                     </div>
                 )}
