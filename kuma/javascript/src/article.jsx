@@ -1,7 +1,6 @@
 // @flow
 import * as React from 'react';
 import { useContext, useEffect, useRef } from 'react';
-import { css } from '@emotion/core';
 
 import { activateBCDSignals, activateBCDTables } from './bcd.js';
 import { addLiveExampleButtons } from './live-examples.js';
@@ -16,51 +15,6 @@ import sectionAnchor from './section-anchor.jsx';
 import type { DocumentData } from './document.jsx';
 type DocumentProps = {
     document: DocumentData
-};
-
-// A media query that identifies screens narrower than a tablet
-const NARROW = '@media (max-width: 749px)';
-
-const styles = {
-    article: css({
-        gridArea: 'main',
-        boxSizing: 'border-box',
-        width: '100%',
-        // Less padding on the left because the sidebar also has
-        // padding on the right
-        padding: '30px 24px 30px 12px',
-        [NARROW]: {
-            // Except on small screens the sidebar is below, so we
-            // need the same (but overall smaller) padding on both sides.
-            padding: '15px 12px'
-        },
-        '& p': {
-            maxWidth: '42rem'
-        },
-        '& a.sectionLink': {
-            fontSize: 24,
-            textDecoration: 'none'
-        },
-
-        // Styles for BCD tables, overriding the stylesheets
-        '& table.bc-table button.bc-history-link': {
-            ':focus': {
-                outline: '#83d0f2 solid 3px',
-                outlineOffset: -3
-            },
-            ':hover': {
-                backgroundColor: '#83d0f2 !important'
-            }
-        }
-    }),
-    metadata: css({
-        marginTop: 32,
-        fontSize: '0.88889rem',
-        color: '#696969',
-        '& div': {
-            margin: '4px 0'
-        }
-    })
 };
 
 /* This is an effect function that runs every time the article is rendered.
@@ -131,9 +85,10 @@ export default function Article({ document }: DocumentProps) {
             id="content"
             ref={article}
             className={
-                isArchive ? 'text-content archive-content' : 'text-content'
+                isArchive
+                    ? 'article text-content archive-content'
+                    : 'article text-content'
             }
-            css={styles.article}
         >
             <article
                 id="wikiArticle"
@@ -149,7 +104,7 @@ function ArticleMetadata({ document }: DocumentProps) {
     const profileBaseURL = `${url.protocol}//${url.host}/profiles/`;
 
     return (
-        <div css={styles.metadata}>
+        <div className="metadata">
             <Contributors
                 contributors={document.contributors}
                 profileBaseURL={profileBaseURL}
