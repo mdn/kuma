@@ -67,11 +67,15 @@ inline indicators aka badges
     line-height: normal;
 }
 
-/* icon styling for indicators needs to be seperate because .spec
-   extend %indicator-inline into some :before content */
+/*
+ * icon styling for indicator icons needs to be separate because
+ * .spec-* extends `%indicator-inline` into some :before content
+ *
+ * This also can't extend `%indicator-with-icon`, as `%indicator-inline-icon`
+ * is applied to all inline indicators to ensure consistent inline icon spacing,
+ * whereas `%indicator-with-icon` is used to add inline padding.
+ */
 %indicator-inline-icon {
-    @extend %indicator-with-icon;
-
     &:before {
         display: inline-block;
         @include bidi((
