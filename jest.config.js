@@ -76,7 +76,7 @@ module.exports = {
     },
 
     // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
-    modulePathIgnorePatterns: ['kumascript'],
+    modulePathIgnorePatterns: ['kumascript']
 
     // Activates notifications for test results
     // notify: false,
@@ -123,7 +123,7 @@ module.exports = {
     // setupTestFrameworkScriptFile: null,
 
     // A list of paths to snapshot serializer modules Jest should use for snapshot testing
-    snapshotSerializers: ['jest-emotion']
+    // snapshotSerializers: []
 
     // The test environment that will be used for testing
     // testEnvironment: "jest-environment-jsdom",
