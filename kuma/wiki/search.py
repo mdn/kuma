@@ -2,7 +2,6 @@
 from __future__ import division
 
 import logging
-import operator
 from math import ceil
 
 from celery import chain
@@ -15,7 +14,6 @@ from elasticsearch_dsl import document, field
 from elasticsearch_dsl.connections import connections
 from elasticsearch_dsl.mapping import Mapping
 from elasticsearch_dsl.search import Search
-from six.moves import reduce
 
 from kuma.core.utils import chord_flow, chunked
 
@@ -223,13 +221,11 @@ class WikiDocumentType(document.Document):
         """
         model = cls.get_model()
 
-        excludes = []
+        excludes = Q()
         for exclude in cls.exclude_slugs:
-            excludes.append(Q(slug__icontains=exclude))
+            excludes |= Q(slug__startswith=exclude)
 
-        qs = (model.objects
-                   .filter(is_redirect=False, deleted=False)
-                   .exclude(reduce(operator.or_, excludes)))
+        qs = model.objects.filter(is_redirect=False).exclude(excludes)
 
         percent = percent / 100
         if percent < 1:
