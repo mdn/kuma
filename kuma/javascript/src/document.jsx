@@ -40,7 +40,6 @@ export type DocumentData = {
         url: string,
         title: string
     }>,
-    contributors: Array<string>,
     lastModified: string, // An ISO date
 };
 
