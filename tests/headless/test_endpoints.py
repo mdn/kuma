@@ -131,11 +131,9 @@ def test_hreflang_basic(base_url):
                                                       'tocHTML', 'bodyHTML',
                                                       'id', 'quickLinksHTML',
                                                       'parents', 'translations',
-                                                      'editURL', 'summary',
+                                                      'wikiURL', 'summary',
                                                       'language',
-                                                      'contributors',
                                                       'lastModified',
-                                                      'lastModifiedBy',
                                                       'absoluteURL')),
                                     'redirectURL'))],
     ids=('whoami', 'doc')

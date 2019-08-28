@@ -5,19 +5,17 @@ import { gettext } from './l10n.js';
 
 import ClockIcon from './icons/clock.svg';
 
-type LastModifiedByProps = {
+type Props = {
     documentLocale: string,
-    lastModifiedBy: string,
     lastModified: string,
-    profileBaseURL: string
+    wikiRevisionHistoryURL: string
 };
 
-export default function LastModifiedBy({
+export default function LastModified({
     documentLocale,
-    lastModifiedBy,
     lastModified,
-    profileBaseURL
-}: LastModifiedByProps) {
+    wikiRevisionHistoryURL
+}: Props) {
     // This fortunately works because the 'lastModified' date string is
     // predictable and always of the same format. It's not a proper ISO
     // string but it's close.
@@ -35,16 +33,15 @@ export default function LastModifiedBy({
             <header>
                 <h4>{gettext('Last updated by:')}</h4>
             </header>
-            <a href={`${profileBaseURL}${lastModifiedBy}`} rel="nofollow">
-                {`${lastModifiedBy}`}
-            </a>
-            {', '}
             <time dateTime={lastModified}>
                 {lastModifiedDate.toLocaleString(
                     documentLocale,
                     dateStringOptions
                 )}
-            </time>
+            </time>,{' '}
+            <a href={`${wikiRevisionHistoryURL}`} rel="nofollow">
+                {gettext('by MDN contributors')}
+            </a>
         </section>
     );
 }

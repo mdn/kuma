@@ -8,7 +8,6 @@ from kuma.api.v1.views import (document_api_data, get_content_based_redirect,
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.users.templatetags.jinja_helpers import gravatar_url
-from kuma.wiki.jobs import DocumentContributorsJob
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
@@ -71,15 +70,8 @@ def test_doc_api_404(client, api_settings, root_doc):
     assert_no_cache_header(response)
 
 
-@pytest.mark.parametrize('ensure_contributors', (True, False))
-def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache,
-                 ensure_contributors):
+def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache):
     """On success we get document details in a JSON response."""
-    if ensure_contributors:
-        # Pre-populate the cache for the call to document_api_data()
-        # made within the view that serves the "api.v1.doc" endpoint.
-        DocumentContributorsJob().refresh(trans_doc.pk)
-
     url = reverse('api.v1.doc', args=[trans_doc.locale, trans_doc.slug])
     response = client.get(url, HTTP_HOST=api_settings.BETA_HOST)
     assert response.status_code == 200
@@ -96,7 +88,7 @@ def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache,
     assert doc_data['language'] == trans_doc.language
     assert doc_data['hrefLang'] == 'fr'
     assert doc_data['absoluteURL'] == trans_doc.get_absolute_url()
-    assert doc_data['editURL'] == absolutify(trans_doc.get_edit_url(),
+    assert doc_data['wikiURL'] == absolutify(trans_doc.get_absolute_url(),
                                              for_wiki_site=True)
     assert doc_data['translateURL'] is None
     assert doc_data['bodyHTML'] == trans_doc.get_body_html()
@@ -110,33 +102,15 @@ def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache,
         'title': 'Root Document',
         'url': '/en-US/docs/Root'
     }]
-    assert doc_data['contributors'] == (
-        ['wiki_user'] if ensure_contributors else [])
     assert doc_data['lastModified'] == '2017-04-14T12:20:00'
-    assert doc_data['lastModifiedBy'] == 'wiki_user'
-
-    # Clear the cache for a clean slate when calling document_api_data().
-    DocumentContributorsJob().delete(trans_doc.pk)
-
-    # Also ensure that we get exactly the same data by calling
-    # the document_api_data() function directly
-    assert data == document_api_data(
-        trans_doc, ensure_contributors=ensure_contributors)
 
 
-@pytest.mark.parametrize('ensure_contributors', (True, False))
 def test_doc_api_for_redirect_to_doc(client, api_settings, root_doc,
-                                     redirect_doc, cleared_cacheback_cache,
-                                     ensure_contributors):
+                                     redirect_doc, cleared_cacheback_cache):
     """
     Test the document API when we're requesting data for a document that
     redirects to another document.
     """
-    if ensure_contributors:
-        # Pre-populate the cache for the call to document_api_data()
-        # made within the view that serves the "api.v1.doc" endpoint.
-        DocumentContributorsJob().refresh(root_doc.pk)
-
     url = reverse('api.v1.doc', args=[redirect_doc.locale, redirect_doc.slug])
     response = client.get(url, HTTP_HOST=api_settings.BETA_HOST, follow=True)
     assert response.status_code == 200
@@ -153,7 +127,7 @@ def test_doc_api_for_redirect_to_doc(client, api_settings, root_doc,
     assert doc_data['language'] == root_doc.language
     assert doc_data['hrefLang'] == 'en'
     assert doc_data['absoluteURL'] == root_doc.get_absolute_url()
-    assert doc_data['editURL'] == absolutify(root_doc.get_edit_url(),
+    assert doc_data['wikiURL'] == absolutify(root_doc.get_absolute_url(),
                                              for_wiki_site=True)
     assert doc_data['translateURL'] == absolutify(
         reverse(
@@ -167,18 +141,7 @@ def test_doc_api_for_redirect_to_doc(client, api_settings, root_doc,
     assert doc_data['quickLinksHTML'] == root_doc.get_quick_links_html()
     assert doc_data['tocHTML'] == root_doc.get_toc_html()
     assert doc_data['translations'] == []
-    assert doc_data['contributors'] == (
-        ['wiki_user'] if ensure_contributors else [])
     assert doc_data['lastModified'] == '2017-04-14T12:15:00'
-    assert doc_data['lastModifiedBy'] == 'wiki_user'
-
-    # Clear the cache for a clean slate when calling document_api_data().
-    DocumentContributorsJob().delete(root_doc.pk)
-
-    # Also ensure that we get exactly the same data by calling
-    # the document_api_data() function directly
-    assert data == document_api_data(
-        root_doc, ensure_contributors=ensure_contributors)
 
 
 @pytest.mark.parametrize('case', ('redirect-to-home', 'redirect-to-other'))

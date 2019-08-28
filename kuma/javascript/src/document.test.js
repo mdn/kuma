@@ -20,8 +20,8 @@ export const fakeDocumentData = {
     hrefLang: 'en',
     absoluteURL: '[fake absolute url]',
     translateURL: '[fake translate url]',
-    editURL:
-        'https://wiki.mdn.developer.mozilla.org/en-US/docs/Web/CSS/box-shadow$edit',
+    wikiURL:
+        'https://wiki.mdn.developer.mozilla.org/en-US/docs/Web/CSS/box-shadow',
     bodyHTML: '[fake body HTML]',
     quickLinksHTML: '[fake quicklinks HTML]',
     tocHTML: '[fake TOC HTML]',
@@ -45,9 +45,7 @@ export const fakeDocumentData = {
             title: '[fake spanish translation]'
         }
     ],
-    contributors: ['mike', 'ike'],
-    lastModified: '2019-01-02T03:04:05Z',
-    lastModifiedBy: 'ike'
+    lastModified: '2019-01-02T03:04:05Z'
 };
 
 describe('Document component renders all of its parts', () => {
@@ -105,12 +103,6 @@ describe('Document component renders all of its parts', () => {
         expect(snapshot).toContain(fakeDocumentData.tocHTML);
         expect(snapshot).toContain(fakeDocumentData.quickLinksHTML);
         expect(snapshot).toContain(fakeDocumentData.bodyHTML);
-    });
-
-    test('contributor names appear', () => {
-        for (let c of fakeDocumentData.contributors) {
-            expect(snapshot).toContain(c);
-        }
     });
 });
 
