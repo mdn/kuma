@@ -236,19 +236,26 @@ def announce_push() {
 }
 
 def compose_test() {
-    def dc = 'docker-compose -f docker-compose.yml -f docker-compose.test.yml'
+    def dc = 'docker-compose'
+    def dc_exec = "${dc} exec -T web"
     def dc_down = "${dc} down --volumes --remove-orphans"
-    // Pre-test tear down to ensure we're starting with a clean slate.
+    def es_url = 'http://elasticsearch:9200'
+    def mysql_url = 'mysql://root:kuma@mysql:3306/developer_mozilla_org'
+    def junit_results = '--junit-xml=/app/test_results/django.xml'
+    sh_with_notify("${dc} --version", 'Check the version')
     sh_with_notify(dc_down, 'Pre-test tear-down')
-    // Run the "smoke" tests with no external dependencies.
-    sh_with_notify("${dc} run noext", 'Smoke tests')
-    // Build the static assets required for many tests.
-    sh_with_notify("${dc} run noext make localecompile build-static",
-                   'Compile locales and build static assets')
-    // Run the Kuma tests, building the mysql image before starting.
-    sh_with_notify("${dc} build mysql", 'Build mysql')
-    sh_with_notify("${dc} run test", 'Kuma tests')
-    // Tear everything down.
+    sh_with_notify("${dc} up -d", 'Start the services detached')
+    sh_with_notify("${dc_exec} urlwait ${mysql_url} 30", 'Wait for MySQL')
+    sh_with_notify("${dc_exec} urlwait ${es_url} 30", 'Wait for Elasticsearch')
+    sh_with_notify("${dc_exec} make clean", 'Start with fresh directories')
+    sh_with_notify("${dc_exec} make localecompile", 'Compile locales')
+    sh_with_notify("${dc_exec} make build-static", 'Build static assets')
+    sh_with_notify("${dc_exec} ./manage.py migrate", 'Run migrations')
+    sh_with_notify("${dc_exec} pytest ${junit_results} kuma", 'Run tests')
+    sh_with_notify(
+        "${dc_exec} ./manage.py makemigrations --check --dry-run",
+        'Ensure that no DB migrations were forgotten'
+    )
     sh_with_notify(dc_down, 'Post-test tear-down')
 }
 

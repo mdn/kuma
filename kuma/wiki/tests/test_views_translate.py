@@ -41,7 +41,7 @@ def test_translate_get_invalid_locale(root_doc, trans_doc_client):
     url = reverse('wiki.translate', args=(root_doc.slug,))
     url += '?tolocale=XxX'
 
-    response = trans_doc_client.get(url)
+    response = trans_doc_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 404
 
 
