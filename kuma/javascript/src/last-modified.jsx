@@ -38,7 +38,8 @@ export default function LastModified({
                     documentLocale,
                     dateStringOptions
                 )}
-            </time>,{' '}
+            </time>
+            ,{' '}
             <a href={`${wikiRevisionHistoryURL}`} rel="nofollow">
                 {gettext('by MDN contributors')}
             </a>

@@ -40,7 +40,7 @@ export type DocumentData = {
         url: string,
         title: string
     }>,
-    lastModified: string, // An ISO date
+    lastModified: string // An ISO date
 };
 
 export type DocumentProps = {
