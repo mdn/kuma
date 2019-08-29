@@ -73,35 +73,6 @@ exports[`Header snapshot 1`] = `
   outline-offset: -3px;
 }
 
-.emotion-4 {
-  box-sizing: border-box;
-  position: absolute;
-  display: block;
-  top: 0;
-  left: 0;
-  width: 99px;
-  height: 99px;
-  z-index: 100;
-  -webkit-transform: translate(-49.5px,-49.5px) rotate(-45deg);
-  -ms-transform: translate(-49.5px,-49.5px) rotate(-45deg);
-  transform: translate(-49.5px,-49.5px) rotate(-45deg);
-  background-color: rgba(255,255,0,0.85);
-  border: solid black 1px;
-  box-shadow: 0px 3px 10px #000;
-  font-weight: bold;
-  text-align: center;
-  line-height: 1.0;
-  font-size: 12.5px;
-  padding-top: 68px;
-  color: black;
-}
-
-.emotion-4:hover {
-  background-color: #ff0;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
 <header
   className="page-header"
 >
@@ -448,16 +419,6 @@ exports[`Header snapshot 1`] = `
     rel="nofollow"
   >
     Sign in
-  </a>
-  <a
-    className="emotion-4"
-    href="https://bugzilla.mozilla.org/show_bug.cgi?id=1561020"
-    rel="noopener noreferrer nofollow"
-    target="_blank"
-  >
-    Beta
-    <br />
-    Feedback
   </a>
 </header>
 `;
