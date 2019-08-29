@@ -17,6 +17,19 @@
             return;
         }
 
+        /**
+         * As of Aug 30, 2019 the body HTML is now rendered with anchor links
+         * the HTML returned from the document JSON API. This depends on the
+         * document having had a chance to re-render from that date onwards.
+         * Basically, if the HTML appears to have `a.section-link` tags in it,
+         * bail early and don't bother doing this with client-side JavaScript.
+         * Take stock at the end of 2019 to see if all pages have been
+         * re-generated, if so, delete this whole function.
+         * See https://github.com/mozilla/kuma/issues/5718
+         */
+        if (document.querySelector('a.section-link')) {
+            return;
+        }
         // collect all headings with an `id` attribute
         var headings = Array.from(document.querySelectorAll('h2[id]')).concat(
             Array.from(document.querySelectorAll('h3[id]'))

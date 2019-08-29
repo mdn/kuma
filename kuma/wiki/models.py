@@ -338,6 +338,7 @@ class Document(NotificationsMixin, models.Model):
         #       production, AND the current revisions of all docs have had
         #       their content cleaned with "clean_content".
         doc.injectSectionIDs()
+        doc.injectAnchorLinks()
         doc.annotateLinks(base_url=settings.SITE_URL)
         return doc.serialize()
 

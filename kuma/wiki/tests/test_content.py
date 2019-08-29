@@ -192,6 +192,90 @@ class InjectSectionIDsTests(TestCase):
         self.assertHTMLEqual(result_src, expected)
 
 
+class InjectSectionAnchorLinksTests(TestCase):
+    def test_anchor_links_h2(self):
+
+        doc_src = """
+            <h1 class="header1">Header One</h1>
+            <p>test</p>
+            <section>
+                <h1 class="header2">Header Two</h1>
+                <h1 name="Header: X" class="header3">Header Three</h1>
+                <p>test</p>
+            </section>
+            <h2 class="ihavenoid">This is ignored</h2>
+            <p>hello kitty</p>
+            <h2 id="offy" class="foobar offscreen">Should also be ignored</h2>
+            <p>hello kitty</p>
+            <h2 class="else" id="not_ignored">Not ignored</h2>
+            <p>test</p>
+        """
+
+        result_src = (kuma.wiki.content
+                      .parse(doc_src)
+                      .injectAnchorLinks()
+                      .serialize())
+        result_doc = pq(result_src)
+
+        # The first H2 tag shouldn't have been touched.
+        h2_1, = result_doc('h2.ihavenoid').items()
+        assert h2_1.text() == 'This is ignored'
+        # Shouldn't be any other elements *inside* that h2 tag.
+        assert not h2_1('a')
+
+        h2_2, = result_doc('h2.offscreen').items()
+        assert h2_2.text() == 'Should also be ignored'
+        # Shouldn't be any other elements *inside* that h2 tag.
+        assert not h2_2('a')
+
+        h2_3, = result_doc('h2.else').items()
+        # The original text should still be there.
+        assert h2_3.text() == 'Not ignored'
+        anchor_link, = h2_3('a.section-link').items()
+        assert anchor_link.attr('aria-label') == 'Link to Not ignored'
+        assert anchor_link.attr('href') == '#not_ignored'
+        assert anchor_link('svg.icon.icon-link')
+
+    def test_anchor_links_h3(self):
+
+        doc_src = """
+            <h1 class="header1">Header One</h1>
+            <p>test</p>
+            <h3 class="ihavenoid">This is ignored</h3>
+            <p>hello kitty</p>
+            <h3 id="offy" class="foobar offscreen">Should also be ignored</h3>
+            <p>hello kitty</p>
+            <h3 class="else" id="not_ignored">Not ignored</h3>
+            <p>test</p>
+        """
+
+        result_src = (kuma.wiki.content
+                      .parse(doc_src)
+                      .injectAnchorLinks()
+                      .serialize())
+        result_doc = pq(result_src)
+
+        # The first H2 tag shouldn't have been touched.
+        h3_1, = result_doc('h3.ihavenoid').items()
+        assert h3_1.text() == 'This is ignored'
+        # Shouldn't be any other elements *inside* that h3 tag.
+        assert not h3_1('a')
+
+        h3_2, = result_doc('h3.offscreen').items()
+        assert h3_2.text() == 'Should also be ignored'
+        # Shouldn't be any other elements *inside* that h3 tag.
+        assert not h3_2('a')
+
+        h3_3, = result_doc('h3.else').items()
+        # The original text should still be there.
+        assert h3_3.text() == 'Not ignored'
+        # The anchor link should be immediately after
+        anchor_link = h3_3.next()
+        assert anchor_link.attr('aria-label') == 'Link to Not ignored'
+        assert anchor_link.attr('href') == '#not_ignored'
+        assert anchor_link('svg.icon.icon-link')
+
+
 def test_extractSection_by_header_id():
     """extractSection can extract by header element id."""
     doc_src = """

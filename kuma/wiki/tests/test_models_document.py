@@ -7,6 +7,7 @@ Legacy tests are in kuma/wiki/tests/test_models.py
 from __future__ import unicode_literals
 
 import json
+import re
 from datetime import timedelta
 
 import mock
@@ -320,16 +321,31 @@ def test_get_body_html(doc_with_sections):
     """The quick_links are removed from the body HTML."""
     result = doc_with_sections.get_body_html()
     expected = """
-    <h2 id="First">First</h2>
+    <h2 id="First">First
+    <a href="#First" aria-label="Link to First" class="section-link"><SVG/></a>
+    </h2>
     <p>This is a document</p>
-    <h2 id="Second">Second</h2>
+    <h2 id="Second">Second
+    <a href="#Second" aria-label="Link to Second" class="section-link"><SVG/></a>
+    </h2>
     <p>Another section, with an
       <a href="/en-US/docs/Root">existing link</a> and a
       <a class="new" rel="nofollow" href="/en-US/docs/NewPage">new link</a>.
     </p>
-    <h2 id="Short">Short</h2>
+    <h2 id="Short">Short
+    <a href="#Short" aria-label="Link to Short" class="section-link"><SVG/></a>
+    </h2>
     <p>This is the short section.</p>
     """
+    # The problem with this test is that the resulting HTML has
+    # large <svg> tags which we don't want to hardcode.
+    # So we'll simplify the test by replacing the SVGs with a
+    # "stamp" that can simulate its presence.
+
+    def simplify_svg_html(html):
+        return re.sub(r'<svg .*?</svg>', '<SVG/>', result)
+
+    result = simplify_svg_html(result)
     assert normalize_html(result) == normalize_html(expected)
 
 

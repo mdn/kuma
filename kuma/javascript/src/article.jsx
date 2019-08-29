@@ -21,6 +21,19 @@ type DocumentProps = {
    This is the React version of the pre-React code in
    kuma/static/js/components/local-anchor.js */
 function addAnchors(article) {
+    /**
+     * As of Aug 30, 2019 the body HTML is now rendered with anchor links
+     * the HTML returned from the document JSON API. This depends on the
+     * document having had a chance to re-render from that date onwards.
+     * Basically, if the HTML appears to have `a.section-link` tags in it,
+     * bail early and don't bother doing this with client-side JavaScript.
+     * Take stock at the end of 2019 to see if all pages have been
+     * re-generated, if so, delete this whole function.
+     * See https://github.com/mozilla/kuma/issues/5718
+     */
+    if (article.querySelector('a.section-link')) {
+        return;
+    }
     for (let heading of article.querySelectorAll('h2[id], h3[id]')) {
         // do not add the widget to headings that are hidden
         if (!heading.classList.contains('offscreen')) {

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 import re
 from collections import defaultdict
 from xml.sax.saxutils import quoteattr
@@ -353,6 +354,11 @@ class ContentSectionTool(object):
     @newrelic.agent.function_trace()
     def injectSectionIDs(self):
         self.stream = SectionIDFilter(self.stream)
+        return self
+
+    @newrelic.agent.function_trace()
+    def injectAnchorLinks(self):
+        self.stream = SectionAnchorLinkFilter(self.stream)
         return self
 
     @newrelic.agent.function_trace()
@@ -756,6 +762,71 @@ class SectionEditLinkFilter(html5lib_Filter):
                               {'type': 'EndTag', 'name': 'a'})
                         for t in ts:
                             yield t
+
+
+# Instead of injecting the SVG of the file `./anchor.svg`, we, right here,
+# turn it into a parsed stream. Then it slots in nicely in the
+# SectionAnchorLinkFilter.__iter__ method below.
+with open(os.path.join(os.path.dirname(__file__), 'anchor.svg')) as f:
+    anchor_svg_raw = f.read()
+anchor_svg_tokens = list(ContentSectionTool(anchor_svg_raw).stream)
+
+
+class SectionAnchorLinkFilter(html5lib_Filter):
+    """
+    Filter which anchor links next to H2 and H3 tags.
+
+    If it's a <h2> tag, put the anchor tag in right before </h2>.
+    If it's a <h3> tag, put the anchor tag after the </h3>.
+    """
+
+    def __iter__(self):
+        input = html5lib_Filter.__iter__(self)
+
+        # Our memory between iterations.
+        # This whole technique hinges on there never being something
+        # like `<h2><h3>Hi!</h3></h2>` in the source.
+        in_heading = None
+
+        for token in input:
+            if token['type'] == 'StartTag' and token['name'] in ('h2', 'h3'):
+                # Does it have an ID tag with a good value?
+                id = token['data'].get((None, 'id'))
+                classlist = token['data'].get((None, 'class'), '')
+                # The simple rule for inclusion is <h2> tags that have an
+                # ID and does not have a "offscreen" in the class list.
+                if id and not re.findall(r'\boffscreen\b', classlist):
+                    in_heading = {'id': id}
+            elif in_heading and token['type'] == 'Characters':
+                # Soak up the inner text content of the current <h2> tag.
+                in_heading['text'] = token['data']
+            elif in_heading and token['type'] == 'EndTag' and token['name'] in ('h2', 'h3'):
+                # The only difference between h2 and h3 is that for h3 we
+                # yield the token first, so that the anchor link is added
+                # afterwards.
+                if token['name'] == 'h3':
+                    yield token
+                yield {
+                    'type': 'StartTag',
+                    'name': 'a',
+                    'data': {
+                        (None, u'class'): u'section-link',
+                        (None, u'aria-label'): ugettext('Link to %(text)s') % {
+                            'text': in_heading['text']
+                        },
+                        (None, u'href'): u"#{}".format(in_heading['id']),
+                    }
+                }
+                for anchor_token in anchor_svg_tokens:
+                    yield anchor_token
+
+                yield {'type': 'EndTag', 'name': 'a'}
+                in_heading = None
+                if token['name'] == 'h3':
+                    # If it was a h3, we have already yielded.
+                    continue
+
+            yield token
 
 
 class SectionTOCFilter(html5lib_Filter):
