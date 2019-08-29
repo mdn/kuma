@@ -69,7 +69,7 @@ def test_doc_api_404(client, root_doc):
     assert_no_cache_header(response)
 
 
-def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache):
+def test_doc_api(client, trans_doc, cleared_cacheback_cache):
     """On success we get document details in a JSON response."""
     url = reverse('api.v1.doc', args=[trans_doc.locale, trans_doc.slug])
     response = client.get(url)
@@ -104,8 +104,8 @@ def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache):
     assert doc_data['lastModified'] == '2017-04-14T12:20:00'
 
 
-def test_doc_api_for_redirect_to_doc(client, api_settings, root_doc,
-                                     redirect_doc, cleared_cacheback_cache):
+def test_doc_api_for_redirect_to_doc(client, root_doc, redirect_doc,
+                                     cleared_cacheback_cache):
     """
     Test the document API when we're requesting data for a document that
     redirects to another document.
