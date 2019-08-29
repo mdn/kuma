@@ -32,6 +32,7 @@
         "optim:svg": "svgo jinja2/includes/icons/* --disable={removeViewBox,removeTitle} --multipass --pretty",
         "precommit": "npm run eslint && npm run stylelint && npm run pretty",
         "test": "jest --testPathIgnorePatterns tests/sass",
+        "test-ci": "JEST_JUNIT_OUTPUT_DIR='./test_results' JEST_JUNIT_OUTPUT_NAME='jest.xml' jest --ci --reporters=default --reporters=jest-junit --testPathIgnorePatterns tests/sass",
         "format": "prettier --write **/*{.js,.jsx,.scss}",
         "pretty": "prettier --check **/*{.js,.jsx,.scss}"
     },
@@ -71,6 +72,7 @@
         "hard-source-webpack-plugin": "0.13.1",
         "husky": "0.14.3",
         "jest": "^24.1.0",
+        "jest-junit": "^8.0.0",
         "node-sass": "4.12.0",
         "npm-run-all": "4.1.5",
         "prettier": "1.18.2",

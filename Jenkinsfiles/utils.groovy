@@ -252,6 +252,7 @@ def compose_test() {
     sh_with_notify("${dc_exec} make build-static", 'Build static assets')
     sh_with_notify("${dc_exec} ./manage.py migrate", 'Run migrations')
     sh_with_notify("${dc_exec} pytest ${junit_results} kuma", 'Run tests')
+    sh_with_notify("${dc_exec} npm run test-ci", 'Run jest tests')
     sh_with_notify(
         "${dc_exec} ./manage.py makemigrations --check --dry-run",
         'Ensure that no DB migrations were forgotten'
