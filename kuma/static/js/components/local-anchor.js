@@ -6,7 +6,7 @@
  * of kuma/javascript/src/article.jsx
  */
 
-(function() {
+(function () {
     'use strict';
 
     function prependLocalAnchors() {
@@ -53,7 +53,20 @@
             }
         }
 
-        mainDocument.addEventListener('click', function(event) {
+        // listen for right clicks
+        mainDocument.addEventListener('contextmenu', function (event) {
+            // if it was on a section link
+            if (event.target.classList && event.target.classList.contains('local-anchor')) {
+                // send event to GA
+                mdn.analytics.trackEvent({
+                    category: 'MDN UI',
+                    action: 'Right click on section link',
+                    label: 'Section-Link-Right-Click'
+                });
+            }
+        });
+
+        mainDocument.addEventListener('click', function (event) {
             var target = event.target;
 
             // only handle clicks on anchor elements
@@ -74,6 +87,12 @@
                 ) {
                     event.preventDefault();
                     mdn.utils.scrollToHeading(headingId);
+                    // send left click events to GA
+                    mdn.analytics.trackEvent({
+                        category: 'MDN UI',
+                        action: 'Click on section link',
+                        label: 'Section-Link-Click'
+                    });
                 }
             }
         });
@@ -81,7 +100,7 @@
 
     // `Array.from` is not supported in IE, progressively enhance
     if (typeof Array.from !== 'undefined') {
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             prependLocalAnchors();
         });
     }
