@@ -26,7 +26,7 @@ export type DocumentData = {
     language: string,
     hrefLang: string,
     absoluteURL: string,
-    editURL: string,
+    wikiURL: string,
     translateURL: string,
     bodyHTML: string,
     quickLinksHTML: string,
@@ -40,9 +40,7 @@ export type DocumentData = {
         url: string,
         title: string
     }>,
-    contributors: Array<string>,
-    lastModified: string, // An ISO date
-    lastModifiedBy: string
+    lastModified: string // An ISO date
 };
 
 export type DocumentProps = {

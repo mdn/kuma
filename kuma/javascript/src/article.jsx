@@ -8,11 +8,10 @@ import { highlightSyntax } from './prism.js';
 import * as InteractiveExamples from './interactive-examples.js';
 import UserProvider from './user-provider.jsx';
 
-import Contributors from './contributors.jsx';
-import LastModifiedBy from './last-modified-by.jsx';
+import LastModified from './last-modified.jsx';
 import sectionAnchor from './section-anchor.jsx';
-
 import type { DocumentData } from './document.jsx';
+
 type DocumentProps = {
     document: DocumentData
 };
@@ -100,19 +99,12 @@ export default function Article({ document }: DocumentProps) {
 }
 
 function ArticleMetadata({ document }: DocumentProps) {
-    const url = new URL(document.editURL);
-    const profileBaseURL = `${url.protocol}//${url.host}/profiles/`;
-
+    const wikiRevisionHistoryURL = document.wikiURL + '$history';
     return (
         <div className="metadata">
-            <Contributors
-                contributors={document.contributors}
-                profileBaseURL={profileBaseURL}
-            />
-            <LastModifiedBy
-                lastModifiedBy={document.lastModifiedBy}
+            <LastModified
                 lastModified={document.lastModified}
-                profileBaseURL={profileBaseURL}
+                wikiRevisionHistoryURL={wikiRevisionHistoryURL}
                 documentLocale={document.locale}
             />
         </div>

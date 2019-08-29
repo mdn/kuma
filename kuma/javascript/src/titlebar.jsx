@@ -55,12 +55,8 @@ const styles = {
 };
 
 function EditButton({ document }: DocumentProps) {
-    /* we want to omit the trailing `$edit` from the URL
-       to ensure users are not sent into edit mode immediately
-       https://bugzilla.mozilla.org/show_bug.cgi?id=1567720#c1 */
-    let editURL = document.editURL.split('$')[0];
     return (
-        <a className="button neutral" href={editURL} rel="nofollow">
+        <a className="button neutral" href={document.wikiURL} rel="nofollow">
             <EditIcon /> {gettext('Edit in wiki')}
         </a>
     );

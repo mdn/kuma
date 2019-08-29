@@ -858,7 +858,7 @@ def react_document(request, document_slug, document_locale):
     seo_parent_title = _get_seo_parent_title(doc, slug_dict, document_locale)
 
     # Get the JSON data for this document
-    doc_api_data = document_api_data(doc, ensure_contributors=True)
+    doc_api_data = document_api_data(doc)
     document_data = doc_api_data['documentData']
 
     # Bundle it all up and, finally, return.

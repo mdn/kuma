@@ -14,7 +14,6 @@ from waffle.models import Flag, Sample, Switch
 from kuma.api.v1.serializers import BCSignalSerializer
 from kuma.core.urlresolvers import reverse
 from kuma.users.templatetags.jinja_helpers import gravatar_url
-from kuma.wiki.jobs import DocumentContributorsJob
 from kuma.wiki.models import Document
 from kuma.wiki.search import WikiDocumentType
 from kuma.wiki.templatetags.jinja_helpers import absolutify
@@ -99,7 +98,7 @@ def get_content_based_redirect(document):
     return None
 
 
-def document_api_data(doc=None, ensure_contributors=False, redirect_url=None):
+def document_api_data(doc=None, redirect_url=None):
     """
     Returns the JSON data for the document for the document API.
     """
@@ -108,13 +107,6 @@ def document_api_data(doc=None, ensure_contributors=False, redirect_url=None):
             'documentData': None,
             'redirectURL': redirect_url,
         }
-
-    job = DocumentContributorsJob()
-    # If "ensure_contributors" is True, we need the contributors since the
-    # result will likely be cached, so we'll set "fetch_on_miss" and wait
-    # for the result if it's not already available or stale.
-    job.fetch_on_miss = ensure_contributors
-    contributors = [c['username'] for c in job.get(doc.pk)]
 
     # The original english slug for this document, for google analytics
     if doc.locale == 'en-US':
@@ -129,6 +121,7 @@ def document_api_data(doc=None, ensure_contributors=False, redirect_url=None):
     available_locales = (
         set([doc.locale]) | set(t.locale for t in other_translations))
 
+    doc_absolute_url = doc.get_absolute_url()
     return {
         'documentData': {
             'locale': doc.locale,
@@ -139,8 +132,8 @@ def document_api_data(doc=None, ensure_contributors=False, redirect_url=None):
             'summary': doc.get_summary_html(),
             'language': doc.language,
             'hrefLang': doc.get_hreflang(available_locales),
-            'absoluteURL': doc.get_absolute_url(),
-            'editURL': absolutify(doc.get_edit_url(), for_wiki_site=True),
+            'absoluteURL': doc_absolute_url,
+            'wikiURL': absolutify(doc_absolute_url, for_wiki_site=True),
             'translateURL': (
                 absolutify(
                     reverse(
@@ -172,11 +165,8 @@ def document_api_data(doc=None, ensure_contributors=False, redirect_url=None):
                     'title': t.title
                 } for t in other_translations
             ],
-            'contributors': contributors,
             'lastModified': (doc.current_revision and
                              doc.current_revision.created.isoformat()),
-            'lastModifiedBy': (doc.current_revision and
-                               str(doc.current_revision.creator))
         },
         'redirectURL': None,
     }
