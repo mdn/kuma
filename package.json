@@ -37,6 +37,7 @@
     },
     "dependencies": {
         "express": "^4.16.4",
+        "jsesc": "2.5.2",
         "morgan": "^1.9.1",
         "newrelic": "^5.9.0",
         "react": "^16.8.4",

@@ -1,10 +1,22 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-
+import jsesc from 'jsesc';
 import SinglePageApp from './single-page-app.jsx';
 import LandingPage from './landing-page.jsx';
 import { localize } from './l10n.js';
 
+/**
+ * Inspired by
+ * https://joreteg.com/blog/improving-redux-state-transfer-performance
+ * This function produces a string that you can inject into an HTML document
+ * by putting it like this: `<script>var data = JSON.parse(THIS_STRING)</script>
+ */
+function stringifySafely(obj) {
+    return jsesc(JSON.stringify(obj), {
+      json: true,
+      isScriptContext: true
+    });
+  }
 /*
  * This function performs server-side rendering of our UI, given
  * a JSON object of document data. It is used by ../ssr-server.js
@@ -56,5 +68,5 @@ export default function ssr(componentName, data) {
             break;
     }
 
-    return html;
+    return {html, script: stringifySafely(data)};
 }
