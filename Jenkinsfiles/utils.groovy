@@ -110,10 +110,18 @@ def sh_with_notify(cmd, display, notify_on_success=false) {
                 stage: display,
                 status: 'success'
             ])
+            notify_slack([
+                stage: display,
+                status: 'success'
+            ])
         }
     } catch(err) {
         notify_irc([
             irc_nick: nick,
+            stage: display,
+            status: 'failure'
+        ])
+        notify_slack([
             stage: display,
             status: 'failure'
         ])
@@ -218,6 +226,10 @@ def announce_push() {
     def tag = get_commit_tag()
     notify_irc([
         irc_nick: "mdn-${env.BRANCH_NAME}",
+        status: "Pushing to ${target}",
+        message: "${repo} image ${tag}"
+    ])
+    notify_slack([
         status: "Pushing to ${target}",
         message: "${repo} image ${tag}"
     ])

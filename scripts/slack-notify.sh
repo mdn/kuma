@@ -17,7 +17,7 @@ return_status() {
         STATUS=$(echo "$STATUS" | tr '[:lower:]' '[:upper:]')
         case "$STATUS" in
         'SUCCESS')
-        	STATUS_PREFIX=":tada:"
+            STATUS_PREFIX=":tada:"
             COLOR="good"
         ;;
         'SHIPPED')
@@ -75,8 +75,7 @@ while [ "$1" != "" ]; do
 done
 
 if [[ -n "$STAGE" ]]; then
-    MESSAGE="${STATUS}${STAGE}:"
-    MESSAGE="$MESSAGE Branch ${BOLD}${BRANCH_NAME}${NORMAL} build #${BUILD_NUMBER}: ${RUN_DISPLAY_URL}"
+    MESSAGE="${STATUS}${STAGE}"
 elif [[ -n "$MESSAGE" ]]; then
     MESSAGE="${STATUS}${MESSAGE}"
 else
@@ -97,13 +96,6 @@ read -r -d '' payload <<EOF
             "title": "${JOB_NAME} Build #${BUILD_NUMBER}",
             "title_link": "${RUN_DISPLAY_URL}",
             "text": "${MESSAGE}",
-            "fields": [
-                {
-                    "title": "Status",
-                    "value": "${STATUS}",
-                    "short": false,
-                }
-            ],
             "footer": "Slack incoming webhook",
             "footer_icon": "https://platform.slack-edge.com/img/default_application_icon.png",
             "ts": $(date +%s)
