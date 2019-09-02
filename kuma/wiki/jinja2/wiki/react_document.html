@@ -119,14 +119,6 @@
   {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(),
                   document_data)|safe }}
 
-  {% if settings.NEWSLETTER and settings.NEWSLETTER_ARTICLE %}
-  <div class="center">
-    <div class="newsletter-box">
-      {% include "includes/newsletter.html" %}
-    </div>
-  </div>
-  {% endif %}
-
   <!-- Footer -->
   <footer id="nav-footer" class="nav-footer">
     <div class="center">

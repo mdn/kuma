@@ -21,6 +21,7 @@ Main stylesheet for the site, standalone
 @import '../components/errorlist';
 @import '../components/compact';
 @import '../components/newsletter';
+@import './components/newsletter';
 @import '../components/payments';
 
 @import 'components/loading-bar';
