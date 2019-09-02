@@ -1,3 +1,20 @@
+.content-layout {
+    display: grid;
+    box-sizing: border-box;
+    margin: 0 auto;
+    max-width: 1400px;
+    /* If we're narrower than a tablet, put the sidebar at the
+       bottom and drop the toc line. */
+    grid-template-columns: 100%;
+    grid-template-areas: 'main' 'document-toc-container' 'side';
+
+    @media #{$mq-tablet-and-up} {
+        grid-template-columns: 25% 75%;
+        grid-template-rows: max-content 1fr;
+        grid-template-areas: 'document-toc-container main' 'side main';
+    }
+}
+
 .full-width-row-container {
     border-bottom: solid 1px $grey-light;
     width: 100%;
