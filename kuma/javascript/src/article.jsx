@@ -9,36 +9,12 @@ import * as InteractiveExamples from './interactive-examples.js';
 import UserProvider from './user-provider.jsx';
 
 import LastModified from './last-modified.jsx';
-import sectionAnchor from './section-anchor.jsx';
 import type { DocumentData } from './document.jsx';
 
 type DocumentProps = {
     document: DocumentData
 };
 
-/* This is an effect function that runs every time the article is rendered.
-   This is the React version of the pre-React code in
-   kuma/static/js/components/local-anchor.js */
-function addAnchors(article) {
-    for (let heading of article.querySelectorAll('h2[id], h3[id]')) {
-        // do not add the widget to headings that are hidden
-        if (!heading.classList.contains('offscreen')) {
-            /* we add the widget to a different place in the DOM
-               for H2 elements than for H3 elements */
-            if (heading.tagName === 'H2') {
-                heading.insertAdjacentElement(
-                    'beforeend',
-                    sectionAnchor(heading)
-                );
-            } else {
-                heading.insertAdjacentElement(
-                    'afterend',
-                    sectionAnchor(heading)
-                );
-            }
-        }
-    }
-}
 
 export default function Article({ document }: DocumentProps) {
     const article = useRef(null);
@@ -58,7 +34,6 @@ export default function Article({ document }: DocumentProps) {
             // Keep addLiveExampleButtons() before addAnchors() so the
             // example title doesn't end up with a link in it on codepen.
             addLiveExampleButtons(rootElement);
-            addAnchors(rootElement);
             highlightSyntax(rootElement);
             activateBCDTables(rootElement);
         }
