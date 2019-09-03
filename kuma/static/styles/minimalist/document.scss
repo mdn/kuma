@@ -77,13 +77,3 @@ Styling for article content
 
 @import 'structure/article';
 @import 'structure/sidebar';
-
-/*
-Delete, move or revert pages.
-====================================================================== */
-
-@import '../components/wiki/parent-suggest';
-@import '../components/wiki/move-decendants';
-@import '../components/wiki/doc-source';
-@import '../components/wiki/delete-document';
-@import '../components/wiki/delete-revision';
