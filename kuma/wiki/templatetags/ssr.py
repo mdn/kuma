@@ -72,9 +72,13 @@ def _render(component_name, html, script, needs_serialization=False):
 
 def client_side_render(component_name, data):
     """
-    Output an empty <div> and a script with complete state so that
+    Output an empty <div> and a script with most of the  state so that
     the UI can be rendered on the client-side.
+    The HTML fields are omitted, as they increase the payload by a lot
+    and are not needed on the client-side
     """
+    for key in ('quickLinksHTML', 'bodyHTML', 'tocHTML'):
+        data['documentData'][key] = ''
     return _render(component_name, '', data, needs_serialization=True)
 
 

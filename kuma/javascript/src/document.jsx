@@ -77,7 +77,9 @@ function Content({ document }: DocumentProps) {
             // See https://bugzilla.mozilla.org/show_bug.cgi?id=1570043
             // aria-live="assertive"
         >
-            {!!document.tocHTML && <TOC html={document.tocHTML} />}
+            {typeof document.tocHTML == 'string' && (
+                <TOC html={document.tocHTML} />
+            )}
             <Article document={document} />
             <Sidebar document={document} />
         </div>

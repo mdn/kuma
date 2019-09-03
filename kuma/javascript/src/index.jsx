@@ -15,10 +15,6 @@ if (container) {
     // with all the data needed to hydrate or render the UI.
     let data = window._react_data;
 
-    // Remove the global reference to this data object so that it can
-    // be garbage collected once it is no longer in use.
-    window._react_data = null; // eslint-disable-line camelcase
-
     // Store the string catalog so that l10n.gettext() can do translations
     localize(data.locale, data.stringCatalog, data.pluralFunction);
 
@@ -35,7 +31,7 @@ if (container) {
                 /* StrictMode is a tool for highlighting potential problems
                    in an application. Like Fragment, StrictMode does not
                    render any visible UI. It activates additional checks and
-                   warnings for its descendants. 
+                   warnings for its descendants.
                    @see https://reactjs.org/docs/strict-mode.html */
                 <React.StrictMode>
                     <SinglePageApp
