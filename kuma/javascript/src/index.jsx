@@ -17,9 +17,14 @@ if (container) {
     // with all the data needed to hydrate or render the UI.
     let data = window._react_data;
 
-    // Remove the global reference to this data object so that it can
-    // be garbage collected once it is no longer in use.
-    window._react_data = null; // eslint-disable-line camelcase
+    let quickLinksHTMLElement = document.querySelector('.sidebar .quick-links');
+    if (quickLinksHTMLElement) {
+        data.documentData.quickLinksHTML = quickLinksHTMLElement.innerHTML;
+    }
+    let wikiArticleElement = document.querySelector('#wikiArticle')
+    if (wikiArticleElement) {
+        data.documentData.bodyHTML = wikiArticleElement.innerHTML;
+    }
 
     // Store the string catalog so that l10n.gettext() can do translations
     localize(data.locale, data.stringCatalog, data.pluralFunction);
