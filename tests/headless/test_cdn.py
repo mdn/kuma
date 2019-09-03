@@ -278,21 +278,16 @@ def test_no_locale_cached_302(base_url, is_behind_cdn, slug, zone):
 @pytest.mark.nondestructive
 @pytest.mark.parametrize(
     'slug, params',
-    [pytest.param('/en-US/dashboards/topic_lookup', {'topic': 'mathml'},
-                  marks=pytest.mark.skip),  # Gets 504 due to slow response
+    [('/en-US/dashboards/topic_lookup', {'topic': 'mathml'}),
      ('/en-US/dashboards/user_lookup', {'user': 'sheppy'})],
     ids=['topic_lookup', 'user_lookup'])
 def test_lookup_dashboards(base_url, is_behind_cdn, slug, params):
     """
-    Ensure that the topic and user dashboard is cached, and forwards/caches
-    based-on the "X-Requested-With" header and any query parameters.
+    Ensure that the topic and user dashboards require login.
     """
-    url = base_url + slug
-    headers = {'X-Requested-With': 'XMLHttpRequest'}
-    response1 = assert_cached(url, 200, is_behind_cdn, headers=headers)
-    response2 = assert_cached(url, 200, is_behind_cdn, headers=headers,
-                              params=params)
-    assert response2.content != response1.content
+    response = assert_cached(base_url + slug, 302, is_behind_cdn)
+    assert response.headers['location'].endswith(
+        '/users/signin?next=' + quote(slug))
 
 
 @pytest.mark.nondestructive
