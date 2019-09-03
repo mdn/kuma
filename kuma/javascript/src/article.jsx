@@ -15,7 +15,6 @@ type DocumentProps = {
     document: DocumentData
 };
 
-
 export default function Article({ document }: DocumentProps) {
     const article = useRef(null);
     const userData = useContext(UserProvider.context);
