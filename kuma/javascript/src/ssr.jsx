@@ -34,6 +34,7 @@ export default function ssr(componentName, data) {
             `let v=(${data.pluralExpression});return(v===true)?1:((v===false)?0:v);`
         );
     }
+
     localize(data.locale, data.stringCatalog, pluralFunction);
 
     // This switch statement is duplicated in index.jsx. Anything changed

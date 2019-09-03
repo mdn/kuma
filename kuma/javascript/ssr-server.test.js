@@ -13,7 +13,7 @@ describe('ssr-server routes', () => {
         request(app)
             .get('/')
             .expect(200)
-            .expect('Content-Type', 'text/html; charset=utf-8')
+            .expect('Content-Type', 'application/json; charset=utf-8')
             .then(response => {
                 expect(response.text).toContain('SSR server ready');
             }));
@@ -51,8 +51,9 @@ describe('ssr-server routes', () => {
             .post(`/ssr/${name}`)
             .send(data)
             .expect(200)
-            .expect('Content-Type', 'text/plain; charset=utf-8')
+            .expect('Content-Type', 'application/json; charset=utf-8')
             .expect(response => {
+                console.log(response.text);
                 expect(response.text).toBe(mockssr(name, data));
             });
     });

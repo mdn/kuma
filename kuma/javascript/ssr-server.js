@@ -59,11 +59,7 @@ app.get('/readiness/?', (req, res) => {
  * not be parsed, escaped, or displayed as HTML.
  */
 app.post('/ssr/:componentName', (req, res) => {
-    const RES = ssr(req.params.componentName, req.body);
-    res.json(RES);
-    // res.set({ 'Content-Type': 'text/plain; charset=utf-8' }).send(
-    //     ssr(req.params.componentName, req.body)
-    // );
+    res.json(ssr(req.params.componentName, req.body));
 });
 
 if (require.main === module) {
