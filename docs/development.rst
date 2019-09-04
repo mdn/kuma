@@ -95,7 +95,7 @@ Compiling JS on the host system with webpack
 --------------------------------------------
 For a quicker iteration cycle while developing the frontend app you can run::
 
-    npm install
+    npm i
     npm run webpack:dev
 
 This watches the react frontend and rebuilds both the web and SSR bundle
