@@ -73,8 +73,10 @@ stage('Test') {
         parallel allTests
         // Notify on success
         utils.notify_irc([irc_nick: nick, stage: 'Test', status: 'success'])
+        utils.notify_slack([stage: 'Test', status: 'success'])
     } catch(err) {
         utils.notify_irc([irc_nick: nick, stage: 'Test', status: 'failure'])
+        utils.notify_slack([stage: 'Test', status: 'failure'])
         throw err
     }
 }
