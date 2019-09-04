@@ -99,7 +99,8 @@ For a quicker iteration cycle while developing the frontend app you can run::
     npm run webpack:dev
 
 This watches the react frontend and rebuilds both the web and SSR bundle
-when changes occur. It rebuilds only what has changed.
+when changes occur. It rebuilds only what has changed and also restarts the
+SSR server.
 It serves React in development mode which yields more explicit warnings and
 allows you to use tools such as the `React DevTools`_.
 
