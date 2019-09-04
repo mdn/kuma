@@ -1,5 +1,8 @@
 const path = require('path');
 
+const webpack = require('webpack');
+const webpackMerge = require('webpack-merge');
+
 // When running in docker, we install libraries into /tools/node_modules
 // so that we don't overwrite the user's local kuma/node_modules directory
 // with linux versions of modules (like the binary newrelic module).
@@ -15,72 +18,38 @@ const path = require('path');
 // TODO: there ought to be a better way to do this.
 //
 const nodePath = process.env.NODE_PATH || path.join(__dirname, 'node_modules');
+const modeConfig = env => require(`./webpack-build-utils/webpack.${env}`)(env);
+const presetsConfig = require('./webpack-build-utils/loadPresets');
 
-const commonConfig = {
-    mode: 'production', // Or switch to "development"
-    module: {
-        rules: [
-            {
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader'
-                }
-            },
-            {
-                test: /\.svg$/,
-                exclude: /node_modules/,
-                use: [
+module.exports = ({ mode, presets } = { mode: 'production', presets: [] }) => {
+    const merged = webpackMerge(
+        {
+            mode,
+            module: {
+                rules: [
                     {
-                        loader: 'babel-loader'
-                    },
-                    {
-                        loader: 'react-svg-loader',
-                        options: {
-                            jsx: true, // true outputs JSX tags
-                            svgo: {
-                                // Disable this one svgo plugin because it
-                                // strips the role attribute from our svgs
-                                plugins: [
-                                    {
-                                        removeUnknownsAndDefaults: false,
-                                        removeViewBox: false
-                                    }
-                                ]
-                            }
+                        test: /\.jsx?$/,
+                        exclude: /node_modules/,
+                        use: {
+                            loader: 'babel-loader'
                         }
                     }
                 ]
-            }
-        ]
-    },
-    resolve: {
-        modules: [nodePath]
-    },
-    resolveLoader: {
-        modules: [nodePath]
-    }
-};
+            },
+            resolve: {
+                modules: [nodePath]
+            },
+            resolveLoader: {
+                modules: [nodePath]
+            },
+            output: {
+                filename: 'react.js'
+            },
+            plugins: [new webpack.ProgressPlugin()]
+        },
+        modeConfig(mode),
+        presetsConfig({ mode, presets })
+    );
 
-module.exports = [
-    {
-        target: 'web',
-        entry: path.resolve(__dirname, './kuma/javascript/src/index.jsx'),
-        output: {
-            filename: 'react.js',
-            path: path.resolve(__dirname, './kuma/javascript/dist/')
-        },
-        ...commonConfig
-    },
-    {
-        target: 'node',
-        entry: path.resolve(__dirname, './kuma/javascript/src/ssr.jsx'),
-        output: {
-            filename: 'ssr.js',
-            path: path.resolve(__dirname, './kuma/javascript/dist/'),
-            libraryExport: 'default',
-            libraryTarget: 'commonjs2'
-        },
-        ...commonConfig
-    }
-];
+    return merged;
+};

@@ -15,7 +15,18 @@
     "scripts": {
         "build-watch": "gulp",
         "webpack": "webpack",
-        "webpack-watch": "webpack -w",
+        "debug": "node --inspect --inspect-brk ./node_modules/webpack/bin/webpack.js",
+        "debug:development:web": "npm run debug -- --env.presets web --env.presets svg --env.mode development",
+        "webpack:web": "npm run webpack -- --env.presets web --env.presets svg",
+        "webpack:node": "npm run webpack -- --env.presets node --env.presets svg",
+        "webpack:production:web": "npm run webpack:web -- --env.mode production",
+        "webpack:production:node": "npm run webpack:node -- --env.mode production",
+        "webpack:development:web": "npm run webpack:web -- --env.mode development",
+        "webpack:development:node": "npm run webpack:node -- --env.mode development",
+        "webpack:development:bouncer": "chokidar ./kuma/javascript/dist/*.js -c 'docker-compose restart ssr'",
+        "webpack:prod": "npm-run-all webpack:production:*",
+        "webpack:analyze": "npm run webpack:production:web -- --env.presets analyze",
+        "webpack:dev": "run-p webpack:development:*",
         "stylelint": "stylelint \"kuma/static/styles/**/*.scss\"",
         "eslint": "eslint --ext .js --ext .jsx kuma/",
         "optim:svg": "svgo jinja2/includes/icons/* --disable={removeViewBox,removeTitle} --multipass --pretty",
@@ -39,6 +50,8 @@
         "@babel/preset-react": "^7.0.0",
         "babel-eslint": "^10.0.1",
         "babel-loader": "^8.0.5",
+        "babel-plugin-emotion": "^10.0.7",
+        "chokidar-cli": "1.2.2",
         "clean-css-cli": "4.2.1",
         "eslint": "5.1.0",
         "eslint-config-prettier": "^4.0.0",
@@ -57,6 +70,7 @@
         "husky": "0.14.3",
         "jest": "^24.1.0",
         "node-sass": "4.12.0",
+        "npm-run-all": "4.1.5",
         "prettier": "1.18.2",
         "react-svg-loader": "3.0.1",
         "react-test-renderer": "^16.8.4",
@@ -66,6 +80,8 @@
         "svgo": "1.2.2",
         "uglify-js": "2.8.29",
         "webpack": "^4.29.3",
-        "webpack-cli": "^3.2.3"
+        "webpack-bundle-analyzer": "3.3.2",
+        "webpack-cli": "^3.2.3",
+        "webpack-merge": "4.2.1"
     }
 }
