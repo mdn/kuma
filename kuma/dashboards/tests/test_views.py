@@ -606,9 +606,23 @@ def test_disallowed_methods(db, client, http_method, endpoint):
             assert 'X-Requested-With' in response['Vary']
 
 
+@pytest.mark.parametrize('endpoint', ['user_lookup', 'topic_lookup'])
+def test_lookups_require_login(root_doc, client, endpoint):
+    qs, headers = '', {}
+    headers.update(HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    if endpoint == 'topic_lookup':
+        qs = '?topic=root'
+    else:
+        qs = '?user=wiki'
+    url = reverse('dashboards.{}'.format(endpoint)) + qs
+    response = client.get(url, **headers)
+    assert response.status_code == 302
+    assert '/signin?next=' in response['Location']
+
+
 @pytest.mark.parametrize('mode', ['ajax', 'non-ajax'])
 @pytest.mark.parametrize('endpoint', ['user_lookup', 'topic_lookup'])
-def test_lookup(root_doc, wiki_user_2, wiki_user_3, client, mode, endpoint):
+def test_lookup(root_doc, wiki_user_2, wiki_user_3, user_client, mode, endpoint):
     qs, headers = '', {}
     if mode == 'ajax':
         if endpoint == 'topic_lookup':
@@ -623,7 +637,7 @@ def test_lookup(root_doc, wiki_user_2, wiki_user_3, client, mode, endpoint):
     else:
         expected_content = []
     url = reverse('dashboards.{}'.format(endpoint)) + qs
-    response = client.get(url, **headers)
+    response = user_client.get(url, **headers)
     assert response.status_code == 200
     assert 'X-Requested-With' in response['Vary']
     assert_shared_cache_header(response)
