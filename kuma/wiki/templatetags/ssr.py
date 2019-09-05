@@ -52,15 +52,21 @@ def render_react(component_name, locale, url, document_data, ssr=True):
         return client_side_render(component_name, data)
 
 
-def _render(component_name, html, script):
+def _render(component_name, html, script, needs_serialization=False):
     """A utility function used by both client side and server side rendering.
     Returns a string that includes the specified HTML and a serialized
     form of the state dict, in the format expected by the client-side code
     in kuma/javascript/src/index.jsx.
     """
+    if needs_serialization:
+        assert isinstance(script, dict), type(script)
+        script = json.dumps(script).replace('</', '<\\/')
+    else:
+        script = u'JSON.parse({})'.format(script)
+
     return (
         u'<div id="react-container" data-component-name="{}">{}</div>\n'
-        u'<script>window._react_data = JSON.parse({});</script>\n'
+        u'<script>window._react_data = {};</script>\n'
     ).format(component_name, html, script)
 
 
@@ -69,10 +75,7 @@ def client_side_render(component_name, data):
     Output an empty <div> and a script with complete state so that
     the UI can be rendered on the client-side.
     """
-    return (
-        u'<div id="react-container" data-component-name="{}">{}</div>\n'
-        u'<script>window._react_data = {};</script>\n'
-    ).format(component_name, '', json.dumps(data))
+    return _render(component_name, '', data, needs_serialization=True)
 
 
 def server_side_render(component_name, data):

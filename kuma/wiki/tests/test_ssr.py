@@ -88,6 +88,7 @@ def test_client_side_render(mock_get_l10n_data, mock_dumps):
         'url': path,
         'stringCatalog': localization_data['catalog'],
         'documentData': document_data,
+        'pluralExpression': None,
     }
     output = ssr.render_react('page', 'en-US', path, document_data, ssr=False)
     expected = (
