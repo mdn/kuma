@@ -69,7 +69,10 @@ def client_side_render(component_name, data):
     Output an empty <div> and a script with complete state so that
     the UI can be rendered on the client-side.
     """
-    return _render(component_name, '', data)
+    return (
+        u'<div id="react-container" data-component-name="{}">{}</div>\n'
+        u'<script>window._react_data = {};</script>\n'
+    ).format(component_name, '', json.dumps(data))
 
 
 def server_side_render(component_name, data):
