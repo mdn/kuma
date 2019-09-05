@@ -2,9 +2,8 @@ import re
 from urlparse import urlsplit
 
 import pytest
-import requests
 from pyquery import PyQuery
-
+from six.moves.urllib.parse import quote
 
 from . import INDEXED_WEB_DOMAINS, request
 
@@ -18,8 +17,8 @@ META_ROBOTS_RE = re.compile(r'''(?x)    # Verbose regex mode
 
 
 @pytest.fixture()
-def is_indexed(base_url):
-    hostname = urlsplit(base_url).netloc
+def is_indexed(site_url):
+    hostname = urlsplit(site_url).netloc
     return hostname in INDEXED_WEB_DOMAINS
 
 
@@ -98,9 +97,9 @@ def test_redirect_localization_dashboard(site_url, wiki_site_url):
 
 @pytest.mark.headless
 @pytest.mark.nondestructive
-def test_document_json(base_url):
-    url = base_url + '/en-US/docs/Web$json'
-    resp = requests.get(url)
+def test_document_json(site_url):
+    url = site_url + '/en-US/docs/Web$json'
+    resp = request('get', url)
     assert resp.status_code == 200
     assert resp.headers['Content-Type'] == 'application/json'
     assert resp.headers['Access-Control-Allow-Origin'] == '*'
@@ -108,9 +107,9 @@ def test_document_json(base_url):
 
 @pytest.mark.headless
 @pytest.mark.nondestructive
-def test_document(base_url, is_indexed):
-    url = base_url + '/en-US/docs/Web'
-    resp = requests.get(url)
+def test_document(site_url, is_indexed):
+    url = site_url + '/en-US/docs/Web'
+    resp = request('get', url)
     assert resp.status_code == 200
     assert resp.headers['Content-Type'] == 'text/html; charset=utf-8'
     meta = META_ROBOTS_RE.search(resp.content)
@@ -124,9 +123,9 @@ def test_document(base_url, is_indexed):
 
 @pytest.mark.headless
 @pytest.mark.nondestructive
-def test_user_document(base_url):
-    url = base_url + '/en-US/docs/User:anonymous:uitest'
-    resp = requests.get(url)
+def test_user_document(site_url):
+    url = site_url + '/en-US/docs/User:anonymous:uitest'
+    resp = request('get', url)
     assert resp.status_code == 200
     assert resp.headers['Content-Type'] == 'text/html; charset=utf-8'
     meta = META_ROBOTS_RE.search(resp.content)
@@ -139,27 +138,24 @@ def test_user_document(base_url):
 
 @pytest.mark.headless
 @pytest.mark.nondestructive
-def test_document_based_redirection(base_url):
+def test_document_based_redirection(site_url):
     """Ensure that content-based redirects properly redirect."""
-    url = base_url + '/en-US/docs/MDN/Promote'
-    resp = requests.get(url)
-    assert resp.status_code == 200
-    assert len(resp.history) == 1
-    assert resp.history[0].status_code == 301
-    assert resp.url == base_url + '/en-US/docs/MDN/About/Promote'
+    url = site_url + '/en-US/docs/MDN/Promote'
+    resp = request('get', url)
+    assert resp.status_code == 301
+    assert resp.headers['Location'] == '/en-US/docs/MDN/About/Promote'
 
 
 @pytest.mark.headless
 @pytest.mark.nondestructive
-def test_document_based_redirection_suppression(base_url):
+def test_document_based_redirection_suppression(site_url):
     """
     Ensure that the redirect directive and not the content of the target
     page is displayed when content-based redirects are suppressed.
     """
-    url = base_url + '/en-US/docs/MDN/Promote?redirect=no'
-    resp = requests.get(url)
+    url = site_url + '/en-US/docs/MDN/Promote?redirect=no'
+    resp = request('get', url)
     assert resp.status_code == 200
-    assert not resp.history
     body = PyQuery(resp.text)('#wikiArticle')
     assert body.text().startswith('REDIRECT ')
     assert body.find('a[href="/en-US/docs/MDN/About/Promote"]')
@@ -168,9 +164,9 @@ def test_document_based_redirection_suppression(base_url):
 @pytest.mark.smoke
 @pytest.mark.headless
 @pytest.mark.nondestructive
-def test_home(base_url, is_indexed):
-    url = base_url + '/en-US/'
-    resp = requests.get(url)
+def test_home(site_url, is_indexed):
+    url = site_url + '/en-US/'
+    resp = request('get', url)
     assert resp.status_code == 200
     assert resp.headers['Content-Type'] == 'text/html; charset=utf-8'
     meta = META_ROBOTS_RE.search(resp.content)
@@ -184,10 +180,10 @@ def test_home(base_url, is_indexed):
 
 @pytest.mark.headless
 @pytest.mark.nondestructive
-def test_hreflang_basic(base_url):
+def test_hreflang_basic(site_url):
     """Ensure that we're specifying the correct value for lang and hreflang."""
-    url = base_url + '/en-US/docs/Web/HTTP'
-    resp = requests.get(url)
+    url = site_url + '/en-US/docs/Web/HTTP'
+    resp = request('get', url)
     assert resp.status_code == 200
     html = PyQuery(resp.text)
     assert html.attr('lang') == 'en'
@@ -211,9 +207,9 @@ def test_hreflang_basic(base_url):
                                     'redirectURL'))],
     ids=('whoami', 'doc')
 )
-def test_beta_api_basic(base_url, uri, expected_keys):
-    """Basic test of beta site's api endpoints."""
-    resp = requests.get(base_url + uri)
+def test_api_basic(site_url, uri, expected_keys):
+    """Basic test of site's api endpoints."""
+    resp = request('get', site_url + uri)
     assert resp.status_code == 200
     assert resp.headers.get('content-type') == 'application/json'
     data = resp.json()
@@ -229,10 +225,10 @@ def test_beta_api_basic(base_url, uri, expected_keys):
 
 @pytest.mark.headless
 @pytest.mark.nondestructive
-def test_api_doc_404(base_url):
+def test_api_doc_404(site_url):
     """Ensure that the beta site's doc api returns 404 for unknown docs."""
-    url = base_url + '/api/v1/doc/en-US/NoSuchPage'
-    resp = requests.get(url)
+    url = site_url + '/api/v1/doc/en-US/NoSuchPage'
+    resp = request('get', url)
     assert resp.status_code == 404
 
 
@@ -357,3 +353,16 @@ def test_former_vanity_302(wiki_site_url, slug, zone, locale):
     assert response.status_code == 302
     assert response.headers['location'].startswith('{}/docs/'.format(locale))
     assert response.headers['location'].endswith(slug.format('', zone))
+
+
+@pytest.mark.headless
+@pytest.mark.nondestructive
+@pytest.mark.parametrize(
+    'slug', ['/en-US/dashboards/user_lookup?user=sheppy',
+             '/en-US/dashboards/topic_lookup?topic=mathml'])
+def test_lookup_dashboards(wiki_site_url, slug):
+    """Ensure that the topic and user dashboards require login."""
+    response = request('get', wiki_site_url + slug)
+    assert response.status_code == 302
+    assert response.headers['location'].endswith(
+        '/users/signin?next=' + quote(slug))
