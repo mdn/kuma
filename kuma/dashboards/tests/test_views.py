@@ -633,7 +633,7 @@ def test_disallowed_methods(db, client, http_method, endpoint):
 
 @pytest.mark.parametrize('endpoint', ['user_lookup', 'topic_lookup'])
 def test_lookups_require_login(root_doc, client, endpoint):
-    qs, headers = '', {}
+    qs, headers = '', {'HTTP_HOST': settings.WIKI_HOST}
     headers.update(HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     if endpoint == 'topic_lookup':
         qs = '?topic=root'
