@@ -95,10 +95,6 @@ def test_client_side_render(mock_get_l10n_data, mock_dumps):
         u'<div id="react-container" data-component-name="{}"></div>\n'
         u'<script>window._react_data = {};</script>\n'
     ).format('page', json.dumps(data))
-    print("OUTPUT")
-    print(output)
-    print("EXPECTED")
-    print(expected)
     assert output == expected
 
 
