@@ -13,10 +13,10 @@ import { localize } from './l10n.js';
  */
 function stringifySafely(obj) {
     return jsesc(JSON.stringify(obj), {
-      json: true,
-      isScriptContext: true
+        json: true,
+        isScriptContext: true
     });
-  }
+}
 /*
  * This function performs server-side rendering of our UI, given
  * a JSON object of document data. It is used by ../ssr-server.js
@@ -69,5 +69,5 @@ export default function ssr(componentName, data) {
             break;
     }
 
-    return {html, script: stringifySafely(data)};
+    return { html, script: stringifySafely(data) };
 }
