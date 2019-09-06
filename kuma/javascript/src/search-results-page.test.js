@@ -130,20 +130,24 @@ describe('SearchRoute', () => {
     test('match() extracts the query string', () => {
         expect(route.match('/en-US/search?q=qq')).toEqual({
             locale: 'en-US',
+            page: 1,
             query: 'qq'
         });
         expect(route.match('/en-US/search?foo=bar&q=qq')).toEqual({
             locale: 'en-US',
+            page: 1,
             query: 'qq'
         });
         expect(route.match('http://mdn.dev/en-US/search?q=qq')).toEqual({
             locale: 'en-US',
+            page: 1,
             query: 'qq'
         });
         expect(
             route.match('https://mdn.dev/en-US/search?foo=bar&q=qq')
         ).toEqual({
             locale: 'en-US',
+            page: 1,
             query: 'qq'
         });
     });
@@ -176,7 +180,7 @@ describe('SearchRoute', () => {
             .then(results => {
                 expect(results).toEqual(fakeSearchResults);
                 expect(global.fetch.mock.calls[0][0]).toBe(
-                    '/api/v1/search/en-US?q=foo%20bar%23'
+                    '/api/v1/search/en-US?q=foo%20bar%23&locale=en-US'
                 );
                 done();
             });
