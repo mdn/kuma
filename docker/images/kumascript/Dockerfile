@@ -24,7 +24,7 @@ COPY kumascript/package.json kumascript/npm-shrinkwrap.json /
 RUN npm config set python /usr/bin/python2.7 && \
     # install the Node.js dependencies,
     # with versions specified in npm-shrinkwrap.json
-    npm install && \
+    npm ci && \
     # update any top-level npm packages listed in package.json,
     # such as mdn-browser-compat-data,
     # as allowed by each package's given "semver".

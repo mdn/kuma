@@ -116,7 +116,7 @@ WORKDIR /tools
 USER kuma
 RUN ln -s /app/package.json /tools \
     && ln -s /app/package-lock.json /tools \
-    && npm install
+    && npm ci
 USER root
 RUN find /tools/node_modules/.bin/ -executable -type f -o -type l -exec ln -s {} /usr/local/bin/ \;
 ENV NODE_PATH=/tools/node_modules
