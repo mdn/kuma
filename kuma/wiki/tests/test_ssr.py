@@ -51,7 +51,9 @@ def test_server_side_render(mock_get_l10n_data, mock_dumps, locale,
 
     url = '{}/{}'.format(settings.SSR_URL, 'document')
 
-    mock_requests.post(url, text=mock_html)
+    mock_requests.post(url, json={
+        'html': mock_html,
+        'script': 'STUFF'})
 
     # Run the template tag
     path = '/en-US/docs/foo'
@@ -64,42 +66,11 @@ def test_server_side_render(mock_get_l10n_data, mock_dumps, locale,
         'stringCatalog': localization_data['catalog'],
         'documentData': document_data,
     }
-    assert output == (
+    expect = (
         u'<div id="react-container" data-component-name="{}">{}</div>\n'
-        u'<script>window._react_data = {};</script>\n'
+        u'<script>window._react_data = JSON.parse(STUFF);</script>\n'
     ).format('document', mock_html, json.dumps(data))
-
-
-@mock.patch('json.dumps')
-@mock.patch('kuma.wiki.templatetags.ssr.get_localization_data')
-def test_plural_function(mock_get_l10n_data, mock_dumps,
-                         mock_requests, settings):
-    """For server-side rendering, if the locale data includes a plural
-       expression, expect the output to include a plural function.
-    """
-
-    mock_dumps.side_effect = sorted_json_dumps
-
-    # This is the input to the mock Node server
-    document_data = {'x': 'one', 'y': 2, 'z': ['a', 'b']}
-
-    localization_data = {'catalog': {'s': 't'}, 'plural': 'n!=1'}
-    mock_get_l10n_data.side_effect = lambda l: localization_data
-
-    url = '{}/{}'.format(settings.SSR_URL, 'page')
-
-    # This will be the output sent by the mock Node server
-    mock_requests.post(url, text='mock html')
-
-    # Run the template tag
-    path = '/en-US/docs/foo'
-    output = ssr.render_react('page', 'es', path, document_data)
-
-    expected = '<script>window._react_data = {pluralFunction:function(n){'
-
-    # Make sure the output is as expected
-    assert expected in output
-    assert localization_data['plural'] in output
+    assert output == expect
 
 
 @mock.patch('json.dumps')
@@ -117,12 +88,14 @@ def test_client_side_render(mock_get_l10n_data, mock_dumps):
         'url': path,
         'stringCatalog': localization_data['catalog'],
         'documentData': document_data,
+        'pluralExpression': None,
     }
     output = ssr.render_react('page', 'en-US', path, document_data, ssr=False)
-    assert output == (
+    expected = (
         u'<div id="react-container" data-component-name="{}"></div>\n'
         u'<script>window._react_data = {};</script>\n'
     ).format('page', json.dumps(data))
+    assert output == expected
 
 
 @pytest.mark.parametrize('failure_class', [

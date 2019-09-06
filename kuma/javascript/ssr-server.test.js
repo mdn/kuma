@@ -51,9 +51,9 @@ describe('ssr-server routes', () => {
             .post(`/ssr/${name}`)
             .send(data)
             .expect(200)
-            .expect('Content-Type', 'text/plain; charset=utf-8')
+            .expect('Content-Type', 'application/json; charset=utf-8')
             .expect(response => {
-                expect(response.text).toBe(mockssr(name, data));
+                expect(response.body).toBe(mockssr(name, data));
             });
     });
 });
