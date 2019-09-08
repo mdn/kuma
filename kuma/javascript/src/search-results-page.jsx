@@ -31,7 +31,7 @@ type SearchResultsResults = {
     query: string
 };
 export type SearchResults = {
-    results?: SearchResultsResults,
+    results: ?SearchResultsResults,
     error: ?any
 };
 
@@ -42,7 +42,7 @@ type Props = {
 };
 
 function makePaginationPageURL(uri) {
-    return `?${uri.split('?')[1]}`;
+    return uri ? `?${uri.split('?')[1]}` : '';
 }
 
 export default function SearchResultsPage({ locale, query, data }: Props) {
@@ -87,7 +87,7 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
                 );
             }
 
-            resultsNode = results.documents.map(result => {
+            resultsNode = (results.documents || []).map(result => {
                 let path = `/${locale}/docs/${result.slug}`;
                 let url =
                     window && window.origin ? `${window.origin}${path}` : path;
@@ -135,8 +135,8 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
                             !results.previous &&
                             !results.next &&
                             gettext('Showing all results.')}
-                        {!!data.results.count &&
-                            (data.results.previous || data.results.next) &&
+                        {!!results.count &&
+                            (results.previous || results.next) &&
                             interpolate(
                                 gettext(
                                     'Showing results %(start)s to %(end)s.'
