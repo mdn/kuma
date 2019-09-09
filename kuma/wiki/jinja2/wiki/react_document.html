@@ -106,7 +106,7 @@
   <meta name="description" content="{{ seo_summary }}">
   <meta name="twitter:description" content="{{ seo_summary }}">
   {% endif %}
-  
+
   {% block printstyle %}
     {% stylesheet 'print' %}
   {% endblock %}
@@ -118,6 +118,39 @@
 
   {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(),
                   document_data)|safe }}
+
+
+<<<<<<< HEAD
+  <!-- Footer -->
+  <footer id="nav-footer" class="nav-footer">
+    <div class="center">
+        {% include "includes/footer/mdn-footer.html" %}
+
+        {% include "includes/footer/moz-footer.html" %}
+
+        <ul class="footer-tos">
+          <li><a href="https://www.mozilla.org/about/legal/terms/mozilla">{{ _('Terms') }}</a></li>
+          <li><a href="https://www.mozilla.org/privacy/websites/">{{ _('Privacy') }}</a></li>
+          <li><a href="https://www.mozilla.org/privacy/websites/#cookies">{{ _('Cookies') }}</a></li>
+        </ul>
+
+        <div id="license" class="contentinfo">
+          {% trans copyright_url='/en-US/docs/MDN/About#Copyrights_and_licenses', thisyear=thisyear() %}
+            <p>&copy; 2005-{{ thisyear }} Mozilla and individual contributors.</p>
+            <p>Content is available under <a href="{{ copyright_url }}">these licenses</a>.</p>
+          {% endtrans %}
+        </div>
+    </div>
+  </footer>
+=======
+  {% if settings.NEWSLETTER and settings.NEWSLETTER_ARTICLE %}
+  <div class="center">
+    <div class="newsletter-box">
+      {% include "includes/newsletter.html" %}
+    </div>
+  </div>
+  {% endif %}
+>>>>>>> 1e8de16f8... Fixes 5640, render footer in react for docs pages
 
   <!-- site js -->
   {% javascript 'react-main' %}
