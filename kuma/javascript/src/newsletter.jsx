@@ -23,10 +23,8 @@ function permanentlyHideNewsletter() {
 }
 
 export default function Newsletter() {
-    const emailRef = useRef(null);
     const errorsRef = useRef(null);
     const newsletterFormRef = useRef(null);
-    const privacyCheckboxRef = useRef(null);
 
     const ga = useContext(GAProvider.context);
 
@@ -89,68 +87,65 @@ export default function Newsletter() {
     const submit = event => {
         let newsletterForm = newsletterFormRef.current;
 
-        // if skipFetch
-        if (newsletterForm) {
-            if (newsletterForm.dataset['skipFetch']) {
-                /*
-                 * An error occured while attempting to subscribe
-                 * the user via Ajax, but no specific error was provided. We
-                 * therefore just send the user directly to the Mozorg
-                 * newsletter subscription page and log the occurence
-                 */
-                ga('send', {
-                    hitType: 'event',
-                    eventCategory: 'newsletter',
-                    eventAction: 'progression',
-                    eventLabel: 'error-forward'
-                });
-                return true;
-            }
-
-            event.preventDefault();
-
-            let params = new URLSearchParams(
-                new FormData(newsletterForm)
-            ).toString();
-
-            fetch(newsletterSubscribeURL, {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Content-type': 'application/x-www-form-urlencoded'
-                },
-                body: params
-            }).then(response => {
-                response.json().then(responseJSON => {
-                    if (responseJSON.success !== 'success') {
-                        let errorsArray = responseJSON.errors;
-
-                        // if there are erros and the array contain at least one item
-                        if (errorsArray && errorsArray.length) {
-                            setErrorsArray(errorsArray);
-                            // if there was an error, but there are no items in the array
-                        } else if (errorsArray && errorsArray.length === 0) {
-                            if (newsletterForm) {
-                                // set the skip-fetch data attribute on the form
-                                newsletterForm.dataset.skipFetch = 'true';
-                                // and submit again for diagnoses on the server
-                                newsletterForm.submit();
-                            }
-                        } else {
-                            setShowNewsletter(false);
-                            permanentlyHideNewsletter();
-                            setShowSuccessfulSubscription(true);
-                            ga('send', {
-                                hitType: 'event',
-                                eventCategory: 'newsletter',
-                                eventAction: 'progression',
-                                eventLabel: 'complete'
-                            });
-                        }
-                    }
-                });
-            });
+        if (!newsletterForm) {
+            return;
         }
+
+        // if skipFetch
+        if (newsletterForm.dataset['skipFetch']) {
+            /*
+             * An error occured while attempting to subscribe
+             * the user via Ajax, but no specific error was provided. We
+             * therefore just send the user directly to the Mozorg
+             * newsletter subscription page and log the occurence
+             */
+            ga('send', {
+                hitType: 'event',
+                eventCategory: 'newsletter',
+                eventAction: 'progression',
+                eventLabel: 'error-forward'
+            });
+            return true;
+        }
+
+        event.preventDefault();
+        let params = new URLSearchParams(
+            new FormData(newsletterForm)
+        ).toString();
+        fetch(newsletterSubscribeURL, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            body: params
+        })
+            .then(response => response.json())
+            .then(({ success, errors }) => {
+                if (success === 'success') {
+                    return;
+                }
+
+                if (errors && errors.length) {
+                    setErrorsArray(errors);
+                    // if there was an error, but there are no items in the array
+                } else if (errors && errors.length === 0) {
+                    // set the skip-fetch data attribute on the form
+                    newsletterForm.dataset.skipFetch = 'true';
+                    // and submit again for diagnoses on the server
+                    newsletterForm.submit();
+                } else {
+                    setShowNewsletter(false);
+                    permanentlyHideNewsletter();
+                    setShowSuccessfulSubscription(true);
+                    ga('send', {
+                        hitType: 'event',
+                        eventCategory: 'newsletter',
+                        eventAction: 'progression',
+                        eventLabel: 'complete'
+                    });
+                }
+            });
     };
 
     /* If this is not en-US, show message informing the user
@@ -244,7 +239,6 @@ export default function Newsletter() {
                                 {gettext('E-mail')}
                             </label>
                             <input
-                                ref={emailRef}
                                 onFocus={inputFocusHandler}
                                 type="email"
                                 id="newsletter-email-input"
@@ -265,7 +259,6 @@ export default function Newsletter() {
                             aria-hidden={showPrivacyCheckbox ? false : true}
                         >
                             <input
-                                ref={privacyCheckboxRef}
                                 type="checkbox"
                                 id="newsletter-privacy-input"
                                 name="privacy"
