@@ -858,7 +858,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         url = reverse('wiki.document', args=[child_data['slug']], locale='es')
         params = {'rev_saved': ''}
         url = '%s?%s' % (url, urlencode(params))
-        self.assertRedirects(response, url)
+        assert response['Location'] == url
 
         translate_url = reverse('wiki.document', args=['length/length'])
         response = self.client.post(translate_url + '$translate?tolocale=es',
@@ -868,7 +868,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         url = reverse('wiki.document', args=[slug], locale='es')
         params = {'rev_saved': ''}
         url = '%s?%s' % (url, urlencode(params))
-        self.assertRedirects(response, url)
+        assert response['Location'] == url
 
     def test_translate_keeps_topical_parent(self):
         self.client.login(username='admin', password='testpass')
@@ -935,7 +935,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         doc_url = reverse('wiki.document', args=[foreign_slug], locale=foreign_locale)
         params = {'rev_saved': ''}
         doc_url = '%s?%s' % (doc_url, urlencode(params))
-        self.assertRedirects(response, doc_url)
+        assert response['Location'] == doc_url
 
         es_d = Document.objects.get(locale=foreign_locale, slug=foreign_slug)
         assert r.toc_depth == es_d.current_revision.toc_depth
@@ -972,7 +972,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         doc_url = reverse('wiki.document', args=[es_slug], locale=es_locale)
         params = {'rev_saved': ''}
         doc_url = '%s?%s' % (doc_url, urlencode(params))
-        self.assertRedirects(response, doc_url)
+        assert response['Location'] == doc_url
         es_doc = Document.objects.get(locale=es_locale,
                                       slug=es_slug)
         es_doc.render()
@@ -1020,7 +1020,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         doc_url = reverse('wiki.document', args=[foreign_slug], locale=foreign_locale)
         params = {'rev_saved': ''}
         doc_url = '%s?%s' % (doc_url, urlencode(params))
-        self.assertRedirects(response, doc_url)
+        assert response['Location'] == doc_url
 
         # Go to edit the translation, ensure the the slug is correct
         response = self.client.get(reverse('wiki.edit',
@@ -1057,7 +1057,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         doc_url = reverse('wiki.document', args=[slug], locale=foreign_locale)
         params = {'rev_saved': ''}
         doc_url = '%s?%s' % (doc_url, urlencode(params))
-        self.assertRedirects(response, doc_url)
+        assert response['Location'] == doc_url
 
     def test_restore_translation_source(self):
         """Edit a localized article without an English parent allows user to
