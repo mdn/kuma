@@ -130,6 +130,7 @@ def server_side_render(component_name, data):
         #     data['documentData'].update(bodyHTML='',
         #                                 tocHTML='',
         #                                 quickLinksHTML='')
+        response.raise_for_status()
         result = response.json()
         return _render(component_name, result['html'], result['script'])
 

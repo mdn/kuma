@@ -21,7 +21,13 @@ const ssr = require('./dist/ssr.js'); // Function to do server-side rendering
 // Configuration
 const PID = process.pid;
 const PORT = parseInt(process.env.SSR_PORT) || 8000;
-const MAX_BODY_SIZE = 1024 * 1024; // 1 megabyte max JSON payload
+
+// Some documents, with lots of Unicode, get very large when Python
+// serializes it to a binary string. For example,
+// https://developer.mozilla.org/ja/docs/Web/API/Window when turned into
+// a JSON string, by Python, becomes a string of length ~1.1MB.
+// Add a little extra just to be on the safe side.
+const MAX_BODY_SIZE = 1024 * 1024 * 5; // 5 megabyte max JSON payload
 
 // We're using the Express server framework
 const app = express();
