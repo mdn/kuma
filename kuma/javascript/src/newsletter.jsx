@@ -3,50 +3,15 @@ import * as React from 'react';
 import { useEffect, useState, useRef, useContext } from 'react';
 
 import GAProvider from './ga-provider.jsx';
-import { initAjaxRequest, getAjaxResponse } from './utils.js';
 import { getLocale, gettext } from './l10n.js';
 import CloseIcon from './icons/close.svg';
-
-/**
- * Returns the Array of error messages as an unordered list element
- * @param {Array} errorsArray - Array of error messages returned from server
- * @returns unordered list element
- */
-function getErrorList(errorsArray) {
-    const errorList = document.createElement('ul');
-    errorList.className = 'errorlist';
-
-    errorsArray.forEach(error => {
-        let item = document.createElement('li');
-        item.appendChild(document.createTextNode(error));
-        errorList.appendChild(item);
-    });
-
-    return errorList;
-}
-
-/**
- * Checks for the `newsletterHide` entry in `localStorage`. If
- * it is found, the newsletter signup form should not be shown.
- * @returns true or false depending on the presence of `newsletterHide` in `localStorage`
- */
-function isHidden() {
-    try {
-        return localStorage.getItem('newsletterHide') === 'true' ? true : false;
-    } catch (error) {
-        console.error(
-            'Error thrown while getting newsletterHide entry from localStorage: ',
-            error
-        );
-    }
-}
 
 /**
  * Called once a user has either successfully subscribed to the
  * newsletter or clicked the close icon. The function stores a
  *`newsletterHide` item in localStorage
  */
-function saveNewsletterVisibleState() {
+function permanentlyHideNewsletter() {
     try {
         localStorage.setItem('newsletterHide', 'true');
     } catch (error) {
@@ -71,7 +36,7 @@ export default function Newsletter() {
     const newsletterSubscribeURL = 'https://www.mozilla.org/en-US/newsletter/';
     const privacyPolicyURL = 'https://www.mozilla.org/privacy/';
 
-    const [showFormErrors, setShowFormErrors] = useState(false);
+    const [errorsArray, setErrorsArray] = useState();
     const [showNewsletter, setShowNewsletter] = useState(true);
     const [showNewsletterLang, setShowNewsletterLang] = useState(false);
     const [showPrivacyCheckbox, setShowPrivacyCheckbox] = useState(false);
@@ -87,7 +52,7 @@ export default function Newsletter() {
      */
     const closeNewsletter = () => {
         setShowNewsletter(false);
-        saveNewsletterVisibleState();
+        permanentlyHideNewsletter();
         ga('send', {
             hitType: 'event',
             eventCategory: 'newsletter',
@@ -122,92 +87,70 @@ export default function Newsletter() {
      * @param {Object} event - The MouseEvent object
      */
     const submit = event => {
-        let emailInput = emailRef.current;
         let newsletterForm = newsletterFormRef.current;
-        let privacyPolicyCheckbox = privacyCheckboxRef.current;
 
-        // if skipXHR
-        if (newsletterForm && newsletterForm.dataset['skipXhr']) {
-            /*
-             * An error occured while attempting to subscribe
-             * the user via Ajax, but no specific error was provided. We
-             * therefore just send the user directly to the Mozorg
-             * newsletter subscription page and log the occurence
-             */
-            ga('send', {
-                hitType: 'event',
-                eventCategory: 'newsletter',
-                eventAction: 'progression',
-                eventLabel: 'error-forward'
-            });
-            return true;
-        }
-
-        event.preventDefault();
-        let ajaxRequest = initAjaxRequest('POST', newsletterSubscribeURL, {
-            'X-Requested-With': 'XMLHttpRequest',
-            'Content-type': 'application/x-www-form-urlencoded'
-        });
-
-        let privacy =
-            privacyPolicyCheckbox && privacyPolicyCheckbox.checked
-                ? '&privacy=true'
-                : '';
-        let documentLocation = encodeURIComponent(document.location.href);
-        let emailInputValue =
-            emailInput && emailInput.value
-                ? encodeURIComponent(emailInput.value)
-                : '';
-        let params = `email=${emailInputValue}&newsletters=${newsletterType}${privacy}&fmt=${newsletterFormat}&source_url=${documentLocation}`;
-
-        ajaxRequest.send(params);
-
-        getAjaxResponse(ajaxRequest).then(response => {
-            let parsedResponse = JSON.parse(response);
-            if (parsedResponse.success !== 'success') {
-                let errorsArray = parsedResponse.errors;
-
-                // if there are erros and the array contain at least one item
-                if (errorsArray && errorsArray.length) {
-                    // show the errors
-                    let errorListContainer = errorsRef.current;
-
-                    if (errorListContainer) {
-                        let currentErrorList = errorListContainer.querySelector(
-                            '.errorlist'
-                        );
-
-                        if (currentErrorList) {
-                            errorListContainer.removeChild(currentErrorList);
-                        }
-
-                        errorListContainer.appendChild(
-                            getErrorList(errorsArray)
-                        );
-
-                        setShowFormErrors(true);
-                    }
-                    // if there was an error, but there are no items in the array
-                } else if (errorsArray && errorsArray.length === 0) {
-                    if (newsletterForm) {
-                        // set the skip-xhr data attribute on the form
-                        newsletterForm.dataset.skipXhr = 'true';
-                        // and submit again for diagnoses on the server
-                        newsletterForm.submit();
-                    }
-                } else {
-                    setShowNewsletter(false);
-                    saveNewsletterVisibleState();
-                    setShowSuccessfulSubscription(true);
-                    ga('send', {
-                        hitType: 'event',
-                        eventCategory: 'newsletter',
-                        eventAction: 'progression',
-                        eventLabel: 'complete'
-                    });
-                }
+        // if skipFetch
+        if (newsletterForm) {
+            if (newsletterForm.dataset['skipFetch']) {
+                /*
+                 * An error occured while attempting to subscribe
+                 * the user via Ajax, but no specific error was provided. We
+                 * therefore just send the user directly to the Mozorg
+                 * newsletter subscription page and log the occurence
+                 */
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: 'newsletter',
+                    eventAction: 'progression',
+                    eventLabel: 'error-forward'
+                });
+                return true;
             }
-        });
+
+            event.preventDefault();
+
+            let params = new URLSearchParams(
+                new FormData(newsletterForm)
+            ).toString();
+
+            fetch(newsletterSubscribeURL, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-type': 'application/x-www-form-urlencoded'
+                },
+                body: params
+            }).then(response => {
+                response.json().then(responseJSON => {
+                    if (responseJSON.success !== 'success') {
+                        let errorsArray = responseJSON.errors;
+
+                        // if there are erros and the array contain at least one item
+                        if (errorsArray && errorsArray.length) {
+                            setErrorsArray(errorsArray);
+                            // if there was an error, but there are no items in the array
+                        } else if (errorsArray && errorsArray.length === 0) {
+                            if (newsletterForm) {
+                                // set the skip-fetch data attribute on the form
+                                newsletterForm.dataset.skipFetch = 'true';
+                                // and submit again for diagnoses on the server
+                                newsletterForm.submit();
+                            }
+                        } else {
+                            setShowNewsletter(false);
+                            permanentlyHideNewsletter();
+                            setShowSuccessfulSubscription(true);
+                            ga('send', {
+                                hitType: 'event',
+                                eventCategory: 'newsletter',
+                                eventAction: 'progression',
+                                eventLabel: 'complete'
+                            });
+                        }
+                    }
+                });
+            });
+        }
     };
 
     /* If this is not en-US, show message informing the user
@@ -217,8 +160,8 @@ export default function Newsletter() {
     }
 
     useEffect(() => {
-        // if `isHidden` is true
-        if (isHidden()) {
+        // if `newsletterHide` is set
+        if (localStorage.getItem('newsletterHide') === 'true') {
             // do not show the newsletter
             setShowNewsletter(false);
         }
@@ -261,27 +204,34 @@ export default function Newsletter() {
                             )}
                         </p>
                     </section>
-                    <legend className="newsletter-fields">
+                    <fieldset className="newsletter-fields">
                         <input
                             type="hidden"
                             id="fmt"
                             name="fmt"
-                            value={newsletterType}
+                            value={newsletterFormat}
                         />
                         <input
                             type="hidden"
                             id="newsletterNewslettersInput"
                             name="newsletters"
-                            value={newsletterFormat}
+                            value={newsletterType}
                         />
                         <div
                             ref={errorsRef}
                             id="newsletter-errors"
                             className={
-                                showFormErrors ? 'newsletter-errors' : 'hidden'
+                                errorsArray ? 'newsletter-errors' : 'hidden'
                             }
-                            aria-hidden={showFormErrors ? true : false}
-                        />
+                            aria-hidden={errorsArray ? true : false}
+                        >
+                            <ul className="errorlist">
+                                {errorsArray &&
+                                    errorsArray.map((error, index) => (
+                                        <li key={index}>{error}</li>
+                                    ))}
+                            </ul>
+                        </div>
 
                         <div
                             id="newsletterEmail"
@@ -344,7 +294,7 @@ export default function Newsletter() {
                                 {gettext('Sign up now')}
                             </button>
                         </div>
-                    </legend>
+                    </fieldset>
                 </form>
                 <button
                     onClick={closeNewsletter}
