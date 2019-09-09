@@ -8,6 +8,7 @@ import Breadcrumbs from './breadcrumbs.jsx';
 import { gettext } from './l10n.js';
 import LanguageMenu from './header/language-menu.jsx';
 import Header from './header/header.jsx';
+import Newsletter from './newsletter.jsx';
 import Route from './route.js';
 import TaskCompletionSurvey from './task-completion-survey.jsx';
 import Titlebar from './titlebar.jsx';
@@ -98,6 +99,7 @@ function DocumentPage({ document }: DocumentProps) {
                 </div>
                 <Content document={document} />
             </main>
+            <Newsletter />
             <TaskCompletionSurvey document={document} />
             <Banners />
         </>
