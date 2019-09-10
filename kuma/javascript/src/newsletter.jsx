@@ -126,7 +126,15 @@ export default function Newsletter() {
         })
             .then(response => response.json())
             .then(({ success, errors }) => {
-                if (success === 'success') {
+                if (success) {
+                    permanentlyHideNewsletter();
+                    setShowSuccessfulSubscription(true);
+                    ga('send', {
+                        hitType: 'event',
+                        eventCategory: 'newsletter',
+                        eventAction: 'progression',
+                        eventLabel: 'complete'
+                    });
                     return;
                 }
 
@@ -138,16 +146,6 @@ export default function Newsletter() {
                     newsletterForm.dataset.skipFetch = 'true';
                     // and submit again for diagnoses on the server
                     newsletterForm.submit();
-                } else {
-                    setShowNewsletter(false);
-                    permanentlyHideNewsletter();
-                    setShowSuccessfulSubscription(true);
-                    ga('send', {
-                        hitType: 'event',
-                        eventCategory: 'newsletter',
-                        eventAction: 'progression',
-                        eventLabel: 'complete'
-                    });
                 }
             })
             .catch(e => {
@@ -166,6 +164,25 @@ export default function Newsletter() {
 
     if (!showNewsletter) {
         return null;
+    }
+
+    if (showSuccessfulSubscription) {
+        return (
+            <section className="newsletter-container">
+                <div id="newsletter-thanks" className="newsletter-thanks">
+                    <h2>
+                        {gettext(
+                            'Thanks! Please check your inbox to confirm your subscription.'
+                        )}
+                    </h2>
+                    <p>
+                        {gettext(
+                            'If you haven’t previously confirmed a subscription to a Mozilla - related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us.'
+                        )}
+                    </p>
+                </div>
+            </section>
+        );
     }
 
     return (
@@ -300,24 +317,6 @@ export default function Newsletter() {
                     <span>{gettext('Hide Newsletter Sign-up')}</span>
                     <CloseIcon />
                 </button>
-            </div>
-            <div
-                id="newsletter-thanks"
-                className={
-                    showSuccessfulSubscription ? 'newsletter-thanks' : 'hidden'
-                }
-                aria-hidden={showSuccessfulSubscription ? false : true}
-            >
-                <h2>
-                    {gettext(
-                        'Thanks! Please check your inbox to confirm your subscription.'
-                    )}
-                </h2>
-                <p>
-                    {gettext(
-                        'If you haven’t previously confirmed a subscription to a Mozilla - related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us.'
-                    )}
-                </p>
             </div>
         </section>
     );
