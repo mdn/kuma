@@ -164,13 +164,13 @@ export default function Newsletter() {
         }
     }, []);
 
+    if (!showNewsletter) {
+        return null;
+    }
+
     return (
         <section className="newsletter-container">
-            <div
-                id="newsletter-form-container"
-                className={showNewsletter ? 'newsletter' : 'hidden'}
-                aria-hidden={showNewsletter ? false : true}
-            >
+            <div id="newsletter-form-container" className="newsletter">
                 <form
                     ref={newsletterFormRef}
                     id="newsletter-form"
