@@ -23,7 +23,6 @@ function permanentlyHideNewsletter() {
 }
 
 export default function Newsletter() {
-    const errorsRef = useRef(null);
     const newsletterFormRef = useRef(null);
 
     const ga = useContext(GAProvider.context);
@@ -169,7 +168,7 @@ export default function Newsletter() {
     if (showSuccessfulSubscription) {
         return (
             <section className="newsletter-container">
-                <div id="newsletter-thanks" className="newsletter-thanks">
+                <div className="newsletter-thanks">
                     <h2>
                         {gettext(
                             'Thanks! Please check your inbox to confirm your subscription.'
@@ -190,7 +189,6 @@ export default function Newsletter() {
             <div id="newsletter-form-container" className="newsletter">
                 <form
                     ref={newsletterFormRef}
-                    id="newsletter-form"
                     className="newsletter-form nodisable"
                     name="newsletter-form"
                     action={newsletterSubscribeURL}
@@ -221,37 +219,27 @@ export default function Newsletter() {
                     <fieldset className="newsletter-fields">
                         <input
                             type="hidden"
-                            id="fmt"
                             name="fmt"
                             value={newsletterFormat}
                         />
                         <input
                             type="hidden"
-                            id="newsletterNewslettersInput"
                             name="newsletters"
                             value={newsletterType}
                         />
-                        <div
-                            ref={errorsRef}
-                            id="newsletter-errors"
-                            className={
-                                hasErrors ? 'newsletter-errors' : 'hidden'
-                            }
-                            aria-hidden={hasErrors}
-                        >
-                            <ul className="errorlist">
-                                {errors.map((error, index) => (
-                                    <li key={index}>{error}</li>
-                                ))}
-                            </ul>
-                        </div>
+                        {errors.length > 0 && (
+                            <div className="newsletter-errors">
+                                <ul className="errorlist">
+                                    {errors.map((error, index) => (
+                                        <li key={index}>{error}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
 
-                        <div
-                            id="newsletterEmail"
-                            className="form-group newsletter-group-email"
-                        >
+                        <div className="form-group newsletter-group-email">
                             <label
-                                htmlFor="newsletterEmailInput"
+                                htmlFor="newsletter-email-input"
                                 className="form-label offscreen"
                             >
                                 {gettext('E-mail')}
@@ -292,10 +280,7 @@ export default function Newsletter() {
                                 .
                             </label>
                         </div>
-                        <div
-                            id="newsletterSubmit"
-                            className="newsletter-group-submit"
-                        >
+                        <div className="newsletter-group-submit">
                             <button
                                 onClick={submit}
                                 id="newsletter-submit"
@@ -309,7 +294,6 @@ export default function Newsletter() {
                 </form>
                 <button
                     onClick={closeNewsletter}
-                    id="newsletter-hide"
                     type="button"
                     className="only-icon newsletter-hide"
                     aria-controls="newsletter-form-container"
