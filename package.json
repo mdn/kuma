@@ -36,6 +36,7 @@
         "pretty": "prettier --check **/*{.js,.jsx,.scss}"
     },
     "dependencies": {
+        "@sentry/node": "^5.6.2",
         "express": "^4.16.4",
         "jsesc": "2.5.2",
         "morgan": "^1.9.1",

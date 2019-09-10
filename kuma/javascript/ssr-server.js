@@ -15,8 +15,24 @@ if (process.env.NEW_RELIC_LICENSE_KEY && process.env.NEW_RELIC_APP_NAME) {
 
 const express = require('express'); // Express server framework
 const morgan = require('morgan');
+const sentry = require('@sentry/node');
 
 const ssr = require('./dist/ssr.js'); // Function to do server-side rendering
+
+// Configure and initialize Sentry if a DSN has been provided.
+if (process.env.SENTRY_DSN) {
+    console.log('Configuring Sentry for the SSR server.');
+    let options = {
+        dsn: process.env.SENTRY_DSN
+    };
+    if (process.env.REVISION_HASH) {
+        options.release = process.env.REVISION_HASH;
+    }
+    if (process.env.SENTRY_ENVIRONMENT) {
+        options.environment = process.env.SENTRY_ENVIRONMENT;
+    }
+    sentry.init(options);
+}
 
 // Configuration
 const PID = process.pid;
