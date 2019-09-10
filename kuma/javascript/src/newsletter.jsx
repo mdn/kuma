@@ -6,6 +6,9 @@ import GAProvider from './ga-provider.jsx';
 import { getLocale, gettext } from './l10n.js';
 import CloseIcon from './icons/close.svg';
 
+const NEWSLETTER_SUBSCRIBE_URL = 'https://www.mozilla.org/en-US/newsletter/';
+const PRIVACY_POLICY_URL = 'https://www.mozilla.org/privacy/';
+
 /**
  * Called once a user has either successfully subscribed to the
  * newsletter or clicked the close icon. The function stores a
@@ -24,14 +27,10 @@ function permanentlyHideNewsletter() {
 
 export default function Newsletter() {
     const newsletterFormRef = useRef(null);
-
     const ga = useContext(GAProvider.context);
-
     const locale = getLocale();
     const newsletterType = 'app-dev';
     const newsletterFormat = 'H';
-    const newsletterSubscribeURL = 'https://www.mozilla.org/en-US/newsletter/';
-    const privacyPolicyURL = 'https://www.mozilla.org/privacy/';
 
     const [errors, setError] = useState([]);
     const [showNewsletter, setShowNewsletter] = useState(true);
@@ -114,7 +113,7 @@ export default function Newsletter() {
         let params = new URLSearchParams(
             new FormData(newsletterForm)
         ).toString();
-        fetch(newsletterSubscribeURL, {
+        fetch(NEWSLETTER_SUBSCRIBE_URL, {
             method: 'POST',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
@@ -186,7 +185,7 @@ export default function Newsletter() {
                     ref={newsletterFormRef}
                     className="newsletter-form nodisable"
                     name="newsletter-form"
-                    action={newsletterSubscribeURL}
+                    action={NEWSLETTER_SUBSCRIBE_URL}
                     method="post"
                 >
                     <section className="newsletter-head">
@@ -269,7 +268,7 @@ export default function Newsletter() {
                                 {gettext(
                                     'I’m okay with Mozilla handling my info as explained in this '
                                 )}
-                                <a href={privacyPolicyURL}>
+                                <a href={PRIVACY_POLICY_URL}>
                                     {gettext('Privacy Policy')}
                                 </a>
                                 .
