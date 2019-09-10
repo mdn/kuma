@@ -145,6 +145,10 @@ export default function Newsletter() {
                         eventLabel: 'complete'
                     });
                 }
+            })
+            .catch(e => {
+                console.error('error while subscribing to newsletter', e);
+                setErrorsArray(['An error occurred while submitting the form']);
             });
     };
 
