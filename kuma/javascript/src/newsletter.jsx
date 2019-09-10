@@ -227,11 +227,11 @@ export default function Newsletter() {
                             name="newsletters"
                             value={newsletterType}
                         />
-                        {errors.length > 0 && (
+                        {hasErrors && (
                             <div className="newsletter-errors">
                                 <ul className="errorlist">
                                     {errors.map((error, index) => (
-                                        <li key={index}>{error}</li>
+                                        <li key={index + error}>{error}</li>
                                     ))}
                                 </ul>
                             </div>
