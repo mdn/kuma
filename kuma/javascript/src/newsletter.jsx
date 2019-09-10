@@ -148,8 +148,7 @@ export default function Newsletter() {
                 }
             })
             .catch(e => {
-                console.error('error while subscribing to newsletter', e);
-                setError(['An error occurred while submitting the form']);
+                setError([e.toString()]);
             });
     };
 
