@@ -36,12 +36,15 @@ export default function Newsletter() {
 
     const [errorsArray, setErrorsArray] = useState();
     const [showNewsletter, setShowNewsletter] = useState(true);
-    const [showNewsletterLang, setShowNewsletterLang] = useState(false);
     const [showPrivacyCheckbox, setShowPrivacyCheckbox] = useState(false);
     const [
         showSuccessfulSubscription,
         setShowSuccessfulSubscription
     ] = useState(false);
+
+    /* If this is not en-US, show message informing the user
+       that newsletter is only available in English */
+    const showNewsletterLang = locale !== 'en-US';
 
     /**
      * Closes the newsletter, sets the visibility state
@@ -152,12 +155,6 @@ export default function Newsletter() {
             });
     };
 
-    /* If this is not en-US, show message informing the user
-       that newsletter is only acailable in English */
-    if (locale !== 'en-US') {
-        setShowNewsletterLang(true);
-    }
-
     useEffect(() => {
         // if `newsletterHide` is set
         if (localStorage.getItem('newsletterHide') === 'true') {
@@ -220,15 +217,14 @@ export default function Newsletter() {
                             ref={errorsRef}
                             id="newsletter-errors"
                             className={
-                                errorsArray ? 'newsletter-errors' : 'hidden'
+                                hasErrors ? 'newsletter-errors' : 'hidden'
                             }
-                            aria-hidden={errorsArray ? true : false}
+                            aria-hidden={hasErrors}
                         >
                             <ul className="errorlist">
-                                {errorsArray &&
-                                    errorsArray.map((error, index) => (
-                                        <li key={index}>{error}</li>
-                                    ))}
+                                {errors.map((error, index) => (
+                                    <li key={index}>{error}</li>
+                                ))}
                             </ul>
                         </div>
 
