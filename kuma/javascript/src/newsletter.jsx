@@ -94,7 +94,6 @@ export default function Newsletter() {
             return;
         }
 
-        // if skipFetch
         if (newsletterForm.dataset['skipFetch']) {
             /*
              * An error occured while attempting to subscribe
@@ -139,11 +138,10 @@ export default function Newsletter() {
 
                 if (errors && errors.length) {
                     setError(errors);
-                    // if there was an error, but there are no items in the array
                 } else if (errors && errors.length === 0) {
-                    // set the skip-fetch data attribute on the form
+                    // resubmit for diagnoses on the server (see skipFetch-
+                    // comment above)
                     newsletterForm.dataset.skipFetch = 'true';
-                    // and submit again for diagnoses on the server
                     newsletterForm.submit();
                 }
             })
@@ -153,9 +151,7 @@ export default function Newsletter() {
     };
 
     useEffect(() => {
-        // if `newsletterHide` is set
         if (localStorage.getItem('newsletterHide') === 'true') {
-            // do not show the newsletter
             setShowNewsletter(false);
         }
     }, []);
