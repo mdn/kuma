@@ -34,7 +34,7 @@ export default function Newsletter() {
     const newsletterSubscribeURL = 'https://www.mozilla.org/en-US/newsletter/';
     const privacyPolicyURL = 'https://www.mozilla.org/privacy/';
 
-    const [errorsArray, setErrorsArray] = useState();
+    const [errors, setError] = useState([]);
     const [showNewsletter, setShowNewsletter] = useState(true);
     const [showPrivacyCheckbox, setShowPrivacyCheckbox] = useState(false);
     const [
@@ -45,6 +45,7 @@ export default function Newsletter() {
     /* If this is not en-US, show message informing the user
        that newsletter is only available in English */
     const showNewsletterLang = locale !== 'en-US';
+    const hasErrors = errors.length > 0;
 
     /**
      * Closes the newsletter, sets the visibility state
@@ -130,7 +131,7 @@ export default function Newsletter() {
                 }
 
                 if (errors && errors.length) {
-                    setErrorsArray(errors);
+                    setError(errors);
                     // if there was an error, but there are no items in the array
                 } else if (errors && errors.length === 0) {
                     // set the skip-fetch data attribute on the form
@@ -151,7 +152,7 @@ export default function Newsletter() {
             })
             .catch(e => {
                 console.error('error while subscribing to newsletter', e);
-                setErrorsArray(['An error occurred while submitting the form']);
+                setError(['An error occurred while submitting the form']);
             });
     };
 
