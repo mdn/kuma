@@ -32,9 +32,10 @@ export default function Newsletter() {
     const newsletterType = 'app-dev';
     const newsletterFormat = 'H';
 
-    const [errors, setError] = useState([]);
     const [showNewsletter, setShowNewsletter] = useState(true);
     const [showPrivacyCheckbox, setShowPrivacyCheckbox] = useState(false);
+    const [submitToServer, setSubmitToServer] = useState(false);
+    const [errors, setError] = useState([]);
     const [
         showSuccessfulSubscription,
         setShowSuccessfulSubscription
@@ -93,7 +94,7 @@ export default function Newsletter() {
             return;
         }
 
-        if (newsletterForm.dataset['skipFetch']) {
+        if (submitToServer) {
             /*
              * An error occured while attempting to subscribe
              * the user via Ajax, but no specific error was provided. We
@@ -140,8 +141,7 @@ export default function Newsletter() {
                 } else if (errors && errors.length === 0) {
                     // resubmit for diagnoses on the server (see skipFetch-
                     // comment above)
-                    newsletterForm.dataset.skipFetch = 'true';
-                    newsletterForm.submit();
+                    setSubmitToServer(true);
                 }
             })
             .catch(e => {
@@ -154,6 +154,14 @@ export default function Newsletter() {
             setShowNewsletter(false);
         }
     }, []);
+
+    useEffect(() => {
+        const newsletterForm = newsletterFormRef.current;
+        if (submitToServer && newsletterForm) {
+            setSubmitToServer(false);
+            newsletterForm.submit();
+        }
+    }, [submitToServer]);
 
     if (!showNewsletter) {
         return null;
