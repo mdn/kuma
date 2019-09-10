@@ -226,7 +226,6 @@ def activate_language_from_request(request):
     language = get_language_from_request(request)
     translation.activate(language)
     request.LANGUAGE_CODE = get_language()
-    print("HI THERE! I JUST SET request.LANGUAGE_CODE==", request.LANGUAGE_CODE)
 
 
 class TranslationExtension(Extension):

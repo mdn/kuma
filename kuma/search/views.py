@@ -68,7 +68,6 @@ class SearchView(ListAPIView):
         self.serialized_filters = (
             FilterWithGroupSerializer(self.available_filters, many=True).data)
         self.selected_filters = get_filters(self.request.query_params.getlist)
-        self.selected_filters = ['none']
         self.query_params = {}
 
     def get_queryset(self):
@@ -83,9 +82,6 @@ class SearchView(ListAPIView):
         query_params = SearchQuerySerializer(data=request.query_params)
         query_params.is_valid(raise_exception=True)
         self.query_params = query_params.data
-        # print("self.query_params:", self.query_params)
-        # print("ARGS", args)
-        # print("KWARGS", kwargs)
         return super(SearchView, self).list(request, *args, **kwargs)
 
     def get_filters(self, aggregations):
