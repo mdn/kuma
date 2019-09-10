@@ -153,19 +153,17 @@ export default function Newsletter() {
         }
     };
 
-    /* If this is not en-US, show message informing the user
-       that newsletter is only acailable in English */
-    if (locale !== 'en-US') {
-        setShowNewsletterLang(true);
-    }
-
     useEffect(() => {
         // if `newsletterHide` is set
         if (localStorage.getItem('newsletterHide') === 'true') {
             // do not show the newsletter
             setShowNewsletter(false);
+        } else if (locale !== 'en-US') {
+            /* If this is not en-US, show message informing the user
+               that newsletter is only acailable in English */
+            setShowNewsletterLang(true);
         }
-    }, []);
+    }, [locale]);
 
     return (
         <section className="newsletter-container">
