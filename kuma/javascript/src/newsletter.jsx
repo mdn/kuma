@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { useEffect, useState, useRef, useContext } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 import GAProvider from './ga-provider.jsx';
 import { getLocale, gettext } from './l10n.js';
@@ -23,6 +23,17 @@ function permanentlyHideNewsletter() {
             error
         );
     }
+}
+
+function submitNewsletterSubscription(form) {
+    return fetch(NEWSLETTER_SUBSCRIBE_URL, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams(new FormData(form)).toString()
+    }).then(response => response.json());
 }
 
 export default function Newsletter() {
@@ -111,18 +122,7 @@ export default function Newsletter() {
         }
 
         event.preventDefault();
-        let params = new URLSearchParams(
-            new FormData(newsletterForm)
-        ).toString();
-        fetch(NEWSLETTER_SUBSCRIBE_URL, {
-            method: 'POST',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Content-type': 'application/x-www-form-urlencoded'
-            },
-            body: params
-        })
-            .then(response => response.json())
+        submitNewsletterSubscription(newsletterForm)
             .then(({ success, errors }) => {
                 if (success) {
                     permanentlyHideNewsletter();
