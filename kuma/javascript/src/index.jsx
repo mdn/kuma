@@ -64,16 +64,28 @@ if (container) {
     }
 
     if (app) {
+        // NOTE: `document.all` is only available in lte IE10
+        // $FlowFixMe
+        const isIE10 = document.all;
+        // IE11 specific https://stackoverflow.com/questions/17907445/how-to-detect-ie11#answer-22082397
+        const isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
         if (container.firstElementChild) {
-            // If the container element is not empty, then it was presumably
-            // rendered on the server, and we just need to hydrate it now.
-            //
-            // If we're running under google translate, however, we skip
-            // the hydration step because the mismatched origins cause
-            // errors and cause all the content to disappear when React
-            // unmounts the components. It is better for the end user in
-            // this case to just get a static HTML page. See Bug 1562293.
-            if (window.origin !== 'https://translate.googleusercontent.com') {
+            /* If the container element is not empty, then it was presumably
+             * rendered on the server, and we just need to hydrate it now.
+             *
+             * If we're running under google translate, however, we skip
+             * the hydration step because the mismatched origins cause
+             * errors and cause all the content to disappear when React
+             * unmounts the components. We also do not hydrate if in IE10+.
+             * It is better for the end user in this case to just get a
+             * static HTML page.
+             * See Bug 1562293, and https://github.com/mozilla/kuma/issues/5786
+             */
+            if (
+                window.origin !== 'https://translate.googleusercontent.com' &&
+                !isIE10 &&
+                !isIE11
+            ) {
                 ReactDOM.hydrate(app, container);
             }
         } else {
