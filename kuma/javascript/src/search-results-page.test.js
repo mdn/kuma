@@ -82,7 +82,6 @@ describe('SearchResultsPage component', () => {
     // but we expect the strings of the fake search data to appear
     // in the page somewhere
     test('results', () => {
-        console.warn('fakeResults:', fakeResults);
         for (const document of fakeResults.documents) {
             expect(snapshot).toContain(document.title);
             expect(snapshot).toContain(document.slug);

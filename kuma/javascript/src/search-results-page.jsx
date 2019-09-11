@@ -114,8 +114,8 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
             });
 
             resultsMetaNode = (
-                <div class="result-container">
-                    <p class="result-meta">
+                <div className="result-container">
+                    <p className="result-meta">
                         {interpolate(
                             ngettext(
                                 '%(count)s document found for "%(query)s" in %(locale)s.',
@@ -153,7 +153,7 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
 
             if (results.count === 0) {
                 noResultsNode = (
-                    <div class="result-container">
+                    <div className="result-container">
                         <div className="no-results">
                             {gettext('No matching documents found.')}
                         </div>
@@ -164,7 +164,7 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
 
         if (data.error) {
             errorNode = (
-                <div class="result-container">
+                <div className="result-container">
                     <div className="error">
                         <h2>{data.error.toString()}</h2>
                     </div>
