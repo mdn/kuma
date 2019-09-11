@@ -1,10 +1,13 @@
 // @flow
 import * as React from 'react';
-import { useEffect, useState, useRef, useContext } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 import GAProvider from './ga-provider.jsx';
 import { getLocale, gettext } from './l10n.js';
 import CloseIcon from './icons/close.svg';
+
+const NEWSLETTER_SUBSCRIBE_URL = 'https://www.mozilla.org/en-US/newsletter/';
+const PRIVACY_POLICY_URL = 'https://www.mozilla.org/privacy/';
 
 /**
  * Called once a user has either successfully subscribed to the
@@ -22,28 +25,37 @@ function permanentlyHideNewsletter() {
     }
 }
 
+function submitNewsletterSubscription(form) {
+    return fetch(NEWSLETTER_SUBSCRIBE_URL, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams(new FormData(form)).toString()
+    }).then(response => response.json());
+}
+
 export default function Newsletter() {
-    const emailRef = useRef(null);
-    const errorsRef = useRef(null);
     const newsletterFormRef = useRef(null);
-    const privacyCheckboxRef = useRef(null);
-
     const ga = useContext(GAProvider.context);
-
     const locale = getLocale();
     const newsletterType = 'app-dev';
     const newsletterFormat = 'H';
-    const newsletterSubscribeURL = 'https://www.mozilla.org/en-US/newsletter/';
-    const privacyPolicyURL = 'https://www.mozilla.org/privacy/';
 
-    const [errorsArray, setErrorsArray] = useState();
     const [showNewsletter, setShowNewsletter] = useState(true);
-    const [showNewsletterLang, setShowNewsletterLang] = useState(false);
     const [showPrivacyCheckbox, setShowPrivacyCheckbox] = useState(false);
+    const [submitToServer, setSubmitToServer] = useState(false);
+    const [errors, setError] = useState([]);
     const [
         showSuccessfulSubscription,
         setShowSuccessfulSubscription
     ] = useState(false);
+
+    /* If this is not en-US, show message informing the user
+       that newsletter is only available in English */
+    const showNewsletterLang = locale !== 'en-US';
+    const hasErrors = errors.length > 0;
 
     /**
      * Closes the newsletter, sets the visibility state
@@ -89,97 +101,99 @@ export default function Newsletter() {
     const submit = event => {
         let newsletterForm = newsletterFormRef.current;
 
-        // if skipFetch
-        if (newsletterForm) {
-            if (newsletterForm.dataset['skipFetch']) {
-                /*
-                 * An error occured while attempting to subscribe
-                 * the user via Ajax, but no specific error was provided. We
-                 * therefore just send the user directly to the Mozorg
-                 * newsletter subscription page and log the occurence
-                 */
-                ga('send', {
-                    hitType: 'event',
-                    eventCategory: 'newsletter',
-                    eventAction: 'progression',
-                    eventLabel: 'error-forward'
-                });
-                return true;
-            }
-
-            event.preventDefault();
-
-            let params = new URLSearchParams(
-                new FormData(newsletterForm)
-            ).toString();
-
-            fetch(newsletterSubscribeURL, {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Content-type': 'application/x-www-form-urlencoded'
-                },
-                body: params
-            }).then(response => {
-                response.json().then(responseJSON => {
-                    if (responseJSON.success !== 'success') {
-                        let errorsArray = responseJSON.errors;
-
-                        // if there are erros and the array contain at least one item
-                        if (errorsArray && errorsArray.length) {
-                            setErrorsArray(errorsArray);
-                            // if there was an error, but there are no items in the array
-                        } else if (errorsArray && errorsArray.length === 0) {
-                            if (newsletterForm) {
-                                // set the skip-fetch data attribute on the form
-                                newsletterForm.dataset.skipFetch = 'true';
-                                // and submit again for diagnoses on the server
-                                newsletterForm.submit();
-                            }
-                        } else {
-                            setShowNewsletter(false);
-                            permanentlyHideNewsletter();
-                            setShowSuccessfulSubscription(true);
-                            ga('send', {
-                                hitType: 'event',
-                                eventCategory: 'newsletter',
-                                eventAction: 'progression',
-                                eventLabel: 'complete'
-                            });
-                        }
-                    }
-                });
-            });
+        if (!newsletterForm) {
+            return;
         }
+
+        if (submitToServer) {
+            /*
+             * An error occured while attempting to subscribe
+             * the user via Ajax, but no specific error was provided. We
+             * therefore just send the user directly to the Mozorg
+             * newsletter subscription page and log the occurence
+             */
+            ga('send', {
+                hitType: 'event',
+                eventCategory: 'newsletter',
+                eventAction: 'progression',
+                eventLabel: 'error-forward'
+            });
+            return true;
+        }
+
+        event.preventDefault();
+        submitNewsletterSubscription(newsletterForm)
+            .then(({ success, errors }) => {
+                if (success) {
+                    permanentlyHideNewsletter();
+                    setShowSuccessfulSubscription(true);
+                    ga('send', {
+                        hitType: 'event',
+                        eventCategory: 'newsletter',
+                        eventAction: 'progression',
+                        eventLabel: 'complete'
+                    });
+                    return;
+                }
+
+                if (errors && errors.length) {
+                    setError(errors);
+                } else if (errors && errors.length === 0) {
+                    // resubmit for diagnoses on the server (see skipFetch-
+                    // comment above)
+                    setSubmitToServer(true);
+                }
+            })
+            .catch(e => {
+                setError([e.toString()]);
+            });
     };
 
-    /* If this is not en-US, show message informing the user
-       that newsletter is only acailable in English */
-    if (locale !== 'en-US') {
-        setShowNewsletterLang(true);
-    }
-
     useEffect(() => {
-        // if `newsletterHide` is set
         if (localStorage.getItem('newsletterHide') === 'true') {
-            // do not show the newsletter
             setShowNewsletter(false);
         }
     }, []);
 
+    useEffect(() => {
+        const newsletterForm = newsletterFormRef.current;
+        if (submitToServer && newsletterForm) {
+            setSubmitToServer(false);
+            newsletterForm.submit();
+        }
+    }, [submitToServer]);
+
+    if (!showNewsletter) {
+        return null;
+    }
+
+    if (showSuccessfulSubscription) {
+        return (
+            <section className="newsletter-container">
+                <div className="newsletter-thanks">
+                    <h2>
+                        {gettext(
+                            'Thanks! Please check your inbox to confirm your subscription.'
+                        )}
+                    </h2>
+                    <p>
+                        {gettext(
+                            'If you haven’t previously confirmed a subscription to a Mozilla - related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us.'
+                        )}
+                    </p>
+                </div>
+            </section>
+        );
+    }
+
     return (
         <section className="newsletter-container">
-            <div
-                id="newsletter-form-container"
-                className={showNewsletter ? 'newsletter' : 'hidden'}
-                aria-hidden={showNewsletter ? false : true}
-            >
+            <div id="newsletter-form-container" className="newsletter">
                 <form
                     ref={newsletterFormRef}
-                    id="newsletter-form"
                     className="newsletter-form nodisable"
                     name="newsletter-form"
-                    action={newsletterSubscribeURL}
+                    action={NEWSLETTER_SUBSCRIBE_URL}
                     method="post"
                 >
                     <section className="newsletter-head">
@@ -207,44 +221,32 @@ export default function Newsletter() {
                     <fieldset className="newsletter-fields">
                         <input
                             type="hidden"
-                            id="fmt"
                             name="fmt"
                             value={newsletterFormat}
                         />
                         <input
                             type="hidden"
-                            id="newsletterNewslettersInput"
                             name="newsletters"
                             value={newsletterType}
                         />
-                        <div
-                            ref={errorsRef}
-                            id="newsletter-errors"
-                            className={
-                                errorsArray ? 'newsletter-errors' : 'hidden'
-                            }
-                            aria-hidden={errorsArray ? true : false}
-                        >
-                            <ul className="errorlist">
-                                {errorsArray &&
-                                    errorsArray.map((error, index) => (
-                                        <li key={index}>{error}</li>
+                        {hasErrors && (
+                            <div className="newsletter-errors">
+                                <ul className="errorlist">
+                                    {errors.map((error, index) => (
+                                        <li key={index + error}>{error}</li>
                                     ))}
-                            </ul>
-                        </div>
+                                </ul>
+                            </div>
+                        )}
 
-                        <div
-                            id="newsletterEmail"
-                            className="form-group newsletter-group-email"
-                        >
+                        <div className="form-group newsletter-group-email">
                             <label
-                                htmlFor="newsletterEmailInput"
+                                htmlFor="newsletter-email-input"
                                 className="form-label offscreen"
                             >
                                 {gettext('E-mail')}
                             </label>
                             <input
-                                ref={emailRef}
                                 onFocus={inputFocusHandler}
                                 type="email"
                                 id="newsletter-email-input"
@@ -265,7 +267,6 @@ export default function Newsletter() {
                             aria-hidden={showPrivacyCheckbox ? false : true}
                         >
                             <input
-                                ref={privacyCheckboxRef}
                                 type="checkbox"
                                 id="newsletter-privacy-input"
                                 name="privacy"
@@ -275,16 +276,13 @@ export default function Newsletter() {
                                 {gettext(
                                     'I’m okay with Mozilla handling my info as explained in this '
                                 )}
-                                <a href={privacyPolicyURL}>
+                                <a href={PRIVACY_POLICY_URL}>
                                     {gettext('Privacy Policy')}
                                 </a>
                                 .
                             </label>
                         </div>
-                        <div
-                            id="newsletterSubmit"
-                            className="newsletter-group-submit"
-                        >
+                        <div className="newsletter-group-submit">
                             <button
                                 onClick={submit}
                                 id="newsletter-submit"
@@ -298,7 +296,6 @@ export default function Newsletter() {
                 </form>
                 <button
                     onClick={closeNewsletter}
-                    id="newsletter-hide"
                     type="button"
                     className="only-icon newsletter-hide"
                     aria-controls="newsletter-form-container"
@@ -306,24 +303,6 @@ export default function Newsletter() {
                     <span>{gettext('Hide Newsletter Sign-up')}</span>
                     <CloseIcon />
                 </button>
-            </div>
-            <div
-                id="newsletter-thanks"
-                className={
-                    showSuccessfulSubscription ? 'newsletter-thanks' : 'hidden'
-                }
-                aria-hidden={showSuccessfulSubscription ? false : true}
-            >
-                <h2>
-                    {gettext(
-                        'Thanks! Please check your inbox to confirm your subscription.'
-                    )}
-                </h2>
-                <p>
-                    {gettext(
-                        'If you haven’t previously confirmed a subscription to a Mozilla - related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us.'
-                    )}
-                </p>
             </div>
         </section>
     );
