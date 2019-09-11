@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+import json
+
 import pytest
 from waffle.models import Flag, Sample, Switch
 
@@ -288,3 +290,59 @@ def test_whoami(user_client, api_settings, wiki_user, beta_testers_group,
         }
     }
     assert_no_cache_header(response)
+
+
+@pytest.mark.django_db
+def test_search_validation_problems(user_client, api_settings):
+    url = reverse('api.v1.search', args=['en-US'])
+
+    # 'q' not present
+    response = user_client.get(url, HTTP_HOST=api_settings.BETA_HOST)
+    assert response.status_code == 400
+    assert response.json()['error'] == "Search term 'q' must be set"
+
+    # 'q' present but falsy
+    response = user_client.get(url, {'q': ''}, HTTP_HOST=api_settings.BETA_HOST)
+    assert response.status_code == 400
+    assert response.json()['error'] == "Search term 'q' must be set"
+
+    # 'q' present but locale invalid
+    response = user_client.get(
+        url, {'q': 'x', 'locale': 'xxx'}, HTTP_HOST=api_settings.BETA_HOST)
+    assert response.status_code == 400
+    assert response.json()['error'] == 'Not a valid locale code'
+
+
+@pytest.mark.django_db
+def test_search_basic(user_client, api_settings):
+    url = reverse('api.v1.search', args=['en-US'])
+    response = user_client.get(
+        url, {'q': 'stuff'}, HTTP_HOST=api_settings.BETA_HOST)
+    assert response.status_code == 200
+    assert response['content-type'] == 'application/json'
+    # FIXME: When the test client does `response.json()` it will try to
+    # decode the `response.content` to unicode without an encoding. So
+    # let's do it manually.
+    data = json.loads(response.content.decode('utf-8'))
+    assert data['documents']
+    assert data['count']
+    locales_found = [x['locale'] for x in data['documents']]
+
+    # Now search in a non-en-US locale
+    response = user_client.get(
+        url,
+        {'q': 'stuff', 'locale': 'sv-SE'},
+        HTTP_HOST=api_settings.BETA_HOST)
+    assert response.status_code == 200
+    assert response['content-type'] == 'application/json'
+    # FIXME: When the test client does `response.json()` it will try to
+    # decode the `response.content` to unicode without an encoding. So
+    # let's do it manually.
+    data = json.loads(response.content.decode('utf-8'))
+    assert data['documents']
+    assert data['count']
+    locales_found_sv = [x['locale'] for x in data['documents']]
+
+    # Simplest possible way to assert that the results depend on the locale
+    # without actually testing too much about the fixtures.
+    assert locales_found != locales_found_sv

@@ -8,14 +8,11 @@ from rest_framework import serializers, status
 from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
-
 from waffle.decorators import waffle_flag
 from waffle.models import Flag, Sample, Switch
 
 from kuma.api.v1.serializers import BCSignalSerializer
 from kuma.core.urlresolvers import reverse
-from kuma.users.templatetags.jinja_helpers import gravatar_url
-from kuma.wiki.models import Document
 from kuma.search.filters import (
     HighlightFilterBackend,
     KeywordQueryBackend,
@@ -23,6 +20,8 @@ from kuma.search.filters import (
     SearchQueryBackend,
     TagGroupFilterBackend)
 from kuma.search.views import SearchView
+from kuma.users.templatetags.jinja_helpers import gravatar_url
+from kuma.wiki.models import Document
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
@@ -250,10 +249,25 @@ class APILanguageFilterBackend(LanguageFilterBackend):
     """
 
     def filter_queryset(self, request, queryset, view):
-
-        locale = request.GET.get('locale', None)
+        locale = request.GET.get('locale') or settings.LANGUAGE_CODE
+        if locale not in settings.ACCEPTED_LOCALES:
+            raise serializers.ValidationError(
+                {'error': 'Not a valid locale code'})
         request.LANGUAGE_CODE = locale
         return super(APILanguageFilterBackend, self).filter_queryset(
+            request, queryset, view)
+
+
+class APISearchQueryBackend(SearchQueryBackend):
+    """Override of kuma.search.filters.SearchQueryBackend that makes a
+    stink if the 'q' query parameter is falsy."""
+
+    def filter_queryset(self, request, queryset, view):
+        search_term = (view.query_params.get('q') or '').strip()
+        if not search_term:
+            raise serializers.ValidationError(
+                {'error': "Search term 'q' must be set"})
+        return super(APISearchQueryBackend, self).filter_queryset(
             request, queryset, view)
 
 
@@ -261,7 +275,7 @@ class APISearchView(SearchView):
     serializer_class = APIDocumentSerializer
     renderer_classes = [JSONRenderer]
     filter_backends = (
-        SearchQueryBackend,
+        APISearchQueryBackend,
         KeywordQueryBackend,
         TagGroupFilterBackend,
         APILanguageFilterBackend,
