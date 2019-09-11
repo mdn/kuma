@@ -88,10 +88,10 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
         title = u'HTML5 ডকুমেন্টের সেকশন এবং আউটলাইন'
         html = '<p>This Bengali page is not spam.</p>'
         doc = document(title=title, slug=slug, html=html, save=True,
-                       locale='bn-BD')
+                       locale='bn')
         revision(document=doc, content=html, is_approved=True, save=True)
         dsa = DocumentSpamAttempt(slug=slug, document=doc)
-        expected = u'/bn-BD/docs/Web/Guide/HT… (HTML5 ডকুমেন্টের সেকশন এব…)'
+        expected = u'/bn/docs/Web/Guide/HT… (HTML5 ডকুমেন্টের সেকশন এব…)'
         assert self.admin.doc_short(dsa) == expected
 
     def test_submitted_data(self):

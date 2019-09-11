@@ -774,7 +774,7 @@ scl3_redirectpatterns = [
 ]
 
 zone_redirects = (
-    ('Add-ons', 'Mozilla/Add-ons', ('af', 'ar', 'bn-BD', 'bn-IN', 'ca',
+    ('Add-ons', 'Mozilla/Add-ons', ('af', 'ar', 'bn', 'bn', 'ca',
                                     'cs', 'de', 'en-US', 'es', 'fa',
                                     'fr', 'hu', 'id', 'it', 'ja',
                                     'ms', 'nl', 'pl', 'pt-BR', 'pt-PT',
@@ -783,7 +783,7 @@ zone_redirects = (
     ('Add-ons', 'Mozilla/Πρόσθετα', ('el',)),
     ('Add-ons', 'Mozilla/애드온들', ('ko',)),
     ('Add-ons', 'Mozilla/Eklentiler', ('tr',)),
-    ('Firefox', 'Mozilla/Firefox', ('af', 'ar', 'az', 'bm', 'bn-IN', 'ca',
+    ('Firefox', 'Mozilla/Firefox', ('af', 'ar', 'az', 'bm', 'bn', 'ca',
                                     'cs', 'de', 'ee', 'el', 'en-US', 'es',
                                     'ff', 'fi', 'fr', 'fy-NL', 'ga-IE', 'ha',
                                     'he', 'hi-IN', 'hr', 'hu', 'id', 'ig',
@@ -793,11 +793,11 @@ zone_redirects = (
                                     'ta', 'th', 'tl', 'tr', 'vi', 'wo',
                                     'xh', 'yo', 'zh-CN', 'zh-TW', 'zu',
                                     None)),
-    ('Firefox', 'Mozilla/ফায়ারফক্স', ('bn-BD',)),
+    ('Firefox', 'Mozilla/ফায়ারফক্স', ('bn',)),
     ('Apps', 'Web/Apps', ('en-US', 'fa', 'fr', 'ja', 'ta', 'th', 'zh-CN',
                           'zh-TW', None)),
     ('Apps', 'Web/Aplicaciones', ('es',)),
-    ('Apps', 'Apps', ('bn-BD', 'de', 'it', 'ko', 'pt-BR', 'ru')),
+    ('Apps', 'Apps', ('bn', 'de', 'it', 'ko', 'pt-BR', 'ru')),
     ('Learn', 'Learn', ('ca', 'de', None)),
     ('Apprendre', 'Apprendre', ('fr',)),
     ('Marketplace', 'Mozilla/Marketplace', ('de', 'en-US', 'es', 'fr', 'it',

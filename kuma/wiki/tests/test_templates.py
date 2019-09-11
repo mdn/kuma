@@ -240,7 +240,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
     def test_lang_switcher_footer(self):
         """Test the language switcher footer"""
         parent = document(locale=settings.WIKI_DEFAULT_LANGUAGE, save=True)
-        trans_bn_bd = document(parent=parent, locale="bn-BD", save=True)
+        trans_bn_bd = document(parent=parent, locale="bn", save=True)
         trans_ar = document(parent=parent, locale="ar", save=True)
         trans_pt_br = document(parent=parent, locale="pt-BR", save=True)
         trans_fr = document(parent=parent, locale="fr", save=True)
@@ -256,14 +256,14 @@ class DocumentTests(UserTestCase, WikiTestCase):
         # The parent document language should be at at second
         assert parent.language in options[1].text
         assert trans_ar.language not in options[1].text
-        # Then should be ar, bn-BD, fr
+        # Then should be ar, bn, fr
         assert trans_ar.language in options[2].text
         assert trans_bn_bd.language in options[3].text
         assert trans_fr.language in options[4].text
 
     def test_lang_switcher_button(self):
         parent = document(locale=settings.WIKI_DEFAULT_LANGUAGE, save=True)
-        trans_bn_bd = document(parent=parent, locale="bn-BD", save=True)
+        trans_bn_bd = document(parent=parent, locale="bn", save=True)
         trans_ar = document(parent=parent, locale="ar", save=True)
         trans_pt_br = document(parent=parent, locale="pt-BR", save=True)
         trans_fr = document(parent=parent, locale="fr", save=True)
@@ -277,7 +277,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         assert trans_pt_br.language not in options[0].text
         # Parent document language name should be at first
         assert parent.language in options[0].text
-        # Then should be ar, bn-BD, fr
+        # Then should be ar, bn, fr
         assert trans_ar.language in options[1].text
         assert trans_bn_bd.language in options[2].text
         assert trans_fr.language in options[3].text

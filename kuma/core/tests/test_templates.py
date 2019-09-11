@@ -46,7 +46,7 @@ class BaseTemplateTests(MockRequestTests):
         assert 'rtl' == dir_attr
 
     def test_lang_switcher(self):
-        translation.activate("bn-BD")
+        translation.activate("bn")
         html = render_to_string(self.template, request=self.request)
         doc = pq(html)
         # Check default locale is in the first choice field
