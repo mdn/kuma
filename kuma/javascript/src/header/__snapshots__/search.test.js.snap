@@ -22,6 +22,7 @@ exports[`Search snapshot 1`] = `
     id="main-q"
     name="q"
     placeholder="Search MDN"
+    required={true}
     type="search"
   />
 </form>

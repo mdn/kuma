@@ -337,13 +337,14 @@ exports[`Header snapshot 1`] = `
       id="main-q"
       name="q"
       placeholder="Search MDN"
+      required={true}
       type="search"
     />
   </form>
   <a
     className="signin-link"
     data-service="GitHub"
-    href="/users/github/login/?next=/[fake%20absolute%20url]"
+    href="/users/github/login/?next=/"
     rel="nofollow"
   >
     Sign in
