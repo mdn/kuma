@@ -70,7 +70,7 @@ install:
 	@ pip install $(requirements)
 
 clean:
-	rm -rf .coverage build/ tmp/emails/*.log
+	rm -rf .coverage build/ tmp/emails/*.log kuma/javascript/dist/
 	find . \( -name \*.pyc -o -name \*.pyo -o -name __pycache__ \) -delete
 	mkdir -p build/locale
 
