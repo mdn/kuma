@@ -27,6 +27,12 @@ export default function Search(props: Props) {
             action={`/${locale}/search`}
             method="get"
             role="search"
+            onSubmit={event => {
+                const input = inputfield.current;
+                if (input && input.value === '') {
+                    event.preventDefault();
+                }
+            }}
         >
             <SearchIcon className="search-icon" />
 
