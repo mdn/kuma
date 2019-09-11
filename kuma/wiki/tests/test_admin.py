@@ -91,7 +91,7 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
                        locale='bn')
         revision(document=doc, content=html, is_approved=True, save=True)
         dsa = DocumentSpamAttempt(slug=slug, document=doc)
-        expected = u'/bn/docs/Web/Guide/HT… (HTML5 ডকুমেন্টের সেকশন এব…)'
+        expected = u'/bn/docs/Web/Guide/HTML/… (HTML5 ডকুমেন্টের সেকশন এব…)'
         assert self.admin.doc_short(dsa) == expected
 
     def test_submitted_data(self):
