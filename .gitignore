@@ -28,6 +28,9 @@ coverage.xml
 # Atom
 .ropeproject
 
+# VSCode
+.vscode
+
 # PyCharm
 .idea
 
