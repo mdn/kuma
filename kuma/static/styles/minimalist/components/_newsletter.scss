@@ -16,3 +16,15 @@
         }
     }
 }
+
+/* Specific styling for newsletter on landing page */
+.callout-newsletter {
+    .newsletter,
+    .newsletter-thanks {
+        margin-top: 0;
+    }
+
+    .newsletter-thanks {
+        border-top: 0;
+    }
+}
