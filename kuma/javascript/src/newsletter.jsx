@@ -150,7 +150,21 @@ export default function Newsletter() {
     };
 
     useEffect(() => {
-        if (localStorage.getItem('newsletterHide') === 'true') {
+        let disableNewsletter = false;
+        try {
+            disableNewsletter =
+                localStorage.getItem('newsletterHide') === 'true';
+        } catch (exc) {
+            // This can happen if localStorage has been disabled in the browser
+            // or if it just plainly isn't working.
+            // If that's the case, definitely disable the newsletter component
+            // because it depends on the ability to use localStorage.
+            console.error(
+                `Exception trying to read from localStorage (${exc.toString()})`
+            );
+            disableNewsletter = true;
+        }
+        if (disableNewsletter) {
             setShowNewsletter(false);
         }
     }, []);
