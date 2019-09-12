@@ -44,7 +44,6 @@ module.exports = {
         'no-redeclare': 'error',
         'no-undef': 'error',
         'no-unused-vars': 'error',
-        quotes: ['error', 'single'],
         semi: ['error', 'always'],
         curly: ['error', 'all'],
         camelcase: [
