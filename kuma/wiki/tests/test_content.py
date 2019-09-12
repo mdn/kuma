@@ -491,6 +491,8 @@ class SectionIDFilterTests(TestCase):
              u'HTML5_엘리먼트'),
             (u'Non safe title "#$%&+,/:;=?@[\\]^`{|}~',
              u'Non_safe_title'),
+            (u"Five o'clock",
+             u'Five_oclock'),
         ]
 
         section_filter = SectionIDFilter('')
