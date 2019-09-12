@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wiki', '0005_auto_20190911_0926'),
+        ('wiki', '0005_change_locale_bn_bd_to_bn'),
     ]
 
     operations = [
