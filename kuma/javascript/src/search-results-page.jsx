@@ -221,7 +221,6 @@ export class SearchRoute extends Route<SearchRouteParams, SearchResults> {
         let query = parsed.searchParams.get('q');
         let page = parseInt(parsed.searchParams.get('page') || '1');
         if (isNaN(page) || page <= 0) {
-            console.warn(`Page not a number: '${page}'`);
             page = null;
         }
 
