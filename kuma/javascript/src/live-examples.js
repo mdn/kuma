@@ -23,6 +23,17 @@ export function addLiveExampleButtons(rootElement) {
         // We expect the iframe to be in a section with an id related
         // to the frame id.
         let sectid = frame.id.replace(idPrefix, '');
+
+        // It *used* to be that the ' character was allowed as a safe
+        // character is IDs. We've since changed the Wiki post-processing
+        // code to replace those with an empty string.
+        // But to be safe, if not all legacy pages have had a chance
+        // to re-render, make sure it's removed here or it'll cause
+        // problems.
+        // This line of code can be deleted in early 2020.
+        // For context, see https://github.com/mozilla/kuma/issues/5810
+        sectid = sectid.replace("'", '');
+
         let section = document.getElementById(sectid);
         if (!section) {
             // If the section doesn't exist, then none of the selectors below
@@ -37,30 +48,15 @@ export function addLiveExampleButtons(rootElement) {
         // direct siblings and also descendants of direct siblings
         // (because sometimes some of the source code is tucked inside
         // a hidden div).
-        let html;
-        let css;
-        let js;
-
-        // This try/catch is a band-aid fix. Really, no DOM element should
-        // have a ID value that is so "weird" that it can throw an error
-        // when trying use `rootElement.querySelector()` in it.
-        // For context, see https://github.com/mozilla/kuma/issues/5810
-        try {
-            html = rootElement.querySelector(
-                `#${sectid} ~ pre[class*=html], #${sectid} ~ * pre[class*=html]`
-            );
-            css = rootElement.querySelector(
-                `#${sectid} ~ pre[class*=css], #${sectid} ~ * pre[class*=css]`
-            );
-            js = rootElement.querySelector(
-                `#${sectid} ~ pre[class*=js], #${sectid} ~ * pre[class*=js]`
-            );
-        } catch (exception) {
-            console.error(
-                `Error thrown trying to use .querySelector on a sectid ${sectid}`
-            );
-            continue;
-        }
+        let html = rootElement.querySelector(
+            `#${sectid} ~ pre[class*=html], #${sectid} ~ * pre[class*=html]`
+        );
+        let css = rootElement.querySelector(
+            `#${sectid} ~ pre[class*=css], #${sectid} ~ * pre[class*=css]`
+        );
+        let js = rootElement.querySelector(
+            `#${sectid} ~ pre[class*=js], #${sectid} ~ * pre[class*=js]`
+        );
 
         // Now get the source code out of those pre elements
         let htmlCode = html ? html.textContent : '';
