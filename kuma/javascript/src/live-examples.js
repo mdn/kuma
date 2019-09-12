@@ -25,7 +25,7 @@ export function addLiveExampleButtons(rootElement) {
         let sectid = frame.id.replace(idPrefix, '');
 
         // It *used* to be that the ' character was allowed as a safe
-        // character is IDs. We've since changed the Wiki post-processing
+        // character in IDs. We've since changed the Wiki post-processing
         // code to replace those with an empty string.
         // But to be safe, if not all legacy pages have had a chance
         // to re-render, make sure it's removed here or it'll cause
