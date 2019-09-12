@@ -13,7 +13,12 @@ def change_locale_bn_bd_to_bn_and_remove_bn_in_forwards(apps, schema_editor):
     DocumentDeletionLog.objects.all().filter(locale='bn-BD').update(locale='bn')
 
     # Remove bn-IN
-    Document.objects.all().filter(locale='bn-IN').delete()
+    bn_in_documents = Document.objects.all().filter(locale='bn-IN')
+    # First set all parent_topic to None so it does
+    # not raise error while deleting the parent topic
+    bn_in_documents.update(parent_topic=None)
+    # Then delete all the `bn-IN` documents
+    bn_in_documents.delete()
     DocumentDeletionLog.objects.all().filter(locale='bn-IN').delete()
 
 
@@ -24,5 +29,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(change_locale_bn_bd_to_bn_and_remove_bn_inforwards)
+        migrations.RunPython(change_locale_bn_bd_to_bn_and_remove_bn_in_forwards)
     ]
