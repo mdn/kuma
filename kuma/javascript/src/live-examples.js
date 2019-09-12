@@ -56,7 +56,7 @@ export function addLiveExampleButtons(rootElement) {
                 `#${sectid} ~ pre[class*=js], #${sectid} ~ * pre[class*=js]`
             );
         } catch (exception) {
-            console.warn(
+            console.error(
                 `Error thrown trying to use .querySelector on a sectid ${sectid}`
             );
             continue;
