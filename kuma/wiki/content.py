@@ -572,22 +572,16 @@ class SectionIDFilter(html5lib_Filter):
                 self.known_ids.add(id)
                 return id
 
-    # MindTouch encodes these characters, so we have to encode them
-    # too.
-    non_url_safe = ['"', '#', '$', '%', '&', '+',
-                    ',', '/', ':', ';', '=', '?',
-                    '@', '[', '\\', ']', '^', '`',
-                    '{', '|', '}', '~', "'"]
+    non_url_safe = '"#$%&+,/:;=?@[\\]^`{|}~\')('
+    translate_table = {ord(char): u'' for char in non_url_safe}
 
     def slugify(self, text):
         """
         Turn the text content of a header into a slug for use in an ID
         """
-        non_safe = [c for c in text if c in self.non_url_safe]
-        if non_safe:
-            for c in non_safe:
-                text = text.replace(c, '')
-        # Strip leading, trailing and multiple whitespace, convert remaining whitespace to _
+        text = text.translate(self.translate_table)
+        # Strip leading, trailing and multiple whitespace,
+        # convert remaining whitespace to _.
         text = u'_'.join(text.split())
         return text
 
