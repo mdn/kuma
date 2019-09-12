@@ -356,7 +356,7 @@ LEGACY_URLS = list(flatten((
 )))
 
 zone_redirects = (
-    (u'Add-ons', u'Mozilla/Add-ons', 'WebExtensions', ('af', 'ar', 'bn',
+    (u'Add-ons', u'Mozilla/Add-ons', 'WebExtensions', ('af', 'ar',
                                                        'bn', 'ca', 'cs',
                                                        'de', 'en-US', 'es',
                                                        'fa', 'fr', 'hu',
@@ -370,7 +370,7 @@ zone_redirects = (
     (u'Add-ons', u'Mozilla/애드온들', 'WebExtensions', ('ko',)),
     (u'Add-ons', u'Mozilla/Eklentiler', 'WebExtensions', ('tr',)),
     (u'Firefox', u'Mozilla/Firefox', 'Privacy', ('af', 'ar', 'az', 'bm',
-                                                 'bn', 'ca', 'cs', 'de',
+                                                 'ca', 'cs', 'de',
                                                  'ee', 'el', 'en-US', 'es',
                                                  'ff', 'fi', 'fr', 'fy-NL',
                                                  'ga-IE', 'ha', 'he', 'hi-IN',

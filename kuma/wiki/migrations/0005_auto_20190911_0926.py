@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from django.db import migrations
 
 
-def change_locale_bn_bd_to_bn_and_remove_bn_inforwards(apps, schema_editor):
+def change_locale_bn_bd_to_bn_and_remove_bn_in_forwards(apps, schema_editor):
     Document = apps.get_model('wiki', 'Document')
     DocumentDeletionLog = apps.get_model('wiki', 'DocumentDeletionLog')
 
