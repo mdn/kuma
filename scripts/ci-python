@@ -24,11 +24,11 @@ sudo cp $DOCKER_COMPOSE_FILE /usr/local/bin/docker-compose
 
 # Now build the Docker container
 
-VERSION=latest make build-base
+time VERSION=latest make build-base
 
 # This "make build-kuma" step is done here only to test that the kuma docker
 # image can be built without error, not because it's needed by docker-compose.
-VERSION=latest make build-kuma
+time VERSION=latest make build-kuma
 
 docker-compose --version
 docker-compose up -d
