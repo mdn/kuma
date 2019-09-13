@@ -254,7 +254,7 @@ export class SearchRoute extends Route<
             // fetch() method because it's called unconditionally.
             // But if there is no query, there's no need to do an XHR
             // request.
-            // By returning a promise that always resolves to `null` we
+            // By returning a promise that always resolves to nothing we
             // can deal with that fact inside the SearchResultsPage
             // component.
             // By the way, the only way you can get to the search page
@@ -262,7 +262,10 @@ export class SearchRoute extends Route<
             // from the current URL.
             // This is all about avoiding returning a completely blank
             // page.
-            return Promise.resolve(null);
+            return Promise.resolve({
+                results: null,
+                error: null,
+            });
         }
         let encoded = encodeURIComponent(query);
         let url = `/api/v1/search/${this.locale}?q=${encoded}`;
