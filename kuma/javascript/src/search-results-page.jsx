@@ -264,7 +264,7 @@ export class SearchRoute extends Route<
             // page.
             return Promise.resolve({
                 results: null,
-                error: null,
+                error: null
             });
         }
         let encoded = encodeURIComponent(query);
