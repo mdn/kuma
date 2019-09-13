@@ -90,17 +90,17 @@ def test_locale_middleware_fixer_confusion(client, db):
 
 def test_locale_middleware_language_cookie(client, db):
     '''The LocaleMiddleware uses the language cookie over the header.'''
-    client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
+    client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn'})
     response = client.get('/', HTTP_ACCEPT_LANGUAGE='fr')
     assert response.status_code == 301
-    assert response['Location'] == '/bn-BD/'
+    assert response['Location'] == '/bn/'
     assert_shared_cache_header(response)
 
 
 @pytest.mark.parametrize('path', ('/', '/en-US/'))
 def test_lang_selector_middleware(path, client):
     '''The LangSelectorMiddleware redirects on the ?lang query first.'''
-    client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn-BD'})
+    client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn'})
     response = client.get('%s?lang=fr' % path,
                           HTTP_ACCEPT_LANGUAGE='en;q=0.9, fr;q=0.8')
     assert response.status_code == 302

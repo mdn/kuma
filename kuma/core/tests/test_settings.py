@@ -13,8 +13,7 @@ def test_accepted_locales():
 
 @pytest.mark.parametrize(
     'primary,secondary',
-    (('bn-BD', 'bn-IN'),
-     ('pt-PT', 'pt-BR'),
+    (('pt-PT', 'pt-BR'),
      ('sr', 'sr-Latn'),
      ('zh-CN', 'zh-TW'),
      ))

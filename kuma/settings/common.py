@@ -159,8 +159,7 @@ ACCEPTED_LOCALES = (
     'az',       # Azerbaijani
     'bg',       # Bulgarian
     'bm',       # Bambara
-    'bn-BD',    # Bengali (Bangladesh)
-    'bn-IN',    # Bengali (India)
+    'bn',       # Bengali
     'ca',       # Catalan
     'cs',       # Czech
     'de',       # German
@@ -221,7 +220,6 @@ ACCEPTED_LOCALES = (
 # When there are multiple options for a given language, this gives the
 # preferred locale for that language (language => preferred locale).
 PREFERRED_LOCALE = {
-    'bn': 'bn-BD',
     'pt': 'pt-PT',
     'sr': 'sr',
     'zh': 'zh-CN',

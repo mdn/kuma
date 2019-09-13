@@ -356,8 +356,8 @@ LEGACY_URLS = list(flatten((
 )))
 
 zone_redirects = (
-    (u'Add-ons', u'Mozilla/Add-ons', 'WebExtensions', ('af', 'ar', 'bn-BD',
-                                                       'bn-IN', 'ca', 'cs',
+    (u'Add-ons', u'Mozilla/Add-ons', 'WebExtensions', ('af', 'ar',
+                                                       'bn', 'ca', 'cs',
                                                        'de', 'en-US', 'es',
                                                        'fa', 'fr', 'hu',
                                                        'id', 'it', 'ja',
@@ -370,7 +370,7 @@ zone_redirects = (
     (u'Add-ons', u'Mozilla/애드온들', 'WebExtensions', ('ko',)),
     (u'Add-ons', u'Mozilla/Eklentiler', 'WebExtensions', ('tr',)),
     (u'Firefox', u'Mozilla/Firefox', 'Privacy', ('af', 'ar', 'az', 'bm',
-                                                 'bn-IN', 'ca', 'cs', 'de',
+                                                 'ca', 'cs', 'de',
                                                  'ee', 'el', 'en-US', 'es',
                                                  'ff', 'fi', 'fr', 'fy-NL',
                                                  'ga-IE', 'ha', 'he', 'hi-IN',
@@ -383,11 +383,11 @@ zone_redirects = (
                                                  'tl', 'tr', 'vi', 'wo',
                                                  'xh', 'yo', 'zh-CN', 'zh-TW',
                                                  'zu', None)),
-    (u'Firefox', u'Mozilla/ফায়ারফক্স', 'Privacy', ('bn-BD',)),
+    (u'Firefox', u'Mozilla/ফায়ারফক্স', 'Privacy', ('bn',)),
     (u'Apps', u'Web/Apps', 'Tutorials', ('en-US', 'fa', 'fr', 'ja', 'ta', 'th',
                                          'zh-CN', 'zh-TW', None)),
     (u'Apps', u'Web/Aplicaciones', 'Tutorials', ('es',)),
-    (u'Apps', u'Apps', 'Tutorials', ('bn-BD', 'de', 'it', 'ko', 'pt-BR',
+    (u'Apps', u'Apps', 'Tutorials', ('bn', 'de', 'it', 'ko', 'pt-BR',
                                      'ru')),
     (u'Learn', u'Learn', 'JavaScript', ('ca', 'de', None)),
     (u'Apprendre', u'Apprendre', 'JavaScript', ('fr',)),
