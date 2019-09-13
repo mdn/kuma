@@ -112,7 +112,11 @@ pull-kuma-latest:
 pull-latest: pull-base-latest pull-kuma-latest
 
 build-base:
+	echo "BEFORE..."
+	docker images
 	docker build -f docker/images/kuma_base/Dockerfile -t ${BASE_IMAGE} .
+	echo "AFTER..."
+	docker images
 
 build-base-py3:
 	docker build -f docker/images/kuma_base/Dockerfile-py3 -t ${BASE_IMAGE_PY3} .

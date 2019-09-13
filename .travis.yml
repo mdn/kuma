@@ -36,10 +36,12 @@ matrix:
               - build
               - static
           before_script:
+            - set -e
             - mkdir -p ~/docker-images
-            # - [[ -f ~/docker-images/kuma_base.tgz ]] && docker load -i ~/docker-images/kuma_base.tgz
-            - docker build -f docker/images/kuma_base/Dockerfile -t mdnwebdocs/kuma_base\:latest .
-            - docker save mdnwebdocs/kuma_base | gzip -c > ~/docker-images/kuma_base.tgz
+            - [[ -f ~/docker-images/kuma_base.tgz ]] && docker load -i ~/docker-images/kuma_base.tgz
+            - time docker build -f docker/images/kuma_base/Dockerfile -t mdnwebdocs/kuma_base\:latest .
+            - docker images
+            - time docker save mdnwebdocs/kuma_base | gzip -c > ~/docker-images/kuma_base.tgz
           script:
             - set -e
             - scripts/ci-python
