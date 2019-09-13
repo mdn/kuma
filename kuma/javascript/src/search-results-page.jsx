@@ -53,6 +53,17 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
     let noResultsNode = null;
     let pagerNode = null;
     let errorNode = null;
+    let noQuery = null;
+
+    if (!query) {
+        noQuery = (
+            <div className="result-container">
+                <p>
+                    <i>{gettext('Nothing found if nothing searched.')}</i>
+                </p>
+            </div>
+        );
+    }
 
     if (data) {
         const { results } = data;
@@ -176,7 +187,7 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
     return (
         <>
             <Header searchQuery={query} />
-            <Titlebar title={`${gettext('Results')}: ${query}`} />
+            {query && <Titlebar title={`${gettext('Results')}: ${query}`} />}
 
             <div className="search-results">
                 {resultsMetaNode}
@@ -188,6 +199,8 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
                 {noResultsNode}
 
                 {errorNode}
+
+                {noQuery}
             </div>
         </>
     );
@@ -220,14 +233,15 @@ export class SearchRoute extends Route<
 
     match(url: string): ?SearchRouteParams {
         let parsed = new URL(url, BASEURL);
+
         let path = parsed.pathname;
-        let query = parsed.searchParams.get('q');
+        let query = parsed.searchParams.get('q') || '';
         let page = parseInt(parsed.searchParams.get('page') || '1');
         if (isNaN(page) || page <= 0) {
             page = null;
         }
 
-        if (path !== `/${this.locale}/search` || !query) {
+        if (path !== `/${this.locale}/search`) {
             return null;
         }
 
@@ -235,6 +249,21 @@ export class SearchRoute extends Route<
     }
 
     fetch({ query, page }: SearchRouteParams): Promise<SearchResultsResponse> {
+        if (!query) {
+            // Every route component *has* to return a promise from the
+            // fetch() method because it's called unconditionally.
+            // But if there is no query, there's no need to do an XHR
+            // request.
+            // By returning a promise that always resolves to `null` we
+            // can deal with that fact inside the SearchResultsPage
+            // component.
+            // By the way, the only way you can get to the search page
+            // with a falsy query is if you manually remove the `?q=...`
+            // from the current URL.
+            // This is all about avoiding returning a completely blank
+            // page.
+            return Promise.resolve(null);
+        }
         let encoded = encodeURIComponent(query);
         let url = `/api/v1/search/${this.locale}?q=${encoded}`;
         url += `&locale=${this.locale}`;

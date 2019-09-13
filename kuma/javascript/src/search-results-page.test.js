@@ -90,6 +90,35 @@ describe('SearchResultsPage component', () => {
     });
 });
 
+describe('SearchResultsPage without query', () => {
+    const page = create(
+        <SearchResultsPage
+            locale="en-US"
+            query=""
+            data={fakeEmptySearchResults}
+        />
+    );
+    const root = page.root;
+
+    // The page should have exactly one Header
+    test('header', () => {
+        const headers = root.findAllByType(Header);
+        expect(headers.length).toBe(1);
+    });
+
+    // The page should one Titlebar, with the expected title
+    test('titlebar', () => {
+        const titlebars = root.findAllByType(Titlebar);
+        expect(titlebars.length).toBe(0);
+    });
+
+    // Should not
+    test('results', () => {
+        const hint = root.findByType('i');
+        expect(hint.children[0]).toBe('Nothing found if nothing searched.');
+    });
+});
+
 describe('SearchResultsPage with error', () => {
     const error = new Error('SearchError');
 
@@ -154,11 +183,6 @@ describe('SearchRoute', () => {
     test('match() does not match if locale does not match', () => {
         expect(route.match('/es/search?q=qq')).toBe(null);
         expect(route.match('/fr/search?q=qq')).toBe(null);
-    });
-
-    test('match() does not match if no query string', () => {
-        expect(route.match('/en-US/search')).toBe(null);
-        expect(route.match('/en-US/search?p=qq')).toBe(null);
     });
 
     test('match() does not match if no /search in URL', () => {
