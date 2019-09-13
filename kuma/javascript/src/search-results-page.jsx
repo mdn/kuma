@@ -12,7 +12,7 @@ type SearchRouteParams = {
     page: ?number
 };
 
-type SearchResultsResults = {
+type SearchResults = {
     count: number,
     documents: ?Array<{
         slug: string,
@@ -30,15 +30,15 @@ type SearchResultsResults = {
     previous: ?string,
     query: string
 };
-export type SearchResults = {
-    results: ?SearchResultsResults,
+export type SearchResultsResponse = {
+    results: ?SearchResults,
     error: ?any
 };
 
 type Props = {
     locale: string,
     query: string,
-    data: ?SearchResults
+    data: ?SearchResultsResponse
 };
 
 function makePaginationPageURL(uri) {
@@ -203,7 +203,10 @@ const BASEURL =
 
 // This Route subclass tells the Router component how to convert
 // search URLs into SearchResultPage components. See route.js and router.jsx.
-export class SearchRoute extends Route<SearchRouteParams, SearchResults> {
+export class SearchRoute extends Route<
+    SearchRouteParams,
+    SearchResultsResponse
+> {
     locale: string;
 
     constructor(locale: string) {
@@ -231,7 +234,7 @@ export class SearchRoute extends Route<SearchRouteParams, SearchResults> {
         return { locale: this.locale, query, page };
     }
 
-    fetch({ query, page }: SearchRouteParams): Promise<SearchResults> {
+    fetch({ query, page }: SearchRouteParams): Promise<SearchResultsResponse> {
         let encoded = encodeURIComponent(query);
         let url = `/api/v1/search/${this.locale}?q=${encoded}`;
         url += `&locale=${this.locale}`;

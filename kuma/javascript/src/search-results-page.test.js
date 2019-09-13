@@ -5,7 +5,7 @@ import { create } from 'react-test-renderer';
 import Header from './header/header.jsx';
 import SearchResultsPage, { SearchRoute } from './search-results-page.jsx';
 import Titlebar from './titlebar.jsx';
-import type { SearchResults } from './search-results-page.jsx';
+import type { SearchResultsResponse } from './search-results-page.jsx';
 
 const fakeResults = {
     count: 2,
@@ -48,12 +48,12 @@ const fakeEmptyResults = {
     query: 'empty'
 };
 
-const fakeSearchResults: SearchResults = {
+const fakeSearchResults: SearchResultsResponse = {
     results: fakeResults,
     error: null
 };
 
-const fakeEmptySearchResults: SearchResults = {
+const fakeEmptySearchResults: SearchResultsResponse = {
     results: fakeEmptyResults,
     error: null
 };
