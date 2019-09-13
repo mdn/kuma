@@ -47,9 +47,16 @@ export default function UserProvider(props: {
     const ga = useContext(GAProvider.context);
 
     useEffect(() => {
+        let dismounted = false;
         fetch('/api/v1/whoami')
             .then(response => response.json())
             .then(data => {
+                // No point attempting to update state if the component
+                // is dismounted.
+                if (dismounted) {
+                    // bail!
+                    return;
+                }
                 let userData = {
                     username: data.username,
                     isAuthenticated: data.is_authenticated,
@@ -108,6 +115,9 @@ export default function UserProvider(props: {
                     }
                 });
             });
+        return () => {
+            dismounted = true;
+        };
     }, [ga]); // only fetch on mount, or if `ga` changes
 
     return (
