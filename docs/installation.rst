@@ -242,13 +242,24 @@ To enable GitHub authentication, you'll need to
 * Application description: My own GitHub app for MDN!
 * Authorization callback URL: http://localhost:8000/users/github/login/callback/.
 
-As an admin user, `add a django-allauth social app`_ for GitHub:
+To automate setting Django up for Github auth you can run
+``docker-compose exec web ./manage.py configure_github_social`` and follow its steps.
+
+If you want to do it manually, as an admin user, `add a django-allauth social app`_ for GitHub:
 
 * Provider: GitHub.
 * Name: MDN Development.
 * Client id: <*your GitHub App Client ID*>.
 * Secret key: <*your GitHub App Client Secret*>.
 * Sites: Move ``locahost:8000`` from "Available sites" to "Chosen sites".
+
+``locahost:8000`` needs to either have ID 1 or ``SITE_ID=1`` has to be set in ``.env``
+to its actual ID. You'll also need to set ``DOMAIN=mdn.localhost`` there.
+
+Your hosts file should contain the following lines::
+
+    127.0.0.1 kubernetes.docker.internal localhost demos mdn.localhost beta.mdn.localhost wiki.mdn.localhost
+    ::1             mdn.localhost beta.mdn.localhost wiki.mdn.localhost
 
 Now you can sign in with GitHub.
 
