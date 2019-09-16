@@ -336,6 +336,7 @@ exports[`Header snapshot 1`] = `
       className="search-input-field"
       id="main-q"
       name="q"
+      pattern="(.|\\\\s)*\\\\S(.|\\\\s)*"
       placeholder="Search MDN"
       required={true}
       type="search"
