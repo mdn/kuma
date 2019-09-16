@@ -9,9 +9,15 @@
     grid-template-areas: 'main' 'document-toc-container' 'side';
 
     @media #{$mq-tablet-and-up} {
-        grid-template-columns: 25% 75%;
-        grid-template-rows: max-content 1fr;
-        grid-template-areas: 'document-toc-container main' 'side main';
+        grid-template-columns: 100%;
+        grid-template-rows: 1fr;
+        grid-template-areas: 'main';
+
+        &.wiki-left-present {
+            grid-template-columns: 25% 75%;
+            grid-template-rows: max-content 1fr;
+            grid-template-areas: 'document-toc-container main' 'side main';
+        }
     }
 }
 
