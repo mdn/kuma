@@ -85,7 +85,6 @@
     {% stylesheet 'banners' %}
   {% endif %}
 
-  <link rel="dns-prefetch" href="https://interactive-examples.mdn.mozilla.net" pr="0.75" />
   <link rel="preconnect" href="https://interactive-examples.mdn.mozilla.net" pr="0.75" />
 
   <link rel="canonical" href="{{ canonical }}" >
@@ -106,7 +105,7 @@
   <meta name="description" content="{{ seo_summary }}">
   <meta name="twitter:description" content="{{ seo_summary }}">
   {% endif %}
-  
+
   {% block printstyle %}
     {% stylesheet 'print' %}
   {% endblock %}
