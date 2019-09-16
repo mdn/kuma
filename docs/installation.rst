@@ -258,7 +258,7 @@ to its actual ID. You'll also need to set ``DOMAIN=mdn.localhost`` there.
 
 Your hosts file should contain the following lines::
 
-    127.0.0.1 kubernetes.docker.internal localhost demos mdn.localhost beta.mdn.localhost wiki.mdn.localhost
+    127.0.0.1 localhost demos mdn.localhost beta.mdn.localhost wiki.mdn.localhost
     ::1             mdn.localhost beta.mdn.localhost wiki.mdn.localhost
 
 Now you can sign in with GitHub.
