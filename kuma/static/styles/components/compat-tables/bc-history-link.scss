@@ -37,6 +37,10 @@ active styles
 
 .active .bc-history-link {
     z-index: 21;
+
+    // Flip the icon in the reveal button to indicate that
+    // another click will conceal the note
+    transform: scaleY(-1);
 }
 
 .active .bc-history-link,

@@ -172,7 +172,7 @@
 
             /**
              * Hides the history dropdown for a given cell
-             * @param {Object} $td - Hides the dropdown for this cell
+             * @param {Object} [$td] - Hides the dropdown for this cell
              */
             function hideHistory($td) {
                 var $history;
