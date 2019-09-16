@@ -45,7 +45,7 @@ class Command(BaseCommand):
             print('\n')
 
             print(GITHUB_INFO)
-            client_id = raw_input('Client ID: ')
+            client_id = raw_input('Client ID: ').strip()
             client_secret = raw_input('Client Secret: ')
 
             social_app, created = SocialApp.objects.update_or_create(
