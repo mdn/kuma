@@ -50,8 +50,8 @@ export type DocumentProps = {
 
 export function Sidebar({ document }: DocumentProps) {
     return (
-        <div className="sidebar">
-            {document.quickLinksHTML && (
+        document.quickLinksHTML && (
+            <div className="sidebar">
                 <div className="quick-links">
                     <div className="quick-links-head sidebar-heading">
                         {gettext('Related Topics')}
@@ -62,8 +62,8 @@ export function Sidebar({ document }: DocumentProps) {
                         }}
                     />
                 </div>
-            )}
-        </div>
+            </div>
+        )
     );
 }
 
@@ -71,12 +71,18 @@ function Content({ document }: DocumentProps) {
     // The wiki-left-present class below is needed for correct BCD layout
     // See kuma/static/styles/components/compat-tables/bc-table.scss
     return (
-        /* adding aria-live here to mark this as a live region to
-          ensure a screen reader will read the new content after navigation */
+        /* If we have either `tocHTML` or `quicklinksHTML`, add the
+           `wiki-left-present` class */
         <div
-            className="wiki-left-present content-layout"
-            // See https://bugzilla.mozilla.org/show_bug.cgi?id=1570043
-            // aria-live="assertive"
+            className={
+                document.tocHTML || document.quickLinksHTML
+                    ? 'wiki-left-present content-layout'
+                    : 'content-layout'
+            }
+            /* adding aria-live here to mark this as a live region to
+               ensure a screen reader will read the new content after navigation 
+               See https://bugzilla.mozilla.org/show_bug.cgi?id=1570043
+               aria-live="assertive" */
         >
             {!!document.tocHTML && <TOC html={document.tocHTML} />}
             <Article document={document} />
