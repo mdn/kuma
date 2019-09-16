@@ -14,7 +14,6 @@ def test_accepted_locales():
 @pytest.mark.parametrize(
     'primary,secondary',
     (('pt-PT', 'pt-BR'),
-     ('sr', 'sr-Latn'),
      ('zh-CN', 'zh-TW'),
      ))
 def test_preferred_locale_codes(primary, secondary):
