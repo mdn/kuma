@@ -37,7 +37,7 @@ def overwrite_or_create_env_vars(env_vars):
 class Command(BaseCommand):
     help = 'Configure Kuma for Sign-In with GitHub'
 
-    def handle(self, *args, **options):
+    def handle(self, **options):
         print('\n')
 
         social_app = SocialApp.objects.filter(provider='github').first()
