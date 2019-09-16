@@ -1,179 +1,194 @@
-{% extends "socialaccount/base.html" %}
+{% extends "react_base.html" %}
+
+{% set styles = ('users',) %}
+
+{% block breadcrumbs %}{% endblock %}
 
 {% set title = _('Create your MDN profile') %}
 
 {% set classes = 'register' %}
 
 {% block site_css %}
-    {{ super() }}
-    {% stylesheet 'submission' %}
+  {{ super() }}
+  {% stylesheet 'submission' %}
 {% endblock %}
 
 {% set provider = account.get_provider() %}
 {% set github_connect_url = provider_login_url('github', process='connect', next=request.session.sociallogin_next_url|default('/')) %}
+
+{% block pageheader %}
+  {{ render_react("signupflow", request.LANGUAGE_CODE, request.get_full_path(),
+                  None, False)|safe }}
+{% endblock %}
 
 {% block content %}
 <section id="content">
   <div class="wrap">
     <section id="content-main" role="main">
       <article id="browser_register" class="readable-line-length center">
-          <h1>{{ _('Create your MDN profile') }}</h1>
-          {% if matching_accounts.exists() and provider.id == 'github' %}
-            <div class="notification warning" data-level="warning">
-              {% trans %}
-                An existing MDN profile matches your GitHub email. Click here to recover a profile:
-              {% endtrans %}
-              {% for match in matching_accounts %}
-                <form method="post" action="{{ url('users.send_recovery_email') }}">
-                  {% csrf_token %}
-                  <label>{{ match.uid }}
+        <h1>{{ _('Create your MDN profile') }}</h1>
+        {% if matching_accounts.exists() and provider.id == 'github' %}
+          <div class="notification warning" data-level="warning">
+            {% trans %}
+              An existing MDN profile matches your GitHub email. Click here to recover a profile:
+            {% endtrans %}
+            {% for match in matching_accounts %}
+              <form method="post" action="{{ url('users.send_recovery_email') }}">
+                {% csrf_token %}
+                <label>{{ match.uid }}
                   <input type="hidden" name="email" value="{{ match.uid }}" />
-                  </label>
-                  <button class="positive" type="submit" name="recover">{{ _('Recover my Profile') }}</button>
-                </form>
-              {% endfor %}
+                </label>
+                <button class="positive" type="submit" name="recover">{{ _('Recover my Profile') }}</button>
+              </form>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <form class="submission" method="post" action="{{ url('socialaccount_signup') }}">
+          {{ honeypot_field()|safe }}
+          {# Custom text for when the user has been redirected through the recurring paymemnt flow #}
+          {% if 'next=' in github_connect_url and 'name' in github_connect_url and 'email' in github_connect_url %}
+            <div class="alert-message alert-message-warning">
+              <p>
+                <h3>{{_('Why do I need an MDN profile to complete my subscription?')}}</h3>
+                {% trans %}
+                An MDN profile allows us to communicate with
+                you about your subscription. In the future,
+                you can manage your payments from your MDN profile.
+                {% endtrans %}
+              </p>
             </div>
           {% endif %}
+          <p>{% trans provider_name=provider.name %}
+            Thanks for signing in to MDN with {{ provider_name }}. To finish setting up your
+            MDN Web Docs account, please choose a username and email address.
+            {% endtrans %}<p>
 
-          <form class="submission" method="post" action="{{ url('socialaccount_signup') }}">
-              {{ honeypot_field()|safe }}
-              {# Custom text for when the user has been redirected through the recurring paymemnt flow #}
-              {% if 'next=' in github_connect_url and 'name' in github_connect_url and 'email' in github_connect_url %}
-                <div class="alert-message alert-message-warning">
-                  <p>
-                    <h3>{{_('Why do I need an MDN profile to complete my subscription?')}}</h3>
-                    {% trans %}
-                      An MDN profile allows us to communicate with
-                      you about your subscription. In the future,
-                      you can manage your payments from your MDN profile.
-                    {% endtrans %}
-                  </p>
-                </div>
-              {% endif %}
-              <p>{% trans provider_name=provider.name %}
-              Thanks for signing in to MDN with {{ provider_name }}. To finish setting up your
-              MDN Web Docs account, please choose a username and email address.
-              {% endtrans %}<p>
-
-          {% if form.errors %}
-            {% for error in form.non_field_errors() %}
-              <div class="notification error" data-level="error">{{ error }}</div>
-            {% endfor %}
-          {% endif %}
-
-          {% csrf_token %}
-          {% if redirect_field_value %}
-          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-          {% endif %}
-
-
-          <fieldset>
-            <ul>
-              <li class="{{ 'error' if form.username.errors }}">
-                <label for="{{ form.username.id_for_label }}" class="outer"><b>{{ form.username.label }}</b></label>
-                {% if form.username.errors %}
-                  {{ form.username.errors }}
-                {% elif matching_user %}
-                  <ul class="errorlist">
-                    <li>{% trans username=matching_user.username %}Your GitHub username {{ username }} is already taken. Please choose another.{% endtrans %}</li>
-                  </ul>
-                {% endif %}
-                {{ form.username }}
-                <p class="field-explanation"><small>{{ _("This will be the name displayed on MDN Web Docs to identify your contributions.") }}</small></p>
-              </li>
-              {# The email field is hidden if only one email is provided #}
-              {% if form.email.field.widget.input_type == 'hidden' %}
-                {{ form.email }}
-              {% else %}
-
-                <li class="{{ 'error' if form.email.errors or form.other_email.errors }}">
-                  <label for="{{ form.email.id_for_label }}" class="outer"><b>{{ form.email.label }}</b></label>
-                  <ul class="errorlist">
-                    {% for error in form.email.errors %}
-                      <li>
-                      {# we have to handle this error message here to have access to the request #}
-                      {% if error == form.duplicate_email_error_label %}
-                        {% trans login_url=url('account_login'), next_url=github_connect_url, provider_name=provider.name %}
-                        A profile already exists with the selected email address.
-                        <a href="{{ login_url }}" class="launch-login" data-next="{{ next_url }}">Connect your {{ provider_name }} account to it.</a>
-                        {% endtrans %}
-                      {% else %}
-                        {{ error }}
-                      {% endif %}
-                      </li>
-                    {% endfor %}
-                  </ul>
-                  <ul class="choices">
-                  {% set matching_uids = matching_accounts.values_list('uid', flat=True) %}
-                  {% for email_choice in form.email %}
-                    {% set id_for_label="%s_%s" % (form.email.name, loop.index0) %}
-                    {% set choice_value=email_choice.data.value %}
-                    <li {{-' class="exists"'|safe if choice_value in matching_uids }}>
-                      {% if choice_value == form.other_email_value %}
-                        {{ email_choice.tag() }}
-                        <label for="{{ id_for_label }}" class="inner other-label">{{ _('Other:') }}</label>
-                        {{ form.other_email }}
-                        {{ form.other_email.error }}
-                      {% else %}
-                      <label for="{{ id_for_label }}">
-                        {{ email_choice.tag() }}
-                        {{ email_choice.choice_label }}
-                        {%- if choice_value in email_addresses %}
-                          {%- if email_addresses[choice_value].get('verified', False) %}
-                            <strong>{{ _('Verified') }}</strong>
-                          {%- else %}
-                            {{ _('Unverified') }}
-                          {%- endif %}
-                        {%- endif %}
-                      </label>
-                      {% endif %}
-                    </li>
-                  {% endfor %}
-                  </ul>
-                  <p class="field-explanation"><small>
-                      {{ _('This will be the email address MDN Web Docs messages and notifications will be sent to. This will <strong>not</strong> be displayed on MDN Web Docs and will be used in accordance with our <a href="%(privacy_url)s">privacy policy</a>.', privacy_url='//www.mozilla.org/privacy/websites/')|safe }}
-                  </small></p>
-                </li>
+              {% if form.errors %}
+                {% for error in form.non_field_errors() %}
+                  <div class="notification error" data-level="error">{{ error }}</div>
+                {% endfor %}
               {% endif %}
 
-              {% if form.captcha %}
-                <li class="{{ 'error' if form.captcha.errors }}">
-                  {% if form.captcha.errors %}
-                    {{ form.captcha.errors }}
+              {% csrf_token %}
+              {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+              {% endif %}
+
+
+              <fieldset>
+                <ul>
+                  <li class="{{ 'error' if form.username.errors }}">
+                    <label for="{{ form.username.id_for_label }}" class="outer"><b>{{ form.username.label }}</b></label>
+                    {% if form.username.errors %}
+                      {{ form.username.errors }}
+                    {% elif matching_user %}
+                      <ul class="errorlist">
+                        <li>{% trans username=matching_user.username %}Your GitHub username {{ username }} is already
+                          taken. Please choose another.{% endtrans %}</li>
+                      </ul>
+                    {% endif %}
+                    {{ form.username }}
+                    <p class="field-explanation">
+                      <small>{{ _("This will be the name displayed on MDN Web Docs to identify your contributions.") }}</small>
+                    </p>
+                  </li>
+                  {# The email field is hidden if only one email is provided #}
+                  {% if form.email.field.widget.input_type == 'hidden' %}
+                    {{ form.email }}
+                  {% else %}
+
+                  <li class="{{ 'error' if form.email.errors or form.other_email.errors }}">
+                    <label for="{{ form.email.id_for_label }}" class="outer"><b>{{ form.email.label }}</b></label>
+                    <ul class="errorlist">
+                      {% for error in form.email.errors %}
+                        <li>
+                          {# we have to handle this error message here to have access to the request #}
+                          {% if error == form.duplicate_email_error_label %}
+                            {% trans login_url=url('account_login'), next_url=github_connect_url, provider_name=provider.name %}
+                              A profile already exists with the selected email address.
+                              <a href="{{ login_url }}" class="launch-login" data-next="{{ next_url }}">Connect your
+                                {{ provider_name }} account to it.</a>
+                            {% endtrans %}
+                          {% else %}
+                            {{ error }}
+                          {% endif %}
+                        </li>
+                      {% endfor %}
+                    </ul>
+                    <ul class="choices">
+                      {% set matching_uids = matching_accounts.values_list('uid', flat=True) %}
+                      {% for email_choice in form.email %}
+                        {% set id_for_label="%s_%s" % (form.email.name, loop.index0) %}
+                        {% set choice_value=email_choice.data.value %}
+                        <li {{-' class="exists"'|safe if choice_value in matching_uids }}>
+                          {% if choice_value == form.other_email_value %}
+                            {{ email_choice.tag() }}
+                            <label for="{{ id_for_label }}" class="inner other-label">{{ _('Other:') }}</label>
+                            {{ form.other_email }}
+                            {{ form.other_email.error }}
+                          {% else %}
+                            <label for="{{ id_for_label }}">
+                            {{ email_choice.tag() }}
+                            {{ email_choice.choice_label }}
+                            {%- if choice_value in email_addresses %}
+                              {%- if email_addresses[choice_value].get('verified', False) %}
+                                <strong>{{ _('Verified') }}</strong>
+                              {%- else %}
+                                {{ _('Unverified') }}
+                              {%- endif %}
+                            {%- endif %}
+                            </label>
+                          {% endif %}
+                        </li>
+                      {% endfor %}
+                    </ul>
+                    <p class="field-explanation">
+                      <small>
+                        {{ _('This will be the email address MDN Web Docs messages and notifications will be sent to. This will <strong>not</strong> be displayed on MDN Web Docs and will be used in accordance with our <a href="%(privacy_url)s">privacy policy</a>.', privacy_url='//www.mozilla.org/privacy/websites/')|safe }}
+                      </small>
+                    </p>
+                  </li>
                   {% endif %}
-                  {{ form.captcha }}
-                </li>
-              {% endif %}
 
-              <li>
-                <fieldset class="section">
-                  <legend><b>{{ _('Terms and Privacy') }}</b></legend>
-                  <ol>
+                  {% if form.captcha %}
+                    <li class="{{ 'error' if form.captcha.errors }}">
+                      {% if form.captcha.errors %}
+                        {{ form.captcha.errors }}
+                      {% endif %}
+                      {{ form.captcha }}
+                    </li>
+                  {% endif %}
 
-                      <li id="terms-agree>">
+                  <li>
+                    <fieldset class="section">
+                      <legend><b>{{ _('Terms and Privacy') }}</b></legend>
+                      <ol>
+                        <li id="terms-agree>">
                           <ul class="errorlist">
-                          {{ form.terms.errors }}
+                            {{ form.terms.errors }}
                           </ul>
-                      <label for="{{ form.terms.id_for_label }}">
-                          {{ form.terms }} {{ form.terms.label }}
-                          {% trans terms_url='https://www.mozilla.org/about/legal/terms/mozilla', privacy_url='https://www.mozilla.org/privacy/websites/' %}
-                          to Mozilla's <a href="{{ terms_url }}">Terms</a> and <a href="{{ privacy_url }}">Privacy Notice</a>.
-                          {% endtrans %}
-                        </label>
+                          <label for="{{ form.terms.id_for_label }}">
+                            {{ form.terms }} {{ form.terms.label }}
+                            {% trans terms_url='https://www.mozilla.org/about/legal/terms/mozilla', privacy_url='https://www.mozilla.org/privacy/websites/' %}
+                            to Mozilla's <a href="{{ terms_url }}">Terms</a> and <a href="{{ privacy_url }}">Privacy
+                              Notice</a>.
+                            {% endtrans %}
+                          </label>
+                        </li>
+                      </ol>
+                    </fieldset>
+                  </li>
 
-                      </li>
-                  </ol>
-                </fieldset>
-              </li>
-
-              <li class="submit">
-                <button class="positive" type="submit" name="create">{{ _('Create profile') }}</button>
-              </li>
-            </ul>
-            <p>{% trans bug_href='https://bugzilla.mozilla.org/enter_bug.cgi?format=__standard__&component=Account%20Help&product=developer.mozilla.org&status_whiteboard=%5Btrouble-logging-in%5D' %}
-                Have trouble creating an account? <a href="{{ bug_href }}" rel="external">Let us help</a>.
-               {% endtrans %}</p>
-          </fieldset>
+                  <li class="submit">
+                    <button class="positive" type="submit" name="create">{{ _('Create profile') }}</button>
+                  </li>
+                </ul>
+                <p>
+                  {% trans bug_href='https://bugzilla.mozilla.org/enter_bug.cgi?format=__standard__&component=Account%20Help&product=developer.mozilla.org&status_whiteboard=%5Btrouble-logging-in%5D' %}
+                    Have trouble creating an account? <a href="{{ bug_href }}" rel="external">Let us help</a>.
+                  {% endtrans %}</p>
+              </fieldset>
         </form>
 
       </article>
@@ -183,18 +198,5 @@
 {% endblock %}
 
 {% block js %}
-{{ super() }}
-<script>
-(function ($) {
-    'use strict';
-
-    var $otherLabel = $('.other-label');
-    var $otherRadio = $otherLabel.prev();
-    $otherLabel.next().on('focus', function() {
-      $otherRadio.prop('checked', true);
-    });
-
-})(jQuery);
-</script>
-
+  {{ super() }}
 {% endblock %}
