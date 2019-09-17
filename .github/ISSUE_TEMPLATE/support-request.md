@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 **Summary**
-_What support task would you like completed by the team? (Please provide a URL if applicable)_
+_What support task would you like completed by the team?
 
 
 **Rationale**
