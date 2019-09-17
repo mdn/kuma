@@ -18,12 +18,12 @@ class ScrapeCommand(BaseCommand):
         if url_or_path.startswith('http'):
             bits = urlparse(url_or_path)
             host = bits.netloc
-            path = bits.path
+            path = bits.path[:-1] if bits.path.endswith('/') else bits.path
             ssl = (bits.scheme == 'https')
         else:
             host = 'wiki.developer.mozilla.org'
             ssl = True
-            path = url_or_path
+            path = url_or_path[:-1] if url_or_path.endswith('/') else url_or_path
         return host, ssl, path
 
     def setup_logging(self, verbosity):
