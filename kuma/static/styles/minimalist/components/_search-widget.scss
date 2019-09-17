@@ -8,7 +8,6 @@
     padding: 2px 8px;
     border: 2px solid $text-color;
     border-radius: 20px;
-    background-color: $grey-light;
     height: 40px;
     min-width: 80px;
 
@@ -18,11 +17,7 @@
     }
 
     input.search-input-field {
-        /* TODO: the !important declarations are used to override
-           stuff in the stylesheets. If we can simplify the
-           stylesheets, then maybe we can remove the importants */
         flex: 1 1 100px;
-        background-color: $grey-light;
         color: $text-color;
         border-width: 0;
         font-size: $tiny-font-size;
