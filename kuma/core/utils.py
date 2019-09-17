@@ -454,20 +454,6 @@ def order_params(original_url):
     return new_url
 
 
-@contextmanager
-def override_urlconf(new_urlconf):
-    """
-    Context manager for temporarily overriding the urlconf for the current
-    thread.
-    """
-    original_urlconf = get_urlconf()
-    set_urlconf(new_urlconf)
-    try:
-        yield
-    finally:
-        set_urlconf(original_urlconf)
-
-
 def requests_retry_session(
     retries=3, backoff_factor=0.3, status_forcelist=(500, 502, 504),
 ):
