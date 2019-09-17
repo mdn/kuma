@@ -1,0 +1,23 @@
+---
+name: Support request
+about: Request a support task from the MDN team.
+title: ''
+labels: ''
+assignees: ''
+
+---
+
+**Summary**
+_What support task would you like completed by the team? (Please provide a URL if applicable)_
+
+
+**Rationale**
+_What problems would this solve?_
+
+
+**Due Date**
+_When would you like this task completed by?_
+
+
+**Additional context**
+_Is there anything else we should know?_
