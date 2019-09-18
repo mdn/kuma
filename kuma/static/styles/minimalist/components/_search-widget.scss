@@ -23,5 +23,11 @@
         font-size: $tiny-font-size;
         min-width: 60px;
         max-width: 320px;
+
+        &:invalid {
+            border: 0;
+            outline: none;
+            box-shadow: none;
+        }
     }
 }

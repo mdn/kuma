@@ -40,6 +40,8 @@ export default function Search(props: Props) {
                 id="main-q"
                 name="q"
                 placeholder={gettext('Search MDN')}
+                pattern="(.|\s)*\S(.|\s)*"
+                required
             />
         </form>
     );
