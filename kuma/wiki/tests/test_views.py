@@ -1572,11 +1572,11 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
     # test translation fails as well
     def test_translation_midair_collission(self):
         """Tests midair collisions for non-ajax translation revisions."""
-        self.test_edit_midair_collisions(is_ajax=False, translate_locale='az')
+        self.test_edit_midair_collisions(is_ajax=False, translate_locale='ca')
 
     def test_translation_midair_collission_ajax(self):
         """Tests midair collisions for ajax translation revisions."""
-        self.test_edit_midair_collisions(is_ajax=True, translate_locale='af')
+        self.test_edit_midair_collisions(is_ajax=True, translate_locale='it')
 
     def test_translation_spam_ajax(self):
         """Tests attempted translation spam edits that occur on Ajax POSTs."""

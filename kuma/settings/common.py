@@ -154,74 +154,45 @@ LANGUAGE_CODE = 'en-US'
 # Candidate locales should be included here and in CANDIDATE_LOCALES
 ACCEPTED_LOCALES = (
     'en-US',    # English
-    'af',       # Akrikaans
     'ar',       # Arabic
-    'az',       # Azerbaijani
     'bg',       # Bulgarian
     'bm',       # Bambara
     'bn',       # Bengali
     'ca',       # Catalan
-    'cs',       # Czech
     'de',       # German
-    'ee',       # Ewe
     'el',       # Greek
     'es',       # Spanish
     'fa',       # Persian
-    'ff',       # Fulah
     'fi',       # Finnish
     'fr',       # French
-    'fy-NL',    # Frisian (Netherlands)
-    'ga-IE',    # Irish (Ireland)
-    'ha',       # Hausa
     'he',       # Hebrew
     'hi-IN',    # Hindi (India)
-    'hr',       # Croatian *** not in Pontoon
     'hu',       # Hungarian
     'id',       # Indonesian
-    'ig',       # Igbo
     'it',       # Italian
     'ja',       # Japanese
-    'ka',       # Georgian
     'kab',      # Kabyle
     'ko',       # Korean
-    'ln',       # Lingala
-    'mg',       # Malagasy
-    'ml',       # Malayalam
     'ms',       # Malay
     'my',       # Burmese
     'nl',       # Dutch
     'pl',       # Polish
     'pt-PT',    # Portuguese (Portugal)
     'pt-BR',    # Portuguese (Brazil)
-    'ro',       # Romanian
     'ru',       # Russian
-    'son',      # Songhay
-    'sq',       # Albanian
-    'sr',       # Serbian
-    'sr-Latn',  # Serbian (Latin)
     'sv-SE',    # Swedish (Sweden)
-    'sw',       # Swahili
-    'ta',       # Tamil
-    'te',       # Telugu
     'th',       # Thai
-    'tl',       # Tagalog
-    'tn',       # Tswana *** not in Pontoon
     'tr',       # Turkish
     'uk',       # Ukranian
     'vi',       # Vietnamese
-    'wo',       # Wolof
-    'xh',       # Xhosa
-    'yo',       # Yoruba
     'zh-CN',    # Chinese (China)
     'zh-TW',    # Chinese (Taiwan, Province of China)
-    'zu',       # Zulu
 )
 
 # When there are multiple options for a given language, this gives the
 # preferred locale for that language (language => preferred locale).
 PREFERRED_LOCALE = {
     'pt': 'pt-PT',
-    'sr': 'sr',
     'zh': 'zh-CN',
 }
 
@@ -342,7 +313,6 @@ MT_TO_KUMA_LOCALE_MAP = {
     'de': 'de',
     'it': 'it',
     'ca': 'ca',
-    'cs': 'cs',
     'ru': 'ru',
     'nl': 'nl',
     'hu': 'hu',
@@ -351,11 +321,9 @@ MT_TO_KUMA_LOCALE_MAP = {
     'fi': 'fi',
     'tr': 'tr',
     'vi': 'vi',
-    'ro': 'ro',
     'ar': 'ar',
     'th': 'th',
     'fa': 'fa',
-    'ka': 'ka',
 }
 
 LANGUAGE_COOKIE_DOMAIN = DOMAIN
@@ -905,33 +873,21 @@ PIPELINE_CSS = {
 # Locales that are well supported by the Zilla family
 LOCALE_USE_ZILLA = [
     'ca',
-    'cs',
     'de',
-    'ee',
     'en-US',
     'es',
     'fi',
     'fr',
-    'fy-NL',
-    'ga-IE',
-    'ha',
-    'hr',
     'hu',
     'id',
-    'ig',
     'it',
     'kab',
-    'ln',
-    'mg',
     'ms',
     'nl',
     'pl',
     'pt-BR',
     'pt-PT',
-    'sq',
     'sv-SE',
-    'sw',
-    'tl',
 ]
 
 

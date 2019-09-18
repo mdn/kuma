@@ -24,7 +24,6 @@ WEIGHTED_ACCEPT_CASES = (
     ('fr, en-US;q=0.5', 'fr'),          # Exact match of non-English language
     ('fr-FR, de-DE;q=0.5', 'fr'),       # Highest locale-specific match wins
     ('fr-FR, de;q=0.5', 'fr'),          # First generic match wins
-    ('ga, fr;q=0.5', 'ga-IE'),          # Generic Gaelic matches ga-IE
     ('pt, fr;q=0.5', 'pt-PT'),          # Generic Portuguese matches pt-PT
     ('pt-BR, en-US;q=0.5', 'pt-BR'),    # Portuguese-Brazil matches
     ('qaz-ZZ, fr-FR;q=0.5', 'fr'),      # Respect partial match on prefix
