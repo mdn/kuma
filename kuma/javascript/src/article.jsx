@@ -4,6 +4,7 @@ import { useContext, useEffect, useRef } from 'react';
 
 import { activateBCDSignals, activateBCDTables } from './bcd.js';
 import { addLiveExampleButtons } from './live-examples.js';
+import { getLocale, gettext } from './l10n.js';
 import { highlightSyntax } from './prism.js';
 import * as InteractiveExamples from './interactive-examples.js';
 import UserProvider from './user-provider.jsx';
@@ -47,6 +48,7 @@ export default function Article({ document }: DocumentProps) {
 
     const isArchive =
         document.slug === 'Archive' || document.slug.startsWith('Archive/');
+    const locale = getLocale();
 
     return (
         /*
@@ -63,6 +65,21 @@ export default function Article({ document }: DocumentProps) {
                     : 'article text-content'
             }
         >
+            {document.locale !== locale && (
+                <div id="doc-pending-fallback" class="warning">
+                    <p>
+                        <bdi>
+                            {gettext(
+                                "You're reading the English version of this content, since no translation exists yet for this locale."
+                            )}
+                            &nbsp;
+                            <a href={document.translateURL} rel="nofollow">
+                                {gettext('Help us translate this article!')}
+                            </a>
+                        </bdi>
+                    </p>
+                </div>
+            )}
             <article
                 id="wikiArticle"
                 dangerouslySetInnerHTML={{ __html: document.bodyHTML }}
