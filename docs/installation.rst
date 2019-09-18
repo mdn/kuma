@@ -43,9 +43,14 @@ Docker setup
 
 #. Install the `Docker platform`_, following Docker's instructions for your
    operating system, such as `Docker for Mac`_ for MacOS, or for your
-   `Linux distribution`_.  Linux users will also want to install
-   `Docker Compose`_ and follow `post-install instructions`_ to confirm that
-   the development user can run Docker commmands.
+   `Linux distribution`_.
+
+   Non-Linux users should increase Docker's memory limits (`Windows`_,
+   `macOS`_) to at least 4 GB, as the default of 2 GB is insufficient.
+   
+   Linux users will also want to install `Docker Compose`_ and follow
+   `post-install instructions`_ to confirm that the development user can run
+   Docker commmands.
 
    To confirm that Docker is installed correctly, run::
 
@@ -94,6 +99,8 @@ Docker setup
 .. _Docker Compose: https://docs.docker.com/compose/install/
 .. _post-install instructions: https://docs.docker.com/engine/installation/linux/linux-postinstall/
 .. _docker as non-root: https://docs.docker.com/engine/installation/linux/linux-postinstall/
+.. _Windows: https://docs.docker.com/docker-for-windows/#advanced
+.. _macOS: https://docs.docker.com/docker-for-mac/#advanced
 
 .. _provision-the-database:
 
