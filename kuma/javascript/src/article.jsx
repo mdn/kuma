@@ -70,7 +70,7 @@ export default function Article({ document }: DocumentProps) {
                     <p>
                         <bdi>
                             {gettext(
-                                "You're reading the English version of this content, since no translation exists yet for this locale."
+                                'You’re reading the English version of this content since no translation exists yet for this locale.'
                             )}
                             &nbsp;
                             <a href={document.translateURL} rel="nofollow">
