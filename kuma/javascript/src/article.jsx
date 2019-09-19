@@ -66,7 +66,7 @@ export default function Article({ document }: DocumentProps) {
             }
         >
             {document.locale !== locale && (
-                <div id="doc-pending-fallback" class="warning">
+                <div id="doc-pending-fallback" className="warning">
                     <p>
                         <bdi>
                             {gettext(
