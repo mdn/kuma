@@ -67,4 +67,9 @@ $crumb-vertical-spacing-desktop: $grid-spacing / 4;
     li:last-child span:after {
         display: none;
     }
+
+    li:last-child a {
+        // Make the last-child <a> appear like regular text
+        color: #333;
+    }
 }
