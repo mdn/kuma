@@ -554,3 +554,23 @@ following to your ``.env`` file::
     MDN_API_S3_BUCKET_NAME=<your-s3-bucket-name>
     AWS_ACCESS_KEY_ID=<your-aws-access-key>
     AWS_SECRET_ACCESS_KEY=<your-aws-secret-key>
+
+
+Enabling ``django-querycount``
+==============================
+
+If you want to find out how many SQL queries are made, per request,
+even if they are XHR requests, you can simply add this to your ``.env`` file:
+
+    ENABLE_QUERYCOUNT=true
+
+Stop and start ``docker-compose`` and now, on ``stdout``, it will print a
+table for every request URL about how many queries that involved and
+some information about how many of them were duplicates.
+
+If you want more insight into the duplicate queries add this to your ``.env``:
+
+    QUERYCOUNT_DISPLAY_DUPLICATES=3
+
+A number greater than the (default) 0 means it will print the 3 most
+repeated SQL queries.
