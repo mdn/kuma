@@ -560,7 +560,7 @@ Enabling ``django-querycount``
 ==============================
 
 If you want to find out how many SQL queries are made, per request,
-even if they are XHR requests, you can simply add this to your ``.env`` file:
+even if they are XHR requests, you can simply add this to your ``.env`` file::
 
     ENABLE_QUERYCOUNT=true
 
@@ -568,7 +568,7 @@ Stop and start ``docker-compose`` and now, on ``stdout``, it will print a
 table for every request URL about how many queries that involved and
 some information about how many of them were duplicates.
 
-If you want more insight into the duplicate queries add this to your ``.env``:
+If you want more insight into the duplicate queries add this to your ``.env``::
 
     QUERYCOUNT_DISPLAY_DUPLICATES=3
 
