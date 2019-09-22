@@ -1,5 +1,5 @@
 // @flow
-import { gettext } from './l10n.js';
+import { gettext, interpolate } from './l10n.js';
 import { getCookie } from './utils.js';
 
 import type { UserData } from './user-provider.jsx';
@@ -302,9 +302,14 @@ export function activateBCDSignals(
         if (step !== bcSignalStep) {
             const prevStep = bcSignalStep;
             bcSignalStep = step;
-            stepsInfoSpan.innerText = `${gettext(
-                'Step'
-            )} ${bcSignalStep} ${gettext('of')} ${bcSignalSteps}`;
+            stepsInfoSpan.innerText = interpolate(
+                gettext('Step %(current)s of %(total)s'),
+                {
+                    current: bcSignalStep,
+                    total: bcSignalSteps
+                },
+                true
+            );
 
             const stepId =
                 document && document.getElementById(`step-${bcSignalStep}`);
@@ -644,6 +649,7 @@ export function activateBCDSignals(
         const textAreaControl = document.createElement('textarea');
         textAreaControl.className = 'control-input';
         textAreaControl.id = 'brief-explanation';
+        textAreaControl.maxLength = 200;
 
         textAreaControl.addEventListener('input', () => {
             validateControls();
@@ -672,6 +678,7 @@ export function activateBCDSignals(
         const textAreaControl = document.createElement('textarea');
         textAreaControl.className = 'control-input';
         textAreaControl.id = 'supporting-material';
+        textAreaControl.maxLength = 200;
 
         return createFormControl({
             header: headerText,
@@ -705,8 +712,16 @@ export function activateBCDSignals(
         leftBlockHeader.innerText = gettext(
             'Tell us what’s wrong with this table'
         );
-        leftBlockDescription.innerHTML = gettext(
-            'Our goal is to provide accurate, real values for all our compatibility data tables. Notifying MDN of inaccurate data or supplying new data pushes us further towards our goal of providing <b>100% real values</b> to the developer community. <br /><b>Thank you for helping.</b>'
+        leftBlockDescription.innerHTML = interpolate(
+            gettext(
+                'Our goal is to provide accurate, real values for all our compatibility data tables. Notifying MDN of inaccurate data or supplying new data pushes us further towards our goal of providing %(bStart)s100% real values%(bEnd)s to the developer community. %(br)s%(bStart)sThank you for helping.%(bEnd)s'
+            ),
+            {
+                bStart: '<b>',
+                bEnd: '</b>',
+                br: '<br />'
+            },
+            true
         );
 
         closeButtonWrapper.appendChild(closeButton);
@@ -869,20 +884,20 @@ export function activateBCDSignals(
             'Report sent'
         )}</span>`;
         completeRightBlockDescription.innerHTML = `
-            <b>${gettext('What happens next?')}</b><br />
+            <h4>${gettext('What happens next?')}</h4>
             <p>
                 ${gettext(
                     'Our team will review your report. Once we verify the information you have supplied we will update this browser compatability table accordingly.'
                 )}
             </p>
-            <b>${gettext('Can I keep track of my report?')}</b><br />
-            </p>
+            <h4>${gettext('Can I keep track of my report?')}</h4>
+            <p>
                 ${gettext(
                     'You can join the GitHub repository to see updates and commits for this table data'
                 )}:
             </p>
             <p>
-                <a href="https://github.com/mdn/browser-compat-data" target="_blank">
+                <a href="https://github.com/mdn/browser-compat-data" target="_blank" rel="noopener noreferrer">
                     https://github.com/mdn/browser-compat-data
                     <span class="external external-icon"></span>
                 </a>
@@ -981,7 +996,7 @@ export function activateBCDSignals(
         const separator = document.createElement('hr');
         const container = document.createElement('div');
         const signalLink = document.createElement('a');
-        signalLink.textContent = gettext('What are we missing ?');
+        signalLink.textContent = gettext('What are we missing?');
         signalLink.setAttribute('class', 'scroll-to-signal');
         signalLink.href = '#';
 
