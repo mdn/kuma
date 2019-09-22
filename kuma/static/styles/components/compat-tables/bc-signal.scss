@@ -415,6 +415,23 @@ div.bc-signal-block {
     }
 }
 
+.error-message {
+    background-color: #ffe7e8;
+    padding: 15px;
+    font-size: 17px;
+    margin-top: 30px;
+    display: none;
+
+    &.visible {
+        display: block;
+    }
+
+    .error-label {
+        font-weight: 600;
+        padding-right: 8px;
+        letter-spacing: .4px;
+    }
+}
 
 .select-browser-block {
     display: flex;

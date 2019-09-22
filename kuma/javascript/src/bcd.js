@@ -273,6 +273,7 @@ export function activateBCDSignals(
 ) {
     let bcTable;
     let bcSignalBlock;
+    let errorMessageWrapper;
     let bcSignalCompleteBlock;
     let sendReportButton;
     let nextStepButton;
@@ -341,6 +342,16 @@ export function activateBCDSignals(
             document && document.getElementById('supporting-material');
         if (material && material instanceof HTMLTextAreaElement) {
             material.value = '';
+        }
+
+        const errorMessage =
+            document && document.querySelector('.error-message');
+        if (
+            errorMessage &&
+            errorMessage instanceof HTMLElement &&
+            errorMessage.classList
+        ) {
+            errorMessage.classList.remove('visible');
         }
 
         nextStepButton.classList.add('disabled');
@@ -465,9 +476,6 @@ export function activateBCDSignals(
             supporting_material: supportingMaterial // eslint-disable-line camelcase
         };
 
-        bcSignalBlock.classList.remove('open');
-        bcSignalCompleteBlock.classList.add('open');
-
         fetch(signalApiUrl, {
             method: 'POST',
             body: JSON.stringify(payload),
@@ -475,7 +483,20 @@ export function activateBCDSignals(
                 'X-CSRFToken': getCookie('csrftoken'),
                 'Content-Type': 'application/json'
             }
-        });
+        })
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Something went wrong');
+                }
+                return response;
+            })
+            .then(function() {
+                bcSignalBlock.classList.remove('open');
+                bcSignalCompleteBlock.classList.add('open');
+            })
+            .catch(function() {
+                errorMessageWrapper.classList.add('visible');
+            });
     };
 
     /**
@@ -690,6 +711,29 @@ export function activateBCDSignals(
     };
 
     /**
+     * Builds and creates the error message box
+     * @returns Error message box as a `HTMLElement`
+     */
+    const createErrorMessageHandler = () => {
+        const errorLabelEl = document.createElement('span');
+        errorLabelEl.className = 'error-label';
+        errorLabelEl.innerHTML = gettext('Connection error:');
+
+        const errorTextEl = document.createElement('span');
+        errorTextEl.innerHTML = gettext(
+            'Sorry, we can’t seem to reach the Server. We are working to fix the problem. Please try again later.'
+        );
+
+        errorMessageWrapper = document.createElement('div');
+        errorMessageWrapper.className = 'warning error-message';
+
+        errorMessageWrapper.appendChild(errorLabelEl);
+        errorMessageWrapper.appendChild(errorTextEl);
+
+        return errorMessageWrapper;
+    };
+
+    /**
      * Builds and creates left block with image, header and description
      * @returns Left block as a `HTMLElement`
      */
@@ -825,6 +869,7 @@ export function activateBCDSignals(
 
         controls.appendChild(createBriefExplanationControl());
         controls.appendChild(createSupportingMaterialControl());
+        controls.appendChild(createErrorMessageHandler());
 
         signalStepTwoBlock.appendChild(controls);
         signalStepTwoBlock.appendChild(stepsButtonBlock);
