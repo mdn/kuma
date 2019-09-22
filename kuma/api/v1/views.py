@@ -222,7 +222,6 @@ def whoami(request):
         'switches': {s.name: s.is_active() for s in Switch.get_all()},
         'samples': {s.name: s.is_active() for s in Sample.get_all()},
     }
-
     return JsonResponse(data)
 
 

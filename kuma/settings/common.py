@@ -460,6 +460,15 @@ if CSP_ENABLE_MIDDLEWARE:
     # For more config, see "Content Security Policy (CSP)" below
     MIDDLEWARE += ('csp.middleware.CSPMiddleware',)
 
+ENABLE_QUERYCOUNT = config('ENABLE_QUERYCOUNT', default=False, cast=bool)
+if ENABLE_QUERYCOUNT:
+    # Prints heavy query counts per request.
+    QUERYCOUNT = {
+        'IGNORE_REQUEST_PATTERNS': [r'^/admin/'],
+        'DISPLAY_DUPLICATES': config(
+            'QUERYCOUNT_DISPLAY_DUPLICATES', cast=int, default=0),
+    }
+    MIDDLEWARE += ('querycount.middleware.QueryCountMiddleware',)
 
 # Auth
 AUTHENTICATION_BACKENDS = (

@@ -62,3 +62,10 @@ urlwait==0.4 \
 Werkzeug==0.15.5 \
     --hash=sha256:87ae4e5b5366da2347eb3116c0e6c681a0e939a33b2805e2c0cbd282664932c4 \
     --hash=sha256:a13b74dd3c45f758d4ebdb224be8f1ab8ef58b3c0ffc1783a8c7d9f4f50227e6
+
+# Prints a query count of requests that incur a lot of ORM SQL queries.
+# Code: https://github.com/bradmontgomery/django-querycount
+# Changes: https://github.com/bradmontgomery/django-querycount/blob/master/HISTORY.rst
+# Docs: https://github.com/bradmontgomery/django-querycount#settings
+django-querycount==0.7.0 \
+    --hash=sha256:8f5123d78716ff0704f2373e746a7200b8d8417798ce4a99bf2de87e3768f9ce
