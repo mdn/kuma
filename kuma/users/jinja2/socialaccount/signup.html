@@ -11,6 +11,7 @@
 {% block site_css %}
   {{ super() }}
   {% stylesheet 'submission' %}
+  {% stylesheet 'signupflow' %}
 {% endblock %}
 
 {% set provider = account.get_provider() %}
@@ -21,12 +22,17 @@
                   None, False)|safe }}
 {% endblock %}
 
+{% block document_head %}
+  <div class="titlebar-container">
+    <h1>{{ _('Create your MDN profile') }}</h1>
+  </div>
+{% endblock %}
+
 {% block content %}
 <section id="content">
   <div class="wrap">
     <section id="content-main" role="main">
       <article id="browser_register" class="readable-line-length center">
-        <h1>{{ _('Create your MDN profile') }}</h1>
         {% if matching_accounts.exists() and provider.id == 'github' %}
           <div class="notification warning" data-level="warning">
             {% trans %}
@@ -59,6 +65,10 @@
               </p>
             </div>
           {% endif %}
+          <ol class="auth-service-header">
+            <li class="github-auth">{{ _('Authorize with Github') }}</li>
+            <li class="mdn-profile">{{ _('Create MDN Profile') }}</li>
+          </ol>
           <p>{% trans provider_name=provider.name %}
             Thanks for signing in to MDN with {{ provider_name }}. To finish setting up your
             MDN Web Docs account, please choose a username and email address.

@@ -834,6 +834,12 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/submission.css',
     },
+    'signupflow': {
+        'source_filenames': (
+            'styles/minimalist/structure/signup-flow.scss',
+        ),
+        'output_filename': 'build/styles/signup-flow.css',
+    },
     'user-banned': {
         'source_filenames': (
             'styles/user-banned.scss',
