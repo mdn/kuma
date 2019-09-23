@@ -11,7 +11,7 @@
           </li>
         {% endfor %}
         <li property="itemListElement" typeof="ListItem" class="crumb">
-          <a href="{{ document.get_absolute_url() }}" property="item" typeof="WebPage">
+          <a href="{{ document.get_absolute_url() }}" class="crumb-current-page" property="item" typeof="WebPage">
             <span property="name" aria-current="page">{{ document.title }}</span>
           </a>
           <meta property="position" content="{{ document.parents|length_plus_one }}">

@@ -35,6 +35,13 @@ $crumb-vertical-spacing-desktop: $grid-spacing / 4;
         }
     }
 
+    a.crumb-current-page {
+        &:link,
+        &:visited {
+            color: $text-color;
+        }
+    }
+
     span {
         display: inline-block;
         position: relative;
@@ -66,10 +73,5 @@ $crumb-vertical-spacing-desktop: $grid-spacing / 4;
 
     li:last-child span:after {
         display: none;
-    }
-
-    li:last-child a {
-        // Make the last-child <a> appear like regular text
-        color: #333;
     }
 }
