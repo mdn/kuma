@@ -9,14 +9,25 @@
     li {
         display: inline;
         hyphens: auto;
-    }
 
-    .breadcrumb-chevron:after {
-        display: inline-block;
-        content: '›';
-        color: $grey-vdark;
-        margin: 0 5px;
-        font-size: 1rem;
-        font-weight: bold;
+        a.crumb-current-page {
+            &:link,
+            &:visited {
+                color: $text-color;
+            }
+        }
+
+        .breadcrumb-chevron:after {
+            display: inline-block;
+            content: '›';
+            color: $grey-vdark;
+            margin: 0 5px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        :last-child .breadcrumb-chevron:after {
+            display: none;
+        }
     }
 }
