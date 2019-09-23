@@ -206,14 +206,6 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
     );
 }
 
-// In order to use new URL() with relative URLs, we need an absolute base
-// URL. If we're running in the browser we can use our current page URL.
-// But if we're doing SSR, we just have to make something up.
-const BASEURL =
-    typeof window !== 'undefined' && window.location
-        ? window.location.origin
-        : 'http://ssr.hack';
-
 // This Route subclass tells the Router component how to convert
 // search URLs into SearchResultPage components. See route.js and router.jsx.
 export class SearchRoute extends Route<
@@ -232,7 +224,9 @@ export class SearchRoute extends Route<
     }
 
     match(url: string): ?SearchRouteParams {
-        let parsed = new URL(url, BASEURL);
+        // In order to use new URL() with relative URLs, we need an absolute
+        // base URL.
+        let parsed = new URL(url, 'http://ssr.hack');
 
         let path = parsed.pathname;
         let query = parsed.searchParams.get('q') || '';
