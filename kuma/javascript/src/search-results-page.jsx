@@ -1,100 +1,217 @@
 // @flow
 import * as React from 'react';
 
-import { gettext, interpolate } from './l10n.js';
+import { gettext, interpolate, ngettext } from './l10n.js';
 import Header from './header/header.jsx';
 import Route from './route.js';
 import Titlebar from './titlebar.jsx';
 
 type SearchRouteParams = {
     locale: string,
-    query: string
+    query: string,
+    page: ?number
 };
 
-export type SearchResults = {
-    results: ?Array<{
+type SearchResults = {
+    count: number,
+    documents: ?Array<{
         slug: string,
         title: string,
-        summary: string,
-        score: number,
-        excerpts: Array<string>
+        locale: string,
+        excerpt: string
     }>,
+    start: number,
+    end: number,
+    filters: ?any, // TODO specify this maybe
+    locale: string,
+    next: ?string,
+    page: number,
+    pages: number,
+    previous: ?string,
+    query: string
+};
+export type SearchResultsResponse = {
+    results: ?SearchResults,
     error: ?any
 };
 
 type Props = {
     locale: string,
     query: string,
-    data: ?SearchResults
+    data: ?SearchResultsResponse
 };
 
+function makePaginationPageURL(uri) {
+    return uri ? `?${uri.split('?')[1]}` : '';
+}
+
 export default function SearchResultsPage({ locale, query, data }: Props) {
-    return (
-        <>
-            <Header searchQuery={query} />
-            <Titlebar title={`${gettext('Results')}: ${query}`} />
-            <div className="search-results">
-                {data &&
-                    data.results &&
-                    data.results.map(hit => {
-                        let path = `/${locale}/docs/${hit.slug}`;
-                        let url =
-                            window && window.origin
-                                ? `${window.origin}${path}`
-                                : path;
-                        return (
-                            <div className="result-container" key={hit.slug}>
-                                <div className="result">
-                                    <div>
-                                        <a className="result-title" href={path}>
-                                            {hit.title}
-                                        </a>
-                                    </div>
-                                    <div className="result-url">
-                                        <a href={path}>{url}</a>
-                                    </div>
-                                    <div className="result-summary">
-                                        {hit.summary}
-                                    </div>
-                                    {hit.excerpts.map((excerpt, i) => (
-                                        <div
-                                            className="result-excerpt"
-                                            key={i}
-                                            dangerouslySetInnerHTML={{
-                                                __html: excerpt
-                                            }}
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-                        );
-                    })}
-                {data && data.results && data.results.length === 0 && (
-                    <div className="no-results">
-                        {gettext('No matching documents found.')}
+    // Because it's clunky to do conditionals in JSX, let's create all the
+    // React nodes here first.
+    let resultsMetaNode = null;
+    let resultsNode = null;
+    let noResultsNode = null;
+    let pagerNode = null;
+    let errorNode = null;
+    let noQuery = null;
+
+    if (!query) {
+        noQuery = (
+            <div className="result-container">
+                <p>
+                    <i>{gettext('Nothing found if nothing searched.')}</i>
+                </p>
+            </div>
+        );
+    }
+
+    if (data) {
+        const { results } = data;
+
+        if (results) {
+            if (results.previous || results.next) {
+                pagerNode = (
+                    <div className="result-container results-more">
+                        <div>
+                            {results.previous && (
+                                <a
+                                    className="button"
+                                    href={makePaginationPageURL(
+                                        results.previous
+                                    )}
+                                    id="search-result-previous"
+                                >
+                                    {gettext('Previous')}
+                                </a>
+                            )}{' '}
+                            {results.next && (
+                                <a
+                                    className="button"
+                                    href={makePaginationPageURL(results.next)}
+                                    id="search-result-next"
+                                >
+                                    {gettext('Next')}
+                                </a>
+                            )}
+                        </div>
                     </div>
-                )}
-                {data && data.error && (
+                );
+            }
+
+            resultsNode = (results.documents || []).map(result => {
+                let path = `/${locale}/docs/${result.slug}`;
+                let url =
+                    window && window.origin ? `${window.origin}${path}` : path;
+                return (
+                    <div className="result-container" key={result.slug}>
+                        <div className="result">
+                            <div>
+                                <a className="result-title" href={path}>
+                                    {result.title}
+                                </a>
+                            </div>
+                            <div
+                                className="result-excerpt"
+                                dangerouslySetInnerHTML={{
+                                    __html: result.excerpt
+                                }}
+                            />
+                            <div className="result-url">
+                                <a href={path}>{url}</a>
+                            </div>
+                        </div>
+                    </div>
+                );
+            });
+
+            resultsMetaNode = (
+                <div className="result-container">
+                    <p className="result-meta">
+                        {interpolate(
+                            ngettext(
+                                '%(count)s document found for "%(query)s" in %(locale)s.',
+                                '%(count)s documents found for "%(query)s" in %(locale)s.',
+                                results.count
+                            ),
+                            {
+                                count: results.count.toLocaleString(),
+                                // XXX this 'locale' is something like 'en-US'
+                                // need to turn that into "English (US)".
+                                locale: locale,
+                                query: results.query
+                            },
+                            true
+                        )}{' '}
+                        {!!results.count &&
+                            !results.previous &&
+                            !results.next &&
+                            gettext('Showing all results.')}
+                        {!!results.count &&
+                            (results.previous || results.next) &&
+                            interpolate(
+                                gettext(
+                                    'Showing results %(start)s to %(end)s.'
+                                ),
+                                {
+                                    start: results.start,
+                                    end: results.end
+                                },
+                                true
+                            )}
+                    </p>
+                </div>
+            );
+
+            if (results.count === 0) {
+                noResultsNode = (
+                    <div className="result-container">
+                        <div className="no-results">
+                            {gettext('No matching documents found.')}
+                        </div>
+                    </div>
+                );
+            }
+        }
+
+        if (data.error) {
+            errorNode = (
+                <div className="result-container">
                     <div className="error">
                         <h2>{data.error.toString()}</h2>
                     </div>
-                )}
+                </div>
+            );
+        }
+    }
+
+    return (
+        <>
+            <Header searchQuery={query} />
+            {query && <Titlebar title={`${gettext('Results')}: ${query}`} />}
+
+            <div className="search-results">
+                {resultsMetaNode}
+
+                {resultsNode}
+
+                {pagerNode}
+
+                {noResultsNode}
+
+                {errorNode}
+
+                {noQuery}
             </div>
         </>
     );
 }
 
-// In order to use new URL() with relative URLs, we need an absolute base
-// URL. If we're running in the browser we can use our current page URL.
-// But if we're doing SSR, we just have to make something up.
-const BASEURL =
-    typeof window !== 'undefined' && window.location
-        ? window.location.origin
-        : 'http://ssr.hack';
-
 // This Route subclass tells the Router component how to convert
 // search URLs into SearchResultPage components. See route.js and router.jsx.
-export class SearchRoute extends Route<SearchRouteParams, SearchResults> {
+export class SearchRoute extends Route<
+    SearchRouteParams,
+    SearchResultsResponse
+> {
     locale: string;
 
     constructor(locale: string) {
@@ -107,20 +224,50 @@ export class SearchRoute extends Route<SearchRouteParams, SearchResults> {
     }
 
     match(url: string): ?SearchRouteParams {
-        let parsed = new URL(url, BASEURL);
-        let path = parsed.pathname;
-        let q = parsed.searchParams.get('q');
+        // In order to use new URL() with relative URLs, we need an absolute
+        // base URL.
+        let parsed = new URL(url, 'http://ssr.hack');
 
-        if (path !== `/${this.locale}/search` || !q) {
+        let path = parsed.pathname;
+        let query = parsed.searchParams.get('q') || '';
+        let page = parseInt(parsed.searchParams.get('page') || '1');
+        if (isNaN(page) || page <= 0) {
+            page = null;
+        }
+
+        if (path !== `/${this.locale}/search`) {
             return null;
         }
 
-        return { locale: this.locale, query: q };
+        return { locale: this.locale, query, page };
     }
 
-    fetch({ query }: SearchRouteParams): Promise<SearchResults> {
+    fetch({ query, page }: SearchRouteParams): Promise<SearchResultsResponse> {
+        if (!query) {
+            // Every route component *has* to return a promise from the
+            // fetch() method because it's called unconditionally.
+            // But if there is no query, there's no need to do an XHR
+            // request.
+            // By returning a promise that always resolves to nothing we
+            // can deal with that fact inside the SearchResultsPage
+            // component.
+            // By the way, the only way you can get to the search page
+            // with a falsy query is if you manually remove the `?q=...`
+            // from the current URL.
+            // This is all about avoiding returning a completely blank
+            // page.
+            return Promise.resolve({
+                results: null,
+                error: null
+            });
+        }
         let encoded = encodeURIComponent(query);
         let url = `/api/v1/search/${this.locale}?q=${encoded}`;
+        url += `&locale=${this.locale}`;
+        if (page && page > 1) {
+            url += `&page=${page}`;
+        }
+
         return (
             fetch(url)
                 .then(response => {
@@ -135,30 +282,14 @@ export class SearchRoute extends Route<SearchRouteParams, SearchResults> {
                 .then(results => {
                     if (
                         !results ||
-                        !results.hits ||
-                        !Array.isArray(results.hits.hits)
+                        !results.documents ||
+                        !Array.isArray(results.documents)
                     ) {
                         throw new Error('Search API returned unexpected data');
                     }
+
                     return {
-                        results: results.hits.hits.map(hit => {
-                            let score = hit._score;
-                            let excerpts =
-                                (hit.highlight && hit.highlight.content) || [];
-
-                            // Sometimes ElasticSearch returns excerpts that
-                            // are thousands of bytes long without any spaces
-                            // and we don't want to display those
-                            if (excerpts) {
-                                excerpts = excerpts.filter(e => e.length < 256);
-                            }
-
-                            // And we only want to display the top 3 excerpts
-                            if (excerpts && excerpts.length > 3) {
-                                excerpts = excerpts.slice(0, 3);
-                            }
-                            return { ...hit._source, score, excerpts };
-                        }),
+                        results,
                         error: null
                     };
                 })

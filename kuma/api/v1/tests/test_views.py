@@ -7,6 +7,7 @@ from kuma.api.v1.views import (document_api_data, get_content_based_redirect,
                                get_s3_key)
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
+from kuma.search.tests import ElasticTestCase
 from kuma.users.templatetags.jinja_helpers import gravatar_url
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
@@ -288,3 +289,48 @@ def test_whoami(user_client, api_settings, wiki_user, beta_testers_group,
         }
     }
     assert_no_cache_header(response)
+
+
+@pytest.mark.django_db
+def test_search_validation_problems(user_client, api_settings):
+    url = reverse('api.v1.search', args=['en-US'])
+
+    # 'q' not present
+    response = user_client.get(url, HTTP_HOST=api_settings.BETA_HOST)
+    assert response.status_code == 400
+    assert response.json()['error'] == "Search term 'q' must be set"
+
+    # 'q' present but falsy
+    response = user_client.get(url, {'q': ''}, HTTP_HOST=api_settings.BETA_HOST)
+    assert response.status_code == 400
+    assert response.json()['error'] == "Search term 'q' must be set"
+
+    # 'q' present but locale invalid
+    response = user_client.get(
+        url, {'q': 'x', 'locale': 'xxx'}, HTTP_HOST=api_settings.BETA_HOST)
+    assert response.status_code == 400
+    assert response.json()['error'] == 'Not a valid locale code'
+
+
+class SearchViewTests(ElasticTestCase):
+    fixtures = ElasticTestCase.fixtures + ['wiki/documents.json',
+                                           'search/filters.json']
+
+    def test_search_basic(self):
+        url = reverse('api.v1.search', args=['en-US'])
+        response = self.client.get(url, {'q': 'article'})
+        assert response.status_code == 200
+        assert response['content-type'] == 'application/json'
+        data = response.json()
+        assert data['documents']
+        assert data['count'] == 4
+        assert data['locale'] == 'en-US'
+
+        # Now search in a non-en-US locale
+        response = self.client.get(url, {'q': 'title', 'locale': 'fr'})
+        assert response.status_code == 200
+        assert response['content-type'] == 'application/json'
+        data = response.json()
+        assert data['documents']
+        assert data['count'] == 5
+        assert data['locale'] == 'fr'
