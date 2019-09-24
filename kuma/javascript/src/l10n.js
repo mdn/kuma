@@ -118,25 +118,21 @@ export function ngettext(
  * ngettext()) that interpolates values from an array or properties from
  * an object into a template string and then returns the resulting string.
  *
- * If the third argument is omitted or is false, then args should be
- * an array, and the values from that array will be interpolated into
- * the string s replacing each occurrance of the string `%s`.
+ * If the second argument is an array, the values from that array will be
+ * interpolated into the string s replacing each occurrance of the string `%s`.
  *
- * If the third argument is true, then args should be an object and s
- * should contain substrings of the form `%(name)s`. Each substring of
- * this form will be replaced with the value of the named property of args.
+ * If the second argument is object then s should contain substrings of
+ * the form `%(name)s`. Each substring of this form will be replaced with the
+ * value of the named property of args.
  */
-export function interpolate(
-    s: string,
-    args: Array<any> | { [string]: any },
-    named: boolean = false
-) {
-    if (named) {
-        let props = ((args: any): { [string]: any }); // A cast for flow
-        return s.replace(/%\(\w+\)s/g, match =>
-            String(props[match.slice(2, -2)])
-        );
-    } else {
+export function interpolate(s: string, args: Array<any> | { [string]: any }) {
+    if (Array.isArray(args)) {
         return s.replace(/%s/g, () => String(args.shift()));
+    } else {
+        // for flow's type refinement, which otherwise breaks inside of closures
+        const typedArgs = args;
+        return s.replace(/%\(\w+\)s/g, match =>
+            String(typedArgs[match.slice(2, -2)])
+        );
     }
 }
