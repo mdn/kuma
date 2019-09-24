@@ -129,6 +129,7 @@ export function interpolate(s: string, args: Array<any> | { [string]: any }) {
     if (Array.isArray(args)) {
         return s.replace(/%s/g, () => String(args.shift()));
     } else {
+        // for flow's type refinement, which otherwise breaks inside of closures
         const typedArgs = args;
         return s.replace(/%\(\w+\)s/g, match =>
             String(typedArgs[match.slice(2, -2)])
