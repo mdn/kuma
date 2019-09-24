@@ -138,32 +138,16 @@ describe('interpolate()', () => {
         expect(interpolate('A%sfoo%sZ', ['a', 'z'])).toBe('AafoozZ');
     });
 
-    it('three argument form, with an array', () => {
-        expect(interpolate('foo', [], true)).toBe('foo');
-        expect(interpolate('%(0)s', [1], true)).toBe('1');
-        expect(interpolate('%(1)s foo %(0)s', [1, true], true)).toBe(
-            'true foo 1'
-        );
-        expect(interpolate('A%(1)sfoo%(0)sZ', ['a', 'z'], true)).toBe(
-            'AzfooaZ'
-        );
-        expect(interpolate('%(0)s%(1)s%(2)s', [1, 2, 3], true)).toBe('123');
-        expect(interpolate('%(2)s%(2)s', [1, 2, 3], true)).toBe('33');
-        expect(interpolate('%(0)s%(1)s%(5)s', [1, 2, 3], true)).toBe(
-            '12undefined'
-        );
-    });
-
     it('three argument form, with object', () => {
-        expect(interpolate('foo', {}, true)).toBe('foo');
-        expect(interpolate('%(a)s', { a: 1 }, true)).toBe('1');
-        expect(interpolate('%(b)s foo %(a)s', { a: 1, b: true }, true)).toBe(
+        expect(interpolate('foo', {})).toBe('foo');
+        expect(interpolate('%(a)s', { a: 1 })).toBe('1');
+        expect(interpolate('%(b)s foo %(a)s', { a: 1, b: true })).toBe(
             'true foo 1'
         );
-        expect(interpolate('A%(z)sfoo%(a)sZ', { a: 'a', z: 'z' }, true)).toBe(
+        expect(interpolate('A%(z)sfoo%(a)sZ', { a: 'a', z: 'z' })).toBe(
             'AzfooaZ'
         );
-        expect(interpolate('%(a)s%(b)s%(d)s', { a: 1, b: 2, c: 3 }, true)).toBe(
+        expect(interpolate('%(a)s%(b)s%(d)s', { a: 1, b: 2, c: 3 })).toBe(
             '12undefined'
         );
     });

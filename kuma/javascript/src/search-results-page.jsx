@@ -139,8 +139,7 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
                                 // need to turn that into "English (US)".
                                 locale: locale,
                                 query: results.query
-                            },
-                            true
+                            }
                         )}{' '}
                         {!!results.count &&
                             !results.previous &&
@@ -155,8 +154,7 @@ export default function SearchResultsPage({ locale, query, data }: Props) {
                                 {
                                     start: results.start,
                                     end: results.end
-                                },
-                                true
+                                }
                             )}
                     </p>
                 </div>
@@ -305,12 +303,8 @@ export class SearchRoute extends Route<
     }
 
     getTitle({ query }: SearchRouteParams): string {
-        return `${interpolate(
-            gettext('Search results for "%(query)s"'),
-            {
-                query
-            },
-            true
-        )} | MDN`;
+        return `${interpolate(gettext('Search results for "%(query)s"'), {
+            query
+        })} | MDN`;
     }
 }
