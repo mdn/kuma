@@ -50,6 +50,12 @@ export default function Article({ document }: DocumentProps) {
         document.slug === 'Archive' || document.slug.startsWith('Archive/');
     const locale = getLocale();
 
+    useEffect(() => {
+        if (document.locale !== locale) {
+            mdn.analytics.trackError('Translation Pending', 'displayed');
+        }
+    }, [document, locale]);
+
     return (
         /*
          * The "text-content" class and "wikiArticle" id are required
