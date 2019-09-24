@@ -8,6 +8,7 @@ exports[`Login component when user is logged in 1`] = `
     className="dropdown-container"
   >
     <button
+      aria-haspopup="true"
       className="dropdown-menu-label"
       type="button"
     >
@@ -20,6 +21,7 @@ exports[`Login component when user is logged in 1`] = `
     </button>
     <ul
       className="dropdown-menu-items"
+      role="menu"
       style={
         Object {
           "right": 0,

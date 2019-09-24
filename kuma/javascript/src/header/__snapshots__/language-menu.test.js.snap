@@ -5,11 +5,15 @@ exports[`LanguageMenu snapshot 1`] = `
   className="dropdown-container"
 >
   <button
+    aria-haspopup="true"
+    aria-label="Current language is English. Choose your preferred language."
+    aria-owns="language-menu"
     className="dropdown-menu-label"
     type="button"
   >
     English
     <span
+      aria-hidden="true"
       className="dropdown-arrow-down"
     >
       ▼
@@ -17,6 +21,8 @@ exports[`LanguageMenu snapshot 1`] = `
   </button>
   <ul
     className="dropdown-menu-items"
+    id="language-menu"
+    role="menu"
     style={
       Object {
         "right": 0,
@@ -25,6 +31,7 @@ exports[`LanguageMenu snapshot 1`] = `
   >
     <li
       lang="es"
+      role="menuitem"
     >
       <a
         href="[fake spanish url]"

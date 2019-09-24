@@ -1,5 +1,3 @@
-@import '../vars/vars-nav';
-
 .dropdown-container {
     /* We use relative here not because we need to tweak positioning
        but because we need to position the menu itself relative to the
@@ -9,15 +7,16 @@
     /* This adjusts for the 5px left padding */
     margin-left: -5px;
 
-    &:hover {
-        &.dropdown-menu-label,
-        &.dropdown-menu-label a {
-            color: $dropdown-item-background-color;
-        }
-
-        &.dropdown-menu-items {
-            display: flex;
-        }
+    .dropdown-menu-label {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        color: $text-color;
+        padding: 0 5px 5px;
+        border: none;
+        white-space: nowrap;
+        font-size: $tiny-font-size;
+        font-weight: bold;
     }
 
     .dropdown-menu-items {
@@ -54,24 +53,20 @@
         }
     }
 
-    &:hover .dropdown-menu-items {
-        display: flex;
+    &:hover,
+    &:focus {
+        .dropdown-menu-label,
+        .dropdown-menu-label a {
+            color: $dropdown-item-background-color;
+        }
     }
 
-    .dropdown-menu-label {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        color: $text-color;
-        padding: 0 5px 5px;
-        border: none;
-        white-space: nowrap;
-        font-size: $tiny-font-size;
-        font-weight: bold;
-
-        &:focus {
-            /* The default focus outline doesn't look right in Chrome without this */
-            outline-offset: -3px;
+    &:hover,
+    &:focus,
+    &:focus-within {
+        .dropdown-menu-items,
+        .dropdown-menu-items {
+            display: flex;
         }
     }
 

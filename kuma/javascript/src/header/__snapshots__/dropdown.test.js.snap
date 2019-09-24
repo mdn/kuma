@@ -5,11 +5,13 @@ exports[`Dropdown closed and open snapshots 1`] = `
   className="dropdown-container"
 >
   <button
+    aria-haspopup="true"
     className="dropdown-menu-label"
     type="button"
   >
     Test
     <span
+      aria-hidden="true"
       className="dropdown-arrow-down"
     >
       ▼
@@ -17,6 +19,7 @@ exports[`Dropdown closed and open snapshots 1`] = `
   </button>
   <ul
     className="dropdown-menu-items"
+    role="menu"
   >
     <li>
       foo
