@@ -149,5 +149,9 @@
   {% if settings.NEWSLETTER and settings.NEWSLETTER_ARTICLE %}
     {% javascript 'newsletter' %}
   {% endif %}
+
+  {% if waffle.flag('bc-signals') %}
+    {% javascript "bcd-signal" %}
+  {% endif %}
 </body>
 </html>
