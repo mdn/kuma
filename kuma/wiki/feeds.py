@@ -14,7 +14,7 @@ from django.utils.translation import ugettext as _
 from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.urlresolvers import reverse
 from kuma.core.validators import valid_jsonp_callback_value
-from kuma.users.templatetags.jinja_helpers import gravatar_url
+from kuma.users.templatetags.jinja_helpers import get_avatar_url
 
 from .models import Document, Revision
 from .templatetags.jinja_helpers import (colorize_diff, diff_table,
@@ -141,8 +141,8 @@ class DocumentJSONFeedGenerator(SyndicationFeed):
             else:
                 revision = document
 
-            if revision.creator.email:
-                item_out['author_avatar'] = gravatar_url(revision.creator.email)
+            if revision.creator:
+                item_out['author_avatar'] = get_avatar_url(revision.creator)
 
             summary = getattr(revision, 'summary', None)
             if summary:

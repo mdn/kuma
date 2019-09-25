@@ -1,6 +1,5 @@
 from allauth.account.signals import email_confirmed, user_signed_up
 from allauth.socialaccount.signals import social_account_removed
-from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
@@ -13,28 +12,8 @@ from kuma.core.urlresolvers import reverse
 from kuma.payments.utils import cancel_stripe_customer_subscription
 from kuma.wiki.jobs import DocumentContributorsJob
 
-from .jobs import UserGravatarURLJob
 from .models import User, UserBan
 from .tasks import send_welcome_email
-
-
-@receiver(post_save, sender=User, dispatch_uid='users.user.post_save')
-def on_user_save(sender, instance, created, **kwargs):
-    """
-    A signal handler to be called after saving a user.
-
-    Invalidates the cache for the given user's gravatar URL.
-    """
-    job = UserGravatarURLJob()
-    if instance.email:
-        handler = job.invalidate
-    elif instance.email is None:
-        handler = job.delete
-    else:
-        return
-    # do the heavy-lifting for all avatar sizes
-    for size in settings.AVATAR_SIZES:
-        handler(instance.email, size=size)
 
 
 @receiver(user_signed_up, dispatch_uid='users.user_signed_up')

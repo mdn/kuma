@@ -29,9 +29,9 @@
 
   <div class="column-2 smaller">
     <figure class="acc-avatar">
-      <img src="{{ gravatar_url(edit_user.email, size=200) }}" alt="{{ edit_user.username }}" width="200" height="200" class="user-photo avatar" />
+      <img src="{{ get_avatar_url(edit_user) }}" alt="{{ edit_user.username }}" width="200" height="200" class="user-photo avatar" />
       <figcaption>
-        {{ _('Change your avatar at') }} <a href="http://gravatar.com" rel="external">gravatar.com</a>
+        {{ _('Change your avatar at') }} <a href="https://github.com/settings/profile" rel="external">github.com</a>
       </figcaption>
     </figure>
   </div>

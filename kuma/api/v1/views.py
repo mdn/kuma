@@ -20,7 +20,7 @@ from kuma.search.filters import (
     SearchQueryBackend,
     TagGroupFilterBackend)
 from kuma.search.views import SearchView
-from kuma.users.templatetags.jinja_helpers import gravatar_url
+from kuma.users.templatetags.jinja_helpers import get_avatar_url
 from kuma.wiki.models import Document
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
@@ -194,10 +194,7 @@ def whoami(request):
             'is_staff': user.is_staff,
             'is_superuser': user.is_superuser,
             'is_beta_tester': user.is_beta_tester,
-            'gravatar_url': {
-                'small': gravatar_url(user.email, size=50),
-                'large': gravatar_url(user.email, size=200),
-            }
+            'avatar_url': get_avatar_url(user),
         }
     else:
         data = {
@@ -207,10 +204,7 @@ def whoami(request):
             'is_staff': False,
             'is_superuser': False,
             'is_beta_tester': False,
-            'gravatar_url': {
-                'small': None,
-                'large': None,
-            }
+            'avatar_url': None,
         }
 
     # Add waffle data to the dict we're going to be returning.

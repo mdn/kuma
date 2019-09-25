@@ -1,7 +1,7 @@
 <div class="login">
     {% if user.is_authenticated %}
         <a class="user-url" href="{{ user.get_absolute_url() }}">
-            <img src="{{ gravatar_url(user.email, size=50) }}" alt="{{ user_display(user) }}" width="50" height="50" class="login-photo avatar" />
+            <img src="{{ get_avatar_url(user) }}" alt="{{ user_display(user) }}" width="50" height="50" class="login-photo avatar" />
             <span class="login-name">{{ user_display(user) }}</span>
             {% include 'includes/icons/arrows/caret-down.svg' %}
         </a>
