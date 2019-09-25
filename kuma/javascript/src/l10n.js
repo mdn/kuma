@@ -152,6 +152,11 @@ export function interpolate(s: string, args: Array<any> | { [string]: any }) {
     }
 }
 
+/**
+ * ELEMENT_REGEXP.test("This is just a string"); // false
+ * ELEMENT_REGEXP.test("<elem/>"); // true
+ * ELEMENT_REGEXP.test("<elemWithSpace />"); // true
+ */
 const ELEMENT_REGEXP = /(<\w+\s*\/>)/g;
 /**
  * Similar to interpolate() it interpolates the given id-string with the given
