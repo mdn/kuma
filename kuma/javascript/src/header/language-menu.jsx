@@ -2,7 +2,7 @@
 import * as React from 'react';
 
 import Dropdown from './dropdown.jsx';
-import { gettext } from '../l10n.js';
+import { gettext, interpolate } from '../l10n.js';
 
 import type { DocumentData } from '../document.jsx';
 
@@ -28,11 +28,20 @@ export default function LanguageMenu({ document }: Props): React.Node {
     // and we can just use the document language string without translation.
     let label =
         document.locale === 'en-US' ? gettext('English') : document.language;
+    let chooseLanguageString = interpolate(
+        gettext('Current language is %s. Choose your preferred language.'),
+        [label]
+    );
 
     return (
-        <Dropdown label={label} right={true}>
+        <Dropdown
+            label={label}
+            right={true}
+            ariaOwns="language-menu"
+            ariaLabel={chooseLanguageString}
+        >
             {document.translations.map(t => (
-                <li key={t.locale} lang={t.locale}>
+                <li key={t.locale} lang={t.locale} role="menuitem">
                     <a href={t.url} title={t.localizedLanguage}>
                         <bdi>{t.language}</bdi>
                     </a>
