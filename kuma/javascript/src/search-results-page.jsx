@@ -45,160 +45,162 @@ function makePaginationPageURL(uri) {
     return uri ? `?${uri.split('?')[1]}` : '';
 }
 
-export default function SearchResultsPage({ locale, query, data }: Props) {
-    // Because it's clunky to do conditionals in JSX, let's create all the
-    // React nodes here first.
-    let resultsMetaNode = null;
-    let resultsNode = null;
-    let noResultsNode = null;
-    let pagerNode = null;
-    let errorNode = null;
-    let noQuery = null;
+function ResultsMeta({
+    locale,
+    results
+}: {
+    locale: string,
+    results: SearchResults
+}) {
+    return (
+        <div className="result-container">
+            <p className="result-meta">
+                {interpolate(
+                    ngettext(
+                        '%(count)s document found for "%(query)s" in %(locale)s.',
+                        '%(count)s documents found for "%(query)s" in %(locale)s.',
+                        results.count
+                    ),
+                    {
+                        count: results.count.toLocaleString(),
+                        // XXX this 'locale' is something like 'en-US'
+                        // need to turn that into "English (US)".
+                        locale: locale,
+                        query: results.query
+                    }
+                )}{' '}
+                {!!results.count &&
+                    !results.previous &&
+                    !results.next &&
+                    gettext('Showing all results.')}
+                {!!results.count &&
+                    (results.previous || results.next) &&
+                    interpolate(
+                        gettext('Showing results %(start)s to %(end)s.'),
+                        {
+                            start: results.start,
+                            end: results.end
+                        }
+                    )}
+            </p>
+        </div>
+    );
+}
 
-    if (!query) {
-        noQuery = (
-            <div className="result-container">
-                <p>
-                    <i>{gettext('Nothing found if nothing searched.')}</i>
-                </p>
+function Results({
+    locale,
+    results
+}: {
+    locale: string,
+    results: SearchResults
+}) {
+    return (results.documents || []).map(result => {
+        const path = `/${locale}/docs/${result.slug}`;
+        const url = window && window.origin ? `${window.origin}${path}` : path;
+        return (
+            <div className="result-container" key={result.slug}>
+                <div className="result">
+                    <div>
+                        <a className="result-title" href={path}>
+                            {result.title}
+                        </a>
+                    </div>
+                    <div
+                        className="result-excerpt"
+                        dangerouslySetInnerHTML={{
+                            __html: result.excerpt
+                        }}
+                    />
+                    <div className="result-url">
+                        <a href={path}>{url}</a>
+                    </div>
+                </div>
             </div>
         );
-    }
+    });
+}
 
-    if (data) {
-        const { results } = data;
+function Pager({ previous, next }: { previous: ?string, next: ?string }) {
+    return (
+        <div className="result-container results-more">
+            <div>
+                {previous && (
+                    <a
+                        className="button"
+                        href={makePaginationPageURL(previous)}
+                        id="search-result-previous"
+                    >
+                        {gettext('Previous')}
+                    </a>
+                )}{' '}
+                {next && (
+                    <a
+                        className="button"
+                        href={makePaginationPageURL(next)}
+                        id="search-result-next"
+                    >
+                        {gettext('Next')}
+                    </a>
+                )}
+            </div>
+        </div>
+    );
+}
 
-        if (results) {
-            if (results.previous || results.next) {
-                pagerNode = (
-                    <div className="result-container results-more">
-                        <div>
-                            {results.previous && (
-                                <a
-                                    className="button"
-                                    href={makePaginationPageURL(
-                                        results.previous
-                                    )}
-                                    id="search-result-previous"
-                                >
-                                    {gettext('Previous')}
-                                </a>
-                            )}{' '}
-                            {results.next && (
-                                <a
-                                    className="button"
-                                    href={makePaginationPageURL(results.next)}
-                                    id="search-result-next"
-                                >
-                                    {gettext('Next')}
-                                </a>
-                            )}
-                        </div>
-                    </div>
-                );
-            }
-
-            resultsNode = (results.documents || []).map(result => {
-                let path = `/${locale}/docs/${result.slug}`;
-                let url =
-                    window && window.origin ? `${window.origin}${path}` : path;
-                return (
-                    <div className="result-container" key={result.slug}>
-                        <div className="result">
-                            <div>
-                                <a className="result-title" href={path}>
-                                    {result.title}
-                                </a>
-                            </div>
-                            <div
-                                className="result-excerpt"
-                                dangerouslySetInnerHTML={{
-                                    __html: result.excerpt
-                                }}
-                            />
-                            <div className="result-url">
-                                <a href={path}>{url}</a>
-                            </div>
-                        </div>
-                    </div>
-                );
-            });
-
-            resultsMetaNode = (
-                <div className="result-container">
-                    <p className="result-meta">
-                        {interpolate(
-                            ngettext(
-                                '%(count)s document found for "%(query)s" in %(locale)s.',
-                                '%(count)s documents found for "%(query)s" in %(locale)s.',
-                                results.count
-                            ),
-                            {
-                                count: results.count.toLocaleString(),
-                                // XXX this 'locale' is something like 'en-US'
-                                // need to turn that into "English (US)".
-                                locale: locale,
-                                query: results.query
-                            }
-                        )}{' '}
-                        {!!results.count &&
-                            !results.previous &&
-                            !results.next &&
-                            gettext('Showing all results.')}
-                        {!!results.count &&
-                            (results.previous || results.next) &&
-                            interpolate(
-                                gettext(
-                                    'Showing results %(start)s to %(end)s.'
-                                ),
-                                {
-                                    start: results.start,
-                                    end: results.end
-                                }
-                            )}
-                    </p>
-                </div>
-            );
-
-            if (results.count === 0) {
-                noResultsNode = (
-                    <div className="result-container">
-                        <div className="no-results">
-                            {gettext('No matching documents found.')}
-                        </div>
-                    </div>
-                );
-            }
-        }
-
-        if (data.error) {
-            errorNode = (
-                <div className="result-container">
-                    <div className="error">
-                        <h2>{data.error.toString()}</h2>
-                    </div>
-                </div>
-            );
-        }
-    }
-
+export default function SearchResultsPage({ locale, query, data }: Props) {
+    const results = data ? data.results : null;
     return (
         <>
             <Header searchQuery={query} />
             {query && <Titlebar title={`${gettext('Results')}: ${query}`} />}
 
             <div className="search-results">
-                {resultsMetaNode}
+                {data && (
+                    <>
+                        {results && (
+                            <>
+                                <ResultsMeta {...{ results, locale }} />
 
-                {resultsNode}
+                                <Results {...{ results, locale }} />
 
-                {pagerNode}
+                                {(results.previous || results.next) && (
+                                    <Pager
+                                        previous={results.previous}
+                                        next={results.next}
+                                    />
+                                )}
 
-                {noResultsNode}
+                                {results.count === 0 && (
+                                    <div className="result-container">
+                                        <div className="no-results">
+                                            {gettext(
+                                                'No matching documents found.'
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+                            </>
+                        )}
 
-                {errorNode}
+                        {data.error && (
+                            <div className="result-container">
+                                <div className="error">
+                                    <h2>{data.error.toString()}</h2>
+                                </div>
+                            </div>
+                        )}
+                    </>
+                )}
 
-                {noQuery}
+                {!query && (
+                    <div className="result-container">
+                        <p>
+                            <i>
+                                {gettext('Nothing found if nothing searched.')}
+                            </i>
+                        </p>
+                    </div>
+                )}
             </div>
         </>
     );
