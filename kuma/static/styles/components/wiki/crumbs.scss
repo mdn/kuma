@@ -42,6 +42,13 @@ $crumb-vertical-spacing-desktop: $grid-spacing / 4;
         }
     }
 
+    a.crumb-current-page {
+        &:link,
+        &:visited {
+            color: $text-color;
+        }
+    }
+
     span {
         display: inline-block;
         position: relative;
