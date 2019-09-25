@@ -8,6 +8,7 @@ import { getLocale, gettext } from './l10n.js';
 import { highlightSyntax } from './prism.js';
 import * as InteractiveExamples from './interactive-examples.js';
 import UserProvider from './user-provider.jsx';
+import GAProvider from './ga-provider.jsx';
 
 import LastModified from './last-modified.jsx';
 import type { DocumentData } from './document.jsx';
@@ -19,6 +20,7 @@ type DocumentProps = {
 export default function Article({ document }: DocumentProps) {
     const article = useRef(null);
     const userData = useContext(UserProvider.context);
+    const ga = useContext(GAProvider.context);
 
     // This is a one-time effect we need to call the first time an article
     // is rendered, to ensure that interactive examples resize themselves
@@ -52,7 +54,12 @@ export default function Article({ document }: DocumentProps) {
 
     useEffect(() => {
         if (document.locale !== locale) {
-            mdn.analytics.trackError('Translation Pending', 'displayed');
+            ga('send', {
+                hitType: 'event',
+                eventCategory: 'Translation Pending',
+                eventAction: 'displayed',
+                eventLabel: ''
+            });
         }
     }, [document, locale]);
 
