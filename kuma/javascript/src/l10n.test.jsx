@@ -176,6 +176,13 @@ describe('interpolate()', () => {
 });
 
 describe('<Interpolated/>', () => {
+    it("doesn't modify strings when no parameters are given", () => {
+        const tree = renderer
+            .create(<Interpolated id="just some text" />)
+            .toJSON();
+        expect(tree).toMatchInlineSnapshot(`"just some text"`);
+    });
+
     it('takes element parameters', () => {
         const tree1 = renderer
             .create(
