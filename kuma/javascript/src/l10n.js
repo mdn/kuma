@@ -157,6 +157,11 @@ const ELEMENT_REGEXP = /(<\w+\s*\/>)/g;
  * Similar to interpolate() it interpolates the given id-string with the given
  * properties, but it can also work with React Elements. It will replace strings
  * of the form `<name/>` and return an Array of React Elements.
+ *
+ * Use it like this (in a React Component):
+ * <Interpolated id="look at this <link/>!" link={<a href="/">site</a>}/>
+ * which renders
+ * ["Look at this ", <a key="<link/>2" href="/">site</a>, "!"]
  */
 export function Interpolated({
     id,
