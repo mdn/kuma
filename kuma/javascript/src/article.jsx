@@ -4,9 +4,11 @@ import { useContext, useEffect, useRef } from 'react';
 
 import { activateBCDSignals, activateBCDTables } from './bcd.js';
 import { addLiveExampleButtons } from './live-examples.js';
+import { getLocale, gettext } from './l10n.js';
 import { highlightSyntax } from './prism.js';
 import * as InteractiveExamples from './interactive-examples.js';
 import UserProvider from './user-provider.jsx';
+import GAProvider from './ga-provider.jsx';
 
 import LastModified from './last-modified.jsx';
 import type { DocumentData } from './document.jsx';
@@ -18,6 +20,7 @@ type DocumentProps = {
 export default function Article({ document }: DocumentProps) {
     const article = useRef(null);
     const userData = useContext(UserProvider.context);
+    const ga = useContext(GAProvider.context);
 
     // This is a one-time effect we need to call the first time an article
     // is rendered, to ensure that interactive examples resize themselves
@@ -47,6 +50,18 @@ export default function Article({ document }: DocumentProps) {
 
     const isArchive =
         document.slug === 'Archive' || document.slug.startsWith('Archive/');
+    const locale = getLocale();
+
+    useEffect(() => {
+        if (document.locale !== locale) {
+            ga('send', {
+                hitType: 'event',
+                eventCategory: 'Translation Pending',
+                eventAction: 'displayed',
+                eventLabel: ''
+            });
+        }
+    }, [document, locale]);
 
     return (
         /*
@@ -63,6 +78,21 @@ export default function Article({ document }: DocumentProps) {
                     : 'article text-content'
             }
         >
+            {document.locale !== locale && (
+                <div className="warning">
+                    <p>
+                        <bdi>
+                            {gettext(
+                                'You’re reading the English version of this content since no translation exists yet for this locale.'
+                            )}
+                            &nbsp;
+                            <a href={document.translateURL} rel="nofollow">
+                                {gettext('Help us translate this article!')}
+                            </a>
+                        </bdi>
+                    </p>
+                </div>
+            )}
             <article
                 id="wikiArticle"
                 dangerouslySetInnerHTML={{ __html: document.bodyHTML }}
