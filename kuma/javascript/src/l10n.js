@@ -175,6 +175,13 @@ export function Interpolated({
             return str;
         }
 
+        /**
+         *  This string refers to an element, but is there a corresponding
+         *  element in args?
+         *  `args` contain: privacyLink={<a href="#here">Hello</a>}
+         *  args["<footer/>".slice(1, -2).trim()]; // false
+         *  args["<privacyLink/>".slice(1, -2).trim()]; // true
+         */
         const element = args[str.slice(1, -2).trim()];
         if (!element) {
             return str;
