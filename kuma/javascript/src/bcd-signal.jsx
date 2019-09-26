@@ -46,8 +46,7 @@ export function activateBCDSignals(slug: string, locale: string) {
                 {
                     current: bcSignalStep,
                     total: bcSignalSteps
-                },
-                true
+                }
             );
 
             const stepId =
@@ -410,7 +409,7 @@ export function activateBCDSignals(slug: string, locale: string) {
         const textAreaControl = document.createElement('textarea');
         textAreaControl.className = 'control-input';
         textAreaControl.id = 'brief-explanation';
-        textAreaControl.maxLength = 200;
+        textAreaControl.maxLength = 1000;
 
         textAreaControl.addEventListener('input', () => {
             validateControls();
@@ -439,7 +438,7 @@ export function activateBCDSignals(slug: string, locale: string) {
         const textAreaControl = document.createElement('textarea');
         textAreaControl.className = 'control-input';
         textAreaControl.id = 'supporting-material';
-        textAreaControl.maxLength = 200;
+        textAreaControl.maxLength = 1000;
 
         return createFormControl({
             header: headerText,
@@ -504,8 +503,7 @@ export function activateBCDSignals(slug: string, locale: string) {
                 bStart: '<b>',
                 bEnd: '</b>',
                 br: '<br />'
-            },
-            true
+            }
         );
 
         closeButtonWrapper.appendChild(closeButton);
