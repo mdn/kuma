@@ -1,14 +1,6 @@
-import pytest
 from django.conf import settings
-from django.contrib.auth.models import AnonymousUser
 
 from ..templatetags.jinja_helpers import get_avatar_url, public_email
-
-
-@pytest.mark.parametrize(
-    'user', (None, AnonymousUser()), ids=('none', 'anonymous'))
-def test_get_avatar_url_no_user(user):
-    assert get_avatar_url(user) is None
 
 
 def test_get_avatar_url(wiki_user, wiki_user_github_account):

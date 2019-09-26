@@ -16,18 +16,15 @@ from kuma.core.urlresolvers import reverse
 @library.global_function
 def get_avatar_url(user, provider='github'):
     """
-    Get the user's avatar URL for the specified provider. Returns None if the
-    user is not logged-in, or the default avatar if the user is logged-in but
-    has no avatar for the specified provider.
+    Get the user's avatar URL for the specified provider. Assumes that the user
+    is not anonymous or None. If the user has no avatar for the specified
+    provider, returns the default avatar.
     """
-    if user and user.is_authenticated:
-        for account in user.socialaccount_set.filter(provider=provider):
-            avatar_url = account.get_avatar_url()
-            if avatar_url:
-                return avatar_url
-        else:
-            return settings.DEFAULT_AVATAR
-    return None
+    for account in user.socialaccount_set.filter(provider=provider):
+        avatar_url = account.get_avatar_url()
+        if avatar_url:
+            return avatar_url
+    return settings.DEFAULT_AVATAR
 
 
 @library.global_function
