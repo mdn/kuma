@@ -52,6 +52,17 @@ function ResultsMeta({
     locale: string,
     results: SearchResults
 }) {
+    let resultsText;
+    if (count > 0) {
+        if (previous || next) {
+            resultsText = interpolate(
+                gettext('Showing results %(start)s to %(end)s.'),
+                { start, end }
+            );
+        } else {
+            resultsText = gettext('Showing all ');
+        }
+    }
     return (
         <div className="result-container">
             <p className="result-meta">
@@ -69,13 +80,7 @@ function ResultsMeta({
                         query
                     }
                 )}{' '}
-                {count > 0 &&
-                    (previous || next
-                        ? interpolate(
-                              gettext('Showing results %(start)s to %(end)s.'),
-                              { start, end }
-                          )
-                        : gettext('Showing all '))}
+                {resultsText}
             </p>
         </div>
     );
