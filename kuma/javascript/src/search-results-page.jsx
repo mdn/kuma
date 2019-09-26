@@ -47,7 +47,7 @@ function makePaginationPageURL(uri) {
 
 function ResultsMeta({
     locale,
-    results
+    results: { count, previous, next, query, start, end }
 }: {
     locale: string,
     results: SearchResults
@@ -59,29 +59,23 @@ function ResultsMeta({
                     ngettext(
                         '%(count)s document found for "%(query)s" in %(locale)s.',
                         '%(count)s documents found for "%(query)s" in %(locale)s.',
-                        results.count
+                        count
                     ),
                     {
-                        count: results.count.toLocaleString(),
+                        count: count.toLocaleString(),
                         // XXX this 'locale' is something like 'en-US'
                         // need to turn that into "English (US)".
-                        locale: locale,
-                        query: results.query
+                        locale,
+                        query
                     }
                 )}{' '}
-                {!!results.count &&
-                    !results.previous &&
-                    !results.next &&
-                    gettext('Showing all results.')}
-                {!!results.count &&
-                    (results.previous || results.next) &&
-                    interpolate(
-                        gettext('Showing results %(start)s to %(end)s.'),
-                        {
-                            start: results.start,
-                            end: results.end
-                        }
-                    )}
+                {count > 0 &&
+                    (previous || next
+                        ? interpolate(
+                              gettext('Showing results %(start)s to %(end)s.'),
+                              { start, end }
+                          )
+                        : gettext('Showing all '))}
             </p>
         </div>
     );
