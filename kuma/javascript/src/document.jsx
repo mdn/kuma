@@ -14,6 +14,7 @@ import Route from './route.js';
 import TaskCompletionSurvey from './task-completion-survey.jsx';
 import Titlebar from './titlebar.jsx';
 import TOC from './toc.jsx';
+import { ContentErrorBoundary } from './error-boundaries.jsx';
 
 import type { GAFunction } from './ga-provider.jsx';
 
@@ -80,7 +81,7 @@ function Content({ document }: DocumentProps) {
                     : 'content-layout'
             }
             /* adding aria-live here to mark this as a live region to
-               ensure a screen reader will read the new content after navigation 
+               ensure a screen reader will read the new content after navigation
                See https://bugzilla.mozilla.org/show_bug.cgi?id=1570043
                aria-live="assertive" */
         >
@@ -104,7 +105,9 @@ function DocumentPage({ document }: DocumentProps) {
                         <LanguageMenu document={document} />
                     </div>
                 </div>
-                <Content document={document} />
+                <ContentErrorBoundary>
+                    <Content document={document} />
+                </ContentErrorBoundary>
             </main>
             <Newsletter />
             <Footer />
