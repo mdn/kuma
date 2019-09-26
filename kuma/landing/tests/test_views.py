@@ -24,10 +24,17 @@ def test_contribute_json(client, db):
     assert response['Content-Type'].startswith('application/json')
 
 
-def test_home(client, db):
-    response = client.get(reverse('home'), follow=True)
+@pytest.mark.parametrize('case', ('DOMAIN', 'BETA_HOST', 'WIKI_HOST'))
+def test_home(client, db, host_settings, case):
+    host = getattr(host_settings, case)
+    response = client.get(reverse('home', locale='en-US'), HTTP_HOST=host)
     assert response.status_code == 200
     assert_shared_cache_header(response)
+    if case in ('DOMAIN', 'WIKI_HOST'):
+        expected_template = 'landing/homepage.html'
+    else:
+        expected_template = 'landing/react_homepage.html'
+    assert expected_template in (t.name for t in response.templates)
 
 
 @mock.patch('kuma.landing.views.render')

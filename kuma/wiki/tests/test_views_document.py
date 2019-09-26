@@ -763,21 +763,16 @@ def test_deleted_doc_no_purge_permdeleted(deleted_doc, wiki_moderator,
     assert 'Purge this document' not in content
 
 
-@mock.patch('kuma.wiki.kumascript.get')
-def test_redirect_suppression(mock_kumascript_get, constance_config, client,
-                              root_doc, redirect_doc):
+@pytest.mark.parametrize('case', ('DOMAIN', 'BETA_HOST', 'WIKI_HOST'))
+def test_redirect_suppression(client, host_settings, root_doc, redirect_doc,
+                              case):
     """The document view shouldn't redirect when passed redirect=no."""
-    constance_config.KUMASCRIPT_TIMEOUT = 1
-    mock_kumascript_get.return_value = (redirect_doc.html, None)
-    url = redirect_doc.get_absolute_url() + '?redirect=no'
-    response = client.get(url, follow=True)
+    host = getattr(host_settings, case)
+    url = redirect_doc.get_absolute_url()
+    response = client.get(url, HTTP_HOST=host)
+    assert response.status_code == 301
+    response = client.get(url + '?redirect=no', HTTP_HOST=host)
     assert response.status_code == 200
-    assert not response.redirect_chain
-    content = response.content.decode(response.charset)
-    body = pq(content).find('#wikiArticle')
-    assert body.text() == 'REDIRECT {}'.format(root_doc.title)
-    assert body.find(
-        'a[href="{}"][class="redirect"]'.format(root_doc.get_absolute_url()))
 
 
 @pytest.mark.parametrize(
@@ -851,3 +846,32 @@ def test_hreflang(client, root_doc, locales, expected_results):
         assert html.attr('lang') == expected_result
         assert html.find('head > link[hreflang="{}"][href$="{}"]'.format(
             expected_result, url))
+
+
+@pytest.mark.parametrize(
+    'param,status',
+    (('utm_source=docs.com', 200),
+     ('redirect=no', 200),
+     ('nocreate=1', 200),
+     ('edit_links=1', 301),
+     ('include=1', 301),
+     ('macros=1', 301),
+     ('nomacros=1', 301),
+     ('raw=1', 301),
+     ('section=junk', 301),
+     ('summary=1', 301)))
+@mock.patch('kuma.wiki.kumascript.get')
+def test_wiki_only_query_params(mock_kumascript_get, constance_config, client,
+                                host_settings, root_doc, param, status):
+    """
+    The document view should ensure the wiki domain when using specific query
+    parameters.
+    """
+    constance_config.KUMASCRIPT_TIMEOUT = 1
+    mock_kumascript_get.return_value = (root_doc.html, None)
+    url = root_doc.get_absolute_url() + '?{}'.format(param)
+    response = client.get(url, HTTP_HOST=host_settings.BETA_HOST, follow=False)
+    assert response.status_code == status
+    if status == 301:
+        assert (response['location'] ==
+                'http://{}{}'.format(host_settings.WIKI_HOST, url))

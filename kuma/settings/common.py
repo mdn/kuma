@@ -154,76 +154,45 @@ LANGUAGE_CODE = 'en-US'
 # Candidate locales should be included here and in CANDIDATE_LOCALES
 ACCEPTED_LOCALES = (
     'en-US',    # English
-    'af',       # Akrikaans
     'ar',       # Arabic
-    'az',       # Azerbaijani
     'bg',       # Bulgarian
     'bm',       # Bambara
-    'bn-BD',    # Bengali (Bangladesh)
-    'bn-IN',    # Bengali (India)
+    'bn',       # Bengali
     'ca',       # Catalan
-    'cs',       # Czech
     'de',       # German
-    'ee',       # Ewe
     'el',       # Greek
     'es',       # Spanish
     'fa',       # Persian
-    'ff',       # Fulah
     'fi',       # Finnish
     'fr',       # French
-    'fy-NL',    # Frisian (Netherlands)
-    'ga-IE',    # Irish (Ireland)
-    'ha',       # Hausa
     'he',       # Hebrew
     'hi-IN',    # Hindi (India)
-    'hr',       # Croatian *** not in Pontoon
     'hu',       # Hungarian
     'id',       # Indonesian
-    'ig',       # Igbo
     'it',       # Italian
     'ja',       # Japanese
-    'ka',       # Georgian
     'kab',      # Kabyle
     'ko',       # Korean
-    'ln',       # Lingala
-    'mg',       # Malagasy
-    'ml',       # Malayalam
     'ms',       # Malay
     'my',       # Burmese
     'nl',       # Dutch
     'pl',       # Polish
     'pt-PT',    # Portuguese (Portugal)
     'pt-BR',    # Portuguese (Brazil)
-    'ro',       # Romanian
     'ru',       # Russian
-    'son',      # Songhay
-    'sq',       # Albanian
-    'sr',       # Serbian
-    'sr-Latn',  # Serbian (Latin)
     'sv-SE',    # Swedish (Sweden)
-    'sw',       # Swahili
-    'ta',       # Tamil
-    'te',       # Telugu
     'th',       # Thai
-    'tl',       # Tagalog
-    'tn',       # Tswana *** not in Pontoon
     'tr',       # Turkish
     'uk',       # Ukranian
     'vi',       # Vietnamese
-    'wo',       # Wolof
-    'xh',       # Xhosa
-    'yo',       # Yoruba
     'zh-CN',    # Chinese (China)
     'zh-TW',    # Chinese (Taiwan, Province of China)
-    'zu',       # Zulu
 )
 
 # When there are multiple options for a given language, this gives the
 # preferred locale for that language (language => preferred locale).
 PREFERRED_LOCALE = {
-    'bn': 'bn-BD',
     'pt': 'pt-PT',
-    'sr': 'sr',
     'zh': 'zh-CN',
 }
 
@@ -344,7 +313,6 @@ MT_TO_KUMA_LOCALE_MAP = {
     'de': 'de',
     'it': 'it',
     'ca': 'ca',
-    'cs': 'cs',
     'ru': 'ru',
     'nl': 'nl',
     'hu': 'hu',
@@ -353,11 +321,9 @@ MT_TO_KUMA_LOCALE_MAP = {
     'fi': 'fi',
     'tr': 'tr',
     'vi': 'vi',
-    'ro': 'ro',
     'ar': 'ar',
     'th': 'th',
     'fa': 'fa',
-    'ka': 'ka',
 }
 
 LANGUAGE_COOKIE_DOMAIN = DOMAIN
@@ -494,6 +460,15 @@ if CSP_ENABLE_MIDDLEWARE:
     # For more config, see "Content Security Policy (CSP)" below
     MIDDLEWARE += ('csp.middleware.CSPMiddleware',)
 
+ENABLE_QUERYCOUNT = config('ENABLE_QUERYCOUNT', default=False, cast=bool)
+if ENABLE_QUERYCOUNT:
+    # Prints heavy query counts per request.
+    QUERYCOUNT = {
+        'IGNORE_REQUEST_PATTERNS': [r'^/admin/'],
+        'DISPLAY_DUPLICATES': config(
+            'QUERYCOUNT_DISPLAY_DUPLICATES', cast=int, default=0),
+    }
+    MIDDLEWARE += ('querycount.middleware.QueryCountMiddleware',)
 
 # Auth
 AUTHENTICATION_BACKENDS = (
@@ -656,7 +631,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    'VERSION': '2019.15',
+    'VERSION': '2019.19',
     'BASE_DIR': BASE_DIR,
     'TEXT_DOMAIN': 'django',
     # Tells the extract script what files to look for l10n in and what function
@@ -718,27 +693,27 @@ PIPELINE_CSS = {
     # single page app.
     'react-mdn': {
         'source_filenames': (
-            'styles/main-shared.scss',
-            'styles/wiki-shared.scss',
+            'styles/minimalist/main.scss',
+            'styles/minimalist/document.scss',
 
             # Custom build of our Prism theme
             'styles/libs/prism/prism.css',
             'styles/libs/prism/prism-line-highlight.css',
             'styles/libs/prism/prism-line-numbers.css',
 
-            'js/prism-mdn/components/prism-json.css',
             'styles/wiki-syntax.scss',
 
             # Styles for BCD tables
             'styles/wiki-compat-tables.scss',
-
-            # Styles for call-to-action banners
-            # See kuma/javascript/src/banners.jsx
-            'styles/components/banners/base.scss'
         ),
         'output_filename': 'build/styles/react-mdn.css',
     },
-
+    'react-search': {
+        'source_filenames': (
+            'styles/minimalist/search-page.scss',
+        ),
+        'output_filename': 'build/styles/react-search.css',
+    },
     'mdn': {
         'source_filenames': (
             'styles/main.scss',
@@ -764,6 +739,15 @@ PIPELINE_CSS = {
             'styles/home.scss',
         ),
         'output_filename': 'build/styles/home.css',
+    },
+    'print': {
+        'source_filenames': (
+            'styles/minimalist/print.scss',
+        ),
+        'output_filename': 'build/styles/print.css',
+        'extra_context': {
+            'media': 'print',
+        },
     },
     'search': {
         'source_filenames': (
@@ -850,6 +834,12 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/submission.css',
     },
+    'signupflow': {
+        'source_filenames': (
+            'styles/minimalist/structure/signup-flow.scss',
+        ),
+        'output_filename': 'build/styles/signup-flow.css',
+    },
     'user-banned': {
         'source_filenames': (
             'styles/user-banned.scss',
@@ -898,33 +888,21 @@ PIPELINE_CSS = {
 # Locales that are well supported by the Zilla family
 LOCALE_USE_ZILLA = [
     'ca',
-    'cs',
     'de',
-    'ee',
     'en-US',
     'es',
     'fi',
     'fr',
-    'fy-NL',
-    'ga-IE',
-    'ha',
-    'hr',
     'hu',
     'id',
-    'ig',
     'it',
     'kab',
-    'ln',
-    'mg',
     'ms',
     'nl',
     'pl',
     'pt-BR',
     'pt-PT',
-    'sq',
     'sv-SE',
-    'sw',
-    'tl',
 ]
 
 

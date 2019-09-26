@@ -47,7 +47,7 @@ locust:
 
 webpack:
 	@ echo "## Running webpack ##"
-	@ npm run webpack
+	@ npm run webpack:prod
 
 compilejsi18n:
 	@ echo "## Generating JavaScript translation catalogs ##"

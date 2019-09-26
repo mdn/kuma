@@ -271,3 +271,13 @@ CODE_SAMPLE_MACROS = [
 ]
 
 DEV_DOC_REQUEST_FORM = 'https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report'
+
+WIKI_ONLY_DOCUMENT_QUERY_PARAMS = frozenset((
+    'edit_links',
+    'include',
+    'macros',
+    'nomacros',
+    'raw',
+    'section',
+    'summary',
+))

@@ -1,20 +1,15 @@
 from __future__ import unicode_literals
 
-from functools import partial
-
 import pytest
 from waffle.models import Flag, Sample, Switch
 
 from kuma.api.v1.views import (document_api_data, get_content_based_redirect,
                                get_s3_key)
 from kuma.core.tests import assert_no_cache_header
-from kuma.core.urlresolvers import reverse as core_reverse
+from kuma.core.urlresolvers import reverse
+from kuma.search.tests import ElasticTestCase
 from kuma.users.templatetags.jinja_helpers import gravatar_url
-from kuma.wiki.jobs import DocumentContributorsJob
 from kuma.wiki.templatetags.jinja_helpers import absolutify
-
-
-reverse = partial(core_reverse, urlconf='kuma.urls_beta')
 
 
 def test_get_s3_key(root_doc):
@@ -76,15 +71,8 @@ def test_doc_api_404(client, api_settings, root_doc):
     assert_no_cache_header(response)
 
 
-@pytest.mark.parametrize('ensure_contributors', (True, False))
-def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache,
-                 ensure_contributors):
+def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache):
     """On success we get document details in a JSON response."""
-    if ensure_contributors:
-        # Pre-populate the cache for the call to document_api_data()
-        # made within the view that serves the "api.v1.doc" endpoint.
-        DocumentContributorsJob().refresh(trans_doc.pk)
-
     url = reverse('api.v1.doc', args=[trans_doc.locale, trans_doc.slug])
     response = client.get(url, HTTP_HOST=api_settings.BETA_HOST)
     assert response.status_code == 200
@@ -101,7 +89,7 @@ def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache,
     assert doc_data['language'] == trans_doc.language
     assert doc_data['hrefLang'] == 'fr'
     assert doc_data['absoluteURL'] == trans_doc.get_absolute_url()
-    assert doc_data['editURL'] == absolutify(trans_doc.get_edit_url(),
+    assert doc_data['wikiURL'] == absolutify(trans_doc.get_absolute_url(),
                                              for_wiki_site=True)
     assert doc_data['translateURL'] is None
     assert doc_data['bodyHTML'] == trans_doc.get_body_html()
@@ -115,33 +103,15 @@ def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache,
         'title': 'Root Document',
         'url': '/en-US/docs/Root'
     }]
-    assert doc_data['contributors'] == (
-        ['wiki_user'] if ensure_contributors else [])
     assert doc_data['lastModified'] == '2017-04-14T12:20:00'
-    assert doc_data['lastModifiedBy'] == 'wiki_user'
-
-    # Clear the cache for a clean slate when calling document_api_data().
-    DocumentContributorsJob().delete(trans_doc.pk)
-
-    # Also ensure that we get exactly the same data by calling
-    # the document_api_data() function directly
-    assert data == document_api_data(
-        trans_doc, ensure_contributors=ensure_contributors)
 
 
-@pytest.mark.parametrize('ensure_contributors', (True, False))
 def test_doc_api_for_redirect_to_doc(client, api_settings, root_doc,
-                                     redirect_doc, cleared_cacheback_cache,
-                                     ensure_contributors):
+                                     redirect_doc, cleared_cacheback_cache):
     """
     Test the document API when we're requesting data for a document that
     redirects to another document.
     """
-    if ensure_contributors:
-        # Pre-populate the cache for the call to document_api_data()
-        # made within the view that serves the "api.v1.doc" endpoint.
-        DocumentContributorsJob().refresh(root_doc.pk)
-
     url = reverse('api.v1.doc', args=[redirect_doc.locale, redirect_doc.slug])
     response = client.get(url, HTTP_HOST=api_settings.BETA_HOST, follow=True)
     assert response.status_code == 200
@@ -158,14 +128,13 @@ def test_doc_api_for_redirect_to_doc(client, api_settings, root_doc,
     assert doc_data['language'] == root_doc.language
     assert doc_data['hrefLang'] == 'en'
     assert doc_data['absoluteURL'] == root_doc.get_absolute_url()
-    assert doc_data['editURL'] == absolutify(root_doc.get_edit_url(),
+    assert doc_data['wikiURL'] == absolutify(root_doc.get_absolute_url(),
                                              for_wiki_site=True)
     assert doc_data['translateURL'] == absolutify(
         reverse(
             'wiki.select_locale',
             args=(root_doc.slug,),
             locale=root_doc.locale,
-            urlconf='kuma.urls'
         ),
         for_wiki_site=True
     )
@@ -173,18 +142,7 @@ def test_doc_api_for_redirect_to_doc(client, api_settings, root_doc,
     assert doc_data['quickLinksHTML'] == root_doc.get_quick_links_html()
     assert doc_data['tocHTML'] == root_doc.get_toc_html()
     assert doc_data['translations'] == []
-    assert doc_data['contributors'] == (
-        ['wiki_user'] if ensure_contributors else [])
     assert doc_data['lastModified'] == '2017-04-14T12:15:00'
-    assert doc_data['lastModifiedBy'] == 'wiki_user'
-
-    # Clear the cache for a clean slate when calling document_api_data().
-    DocumentContributorsJob().delete(root_doc.pk)
-
-    # Also ensure that we get exactly the same data by calling
-    # the document_api_data() function directly
-    assert data == document_api_data(
-        root_doc, ensure_contributors=ensure_contributors)
 
 
 @pytest.mark.parametrize('case', ('redirect-to-home', 'redirect-to-other'))
@@ -331,3 +289,48 @@ def test_whoami(user_client, api_settings, wiki_user, beta_testers_group,
         }
     }
     assert_no_cache_header(response)
+
+
+@pytest.mark.django_db
+def test_search_validation_problems(user_client, api_settings):
+    url = reverse('api.v1.search', args=['en-US'])
+
+    # 'q' not present
+    response = user_client.get(url, HTTP_HOST=api_settings.BETA_HOST)
+    assert response.status_code == 400
+    assert response.json()['error'] == "Search term 'q' must be set"
+
+    # 'q' present but falsy
+    response = user_client.get(url, {'q': ''}, HTTP_HOST=api_settings.BETA_HOST)
+    assert response.status_code == 400
+    assert response.json()['error'] == "Search term 'q' must be set"
+
+    # 'q' present but locale invalid
+    response = user_client.get(
+        url, {'q': 'x', 'locale': 'xxx'}, HTTP_HOST=api_settings.BETA_HOST)
+    assert response.status_code == 400
+    assert response.json()['error'] == 'Not a valid locale code'
+
+
+class SearchViewTests(ElasticTestCase):
+    fixtures = ElasticTestCase.fixtures + ['wiki/documents.json',
+                                           'search/filters.json']
+
+    def test_search_basic(self):
+        url = reverse('api.v1.search', args=['en-US'])
+        response = self.client.get(url, {'q': 'article'})
+        assert response.status_code == 200
+        assert response['content-type'] == 'application/json'
+        data = response.json()
+        assert data['documents']
+        assert data['count'] == 4
+        assert data['locale'] == 'en-US'
+
+        # Now search in a non-en-US locale
+        response = self.client.get(url, {'q': 'title', 'locale': 'fr'})
+        assert response.status_code == 200
+        assert response['content-type'] == 'application/json'
+        data = response.json()
+        assert data['documents']
+        assert data['count'] == 5
+        assert data['locale'] == 'fr'

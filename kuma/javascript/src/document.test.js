@@ -3,8 +3,11 @@ import React from 'react';
 import { create } from 'react-test-renderer';
 
 import Article from './article.jsx';
-import Document, { Breadcrumbs, DocumentRoute, Sidebar } from './document.jsx';
+import Breadcrumbs from './breadcrumbs.jsx';
+import Document, { DocumentRoute, Sidebar } from './document.jsx';
 import Header from './header/header.jsx';
+import Newsletter from './newsletter.jsx';
+import Footer from './footer.jsx';
 import TaskCompletionSurvey from './task-completion-survey.jsx';
 import Titlebar from './titlebar.jsx';
 
@@ -19,8 +22,8 @@ export const fakeDocumentData = {
     hrefLang: 'en',
     absoluteURL: '[fake absolute url]',
     translateURL: '[fake translate url]',
-    editURL:
-        'https://wiki.mdn.developer.mozilla.org/en-US/docs/Web/CSS/box-shadow$edit',
+    wikiURL:
+        'https://wiki.mdn.developer.mozilla.org/en-US/docs/Web/CSS/box-shadow',
     bodyHTML: '[fake body HTML]',
     quickLinksHTML: '[fake quicklinks HTML]',
     tocHTML: '[fake TOC HTML]',
@@ -44,9 +47,7 @@ export const fakeDocumentData = {
             title: '[fake spanish translation]'
         }
     ],
-    contributors: ['mike', 'ike'],
-    lastModified: '2019-01-02T03:04:05Z',
-    lastModifiedBy: 'ike'
+    lastModified: '2019-01-02T03:04:05Z'
 };
 
 describe('Document component renders all of its parts', () => {
@@ -99,17 +100,23 @@ describe('Document component renders all of its parts', () => {
         expect(articles.length).toBe(1);
     });
 
+    // The document has one newsletter element
+    test('newsletter', () => {
+        const newsletter = root.findAllByType(Newsletter);
+        expect(newsletter.length).toBe(1);
+    });
+
+    // And one footer element
+    test('footer', () => {
+        const footer = root.findAllByType(Footer);
+        expect(footer.length).toBe(1);
+    });
+
     // And make sure that our various strings of HTML appear in the document
     test('html strings', () => {
         expect(snapshot).toContain(fakeDocumentData.tocHTML);
         expect(snapshot).toContain(fakeDocumentData.quickLinksHTML);
         expect(snapshot).toContain(fakeDocumentData.bodyHTML);
-    });
-
-    test('contributor names appear', () => {
-        for (let c of fakeDocumentData.contributors) {
-            expect(snapshot).toContain(c);
-        }
     });
 });
 

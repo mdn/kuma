@@ -1,0 +1,80 @@
+/*
+Main CSS file for MDN.  Holds the site structure and key styles.
+********************************************************************** */
+
+/* columns */
+@import '../../components/structure/columns';
+@import '../../components/structure/cols';
+
+/*
+Pre-header
+====================================================================== */
+
+/* soapbox notice */
+@import '../../components/structure/global-notice';
+
+/* keyboard/screen reader skip link menu */
+@import '../../components/structure/nav-access';
+
+/*
+Header
+====================================================================== */
+@import '../structure/header';
+
+/*
+Main Navigation
+-------------------------------------------------------------- */
+
+@import '../components/main-nav';
+
+/*
+Document Head
+====================================================================== */
+
+@import '../../components/structure/document-head';
+
+/*
+Footer
+====================================================================== */
+
+@import '../structure/footer';
+@import '../../components/structure/contentinfo';
+
+/*
+Misc - needs sorting
+====================================================================== */
+
+@import '../../components/structure/archive';
+@import '../../components/structure/socialaccount-providers';
+@import '../../components/structure/feature-test-element';
+@import '../../components/structure/pagination';
+
+#wikiArticle > p:first-child:empty {
+    display: none; /* bug 1305178: hide empty first paragraph */
+}
+
+#wikiArticle {
+    padding-bottom: $grid-spacing;
+    border-bottom: $section-border;
+}
+
+p.field-explanation {
+    margin-bottom: 0;
+}
+
+#content-main.full {
+    clear: both;
+    float: none;
+    width: 100%;
+}
+
+.main {
+    float: left;
+    width: 670px;
+}
+
+@media #{$mq-mobile-and-down} {
+    .header-clear {
+        display: none;
+    }
+}

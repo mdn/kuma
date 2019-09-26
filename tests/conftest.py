@@ -129,10 +129,5 @@ def is_behind_cdn(kuma_status):
 
 
 @pytest.fixture(scope='session')
-def beta_site_url(kuma_status):
-    return kuma_status['settings']['BETA_SITE_URL']
-
-
-@pytest.fixture(scope='session')
 def wiki_site_url(kuma_status):
     return kuma_status['settings']['WIKI_SITE_URL']

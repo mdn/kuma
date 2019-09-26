@@ -1,0 +1,30 @@
+.newsletter,
+.newsletter-thanks {
+    position: relative;
+    margin: 40px auto 0;
+    padding: 40px;
+    border-top: 3px solid $text-color;
+    max-width: $max-width-default;
+
+    .newsletter-form {
+        display: block;
+
+        @media #{$mq-small-desktop-and-up} {
+            display: grid;
+            column-gap: 20px;
+            grid-template-columns: 2fr 1fr;
+        }
+    }
+}
+
+/* Specific styling for newsletter on landing page */
+.callout-newsletter {
+    .newsletter,
+    .newsletter-thanks {
+        margin-top: 0;
+    }
+
+    .newsletter-thanks {
+        border-top: 0;
+    }
+}

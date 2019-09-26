@@ -480,7 +480,7 @@ class SectionIDFilterTests(TestCase):
             (u'Outils facilitant le développement HTML',
              u'Outils_facilitant_le_développement_HTML'),
             (u'字面值(literals)',
-             u'字面值(literals)'),
+             u'字面值literals'),
             (u'Documentação',
              u'Documentação'),
             (u'Lektury uzupełniające',
@@ -489,8 +489,10 @@ class SectionIDFilterTests(TestCase):
              u'Атрибуты'),
             (u'HTML5 엘리먼트',
              u'HTML5_엘리먼트'),
-            (u'Non safe title "#$%&+,/:;=?@[\\]^`{|}~',
+            (u'Non safe title "#$%&+,/:;=?@[\\]^`{|}~\')(',
              u'Non_safe_title'),
+            (u"Five o'clock",
+             u'Five_oclock'),
         ]
 
         section_filter = SectionIDFilter('')

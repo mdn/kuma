@@ -2,7 +2,7 @@
 from csp.decorators import csp_update
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import JsonResponse
+from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.safestring import mark_safe
 from django.utils.six.moves.urllib.parse import urlencode
@@ -11,7 +11,8 @@ from django.views.decorators.cache import never_cache
 
 import kuma.wiki.content
 from kuma.attachments.forms import AttachmentRevisionForm
-from kuma.core.decorators import block_user_agents, login_required
+from kuma.core.decorators import (block_user_agents, ensure_wiki_domain,
+                                  login_required)
 from kuma.core.i18n import get_language_mapping
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import get_object_or_none, smart_int, urlparams
@@ -23,6 +24,7 @@ from ..forms import DocumentForm, RevisionForm
 from ..models import Document, Revision
 
 
+@ensure_wiki_domain
 @never_cache
 @block_user_agents
 @login_required
@@ -37,6 +39,7 @@ def select_locale(request, document_slug, document_locale):
     return render(request, 'wiki/select_locale.html', {'document': doc})
 
 
+@ensure_wiki_domain
 @never_cache
 @block_user_agents
 @login_required
@@ -59,10 +62,18 @@ def translate(request, document_slug, document_locale):
                                    locale=settings.WIKI_DEFAULT_LANGUAGE,
                                    slug=document_slug)
 
+    # Get the mapping here and now so it can be used for input validation
+    language_mapping = get_language_mapping()
+
     # HACK: Seems weird, but sticking the translate-to locale in a query
     # param is the best way to avoid the MindTouch-legacy locale
     # redirection logic.
     document_locale = request.GET.get('tolocale', document_locale)
+    if document_locale.lower() not in language_mapping:
+        # The 'tolocale' query string parameters aren't free-text. They're
+        # explicitly listed on the "Select language" page (`...$locales`)
+        # If a locale was entered that wasn't a link it's a user bug.
+        raise Http404
 
     # Set a "Discard Changes" page
     discard_href = ''
@@ -258,7 +269,6 @@ def translate(request, document_slug, document_locale):
 
     parent_split = split_slug(parent_doc.slug)
 
-    language_mapping = get_language_mapping()
     language = language_mapping[document_locale.lower()]
     default_locale = language_mapping[settings.WIKI_DEFAULT_LANGUAGE.lower()]
 

@@ -1,4 +1,4 @@
-FROM node:10.16.0@sha256:523f767f8907f002316d3334bdb9d1154c7c6f6157c7aed3de5305726a963616
+FROM node:10.16.3@sha256:e0f7dabe991810057aee6ba7a7d4136fe7fc70e99235d79e6c7ae0177656a5c8
 
 RUN set -ex && \
     apt-get update && \
@@ -24,7 +24,7 @@ COPY kumascript/package.json kumascript/npm-shrinkwrap.json /
 RUN npm config set python /usr/bin/python2.7 && \
     # install the Node.js dependencies,
     # with versions specified in npm-shrinkwrap.json
-    npm install && \
+    npm ci && \
     # update any top-level npm packages listed in package.json,
     # such as mdn-browser-compat-data,
     # as allowed by each package's given "semver".

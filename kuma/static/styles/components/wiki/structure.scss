@@ -40,13 +40,3 @@ Column structure for main wiki content
         }
     }
 }
-
-
-/* print styling */
-@media print {
-
-    /* hide sections not important to the article */
-    #wiki-left {
-        display: none;
-    }
-}

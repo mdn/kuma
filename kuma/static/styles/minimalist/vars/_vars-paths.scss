@@ -1,0 +1,28 @@
+/*
+paths
+====================================================================== */
+$path-to-assets: '../../';
+$path-to-images: $path-to-assets + 'img/';
+$path-to-embedded-images: $path-to-images + 'embed/';
+$path-to-fonts: $path-to-assets + 'fonts/';
+$path-to-locale-fonts: '../../' + 'fonts/locales/';
+$logo-sprite-url: $path-to-images + 'web-docs-sprite.svg';
+
+/*
+svg icons base paths
+svg icons located in jinja2/includes/icons
+====================================================================== */
+$path-to-svg-arrow-icons: $path-to-assets + 'arrows/';
+$path-to-svg-bc-general-icons: $path-to-assets + 'browser-compat-general/';
+$path-to-svg-browser-icons: $path-to-assets + 'browsers/';
+$path-to-svg-emoji-icons: $path-to-assets + 'emojis/';
+$path-to-svg-file-icons: $path-to-assets + 'file-icons/';
+$path-to-svg-form-icons: $path-to-assets + 'forms/';
+$path-to-svg-general-icons: $path-to-assets + 'general/';
+$path-to-svg-notification-icons: $path-to-assets + 'notifications/';
+$path-to-svg-platform-icons: $path-to-assets + 'platforms/';
+$path-to-svg-punctuation-icons: $path-to-assets + 'punctuation/';
+$path-to-svg-social-icons: $path-to-assets + 'social/';
+$path-to-svg-tool-icons: $path-to-assets + 'tools/';
+$path-to-svg-user-icons: $path-to-assets + 'user/';
+$path-to-svg-web-service-icons: $path-to-assets + 'web-service/';

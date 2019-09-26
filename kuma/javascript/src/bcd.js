@@ -109,10 +109,6 @@ function open(cell: HTMLElement) {
     // Finlly, mark the cell as active
     cell.classList.add('active');
     cell.setAttribute('aria-expanded', 'true');
-
-    // And flip the icon in the reveal button to indicate that
-    // another click will conceal the note
-    button.style.transform = 'scale(1, -1)';
 }
 
 /**

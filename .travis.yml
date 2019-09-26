@@ -20,6 +20,8 @@ matrix:
           cache: pip
           script:
             - set -x
+            # Make sure there are no left-over git patch markers in
+            - git --no-pager grep '>>>>>>>'
             # Make sure these match what's in requirements/dev.txt!
             - pip install flake8==3.7.3 flake8-import-order==0.18
             - flake8 kuma docs tests

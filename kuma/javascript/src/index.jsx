@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 
 import SinglePageApp from './single-page-app.jsx';
 import LandingPage from './landing-page.jsx';
+import SignupFlow from './signup-flow.jsx';
 import { localize } from './l10n.js';
 
 let container = document.getElementById('react-container');
@@ -32,10 +33,17 @@ if (container) {
             // navigation between pages. Currently the single page app
             // handles document pages and search results
             app = (
-                <SinglePageApp
-                    initialURL={data.url}
-                    initialData={data.documentData}
-                />
+                /* StrictMode is a tool for highlighting potential problems
+                   in an application. Like Fragment, StrictMode does not
+                   render any visible UI. It activates additional checks and
+                   warnings for its descendants. 
+                   @see https://reactjs.org/docs/strict-mode.html */
+                <React.StrictMode>
+                    <SinglePageApp
+                        initialURL={data.url}
+                        initialData={data.documentData}
+                    />
+                </React.StrictMode>
             );
             break;
         case 'landing':
@@ -44,7 +52,23 @@ if (container) {
             // content is still based on Jinja templates, so we can't
             // currently make it part of the single page app and have
             // to handle it as a special case here.
-            app = <LandingPage />;
+            app = (
+                <React.StrictMode>
+                    <LandingPage />
+                </React.StrictMode>
+            );
+            break;
+        case 'signupflow':
+            // This is the React UI for the MDN sign-up flow.
+            // The signup flow has a React-based header, but most of the
+            // content is still based on Jinja templates, so we can't
+            // currently make it part of the single page app and have
+            // to handle it as a special case here.
+            app = (
+                <React.StrictMode>
+                    <SignupFlow />
+                </React.StrictMode>
+            );
             break;
         case 'default':
             throw new Error(
@@ -53,16 +77,28 @@ if (container) {
     }
 
     if (app) {
+        // NOTE: `document.all` is only available in lte IE10
+        // $FlowFixMe
+        const isIE10 = document.all;
+        // IE11 specific https://stackoverflow.com/questions/17907445/how-to-detect-ie11#answer-22082397
+        const isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
         if (container.firstElementChild) {
-            // If the container element is not empty, then it was presumably
-            // rendered on the server, and we just need to hydrate it now.
-            //
-            // If we're running under google translate, however, we skip
-            // the hydration step because the mismatched origins cause
-            // errors and cause all the content to disappear when React
-            // unmounts the components. It is better for the end user in
-            // this case to just get a static HTML page. See Bug 1562293.
-            if (window.origin !== 'https://translate.googleusercontent.com') {
+            /* If the container element is not empty, then it was presumably
+             * rendered on the server, and we just need to hydrate it now.
+             *
+             * If we're running under google translate, however, we skip
+             * the hydration step because the mismatched origins cause
+             * errors and cause all the content to disappear when React
+             * unmounts the components. We also do not hydrate if in IE10+.
+             * It is better for the end user in this case to just get a
+             * static HTML page.
+             * See Bug 1562293, and https://github.com/mozilla/kuma/issues/5786
+             */
+            if (
+                window.origin !== 'https://translate.googleusercontent.com' &&
+                !isIE10 &&
+                !isIE11
+            ) {
                 ReactDOM.hydrate(app, container);
             }
         } else {

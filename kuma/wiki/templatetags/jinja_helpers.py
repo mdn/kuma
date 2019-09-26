@@ -262,3 +262,12 @@ def include_svg(path, title=None, title_id=None):
     else:
         svg_out = svg
     return jinja2.Markup(svg_out)
+
+
+@library.filter
+def length_plus_one(lengthy):
+    """Useful when you want to do something like
+    `{{ somelist|length_plus_one }}` and you want it to output the
+    Python equivalent of `len(somelist) + 1`.
+    """
+    return len(lengthy) + 1

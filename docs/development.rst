@@ -91,8 +91,27 @@ To do both::
 
 .. _compiling-with-gulp:
 
-Compiling on the host system with gulp
---------------------------------------
+Compiling JS on the host system with webpack
+--------------------------------------------
+For a quicker iteration cycle while developing the frontend app you can run::
+
+    npm i
+    npm run webpack:dev
+
+This watches the react frontend and rebuilds both the web and SSR bundle
+when changes occur. It rebuilds only what has changed and also restarts the
+SSR server.
+It serves React in development mode which yields more explicit warnings and
+allows you to use tools such as the `React DevTools`_.
+
+.. _`React DevTools`: https://reactjs.org/blog/2019/08/15/new-react-devtools.html#how-do-i-get-the-new-devtools
+
+You can also run it in production mode::
+
+   npm run webpack:prod
+
+Compiling SCSS on the host system with gulp
+-------------------------------------------
 ``make build-static`` is how assets are built for production. It is also
 slow for iterative front-end development. With ``DEBUG=True`` (the default for
 local development), Gulp can be used to rebuild as files are changed, using a
@@ -143,6 +162,14 @@ To run eslint_ on ``.js`` files::
 
 .. _stylelint: https://stylelint.io/
 .. _eslint: https://eslint.org/
+
+Bundle Analyze
+--------------
+To get an idea about the size distribution of our react codebase you can run::
+
+    npm run webpack:analyze
+
+This will open an interactively explorable report in your browser.
 
 Database migrations
 ===================
@@ -527,3 +554,23 @@ following to your ``.env`` file::
     MDN_API_S3_BUCKET_NAME=<your-s3-bucket-name>
     AWS_ACCESS_KEY_ID=<your-aws-access-key>
     AWS_SECRET_ACCESS_KEY=<your-aws-secret-key>
+
+
+Enabling ``django-querycount``
+==============================
+
+If you want to find out how many SQL queries are made, per request,
+even if they are XHR requests, you can simply add this to your ``.env`` file::
+
+    ENABLE_QUERYCOUNT=true
+
+Stop and start ``docker-compose`` and now, on ``stdout``, it will print a
+table for every request URL about how many queries that involved and
+some information about how many of them were duplicates.
+
+If you want more insight into the duplicate queries add this to your ``.env``::
+
+    QUERYCOUNT_DISPLAY_DUPLICATES=3
+
+A number greater than the (default) 0 means it will print the 3 most
+repeated SQL queries.

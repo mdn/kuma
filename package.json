@@ -10,24 +10,35 @@
     "author": "Mozilla",
     "license": "MPL",
     "bugs": {
-        "url": "https://bugzilla.mozilla.org/"
+        "url": "https://github.com/mozilla/kuma/issues"
     },
     "scripts": {
         "build-watch": "gulp",
         "webpack": "webpack",
-        "webpack-watch": "webpack -w",
+        "debug": "node --inspect --inspect-brk ./node_modules/webpack/bin/webpack.js",
+        "debug:development:web": "npm run debug -- --env.presets web --env.presets svg --env.mode development",
+        "webpack:web": "npm run webpack -- --env.presets web --env.presets svg",
+        "webpack:node": "npm run webpack -- --env.presets node --env.presets svg",
+        "webpack:production:web": "npm run webpack:web -- --env.mode production",
+        "webpack:production:node": "npm run webpack:node -- --env.mode production",
+        "webpack:development:web": "npm run webpack:web -- --env.mode development --env.presets hardsource",
+        "webpack:development:node": "npm run webpack:node -- --env.mode development --env.presets hardsource",
+        "webpack:prod": "npm-run-all webpack:production:*",
+        "webpack:analyze": "npm run webpack:production:web -- --env.presets analyze",
+        "webpack:dev": "npm-run-all stopssr webpack:development:web",
+        "stopssr": "node  webpack-build-utils/terminal.js 'docker-compose stop ssr'",
         "stylelint": "stylelint \"kuma/static/styles/**/*.scss\"",
         "eslint": "eslint --ext .js --ext .jsx kuma/",
         "optim:svg": "svgo jinja2/includes/icons/* --disable={removeViewBox,removeTitle} --multipass --pretty",
         "precommit": "npm run eslint && npm run stylelint && npm run pretty",
         "test": "jest --testPathIgnorePatterns tests/sass",
-        "format": "prettier --write **/*{.js,jsx}",
-        "pretty": "prettier --check **/*{.js,jsx}"
+        "format": "prettier --write **/*{.js,.jsx,.scss}",
+        "pretty": "prettier --check **/*{.js,.jsx,.scss}"
     },
     "dependencies": {
-        "@emotion/core": "^10.0.7",
-        "@emotion/styled": "^10.0.7",
+        "@sentry/node": "^5.6.2",
         "express": "^4.16.4",
+        "jsesc": "2.5.2",
         "morgan": "^1.9.1",
         "newrelic": "^5.9.0",
         "react": "^16.8.4",
@@ -39,7 +50,6 @@
         "@babel/preset-env": "^7.3.1",
         "@babel/preset-flow": "^7.0.0",
         "@babel/preset-react": "^7.0.0",
-        "@emotion/babel-preset-css-prop": "^10.0.7",
         "babel-eslint": "^10.0.1",
         "babel-loader": "^8.0.5",
         "babel-plugin-emotion": "^10.0.7",
@@ -58,10 +68,11 @@
         "gulp-sass": "4.0.1",
         "gulp-stylelint": "7.0.0",
         "gulp-watch": "5.0.1",
+        "hard-source-webpack-plugin": "0.13.1",
         "husky": "0.14.3",
         "jest": "^24.1.0",
-        "jest-emotion": "^10.0.7",
         "node-sass": "4.12.0",
+        "npm-run-all": "4.1.5",
         "prettier": "1.18.2",
         "react-svg-loader": "3.0.1",
         "react-test-renderer": "^16.8.4",
@@ -71,6 +82,8 @@
         "svgo": "1.2.2",
         "uglify-js": "2.8.29",
         "webpack": "^4.29.3",
-        "webpack-cli": "^3.2.3"
+        "webpack-bundle-analyzer": "3.3.2",
+        "webpack-cli": "^3.2.3",
+        "webpack-merge": "4.2.1"
     }
 }

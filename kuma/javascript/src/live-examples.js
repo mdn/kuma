@@ -23,6 +23,17 @@ export function addLiveExampleButtons(rootElement) {
         // We expect the iframe to be in a section with an id related
         // to the frame id.
         let sectid = frame.id.replace(idPrefix, '');
+
+        // It *used* to be that the ' character was allowed as a safe
+        // character in IDs. We've since changed the Wiki post-processing
+        // code to replace those with an empty string.
+        // But to be safe, if not all legacy pages have had a chance
+        // to re-render, make sure it's removed here or it'll cause
+        // problems.
+        // This line of code can be deleted in early 2020.
+        // For context, see https://github.com/mozilla/kuma/issues/5810
+        sectid = sectid.replace("'", '');
+
         let section = document.getElementById(sectid);
         if (!section) {
             // If the section doesn't exist, then none of the selectors below

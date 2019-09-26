@@ -14,18 +14,11 @@ from ..models import Document, Revision
 
 
 HREFLANG_TEST_CASES = {
-    'no-country': [['ar', 'af', 'zu'], ['ar', 'af', 'zu']],
-    'single-country': [['fy-NL', 'ga-IE', 'hi-IN', 'sv-SE'],
-                       ['fy', 'ga', 'hi', 'sv']],
-    'bn-preferred-only': [['bn-BD'], ['bn']],
-    'bn-non-preferred-only': [['bn-IN'], ['bn']],
-    'bn-both': [['bn-BD', 'bn-IN'], ['bn', 'bn-IN']],
+    'no-country': [['ar', 'ca', 'he'], ['ar', 'ca', 'he']],
+    'single-country': [['hi-IN', 'sv-SE'], ['hi', 'sv']],
     'pt-preferred-only': [['pt-PT'], ['pt']],
     'pt-non-preferred-only': [['pt-BR'], ['pt']],
     'pt-both': [['pt-PT', 'pt-BR'], ['pt', 'pt-BR']],
-    'sr-preferred-only': [['sr'], ['sr']],
-    'sr-non-preferred-only': [['sr-Latn'], ['sr']],
-    'sr-both': [['sr', 'sr-Latn'], ['sr', 'sr-Latn']],
     'zh-preferred-only': [['zh-CN'], ['zh']],
     'zh-non-preferred-only': [['zh-TW'], ['zh']],
     'zh-both': [['zh-CN', 'zh-TW'], ['zh', 'zh-TW']],

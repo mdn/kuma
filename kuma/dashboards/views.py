@@ -15,8 +15,8 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
 from django.views.decorators.vary import vary_on_headers
 
-from kuma.core.decorators import login_required
-from kuma.core.decorators import shared_cache_control
+from kuma.core.decorators import (ensure_wiki_domain, login_required,
+                                  shared_cache_control)
 from kuma.core.utils import paginate
 from kuma.wiki.kumascript import macro_usage
 from kuma.wiki.models import Document, Revision
@@ -26,13 +26,14 @@ from .forms import RevisionDashboardForm
 from .jobs import SpamDashboardHistoricalStats
 
 
+@ensure_wiki_domain
 @shared_cache_control
 def index(request):
     """Index of dashboards."""
-
     return render(request, 'dashboards/index.html')
 
 
+@ensure_wiki_domain
 @never_cache
 @require_GET
 @login_required
@@ -145,6 +146,7 @@ def revisions(request):
 @shared_cache_control
 @vary_on_headers('X-Requested-With')
 @require_GET
+@login_required
 def user_lookup(request):
     """Returns partial username matches"""
     userlist = []
@@ -155,8 +157,8 @@ def user_lookup(request):
             matches = (get_user_model().objects
                        .filter(username__istartswith=user)
                        .order_by('username'))
-            for match in matches:
-                userlist.append({'label': match.username})
+            for username in matches.values_list('username', flat=True)[:20]:
+                userlist.append({'label': username})
 
     data = json.dumps(userlist)
     return HttpResponse(data, content_type='application/json; charset=utf-8')
@@ -165,6 +167,7 @@ def user_lookup(request):
 @shared_cache_control
 @vary_on_headers('X-Requested-With')
 @require_GET
+@login_required
 def topic_lookup(request):
     """Returns partial topic matches"""
     topiclist = []
@@ -172,15 +175,17 @@ def topic_lookup(request):
     if request.is_ajax():
         topic = request.GET.get('topic', '')
         if topic:
-            matches = Document.objects.filter(slug__icontains=topic)
-            for match in matches:
-                topiclist.append({'label': match.slug})
+            matches = (Document.objects.filter(slug__icontains=topic)
+                       .order_by('slug'))
+            for slug in matches.values_list('slug', flat=True)[:20]:
+                topiclist.append({'label': slug})
 
     data = json.dumps(topiclist)
     return HttpResponse(data,
                         content_type='application/json; charset=utf-8')
 
 
+@ensure_wiki_domain
 @never_cache
 @require_GET
 @login_required
@@ -201,6 +206,7 @@ def spam(request):
     return render(request, 'dashboards/spam.html', data)
 
 
+@ensure_wiki_domain
 @shared_cache_control
 @require_GET
 def macros(request):

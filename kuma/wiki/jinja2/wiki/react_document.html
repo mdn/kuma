@@ -1,5 +1,6 @@
-{% set beta = settings.ENABLE_RESTRICTIONS_BY_HOST and is_beta(request) %}
-{% set untrusted = settings.ENABLE_RESTRICTIONS_BY_HOST and is_untrusted(request) %}
+{#- Set "wiki" and "untrusted" for the benefit of Jinja includes that need them. #}
+{% set wiki = False %}
+{% set untrusted = False %}
 {% set canonical = document_data['absoluteURL'] | absolutify %}
 
 <!DOCTYPE html>
@@ -80,7 +81,10 @@
   {% javascript 'html5shiv' %}
   <![endif]-->
 
-  <link rel="dns-prefetch" href="https://interactive-examples.mdn.mozilla.net" pr="0.75" />
+  {% if waffle.flag('developer_needs') %}
+    {% stylesheet 'banners' %}
+  {% endif %}
+
   <link rel="preconnect" href="https://interactive-examples.mdn.mozilla.net" pr="0.75" />
 
   <link rel="canonical" href="{{ canonical }}" >
@@ -101,6 +105,10 @@
   <meta name="description" content="{{ seo_summary }}">
   <meta name="twitter:description" content="{{ seo_summary }}">
   {% endif %}
+
+  {% block printstyle %}
+    {% stylesheet 'print' %}
+  {% endblock %}
 </head>
 <body>
   {% include "includes/config.html" %}
@@ -110,45 +118,11 @@
   {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(),
                   document_data)|safe }}
 
-  {% if settings.NEWSLETTER and settings.NEWSLETTER_ARTICLE %}
-  <div class="center">
-    <div class="newsletter-box">
-      {% include "includes/newsletter.html" %}
-    </div>
-  </div>
-  {% endif %}
-
-  <!-- Footer -->
-  <footer id="nav-footer" class="nav-footer">
-    <div class="center">
-        {% include "includes/footer/mdn-footer.html" %}
-
-        {% include "includes/footer/moz-footer.html" %}
-
-        <ul class="footer-tos">
-          <li><a href="https://www.mozilla.org/about/legal/terms/mozilla">{{ _('Terms') }}</a></li>
-          <li><a href="https://www.mozilla.org/privacy/websites/">{{ _('Privacy') }}</a></li>
-          <li><a href="https://www.mozilla.org/privacy/websites/#cookies">{{ _('Cookies') }}</a></li>
-        </ul>
-
-        <div id="license" class="contentinfo">
-          {% trans copyright_url='/en-US/docs/MDN/About#Copyrights_and_licenses', thisyear=thisyear() %}
-            <p>&copy; 2005-{{ thisyear }} Mozilla and individual contributors.</p>
-            <p>Content is available under <a href="{{ copyright_url }}">these licenses</a>.</p>
-          {% endtrans %}
-        </div>
-    </div>
-  </footer>
-
   <!-- site js -->
   {% javascript 'react-main' %}
   <script>
     if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
   </script>
-
-  {% if settings.NEWSLETTER and settings.NEWSLETTER_ARTICLE %}
-    {% javascript 'newsletter' %}
-  {% endif %}
 
   {% if waffle.flag('bc-signals') %}
     {% javascript "bcd-signal" %}

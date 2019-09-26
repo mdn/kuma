@@ -1,13 +1,15 @@
 // @flow
 import * as React from 'react';
-import { css } from '@emotion/core';
 
 import A11yNav from './a11y/a11y-nav.jsx';
 import Article from './article.jsx';
 import Banners from './banners.jsx';
+import Breadcrumbs from './breadcrumbs.jsx';
 import { gettext } from './l10n.js';
 import LanguageMenu from './header/language-menu.jsx';
 import Header from './header/header.jsx';
+import Newsletter from './newsletter.jsx';
+import Footer from './footer.jsx';
 import Route from './route.js';
 import TaskCompletionSurvey from './task-completion-survey.jsx';
 import Titlebar from './titlebar.jsx';
@@ -25,7 +27,7 @@ export type DocumentData = {
     language: string,
     hrefLang: string,
     absoluteURL: string,
-    editURL: string,
+    wikiURL: string,
     translateURL: string,
     bodyHTML: string,
     quickLinksHTML: string,
@@ -39,104 +41,19 @@ export type DocumentData = {
         url: string,
         title: string
     }>,
-    contributors: Array<string>,
-    lastModified: string, // An ISO date
-    lastModifiedBy: string
+    lastModified: string // An ISO date
 };
 
 export type DocumentProps = {
     document: DocumentData
 };
 
-// A media query that identifies screens narrower than a tablet
-const NARROW = '@media (max-width: 749px)';
-
-const styles = {
-    // Breadcrumbs styles
-    breadcrumbsContainer: css({
-        boxSizing: 'border-box',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        minHeight: 40,
-        padding: '4px 16px 4px 24px',
-        borderBottom: 'solid 1px #dce3e5',
-        backgroundColor: '#fff'
-    }),
-    breadcrumbsRow: css({
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: '100%',
-        maxWidth: 1360
-    }),
-    breadcrumbs: css({
-        flex: '1 1'
-    }),
-    crumb: css({
-        display: 'inline',
-        fontSize: 14,
-        hyphens: 'auto',
-        '&a': {
-            color: '#3d7e9a'
-        }
-    }),
-    chevron: css({
-        fontFamily: 'zillaslab,serif',
-        fontWeight: 'bold',
-        fontSize: 18,
-        margin: '0 8px'
-    }),
-
-    // Content styles: the sidebar and main article content
-    contentLayout: css({
-        display: 'grid',
-        boxSizing: 'border-box',
-        maxWidth: 1400,
-        margin: '0 auto',
-        gridTemplateColumns: '25% 75%',
-        gridTemplateRows: 'max-content 1fr',
-        gridTemplateAreas: '"document-toc-container main" "side main"',
-        [NARROW]: {
-            // If we're narrower than a tablet, put the sidebar at the
-            // bottom and drop the toc line.
-            gridTemplateColumns: '100%',
-            gridTemplateAreas: '"main" "document-toc-container" "side"'
-        }
-    }),
-    sidebar: css({
-        gridArea: 'side',
-        boxSizing: 'border-box',
-        width: '100%',
-        // Less padding on the right because the article area
-        // has padding on the left, too.
-        padding: '30px 12px 30px 24px',
-        [NARROW]: {
-            // Except that on small screens the sidebar is at the bottom and
-            // so we need the same padding (but less of it) on both sides.
-            padding: '15px 12px'
-        }
-    }),
-    sidebarHeading: css({
-        fontFamily:
-            'x-locale-heading-primary, zillaslab, "Palatino", "Palatino Linotype", x-locale-heading-secondary, serif',
-        fontSize: 20,
-        height: 24,
-        marginBottom: 16
-    })
-};
-
 export function Sidebar({ document }: DocumentProps) {
     return (
-        <div css={styles.sidebar}>
-            {document.quickLinksHTML && (
+        document.quickLinksHTML && (
+            <div className="sidebar">
                 <div className="quick-links">
-                    <div
-                        css={styles.sidebarHeading}
-                        className="quick-links-head"
-                    >
+                    <div className="quick-links-head sidebar-heading">
                         {gettext('Related Topics')}
                     </div>
                     <div
@@ -145,39 +62,8 @@ export function Sidebar({ document }: DocumentProps) {
                         }}
                     />
                 </div>
-            )}
-        </div>
-    );
-}
-
-function Chevron() {
-    return <span css={styles.chevron}>›</span>;
-}
-
-export function Breadcrumbs({ document }: DocumentProps) {
-    // The <span> elements below aren't needed except that the stylesheets
-    // are set up to expect them.
-    return (
-        <div css={styles.breadcrumbsContainer}>
-            <div css={styles.breadcrumbsRow}>
-                <nav css={styles.breadcrumbs} role="navigation">
-                    <ol>
-                        {document.parents.map(p => (
-                            <li css={styles.crumb} key={p.url}>
-                                <a href={p.url}>
-                                    <span>{p.title}</span>
-                                </a>
-                                <Chevron />
-                            </li>
-                        ))}
-                        <li css={styles.crumb}>
-                            <span>{document.title}</span>
-                        </li>
-                    </ol>
-                </nav>
-                <LanguageMenu document={document} />
             </div>
-        </div>
+        )
     );
 }
 
@@ -185,13 +71,18 @@ function Content({ document }: DocumentProps) {
     // The wiki-left-present class below is needed for correct BCD layout
     // See kuma/static/styles/components/compat-tables/bc-table.scss
     return (
-        /* adding aria-live here to mark this as a live region to
-          ensure a screen reader will read the new content after navigation */
+        /* If we have either `tocHTML` or `quicklinksHTML`, add the
+           `wiki-left-present` class */
         <div
-            css={styles.contentLayout}
-            className="wiki-left-present"
-            // See https://bugzilla.mozilla.org/show_bug.cgi?id=1570043
-            // aria-live="assertive"
+            className={
+                document.tocHTML || document.quickLinksHTML
+                    ? 'wiki-left-present content-layout'
+                    : 'content-layout'
+            }
+            /* adding aria-live here to mark this as a live region to
+               ensure a screen reader will read the new content after navigation 
+               See https://bugzilla.mozilla.org/show_bug.cgi?id=1570043
+               aria-live="assertive" */
         >
             {!!document.tocHTML && <TOC html={document.tocHTML} />}
             <Article document={document} />
@@ -205,9 +96,18 @@ function DocumentPage({ document }: DocumentProps) {
         <>
             <A11yNav />
             <Header document={document} />
-            <Titlebar title={document.title} document={document} />
-            <Breadcrumbs document={document} />
-            <Content document={document} />
+            <main role="main">
+                <Titlebar title={document.title} document={document} />
+                <div className="full-width-row-container">
+                    <div className="max-content-width-container">
+                        <Breadcrumbs document={document} />
+                        <LanguageMenu document={document} />
+                    </div>
+                </div>
+                <Content document={document} />
+            </main>
+            <Newsletter />
+            <Footer />
             <TaskCompletionSurvey document={document} />
             <Banners />
         </>

@@ -1,0 +1,77 @@
+.dropdown-container {
+    /* We use relative here not because we need to tweak positioning
+       but because we need to position the menu itself relative to the
+       label position when it is shown. */
+    position: relative;
+
+    /* This adjusts for the 5px left padding */
+    margin-left: -5px;
+
+    .dropdown-menu-label {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        color: $text-color;
+        padding: 0 5px 5px;
+        border: none;
+        white-space: nowrap;
+        font-size: $tiny-font-size;
+        font-weight: bold;
+    }
+
+    .dropdown-menu-items {
+        position: absolute;
+        display: none;
+        flex-direction: column;
+        box-sizing: border-box;
+        background-color: #fff;
+        padding: 4px 0;
+        border: $menu-border;
+        border-radius: $menu-border-radius;
+        box-shadow: $menu-box-shadow;
+        min-width: 100%;
+        z-index: $menu-zindex;
+
+        li a,
+        li button {
+            display: inline-block;
+            box-sizing: border-box;
+            color: $dropdown-item-background-color;
+            padding: 6px 16px;
+            width: 100%;
+            font-size: 15px;
+            font-weight: bold;
+            /* buttons have centered text by default */
+            text-align: start;
+            white-space: nowrap;
+
+            &:hover {
+                color: #fff;
+                background-color: $dropdown-item-background-color;
+                text-decoration: none;
+            }
+        }
+    }
+
+    &:hover,
+    &:focus {
+        .dropdown-menu-label,
+        .dropdown-menu-label a {
+            color: $dropdown-item-background-color;
+        }
+    }
+
+    &:hover,
+    &:focus,
+    &:focus-within {
+        .dropdown-menu-items,
+        .dropdown-menu-items {
+            display: flex;
+        }
+    }
+
+    .dropdown-arrow-down {
+        padding-left: 2px;
+        font-size: 75%;
+    }
+}

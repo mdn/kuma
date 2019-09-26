@@ -1,0 +1,68 @@
+@import '../../includes/vars';
+
+.search-results {
+    margin: 0 24px;
+
+    .result-container {
+        display: flex;
+        flex-direction: row;
+        margin: 20px auto;
+        max-width: 1200px;
+
+        .result {
+            flex: 2 1 500px;
+        }
+
+        .result-title {
+            font-weight: bold;
+        }
+
+        .result-url {
+            font-size: $tiny-font-size;
+        }
+
+        .result-summary {
+            margin-bottom: 10px;
+        }
+
+        p.result-meta {
+            font-style: italic;
+        }
+
+        .result-excerpt {
+            padding: 2px;
+            font-style: italic;
+            font-size: $tiny-font-size;
+            max-width: 42rem;
+            /* Sometimes elasticsearch gives us excerpts with no spaces
+            and we have to force the words to wrap. */
+            overflow-wrap: anywhere;
+
+            mark {
+                background-color: inherit;
+                font-weight: bold;
+            }
+
+            &::before {
+                content: '...';
+            }
+
+            &::after {
+                content: '...';
+            }
+        }
+
+        .no-results {
+            margin: 20px auto;
+            max-width: 1200px;
+            font-weight: bold;
+        }
+
+        /* TODO: Use generic styling for error messages  */
+        .error {
+            margin: 16px;
+            padding: 16px;
+            border: 2px solid $red;
+        }
+    }
+}

@@ -15,13 +15,35 @@ if (process.env.NEW_RELIC_LICENSE_KEY && process.env.NEW_RELIC_APP_NAME) {
 
 const express = require('express'); // Express server framework
 const morgan = require('morgan');
+const sentry = require('@sentry/node');
 
 const ssr = require('./dist/ssr.js'); // Function to do server-side rendering
+
+// Configure and initialize Sentry if a DSN has been provided.
+if (process.env.SENTRY_DSN) {
+    console.log('Configuring Sentry for the SSR server.');
+    let options = {
+        dsn: process.env.SENTRY_DSN
+    };
+    if (process.env.REVISION_HASH) {
+        options.release = process.env.REVISION_HASH;
+    }
+    if (process.env.SENTRY_ENVIRONMENT) {
+        options.environment = process.env.SENTRY_ENVIRONMENT;
+    }
+    sentry.init(options);
+}
 
 // Configuration
 const PID = process.pid;
 const PORT = parseInt(process.env.SSR_PORT) || 8000;
-const MAX_BODY_SIZE = 1024 * 1024; // 1 megabyte max JSON payload
+
+// Some documents, with lots of Unicode, get very large when Python
+// serializes it to a binary string. For example,
+// https://developer.mozilla.org/ja/docs/Web/API/Window when turned into
+// a JSON string, by Python, becomes a string of length ~1.1MB.
+// Add a little extra just to be on the safe side.
+const MAX_BODY_SIZE = 1024 * 1024 * 5; // 5 megabyte max JSON payload
 
 // We're using the Express server framework
 const app = express();
@@ -59,9 +81,7 @@ app.get('/readiness/?', (req, res) => {
  * not be parsed, escaped, or displayed as HTML.
  */
 app.post('/ssr/:componentName', (req, res) => {
-    res.set({ 'Content-Type': 'text/plain; charset=utf-8' }).send(
-        ssr(req.params.componentName, req.body)
-    );
+    res.json(ssr(req.params.componentName, req.body));
 });
 
 if (require.main === module) {

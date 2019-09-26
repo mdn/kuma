@@ -27,11 +27,11 @@ class TestFormatDecimal(KumaTestCase):
         num = _format_decimal(1234.567)
         assert '1,234.567' == num
 
-    def test_fy_NL_locale(self):
+    def test_pt_BR_locale(self):
         """Falls back to English for unknown babel locales"""
         # Note: if this starts to fail for no apparent reason, it's probably
-        # because babel learned about fy-NL since this test was written.
-        translation.activate('fy-NL')
-        assert 'fy-nl' == translation.get_language()
+        # because babel learned about pt-BR since this test was written.
+        translation.activate('pt-BR')
+        assert 'pt-br' == translation.get_language()
         num = _format_decimal(1234.567)
         assert '1,234.567' == num

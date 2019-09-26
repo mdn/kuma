@@ -21,7 +21,7 @@
           We're sorry, we couldn't find what you were looking for.
           {% endtrans %}</p>
 
-        {%- if not untrusted %}
+        {%- if wiki and not untrusted %}
         <p>{% trans homepage_url=url('home') %}
           You can try a search or start over on the <a href="{{ homepage_url }}">home page</a>.
           {% endtrans %}</p>
@@ -37,7 +37,7 @@
         <p class="notice">{{ _("This user's profile has been banned.") }}</p>
       {% endif %}
 
-      {% if not (beta or untrusted) and not user.is_authenticated %}
+      {% if wiki and not untrusted and not user.is_authenticated %}
       {% include "socialaccount/snippets/provider_list.html" %}
       {% endif %}
 

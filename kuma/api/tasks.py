@@ -141,7 +141,7 @@ def publish(doc_pks, log=None, completion_message=None,
                 data = document_api_data(redirect_url=redirect_url)
                 kwargs.update(Body=json.dumps(data))
         else:
-            data = document_api_data(doc, ensure_contributors=True)
+            data = document_api_data(doc)
             kwargs.update(Body=json.dumps(data))
         s3_object = s3_bucket.put_object(**kwargs)
         log.info('Published {!r}'.format(s3_object))

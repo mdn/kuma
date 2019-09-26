@@ -18,8 +18,8 @@ class Command(ScrapeCommand):
                             help='Sample specification file')
         parser.add_argument('--host',
                             help=('Where to sample MDN from (default'
-                                  ' "developer.mozilla.org")'),
-                            default='developer.mozilla.org')
+                                  ' "wiki.developer.mozilla.org")'),
+                            default='wiki.developer.mozilla.org')
         parser.add_argument('--nossl',
                             help='Disable SSL',
                             action='store_false',

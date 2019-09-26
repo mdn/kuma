@@ -51,7 +51,7 @@ describe('Titlebar', () => {
                     title="test"
                     document={{
                         ...fakeDocumentData,
-                        editURL: 'foobar$edit'
+                        wikiURL: 'foobar'
                     }}
                 />
             </UserProvider.context.Provider>

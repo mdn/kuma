@@ -140,14 +140,14 @@ class EventsRedirectTest(KumaTestCase):
     'http_method', ['get', 'put', 'delete', 'options', 'head'])
 def test_setting_language_cookie_disallowed_methods(client, http_method):
     url = reverse('set-language-cookie')
-    response = getattr(client, http_method)(url, {'language': 'bn-BD'})
+    response = getattr(client, http_method)(url, {'language': 'bn'})
     assert response.status_code == 405
     assert_no_cache_header(response)
 
 
 def test_setting_language_cookie_working(client):
     url = reverse('set-language-cookie')
-    response = client.post(url, {'language': 'bn-BD'})
+    response = client.post(url, {'language': 'bn'})
     assert response.status_code == 204
     assert_no_cache_header(response)
 
@@ -155,7 +155,7 @@ def test_setting_language_cookie_working(client):
 
     # Check language cookie is set
     assert lang_cookie
-    assert lang_cookie.value == 'bn-BD'
+    assert lang_cookie.value == 'bn'
     # Check that the max-age from the cookie is the same as our settings
     assert lang_cookie['max-age'] == settings.LANGUAGE_COOKIE_AGE
 

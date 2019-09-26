@@ -14,10 +14,7 @@ from django.utils.http import urlquote
 
 from .jobs import BannedIPsJob
 from .urlresolvers import reverse
-from .utils import add_shared_cache_control
-
-
-HOUR = 60 * 60
+from .utils import add_shared_cache_control, is_wiki, redirect_to_wiki
 
 
 def shared_cache_control(func=None, **kwargs):
@@ -45,9 +42,6 @@ def shared_cache_control(func=None, **kwargs):
     if func:
         return _shared_cache_controller(func)
     return _shared_cache_controller
-
-
-beta_shared_cache_control = shared_cache_control(s_maxage=HOUR)
 
 
 def user_access_decorator(redirect_func, redirect_url_func, deny_func=None,
@@ -202,6 +196,20 @@ def redirect_in_maintenance_mode(func=None, methods=None):
         if (settings.MAINTENANCE_MODE and
                 ((methods is None) or (request.method in methods))):
             return redirect('maintenance_mode')
+        return func(request, *args, **kwargs)
+
+    return wrapped
+
+
+def ensure_wiki_domain(func):
+    """
+    Decorator for view functions. If this request is not for the Wiki domain,
+    redirect it to that domain.
+    """
+    @wraps(func)
+    def wrapped(request, *args, **kwargs):
+        if not is_wiki(request):
+            return redirect_to_wiki(request)
         return func(request, *args, **kwargs)
 
     return wrapped

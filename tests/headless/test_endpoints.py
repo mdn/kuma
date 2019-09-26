@@ -123,14 +123,6 @@ def test_hreflang_basic(base_url):
 
 @pytest.mark.headless
 @pytest.mark.nondestructive
-def test_beta_endpoint_not_on_wiki(wiki_site_url):
-    """Ensure that this beta endpoint is not provided by the wiki site."""
-    resp = requests.get(wiki_site_url + '/api/v1/whoami')
-    assert resp.status_code == 404
-
-
-@pytest.mark.headless
-@pytest.mark.nondestructive
 @pytest.mark.parametrize(
     'uri,expected_keys',
     [('/api/v1/whoami', ('username', 'is_staff', 'is_authenticated', 'timezone',
@@ -139,18 +131,16 @@ def test_beta_endpoint_not_on_wiki(wiki_site_url):
                                                       'tocHTML', 'bodyHTML',
                                                       'id', 'quickLinksHTML',
                                                       'parents', 'translations',
-                                                      'editURL', 'summary',
+                                                      'wikiURL', 'summary',
                                                       'language',
-                                                      'contributors',
                                                       'lastModified',
-                                                      'lastModifiedBy',
                                                       'absoluteURL')),
                                     'redirectURL'))],
-    ids=('whomai', 'doc')
+    ids=('whoami', 'doc')
 )
-def test_beta_api_basic(beta_site_url, uri, expected_keys):
+def test_beta_api_basic(base_url, uri, expected_keys):
     """Basic test of beta site's api endpoints."""
-    resp = requests.get(beta_site_url + uri)
+    resp = requests.get(base_url + uri)
     assert resp.status_code == 200
     assert resp.headers.get('content-type') == 'application/json'
     data = resp.json()
@@ -166,8 +156,8 @@ def test_beta_api_basic(beta_site_url, uri, expected_keys):
 
 @pytest.mark.headless
 @pytest.mark.nondestructive
-def test_api_doc_404(beta_site_url):
+def test_api_doc_404(base_url):
     """Ensure that the beta site's doc api returns 404 for unknown docs."""
-    url = beta_site_url + '/api/v1/doc/en-US/NoSuchPage'
+    url = base_url + '/api/v1/doc/en-US/NoSuchPage'
     resp = requests.get(url)
     assert resp.status_code == 404

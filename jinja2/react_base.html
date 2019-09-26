@@ -1,9 +1,9 @@
-{% set beta = settings.ENABLE_RESTRICTIONS_BY_HOST and is_beta(request) %}
-{% set untrusted = settings.ENABLE_RESTRICTIONS_BY_HOST and is_untrusted(request) %}
+{% set wiki = False %}
+{% set untrusted = False %}
 
 <!DOCTYPE html>
 <html lang="{% block lang %}{{ LANG }}{% endblock %}" dir="{{ DIR }}" class="no-js">
-<head {%- if not untrusted %} prefix="og: http://ogp.me/ns#"{% endif %}>
+<head prefix="og: http://ogp.me/ns#">
   <meta charset="utf-8">
   {%- block experiment_js %}{% endblock %}
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -21,13 +21,10 @@
 
   {% include "includes/preload.html" %}
 
-  {%- if not untrusted %}
-    <link rel="home" href="{{ url('home') }}">
-    <link rel="license" href="#license">
-  {% endif %}
+  <link rel="home" href="{{ url('home') }}">
+  <link rel="license" href="#license">
 
   {% block site_css %}
-
     {% stylesheet 'react-mdn' %}
   {% endblock %}
 
@@ -47,20 +44,18 @@
 
   {% block perfhead %}{% endblock %}
 
-  {%- if not untrusted %}
-    {%- block site_meta %}
-    <!-- common social tags -->
-    {% set social_logo = request.build_absolute_uri(static('img/opengraph-logo.png')) %}
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="{{ social_logo }}">
-    <meta property="og:site_name" content="{{ _('MDN Web Docs') }}">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:image" content="{{ social_logo }}">
-    <meta name="twitter:site" content="@MozDevNet">
-    <meta name="twitter:creator" content="@MozDevNet">
-    <link rel="search" type="application/opensearchdescription+xml" href="{{ settings.SITE_URL }}/{{ request.LANGUAGE_CODE }}/search/xml" title="{{ _('MDN Web Docs') }}">
-    {% endblock %}
-  {% endif %}
+  {%- block site_meta %}
+  <!-- common social tags -->
+  {% set social_logo = request.build_absolute_uri(static('img/opengraph-logo.png')) %}
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="{{ social_logo }}">
+  <meta property="og:site_name" content="{{ _('MDN Web Docs') }}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:image" content="{{ social_logo }}">
+  <meta name="twitter:site" content="@MozDevNet">
+  <meta name="twitter:creator" content="@MozDevNet">
+  <link rel="search" type="application/opensearchdescription+xml" href="{{ settings.SITE_URL }}/{{ request.LANGUAGE_CODE }}/search/xml" title="{{ _('MDN Web Docs') }}">
+  {% endblock %}
   <!-- third-generation iPad with high-resolution Retina display: -->
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ static('img/favicon144.png') }}">
   <!-- iPhone with high-resolution Retina display: -->
@@ -77,6 +72,10 @@
   <![endif]-->
 
   {% block extrahead %}{% endblock %}
+  
+  {% block printstyle %}
+    {% stylesheet 'print' %}
+  {% endblock %}
 </head>
 <body {% block body_attributes %}{% endblock %} class="{% block bodyclass %}{% endblock %}{% if settings.MAINTENANCE_MODE %} maintenance-mode{% endif %}"{% if request.user and request.user.is_authenticated %} data-login-service="{{ request.session.sociallogin_provider }}"{% endif %}>
 
@@ -88,9 +87,6 @@
         <p>
           <bdi>
             {{ _('MDN is currently in read-only maintenance mode.') }}
-            {%- if not (beta or untrusted) %}
-            <a href="{{ url('maintenance_mode') }}">{{ _('Learn more') }}</a>.
-            {%- endif %}
           </bdi>
         </p>
       </div>
@@ -98,6 +94,9 @@
   {%- else %}
     {{ soapbox_messages(get_soapbox_messages(request.path)) }}
   {%- endif %}
+
+  <!-- Header -->
+  {% block pageheader %}{% endblock %}
 
   <!-- Content will go here -->
   <main id="content">
@@ -109,35 +108,33 @@
 
   {%- block contrib_popup %}{# Inject contributions popup where needed #}{% endblock %}
 
-  {%- if not untrusted %}
   <!-- Footer -->
-    <footer id="nav-footer" class="nav-footer">
-      <div class="center">
-          {% include "includes/footer/mdn-footer.html" %}
+  <footer id="nav-footer" class="nav-footer">
+    <div class="center">
+        {% include "includes/footer/mdn-footer.html" %}
 
-          {% include "includes/footer/moz-footer.html" %}
+        {% include "includes/footer/moz-footer.html" %}
 
-          {% block lang_switcher %}
-            {% include "includes/lang_switcher.html" %}
-          {% endblock %}
+        {% block lang_switcher %}
+          {% include "includes/lang_switcher.html" %}
+        {% endblock %}
 
-          {% block footer_copyright %}
-            <ul class="footer-tos">
-              <li><a href="https://www.mozilla.org/about/legal/terms/mozilla">{{ _('Terms') }}</a></li>
-              <li><a href="https://www.mozilla.org/privacy/websites/">{{ _('Privacy') }}</a></li>
-              <li><a href="https://www.mozilla.org/privacy/websites/#cookies">{{ _('Cookies') }}</a></li>
-            </ul>
+        {% block footer_copyright %}
+          <ul class="footer-tos">
+            <li><a href="https://www.mozilla.org/about/legal/terms/mozilla">{{ _('Terms') }}</a></li>
+            <li><a href="https://www.mozilla.org/privacy/websites/">{{ _('Privacy') }}</a></li>
+            <li><a href="https://www.mozilla.org/privacy/websites/#cookies">{{ _('Cookies') }}</a></li>
+          </ul>
 
-            <div id="license" class="contentinfo">
-              {% trans copyright_url='/en-US/docs/MDN/About#Copyrights_and_licenses', thisyear=thisyear() %}
-                <p>&copy; 2005-{{ thisyear }} Mozilla and individual contributors.</p>
-                <p>Content is available under <a href="{{ copyright_url }}">these licenses</a>.</p>
-              {% endtrans %}
-            </div>
-          {% endblock %}
-      </div>
-    </footer>
-    {%- endif %} {# if not untrusted #}
+          <div id="license" class="contentinfo">
+            {% trans copyright_url='/en-US/docs/MDN/About#Copyrights_and_licenses', thisyear=thisyear() %}
+              <p>&copy; 2005-{{ thisyear }} Mozilla and individual contributors.</p>
+              <p>Content is available under <a href="{{ copyright_url }}">these licenses</a>.</p>
+            {% endtrans %}
+          </div>
+        {% endblock %}
+    </div>
+  </footer>
 
   <!-- site js -->
   {% block site_js %}

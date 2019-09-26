@@ -1,0 +1,33 @@
+.header-search {
+    grid-area: S;
+    display: flex;
+    flex: 2 1;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 2px 8px;
+    border: 2px solid $text-color;
+    border-radius: 20px;
+    height: 40px;
+    min-width: 80px;
+
+    .search-icon {
+        flex: 0 0 20px;
+        fill: $text-color;
+    }
+
+    input.search-input-field {
+        flex: 1 1 100px;
+        color: $text-color;
+        border-width: 0;
+        font-size: $tiny-font-size;
+        min-width: 60px;
+        max-width: 320px;
+
+        &:invalid {
+            border: 0;
+            outline: none;
+            box-shadow: none;
+        }
+    }
+}

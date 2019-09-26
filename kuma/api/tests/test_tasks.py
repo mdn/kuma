@@ -86,7 +86,7 @@ def test_publish_standard(get_s3_bucket_mock, root_doc, invalidate_cdn_cache):
     s3_bucket_mock.put_object.assert_called_once_with(
         ACL='public-read',
         Key=get_s3_key(root_doc),
-        Body=json.dumps(document_api_data(root_doc, ensure_contributors=True)),
+        Body=json.dumps(document_api_data(root_doc)),
         ContentType='application/json',
         ContentLanguage=root_doc.locale
     )
@@ -170,7 +170,7 @@ def test_publish_multiple(get_s3_bucket_mock, root_doc, redirect_doc,
             ACL='public-read',
             Key=get_s3_key(root_doc),
             Body=json.dumps(
-                document_api_data(root_doc, ensure_contributors=True)),
+                document_api_data(root_doc)),
             ContentType='application/json',
             ContentLanguage=root_doc.locale
         ),

@@ -249,7 +249,7 @@ def test_revision_form_normalize_unicode(root_doc, rf):
 def test_document_form_normalize_unicode(root_doc, rf):
     """Document slugs are normalized to NFC, required for URLs."""
 
-    raw_slug = u'ফায়ারফক্স'  # "Firefox" in Bengali (bn-BD)
+    raw_slug = u'ফায়ারফক্স'  # "Firefox" in Bengali (bn)
 
     # This slug is the same in NFC, NFD, NFKD, and NFKD. The second character
     # has these codepoints:

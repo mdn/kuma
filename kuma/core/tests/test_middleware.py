@@ -74,11 +74,10 @@ def test_force_anonymous_session_middleware(rf, settings):
 
 @pytest.mark.parametrize(
     'host,key,expected',
-    (('beta', 'BETA_HOST', 'kuma.urls_beta'),
-     ('beta-origin', 'BETA_ORIGIN', 'kuma.urls_beta'),
+    (('wiki', 'WIKI_HOST', None),
      ('demos', 'ATTACHMENT_HOST', 'kuma.urls_untrusted'),
      ('demos-origin', 'ATTACHMENT_ORIGIN', 'kuma.urls_untrusted')),
-    ids=('beta', 'beta-origin', 'attachment', 'attachment-origin')
+    ids=('wiki', 'attachment', 'attachment-origin')
 )
 def test_restricted_endpoints_middleware(rf, settings, host, key, expected):
     setattr(settings, key, host)
@@ -87,11 +86,10 @@ def test_restricted_endpoints_middleware(rf, settings, host, key, expected):
     middleware = RestrictedEndpointsMiddleware(lambda req: None)
     request = rf.get('/foo', HTTP_HOST=host)
     middleware(request)
-    assert request.urlconf == expected
-
-    request = rf.get('/foo', HTTP_HOST='testserver')
-    middleware(request)
-    assert not hasattr(request, 'urlconf')
+    if expected:
+        assert request.urlconf == expected
+    else:
+        assert not hasattr(request, 'urlconf')
 
 
 def test_restricted_endpoints_middleware_when_disabled(settings):

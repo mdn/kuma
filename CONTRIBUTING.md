@@ -3,14 +3,14 @@ Things to know when contributing code
 * You agree to license your contributions under [MPL 2][MPL2].
 * You agreed to follow the [Code of Conduct][coc].
 * Discuss large changes in [Discourse][discourse] or on a
-  [bugzilla bug][mdn-backlog] before coding.
+  [GitHub issue][bugs] before coding.
 * We don't accept pull requests for translated strings (anything under
   ``locale/``). Please use [Pontoon][pontoon] instead.
 
 [MPL2]: http://www.mozilla.org/MPL/2.0/
 [coc]: https://github.com/mozilla/kuma/blob/master/CODE_OF_CONDUCT.md
 [discourse]: https://discourse.mozilla.org/c/mdn
-[mdn-backlog]: https://mzl.la/2onLvZ8
+[bugs]: https://github.com/mozilla/kuma/issues
 [pontoon]: https://pontoon.mozilla.org/projects/mdn/
 
 What to work on

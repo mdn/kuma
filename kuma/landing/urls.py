@@ -27,10 +27,10 @@ lang_urlpatterns = [
 
 urlpatterns = [
     url(r'^contribute\.json$',
-        shared_cache_control(views.contribute_json),
+        views.contribute_json,
         name='contribute_json'),
     url(r'^robots.txt$',
-        shared_cache_control(views.robots_txt),
+        views.robots_txt,
         name='robots_txt'),
     url(r'^favicon.ico$',
         shared_cache_control(views.FaviconRedirect.as_view(), s_maxage=MONTH),

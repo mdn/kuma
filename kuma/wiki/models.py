@@ -1275,7 +1275,11 @@ Full traceback:
     def get_absolute_url(self, endpoint='wiki.document', urlconf='kuma.urls',
                          **kwargs):
         """
-        Build the absolute URL to this document from its full path
+        Build the absolute URL to this document from its full path. We're
+        explicitly setting the "urlconf" because this can be called from
+        the "untrusted" (attachments) domain (which doesn't support the
+        "wiki.document" endpoint) when freshly-rendered HTML is needed
+        during a request for a code sample.
         """
         return reverse(endpoint, locale=self.locale, args=[self.slug],
                        urlconf=urlconf, **kwargs)
@@ -1691,7 +1695,7 @@ class Revision(models.Model):
     def get_absolute_url(self):
         """Build the absolute URL to this revision"""
         return reverse('wiki.revision', args=[self.document.slug, self.pk],
-                       locale=self.document.locale, urlconf='kuma.urls')
+                       locale=self.document.locale)
 
     def _based_on_is_clean(self):
         """Return a tuple: (the correct value of based_on, whether the old

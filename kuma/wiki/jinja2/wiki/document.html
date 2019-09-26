@@ -59,7 +59,6 @@
 {% endblock %}
 
 {% block extrahead %}
-  <link rel="dns-prefetch" href="https://interactive-examples.mdn.mozilla.net" pr="0.75" />
   <link rel="preconnect" href="https://interactive-examples.mdn.mozilla.net" pr="0.75" />
 
   <link rel="alternate" type="application/json" href="{{ url('wiki.json_slug', document.slug) | absolutify }}">
@@ -83,6 +82,10 @@
   <meta name="description" content="{{ seo_summary }}">
   <meta name="twitter:description" content="{{ seo_summary }}">
   {% endif %}
+{% endblock %}
+
+{% block printstyle %}
+  {% stylesheet 'print' %}
 {% endblock %}
 
 {% block wiki_notice %}

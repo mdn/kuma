@@ -4,8 +4,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext
 from django.views.decorators.cache import never_cache
 
-from kuma.core.decorators import (block_user_agents, login_required,
-                                  permission_required)
+from kuma.core.decorators import (block_user_agents, ensure_wiki_domain,
+                                  login_required, permission_required)
 from kuma.core.urlresolvers import reverse
 
 from ..decorators import check_readonly, process_document_path
@@ -14,6 +14,7 @@ from ..models import Document, DocumentDeletionLog, Revision
 from ..utils import locale_and_slug_from_path
 
 
+@ensure_wiki_domain
 @never_cache
 @block_user_agents
 @login_required
@@ -58,6 +59,7 @@ def revert_document(request, document_path, revision_id):
         return redirect('wiki.document_revisions', revision.document.slug)
 
 
+@ensure_wiki_domain
 @never_cache
 @block_user_agents
 @login_required
@@ -102,6 +104,7 @@ def delete_document(request, document_slug, document_locale):
     return render(request, 'wiki/confirm_document_delete.html', context)
 
 
+@ensure_wiki_domain
 @never_cache
 @block_user_agents
 @login_required
@@ -119,6 +122,7 @@ def restore_document(request, document_slug, document_locale):
     return redirect(document)
 
 
+@ensure_wiki_domain
 @never_cache
 @block_user_agents
 @login_required

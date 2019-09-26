@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
 
+from kuma.core.decorators import ensure_wiki_domain
 from kuma.core.utils import paginate
 
 from .forms import KeyForm
@@ -11,6 +12,7 @@ from .models import Key
 ITEMS_PER_PAGE = 15
 
 
+@ensure_wiki_domain
 @login_required
 @permission_required('authkeys.add_key', raise_exception=True)
 def new(request):
@@ -29,12 +31,14 @@ def new(request):
     return render(request, 'authkeys/new.html', context)
 
 
+@ensure_wiki_domain
 @login_required
 def list(request):
     keys = Key.objects.filter(user=request.user)
     return render(request, 'authkeys/list.html', dict(keys=keys))
 
 
+@ensure_wiki_domain
 @login_required
 def history(request, pk):
     key = get_object_or_404(Key, pk=pk)
@@ -49,6 +53,7 @@ def history(request, pk):
     return render(request, 'authkeys/history.html', context)
 
 
+@ensure_wiki_domain
 @login_required
 @permission_required('authkeys.delete_key', raise_exception=True)
 def delete(request, pk):

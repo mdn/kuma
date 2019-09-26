@@ -1,4 +1,4 @@
-{% set beta = settings.ENABLE_RESTRICTIONS_BY_HOST and is_beta(request) %}
+{% set wiki = is_wiki(request) %}
 {% set untrusted = settings.ENABLE_RESTRICTIONS_BY_HOST and is_untrusted(request) %}
 
 <!DOCTYPE html>
@@ -84,6 +84,9 @@
   <![endif]-->
 
   {% block extrahead %}{% endblock %}
+  {% block printstyle %}
+    {% stylesheet 'print' %}
+  {% endblock %}
 </head>
 <body {% block body_attributes %}{% endblock %} class="{% block bodyclass %}{% endblock %}{% if settings.MAINTENANCE_MODE %} maintenance-mode{% endif %}"{% if request.user and request.user.is_authenticated %} data-login-service="{{ request.session.sociallogin_provider }}"{% endif %}>
 
@@ -113,9 +116,6 @@
     {% block wiki_notice %}{% endblock %}
 
     <!-- Header -->
-    {%- if beta %}
-    <header id="react-header"></header>
-    {%- else %}
     <header id="main-header" class="header-main">
       <a href="{{ url('home') }}" class="logo">{{ _('MDN Web Docs') }}</a>
       <div class="nav-toolbox-wrapper">
@@ -124,7 +124,6 @@
       </div>
       {% include "includes/nav-main-search.html" %}
     </header>
-    {%- endif %} {# if beta #}
 
   {%- endif %} {# if not untrusted #}
 

@@ -29,15 +29,11 @@ Components that may appear on most wiki pages
 @import 'components/wiki/toc';
 @import 'components/wiki/topicpage-table';
 @import 'components/wiki/kserrors';
-@import 'components/wiki/page-print';
-@import 'components/wiki/edit-section';
-@import 'components/wiki/offline-dialog-content';
 @import 'components/wiki/intrinsic';
 @import 'components/wiki/properties';
 @import 'components/wiki/spec';
 @import 'components/wiki/indicators';
 @import 'components/wiki/glossaryLink';
-@import 'components/wiki/communitybox';
 @import 'components/wiki/mega';
 @import 'components/wiki/interactive';
 
@@ -84,10 +80,3 @@ Delete, move or revert pages.
 @import 'components/wiki/doc-source';
 @import 'components/wiki/delete-document';
 @import 'components/wiki/delete-revision';
-
-
-/*
-Promos
-====================================================================== */
-
-@import 'components/wiki/promos';
