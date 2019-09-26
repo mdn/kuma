@@ -284,22 +284,21 @@ def test_whoami(user_client, wiki_user, wiki_user_github_account,
 
 
 @pytest.mark.django_db
-def test_search_validation_problems(user_client, api_settings):
+def test_search_validation_problems(user_client):
     url = reverse('api.v1.search', args=['en-US'])
 
     # 'q' not present
-    response = user_client.get(url, HTTP_HOST=api_settings.BETA_HOST)
+    response = user_client.get(url)
     assert response.status_code == 400
     assert response.json()['error'] == "Search term 'q' must be set"
 
     # 'q' present but falsy
-    response = user_client.get(url, {'q': ''}, HTTP_HOST=api_settings.BETA_HOST)
+    response = user_client.get(url, {'q': ''})
     assert response.status_code == 400
     assert response.json()['error'] == "Search term 'q' must be set"
 
     # 'q' present but locale invalid
-    response = user_client.get(
-        url, {'q': 'x', 'locale': 'xxx'}, HTTP_HOST=api_settings.BETA_HOST)
+    response = user_client.get(url, {'q': 'x', 'locale': 'xxx'})
     assert response.status_code == 400
     assert response.json()['error'] == 'Not a valid locale code'
 
