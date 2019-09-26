@@ -123,6 +123,13 @@ class DocumentJSONFeedGenerator(SyndicationFeed):
             if not valid_jsonp_callback_value(callback):
                 callback = None
 
+        user_to_avatar_map = {}
+
+        def get_avatar_url_cached(user):
+            if user.id not in user_to_avatar_map:
+                user_to_avatar_map[user.id] = get_avatar_url(user)
+            return user_to_avatar_map[user.id]
+
         items_out = []
         for item in self.items:
             document = item['obj']
@@ -142,7 +149,8 @@ class DocumentJSONFeedGenerator(SyndicationFeed):
                 revision = document
 
             if revision.creator:
-                item_out['author_avatar'] = get_avatar_url(revision.creator)
+                item_out['author_avatar'] = get_avatar_url_cached(
+                    revision.creator)
 
             summary = getattr(revision, 'summary', None)
             if summary:
