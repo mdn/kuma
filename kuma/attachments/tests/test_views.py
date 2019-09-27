@@ -57,6 +57,14 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
         assert rev.comment == 'Initial upload'
         assert rev.is_approved
 
+    @override_config(WIKI_ATTACHMENTS_DISABLE_UPLOAD=True)
+    def test_disabled_edit_attachment(self):
+        response = self._post_attachment()
+        assert_no_cache_header(response)
+        self.assertEqual(response.status_code, 403)  # HTTP 403 Forbidden
+        with self.assertRaises(Attachment.DoesNotExist):
+            Attachment.objects.get(title='Test uploaded file')
+
     def test_get_previous(self):
         """
         AttachmentRevision.get_previous() should return this revisions's
