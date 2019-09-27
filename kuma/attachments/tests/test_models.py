@@ -1,5 +1,6 @@
 import datetime
 
+from constance.test import override_config
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.files.base import ContentFile
@@ -184,3 +185,9 @@ class AttachmentModelTests(UserTestCase):
         u7.user_permissions.add(p2)
         u7.save()
         self.assertTrue(allow_add_attachment_by(u7))
+
+    @override_config(WIKI_ATTACHMENTS_DISABLE_UPLOAD=True)
+    def test_permissions_when_disabled(self):
+        # All users, including superusers, are denied
+        admin = self.user_model.objects.get(username='admin')
+        self.assertFalse(allow_add_attachment_by(admin))
