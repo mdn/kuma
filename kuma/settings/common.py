@@ -479,7 +479,7 @@ AUTH_USER_MODEL = 'users.User'
 USER_AVATAR_PATH = 'uploads/avatars/'
 
 if urlsplit(STATIC_URL).hostname in (None, 'localhost'):
-    # Gravatar needs a publicly available default image
+    # Avatar needs a publicly available default image
     DEFAULT_AVATAR = PRODUCTION_URL + '/static/img/avatar.png'
 else:
     DEFAULT_AVATAR = STATIC_URL + 'img/avatar.png'
@@ -1336,7 +1336,7 @@ CSP_IMG_SRC = [
     BETA_SITE_URL,
     "data:",
     PROTOCOL + "i2.wp.com",
-    "https://secure.gravatar.com",
+    "https://*.githubusercontent.com",
     "https://www.google-analytics.com",
     _PROD_ATTACHMENT_SITE_URL,
     WIKI_SITE_URL,

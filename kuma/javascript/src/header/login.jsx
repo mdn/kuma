@@ -26,12 +26,12 @@ export default function Login(): React.Node {
 
     if (userData.isAuthenticated && userData.username) {
         // If we have user data and the user is logged in, show their
-        // profile pic, defaulting to the dino head if the gravatar
-        // URLs don't work.
+        // profile pic, defaulting to the dino head if the avatar
+        // URL doesn't work.
         let label = (
             <img
-                srcSet={`${userData.gravatarUrl.large || ''} 200w, ${userData
-                    .gravatarUrl.small || ''} 50w`}
+                srcSet={`${userData.avatarUrl ||
+                    ''} 200w, ${userData.avatarUrl || ''} 50w`}
                 src={'/static/img/avatar.png'}
                 className="avatar"
                 alt={userData.username}

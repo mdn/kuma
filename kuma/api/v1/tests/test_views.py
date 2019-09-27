@@ -8,7 +8,6 @@ from kuma.api.v1.views import (document_api_data, get_content_based_redirect,
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.search.tests import ElasticTestCase
-from kuma.users.templatetags.jinja_helpers import gravatar_url
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
@@ -209,10 +208,7 @@ def test_whoami_anonymous(client, api_settings, timezone):
         'is_staff': False,
         'is_superuser': False,
         'is_beta_tester': False,
-        'gravatar_url': {
-            'small': None,
-            'large': None,
-        },
+        'avatar_url': None,
         'waffle': {
             'flags': {
                 'section_edit': False,
@@ -238,8 +234,9 @@ def test_whoami_anonymous(client, api_settings, timezone):
     [('US/Eastern', False, False, False),
      ('US/Pacific', True, True, True)],
     ids=('muggle', 'wizard'))
-def test_whoami(user_client, api_settings, wiki_user, beta_testers_group,
-                timezone, is_staff, is_superuser, is_beta_tester):
+def test_whoami(user_client, api_settings, wiki_user, wiki_user_github_account,
+                beta_testers_group, timezone, is_staff, is_superuser,
+                is_beta_tester):
     """Test responses for logged-in users."""
     # Create some fake waffle objects
     Flag.objects.create(name='section_edit', authenticated=True)
@@ -268,10 +265,7 @@ def test_whoami(user_client, api_settings, wiki_user, beta_testers_group,
         'is_staff': is_staff,
         'is_superuser': is_superuser,
         'is_beta_tester': is_beta_tester,
-        'gravatar_url': {
-            'small': gravatar_url(wiki_user.email, size=50),
-            'large': gravatar_url(wiki_user.email, size=200),
-        },
+        'avatar_url': wiki_user_github_account.get_avatar_url(),
         'waffle': {
             'flags': {
                 'section_edit': True,

@@ -34,18 +34,6 @@ from ..signup import SignupForm
 from ..views import delete_document, revert_document
 
 
-@pytest.fixture
-def wiki_user_github_account(wiki_user):
-    return SocialAccount.objects.create(
-        user=wiki_user,
-        provider='github',
-        extra_data=dict(
-            email=wiki_user.email,
-            html_url="https://github.com/{}".format(wiki_user.username)
-        )
-    )
-
-
 def test_old_profile_url_gone(db, client):
     response = client.get('/users/edit', follow=True)
     assert response.status_code == 404

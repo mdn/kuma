@@ -26,7 +26,7 @@ class HumansTest(TestCase):
         data = json.load(open(CONTRIBUTORS_JSON, 'rb'))
         ht = HumansTXT()
         humans = ht.get_github(data)
-        assert len(humans) == 19
+        assert len(humans) == 8
 
     def test_for_login_name_when_no_name(self):
         """
@@ -37,10 +37,10 @@ class HumansTest(TestCase):
         humans = ht.get_github(data)
         human = Human()
         for h in humans:
-            if h.name == "chengwang":
+            if h.name == "stephaniehobson":
                 human = h
 
-        assert human.name == "chengwang"
+        assert human.name == "stephaniehobson"
 
     def test_write_to_file(self):
         human1 = Human()

@@ -69,7 +69,7 @@ describe('UserProvider', () => {
                         is_staff: true,
                         is_super_user: false,
                         timezone: null,
-                        gravatar_url: { small: null, large: null },
+                        avatar_url: null,
                         waffle: waffleFlags
                     })
             });

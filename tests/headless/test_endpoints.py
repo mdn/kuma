@@ -126,7 +126,7 @@ def test_hreflang_basic(base_url):
 @pytest.mark.parametrize(
     'uri,expected_keys',
     [('/api/v1/whoami', ('username', 'is_staff', 'is_authenticated', 'timezone',
-                         'is_beta_tester', 'gravatar_url', 'is_superuser')),
+                         'is_beta_tester', 'avatar_url', 'is_superuser')),
      ('/api/v1/doc/en-US/Web/CSS', (('documentData', ('locale', 'title', 'slug',
                                                       'tocHTML', 'bodyHTML',
                                                       'id', 'quickLinksHTML',
