@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 
 from django.conf import settings
+from django.core.files.storage import default_storage
 from django.db import models
 from django.db.utils import IntegrityError
 from django.utils.functional import cached_property
@@ -9,6 +10,12 @@ from django.utils.translation import ugettext_lazy as _
 from django_mysql.models import Model as MySQLModel
 
 from .utils import attachment_upload_to, full_attachment_url
+
+
+if settings.ATTACHMENTS_USE_S3:
+    raise NotImplementedError
+else:
+    storage = default_storage
 
 
 class Attachment(models.Model):
@@ -100,7 +107,11 @@ class AttachmentRevision(models.Model):
     attachment = models.ForeignKey(Attachment, related_name='revisions',
                                    on_delete=models.CASCADE)
 
-    file = models.FileField(upload_to=attachment_upload_to, max_length=500)
+    file = models.FileField(
+        storage=storage,
+        upload_to=attachment_upload_to,
+        max_length=500,
+    )
 
     title = models.CharField(max_length=255, null=True, db_index=True)
 
@@ -210,6 +221,7 @@ class AttachmentRevision(models.Model):
 class TrashedAttachment(MySQLModel):
 
     file = models.FileField(
+        storage=storage,
         upload_to=attachment_upload_to,
         max_length=500,
         help_text=_('The attachment file that was trashed'),

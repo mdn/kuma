@@ -1828,6 +1828,9 @@ SSR_TIMEOUT = float(config('SSR_TIMEOUT', default='1'))
 # Setting for configuring the AWS S3 bucket name used for the document API.
 MDN_API_S3_BUCKET_NAME = config('MDN_API_S3_BUCKET_NAME', default=None)
 
+# Serve and upload attachments via S3, instead of the local filesystem
+ATTACHMENTS_USE_S3 = config('ATTACHMENTS_USE_S3', default=False, cast=bool)
+
 # When we potentially have multiple CDN distributions that do different
 # things.
 # Inside kuma, when a document is considered "changed", we trigger

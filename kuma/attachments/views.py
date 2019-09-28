@@ -42,12 +42,18 @@ def raw_file(request, attachment_id, filename):
         raise Http404
 
     if is_untrusted(request):
-        rev = attachment.current_revision
-        response = StreamingHttpResponse(rev.file, content_type=rev.mime_type)
-        response['Content-Length'] = rev.file.size
-        response['Last-Modified'] = convert_to_http_date(rev.created)
-        response['X-Frame-Options'] = 'ALLOW-FROM %s' % settings.DOMAIN
-        return response
+        # Request's Host is a supported domain for attachments...
+        if settings.ATTACHMENTS_USE_S3:
+            # ...redirect to S3
+            raise NotImplementedError
+        else:
+            # ...or serve from the local filesystem
+            rev = attachment.current_revision
+            response = StreamingHttpResponse(rev.file, content_type=rev.mime_type)
+            response['Content-Length'] = rev.file.size
+            response['Last-Modified'] = convert_to_http_date(rev.created)
+            response['X-Frame-Options'] = f'ALLOW-FROM {settings.DOMAIN}'
+            return response
 
     return redirect(attachment.get_file_url(), permanent=True)
 
