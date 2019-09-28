@@ -1,3 +1,6 @@
+from collections import OrderedDict
+from operator import attrgetter
+
 from django.conf import settings
 from django.http import HttpResponsePermanentRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
@@ -6,6 +9,7 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
 from rest_framework import serializers, status
 from rest_framework.decorators import api_view
+from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from waffle.decorators import waffle_flag
@@ -14,14 +18,25 @@ from waffle.models import Flag, Sample, Switch
 from kuma.api.v1.serializers import BCSignalSerializer
 from kuma.core.urlresolvers import reverse
 from kuma.search.filters import (
+    get_filters,
     HighlightFilterBackend,
     KeywordQueryBackend,
     LanguageFilterBackend,
     SearchQueryBackend,
     TagGroupFilterBackend)
-from kuma.search.views import SearchView
+from kuma.search.jobs import AvailableFiltersJob
+from kuma.search.pagination import SearchPagination
+from kuma.search.queries import Filter, FilterGroup
+from kuma.search.renderers import ExtendedTemplateHTMLRenderer
+from kuma.search.serializers import (
+    DocumentSerializer,
+    FacetedFilterSerializer,
+    FilterWithGroupSerializer,
+    SearchQuerySerializer)
+from kuma.search.utils import QueryURLObject
 from kuma.users.templatetags.jinja_helpers import get_avatar_url
 from kuma.wiki.models import Document
+from kuma.wiki.search import WikiDocumentType
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
@@ -262,6 +277,110 @@ class APISearchQueryBackend(SearchQueryBackend):
                 {'error': "Search term 'q' must be set"})
         return super(APISearchQueryBackend, self).filter_queryset(
             request, queryset, view)
+
+
+class SearchView(ListAPIView):
+    http_method_names = ['get']
+    serializer_class = DocumentSerializer
+    renderer_classes = (
+        ExtendedTemplateHTMLRenderer,
+        JSONRenderer,
+    )
+    #: list of filters to applies in order of listing, each implementing
+    #: the specific search feature
+    filter_backends = (
+        SearchQueryBackend,
+        KeywordQueryBackend,
+        TagGroupFilterBackend,
+        LanguageFilterBackend,
+        HighlightFilterBackend,
+    )
+    pagination_class = SearchPagination
+
+    def initial(self, request, *args, **kwargs):
+        super(SearchView, self).initial(request, *args, **kwargs)
+        self.current_page = self.request.query_params.get(
+            self.pagination_class.page_query_param,
+            1,
+        )
+        self.available_filters = AvailableFiltersJob().get()
+        self.serialized_filters = (
+            FilterWithGroupSerializer(self.available_filters, many=True).data)
+        self.selected_filters = get_filters(self.request.query_params.getlist)
+        self.query_params = {}
+
+    def get_queryset(self):
+        return WikiDocumentType.search()
+
+    def list(self, request, *args, **kwargs):
+        """
+        We override the `list` method here to store the URL.
+        """
+        # Stash some data here for the serializer.
+        self.url = request.get_full_path()
+        query_params = SearchQuerySerializer(data=request.query_params)
+        query_params.is_valid(raise_exception=True)
+        self.query_params = query_params.data
+        return super(SearchView, self).list(request, *args, **kwargs)
+
+    def get_filters(self, aggregations):
+        url = QueryURLObject(self.url)
+        filter_mapping = OrderedDict(
+            (filter_['slug'], filter_)
+            for filter_ in self.serialized_filters
+        )
+        filter_groups = OrderedDict()
+
+        try:
+            aggs = aggregations or {}
+            facet_counts = [(slug, aggs[slug]['doc_count'])
+                            for slug in filter_mapping.keys()]
+        except KeyError:
+            facet_counts = []
+
+        for slug, count in facet_counts:
+
+            filter_ = filter_mapping.get(slug, None)
+            if filter_ is None:
+                filter_name = slug
+                group_name = None
+                group_slug = None
+            else:
+                # Let's check if we can get the name from the gettext catalog
+                filter_name = _(filter_['name'])
+                group_name = _(filter_['group']['name'])
+                group_slug = filter_['group']['slug']
+
+            filter_groups.setdefault((
+                group_name,
+                group_slug,
+                filter_['group']['order']
+            ), []).append(
+                Filter(
+                    url=url,
+                    page=self.current_page,
+                    name=filter_name,
+                    slug=slug,
+                    count=count,
+                    active=slug in self.selected_filters,
+                    group_name=group_name,
+                    group_slug=group_slug,
+                )
+            )
+
+        # return a sorted list of filters here
+        grouped_filters = []
+        for group_options, filters in filter_groups.items():
+            group_name, group_slug, group_order = group_options
+            sorted_filters = sorted(filters, key=attrgetter('name'))
+            grouped_filters.append(FilterGroup(name=group_name,
+                                               slug=group_slug,
+                                               order=group_order,
+                                               options=sorted_filters))
+        sorted_filters = sorted(grouped_filters,
+                                key=attrgetter('order'),
+                                reverse=True)
+        return FacetedFilterSerializer(sorted_filters, many=True).data
 
 
 class APISearchView(SearchView):

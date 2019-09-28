@@ -17,5 +17,5 @@
 
 {% block document_head %}
 {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(),
-                None, False)|safe }}
+                results)|safe }}
 {% endblock %}
