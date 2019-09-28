@@ -2,12 +2,14 @@
 import { gettext, interpolate } from './l10n.js';
 import { getCookie } from './utils.js';
 
-let bcSignalsRendered = false;
+let bcSignalsInvoked = false;
 
 export function activateBCDSignals(slug: string, locale: string) {
-    if (bcSignalsRendered) {
+    if (bcSignalsInvoked) {
         return;
     }
+    // Set control to true to avoid multiple calls on component rerender
+    bcSignalsInvoked = true;
 
     let bcTable;
     let bcSignalBlock;
@@ -133,7 +135,7 @@ export function activateBCDSignals(slug: string, locale: string) {
                 briefExplanation instanceof HTMLTextAreaElement &&
                 briefExplanation.value &&
                 typeof briefExplanation.value === 'string' &&
-                briefExplanation.value.length > 0
+                briefExplanation.value.trim().length > 0
             ) {
                 sendReportButton.classList.remove('disabled');
             } else {
@@ -223,7 +225,9 @@ export function activateBCDSignals(slug: string, locale: string) {
         })
             .then(function(response) {
                 if (!response.ok) {
-                    throw new Error('Something went wrong');
+                    throw new Error(
+                        `Response was not OK (${response.statusText})`
+                    );
                 }
                 return response;
             })
@@ -460,7 +464,7 @@ export function activateBCDSignals(slug: string, locale: string) {
 
         const errorTextEl = document.createElement('span');
         errorTextEl.innerHTML = gettext(
-            'Sorry, we can’t seem to reach the Server. We are working to fix the problem. Please try again later.'
+            'Sorry, we can’t seem to reach the server. We are working to fix the problem. Please try again later.'
         );
 
         errorMessageWrapper = document.createElement('div');
@@ -797,12 +801,10 @@ export function activateBCDSignals(slug: string, locale: string) {
 
     bcTable = document && document.querySelector('.bc-table');
 
-    if (!bcSignalsRendered && bcTable && bcTable.insertAdjacentElement) {
+    if (bcTable && bcTable.insertAdjacentElement) {
         bcTable.insertAdjacentElement('afterend', signalElem());
         bcTable.insertAdjacentElement('afterend', signalStepsBlock());
         bcTable.insertAdjacentElement('afterend', signalCompleteBlock());
-        // Set control to true to avoid multiple calls on component rerender
-        bcSignalsRendered = true;
     }
 }
 
