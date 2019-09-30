@@ -136,12 +136,12 @@ class AttachmentModelTests(UserTestCase):
 
         # Create a group with the negative permission.
         g1, created = Group.objects.get_or_create(name='cannot_attach')
-        g1.permissions = [p1]
+        g1.permissions.set([p1])
         g1.save()
 
         # Create a group with the positive permission.
         g2, created = Group.objects.get_or_create(name='can_attach')
-        g2.permissions = [p2]
+        g2.permissions.set([p2])
         g2.save()
 
         # User with no explicit permission is allowed
@@ -150,13 +150,13 @@ class AttachmentModelTests(UserTestCase):
 
         # User in group with negative permission is disallowed
         u3 = user(username='test_user3', save=True)
-        u3.groups = [g1]
+        u3.groups.set([g1])
         u3.save()
         self.assertTrue(not allow_add_attachment_by(u3))
 
         # Superusers can do anything, despite group perms
         u1 = user(username='test_super', is_superuser=True, save=True)
-        u1.groups = [g1]
+        u1.groups.set([g1])
         u1.save()
         self.assertTrue(allow_add_attachment_by(u1))
 
@@ -168,14 +168,14 @@ class AttachmentModelTests(UserTestCase):
 
         # User with positive permission overrides group
         u5 = user(username='test_user5', save=True)
-        u5.groups = [g1]
+        u5.groups.set([g1])
         u5.user_permissions.add(p2)
         u5.save()
         self.assertTrue(allow_add_attachment_by(u5))
 
         # Group with positive permission takes priority
         u6 = user(username='test_user6', save=True)
-        u6.groups = [g1, g2]
+        u6.groups.set([g1, g2])
         u6.save()
         self.assertTrue(allow_add_attachment_by(u6))
 
