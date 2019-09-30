@@ -4,7 +4,7 @@ import { getCookie } from './utils.js';
 
 let bcSignalsInvoked = false;
 
-export function activateBCDSignals(slug: string, locale: string) {
+window.activateBCDSignals = (slug: string, locale: string) => {
     if (bcSignalsInvoked) {
         return;
     }
@@ -273,17 +273,17 @@ export function activateBCDSignals(slug: string, locale: string) {
         controlInnerWrapper.className = 'control-wrap';
         controlHeader.className = 'control-header';
         if (controlObj.inline) {
-            controlHeader.className += ' has-control';
+            controlHeader.classList.add('has-control');
         }
         if (controlObj.optional) {
-            controlHeader.className += ' with-optional-label';
+            controlHeader.classList.add('with-optional-label');
         }
 
         controlDescription.className = 'control-description';
 
         controlHeader.appendChild(createStepNumLabel(controlObj.index, true));
         controlHeader.appendChild(document.createTextNode(controlObj.header));
-        controlDescription.innerHTML = controlObj.description;
+        controlDescription.innerText = controlObj.description;
 
         controlInnerWrapper.appendChild(controlHeader);
         controlInnerWrapper.appendChild(controlDescription);
@@ -435,8 +435,12 @@ export function activateBCDSignals(slug: string, locale: string) {
      */
     const createSupportingMaterialControl = () => {
         const headerText = gettext('Do you have any supporting material?');
+
+        // If we could use markup in the localized strings I would ideally say
+        // '<b>Browser documentation and release notes</b> are good supporting items to accompany your message. A demo hosted on services like <b>Codepen</b> or <b>JSBin</b> are perfect for providing real examples of your findings.'
+        // See https://github.com/mozilla/kuma/issues/5886
         const descriptionText = gettext(
-            '<b>Browser documentation and release notes</b> are good supporting items to accompany your message. A demo hosted on services like <b>Codepen</b> or <b>JSBin</b> are perfect for providing real examples of your findings.'
+            'Browser documentation and release notes are good supporting items to accompany your message. A demo hosted on services like Codepen or JSBin are perfect for providing real examples of your findings.'
         );
 
         const textAreaControl = document.createElement('textarea');
@@ -460,10 +464,10 @@ export function activateBCDSignals(slug: string, locale: string) {
     const createErrorMessageHandler = () => {
         const errorLabelEl = document.createElement('span');
         errorLabelEl.className = 'error-label';
-        errorLabelEl.innerHTML = gettext('Connection error:');
+        errorLabelEl.innerText = gettext('Connection error:');
 
         const errorTextEl = document.createElement('span');
-        errorTextEl.innerHTML = gettext(
+        errorTextEl.innerText = gettext(
             'Sorry, we can’t seem to reach the server. We are working to fix the problem. Please try again later.'
         );
 
@@ -487,6 +491,8 @@ export function activateBCDSignals(slug: string, locale: string) {
         const leftBlockDescription = document.createElement('p');
         const closeButtonWrapper = document.createElement('div');
         const closeButton = document.createElement('button');
+        const lineBreak = document.createElement('br');
+        const leftBlockSecondLine = document.createTextNode('');
 
         closeButton.className = 'button close-btn';
         closeButtonWrapper.className = 'close-button-wrapper';
@@ -499,16 +505,16 @@ export function activateBCDSignals(slug: string, locale: string) {
         leftBlockHeader.innerText = gettext(
             'Tell us what’s wrong with this table'
         );
-        leftBlockDescription.innerHTML = interpolate(
-            gettext(
-                'Our goal is to provide accurate, real values for all our compatibility data tables. Notifying MDN of inaccurate data or supplying new data pushes us further towards our goal of providing %(bStart)s100% real values%(bEnd)s to the developer community. %(br)s%(bStart)sThank you for helping.%(bEnd)s'
-            ),
-            {
-                bStart: '<b>',
-                bEnd: '</b>',
-                br: '<br />'
-            }
+
+        // Message with markup:
+        // 'Our goal is to provide accurate, real values for all our compatibility data tables. Notifying MDN of inaccurate data or supplying new data pushes us further towards our goal of providing <b>100% real values</b> to the developer community. <br><b>Thank you for helping.</b>'
+        // See https://github.com/mozilla/kuma/issues/5886
+        leftBlockDescription.innerText = gettext(
+            'Our goal is to provide accurate, real values for all our compatibility data tables. Notifying MDN of inaccurate data or supplying new data pushes us further towards our goal of providing 100% real values to the developer community.'
         );
+        leftBlockSecondLine.nodeValue = gettext('Thank you for helping.');
+        leftBlockDescription.appendChild(lineBreak);
+        leftBlockDescription.appendChild(leftBlockSecondLine);
 
         closeButtonWrapper.appendChild(closeButton);
         leftBlockWrapper.appendChild(closeButtonWrapper);
@@ -563,7 +569,7 @@ export function activateBCDSignals(slug: string, locale: string) {
         nextStepButton.addEventListener('click', () => {
             toStep(2);
         });
-        nextStepButton.innerHTML = gettext('Next step (2 of 2)');
+        nextStepButton.innerText = gettext('Next step (2 of 2)');
 
         nextStepButtonIcon.className = 'icon-next';
         nextStepButton.appendChild(nextStepButtonIcon);
@@ -586,6 +592,7 @@ export function activateBCDSignals(slug: string, locale: string) {
         const controls = document.createElement('div');
         const stepsButtonBlock = document.createElement('div');
         const goBackButton = document.createElement('button');
+        const goBackIcon = document.createElement('span');
         sendReportButton = document.createElement('button');
 
         signalStepTwoBlock.id = 'step-2';
@@ -596,10 +603,11 @@ export function activateBCDSignals(slug: string, locale: string) {
         controls.className = 'controls';
         stepsButtonBlock.className = 'navigation-buttons reverse';
         goBackButton.className = 'button prev-step-btn btn-dark';
+        goBackIcon.className = 'icon-back';
+        const backBtnLabel = document.createTextNode(gettext('Previous step'));
 
-        goBackButton.innerHTML = `<span class="icon-back"></span>${gettext(
-            'Previous step'
-        )}`;
+        goBackButton.appendChild(goBackIcon);
+        goBackButton.appendChild(backBtnLabel);
 
         sendReportButton.addEventListener('click', sendReport);
         goBackButton.addEventListener('click', () => {
@@ -646,9 +654,17 @@ export function activateBCDSignals(slug: string, locale: string) {
         const completeRightBlockDescription = document.createElement('div');
         const completeImageTextBlock = document.createElement('h2');
         const completeRightTextBlock = document.createElement('h3');
+        const completeRightBlockInner = document.createElement('span');
         const finishButton = document.createElement('button');
         const closeButtonWrapper = document.createElement('div');
         const closeButton = document.createElement('button');
+        const rightBlockFirstTitle = document.createElement('h4');
+        const rightBlockFirstDescription = document.createElement('p');
+        const rightBlockSecondTitle = document.createElement('h4');
+        const rightBlockSecondDescription = document.createElement('p');
+        const linksBlock = document.createElement('p');
+        const linkIcon = document.createElement('span');
+        const githubLink = document.createElement('a');
 
         closeButton.className = 'button close-btn';
         navigationButtons.className = 'navigation-buttons';
@@ -667,29 +683,24 @@ export function activateBCDSignals(slug: string, locale: string) {
 
         finishButton.addEventListener('click', finishReport);
         completeImageTextBlock.innerText = gettext('Thank you!');
-        completeRightTextBlock.innerHTML = `<span>${gettext(
-            'Report sent'
-        )}</span>`;
-        completeRightBlockDescription.innerHTML = `
-            <h4>${gettext('What happens next?')}</h4>
-            <p>
-                ${gettext(
-                    'Our team will review your report. Once we verify the information you have supplied we will update this browser compatability table accordingly.'
-                )}
-            </p>
-            <h4>${gettext('Can I keep track of my report?')}</h4>
-            <p>
-                ${gettext(
-                    'You can join the GitHub repository to see updates and commits for this table data'
-                )}:
-            </p>
-            <p>
-                <a href="https://github.com/mdn/browser-compat-data" target="_blank" rel="noopener noreferrer">
-                    https://github.com/mdn/browser-compat-data
-                    <span class="external external-icon"></span>
-                </a>
-            </p>
-        `;
+        completeRightBlockInner.innerText = gettext('Report sent');
+
+        linkIcon.setAttribute('class', 'external external-icon');
+        githubLink.textContent = gettext(
+            'https://github.com/mdn/browser-compat-data '
+        );
+        githubLink.href = 'https://github.com/mdn/browser-compat-data';
+
+        rightBlockFirstTitle.innerText = gettext('What happens next?');
+        rightBlockFirstDescription.innerText = gettext(
+            'Our team will review your report. Once we verify the information you have supplied we will update this browser compatability table accordingly.'
+        );
+        rightBlockSecondTitle.innerText = gettext(
+            'Can I keep track of my report?'
+        );
+        rightBlockSecondDescription.innerText = gettext(
+            'You can join the GitHub repository to see updates and commits for this table data:'
+        );
 
         closeButton.addEventListener('click', toggleBcSignalBlock);
 
@@ -698,10 +709,17 @@ export function activateBCDSignals(slug: string, locale: string) {
         completeLeftBlock.appendChild(closeButtonWrapper);
         completeLeftBlock.appendChild(completeImageBlock);
         completeLeftBlock.appendChild(completeImageTextBlock);
+        githubLink.appendChild(linkIcon);
+        linksBlock.appendChild(githubLink);
+        completeRightTextBlock.appendChild(completeRightBlockInner);
+        completeRightBlockDescription.appendChild(rightBlockFirstTitle);
+        completeRightBlockDescription.appendChild(rightBlockFirstDescription);
+        completeRightBlockDescription.appendChild(rightBlockSecondTitle);
+        completeRightBlockDescription.appendChild(rightBlockSecondDescription);
+        completeRightBlockDescription.appendChild(linksBlock);
         completeRightBlock.appendChild(completeRightTextBlock);
         completeRightBlock.appendChild(completeRightBlockDescription);
         completeRightBlock.appendChild(navigationButtons);
-
         bcSignalCompleteBlock.appendChild(completeLeftBlock);
         bcSignalCompleteBlock.appendChild(completeRightBlock);
 
@@ -806,6 +824,4 @@ export function activateBCDSignals(slug: string, locale: string) {
         bcTable.insertAdjacentElement('afterend', signalStepsBlock());
         bcTable.insertAdjacentElement('afterend', signalCompleteBlock());
     }
-}
-
-window.activateBCDSignals = activateBCDSignals;
+};
