@@ -332,8 +332,6 @@ LANGUAGE_COOKIE_AGE = 365 * 24 * 60 * 60
 
 SITE_ID = config('SITE_ID', default=1, cast=int)
 
-MDC_PAGES_DIR = path('..', 'mdc_pages')
-
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
@@ -476,22 +474,12 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',  # Legacy
 )
 AUTH_USER_MODEL = 'users.User'
-USER_AVATAR_PATH = 'uploads/avatars/'
 
 if urlsplit(STATIC_URL).hostname in (None, 'localhost'):
     # Avatar needs a publicly available default image
     DEFAULT_AVATAR = PRODUCTION_URL + '/static/img/avatar.png'
 else:
     DEFAULT_AVATAR = STATIC_URL + 'img/avatar.png'
-
-AVATAR_SIZES = [  # in pixels
-    34,   # wiki document page
-    48,   # user_link helper
-    200,  # user pages
-    220,  # default, e.g. used in feeds
-]
-ACCOUNT_ACTIVATION_DAYS = 30
-MAX_AVATAR_FILE_SIZE = 131072  # 100k, in bytes
 
 ROOT_URLCONF = 'kuma.urls'
 
@@ -1197,13 +1185,6 @@ ALLOWED_HOSTS = config(
     cast=Csv()
 )
 
-# Maximum length of the filename. Forms should use this and raise
-# ValidationError if the length is exceeded.
-# @see http://code.djangoproject.com/ticket/9893
-# Columns are 250 but this leaves 50 chars for the upload_to prefix
-MAX_FILENAME_LENGTH = 200
-MAX_FILEPATH_LENGTH = 250
-
 _PROD_ATTACHMENT_HOST = 'mdn.mozillademos.org'
 _PROD_ATTACHMENT_SITE_URL = 'https://' + _PROD_ATTACHMENT_HOST
 ATTACHMENT_HOST = config('ATTACHMENT_HOST', default=_PROD_ATTACHMENT_HOST)
@@ -1296,19 +1277,6 @@ for pattern in _ALLOWED_IFRAME_PATTERNS:
 # Allow all iframe sources (for debugging)
 ALLOW_ALL_IFRAMES = config('ALLOW_ALL_IFRAMES', default=False, cast=bool)
 
-
-# Video settings, hard coded here for now.
-# TODO: figure out a way that doesn't need these values
-WIKI_VIDEO_WIDTH = 640
-WIKI_VIDEO_HEIGHT = 480
-
-IMAGE_MAX_FILESIZE = 1048576  # 1 megabyte, in bytes
-THUMBNAIL_SIZE = 120  # Thumbnail size, in pixels
-THUMBNAIL_UPLOAD_PATH = 'uploads/images/thumbnails/'
-IMAGE_UPLOAD_PATH = 'uploads/images/'
-# A string listing image mime types to accept, comma separated.
-# String must not contain double quotes!
-IMAGE_ALLOWED_MIMETYPES = 'image/jpeg,image/png,image/gif'
 
 # Email
 EMAIL_BACKEND = config(
@@ -1508,14 +1476,6 @@ CELERY_TASK_ROUTES = {
         'queue': 'mdn_api'
     },
 }
-
-# Wiki rebuild settings
-WIKI_REBUILD_TOKEN = 'kuma:wiki:full-rebuild'
-WIKI_REBUILD_ON_DEMAND = False
-
-# Top contributors cache settings
-TOP_CONTRIBUTORS_CACHE_KEY = 'kuma:TopContributors'
-TOP_CONTRIBUTORS_CACHE_TIMEOUT = 60 * 60 * 12
 
 # Do not change this without also deleting all wiki documents:
 WIKI_DEFAULT_LANGUAGE = LANGUAGE_CODE
