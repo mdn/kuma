@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.utils.html import format_html
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
@@ -35,6 +36,4 @@ class UserAdmin(BaseUserAdmin):
         link = urlparams(reverse('dashboards.revisions'),
                          user=obj.username)
         count = obj.created_revisions.count()
-        return ('<a href="%(link)s"><strong>%(count)s</strong></a>' %
-                {'link': link, 'count': count})
-    revisions.allow_tags = True
+        return format_html('<a href="{}"><strong>{}</strong></a>', link, count)
