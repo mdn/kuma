@@ -6,8 +6,6 @@ from kuma.wiki.search import WikiDocumentType
 
 
 class FilterManager(models.Manager):
-    use_for_related_fields = True
-
     def visible_only(self):
         return self.filter(visible=True)
 
