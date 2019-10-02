@@ -61,7 +61,7 @@ export default function Article({ document }: DocumentProps) {
                 eventLabel: ''
             });
         }
-    }, [document, locale]);
+    }, [document, locale, ga]);
 
     return (
         /*
