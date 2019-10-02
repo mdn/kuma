@@ -195,6 +195,7 @@ class Filter(models.Model):
     objects = FilterManager()
 
     class Meta(object):
+        base_manager_name = 'objects'
         unique_together = (
             ('name', 'slug'),
         )
