@@ -1259,6 +1259,8 @@ ALLOWED_IFRAME_PATTERNS = [
     parse_iframe_url('https://jsfiddle.net/.*/embedded/.*'),
     # Charts, https://developer.mozilla.org/en-US/docs/MDN/Kuma/Server_charts
     parse_iframe_url('https://rpm.newrelic.com/public/charts/'),
+    # Test262 Report, https://test262.report/
+    parse_iframe_url('https://test262.report/embed/features/'),
 ]
 
 # Add the overridden attachment / live sample host
