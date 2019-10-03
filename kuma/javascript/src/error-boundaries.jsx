@@ -24,13 +24,9 @@ export class AppErrorBoundary extends React.Component {
     render() {
         if (this.state.error) {
             return (
-                <ErrorWrapper title={gettext('Application rendering error')}>
-                    <p>
-                        {gettext(
-                            'An unhandled error occurred in the application. The error has been logged and an administrator was notified. We apologize for the inconvenience!'
-                        )}
-                    </p>
-                </ErrorWrapper>
+                <ErrorWrapper
+                    title={gettext('Application rendering error')}
+                ></ErrorWrapper>
             );
         }
 
@@ -50,13 +46,9 @@ export class ContentErrorBoundary extends AppErrorBoundary {
     render() {
         if (this.state.error) {
             return (
-                <ErrorWrapper title={gettext('Content rendering error')}>
-                    <p>
-                        {gettext(
-                            'An unhandled error occurred in the application. The error has been logged and an administrator was notified. We apologize for the inconvenience!'
-                        )}
-                    </p>
-                </ErrorWrapper>
+                <ErrorWrapper
+                    title={gettext('Content rendering error')}
+                ></ErrorWrapper>
             );
         }
 
@@ -71,8 +63,12 @@ function ErrorWrapper({ title, children }) {
                 <section id="content-main" className="full" role="main">
                     <div className="content-layout">
                         <h1 className="page-title">{title}</h1>
+                        <p>
+                            {gettext(
+                                'An unhandled error occurred in the application. The error has been logged and an administrator was notified. We apologize for the inconvenience!'
+                            )}
+                        </p>
                         {children}
-
                         <p>
                             <button
                                 type="button"

@@ -39,19 +39,6 @@ if (container) {
                     initialData={data.documentData}
                 />
             );
-            // app = (
-            //     /* StrictMode is a tool for highlighting potential problems
-            //        in an application. Like Fragment, StrictMode does not
-            //        render any visible UI. It activates additional checks and
-            //        warnings for its descendants.
-            //        @see https://reactjs.org/docs/strict-mode.html */
-            //     <React.StrictMode>
-            //         <SinglePageApp
-            //             initialURL={data.url}
-            //             initialData={data.documentData}
-            //         />
-            //     </React.StrictMode>
-            // );
             break;
         case 'landing':
             // This is the React UI for the MDN homepage.
@@ -60,11 +47,6 @@ if (container) {
             // currently make it part of the single page app and have
             // to handle it as a special case here.
             app = <LandingPage />;
-            // app = (
-            //     <React.StrictMode>
-            //         <LandingPage />
-            //     </React.StrictMode>
-            // );
             break;
         case 'signupflow':
             // This is the React UI for the MDN sign-up flow.
@@ -73,11 +55,6 @@ if (container) {
             // currently make it part of the single page app and have
             // to handle it as a special case here.
             app = <SignupFlow />;
-            // app = (
-            //     <React.StrictMode>
-            //         <SignupFlow />
-            //     </React.StrictMode>
-            // );
             break;
         case 'default':
             throw new Error(
