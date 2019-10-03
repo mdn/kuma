@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from django.template.defaultfilters import truncatechars
 from django.template.response import TemplateResponse
 from django.utils import timezone
-from django.utils.html import escape, format_html, format_html_join
+from django.utils.html import format_html, format_html_join
 from django.utils.safestring import mark_safe
 from django.utils.text import Truncator
 from django.views.decorators.cache import never_cache
@@ -138,10 +138,9 @@ def related_revisions_link(obj):
     )
     count = obj.revisions.count()
     what = (count == 1) and 'revision' or 'revisions'
-    return '<a href="%s">%s&nbsp;%s</a>' % (link, count, what)
+    return format_html('<a href="{}">{}&nbsp;{}</a>', link, count, what)
 
 
-related_revisions_link.allow_tags = True
 related_revisions_link.short_description = "All Revisions"
 
 
@@ -151,10 +150,11 @@ def current_revision_link(obj):
         return "None"
     rev = obj.current_revision
     rev_url = reverse('admin:wiki_revision_change', args=[rev.id])
-    return '<a href="%s">Current&nbsp;Revision&nbsp;(#%s)</a>' % (rev_url, rev.id)
+    return format_html(
+        '<a href="{}">Current&nbsp;Revision&nbsp;(#{})</a>', rev_url, rev.id
+    )
 
 
-current_revision_link.allow_tags = True
 current_revision_link.short_description = "Current Revision"
 
 
@@ -163,10 +163,11 @@ def parent_document_link(obj):
     if not obj.parent:
         return ''
     url = reverse('admin:wiki_document_change', args=[obj.parent.id])
-    return '<a href="%s">Translated&nbsp;from&nbsp;(#%s)</a>' % (url, obj.parent.id)
+    return format_html(
+        '<a href="{}">Translated&nbsp;from&nbsp;(#{})</a>', url, obj.parent.id
+    )
 
 
-parent_document_link.allow_tags = True
 parent_document_link.short_description = "Translation Parent"
 
 
@@ -176,10 +177,11 @@ def topic_parent_document_link(obj):
         return ''
     url = reverse('admin:wiki_document_change',
                   args=[obj.parent_topic.id])
-    return '<a href="%s">Topic&nbsp;Parent&nbsp;(#%s)</a>' % (url, obj.parent_topic.id)
+    return format_html(
+        '<a href="{}">Topic&nbsp;Parent&nbsp;(#{})</a>', url, obj.parent_topic.id
+    )
 
 
-topic_parent_document_link.allow_tags = True
 topic_parent_document_link.short_description = "Parent Document"
 
 
@@ -192,11 +194,10 @@ def topic_children_documents_link(obj):
         reverse('admin:wiki_document_changelist', args=[]),
         'parent_topic__exact=%s' % (obj.id)
     )
-    what = (count == 1) and 'child' or 'children'
-    return '<a href="%s">%s&nbsp;%s</a>' % (link, count, what)
+    what = 'child' if count == 1 else 'children'
+    return format_html('<a href="{}">{}&nbsp;{}</a>', link, count, what)
 
 
-topic_children_documents_link.allow_tags = True
 topic_children_documents_link.short_description = "Child Documents"
 
 
@@ -211,30 +212,31 @@ def topic_sibling_documents_link(obj):
         reverse('admin:wiki_document_changelist', args=[]),
         'parent_topic__exact=%s' % (obj.parent_topic.id)
     )
-    what = (count == 1) and 'sibling' or 'siblings'
-    return '<a href="%s">%s&nbsp;%s</a>' % (link, count, what)
+    what = 'sibling' if count == 1 else 'siblings'
+    return format_html('<a href="{}">{}&nbsp;{}</a>', link, count, what)
 
 
-topic_sibling_documents_link.allow_tags = True
 topic_sibling_documents_link.short_description = "Sibling Documents"
 
 
 def document_link(obj):
     """Public link to the document"""
     link = obj.get_absolute_url()
-    return ('<a target="_blank" rel="noopener" href="%s">'
-            '<img src="%simg/icons/link_external.png"> View</a>' %
-            (link, settings.STATIC_URL))
+    return format_html(
+        '<a target="_blank" rel="noopener" href="{}"><img src="{}img/icons/link_external.png"> View</a>',
+        link,
+        settings.STATIC_URL,
+    )
 
 
-document_link.allow_tags = True
 document_link.short_description = "Public"
 
 
 def combine_funcs(obj, funcs):
     """Combine several field functions into one block of lines"""
-    out = (x(obj) for x in funcs)
-    return '<ul>%s</ul>' % ''.join('<li>%s</li>' % x for x in out if x)
+    items = (func(obj) for func in funcs)
+    list_body = format_html_join('', '<li>{}</li>', ([item] for item in items if item))
+    return format_html('<ul>{}</ul>', list_body)
 
 
 def document_nav_links(obj):
@@ -247,7 +249,6 @@ def document_nav_links(obj):
     ))
 
 
-document_nav_links.allow_tags = True
 document_nav_links.short_description = "Hierarchy"
 
 
@@ -259,22 +260,33 @@ def revision_links(obj):
     ))
 
 
-revision_links.allow_tags = True
 revision_links.short_description = "Revisions"
 
 
 def rendering_info(obj):
     """Combine the rendering times into one block"""
-    return '<ul>%s</ul>' % ''.join('<li>%s</li>' % (x % y) for x, y in (
-        ('<img src="%s/admin/img/admin/icon-yes.gif" alt="%s"> '
-         'Deferred rendering', (settings.STATIC_URL, obj.defer_rendering)),
-        ('%s (last)', obj.last_rendered_at),
-        ('%s (started)', obj.render_started_at),
-        ('%s (scheduled)', obj.render_scheduled_at),
-    ) if y)
+    items = (
+        format_html(template, *data)
+        for (template, data) in (
+            (
+                '<img src="{}admin/img/icon-{}.svg" alt="{}"> Deferred rendering',
+                [
+                    settings.STATIC_URL,
+                    "yes" if obj.defer_rendering else "no",
+                    obj.defer_rendering,
+                ]
+            ),
+            ('{} (last)', [obj.last_rendered_at]),
+            ('{} (started)', [obj.render_started_at]),
+            ('{} (scheduled)', [obj.render_scheduled_at]),
+        )
+        if any(data)
+    )
+
+    list_body = format_html_join('', '<li>{}</li>', ([item] for item in items))
+    return format_html('<ul>{}</ul>', list_body)
 
 
-rendering_info.allow_tags = True
 rendering_info.short_description = 'Rendering'
 rendering_info.admin_order_field = 'last_rendered_at'
 
@@ -520,12 +532,14 @@ class RevisionAkismetSubmissionAdmin(DisabledDeletionMixin, admin.ModelAdmin):
         """Link to the revision public page"""
         if obj.revision_id:
             admin_link = obj.revision.get_absolute_url()
-            return ('<a target="_blank" rel="noopener" '
-                    'href="%s">%s</a>' %
-                    (admin_link, escape(obj.revision)))
+            return format_html(
+                '<a target="_blank" rel="noopener" href="{}">{}</a>',
+                admin_link,
+                obj.revision,
+            )
         else:
             return 'None'
-    revision_with_link.allow_tags = True
+
     revision_with_link.short_description = "Revision"
 
     def get_readonly_fields(self, request, obj=None):
