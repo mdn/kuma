@@ -24,9 +24,9 @@ export class AppErrorBoundary extends React.Component {
     render() {
         if (this.state.error) {
             return (
-                <ErrorWrapper
+                <ErrorMessage
                     title={gettext('Application rendering error')}
-                ></ErrorWrapper>
+                ></ErrorMessage>
             );
         }
 
@@ -46,9 +46,9 @@ export class ContentErrorBoundary extends AppErrorBoundary {
     render() {
         if (this.state.error) {
             return (
-                <ErrorWrapper
+                <ErrorMessage
                     title={gettext('Content rendering error')}
-                ></ErrorWrapper>
+                ></ErrorMessage>
             );
         }
 
@@ -56,7 +56,7 @@ export class ContentErrorBoundary extends AppErrorBoundary {
     }
 }
 
-function ErrorWrapper({ title, children }) {
+function ErrorMessage({ title, children }) {
     return (
         <section id="content">
             <div className="wrap">
@@ -85,7 +85,7 @@ function ErrorWrapper({ title, children }) {
     );
 }
 
-ErrorWrapper.propTypes = {
+ErrorMessage.propTypes = {
     title: PropTypes.string,
     children: PropTypes.element.isRequired
 };
