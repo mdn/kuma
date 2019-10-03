@@ -696,6 +696,12 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/react-mdn.css',
     },
+    'minimalist-header': {
+        'source_filenames': (
+            'styles/minimalist/organisms/header.scss',
+        ),
+        'output_filename': 'build/styles/minimalist-header.css',
+    },
     'react-search': {
         'source_filenames': (
             'styles/minimalist/search-page.scss',
