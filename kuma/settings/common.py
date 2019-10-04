@@ -690,9 +690,6 @@ PIPELINE_CSS = {
             'styles/libs/prism/prism-line-numbers.css',
 
             'styles/wiki-syntax.scss',
-
-            # Styles for BCD tables
-            'styles/wiki-compat-tables.scss',
         ),
         'output_filename': 'build/styles/react-mdn.css',
     },
@@ -701,6 +698,12 @@ PIPELINE_CSS = {
             'styles/minimalist/search-page.scss',
         ),
         'output_filename': 'build/styles/react-search.css',
+    },
+    'react-bcd': {
+        'source_filenames': (
+            'styles/wiki-compat-tables.scss',
+        ),
+        'output_filename': 'build/styles/react-bcd.css'
     },
     'mdn': {
         'source_filenames': (

@@ -118,7 +118,7 @@
   {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(),
                   document_data)|safe }}
 
-  <!-- site js -->
+  {% stylesheet 'react-bcd' %}
   {% javascript 'react-main' %}
   <script>
     if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
