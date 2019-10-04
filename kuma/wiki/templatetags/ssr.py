@@ -99,37 +99,6 @@ def server_side_render(component_name, data):
                                  data=json.dumps(data).encode('utf8'),
                                  timeout=timeout)
 
-        # Even though we've got fully rendered HTML now, we still need to
-        # send the document data along with it so that React can sync its
-        # state on the client side with what is in the HTML. When rendering
-        # a document page, the data includes long strings of HTML that
-        # we can get away without duplicating. So as an optimization when
-        # component_name is "document", we're going to make a copy of the
-        # data (because the original belongs to our caller) and delete those
-        # strings from the copy.
-        #
-        # WARNING: This optimization can save 20kb in data transfer
-        # for typical pages, but it requires us to be very careful on
-        # the frontend. If any components render conditionally based on
-        # the state of bodyHTML, tocHTML or quickLinkHTML, then they will
-        # render differently on the client than during SSR, and the hydrate
-        # will not just work cleanly, and those components will re-render
-        # with empty strings. This has already caused Bug 1558308, and
-        # I've commented it out because the benefit in file size doesn't
-        # seem worth the risk of client-side bugs.
-        #
-        # As an alternative, it ought to be possible to extract the HTML
-        # strings from the SSR'ed document and rebuild the document object
-        # on the client right before we call hydrate(). So if you uncomment
-        # the lines below, you should also edit kuma/javascript/src/index.jsx
-        # to extract the HTML from the document as well.
-        #
-        # if component_name == 'document':
-        #     data = data.copy()
-        #     data['documentData'] = data['documentData'].copy()
-        #     data['documentData'].update(bodyHTML='',
-        #                                 tocHTML='',
-        #                                 quickLinksHTML='')
         response.raise_for_status()
         result = response.json()
         return _render(component_name, result['html'], result['script'])

@@ -21,9 +21,14 @@ if (container) {
     if (quickLinksHTMLElement) {
         data.documentData.quickLinksHTML = quickLinksHTMLElement.innerHTML;
     }
-    let wikiArticleElement = document.querySelector('#wikiArticle')
+    let wikiArticleElement = document.querySelector('#wikiArticle');
     if (wikiArticleElement) {
         data.documentData.bodyHTML = wikiArticleElement.innerHTML;
+    }
+
+    let tocElement = document.querySelector('.document-toc ul');
+    if (tocElement) {
+        data.documentData.tocHTML = tocElement.innerHTML;
     }
 
     // Store the string catalog so that l10n.gettext() can do translations

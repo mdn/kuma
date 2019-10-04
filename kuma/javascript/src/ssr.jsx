@@ -53,6 +53,9 @@ export default function ssr(componentName, data) {
                     initialData={data.documentData}
                 />
             );
+            ['quickLinksHTML', 'bodyHTML', 'tocHTML'].forEach(key => {
+                delete data.documentData[key];
+            });
             break;
         case 'landing':
             // This is the React UI for the MDN homepage.
