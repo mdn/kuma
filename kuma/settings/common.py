@@ -811,6 +811,7 @@ PIPELINE_CSS = {
     },
     'dashboards': {
         'source_filenames': (
+            'styles/components/compact.scss',
             'styles/dashboards.scss',
             'styles/diff.scss',
         ),
