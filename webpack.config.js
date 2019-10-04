@@ -21,7 +21,9 @@ const nodePath = process.env.NODE_PATH || path.join(__dirname, 'node_modules');
 const modeConfig = env => require(`./webpack-build-utils/webpack.${env}`)(env);
 const presetsConfig = require('./webpack-build-utils/loadPresets');
 
-module.exports = ({ mode, presets } = { mode: 'production', presets: [] }) => {
+module.exports = (
+    { mode, presets, SENTRY_DSN } = { mode: 'production', presets: [] }
+) => {
     const merged = webpackMerge(
         {
             mode,
@@ -45,7 +47,12 @@ module.exports = ({ mode, presets } = { mode: 'production', presets: [] }) => {
             output: {
                 filename: 'react.js'
             },
-            plugins: [new webpack.ProgressPlugin()]
+            plugins: [
+                new webpack.ProgressPlugin(),
+                new webpack.DefinePlugin({
+                    'process.env.SENTRY_DSN': JSON.stringify(SENTRY_DSN)
+                })
+            ]
         },
         modeConfig(mode),
         presetsConfig({ mode, presets })

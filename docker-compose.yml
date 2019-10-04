@@ -42,6 +42,7 @@ services:
       - PYTHONWARNINGS=${PYTHONWARNINGS:-default}
       - MAINTENANCE_MODE=${MAINTENANCE_MODE:-False}
       - REVISION_HASH=${KUMA_REVISION_HASH:-undefined}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       # For the server side rendering server and the code that connects to it.
       - SSR_PORT=8000
       - SSR_URL=http://ssr:8000/ssr

@@ -19,9 +19,9 @@
         "debug:development:web": "npm run debug -- --env.presets web --env.presets svg --env.mode development",
         "webpack:web": "npm run webpack -- --env.presets web --env.presets svg",
         "webpack:node": "npm run webpack -- --env.presets node --env.presets svg",
-        "webpack:production:web": "npm run webpack:web -- --env.mode production",
+        "webpack:production:web": "npm run webpack:web -- --env.mode production --env.SENTRY_DSN=$SENTRY_DSN",
         "webpack:production:node": "npm run webpack:node -- --env.mode production",
-        "webpack:development:web": "npm run webpack:web -- --env.mode development --env.presets hardsource",
+        "webpack:development:web": "npm run webpack:web -- --env.mode development --env.presets hardsource --env.SENTRY_DSN=$SENTRY_DSN",
         "webpack:development:node": "npm run webpack:node -- --env.mode development --env.presets hardsource",
         "webpack:prod": "npm-run-all webpack:production:*",
         "webpack:analyze": "npm run webpack:production:web -- --env.presets analyze",
@@ -36,6 +36,7 @@
         "pretty": "prettier --check **/*{.js,.jsx,.scss}"
     },
     "dependencies": {
+        "@sentry/browser": "^5.6.3",
         "@sentry/node": "^5.6.2",
         "express": "^4.16.4",
         "jsesc": "2.5.2",

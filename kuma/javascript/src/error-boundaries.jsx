@@ -1,20 +1,29 @@
 import * as React from 'react';
+import * as Sentry from '@sentry/browser';
 import PropTypes from 'prop-types';
 
 import { gettext } from './l10n.js';
 
+if (process.env.SENTRY_DSN) {
+    Sentry.init({ dsn: process.env.SENTRY_DSN });
+}
+
 export class AppErrorBoundary extends React.Component {
-    state = { error: null };
+    state = { error: null, eventId: null };
 
     static getDerivedStateFromError(error) {
         return { error };
     }
 
-    logError() {
-        // https://github.com/mozilla/kuma/issues/5833
-        // When we start to use Sentry, change the method signature to
-        // logError(error, errorInfo) {
-    }
+    logError = (error, errorInfo) => {
+        if (process.env.SENTRY_DSN) {
+            Sentry.withScope(scope => {
+                scope.setExtras(errorInfo);
+                const eventId = Sentry.captureException(error);
+                this.setState({ eventId });
+            });
+        }
+    };
 
     componentDidCatch(error, errorInfo) {
         document.title = 'Application rendering Error';
@@ -26,6 +35,7 @@ export class AppErrorBoundary extends React.Component {
             return (
                 <ErrorMessage
                     title={gettext('Application rendering error')}
+                    eventId={this.state.eventId}
                 ></ErrorMessage>
             );
         }
@@ -48,6 +58,7 @@ export class ContentErrorBoundary extends AppErrorBoundary {
             return (
                 <ErrorMessage
                     title={gettext('Content rendering error')}
+                    eventId={this.state.eventId}
                 ></ErrorMessage>
             );
         }
@@ -56,7 +67,7 @@ export class ContentErrorBoundary extends AppErrorBoundary {
     }
 }
 
-function ErrorMessage({ title, children }) {
+function ErrorMessage({ title, eventId, children }) {
     return (
         <section id="content">
             <div className="wrap">
@@ -65,7 +76,7 @@ function ErrorMessage({ title, children }) {
                         <h1 className="page-title">{title}</h1>
                         <p>
                             {gettext(
-                                'An unhandled error occurred in the application. The error has been logged and an administrator was notified. We apologize for the inconvenience!'
+                                'An unhandled error occurred in the application. We apologize for the inconvenience!'
                             )}
                         </p>
                         {children}
@@ -78,6 +89,16 @@ function ErrorMessage({ title, children }) {
                                 Reload page
                             </button>
                         </p>
+
+                        {eventId && (
+                            <p>
+                                <small>
+                                    {gettext(
+                                        'Error has been successfully reported.'
+                                    )}
+                                </small>
+                            </p>
+                        )}
                     </div>
                 </section>
             </div>
@@ -87,5 +108,6 @@ function ErrorMessage({ title, children }) {
 
 ErrorMessage.propTypes = {
     title: PropTypes.string,
-    children: PropTypes.element.isRequired
+    children: PropTypes.element.isRequired,
+    eventId: PropTypes.string
 };
