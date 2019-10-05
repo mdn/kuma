@@ -66,13 +66,9 @@
   <link rel="apple-touch-icon-precomposed" href="{{ static('img/favicon57.png') }}">
   <!-- basic favicon -->
   <link rel="shortcut icon" href="{{ favicon_url() }}">
-  <!--[if IE]>
-  <meta http-equiv="imagetoolbar" content="no">
-  {% javascript 'html5shiv' %}
-  <![endif]-->
 
   {% block extrahead %}{% endblock %}
-  
+
   {% block printstyle %}
     {% stylesheet 'print' %}
   {% endblock %}
