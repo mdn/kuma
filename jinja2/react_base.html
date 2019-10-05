@@ -72,7 +72,7 @@
   <![endif]-->
 
   {% block extrahead %}{% endblock %}
-  
+
   {% block printstyle %}
     {% stylesheet 'print' %}
   {% endblock %}
@@ -138,8 +138,6 @@
 
   <!-- site js -->
   {% block site_js %}
-    <!--[if lte IE 8]>{% javascript 'selectivizr' %}<![endif]-->
-
     {{ providers_media_js() }}
     {% javascript 'react-main' %}
     <script>
