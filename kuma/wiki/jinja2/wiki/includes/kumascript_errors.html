@@ -23,7 +23,7 @@
       <ul id="kserrors-list">
       {% for error in kumascript_errors %}
         <li>
-          <dl class="compact">
+          <dl>
             {% if error.args %}
               {% set error_type = error.args[0] %}
               <dt>{{ _('Error type:') }}</dt>

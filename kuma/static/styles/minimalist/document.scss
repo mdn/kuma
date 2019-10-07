@@ -26,8 +26,6 @@ Components that may appear on most wiki pages
 @import './base/structure';
 @import '../components/wiki/wiki-block';
 @import '../components/wiki/quick-links';
-@import '../components/wiki/reviews';
-@import '../components/wiki/contributors';
 @import '../components/wiki/toc';
 @import '../components/wiki/topicpage-table';
 @import '../components/wiki/kserrors';
@@ -36,7 +34,6 @@ Components that may appear on most wiki pages
 @import '../components/wiki/spec';
 @import '../components/wiki/indicators';
 @import '../components/wiki/glossaryLink';
-@import '../components/wiki/mega';
 @import '../components/wiki/interactive';
 
 @import './components/dropdown';

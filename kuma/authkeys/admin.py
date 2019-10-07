@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html
 
 from kuma.core.urlresolvers import reverse
 
@@ -9,11 +10,10 @@ def history_link(self):
     url = '%s?%s' % (reverse('admin:authkeys_keyaction_changelist'),
                      'key__exact=%s' % (self.id))
     count = self.history.count()
-    what = (count == 1) and 'action' or 'actions'
-    return '<a href="%s">%s&nbsp;%s</a>' % (url, count, what)
+    what = 'action' if count == 1 else 'actions'
+    return format_html('<a href="{}">{}&nbsp;{}</a>', url, count, what)
 
 
-history_link.allow_tags = True
 history_link.short_description = 'Usage history'
 
 
@@ -30,10 +30,9 @@ def key_link(self):
     key = self.key
     url = reverse('admin:authkeys_key_change',
                   args=[key.id])
-    return '<a href="%s">%s (#%s)</a>' % (url, key.user, key.id)
+    return format_html('<a href="{}">{} (#{})</a>', url, key.user, key.id)
 
 
-key_link.allow_tags = True
 key_link.short_description = 'Key'
 
 
@@ -42,10 +41,9 @@ def content_object_link(self):
     url_key = 'admin:%s_%s_change' % (obj._meta.app_label,
                                       obj._meta.model_name)
     url = reverse(url_key, args=[obj.id])
-    return '<a href="%s">%s (#%s)</a>' % (url, self.content_type, obj.pk)
+    return format_html('<a href="{}">{} (#{})</a>', url, self.content_type, obj.pk)
 
 
-content_object_link.allow_tags = True
 content_object_link.short_description = 'Object'
 
 

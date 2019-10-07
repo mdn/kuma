@@ -2,7 +2,7 @@
 name: Bug report
 about: Help us fix things that are broken
 title: ''
-labels: ''
+labels: needs triage
 assignees: ''
 
 ---

@@ -124,7 +124,13 @@ build-kuma:
 build-kumascript:
 	docker build --no-cache \
 	--build-arg REVISION_HASH=${KUMASCRIPT_REVISION_HASH} \
-	-f docker/images/kumascript/Dockerfile -t ${KUMASCRIPT_IMAGE} .
+	-f kumascript/docker/Dockerfile -t ${KUMASCRIPT_IMAGE} .
+
+build-kumascript-with-all-tags:
+	docker build --no-cache \
+	--build-arg REVISION_HASH=${KUMASCRIPT_REVISION_HASH} \
+	-f kumascript/docker/Dockerfile -t ${KUMASCRIPT_IMAGE} \
+	-t ${KUMASCRIPT_IMAGE_LATEST} .
 
 build: build-base build-kuma build-kumascript
 
