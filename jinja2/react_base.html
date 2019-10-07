@@ -25,7 +25,7 @@
   <link rel="license" href="#license">
 
   {% block site_css %}
-    {% stylesheet 'react-mdn' %}
+    {% include "includes/style.html" %}
   {% endblock %}
 
   {%- if settings.MAINTENANCE_MODE %}
