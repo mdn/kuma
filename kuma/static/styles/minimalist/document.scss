@@ -1,71 +1,73 @@
+@import '../includes/_svg_data_uri_icons.scss';
+
 /*
 Styling that is shared across the wiki and read-only sites
 ====================================================================== */
-@import '../includes/vars';
-@import './vars/vars-paths';
-@import '../includes/mixins';
-@import '../includes/mixins_indicators';
-@import '../components/readable-line-length';
-@import '../components/wiki/mixins';
+@import '../includes/_vars.scss';
+@import './vars/_vars-paths.scss';
+@import '../includes/_mixins.scss';
+@import '../includes/_mixins_indicators.scss';
+@import '../components/_readable-line-length.scss';
+@import '../components/wiki/_mixins.scss';
 
 /*
 General element over-rides
 ====================================================================== */
-@import '../components/wiki/elements';
+@import '../components/wiki/_elements.scss';
 
 /*
 Utitlity classes (reused in a variety of contexts)
 ====================================================================== */
-@import '../components/wiki/document-list';
-@import '../components/wiki/external-icon';
-@import './structure/containers';
+@import '../components/wiki/_document-list.scss';
+@import '../components/wiki/_external-icon.scss';
+@import './structure/_containers.scss';
 
 /*
 Components that may appear on most wiki pages
 ====================================================================== */
-@import './base/structure';
-@import '../components/wiki/wiki-block';
-@import '../components/wiki/quick-links';
-@import '../components/wiki/toc';
-@import '../components/wiki/topicpage-table';
-@import '../components/wiki/kserrors';
+@import './base/_structure.scss';
+@import '../components/wiki/_wiki-block.scss';
+@import '../components/wiki/_quick-links.scss';
+@import '../components/wiki/_toc.scss';
+@import '../components/wiki/_topicpage-table.scss';
+@import '../components/wiki/_kserrors.scss';
 @import '../components/wiki/intrinsic';
-@import '../components/wiki/properties';
-@import '../components/wiki/spec';
-@import '../components/wiki/indicators';
+@import '../components/wiki/_properties.scss';
+@import '../components/wiki/_spec.scss';
+@import '../components/wiki/_indicators.scss';
 @import '../components/wiki/glossaryLink';
-@import '../components/wiki/interactive';
+@import '../components/wiki/_interactive.scss';
 
-@import './components/dropdown';
-@import './components/titlebar';
-@import './components/task-completion';
+@import './components/_dropdown.scss';
+@import './components/_titlebar.scss';
+@import './components/_task-completion.scss';
 
 /*
 Article meta
 - contains breadcrumbs and page buttons.
 -------------------------------------------------------------- */
-@import './components/breadcrumbs';
+@import './components/_breadcrumbs.scss';
 
 /*
 Styling for article content
 ====================================================================== */
 
-@import '../components/wiki/content/alllinks';
-@import '../components/wiki/content/bug';
-@import '../components/wiki/content/callout-box';
-@import '../components/wiki/content/card-grid';
-@import '../components/wiki/content/columnList';
-@import '../components/wiki/content/columns';
-@import '../components/wiki/content/directory-tree';
-@import '../components/wiki/content/footnote';
-@import '../components/wiki/content/html5ArticleToc';
-@import '../components/wiki/content/landingPage';
-@import '../components/wiki/content/moreinfo';
-@import '../components/wiki/content/originaldocinfo';
-@import '../components/wiki/content/pull-aside';
-@import '../components/wiki/customcss';
-@import '../components/wiki/sample-code';
-@import '../components/wiki/section-edit';
+@import '../components/wiki/content/alllinks.scss';
+@import '../components/wiki/content/_bug.scss';
+@import '../components/wiki/content/_callout-box.scss';
+@import '../components/wiki/content/_card-grid.scss';
+@import '../components/wiki/content/_columnList.scss';
+@import '../components/wiki/content/_columns.scss';
+@import '../components/wiki/content/_directory-tree.scss';
+@import '../components/wiki/content/_footnote.scss';
+@import '../components/wiki/content/_html5ArticleToc.scss';
+@import '../components/wiki/content/_landingPage.scss';
+@import '../components/wiki/content/_moreinfo.scss';
+@import '../components/wiki/content/_originaldocinfo.scss';
+@import '../components/wiki/content/_pull-aside.scss';
+@import '../components/wiki/_customcss.scss';
+@import '../components/wiki/_sample-code.scss';
+@import '../components/wiki/_section-edit.scss';
 
-@import './structure/article';
-@import './structure/sidebar';
+@import './structure/_article.scss';
+@import './structure/_sidebar.scss';

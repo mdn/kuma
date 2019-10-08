@@ -1,0 +1,257 @@
+/*
+Used to style the dashboard widgets in the dashboard apps
+********************************************************************** */
+
+@import 'includes/_vars.scss';
+@import 'includes/_mixins.scss';
+@import 'components/_banned.scss';
+
+/* New revision dashboard styles */
+.dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+
+    thead tr {
+        background: #3a3a3a;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    tbody tr {
+        cursor: pointer;
+        border-top-width: 1px;
+        border-top-style: solid;
+        @include rgba-fallback(border-top-color, $text-color, .4);
+
+        &:hover {
+            background: $light-background-color;
+
+            & + .dashboard-detail {
+                background: $light-background-color;
+            }
+        }
+
+        .new,
+        .edit,
+        .locale,
+        .deleted {
+            @include set-font-size(11px);
+            border-radius: 8px;
+            color: #fff;
+            display: inline-block;
+            margin-right: 6px;
+            padding: 2px 4px;
+        }
+
+        .new {
+            @include rgba-fallback(background, $green, .6);
+        }
+
+        .edit {
+            background: $blue;
+        }
+
+        .locale {
+            @include rgba-fallback(background, #777, .6);
+        }
+
+        .deleted {
+            @include rgba-fallback(background, #f00, .6);
+        }
+    }
+
+    /* Select only the outer table cells. */
+    > thead th,
+    .dashboard-row > td {
+        @include column-2();
+        padding: 6px;
+        vertical-align: text-top;
+    }
+
+    /* needs extra specificity to over-ride rules above */
+    .dashboard-title,
+    .dashboard-comment,
+    .dashboard-tags {
+        @include column-3();
+    }
+
+    .dashboard-report {
+        @include column-2();
+        word-break: break-all;
+    }
+
+    .dashboard-spam {
+        @include column-1();
+        word-break: break-all;
+    }
+
+    #page-buttons {
+        li {
+            display: inline-block;
+            @include bidi(((margin-right, $content-horizontal-spacing, margin-left, 0),));
+            margin-top: $content-vertical-spacing;
+        }
+    }
+}
+
+.dashboard-table-spam {
+
+    /* styles over riding both the revision table and diff */
+
+    tbody tr {
+        border-top: none;
+        cursor: default;
+    }
+
+    tbody > tr:hover {
+        background: inherit;
+    }
+
+    /* styles over riding just the revision table, not the diff */
+
+    > tbody {
+        border-bottom: 5px solid #000;
+    }
+
+    > tbody > tr > td {
+        padding: 2px 2px 10px 2px;
+        vertical-align: top;
+    }
+
+    > tbody > tr:first-child > td {
+        padding-top: $grid-spacing;
+    }
+
+    > tbody > tr:last-child > td {
+        padding-bottom: $grid-spacing;
+    }
+}
+
+.spam-trends-table {
+    width: 100%;
+
+    .data,
+    .float,
+    .rate {
+        font-family: monospace;
+        text-align: right;
+    }
+}
+
+.macros-table {
+    .data {
+        font-family: monospace;
+        text-align: right;
+    }
+}
+
+.spam-events-table {
+    width: 100%;
+    table-layout: fixed;
+
+    th {
+        vertical-align: bottom;
+    }
+
+    td {
+        word-break: keep-all;
+    }
+
+    .data {
+        font-family: monospace;
+        text-align: right;
+    }
+
+    .path,
+    .name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .path {
+        width: 40%;
+    }
+
+    .data,
+    .name {
+        width: ((100% - 40%) / 5); // (100% - .path) / 5 columns
+    }
+}
+
+th.stat-header { // needs extra specificity to over-ride default styles
+    text-align: right;
+}
+
+.dashboard-title {
+    word-break: break-all;
+}
+
+.dashboard-slug {
+    @include set-smaller-font-size();
+    opacity: .8;
+    font-style: italic;
+    display: block;
+}
+
+.dashboard-detail {
+    border-top: 0;
+}
+
+.dashboard-detail-details {
+    display: none;
+    padding: 0 6px;
+}
+
+.submission-spam {
+    font-weight: bold;
+    color: $negative;
+}
+
+.submission-ham {
+    font-weight: bold;
+    color: $positive;
+}
+
+.dashboard-confirm {
+    @include set-larger-font-size();
+    font-weight: bold;
+}
+
+td.dashboard-comment {
+    font-style: italic;
+}
+
+.dashboard-compare {
+    max-height: 200px;
+    overflow: hidden;
+    overflow-y: scroll;
+    border: 1px solid #000;
+
+    .diff {
+        margin-top: 0 !important; /* stylelint-disable-line declaration-no-important */
+    }
+
+    .diff thead tr {
+        background-color: $grey;
+    }
+}
+
+#revision-filter {
+    #id_start_date,
+    #id_end_date {
+        width: 100px;
+    }
+
+    label {
+        display: inline-block;
+        margin-right: $content-horizontal-spacing;
+    }
+
+    .revision-field {
+        display: inline-block;
+        margin: 0 $grid-spacing ($grid-spacing / 2) 0;
+        white-space: nowrap;
+    }
+}

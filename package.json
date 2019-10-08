@@ -14,6 +14,7 @@
     },
     "scripts": {
         "build-watch": "gulp",
+        "copy:style": "node  webpack-build-utils/terminal.js 'cp -R ./kuma/static/styles/ ./static/styles'",
         "webpack": "webpack",
         "debug": "node --inspect --inspect-brk ./node_modules/webpack/bin/webpack.js",
         "debug:development:web": "npm run debug -- --env.presets web --env.presets svg --env.mode development",
@@ -31,6 +32,8 @@
         "eslint": "eslint --ext .js --ext .jsx kuma/",
         "optim:svg": "svgo jinja2/includes/icons/* --disable={removeViewBox,removeTitle} --multipass --pretty",
         "precommit": "npm run eslint && npm run stylelint && npm run pretty",
+        "process:sass": "node-sass-chokidar ./kuma/static/styles/ -o ./static/styles -w",
+        "start": "run-p process:sass webpack:dev",
         "test": "jest --testPathIgnorePatterns tests/sass",
         "test-ci": "JEST_JUNIT_OUTPUT_DIR='./test_results' JEST_JUNIT_OUTPUT_NAME='jest.xml' jest --ci --reporters=default --reporters=jest-junit --testPathIgnorePatterns tests/sass",
         "format": "prettier --write **/*{.js,.jsx,.scss}",

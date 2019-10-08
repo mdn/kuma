@@ -1,6 +1,3 @@
-@import 'includes/mixins_indicators';
-@import 'includes/svg_data_uri_icons';
-
 $bg-good: mix($positive, #fff, 5%);
 $bg-bad: mix($negative, #fff, 5%);
 

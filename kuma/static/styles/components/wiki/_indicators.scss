@@ -1,5 +1,3 @@
-@import '../../includes/svg_data_uri_icons';
-
 /*
 Indicators
 - in a perfect world each indicator is composed of 2 classes that
@@ -271,7 +269,7 @@ icons for both types of indicators
 
 .experimental,
 .experimentalBadge {
-    @include indicator-svg-icon($path-to-svg-general-icons + 'flask.svg');
+    @include indicator-svg-icon('../general/flask.svg');
 }
 
 .inlineIndicator.experimental,
@@ -279,34 +277,34 @@ icons for both types of indicators
     @extend %indicator-with-icon;
 
     &:before {
-        @include set-inline-icon($path-to-svg-general-icons + 'flask.svg');
+        @include set-inline-icon('../general/flask.svg');
     }
 }
 
 .warning:not(.notification) {
-    @include indicator-svg-icon($path-to-svg-notification-icons + 'exclamation-circle.svg');
+    @include indicator-svg-icon('../notifications/exclamation-circle.svg');
 }
 
 .deprecated {
-    @include indicator-svg-icon($path-to-svg-emoji-icons + 'thumbs-down.svg');
+    @include indicator-svg-icon('../emojis/thumbs-down.svg');
 }
 
 .inlineIndicator.deprecated {
     @extend %indicator-with-icon;
 
     &:before {
-        @include set-inline-icon($path-to-svg-emoji-icons + 'thumbs-down.svg');
+        @include set-inline-icon('../emojis/thumbs-down.svg');
     }
 }
 
 .draft,
 .warning.warning-review,
 .translationInProgress {
-    @include indicator-svg-icon($path-to-svg-tool-icons + 'pencil.svg');
+    @include indicator-svg-icon('../tools/pencil.svg');
 }
 
 .note {
-    @include indicator-svg-icon($path-to-svg-file-icons + 'file.svg');
+    @include indicator-svg-icon('../file-icons/file.svg');
 
     &:before {
         @include vendorize(transform, scaleY(-1) scaleX(1));
@@ -314,12 +312,12 @@ icons for both types of indicators
 }
 
 .obsolete {
-    @include indicator-svg-icon($path-to-svg-general-icons + 'trash.svg');
+    @include indicator-svg-icon('../general/trash.svg');
 }
 
 .nonStandard,
 .nonstandardBadge {
-    @include indicator-svg-icon($path-to-svg-notification-icons + 'exclamation-triangle.svg');
+    @include indicator-svg-icon('../notifications/exclamation-triangle.svg');
 }
 
 .inlineIndicator.nonStandard,
@@ -327,17 +325,17 @@ icons for both types of indicators
     @extend %indicator-with-icon;
 
     &:before {
-        @include set-inline-icon($path-to-svg-notification-icons + 'exclamation-triangle.svg');
+        @include set-inline-icon('../notifications/exclamation-triangle.svg');
     }
 }
 
 .privilegedBadge,
 .install {
-    @include indicator-svg-icon($path-to-svg-general-icons + 'shield.svg');
+    @include indicator-svg-icon('../general/shield.svg');
 }
 
 .secureContexts {
-    @include indicator-svg-icon($path-to-svg-general-icons + 'lock.svg');
+    @include indicator-svg-icon('../general/lock.svg');
 }
 
 /* when used in inline indicator boxes */

@@ -1,21 +1,24 @@
-@import 'includes/vars';
-@import 'includes/mixins';
+@import 'includes/_vars.scss';
+@import 'includes/_mixins.scss';
+
+@import 'includes/_svg_data_uri_icons.scss';
+@import 'includes/_mixins_indicators.scss';
 
 /*
 Main stylesheet for the site, standalone
 ********************************************************************** */
 
 /* stylesheets used only in main  */
-@import 'base/elements';
-@import 'base/icons';
+@import 'base/_elements.scss';
+@import 'base/_icons.scss';
 
 /* components also used elsewhere */
-@import 'components/components';
-@import 'components/content';
-@import 'components/cta';
-@import 'components/structure';
-@import 'components/form';
-@import 'components/highlight';
-@import 'components/errorlist';
-@import 'components/newsletter';
-@import 'components/payments';
+@import 'components/_components.scss';
+@import 'components/_content.scss';
+@import 'components/_cta.scss';
+@import 'components/_structure.scss';
+@import 'components/_form.scss';
+@import 'components/_highlight.scss';
+@import 'components/_errorlist.scss';
+@import 'components/_newsletter.scss';
+@import 'components/_payments.scss';

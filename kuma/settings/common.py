@@ -681,18 +681,7 @@ PIPELINE_CSS = {
     # single page app.
     'react-mdn': {
         'source_filenames': (
-            'styles/minimalist/main.scss',
-            'styles/minimalist/document.scss',
-
-            # Custom build of our Prism theme
-            'styles/libs/prism/prism.css',
-            'styles/libs/prism/prism-line-highlight.css',
-            'styles/libs/prism/prism-line-numbers.css',
-
-            'styles/wiki-syntax.scss',
-
-            # Styles for BCD tables
-            'styles/wiki-compat-tables.scss',
+            'styles/react-mdn.scss',
         ),
         'output_filename': 'build/styles/react-mdn.css',
     },
@@ -720,14 +709,6 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/banners.css',
     },
-    'jquery-ui': {
-        'source_filenames': (
-            'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
-            'styles/libs/jqueryui/moz-jquery-plugins.css',
-            'css/jquery-ui-customizations.scss',
-        ),
-        'output_filename': 'build/styles/jquery-ui.css',
-    },
     'home': {
         'source_filenames': (
             'styles/home.scss',
@@ -751,17 +732,7 @@ PIPELINE_CSS = {
     },
     'wiki': {
         'source_filenames': (
-            'styles/components/banners/wiki-notice.scss',
             'styles/wiki.scss',
-            'styles/diff.scss',
-
-            # Custom build of our Prism theme
-            'styles/libs/prism/prism.css',
-            'styles/libs/prism/prism-line-highlight.css',
-            'styles/libs/prism/prism-line-numbers.css',
-
-            'js/prism-mdn/components/prism-json.css',
-            'styles/wiki-syntax.scss',
         ),
         'output_filename': 'build/styles/wiki.css',
     },
@@ -810,16 +781,13 @@ PIPELINE_CSS = {
     },
     'error-404': {
         'source_filenames': (
-            'styles/error.scss',
             'styles/error-404.scss',
         ),
         'output_filename': 'build/styles/error-404.css',
     },
     'dashboards': {
         'source_filenames': (
-            'styles/components/compact.scss',
             'styles/dashboards.scss',
-            'styles/diff.scss',
         ),
         'output_filename': 'build/styles/dashboards.css',
     },
@@ -849,10 +817,7 @@ PIPELINE_CSS = {
     },
     'editor-content': {
         'source_filenames': (
-            'styles/main.scss',
-            'styles/wiki.scss',
-            'styles/wiki-wysiwyg.scss',
-            'styles/wiki.scss',
+            'styles/editor-content.scss',
         ),
         'output_filename': 'build/styles/editor-content.css',
         'template_name': 'pipeline/javascript-array.jinja',
@@ -877,6 +842,22 @@ PIPELINE_CSS = {
             'styles/samples.scss',
         ),
         'output_filename': 'build/styles/samples.css',
+    },
+    'prism': {
+        'source_filenames': (
+            'styles/libs/prism/prism.css',
+            'styles/libs/prism/prism-line-highlight.css',
+            'styles/libs/prism/prism-line-numbers.css',
+        ),
+        'output_filename': 'build/styles/prism.css',
+    },
+    'jquery-ui': {
+        'source_filenames': (
+            'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
+            'styles/libs/jqueryui/moz-jquery-plugins.css',
+            'css/jquery-ui-customizations.scss',
+        ),
+        'output_filename': 'build/styles/jquery-ui.css',
     },
 }
 

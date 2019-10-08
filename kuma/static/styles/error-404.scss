@@ -1,6 +1,8 @@
 @import 'includes/vars';
 @import 'includes/mixins';
 
+@import './error.scss';
+
 /* stylelint-disable */
 /* 404 - Animate the tumbeast's eyes. Original animation by J Zeller. */
 @keyframes crazylefteye {

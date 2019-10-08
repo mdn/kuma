@@ -1,5 +1,3 @@
-@import '../../includes/svg_data_uri_icons';
-
 /*
 add icon to external inks but not if they are to demos or if we're specifically to ignore
 ********************************************************************** */
@@ -9,7 +7,7 @@ add icon to external inks but not if they are to demos or if we're specifically 
 
     html[dir='ltr'] &:before,
     html[dir='rtl'] &:after {
-        @include set-icon($path-to-svg-general-icons + 'external-link.svg', 12px);
+        @include set-icon('../general/external-link.svg', 12px);
         margin-top: 3px;
         margin-right: 3px;
         vertical-align: text-top;

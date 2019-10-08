@@ -1,6 +1,3 @@
-@import 'includes/mixins_indicators';
-@import '../../includes/svg_data_uri_icons';
-
 .bc-browsers {
     .bc-head-txt-label {
         display: inline-block;
@@ -129,7 +126,7 @@ Icons denooting complicatons with support (footnote, altname, prefix, etc)
 }
 
 .ic-experimental:before {
-    @include set-icon($path-to-svg-general-icons + 'flask.svg');
+    @include set-icon('../general/flask.svg');
 }
 
 .ic-history:before {

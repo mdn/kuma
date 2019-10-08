@@ -69,7 +69,7 @@ div.index.widgeted li.html5 {
 
 /* Add widgeted index, adding a Webcomponent badge of the li element if class="webcomp" */
 div.index.widgeted li.webcomp::after {
-    @include set-icon($path-to-svg-general-icons + 'cogs.svg');
+    @include set-icon('../general/cogs.svg');
 }
 
 /* --- */
