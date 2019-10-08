@@ -95,10 +95,6 @@ function Results({
 }) {
     return (results.documents || []).map(result => {
         const path = `/${locale}/docs/${result.slug}`;
-        const url =
-            typeof window !== 'undefined' && window.origin
-                ? `${window.origin}${path}`
-                : path;
         return (
             <div className="result-container" key={result.slug}>
                 <div className="result">
@@ -114,7 +110,7 @@ function Results({
                         }}
                     />
                     <div className="result-url">
-                        <a href={path}>{url}</a>
+                        <a href={path}>{path}</a>
                     </div>
                 </div>
             </div>
