@@ -3,7 +3,6 @@ import * as React from 'react';
 
 import A11yNav from './a11y/a11y-nav.jsx';
 import Banners from './banners.jsx';
-import GAProvider from './ga-provider.jsx';
 import Header from './header/header.jsx';
 import UserProvider from './user-provider.jsx';
 
@@ -15,12 +14,10 @@ import UserProvider from './user-provider.jsx';
  */
 export default function SignupFlow() {
     return (
-        <GAProvider>
-            <UserProvider>
-                <A11yNav />
-                <Header />
-                <Banners />
-            </UserProvider>
-        </GAProvider>
+        <UserProvider>
+            <A11yNav />
+            <Header />
+            <Banners />
+        </UserProvider>
     );
 }
