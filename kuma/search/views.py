@@ -2,9 +2,11 @@ from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 from ratelimit.decorators import ratelimit
 
-from kuma.api.v1.views import search as search_api, SearchView
+from kuma.api.v1.views import search as search_api
 from kuma.core.decorators import shared_cache_control
 from kuma.core.utils import is_wiki
+
+from .search import SearchView
 
 # Since the search endpoint accepts user input (via query parameters) and its
 # response is compressed, use rate limiting to mitigate the BREACH attack
