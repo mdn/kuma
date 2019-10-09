@@ -5,9 +5,10 @@ from django.utils.translation import activate, ugettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
 from rest_framework import serializers, status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, throttle_classes
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
+from rest_framework.throttling import UserRateThrottle
 from waffle.decorators import waffle_flag
 from waffle.models import Flag, Sample, Switch
 
@@ -287,6 +288,7 @@ search = never_cache(APISearchView.as_view())
 
 @waffle_flag('bc-signals')
 @api_view(['POST'])
+@throttle_classes([UserRateThrottle])
 def bc_signal(request):
     serializer = BCSignalSerializer(data=request.data)
     if serializer.is_valid():
