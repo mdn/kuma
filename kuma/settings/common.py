@@ -953,6 +953,7 @@ PIPELINE_JS = {
         'output_filename': 'build/js/banners.js',
         'extra_context': {
             'async': True,
+            'defer': True,
         },
     },
     'users': {
@@ -964,6 +965,7 @@ PIPELINE_JS = {
         'output_filename': 'build/js/users.js',
         'extra_context': {
             'async': True,
+            'defer': True,
         },
     },
     'dashboard': {
@@ -973,6 +975,7 @@ PIPELINE_JS = {
         'output_filename': 'build/js/dashboard.js',
         'extra_context': {
             'async': True,
+            'defer': True,
         },
     },
     'jquery-ui': {
@@ -990,6 +993,7 @@ PIPELINE_JS = {
         'output_filename': 'build/js/search.js',
         'extra_context': {
             'async': True,
+            'defer': True,
         },
     },
     'payments': {
@@ -1041,6 +1045,7 @@ PIPELINE_JS = {
         'output_filename': 'build/js/wiki.js',
         'extra_context': {
             'async': True,
+            'defer': True,
         },
     },
     'wiki-edit': {
@@ -1059,6 +1064,7 @@ PIPELINE_JS = {
         'output_filename': 'build/js/wiki-move.js',
         'extra_context': {
             'async': True,
+            'defer': True,
         },
     },
     'wiki-compat-tables': {
@@ -1082,6 +1088,7 @@ PIPELINE_JS = {
         'output_filename': 'build/js/task-completion.js',
         'extra_context': {
             'async': True,
+            'defer': True,
         },
     },
     'newsletter': {
@@ -1091,6 +1098,7 @@ PIPELINE_JS = {
         'output_filename': 'build/js/newsletter.js',
         'extra_context': {
             'async': True,
+            'defer': True,
         },
     },
     'html5shiv': {
@@ -1113,6 +1121,7 @@ PIPELINE_JS = {
         'output_filename': 'build/js/perf.js',
         'extra_context': {
             'async': True,
+            'defer': True,
         },
     },
 }
