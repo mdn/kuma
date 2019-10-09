@@ -156,6 +156,7 @@ def document_api_data(doc=None, redirect_url=None):
             'bodyHTML': doc.get_body_html(),
             'quickLinksHTML': doc.get_quick_links_html(),
             'tocHTML': doc.get_toc_html(),
+            'raw': doc.html,
             'parents': [
                 {
                     'url': d.get_absolute_url(),
