@@ -6,6 +6,7 @@ import json
 
 import mock
 import pytest
+from django.conf import settings
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ImproperlyConfigured
@@ -14,6 +15,7 @@ from pyquery import PyQuery as pq
 from waffle.testutils import override_switch
 
 from kuma.core.tests import (assert_no_cache_header,
+                             assert_redirect_to_wiki,
                              assert_shared_cache_header)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html, urlparams
@@ -77,7 +79,7 @@ def known_author(wiki_user):
 def test_revisions_not_logged_in(root_doc, client):
     """A user who is not logged in can't see the revisions dashboard."""
     url = reverse('dashboards.revisions')
-    response = client.get(url)
+    response = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
     assert response['Location'] == '/en-US/users/signin?next={}'.format(url)
     assert_no_cache_header(response)
@@ -85,7 +87,8 @@ def test_revisions_not_logged_in(root_doc, client):
 
 def test_revisions(root_doc, user_client):
     """The revision dashboard works for logged in users."""
-    response = user_client.get(reverse('dashboards.revisions'))
+    response = user_client.get(reverse('dashboards.revisions'),
+                               HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert 'Cache-Control' in response
     assert_no_cache_header(response)
@@ -97,6 +100,7 @@ def test_revisions(root_doc, user_client):
 def test_revisions_list_via_AJAX(dashboard_revisions, user_client):
     """The full list of revisions can be returned via AJAX."""
     response = user_client.get(reverse('dashboards.revisions'),
+                               HTTP_HOST=settings.WIKI_HOST,
                                HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     assert response.status_code == 200
     page = pq(response.content)
@@ -115,7 +119,8 @@ def test_revisions_show_ips_button(switch, is_admin, root_doc, user_client,
     """Toggle IPs button appears for admins when the switch is active."""
     client = admin_client if is_admin else user_client
     with override_switch('store_revision_ips', active=switch):
-        response = client.get(reverse('dashboards.revisions'))
+        response = client.get(reverse('dashboards.revisions'),
+                              HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     page = pq(response.content)
     ip_button = page.find('button#show_ips_btn')
@@ -134,7 +139,8 @@ def test_revisions_show_spam_submission_button(has_perm, root_doc, wiki_user,
             content_type=content_type)
         wiki_user.user_permissions.add(perm)
 
-    response = user_client.get(reverse('dashboards.revisions'))
+    response = user_client.get(reverse('dashboards.revisions'),
+                               HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     page = pq(response.content)
     spam_report_button = page.find('.spam-ham-button')
@@ -145,7 +151,8 @@ def test_revisions_locale_filter(dashboard_revisions, user_client):
     """Revisions can be filtered by locale."""
     url = urlparams(reverse('dashboards.revisions', locale='fr'),
                     locale='fr')
-    response = user_client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    response = user_client.get(url, HTTP_HOST=settings.WIKI_HOST,
+                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     assert response.status_code == 200
 
     page = pq(response.content)
@@ -158,7 +165,8 @@ def test_revisions_locale_filter(dashboard_revisions, user_client):
 def test_revisions_creator_filter(dashboard_revisions, user_client):
     """Revisions can be filtered by a username."""
     url = urlparams(reverse('dashboards.revisions'), user='wiki_user_2')
-    response = user_client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    response = user_client.get(url, HTTP_HOST=settings.WIKI_HOST,
+                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     assert response.status_code == 200
 
     page = pq(response.content)
@@ -173,7 +181,8 @@ def test_revisions_creator_filter(dashboard_revisions, user_client):
 def test_revisions_topic_filter(dashboard_revisions, user_client):
     """Revisions can be filtered by topic (the document slug)."""
     url = urlparams(reverse('dashboards.revisions'), topic='wiki_user_2-doc')
-    response = user_client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    response = user_client.get(url, HTTP_HOST=settings.WIKI_HOST,
+                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     assert response.status_code == 200
 
     page = pq(response.content)
@@ -192,7 +201,8 @@ def test_revisions_known_authors_filter(authors, dashboard_revisions,
                                         user_client, known_author):
     """Revisions can be filtered by the Known Authors group."""
     url = urlparams(reverse('dashboards.revisions'), authors=authors)
-    response = user_client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    response = user_client.get(url, HTTP_HOST=settings.WIKI_HOST,
+                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     assert response.status_code == 200
 
     page = pq(response.content)
@@ -220,7 +230,8 @@ def test_revisions_creator_overrides_known_authors_filter(
     url = urlparams(reverse('dashboards.revisions'),
                     user='wiki_user_3',
                     authors=RevisionDashboardForm.KNOWN_AUTHORS)
-    response = user_client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    response = user_client.get(url, HTTP_HOST=settings.WIKI_HOST,
+                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     assert response.status_code == 200
     page = pq(response.content)
     revisions = page.find('.dashboard-row')
@@ -241,7 +252,8 @@ def test_revisions_deleted_document(dashboard_revisions, user_client,
         reason='Testing deleted docs.')
     del_doc.delete()
 
-    response = user_client.get(reverse('dashboards.revisions'))
+    response = user_client.get(reverse('dashboards.revisions'),
+                               HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     page = pq(response.content)
     rev_rows = page.find('.dashboard-row')
@@ -258,7 +270,8 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
 
     def test_not_logged_in(self, mock_analytics_upageviews):
         """A user who is not logged in is not able to see the dashboard."""
-        response = self.client.get(reverse('dashboards.spam'))
+        response = self.client.get(reverse('dashboards.spam'),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert_no_cache_header(response)
 
@@ -266,25 +279,29 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         """A user with correct permissions is able to see the dashboard."""
         self.client.login(username='testuser', password='testpass')
         # Attempt to see spam dashboard as a logged-in user without permissions
-        response = self.client.get(reverse('dashboards.spam'))
+        response = self.client.get(reverse('dashboards.spam'),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 403
 
         # Give testuser wiki.add_revisionakismetsubmission permission
         perm_akismet = Permission.objects.get(codename='add_revisionakismetsubmission')
         self.testuser.user_permissions.add(perm_akismet)
-        response = self.client.get(reverse('dashboards.spam'))
+        response = self.client.get(reverse('dashboards.spam'),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 403
 
         # Give testuser wiki.add_documentspamattempt permission
         perm_spam = Permission.objects.get(codename='add_documentspamattempt')
         self.testuser.user_permissions.add(perm_spam)
-        response = self.client.get(reverse('dashboards.spam'))
+        response = self.client.get(reverse('dashboards.spam'),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 403
 
         # Give testuser wiki.add_userban permission
         perm_ban = Permission.objects.get(codename='add_userban')
         self.testuser.user_permissions.add(perm_ban)
-        response = self.client.get(reverse('dashboards.spam'))
+        response = self.client.get(reverse('dashboards.spam'),
+                                   HTTP_HOST=settings.WIKI_HOST)
         # With all correct permissions testuser is able to see the dashboard
         assert response.status_code == 200
         assert_no_cache_header(response)
@@ -311,11 +328,13 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         # The first response will say that the report is being processed
-        response = self.client.get(reverse('dashboards.spam'))
+        response = self.client.get(reverse('dashboards.spam'),
+                                   HTTP_HOST=settings.WIKI_HOST)
         self.assertContains(
             response, "The report is being processed", status_code=200)
 
-        response2 = self.client.get(reverse('dashboards.spam'))
+        response2 = self.client.get(reverse('dashboards.spam'),
+                                    HTTP_HOST=settings.WIKI_HOST)
 
         self.assertContains(response2, "Oops!", status_code=200)
         page = pq(response2.content)
@@ -355,10 +374,12 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         # The first response will say that the report is being processed
-        response = self.client.get(reverse('dashboards.spam'))
+        response = self.client.get(reverse('dashboards.spam'),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert 200 == response.status_code
 
-        response2 = self.client.get(reverse('dashboards.spam'))
+        response2 = self.client.get(reverse('dashboards.spam'),
+                                    HTTP_HOST=settings.WIKI_HOST)
         page = pq(response2.content)
         table_rows = page.find('.spam-events-table tbody tr')
         table_row_text = ''
@@ -377,10 +398,12 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
         """The spam trends table shows up."""
         self.client.login(username='admin', password='testpass')
         # The first response will say that the report is being processed
-        response = self.client.get(reverse('dashboards.spam'))
+        response = self.client.get(reverse('dashboards.spam'),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert 200 == response.status_code
 
-        response2 = self.client.get(reverse('dashboards.spam'))
+        response2 = self.client.get(reverse('dashboards.spam'),
+                                    HTTP_HOST=settings.WIKI_HOST)
         page = pq(response2.content)
         spam_trends_table = page.find('.spam-trends-table')
         assert 1 == len(spam_trends_table)
@@ -480,10 +503,12 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
 
         self.client.login(username='admin', password='testpass')
         # The first response will say that the report is being processed
-        response = self.client.get(reverse('dashboards.spam'))
+        response = self.client.get(reverse('dashboards.spam'),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert 200 == response.status_code
 
-        response2 = self.client.get(reverse('dashboards.spam'))
+        response2 = self.client.get(reverse('dashboards.spam'),
+                                    HTTP_HOST=settings.WIKI_HOST)
         page = pq(response2.content)
 
         row_daily = page.find('.spam-trends-table tbody tr')[0].text_content().replace(' ', '').strip('\n').split('\n')
@@ -595,7 +620,7 @@ class SpamDashTest(SampleRevisionsMixin, UserTestCase):
 def test_disallowed_methods(db, client, http_method, endpoint):
     """HTTP methods other than GET & HEAD are not allowed."""
     url = reverse('dashboards.{}'.format(endpoint))
-    response = getattr(client, http_method)(url)
+    response = getattr(client, http_method)(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 405
     if endpoint in ('spam', 'revisions'):
         assert_no_cache_header(response)
@@ -608,7 +633,7 @@ def test_disallowed_methods(db, client, http_method, endpoint):
 
 @pytest.mark.parametrize('endpoint', ['user_lookup', 'topic_lookup'])
 def test_lookups_require_login(root_doc, client, endpoint):
-    qs, headers = '', {}
+    qs, headers = '', {'HTTP_HOST': settings.WIKI_HOST}
     headers.update(HTTP_X_REQUESTED_WITH='XMLHttpRequest')
     if endpoint == 'topic_lookup':
         qs = '?topic=root'
@@ -623,7 +648,7 @@ def test_lookups_require_login(root_doc, client, endpoint):
 @pytest.mark.parametrize('mode', ['ajax', 'non-ajax'])
 @pytest.mark.parametrize('endpoint', ['user_lookup', 'topic_lookup'])
 def test_lookup(root_doc, wiki_user_2, wiki_user_3, user_client, mode, endpoint):
-    qs, headers = '', {}
+    qs, headers = '', {'HTTP_HOST': settings.WIKI_HOST}
     if mode == 'ajax':
         if endpoint == 'topic_lookup':
             qs = '?topic=root'
@@ -656,7 +681,8 @@ def test_macros(mock_usage, client, db):
         }
     }
 
-    response = client.get(reverse('dashboards.macros'))
+    response = client.get(reverse('dashboards.macros'),
+                          HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert 'Cookie' in response['Vary']
     assert_shared_cache_header(response)
@@ -682,7 +708,8 @@ def test_macros_no_counts(mock_usage, client, db):
         }
     }
 
-    response = client.get(reverse('dashboards.macros'))
+    response = client.get(reverse('dashboards.macros'),
+                          HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert "Found 2 active macros." in response.content.decode('utf8')
     page = pq(response.content)
@@ -692,7 +719,8 @@ def test_macros_no_counts(mock_usage, client, db):
 
 def test_index(client, db):
     """The dashboard index can be loaded."""
-    response = client.get(reverse('dashboards.index'))
+    response = client.get(reverse('dashboards.index'),
+                          HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     content = response.content.decode(response.charset)
     assert reverse('dashboards.macros') in content
@@ -705,7 +733,8 @@ def test_index(client, db):
 def test_index_non_english_sees_translations(client, db):
     """Non-English users see the in-progress translations dashboard."""
     with override('fr'):
-        response = client.get(reverse('dashboards.index'))
+        response = client.get(reverse('dashboards.index'),
+                              HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         content = response.content.decode(response.charset)
         assert reverse('dashboards.macros') in content
@@ -717,7 +746,8 @@ def test_index_non_english_sees_translations(client, db):
 
 def test_index_admin_sees_spam_dashboard(admin_client):
     """A moderator can see the spam dashboard in the list."""
-    response = admin_client.get(reverse('dashboards.index'))
+    response = admin_client.get(reverse('dashboards.index'),
+                                HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     content = response.content.decode(response.charset)
     assert reverse('dashboards.macros') in content
@@ -725,3 +755,11 @@ def test_index_admin_sees_spam_dashboard(admin_client):
     l10n_url = reverse('wiki.list_with_localization_tag',
                        kwargs={'tag': 'inprogress'})
     assert l10n_url not in content
+
+
+@pytest.mark.parametrize('endpoint', ['index', 'revisions', 'spam', 'macros'])
+def test_redirect(client, endpoint):
+    """Redirect to the wiki domain if not already."""
+    url = reverse('dashboards.{}'.format(endpoint))
+    response = client.get(url)
+    assert_redirect_to_wiki(response, url)

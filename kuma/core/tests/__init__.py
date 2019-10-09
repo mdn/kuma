@@ -12,6 +12,11 @@ from django.test import TestCase
 from django.utils.translation import trans_real
 
 
+def assert_redirect_to_wiki(response, url):
+    assert response.status_code == 301
+    assert response['Location'].endswith(settings.WIKI_HOST + url)
+
+
 def assert_no_cache_header(response):
     assert 'max-age=0' in response['Cache-Control']
     assert 'no-cache' in response['Cache-Control']

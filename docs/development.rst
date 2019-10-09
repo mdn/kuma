@@ -43,10 +43,10 @@ Run the Django test suite::
 
 For more information, see the :doc:`test documentation <tests>`.
 
-Front-end tests
+Functional tests
 ---------------
-To run the front-end (selenium) tests, see
-:doc:`Client-side Testing <tests-ui>`.
+To run the functional tests, see
+:doc:`Client-side Testing <tests-functional>`.
 
 Kumascript tests
 ----------------

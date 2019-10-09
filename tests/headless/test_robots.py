@@ -7,7 +7,7 @@ from . import INDEXED_ATTACHMENT_DOMAINS, INDEXED_WEB_DOMAINS
 
 
 @pytest.mark.smoke
-@pytest.mark.nodata
+@pytest.mark.headless
 @pytest.mark.nondestructive
 def test_robots(any_host_url):
     url = any_host_url + '/robots.txt'

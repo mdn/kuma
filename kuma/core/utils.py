@@ -43,10 +43,7 @@ def to_html(pq):
 
 
 def is_wiki(request):
-    return request.get_host() not in (
-        settings.BETA_ORIGIN,
-        settings.BETA_HOST,
-    )
+    return request.get_host() == settings.WIKI_HOST
 
 
 def redirect_to_wiki(request, permanent=True):

@@ -11,6 +11,7 @@ from datetime import datetime
 import mock
 import pytest
 import requests_mock
+from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.test.client import BOUNDARY, encode_multipart, MULTIPART_CONTENT
 from django.utils.http import quote_etag
@@ -20,7 +21,8 @@ from waffle.testutils import override_switch
 
 from kuma.authkeys.models import Key
 from kuma.core.models import IPBan
-from kuma.core.tests import assert_no_cache_header, assert_shared_cache_header
+from kuma.core.tests import (assert_no_cache_header, assert_redirect_to_wiki,
+                             assert_shared_cache_header)
 from kuma.core.urlresolvers import reverse
 
 from . import HREFLANG_TEST_CASES
@@ -115,11 +117,14 @@ def authkey(wiki_user):
     'endpoint', ['children', 'toc', 'json', 'json_slug'])
 def test_disallowed_methods(client, http_method, endpoint):
     """HTTP methods other than GET & HEAD are not allowed."""
+    headers = {}
     kwargs = None
     if endpoint != 'json':
         kwargs = dict(document_path='Web/CSS')
+    if endpoint == 'toc':
+        headers.update(HTTP_HOST=settings.WIKI_HOST)
     url = reverse('wiki.{}'.format(endpoint), kwargs=kwargs)
-    response = getattr(client, http_method)(url)
+    response = getattr(client, http_method)(url, **headers)
     assert response.status_code == 405
     assert_shared_cache_header(response)
 
@@ -141,7 +146,7 @@ def test_api_safe(client, section_doc, section_case, if_none_match, method):
     if section_id:
         url += '?section={}'.format(section_id)
 
-    headers = {}
+    headers = dict(HTTP_HOST=settings.WIKI_HOST)
 
     if method == 'GET':
         # Starting with Django 1.11, condition headers will be
@@ -181,7 +186,8 @@ def test_api_put_forbidden_when_no_authkey(client, user_client, root_doc,
     an authkey, even for logged-in users.
     """
     url = root_doc.get_absolute_url() + '$api'
-    response = (client if user_case == 'anonymous' else user_client).put(url)
+    response = (client if user_case == 'anonymous' else user_client).put(
+        url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 403
     assert_no_cache_header(response)
 
@@ -196,7 +202,8 @@ def test_api_put_unsupported_content_type(client, authkey):
         url,
         data='stuff',
         content_type='nonsense',
-        HTTP_AUTHORIZATION=authkey.header
+        HTTP_AUTHORIZATION=authkey.header,
+        HTTP_HOST=settings.WIKI_HOST
     )
     assert response.status_code == 400
     assert_shared_cache_header(response)
@@ -216,7 +223,8 @@ def test_api_put_authkey_tracking(client, authkey):
         url,
         data=encoded_data,
         content_type=content_type,
-        HTTP_AUTHORIZATION=authkey.header
+        HTTP_AUTHORIZATION=authkey.header,
+        HTTP_HOST=settings.WIKI_HOST
     )
     assert response.status_code == 201
     assert_shared_cache_header(response)
@@ -229,7 +237,8 @@ def test_api_put_authkey_tracking(client, authkey):
         url,
         data=encoded_data,
         content_type=content_type,
-        HTTP_AUTHORIZATION=authkey.header
+        HTTP_AUTHORIZATION=authkey.header,
+        HTTP_HOST=settings.WIKI_HOST
     )
     assert response.status_code == 205
     assert_shared_cache_header(response)
@@ -260,10 +269,11 @@ def test_api_put_existing(settings, client, section_doc, authkey, section_case,
     if section_id:
         url += '?section={}'.format(section_id)
 
-    headers = dict(HTTP_AUTHORIZATION=authkey.header)
+    headers = dict(HTTP_AUTHORIZATION=authkey.header,
+                   HTTP_HOST=settings.WIKI_HOST)
 
     if if_match == 'match':
-        response = client.get(url)
+        response = client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert 'etag' in response
         headers['HTTP_IF_MATCH'] = response['etag']
     elif if_match == 'mismatch':
@@ -362,6 +372,7 @@ def test_api_put_new(settings, client, root_doc, authkey, section_case,
         data=encoded_data,
         content_type=content_type,
         HTTP_AUTHORIZATION=authkey.header,
+        HTTP_HOST=settings.WIKI_HOST
     )
 
     if content_case == 'html-fragment':
@@ -504,7 +515,8 @@ def test_document_banned_ip_can_read(client, root_doc):
     '''Banned IPs are still allowed to read content, just not edit.'''
     ip = '127.0.0.1'
     IPBan.objects.create(ip=ip)
-    response = client.get(root_doc.get_absolute_url(), REMOTE_ADDR=ip)
+    response = client.get(root_doc.get_absolute_url(), REMOTE_ADDR=ip,
+                          HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
 
 
@@ -536,11 +548,13 @@ def test_kumascript_error_reporting(admin_client, root_doc, ks_toolbox,
         if endpoint == 'preview':
             response = admin_client.post(
                 reverse('wiki.preview'),
-                dict(content='anything truthy')
+                dict(content='anything truthy'),
+                HTTP_HOST=settings.WIKI_HOST
             )
         else:
             with mock.patch('kuma.wiki.models.config', **ks_settings):
-                response = admin_client.get(root_doc.get_absolute_url())
+                response = admin_client.get(root_doc.get_absolute_url(),
+                                            HTTP_HOST=settings.WIKI_HOST)
 
     assert response.status_code == 200
 
@@ -562,7 +576,8 @@ def test_tags_show_in_document(root_doc, client, wiki_user):
     """Test tags are showing correctly in document view"""
     tags = ('JavaScript', 'AJAX', 'DOM')
     Revision.objects.create(document=root_doc, tags=','.join(tags), creator=wiki_user)
-    response = client.get(root_doc.get_absolute_url())
+    response = client.get(root_doc.get_absolute_url(),
+                          HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
 
     page = pq(response.content)
@@ -577,7 +592,8 @@ def test_tags_not_show_while_empty(root_doc, client, wiki_user):
     # Create a revision with no tags
     Revision.objects.create(document=root_doc, tags=','.join([]), creator=wiki_user)
 
-    response = client.get(root_doc.get_absolute_url())
+    response = client.get(root_doc.get_absolute_url(),
+                          HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
 
     page = pq(response.content)
@@ -645,7 +661,7 @@ def test_fallback_to_translation(root_doc, trans_doc, client, params_case):
     """
     params = '?x=y&x=z' if (params_case == 'with-params') else ''
     url = reverse('wiki.document', args=[root_doc.slug], locale='fr')
-    response = client.get(url + params)
+    response = client.get(url + params, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
     assert_shared_cache_header(response)
     assert response['Location'].endswith(trans_doc.get_absolute_url() + params)
@@ -666,7 +682,7 @@ def test_redirect_with_no_slug(db, client):
 def test_watch_405(client, root_doc, endpoint, http_method):
     """Watch document with HTTP non-POST request results in 405."""
     url = reverse(endpoint, args=[root_doc.slug])
-    response = getattr(client, http_method)(url)
+    response = getattr(client, http_method)(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 405
     assert_no_cache_header(response)
 
@@ -676,7 +692,7 @@ def test_watch_405(client, root_doc, endpoint, http_method):
 def test_watch_login_required(client, root_doc, endpoint):
     """User must be logged-in to subscribe to a document."""
     url = reverse(endpoint, args=[root_doc.slug])
-    response = client.post(url)
+    response = client.post(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
     assert_no_cache_header(response)
     assert response['Location'].endswith(
@@ -691,7 +707,7 @@ def test_watch_unwatch(user_client, wiki_user, root_doc, endpoint, event):
     """Watch and unwatch a document."""
     url = reverse(endpoint, args=[root_doc.slug])
     # Subscribe
-    response = user_client.post(url)
+    response = user_client.post(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
     assert_no_cache_header(response)
     assert response['Location'].endswith(
@@ -699,7 +715,7 @@ def test_watch_unwatch(user_client, wiki_user, root_doc, endpoint, event):
     assert event.is_notifying(wiki_user, root_doc), 'Watch was not created'
 
     # Unsubscribe
-    response = user_client.post(url)
+    response = user_client.post(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
     assert_no_cache_header(response)
     assert response['Location'].endswith(
@@ -710,7 +726,8 @@ def test_watch_unwatch(user_client, wiki_user, root_doc, endpoint, event):
 
 def test_deleted_doc_anon(deleted_doc, client):
     """Requesting a deleted doc returns 404"""
-    response = client.get(deleted_doc.get_absolute_url())
+    response = client.get(deleted_doc.get_absolute_url(),
+                          HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 404
     content = response.content.decode(response.charset)
     assert "This document was deleted" not in content
@@ -719,7 +736,8 @@ def test_deleted_doc_anon(deleted_doc, client):
 
 def test_deleted_doc_user(deleted_doc, user_client):
     """Requesting a deleted doc returns 404, deletion message"""
-    response = user_client.get(deleted_doc.get_absolute_url())
+    response = user_client.get(deleted_doc.get_absolute_url(),
+                               HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 404
     content = response.content.decode(response.charset)
     assert "This document was deleted" not in content
@@ -730,7 +748,8 @@ def test_deleted_doc_user(deleted_doc, user_client):
 
 def test_deleted_doc_moderator(deleted_doc, moderator_client):
     """Requesting deleted doc as moderator returns 404 with action buttons."""
-    response = moderator_client.get(deleted_doc.get_absolute_url())
+    response = moderator_client.get(deleted_doc.get_absolute_url(),
+                                    HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 404
     content = response.content.decode(response.charset)
     assert 'Reason for Deletion' in content
@@ -749,7 +768,8 @@ def test_deleted_doc_no_purge_permdeleted(deleted_doc, wiki_moderator,
     """Requesting deleted doc without purge perm removes purge button."""
     wiki_moderator.user_permissions.remove(
         Permission.objects.get(codename='purge_document'))
-    response = moderator_client.get(deleted_doc.get_absolute_url())
+    response = moderator_client.get(deleted_doc.get_absolute_url(),
+                                    HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 404
     content = response.content.decode(response.charset)
     assert 'Reason for Deletion' in content
@@ -763,11 +783,10 @@ def test_deleted_doc_no_purge_permdeleted(deleted_doc, wiki_moderator,
     assert 'Purge this document' not in content
 
 
-@pytest.mark.parametrize('case', ('DOMAIN', 'BETA_HOST', 'WIKI_HOST'))
-def test_redirect_suppression(client, host_settings, root_doc, redirect_doc,
-                              case):
+@pytest.mark.parametrize('case', ('DOMAIN', 'WIKI_HOST'))
+def test_redirect_suppression(client, settings, root_doc, redirect_doc, case):
     """The document view shouldn't redirect when passed redirect=no."""
-    host = getattr(host_settings, case)
+    host = getattr(settings, case)
     url = redirect_doc.get_absolute_url()
     response = client.get(url, HTTP_HOST=host)
     assert response.status_code == 301
@@ -792,7 +811,7 @@ def test_redirects_only_internal(mock_kumascript_get, constance_config,
         created=datetime(2018, 4, 18, 12, 15))
     mock_kumascript_get.return_value = (redirect_doc.html, None)
     url = redirect_doc.get_absolute_url()
-    response = client.get(url, follow=True)
+    response = client.get(url, follow=True, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert not response.redirect_chain
     content = response.content.decode(response.charset)
@@ -816,7 +835,7 @@ def test_self_redirect_supression(mock_kumascript_get, constance_config,
         title='Self Redirect Document',
         created=datetime(2018, 4, 19, 12, 15))
     mock_kumascript_get.return_value = (redirect_doc.html, None)
-    response = client.get(url, follow=True)
+    response = client.get(url, follow=True, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert not response.redirect_chain
     content = response.content.decode(response.charset)
@@ -840,7 +859,7 @@ def test_hreflang(client, root_doc, locales, expected_results):
     ]
     for doc, expected_result in zip(docs, expected_results):
         url = doc.get_absolute_url()
-        response = client.get(url)
+        response = client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200, url
         html = pq(response.content.decode(response.charset))
         assert html.attr('lang') == expected_result
@@ -861,17 +880,20 @@ def test_hreflang(client, root_doc, locales, expected_results):
      ('section=junk', 301),
      ('summary=1', 301)))
 @mock.patch('kuma.wiki.kumascript.get')
-def test_wiki_only_query_params(mock_kumascript_get, constance_config, client,
-                                host_settings, root_doc, param, status):
+@mock.patch('kuma.wiki.templatetags.ssr.server_side_render')
+def test_wiki_only_query_params(mock_ssr, mock_kumascript_get, constance_config,
+                                client, root_doc, param, status):
     """
     The document view should ensure the wiki domain when using specific query
     parameters.
     """
     constance_config.KUMASCRIPT_TIMEOUT = 1
+    # For the purpose of this test, we don't care about the content of the
+    # document page, so let's explicitly mock the "server_side_render" call.
+    mock_ssr.return_value = '<div></div>'
     mock_kumascript_get.return_value = (root_doc.html, None)
     url = root_doc.get_absolute_url() + '?{}'.format(param)
-    response = client.get(url, HTTP_HOST=host_settings.BETA_HOST, follow=False)
+    response = client.get(url)
     assert response.status_code == status
     if status == 301:
-        assert (response['location'] ==
-                'http://{}{}'.format(host_settings.WIKI_HOST, url))
+        assert_redirect_to_wiki(response, url)

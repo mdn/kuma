@@ -7,7 +7,6 @@
     "assets/ckeditor4/source/plugins/descriptionlist/package.json",
     "kuma/static/js/libs/jquery-ui-1.10.3.custom/development-bundle/package.json",
     "kumascript/package.json",
-    "tests/performance/Dockerfile",
     "docker/images/kuma/Dockerfile"
   ],
   "masterIssue": true,

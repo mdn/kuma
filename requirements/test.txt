@@ -7,27 +7,10 @@
 braceexpand==0.1.1 \
     --hash=sha256:f967ca39bdb98e16299a69c45a944c5d4345393615ed6470bb1e62ca3506bf41
 
-# Page Object Model for testing with Selenium
-# Code: https://github.com/mozilla/PyPOM
-# Changes: https://pypom.readthedocs.io/en/latest/news.html#release-notes
-# Docs: https://pypom.readthedocs.io/en/latest/index.html
-PyPOM==2.2.0 \
-    --hash=sha256:4bdd57fceb72d7e6a3645cf6c9322f490d9cfb5d777eac2c851a3b658b813939 \
-    --hash=sha256:6772ec99f0a21a5bdc8c092007a8c813ed18359e67ed70258bbb233df5e28829
-
-
 # Test plugin: Re-run flaky tests
 pytest-rerunfailures==2.1.0 \
     --hash=sha256:e867cec5eabb20ed38e04b6b9c277e34b0603143ee315beab56296d8329fe3f2 \
     --hash=sha256:82e6cd823c50ff2d1b2b183642302d42c1650bcf387b17d46f5711e08fa0995f
-
-# Test plugin: Run tests with selenium
-# Code: https://github.com/pytest-dev/pytest-selenium
-# Changes: http://pytest-selenium.readthedocs.io/en/latest/news.html
-# Docs: http://pytest-selenium.readthedocs.io/en/latest/index.html
-pytest-selenium==1.14.0 \
-    --hash=sha256:3d23f13b6e42fb93925b0e1f9d094e0523b4014d1eee0c51674b4a02c900fce7 \
-    --hash=sha256:c8500762082bf5b7fbb9fc37c2794a6cff6d5ebc50ede67eb29409e17461ea2f
 
 # Wait until a database (or other) service is able to accept connections.
 # Code: https://github.com/pmac/urlwait

@@ -42,9 +42,6 @@ coveragetest: clean
 coveragetesthtml: coveragetest
 	coverage html
 
-locust:
-	locust -f tests/performance/smoke.py --host=https://developer.allizom.org
-
 webpack:
 	@ echo "## Running webpack ##"
 	@ npm run webpack:prod
@@ -178,4 +175,4 @@ npmrefresh:
 	npm install
 
 # Those tasks don't have file targets
-.PHONY: test coveragetest locust clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh npmrefresh webpack compile-react-i18n
+.PHONY: test coveragetest clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh npmrefresh webpack compile-react-i18n

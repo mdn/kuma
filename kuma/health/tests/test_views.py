@@ -111,7 +111,6 @@ def test_status(client, settings, mock_status_externals):
         'PROTOCOL': 'http://',
         'REVISION_HASH': '3f45719d45f15da73ccc15747c28b80ccc8dfee5',
         'SITE_URL': 'http://mdn.localhost:8000',
-        'BETA_SITE_URL': 'http://beta.mdn.localhost:8000',
         'WIKI_SITE_URL': 'http://wiki.mdn.localhost:8000',
         'STATIC_URL': '/static/',
     }
