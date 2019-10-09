@@ -952,7 +952,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/banners.js',
         'extra_context': {
-            'async': True,
             'defer': True,
         },
     },
@@ -964,7 +963,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/users.js',
         'extra_context': {
-            'async': True,
             'defer': True,
         },
     },
@@ -974,7 +972,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/dashboard.js',
         'extra_context': {
-            'async': True,
             'defer': True,
         },
     },
@@ -992,7 +989,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/search.js',
         'extra_context': {
-            'async': True,
             'defer': True,
         },
     },
@@ -1044,7 +1040,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/wiki.js',
         'extra_context': {
-            'async': True,
             'defer': True,
         },
     },
@@ -1063,7 +1058,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/wiki-move.js',
         'extra_context': {
-            'async': True,
             'defer': True,
         },
     },
@@ -1087,7 +1081,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/task-completion.js',
         'extra_context': {
-            'async': True,
             'defer': True,
         },
     },
@@ -1097,7 +1090,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/newsletter.js',
         'extra_context': {
-            'async': True,
             'defer': True,
         },
     },
@@ -1120,7 +1112,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/perf.js',
         'extra_context': {
-            'async': True,
             'defer': True,
         },
     },
