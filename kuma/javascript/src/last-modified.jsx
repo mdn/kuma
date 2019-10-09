@@ -30,9 +30,7 @@ export default function LastModified({
     return (
         <section className="contributors-sub">
             <ClockIcon />
-            <header>
-                <h4>{gettext('Last modified:')}</h4>
-            </header>
+            <strong>{gettext('Last modified: ')}</strong>
             <time dateTime={lastModified}>
                 {lastModifiedDate.toLocaleString(
                     documentLocale,
