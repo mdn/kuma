@@ -1037,7 +1037,6 @@ PIPELINE_JS = {
             'js/utils/utils.js',
             'js/utils/post-message-handler.js',
             'js/wiki.js',
-            'js/utils/bug1522937-iex-test.js',
             'js/interactive.js',
             'js/wiki-samples.js',
             'js/wiki-toc.js',
