@@ -1093,12 +1093,6 @@ PIPELINE_JS = {
             'async': True,
         },
     },
-    'html5shiv': {
-        'source_filenames': (
-            'js/libs/html5shiv/html5shiv.js',
-        ),
-        'output_filename': 'build/js/html5shiv.js',
-    },
     'selectivizr': {
         'source_filenames': (
             'js/libs/selectivizr/selectivizr.js',
