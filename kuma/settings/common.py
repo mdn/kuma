@@ -1099,12 +1099,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/html5shiv.js',
     },
-    'selectivizr': {
-        'source_filenames': (
-            'js/libs/selectivizr/selectivizr.js',
-        ),
-        'output_filename': 'build/js/selectivizr.js',
-    },
     'perf': {
         'source_filenames': (
             'js/utils/perf.js',
