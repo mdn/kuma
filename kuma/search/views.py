@@ -24,9 +24,10 @@ def search(request, *args, **kwargs):
     if is_wiki(request):
         return wiki_search(request, *args, **kwargs)
 
+    results = search_api(request, *args, **kwargs).data
     context = {
         'results': {
-            'results': search_api(request, *args, **kwargs).data
+            'results': None if results.get('error') else results
         }
     }
 
