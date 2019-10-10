@@ -23,7 +23,6 @@ export function addLiveExampleButtons(rootElement) {
         // We expect the iframe to be in a section with an id related
         // to the frame id.
         let sectid = frame.id.replace(idPrefix, '');
-
         // It *used* to be that the ' character was allowed as a safe
         // character in IDs. We've since changed the Wiki post-processing
         // code to replace those with an empty string.
@@ -34,7 +33,16 @@ export function addLiveExampleButtons(rootElement) {
         // For context, see https://github.com/mozilla/kuma/issues/5810
         sectid = sectid.replace("'", '');
 
+        if (/^\d/.test(sectid)) {
+            // The iframe's ID didn't necessary start with a number but
+            // if you remove the iframes IDs' prefix what's left might
+            // start with a number. But that won't find a section because
+            // no section in the DOM has an ID that starts with a number.
+            sectid = `id${sectid}`;
+        }
+
         let section = document.getElementById(sectid);
+
         if (!section) {
             // If the section doesn't exist, then none of the selectors below
             // will work, so we can bail out early
@@ -62,7 +70,10 @@ export function addLiveExampleButtons(rootElement) {
                 `#${sectid} ~ pre[class*=js], #${sectid} ~ * pre[class*=js]`
             );
         } catch (err) {
-            console.error('Error trying to find html, css, js DOM nodes:', err);
+            console.error(
+                `Error trying to find html, css, js DOM nodes (section id ${sectid})`,
+                err
+            );
         }
 
         // Now get the source code out of those pre elements

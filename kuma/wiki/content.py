@@ -614,6 +614,18 @@ class SectionIDFilter(html5lib_Filter):
         # Slugify the text we found inside the header, generate an ID
         # as a last resort.
         slug = self.slugify(u''.join(text))
+
+        # If the slug starts with a digit we need to pad it because the ID
+        # won't work as a DOM attribute ID. E.g.
+        # >> document.querySelector('#123_foo')
+        # SyntaxError: '#123_foo' is not a valid selector
+        #
+        # So, to prevent that replace any leading digits.
+        if slug and slug[0].isdigit():
+            # If the ID starts with a number put in an extra string at
+            # the start so it at least becomes a perfectly valid ID.
+            slug = 'id' + slug
+
         if not slug:
             slug = self.gen_id()
         else:
