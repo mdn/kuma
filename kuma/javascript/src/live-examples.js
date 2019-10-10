@@ -48,15 +48,22 @@ export function addLiveExampleButtons(rootElement) {
         // direct siblings and also descendants of direct siblings
         // (because sometimes some of the source code is tucked inside
         // a hidden div).
-        let html = rootElement.querySelector(
-            `#${sectid} ~ pre[class*=html], #${sectid} ~ * pre[class*=html]`
-        );
-        let css = rootElement.querySelector(
-            `#${sectid} ~ pre[class*=css], #${sectid} ~ * pre[class*=css]`
-        );
-        let js = rootElement.querySelector(
-            `#${sectid} ~ pre[class*=js], #${sectid} ~ * pre[class*=js]`
-        );
+        let html = null;
+        let css = null;
+        let js = null;
+        try {
+            html = rootElement.querySelector(
+                `#${sectid} ~ pre[class*=html], #${sectid} ~ * pre[class*=html]`
+            );
+            css = rootElement.querySelector(
+                `#${sectid} ~ pre[class*=css], #${sectid} ~ * pre[class*=css]`
+            );
+            js = rootElement.querySelector(
+                `#${sectid} ~ pre[class*=js], #${sectid} ~ * pre[class*=js]`
+            );
+        } catch (err) {
+            console.error('Error trying to find html, css, js DOM nodes:', err);
+        }
 
         // Now get the source code out of those pre elements
         let htmlCode = html ? html.textContent : '';
