@@ -98,13 +98,12 @@ export default function Newsletter() {
      * @param {Object} event - The MouseEvent object
      */
     const submit = event => {
-        let newsletterForm = newsletterFormRef.current;
+        event.preventDefault();
 
+        let newsletterForm = newsletterFormRef.current;
         if (!newsletterForm) {
             return;
         }
-
-        event.preventDefault();
         submitNewsletterSubscription(newsletterForm)
             .then(({ success, errors }) => {
                 if (success) {
@@ -178,8 +177,7 @@ export default function Newsletter() {
                     ref={newsletterFormRef}
                     className="newsletter-form nodisable"
                     name="newsletter-form"
-                    action={NEWSLETTER_SUBSCRIBE_URL}
-                    method="post"
+                    onSubmit={submit}
                 >
                     <section className="newsletter-head">
                         <h2 className="newsletter-teaser">
@@ -269,7 +267,6 @@ export default function Newsletter() {
                         </div>
                         <div className="newsletter-group-submit">
                             <button
-                                onClick={submit}
                                 id="newsletter-submit"
                                 type="submit"
                                 className="button neutral newsletter-submit"
