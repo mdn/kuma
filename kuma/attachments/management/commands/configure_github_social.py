@@ -52,7 +52,7 @@ class Command(BaseCommand):
         print('\n')
 
         social_app = SocialApp.objects.filter(provider='github').first()
-        if social_app is not None and input(OVERWRITE_PROMPT) == 'yes':
+        if social_app is None or input(OVERWRITE_PROMPT) == 'yes':
             print('\n')
 
             print(GITHUB_INFO)
