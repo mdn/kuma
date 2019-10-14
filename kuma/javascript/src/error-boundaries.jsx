@@ -13,19 +13,19 @@ export class AppErrorBoundary extends React.Component {
         return { error };
     }
 
-    logError(boundaryName) {
+    logError(boundaryName, error) {
         // https://developers.google.com/analytics/devguides/collection/analyticsjs/events#event_fields
         this.context('send', {
             hitType: 'event',
             eventCategory: 'errorboundary',
-            eventAction: boundaryName,
+            eventAction: `${boundaryName}:${error.toString()}`,
             eventLabel: document.location.href
         });
     }
 
-    componentDidCatch() {
+    componentDidCatch(error) {
         document.title = 'Application rendering Error';
-        this.logError('application');
+        this.logError('application', error);
     }
 
     render() {
@@ -46,9 +46,9 @@ AppErrorBoundary.propTypes = {
 };
 
 export class ContentErrorBoundary extends AppErrorBoundary {
-    componentDidCatch() {
+    componentDidCatch(error) {
         document.title = 'Content rendering error';
-        this.logError('content');
+        this.logError('content', error);
     }
     render() {
         if (this.state.error) {
