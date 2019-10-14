@@ -146,53 +146,6 @@ class ViewTests(ElasticTestCase):
         assert response.status_code == 405
         assert_no_cache_header(response)
 
-    def test_handled_exceptions(self):
-
-        # These are instantiated with an error string.
-        for exc in [elasticsearch.ElasticsearchException,
-                    elasticsearch.SerializationError,
-                    elasticsearch.TransportError,
-                    elasticsearch.NotFoundError,
-                    elasticsearch.RequestError]:
-
-            class ExceptionSearchView(SearchView):
-                filter_backends = ()
-
-                def list(self, *args, **kwargs):
-                    raise exc(503, 'ERROR!!')
-
-            view = ExceptionSearchView.as_view()
-            request = self.get_request('/en-US/search')
-            response = view(request).render()
-            assert response.status_code == 200
-            assert 'Search is temporarily unavailable' in response.content
-
-    def test_unicode_exception(self):
-        class UnicodeDecodeErrorSearchView(SearchView):
-            filter_backends = ()
-
-            def list(self, *args, **kwargs):
-                # willfully causing a UnicodeDecodeError
-                return 'coöperative'.encode('ascii')
-
-        view = UnicodeDecodeErrorSearchView.as_view()
-        request = self.get_request('/en-US/search')
-        response = view(request).render()
-        assert response.status_code == 404
-        assert 'Something went wrong with the search query' in response.content
-
-    def test_unhandled_exceptions(self):
-        class RealExceptionSearchView(SearchView):
-            filter_backends = ()
-
-            def list(self, *args, **kwargs):
-                raise ValueError
-
-        view = RealExceptionSearchView.as_view()
-        request = self.get_request('/en-US/search')
-        with pytest.raises(ValueError):
-            view(request)
-
     def test_paginate_by_param(self):
         request = self.get_request('/en-US/search')
 

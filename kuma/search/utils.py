@@ -1,11 +1,7 @@
 import logging
 
-import elasticsearch
 import six
 from django.utils.translation import ugettext_lazy as _
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import exception_handler
 from urlobject import URLObject
 
 
@@ -69,24 +65,3 @@ class QueryURLObject(URLObject):
             if param and default:
                 clean_params[param] = default
         return clean_params
-
-
-def search_exception_handler(exc, context):
-    # Call REST framework's default exception handler first,
-    # to get the standard error response.
-    response = exception_handler(exc, context)
-
-    if response is None:
-        if isinstance(exc, elasticsearch.ElasticsearchException):
-            # FIXME: This really should return a 503 error instead but Zeus
-            # doesn't let that through and displays a generic error page in that
-            # case which we don't want here
-            log.error('Elasticsearch exception: %s' % exc)
-            return Response({'detail': SEARCH_DOWN_DETAIL},
-                            status=status.HTTP_200_OK)
-        elif isinstance(exc, UnicodeDecodeError):
-            log.error('UnicodeDecodeError exception: %s' % exc)
-            return Response({'detail': SEARCH_ERROR_DETAIL},
-                            status=status.HTTP_404_NOT_FOUND)
-
-    return response
