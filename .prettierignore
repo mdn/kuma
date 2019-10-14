@@ -20,6 +20,5 @@ kuma/static/js/libs/
 !/kuma/static/styles/minimalist/**/*.scss
 
 # Exceptions to specific .js files
-gulpfile.js
 ckeditor_config.js
 jest_v24.x.x.js
