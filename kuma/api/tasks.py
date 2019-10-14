@@ -139,7 +139,7 @@ def publish(doc_pks, log=None, completion_message=None,
                 kwargs.update(WebsiteRedirectLocation=redirect_url)
             else:
                 data = document_api_data(redirect_url=redirect_url)
-                kwargs.update(Body=json.dumps(data))
+                kwargs.update(Body=json.dumps(data, indent=2))
         else:
             data = document_api_data(doc)
             kwargs.update(Body=json.dumps(data))

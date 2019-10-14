@@ -61,7 +61,7 @@ def get_s3_key(doc=None, locale=None, slug=None,
                prefix_with_forward_slash=False):
     if doc:
         locale, slug = doc.locale, doc.slug
-    key = reverse('api.v1.doc', args=(locale, slug))
+    key = reverse('api.v1.doc', args=(locale, slug)) + '.json'
     if prefix_with_forward_slash:
         # Redirects within an S3 bucket must be prefixed with "/".
         return key

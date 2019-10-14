@@ -37,6 +37,9 @@ class Command(BaseCommand):
             help='Render ALL documents (rather than by path)',
             action='store_true')
         parser.add_argument(
+            '--locale',
+            help='Publish ALL documents in this locale (rather than by path)')
+        parser.add_argument(
             '--min-age',
             help='Documents rendered less than this many seconds ago will be'
                  ' skipped (default 600)',
@@ -53,10 +56,6 @@ class Command(BaseCommand):
         parser.add_argument(
             '--nocache',
             help='Use Cache-Control: no-cache instead of max-age=0',
-            action='store_true')
-        parser.add_argument(
-            '--defer',
-            help='Defer rendering by chaining tasks via celery',
             action='store_true')
         parser.add_argument(
             '--skip-cdn-invalidation',
@@ -83,6 +82,8 @@ class Command(BaseCommand):
             docs = Document.objects.filter(
                 Q(last_rendered_at__isnull=True) |
                 Q(last_rendered_at__lt=min_render_age))
+            if options['locale']:
+                docs = docs.filter(locale=options['locale'])
             docs = docs.order_by('-modified')
             docs = docs.values_list('id', flat=True)
 
