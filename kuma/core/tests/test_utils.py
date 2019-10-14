@@ -5,7 +5,12 @@ from django.core import mail
 from django.core.mail.backends.locmem import EmailBackend
 from django.utils.encoding import force_bytes
 
-from kuma.core.utils import EmailMultiAlternativesRetrying, order_params, safer_pyquery, send_mail_retrying, smart_int
+from kuma.core.utils import (
+    EmailMultiAlternativesRetrying,
+    order_params,
+    safer_pyquery,
+    send_mail_retrying,
+    smart_int)
 
 
 def test_smart_int():
