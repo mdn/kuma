@@ -1,0 +1,21 @@
+@mixin fieldset {
+    margin: 10px 0;
+}
+
+@mixin legend {
+    margin: 5px 0;
+    @include set-font-size(18px);
+    font-weight: bold;
+}
+
+@mixin label {
+    font-weight: bold;
+    @include set-font-size(18px);
+}
+
+@mixin input-base {
+    padding: 10px;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    min-width: 200px;
+}

@@ -1,6 +1,4 @@
 from allauth.socialaccount.forms import SignupForm as BaseSignupForm
-from captcha.fields import ReCaptchaField
-from constance import config
 from django import forms
 from django.core import validators
 from django.utils.translation import ugettext_lazy as _
@@ -48,12 +46,6 @@ class SignupForm(BaseSignupForm):
             'min_length': USERNAME_SHORT,
             'max_length': USERNAME_LONG,
         }
-        # Add recaptcha if configured in settings.
-        if config.RECAPTCHA_PUBLIC_KEY and config.RECAPTCHA_PRIVATE_KEY:
-            self.fields['captcha'] = ReCaptchaField(
-                public_key=config.RECAPTCHA_PUBLIC_KEY,
-                private_key=config.RECAPTCHA_PRIVATE_KEY
-            )
 
     def clean_email(self):
         value = self.cleaned_data['email']

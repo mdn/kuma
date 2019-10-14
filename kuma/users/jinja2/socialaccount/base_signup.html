@@ -1,0 +1,142 @@
+{#- Set "wiki" and "untrusted" for the benefit of Jinja includes that need them. #}
+{% set wiki = False %}
+{% set untrusted = False %}
+
+<!DOCTYPE html>
+<html lang="{% block lang %}{{ LANG }}{% endblock %}" dir="{{ DIR }}" class="no-js">
+
+<head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <script>(function (d) { d.className = d.className.replace(/\bno-js/, ''); })(document.documentElement);</script>
+    <title>{% block title %}{{ _('Create your MDN profile') }}{% endblock %}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content={%- if request.get_host() in settings.ALLOW_ROBOTS_WEB_DOMAINS -%} "index, follow"
+        {%- else -%} "noindex, nofollow" {%- endif -%} />
+
+    {% include "includes/preload.html" %}
+
+    <link rel="home" href="{{ url('home') }}" />
+    <link rel="license" href="#license" />
+
+    {% block page_css %}
+    {% include "includes/style.html" %}
+    {% endblock %}
+
+    {% include "includes/zilla.html" %}
+
+    {%- if settings.MAINTENANCE_MODE %}
+    {% stylesheet 'maintenance-mode-global' %}
+    {%- endif %}
+
+    {#- If the stylesheet exists, include it. Otherwise, does nothing. #}
+    {% stylesheet 'locale-%s' % LANG %}
+
+    {% block site_analytics %}
+    {% include "includes/react_google_analytics.html" %}
+    {% endblock %}
+
+    {% block speedcurve_lux %}
+    {% include "includes/speedcurve-lux.html" %}
+    {% endblock %}
+
+    {% javascript "perf" %}
+
+    <!-- common social tags -->
+    {% set social_logo = request.build_absolute_uri(static('img/opengraph-logo.png')) %}
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="{{ social_logo }}" />
+    <meta property="og:site_name" content="{{ _('MDN Web Docs') }}" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:image" content="{{ social_logo }}" />
+    <meta name="twitter:site" content="@MozDevNet" />
+    <meta name="twitter:creator" content="@MozDevNet" />
+    <link rel="search" type="application/opensearchdescription+xml"
+        href="{{ settings.SITE_URL }}/{{ request.LANGUAGE_CODE }}/search/xml" title="{{ _('MDN Web Docs') }}" />
+
+    <!-- third-generation iPad with high-resolution Retina display: -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ static('img/favicon144.png') }}" />
+    <!-- iPhone with high-resolution Retina display: -->
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ static('img/favicon114.png') }}" />
+    <!-- first- and second-generation iPad: -->
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ static('img/favicon72.png') }}" />
+    <!-- non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+    <link rel="apple-touch-icon-precomposed" href="{{ static('img/favicon57.png') }}" />
+    <!-- basic favicon -->
+    <link rel="shortcut icon" href="{{ favicon_url() }}" />
+</head>
+
+<body>
+    {% include "includes/config.html" %}
+
+    {%- if settings.MAINTENANCE_MODE %}
+    <div class="global-notice maintenance-mode-notice">
+        <div class="wrap center">
+            <p>
+                <bdi>
+                    {{ _('MDN is currently in read-only maintenance mode.') }}
+                </bdi>
+            </p>
+        </div>
+    </div>
+    {%- else %}
+    {{ soapbox_messages(get_soapbox_messages(request.path)) }}
+    {%- endif %}
+
+    <!-- Header -->
+    {% block pageheader %}{% endblock %}
+
+    <!-- Content will go here -->
+    <main id="content">
+        {% block document_head %}{% endblock %}
+        <div class="center clear">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="nav-footer" class="nav-footer">
+        <div class="center">
+            {% include "includes/footer/mdn-footer.html" %}
+
+            {% include "includes/footer/moz-footer.html" %}
+
+            {% block lang_switcher %}
+            {% include "includes/lang_switcher.html" %}
+            {% endblock %}
+
+            {% block footer_copyright %}
+            <ul class="footer-tos">
+                <li><a href="https://www.mozilla.org/about/legal/terms/mozilla">{{ _('Terms') }}</a></li>
+                <li><a href="https://www.mozilla.org/privacy/websites/">{{ _('Privacy') }}</a></li>
+                <li><a href="https://www.mozilla.org/privacy/websites/#cookies">{{ _('Cookies') }}</a></li>
+            </ul>
+
+            <div id="license" class="contentinfo">
+                {% trans copyright_url='/en-US/docs/MDN/About#Copyrights_and_licenses', thisyear=thisyear() %}
+                <p>&copy; 2005-{{ thisyear }} Mozilla and individual contributors.</p>
+                <p>Content is available under <a href="{{ copyright_url }}">these licenses</a>.</p>
+                {% endtrans %}
+            </div>
+            {% endblock %}
+        </div>
+    </footer>
+
+    <!-- site js -->
+    {% block site_js %}
+
+    {{ providers_media_js() }}
+    {% javascript 'react-main' %}
+    <script>
+        if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
+    </script>
+    {% for script in scripts %}
+    {% javascript script %}
+    {% endfor %}
+    {% endblock %}
+
+    {% block js %}{% endblock %}
+</body>
+
+</html>

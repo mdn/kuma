@@ -1,0 +1,4 @@
+<div id="change-username-container" {% if is_hidden %}class="hidden"{% endif %}>
+    <label for="{{ form.username.id_for_label }}" class="visually-hidden">{{ form.username.label }}</label>
+    {{ form.username }}
+</div>

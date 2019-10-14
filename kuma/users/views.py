@@ -474,6 +474,7 @@ class SignupView(BaseSignupView):
         """
         Returns an instance of the form to be used in this view.
         """
+        self.default_email = None
         self.email_addresses = collections.OrderedDict()
         form = super(SignupView, self).get_form(form_class)
         form.fields['email'].label = _('Email address')
@@ -507,7 +508,7 @@ class SignupView(BaseSignupView):
         # if we didn't get any extra email addresses from the provider
         # but the default email is available, simply hide the form widget
         if not extra_email_addresses and email is not None:
-            form.fields['email'].widget = forms.HiddenInput()
+            self.default_email = email
 
         # let the user choose from provider's extra email addresses, or enter
         # a new one.
@@ -540,6 +541,7 @@ class SignupView(BaseSignupView):
             email_select = forms.RadioSelect(choices=choices,
                                              attrs={'id': 'email'})
             form.fields['email'].widget = email_select
+            form.initial.update(email=choices[0])
             if not email and len(verified_emails) == 1:
                 form.initial.update(email=verified_emails[0])
         return form
@@ -597,6 +599,7 @@ class SignupView(BaseSignupView):
             matching_accounts = SocialAccount.objects.none()
 
         context.update({
+            'default_email': self.default_email,
             'email_addresses': self.email_addresses,
             'matching_user': self.matching_user,
             'matching_accounts': matching_accounts,

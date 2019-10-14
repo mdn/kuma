@@ -1,6 +1,12 @@
 /*
 Styling for the new user signup flow
 ====================================================================== */
-@import '../../includes/vars';
+@import '../../includes/_vars.scss';
+@import '../vars/_vars-color-palette.scss';
 
-@import '../components/auth-service-header';
+@import '../../includes/_mixins.scss';
+@import '../atoms/_mixins-buttons.scss';
+@import '../atoms/_mixins-forms.scss';
+
+@import '../components/_auth-service-header.scss';
+@import '../components/_auth-signup-form.scss';

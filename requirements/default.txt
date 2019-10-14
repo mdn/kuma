@@ -140,11 +140,6 @@ django-ratelimit==2.0.0 \
     --hash=sha256:40dd23dcdda413d2199bb88b4d9151bf66ea19586b2047ada313ddcf77e2959c \
     --hash=sha256:ddb6bd68a7a25fab335a0441671681ce9993167e640a2301a2e0e07ce9dd46fb
 
-# Use ReCaptcha in signup form
-django-recaptcha==1.0.5 \
-    --hash=sha256:dc370fa0f7bd77378f8be5f03e88906bf0b62b8478b35af05846f7d640f1ec32 \
-    --hash=sha256:d4d896dd399a1a0810af8e59a646bb5a1586b2cc8b8f32d16766ade5fba79475
-
 # Implement redirects in Django instead of Apache httpd
 # Code, Docs, Changes: https://github.com/pmac/django-redirect-urls
 django-redirect-urls==1.0 \
