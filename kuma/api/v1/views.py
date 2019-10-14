@@ -19,7 +19,7 @@ from kuma.search.filters import (
     LanguageFilterBackend,
     SearchQueryBackend,
     TagGroupFilterBackend)
-from kuma.search.views import SearchView
+from kuma.search.search import SearchView
 from kuma.users.templatetags.jinja_helpers import get_avatar_url
 from kuma.wiki.models import Document
 from kuma.wiki.templatetags.jinja_helpers import absolutify

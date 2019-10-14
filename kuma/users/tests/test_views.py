@@ -52,7 +52,7 @@ class BanTestCase(UserTestCase):
                           password='testpass')
         ban_url = reverse('users.ban_user',
                           kwargs={'username': admin.username})
-        resp = self.client.get(ban_url)
+        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert_no_cache_header(resp)
         assert reverse(settings.LOGIN_URL) in resp['Location']
@@ -63,7 +63,7 @@ class BanTestCase(UserTestCase):
                           password='testpass')
         ban_url = reverse('users.ban_user',
                           kwargs={'username': testuser.username})
-        resp = self.client.get(ban_url)
+        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -77,7 +77,7 @@ class BanTestCase(UserTestCase):
         ban_url = reverse('users.ban_user',
                           kwargs={'username': testuser.username})
 
-        resp = self.client.post(ban_url, data)
+        resp = self.client.post(ban_url, data, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert_no_cache_header(resp)
         assert testuser.get_absolute_url() in resp['Location']
@@ -101,7 +101,7 @@ class BanTestCase(UserTestCase):
         ban_url = reverse('users.ban_user',
                           kwargs={'username': nonexistent_username})
 
-        resp = self.client.post(ban_url, data)
+        resp = self.client.post(ban_url, data, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 404
         assert_no_cache_header(resp)
 
@@ -121,7 +121,7 @@ class BanTestCase(UserTestCase):
                           kwargs={'username': testuser.username})
 
         # POST without data kwargs
-        resp = self.client.post(ban_url)
+        resp = self.client.post(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -132,7 +132,7 @@ class BanTestCase(UserTestCase):
 
         # POST with a blank reason
         data = {'reason': ''}
-        resp = self.client.post(ban_url, data)
+        resp = self.client.post(ban_url, data, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -179,7 +179,7 @@ class BanTestCase(UserTestCase):
         ban_url = reverse('users.ban_user',
                           kwargs={'username': testuser.username})
 
-        resp = self.client.get(ban_url)
+        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -187,7 +187,7 @@ class BanTestCase(UserTestCase):
         UserBan.objects.create(user=testuser, by=admin,
                                reason='Banned by unit test.',
                                is_active=True)
-        resp = self.client.get(ban_url)
+        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert_no_cache_header(resp)
         assert testuser.get_absolute_url() in resp['Location']
@@ -206,7 +206,7 @@ class BanAndCleanupTestCase(UserTestCase):
                           password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': admin.username})
-        resp = self.client.get(ban_url)
+        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert_no_cache_header(resp)
         assert reverse(settings.LOGIN_URL) in resp['Location']
@@ -217,7 +217,7 @@ class BanAndCleanupTestCase(UserTestCase):
                           password='testpass')
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': testuser.username})
-        resp = self.client.get(ban_url)
+        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -231,7 +231,7 @@ class BanAndCleanupTestCase(UserTestCase):
         ban_url = reverse('users.ban_user_and_cleanup',
                           kwargs={'username': testuser.username})
         testuser.delete()
-        resp = self.client.get(ban_url)
+        resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 404
         assert_no_cache_header(resp)
 
@@ -317,19 +317,22 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
     def test_ban_nonexistent_user(self):
         """POSTs to ban_user_and_cleanup for nonexistent user return 404."""
         self.testuser.delete()
-        resp = self.client.post(self.ban_testuser_url)
+        resp = self.client.post(self.ban_testuser_url,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 404
         assert_no_cache_header(resp)
 
     def test_post_returns_summary_page(self):
         """POSTing to ban_user_and_cleanup returns the summary page."""
-        resp = self.client.post(self.ban_testuser_url)
+        resp = self.client.post(self.ban_testuser_url,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
     def test_post_bans_user(self):
         """POSTing to the ban_user_and_cleanup bans user for "spam" reason."""
-        resp = self.client.post(self.ban_testuser_url)
+        resp = self.client.post(self.ban_testuser_url,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -347,7 +350,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
                                reason='Banned by unit test.',
                                is_active=True)
 
-        resp = self.client.post(self.ban_testuser_url)
+        resp = self.client.post(self.ban_testuser_url,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -377,7 +381,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         # The request
         data = {'revision-id': [rev.id for rev in revisions_created]}
-        resp = self.client.post(self.ban_testuser_url, data=data)
+        resp = self.client.post(self.ban_testuser_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -400,7 +405,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # User has no revisions
         data = {'revision-id': []}
 
-        resp = self.client.post(self.ban_testuser_url, data=data)
+        resp = self.client.post(self.ban_testuser_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -424,7 +430,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # User's revisions were not in request.POST (not selected in the template)
         data = {'revision-id': []}
 
-        resp = self.client.post(self.ban_testuser_url, data=data)
+        resp = self.client.post(self.ban_testuser_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -452,7 +459,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # User being banned did not create the revisions being POSTed
         data = {'revision-id': [rev.id for rev in revisions_created]}
 
-        resp = self.client.post(self.ban_testuser2_url, data=data)
+        resp = self.client.post(self.ban_testuser2_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -479,7 +487,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-id': [rev.id for rev in new_revisions]}
 
         self.client.login(username='admin', password='testpass')
-        resp = self.client.post(self.ban_testuser_url, data=data)
+        resp = self.client.post(self.ban_testuser_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -514,7 +523,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-id': [rev.id for rev in spam_revisions]}
 
         self.client.login(username='admin', password='testpass')
-        resp = self.client.post(self.ban_testuser_url, data=data)
+        resp = self.client.post(self.ban_testuser_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -561,7 +571,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-id': [rev.id for rev in spam_revisions_a + spam_revisions_b]}
 
         self.client.login(username='admin', password='testpass')
-        resp = self.client.post(self.ban_testuser_url, data=data)
+        resp = self.client.post(self.ban_testuser_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -603,7 +614,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-id': [rev.id for rev in spam_revisions]}
 
         self.client.login(username='admin', password='testpass')
-        resp = self.client.post(self.ban_testuser_url, data=data)
+        resp = self.client.post(self.ban_testuser_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -638,7 +650,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         data = {'revision-id': [rev.id for rev in spam_revision1 + spam_revision2]}
 
         self.client.login(username='admin', password='testpass')
-        resp = self.client.post(self.ban_testuser_url, data=data)
+        resp = self.client.post(self.ban_testuser_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -691,7 +704,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
                 [rev.id for rev in spam_revision1 + spam_revision2 + spam_revision3]}
 
         self.client.login(username='admin', password='testpass')
-        resp = self.client.post(self.ban_testuser_url, data=data)
+        resp = self.client.post(self.ban_testuser_url, data=data,
+                                HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -1061,22 +1075,30 @@ def test_user_edit_github_is_public(wiki_user, wiki_user_github_account,
     assert wiki_user.is_github_url_public
 
 
-def test_404_logins(db, client):
+@pytest.mark.parametrize('case', ('DOMAIN', 'WIKI_HOST'))
+def test_404_logins(db, client, case):
     """The login buttons should display on the 404 page."""
-    response = client.get('/something-doesnt-exist', follow=True)
+    response = client.get('/something-doesnt-exist', follow=True,
+                          HTTP_HOST=getattr(settings, case))
     assert response.status_code == 404
-    assert len(pq(response.content).find('.socialaccount-providers')) > 0
+    providers_shown = pq(response.content).find('.socialaccount-providers')
+    if case == 'WIKI_HOST':
+        assert providers_shown
+    else:
+        assert not providers_shown
 
 
-def test_404_already_logged_in(user_client):
+@pytest.mark.parametrize('case', ('DOMAIN', 'WIKI_HOST'))
+def test_404_already_logged_in(user_client, case):
     """
     The login buttons should not display on the 404 page when the
     user is logged-in.
     """
     # View page as a logged in user
-    response = user_client.get('/something-doesnt-exist', follow=True)
+    response = user_client.get('/something-doesnt-exist', follow=True,
+                               HTTP_HOST=getattr(settings, case))
     assert response.status_code == 404
-    assert len(pq(response.content).find('.socialaccount-providers')) == 0
+    assert not pq(response.content).find('.socialaccount-providers')
 
 
 class KumaGitHubTests(UserTestCase, SocialTestMixin):

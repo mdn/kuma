@@ -101,16 +101,30 @@ export function ngettext(
     if (Array.isArray(translation)) {
         // If we got an array of translations, figure out which one
         // to use for this specific count
-        return translation[currentPluralFunction(count)];
+        if (translation.length === 1) {
+            // If there's only one option, use it. This is not strictly
+            // necessary, but is a bit safer for localizations whose plural
+            // forms are the same as their singular form (Chinese, Japanese,
+            // Korean, Vietnamese, etc.) since there's no need to call the
+            // "currentPluralFunction" which could be incorrect and return
+            // an index outside the range of the array.
+            return translation[0];
+        }
+        const selectedTranslation = translation[currentPluralFunction(count)];
+        // Protect against a "currentPluralFunction" that returns an bad index,
+        // by falling back to the default English singular or plural selection
+        // below when the "selectedTranslation" is undefined.
+        if (selectedTranslation !== undefined) {
+            return selectedTranslation;
+        }
     } else if (typeof translation === 'string') {
         // If we only got one string, just return it, regardless
         // of the count
         return translation;
-    } else {
-        // If there is no data, or no translation found, then return
-        // the english singular or plural.
-        return count === 1 ? singular : plural;
     }
+    // If there is no data, or no translation found, then return
+    // the english singular or plural.
+    return count === 1 ? singular : plural;
 }
 
 /**

@@ -32,7 +32,7 @@ export default function LastModified({
             <ClockIcon />
             <header>
                 <h4>{gettext('Last modified:')}</h4>
-            </header>
+            </header>{' '}
             <time dateTime={lastModified}>
                 {lastModifiedDate.toLocaleString(
                     documentLocale,

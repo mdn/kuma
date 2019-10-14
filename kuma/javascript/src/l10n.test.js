@@ -125,6 +125,20 @@ describe('ngettext', () => {
         expect(ngtext('s', 'p', 2)).toBe('t');
         expect(ngtext('s', 'p', 3)).toBe('t');
     });
+
+    it('Returns sole plural form regardless of count', () => {
+        localize('test', { s: ['t'] }, n => (n === 1 ? 0 : 1));
+        expect(ngtext('s', 'p', 0)).toBe('t');
+        expect(ngtext('s', 'p', 1)).toBe('t');
+        expect(ngtext('s', 'p', 2)).toBe('t');
+    });
+
+    it('Returns untranslated text if plural function returns bad index', () => {
+        localize('test', { s: ['t1', 't2'] }, n => n);
+        expect(ngtext('s', 'p', 0)).toBe('t1');
+        expect(ngtext('s', 'p', 1)).toBe('t2');
+        expect(ngtext('s', 'p', 2)).toBe('p');
+    });
 });
 
 describe('interpolate()', () => {

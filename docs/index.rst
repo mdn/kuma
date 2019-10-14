@@ -15,8 +15,7 @@ Contents:
    development
    troubleshooting
    tests
-   tests-ui
-   tests-performance
+   tests-functional
 
    feature-toggles
    celery

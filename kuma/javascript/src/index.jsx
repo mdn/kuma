@@ -6,6 +6,7 @@ import SinglePageApp from './single-page-app.jsx';
 import LandingPage from './landing-page.jsx';
 import SignupFlow from './signup-flow.jsx';
 import { AppErrorBoundary } from './error-boundaries.jsx';
+import GAProvider from './ga-provider.jsx';
 import { localize } from './l10n.js';
 
 let container = document.getElementById('react-container');
@@ -67,10 +68,13 @@ if (container) {
        render any visible UI. It activates additional checks and
        warnings for its descendants.
        @see https://reactjs.org/docs/strict-mode.html */
-    app = <React.StrictMode>{app}</React.StrictMode>;
-
-    /* Need docstring*/
-    app = <AppErrorBoundary>{app}</AppErrorBoundary>;
+    app = (
+        <GAProvider>
+            <AppErrorBoundary>
+                <React.StrictMode>{app}</React.StrictMode>
+            </AppErrorBoundary>
+        </GAProvider>
+    );
 
     // NOTE: `document.all` is only available in lte IE10
     // $FlowFixMe

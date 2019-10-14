@@ -3,12 +3,14 @@ import json
 
 import pytest
 from constance.test import override_config
+from django.conf import settings
 from django.core.files.base import ContentFile
 from django.db import transaction
 from django.utils.six.moves.urllib.parse import urlparse
 from pyquery import PyQuery as pq
 
-from kuma.core.tests import assert_no_cache_header, assert_shared_cache_header
+from kuma.core.tests import (assert_no_cache_header, assert_redirect_to_wiki,
+                             assert_shared_cache_header)
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html
 from kuma.users.tests import UserTestCase
@@ -41,14 +43,15 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
             'comment': 'Initial upload',
             'file': file_for_upload,
         }
-        response = self.client.post(self.files_url,
-                                    data=post_data)
+        response = self.client.post(self.files_url, data=post_data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         return response
 
     def test_edit_attachment(self):
         response = self._post_attachment()
         assert_no_cache_header(response)
-        self.assertRedirects(response, self.document.get_edit_url())
+        assert response.status_code == 302
+        assert response['Location'] == self.document.get_edit_url()
 
         attachment = Attachment.objects.get(title='Test uploaded file')
         rev = attachment.current_revision
@@ -115,7 +118,8 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
             'comment': 'Initial upload',
             'file': _file,
         }
-        response = self.client.post(self.files_url, data=post_data)
+        response = self.client.post(self.files_url, data=post_data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert_no_cache_header(response)
         self.assertContains(response, 'Files of this type are not permitted.')
@@ -143,7 +147,8 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
         }
         files_url = reverse('attachments.edit_attachment',
                             kwargs={'document_path': doc.slug})
-        response = self.client.post(files_url, data=post_data)
+        response = self.client.post(files_url, data=post_data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert_no_cache_header(response)
 
@@ -204,7 +209,7 @@ def test_edit_attachment_get(admin_client, root_doc):
     url = reverse(
         'attachments.edit_attachment',
         kwargs={'document_path': root_doc.slug})
-    response = admin_client.get(url)
+    response = admin_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
     assert_no_cache_header(response)
     assert urlparse(response['Location']).path == root_doc.get_edit_url()
@@ -229,7 +234,8 @@ def test_edit_attachment_post_with_vacant_file(admin_client, root_doc, tmpdir,
 
     url = reverse('attachments.edit_attachment',
                   kwargs={'document_path': root_doc.slug})
-    response = admin_client.post(url, data=post_data)
+    response = admin_client.post(url, data=post_data,
+                                 HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     doc = pq(response.content)
     assert to_html(doc('ul.errorlist a[href="#id_file"]')) == expected
@@ -275,3 +281,10 @@ def test_raw_file_if_modified_since(client, settings, file_attachment):
     assert response['Last-Modified'] == convert_to_http_date(created)
     assert 'public' in response['Cache-Control']
     assert 'max-age=900' in response['Cache-Control']
+
+
+def test_edit_attachment_redirect(client, root_doc):
+    url = reverse('attachments.edit_attachment',
+                  kwargs={'document_path': root_doc.slug})
+    response = client.get(url)
+    assert_redirect_to_wiki(response, url)

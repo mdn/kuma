@@ -56,28 +56,32 @@ def test_deletion_log_assert(db, rf):
 
 
 class DocumentTests(UserTestCase, WikiTestCase):
-    """Tests for the Document template"""
+    """Tests for the wiki Document template"""
 
     def test_document_view(self):
         """Load the document view page and verify the title and content."""
         r = revision(save=True, content='Some text.', is_approved=True)
-        response = self.client.get(r.document.get_absolute_url())
+        response = self.client.get(r.document.get_absolute_url(),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert 200 == response.status_code
         doc = pq(response.content)
-        assert doc('main#content div.document-head h1').text() == str(r.document.title)
+        assert (doc('main#content div.document-head h1').text() ==
+                str(r.document.title))
         assert doc('article#wikiArticle').text() == r.document.html
 
     @pytest.mark.breadcrumbs
     def test_document_no_breadcrumbs(self):
         """Create docs with topical parent/child rel, verify no breadcrumbs."""
         d1, d2 = create_topical_parents_docs()
-        response = self.client.get(d1.get_absolute_url())
+        response = self.client.get(d1.get_absolute_url(),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert 200 == response.status_code
         doc = pq(response.content)
         assert doc('main#content div.document-head h1').text() == d1.title
         assert len(doc('nav.crumbs')) == 0
 
-        response = self.client.get(d2.get_absolute_url())
+        response = self.client.get(d2.get_absolute_url(),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert 200 == response.status_code
         doc = pq(response.content)
         assert doc('main#content div.document-head h1').text() == d2.title
@@ -92,13 +96,15 @@ class DocumentTests(UserTestCase, WikiTestCase):
         d2.quick_links_html = '<ul><li>Quick Link</li></ul>'
         d2.save()
 
-        response = self.client.get(d1.get_absolute_url())
+        response = self.client.get(d1.get_absolute_url(),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         doc = pq(response.content)
         assert doc('main#content div.document-head h1').text() == d1.title
         assert len(doc('nav.crumbs')) == 0  # No parents, no breadcrumbs
 
-        response = self.client.get(d2.get_absolute_url())
+        response = self.client.get(d2.get_absolute_url(),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         doc = pq(response.content)
         assert doc('main#content div.document-head h1').text() == d2.title
@@ -108,7 +114,8 @@ class DocumentTests(UserTestCase, WikiTestCase):
     def test_english_document_no_approved_content(self):
         """Load an English document with no approved content."""
         r = revision(save=True, content='Some text.', is_approved=False)
-        response = self.client.get(r.document.get_absolute_url())
+        response = self.client.get(r.document.get_absolute_url(),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert 200 == response.status_code
         doc = pq(response.content)
         assert doc('main#content div.document-head h1').text() == str(r.document.title)
@@ -121,7 +128,8 @@ class DocumentTests(UserTestCase, WikiTestCase):
         r = revision(save=True, content='Some text.', is_approved=False)
         d2 = document(parent=r.document, locale='fr', slug='french', save=True)
         revision(document=d2, save=True, content='Moartext', is_approved=False)
-        response = self.client.get(d2.get_absolute_url())
+        response = self.client.get(d2.get_absolute_url(),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert 200 == response.status_code
         doc = pq(response.content)
         assert doc('main#content div.document-head h1').text() == str(d2.title)
@@ -138,7 +146,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         d2 = document(parent=r.document, locale='fr', slug='french', save=True)
         revision(document=d2, is_approved=False, save=True)
         url = reverse('wiki.document', args=[d2.slug], locale='fr')
-        response = self.client.get(url)
+        response = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert_shared_cache_header(response)
         doc = pq(response.content)
@@ -158,7 +166,7 @@ class DocumentTests(UserTestCase, WikiTestCase):
         exists."""
         r = revision(save=True, content='Some text.', is_approved=True)
         url = reverse('wiki.document', args=[r.document.slug], locale='fr')
-        response = self.client.get(url)
+        response = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert_shared_cache_header(response)
         doc = pq(response.content)
@@ -190,7 +198,8 @@ class DocumentTests(UserTestCase, WikiTestCase):
         redirect_url = redirect.get_absolute_url()
 
         self.client.login(username='admin', password='testpass')
-        response = self.client.get(redirect_url, follow=True)
+        response = self.client.get(redirect_url, follow=True,
+                                   HTTP_HOST=settings.WIKI_HOST)
         self.assertRedirects(response, urlparams(target_url), status_code=301)
         self.assertContains(response, redirect_url)
 
@@ -198,23 +207,28 @@ class DocumentTests(UserTestCase, WikiTestCase):
         """The template shouldn't crash or print a backlink if the "from" page
         doesn't exist."""
         d = document(save=True)
-        response = self.client.get(urlparams(d.get_absolute_url()))
+        response = self.client.get(urlparams(d.get_absolute_url()),
+                                   HTTP_HOST=settings.WIKI_HOST)
         self.assertNotContains(response, 'Redirected from ')
 
     def test_non_localizable_translate_disabled(self):
         """Non localizable document doesn't show tab for 'Localize'."""
         self.client.login(username='testuser', password='testpass')
         d = document(is_localizable=True, save=True)
-        resp = self.client.get(d.get_absolute_url())
+        resp = self.client.get(d.get_absolute_url(),
+                               HTTP_HOST=settings.WIKI_HOST)
         doc = pq(resp.content)
-        assert 'Add a translation' in doc('.page-buttons #translations li').text()
+        assert ('Add a translation' in
+                doc('.page-buttons #translations li').text())
 
         # Make it non-localizable
         d.is_localizable = False
         d.save()
-        resp = self.client.get(d.get_absolute_url())
+        resp = self.client.get(d.get_absolute_url(),
+                               HTTP_HOST=settings.WIKI_HOST)
         doc = pq(resp.content)
-        assert 'Add a translation' not in doc('.page-buttons #translations li').text()
+        assert ('Add a translation' not in
+                doc('.page-buttons #translations li').text())
 
     @pytest.mark.toc
     def test_toc_depth(self):
@@ -227,13 +241,15 @@ class DocumentTests(UserTestCase, WikiTestCase):
         <p>This is more section content.</p>
         """
         r = revision(save=True, content=doc_content, is_approved=True)
-        response = self.client.get(r.document.get_absolute_url())
+        response = self.client.get(r.document.get_absolute_url(),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert 200 == response.status_code
         assert b'<div id="toc"' in response.content
         new_r = revision(document=r.document, content=r.content,
                          toc_depth=0, is_approved=True)
         new_r.save()
-        response = self.client.get(r.document.get_absolute_url())
+        response = self.client.get(r.document.get_absolute_url(),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert 200 == response.status_code
         assert b'<div class="page-toc">' not in response.content
 
@@ -245,7 +261,8 @@ class DocumentTests(UserTestCase, WikiTestCase):
         trans_pt_br = document(parent=parent, locale="pt-BR", save=True)
         trans_fr = document(parent=parent, locale="fr", save=True)
 
-        response = self.client.get(trans_pt_br.get_absolute_url())
+        response = self.client.get(trans_pt_br.get_absolute_url(),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert 200 == response.status_code
         doc = pq(response.content)
         options = doc(".languages.go select.wiki-l10n option")
@@ -268,7 +285,8 @@ class DocumentTests(UserTestCase, WikiTestCase):
         trans_pt_br = document(parent=parent, locale="pt-BR", save=True)
         trans_fr = document(parent=parent, locale="fr", save=True)
 
-        response = self.client.get(trans_pt_br.get_absolute_url())
+        response = self.client.get(trans_pt_br.get_absolute_url(),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert 200 == response.status_code
         doc = pq(response.content)
         options = doc("#languages-menu-submenu ul#translations li a")
@@ -287,7 +305,8 @@ class DocumentTests(UserTestCase, WikiTestCase):
         r = revision(save=True, content='Experiment.', is_approved=True,
                      slug=slug)
         assert r.document.is_experiment
-        response = self.client.get(r.document.get_absolute_url())
+        response = self.client.get(r.document.get_absolute_url(),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         doc = pq(response.content)
         doc_title = doc('main#content div.document-head h1').text()
@@ -336,7 +355,8 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
         """Anonymous users get the experiment script on the original page."""
         rev = revision(save=True, content='Original Content.', is_approved=True,
                        slug='Original')
-        response = self.client.get(rev.document.get_absolute_url())
+        response = self.client.get(rev.document.get_absolute_url(),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert b'Original Content.' in response.content
         assert b'dimension15' not in response.content
@@ -347,7 +367,8 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
         rev = revision(save=True, content='Original Content.', is_approved=True,
                        slug='Original')
         self.client.login(username='testuser', password='testpass')
-        response = self.client.get(rev.document.get_absolute_url())
+        response = self.client.get(rev.document.get_absolute_url(),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert self.script_src.encode('utf-8') not in response.content
 
@@ -358,7 +379,7 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
         revision(save=True, content='Variant Content.', is_approved=True,
                  slug='Experiment:Test/Variant')
         response = self.client.get(rev.document.get_absolute_url(),
-                                   {'v': 'test'})
+                                   {'v': 'test'}, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert b'Original Content.' not in response.content
         assert b'Variant Content.' in response.content
@@ -376,7 +397,7 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
                  slug='Experiment:Test/Variant')
         self.client.login(username='testuser', password='testpass')
         response = self.client.get(rev.document.get_absolute_url(),
-                                   {'v': 'test'})
+                                   {'v': 'test'}, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         content = response.content.decode('utf-8')
         assert 'Original Content.' not in content
@@ -400,7 +421,8 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
     def test_en_doc(self):
         doc = _create_document()
         assert doc.slug
-        response = self.client.get(doc.get_absolute_url())
+        response = self.client.get(doc.get_absolute_url(),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         content = response.content.decode('utf8')
         assert self.ga_create in content
@@ -412,7 +434,8 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
         fr_doc = _create_document(title=u'Document Français',
                                   parent=en_doc, locale='fr')
         assert en_doc.slug != fr_doc.slug
-        response = self.client.get(fr_doc.get_absolute_url())
+        response = self.client.get(fr_doc.get_absolute_url(),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         content = response.content.decode('utf8')
         assert self.ga_create in content
@@ -421,7 +444,8 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
 
     def test_orphan_doc(self):
         orphan_doc = _create_document(title=u'Huérfano', locale='es')
-        response = self.client.get(orphan_doc.get_absolute_url())
+        response = self.client.get(orphan_doc.get_absolute_url(),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         content = response.content.decode('utf8')
         assert self.ga_create in content
@@ -429,7 +453,7 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
         assert dim17 not in content
 
     def test_anon_user(self):
-        response = self.client.get('/en-US/')
+        response = self.client.get('/en-US/', HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         content = response.content.decode('utf8')
         assert self.ga_create in content
@@ -439,7 +463,7 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
 
     def test_regular_user(self):
         assert self.client.login(username='testuser', password='testpass')
-        response = self.client.get('/en-US/')
+        response = self.client.get('/en-US/', HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         content = response.content.decode('utf8')
         assert self.ga_create in content
@@ -452,7 +476,7 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
         beta = Group.objects.get(name='Beta Testers')
         testuser.groups.add(beta)
         assert self.client.login(username='testuser', password='testpass')
-        response = self.client.get('/en-US/')
+        response = self.client.get('/en-US/', HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         content = response.content.decode('utf8')
         assert self.ga_create in content
@@ -462,7 +486,7 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
 
     def test_staff_user(self):
         assert self.client.login(username='admin', password='testpass')
-        response = self.client.get('/en-US/')
+        response = self.client.get('/en-US/', HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         content = response.content.decode('utf8')
         assert self.ga_create in content
@@ -475,7 +499,7 @@ def test_revision_template(root_doc, client):
     """Verify the revision template."""
     rev = root_doc.current_revision
     url = reverse('wiki.revision', args=[root_doc.slug, rev.id])
-    response = client.get(url)
+    response = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert response['X-Robots-Tag'] == 'noindex'
     assert_shared_cache_header(response)
@@ -500,7 +524,8 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
     def test_new_document_GET_with_perm(self):
         """HTTP GET to new document URL renders the form."""
         self.client.login(username='admin', password='testpass')
-        response = self.client.get(reverse('wiki.create'))
+        response = self.client.get(reverse('wiki.create'),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert 200 == response.status_code
         doc = pq(response.content)
         assert 1 == len(doc('form#wiki-page-edit input[name="title"]'))
@@ -511,7 +536,8 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         https://bugzil.la/1052047
         """
         self.client.login(username='admin', password='testpass')
-        response = self.client.get(reverse('wiki.create'))
+        response = self.client.get(reverse('wiki.create'),
+                                   HTTP_HOST=settings.WIKI_HOST)
 
         test_strings = ['Review needed?', 'Technical', 'Editorial']
         assert 200 == response.status_code
@@ -523,7 +549,8 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
     def test_new_document_preview_button(self):
         """HTTP GET to new document URL shows preview button."""
         self.client.login(username='admin', password='testpass')
-        response = self.client.get(reverse('wiki.create'))
+        response = self.client.get(reverse('wiki.create'),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert 200 == response.status_code
         doc = pq(response.content)
         assert len(doc('.btn-preview'))
@@ -532,7 +559,8 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         """The new document form should have all all 'Relevant to' options
         checked by default."""
         self.client.login(username='admin', password='testpass')
-        response = self.client.get(reverse('wiki.create'))
+        response = self.client.get(reverse('wiki.create'),
+                                   HTTP_HOST=settings.WIKI_HOST)
         doc = pq(response.content)
         assert "Name Your Article" == doc('input#id_title').attr('placeholder')
 
@@ -545,7 +573,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         tags = ['tag1', 'tag2']
         data = new_document_data(tags)
         response = self.client.post(reverse('wiki.create'), data,
-                                    follow=True)
+                                    follow=True, HTTP_HOST=settings.WIKI_HOST)
         d = Document.objects.get(title=data['title'])
         assert len(response.redirect_chain) == 1
         redirect_uri, status_code = response.redirect_chain[0]
@@ -570,7 +598,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         data = new_document_data(['tag1', 'tag2'])
         locale = 'es'
         self.client.post(reverse('wiki.create', locale=locale),
-                         data, follow=True)
+                         data, follow=True, HTTP_HOST=settings.WIKI_HOST)
         d = Document.objects.get(title=data['title'])
         assert locale == d.locale
 
@@ -580,7 +608,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         data = new_document_data(['tag1', 'tag2'])
         data['title'] = ''
         response = self.client.post(reverse('wiki.create'), data,
-                                    follow=True)
+                                    follow=True, HTTP_HOST=settings.WIKI_HOST)
         doc = pq(response.content)
         ul = doc('article ul.errorlist')
         assert len(ul)
@@ -592,7 +620,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         data = new_document_data(['tag1', 'tag2'])
         data['content'] = ''
         response = self.client.post(reverse('wiki.create'), data,
-                                    follow=True)
+                                    follow=True, HTTP_HOST=settings.WIKI_HOST)
         doc = pq(response.content)
         ul = doc('article ul.errorlist')
         assert 1 == len(ul)
@@ -605,7 +633,8 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
         data = new_document_data()
         data['slug'] = d.slug
-        response = self.client.post(reverse('wiki.create'), data)
+        response = self.client.post(reverse('wiki.create'), data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert 200 == response.status_code
         doc = pq(response.content)
         ul = doc('article ul.errorlist')
@@ -620,7 +649,8 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
         data = new_document_data()
         data['slug'] = '%s-once-more-with-feeling' % d.slug
-        response = self.client.post(reverse('wiki.create'), data)
+        response = self.client.post(reverse('wiki.create'), data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert 302 == response.status_code
 
     def test_slug_3_chars(self):
@@ -628,7 +658,8 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         self.client.login(username='admin', password='testpass')
         data = new_document_data()
         data['slug'] = 'ask'
-        response = self.client.post(reverse('wiki.create'), data)
+        response = self.client.post(reverse('wiki.create'), data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert 302 == response.status_code
         assert 'ask' == Document.objects.all()[0].slug
 
@@ -646,14 +677,14 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         """Creating a revision without being logged in redirects to login page.
         """
         self.client.logout()
-        response = self.client.get(reverse('wiki.edit',
-                                           args=[self.d.slug]))
+        response = self.client.get(reverse('wiki.edit', args=[self.d.slug]),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
 
     def test_new_revision_GET_with_perm(self):
         """HTTP GET to new revision URL renders the form."""
-        response = self.client.get(reverse('wiki.edit',
-                                           args=[self.d.slug]))
+        response = self.client.get(reverse('wiki.edit', args=[self.d.slug]),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -685,7 +716,8 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
             'form-type': 'rev',
         }
         edit_url = reverse('wiki.edit', args=[self.d.slug])
-        response = self.client.post(edit_url, data)
+        response = self.client.post(edit_url, data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -744,7 +776,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         data = new_document_data(tags)
         data['form-type'] = 'rev'
         response = self.client.post(reverse('wiki.edit', args=[self.d.slug]),
-                                    data)
+                                    data, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -769,7 +801,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         data = new_document_data(tags)
         data['form-type'] = 'rev'
         response = self.client.post(reverse('wiki.edit', args=[self.d.slug]),
-                                    data)
+                                    data, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -802,7 +834,8 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         _create_document(title='Document Prueba', parent=self.d,
                          locale='es')
         # Make sure is_localizable hidden field is rendered
-        response = self.client.get(reverse('wiki.edit', args=[self.d.slug]))
+        response = self.client.get(reverse('wiki.edit', args=[self.d.slug]),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -813,7 +846,7 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         data['form-type'] = 'doc'
         data.update(is_localizable='True')
         response = self.client.post(reverse('wiki.edit', args=[self.d.slug]),
-                                    data)
+                                    data, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -826,7 +859,7 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         data.update(slug=new_slug)
         data['form-type'] = 'doc'
         response = self.client.post(reverse('wiki.edit', args=[self.d.slug]),
-                                    data)
+                                    data, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -839,7 +872,7 @@ class DocumentEditTests(UserTestCase, WikiTestCase):
         data.update(title=new_title)
         data['form-type'] = 'doc'
         response = self.client.post(reverse('wiki.edit', args=[self.d.slug]),
-                                    data)
+                                    data, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -854,7 +887,7 @@ def test_compare_revisions(edit_revision, client):
     url = urlparams(reverse('wiki.compare_revisions', args=[doc.slug]),
                     **params)
 
-    response = client.get(url)
+    response = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert response['X-Robots-Tag'] == 'noindex'
     assert_shared_cache_header(response)
@@ -893,7 +926,7 @@ def test_compare_first_translation(trans_revision, client):
     url = urlparams(reverse('wiki.compare_revisions', args=[fr_doc.slug],
                             locale=fr_doc.locale), **params)
 
-    response = client.get(url)
+    response = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     assert response['X-Robots-Tag'] == 'noindex'
     assert_shared_cache_header(response)
@@ -941,7 +974,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         """Try to create a translation while logged out."""
         self.client.logout()
         translate_uri = self._translate_uri()
-        response = self.client.get(translate_uri)
+        response = self.client.get(translate_uri, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert_no_cache_header(response)
         expected_url = '%s?next=%s' % (reverse('account_login'),
@@ -950,7 +983,8 @@ class TranslateTests(UserTestCase, WikiTestCase):
 
     def test_translate_GET_with_perm(self):
         """HTTP GET to translate URL renders the form."""
-        response = self.client.get(self._translate_uri())
+        response = self.client.get(self._translate_uri(),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -964,7 +998,8 @@ class TranslateTests(UserTestCase, WikiTestCase):
         """HTTP GET to translate URL returns 400 when not localizable."""
         self.d.is_localizable = False
         self.d.save()
-        response = self.client.get(self._translate_uri())
+        response = self.client.get(self._translate_uri(),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 400
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -974,7 +1009,8 @@ class TranslateTests(UserTestCase, WikiTestCase):
         translate_uri = self._translate_uri()
         data = _translation_data()
         data['slug'] = ''  # Invalid slug
-        response = self.client.post(translate_uri, data)
+        response = self.client.post(translate_uri, data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -985,7 +1021,8 @@ class TranslateTests(UserTestCase, WikiTestCase):
         translate_uri = self._translate_uri()
         data = _translation_data()
         data['content'] = ''  # Content is required
-        response = self.client.post(translate_uri, data)
+        response = self.client.post(translate_uri, data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -999,7 +1036,8 @@ class TranslateTests(UserTestCase, WikiTestCase):
 
         translate_uri = self._translate_uri()
         data = _translation_data()
-        response = self.client.post(translate_uri, data)
+        response = self.client.post(translate_uri, data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -1040,7 +1078,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
 
         # Verify the form renders with correct content
         translate_uri = self._translate_uri()
-        response = self.client.get(translate_uri)
+        response = self.client.get(translate_uri, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -1052,7 +1090,8 @@ class TranslateTests(UserTestCase, WikiTestCase):
         # Post the translation and verify
         data = _translation_data()
         data['content'] = 'loremo ipsumo doloro sito ameto nuevo'
-        response = self.client.post(translate_uri, data)
+        response = self.client.post(translate_uri, data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -1067,7 +1106,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         # subsequent translations should NOT include slug input
         self.client.logout()
         self.client.login(username='testuser', password='testpass')
-        response = self.client.get(translate_uri)
+        response = self.client.get(translate_uri, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -1098,7 +1137,8 @@ class TranslateTests(UserTestCase, WikiTestCase):
         new_title = 'Un nuevo titulo'
         data['title'] = new_title
         data['form-type'] = 'doc'
-        response = self.client.post(translate_uri, data)
+        response = self.client.post(translate_uri, data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -1120,7 +1160,8 @@ class TranslateTests(UserTestCase, WikiTestCase):
         new_title = 'Un nuevo titulo'
         data['title'] = new_title
         data['form'] = 'rev'
-        response = self.client.post(translate_uri, data)
+        response = self.client.post(translate_uri, data,
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -1138,7 +1179,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         """
         self.test_first_translation_to_locale()
         translate_uri = self._translate_uri()
-        response = self.client.get(translate_uri)
+        response = self.client.get(translate_uri, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
@@ -1161,7 +1202,7 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
                                    args=[translate_path]))
     else:
         uri = reverse(view, locale=locale, args=[doc.slug])
-    response = client.get(uri)
+    response = client.get(uri, HTTP_HOST=settings.WIKI_HOST)
     assert response['X-Robots-Tag'] == 'noindex'
     assert_no_cache_header(response)
     orig_rev = doc.current_revision
@@ -1176,8 +1217,8 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
     # Then Fred saves his edit:
     post_data_copy = {'based_on': orig_rev.id, 'slug': orig_rev.slug}
     post_data_copy.update(post_data)  # Don't mutate arg.
-    response = client.post(uri,
-                           data=post_data_copy)
+    response = client.post(uri, data=post_data_copy,
+                           HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code in (200, 302)
     assert response['X-Robots-Tag'] == 'noindex'
     assert_no_cache_header(response)
@@ -1194,14 +1235,16 @@ class ArticlePreviewTests(UserTestCase, WikiTestCase):
 
     def test_preview_GET_405(self):
         """Preview with HTTP GET results in 405."""
-        response = self.client.get(reverse('wiki.preview'))
+        response = self.client.get(reverse('wiki.preview'),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 405
         assert_no_cache_header(response)
 
     def test_preview(self):
         """Preview the wiki syntax content."""
         response = self.client.post(reverse('wiki.preview'),
-                                    {'content': '<h1>Test Content</h1>'})
+                                    {'content': '<h1>Test Content</h1>'},
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert_no_cache_header(response)
         doc = pq(response.content)
@@ -1215,7 +1258,8 @@ class ArticlePreviewTests(UserTestCase, WikiTestCase):
         _create_document(title='Prueba', parent=d, locale='es')
         # Preview content that links to it and verify link is in locale.
         url = reverse('wiki.preview', locale='es')
-        response = self.client.post(url, {'content': '[[Test Document]]'})
+        response = self.client.post(url, {'content': '[[Test Document]]'},
+                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert_no_cache_header(response)
         doc = pq(response.content)
@@ -1235,7 +1279,8 @@ class SelectLocaleTests(UserTestCase, WikiTestCase):
     def test_page_renders_locales(self):
         """Load the page and verify it contains all the locales for l10n."""
         response = self.client.get(reverse('wiki.select_locale',
-                                           args=[self.d.slug]))
+                                           args=[self.d.slug]),
+                                   HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert_no_cache_header(response)
         doc = pq(response.content)
@@ -1284,7 +1329,7 @@ def test_list_revisions(elem_num, has_prev, is_english, has_revert,
     doc = trans_edit_revision.document
     url = reverse('wiki.document_revisions', locale=doc.locale,
                   args=[doc.slug])
-    response = admin_client.get(url)
+    response = admin_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
 
     page = pq(response.content)

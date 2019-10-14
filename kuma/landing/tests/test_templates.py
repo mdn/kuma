@@ -20,13 +20,14 @@ def test_google_analytics_enabled(db, settings, client):
     assert b"ga('create" in response.content
 
 
-def test_default_search_filters(db, client):
+def test_default_search_filters(db, settings, client):
     group = FilterGroup.objects.create(name='Topic', slug='topic')
     for name in ['CSS', 'HTML', 'JavaScript']:
         Filter.objects.create(group=group, name=name, slug=name.lower(),
                               default=True)
 
-    response = client.get(reverse('home'), follow=True)
+    response = client.get(reverse('home'), follow=True,
+                          HTTP_HOST=settings.WIKI_HOST)
     page = pq(response.content)
     filters = page.find('#home-search-form input[type=hidden]')
 
