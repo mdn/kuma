@@ -1,42 +1,42 @@
-@import 'includes/vars';
-@import 'includes/mixins';
+@import 'includes/_vars.scss';
+@import 'includes/_mixins.scss';
 
 /*
 Profile shared
 ====================================================================== */
-@import 'components/users/vars';
-@import 'components/users/user-title';
+@import 'components/users/_vars.scss';
+@import 'components/users/_user-title.scss';
 
 
 /*
 Profile view
 ====================================================================== */
-@import 'components/activity';
-@import 'components/banned';
-@import 'components/readable-line-length';
-@import 'components/alert-message';
-@import 'components/users/docs-activity';
-@import 'components/users/user-links';
-@import 'components/users/user-head';
-@import 'components/users/user-section';
-@import 'components/users/user-tags';
+@import 'components/_activity.scss';
+@import 'components/_banned.scss';
+@import 'components/_readable-line-length.scss';
+@import 'components/_alert-message.scss';
+@import 'components/users/_docs-activity.scss';
+@import 'components/users/_user-links.scss';
+@import 'components/users/_user-head.scss';
+@import 'components/users/_user-section.scss';
+@import 'components/users/_user-tags.scss';
 
 
 /*
 Profile edit
 ====================================================================== */
-@import 'components/tagit';
-@import 'components/users/user-edit';
+@import 'components/_tagit.scss';
+@import 'components/users/_user-edit.scss';
 
 /*
 Manage Payments
 ====================================================================== */
-@import 'components/users/manage-subscriptions';
+@import 'components/users/_manage-subscriptions.scss';
 
 /*
 API keys page
 ====================================================================== */
-@import 'components/option-list';
+@import 'components/_option-list.scss';
 
 /*
  * Users app CSS

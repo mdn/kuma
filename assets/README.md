@@ -11,7 +11,7 @@ for the details.
 
 Here are the subfolders:
 
-* `build`: (TODO) Output of ``gulp`` and ``make compilejsi18n``, copied to
+* `build`: (TODO) Output of ``make compilejsi18n``, copied to
   ``static/build``.
 * `ckeditor4`: The source and build folders for CKEditor 4.
   ``ckeditor4/build`` is copied to ``static/js/libs/ckeditor4/build``.
@@ -19,7 +19,7 @@ Here are the subfolders:
 * `legacy`: These files are no longer served to users, and are candidates
   for deletion.
 * `lib`: (TODO) Third-party libraries that are served to users.
-* `pipeline`: (TODO) Input of the ``gulp`` process. It should be possible to
+* `pipeline`: (TODO) Input of the ``process:sass`` npm script. It should be possible to
   convert these to ``webpack`` some day.
 * `reference`: These files are related to assets, but are not part of an
   automated build process, and are not served to users.

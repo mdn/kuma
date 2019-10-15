@@ -1,6 +1,6 @@
-@import 'includes/vars';
-@import 'includes/mixins';
-@import 'components/syntax/example';
+@import 'includes/_vars.scss';
+@import 'includes/_mixins.scss';
+@import 'components/syntax/_example.scss';
 
 /* styles for the WYSIWYG editor which we cannot take directly from screen.css */
 html,

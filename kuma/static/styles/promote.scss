@@ -1,6 +1,6 @@
-@import 'includes/vars';
-@import 'includes/mixins';
-@import 'base/fonts/milk';
+@import 'includes/_vars.scss';
+@import 'includes/_mixins.scss';
+@import 'base/fonts/_milk.scss';
 
 /* Values used by all boxes. */
 $box-padding: 20px;

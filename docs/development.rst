@@ -89,8 +89,6 @@ To do both::
 .. _django-pipeline: https://github.com/jazzband/django-pipeline
 .. _node-sass: https://github.com/sass/node-sass
 
-.. _compiling-with-gulp:
-
 Compiling JS on the host system with webpack
 --------------------------------------------
 For a quicker iteration cycle while developing the frontend app you can run::
@@ -110,41 +108,6 @@ You can also run it in production mode::
 
    npm run webpack:prod
 
-Compiling SCSS on the host system with gulp
--------------------------------------------
-``make build-static`` is how assets are built for production. It is also
-slow for iterative front-end development. With ``DEBUG=True`` (the default for
-local development), Gulp can be used to rebuild as files are changed, using a
-parallel workflow.
-
-If you haven't already installed `Node.js`_  and `gulp`_ on
-your local machine, see :ref:`frontend-development`.
-
-.. _gulp: http://gulpjs.com/
-.. _`Node.js`: https://nodejs.org/
-
-On your local (host) machine, open a new shell and run from the root of the
-Kuma repository::
-
-    ./node_modules/.bin/gulp
-    gulp  # If installed with --global
-
-This ``gulp`` command will do two things. First, it will watch *all* files
-under ``./kuma/static``, and any changed file that is *not* a Sass file
-(``.scss`` or ``.sass``) under ``./kuma/static/styles`` will be copied to
-``./static`` as is (no compilation will be done).
-
-Second, it will watch *all* files with a ``.scss`` extension under
-``./kuma/static/styles``, and any change will trigger a ``stylelint``
-of the changed file, as well as a recompile of *all* top-level ``.scss`` files.
-All of the resulting compiled files will then be copied to ``./static``, and
-immediately available to your local server.  This is still faster than the
-full ``make build-static`` build.
-
-When running in production mode (``DEBUG=False``), assets are only read when
-the webserver starts, so assets processed by ``gulp`` will not appear. See
-:ref:`generating-production-assets` for more information.
-
 Style guide and linters
 -----------------------
 There is an evolving style guide at https://mdn.github.io/mdn-fiori/, sourced
@@ -154,7 +117,6 @@ enforced by linters.
 To run stylelint_ on all ``.scss`` files::
 
     npm run stylelint
-    gulp css:lint  # Alternate on the host system
 
 To run eslint_ on ``.js`` files::
 
@@ -364,8 +326,7 @@ asset processing:
 
 In production mode, assets and their hashes are read once when the server
 starts, for efficiency. Any changes to assets require rebuilding with
-``make build-static`` and restarting the web process. The ``gulp`` workflow
-is not compatible with production mode.
+``make build-static`` and restarting the web process.
 
 To emulate production, and test compressed and hashed assets locally:
 
