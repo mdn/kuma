@@ -11,18 +11,19 @@ services:
       - elasticsearch
       - redis
       - kumascript
+      - minio
     environment:
       # Django settings overrides:
       - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
       - ALLOW_ALL_IFRAMES=${ALLOW_ALL_IFRAMES:-False}
       - ALLOWED_HOSTS=*
       - ATTACHMENT_HOST=${ATTACHMENT_HOST:-localhost:8000}
-      - ATTACHMENTS_USE_S3=${ATTACHMENTS_USE_S3:-False}
-      - ATTACHMENTS_AWS_ACCESS_KEY_ID=${ATTACHMENTS_AWS_ACCESS_KEY_ID}
-      - ATTACHMENTS_AWS_SECRET_ACCESS_KEY=${ATTACHMENTS_AWS_SECRET_ACCESS_KEY}
-      - ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN=${ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN}
-      - ATTACHMENTS_AWS_S3_SECURE_URLS=${ATTACHMENTS_AWS_S3_SECURE_URLS}
-      - ATTACHMENTS_AWS_S3_ENDPOINT_URL=${ATTACHMENTS_AWS_S3_ENDPOINT_URL}
+      - ATTACHMENTS_USE_S3=${ATTACHMENTS_USE_S3:-True}
+      - ATTACHMENTS_AWS_ACCESS_KEY_ID=${ATTACHMENTS_AWS_ACCESS_KEY_ID:-minio}
+      - ATTACHMENTS_AWS_SECRET_ACCESS_KEY=${ATTACHMENTS_AWS_SECRET_ACCESS_KEY:-minio123}
+      - ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN=${ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN:-localhost:9000/mdn-attachments}
+      - ATTACHMENTS_AWS_S3_SECURE_URLS=${ATTACHMENTS_AWS_S3_SECURE_URLS:-False}
+      - ATTACHMENTS_AWS_S3_ENDPOINT_URL=${ATTACHMENTS_AWS_S3_ENDPOINT_URL:-http://minio:9000}
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
       - CELERY_BROKER_URL=redis://redis:6379/0
@@ -63,6 +64,7 @@ services:
       - redis
       - kumascript
       - ssr
+      - minio
     ports:
       - "8000:8000"
 
@@ -130,7 +132,32 @@ services:
       - "9080:9080"
     volumes:
       - ./kumascript:/app
+
+  # MinIO: S3-compatible object storage (https://min.io)
+  minio:
+    image: minio/minio
+    command: server /data
+    environment:
+      MINIO_ACCESS_KEY: "minio"
+      MINIO_SECRET_KEY: "minio123"
+    ports:
+      - "9000:9000"
+    volumes:
+      - miniodata:/data
+
+  # One-shot service that ensures Minio is properly configured for Kuma
+  # No need to explicitly wait for minio; mc automatically wailts
+  minio_setup:
+    image: minio/mc
+    depends_on:
+      - minio
+    environment:
+      MC_HOST_minio: "http://${MINIO_ACCESS_KEY:-minio}:${MINIO_SECRET_KEY:-minio123}@minio:9000"
+    entrypoint: ""
+    command: /bin/sh -c "for BUCKET in 'test' 'mdn-attachments'; do mc mb -p minio/$$BUCKET && mc policy set download minio/$$BUCKET; done"
+
 volumes:
+    miniodata:
     mysqlvolume:
     esdata:
       driver: local
