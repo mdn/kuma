@@ -68,6 +68,9 @@ class Attachment(models.Model):
         return self.title
 
     def get_file_url(self):
+        if self.current_revision is None:
+            return ""
+
         return full_attachment_url(self.id, self.current_revision.filename)
 
     @cached_property
@@ -172,7 +175,7 @@ class AttachmentRevision(models.Model):
 
     @property
     def filename(self):
-        return os.path.split(self.file.path)[-1]
+        return os.path.basename(self.file.name)
 
     def save(self, *args, **kwargs):
         super(AttachmentRevision, self).save(*args, **kwargs)
@@ -266,4 +269,4 @@ class TrashedAttachment(MySQLModel):
 
     @property
     def filename(self):
-        return os.path.split(self.file.path)[-1]
+        return os.path.basename(self.file.name)
