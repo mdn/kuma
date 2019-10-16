@@ -931,6 +931,15 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/react-main.js',
     },
+    'bcd-signal': {
+        'source_filenames': (
+            'bcd-signal.js',
+        ),
+        'output_filename': 'build/js/react-bcd-signal.js',
+        'extra_context': {
+            'defer': True,
+        },
+    },
     'banners': {
         'source_filenames': (
             'js/components/banners/utils/banners-event-util.js',

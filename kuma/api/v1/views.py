@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.utils.translation import activate, ugettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
+from ratelimit.decorators import ratelimit
 from rest_framework import serializers, status
 from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
@@ -279,6 +280,7 @@ class APISearchView(SearchView):
 search = never_cache(APISearchView.as_view())
 
 
+@ratelimit(key='user_or_ip', rate='10/d', block=True)
 @waffle_flag('bc-signals')
 @api_view(['POST'])
 def bc_signal(request):

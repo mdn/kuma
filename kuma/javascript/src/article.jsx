@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { useContext, useEffect, useRef } from 'react';
 
-import { activateBCDSignals, activateBCDTables } from './bcd.js';
+import { activateBCDTables } from './bcd.js';
 import { addLiveExampleButtons } from './live-examples.js';
 import { getLocale, gettext } from './l10n.js';
 import { highlightSyntax } from './prism.js';
@@ -54,7 +54,11 @@ export default function Article({ document }: DocumentProps) {
     useEffect(() => {
         let rootElement = article.current;
         if (rootElement) {
-            activateBCDSignals(document.slug, document.locale, userData);
+            // The reasons it might NOT exist is because perhaps it's not
+            // loaded because a waffle flag tells it not to.
+            if (window.activateBCDSignals) {
+                window.activateBCDSignals(document.slug, document.locale);
+            }
         }
     }, [document, userData]);
 

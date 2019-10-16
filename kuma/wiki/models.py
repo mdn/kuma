@@ -2041,6 +2041,12 @@ class BCSignal(models.Model):
         verbose_name=_('Document (optional)'),
         on_delete=models.SET_NULL
     )
+
+    browsers = models.CharField(max_length=255, default='', blank=True)
+    feature = models.CharField(max_length=255, default='', blank=True)
+    explanation = models.TextField(default='', blank=True)
+    supporting_material = models.TextField(default='', blank=True)
+
     submitted_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
