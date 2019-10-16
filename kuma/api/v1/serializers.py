@@ -6,7 +6,7 @@ from kuma.wiki.models import BCSignal, Document
 
 class BCSignalSerializer(serializers.ModelSerializer):
     slug = serializers.CharField(max_length=255)
-    locale = serializers.CharField(max_length=255)
+    locale = serializers.CharField(max_length=7)
     explanation = serializers.CharField(
         allow_blank=True, required=False, max_length=1000
     )
