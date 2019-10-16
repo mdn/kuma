@@ -1,0 +1,14 @@
+<script>
+  window.fetch ||
+    document.write(
+      '<script src="https://unpkg.com/unfetch/polyfill"><\/script>'
+    );
+</script>
+<script>
+  // Only include the fat polyfill for browsers that seem to not have
+  // certain JS features. E.g. Firefox 38.
+  Array.prototype.includes ||
+    document.write(
+      '<script src="https://cdn.polyfill.io/v2/polyfill.min.js"><\/script>'
+    );
+</script>

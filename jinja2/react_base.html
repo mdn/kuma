@@ -67,6 +67,8 @@
   <!-- basic favicon -->
   <link rel="shortcut icon" href="{{ favicon_url() }}">
 
+  {% include "includes/polyfill_scripts.html" %}
+
   {% block extrahead %}{% endblock %}
 
   {% block printstyle %}

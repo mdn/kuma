@@ -47,7 +47,17 @@ export default function Article({ document }: DocumentProps) {
                 });
             }
             highlightSyntax(rootElement);
-            activateBCDTables(rootElement);
+            try {
+                activateBCDTables(rootElement);
+            } catch (error) {
+                console.error(error);
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: 'article-effect-error',
+                    eventAction: 'activateBCDTables',
+                    eventLabel: error.toString()
+                });
+            }
         }
     }, [document, ga]);
 
@@ -57,10 +67,20 @@ export default function Article({ document }: DocumentProps) {
             // The reasons it might NOT exist is because perhaps it's not
             // loaded because a waffle flag tells it not to.
             if (window.activateBCDSignals) {
-                window.activateBCDSignals(document.slug, document.locale);
+                try {
+                    window.activateBCDSignals(document.slug, document.locale);
+                } catch (error) {
+                    console.error(error);
+                    ga('send', {
+                        hitType: 'event',
+                        eventCategory: 'article-effect-error',
+                        eventAction: 'activateBCDSignals',
+                        eventLabel: error.toString()
+                    });
+                }
             }
         }
-    }, [document, userData]);
+    }, [document, userData, ga]);
 
     const isArchive =
         document.slug === 'Archive' || document.slug.startsWith('Archive/');
