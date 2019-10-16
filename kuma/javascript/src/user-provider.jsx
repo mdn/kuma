@@ -12,10 +12,7 @@ export type UserData = {
     isStaff: boolean,
     isSuperuser: boolean,
     timezone: ?string,
-    gravatarUrl: {
-        small: ?string,
-        large: ?string
-    },
+    avatarUrl: ?string,
     waffle: {
         flags: { [flag_name: string]: boolean },
         switches: { [switch_name: string]: boolean },
@@ -30,7 +27,7 @@ const defaultUserData: UserData = {
     isStaff: false,
     isSuperuser: false,
     timezone: null,
-    gravatarUrl: { small: null, large: null },
+    avatarUrl: null,
     waffle: {
         flags: {},
         switches: {},
@@ -64,7 +61,7 @@ export default function UserProvider(props: {
                     isStaff: data.is_staff,
                     isSuperuser: data.is_super_user,
                     timezone: data.timezone,
-                    gravatarUrl: data.gravatar_url,
+                    avatarUrl: data.avatar_url,
                     // NOTE: if we ever decide that waffle data should
                     // be re-fetched on client-side navigation, we'll
                     // have to create a separate context for it.

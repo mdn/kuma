@@ -25,7 +25,7 @@
   <link rel="license" href="#license">
 
   {% block site_css %}
-    {% stylesheet 'react-mdn' %}
+    {% include "includes/style.html" %}
   {% endblock %}
 
   {%- if settings.MAINTENANCE_MODE %}
@@ -66,13 +66,9 @@
   <link rel="apple-touch-icon-precomposed" href="{{ static('img/favicon57.png') }}">
   <!-- basic favicon -->
   <link rel="shortcut icon" href="{{ favicon_url() }}">
-  <!--[if IE]>
-  <meta http-equiv="imagetoolbar" content="no">
-  {% javascript 'html5shiv' %}
-  <![endif]-->
 
   {% block extrahead %}{% endblock %}
-  
+
   {% block printstyle %}
     {% stylesheet 'print' %}
   {% endblock %}
@@ -138,8 +134,6 @@
 
   <!-- site js -->
   {% block site_js %}
-    <!--[if lte IE 8]>{% javascript 'selectivizr' %}<![endif]-->
-
     {{ providers_media_js() }}
     {% javascript 'react-main' %}
     <script>

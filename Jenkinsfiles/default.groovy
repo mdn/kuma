@@ -1,15 +1,15 @@
+stage('Build base') {
+    utils.sh_with_notify(
+        'make build-base VERSION=latest',
+        'Build of latest-tagged Kuma base image'
+    )
+}
+
 stage('Test') {
     utils.compose_test()
 }
 
-stage('Build & push kuma_base image') {
-    utils.sh_with_notify(
-        'make build-base push-base',
-        'Build and push of commit-tagged Kuma base image'
-    )
-}
-
-stage('Build & push kuma image') {
+stage('Build & push images') {
     utils.sh_with_notify(
         'make build-kuma push-kuma',
         "Build & push of commit-tagged Kuma image"

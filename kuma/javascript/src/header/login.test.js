@@ -31,7 +31,7 @@ test('Login component when user is logged in', () => {
                 ...UserProvider.defaultUserData,
                 isAuthenticated: true,
                 username: 'test-username',
-                gravatarUrl: { small: 'test-url', large: 'test-bigurl' }
+                avatarUrl: 'test-url'
             }}
         >
             <Login />
@@ -46,8 +46,8 @@ test('Login component when user is logged in', () => {
     expect(dropdown).toBeDefined();
 
     // Whose label prop is an image with the expected src and alt attributes
-    expect(dropdown.props.label.props.srcSet).toContain('test-url');
-    expect(dropdown.props.label.props.srcSet).toContain('test-bigurl');
+    expect(dropdown.props.label.props.srcSet).toContain('test-url 50w');
+    expect(dropdown.props.label.props.srcSet).toContain('test-url 200w');
     expect(dropdown.props.label.props.alt).toEqual('test-username');
 
     let string = JSON.stringify(login.toJSON());

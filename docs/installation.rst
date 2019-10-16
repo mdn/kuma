@@ -183,37 +183,6 @@ Visit the homepage
 ==================
 Open the homepage at http://localhost:8000 . You've installed Kuma!
 
-.. _frontend-development:
-
-Prepare for front-end development (optional)
-============================================
-When doing front-end development on your local machine, you'll probably
-want to run ``gulp``, to rebuild front-end assets as they edited, rather than
-running ``make build-static`` after each change.
-
-First, install Node.js v8, using the `install instructions for your OS`_.
-
-Next, from the root directory of your Kuma repository, install ``gulp`` and
-dependencies::
-
-    npm install
-
-Now, you can run ``gulp`` (probably from its own shell)::
-
-    node_modules/.bin/gulp
-
-Alternatively, you can install ``gulp`` globally::
-
-    sudo npm install -g
-
-And then run ``gulp`` more simply::
-
-    gulp
-
-.. _gulp: http://gulpjs.com/
-.. _`Node.js`: https://nodejs.org/
-.. _`install instructions for your OS`: https://nodejs.org/en/download/package-manager/
-
 Create an admin user
 ====================
 Many Kuma settings require access to the Django admin, including

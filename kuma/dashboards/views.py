@@ -143,6 +143,7 @@ def revisions(request):
     return render(request, template, context)
 
 
+@ensure_wiki_domain
 @shared_cache_control
 @vary_on_headers('X-Requested-With')
 @require_GET
@@ -164,6 +165,7 @@ def user_lookup(request):
     return HttpResponse(data, content_type='application/json; charset=utf-8')
 
 
+@ensure_wiki_domain
 @shared_cache_control
 @vary_on_headers('X-Requested-With')
 @require_GET

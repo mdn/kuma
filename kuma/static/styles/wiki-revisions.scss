@@ -1,6 +1,6 @@
-@import 'includes/vars';
-@import 'includes/mixins';
+@import 'includes/_vars.scss';
+@import 'includes/_mixins.scss';
 
 /* styles used by the revision history page only */
 
-@import 'components/wiki/revision-list';
+@import 'components/wiki/_revision-list.scss';

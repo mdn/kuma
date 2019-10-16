@@ -2,6 +2,7 @@ import calendar
 import hashlib
 from datetime import datetime
 
+from constance import config
 from django.conf import settings
 from django.utils import timezone
 from django.utils.http import http_date
@@ -16,6 +17,9 @@ def allow_add_attachment_by(user):
     When the user has this permission, upload is disallowed unless it's
     a superuser or staff.
     """
+    if config.WIKI_ATTACHMENTS_DISABLE_UPLOAD:
+        # Uploading via the Wiki is disabled
+        return False
     if user.is_superuser or user.is_staff:
         # Superusers and staff always allowed
         return True

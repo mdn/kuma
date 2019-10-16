@@ -7,7 +7,6 @@ from kuma.wiki.tests import revision
 
 from . import UserTestCase
 from ..models import UserBan
-from ..templatetags.jinja_helpers import gravatar_url
 
 
 class TestUser(UserTestCase):
@@ -82,13 +81,6 @@ class TestUser(UserTestCase):
         user = self.user_model.objects.get(username='testuser')
         assert hasattr(user, 'irc_nickname')
         assert 'testuser' == user.irc_nickname
-
-    def test_unicode_email_gravatar(self):
-        """Bug 689056: Unicode characters in email addresses shouldn't break
-        gravatar URLs"""
-        user = self.user_model.objects.get(username='testuser')
-        user.email = u"Someguy Dude\xc3\xaas Lastname"
-        gravatar_url(user.email)  # Should not raise UnicodeEncodingError
 
     def test_locale_timezone_fields(self):
         """We've added locale and timezone fields. Verify defaults."""

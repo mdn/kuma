@@ -26,7 +26,7 @@ The three phases of an asset's life are **Building**, **Collecting**, and
       ``django-pipeline``, combine several source files into a
       single minified JavaScript file.
     - :ref:`CSS bundles <pipeline-css-bundles>`, assembled by
-      ``django-pipeline`` or ``gulp``, combine several source Sass files into a
+      ``django-pipeline`` or ``process:sass``, combine several source Sass files into a
       single minified CSS file.
 * **Collecting** - Built assets are collected to the ``/static`` folder.
     - Django's :ref:`staticfiles <django-staticfiles>` provides a framework
@@ -34,8 +34,6 @@ The three phases of an asset's life are **Building**, **Collecting**, and
       :ref:`Storage <staticfiles-storage>` classes for collecting files.
     - django-pipeline_ augments ``staticfiles``, to allow compiling, bundling,
       and minifiying JS and CSS assets in the collection phase.
-    - :ref:`gulp <gulp-alternative>` provides alternative tools to ``staticfiles``
-      for local development of assets.
 * **Serving** - Collected assets are served to visitors in development and production
     - In `Django and Jinja templates`_, the :ref:`static tag <static-tag>` returns
       the URL of assets collected by ``staticfiles``.
@@ -207,8 +205,7 @@ which combines:
 Source styles are written in Sass_, and compiled to CSS with node-sass_. These
 must be compiled to CSS in both development and production modes. Backend
 developers tend to use ``make build-static`` to build and collect these files,
-and front-end developers tend to use ``gulp watch`` to directly compile them.
-See :ref:`front-end-development` for more information.
+and front-end developers tend to use ``nom run process:sass`` to directly compile them.
 
 The CSS bundles are specified in PIPELINE_CSS_ in the Django settings.
 The bundles are served differently in "development" and "production" modes.
@@ -453,7 +450,7 @@ There are many `configuration items`_, some of which are:
   source locations.
 * ``COMPILERS``: A list of CSS compilers. ``pipeline``'s ``SASSCompiler`` in
   testing and production, and ``kuma.core.pipeline.sass.DebugSassCompiler``
-  (which does nothing, but instead defers to ``gulp``) in development.
+  (which does nothing, but instead defers to ``node-sass``) in development.
 
 The ``Makefile`` specifies the testing configuration, so commands like
 ``make collectstatic`` run with ``PIPELINE_ENABLED`` and
@@ -508,8 +505,7 @@ This works the same way as ``PipelineStorage``, but avoids creating packages,
 where several files are combined into one. JavaScript files are
 served from the source folders, but CSS files need to be compiled from Sass_,
 and are served from the ``/static`` folder after collection. When developing
-style files, a developer either needs to run ``./manage.py collectstatic`` or
-use :ref:`gulp <gulp-alternative>` to see changes.
+style files, a developer needs to run ``./manage.py collectstatic`` to see changes.
 
 .. _kuma.core.pipeline.storage.ManifestPipelineStorage:
 
@@ -523,21 +519,6 @@ generated when the production Docker containers are created.
 .. _cleancss: https://github.com/jakubpawlowicz/clean-css-cli
 .. _`configuration items`: https://django-pipeline.readthedocs.io/en/latest/configuration.html
 .. _SASS: https://sass-lang.com/
-
-.. _gulp-alternative:
-
-Compiling and collecting assets with Gulp
-=========================================
-An alternate way to compile and collect assets is to use Gulp, as described in
-:ref:`compiling-with-gulp`. This requires installing node and related packages
-on the "host" system, rather than relying on the Docker containers, but it
-matches the preferred workflow of some front-end developers.
-
-The ``gulp`` process also compiles Sass_ sources to CSS, and copies files from
-``/kuma/static`` to ``/static``, mirroring the process from
-``make collectstatic``. However, additional tools, like PostCSS_, can't be
-added to the gulp workflow like other projects, because the
-``make collectstatic`` process is the only one used to generate production assets.
 
 .. _PostCSS: https://postcss.org
 
@@ -664,7 +645,7 @@ Future
 * Ensure files that are not meant for visitors are not collected, to speed
   up development, collecting, and preparing production images.
 * Remove the ``CachedFileFinder`` and ``PipelineFinder``.
-* Remove ``django-pipeline``, using ``gulp`` on the server as well before
+* Remove ``django-pipeline``, using ``webpack`` on the server as well before
   running ``./manage.py collectstatic``.
 * Add ``django-webpack-loader`` or similar to integrate React assets
 

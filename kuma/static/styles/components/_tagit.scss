@@ -1,0 +1,59 @@
+@import '_tags.scss';
+/*
+overrides for tagit widget
+********************************************************************** */
+
+.tagit.ui-widget-content { /* over-ride the jQuery plugin */
+    @extend ul.tags;
+    background-image: none;
+    @include set-site-font-family();
+    font-size: 1em;
+
+    .close {
+        @include bidi(((margin-left, 4px, margin-right, 0),));
+
+        .text-icon {
+            display: none;
+        }
+
+        .ui-icon-close {
+            background: url($path-to-images + 'icn-delete.png') center -96px no-repeat;
+            cursor: pointer;
+            display: inline-block;
+            height: 15px;
+            margin: 0 0 -3px 0;
+            @include bidi(((margin-left, 3px, margin-right, 0),));
+            overflow: hidden;
+            direction: ltr; // ltr should be set with negative text indent
+            text-indent: -9999px;
+            width: 10px;
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+            .ui-icon-close {
+                background-position: center -146px;
+            }
+        }
+    }
+}
+
+.tagit-choice.ui-widget-content.ui-state-default,
+.tagit-new {
+    @extend %tag-item;
+    color: $text-color;
+    font-weight: normal;
+}
+
+.tagit-new {
+    background-color: #fff;
+    border-color: $tag-border-color;
+    margin-bottom: 0; /* will always be last, no tags underneath it, and bottom margins on form elements dont' collapse */
+
+    input {
+        background: transparent;
+        border: 0;
+        padding: 0;
+    }
+}

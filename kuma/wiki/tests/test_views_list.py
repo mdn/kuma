@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 import pytest
+from django.conf import settings
 from pyquery import PyQuery as pq
 
 from kuma.core.tests import assert_shared_cache_header
@@ -23,7 +24,7 @@ def test_disallowed_methods(db, client, http_method, endpoint):
     if endpoint in ('tag', 'list_review_tag', 'list_with_localization_tag'):
         kwargs = dict(tag='tag')
     url = reverse('wiki.{}'.format(endpoint), kwargs=kwargs)
-    resp = getattr(client, http_method)(url)
+    resp = getattr(client, http_method)(url, HTTP_HOST=settings.WIKI_HOST)
     assert resp.status_code == 405
     assert_shared_cache_header(resp)
 
@@ -31,7 +32,7 @@ def test_disallowed_methods(db, client, http_method, endpoint):
 def test_revisions(root_doc, client):
     """$history of English doc works."""
     url = reverse('wiki.document_revisions', args=(root_doc.slug,))
-    resp = client.get(url)
+    resp = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert resp.status_code == 200
     assert_shared_cache_header(resp)
 
@@ -45,7 +46,7 @@ def test_revisions_of_translated_document(trans_doc, client):
     assert trans_doc.revisions.count() == 1
     url = reverse('wiki.document_revisions', args=(trans_doc.slug,),
                   locale=trans_doc.locale)
-    resp = client.get(url)
+    resp = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert resp.status_code == 200
     page = pq(resp.content)
     list_content = page('.revision-list-contain').find('li')
@@ -67,7 +68,7 @@ def test_revisions_of_translated_doc_with_no_based_on(trans_revision, client):
     trans_doc = trans_revision.document
     url = reverse('wiki.document_revisions', args=(trans_doc.slug,),
                   locale=trans_doc.locale)
-    resp = client.get(url)
+    resp = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert resp.status_code == 200
     page = pq(resp.content)
     list_content = page('.revision-list-contain').find('li')
@@ -77,7 +78,7 @@ def test_revisions_of_translated_doc_with_no_based_on(trans_revision, client):
 def test_revisions_bad_slug_is_not_found(db, client):
     """$history of unknown page returns 404."""
     url = reverse('wiki.document_revisions', args=('not_found',))
-    resp = client.get(url)
+    resp = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert resp.status_code == 404
 
 
@@ -85,7 +86,7 @@ def test_revisions_doc_without_revisions_is_not_found(db, client):
     """$history of half-created document returns 404."""
     doc = Document.objects.create(locale='en-US', slug='half_created')
     url = reverse('wiki.document_revisions', args=(doc.slug,))
-    resp = client.get(url)
+    resp = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert resp.status_code == 404
 
 
@@ -93,7 +94,7 @@ def test_revisions_all_params_as_anon_user_is_forbidden(root_doc, client):
     """Anonymous users are forbidden to request all revisions."""
     url = reverse('wiki.document_revisions', args=(root_doc.slug,))
     all_url = urlparams(url, limit='all')
-    resp = client.get(all_url)
+    resp = client.get(all_url, HTTP_HOST=settings.WIKI_HOST)
     assert resp.status_code == 403
     assert_shared_cache_header(resp)
 
@@ -105,7 +106,7 @@ def test_revisions_all_params_as_user_is_allowed(root_doc, wiki_user, client):
     wiki_user.set_password('password')
     wiki_user.save()
     client.login(username=wiki_user.username, password='password')
-    resp = client.get(all_url)
+    resp = client.get(all_url, HTTP_HOST=settings.WIKI_HOST)
     assert resp.status_code == 200
 
 
@@ -115,7 +116,7 @@ def test_revisions_request_tiny_pages(edit_revision, client):
     assert doc.revisions.count() > 1
     url = reverse('wiki.document_revisions', args=(doc.slug,))
     limit_url = urlparams(url, limit=1)
-    resp = client.get(limit_url)
+    resp = client.get(limit_url, HTTP_HOST=settings.WIKI_HOST)
     assert resp.status_code == 200
     page = pq(resp.content)
     assert len(page.find('ol.pagination')) == 1
@@ -126,7 +127,7 @@ def test_revisions_request_large_pages(root_doc, client):
     rev_count = root_doc.revisions.count()
     url = reverse('wiki.document_revisions', args=(root_doc.slug,))
     limit_url = urlparams(url, limit=rev_count + 1)
-    resp = client.get(limit_url)
+    resp = client.get(limit_url, HTTP_HOST=settings.WIKI_HOST)
     assert resp.status_code == 200
     page = pq(resp.content)
     assert len(page.find('ol.pagination')) == 0
@@ -136,13 +137,13 @@ def test_revisions_request_invalid_pages(root_doc, client):
     """$history?limit=nonsense uses the default pagination."""
     url = reverse('wiki.document_revisions', args=(root_doc.slug,))
     limit_url = urlparams(url, limit='nonsense')
-    resp = client.get(limit_url)
+    resp = client.get(limit_url, HTTP_HOST=settings.WIKI_HOST)
     assert resp.status_code == 200
 
 
 def test_list_no_redirects(redirect_doc, doc_hierarchy, client):
     url = reverse('wiki.all_documents')
-    resp = client.get(url)
+    resp = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert resp.status_code == 200
     assert_shared_cache_header(resp)
     assert 'text/html' in resp['Content-Type']
@@ -157,7 +158,7 @@ def test_tags(root_doc, client):
     """Test list of all tags."""
     root_doc.tags.set('foobar', 'blast')
     url = reverse('wiki.list_tags')
-    resp = client.get(url)
+    resp = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert resp.status_code == 200
     assert b'foobar' in resp.content
     assert b'blast' in resp.content
@@ -179,7 +180,7 @@ def test_tag_list(root_doc, trans_doc, client, locale_case, tag_case, tag):
     trans_doc.tags.set('foo', 'bar')
     exp_doc = root_doc if (locale_case == 'root') else trans_doc
     url = reverse('wiki.tag', locale=exp_doc.locale, kwargs={'tag': tag_query})
-    resp = client.get(url)
+    resp = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert resp.status_code == 200
     assert_shared_cache_header(resp)
     dom = pq(resp.content)
@@ -192,7 +193,7 @@ def test_tag_list(root_doc, trans_doc, client, locale_case, tag_case, tag):
     root_doc.tags.set('foobar')
     trans_doc.tags.set('foobar')
 
-    resp = client.get(url)
+    resp = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert resp.status_code == 200
     dom = pq(resp.content)
     assert len(dom('#document-list ul.document-list li')) == 0
@@ -217,7 +218,7 @@ def test_list_with_errors(redirect_doc, doc_hierarchy, client, locale):
         exp_docs = ()
 
     url = reverse('wiki.errors', locale=locale)
-    resp = client.get(url)
+    resp = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     dom = pq(resp.content)
     assert resp.status_code == 200
     assert_shared_cache_header(resp)
@@ -241,7 +242,7 @@ def test_list_without_parent(redirect_doc, root_doc, doc_hierarchy, client,
         exp_docs = ()
 
     url = reverse('wiki.without_parent', locale=locale)
-    resp = client.get(url)
+    resp = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     dom = pq(resp.content)
     assert resp.status_code == 200
     assert_shared_cache_header(resp)
@@ -260,7 +261,7 @@ def test_list_top_level(redirect_doc, root_doc, doc_hierarchy, client, locale):
         exp_docs = (doc_hierarchy.top.translated_to(locale),)
 
     url = reverse('wiki.top_level', locale=locale)
-    resp = client.get(url)
+    resp = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     dom = pq(resp.content)
     assert resp.status_code == 200
     assert_shared_cache_header(resp)
@@ -289,7 +290,7 @@ def test_list_with_localization_tag(redirect_doc, doc_hierarchy, client,
 
     url = reverse('wiki.list_with_localization_tag', locale=locale,
                   kwargs={'tag': 'inprogress'})
-    resp = client.get(url)
+    resp = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     dom = pq(resp.content)
     assert resp.status_code == 200
     assert_shared_cache_header(resp)
@@ -317,7 +318,7 @@ def test_list_with_localization_tags(redirect_doc, doc_hierarchy, client,
         exp_docs = ()
 
     url = reverse('wiki.list_with_localization_tags', locale=locale)
-    resp = client.get(url)
+    resp = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     dom = pq(resp.content)
     assert resp.status_code == 200
     assert_shared_cache_header(resp)

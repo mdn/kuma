@@ -38,7 +38,7 @@ ALLOWED_ATTRIBUTES['*'] = ['lang']
 # Note: <iframe> is allowed, but src="" is pre-filtered before bleach
 ALLOWED_ATTRIBUTES['iframe'] = ['id', 'src', 'sandbox', 'seamless',
                                 'frameborder', 'width', 'height', 'class',
-                                'allow']
+                                'allow', 'title']
 ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align', 'lang', 'dir']
 ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'id', 'title', 'lang', 'dir']
 ALLOWED_ATTRIBUTES['abbr'] = ['style', 'class', 'id', 'title', 'lang', 'dir']

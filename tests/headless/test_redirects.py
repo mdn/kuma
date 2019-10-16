@@ -4,8 +4,9 @@ import pytest
 
 from utils.urls import assert_valid_url
 
-from .map_301 import (GITHUB_IO_URLS, LEGACY_URLS, MARIONETTE_URLS, MOZILLADEMOS_URLS, REDIRECT_URLS,
-                      SCL3_REDIRECT_URLS, ZONE_REDIRECT_URLS)
+from .map_301 import (GITHUB_IO_URLS, LEGACY_URLS, MARIONETTE_URLS,
+                      MOZILLADEMOS_URLS, REDIRECT_URLS, SCL3_REDIRECT_URLS,
+                      WEBEXT_URLS, ZONE_REDIRECT_URLS)
 
 # while these test methods are similar, they're each testing a
 # subset of redirects, and it was easier to work with them separately.
@@ -70,5 +71,14 @@ def test_zone_redirects(url, base_url):
 @pytest.mark.parametrize('url', MARIONETTE_URLS,
                          ids=[item['url'] for item in MARIONETTE_URLS])
 def test_marionette_redirects(url, base_url):
+    url['base_url'] = base_url
+    assert_valid_url(**url)
+
+
+@pytest.mark.headless
+@pytest.mark.nondestructive
+@pytest.mark.parametrize('url', WEBEXT_URLS,
+                         ids=[item['url'] for item in WEBEXT_URLS])
+def test_webext_redirects(url, base_url):
     url['base_url'] = base_url
     assert_valid_url(**url)

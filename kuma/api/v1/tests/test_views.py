@@ -8,7 +8,6 @@ from kuma.api.v1.views import (document_api_data, get_content_based_redirect,
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.search.tests import ElasticTestCase
-from kuma.users.templatetags.jinja_helpers import gravatar_url
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
@@ -54,27 +53,26 @@ def test_get_content_based_redirect(root_doc, redirect_doc, redirect_to_self,
 
 @pytest.mark.parametrize(
     'http_method', ['put', 'post', 'delete', 'options', 'head'])
-def test_doc_api_disallowed_methods(client, api_settings, http_method):
+def test_doc_api_disallowed_methods(client, http_method):
     """HTTP methods other than GET are not allowed."""
     url = reverse('api.v1.doc', args=['en-US', 'Web/CSS'])
-    response = getattr(client, http_method)(url,
-                                            HTTP_HOST=api_settings.BETA_HOST)
+    response = getattr(client, http_method)(url)
     assert response.status_code == 405
     assert_no_cache_header(response)
 
 
-def test_doc_api_404(client, api_settings, root_doc):
+def test_doc_api_404(client, root_doc):
     """We get a 404 if we ask for a document that does not exist."""
     url = reverse('api.v1.doc', args=['en-US', 'NoSuchPage'])
-    response = client.get(url, HTTP_HOST=api_settings.BETA_HOST)
+    response = client.get(url)
     assert response.status_code == 404
     assert_no_cache_header(response)
 
 
-def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache):
+def test_doc_api(client, trans_doc, cleared_cacheback_cache):
     """On success we get document details in a JSON response."""
     url = reverse('api.v1.doc', args=[trans_doc.locale, trans_doc.slug])
-    response = client.get(url, HTTP_HOST=api_settings.BETA_HOST)
+    response = client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
 
@@ -106,14 +104,14 @@ def test_doc_api(client, api_settings, trans_doc, cleared_cacheback_cache):
     assert doc_data['lastModified'] == '2017-04-14T12:20:00'
 
 
-def test_doc_api_for_redirect_to_doc(client, api_settings, root_doc,
-                                     redirect_doc, cleared_cacheback_cache):
+def test_doc_api_for_redirect_to_doc(client, root_doc, redirect_doc,
+                                     cleared_cacheback_cache):
     """
     Test the document API when we're requesting data for a document that
     redirects to another document.
     """
     url = reverse('api.v1.doc', args=[redirect_doc.locale, redirect_doc.slug])
-    response = client.get(url, HTTP_HOST=api_settings.BETA_HOST, follow=True)
+    response = client.get(url, follow=True)
     assert response.status_code == 200
     assert_no_cache_header(response)
 
@@ -146,7 +144,7 @@ def test_doc_api_for_redirect_to_doc(client, api_settings, root_doc,
 
 
 @pytest.mark.parametrize('case', ('redirect-to-home', 'redirect-to-other'))
-def test_doc_api_for_redirect_to_non_doc(client, api_settings, redirect_to_home,
+def test_doc_api_for_redirect_to_non_doc(client, redirect_to_home,
                                          redirect_to_macros, case):
     """
     Test the document API when we're requesting data for a document that
@@ -160,7 +158,7 @@ def test_doc_api_for_redirect_to_non_doc(client, api_settings, redirect_to_home,
         expected_redirect_url = absolutify('/en-US/dashboards/macros',
                                            for_wiki_site=True)
     url = reverse('api.v1.doc', args=[doc.locale, doc.slug])
-    response = client.get(url, HTTP_HOST=api_settings.BETA_HOST)
+    response = client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
 
@@ -175,18 +173,17 @@ def test_doc_api_for_redirect_to_non_doc(client, api_settings, redirect_to_home,
 
 @pytest.mark.parametrize(
     'http_method', ['put', 'post', 'delete', 'options', 'head'])
-def test_whoami_disallowed_methods(client, api_settings, http_method):
+def test_whoami_disallowed_methods(client, http_method):
     """HTTP methods other than GET are not allowed."""
     url = reverse('api.v1.whoami')
-    response = getattr(client, http_method)(url,
-                                            HTTP_HOST=api_settings.BETA_HOST)
+    response = getattr(client, http_method)(url)
     assert response.status_code == 405
     assert_no_cache_header(response)
 
 
 @pytest.mark.django_db
 @pytest.mark.parametrize('timezone', ('US/Eastern', 'US/Pacific'))
-def test_whoami_anonymous(client, api_settings, timezone):
+def test_whoami_anonymous(client, settings, timezone):
     """Test response for anonymous users."""
     # Create some fake waffle objects
     Flag.objects.create(name='section_edit', authenticated=True)
@@ -197,9 +194,9 @@ def test_whoami_anonymous(client, api_settings, timezone):
     Sample.objects.create(name="sample_never", percent=0)
     Sample.objects.create(name="sample_always", percent=100)
 
-    api_settings.TIME_ZONE = timezone
+    settings.TIME_ZONE = timezone
     url = reverse('api.v1.whoami')
-    response = client.get(url, HTTP_HOST=api_settings.BETA_HOST)
+    response = client.get(url)
     assert response.status_code == 200
     assert response['content-type'] == 'application/json'
     assert response.json() == {
@@ -209,10 +206,7 @@ def test_whoami_anonymous(client, api_settings, timezone):
         'is_staff': False,
         'is_superuser': False,
         'is_beta_tester': False,
-        'gravatar_url': {
-            'small': None,
-            'large': None,
-        },
+        'avatar_url': None,
         'waffle': {
             'flags': {
                 'section_edit': False,
@@ -238,8 +232,9 @@ def test_whoami_anonymous(client, api_settings, timezone):
     [('US/Eastern', False, False, False),
      ('US/Pacific', True, True, True)],
     ids=('muggle', 'wizard'))
-def test_whoami(user_client, api_settings, wiki_user, beta_testers_group,
-                timezone, is_staff, is_superuser, is_beta_tester):
+def test_whoami(user_client, wiki_user, wiki_user_github_account,
+                beta_testers_group, timezone, is_staff, is_superuser,
+                is_beta_tester):
     """Test responses for logged-in users."""
     # Create some fake waffle objects
     Flag.objects.create(name='section_edit', authenticated=True)
@@ -258,7 +253,7 @@ def test_whoami(user_client, api_settings, wiki_user, beta_testers_group,
         wiki_user.groups.add(beta_testers_group)
     wiki_user.save()
     url = reverse('api.v1.whoami')
-    response = user_client.get(url, HTTP_HOST=api_settings.BETA_HOST)
+    response = user_client.get(url)
     assert response.status_code == 200
     assert response['content-type'] == 'application/json'
     assert response.json() == {
@@ -268,10 +263,7 @@ def test_whoami(user_client, api_settings, wiki_user, beta_testers_group,
         'is_staff': is_staff,
         'is_superuser': is_superuser,
         'is_beta_tester': is_beta_tester,
-        'gravatar_url': {
-            'small': gravatar_url(wiki_user.email, size=50),
-            'large': gravatar_url(wiki_user.email, size=200),
-        },
+        'avatar_url': wiki_user_github_account.get_avatar_url(),
         'waffle': {
             'flags': {
                 'section_edit': True,
@@ -292,22 +284,21 @@ def test_whoami(user_client, api_settings, wiki_user, beta_testers_group,
 
 
 @pytest.mark.django_db
-def test_search_validation_problems(user_client, api_settings):
+def test_search_validation_problems(user_client):
     url = reverse('api.v1.search', args=['en-US'])
 
     # 'q' not present
-    response = user_client.get(url, HTTP_HOST=api_settings.BETA_HOST)
+    response = user_client.get(url)
     assert response.status_code == 400
     assert response.json()['error'] == "Search term 'q' must be set"
 
     # 'q' present but falsy
-    response = user_client.get(url, {'q': ''}, HTTP_HOST=api_settings.BETA_HOST)
+    response = user_client.get(url, {'q': ''})
     assert response.status_code == 400
     assert response.json()['error'] == "Search term 'q' must be set"
 
     # 'q' present but locale invalid
-    response = user_client.get(
-        url, {'q': 'x', 'locale': 'xxx'}, HTTP_HOST=api_settings.BETA_HOST)
+    response = user_client.get(url, {'q': 'x', 'locale': 'xxx'})
     assert response.status_code == 400
     assert response.json()['error'] == 'Not a valid locale code'
 

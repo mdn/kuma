@@ -117,7 +117,8 @@ def test_raw_code_sample_file(code_sample_doc, constance_config,
         'file': file_for_upload,
     }
     constance_config.WIKI_ATTACHMENT_ALLOWED_TYPES = 'text/plain'
-    response = admin_client.post(upload_url, data=post_data)
+    response = admin_client.post(upload_url, data=post_data,
+                                 HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
     edit_url = reverse('wiki.edit', args=(code_sample_doc.slug,))
     assert response.url == edit_url

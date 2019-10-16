@@ -1,0 +1,39 @@
+/*
+add icon to external inks but not if they are to demos or if we're specifically to ignore
+********************************************************************** */
+
+.external-icon:not([href^='https://mdn.mozillademos.org']):not(.ignore-external) {
+    white-space: pre-line;
+
+    html[dir='ltr'] &:before,
+    html[dir='rtl'] &:after {
+        @include set-icon('../general/external-link.svg', 12px);
+        margin-top: 3px;
+        margin-right: 3px;
+        vertical-align: text-top;
+    }
+
+    html[dir='rtl'] &:after {
+        transform: rotateY(180deg);
+    }
+
+    &:hover,
+    &:focus {
+        &:before,
+        &:after {
+            text-decoration: none;
+        }
+    }
+}
+
+.communitymailinglist {
+    .external-icon:not([href^='https://mdn.mozillademos.org']):not(.ignore-external) {
+        html[dir='ltr'] &:before,
+        html[dir='rtl'] &:after {
+            @include set-icon($icon-white-external-link, 12px);
+            margin-top: 5px;
+            margin-right: 3px;
+            vertical-align: middle;
+        }
+    }
+}

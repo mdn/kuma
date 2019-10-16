@@ -2,6 +2,7 @@ from datetime import datetime
 
 import pytest
 import requests_mock
+from allauth.socialaccount.models import SocialAccount
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.cache import caches
@@ -12,17 +13,6 @@ from waffle.testutils import override_flag
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.constants import REDIRECT_CONTENT
 from kuma.wiki.models import Document, Revision
-
-
-@pytest.fixture
-def host_settings(settings):
-    settings.DOMAIN = 'mdn.dev'
-    settings.BETA_HOST = 'beta.mdn.dev'
-    settings.WIKI_HOST = 'wiki.mdn.dev'
-    settings.ALLOWED_HOSTS.append(settings.DOMAIN)
-    settings.ALLOWED_HOSTS.append(settings.BETA_HOST)
-    settings.ALLOWED_HOSTS.append(settings.WIKI_HOST)
-    return settings
 
 
 @pytest.fixture(autouse=True)
@@ -107,6 +97,19 @@ def wiki_user(db, django_user_model):
         username='wiki_user',
         email='wiki_user@example.com',
         date_joined=datetime(2017, 4, 14, 12, 0))
+
+
+@pytest.fixture
+def wiki_user_github_account(wiki_user):
+    return SocialAccount.objects.create(
+        user=wiki_user,
+        provider='github',
+        extra_data=dict(
+            email=wiki_user.email,
+            avatar_url='https://avatars0.githubusercontent.com/yada/yada',
+            html_url="https://github.com/{}".format(wiki_user.username)
+        )
+    )
 
 
 @pytest.fixture

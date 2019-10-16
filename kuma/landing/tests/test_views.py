@@ -6,7 +6,8 @@ from django.core.cache import cache
 from django.utils.six.moves.urllib.parse import urlparse
 from ratelimit.exceptions import Ratelimited
 
-from kuma.core.tests import assert_no_cache_header, assert_shared_cache_header
+from kuma.core.tests import (assert_no_cache_header, assert_redirect_to_wiki,
+                             assert_shared_cache_header)
 from kuma.core.urlresolvers import reverse
 
 
@@ -24,13 +25,13 @@ def test_contribute_json(client, db):
     assert response['Content-Type'].startswith('application/json')
 
 
-@pytest.mark.parametrize('case', ('DOMAIN', 'BETA_HOST', 'WIKI_HOST'))
-def test_home(client, db, host_settings, case):
-    host = getattr(host_settings, case)
-    response = client.get(reverse('home', locale='en-US'), HTTP_HOST=host)
+@pytest.mark.parametrize('case', ('DOMAIN', 'WIKI_HOST'))
+def test_home(client, db, settings, case):
+    response = client.get(reverse('home', locale='en-US'),
+                          HTTP_HOST=getattr(settings, case))
     assert response.status_code == 200
     assert_shared_cache_header(response)
-    if case in ('DOMAIN', 'WIKI_HOST'):
+    if case == 'WIKI_HOST':
         expected_template = 'landing/homepage.html'
     else:
         expected_template = 'landing/react_homepage.html'
@@ -52,7 +53,7 @@ def test_home_when_rate_limited(mock_render, client, db):
 def test_maintenance_mode(db, client, settings, mode):
     url = reverse('maintenance_mode')
     settings.MAINTENANCE_MODE = (mode == 'maintenance')
-    response = client.get(url)
+    response = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     if settings.MAINTENANCE_MODE:
         assert response.status_code == 200
         assert ('landing/maintenance-mode.html' in
@@ -116,3 +117,12 @@ def test_favicon_ico(client, settings):
     assert response.status_code == 302
     assert_shared_cache_header(response)
     assert response['Location'] == '/static/img/favicon32-local.png'
+
+
+@pytest.mark.parametrize(
+    'endpoint', ['maintenance_mode', 'promote', 'promote_buttons'])
+def test_redirect(client, endpoint):
+    """Redirect to the wiki domain if not already."""
+    url = reverse(endpoint)
+    response = client.get(url)
+    assert_redirect_to_wiki(response, url)

@@ -1,0 +1,105 @@
+/*
+Main CSS file for MDN.  Holds the site structure and key styles.
+********************************************************************** */
+
+/* columns */
+@import 'structure/_columns.scss';
+@import 'structure/_cols.scss';
+
+/*
+Pre-header
+====================================================================== */
+
+/* soapbox notice */
+@import 'structure/_global-notice.scss';
+
+/* keyboard/screen reader skip link menu */
+@import 'structure/_nav-access.scss';
+
+/*
+Header
+====================================================================== */
+
+@import 'structure/page-header/_main-header.scss';
+@import 'structure/page-header/_submenu.scss';
+
+/*
+Main navigation and toolbox wrapper
+====================================================================== */
+@import 'structure/page-header/_nav-toolbox-wrapper.scss';
+
+/*
+Toolbox
+- login widget
+- profile (logged in) links
+-------------------------------------------------------------- */
+
+@import 'structure/page-header/_toolbox.scss';
+@import 'structure/page-header/_login.scss';
+
+/*
+Main Navigation
+- menus & submenus
+- search bar
+-------------------------------------------------------------- */
+
+@import 'structure/page-header/_nav-main.scss';
+@import 'structure/page-header/_nav-main-search.scss';
+
+/*
+Search form
+- in page search form
+-------------------------------------------------------------- */
+@import 'structure/_search-form.scss';
+
+/*
+Document Head
+====================================================================== */
+
+@import 'structure/_document-head.scss';
+
+/*
+Footer
+====================================================================== */
+
+@import 'structure/_nav-footer.scss';
+@import 'structure/_contentinfo.scss';
+
+/*
+Misc - needs sorting
+====================================================================== */
+
+@import 'structure/_archive.scss';
+@import 'structure/_socialaccount-providers.scss';
+@import 'structure/_feature-test-element.scss';
+@import 'structure/_pagination.scss';
+
+#wikiArticle > p:first-child:empty {
+    display: none; /* bug 1305178: hide empty first paragraph */
+}
+
+#wikiArticle {
+    padding-bottom: $grid-spacing;
+    border-bottom: $section-border;
+}
+
+p.field-explanation {
+    margin-bottom: 0;
+}
+
+#content-main.full {
+    clear: both;
+    float: none;
+    width: 100%;
+}
+
+.main {
+    float: left;
+    width: 670px;
+}
+
+@media #{$mq-mobile-and-down} {
+    .header-clear {
+        display: none;
+    }
+}

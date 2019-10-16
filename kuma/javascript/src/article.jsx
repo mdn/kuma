@@ -35,11 +35,21 @@ export default function Article({ document }: DocumentProps) {
             InteractiveExamples.setLayout(rootElement);
             // Keep addLiveExampleButtons() before addAnchors() so the
             // example title doesn't end up with a link in it on codepen.
-            addLiveExampleButtons(rootElement);
+            try {
+                addLiveExampleButtons(rootElement);
+            } catch (error) {
+                console.error(error);
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: 'article-effect-error',
+                    eventAction: 'addLiveExampleButtons',
+                    eventLabel: error.toString()
+                });
+            }
             highlightSyntax(rootElement);
             activateBCDTables(rootElement);
         }
-    }, [document]);
+    }, [document, ga]);
 
     useEffect(() => {
         let rootElement = article.current;
@@ -65,7 +75,7 @@ export default function Article({ document }: DocumentProps) {
                 eventLabel: ''
             });
         }
-    }, [document, locale]);
+    }, [document, locale, ga]);
 
     return (
         /*

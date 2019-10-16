@@ -1,0 +1,241 @@
+/*
+"Components" used throughout the site in varying ways.
+For example, .toggler is used in a few different widgets (TOC, subnav, etc.)
+********************************************************************** */
+
+@import '../base/_utilities.scss';
+
+/*
+toggler component: a basic slide up and slide now system
+====================================================================== */
+
+.toggler {
+    position: relative;
+
+    #{$selector-icon} {
+        position: absolute;
+        top: 3px;
+        @include bidi(((right, $icon-margin, left, auto),));
+        color: $text-color;
+    }
+
+    .icon-caret-right {
+        @include bidi-value-vendorize(transform, rotate(0deg), rotate(180deg));
+    }
+}
+
+.toggle-container.closed {
+    display: none;
+}
+
+/*
+subnav component:  used within the wiki
+====================================================================== */
+
+.subnav {
+    .toggler,
+    > ol > li > a {
+        padding: $grid-spacing (2 * $grid-spacing) $grid-spacing $grid-spacing;
+        border-bottom: 1px dotted #d4dde4;
+        text-transform: uppercase;
+        display: block;
+    }
+
+    ol ol {
+        display: none; /* prevents flash of unstyled content */
+
+        .no-js & {
+            display: block;
+        }
+    }
+
+    .toggleable.current,
+    > ol > li.current {
+        background: $light-background-color;
+    }
+
+    #{$selector-icon} {
+        top: 23px;
+        @include bidi(((right, 20px, left, auto),));
+    }
+
+    .toggle-container {
+        a {
+            @include set-smaller-font-size();
+            display: block;
+            padding: $content-vertical-spacing $grid-spacing;
+        }
+
+        .toggleable {
+            background: #e9eef1;
+
+            .toggler {
+                @include title-header();
+                font-weight: normal;
+                padding-top: ($grid-spacing / 2);
+                padding-bottom: ($grid-spacing / 2);
+                border: 0;
+
+                i {
+                    top: ($grid-spacing / 2);
+                }
+            }
+
+            .toggle-container a {
+                padding-left: ($grid-spacing * 1.5);
+            }
+        }
+
+        li.current {
+            > a:not(.toggler) {
+                position: relative;
+                color: #fff;
+                background-color: $text-color;
+
+                @include generate-arrow();
+
+                &:before {
+                    border-right-color: #fff;
+                    position: absolute;
+                    top: 20%;
+                    right: 0;
+                }
+            }
+        }
+    }
+
+    @include reverse-link-decoration();
+}
+
+/*
+Notifications
+====================================================================== */
+
+/* style notifications
+-------------------------------------------------------------- */
+$notification-border-width: 2px;
+$notification-button-border: 1px solid;
+$notification-button-margin: 5px 5px 0 0;
+$notification-button-padding: 2px 5px 3px;
+
+.notification {
+    @extend .media;
+    border-radius: 2px;
+    border-style: solid;
+    border-width: $notification-border-width;
+    margin-bottom: $grid-spacing;
+    padding: ($grid-spacing / 2);
+    position: relative;
+
+    body > & {
+        margin-bottom: 0;
+    }
+
+    .text-content & {
+        @include restrict-line-length();
+    }
+
+    &.closed {
+        display: none;
+    }
+
+    &.clickable {
+        cursor: pointer;
+    }
+
+    /* little x button in top right corner */
+    button.close {
+        background: transparent;
+        border: 0;
+        display: block;
+        padding: 2px;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    /* theme the various notification states */
+    & {
+        @include notification-theme('default');
+    }
+
+    &.info {
+        @include notification-theme('neutral');
+    }
+
+    &.success {
+        @include notification-theme('positive');
+    }
+
+    &.warning {
+        @include notification-theme('warning');
+
+        /* warning clashes with a class in CustomCSS so we have to re-assert border-width and link color
+           the CustomCSS class might be changeable in the future but we can't change the notifier class
+           because it is part of a django module . See also .notification-button. */
+        border-width: $notification-border-width;
+        font-style: normal;
+
+        a,
+        a:visited,
+        a:hover,
+        a:focus {
+            border-bottom: 0;
+            color: $link-color;
+            text-decoration: none;
+        }
+
+        a:hover,
+        a:focus {
+            text-decoration: underline;
+        }
+    }
+
+    &.error {
+        @include notification-theme('negative');
+    }
+}
+
+.notification-message {
+    @extend .media-body; /* here incase there's an icon, has the added benfiit of acting like a clearfix */
+
+    /* remove margin from first element in message */
+    & *:first-child {
+        margin-top: 0;
+    }
+}
+
+/* optional icon, message displays fine without it */
+.notification-img {
+    @extend .media-side;
+}
+
+/* class to add to <button> and <a> to make them look buttony */
+.notification-button {
+    border: 1px solid;
+    border-radius: 2px;
+    display: inline-block;
+    line-height: 1;
+    margin: 5px 5px 0 0;
+    padding: 2px 5px 3px;
+    text-transform: none;
+
+    .notification.warning & { /* see comment for &.warning */
+        border: $notification-button-border;
+        margin: $notification-button-margin;
+        padding: $notification-button-padding;
+    }
+}
+
+.notification-tray {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 999999;
+    width: 300px;
+    font-size: $smaller-font-size;
+
+    .notification {
+        margin-bottom: 8px;
+    }
+}

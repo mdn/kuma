@@ -2,6 +2,8 @@
 """Tests for the DocumentHistorySource class ($history API)."""
 from __future__ import unicode_literals
 
+from django.conf import settings
+
 from . import mock_requester, mock_storage
 from ..sources import DocumentHistorySource
 
@@ -10,7 +12,7 @@ def test_gather_revisions_default(root_doc, client):
     """The default is requests if revision count is unspecified."""
     path = root_doc.get_absolute_url()
     source = DocumentHistorySource(path)
-    html = client.get(path + '$history').content
+    html = client.get(path + '$history', HTTP_HOST=settings.WIKI_HOST).content
     requester = mock_requester(content=html, status_code=200)
     storage = mock_storage(spec=[
         'get_document_history', 'save_document_history'])
@@ -37,7 +39,7 @@ def test_gather_revisions_multiple(root_doc, client):
     """If a revision count is specified, that many are requested."""
     path = root_doc.get_absolute_url()
     source = DocumentHistorySource(path, revisions=2)
-    html = client.get(path + '$history').content
+    html = client.get(path + '$history', HTTP_HOST=settings.WIKI_HOST).content
     requester = mock_requester(content=html, status_code=200)
     storage = mock_storage(spec=[
         'get_document_history', 'save_document_history'])
@@ -62,7 +64,7 @@ def test_gather_revisions_more_than_available(root_doc, client):
     """If a revision count is more than the revisions, take note."""
     path = root_doc.get_absolute_url()
     source = DocumentHistorySource(path, revisions=3)
-    html = client.get(path + '$history').content
+    html = client.get(path + '$history', HTTP_HOST=settings.WIKI_HOST).content
     requester = mock_requester(content=html, status_code=200)
     storage = mock_storage(spec=[
         'get_document_history', 'save_document_history'])
@@ -113,7 +115,7 @@ def test_gather_translated(translated_doc, client):
     """A translated document may include the English source doc."""
     path = translated_doc.get_absolute_url()
     source = DocumentHistorySource(path)
-    html = client.get(path + '$history').content
+    html = client.get(path + '$history', HTTP_HOST=settings.WIKI_HOST).content
     requester = mock_requester(content=html, status_code=200)
     storage = mock_storage(spec=[
         'get_document_history', 'save_document_history'])

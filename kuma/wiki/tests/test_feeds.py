@@ -395,7 +395,7 @@ def test_recent_documents_as_jsonp(root_doc, client):
     assert resp.content == raw_json
 
 
-def test_recent_documents_optional_items(create_revision, client):
+def test_recent_documents_optional_items(create_revision, client, settings):
     """The recent documents JSON feed includes some items if set."""
     feed_url = reverse('wiki.feeds.recent_documents',
                        kwargs={'format': 'json'})
@@ -404,16 +404,8 @@ def test_recent_documents_optional_items(create_revision, client):
     assert_shared_cache_header(resp)
     data = json.loads(resp.content)
     assert len(data) == 1
-    assert data[0]['author_avatar'].startswith(
-        'https://secure.gravatar.com/avatar/')
+    assert data[0]['author_avatar'] == settings.DEFAULT_AVATAR
     assert 'summary' not in data[0]
-
-    create_revision.creator.email = ''
-    create_revision.creator.save()
-    resp = client.get(feed_url)
-    assert resp.status_code == 200
-    data = json.loads(resp.content)
-    assert 'author_avatar' not in data[0]
 
     create_revision.summary = 'The summary'
     create_revision.save()

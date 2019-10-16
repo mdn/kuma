@@ -45,7 +45,6 @@ export default function Newsletter() {
 
     const [showNewsletter, setShowNewsletter] = useState(true);
     const [showPrivacyCheckbox, setShowPrivacyCheckbox] = useState(false);
-    const [submitToServer, setSubmitToServer] = useState(false);
     const [errors, setError] = useState([]);
     const [
         showSuccessfulSubscription,
@@ -99,29 +98,12 @@ export default function Newsletter() {
      * @param {Object} event - The MouseEvent object
      */
     const submit = event => {
-        let newsletterForm = newsletterFormRef.current;
+        event.preventDefault();
 
+        let newsletterForm = newsletterFormRef.current;
         if (!newsletterForm) {
             return;
         }
-
-        if (submitToServer) {
-            /*
-             * An error occured while attempting to subscribe
-             * the user via Ajax, but no specific error was provided. We
-             * therefore just send the user directly to the Mozorg
-             * newsletter subscription page and log the occurence
-             */
-            ga('send', {
-                hitType: 'event',
-                eventCategory: 'newsletter',
-                eventAction: 'progression',
-                eventLabel: 'error-forward'
-            });
-            return true;
-        }
-
-        event.preventDefault();
         submitNewsletterSubscription(newsletterForm)
             .then(({ success, errors }) => {
                 if (success) {
@@ -138,10 +120,6 @@ export default function Newsletter() {
 
                 if (errors && errors.length) {
                     setError(errors);
-                } else if (errors && errors.length === 0) {
-                    // resubmit for diagnoses on the server (see skipFetch-
-                    // comment above)
-                    setSubmitToServer(true);
                 }
             })
             .catch(e => {
@@ -168,14 +146,6 @@ export default function Newsletter() {
             setShowNewsletter(false);
         }
     }, []);
-
-    useEffect(() => {
-        const newsletterForm = newsletterFormRef.current;
-        if (submitToServer && newsletterForm) {
-            setSubmitToServer(false);
-            newsletterForm.submit();
-        }
-    }, [submitToServer]);
 
     if (!showNewsletter) {
         return null;
@@ -207,8 +177,7 @@ export default function Newsletter() {
                     ref={newsletterFormRef}
                     className="newsletter-form nodisable"
                     name="newsletter-form"
-                    action={NEWSLETTER_SUBSCRIBE_URL}
-                    method="post"
+                    onSubmit={submit}
                 >
                     <section className="newsletter-head">
                         <h2 className="newsletter-teaser">
@@ -298,7 +267,6 @@ export default function Newsletter() {
                         </div>
                         <div className="newsletter-group-submit">
                             <button
-                                onClick={submit}
                                 id="newsletter-submit"
                                 type="submit"
                                 className="button neutral newsletter-submit"

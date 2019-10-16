@@ -1,6 +1,7 @@
 import json
 
 import pytest
+from django.conf import settings
 from django.contrib.auth.models import Permission
 from waffle.testutils import override_flag
 
@@ -51,7 +52,7 @@ def enable_akismet_submissions(constance_config):
 def test_disallowed_methods(db, client, http_method):
     """HTTP methods other than POST are not allowed."""
     url = reverse('wiki.submit_akismet_spam')
-    response = getattr(client, http_method)(url)
+    response = getattr(client, http_method)(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 405
     assert_no_cache_header(response)
 
@@ -61,7 +62,8 @@ def test_spam_valid_response(create_revision, akismet_wiki_user, user_client,
                              enable_akismet_submissions,
                              akismet_mock_requests):
     url = reverse('wiki.submit_akismet_spam')
-    response = user_client.post(url, data={'revision': create_revision.id})
+    response = user_client.post(url, data={'revision': create_revision.id},
+                                HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 201
     assert_no_cache_header(response)
 
@@ -97,7 +99,8 @@ def test_spam_with_many_response(create_revision, akismet_wiki_user,
 
     # Create another Akismet revision via the endpoint.
     url = reverse('wiki.submit_akismet_spam')
-    response = user_client.post(url, data={'revision': create_revision.id})
+    response = user_client.post(url, data={'revision': create_revision.id},
+                                HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 201
     assert_no_cache_header(response)
     data = json.loads(response.content)
@@ -116,7 +119,8 @@ def test_spam_with_many_response(create_revision, akismet_wiki_user,
 def test_spam_no_permission(create_revision, wiki_user, user_client,
                             enable_akismet_submissions, akismet_mock_requests):
     url = reverse('wiki.submit_akismet_spam')
-    response = user_client.post(url, data={'revision': create_revision.id})
+    response = user_client.post(url, data={'revision': create_revision.id},
+                                HTTP_HOST=settings.WIKI_HOST)
     # Redirects to login page when without permission.
     assert response.status_code == 302
     assert response['Location'].endswith('users/signin?next={}'.format(url))
@@ -138,7 +142,8 @@ def test_spam_revision_does_not_exist(create_revision, akismet_wiki_user,
     create_revision.delete()
 
     url = reverse('wiki.submit_akismet_spam')
-    response = user_client.post(url, data={'revision': revision_id})
+    response = user_client.post(url, data={'revision': revision_id},
+                                HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 400
     assert_no_cache_header(response)
 

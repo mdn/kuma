@@ -42,9 +42,6 @@ coveragetest: clean
 coveragetesthtml: coveragetest
 	coverage html
 
-locust:
-	locust -f tests/performance/smoke.py --host=https://developer.allizom.org
-
 webpack:
 	@ echo "## Running webpack ##"
 	@ npm run webpack:prod
@@ -124,7 +121,13 @@ build-kuma:
 build-kumascript:
 	docker build --no-cache \
 	--build-arg REVISION_HASH=${KUMASCRIPT_REVISION_HASH} \
-	-f docker/images/kumascript/Dockerfile -t ${KUMASCRIPT_IMAGE} .
+	-f kumascript/docker/Dockerfile -t ${KUMASCRIPT_IMAGE} .
+
+build-kumascript-with-all-tags:
+	docker build --no-cache \
+	--build-arg REVISION_HASH=${KUMASCRIPT_REVISION_HASH} \
+	-f kumascript/docker/Dockerfile -t ${KUMASCRIPT_IMAGE} \
+	-t ${KUMASCRIPT_IMAGE_LATEST} .
 
 build: build-base build-kuma build-kumascript
 
@@ -172,4 +175,4 @@ npmrefresh:
 	npm install
 
 # Those tasks don't have file targets
-.PHONY: test coveragetest locust clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh npmrefresh webpack compile-react-i18n
+.PHONY: test coveragetest clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh npmrefresh webpack compile-react-i18n

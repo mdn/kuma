@@ -12,15 +12,19 @@ from jinja2 import contextfunction, escape, Markup
 from kuma.core.templatetags.jinja_helpers import datetimeformat
 from kuma.core.urlresolvers import reverse
 
-from ..jobs import UserGravatarURLJob
-
 
 @library.global_function
-def gravatar_url(email, secure=True, size=220, rating='pg',
-                 default=settings.DEFAULT_AVATAR):
-    job = UserGravatarURLJob()
-    return job.get(email, secure=secure, size=size,
-                   rating=rating, default=default)
+def get_avatar_url(user, provider='github'):
+    """
+    Get the user's avatar URL for the specified provider. Assumes that the user
+    is not anonymous or None. If the user has no avatar for the specified
+    provider, returns the default avatar.
+    """
+    for account in user.socialaccount_set.filter(provider=provider):
+        avatar_url = account.get_avatar_url()
+        if avatar_url:
+            return avatar_url
+    return settings.DEFAULT_AVATAR
 
 
 @library.global_function

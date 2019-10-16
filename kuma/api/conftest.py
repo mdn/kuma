@@ -8,13 +8,6 @@ from kuma.wiki.models import Document, Revision
 
 
 @pytest.fixture
-def api_settings(settings):
-    settings.BETA_HOST = 'beta.mdn.dev'
-    settings.ALLOWED_HOSTS.append(settings.BETA_HOST)
-    return settings
-
-
-@pytest.fixture
 def redirect_to_self(wiki_user):
     """
     A top-level English document that redirects to itself.

@@ -1,0 +1,274 @@
+#{$selector-icon} {
+    cursor: default;
+    display: inline-block;
+
+    &:before {
+        display: inline-block;
+        text-decoration: none;
+    }
+}
+
+label #{$selector-icon}:first-child {
+    @include bidi(
+        ((margin-left, 0, $icon-margin), (margin-right, $icon-margin, 0))
+    );
+}
+
+.icon {
+    fill: currentColor;
+}
+
+.icon-arrow,
+.icon-arrow-up,
+.icon-arrow-right,
+.icon-arrow-left,
+.icon-book,
+.icon-caret-down,
+.icon-caret-right,
+.icon-chevron-down,
+.icon-chevron-up,
+.icon-check-mark,
+.icon-close,
+.icon-cogs,
+.icon-external-link,
+.icon-eye,
+.icon-exclamation-circle,
+.icon-exclamation-triangle,
+.icon-file,
+.icon-flask,
+.icon-gear,
+.icon-globe,
+.icon-info-circle,
+.icon-language,
+.icon-lock,
+.icon-pencil,
+.icon-plain-text,
+.icon-play,
+.icon-shield,
+.icon-tags,
+.icon-undo,
+.search-icon .icon-search {
+    width: $icon-size;
+    height: $icon-size;
+}
+
+/* icons used by PreviousMenuNext macro */
+.prevnext {
+    .icon-arrow-left {
+        @include set-icon('../arrows/arrow-left.svg');
+        vertical-align: sub;
+    }
+
+    .icon-arrow-up {
+        @include set-icon('../arrows/arrow-up.svg');
+        vertical-align: sub;
+    }
+
+    .icon-arrow-right {
+        @include set-icon('../arrows/arrow-right.svg');
+        vertical-align: sub;
+    }
+}
+
+/* icon classes used by DeprecatedBadge and the HTMLRefTable macros */
+i.icon-thumbs-down-alt {
+    @include set-icon('../emojis/thumbs-down.svg');
+    vertical-align: bottom;
+}
+
+/* icon classes used by ExperimentalBadge and the HTMLRefTable macros */
+i.icon-beaker {
+    @include set-icon('../general/flask.svg');
+    vertical-align: text-bottom;
+}
+
+/* icon used by NonStandardBadge macro */
+i.icon-warning-sign {
+    @include set-icon(
+        '../notifications/exclamation-triangle.svg'
+    );
+    vertical-align: bottom;
+}
+
+/* icon used by ObsoleteBadge macro */
+i.icon-trash {
+    @include set-icon('../general/trash.svg');
+    vertical-align: text-bottom;
+}
+
+/* used with .notification-img */
+i.icon-info-sign {
+    @include set-icon(
+        '../notifications/info-circle.svg',
+        24px,
+        30px
+    );
+}
+
+.icon-only-inline {
+    /* icon used by Experimetal_Inline macro */
+    i.icon-beaker {
+        @include set-icon($icon-flask-blue);
+    }
+
+    /* icon used by Non-standard_Inline macro */
+    i.icon-warning-sign {
+        @include set-icon($icon-exclamation-traingle-yellow);
+    }
+
+    /* icon used by Obsolete_Inline macro */
+    i.icon-trash {
+        @include set-icon($icon-trash-red);
+    }
+}
+
+/* icons used by the HTMLRefTable macro */
+.standard-table {
+    i.icon-cogs {
+        @include set-icon('../general/cogs.svg');
+    }
+}
+
+/* Github icon in login component */
+.login-link .icon {
+    margin-left: 5px;
+    vertical-align: text-bottom;
+}
+
+/* language icon as part of the page tools */
+.icon-language {
+    vertical-align: bottom;
+}
+
+/* tags icon on page create/revise */
+.page-tags .icon-tags {
+    width: 24px;
+    height: 24px;
+    vertical-align: bottom;
+}
+
+/* question mark icon on page create/revise */
+.revision-comment-link .icon-question-mark,
+.page-tags .icon-question-mark,
+.page-attachments .icon-question-mark,
+.page-attachments .icon-paperclip {
+    vertical-align: bottom;
+}
+
+/* community and clock icon size for contributors section */
+.contributors-sub .icon-group,
+.contributors-sub .icon-clock,
+div[class*='metadata'] .icon-group {
+    margin-right: 5px;
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+}
+
+/* clock icon size for contributors section */
+.contributors-sub .icon-clock,
+div[class*='metadata'] .icon-clock {
+    width: 16px;
+    height: 16px;
+}
+
+/* check mark on publish button, user profile edit */
+button[type='submit'] .icon-check-mark {
+    vertical-align: bottom;
+}
+
+/* Github icon under My profiles on user edit */
+.site.github .icon-github {
+    margin-right: 5px;
+    vertical-align: bottom;
+}
+
+/* user icons on view profile */
+.user-buttons .icon-pencil {
+    margin-right: 5px;
+    vertical-align: bottom;
+}
+
+.user-buttons .icon-gear {
+    vertical-align: bottom;
+}
+
+/* icons for user links on view profile */
+.user-links .icon-facebook,
+.user-links .icon-github,
+.user-links .icon-group,
+.user-links .icon-linkedin,
+.user-links .icon-stack-overflow,
+.user-links .icon-twitter,
+.user-links .icon-discourse {
+    margin-right: 5px;
+    width: 21px;
+    height: 21px;
+    vertical-align: inherit;
+}
+
+.user-links .icon-linkedin,
+.user-links .icon-facebook {
+    vertical-align: top;
+}
+
+.user-links .icon-github,
+.user-links .icon-twitter {
+    vertical-align: bottom;
+}
+
+.attachment .icon-paperclip {
+    width: 16px;
+    height: 16px;
+    vertical-align: bottom;
+}
+
+/* filter, checkbox icon on search results */
+.search-results-filters .icon-list,
+.search-results-filters .icon-checkbox {
+    vertical-align: middle;
+}
+
+/* checkbox icon on search results page */
+.search-results-filters .icon-checkbox {
+    margin-bottom: 2px;
+    width: 16px;
+    height: 16px;
+}
+
+/* file icon on search results */
+.search-results-container .icon-file {
+    margin-right: 10px;
+    width: 21px;
+    height: 21px;
+}
+
+/* trash icon on edit email addresses page */
+.email_list .icon-trash {
+    vertical-align: middle;
+}
+
+/* icons inside the dashboard-detail-details container */
+.dashboard-detail-details {
+    .icon-undo,
+    .icon-play,
+    .icon-pencil,
+    .icon-book {
+        float: left;
+        margin-right: 5px;
+    }
+}
+
+/* icons inside the hacks section on homepage */
+.column-hacks .icon-arrow {
+    vertical-align: text-bottom;
+}
+
+/* specific styling for icons on mobile */
+@media #{$mq-mobile-and-down} {
+    .column-hacks .icon-star,
+    .column-involved .icon-smile {
+        width: 16px;
+        height: 16px;
+    }
+}

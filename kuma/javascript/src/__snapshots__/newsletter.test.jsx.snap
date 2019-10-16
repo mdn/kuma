@@ -9,10 +9,9 @@ exports[`Newsletter de-DE 1`] = `
     id="newsletter-form-container"
   >
     <form
-      action="https://www.mozilla.org/en-US/newsletter/"
       className="newsletter-form nodisable"
-      method="post"
       name="newsletter-form"
+      onSubmit={[Function]}
     >
       <section
         className="newsletter-head"
@@ -95,7 +94,6 @@ exports[`Newsletter de-DE 1`] = `
           <button
             className="button neutral newsletter-submit"
             id="newsletter-submit"
-            onClick={[Function]}
             type="submit"
           >
             Sign up now
@@ -127,10 +125,9 @@ exports[`Newsletter en-US 1`] = `
     id="newsletter-form-container"
   >
     <form
-      action="https://www.mozilla.org/en-US/newsletter/"
       className="newsletter-form nodisable"
-      method="post"
       name="newsletter-form"
+      onSubmit={[Function]}
     >
       <section
         className="newsletter-head"
@@ -213,7 +210,6 @@ exports[`Newsletter en-US 1`] = `
           <button
             className="button neutral newsletter-submit"
             id="newsletter-submit"
-            onClick={[Function]}
             type="submit"
           >
             Sign up now

@@ -2,7 +2,7 @@
 name: Change request
 about: Suggest a change to how MDN currently works
 title: ''
-labels: ''
+labels: needs triage
 assignees: ''
 
 ---

@@ -11,7 +11,7 @@ from ..models import Attachment
 
 @pytest.mark.security
 def test_xss_file_attachment_title(admin_client, constance_config, root_doc,
-                                   wiki_user, editor_client):
+                                   wiki_user, editor_client, settings):
     constance_config.WIKI_ATTACHMENT_ALLOWED_TYPES = 'text/plain'
 
     # use view to create new attachment
@@ -25,7 +25,8 @@ def test_xss_file_attachment_title(admin_client, constance_config, root_doc,
         'comment': 'xss',
         'file': file_for_upload,
     }
-    response = admin_client.post(files_url, data=post_data)
+    response = admin_client.post(files_url, data=post_data,
+                                 HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
 
     # now stick it in/on a document
@@ -35,7 +36,8 @@ def test_xss_file_attachment_title(admin_client, constance_config, root_doc,
         document=root_doc, creator=wiki_user, content=content)
 
     # view it and verify markup is escaped
-    response = editor_client.get(root_doc.get_edit_url())
+    response = editor_client.get(root_doc.get_edit_url(),
+                                 HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     doc = pq(response.content)
     text = doc('.page-attachments-table .attachment-name-cell').text()

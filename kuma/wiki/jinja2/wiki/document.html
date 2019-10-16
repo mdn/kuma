@@ -53,6 +53,7 @@
 
 {% block site_css %}
     {{ super() }}
+    {% stylesheet 'prism' %}
     {% if waffle.flag('developer_needs') %}
       {% stylesheet 'banners' %}
     {% endif %}

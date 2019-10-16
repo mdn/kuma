@@ -1,0 +1,597 @@
+/*
+
+Copied from the custom CSS macro template CustomCSS
+This file was added to by the contributors as part of the redesign migration, it contains:
+- legacy classes in use from old versions of the MDN
+- new classes created to when contibutors needed something the devs did not provide
+- fixes for bugs filed that the dev team did not get to
+
+In a perfect world we go through the contents of this file and integrate it with the dev team's CSS files
+eventually emptying this file.
+
+********************************************************************** */
+
+
+.prevnext {
+    @include restrict-line-length();
+}
+
+/* Used for footnotes in {{PricePointTable}}
+ (footnotes styles should be unified) */
+
+.footnote {
+    vertical-align: super;
+    font-size: 60%;
+}
+
+/* In index & quicklinks, dim obsolete, deprecated or non-standard element instead of striking through them */
+s.deprecatedElement,
+s.obsoleteElement,
+s.nonStdElement {
+    text-decoration: none;
+    opacity: .3;
+
+    /* brighten them to be readable if the user hovers or focuses */
+    &:hover,
+    &:focus {
+        opacity: 1;
+    }
+}
+
+/* Add widgeted index, here adding an HTML5 badge as the bullet of the li element if class="html5" */
+div.index.widgeted {
+    @include vendorize(columns, 10em);
+}
+
+div.index.widgeted li {
+    padding-left: 18px;
+}
+
+div.index.widgeted li.html5 {
+    background-image: url('https://developer.mozilla.org/files/3855/HTML5_Badge_16.png');
+    background-repeat: no-repeat;
+    background-position: left 4px;
+}
+
+[dir='rtl'] div.index.widgeted li {
+    padding-right: 18px;
+}
+
+[dir='rtl'] div.index.widgeted li.html5 {
+    background-image: url('https://developer.mozilla.org/files/3855/HTML5_Badge_16.png');
+    background-repeat: no-repeat;
+    background-position: right 4px;
+}
+
+[dir='rtl'] div.index.widgeted span {
+    padding-right: 24px;
+}
+
+/* Add widgeted index, adding a Webcomponent badge of the li element if class="webcomp" */
+div.index.widgeted li.webcomp::after {
+    @include set-icon('../general/cogs.svg');
+}
+
+/* --- */
+.cleared {
+    clear: both;
+}
+
+/* This style has problem ! Style attribute of BR element is not work in Kuma */
+.clearLeft {
+    clear: left;
+}
+
+#wikiArticle .breadcrumbs {
+    display: block;
+    margin-bottom: 1em;
+}
+
+/* --- */
+
+/* The index page for HTML / CSS */
+div.index {
+    @include vendorize(columns, 18em);
+    margin-bottom: $grid-spacing;
+}
+
+div.index > span {
+    font-family: serif;
+    font-size: 1.6em;
+}
+
+div.index ul,
+div.index ol {
+    margin-left: 0;
+    padding-left: 0;
+    list-style-type: none;
+}
+
+/* --- */
+
+/* Used to to create icon-badged APIs inline */
+.indexListRow {
+    @include vendorize-value(display, flex);
+    @include vendorize(flex-direction, row);
+    @include vendorize(flex-wrap, wrap);
+    @include vendorize(justify-content, flex-start);
+    @include vendorize(align-content, stretch);
+    @include vendorize(align-items, flex-start);
+}
+
+.indexListTerm {
+    @include vendorize(order, 0);
+    @include vendorize(flex, 0 1 auto);
+    @include vendorize(align-self, flex-start);
+}
+
+.indexListBadges {
+    @include vendorize(order, 0);
+    @include vendorize(flex, 0 1 auto);
+    @include vendorize(align-self, flex-end);
+    padding-left: 6px;
+    margin-right: 6px;
+}
+
+
+/* Compatibility tables */
+table.compat-table {
+    @include rgba-fallback(border-color, rgb(0, 0, 0), 0);
+    border-collapse: collapse;
+    margin: 0;
+}
+
+table.compat-table td {
+    padding: 5px;
+    border-width: 1px;
+    border-style: solid;
+    @include rgba-fallback(border-color, $table-blue, .25);
+    font-size: 12px;
+    background: #fff;
+    vertical-align: top;
+    word-wrap: break-word;
+}
+
+table.compat-table th,
+table.compat-table td.header {
+    border: none;
+    background: none;
+    padding: 2px 4px 8px;
+
+    /* typography */
+    @include set-font-size(16px);
+    line-height: 1;
+    @include set-heading-font-family();
+}
+
+div.action-driven {
+    display: inline-block;
+    float: none;
+    min-height: 8.5em;
+    margin: .8em;
+    box-shadow: .2em .1em .1em #808080;
+    vertical-align: top;
+}
+
+div.action-driven > div {
+    @include set-font-size(20px);
+    text-transform: uppercase;
+    @include set-heading-font-family();
+}
+
+
+/* --- */
+
+dl {
+    margin-bottom: 20px;
+}
+
+/* --- */
+.renamedMethod,
+.noscriptMethod,
+.deprecatedMethod,
+.unimplementedMethod {
+    font-weight: 700;
+}
+
+
+/* style for next and previous pages in tutorial */
+
+.previousPage {
+    @include bidi((
+        (float, left, right),
+        (margin-right, ($grid-spacing), margin-left, 0)
+    ));
+    margin-bottom: $grid-spacing;
+}
+
+
+.nextPage {
+    @include bidi((
+        (float, right, left),
+        (margin-left, ($grid-spacing), margin-right, 0)
+    ));
+    margin-top: $grid-spacing;
+}
+
+
+/* styles for liveSample link: https://developer.mozilla.org/en-US/docs/Template:LiveSample */
+a.liveSample {
+    display: inline-block;
+    margin: 0 3px 1em;
+    font-size: 1.25em;
+    color: #fff;
+}
+
+a.liveSample:link,
+a.liveSample:visited {
+    background-color: #069;
+}
+
+a.liveSample:hover,
+a.liveSample:focus {
+    background-color: #0099e6;
+}
+
+[dir='rtl'] a.liveSample {
+    background-position: left 40% !important; /* stylelint-disable-line declaration-no-important */
+    padding: .35em .75em .2em !important; /* stylelint-disable-line declaration-no-important */
+}
+
+/* callout boxes etc */
+.standardSidebar {
+    background: $light-background-color;
+    padding: $grid-spacing 15px;
+    @include bidi((
+        (margin, 0 0 15px 15px, 0 15px 15px 0),
+        (float, right, left)
+    ));
+    padding: 5px 15px;
+    background: #eee;
+    font-size: .85em;
+    position: relative;
+    z-index: 2;
+}
+
+
+@media #{$mq-small-mobile-and-down} {
+    html .standardSidebar {
+        float: none;
+        margin: 0 0 15px 0;
+    }
+}
+
+
+/* Colored text for INCORRECT/BAD and CORRECT/GOOD values (and BEST)*/
+.correct {
+    color: #008000;
+}
+
+.incorrect {
+    color: #f00;
+}
+
+.best {
+    color: #396;
+}
+
+/* Item in a list of item that has been done */
+.done {
+    text-decoration: line-through;
+}
+
+/* Specific items for tutorials */
+.tuto_details,
+.tuto_example {
+    border: 1px solid #36b;
+    padding: .5em;
+    margin-bottom: 1em;
+}
+
+.tuto_details {
+    background: #f4f4f4;
+}
+
+.tuto_example {
+    background: #fffff4;
+}
+
+.tuto_type {
+    font-weight: 700;
+    text-align: left;
+}
+
+/* TODO */
+/* This is a specific item for the CSS tutorial: https://developer.mozilla.org/en-US/docs/CSS/Getting_Started/Selectors */
+/* To be removed once we have Live Examples */
+a.tutospecial:link,
+a.tutospecial:visited {
+    padding: 1px 10px;
+    color: #fff;
+    background: #555;
+    border-radius: 3px;
+    border: 1px outset #333;
+    /* fallback for next line */
+    border: 1px outset rgba(50, 50, 50, .5);
+    font-family: georgia, serif;
+    font-size: 14px;
+    font-style: italic;
+    text-decoration: none;
+}
+
+a.tutospecial:hover,
+a.tutospecial:focus,
+a.tutospecial:active {
+    background-color: #666;
+}
+
+#tutochallenge {
+    display: none;
+}
+
+#tutochallenge a.hideAnswer {
+    font-size: 12px;
+    text-align: right;
+    display: block;
+}
+
+#tutochallenge:target {
+    display: block;
+}
+
+#tutochallenge + a {
+    font-size: 12px;
+    text-align: right;
+    display: block;
+}
+
+#tutochallenge:target + a {
+    display: none;
+}
+
+
+/* for B2G docs, to allow use of B2G lookalike UX elements */
+/* For display of Firefox OS UX screenshots in a grid */
+table.fxosScreenGrid,
+table.fxosScreenGrid tr {
+    border: none;
+}
+
+table.fxosScreenGrid td,
+table.fxosScreenGrid th {
+    border: none;
+    width: 340px;
+    vertical-align: top;
+}
+
+div.fxosLiveSampleWrapper {
+    width: 328px;
+    padding: 6px 4px;
+    text-align: center;
+    border: 1px solid #b8b2a4;
+    background-color: #f3ecdd;
+}
+
+
+/* -- */
+.rightButtonBox {
+    float: right;
+    width: 250px;
+    position: relative;
+    z-index: 2;
+}
+
+[dir='rtl'] .rightButtonBox {
+    margin: 0 15px 15px 0;
+    float: left;
+}
+
+/* ----------------------------------
+* Buttons
+* ---------------------------------- */
+
+/* For styling bug links */
+.bug-resolved {
+    text-decoration: line-through;
+}
+
+
+/* Template link style */
+.templateLink {
+    border: 1px solid #ccc;
+    padding: 1px;
+}
+
+/*
+ * Colorized icons
+ */
+
+#wikiArticle i.icon-beaker,
+#wikiArticle i.icon-warning-sign,
+#wikiArticle i.icon-thumbs-down-alt,
+#wikiArticle i.icon-stethoscope,
+#wikiArticle i.icon-trash {
+    cursor: default;
+}
+
+/* obsolete */
+#wikiArticle i.icon-stethoscope {
+    color: #483d8b;
+}
+
+/* Horizontal tab boxes */
+.htab {
+    margin: 0 auto 1em;
+
+    > ul {
+        width: 150px;
+        text-align: left;
+        display: inline;
+        padding: 0;
+        margin: 0 auto;
+        position: relative;
+        top: 0;
+
+        > li {
+            background-color: #f1f6f8 !important; /* stylelint-disable-line declaration-no-important */
+            border: 1px solid transparent;
+            border-top-width: 2px;
+            border-radius: 0;
+            color: #4d4e53;
+            display: inline;
+            height: 32px;
+            list-style-type: none;
+            margin: auto;
+            opacity: .75;
+            -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=75)';
+            position: relative;
+            padding: 5px 6px 3px 6px;
+            text-align: left;
+
+            @include set-heading-font-family();
+            @include set-font-size(14px);
+
+
+            &.selected {
+                background-color: #eaeff2 !important; /* stylelint-disable-line declaration-no-important */
+                @include rgba-fallback(border-top-color, $table-blue, .25);
+                font-weight: bold;
+
+                opacity: 1 !important; /* stylelint-disable-line declaration-no-important */
+                -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=100)';
+                padding-top: 4px;
+                position: relative;
+                z-index: 10;
+
+                a {
+                    color: #000;
+                }
+            }
+        }
+    }
+
+
+    > div {
+        background-color: #eaeff2;
+        margin-top: 0;
+        border: none;
+        padding: 12px;
+        position: relative;
+        z-index: 9;
+        word-wrap: break-word;
+    }
+}
+
+
+.htab > ul,
+.htab > ul > li,
+.htab > ul > li > a {
+    cursor: pointer;
+}
+
+
+.htab > ul > li > a {
+    padding: 2px 18px 4px;
+    text-decoration: none;
+}
+
+.htab > ul > li > a:hover,
+.htab > ul > li > a:focus {
+    text-decoration: underline;
+}
+
+
+/* download buttons */
+
+a.download-button {
+    margin-bottom: 20px;
+    padding: 10px;
+    text-align: center;
+    display: inline-block;
+    border: 2px solid;
+    white-space: nowrap;
+    color: $green;
+    background-color: #fff;
+}
+
+
+/* download box stuff */
+
+li.download-box {
+    position: relative;
+    text-align: center;
+
+    img {
+        float: none;
+    }
+}
+
+
+li.download-box p {
+    padding-bottom: 3em;
+}
+
+
+.download-box .download-button {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    @include vendorize(transform, translate(-50%, 0));
+}
+
+
+@media #{$mq-mobile-and-down} {
+    .download-desc > span:first-child {
+        font-weight: 700;
+        display: block;
+    }
+}
+
+
+/* -- */
+
+span.comment {
+    display: none;
+}
+
+pre span.comment {
+    display: inline;
+}
+
+/*
+  Zone-related classes kept after the removal of zones.
+  (See https://bugzilla.mozilla.org/show_bug.cgi?id=1469029)
+ */
+
+/*
+  reference-values:
+
+  NOTE: This has been DEPRECATED. New work should use the utility
+        class "bump-left-padding" instead of "reference-values",
+        and this rule should be removed when it is no longer used
+        on any document pages.
+
+  This gives an extra indent to a dl, when it's embedded inside another dl,
+  which comes up sometimes in the reference pages. The extra indent indicates
+  that the embedded dl is part of an embedded list, not the main list.
+ */
+dd > dl.reference-values {
+    padding-left: $grid-spacing * 2;
+}
+
+/*
+  webextension-api-sidebar:
+
+  TODO: Replace the use of "webextension-api-sidebar" with the utility class
+        "light-grey-background" within the "WebExtAPISidebar.ejs" Kumascript
+        macro and then remove this rule.
+
+  This applies a background color to the piece of a sidebar containing the
+  api items relevant to the current page. It helps people orient themselves
+  within the sidebar.
+ */
+li.webextension-api-sidebar {
+    background-color: $grey-light;
+}
+
+/*end!*/

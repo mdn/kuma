@@ -332,8 +332,6 @@ LANGUAGE_COOKIE_AGE = 365 * 24 * 60 * 60
 
 SITE_ID = config('SITE_ID', default=1, cast=int)
 
-MDC_PAGES_DIR = path('..', 'mdc_pages')
-
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
@@ -476,22 +474,12 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',  # Legacy
 )
 AUTH_USER_MODEL = 'users.User'
-USER_AVATAR_PATH = 'uploads/avatars/'
 
 if urlsplit(STATIC_URL).hostname in (None, 'localhost'):
-    # Gravatar needs a publicly available default image
+    # Avatar needs a publicly available default image
     DEFAULT_AVATAR = PRODUCTION_URL + '/static/img/avatar.png'
 else:
     DEFAULT_AVATAR = STATIC_URL + 'img/avatar.png'
-
-AVATAR_SIZES = [  # in pixels
-    34,   # wiki document page
-    48,   # user_link helper
-    200,  # user pages
-    220,  # default, e.g. used in feeds
-]
-ACCOUNT_ACTIVATION_DAYS = 30
-MAX_AVATAR_FILE_SIZE = 131072  # 100k, in bytes
 
 ROOT_URLCONF = 'kuma.urls'
 
@@ -631,7 +619,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    'VERSION': '2019.19',
+    'VERSION': '2019.21',
     'BASE_DIR': BASE_DIR,
     'TEXT_DOMAIN': 'django',
     # Tells the extract script what files to look for l10n in and what function
@@ -693,20 +681,15 @@ PIPELINE_CSS = {
     # single page app.
     'react-mdn': {
         'source_filenames': (
-            'styles/minimalist/main.scss',
-            'styles/minimalist/document.scss',
-
-            # Custom build of our Prism theme
-            'styles/libs/prism/prism.css',
-            'styles/libs/prism/prism-line-highlight.css',
-            'styles/libs/prism/prism-line-numbers.css',
-
-            'styles/wiki-syntax.scss',
-
-            # Styles for BCD tables
-            'styles/wiki-compat-tables.scss',
+            'styles/react-mdn.scss',
         ),
         'output_filename': 'build/styles/react-mdn.css',
+    },
+    'react-header': {
+        'source_filenames': (
+            'styles/minimalist/organisms/header.scss',
+        ),
+        'output_filename': 'build/styles/react-header.css',
     },
     'react-search': {
         'source_filenames': (
@@ -725,14 +708,6 @@ PIPELINE_CSS = {
             'styles/components/banners/base.scss',
         ),
         'output_filename': 'build/styles/banners.css',
-    },
-    'jquery-ui': {
-        'source_filenames': (
-            'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
-            'styles/libs/jqueryui/moz-jquery-plugins.css',
-            'css/jquery-ui-customizations.scss',
-        ),
-        'output_filename': 'build/styles/jquery-ui.css',
     },
     'home': {
         'source_filenames': (
@@ -757,17 +732,7 @@ PIPELINE_CSS = {
     },
     'wiki': {
         'source_filenames': (
-            'styles/components/banners/wiki-notice.scss',
             'styles/wiki.scss',
-            'styles/diff.scss',
-
-            # Custom build of our Prism theme
-            'styles/libs/prism/prism.css',
-            'styles/libs/prism/prism-line-highlight.css',
-            'styles/libs/prism/prism-line-numbers.css',
-
-            'js/prism-mdn/components/prism-json.css',
-            'styles/wiki-syntax.scss',
         ),
         'output_filename': 'build/styles/wiki.css',
     },
@@ -816,7 +781,6 @@ PIPELINE_CSS = {
     },
     'error-404': {
         'source_filenames': (
-            'styles/error.scss',
             'styles/error-404.scss',
         ),
         'output_filename': 'build/styles/error-404.css',
@@ -824,7 +788,6 @@ PIPELINE_CSS = {
     'dashboards': {
         'source_filenames': (
             'styles/dashboards.scss',
-            'styles/diff.scss',
         ),
         'output_filename': 'build/styles/dashboards.css',
     },
@@ -854,10 +817,7 @@ PIPELINE_CSS = {
     },
     'editor-content': {
         'source_filenames': (
-            'styles/main.scss',
-            'styles/wiki.scss',
-            'styles/wiki-wysiwyg.scss',
-            'styles/wiki.scss',
+            'styles/editor-content.scss',
         ),
         'output_filename': 'build/styles/editor-content.css',
         'template_name': 'pipeline/javascript-array.jinja',
@@ -882,6 +842,22 @@ PIPELINE_CSS = {
             'styles/samples.scss',
         ),
         'output_filename': 'build/styles/samples.css',
+    },
+    'prism': {
+        'source_filenames': (
+            'styles/libs/prism/prism.css',
+            'styles/libs/prism/prism-line-highlight.css',
+            'styles/libs/prism/prism-line-numbers.css',
+        ),
+        'output_filename': 'build/styles/prism.css',
+    },
+    'jquery-ui': {
+        'source_filenames': (
+            'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
+            'styles/libs/jqueryui/moz-jquery-plugins.css',
+            'css/jquery-ui-customizations.scss',
+        ),
+        'output_filename': 'build/styles/jquery-ui.css',
     },
 }
 
@@ -1051,7 +1027,6 @@ PIPELINE_JS = {
             'js/utils/utils.js',
             'js/utils/post-message-handler.js',
             'js/wiki.js',
-            'js/utils/bug1522937-iex-test.js',
             'js/interactive.js',
             'js/wiki-samples.js',
             'js/wiki-toc.js',
@@ -1112,18 +1087,6 @@ PIPELINE_JS = {
         'extra_context': {
             'async': True,
         },
-    },
-    'html5shiv': {
-        'source_filenames': (
-            'js/libs/html5shiv/html5shiv.js',
-        ),
-        'output_filename': 'build/js/html5shiv.js',
-    },
-    'selectivizr': {
-        'source_filenames': (
-            'js/libs/selectivizr/selectivizr.js',
-        ),
-        'output_filename': 'build/js/selectivizr.js',
     },
     'perf': {
         'source_filenames': (
@@ -1206,13 +1169,6 @@ ALLOWED_HOSTS = config(
     cast=Csv()
 )
 
-# Maximum length of the filename. Forms should use this and raise
-# ValidationError if the length is exceeded.
-# @see http://code.djangoproject.com/ticket/9893
-# Columns are 250 but this leaves 50 chars for the upload_to prefix
-MAX_FILENAME_LENGTH = 200
-MAX_FILEPATH_LENGTH = 250
-
 _PROD_ATTACHMENT_HOST = 'mdn.mozillademos.org'
 _PROD_ATTACHMENT_SITE_URL = 'https://' + _PROD_ATTACHMENT_HOST
 ATTACHMENT_HOST = config('ATTACHMENT_HOST', default=_PROD_ATTACHMENT_HOST)
@@ -1220,9 +1176,6 @@ ATTACHMENT_SITE_URL = PROTOCOL + ATTACHMENT_HOST
 _PROD_ATTACHMENT_ORIGIN = 'demos-origin.mdn.mozit.cloud'
 ATTACHMENT_ORIGIN = config('ATTACHMENT_ORIGIN', default=_PROD_ATTACHMENT_ORIGIN)
 
-BETA_HOST = config('BETA_HOST', default='beta.' + DOMAIN)
-BETA_ORIGIN = config('BETA_ORIGIN', default='beta.mdn.mozit.cloud')
-BETA_SITE_URL = PROTOCOL + BETA_HOST
 WIKI_HOST = config('WIKI_HOST', default='wiki.' + DOMAIN)
 WIKI_SITE_URL = PROTOCOL + WIKI_HOST
 
@@ -1287,6 +1240,8 @@ ALLOWED_IFRAME_PATTERNS = [
     parse_iframe_url('https://jsfiddle.net/.*/embedded/.*'),
     # Charts, https://developer.mozilla.org/en-US/docs/MDN/Kuma/Server_charts
     parse_iframe_url('https://rpm.newrelic.com/public/charts/'),
+    # Test262 Report, https://test262.report/
+    parse_iframe_url('https://test262.report/embed/features/'),
 ]
 
 # Add the overridden attachment / live sample host
@@ -1306,19 +1261,6 @@ for pattern in _ALLOWED_IFRAME_PATTERNS:
 ALLOW_ALL_IFRAMES = config('ALLOW_ALL_IFRAMES', default=False, cast=bool)
 
 
-# Video settings, hard coded here for now.
-# TODO: figure out a way that doesn't need these values
-WIKI_VIDEO_WIDTH = 640
-WIKI_VIDEO_HEIGHT = 480
-
-IMAGE_MAX_FILESIZE = 1048576  # 1 megabyte, in bytes
-THUMBNAIL_SIZE = 120  # Thumbnail size, in pixels
-THUMBNAIL_UPLOAD_PATH = 'uploads/images/thumbnails/'
-IMAGE_UPLOAD_PATH = 'uploads/images/'
-# A string listing image mime types to accept, comma separated.
-# String must not contain double quotes!
-IMAGE_ALLOWED_MIMETYPES = 'image/jpeg,image/png,image/gif'
-
 # Email
 EMAIL_BACKEND = config(
     'EMAIL_BACKEND',
@@ -1330,7 +1272,6 @@ EMAIL_FILE_PATH = '/app/tmp/emails'
 CSP_DEFAULT_SRC = ("'none'",)
 CSP_CONNECT_SRC = [
     SITE_URL,
-    BETA_SITE_URL,
     WIKI_SITE_URL,
 ]
 CSP_FONT_SRC = [
@@ -1342,10 +1283,9 @@ CSP_FRAME_SRC = [
 
 CSP_IMG_SRC = [
     SITE_URL,
-    BETA_SITE_URL,
     "data:",
     PROTOCOL + "i2.wp.com",
-    "https://secure.gravatar.com",
+    "https://*.githubusercontent.com",
     "https://www.google-analytics.com",
     _PROD_ATTACHMENT_SITE_URL,
     WIKI_SITE_URL,
@@ -1518,14 +1458,6 @@ CELERY_TASK_ROUTES = {
     },
 }
 
-# Wiki rebuild settings
-WIKI_REBUILD_TOKEN = 'kuma:wiki:full-rebuild'
-WIKI_REBUILD_ON_DEMAND = False
-
-# Top contributors cache settings
-TOP_CONTRIBUTORS_CACHE_KEY = 'kuma:TopContributors'
-TOP_CONTRIBUTORS_CACHE_TIMEOUT = 60 * 60 * 12
-
 # Do not change this without also deleting all wiki documents:
 WIKI_DEFAULT_LANGUAGE = LANGUAGE_CODE
 
@@ -1579,6 +1511,11 @@ CONSTANCE_CONFIG = dict(
     WIKI_ATTACHMENT_ALLOWED_TYPES=(
         'image/gif image/jpeg image/png image/svg+xml text/html image/vnd.adobe.photoshop',
         'Allowed file types for wiki file attachments',
+    ),
+    WIKI_ATTACHMENTS_DISABLE_UPLOAD=(
+        False,
+        'Disable uploading of new or revised attachments via the Wiki. '
+        'Attachments may still be modified via the Django Admin.'
     ),
     WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS=(
         14,
@@ -1748,7 +1685,7 @@ CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=True, cast=bool)
 # appended as well, and we don't want that behavior (a server port of 8000 is
 # added both in secure local development as well as in K8s stage/production, so
 # that will guarantee a mismatch with the referer).
-CSRF_TRUSTED_ORIGINS = [WIKI_HOST, DOMAIN, BETA_HOST]
+CSRF_TRUSTED_ORIGINS = [WIKI_HOST, DOMAIN]
 X_FRAME_OPTIONS = 'DENY'
 
 

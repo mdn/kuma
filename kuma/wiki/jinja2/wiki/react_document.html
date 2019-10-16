@@ -25,7 +25,9 @@
   <link rel="home" href="{{ url('home') }}">
   <link rel="license" href="#license">
 
-  {% stylesheet 'react-mdn' %}
+  {% include "includes/style.html" %}
+
+  {% stylesheet 'prism' %}
 
   {% include "includes/zilla.html" %}
 
@@ -76,10 +78,6 @@
   <link rel="apple-touch-icon-precomposed" href="{{ static('img/favicon57.png') }}">
   <!-- basic favicon -->
   <link rel="shortcut icon" href="{{ favicon_url() }}">
-  <!--[if IE]>
-  <meta http-equiv="imagetoolbar" content="no">
-  {% javascript 'html5shiv' %}
-  <![endif]-->
 
   {% if waffle.flag('developer_needs') %}
     {% stylesheet 'banners' %}
