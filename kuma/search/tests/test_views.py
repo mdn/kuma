@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import elasticsearch
 import pytest
 from django.conf import settings
 
