@@ -92,11 +92,11 @@ def assert_cached(url, expected_status_code=200, is_behind_cdn=True,
 @pytest.mark.headless
 @pytest.mark.nondestructive
 @pytest.mark.parametrize(
-    'slug,status', [('/_kuma_status.json', 200),
+    'slug,status', [('/miel', 500),
+                    ('/_kuma_status.json', 200),
                     ('/healthz', 204),
                     ('/readiness', 204),
                     ('/api/v1/whoami', 200),
-                    ('/api/v1/doc/en-US/Web/CSS', 200),
                     ('/api/v1/search/en-US?q=css', 200),
                     ('/en-US/search?q=css', 200),
                     ('/en-US/profile', 302),
@@ -129,8 +129,7 @@ def test_not_cached(site_url, is_behind_cdn, slug, status):
 @pytest.mark.headless
 @pytest.mark.nondestructive
 @pytest.mark.parametrize(
-    'slug,status', [('/miel', 500),
-                    ('/en-US/', 200),
+    'slug,status', [('/en-US/', 200),
                     ('/en-US/events', 302),
                     ('/robots.txt', 200),
                     ('/favicon.ico', 302),
@@ -142,6 +141,7 @@ def test_not_cached(site_url, is_behind_cdn, slug, status):
                     ('/@api/deki/files/3613/=hut.jpg', 301),
                     ('/diagrams/workflow/workflow.svg', 200),
                     ('/presentations/microsummaries/index.html', 200),
+                    ('/api/v1/doc/en-US/Web/CSS', 200),
                     ('/en-US/search/xml', 200),
                     ('/en-US/docs.json?slug=Web/HTML', 200),
                     ('/en-US/Firefox', 302),
@@ -179,18 +179,15 @@ def test_no_locale_cached_302(site_url, is_behind_cdn, slug, zone):
 @pytest.mark.nondestructive
 def test_document_with_cookie_and_param(site_url, is_behind_cdn, is_local_url):
     """
-    Ensure that the "dwf_sg_task_completion" cookie, and query
+    Ensure that the "django_language" cookie, and query
     parameters are forwarded/cached-on for document requests.
     """
-    url = site_url + '/en-US/docs/Web/HTML'
-    response1 = assert_cached(url, 200, is_behind_cdn,
-                              cookies={'dwf_sg_task_completion': 'True'})
-    response2 = assert_cached(url, 200, is_behind_cdn,
-                              cookies={'dwf_sg_task_completion': 'False'})
-    response3 = assert_cached(url + '?redirect=no', 200, is_behind_cdn)
-    assert response3.content != response2.content
-    assert response3.content != response1.content
-    if is_local_url:
-        pytest.xfail('the sg_task_completion waffle flag is not '
-                     'enabled by default in the sample database')
-    assert response2.content != response1.content
+    url = site_url + '/docs/Web/HTML'
+    response = assert_cached(url, 302, is_behind_cdn,
+                             cookies={'django_language': 'de'})
+    assert response.headers['location'].endswith('/de/docs/Web/HTML')
+    response = assert_cached(url, 302, is_behind_cdn,
+                             cookies={'django_language': 'fr'})
+    assert response.headers['location'].endswith('/fr/docs/Web/HTML')
+    response = assert_cached(url + '?lang=es', 302, is_behind_cdn)
+    assert response.headers['location'].endswith('/es/docs/Web/HTML')

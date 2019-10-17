@@ -81,14 +81,6 @@ def checkout_repo(repo, branch, relative_target_dir) {
     )
 }
 
-def notify_irc(Map args) {
-    def command = "${env.WORKSPACE}/scripts/irc-notify.sh"
-    for (arg in args) {
-        command += " --${arg.key} '${arg.value}'"
-    }
-    sh command
-}
-
 def notify_slack(Map args, credential_id='slack-hook') {
     def command = "${env.WORKSPACE}/scripts/slack-notify.sh"
     withCredentials([string(credentialsId: credential_id, variable: 'HOOK')]) {
@@ -105,22 +97,12 @@ def sh_with_notify(cmd, display, notify_on_success=false) {
     try {
         sh cmd
         if (notify_on_success) {
-            notify_irc([
-                irc_nick: nick,
-                stage: display,
-                status: 'success'
-            ])
             notify_slack([
                 stage: display,
                 status: 'success'
             ])
         }
     } catch(err) {
-        notify_irc([
-            irc_nick: nick,
-            stage: display,
-            status: 'failure'
-        ])
         notify_slack([
             stage: display,
             status: 'failure'
@@ -224,11 +206,6 @@ def announce_push() {
     def target = get_target_name()
     def repo = get_repo_name()
     def tag = get_commit_tag()
-    notify_irc([
-        irc_nick: "mdn-${env.BRANCH_NAME}",
-        status: "Pushing to ${target}",
-        message: "${repo} image ${tag}"
-    ])
     notify_slack([
         status: "Pushing to ${target}",
         message: "${repo} image ${tag}"
