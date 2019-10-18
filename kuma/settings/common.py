@@ -930,6 +930,9 @@ PIPELINE_JS = {
             'react.js'
         ),
         'output_filename': 'build/js/react-main.js',
+        'extra_context': {
+            'defer': True,
+        },
     },
     'bcd-signal': {
         'source_filenames': (
@@ -1097,6 +1100,20 @@ PIPELINE_JS = {
         'extra_context': {
             'async': True,
         },
+    },
+    'fetch-polyfill': {
+        'source_filenames': (
+            'js/libs/unfetch-4.1.0.min.js',
+        ),
+        'output_filename': 'build/js/fetch-polyfill.js',
+        'template_name': 'pipeline/javascript-embedded.jinja',
+    },
+    'js-polyfill': {
+        'source_filenames': (
+            'js/libs/polyfill-v3.min.js',
+        ),
+        'output_filename': 'build/js/js-polyfill.js',
+        'template_name': 'pipeline/javascript-embedded.jinja',
     },
 }
 
