@@ -612,3 +612,14 @@ class EditorToolbarAdmin(admin.ModelAdmin):
 @admin.register(BCSignal)
 class BCSignalAdmin(admin.ModelAdmin):
     list_display = ['pk', 'document', 'submitted_at']
+    list_filter = ['submitted_at']
+    search_fields = ['document__slug', 'document__title', 'document__locale']
+    readonly_fields = ['document', 'browsers', 'feature']
+
+    def get_queryset(self, request):
+        only = (
+            'document__slug', 'document__title', 'document__locale',
+            'submitted_at'
+        )
+        return super(BCSignalAdmin, self).get_queryset(request).select_related(
+            'document').only(*only)
