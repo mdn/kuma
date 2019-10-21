@@ -105,6 +105,6 @@ files are not expected.
 .. _wsc: https://github.com/WebSpellChecker/ckeditor-plugin-wsc
 .. _wordcount: https://github.com/w8tcha/CKEditor-WordCount-Plugin
 .. _`/assets/ckeditor4/source/plugins/`:
-   https://github.com/mozilla/kuma/tree/master/assets/ckeditor4/source/plugins
+   https://github.com/mdn/kuma/tree/master/assets/ckeditor4/source/plugins
 .. _`/kuma/wiki/jinja2/wiki/includes/ckeditor_scripts.html`:
-   https://github.com/mozilla/kuma/tree/master/kuma/wiki/jinja2/wiki/includes/ckeditor_scripts.html
+   https://github.com/mdn/kuma/tree/master/kuma/wiki/jinja2/wiki/includes/ckeditor_scripts.html

@@ -19,7 +19,7 @@ SC_SIDE_ID_NAME = 'SPEEDCURVE_SITE_ID'
 
 # URL patterns to compare two commits
 app_compare = {
-    'kuma': 'https://github.com/mozilla/kuma/compare/%s...%s',
+    'kuma': 'https://github.com/mdn/kuma/compare/%s...%s',
     'kumascript': 'https://github.com/mdn/kumascript/compare/%s...%s'
 }
 

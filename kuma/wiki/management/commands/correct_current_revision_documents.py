@@ -22,7 +22,7 @@ class Command(BaseCommand):
 
     The original commit that started this problem landed on master
     on April 16 2019.
-    https://github.com/mozilla/kuma/commit/3177d761775c1a14244f144845c5045f05891b38
+    https://github.com/mdn/kuma/commit/3177d761775c1a14244f144845c5045f05891b38
     If there are other documents before then, it might be outside the scope
     of this.
     """

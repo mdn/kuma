@@ -62,7 +62,7 @@ and documented in the admin site's `constance section`_.
 .. _constance section: http://localhost:8000/admin/constance/config/
 .. _Waffle switches: https://waffle.readthedocs.io/en/latest/types/switch.html
 .. _Waffle flags: https://waffle.readthedocs.io/en/latest/types/flag.html
-.. _PR 3331: https://github.com/mozilla/kuma/pull/3331
+.. _PR 3331: https://github.com/mdn/kuma/pull/3331
 
 Using Traffic Cop for A/B Testing
 ==================================

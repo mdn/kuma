@@ -5,12 +5,12 @@
     "private": true,
     "repository": {
         "type": "git",
-        "url": "https://github.com/mozilla/kuma.git"
+        "url": "https://github.com/mdn/kuma.git"
     },
     "author": "Mozilla",
     "license": "MPL",
     "bugs": {
-        "url": "https://github.com/mozilla/kuma/issues"
+        "url": "https://github.com/mdn/kuma/issues"
     },
     "scripts": {
         "copy:style": "node  webpack-build-utils/terminal.js 'cp -R ./kuma/static/styles/ ./static/styles'",

@@ -31,7 +31,7 @@ export function addLiveExampleButtons(rootElement) {
         // to re-render, make sure it's removed here or it'll cause
         // problems.
         // This line of code can be deleted in early 2020.
-        // For context, see https://github.com/mozilla/kuma/issues/5810
+        // For context, see https://github.com/mdn/kuma/issues/5810
         sectid = sectid.replace("'", '');
 
         let section = document.getElementById(sectid);

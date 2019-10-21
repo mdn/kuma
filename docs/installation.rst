@@ -34,7 +34,7 @@ transitioning to Docker containers for deployment as well.
 .. _`Docker for Mac`: https://docs.docker.com/docker-for-mac/
 .. _`Docker's Ubuntu packages`: https://docs.docker.com/engine/installation/linux/ubuntulinux/
 .. _`DockerHub`: https://hub.docker.com/r/mdnwebdocs/kuma_base/tags/
-.. _TravisCI: https://travis-ci.org/mozilla/kuma/
+.. _TravisCI: https://travis-ci.org/mdn/kuma/
 .. _Jenkins: https://ci.us-west-2.mdn.mozit.cloud/blue/organizations/jenkins/kuma/activity
 .. _discourse: https://discourse.mozilla.org/c/mdn
 
@@ -47,7 +47,7 @@ Docker setup
 
    Non-Linux users should increase Docker's memory limits (`Windows`_,
    `macOS`_) to at least 4 GB, as the default of 2 GB is insufficient.
-   
+
    Linux users will also want to install `Docker Compose`_ and follow
    `post-install instructions`_ to confirm that the development user can run
    Docker commmands.
@@ -61,7 +61,7 @@ Docker setup
 
 #. Clone the kuma Git repository, if you haven't already::
 
-        git clone --recursive https://github.com/mozilla/kuma.git
+        git clone --recursive https://github.com/mdn/kuma.git
 
    If you think you might be submitting pull requests, consider
    forking the repository first, and then cloning your fork of it.

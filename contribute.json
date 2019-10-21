@@ -2,9 +2,9 @@
     "name": "Kuma",
     "description": "The app powering MDN Web Docs.",
     "repository": {
-        "url": "https://github.com/mozilla/kuma",
+        "url": "https://github.com/mdn/kuma",
         "license": "MPL2",
-        "tests": "https://travis-ci.org/mozilla/kuma"
+        "tests": "https://travis-ci.org/mdn/kuma"
     },
     "participate": {
         "home": "https://wiki.mozilla.org/MDN",
@@ -21,7 +21,7 @@
     },
     "bugs": {
         "list": "https://mzl.la/2onLvZ8",
-        "report": "https://github.com/mozilla/kuma/issues/new",
+        "report": "https://github.com/mdn/kuma/issues/new",
         "mentored": "https://mzl.la/2BFx4Ie",
         "goodfirstbug": "https://mzl.la/2ojEGaW"
     },
