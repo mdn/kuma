@@ -91,7 +91,7 @@ if (container) {
          * unmounts the components. We also do not hydrate if in IE10+.
          * It is better for the end user in this case to just get a
          * static HTML page.
-         * See Bug 1562293, and https://github.com/mozilla/kuma/issues/5786
+         * See Bug 1562293, and https://github.com/mdn/kuma/issues/5786
          */
         if (
             window.origin !== 'https://translate.googleusercontent.com' &&

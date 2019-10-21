@@ -131,7 +131,7 @@ const _MainMenu = ({ document, locale }: Props) => {
                     {
                         label: gettext('Report an issue'),
                         external: true,
-                        url: 'https://github.com/mozilla/kuma/issues/new'
+                        url: 'https://github.com/mdn/kuma/issues/new'
                     }
                 ]
             }

@@ -166,7 +166,7 @@ changes to whitespace or attribute order. In the simple document, this step
 adds the extra space in ``style="color: red"``.
 
 .. _bleach: https://github.com/mozilla/bleach
-.. _`allowed lists`: https://github.com/mozilla/kuma/blob/master/kuma/wiki/constants.py
+.. _`allowed lists`: https://github.com/mdn/kuma/blob/master/kuma/wiki/constants.py
 .. _html5lib: https://github.com/html5lib/html5lib-python
 
 .. _kumascript-content:
@@ -312,7 +312,7 @@ external data
 .. _SimpleBadge: https://github.com/mdn/kumascript/blob/master/macros/SimpleBadge.ejs
 .. _obsolete_inline: https://github.com/mdn/kumascript/blob/master/macros/obsolete_inline.ejs
 .. _ObsoleteBadge: https://github.com/mdn/kumascript/blob/master/macros/ObsoleteBadge.ejs
-.. _`environment variables`: https://github.com/mozilla/kuma/blob/77477d345c2513b9619920fd46174e0120b273c8/kuma/wiki/kumascript.py#L104-L115
+.. _`environment variables`: https://github.com/mdn/kuma/blob/77477d345c2513b9619920fd46174e0120b273c8/kuma/wiki/kumascript.py#L104-L115
 .. _`SpecName`: https://github.com/mdn/kumascript/blob/master/macros/SpecName.ejs
 .. _`SpecData.json`: https://github.com/mdn/kumascript/blob/master/macros/SpecData.json
 .. _`browser-compat-data project`: https://github.com/mdn/browser-compat-data

@@ -141,16 +141,16 @@ Before deploying, a staff member should:
 
 .. _Dennis: https://github.com/willkg/dennis
 .. _Jenkins: https://ci.us-west-2.mdn.mozit.cloud
-.. _Kuma: https://travis-ci.org/mozilla/kuma/
+.. _Kuma: https://travis-ci.org/mdn/kuma/
 .. _KumaScript: https://travis-ci.org/mdn/kumascript
 .. _Pontoon: https://pontoon.mozilla.org/projects/mdn/
 .. _`Kuma images`: https://hub.docker.com/r/mdnwebdocs/kuma/tags/
 .. _`Kuma master build`: https://ci.us-west-2.mdn.mozit.cloud/blue/organizations/jenkins/kuma/activity/?branch=master
 .. _`KumaScript images`: https://hub.docker.com/r/mdnwebdocs/kumascript/tags/
 .. _`KumaScript master build`: https://ci.us-west-2.mdn.mozit.cloud/blue/organizations/jenkins/kumascript/activity?branch=master
-.. _`master build`: https://travis-ci.org/mozilla/kuma
+.. _`master build`: https://travis-ci.org/mdn/kuma
 .. _`mdn-browser-compat-data`: https://www.npmjs.com/package/mdn-browser-compat-data
-.. _`open a pull request`: https://github.com/mozilla/kuma
+.. _`open a pull request`: https://github.com/mdn/kuma
 .. _mdn-l10n: https://github.com/mozilla-l10n/mdn-l10n
 .. _DockerHub: https://hub.docker.com/
 

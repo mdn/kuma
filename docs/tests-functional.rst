@@ -81,16 +81,16 @@ Using Alternate Environments
 Run tests on MDN's Continuous Integration (CI) infrastructure
 -------------------------------------------------------------
 
-If you have commit rights on the `mozilla/kuma GitHub repository`_ you can
+If you have commit rights on the `mdn/kuma GitHub repository`_ you can
 run the functional tests using the `MDN CI Infrastructure`_. Just force push
-to `mozilla/kuma@stage-integration-tests`_ to run the tests
+to `mdn/kuma@stage-integration-tests`_ to run the tests
 against https://developer.allizom.org.
 
 You can check the status, progress, and logs of the
 test runs at `MDN's Jenkins-based multi-branch pipeline`_.
 
-.. _`mozilla/kuma GitHub repository`: https://github.com/mozilla/kuma
-.. _`mozilla/kuma@stage-integration-tests`: https://github.com/mozilla/kuma/tree/stage-integration-tests
+.. _`mdn/kuma GitHub repository`: https://github.com/mdn/kuma
+.. _`mdn/kuma@stage-integration-tests`: https://github.com/mdn/kuma/tree/stage-integration-tests
 .. _`MDN's Jenkins-based multi-branch pipeline`: https://ci.us-west-2.mdn.mozit.cloud/blue/organizations/jenkins/kuma/branches/
 
 MDN CI Infrastructure
@@ -140,13 +140,13 @@ You can check the status, progress, and logs of any pipeline runs via
 `MDN's Jenkins-based multi-branch pipeline`_.
 
 .. _`mozmar/jenkins-pipeline`: https://github.com/mozmar/jenkins-pipeline
-.. _`Jenkinsfile`: https://github.com/mozilla/kuma/blob/master/Jenkinsfile
-.. _`Jenkinsfiles directory`: https://github.com/mozilla/kuma/tree/master/Jenkinsfiles
-.. _`Jenkinsfiles/master.groovy`: https://github.com/mozilla/kuma/blob/master/Jenkinsfiles/master.groovy
-.. _`Jenkinsfiles/default.groovy`: https://github.com/mozilla/kuma/blob/master/Jenkinsfiles/default.groovy
-.. _`Jenkinsfiles/integration-tests.groovy`: https://github.com/mozilla/kuma/blob/master/Jenkinsfiles/integration-tests.groovy
-.. _`Jenkinsfiles/prod-integration-tests.yml` : https://github.com/mozilla/kuma/blob/master/Jenkinsfiles/prod-integration-tests.yml
-.. _`Jenkinsfiles/stage-integration-tests.yml` : https://github.com/mozilla/kuma/blob/master/Jenkinsfiles/stage-integration-tests.yml
+.. _`Jenkinsfile`: https://github.com/mdn/kuma/blob/master/Jenkinsfile
+.. _`Jenkinsfiles directory`: https://github.com/mdn/kuma/tree/master/Jenkinsfiles
+.. _`Jenkinsfiles/master.groovy`: https://github.com/mdn/kuma/blob/master/Jenkinsfiles/master.groovy
+.. _`Jenkinsfiles/default.groovy`: https://github.com/mdn/kuma/blob/master/Jenkinsfiles/default.groovy
+.. _`Jenkinsfiles/integration-tests.groovy`: https://github.com/mdn/kuma/blob/master/Jenkinsfiles/integration-tests.groovy
+.. _`Jenkinsfiles/prod-integration-tests.yml` : https://github.com/mdn/kuma/blob/master/Jenkinsfiles/prod-integration-tests.yml
+.. _`Jenkinsfiles/stage-integration-tests.yml` : https://github.com/mdn/kuma/blob/master/Jenkinsfiles/stage-integration-tests.yml
 
 Markers
 =======

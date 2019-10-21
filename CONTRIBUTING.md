@@ -8,9 +8,9 @@ Things to know when contributing code
   ``locale/``). Please use [Pontoon][pontoon] instead.
 
 [MPL2]: http://www.mozilla.org/MPL/2.0/
-[coc]: https://github.com/mozilla/kuma/blob/master/CODE_OF_CONDUCT.md
+[coc]: https://github.com/mdn/kuma/blob/master/CODE_OF_CONDUCT.md
 [discourse]: https://discourse.mozilla.org/c/mdn
-[bugs]: https://github.com/mozilla/kuma/issues
+[bugs]: https://github.com/mdn/kuma/issues
 [pontoon]: https://pontoon.mozilla.org/projects/mdn/
 
 What to work on
@@ -48,7 +48,7 @@ and give feedback, or to tell you when we plan to review it.
 
 [gh-flow]: https://guides.github.com/introduction/flow/
 [install]: https://kuma.readthedocs.io/en/latest/installation.html
-[travisci]: https://travis-ci.org/mozilla/kuma/pull_requests
+[travisci]: https://travis-ci.org/mdn/kuma/pull_requests
 
 Conventions
 ===========
@@ -163,7 +163,7 @@ MDN can be accessed faster than 5 pages per second, and we shouldn't
 penalize scrapers that respect robots.txt.
 ```
 
-[crawl-delay-commit]: https://github.com/mozilla/kuma/commit/4ba37df42531589c4276ea2b4c44270ac1c49210
+[crawl-delay-commit]: https://github.com/mdn/kuma/commit/4ba37df42531589c4276ea2b4c44270ac1c49210
 
 Testing
 -------
@@ -197,18 +197,18 @@ We **prefer** test functions, a small number of global
 that customize the global fixtures, and using [assert][assert] for test
 assertions.
 
-[travisci]: https://travis-ci.org/mozilla/kuma/pull_requests
+[travisci]: https://travis-ci.org/mdn/kuma/pull_requests
 [testing]: https://kuma.readthedocs.io/en/latest/tests.html#running-the-test-suite
 [testcase]: https://docs.djangoproject.com/en/1.8/topics/testing/tools/#testcase
 [fixture_files]: https://docs.djangoproject.com/en/1.8/topics/testing/tools/#fixture-loading
-[eq]: https://github.com/mozilla/kuma/blob/6f31cbc22e72827e4832b3ed6ca542132bf41f83/kuma/core/tests/__init__.py#L16
-[ok]: https://github.com/mozilla/kuma/blob/6f31cbc22e72827e4832b3ed6ca542132bf41f83/kuma/core/tests/__init__.py#L26
-[get_user]: https://github.com/mozilla/kuma/blob/6f31cbc22e72827e4832b3ed6ca542132bf41f83/kuma/core/tests/__init__.py#L36
-[document]: https://github.com/mozilla/kuma/blob/6f31cbc22e72827e4832b3ed6ca542132bf41f83/kuma/wiki/tests/__init__.py#L29
-[revision]: https://github.com/mozilla/kuma/blob/6f31cbc22e72827e4832b3ed6ca542132bf41f83/kuma/wiki/tests/__init__.py#L43
+[eq]: https://github.com/mdn/kuma/blob/6f31cbc22e72827e4832b3ed6ca542132bf41f83/kuma/core/tests/__init__.py#L16
+[ok]: https://github.com/mdn/kuma/blob/6f31cbc22e72827e4832b3ed6ca542132bf41f83/kuma/core/tests/__init__.py#L26
+[get_user]: https://github.com/mdn/kuma/blob/6f31cbc22e72827e4832b3ed6ca542132bf41f83/kuma/core/tests/__init__.py#L36
+[document]: https://github.com/mdn/kuma/blob/6f31cbc22e72827e4832b3ed6ca542132bf41f83/kuma/wiki/tests/__init__.py#L29
+[revision]: https://github.com/mdn/kuma/blob/6f31cbc22e72827e4832b3ed6ca542132bf41f83/kuma/wiki/tests/__init__.py#L43
 [pytest-fixtures]: https://docs.pytest.org/en/latest/fixture.html
-[root_doc]: https://github.com/mozilla/kuma/blob/6f31cbc22e72827e4832b3ed6ca542132bf41f83/kuma/conftest.py#L35
-[wiki_user]: https://github.com/mozilla/kuma/blob/6f31cbc22e72827e4832b3ed6ca542132bf41f83/kuma/conftest.py#L18
+[root_doc]: https://github.com/mdn/kuma/blob/6f31cbc22e72827e4832b3ed6ca542132bf41f83/kuma/conftest.py#L35
+[wiki_user]: https://github.com/mdn/kuma/blob/6f31cbc22e72827e4832b3ed6ca542132bf41f83/kuma/conftest.py#L18
 [assert]: https://docs.pytest.org/en/latest/assert.html
 [pytest]: https://docs.pytest.org/en/latest/
 

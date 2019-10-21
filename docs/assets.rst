@@ -91,7 +91,7 @@ images or when a developer wants to see updated translations.
 .. _`git submodule`: https://github.blog/2016-02-01-working-with-submodules/
 .. _gettext: https://en.wikipedia.org/wiki/Gettext
 .. _Puente: https://puente.readthedocs.io/en/latest/
-.. _`PUENTE configuration`: https://github.com/mozilla/kuma/blob/master/kuma/settings/common.py#L645-L669
+.. _`PUENTE configuration`: https://github.com/mdn/kuma/blob/master/kuma/settings/common.py#L645-L669
 .. _`extract management command`: https://github.com/mozilla/puente/blob/master/puente/management/commands/extract.py
 .. _Babel: http://babel.pocoo.org/en/latest/messages.html
 
@@ -177,17 +177,17 @@ with UglifyJS_, which removes whitespace, replaces variable names with
 shorter names, and performs other transformations to make the file smaller.
 
 .. _`static/build/js/main.js`: https://developer.mozilla.org/static/build/js/main.js
-.. _`kuma/static/js/libs/jquery/jquery.js`: https://github.com/mozilla/kuma/blob/master/kuma/static/js/libs/jquery/jquery.js
-.. _`kuma/static/js/libs/icons.js`: https://github.com/mozilla/kuma/blob/master/kuma/static/js/libs/icons.js
-.. _`kuma/static/js/components.js`: https://github.com/mozilla/kuma/blob/master/kuma/static/js/components.js
-.. _`kuma/static/js/analytics.js`: https://github.com/mozilla/kuma/blob/master/kuma/static/js/analytics.js
-.. _`kuma/static/js/main.js`: https://github.com/mozilla/kuma/blob/master/kuma/static/js/main.js
-.. _`kuma/static/js/components/nav-main-search.js`: https://github.com/mozilla/kuma/blob/master/kuma/static/js/components/nav-main-search.js
-.. _`kuma/static/js/auth.js`: https://github.com/mozilla/kuma/blob/master/kuma/static/js/auth.js
-.. _`kuma/static/js/highlight.js`: https://github.com/mozilla/kuma/blob/master/kuma/static/js/highlight.js
-.. _`kuma/static/js/wiki-compat-trigger.js`: https://github.com/mozilla/kuma/blob/master/kuma/static/js/wiki-compat-trigger.js
-.. _`kuma/static/js/lang-switcher.js`: https://github.com/mozilla/kuma/blob/master/kuma/static/js/lang-switcher.js
-.. _PIPELINE_JS: https://github.com/mozilla/kuma/blob/master/kuma/settings/common.py#L909-L923
+.. _`kuma/static/js/libs/jquery/jquery.js`: https://github.com/mdn/kuma/blob/master/kuma/static/js/libs/jquery/jquery.js
+.. _`kuma/static/js/libs/icons.js`: https://github.com/mdn/kuma/blob/master/kuma/static/js/libs/icons.js
+.. _`kuma/static/js/components.js`: https://github.com/mdn/kuma/blob/master/kuma/static/js/components.js
+.. _`kuma/static/js/analytics.js`: https://github.com/mdn/kuma/blob/master/kuma/static/js/analytics.js
+.. _`kuma/static/js/main.js`: https://github.com/mdn/kuma/blob/master/kuma/static/js/main.js
+.. _`kuma/static/js/components/nav-main-search.js`: https://github.com/mdn/kuma/blob/master/kuma/static/js/components/nav-main-search.js
+.. _`kuma/static/js/auth.js`: https://github.com/mdn/kuma/blob/master/kuma/static/js/auth.js
+.. _`kuma/static/js/highlight.js`: https://github.com/mdn/kuma/blob/master/kuma/static/js/highlight.js
+.. _`kuma/static/js/wiki-compat-trigger.js`: https://github.com/mdn/kuma/blob/master/kuma/static/js/wiki-compat-trigger.js
+.. _`kuma/static/js/lang-switcher.js`: https://github.com/mdn/kuma/blob/master/kuma/static/js/lang-switcher.js
+.. _PIPELINE_JS: https://github.com/mdn/kuma/blob/master/kuma/settings/common.py#L909-L923
 .. _UglifyJS: https://github.com/mishoo/UglifyJS2/tree/v2.x
 
 .. _pipeline-css-bundles:
@@ -222,9 +222,9 @@ used in a template.  In production, the output bundle is used, so a single
 clean-css_, which transforms the CSS to make the output files smaller.
 
 .. _`static/build/styles/dashboards.css`: https://developer.mozilla.org/static/build/styles/dashboards.css
-.. _`kuma/static/styles/dashboards.scss`:  https://github.com/mozilla/kuma/blob/master/kuma/static/styles/dashboards.scss
-.. _`kuma/static/styles/diff.scss`: https://github.com/mozilla/kuma/blob/master/kuma/static/diff.scss
-.. _PIPELINE_CSS: https://github.com/mozilla/kuma/blob/master/kuma/settings/common.py#L787-L793
+.. _`kuma/static/styles/dashboards.scss`:  https://github.com/mdn/kuma/blob/master/kuma/static/styles/dashboards.scss
+.. _`kuma/static/styles/diff.scss`: https://github.com/mdn/kuma/blob/master/kuma/static/diff.scss
+.. _PIPELINE_CSS: https://github.com/mdn/kuma/blob/master/kuma/settings/common.py#L787-L793
 .. _clean-css: https://github.com/jakubpawlowicz/clean-css
 
 .. _django-staticfiles:
@@ -543,7 +543,7 @@ For example, here is the HTML that includes the Tumbeast_ in `the 404 page`_::
 
 .. _static: https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#std:templatetag-static
 .. _Tumbeast: https://theoatmeal.com/static/state_web_summer.html#tumblr
-.. _`the 404 page`: https://github.com/mozilla/kuma/blob/master/jinja2/404.html
+.. _`the 404 page`: https://github.com/mdn/kuma/blob/master/jinja2/404.html
 
 .. _statici18n-tag:
 
@@ -556,7 +556,7 @@ The tag ``statici18n`` is provided by django-statici18n_. It works like the
 
    <script src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
 
-.. _`the base template`: https://github.com/mozilla/kuma/blob/master/jinja2/base.html
+.. _`the base template`: https://github.com/mdn/kuma/blob/master/jinja2/base.html
 
 .. _pipeline-tags:
 
@@ -598,9 +598,9 @@ array, such as `the configuration script`_::
         }
     };
 
-.. _`the revision dashboard`: https://github.com/mozilla/kuma/blob/master/kuma/dashboards/jinja2/dashboards/revisions.html
-.. _javascript-array: https://github.com/mozilla/kuma/blob/master/jinja2/pipeline/javascript-array.jinja
-.. _`the configuration script`: https://github.com/mozilla/kuma/blob/master/jinja2/includes/config.html
+.. _`the revision dashboard`: https://github.com/mdn/kuma/blob/master/kuma/dashboards/jinja2/dashboards/revisions.html
+.. _javascript-array: https://github.com/mdn/kuma/blob/master/jinja2/pipeline/javascript-array.jinja
+.. _`the configuration script`: https://github.com/mdn/kuma/blob/master/jinja2/includes/config.html
 
 .. _serve-whitenoise:
 

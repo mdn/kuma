@@ -151,7 +151,7 @@ See CONTRIBUTING.md_ for details of the coding style on Kuma.
 New code is expected to have test coverage.  See the
 :doc:`Test Suite docs <tests>` for tips on writing tests.
 
-.. _CONTRIBUTING.md: https://github.com/mozilla/kuma/blob/master/CONTRIBUTING.md
+.. _CONTRIBUTING.md: https://github.com/mdn/kuma/blob/master/CONTRIBUTING.md
 
 Managing dependencies
 =====================
@@ -162,7 +162,7 @@ Kuma tracks its Python dependencies with pip_.  See the
 `README in the requirements folder`_ for details.
 
 .. _pip: https://pip.pypa.io/
-.. _README in the requirements folder: https://github.com/mozilla/kuma/tree/master/requirements
+.. _README in the requirements folder: https://github.com/mdn/kuma/tree/master/requirements
 
 .. _front-end-asset-dependencies:
 

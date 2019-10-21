@@ -438,7 +438,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
 
         // If we could use markup in the localized strings I would ideally say
         // '<b>Browser documentation and release notes</b> are good supporting items to accompany your message. A demo hosted on services like <b>Codepen</b> or <b>JSBin</b> are perfect for providing real examples of your findings.'
-        // See https://github.com/mozilla/kuma/issues/5886
+        // See https://github.com/mdn/kuma/issues/5886
         const descriptionText = gettext(
             'Browser documentation and release notes are good supporting items to accompany your message. A demo hosted on services like Codepen or JSBin are perfect for providing real examples of your findings.'
         );
@@ -508,7 +508,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
 
         // Message with markup:
         // 'Our goal is to provide accurate, real values for all our compatibility data tables. Notifying MDN of inaccurate data or supplying new data pushes us further towards our goal of providing <b>100% real values</b> to the developer community. <br><b>Thank you for helping.</b>'
-        // See https://github.com/mozilla/kuma/issues/5886
+        // See https://github.com/mdn/kuma/issues/5886
         leftBlockDescription.innerText = gettext(
             'Our goal is to provide accurate, real values for all our compatibility data tables. Notifying MDN of inaccurate data or supplying new data pushes us further towards our goal of providing 100% real values to the developer community.'
         );
