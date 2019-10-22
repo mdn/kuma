@@ -32,7 +32,6 @@ export default function LastModified({
             </header>{' '}
             <ul>
                 <li className="last-modified">
-                    {' '}
                     <b>{gettext('Last modified:')}</b>{' '}
                     <time dateTime={lastModified}>
                         {lastModifiedDate.toLocaleString(
