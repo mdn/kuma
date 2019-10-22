@@ -821,7 +821,7 @@ def react_document(request, document_slug, document_locale):
             raise Http404
 
         # Check if we should fall back to default locale.
-        fallback_doc, _, redirect_url = _default_locale_fallback(
+        fallback_doc, fallback_reason, redirect_url = _default_locale_fallback(
             request, document_slug, document_locale)
         if fallback_doc is not None:
             doc = fallback_doc
