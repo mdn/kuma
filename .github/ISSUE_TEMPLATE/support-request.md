@@ -2,7 +2,7 @@
 name: Support request
 about: Request a support task from the MDN team.
 title: ''
-labels: needs triage
+labels: 'status: needs triage'
 assignees: ''
 
 ---
