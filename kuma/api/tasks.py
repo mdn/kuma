@@ -137,9 +137,8 @@ def publish(doc_pks, log=None, completion_message=None,
             redirect_url, is_redirect_to_document = redirect
             if is_redirect_to_document:
                 kwargs.update(WebsiteRedirectLocation=redirect_url)
-            else:
-                data = document_api_data(redirect_url=redirect_url)
-                kwargs.update(Body=json.dumps(data))
+            data = document_api_data(redirect_url=redirect_url)
+            kwargs.update(Body=json.dumps(data))
         else:
             data = document_api_data(doc)
             kwargs.update(Body=json.dumps(data))

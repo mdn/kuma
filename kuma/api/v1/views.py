@@ -58,10 +58,13 @@ def doc(request, locale, slug):
 
 
 def get_s3_key(doc=None, locale=None, slug=None,
-               prefix_with_forward_slash=False):
+               prefix_with_forward_slash=False,
+               suffix_file_extension=True):
     if doc:
         locale, slug = doc.locale, doc.slug
     key = reverse('api.v1.doc', args=(locale, slug))
+    if suffix_file_extension:
+        key += '.json'
     if prefix_with_forward_slash:
         # Redirects within an S3 bucket must be prefixed with "/".
         return key
@@ -70,7 +73,11 @@ def get_s3_key(doc=None, locale=None, slug=None,
 
 def get_cdn_key(locale, slug):
     """Given a document's locale and slug, return the "key" for the CDN."""
-    return get_s3_key(locale=locale, slug=slug, prefix_with_forward_slash=True)
+    return get_s3_key(
+        locale=locale,
+        slug=slug,
+        prefix_with_forward_slash=True,
+        suffix_file_extension=False)
 
 
 def get_content_based_redirect(document):
@@ -88,7 +95,10 @@ def get_content_based_redirect(document):
         if redirect_document:
             # This is a redirect to another document.
             return (
-                get_s3_key(redirect_document, prefix_with_forward_slash=True),
+                get_s3_key(
+                    redirect_document,
+                    prefix_with_forward_slash=True,
+                    suffix_file_extension=False),
                 True
             )
         # This is a redirect to non-document page. For now, if it's the home
@@ -156,6 +166,7 @@ def document_api_data(doc=None, redirect_url=None):
             'bodyHTML': doc.get_body_html(),
             'quickLinksHTML': doc.get_quick_links_html(),
             'tocHTML': doc.get_toc_html(),
+            'raw': doc.html,
             'parents': [
                 {
                     'url': d.get_absolute_url(),

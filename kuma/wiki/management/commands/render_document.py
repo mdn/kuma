@@ -37,6 +37,12 @@ class Command(BaseCommand):
             help='Render ALL documents (rather than by path)',
             action='store_true')
         parser.add_argument(
+            '--locale',
+            help='Publish ALL documents in this locale (rather than by path)')
+        parser.add_argument(
+            '--not-locale',
+            help='Publish all documents NOT in this locale')
+        parser.add_argument(
             '--min-age',
             help='Documents rendered less than this many seconds ago will be'
                  ' skipped (default 600)',
@@ -55,10 +61,6 @@ class Command(BaseCommand):
             help='Use Cache-Control: no-cache instead of max-age=0',
             action='store_true')
         parser.add_argument(
-            '--defer',
-            help='Defer rendering by chaining tasks via celery',
-            action='store_true')
-        parser.add_argument(
             '--skip-cdn-invalidation',
             help=(
                 'No CDN cache invalidation after publishing. Forced to True '
@@ -73,6 +75,7 @@ class Command(BaseCommand):
         else:
             cache_control = 'max-age=0'
         force = options['force']
+        invalidate_cdn_cache = not options['skip_cdn_invalidation']
 
         if options['all']:
             # Query all documents, excluding those whose `last_rendered_at` is
@@ -83,10 +86,19 @@ class Command(BaseCommand):
             docs = Document.objects.filter(
                 Q(last_rendered_at__isnull=True) |
                 Q(last_rendered_at__lt=min_render_age))
+            if options['locale']:
+                docs = docs.filter(locale=options['locale'])
+            if options['not_locale']:
+                docs = docs.exclude(locale=options['not_locale'])
             docs = docs.order_by('-modified')
             docs = docs.values_list('id', flat=True)
 
-            self.chain_render_docs(docs, cache_control, base_url, force)
+            self.chain_render_docs(
+                docs,
+                cache_control,
+                base_url,
+                force,
+                invalidate_cdn_cache=invalidate_cdn_cache)
 
         else:
             # Accept page paths from command line, but be liberal
@@ -95,7 +107,7 @@ class Command(BaseCommand):
             paths = options['paths']
             if not paths:
                 raise CommandError('Need at least one document path to render')
-            invalidate_cdn_cache = not options['skip_cdn_invalidation']
+
             for path in paths:
                 if path.startswith('/'):
                     path = path[1:]

@@ -13,7 +13,7 @@ from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 def test_get_s3_key(root_doc):
     locale, slug = root_doc.locale, root_doc.slug
-    expected_key = 'api/v1/doc/{}/{}'.format(locale, slug)
+    expected_key = 'api/v1/doc/{}/{}.json'.format(locale, slug)
     assert (
         get_s3_key(root_doc) == get_s3_key(locale=locale, slug=slug) ==
         expected_key
@@ -37,7 +37,12 @@ def test_get_content_based_redirect(root_doc, redirect_doc, redirect_to_self,
         expected = None
     elif case == 'redirect':
         doc = redirect_doc
-        expected = (get_s3_key(root_doc, prefix_with_forward_slash=True), True)
+        expected = (
+            get_s3_key(
+                root_doc,
+                prefix_with_forward_slash=True,
+                suffix_file_extension=False),
+            True)
     elif case == 'redirect-to-self':
         doc = redirect_to_self
         expected = None

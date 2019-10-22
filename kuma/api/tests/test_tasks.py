@@ -6,7 +6,8 @@ import mock
 import pytest
 
 from kuma.api.tasks import publish, request_cdn_cache_invalidation, unpublish
-from kuma.api.v1.views import document_api_data, get_s3_key
+from kuma.api.v1.views import (
+    document_api_data, get_content_based_redirect, get_s3_key)
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
@@ -102,13 +103,15 @@ def test_publish_redirect(get_s3_bucket_mock, root_doc, redirect_doc):
     log_mock = mock.Mock()
     get_s3_bucket_mock.return_value = s3_bucket_mock = get_mocked_s3_bucket()
     publish([redirect_doc.pk], log=log_mock)
+
     s3_bucket_mock.put_object.assert_called_once_with(
         ACL='public-read',
         Key=get_s3_key(redirect_doc),
         WebsiteRedirectLocation=get_s3_key(
-            root_doc, prefix_with_forward_slash=True),
+            root_doc, prefix_with_forward_slash=True, suffix_file_extension=False),
         ContentType='application/json',
-        ContentLanguage=redirect_doc.locale
+        ContentLanguage=redirect_doc.locale,
+        Body=json.dumps(document_api_data(None, redirect_url=get_content_based_redirect(redirect_doc)[0]))
     )
     log_mock.info.assert_called_once_with('Published S3 Object #1')
 
@@ -178,9 +181,10 @@ def test_publish_multiple(get_s3_bucket_mock, root_doc, redirect_doc,
             ACL='public-read',
             Key=get_s3_key(redirect_doc),
             WebsiteRedirectLocation=get_s3_key(
-                root_doc, prefix_with_forward_slash=True),
+                root_doc, prefix_with_forward_slash=True, suffix_file_extension=False),
             ContentType='application/json',
-            ContentLanguage=redirect_doc.locale
+            ContentLanguage=redirect_doc.locale,
+            Body=json.dumps(document_api_data(redirect_url=get_content_based_redirect(redirect_doc)[0])),
         ),
         mock.call(
             ACL='public-read',
