@@ -2,7 +2,7 @@
 name: Feature request
 about: Suggest a new idea for MDN
 title: ''
-labels: needs triage
+labels: 'status: needs triage'
 assignees: ''
 
 ---
