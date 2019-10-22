@@ -1764,11 +1764,6 @@ BLOCKABLE_USER_AGENTS = [
     "curl",
 ]
 
-# TODO: Once using DRF more we need to make that exception handler more generic
-REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'kuma.search.utils.search_exception_handler'
-}
-
 SENTRY_DSN = config('SENTRY_DSN', default=None)
 
 if SENTRY_DSN:
