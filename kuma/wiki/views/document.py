@@ -810,7 +810,9 @@ def react_document(request, document_slug, document_locale):
     slug_dict = split_slug(document_slug)
 
     # Is there a document at this slug, in this locale?
-    doc, _ = _get_doc_and_fallback_reason(document_locale, document_slug)
+    doc, fallback_reason = _get_doc_and_fallback_reason(
+        document_locale,
+        document_slug)
 
     if doc is None:
         # We can throw a 404 immediately if the request type is HEAD.
@@ -861,6 +863,28 @@ def react_document(request, document_slug, document_locale):
     doc_api_data = document_api_data(doc)
     document_data = doc_api_data['documentData']
 
+    def robots_index():
+        if fallback_reason:
+            return False
+
+        if not doc.html:
+            return False
+
+        if doc.is_experiment:
+            return False
+
+        if doc.has_legacy_namespace:
+            return False
+
+        if request.get_host() not in settings.ALLOW_ROBOTS_WEB_DOMAINS:
+            return False
+
+        return True
+
+    robots_meta_content = (
+        'index, follow' if robots_index() else 'noindex, nofollow'
+    )
+
     # Bundle it all up and, finally, return.
     context = {
         'document_data': document_data,
@@ -869,6 +893,7 @@ def react_document(request, document_slug, document_locale):
         # to be bundled up into the json object above instead.
         'seo_summary': seo_summary,
         'seo_parent_title': seo_parent_title,
+        'robots_meta_content': robots_meta_content,
     }
     response = render(request, 'wiki/react_document.html', context)
 
