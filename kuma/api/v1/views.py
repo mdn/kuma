@@ -119,8 +119,6 @@ def document_api_data(doc=None, redirect_url=None):
     """
     Returns the JSON data for the document for the document API.
     """
-    print("DOC:", doc)
-    print("redirect_url", redirect_url)
     if redirect_url:
         return {
             'documentData': None,
