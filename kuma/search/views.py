@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.utils.http import urlencode
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
 from django.views.generic import RedirectView
@@ -44,10 +43,10 @@ class SearchRedirectView(RedirectView):
     permanent = True
 
     def get_redirect_url(self, *args, **kwargs):
-        get = self.request.GET.get('q', None)
+        query_string = self.request.META.get('QUERY_STRING')
         url = reverse_lazy('api.v1.search', kwargs={'locale': self.request.LANGUAGE_CODE})
-        if get:
-            url += '?' + urlencode({"q": get})
+        if query_string:
+            url += '?' + query_string
         return url
 
 
