@@ -1,6 +1,9 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.utils.http import urlencode
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
+from django.views.generic import RedirectView
 from ratelimit.decorators import ratelimit
 
 from kuma.api.v1.views import search as search_api
@@ -35,6 +38,17 @@ def search(request, *args, **kwargs):
 
 
 wiki_search = SearchView.as_view()
+
+
+class SearchRedirectView(RedirectView):
+    permanent = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        get = self.request.GET.get('q', None)
+        url = reverse_lazy('api.v1.search', kwargs={'locale': self.request.LANGUAGE_CODE})
+        if get:
+            url += '?' + urlencode({"q": get})
+        return url
 
 
 @shared_cache_control(s_maxage=60 * 60 * 24 * 7)
