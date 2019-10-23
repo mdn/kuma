@@ -398,7 +398,7 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
                                 HTTP_HOST=settings.WIKI_HOST)
         assert_no_cache_header(resp)
         # No UnicodeDecodeError, it's a unicode string
-        assert isinstance(mock_requests.request_history[0].body, str)
+        assert isinstance(mock_requests.request_history[0].body, bytes)
 
     @override_config(KUMASCRIPT_TIMEOUT=1.0, KUMASCRIPT_MAX_AGE=600)
     @mock.patch('kuma.wiki.kumascript.post')

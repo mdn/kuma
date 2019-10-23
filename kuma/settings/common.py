@@ -1874,3 +1874,11 @@ MDN_CLOUDFRONT_DISTRIBUTIONS = {
 # See https://bugzilla.mozilla.org/show_bug.cgi?id=1567587 for some more
 # details about why we don't want or need this.
 CACHEBACK_VERIFY_CACHE_WRITE = False
+
+# Write down the override location for where DB migrations for third-party
+# Django apps should go. This is relevant if an app we depend on requires
+# new migrations that aren't in the released upstream package.
+# One good example is: https://github.com/ubernostrum/django-soapbox/issues/5
+MIGRATION_MODULES = {
+    'soapbox': 'kuma.soap_migrations'
+}
