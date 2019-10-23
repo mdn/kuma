@@ -438,67 +438,6 @@ def test_section_edit_links():
     assert normalize_html(expected) == normalize_html(result)
 
 
-<<<<<<< HEAD
-class CodeSyntaxFilterTests(TestCase):
-    def test_code_syntax_conversion(self):
-        doc_src = """
-            <h2>Some JavaScript</h2>:
-            <pre class="deki-transform" function="syntax.JavaScript">
-            function foo(){
-                alert("bar");
-            }
-            </pre>
-            <pre>Some CSS:</pre>
-            <pre class="dek-trans" function="syntax.CSS">
-            .dek-trans { color: red; }
-            </pre>
-        """
-        expected = """
-            <h2>Some JavaScript</h2>:
-            <pre class="brush: js">
-            function foo(){
-                alert("bar");
-            }
-            </pre>
-            <pre>Some CSS:</pre>
-            <pre class="brush: css">
-            .dek-trans { color: red; }
-            </pre>
-        """
-        result = (kuma.wiki.content
-                  .parse(doc_src)
-                  .filter(CodeSyntaxFilter).serialize())
-        assert normalize_html(expected) == normalize_html(result)
-
-
-class SectionIDFilterTests(TestCase):
-    def test_non_ascii_section_headers(self):
-        headers = [
-            (u'Documentation à propos de HTML',
-             u'Documentation_à_propos_de_HTML'),
-            (u'Outils facilitant le développement HTML',
-             u'Outils_facilitant_le_développement_HTML'),
-            (u'字面值(literals)',
-             u'字面值literals'),
-            (u'Documentação',
-             u'Documentação'),
-            (u'Lektury uzupełniające',
-             u'Lektury_uzupełniające'),
-            (u'Атрибуты',
-             u'Атрибуты'),
-            (u'HTML5 엘리먼트',
-             u'HTML5_엘리먼트'),
-            (u'Non safe title "#$%&+,/:;=?@[\\]^`{|}~\')(',
-             u'Non_safe_title'),
-            (u"Five o'clock",
-             u'Five_oclock'),
-        ]
-
-        section_filter = SectionIDFilter('')
-
-        for original, slugified in headers:
-            assert slugified == section_filter.slugify(original)
-=======
 def test_code_syntax_conversion():
     doc_src = """
         <h2>Some JavaScript</h2>:
@@ -537,7 +476,7 @@ def test_non_ascii_section_headers():
         ('Outils facilitant le développement HTML',
          'Outils_facilitant_le_développement_HTML'),
         ('字面值(literals)',
-         '字面值(literals)'),
+         '字面值literals'),
         ('Documentação',
          'Documentação'),
         ('Lektury uzupełniające',
@@ -546,15 +485,16 @@ def test_non_ascii_section_headers():
          'Атрибуты'),
         ('HTML5 엘리먼트',
          'HTML5_엘리먼트'),
-        ('Non safe title "#$%&+,/:;=?@[\\]^`{|}~',
+        (u'Non safe title "#$%&+,/:;=?@[\\]^`{|}~\')(',
          'Non_safe_title'),
+        (u"Five o'clock",
+         u'Five_oclock'),
     ]
 
     section_filter = SectionIDFilter('')
 
     for original, slugified in headers:
         assert slugified == section_filter.slugify(original)
->>>>>>> bug 1467518 Python 3.7 everything
 
 
 @pytest.mark.toc
