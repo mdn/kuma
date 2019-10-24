@@ -178,13 +178,10 @@ class ViewTests(ElasticTestCase):
         expected = 'Search index: %s' % Index.objects.get_current().name
         assert expected in response.content.decode(response.charset)
 
-    def test_score(self):
+    def test_api_redirect(self):
         response = self.client.get('/en-US/search.json',
                                    HTTP_HOST=settings.WIKI_HOST)
-        assert response.status_code == 200
-        assert len(response.data['documents']) > 0
-        for document in response.data['documents']:
-            assert 'score' in document
+        assert response.status_code == 301
 
 
 @pytest.mark.parametrize('locale', ['en-US', 'fr'])
