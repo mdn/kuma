@@ -14,3 +14,7 @@ indent_size = 4
 # Jenkinsfile uses two spaces
 [Jenkinsfile]
 indent_size = 2
+
+# git and Makefile use the superior tabs
+[.git*,Makefile,make.bat]
+indent_style = tab
