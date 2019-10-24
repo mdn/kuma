@@ -50,7 +50,7 @@ services:
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:
     <<: *worker
-    command: gunicorn -w ${GUNICORN_WORKERS:-4} --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 --worker-class=meinheld.gmeinheld.MeinheldWorker kuma.wsgi:application
+    command: ./manage.py runserver 0.0.0.0:8000
     depends_on:
       - mysql
       - elasticsearch
@@ -63,7 +63,7 @@ services:
   # API is used by KumaScript for content and metadata
   api:
     <<: *worker
-    command: gunicorn -w ${GUNICORN_WORKERS:-4} --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 kuma.wsgi:application
+    command: ./manage.py runserver 0.0.0.0:8000
     depends_on:
       - mysql
       - elasticsearch
