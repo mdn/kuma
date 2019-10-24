@@ -545,6 +545,7 @@ INSTALLED_APPS = (
     'allauth.account',
     'allauth.socialaccount',
     'kuma.users.providers.github',
+    'kuma.users.providers.google',
 
     # util
     'django_jinja',

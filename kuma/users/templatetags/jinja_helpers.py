@@ -16,13 +16,13 @@ from ..models import User
 
 
 @library.global_function
-def get_avatar_url(user, provider='github'):
+def get_avatar_url(user):
     """
     Get the user's avatar URL for the specified provider. Assumes that the user
     is not anonymous or None. If the user has no avatar for the specified
     provider, returns the default avatar.
     """
-    for account in user.socialaccount_set.filter(provider=provider):
+    for account in user.socialaccount_set.all():
         avatar_url = account.get_avatar_url()
         if avatar_url:
             return avatar_url

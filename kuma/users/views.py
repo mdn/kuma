@@ -477,11 +477,16 @@ class SignupView(BaseSignupView):
         self.email_addresses = {}
         form = super(SignupView, self).get_form(form_class)
         form.fields['email'].label = _('Email address')
+
+        # When no username is provided, default to the local-part of the email address
+        if form.initial.get('username', '') == '':
+            form.initial['username'] = form.initial.get('email', '').split('@')[0]
+
         self.matching_user = None
         initial_username = form.initial.get('username', None)
 
-        # For GitHub users, see if we can find matching user by username
-        assert self.sociallogin.account.provider == 'github'
+        # For GitHub/Google users, see if we can find matching user by username
+        assert self.sociallogin.account.provider in ('github', 'google')
         User = get_user_model()
         try:
             self.matching_user = User.objects.get(username=initial_username)
@@ -585,7 +590,7 @@ class SignupView(BaseSignupView):
         context = super(SignupView, self).get_context_data(**kwargs)
 
         # For GitHub users, find matching legacy Persona social accounts
-        assert self.sociallogin.account.provider == 'github'
+        assert self.sociallogin.account.provider in ('github', 'google')
         or_query = []
         for email_address in self.email_addresses.values():
             if email_address['verified']:
