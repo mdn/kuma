@@ -1,11 +1,10 @@
 from django.conf.urls import url
 
 from . import views
-from .views import SearchRedirectView
 
 lang_base_urlpatterns = [
     url(r'^$', views.search, name='search'),
-    url(r'^.(?P<format>json)$', SearchRedirectView.as_view())
+    url(r'^.(?P<format>json)$', views.SearchRedirectView.as_view())
 ]
 
 
