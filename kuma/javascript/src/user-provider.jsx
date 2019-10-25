@@ -104,7 +104,7 @@ export default function UserProvider(props: {
                         // the location bar
                         if (window.location.search.includes('utm_')) {
                             window.history.replaceState(
-                                window.location.pathname,
+                                {},
                                 '',
                                 window.location.pathname
                             );
