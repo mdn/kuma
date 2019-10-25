@@ -24,7 +24,7 @@ $clock-url: '../general/clock.svg';
         font-size: 0.88889rem;
         color: $grey;
 
-        header {
+        header.visually-hidden {
             @include visually-hidden;
         }
 
