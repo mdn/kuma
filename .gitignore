@@ -66,6 +66,7 @@ build.py
 developer.mozilla.org.tar.gz
 docker-compose.dev.yml
 docker-compose.locust.yml
+docker-compose.override.yml
 etc/nginx/ssl/developer.127.0.0.1.nip.io.crt
 etc/nginx/ssl/developer.127.0.0.1.nip.io.key
 humans.txt
