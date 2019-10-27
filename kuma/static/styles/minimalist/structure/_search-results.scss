@@ -36,7 +36,7 @@
             max-width: 42rem;
             /* Sometimes elasticsearch gives us excerpts with no spaces
             and we have to force the words to wrap. */
-            overflow-wrap: anywhere;
+            overflow-wrap: break-word;
 
             mark {
                 background-color: inherit;
