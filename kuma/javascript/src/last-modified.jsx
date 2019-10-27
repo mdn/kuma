@@ -3,8 +3,6 @@ import * as React from 'react';
 
 import { gettext } from './l10n.js';
 
-import ClockIcon from './icons/clock.svg';
-
 type Props = {
     documentLocale: string,
     lastModified: string,
@@ -28,21 +26,25 @@ export default function LastModified({
     };
 
     return (
-        <section className="contributors-sub">
-            <ClockIcon />
-            <header>
-                <h4>{gettext('Last modified:')}</h4>
+        <section className="document-meta">
+            <header className="visually-hidden">
+                <h4>Metadata</h4>
             </header>{' '}
-            <time dateTime={lastModified}>
-                {lastModifiedDate.toLocaleString(
-                    documentLocale,
-                    dateStringOptions
-                )}
-            </time>
-            ,{' '}
-            <a href={`${wikiRevisionHistoryURL}`} rel="nofollow">
-                {gettext('by MDN contributors')}
-            </a>
+            <ul>
+                <li className="last-modified">
+                    <b>{gettext('Last modified:')}</b>{' '}
+                    <time dateTime={lastModified}>
+                        {lastModifiedDate.toLocaleString(
+                            documentLocale,
+                            dateStringOptions
+                        )}
+                    </time>
+                    ,{' '}
+                    <a href={`${wikiRevisionHistoryURL}`} rel="nofollow">
+                        {gettext('by MDN contributors')}
+                    </a>
+                </li>
+            </ul>
         </section>
     );
 }
