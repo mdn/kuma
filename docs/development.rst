@@ -248,7 +248,7 @@ container's environment and settings are configured in ``docker-compose.yml``.
 The settings are "baked" into the containers created by ``docker-compose up``.
 
 To override a container's settings for development, use a local override file.
-For example, the ``web`` service runs in container with the
+For example, the ``web`` service runs in a container with the
 default command
 "``gunicorn -w 4 --bind 0.0.0.0:8000 --timeout=120 kuma.wsgi:application``".
 (The container has a name that begins with ``kuma_web_1_`` and
@@ -258,7 +258,7 @@ need this container name for some of the commands described below.)
 A useful alternative for debugging is to run a single-threaded process that
 loads the Werkzeug debugger on exceptions (see docs for runserver_plus_), and
 that allows for stepping through the code with a debugger.
-To use this alternative, create an override file ``docker-compose.dev.yml``::
+To use this alternative, create an override file ``docker-compose.override.yml``::
 
     version: "2.1"
     services:
@@ -272,16 +272,12 @@ This is similar to "``docker run -it <container> ./manage.py runserver_plus``",
 using all the other configuration items in ``docker-compose.yml``.
 Apply the custom setting with::
 
-    docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+    docker-compose up -d
 
 You can then add ``pdb`` breakpoints to the code
 (``import pdb; pdb.set_trace``) and connect to the debugger with::
 
     docker attach <container>
-
-To always include the override compose file, add it to your ``.env`` file::
-
-    COMPOSE_FILE=docker-compose.yml:docker-compose.dev.yml
 
 A similar method can be used to override environment variables in containers,
 run additional services, or make other changes.  See the docker-compose_
