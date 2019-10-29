@@ -208,34 +208,48 @@ http://localhost:8000/admin/login/
 
 .. _enable-github-auth:
 
-Enable GitHub authentication (optional)
+Enable GitHub/Google authentication (optional)
 =======================================
+Since Google's OAuth requires us to use a valid top-level-domain, we're going to use
+http://localhost.org:8000 as an example for every URL here.
+
+To automate setting Django up for social auth you can run
+``docker-compose exec web ./manage.py configure_social_auth`` and follow its steps (and
+ignore the rest of this section).
+
+If you want to do it manually, follow these steps:
+
 To enable GitHub authentication, you'll need to
 `register an OAuth application on GitHub`_, with settings like:
 
 * Application name: MDN Development for (<username>).
-* Homepage URL: http://localhost:8000/.
+* Homepage URL: http://localhost.org:8000/.
 * Application description: My own GitHub app for MDN!
-* Authorization callback URL: http://localhost:8000/users/github/login/callback/.
+* Authorization callback URL: http://localhost.org:8000/users/github/login/callback/.
 
-To automate setting Django up for Github auth you can run
-``docker-compose exec web ./manage.py configure_github_social`` and follow its steps.
+To enable Google authentication, you'll need to first `create an API project on Google`_.
+After that we'll need to `configure credentials for that project`_ with settings like:
 
-If you want to do it manually, as an admin user, `add a django-allauth social app`_ for GitHub:
+* Name: MDN Development for (<username>).
+* Authorized JavaScript origins: http://localhost.org:8000.
+* Authorized redirect URIs: http://localhost.org:8000/users/google/login/callback/.
 
-* Provider: GitHub.
+As an admin user, `add a django-allauth social app`_ for both GitHub and Google do the
+following:
+
+* Provider: GitHub/Google.
 * Name: MDN Development.
-* Client id: <*your GitHub App Client ID*>.
-* Secret key: <*your GitHub App Client Secret*>.
+* Client id: <*your Client ID*>.
+* Secret key: <*your Client Secret*>.
 * Sites: Move ``locahost:8000`` from "Available sites" to "Chosen sites".
 
 ``locahost:8000`` needs to either have ID 1 or ``SITE_ID=1`` has to be set in ``.env``
-to its actual ID. You'll also need to set ``DOMAIN=mdn.localhost`` there.
+to its actual ID. You'll also need to set ``DOMAIN=localhost.org`` (no port!) there.
 
 Your hosts file should contain the following lines::
 
-    127.0.0.1 localhost demos mdn.localhost beta.mdn.localhost wiki.mdn.localhost
-    ::1             mdn.localhost beta.mdn.localhost wiki.mdn.localhost
+    127.0.0.1 localhost demos localhost.org wiki.localhost.org
+    ::1             localhost.org wiki.localhost.org
 
 Now you can sign in with GitHub.
 
@@ -260,6 +274,8 @@ Django shell::
     >>> exit()
 
 .. _register an OAuth application on GitHub: https://github.com/settings/applications/new
+.. _create an API project on Google: https://console.developers.google.com/projectcreate
+.. _configure credentials for that project: https://console.developers.google.com/apis/credentials
 .. _add a django-allauth social app: http://localhost:8000/admin/socialaccount/socialapp/add/
 .. _`Use your GitHub account to sign in`: https://developer.mozilla.org/users/github/login/?process=connect
 
