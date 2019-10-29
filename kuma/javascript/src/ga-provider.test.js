@@ -12,7 +12,7 @@ describe('GAProvider', () => {
     test('Provides the window.ga() function', () => {
         const Consumer = GAProvider.context.Consumer;
         const contextConsumer = jest.fn();
-        const dummyGAFunc = () => {};
+        const dummyGAFunc = jest.fn();
         window.ga = dummyGAFunc;
 
         create(
@@ -21,11 +21,7 @@ describe('GAProvider', () => {
             </GAProvider>
         );
 
-        // We expect GAProvider to set window.ga as its value and we
-        // expect the Consumer to get that value from the provider and
-        // pass it to the contextConsumer function.
-        expect(contextConsumer.mock.calls.length).toBe(1);
-        expect(contextConsumer.mock.calls[0][0]).toEqual(dummyGAFunc);
+        expect(dummyGAFunc).not.toHaveBeenCalled();
     });
 
     test('Provides a dummy if no window.ga function', () => {
@@ -52,21 +48,7 @@ describe('GAProvider.useClientId', () => {
         delete window.ga;
     });
 
-    test('hook returns "" if there is no ga function', () => {
-        function Test() {
-            const clientId = GAProvider.useClientId();
-            expect(clientId).toBe('');
-            return null;
-        }
-
-        create(
-            <GAProvider>
-                <Test />
-            </GAProvider>
-        );
-    });
-
-    test('hook works if there is a ga function', done => {
+    test('hook works if there is a ga function', () => {
         const mockTrackerObject = {
             get(p) {
                 return p === 'clientId' ? 'mockClientId' : '';
@@ -80,27 +62,17 @@ describe('GAProvider.useClientId', () => {
         }
         window.ga = mockGA;
 
-        let numCalls = 0;
-
         function Test() {
-            const clientId = GAProvider.useClientId();
-            switch (numCalls) {
-                case 0:
-                    expect(clientId).toBe('');
-                    numCalls++;
-                    break;
-                case 1:
-                    expect(clientId).toBe('mockClientId');
-                    done();
-            }
-            return null;
+            return GAProvider.useClientId();
         }
 
-        create(
+        const renderer = create(
             <GAProvider>
                 <Test />
             </GAProvider>
         );
+        expect(renderer.toJSON()).toBe('');
         act(() => {});
+        expect(renderer.toJSON()).toBe('mockClientId');
     });
 });
