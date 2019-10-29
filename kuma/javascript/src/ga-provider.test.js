@@ -22,11 +22,6 @@ describe('GAProvider', () => {
         );
 
         expect(dummyGAFunc).not.toHaveBeenCalled();
-        // // We expect GAProvider to set window.ga as its value and we
-        // // expect the Consumer to get that value from the provider and
-        // // pass it to the contextConsumer function.
-        // expect(contextConsumer.mock.calls.length).toBe(1);
-        // expect(contextConsumer.mock.calls[0][0]).toEqual(dummyGAFunc);
     });
 
     test('Provides a dummy if no window.ga function', () => {
