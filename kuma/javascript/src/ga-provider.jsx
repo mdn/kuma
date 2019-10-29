@@ -4,9 +4,13 @@ import { useContext, useEffect, useState } from 'react';
 
 export type GAFunction = (...any) => void;
 
-const noop: GAFunction = () => {};
+function ga(...args) {
+    if (typeof window === 'object' && typeof window.ga === 'function') {
+        window.ga(...args);
+    }
+}
 
-const context = React.createContext<GAFunction>(noop);
+const context = React.createContext<GAFunction>(ga);
 
 /**
  * If we're running in the browser (not being server-side rendered)
@@ -24,16 +28,6 @@ const context = React.createContext<GAFunction>(noop);
 export default function GAProvider(props: {
     children: React.Node
 }): React.Node {
-    let ga: GAFunction;
-
-    // If there is a window object that defines a ga() function, then
-    // that ga function is the value we will provide. Otherwise we just
-    // provide a dummy function that does nothing.
-    if (typeof window === 'object' && typeof window.ga === 'function') {
-        ga = window.ga;
-    } else {
-        ga = noop;
-    }
     return <context.Provider value={ga}>{props.children}</context.Provider>;
 }
 
