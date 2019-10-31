@@ -13,6 +13,7 @@
  *
  * @flow
  */
+import * as React from 'react';
 
 // This is the type of the string catalog that Django creates for a locale.
 type StringCatalog = { [string]: string | Array<string> };
@@ -149,4 +150,50 @@ export function interpolate(s: string, args: Array<any> | { [string]: any }) {
             String(typedArgs[match.slice(2, -2)])
         );
     }
+}
+
+/**
+ * ELEMENT_REGEXP.test("This is just a string"); // false
+ * ELEMENT_REGEXP.test("<elem/>"); // true
+ * ELEMENT_REGEXP.test("<elemWithSpace />"); // true
+ */
+const ELEMENT_REGEXP = /(<\w+\s*\/>)/g;
+/**
+ * Similar to interpolate() it interpolates the given id-string with the given
+ * properties, but it can also work with React Elements. It will replace strings
+ * of the form `<name/>` and return an Array of React Elements.
+ *
+ * Use it like this (in a React Component):
+ * <Interpolated id="look at this <link/>!" link={<a href="/">site</a>}/>
+ * which renders
+ * ["Look at this ", <a key="<link/>2" href="/">site</a>, "!"]
+ */
+export function Interpolated({
+    id,
+    ...args
+}: {
+    id: string,
+    [key: string]: React.Node
+}): React.Node[] {
+    return id.split(ELEMENT_REGEXP).map((str, i) => {
+        if (!ELEMENT_REGEXP.test(str)) {
+            return str;
+        }
+
+        /**
+         *  This string refers to an element, but is there a corresponding
+         *  element in args?
+         *  `args` contain: privacyLink={<a href="#here">Hello</a>}
+         *  args["<footer/>".slice(1, -2).trim()]; // false
+         *  args["<privacyLink/>".slice(1, -2).trim()]; // true
+         */
+        const element = args[str.slice(1, -2).trim()];
+        if (!element) {
+            return str;
+        }
+
+        return React.cloneElement(element, {
+            key: str + i
+        });
+    });
 }

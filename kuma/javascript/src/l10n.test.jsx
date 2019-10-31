@@ -1,6 +1,14 @@
 //@flow
-
-import { localize, getLocale, gettext, ngettext, interpolate } from './l10n.js';
+import React from 'react';
+import renderer from 'react-test-renderer';
+import {
+    localize,
+    getLocale,
+    gettext,
+    ngettext,
+    interpolate,
+    Interpolated
+} from './l10n';
 
 // We don't actually want the strings in this file to be extracted
 // for localization, so we're going to use non-standard aliases
@@ -142,7 +150,7 @@ describe('ngettext', () => {
 });
 
 describe('interpolate()', () => {
-    it('two argument form', () => {
+    it('takes an array', () => {
         expect(interpolate('foo', [])).toBe('foo');
         expect(interpolate('%s', [1])).toBe('1');
         expect(interpolate('%s%s%s', [1, 2, 3])).toBe('123');
@@ -152,7 +160,7 @@ describe('interpolate()', () => {
         expect(interpolate('A%sfoo%sZ', ['a', 'z'])).toBe('AafoozZ');
     });
 
-    it('three argument form, with object', () => {
+    it('takes an object with string parameters', () => {
         expect(interpolate('foo', {})).toBe('foo');
         expect(interpolate('%(a)s', { a: 1 })).toBe('1');
         expect(interpolate('%(b)s foo %(a)s', { a: 1, b: true })).toBe(
@@ -164,5 +172,37 @@ describe('interpolate()', () => {
         expect(interpolate('%(a)s%(b)s%(d)s', { a: 1, b: 2, c: 3 })).toBe(
             '12undefined'
         );
+    });
+});
+
+describe('<Interpolated/>', () => {
+    it("doesn't modify strings when no parameters are given", () => {
+        const tree = renderer
+            .create(<Interpolated id="just some text" />)
+            .toJSON();
+        expect(tree).toMatchInlineSnapshot(`"just some text"`);
+    });
+
+    it('takes element parameters', () => {
+        const tree1 = renderer
+            .create(
+                <Interpolated
+                    id="oh a <link/> wow"
+                    link={<a href="/">click</a>}
+                />
+            )
+            .toJSON();
+        expect(tree1).toMatchSnapshot();
+
+        const tree2 = renderer
+            .create(
+                <Interpolated
+                    id="wow <head/> such <body /> many <foot />"
+                    head={<h1>Beautiful</h1>}
+                    foot={<p className="something">more</p>}
+                />
+            )
+            .toJSON();
+        expect(tree2).toMatchSnapshot();
     });
 });

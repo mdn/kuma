@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useContext, useEffect, useRef, useState } from 'react';
 
 import GAProvider from './ga-provider.jsx';
-import { getLocale, gettext } from './l10n.js';
+import { getLocale, gettext, Interpolated } from './l10n';
 import CloseIcon from './icons/close.svg';
 
 const NEWSLETTER_SUBSCRIBE_URL = 'https://www.mozilla.org/en-US/newsletter/';
@@ -256,13 +256,16 @@ export default function Newsletter() {
                                 required
                             />
                             <label htmlFor="newsletter-privacy-input">
-                                {gettext(
-                                    'I’m okay with Mozilla handling my info as explained in this '
-                                )}
-                                <a href={PRIVACY_POLICY_URL}>
-                                    {gettext('Privacy Policy')}
-                                </a>
-                                .
+                                <Interpolated
+                                    id={gettext(
+                                        'I’m okay with Mozilla handling my info as explained in this <privacyLink/>.'
+                                    )}
+                                    privacyLink={
+                                        <a href={PRIVACY_POLICY_URL}>
+                                            {gettext('Privacy Policy')}
+                                        </a>
+                                    }
+                                />
                             </label>
                         </div>
                         <div className="newsletter-group-submit">
