@@ -1,19 +1,23 @@
+// @flow
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
 import GAProvider from './ga-provider.jsx';
 import { gettext } from './l10n.js';
 
-export class AppErrorBoundary extends React.Component {
+export class AppErrorBoundary extends React.Component<
+    { children: React.Node },
+    { error: null | Error }
+> {
     state = { error: null };
 
     static contextType = GAProvider.context;
 
-    static getDerivedStateFromError(error) {
+    static getDerivedStateFromError(error: Error) {
         return { error };
     }
 
-    logError(boundaryName, error) {
+    logError(boundaryName: string, error: Error) {
         // https://developers.google.com/analytics/devguides/collection/analyticsjs/events#event_fields
         this.context('send', {
             hitType: 'event',
@@ -23,7 +27,7 @@ export class AppErrorBoundary extends React.Component {
         });
     }
 
-    componentDidCatch(error) {
+    componentDidCatch(error: Error) {
         document.title = 'Application rendering Error';
         this.logError('application', error);
     }
@@ -41,12 +45,8 @@ export class AppErrorBoundary extends React.Component {
     }
 }
 
-AppErrorBoundary.propTypes = {
-    children: PropTypes.element.isRequired
-};
-
 export class ContentErrorBoundary extends AppErrorBoundary {
-    componentDidCatch(error) {
+    componentDidCatch(error: Error) {
         document.title = 'Content rendering error';
         this.logError('content', error);
     }
@@ -63,7 +63,13 @@ export class ContentErrorBoundary extends AppErrorBoundary {
     }
 }
 
-function ErrorMessage({ title, children }) {
+function ErrorMessage({
+    title,
+    children
+}: {
+    title: string,
+    children?: React.Node
+}) {
     return (
         <section id="content">
             <div className="wrap">
