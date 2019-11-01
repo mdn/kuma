@@ -17,7 +17,10 @@ const webpackMerge = require('webpack-merge');
 //
 // TODO: there ought to be a better way to do this.
 //
-const nodePath = (process.env.NODE_PATH && process.env.NODE_PATH.split(path.delimiter)) || [path.join(__dirname, 'node_modules')];
+const nodePath = (process.env.NODE_PATH &&
+    process.env.NODE_PATH.split(path.delimiter)) || [
+    path.join(__dirname, 'node_modules')
+];
 const modeConfig = env => require(`./webpack-build-utils/webpack.${env}`)(env);
 const presetsConfig = require('./webpack-build-utils/loadPresets');
 
