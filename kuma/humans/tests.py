@@ -1,10 +1,10 @@
 
 
 import json
+from io import StringIO
 from os.path import dirname
 
 from django.test import TestCase
-from django.utils.six import StringIO
 
 from .models import Human, HumansTXT
 

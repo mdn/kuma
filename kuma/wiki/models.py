@@ -16,7 +16,6 @@ from django.db.models import signals
 from django.utils.decorators import available_attrs
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
-from django.utils.six import text_type
 from django.utils.translation import ugettext, ugettext_lazy as _
 from taggit.managers import TaggableManager
 from taggit.models import ItemBase, TagBase
@@ -775,14 +774,14 @@ class Document(NotificationsMixin, models.Model):
         if (self.parent and self.parent.id != self.id and
                 not self.parent.is_localizable):
             raise ValidationError('"%s": parent "%s" is not localizable.' % (
-                                  text_type(self), text_type(self.parent)))
+                                  str(self), str(self.parent)))
 
         # Can't make not localizable if it has translations
         # This only applies to documents that already exist, hence self.pk
         if self.pk and not self.is_localizable and self.translations.exists():
             raise ValidationError('"%s": document has %s translations but is '
                                   'not localizable.' %
-                                  (text_type(self), self.translations.count()))
+                                  (str(self), self.translations.count()))
 
     def revert(self, revision, user, comment=None):
         """

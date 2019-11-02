@@ -14,7 +14,6 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.template.loader import render_to_string
-from django.utils.six import text_type
 from pyquery import PyQuery as pq
 from waffle.testutils import override_flag, override_switch
 
@@ -2392,10 +2391,10 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         assert normalize_html(expected) == normalize_html(response.content)
 
         # Also, ensure that the revision is slipped into the headers
-        assert (text_type(Document.objects.get(slug=rev.document.slug,
-                                               locale=rev.document.locale)
-                                          .current_revision.id) ==
-                text_type(response['x-kuma-revision']))
+        assert (str(Document.objects.get(slug=rev.document.slug,
+                                         locale=rev.document.locale)
+                                    .current_revision.id) ==
+                str(response['x-kuma-revision']))
 
     @pytest.mark.midair
     def test_midair_section_collision_ajax(self):

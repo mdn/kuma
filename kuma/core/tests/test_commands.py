@@ -1,8 +1,7 @@
-
+from io import StringIO
 
 import pytest
 from django.core.management import call_command, CommandError
-from django.utils.six import StringIO
 
 
 def test_help():

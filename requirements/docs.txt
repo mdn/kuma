@@ -7,7 +7,6 @@ docutils==0.12
 Jinja2==2.10.1
 MarkupSafe==0.23
 pytz==2018.5
-six==1.11.0
 
 # These requirements are unique to docs
 Pygments==2.1.1

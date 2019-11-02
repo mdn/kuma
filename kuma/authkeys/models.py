@@ -10,14 +10,13 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.crypto import constant_time_compare
 from django.utils.encoding import python_2_unicode_compatible
-from django.utils.six import int2byte
 from django.utils.translation import ugettext_lazy as _
 
 
 def generate_key():
     """Generate a random API key."""
     # 32 * 8 = 256 random bits
-    random_bytes = b''.join(int2byte(random.randint(0, 255)) for _ in range(32))
+    random_bytes = bytes(random.randint(0, 255) for _ in range(32))
     random_hash = hashlib.sha256(random_bytes).digest()
     replacements = [b'rA', b'aZ', b'gQ', b'hH', b'hG', b'aR', b'DD']
     random_repl = random.choice(replacements)

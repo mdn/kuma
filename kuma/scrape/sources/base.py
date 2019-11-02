@@ -4,9 +4,6 @@
 import re
 from urllib.parse import unquote
 
-from django.utils.six import (binary_type, python_2_unicode_compatible,
-                              text_type)
-
 
 class Source(object):
     """
@@ -51,7 +48,6 @@ class Source(object):
     # Format is name -> (option_type, default value)
     OPTIONS = {}
 
-    @python_2_unicode_compatible
     class SourceError(Exception):
         """An error raised during gathering."""
         def __init__(self, *args, **kwargs):
@@ -86,7 +82,7 @@ class Source(object):
             valid = (value == 'all' or value == int(value))
         else:
             assert option_type == 'text'
-            valid = isinstance(value, text_type)
+            valid = isinstance(value, str)
 
         if not valid:
             raise ValueError('invalid value "%s" for type "%s"' %
@@ -113,7 +109,7 @@ class Source(object):
                     changed[name] = value
                     setattr(self, name, value)
             elif option_type == 'int_all':
-                if text_type(value).lower() == 'all':
+                if str(value).lower() == 'all':
                     if current != 'all':
                         changed[name] = 'all'
                         setattr(self, name, 'all')
@@ -143,12 +139,12 @@ class Source(object):
 
     def decode_href(self, href):
         """Convert URL-escaped href attributes to unicode."""
-        if isinstance(href, binary_type):
+        if isinstance(href, bytes):
             uhref = href.decode('ascii')
         else:
             uhref = href
         decoded = unquote(uhref)
-        assert isinstance(decoded, text_type)
+        assert isinstance(decoded, str)
         return decoded
 
     def gather(self, requester, storage):

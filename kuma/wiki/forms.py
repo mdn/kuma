@@ -14,7 +14,6 @@ from django.forms.widgets import CheckboxSelectMultiple
 from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.safestring import mark_safe
-from django.utils.six import string_types, text_type
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 from taggit.utils import parse_tags
@@ -187,7 +186,7 @@ class AkismetRevisionData(object):
         })
 
         for key, value in meta.items():
-            if not isinstance(value, string_types):
+            if not isinstance(value, str):
                 continue
             if key.startswith('HTTP_COOKIE'):
                 continue
@@ -659,7 +658,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
         try:
             doc_current_rev = self.instance.document.current_revision.id
-            if text_type(current_rev) != text_type(doc_current_rev):
+            if str(current_rev) != str(doc_current_rev):
 
                 if (self.section_id and self.instance and
                         self.instance.document):

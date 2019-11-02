@@ -16,7 +16,6 @@ from django.shortcuts import _get_queryset, redirect
 from django.utils.cache import patch_cache_control
 from django.utils.encoding import force_text, smart_bytes
 from django.utils.http import urlencode
-from django.utils.six import text_type
 from django.utils.translation import ugettext_lazy as _
 from polib import pofile
 from pyquery import PyQuery as pq
@@ -284,11 +283,17 @@ def get_unique(content_type, object_pk, name=None, request=None,
     # HACK: Build a hash of the fields that should be unique, let MySQL
     # chew on that for a unique index. Note that any changes to this algo
     # will create all new unique hashes that don't match any existing ones.
-    hash_text = "\n".join(text_type(x).encode('utf-8') for x in (
-        content_type.pk, object_pk, name or '', ip, user_agent,
-        (user and user.pk or 'None')
-    ))
-    unique_hash = hashlib.md5(hash_text).hexdigest()
+    hash_text = '\n'.join(
+        (
+            content_type.pk,
+            object_pk,
+            name or '',
+            ip,
+            user_agent,
+            user.pk if user else 'None',
+        )
+    )
+    unique_hash = hashlib.md5(hash_text.encode('utf-8')).hexdigest()
 
     return (user, ip, user_agent, unique_hash)
 
