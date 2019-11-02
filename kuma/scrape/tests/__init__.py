@@ -1,5 +1,5 @@
 """Tests for scraping live data and creating sample data."""
-from __future__ import unicode_literals
+
 
 import mock
 

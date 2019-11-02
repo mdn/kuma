@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 
 from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage

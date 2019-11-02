@@ -4,7 +4,7 @@ Tests for kuma.wiki.models.Document.
 
 Legacy tests are in kuma/wiki/tests/test_models.py
 """
-from __future__ import unicode_literals
+
 
 import json
 from datetime import timedelta

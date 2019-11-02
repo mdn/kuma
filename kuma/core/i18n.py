@@ -4,7 +4,7 @@ Customizations of Django i18n functions for Kuma.
 Django language code is lower case, like 'en-us'.
 Kuma language code is mixed case, like 'en-US'.
 """
-from __future__ import unicode_literals
+
 
 from collections import OrderedDict
 

@@ -1,5 +1,5 @@
 """Data sources for scraping MDN."""
-from __future__ import absolute_import, unicode_literals
+
 
 from .base import DocumentBaseSource, Source
 from .document import DocumentSource

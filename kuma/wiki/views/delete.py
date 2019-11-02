@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect, render

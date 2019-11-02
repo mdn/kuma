@@ -7,7 +7,7 @@ TODO:
 - Permissions for tag namespaces (eg. system:* is superuser-only)
 - Machine tag assists
 """
-from __future__ import unicode_literals
+
 
 from datetime import date, timedelta
 

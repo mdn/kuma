@@ -1,5 +1,5 @@
 """Scrape document links found on a MDN page, so that all the links will work."""
-from __future__ import unicode_literals
+
 
 from django.core.management.base import CommandError
 

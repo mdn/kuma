@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 
 import pytest
 from waffle.testutils import override_switch

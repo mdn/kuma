@@ -3,7 +3,7 @@ Tests for kuma/wiki/views/document.py
 
 Legacy tests are in test_views.py.
 """
-from __future__ import unicode_literals
+
 
 import base64
 import json

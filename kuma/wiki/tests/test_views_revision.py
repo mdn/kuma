@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Tests for kuma.wiki.views.revision."""
-from __future__ import unicode_literals
+
 
 import pytest
 from django.conf import settings

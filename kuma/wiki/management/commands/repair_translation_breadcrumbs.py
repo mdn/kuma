@@ -1,7 +1,7 @@
 """
 Repair breadcrumb relations for translations that are missing parent topics.
 """
-from __future__ import unicode_literals
+
 
 import logging
 

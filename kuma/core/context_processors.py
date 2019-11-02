@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 
 from constance import config
 from django.conf import settings

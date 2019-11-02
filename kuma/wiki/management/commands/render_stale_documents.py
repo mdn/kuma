@@ -1,7 +1,7 @@
 """
 Manually re-render stale documents
 """
-from __future__ import unicode_literals
+
 
 import logging
 

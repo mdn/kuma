@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Tests for kuma.wiki.events."""
-from __future__ import unicode_literals
+
 
 from datetime import datetime
 

@@ -1,5 +1,5 @@
 """Store temporary data and interact with the database."""
-from __future__ import unicode_literals
+
 
 import logging
 from collections import OrderedDict

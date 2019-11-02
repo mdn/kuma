@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Tests for the Source class."""
-from __future__ import unicode_literals
+
 
 import mock
 import pytest

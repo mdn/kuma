@@ -2,7 +2,7 @@
 """
 Manually schedule the removal of one or more documents from the document API.
 """
-from __future__ import unicode_literals
+
 
 from collections import namedtuple
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Tests for the DocumentRedirectSource class (HEAD document)."""
-from __future__ import unicode_literals
+
 
 from . import mock_requester, mock_storage
 from ..sources import DocumentRedirectSource

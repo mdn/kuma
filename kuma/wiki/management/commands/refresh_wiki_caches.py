@@ -4,7 +4,7 @@ Refresh cached wiki data.
 Run this periodically, it's useful for preventing redundant traffic between
 Kuma and other services like Kumascript.
 """
-from __future__ import unicode_literals
+
 
 import hashlib
 import logging

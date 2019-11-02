@@ -1,5 +1,5 @@
 """DocumentRedirectSource checks if a MDN wiki document is a redirect."""
-from __future__ import absolute_import, unicode_literals
+
 
 from django.utils.six.moves.urllib.parse import urlparse
 

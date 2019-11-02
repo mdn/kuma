@@ -2,8 +2,8 @@
 """
 Manually schedule the cleaning of one or more documents
 """
-from __future__ import division
-from __future__ import unicode_literals
+
+
 
 from math import ceil
 

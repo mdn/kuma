@@ -3,7 +3,7 @@ Test WikiDocumentType.
 
 Integration tests against an ElasticSearch server are in kuma/search/tests/
 """
-from __future__ import unicode_literals
+
 
 import mock
 import pytest

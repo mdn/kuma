@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Tests for the RevisionSource class ($revision/ID API)."""
-from __future__ import unicode_literals
+
 
 from datetime import datetime
 

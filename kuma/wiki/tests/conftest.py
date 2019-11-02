@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """py.test fixtures for kuma.wiki.tests."""
-from __future__ import unicode_literals
+
 
 import base64
 import json

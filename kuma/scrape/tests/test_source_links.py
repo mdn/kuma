@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Tests for the LinksSource class (Links from a page)."""
-from __future__ import unicode_literals
+
 
 from datetime import datetime
 
