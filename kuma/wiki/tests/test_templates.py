@@ -11,7 +11,6 @@ from django.core import mail
 from django.shortcuts import render
 from django.test.utils import override_settings
 from django.utils import translation
-from django.utils.http import urlquote
 from pyquery import PyQuery as pq
 
 from kuma.core.tests import (assert_no_cache_header,
@@ -977,7 +976,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         assert response.status_code == 302
         assert_no_cache_header(response)
         expected_url = '%s?next=%s' % (reverse('account_login'),
-                                       urlquote(translate_uri))
+                                       quote(translate_uri))
         assert expected_url in response['Location']
 
     def test_translate_GET_with_perm(self):
