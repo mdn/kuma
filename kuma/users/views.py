@@ -30,7 +30,6 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
 from honeypot.decorators import verify_honeypot_value
-from six.moves import reduce
 from taggit.utils import parse_tags
 
 from kuma.core.decorators import (ensure_wiki_domain, login_required,
@@ -44,6 +43,7 @@ from .models import User, UserBan
 # we have to import the signup form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
 from .signup import SignupForm
+from functools import reduce
 
 
 # TODO: Make this dynamic, editable from admin interface
