@@ -1,5 +1,5 @@
 import time
-import urllib
+import urllib.parse
 
 import mock
 import pytest

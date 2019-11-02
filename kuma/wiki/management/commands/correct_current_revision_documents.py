@@ -1,6 +1,6 @@
 
 
-import urllib
+import urllib.parse
 
 from dateutil import parser
 from django.conf import settings
@@ -69,7 +69,7 @@ class Command(BaseCommand):
         def get_url(doc, name='wiki.document', *args):
             return '{}{}'.format(
                 options['baseurl'],
-                urllib.quote(
+                urllib.parse.quote(
                     reverse(name, locale=doc.locale, args=(doc.slug,) + args)))
 
         documents = Document.objects.all()
