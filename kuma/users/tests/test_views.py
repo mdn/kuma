@@ -992,9 +992,8 @@ def test_user_edit_interests(wiki_user, wiki_user_github_account, user_client):
     doc = pq(response.content)
     assert doc.find('#user-head').length == 1
 
-    result_tags = [t.name.replace('profile:interest:', '')
-                   for t in wiki_user.tags.all_ns('profile:interest:')]
-    result_tags.sort()
+    result_tags = sorted([t.name.replace('profile:interest:', '')
+                          for t in wiki_user.tags.all_ns('profile:interest:')])
     test_tags.sort()
     assert result_tags == test_tags
 

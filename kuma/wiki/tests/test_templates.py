@@ -795,8 +795,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         self.d.save()
         tags = ['tag1', 'tag2', 'tag3']
         self.d.tags.add(*tags)
-        result_tags = list(self.d.tags.names())
-        result_tags.sort()
+        result_tags = sorted(self.d.tags.names())
         assert tags == result_tags
         tags = ['tag1', 'tag4']
         data = new_document_data(tags)

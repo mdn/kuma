@@ -71,7 +71,7 @@ def pytest_generate_tests(metafunc):
     """
     for name, params in _DYNAMIC_FIXTURES.items():
         if name in metafunc.fixturenames:
-            if type(params) is dict:
+            if isinstance(params, dict):
                 metafunc.parametrize(name, **params)
             else:
                 metafunc.parametrize(name, params)

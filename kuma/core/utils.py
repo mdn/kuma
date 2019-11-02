@@ -242,7 +242,7 @@ def chunked(iterable, n):
     :returns: generator of chunks from the iterable
     """
     iterable = iter(iterable)
-    while 1:
+    while True:
         t = tuple(islice(iterable, n))
         if t:
             yield t
@@ -440,8 +440,7 @@ def add_shared_cache_control(response, **kwargs):
 def order_params(original_url):
     """Standardize order of query parameters."""
     bits = urlsplit(original_url)
-    qs = parse_qsl(bits.query, keep_blank_values=True)
-    qs.sort()
+    qs = sorted(parse_qsl(bits.query, keep_blank_values=True))
     new_qs = urlencode(qs)
     new_url = urlunsplit((bits.scheme, bits.netloc, bits.path, new_qs, bits.fragment))
     return new_url

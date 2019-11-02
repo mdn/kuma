@@ -1210,8 +1210,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
                                    slug="a-test-article")
         rev = doc.revisions.order_by('-id').all()[0]
-        review_tags = [x.name for x in rev.review_tags.all()]
-        review_tags.sort()
+        review_tags = sorted([x.name for x in rev.review_tags.all()])
         assert review_tags == ['editorial', 'technical']
 
         # Now, ensure that review form appears for the review tags.
@@ -1365,8 +1364,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
                                        slug=slug)
             rev = doc.revisions.order_by('-id').all()[0]
-            review_tags = [x.name for x in rev.review_tags.all()]
-            review_tags.sort()
+            review_tags = sorted([x.name for x in rev.review_tags.all()])
             for expected_str in data_dict['message_contains']:
                 assert expected_str in rev.summary
                 assert expected_str in rev.comment
