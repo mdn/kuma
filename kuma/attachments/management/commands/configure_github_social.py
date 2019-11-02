@@ -7,13 +7,6 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.management.base import BaseCommand
 
-try:
-    input = raw_input
-except NameError:
-    # Python3's input behaves like raw_input
-    # TODO: Delete this block when we've migrated
-    pass
-
 LOCALHOST = 'localhost:8000'
 MDN_LOCALHOST = 'mdn.localhost'
 
