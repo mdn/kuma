@@ -765,18 +765,11 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
                     based_on = self.cleaned_data.get('based_on')
                     assert based_on, 'Expected a new translation.'
                     document = based_on.document
-                    # print("INPUT:", repr(document))
-                    # print("HTML______")
-                    # print(document.html)
-                    # print("HTML______")
-                    # print(document.html)
                     self._akismet_data = AkismetNewTranslationData(
                         self.request, self.cleaned_data, document,
                         self.data.get('locale'))
 
         parameters = self._akismet_data.parameters.copy()
-        # print(parameters)
-        # raise Exception
         parameters.update(self.akismet_parameter_overrides())
         return parameters
 
