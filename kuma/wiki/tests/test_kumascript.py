@@ -3,9 +3,9 @@
 
 import base64
 import json
+from unittest import mock
 from urllib.parse import urljoin
 
-import mock
 import pytest
 import requests_mock
 from elasticsearch import TransportError

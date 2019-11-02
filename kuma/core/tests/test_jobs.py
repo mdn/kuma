@@ -1,6 +1,6 @@
 
 
-import mock
+from unittest import mock
 
 from kuma.core.tests import KumaTestCase
 

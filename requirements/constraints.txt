@@ -338,24 +338,6 @@ greenlet==0.4.15 \
 
 
 #
-# mock
-#
-# Backport of function signature features from Python 3.3's inspect
-# Code: https://github.com/aliles/funcsigs
-# Changes: https://github.com/aliles/funcsigs/blob/master/CHANGELOG
-# Docs: http://funcsigs.readthedocs.io/en/latest/
-funcsigs==0.4 \
-    --hash=sha256:ff5ad9e2f8d9e5d1e8bbfbcf47722ab527cf0d51caeeed9da6d0f40799383fde \
-    --hash=sha256:d83ce6df0b0ea6618700fe1db353526391a8a3ada1b7aba52fed7a61da772033
-# Automation for setuptools
-# Code: https://github.com/openstack-dev/pbr
-# Changes: https://docs.openstack.org/pbr/latest/user/history.html
-# Docs: https://docs.openstack.org/pbr/latest/
-pbr==1.8.1 \
-    --hash=sha256:46c8db75ae75a056bd1cc07fa21734fe2e603d11a07833ecc1eeb74c35c72e0c \
-    --hash=sha256:e2127626a91e6c885db89668976db31020f0af2da728924b56480fc7ccf09649
-
-#
 # PyPOM
 #
 # Provides facilities for defining, registering and looking up components.

@@ -1,8 +1,8 @@
 
 
 from datetime import datetime
+from unittest import mock
 
-import mock
 import pytest
 from django.db import IntegrityError
 from taggit.models import Tag

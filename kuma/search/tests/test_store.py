@@ -1,6 +1,7 @@
 
 
-import mock
+from unittest import mock
+
 from django.contrib.sites.models import Site
 
 from kuma.core.tests import KumaTestCase

@@ -1,6 +1,6 @@
 
 
-import mock
+from unittest import mock
 
 from kuma.payments.utils import (
     cancel_stripe_customer_subscription,

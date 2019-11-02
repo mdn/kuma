@@ -1,4 +1,4 @@
-import mock
+from unittest import mock
 
 from allauth.account.models import EmailAddress, EmailConfirmationHMAC
 from allauth.account.signals import user_signed_up

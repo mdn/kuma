@@ -1,9 +1,9 @@
 import time
 from datetime import date, datetime, timedelta
+from unittest import mock
 from urllib.parse import urlparse
 from xml.sax.saxutils import escape
 
-import mock
 import pytest
 from constance import config
 from constance.test import override_config

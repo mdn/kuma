@@ -1,4 +1,5 @@
 import json
+from unittest.mock import patch
 
 import pytest
 from allauth.account.models import EmailAddress
@@ -7,7 +8,6 @@ from constance.test.utils import override_config
 from django.conf import settings
 from django.db import IntegrityError
 from django.http import HttpResponse
-from mock import patch
 from pyquery import PyQuery as pq
 from waffle.testutils import override_switch
 

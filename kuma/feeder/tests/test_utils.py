@@ -4,10 +4,10 @@
 import socket
 from datetime import datetime
 from time import mktime, struct_time
+from unittest import mock
 from urllib.error import URLError
 
 import jsonpickle
-import mock
 import pytest
 from feedparser import FeedParserDict
 

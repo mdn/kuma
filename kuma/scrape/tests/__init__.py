@@ -1,7 +1,7 @@
 """Tests for scraping live data and creating sample data."""
 
 
-import mock
+from unittest import mock
 
 
 def mock_requester(

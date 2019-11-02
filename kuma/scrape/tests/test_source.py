@@ -2,7 +2,8 @@
 """Tests for the Source class."""
 
 
-import mock
+from unittest import mock
+
 import pytest
 
 from kuma.scrape.sources import Source

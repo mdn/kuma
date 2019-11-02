@@ -4,9 +4,9 @@
 import datetime
 import json
 from html.parser import HTMLParser
+from unittest import mock
 from urllib.parse import parse_qs, urlencode, urlparse
 
-import mock
 import pytest
 import requests_mock
 from constance.test import override_config

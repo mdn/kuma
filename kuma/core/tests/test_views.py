@@ -1,8 +1,8 @@
 
 
 import logging
+from unittest import mock
 
-import mock
 import pytest
 from django.conf import settings
 from django.core import mail

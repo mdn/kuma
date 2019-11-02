@@ -1,7 +1,7 @@
 import time
+from unittest import mock
 from urllib.parse import parse_qs, quote, urlparse
 
-import mock
 import pytest
 from constance import config
 from django.conf import settings

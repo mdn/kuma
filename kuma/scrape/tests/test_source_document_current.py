@@ -2,7 +2,7 @@
 """Tests for the DocumentCurrentSource class (document.current_revision)."""
 
 
-import mock
+from unittest import mock
 
 from . import mock_storage
 from ..sources import DocumentCurrentSource

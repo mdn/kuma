@@ -3,8 +3,8 @@
 
 
 from datetime import datetime
+from unittest import mock
 
-import mock
 import pytest
 from django.conf import settings
 

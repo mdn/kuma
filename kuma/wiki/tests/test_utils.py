@@ -2,9 +2,9 @@
 
 import datetime
 import os.path
+from unittest import mock
 
 
-import mock
 import pytest
 from constance.test import override_config
 from django.core.exceptions import ImproperlyConfigured

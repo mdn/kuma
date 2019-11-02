@@ -1,8 +1,8 @@
 
 
 import json
+from unittest import mock
 
-import mock
 import pytest
 
 from kuma.api.tasks import publish, request_cdn_cache_invalidation, unpublish

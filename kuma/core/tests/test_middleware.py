@@ -1,10 +1,9 @@
-
+from unittest.mock import MagicMock, patch
 
 import pytest
 from django.core.exceptions import MiddlewareNotUsed
 from django.http import HttpResponse
 from django.test import RequestFactory
-from mock import MagicMock, patch
 
 from ..middleware import (
     ForceAnonymousSessionMiddleware,

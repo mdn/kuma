@@ -1,4 +1,4 @@
-import mock
+from unittest import mock
 
 from django.utils import translation
 from rest_framework import serializers

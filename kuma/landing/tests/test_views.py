@@ -1,6 +1,6 @@
+from unittest import mock
 from urllib.parse import urlparse
 
-import mock
 import pytest
 from django.core.cache import cache
 from ratelimit.exceptions import Ratelimited

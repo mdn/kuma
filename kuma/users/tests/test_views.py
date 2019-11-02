@@ -1,6 +1,6 @@
 from textwrap import dedent
+from unittest import mock
 
-import mock
 import pytest
 import requests_mock
 from allauth.account.models import EmailAddress

@@ -9,9 +9,9 @@ import base64
 import json
 from collections import namedtuple
 from datetime import datetime
+from unittest import mock
 from urllib.parse import quote, urlparse
 
-import mock
 import pytest
 import requests_mock
 from django.conf import settings

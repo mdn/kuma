@@ -8,8 +8,8 @@ Legacy tests are in kuma/wiki/tests/test_models.py
 
 import json
 from datetime import timedelta
+from unittest import mock
 
-import mock
 import pytest
 
 from . import HREFLANG_TEST_CASES, normalize_html
