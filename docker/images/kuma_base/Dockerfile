@@ -1,4 +1,4 @@
-FROM python:3.7-slim@sha256:d11045cada89c0d1ebe3a8b0cd6c25d29fc300f9f2eb17bb24c5674e62b5ba58
+FROM python:3.8.0-slim@sha256:7df1fd6bb894e03b488c01fd05eaa4dd677f5b57d800c209f7f0af9867137df9
 
 # Set the environment variables
 ENV NODE_VERSION=10.16.3 \
