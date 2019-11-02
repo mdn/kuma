@@ -40,12 +40,12 @@ class Source(object):
 
     # Types of source options. Used when merging options, to determine if
     # the new or existing option value should win, possible resetting scraping.
-    OPTION_TYPES = set((
+    OPTION_TYPES = {
         'bool',     # True > False
         'int',      # 2 > 1 > 0
         'int_all',  # 'all' > 2 > 0
         'text',     # any new value > old value > ''
-    ))
+    }
 
     # The scrape options for this source, defaulting to no valid settings
     # Format is name -> (option_type, default value)

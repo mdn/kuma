@@ -176,9 +176,9 @@ def test_sitemaps_excluded_documents(tmpdir, settings, wiki_user):
     # Now check exactly which slugs we expect in entirety.
     # Note that this automatically asserts that all the legacy docs
     # created above don't get returned.
-    assert set([urlparse(loc).path for loc in all_locs]) == set([
+    assert {urlparse(loc).path for loc in all_locs} == {
         '/en-US/', '/en-US/docs/top', '/sv-SE/'
-    ])
+    }
 
 
 class DeleteOldDocumentSpamAttemptData(UserTestCase):

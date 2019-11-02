@@ -754,7 +754,7 @@ def wiki_document(request, document_slug, document_locale):
         other_translations = original_doc.get_other_translations(
             fields=['title', 'locale', 'slug', 'parent']
         )
-        all_locales = (set([original_doc.locale]) |
+        all_locales = ({original_doc.locale} |
                        set(trans.locale for trans in other_translations))
 
         # Bundle it all up and, finally, return.

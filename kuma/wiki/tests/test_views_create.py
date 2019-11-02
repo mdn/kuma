@@ -123,7 +123,7 @@ def test_create_valid(add_doc_client):
     assert_no_cache_header(resp)
     assert resp['Location'].endswith(reverse('wiki.document', args=(slug,)))
     doc = Document.objects.get(slug=slug)
-    for name in (set(data.keys()) - set(('tags', 'review_tags'))):
+    for name in (set(data.keys()) - {'tags', 'review_tags'}):
         assert getattr(doc.current_revision, name) == data[name]
     assert (sorted(doc.tags.all().values_list('name', flat=True)) ==
             ['tag1', 'tag2'])
@@ -189,7 +189,7 @@ def test_create_child_valid(root_doc, add_doc_client, slug):
         reverse('wiki.document', args=(full_slug,)))
     assert root_doc.children.count() == 1
     doc = Document.objects.get(slug=full_slug, locale='en-US')
-    skip_keys = set(('tags', 'review_tags', 'parent_topic'))
+    skip_keys = {'tags', 'review_tags', 'parent_topic'}
     for name in (set(data.keys()) - skip_keys):
         expected = full_slug if name == 'slug' else data[name]
         assert getattr(doc.current_revision, name) == expected

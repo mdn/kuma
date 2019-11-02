@@ -47,7 +47,7 @@ def pytest_configure(config):
     # Process the settings for this Kuma instance
     settings = _KUMA_STATUS['settings']
     allowed_hosts = set(settings['ALLOWED_HOSTS'])
-    host_urls = set((base_url,))
+    host_urls = {base_url}
     protocol = settings['PROTOCOL']
     for host in allowed_hosts:
         if host != '*':

@@ -65,7 +65,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterUniqueTogether(
             name='filtergroup',
-            unique_together=set([('name', 'slug')]),
+            unique_together={('name', 'slug')},
         ),
         migrations.AddField(
             model_name='filter',
@@ -79,7 +79,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterUniqueTogether(
             name='filter',
-            unique_together=set([('name', 'slug')]),
+            unique_together={('name', 'slug')},
         ),
         migrations.AddField(
             model_name='filter',

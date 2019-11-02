@@ -30,13 +30,13 @@ class LinksSource(Source):
 
     PARAM_NAME = 'path'
 
-    ignored_slugs = set((
+    ignored_slugs = {
         'dashboards',
         'profiles',
         'search',
         'users/signin',
         'docs/tag/',
-    ))
+    }
 
     def __init__(self, path=None, **options):
         """Process and validate the initial path."""

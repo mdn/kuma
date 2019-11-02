@@ -64,7 +64,7 @@ class WikiDocumentType(document.Document):
     @classmethod
     def case_insensitive_keywords(cls, keywords):
         '''Create a unique list of lowercased keywords.'''
-        return sorted(set([keyword.lower() for keyword in keywords]))
+        return sorted({keyword.lower() for keyword in keywords})
 
     @classmethod
     def from_django(cls, obj):

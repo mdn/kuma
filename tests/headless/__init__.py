@@ -10,16 +10,15 @@ pytest.register_assert_rewrite('utils.urls')
 DEFAULT_TIMEOUT = 120  # seconds
 
 # Untrusted attachments and samples domains that are indexed
-INDEXED_ATTACHMENT_DOMAINS = set((
+INDEXED_ATTACHMENT_DOMAINS = {
     'mdn.mozillademos.org',          # Main attachments domain
     'demos.mdn.mozit.cloud',         # Alternate attachments domain (testing)
     'demos-origin.mdn.mozit.cloud',  # Attachments origin
-))
+}
 
 # Kuma web domains that are indexed
-INDEXED_WEB_DOMAINS = set((
-    'developer.mozilla.org',    # Main website, CDN origin
-))
+INDEXED_WEB_DOMAINS = {
+    'developer.mozilla.org'}
 
 
 def request(method, url, **kwargs):

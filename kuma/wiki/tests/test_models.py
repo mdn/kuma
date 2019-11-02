@@ -61,8 +61,8 @@ def test_clean_current_revision(root_doc, trans_doc, wiki_user_2, doc_case,
         </html>
     """
     tags = '"Banana" "Orange" "Apple"'
-    l10n_tags = set(['inprogress'])
-    review_tags = set(['editorial', 'technical'])
+    l10n_tags = {'inprogress'}
+    review_tags = {'editorial', 'technical'}
     current_rev.tags = tags
     # Let's make the revision's slug and title different from the document
     # to ensure that they're corrected in the end.
