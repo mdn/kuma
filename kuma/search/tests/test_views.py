@@ -37,7 +37,7 @@ class ViewTests(ElasticTestCase):
                 assert serialized_filter['name'] == 'Tagged'
                 assert serialized_filter['slug'] == 'tagged'
                 assert serialized_filter['shortcut'] is None
-                assert list(serialized_filter['tags']) == [u'tagged']
+                assert list(serialized_filter['tags']) == ['tagged']
                 assert serialized_filter['operator'] == 'OR'
                 assert serialized_filter['group'] == {
                     'order': 1,
@@ -62,7 +62,7 @@ class ViewTests(ElasticTestCase):
                 assert filter_1['name'] == 'Tagged'
                 assert filter_1['slug'] == 'tagged'
                 assert filter_1['shortcut'] is None
-                assert list(filter_1['tags']) == [u'tagged']
+                assert list(filter_1['tags']) == ['tagged']
                 assert filter_1['operator'] == 'OR'
                 assert filter_1['group'] == {
                     'order': 1,

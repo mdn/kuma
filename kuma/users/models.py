@@ -34,10 +34,10 @@ class UserBan(models.Model):
     is_active = models.BooleanField(default=True, help_text="(Is ban active)")
 
     def __str__(self):
-        message = _(u'%(banned_user)s banned by %(banned_by)s') % {
+        message = _('%(banned_user)s banned by %(banned_by)s') % {
             'banned_user': self.user, 'banned_by': self.by}
         if not self.is_active:
-            message = _(u'%s (no longer active)') % message
+            message = _('%s (no longer active)') % message
         return message
 
 
@@ -46,7 +46,7 @@ class User(AbstractUser):
     Our custom user class.
     """
     timezone = models.CharField(
-        verbose_name=_(u'Timezone'),
+        verbose_name=_('Timezone'),
         max_length=42,
         blank=True,
         default=settings.TIME_ZONE,
@@ -59,50 +59,50 @@ class User(AbstractUser):
         max_length=7,
         default=settings.LANGUAGE_CODE,
         choices=settings.SORTED_LANGUAGES,
-        verbose_name=_(u'Language'),
+        verbose_name=_('Language'),
         blank=True,
         db_index=True,
     )
     homepage = models.URLField(
-        verbose_name=_(u'Homepage'),
+        verbose_name=_('Homepage'),
         max_length=255,
         blank=True,
         error_messages={
-            'invalid': _(u'This URL has an invalid format. '
-                         u'Valid URLs look like http://example.com/my_page.')
+            'invalid': _('This URL has an invalid format. '
+                         'Valid URLs look like http://example.com/my_page.')
         },
     )
     title = models.CharField(
-        verbose_name=_(u'Title'),
+        verbose_name=_('Title'),
         max_length=255,
         blank=True,
     )
     fullname = models.CharField(
-        verbose_name=_(u'Name'),
+        verbose_name=_('Name'),
         max_length=255,
         blank=True,
     )
     organization = models.CharField(
-        verbose_name=_(u'Organization'),
+        verbose_name=_('Organization'),
         max_length=255,
         blank=True,
     )
     location = models.CharField(
-        verbose_name=_(u'Location'),
+        verbose_name=_('Location'),
         max_length=255,
         blank=True,
     )
     bio = models.TextField(
-        verbose_name=_(u'About Me'),
+        verbose_name=_('About Me'),
         blank=True,
     )
     irc_nickname = models.CharField(
-        verbose_name=_(u'IRC nickname'),
+        verbose_name=_('IRC nickname'),
         max_length=255,
         blank=True,
     )
 
-    tags = NamespacedTaggableManager(verbose_name=_(u'Tags'), blank=True)
+    tags = NamespacedTaggableManager(verbose_name=_('Tags'), blank=True)
 
     WEBSITE_VALIDATORS = {
         'website': validators.RegexValidator(
@@ -149,46 +149,46 @@ class User(AbstractUser):
 
     # a bunch of user URLs
     website_url = models.TextField(
-        _(u'Website'),
+        _('Website'),
         blank=True,
         validators=[WEBSITE_VALIDATORS['website']],
     )
     mozillians_url = models.TextField(
-        _(u'Mozillians'),
+        _('Mozillians'),
         blank=True,
         validators=[WEBSITE_VALIDATORS['mozillians']],
     )
     github_url = models.TextField(
-        _(u'GitHub'),
+        _('GitHub'),
         blank=True,
         validators=[WEBSITE_VALIDATORS['github']],
     )
     is_github_url_public = models.BooleanField(
-        _(u'Public GitHub URL'),
+        _('Public GitHub URL'),
         default=False,
     )
     twitter_url = models.TextField(
-        _(u'Twitter'),
+        _('Twitter'),
         blank=True,
         validators=[WEBSITE_VALIDATORS['twitter']],
     )
     linkedin_url = models.TextField(
-        _(u'LinkedIn'),
+        _('LinkedIn'),
         blank=True,
         validators=[WEBSITE_VALIDATORS['linkedin']],
     )
     facebook_url = models.TextField(
-        _(u'Facebook'),
+        _('Facebook'),
         blank=True,
         validators=[WEBSITE_VALIDATORS['facebook']],
     )
     stackoverflow_url = models.TextField(
-        _(u'Stack Overflow'),
+        _('Stack Overflow'),
         blank=True,
         validators=[WEBSITE_VALIDATORS['stackoverflow']],
     )
     discourse_url = models.TextField(
-        _(u'Discourse'),
+        _('Discourse'),
         blank=True,
         validators=[WEBSITE_VALIDATORS['discourse']],
     )

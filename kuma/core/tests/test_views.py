@@ -25,14 +25,14 @@ def sitemaps(db, settings, tmpdir):
     locale_dir = media_dir.mkdir('sitemaps').mkdir('en-US')
     sitemap_file = media_dir.join('sitemap.xml')
     locale_file = locale_dir.join('sitemap.xml')
-    sitemap_file.write_text(u"""
+    sitemap_file.write_text("""
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
     <loc>https://localhost:8000/sitemaps/en-US/sitemap.xml</loc>
     <lastmod>2017-09-06T23:24:37+00:00</lastmod>
   </sitemap>
 </sitemapindex>""", 'utf8')
-    locale_file.write_text(u"""
+    locale_file.write_text("""
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>

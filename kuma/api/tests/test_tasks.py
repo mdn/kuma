@@ -379,19 +379,19 @@ def test_request_cdn_cache_invalidation_configured(
 
     pairs = [('sv-SE', 'Learn/stuff')]
     request_cdn_cache_invalidation(pairs)
-    assert transform_calls_made == [[u'sv-SE', u'Learn/stuff']]
+    assert transform_calls_made == [['sv-SE', 'Learn/stuff']]
 
     # When used, we need to reset it because it's a module global mutable
     # specific to this test module.
     del transform_calls_made[:]
 
     mocked_get_cloudfront_client().create_invalidation.assert_called_with(
-        DistributionId=u'XYZABC123',
+        DistributionId='XYZABC123',
         InvalidationBatch={
-            u'Paths': {
-                u'Items': [u'/sv-SE/Learn/stuff/'],
-                u'Quantity': 1
+            'Paths': {
+                'Items': ['/sv-SE/Learn/stuff/'],
+                'Quantity': 1
             },
-            u'CallerReference': mock.ANY
+            'CallerReference': mock.ANY
         }
     )

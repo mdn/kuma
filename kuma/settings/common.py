@@ -11,7 +11,7 @@ import dj_email_url
 from decouple import config, Csv
 from six.moves.urllib.parse import parse_qs, urlencode, urlsplit, urlunsplit
 
-_Language = namedtuple(u'Language', u'english native')
+_Language = namedtuple('Language', 'english native')
 
 
 def path(*parts):

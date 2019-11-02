@@ -28,29 +28,29 @@ class UserEditForm(forms.ModelForm):
     specially.
     """
     timezone = TimezoneChoiceField(
-        label=_(u'Timezone'),
+        label=_('Timezone'),
         initial=settings.TIME_ZONE,
         choices=COMMON_GROUPED_CHOICES,
         required=False,
     )
     beta = forms.BooleanField(
-        label=_(u'Beta tester'),
+        label=_('Beta tester'),
         required=False,
     )
     interests = forms.CharField(
-        label=_(u'Interests'),
+        label=_('Interests'),
         max_length=255,
         required=False,
         widget=forms.TextInput(attrs={'class': 'tags'}),
     )
     expertise = forms.CharField(
-        label=_(u'Expertise'),
+        label=_('Expertise'),
         max_length=255,
         required=False,
         widget=forms.TextInput(attrs={'class': 'tags'}),
     )
     username = forms.RegexField(
-        label=_(u'Username'),
+        label=_('Username'),
         regex=USERNAME_REGEX,
         max_length=30,
         required=False,

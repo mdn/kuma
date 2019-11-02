@@ -27,9 +27,9 @@ class AkismetHistoricalDataTests(UserTestCase):
     rf = RequestFactory()
     base_akismet_payload = {
         'blog_charset': 'UTF-8',
-        'blog_lang': u'en_us',
-        'comment_author': u'Test User',
-        'comment_author_email': u'testuser@test.com',
+        'blog_lang': 'en_us',
+        'comment_author': 'Test User',
+        'comment_author_email': 'testuser@test.com',
         'comment_content': (
             'Sample\n'
             'SampleSlug\n'
@@ -219,7 +219,7 @@ def test_multiword_tags(root_doc, rf):
 def test_revision_form_normalize_unicode(root_doc, rf):
     """Revision slugs are normalized to NFKC, required for URLs."""
 
-    raw_slug = u'Εφαρμογές'  # "Applications" in Greek (el)
+    raw_slug = 'Εφαρμογές'  # "Applications" in Greek (el)
 
     # In NFC / NFKD, 'έ' is represented by two "decomposed" codepoints
     #  03B5 (GREEK SMALL LETTER EPSILON)
@@ -248,20 +248,20 @@ def test_revision_form_normalize_unicode(root_doc, rf):
 def test_document_form_normalize_unicode(root_doc, rf):
     """Document slugs are normalized to NFC, required for URLs."""
 
-    raw_slug = u'ফায়ারফক্স'  # "Firefox" in Bengali (bn)
+    raw_slug = 'ফায়ারফক্স'  # "Firefox" in Bengali (bn)
 
     # This slug is the same in NFC, NFD, NFKD, and NFKD. The second character
     # has these codepoints:
     # 09af BENGALI LETTER YA (য)
     # 09bc BENGALI SIGN NUKTA
     # 09be BENGALI VOWEL SIGN AA (non-breaking spacing mark)
-    nfkc_slug = u'\u09ab\u09be\u09af\u09bc\u09be\u09b0\u09ab\u0995\u09cd\u09b8'
+    nfkc_slug = '\u09ab\u09be\u09af\u09bc\u09be\u09b0\u09ab\u0995\u09cd\u09b8'
     assert nfkc_slug == unicodedata.normalize('NFKC', raw_slug)
 
     # An alternate representation of the second character is:
     # 09df BENGALI LETTER YYA (য়)
     # 09be BENGALI VOWEL SIGN AA (non-breaking spacing mark)
-    alt_slug = u'\u09ab\u09be\u09df\u09be\u09b0\u09ab\u0995\u09cd\u09b8'
+    alt_slug = '\u09ab\u09be\u09df\u09be\u09b0\u09ab\u0995\u09cd\u09b8'
     assert alt_slug != nfkc_slug
 
     rev = root_doc.current_revision
@@ -811,12 +811,12 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
     }
 
     view_data = {  # Data passed by view, derived from POST
-        'comment': u'Traduction initiale',
+        'comment': 'Traduction initiale',
         'content': (
-            u'<h2 id="Summary">Summary</h2>\n'
-            u'<p><strong>HyperText Markup Language (HTML)</strong>, ou'
-            u' <em>langage de balisage hypertexte</em>, est le langage au cœur'
-            u' de presque tout contenu Web.</p>\n'
+            '<h2 id="Summary">Summary</h2>\n'
+            '<p><strong>HyperText Markup Language (HTML)</strong>, ou'
+            ' <em>langage de balisage hypertexte</em>, est le langage au cœur'
+            ' de presque tout contenu Web.</p>\n'
         ),
         'current_rev': '',
         'form': 'both',
@@ -824,7 +824,7 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
         'localization_tags': ['inprogress'],
         'slug': 'HTML',
         'tags': '"HTML" "Landing" "Web"',
-        'title': u'Guide de développement HTML',
+        'title': 'Guide de développement HTML',
         'toc_depth': Revision.TOC_DEPTH_ALL,
     }
 
@@ -886,11 +886,11 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
         assert sorted(parameters.keys()) == self.akismet_keys
         assert parameters['blog_lang'] == 'fr, en_us'
         expected_content = (
-            u'Guide de développement HTML\n'
-            u'<p><strong>HyperText Markup Language (HTML)</strong>, ou'
-            u' <em>langage de balisage hypertexte</em>, est le langage au cœur'
-            u' de presque tout contenu Web.</p>\n'
-            u'Traduction initiale'
+            'Guide de développement HTML\n'
+            '<p><strong>HyperText Markup Language (HTML)</strong>, ou'
+            ' <em>langage de balisage hypertexte</em>, est le langage au cœur'
+            ' de presque tout contenu Web.</p>\n'
+            'Traduction initiale'
         )
         assert parameters['comment_content'] == expected_content
 
@@ -912,26 +912,26 @@ class RevisionFormEditTranslationTests(RevisionFormViewTests):
 
     fr_original = {  # Default attributes of original French page
         'content': (
-            u'<h2 id="Summary">Summary</h2>\n'
-            u'<p><strong>HyperText Markup Language (HTML)</strong>, ou'
-            u' <em>langage de balisage hypertexte</em>, est le langage au cœur'
-            u' de presque tout contenu Web.</p>\n'
+            '<h2 id="Summary">Summary</h2>\n'
+            '<p><strong>HyperText Markup Language (HTML)</strong>, ou'
+            ' <em>langage de balisage hypertexte</em>, est le langage au cœur'
+            ' de presque tout contenu Web.</p>\n'
         ),
         'slug': 'Web/Guide/HTML',
         'tags': '"HTML" "Landing"',
-        'title': u'Guide de développement HTML',
+        'title': 'Guide de développement HTML',
         'toc_depth': Revision.TOC_DEPTH_ALL,
     }
 
     view_data = {  # Data passed by view, derived from POST
-        'comment': u'Traduction initiale terminée',
+        'comment': 'Traduction initiale terminée',
         'content': (
-            u'<h2 id="Summary">Summary</h2>\n'
-            u'<p><strong>HyperText Markup Language (HTML)</strong>, ou'
-            u' <em>langage de balisage hypertexte</em>, est le langage au cœur'
-            u' de presque tout contenu Web.</p>\n'
-            u'<p>La majorité de ce que vous voyez dans votre navigateur est'
-            u' décrit en utilisant HTML.<p>'
+            '<h2 id="Summary">Summary</h2>\n'
+            '<p><strong>HyperText Markup Language (HTML)</strong>, ou'
+            ' <em>langage de balisage hypertexte</em>, est le langage au cœur'
+            ' de presque tout contenu Web.</p>\n'
+            '<p>La majorité de ce que vous voyez dans votre navigateur est'
+            ' décrit en utilisant HTML.<p>'
         ),
         'current_rev': '',
         'form': 'both',
@@ -939,7 +939,7 @@ class RevisionFormEditTranslationTests(RevisionFormViewTests):
         'localization_tags': ['inprogress'],
         'slug': 'HTML',
         'tags': '"HTML" "Landing" "Web"',
-        'title': u'Guide de développement HTML',
+        'title': 'Guide de développement HTML',
         'toc_depth': Revision.TOC_DEPTH_ALL,
     }
 
@@ -1001,10 +1001,10 @@ class RevisionFormEditTranslationTests(RevisionFormViewTests):
         assert sorted(parameters.keys()) == self.akismet_keys_edit
         assert parameters['blog_lang'] == 'fr, en_us'
         expected_content = (
-            u'<p>La majorité de ce que vous voyez dans votre navigateur est'
-            u' décrit en utilisant HTML.<p>\n'
-            u'Traduction initiale terminée\n'
-            u'Web'
+            '<p>La majorité de ce que vous voyez dans votre navigateur est'
+            ' décrit en utilisant HTML.<p>\n'
+            'Traduction initiale terminée\n'
+            'Web'
         )
         assert parameters['comment_content'] == expected_content
         assert parameters['permalink'] == ('http://testserver/fr/docs/'
@@ -1040,5 +1040,5 @@ class TreeMoveFormTests(UserTestCase):
                              'slug': 'nothing/article'})
         form.is_valid()
         self.assertTrue(form.errors)
-        self.assertIn(u'Parent', form.errors.as_text())
-        self.assertIn(u'does not exist', form.errors.as_text())
+        self.assertIn('Parent', form.errors.as_text())
+        self.assertIn('does not exist', form.errors.as_text())

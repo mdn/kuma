@@ -1025,12 +1025,12 @@ def test_bug_709938_interests(wiki_user, wiki_user_github_account,
     response = user_client.get(url)
     doc = pq(response.content)
 
-    test_tags = [u'science,Technology,paradox,knowledge,modeling,big data,'
-                 u'vector,meme,heuristics,harmony,mathesis universalis,'
-                 u'symmetry,mathematics,computer graphics,field,chemistry,'
-                 u'religion,astronomy,physics,biology,literature,'
-                 u'spirituality,Art,Philosophy,Psychology,Business,Music,'
-                 u'Computer Science']
+    test_tags = ['science,Technology,paradox,knowledge,modeling,big data,'
+                 'vector,meme,heuristics,harmony,mathesis universalis,'
+                 'symmetry,mathematics,computer graphics,field,chemistry,'
+                 'religion,astronomy,physics,biology,literature,'
+                 'spirituality,Art,Philosophy,Psychology,Business,Music,'
+                 'Computer Science']
 
     form = _get_current_form_field_values(doc)
 

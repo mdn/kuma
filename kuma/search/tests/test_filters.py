@@ -533,12 +533,12 @@ class FilterTexts(ElasticTestCase):
             order=1)
         qd = QueryDict('q=test&topic=css,canvas,js')
         filters = get_filters(qd.getlist)
-        assert [u'css,canvas,js'] == list(filters)
+        assert ['css,canvas,js'] == list(filters)
 
         qd = QueryDict('q=test&topic=css,js&none=none')
         filters = get_filters(qd.getlist)
-        assert [u'none'] == filters
+        assert ['none'] == filters
 
         qd = QueryDict('q=test&none=none')
         filters = get_filters(qd.getlist)
-        assert [u'none'] == filters
+        assert ['none'] == filters

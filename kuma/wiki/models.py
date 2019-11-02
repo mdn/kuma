@@ -2050,7 +2050,7 @@ class BCSignal(models.Model):
     submitted_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return u'BC Signal: {}'.format(self.document.slug)
+        return 'BC Signal: {}'.format(self.document.slug)
 
     class Meta:
         verbose_name = 'BC Signal'

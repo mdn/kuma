@@ -850,7 +850,7 @@ def react_document(request, document_slug, document_locale):
         # Redirected from <a href="%(url)s?redirect=no">%(url)s</a>
         messages.add_message(
             request, messages.WARNING,
-            mark_safe(ugettext(u'Redirected from %(url)s') % {
+            mark_safe(ugettext('Redirected from %(url)s') % {
                 "url": request.build_absolute_uri(doc.get_absolute_url())
             }), extra_tags='wiki_redirect')
         return HttpResponsePermanentRedirect(url)

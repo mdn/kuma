@@ -83,7 +83,7 @@ class Akismet(object):
         # blog is the only parameter required by all API endpoints
         if 'blog' not in payload:
             scheme = 'https' if self.ssl else 'http'
-            payload['blog'] = u'%s://%s/' % (scheme, self.domain)
+            payload['blog'] = '%s://%s/' % (scheme, self.domain)
         url = urljoin(self.url, method)
         return self.session.post(url, data=payload)
 

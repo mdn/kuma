@@ -485,10 +485,10 @@ def test_non_ascii_section_headers():
          'Атрибуты'),
         ('HTML5 엘리먼트',
          'HTML5_엘리먼트'),
-        (u'Non safe title "#$%&+,/:;=?@[\\]^`{|}~\')(',
+        ('Non safe title "#$%&+,/:;=?@[\\]^`{|}~\')(',
          'Non_safe_title'),
-        (u"Five o'clock",
-         u'Five_oclock'),
+        ("Five o'clock",
+         'Five_oclock'),
     ]
 
     section_filter = SectionIDFilter('')
@@ -1403,7 +1403,7 @@ def test_content_is_a_url(mock_requests):
     # My not setting up expectations, and if it got used,
     # these tests would raise a `NoMockAddress` exception.
 
-    url = u'https://developer.mozilla.org'
+    url = 'https://developer.mozilla.org'
     assert get_seo_description(url, 'en-US', False) == ''
 
     # Doesn't matter if it's http or https
@@ -1411,5 +1411,5 @@ def test_content_is_a_url(mock_requests):
 
     # If the content, afterwards, has real paragraphs, then the first
     # line becomes the seo description
-    real_line = u'\n<p>This is the second line</p>'
+    real_line = '\n<p>This is the second line</p>'
     assert get_seo_description(url + real_line, 'en-US', False) == url

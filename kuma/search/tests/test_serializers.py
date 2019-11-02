@@ -24,24 +24,24 @@ class SerializerTests(ElasticTestCase):
         filter_.tags.add('tag')
         filter_serializer = FilterWithGroupSerializer(filter_)
         data = filter_serializer.data
-        assert ({'order': 1, 'name': u'Group', 'slug': u'group'} ==
+        assert ({'order': 1, 'name': 'Group', 'slug': 'group'} ==
                 data['group'])
-        assert u'Serializer' == data['name']
+        assert 'Serializer' == data['name']
         assert 'OR' == data['operator']
         assert data['shortcut'] is None
         assert 'serializer' == data['slug']
         assert 1 == len(data['tags'])
-        assert u'tag' == data['tags'][0]
+        assert 'tag' == data['tags'][0]
 
     @mock.patch('kuma.search.serializers.ugettext')
     def test_filter_serializer_with_translations(self, _mock):
-        _mock.return_value = u'Juegos'
+        _mock.return_value = 'Juegos'
         translation.activate('es')
         filter_ = Filter(name='Games', slug='games')
         serializer = FilterSerializer(filter_)
         assert {
-            'name': u'Juegos',
-            'slug': u'games',
+            'name': 'Juegos',
+            'slug': 'games',
             'shortcut': None
         } == serializer.data
 
@@ -65,7 +65,7 @@ class SerializerTests(ElasticTestCase):
         search = search.highlight(*WikiDocumentType.excerpt_fields)
         result = search.execute()
         serializer = DocumentSerializer(result, many=True)
-        assert u'A <em>CSS</em> article' == serializer.data[0]['excerpt']
+        assert 'A <em>CSS</em> article' == serializer.data[0]['excerpt']
 
 
 class SearchQueryFieldSerializer(serializers.Serializer):

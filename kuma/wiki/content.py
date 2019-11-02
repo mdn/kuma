@@ -570,7 +570,7 @@ class SectionIDFilter(html5lib_Filter):
                 return id
 
     non_url_safe = '"#$%&+,/:;=?@[\\]^`{|}~\')('
-    translate_table = {ord(char): u'' for char in non_url_safe}
+    translate_table = {ord(char): '' for char in non_url_safe}
 
     def slugify(self, text):
         """

@@ -442,7 +442,7 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
         assert dim17 in content
 
     def test_orphan_doc(self):
-        orphan_doc = _create_document(title=u'Huérfano', locale='es')
+        orphan_doc = _create_document(title='Huérfano', locale='es')
         response = self.client.get(orphan_doc.get_absolute_url(),
                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200

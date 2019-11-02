@@ -356,7 +356,7 @@ LEGACY_URLS = list(flatten((
 )))
 
 zone_redirects = (
-    (u'Add-ons', u'Mozilla/Add-ons', 'WebExtensions', ('ar',
+    ('Add-ons', 'Mozilla/Add-ons', 'WebExtensions', ('ar',
                                                        'bn', 'ca',
                                                        'de', 'en-US', 'es',
                                                        'fa', 'fr', 'hu',
@@ -366,10 +366,10 @@ zone_redirects = (
                                                        'ru', 'sv-SE', 'th',
                                                        'uk', 'vi', 'zh-CN',
                                                        'zh-TW', None)),
-    (u'Add-ons', u'Mozilla/Πρόσθετα', 'WebExtensions', ('el',)),
-    (u'Add-ons', u'Mozilla/애드온들', 'WebExtensions', ('ko',)),
-    (u'Add-ons', u'Mozilla/Eklentiler', 'WebExtensions', ('tr',)),
-    (u'Firefox', u'Mozilla/Firefox', 'Privacy', ('ar', 'bm',
+    ('Add-ons', 'Mozilla/Πρόσθετα', 'WebExtensions', ('el',)),
+    ('Add-ons', 'Mozilla/애드온들', 'WebExtensions', ('ko',)),
+    ('Add-ons', 'Mozilla/Eklentiler', 'WebExtensions', ('tr',)),
+    ('Firefox', 'Mozilla/Firefox', 'Privacy', ('ar', 'bm',
                                                  'ca', 'de',
                                                  'el', 'en-US', 'es',
                                                  'fi', 'fr',
@@ -383,18 +383,18 @@ zone_redirects = (
                                                  'tr', 'vi',
                                                  'zh-CN', 'zh-TW',
                                                  None)),
-    (u'Firefox', u'Mozilla/ফায়ারফক্স', 'Privacy', ('bn',)),
-    (u'Apps', u'Web/Apps', 'Tutorials', ('en-US', 'fa', 'fr', 'ja', 'th',
+    ('Firefox', 'Mozilla/ফায়ারফক্স', 'Privacy', ('bn',)),
+    ('Apps', 'Web/Apps', 'Tutorials', ('en-US', 'fa', 'fr', 'ja', 'th',
                                          'zh-CN', 'zh-TW', None)),
-    (u'Apps', u'Web/Aplicaciones', 'Tutorials', ('es',)),
-    (u'Apps', u'Apps', 'Tutorials', ('bn', 'de', 'it', 'ko', 'pt-BR',
+    ('Apps', 'Web/Aplicaciones', 'Tutorials', ('es',)),
+    ('Apps', 'Apps', 'Tutorials', ('bn', 'de', 'it', 'ko', 'pt-BR',
                                      'ru')),
-    (u'Learn', u'Learn', 'JavaScript', ('ca', 'de', None)),
-    (u'Apprendre', u'Apprendre', 'JavaScript', ('fr',)),
-    (u'Marketplace', u'Mozilla/Marketplace', 'APIs', ('de', 'en-US', 'es',
+    ('Learn', 'Learn', 'JavaScript', ('ca', 'de', None)),
+    ('Apprendre', 'Apprendre', 'JavaScript', ('fr',)),
+    ('Marketplace', 'Mozilla/Marketplace', 'APIs', ('de', 'en-US', 'es',
                                                       'fr', 'it', 'ja',
                                                       'zh-CN', None)),
-    (u'Marketplace', u'Mozilla/بازار', 'APIs', ('fa',)),
+    ('Marketplace', 'Mozilla/بازار', 'APIs', ('fa',)),
 )
 
 zone_url_test_kwargs = {
@@ -407,31 +407,31 @@ zone_url_test_kwargs = {
 ZONE_REDIRECT_URLS = []
 for zone_root, wiki_slug, child_path, locales in zone_redirects:
     for locale in locales:
-        prefix = (u'/' + locale) if locale else ''
-        redirect_path = prefix + u'/docs/' + wiki_slug
-        paths = [prefix + u'/' + zone_root]
+        prefix = ('/' + locale) if locale else ''
+        redirect_path = prefix + '/docs/' + wiki_slug
+        paths = [prefix + '/' + zone_root]
         # Test with a "docs" based path as well if it makes sense.
         if zone_root != wiki_slug:
-            paths.append(prefix + u'/docs/' + zone_root)
+            paths.append(prefix + '/docs/' + zone_root)
         for path in paths:
             # The zone root without a trailing slash.
             ZONE_REDIRECT_URLS.append(
                 url_test(path, redirect_path, **zone_url_test_kwargs))
             # The zone root with a trailing slash.
             ZONE_REDIRECT_URLS.append(
-                url_test(path + u'/', redirect_path, **zone_url_test_kwargs))
+                url_test(path + '/', redirect_path, **zone_url_test_kwargs))
             # A zone child page with query parameters.
             ZONE_REDIRECT_URLS.append(
-                url_test(path + u'/' + child_path + '?raw&macros',
-                         redirect_path + u'/' + child_path + '?raw&macros',
+                url_test(path + '/' + child_path + '?raw&macros',
+                         redirect_path + '/' + child_path + '?raw&macros',
                          **zone_url_test_kwargs))
             # The zone root with $edit.
             ZONE_REDIRECT_URLS.append(
-                url_test(path + u'$edit', redirect_path + u'$edit',
+                url_test(path + '$edit', redirect_path + '$edit',
                          **zone_url_test_kwargs))
             # A zone path with curly braces {}
             ZONE_REDIRECT_URLS.append(
-                url_test(path + u'/{test}', redirect_path + '/{test}',
+                url_test(path + '/{test}', redirect_path + '/{test}',
                          **zone_url_test_kwargs))
 
 # Redirects added after 2017 AWS move

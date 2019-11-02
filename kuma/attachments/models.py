@@ -145,7 +145,7 @@ class AttachmentRevision(models.Model):
         verbose_name_plural = _('attachment revisions')
 
     def __str__(self):
-        return (u'%s (file: "%s", ID: #%s)' %
+        return ('%s (file: "%s", ID: #%s)' %
                 (self.title, self.filename, self.pk))
 
     @property
@@ -169,8 +169,8 @@ class AttachmentRevision(models.Model):
         therefor the check if there are other sibling revisions is moot.
         """
         if individual and self.siblings().count() == 0:
-            raise IntegrityError(u'You cannot delete the last revision of '
-                                 u'attachment %s' % self.attachment)
+            raise IntegrityError('You cannot delete the last revision of '
+                                 'attachment %s' % self.attachment)
         trash_item = self.trash(username=username)
         super(AttachmentRevision, self).delete(*args, **kwargs)
         return trash_item

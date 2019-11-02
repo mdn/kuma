@@ -67,8 +67,8 @@ def test_server_side_render(mock_get_l10n_data, mock_dumps, locale,
         'documentData': document_data,
     }
     expect = (
-        u'<div id="react-container" data-component-name="{}">{}</div>\n'
-        u'<script>window._react_data = JSON.parse(STUFF);</script>\n'
+        '<div id="react-container" data-component-name="{}">{}</div>\n'
+        '<script>window._react_data = JSON.parse(STUFF);</script>\n'
     ).format('document', mock_html, json.dumps(data))
     assert output == expect
 
@@ -92,8 +92,8 @@ def test_client_side_render(mock_get_l10n_data, mock_dumps):
     }
     output = ssr.render_react('page', 'en-US', path, document_data, ssr=False)
     expected = (
-        u'<div id="react-container" data-component-name="{}"></div>\n'
-        u'<script>window._react_data = {};</script>\n'
+        '<div id="react-container" data-component-name="{}"></div>\n'
+        '<script>window._react_data = {};</script>\n'
     ).format('page', json.dumps(data))
     assert output == expected
 

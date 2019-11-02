@@ -24,7 +24,7 @@ def get_filters(getter_func):
 
     """
     if getter_func("none"):
-        return [u'none']
+        return ['none']
     filters = collections.OrderedDict()
     for slug in FilterGroup.objects.values_list('slug', flat=True):
         for filters_slug in getter_func(slug, []):

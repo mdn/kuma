@@ -309,7 +309,7 @@ def revision_by_distinct_doc(list_of_revisions):
 
 
 def ban_and_revert_notification(spammer, moderator, info):
-    subject = u'[MDN] %s has been banned by %s' % (spammer, moderator)
+    subject = '[MDN] %s has been banned by %s' % (spammer, moderator)
     context = {'spammer': spammer,
                'moderator': moderator}
     context.update(info)
