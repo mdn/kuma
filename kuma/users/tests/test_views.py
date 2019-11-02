@@ -1,4 +1,3 @@
-import os
 from textwrap import dedent
 
 import mock
@@ -1131,25 +1130,6 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         doc = pq(resp.content)
         assert 'Account Sign In Failure' in doc.find('h1').text()
 
-    @override_config(RECAPTCHA_PRIVATE_KEY='private_key',
-                     RECAPTCHA_PUBLIC_KEY='public_key')
-    def test_signin_captcha(self):
-        resp = self.github_login()
-        self.assertRedirects(resp, self.signup_url)
-
-        data = {'website': '',
-                'username': 'octocat',
-                'email': 'octo.cat@github-inc.com',
-                'terms': True,
-                'g-recaptcha-response': 'FAILED'}
-
-        with mock.patch('captcha.client.request') as request_mock:
-            request_mock.return_value.read.return_value = '{"success": null}'
-            response = self.client.post(self.signup_url, data=data, follow=True)
-        assert response.status_code == 200
-        assert (response.context['form'].errors ==
-                {'captcha': [u'Incorrect, please try again.']})
-
     def test_matching_user(self):
         self.github_login()
         response = self.client.get(self.signup_url)
@@ -1163,7 +1143,6 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         assert_no_cache_header(response)
         assert response.context['matching_user'] == octocat
 
-    @mock.patch.dict(os.environ, {'RECAPTCHA_TESTING': 'True'})
     def test_email_addresses(self):
         public_email = 'octocat-public@example.com'
         private_email = 'octocat-private@example.com'
@@ -1204,9 +1183,9 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                 {'verified': True, 'email': private_email, 'primary': True})
         # then check that the invalid email is not present
         assert invalid_email not in email_address
-        # then check if the radio button's default value is the public email
+        # then check if the radio button's default value is the primary email
         # address
-        assert response.context['form'].initial['email'] == public_email
+        assert response.context['form'].initial['email'][1] == private_email
 
         unverified_email = 'o.ctocat@gmail.com'
         data = {
@@ -1215,7 +1194,6 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
             'email': SignupForm.other_email_value,  # = use other_email
             'other_email': unverified_email,
             'terms': True,
-            'g-recaptcha-response': 'PASSED',
         }
         assert not EmailAddress.objects.filter(email=unverified_email).exists()
         response = self.client.post(self.signup_url, data=data)
@@ -1248,16 +1226,6 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         assert_no_cache_header(response)
         assert response.context["form"].initial["email"] == private_email
 
-    def test_no_email_addresses(self):
-        """Note: this does not seem to currently happen."""
-        profile_data = self.github_profile_data.copy()
-        profile_data['email'] = None
-        self.github_login(profile_data=profile_data, email_data=[])
-        response = self.client.get(self.signup_url)
-        assert response.status_code == 200
-        assert_no_cache_header(response)
-        assert response.context["form"].initial["email"] == ''
-
     def test_signup_public_github(self, is_public=True):
         resp = self.github_login()
         assert resp.redirect_chain[-1][0].endswith(self.signup_url)
@@ -1275,47 +1243,6 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
 
     def test_signup_private_github(self):
         self.test_signup_public_github(is_public=False)
-
-    def test_matching_accounts(self):
-        """
-        Legacy Persona accounts are detected.
-
-        This prompts the "account recovery" workflow, where a user can
-        request an email with a link that allows login to the existing
-        Persona-backed account, instead of creating a fresh account.
-        """
-        testemail = 'octo.cat.III@github-inc.com'
-        profile_data = self.github_profile_data.copy()
-        profile_data['email'] = testemail
-        email_data = self.github_email_data[:]
-        email_data[0]['email'] = testemail
-        self.github_login(profile_data=profile_data, email_data=email_data)
-        response = self.client.get(self.signup_url)
-        assert response.status_code == 200
-        assert_no_cache_header(response)
-        assert not response.context['matching_accounts']
-        # The template is tested here instead of test_templates.py because
-        # test setup is so painful for login tests.
-        parsed = pq(response.content)
-        li_exists = parsed.find('ul.choices li.exists')
-        assert not li_exists
-
-        # Create a legacy Persona account with the given email address
-        octocat3 = user(username='octocat3', is_active=True,
-                        email=testemail, password='test', save=True)
-        social_account = SocialAccount.objects.create(uid=testemail,
-                                                      provider='persona',
-                                                      user=octocat3)
-        response = self.client.get(self.signup_url)
-        assert list(response.context['matching_accounts']) == [social_account]
-        parsed = pq(response.content)
-        # li with class=exists is rendered with a strikeout, to suggest to the
-        # user that signup may fail and they should use account recovery.
-        li_exists = parsed.find('ul.choices li.exists')
-        assert len(li_exists) == 1
-        email_input = li_exists('input[type=radio]')
-        assert len(email_input) == 1
-        assert email_input[0].attrib['value'] == testemail
 
     def test_account_tokens(self):
         testemail = 'account_token@acme.com'

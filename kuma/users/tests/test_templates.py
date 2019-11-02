@@ -26,7 +26,7 @@ class SignupTests(UserTestCase, SocialTestMixin):
     profile_create_strings = (
         'Create your MDN profile',
         'choose a username',
-        'Have trouble',
+        'Having trouble',
         'I agree',
         'to Mozilla',
         'Terms',
@@ -55,7 +55,7 @@ class SignupTests(UserTestCase, SocialTestMixin):
             response = self.github_login()
         test_strings = ['Create your MDN profile',
                         'choose a username',
-                        'Have trouble']
+                        'Having trouble']
         for test_string in test_strings:
             self.assertContains(response, test_string)
         session = response.context['request'].session
@@ -174,63 +174,6 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         # Test the signup form and our very custom email selector
         signup_url = reverse('socialaccount_signup')
         response = self.client.get(signup_url)
-        parsed = pq(response.content)
-        expected_emails = [
-            {
-                'li_attrib': {},
-                'label_attrib': {'for': 'email_0'},
-                'radio_attrib': {'required': '',
-                                 'type': 'radio',
-                                 'name': 'email',
-                                 'value': 'octocat-private@example.com',
-                                 'id': 'email_0'},
-                'verified': True,
-            }, {
-                'li_attrib': {},
-                'label_attrib': {'for': 'email_1'},
-                'radio_attrib': {'checked': 'checked',
-                                 'required': '',
-                                 'type': 'radio',
-                                 'name': 'email',
-                                 'value': 'octocat@example.com',
-                                 'id': 'email_1'},
-                'verified': False,
-            }, {
-                'li_attrib': {},
-                'label_attrib': {'class': 'inner other-label',
-                                 'for': 'email_2'},
-                'radio_attrib': {'required': '',
-                                 'type': 'radio',
-                                 'name': 'email',
-                                 'value': '_other',
-                                 'id': 'email_2'},
-                'other_attrib': {'type': 'email',
-                                 'name': 'other_email',
-                                 'id': 'id_other_email'}
-            },
-        ]
-        email_lis = parsed.find('ul.choices li')
-        assert len(email_lis) == len(expected_emails)
-        for expected, email_li in zip(expected_emails, email_lis):
-            actual = {'li_attrib': email_li.attrib}
-            email_label = email_li.find('label')
-            actual['label_attrib'] = email_label.attrib
-            email_inner = email_li.cssselect('input[type=email]')
-            if email_inner:
-                # The "Other:" element is arranged differently, has an email input
-                actual['other_attrib'] = email_inner[0].attrib
-                email_radio = email_li.cssselect('input[type=radio]')[0]
-            else:
-                # Standard selections from Github include if the email is verified
-                text = email_label.text_content()
-                actual['verified'] = 'Unknown'
-                if 'Verified' in text:
-                    actual['verified'] = True
-                elif 'Unverified' in text:  # pragma: no cover
-                    actual['verified'] = False
-                email_radio = email_label.cssselect('input[type=radio]')[0]
-            actual['radio_attrib'] = email_radio.attrib
-            assert actual == expected
 
         # POST user choices to complete signup
         username = self.github_profile_data['login']

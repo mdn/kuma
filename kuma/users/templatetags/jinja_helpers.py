@@ -135,7 +135,7 @@ def providers_media_js(context):
     """
     request = context['request']
     return Markup(u'\n'.join([p.media_js(request)
-                             for p in providers.registry.get_list()]))
+                              for p in providers.registry.get_list()]))
 
 
 @library.global_function
@@ -161,3 +161,10 @@ def social_accounts(user):
 @library.render_with('honeypot/honeypot_field.html')
 def honeypot_field(field_name=None):
     return render_honeypot_field(field_name)
+
+
+@library.global_function
+def get_primary_email(email_addresses):
+    for email in email_addresses:
+        if email_addresses[email].get('primary'):
+            return email

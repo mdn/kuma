@@ -1,0 +1,21 @@
+<div id="change-email-container" class="email-choices-container hidden">
+    <ul>
+        {% for email_choice in form.email %}
+            {% set id_for_label="%s_%s" % (form.email.name, loop.index0) %}
+            {% set choice_value=email_choice.data.value %}
+            <li>
+                {% if choice_value == form.other_email_value %}
+                    {{ email_choice.tag() }}
+                    <label for="{{ id_for_label }}" class="inner other-label">{{ _('Other:') }}</label>
+                    {{ form.other_email }}
+                    {{ form.other_email.error }}
+                {% else %}
+                    <label for="{{ id_for_label }}">
+                        {{ email_choice.tag() }}
+                        {{ email_choice.choice_label }}
+                    </label>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>

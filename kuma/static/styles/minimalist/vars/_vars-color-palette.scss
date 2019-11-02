@@ -1,1 +1,8 @@
+$brand-primary: #015fdf;
+
 $blue-grey: #dce3e5;
+
+$border-color: #585858;
+
+$warning-border-color: #ffc543;
+$warning-background-color: scale-color($warning-border-color, $lightness: 50%);

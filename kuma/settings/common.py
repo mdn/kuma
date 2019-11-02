@@ -555,7 +555,6 @@ INSTALLED_APPS = (
     'honeypot',
     'cacheback',
     'django_extensions',
-    'captcha',
 
     'kuma.dashboards',
     'statici18n',
@@ -961,6 +960,15 @@ PIPELINE_JS = {
             'js/users.js',
         ),
         'output_filename': 'build/js/users.js',
+        'extra_context': {
+            'async': True,
+        },
+    },
+    'user-signup': {
+        'source_filenames': (
+            'js/components/user-signup/signup.js',
+        ),
+        'output_filename': 'build/js/signup.js',
         'extra_context': {
             'async': True,
         },
@@ -1602,14 +1610,6 @@ CONSTANCE_CONFIG = dict(
         '',
         'API key for Akismet spam checks, leave empty to disable'
     ),
-    RECAPTCHA_PUBLIC_KEY=(
-        '',
-        'ReCAPTCHA public key, leave empty to disable'
-    ),
-    RECAPTCHA_PRIVATE_KEY=(
-        '',
-        'ReCAPTCHA private key, leave empty to disable'
-    ),
     EMAIL_LIST_MDN_ADMINS=(
         'mdn-admins@mozilla.org',
         'Email address to request admin intervention'
@@ -1783,10 +1783,6 @@ if SENTRY_DSN:
     INSTALLED_APPS = INSTALLED_APPS + (
         'raven.contrib.django.raven_compat',
     )
-
-# Tell django-recaptcha we want to use "No CAPTCHA".
-# Note: The API keys are located in Django constance.
-NOCAPTCHA = True  # Note: Using No Captcha implies SSL.
 
 # Tell django-taggit to use case-insensitive search for existing tags
 TAGGIT_CASE_INSENSITIVE = True

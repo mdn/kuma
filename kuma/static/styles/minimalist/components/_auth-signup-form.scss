@@ -1,0 +1,64 @@
+.lead-in {
+    text-align: center;
+}
+
+.existing-account {
+    background-color: $warning-background-color;
+    padding: 10px;
+    border: 2px solid $warning-border-color;
+    text-align: center;
+
+    form {
+        display: inline;
+    }
+}
+
+.social-signup-form {
+    fieldset {
+        @include fieldset;
+    }
+
+    legend {
+        @include legend;
+    }
+
+    label {
+        @include label;
+    }
+
+    input[type='text'],
+    input[type='email'] {
+        @include input-base;
+    }
+
+    .field-explanation {
+        margin-top: 5px;
+        @include set-font-size($tiny-font-size);
+    }
+
+    .email-choices-container {
+        label {
+            font-weight: normal;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+    }
+
+    .terms-privacy {
+        display: block;
+        margin: 20px 0 40px;
+        font-weight: normal;
+    }
+
+    .submit {
+        text-align: center;
+    }
+
+    .account-help {
+        margin: 40px 0;
+        @include set-font-size(16px);
+        text-align: center;
+    }
+}
