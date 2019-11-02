@@ -12,7 +12,7 @@ class NamespacedTaggableManagerTest(TestCase):
     food_model = Food
 
     def assert_tags_equal(self, qs, tags, attr="name"):
-        got = sorted(map(lambda tag: getattr(tag, attr), qs))
+        got = sorted(getattr(tag, attr) for tag in qs)
         self.assertEqual(got, sorted(tags))
 
     def test_all_ns(self):
