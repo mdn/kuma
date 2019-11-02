@@ -155,11 +155,6 @@ oauthlib==2.0.4 \
 defusedxml==0.5.0 \
     --hash=sha256:24d7f2f94f7f3cb6061acb215685e5125fbcdc40a857eff9de22518820b0a4f4 \
     --hash=sha256:702a91ade2968a82beb0db1e0766a6a273f33d4616a6ce8cde475d8e09853b20
-# OpenID library for Python 2
-# Code: https://github.com/openid/python-openid
-python-openid==2.2.5 \
-    --hash=sha256:92c51c3ecec846cbec4aeff11f9ff47303d4a63f93b0e6ac0ec02a091fed70ef \
-    --hash=sha256:c2d133e47e0a7705c9272eef00d7a09c174f5bf17a127fed8e2c6499556cc782
 # OpenID library for Python 3
 # Code: https://github.com/necaris/python3-openid
 # Changes: https://github.com/necaris/python3-openid/blob/master/CHANGES.md
@@ -173,16 +168,6 @@ python3-openid==3.1.0 \
 requests-oauthlib==0.8.0 \
     --hash=sha256:883ac416757eada6d3d07054ec7092ac21c7f35cb1d2cf82faf205637081f468 \
     --hash=sha256:50a8ae2ce8273e384895972b56193c7409601a66d4975774c60c2aed869639ca
-
-# django-extensions
-#
-# Backport of Python 3.5's type hints
-# Changes: https://pypi.python.org/pypi/typing
-# Docs: https://docs.python.org/3/library/typing.html
-typing==3.6.4 \
-    --hash=sha256:b2c689d54e1144bbcfd191b0832980a21c2dbcf7b5ff7a66248a60c90e951eb8 \
-    --hash=sha256:3a887b021a77b292e151afb75323dea88a7bc1b3dfa92176cff8e44c8b68bddf \
-    --hash=sha256:d400a9344254803a2368533e4533a4200d21eb7b6b729c173bc38201a74db3f2
 
 
 # django-statici18n
@@ -210,14 +195,6 @@ elasticsearch==6.3.1 \
     --hash=sha256:7546cc08e3899716e12fe67d12d7cfe9a64647014d1134b014c3c392b63cad42 \
     --hash=sha256:aada5cfdc4a543c47098eb3aca6663848ef5d04b4324935ced441debc11ec98b
 
-# elasticsearch-dsl
-#
-# Required by elasticsearch-dsl but only needed because we're on Python 2.7
-# Code: https://github.com/phihag/ipaddress
-ipaddress==1.0.22 \
-    --hash=sha256:64b28eec5e78e7510698f6d4da08800a5c575caa4a286c93d651c5d3ff7b6794 \
-    --hash=sha256:b146c751ea45cad6188dd6cf2d9b757f6f4f8d6ffb96a023e6f2e26eea02a72c
-
 
 # Extensions to datetime module
 # Code: https://github.com/dateutil/dateutil/
@@ -229,14 +206,6 @@ python-dateutil==2.7.3 \
 
 # flake8
 #
-# Backport of Python 3 configparser, version tracks Python 3 versions
-# Code: https://github.com/jaraco/configparser
-# Changes: https://github.com/jaraco/configparser/blob/master/CHANGES.rst
-# Docs: https://docs.python.org/3/library/configparser.html
-configparser==3.7.1 \
-    --hash=sha256:c114ff90ee2e762db972fa205f02491b1f5cf3ff950decd8542c62970c9bedac \
-    --hash=sha256:df28e045fbff307a28795b18df6ac8662be3219435560ddb068c283afab1ea7a \
-    --hash=sha256:5bd5fa2a491dc3cfe920a3f2a107510d65eceae10e9c6e547b90261a4710df32
 # Advertise objects with a common interface
 # Code: https://github.com/takluyver/entrypoints
 # Docs: https://entrypoints.readthedocs.io/en/latest/
