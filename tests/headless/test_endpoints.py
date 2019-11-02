@@ -1,5 +1,5 @@
 import re
-from urlparse import urlsplit
+from urllib.parse import urlsplit
 
 import pytest
 from pyquery import PyQuery

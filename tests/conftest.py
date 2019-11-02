@@ -1,4 +1,4 @@
-from urlparse import urlsplit, urlunsplit
+from urllib.parse import urlsplit, urlunsplit
 
 import pytest
 import requests
