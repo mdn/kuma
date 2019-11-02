@@ -3,6 +3,7 @@
 import os
 import re
 from datetime import datetime
+from glob import glob
 from urllib.parse import urlparse
 
 from kuma.core.urlresolvers import reverse
@@ -160,14 +161,16 @@ def test_sitemaps_excluded_documents(tmpdir, settings, wiki_user):
 
     build_sitemaps()
 
+
+    sitemaps = glob(os.path.join(settings.MEDIA_ROOT, '**/*.xml'),
+                    recursive=True)
+
     all_locs = []
-    # Python 3 has support for `glob('**/*.xml')` but for Python 2,
-    # we'll have to use os.walk().
-    for root, dirs, files in os.walk(settings.MEDIA_ROOT):
-        for file in files:
-            with open(os.path.join(root, file)) as f:
-                content = f.read()
-                all_locs.extend(re.findall('<loc>(.*?)</loc>', content))
+    for sitemap in sitemaps:
+        with open(sitemap) as f:
+            content = f.read()
+            matches = re.findall('<loc>(.*?)</loc>', content)
+            all_locs.extend(matches)
 
     # Exclude the inter-linking sitemaps
     all_locs = [loc for loc in all_locs if not loc.endswith('.xml')]
