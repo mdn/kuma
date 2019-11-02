@@ -184,17 +184,17 @@ def parse_tags(tagstring, sorted=True):
     i = iter(tagstring)
     try:
         while True:
-            c = i.next()
+            c = next(i)
             if c == '"':
                 if buffer:
                     to_be_split.append(''.join(buffer))
                     buffer = []
                 # Find the matching quote
                 open_quote = True
-                c = i.next()
+                c = next(i)
                 while c != '"':
                     buffer.append(c)
-                    c = i.next()
+                    c = next(i)
                 if buffer:
                     word = ''.join(buffer).strip()
                     if word:
