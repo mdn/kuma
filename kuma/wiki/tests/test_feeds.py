@@ -3,9 +3,9 @@
 
 import json
 from datetime import datetime
+from urllib.parse import parse_qs, urlparse
 
 import pytest
-from django.utils.six.moves.urllib_parse import parse_qs, urlparse
 from django.utils.timezone import make_aware
 from pyquery import PyQuery as pq
 from pytz import AmbiguousTimeError

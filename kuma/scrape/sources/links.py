@@ -3,9 +3,9 @@
 
 
 import logging
+from urllib.parse import urlparse
 
 from django.conf import settings
-from django.utils.six.moves.urllib.parse import urlparse
 
 from kuma.core.utils import safer_pyquery as pq
 

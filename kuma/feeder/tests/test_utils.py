@@ -4,11 +4,11 @@
 import socket
 from datetime import datetime
 from time import mktime, struct_time
+from urllib.error import URLError
 
 import jsonpickle
 import mock
 import pytest
-from django.utils.six.moves.urllib.error import URLError
 from feedparser import FeedParserDict
 
 from ..models import Entry, Feed

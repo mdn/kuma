@@ -3,8 +3,7 @@
 import os
 import re
 from datetime import datetime
-
-from six.moves.urllib.parse import urlparse
+from urllib.parse import urlparse
 
 from kuma.core.urlresolvers import reverse
 from kuma.users.models import User

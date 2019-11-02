@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from urllib.parse import urlencode
 
 import newrelic.agent
 from csp.decorators import csp_update
@@ -8,7 +8,6 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.safestring import mark_safe
-from django.utils.six.moves.urllib.parse import urlencode
 from django.utils.translation import ugettext
 from django.views.decorators.cache import never_cache
 from django.views.decorators.clickjacking import xframe_options_sameorigin

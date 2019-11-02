@@ -9,6 +9,7 @@ import base64
 import json
 from collections import namedtuple
 from datetime import datetime
+from urllib.parse import quote, urlparse
 
 import mock
 import pytest
@@ -17,7 +18,6 @@ from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.test.client import BOUNDARY, encode_multipart, MULTIPART_CONTENT
 from django.utils.http import quote_etag
-from django.utils.six.moves.urllib.parse import quote, urlparse
 from pyquery import PyQuery as pq
 from waffle.testutils import override_switch
 

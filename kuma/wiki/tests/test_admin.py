@@ -1,11 +1,10 @@
-
+from urllib.parse import parse_qsl
 
 import pytest
 import requests_mock
 from constance.test import override_config
 from django.contrib.admin import AdminSite
 from django.test import RequestFactory
-from django.utils.six.moves.urllib.parse import parse_qsl
 from pyquery import PyQuery as pq
 from waffle.testutils import override_flag
 

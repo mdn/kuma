@@ -1,5 +1,6 @@
 import time
 from datetime import date, datetime, timedelta
+from urllib.parse import urlparse
 from xml.sax.saxutils import escape
 
 import mock
@@ -8,7 +9,6 @@ from constance import config
 from constance.test import override_config
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from six.moves.urllib.parse import urlparse
 
 from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.core.exceptions import ProgrammingError

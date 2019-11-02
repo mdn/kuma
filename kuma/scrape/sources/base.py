@@ -2,10 +2,10 @@
 
 
 import re
+from urllib.parse import unquote
 
 from django.utils.six import (binary_type, python_2_unicode_compatible,
                               text_type)
-from django.utils.six.moves.urllib.parse import unquote
 
 
 class Source(object):

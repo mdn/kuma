@@ -1,7 +1,8 @@
+from urllib.parse import parse_qs, unquote, urlparse
+
 import requests
 import six
 from braceexpand import braceexpand
-from six.moves.urllib.parse import parse_qs, unquote, urlparse
 
 
 # https://github.com/mozilla/bedrock/blob/master/tests/redirects/base.py

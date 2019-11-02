@@ -6,12 +6,12 @@ import time
 import unicodedata
 from collections import defaultdict
 from functools import partial
+from urllib.parse import urljoin
 
 import requests
 from constance import config
 from django.conf import settings
 from django.contrib.sites.models import Site
-from django.utils.six.moves.urllib.parse import urljoin
 from elasticsearch import TransportError
 from requests.exceptions import ConnectionError, ReadTimeout
 

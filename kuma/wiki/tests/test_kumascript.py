@@ -3,11 +3,11 @@
 
 import base64
 import json
+from urllib.parse import urljoin
 
 import mock
 import pytest
 import requests_mock
-from django.utils.six.moves.urllib.parse import urljoin
 from elasticsearch import TransportError
 from elasticsearch_dsl.connections import connections
 from requests.exceptions import (ConnectionError, ContentDecodingError,

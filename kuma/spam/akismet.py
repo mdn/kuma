@@ -1,9 +1,9 @@
 import sys
+from urllib.parse import urljoin
 
 import newrelic.agent
 from constance import config
 from django.conf import settings
-from django.utils.six.moves.urllib.parse import urljoin
 from requests import Session
 from requests.adapters import HTTPAdapter
 from requests.exceptions import RequestException

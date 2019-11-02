@@ -3,9 +3,9 @@
 
 import json
 import os
+from urllib.request import urlopen
 
 from django.conf import settings
-from django.utils.six.moves.urllib.request import urlopen
 
 GITHUB_REPOS = "https://api.github.com/repos/mdn/kuma/contributors"
 

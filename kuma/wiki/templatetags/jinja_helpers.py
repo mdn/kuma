@@ -2,6 +2,7 @@
 import difflib
 import json
 import re
+from urllib.parse import urlsplit, urlunparse
 
 import jinja2
 from constance import config
@@ -11,7 +12,6 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.template import loader
 from django.utils import lru_cache
 from django.utils.html import conditional_escape
-from django.utils.six.moves.urllib.parse import urlsplit, urlunparse
 from django.utils.translation import ugettext
 from django_jinja import library
 

@@ -5,11 +5,11 @@ import platform
 import re
 from collections import namedtuple
 from os.path import dirname
+from urllib.parse import parse_qs, urlencode, urlsplit, urlunsplit
 
 import dj_database_url
 import dj_email_url
 from decouple import config, Csv
-from six.moves.urllib.parse import parse_qs, urlencode, urlsplit, urlunsplit
 
 _Language = namedtuple('Language', 'english native')
 

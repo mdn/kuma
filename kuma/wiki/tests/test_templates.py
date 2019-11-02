@@ -1,5 +1,5 @@
 import time
-import urllib.parse
+from urllib.parse import parse_qs, quote, urlparse
 
 import mock
 import pytest
@@ -12,7 +12,6 @@ from django.shortcuts import render
 from django.test.utils import override_settings
 from django.utils import translation
 from django.utils.http import urlquote
-from django.utils.six.moves.urllib.parse import parse_qs, urlparse
 from pyquery import PyQuery as pq
 
 from kuma.core.tests import (assert_no_cache_header,
@@ -1197,7 +1196,7 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
     meantime."""
     if trans_lang:
         translate_path = doc.slug
-        uri = urllib.parse.quote(
+        uri = quote(
             reverse('wiki.translate',
                     locale=trans_lang,
                     args=[translate_path]))

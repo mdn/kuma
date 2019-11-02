@@ -1,12 +1,12 @@
 import datetime
 import json
+from urllib.parse import urlparse
 
 import pytest
 from constance.test import override_config
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.db import transaction
-from django.utils.six.moves.urllib.parse import urlparse
 from pyquery import PyQuery as pq
 
 from kuma.core.tests import (assert_no_cache_header, assert_redirect_to_wiki,

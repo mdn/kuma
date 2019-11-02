@@ -5,6 +5,7 @@ import hashlib
 import logging
 import os
 from itertools import islice
+from urllib.parse import parse_qsl, ParseResult, urlparse, urlsplit, urlunsplit
 
 from babel import dates, localedata
 from celery import chain, chord
@@ -20,7 +21,6 @@ from django.utils.translation import ugettext_lazy as _
 from polib import pofile
 from pyquery import PyQuery as pq
 from pytz import timezone
-from six.moves.urllib.parse import parse_qsl, ParseResult, urlparse, urlsplit, urlunsplit
 from taggit.utils import split_strip
 
 from .exceptions import DateTimeFormatError

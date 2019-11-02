@@ -3,6 +3,7 @@ import sys
 import traceback
 from datetime import datetime, timedelta
 from functools import wraps
+from urllib.parse import urlparse
 from uuid import uuid4
 
 import newrelic.agent
@@ -17,7 +18,6 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 from django.utils.six import text_type
 from django.utils.translation import ugettext, ugettext_lazy as _
-from six.moves.urllib.parse import urlparse
 from taggit.managers import TaggableManager
 from taggit.models import ItemBase, TagBase
 from taggit.utils import edit_string_for_tags, parse_tags

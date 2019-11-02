@@ -3,6 +3,8 @@
 
 import datetime
 import json
+from html.parser import HTMLParser
+from urllib.parse import parse_qs, urlencode, urlparse
 
 import mock
 import pytest
@@ -13,8 +15,6 @@ from django.contrib.sites.models import Site
 from django.core import mail
 from django.template.loader import render_to_string
 from django.utils.six import text_type
-from django.utils.six.moves import html_parser
-from django.utils.six.moves.urllib.parse import parse_qs, urlencode, urlparse
 from pyquery import PyQuery as pq
 from waffle.testutils import override_flag, override_switch
 
@@ -1476,7 +1476,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             # Add an some extra characters to the end, since the unescaped length
             # is a little less than the escaped length
             end_of_error = start_of_error + len(collision_err) + 20
-            location_of_error = html_parser.HTMLParser().unescape(
+            location_of_error = HTMLParser().unescape(
                 content[start_of_error: end_of_error]
             )
         assert collision_err in location_of_error

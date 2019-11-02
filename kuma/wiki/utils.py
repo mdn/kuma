@@ -2,6 +2,7 @@
 
 import datetime
 import json
+from urllib.parse import urlparse
 
 import tidylib
 from apiclient.discovery import build
@@ -12,7 +13,6 @@ from django.urls import resolve, Resolver404
 from django.utils import translation
 from httplib2 import Http
 from oauth2client.service_account import ServiceAccountCredentials
-from six.moves.urllib.parse import urlparse
 
 from kuma.core.urlresolvers import split_path
 

@@ -1,4 +1,4 @@
-
+from urllib.parse import urlsplit
 
 from django.conf import settings
 from django.contrib.sessions.middleware import SessionMiddleware
@@ -8,7 +8,6 @@ from django.http import (HttpResponseForbidden,
                          HttpResponseRedirect)
 from django.urls import get_script_prefix, resolve, Resolver404
 from django.utils.encoding import smart_str
-from django.utils.six.moves.urllib.parse import urlsplit
 from waffle.middleware import WaffleMiddleware
 from whitenoise.middleware import WhiteNoiseMiddleware
 

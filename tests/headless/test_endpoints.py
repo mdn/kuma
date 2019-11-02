@@ -1,9 +1,8 @@
 import re
-from urllib.parse import urlsplit
+from urllib.parse import quote, urlsplit
 
 import pytest
 from pyquery import PyQuery
-from six.moves.urllib.parse import quote
 
 from . import INDEXED_WEB_DOMAINS, request
 

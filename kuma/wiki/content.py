@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 from collections import defaultdict
+from urllib.parse import unquote, urlencode, urlparse, urlsplit
 from xml.sax.saxutils import quoteattr
 
 import bleach
@@ -8,8 +9,6 @@ import html5lib
 import newrelic.agent
 from django.conf import settings
 from django.utils.encoding import python_2_unicode_compatible
-from django.utils.six.moves.urllib.parse import (unquote, urlencode, urlparse,
-                                                 urlsplit)
 from django.utils.translation import ugettext
 from html5lib.filters.base import Filter as html5lib_Filter
 from lxml import etree

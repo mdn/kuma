@@ -5,12 +5,12 @@ import socket
 from datetime import datetime
 from hashlib import md5
 from time import mktime
+from urllib.error import URLError
 
 import feedparser
 import jsonpickle
 from django.conf import settings
 from django.utils.encoding import smart_bytes
-from django.utils.six.moves.urllib.error import URLError
 
 from .models import Entry, Feed
 

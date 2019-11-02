@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from base64 import b64encode
+from urllib.parse import urljoin
 
 import bleach
 import pytest
 from django.conf import settings
 from django.test import TestCase
-from django.utils.six.moves.urllib.parse import urljoin
 from jinja2 import escape, Markup
 from pyquery import PyQuery as pq
 
