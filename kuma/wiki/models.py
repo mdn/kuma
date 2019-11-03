@@ -14,7 +14,6 @@ from django.core.exceptions import ValidationError
 from django.db import models, transaction
 from django.db.models import signals
 from django.utils.decorators import available_attrs
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext, ugettext_lazy as _
 from taggit.managers import TaggableManager
@@ -131,7 +130,6 @@ class TaggedDocument(ItemBase):
         return tags_for(cls, *args, **kwargs)
 
 
-@python_2_unicode_compatible
 class DocumentAttachment(models.Model):
     """
     Intermediary between Documents and Attachments. Allows storing the
@@ -180,7 +178,6 @@ class DocumentAttachment(models.Model):
             )
 
 
-@python_2_unicode_compatible
 class Document(NotificationsMixin, models.Model):
     """A localized knowledgebase document, not revision-specific."""
     TOC_FILTERS = {
@@ -1552,7 +1549,6 @@ Full traceback:
         return rev
 
 
-@python_2_unicode_compatible
 class DocumentDeletionLog(models.Model):
     """
     Log of who deleted a Document, when, and why.
@@ -1621,7 +1617,6 @@ class LocalizationTaggedRevision(ItemBase):
         return tags_for(cls, *args, **kwargs)
 
 
-@python_2_unicode_compatible
 class Revision(models.Model):
     """A revision of a localized knowledgebase document"""
     # Depth of table-of-contents in document display.
@@ -1871,7 +1866,6 @@ class Revision(models.Model):
         return abs((datetime.now() - self.created).days)
 
 
-@python_2_unicode_compatible
 class RevisionIP(models.Model):
     """
     IP Address for a Revision including User-Agent string and Referrer URL.
@@ -1910,7 +1904,6 @@ class RevisionIP(models.Model):
         return '%s (revision %d)' % (self.ip or 'No IP', self.revision.id)
 
 
-@python_2_unicode_compatible
 class RevisionAkismetSubmission(AkismetSubmission):
     """
     The Akismet submission per wiki document revision.
@@ -1949,7 +1942,6 @@ class RevisionAkismetSubmission(AkismetSubmission):
             )
 
 
-@python_2_unicode_compatible
 class EditorToolbar(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL,
                                 related_name='created_toolbars',
@@ -1962,7 +1954,6 @@ class EditorToolbar(models.Model):
         return self.name
 
 
-@python_2_unicode_compatible
 class DocumentSpamAttempt(SpamAttempt):
     """
     The wiki document specific spam attempt.
@@ -2029,7 +2020,6 @@ class DocumentSpamAttempt(SpamAttempt):
         return f'{self.slug} ({self.title})'
 
 
-@python_2_unicode_compatible
 class BCSignal(models.Model):
     """Model to keep track of the BC signals."""
     document = models.ForeignKey(

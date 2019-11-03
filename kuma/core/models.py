@@ -3,13 +3,11 @@
 from django.db import models
 from django.dispatch import receiver
 from django.utils import timezone
-from django.utils.encoding import python_2_unicode_compatible
 
 from .jobs import BannedIPsJob
 from .managers import IPBanManager
 
 
-@python_2_unicode_compatible
 class IPBan(models.Model):
     """
     Ban an IP address.

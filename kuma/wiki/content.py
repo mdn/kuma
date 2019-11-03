@@ -8,7 +8,6 @@ import bleach
 import html5lib
 import newrelic.agent
 from django.conf import settings
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext
 from html5lib.filters.base import Filter as html5lib_Filter
 from lxml import etree
@@ -292,7 +291,6 @@ def filter_out_noinclude(src):
     return to_html(doc)
 
 
-@python_2_unicode_compatible
 class ContentSectionTool(object):
 
     def __init__(self, src=None, is_full_document=False):

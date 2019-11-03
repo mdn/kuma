@@ -8,7 +8,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.tokens import default_token_generator
 from django.core import validators
 from django.db import models
-from django.utils.encoding import force_bytes, python_2_unicode_compatible
+from django.utils.encoding import force_bytes
 from django.utils.functional import cached_property
 from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import ugettext_lazy as _
@@ -19,7 +19,6 @@ from kuma.core.urlresolvers import reverse
 from .constants import USERNAME_REGEX
 
 
-@python_2_unicode_compatible
 class UserBan(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              related_name="bans",

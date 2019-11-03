@@ -9,7 +9,6 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.crypto import constant_time_compare
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -27,7 +26,6 @@ def hash_secret(secret):
     return hashlib.sha512((settings.SECRET_KEY + secret).encode('utf-8')).hexdigest()
 
 
-@python_2_unicode_compatible
 class Key(models.Model):
     """Authentication key"""
     user = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False,

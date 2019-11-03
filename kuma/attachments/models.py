@@ -4,7 +4,6 @@ from datetime import datetime
 from django.conf import settings
 from django.db import models
 from django.db.utils import IntegrityError
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from django_mysql.models import Model as MySQLModel
@@ -12,7 +11,6 @@ from django_mysql.models import Model as MySQLModel
 from .utils import attachment_upload_to, full_attachment_url
 
 
-@python_2_unicode_compatible
 class Attachment(models.Model):
     """
     An attachment which can be inserted into one or more wiki documents.
@@ -93,7 +91,6 @@ class Attachment(models.Model):
         return document_attachment
 
 
-@python_2_unicode_compatible
 class AttachmentRevision(models.Model):
     """
     A revision of an attachment.
@@ -210,7 +207,6 @@ class AttachmentRevision(models.Model):
         return self.attachment.revisions.exclude(pk=self.pk)
 
 
-@python_2_unicode_compatible
 class TrashedAttachment(MySQLModel):
 
     file = models.FileField(
