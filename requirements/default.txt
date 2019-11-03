@@ -256,10 +256,10 @@ meinheld==1.0.1 \
 # Code: https://github.com/PyMySQL/mysqlclient-python
 # Changes: https://github.com/PyMySQL/mysqlclient-python/blob/master/HISTORY.rst
 # Docs: https://mysqlclient.readthedocs.io/
-mysqlclient==1.4.2.post1 \
-    --hash=sha256:425e733b05e359a714d6007c0fc44582be66b63e5a3df0a50949274ae16f4bc6 \
-    --hash=sha256:62e4770b6a797b9416bcf70488365b7d6b9c9066878108499c559293bb464380 \
-    --hash=sha256:f257d250f2675d0ef99bd318906f3cfc05cef4a2f385ea695ff32a3f04b9f9a7
+mysqlclient==1.4.4 \
+    --hash=sha256:79a498ddda955e488f80c82a6392bf6e07c323d48db236033f33825665d8ba5c \
+    --hash=sha256:8c3b61d89f7daaeab6aad6bf4c4bc3ef30bec1a8169f94dc59aea87ba2fabf80 \
+    --hash=sha256:9c737cc55a5dc8dd3583a942d5a9b21be58d16f00f5fefca4e575e7d9682e98c
 
 # Report performance metrics and exceptions to New Relic
 # Docs: https://docs.newrelic.com/docs/agents/python-agent/
