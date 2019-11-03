@@ -1,9 +1,6 @@
 """
 Manually schedule the cleaning of one or more documents
 """
-
-
-
 from math import ceil
 
 from celery import chain

@@ -156,9 +156,7 @@ shell_plus: up
 	docker-compose exec web ./manage.py shell_plus
 
 pythonlint:
-	# The 'tests' folder isn't prepared for Python 3 yet.
-	# flake8 kuma docs tests
-	flake8 kuma docs
+	flake8 kuma docs tests
 
 jslint:
 	npm run eslint

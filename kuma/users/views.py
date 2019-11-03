@@ -1,6 +1,7 @@
 import json
 import operator
 from datetime import datetime, timedelta
+from functools import reduce
 
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
@@ -42,7 +43,6 @@ from .models import User, UserBan
 # we have to import the signup form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
 from .signup import SignupForm
-from functools import reduce
 
 
 # TODO: Make this dynamic, editable from admin interface

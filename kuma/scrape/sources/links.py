@@ -1,7 +1,4 @@
 """LinksSource gathers wiki document links from a rendered page."""
-
-
-
 import logging
 from urllib.parse import urlparse
 

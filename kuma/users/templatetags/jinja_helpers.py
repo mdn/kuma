@@ -87,8 +87,8 @@ def unicode_to_html(text):
 def user_list(users):
     """Turn a list of users into a list of links to their profiles."""
     link = '<a href="%s">%s</a>'
-    list = ', '.join([link % (escape(u.get_absolute_url()), escape(u.username)) for
-                       u in users])
+    list = ', '.join([link % (escape(u.get_absolute_url()), escape(u.username))
+                      for u in users])
     return Markup(list)
 
 

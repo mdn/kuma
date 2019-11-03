@@ -1,5 +1,3 @@
-
-
 import os
 import re
 from datetime import datetime
@@ -160,7 +158,6 @@ def test_sitemaps_excluded_documents(tmpdir, settings, wiki_user):
     )
 
     build_sitemaps()
-
 
     sitemaps = glob(os.path.join(settings.MEDIA_ROOT, '**/*.xml'),
                     recursive=True)

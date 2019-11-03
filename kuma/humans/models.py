@@ -1,6 +1,3 @@
-
-
-
 import json
 import os
 from urllib.request import urlopen
