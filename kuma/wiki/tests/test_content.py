@@ -784,9 +784,9 @@ def test_filteriframe_default_rejected(url, settings):
 
 BLEACH_INVALID_HREFS = {
     'b64_script1': ('data:text/html;base64,' +
-                    b64encode(b'<script>alert("document.cookie:" + document.cookie);').decode('utf-8')),
+                    b64encode(b'<script>alert("document.cookie:" + document.cookie);').decode()),
     'b64_script2': ('data:text/html;base64,' +
-                    b64encode(b'<script>alert(document.domain)</script>').decode('utf-8')),
+                    b64encode(b'<script>alert(document.domain)</script>').decode()),
     'javascript': 'javascript:alert(1)',
     'js_htmlref1': 'javas&#x09;cript:alert(1)',
     'js_htmlref2': '&#14;javascript:alert(1)',

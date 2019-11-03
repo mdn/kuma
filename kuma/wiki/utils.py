@@ -102,10 +102,10 @@ def tidy_content(content):
     except UnicodeDecodeError:
         # In case something happens in pytidylib we'll try again with
         # a proper encoding
-        content = tidylib.tidy_document(content.encode('utf-8'),
+        content = tidylib.tidy_document(content.encode(),
                                         options=options)
         tidied, errors = content
-        return tidied.decode('utf-8'), errors
+        return tidied.decode(), errors
     else:
         return content
 

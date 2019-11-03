@@ -38,7 +38,7 @@ def akismet_wiki_user_2(wiki_user_2, permission_add_revisionakismetsubmission):
 def akismet_mock_requests(mock_requests):
     mock_requests.post(VERIFY_URL, content=b'valid')
     mock_requests.post(
-        SPAM_URL, content=Akismet.submission_success.encode('utf-8'))
+        SPAM_URL, content=Akismet.submission_success.encode())
     return mock_requests
 
 

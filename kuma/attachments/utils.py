@@ -81,6 +81,6 @@ def attachment_upload_to(instance, filename):
     return "attachments/%(date)s/%(id)s/%(md5)s/%(filename)s" % {
         'date': now.strftime('%Y/%m/%d'),
         'id': instance.attachment.id,
-        'md5': hashlib.md5(str(now).encode('utf-8')).hexdigest(),
+        'md5': hashlib.md5(str(now).encode()).hexdigest(),
         'filename': filename
     }

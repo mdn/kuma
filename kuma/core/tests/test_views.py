@@ -178,7 +178,7 @@ def test_sitemap(client, settings, sitemaps, db, method):
     assert response['Content-Type'] == 'application/xml'
     if method == 'get':
         assert ''.join(
-            [chunk.decode('utf-8') for chunk in response.streaming_content]
+            [chunk.decode() for chunk in response.streaming_content]
         ) == sitemaps['index']
 
 
@@ -205,7 +205,7 @@ def test_sitemaps(client, settings, sitemaps, db, method):
     assert_shared_cache_header(response)
     assert response['Content-Type'] == 'application/xml'
     if method == 'get':
-        assert (''.join([chunk.decode('utf-8') for chunk in response.streaming_content]) ==
+        assert (''.join([chunk.decode() for chunk in response.streaming_content]) ==
                 sitemaps['locales']['en-US'])
 
 

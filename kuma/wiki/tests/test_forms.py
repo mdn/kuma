@@ -402,7 +402,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
 
         # The mock request content has to be a byte string
         if not isinstance(is_spam, bytes):
-            is_spam = is_spam.encode('utf-8')
+            is_spam = is_spam.encode()
 
         mock_requests.post(VERIFY_URL, content=b'valid')
         mock_requests.post(CHECK_URL, content=is_spam)

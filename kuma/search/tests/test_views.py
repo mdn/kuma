@@ -19,7 +19,7 @@ class ViewTests(ElasticTestCase):
                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert_no_cache_header(response)
-        content = response.content.decode('utf-8')
+        content = response.content.decode()
         assert 'Results for' in content
         assert 'an article title' in content
         assert '4 documents found for "article" in English' in content
@@ -190,4 +190,4 @@ def test_search_plugin(db, client, locale):
     assert_shared_cache_header(response)
     assert response['Content-Type'] == 'application/opensearchdescription+xml'
     assert 'search/plugin.html' in [t.name for t in response.templates]
-    assert '/{}/search'.format(locale) in response.content.decode('utf-8')
+    assert '/{}/search'.format(locale) in response.content.decode()

@@ -56,7 +56,7 @@ class Command(BaseCommand):
                 to_prefetch.append(url)
 
             # Get an MD5 hash of the lowercased path
-            path = doc.slug.lower().encode('utf-8')
+            path = doc.slug.lower().encode()
             path_hash = hashlib.md5(path).hexdigest()
 
             # Warm up the page_exists cache

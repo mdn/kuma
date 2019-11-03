@@ -727,14 +727,14 @@ class SectionEditLinkFilter(html5lib_Filter):
                                        reverse('wiki.document',
                                                args=[self.slug],
                                                locale=self.locale),
-                                       urlencode({'section': value.encode('utf-8'),
+                                       urlencode({'section': value.encode(),
                                                   'raw': 'true'})
                                    )),
                                    (None, 'href'): order_params('%s?%s' % (
                                        reverse('wiki.edit',
                                                args=[self.slug],
                                                locale=self.locale),
-                                       (urlencode({'section': value.encode('utf-8'),
+                                       (urlencode({'section': value.encode(),
                                                    'edit_links': 'true'})
                                         )))
                                }},

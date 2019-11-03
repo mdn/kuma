@@ -159,7 +159,7 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
         assert not DocumentSpamAttempt.objects.exists()
         mock_requests.post(VERIFY_URL, content=b'valid')
         mock_requests.post(HAM_URL,
-                           content=Akismet.submission_success.encode('utf-8'))
+                           content=Akismet.submission_success.encode())
         self.admin.save_model(self.request, dsa, None, True)
         dsa = DocumentSpamAttempt.objects.get()
         assert dsa.review == DocumentSpamAttempt.HAM
@@ -180,7 +180,7 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
         assert not DocumentSpamAttempt.objects.exists()
         mock_requests.post(VERIFY_URL, content=b'valid')
         mock_requests.post(HAM_URL,
-                           content=Akismet.submission_success.encode('utf-8'))
+                           content=Akismet.submission_success.encode())
         self.admin.save_model(self.request, dsa, None, True)
         self.assert_needs_review()
 
@@ -195,7 +195,7 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
         assert not DocumentSpamAttempt.objects.exists()
         mock_requests.post(VERIFY_URL, content=b'valid')
         mock_requests.post(HAM_URL,
-                           content=Akismet.submission_success.encode('utf-8'))
+                           content=Akismet.submission_success.encode())
         self.admin.save_model(self.request, dsa, None, True)
         self.assert_needs_review()
 
@@ -242,7 +242,7 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
 
         mock_requests.post(VERIFY_URL, content=b'valid')
         mock_requests.post(SPAM_URL,
-                           content=Akismet.submission_success.encode('utf-8'))
+                           content=Akismet.submission_success.encode())
 
         data = {
             'revision': revision.id,
@@ -300,7 +300,7 @@ class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
 
         mock_requests.post(VERIFY_URL, content=b'valid')
         mock_requests.post(SPAM_URL,
-                           content=Akismet.submission_success.encode('utf-8'))
+                           content=Akismet.submission_success.encode())
 
         data = {
             'revision': revision.id,

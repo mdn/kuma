@@ -357,7 +357,7 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
         assert response.status_code == 200
         assert b'Original Content.' in response.content
         assert b'dimension15' not in response.content
-        assert self.script_src.encode('utf-8') in response.content
+        assert self.script_src.encode() in response.content
 
     def test_user_no_variant_selected(self):
         """Users get original page without the experiment script."""
@@ -367,7 +367,7 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
         response = self.client.get(rev.document.get_absolute_url(),
                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
-        assert self.script_src.encode('utf-8') not in response.content
+        assert self.script_src.encode() not in response.content
 
     def test_anon_valid_variant_selected(self):
         """Anon users are in the Google Analytics cohort on the variant."""
@@ -380,9 +380,9 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
         assert response.status_code == 200
         assert b'Original Content.' not in response.content
         assert b'Variant Content.' in response.content
-        assert self.expected_15.encode('utf-8') in response.content
-        assert self.expected_16.encode('utf-8') in response.content
-        assert self.script_src.encode('utf-8') not in response.content
+        assert self.expected_15.encode() in response.content
+        assert self.expected_16.encode() in response.content
+        assert self.script_src.encode() not in response.content
         doc = pq(response.content)
         assert not doc('#edit-button')
 

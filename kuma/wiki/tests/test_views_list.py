@@ -151,7 +151,7 @@ def test_list_no_redirects(redirect_doc, doc_hierarchy, client):
     # doc_hierarchy, plus the root_doc (which is pulled-in by
     # the redirect_doc), but the redirect_doc should not be one of them.
     assert len(pq(resp.content).find('.document-list li')) == 5
-    assert redirect_doc.slug.encode('utf-8') not in resp.content
+    assert redirect_doc.slug.encode() not in resp.content
 
 
 def test_tags(root_doc, client):

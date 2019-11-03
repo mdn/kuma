@@ -258,7 +258,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             name=SPAM_SUBMISSIONS_FLAG, everyone=True)
         mock_requests.post(VERIFY_URL, content=b'valid')
         mock_requests.post(
-            SPAM_URL, content=Akismet.submission_success.encode('utf-8'))
+            SPAM_URL, content=Akismet.submission_success.encode())
         return mock_requests
 
     def test_delete_document(self):

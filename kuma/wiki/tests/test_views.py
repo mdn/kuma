@@ -1249,15 +1249,15 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         response = self.client.get(reverse('wiki.feeds.list_review',
                                            args=('atom',)),
                                    HTTP_HOST=settings.WIKI_HOST)
-        assert doc_entry.encode('utf-8') in response.content
+        assert doc_entry.encode() in response.content
         response = self.client.get(reverse('wiki.feeds.list_review_tag',
                                            args=('atom', 'technical', )),
                                    HTTP_HOST=settings.WIKI_HOST)
-        assert doc_entry.encode('utf-8') in response.content
+        assert doc_entry.encode() in response.content
         response = self.client.get(reverse('wiki.feeds.list_review_tag',
                                            args=('atom', 'editorial', )),
                                    HTTP_HOST=settings.WIKI_HOST)
-        assert doc_entry.encode('utf-8') in response.content
+        assert doc_entry.encode() in response.content
 
         # Post an edit that removes the technical review tag.
         data.update({
@@ -1299,15 +1299,15 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         response = self.client.get(reverse('wiki.feeds.list_review',
                                            args=('atom',)),
                                    HTTP_HOST=settings.WIKI_HOST)
-        assert doc_entry in response.content.decode('utf-8')
+        assert doc_entry in response.content.decode()
         response = self.client.get(reverse('wiki.feeds.list_review_tag',
                                            args=('atom', 'technical', )),
                                    HTTP_HOST=settings.WIKI_HOST)
-        assert doc_entry not in response.content.decode('utf-8')
+        assert doc_entry not in response.content.decode()
         response = self.client.get(reverse('wiki.feeds.list_review_tag',
                                            args=('atom', 'editorial', )),
                                    HTTP_HOST=settings.WIKI_HOST)
-        assert doc_entry in response.content.decode('utf-8')
+        assert doc_entry in response.content.decode()
 
     @pytest.mark.review_tags
     def test_quick_review(self):
@@ -1463,7 +1463,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         # The midair collision error, with the document url
         collision_err = MIDAIR_COLLISION % {'url': history_url}
 
-        content = resp.content.decode('utf-8')
+        content = resp.content.decode()
         if is_ajax:
             location_of_error = json.loads(content)['error_message']
         else:

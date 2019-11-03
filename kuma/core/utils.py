@@ -293,7 +293,7 @@ def get_unique(content_type, object_pk, name=None, request=None,
             user.pk if user else 'None',
         )
     )
-    unique_hash = hashlib.md5(hash_text.encode('utf-8')).hexdigest()
+    unique_hash = hashlib.md5(hash_text.encode()).hexdigest()
 
     return (user, ip, user_agent, unique_hash)
 

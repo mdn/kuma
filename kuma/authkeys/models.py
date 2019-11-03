@@ -19,11 +19,11 @@ def generate_key():
     random_hash = hashlib.sha256(random_bytes).digest()
     replacements = [b'rA', b'aZ', b'gQ', b'hH', b'hG', b'aR', b'DD']
     random_repl = random.choice(replacements)
-    return base64.b64encode(random_hash, random_repl).rstrip(b'=').decode('utf-8')
+    return base64.b64encode(random_hash, random_repl).rstrip(b'=').decode()
 
 
 def hash_secret(secret):
-    return hashlib.sha512((settings.SECRET_KEY + secret).encode('utf-8')).hexdigest()
+    return hashlib.sha512((settings.SECRET_KEY + secret).encode()).hexdigest()
 
 
 class Key(models.Model):

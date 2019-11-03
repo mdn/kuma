@@ -108,7 +108,7 @@ def authkey(wiki_user):
     secret = key.generate_secret()
     key.save()
     auth = '%s:%s' % (key.key, secret)
-    header = 'Basic %s' % base64.b64encode(auth.encode('utf-8')).decode('utf-8')
+    header = 'Basic %s' % base64.b64encode(auth.encode()).decode()
     return AuthKey(key=key, header=header)
 
 

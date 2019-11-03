@@ -122,7 +122,7 @@ def assert_valid_url(url, location=None, status_code=requests.codes.moved_perman
             # strip off query for further comparison
             resp_location = resp_location.split('?')[0]
 
-        assert location == unquote(resp_location).decode('utf-8')
+        assert location == unquote(resp_location).decode()
 
     if resp_headers and not follow_redirects:
         for name, value in resp_headers.items():

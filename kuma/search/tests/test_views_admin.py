@@ -16,7 +16,7 @@ def test_view_indexes(admin_client, settings):
     url = reverse('admin:search_index_changelist')
     response = admin_client.get(url)
     assert response.status_code == 200
-    content = response.content.decode('utf-8')
+    content = response.content.decode()
     assert settings.ES_URLS[0] in content
     assert settings.ES_URLS[1] not in content
     assert settings.ES_URLS[1].replace(
