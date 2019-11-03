@@ -31,6 +31,17 @@
         @include input-base;
     }
 
+    .edit-default {
+        display: block;
+        @include btn-simple-text();
+        padding-left: 0;
+
+        @media #{$mq-tablet-and-up} {
+            display: initial;
+            padding-left: 10px;
+        }
+    }
+
     .field-explanation {
         margin-top: 5px;
         @include set-font-size($tiny-font-size);

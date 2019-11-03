@@ -26,8 +26,14 @@
 <main id="content-main" role="main">
   <article id="browser_register" class="readable-line-length center">
     <ol class="auth-service-header">
-      <li class="github-auth">{{ _('Authorize with Github') }}</li>
-      <li class="mdn-profile">{{ _('Create MDN Profile') }}</li>
+      <li class="github-auth checked">
+        <img src="{{ static('auth/github-auth.svg') }}" width="90px" alt="Github" />
+        {{ _('Authorize with Github') }}
+      </li>
+      <li class="mdn-profile">
+        <img src="{{ static('auth/mdn-auth.svg') }}" width="90px" alt="{{ _('User avatar') }}" />
+        {{ _('Create MDN Profile') }}
+      </li>
     </ol>
 
     <p class="lead-in">
@@ -67,7 +73,7 @@
                 {% set github_username = account.get_provider_account() %}
                 <input type="hidden" name="username" value="{{ github_username }}" />
                 {{ github_username }}
-                <button id="change-username" type="button" class="simple-text" aria-label="{{ _('Your’re current username is %s. Change username?'%(github_username)) }}">{{ _('change username') }}</button>
+                <button id="change-username" type="button" class="edit-default" aria-label="{{ _('Your’re current username is %s. Change username?'%(github_username)) }}">{{ _('change username') }}</button>
               </div>
               {% set is_hidden = true %}
               {% include 'socialaccount/includes/change_username.html' %}
@@ -93,13 +99,13 @@
               <div id="email-static-container" class="email-static">
                 <input type="hidden" name="email" value="{{ primary_email }}" />
                 {{ primary_email }}
-                <button id="change-email" type="button" class="simple-text" aria-label="{{ _('Your’re current email address is %s. Change email address?'%(primary_email)) }}">{{ _('change email address') }}</button>
+                <button id="change-email" type="button" class="edit-default" aria-label="{{ _('Your’re current email address is %s. Change email address?'%(primary_email)) }}">{{ _('change email address') }}</button>
               </div>
             {% else %}
               <div id="email-static-container" class="email-static">
                 <input type="hidden" name="email" value="{{ default_email }}" />
                 {{ default_email }}
-                <button id="change-email" type="button" class="simple-text" aria-label="{{ _('Your’re current email address is %s. Change email address?'%(default_email)) }}">{{ _('change email address') }}</button>
+                <button id="change-email" type="button" class="edit-default" aria-label="{{ _('Your’re current email address is %s. Change email address?'%(default_email)) }}">{{ _('change email address') }}</button>
               </div>
             {% endif %}
 
@@ -128,7 +134,7 @@
         </li>
 
         <li class="submit">
-          <button class="cta primary" type="submit" name="create">{{ _('Create profile') }}</button>
+          <button id="create-mdn-account" class="cta primary" type="submit" name="create" data-avatar="{{ account.get_avatar_url() }}">{{ _('Create profile') }}</button>
         </li>
       </ul>
 

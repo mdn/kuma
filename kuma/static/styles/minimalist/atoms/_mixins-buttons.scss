@@ -1,7 +1,7 @@
 /* A button that resembles a text link. These should
    be use sparingly and *only* when a button truly is
    the correct element */
-.simple-text {
+@mixin btn-simple-text() {
     background: none;
     color: $link-color;
     border: 0;

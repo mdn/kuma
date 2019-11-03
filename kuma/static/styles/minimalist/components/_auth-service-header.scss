@@ -7,12 +7,9 @@
     text-align: center;
     font-weight: bold;
 
-    @media #{$mq-tablet-and-up} {
-        list-style: decimal;
-    }
-
     .github-auth,
     .mdn-profile {
+        position: relative;
         max-width: 140px;
 
         @media #{$mq-tablet-and-up} {
@@ -20,38 +17,48 @@
         }
     }
 
-    .github-auth::before,
-    .mdn-profile::before {
+    .github-auth,
+    .mdn-profile {
+        img {
+            display: block;
+            margin: 0 auto;
+            border: 10px solid #fff;
+            border-radius: 50%;
+        }
+    }
+
+    .checked::after {
         display: block;
+        position: absolute;
+        top: 12px;
+        right: 30px;
+        background: transparent url('../../../general/auth-checkmark.svg') 0 0
+            no-repeat;
         content: '';
-        margin: 0 auto;
-        background-size: 70px;
-        width: 70px;
-        height: 70px;
+        background-size: 20px;
+        width: 20px;
+        height: 20px;
 
         @media #{$mq-tablet-and-up} {
-            background-size: 100px;
-            width: 100px;
-            height: 100px;
+            right: 40px;
+            background-size: 25px;
+            width: 25px;
+            height: 25px;
         }
     }
 
-    .github-auth::before {
-        background-image: url('../../../general/auth-checkmark.svg'),
-            url('../../../social/github-auth.svg');
-        background-repeat: no-repeat;
-        background-position: 48px 5px, 0 0;
-        background-size: 20px, 70px;
+    .mdn-profile {
+        &::after {
+            right: 30px;
 
-        @media #{$mq-tablet-and-up} {
-            background-position: 70px 8px, 0 0;
-            background-size: 25px, 100px;
+            @media #{$mq-tablet-and-up} {
+                right: 20px;
+            }
         }
     }
 
-    .mdn-profile::before {
-        background: transparent url('../../../brand/mdn-auth.svg') 0 0 no-repeat;
-        opacity: 0.5;
+    .animate {
+        @include fade-in();
     }
 
     .lead-in {
