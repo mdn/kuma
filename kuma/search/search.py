@@ -1,4 +1,3 @@
-from collections import OrderedDict
 from operator import attrgetter
 
 from django.utils.translation import ugettext
@@ -65,11 +64,11 @@ class SearchView(ListAPIView):
 
     def get_filters(self, aggregations):
         url = QueryURLObject(self.url)
-        filter_mapping = OrderedDict(
-            (filter_['slug'], filter_)
+        filter_mapping = {
+            filter_['slug']: filter_
             for filter_ in self.serialized_filters
-        )
-        filter_groups = OrderedDict()
+        }
+        filter_groups = {}
 
         try:
             aggs = aggregations or {}

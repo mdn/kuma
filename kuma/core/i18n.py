@@ -6,8 +6,6 @@ Kuma language code is mixed case, like 'en-US'.
 """
 
 
-from collections import OrderedDict
-
 from django.apps import apps
 from django.conf import settings
 from django.conf.locale import LANG_INFO
@@ -52,8 +50,8 @@ def get_django_languages():
     This would be the same as Django's get_languages, if we were using Django
     language codes.
     """
-    return OrderedDict((kuma_language_code_to_django(locale), name)
-                       for locale, name in settings.LANGUAGES)
+    return {kuma_language_code_to_django(locale): name
+            for locale, name in settings.LANGUAGES}
 
 
 def get_kuma_languages():

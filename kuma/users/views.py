@@ -1,4 +1,3 @@
-import collections
 import json
 import operator
 from datetime import datetime, timedelta
@@ -475,7 +474,7 @@ class SignupView(BaseSignupView):
         Returns an instance of the form to be used in this view.
         """
         self.default_email = None
-        self.email_addresses = collections.OrderedDict()
+        self.email_addresses = {}
         form = super(SignupView, self).get_form(form_class)
         form.fields['email'].label = _('Email address')
         self.matching_user = None

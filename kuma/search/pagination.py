@@ -1,5 +1,3 @@
-from collections import OrderedDict
-
 from django.conf import settings
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -24,20 +22,20 @@ class SearchPagination(PageNumberPagination):
                      self).paginate_queryset(queryset, request, view=view)
 
     def get_paginated_response(self, data):
-        return Response(OrderedDict([
-            ('query', self.request.query_params.get('q')),
-            ('locale', getattr(
+        return Response({
+            'query': self.request.query_params.get('q'),
+            'locale': getattr(
                 self.request,
                 'LANGUAGE_CODE',
                 settings.WIKI_DEFAULT_LANGUAGE
-            )),
-            ('page', self.page.number),
-            ('pages', self.page.paginator.num_pages),
-            ('start', self.page.start_index()),
-            ('end', self.page.end_index()),
-            ('next', self.get_next_link()),
-            ('previous', self.get_previous_link()),
-            ('count', self.page.paginator.count),
-            ('filters', self.view.get_filters(self.page.aggregations)),
-            ('documents', data),
-        ]))
+            ),
+            'page': self.page.number,
+            'pages': self.page.paginator.num_pages,
+            'start': self.page.start_index(),
+            'end': self.page.end_index(),
+            'next': self.get_next_link(),
+            'previous': self.get_previous_link(),
+            'count': self.page.paginator.count,
+            'filters': self.view.get_filters(self.page.aggregations),
+            'documents': data,
+        })

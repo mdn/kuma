@@ -3,7 +3,6 @@
 
 import logging
 import time
-from collections import OrderedDict
 from datetime import datetime
 from math import ceil
 
@@ -104,7 +103,7 @@ class Scraper(object):
     def __init__(self, host='wiki.developer.mozilla.org', ssl=True):
         """Initialize Scraper."""
         self.requester = Requester(host, ssl)
-        self.sources = OrderedDict()
+        self.sources = {}
         self.storage = Storage()
         self.defaults = {}
         self.overrides = {}
@@ -155,7 +154,7 @@ class Scraper(object):
         blocked = False  # Stop if we're stuck on a blocked dependency
         cycle = 0
         start = datetime.now()
-        state_counts = OrderedDict((state, 0) for state in Source.STATES)
+        state_counts = dict.fromkeys(Source.STATES, 0)
         state_counts[Source.STATE_INIT] = len(self.sources)
         while (first or repeat) and not blocked:
             first = False
@@ -164,7 +163,7 @@ class Scraper(object):
                             state_counts[Source.STATE_DONE] -
                             state_counts[Source.STATE_ERROR])
             last_counts = state_counts
-            state_counts = OrderedDict((state, 0) for state in Source.STATES)
+            state_counts = dict.fromkeys(Source.STATES, 0)
             new_sources = []
             cycle += 1
 

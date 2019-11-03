@@ -2,7 +2,6 @@
 
 
 import logging
-from collections import OrderedDict
 
 from django.db import IntegrityError
 from taggit.models import Tag
@@ -42,7 +41,7 @@ class Storage(object):
 
     def deduped_tags(self, tags):
         """Filter tags to remove those that only differ by case."""
-        deduped = OrderedDict()
+        deduped = {}
         for tag in self.sorted_tags(tags):
             deduped.setdefault(tag.lower(), tag)
         return list(deduped.values())

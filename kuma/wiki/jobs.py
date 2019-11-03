@@ -1,6 +1,5 @@
 
 
-import collections
 import random
 
 from django.conf import settings
@@ -49,10 +48,11 @@ class DocumentContributorsJob(KumaJob):
             return self.empty()
 
         # then return the ordered results given the ID list, MySQL only syntax
-        select = collections.OrderedDict([
-            ('ordered_ids',
-             'FIELD(id,%s)' % ','.join(map(str, recent_creator_ids))),
-        ])
+        select = {
+            'ordered_ids':
+            'FIELD(id,%s)' % ','.join(str(id) for id in recent_creator_ids),
+        }
+
         return list(User.objects.filter(id__in=recent_creator_ids,
                                         is_active=True)
                                 .extra(select=select,

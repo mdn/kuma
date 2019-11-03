@@ -12,7 +12,6 @@
 # serve to show the default.
 
 # import sys, os
-from collections import OrderedDict
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -112,12 +111,12 @@ html_theme_options = {
                     '<a href="https://developer.mozilla.org/en-US/">MDN</a>'),
     'travis_button': False,
     'codecov_button': False,
-    'extra_nav_links': OrderedDict((
-        ('MDN', 'https://developer.mozilla.org'),
-        ('MDN Staging', 'https://developer.allizom.org'),
-        ('Kuma on GitHub', 'https://github.com/mdn/kuma'),
-        ('KumaScript on GitHub', 'https://github.com/mdn/kumascript'),
-    )),
+    'extra_nav_links': {
+        'MDN': 'https://developer.mozilla.org',
+        'MDN Staging': 'https://developer.allizom.org',
+        'Kuma on GitHub': 'https://github.com/mdn/kuma',
+        'KumaScript on GitHub': 'https://github.com/mdn/kumascript',
+    },
     'show_related': True,
     'page_width': '100%'
 }
