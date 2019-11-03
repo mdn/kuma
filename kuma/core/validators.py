@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # see also: http://github.com/tav/scripts/raw/master/validate_jsonp.py
 # Placed into the Public Domain by tav <tav@espians.com>
 

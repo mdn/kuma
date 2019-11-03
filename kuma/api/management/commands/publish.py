@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Manually schedule the publishing of one or more documents to the document API.
 """

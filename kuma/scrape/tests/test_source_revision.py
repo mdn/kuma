@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Tests for the RevisionSource class ($revision/ID API)."""
 
 

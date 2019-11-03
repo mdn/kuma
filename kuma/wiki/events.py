@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Send notification emails for editing events."""
 
 

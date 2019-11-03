@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Manually schedule the removal of one or more documents from the document API.
 """

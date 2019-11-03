@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import requests
 
 from utils.urls import flatten, url_test

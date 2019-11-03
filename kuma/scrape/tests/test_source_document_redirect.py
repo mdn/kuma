@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Tests for the DocumentRedirectSource class (HEAD document)."""
 
 

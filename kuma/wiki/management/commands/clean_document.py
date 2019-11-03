@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Manually schedule the cleaning of one or more documents
 """

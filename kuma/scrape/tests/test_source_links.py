@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Tests for the LinksSource class (Links from a page)."""
 
 

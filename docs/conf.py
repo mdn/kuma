@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # Kuma documentation build configuration file, created by
 # sphinx-quickstart on Mon Aug  5 15:41:51 2013.

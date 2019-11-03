@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """py.test fixtures for kuma.wiki.tests."""
 
 

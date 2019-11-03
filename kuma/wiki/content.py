@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import re
 from collections import defaultdict
 from urllib.parse import unquote, urlencode, urlparse, urlsplit
