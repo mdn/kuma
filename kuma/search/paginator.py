@@ -1,4 +1,5 @@
-from django.core.paginator import EmptyPage, Page, PageNotAnInteger, Paginator
+from django.core.paginator import (
+    EmptyPage, InvalidPage, Page, PageNotAnInteger, Paginator)
 from django.utils.functional import cached_property
 
 
@@ -37,6 +38,18 @@ class SearchPaginator(Paginator):
         assigns the count from the ES result to the Paginator.
         """
         number = self.validate_number(number)
+        if number >= 1000:
+            # Anything >=1,000 will result in a hard error in
+            # Elasticsearch which would happen before we even get a chance
+            # to validate that the range is too big. The error you would
+            # get from Elasticsearch 6.x is something like this:
+            #
+            #     Result window is too large, from + size must be less
+            #     than or equal to: [10000] but was [11000].
+            #
+            # See https://github.com/mdn/kuma/issues/6092
+            raise InvalidPage('Page number too large')
+
         bottom = (number - 1) * self.per_page
         top = bottom + self.per_page
 
