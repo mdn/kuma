@@ -1,0 +1,17 @@
+.benefits {
+    @include card('gradient');
+    margin: 20px auto;
+
+    @media #{$mq-tablet-and-up} {
+        margin: 60px auto;
+    }
+
+    ul {
+        @include unordered-list-base();
+        max-width: 260px;
+
+        li {
+            @include custom-checkmark-list-item();
+        }
+    }
+}

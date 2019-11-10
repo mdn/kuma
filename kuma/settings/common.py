@@ -836,6 +836,12 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/signup-flow.css',
     },
+    'auth-modal': {
+        'source_filenames': (
+            'styles/minimalist/components/auth-modal.scss',
+        ),
+        'output_filename': 'build/styles/auth-modal.css',
+    },
     'user-banned': {
         'source_filenames': (
             'styles/user-banned.scss',
@@ -1009,6 +1015,16 @@ PIPELINE_JS = {
             'js/components/user-signup/signup.js',
         ),
         'output_filename': 'build/js/signup.js',
+        'extra_context': {
+            'async': True,
+        },
+    },
+    'auth-modal': {
+        'source_filenames': (
+            'js/components/modal.js',
+            'js/components/user-signup/auth-modal.js',
+        ),
+        'output_filename': 'build/js/auth-modal.js',
         'extra_context': {
             'async': True,
         },
@@ -1831,6 +1847,8 @@ ENABLE_NEWSLETTER_SIGNUP = config('ENABLE_NEWSLETTER_SIGNUP', default=False, cas
 # Whether or not to enable the BCD signalling feature.
 # Affects loading of CSS (statically) and JS (in runtime).
 ENABLE_BCD_SIGNAL = config('ENABLE_BCD_SIGNAL', default=True, cast=bool)
+# Multi Auth Switch
+MULTI_AUTH_ENABLED = config('MULTI_AUTH_ENABLED', default=False, cast=bool)
 
 # Content Experiments
 # Must be kept up to date with PIPELINE_JS setting and the JS client-side

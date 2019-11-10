@@ -132,10 +132,15 @@
     </div>
   </footer>
 
+  {% block auth_modal %}
+    {% include "includes/auth-modal.html" %}
+  {% endblock %}
+
   <!-- site js -->
   {% block site_js %}
     {{ providers_media_js() }}
     {% javascript 'react-main' %}
+    {% javascript 'auth-modal' %}
     {% for script in scripts %}
       {% javascript script %}
     {% endfor %}
