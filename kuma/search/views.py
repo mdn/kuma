@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
 from django.views.generic import RedirectView
+from elasticsearch.exceptions import RequestError
 from ratelimit.decorators import ratelimit
 
 from kuma.api.v1.views import search as search_api
@@ -23,15 +24,18 @@ def search(request, *args, **kwargs):
     """
     The search view.
     """
-    if is_wiki(request):
-        return wiki_search(request, *args, **kwargs)
+    try:
+        if is_wiki(request):
+            return wiki_search(request, *args, **kwargs)
 
-    results = search_api(request, *args, **kwargs).data
-    context = {
-        'results': {
-            'results': None if results.get('error') else results
+        results = search_api(request, *args, **kwargs).data
+        context = {
+            'results': {
+                'results': None if results.get('error') else results
+            }
         }
-    }
+    except RequestError:
+        return render(request, 'handlers/400.html', {'reason': 'search_phase_execution_exception'}, status=400)
 
     return render(request, 'search/react.html', context)
 
