@@ -1,4 +1,7 @@
-import mock
+
+
+from unittest import mock
+
 import pytest
 
 from ..models import Document, Revision

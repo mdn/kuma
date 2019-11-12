@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 
 import pytest
 from waffle.models import Flag, Sample, Switch
@@ -102,7 +102,7 @@ def test_doc_api(client, trans_doc, cleared_cacheback_cache):
         'locale': 'en-US',
         'language': 'English (US)',
         'hrefLang': 'en',
-        'localizedLanguage': u'Anglais am\u00e9ricain',
+        'localizedLanguage': 'Anglais am\u00e9ricain',
         'title': 'Root Document',
         'url': '/en-US/docs/Root'
     }]

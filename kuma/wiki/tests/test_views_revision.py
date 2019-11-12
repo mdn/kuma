@@ -1,5 +1,6 @@
-# -*- coding: utf-8 -*-
 """Tests for kuma.wiki.views.revision."""
+
+
 import pytest
 from django.conf import settings
 

@@ -1,9 +1,9 @@
 import sys
+from urllib.parse import urljoin
 
 import newrelic.agent
 from constance import config
 from django.conf import settings
-from django.utils.six.moves.urllib.parse import urljoin
 from requests import Session
 from requests.adapters import HTTPAdapter
 from requests.exceptions import RequestException
@@ -83,7 +83,7 @@ class Akismet(object):
         # blog is the only parameter required by all API endpoints
         if 'blog' not in payload:
             scheme = 'https' if self.ssl else 'http'
-            payload['blog'] = u'%s://%s/' % (scheme, self.domain)
+            payload['blog'] = '%s://%s/' % (scheme, self.domain)
         url = urljoin(self.url, method)
         return self.session.post(url, data=payload)
 

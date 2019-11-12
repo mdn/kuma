@@ -1,7 +1,8 @@
-from __future__ import unicode_literals
+
 
 import re
 from functools import partial, wraps
+from urllib.parse import quote
 
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
@@ -10,7 +11,6 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.utils.decorators import available_attrs
-from django.utils.http import urlquote
 
 from .jobs import BannedIPsJob
 from .urlresolvers import reverse
@@ -66,7 +66,7 @@ def user_access_decorator(redirect_func, redirect_url_func, deny_func=None,
 
                 # Redirect back here afterwards?
                 if redirect_field:
-                    path = urlquote(request.get_full_path())
+                    path = quote(request.get_full_path())
                     redirect_url = '%s?%s=%s' % (
                         redirect_url, redirect_field, path)
 

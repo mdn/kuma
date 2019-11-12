@@ -1,9 +1,8 @@
-from __future__ import unicode_literals
+from unittest import mock
+from urllib.parse import urlparse
 
-import mock
 import pytest
 from django.core.cache import cache
-from django.utils.six.moves.urllib.parse import urlparse
 from ratelimit.exceptions import Ratelimited
 
 from kuma.core.tests import (assert_no_cache_header, assert_redirect_to_wiki,

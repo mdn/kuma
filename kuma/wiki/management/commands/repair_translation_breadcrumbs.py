@@ -1,6 +1,8 @@
 """
 Repair breadcrumb relations for translations that are missing parent topics.
 """
+
+
 import logging
 
 from django.core.management.base import (BaseCommand)
@@ -30,11 +32,11 @@ class Command(BaseCommand):
                 # Some translated pages really don't end up needing a
                 # breadcrumb repair, but we don't really know until we try and
                 # come up empty handed.
-                logging.debug(u'\t(root) -> /%s/docs/%s' % (
+                logging.debug('\t(root) -> /%s/docs/%s' % (
                     doc.locale, doc.slug))
             else:
                 # We got a new parent topic, so save and report the result
                 doc.save()
-                logging.debug(u'\t/%s/docs/%s -> /%s/docs/%s' % (
+                logging.debug('\t/%s/docs/%s -> /%s/docs/%s' % (
                     doc.parent_topic.locale, doc.parent_topic.slug,
                     doc.locale, doc.slug))

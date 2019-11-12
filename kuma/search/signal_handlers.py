@@ -27,7 +27,7 @@ def render_done_handler(instance, **kwargs):
         if outdated:
             log.info('Found a newer index and scheduled '
                      'indexing it after promotion.')
-        doc_pks = set([item.pk for item in doc.other_translations])
+        doc_pks = {item.pk for item in doc.other_translations}
         doc_pks.add(doc.id)
         try:
             index_documents.delay(list(doc_pks), current_index.pk)

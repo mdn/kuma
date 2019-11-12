@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-from __future__ import division
+
 
 import logging
 from math import ceil
@@ -64,7 +63,7 @@ class WikiDocumentType(document.Document):
     @classmethod
     def case_insensitive_keywords(cls, keywords):
         '''Create a unique list of lowercased keywords.'''
-        return sorted(set([keyword.lower() for keyword in keywords]))
+        return sorted({keyword.lower() for keyword in keywords})
 
     @classmethod
     def from_django(cls, obj):
@@ -251,7 +250,7 @@ class WikiDocumentType(document.Document):
         if highlighted:
             for excerpt_field in self.excerpt_fields:
                 if excerpt_field in highlighted:
-                    return u'…'.join(highlighted[excerpt_field])
+                    return '…'.join(highlighted[excerpt_field])
         return self.summary
 
     @classmethod

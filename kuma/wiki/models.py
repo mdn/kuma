@@ -1,10 +1,9 @@
-from __future__ import unicode_literals
-
 import json
 import sys
 import traceback
 from datetime import datetime, timedelta
 from functools import wraps
+from urllib.parse import urlparse
 from uuid import uuid4
 
 import newrelic.agent
@@ -15,10 +14,8 @@ from django.core.exceptions import ValidationError
 from django.db import models, transaction
 from django.db.models import signals
 from django.utils.decorators import available_attrs
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext, ugettext_lazy as _
-from six.moves.urllib.parse import urlparse
 from taggit.managers import TaggableManager
 from taggit.models import ItemBase, TagBase
 from taggit.utils import edit_string_for_tags, parse_tags
@@ -133,7 +130,6 @@ class TaggedDocument(ItemBase):
         return tags_for(cls, *args, **kwargs)
 
 
-@python_2_unicode_compatible
 class DocumentAttachment(models.Model):
     """
     Intermediary between Documents and Attachments. Allows storing the
@@ -170,7 +166,7 @@ class DocumentAttachment(models.Model):
         db_table = 'attachments_documentattachment'
 
     def __str__(self):
-        return u'"%s" for document "%s"' % (self.file, self.document)
+        return '"%s" for document "%s"' % (self.file, self.document)
 
     def clean(self):
         if self.pk and (self.document.files.through.objects.exclude(pk=self.pk)
@@ -182,7 +178,6 @@ class DocumentAttachment(models.Model):
             )
 
 
-@python_2_unicode_compatible
 class Document(NotificationsMixin, models.Model):
     """A localized knowledgebase document, not revision-specific."""
     TOC_FILTERS = {
@@ -776,14 +771,14 @@ class Document(NotificationsMixin, models.Model):
         if (self.parent and self.parent.id != self.id and
                 not self.parent.is_localizable):
             raise ValidationError('"%s": parent "%s" is not localizable.' % (
-                                  unicode(self), unicode(self.parent)))
+                                  str(self), str(self.parent)))
 
         # Can't make not localizable if it has translations
         # This only applies to documents that already exist, hence self.pk
         if self.pk and not self.is_localizable and self.translations.exists():
             raise ValidationError('"%s": document has %s translations but is '
                                   'not localizable.' %
-                                  (unicode(self), self.translations.count()))
+                                  (str(self), self.translations.count()))
 
     def revert(self, revision, user, comment=None):
         """
@@ -808,7 +803,7 @@ class Document(NotificationsMixin, models.Model):
             revision.comment = ("Revert to revision of %s by %s" %
                                 (revision.created, revision.creator))
             if comment:
-                revision.comment = u'%s: "%s"' % (revision.comment, comment)
+                revision.comment = '%s: "%s"' % (revision.comment, comment)
             revision.created = datetime.now()
             revision.creator = user
 
@@ -1101,7 +1096,7 @@ class Document(NotificationsMixin, models.Model):
                 # correct exception + error message, so just propagate
                 # it up.
                 raise
-            except Exception as e:
+            except Exception:
                 # One of the immediate children of this page failed to
                 # move.
                 exc_class, exc_message, exc_tb = sys.exc_info()
@@ -1127,7 +1122,7 @@ Full traceback:
                        'slug': old_child_slug,
                        'exc_class': exc_class,
                        'exc_message': exc_message,
-                       'traceback': traceback.format_exc(e)}
+                       'traceback': traceback.format_exc()}
                 raise PageMoveError(message)
 
     def repair_breadcrumbs(self):
@@ -1554,7 +1549,6 @@ Full traceback:
         return rev
 
 
-@python_2_unicode_compatible
 class DocumentDeletionLog(models.Model):
     """
     Log of who deleted a Document, when, and why.
@@ -1623,7 +1617,6 @@ class LocalizationTaggedRevision(ItemBase):
         return tags_for(cls, *args, **kwargs)
 
 
-@python_2_unicode_compatible
 class Revision(models.Model):
     """A revision of a localized knowledgebase document"""
     # Depth of table-of-contents in document display.
@@ -1634,10 +1627,10 @@ class Revision(models.Model):
     TOC_DEPTH_H4 = 4
 
     TOC_DEPTH_CHOICES = (
-        (TOC_DEPTH_NONE, _(u'No table of contents')),
-        (TOC_DEPTH_ALL, _(u'All levels')),
-        (TOC_DEPTH_H2, _(u'H2 and higher')),
-        (TOC_DEPTH_H3, _(u'H3 and higher')),
+        (TOC_DEPTH_NONE, _('No table of contents')),
+        (TOC_DEPTH_ALL, _('All levels')),
+        (TOC_DEPTH_H2, _('H2 and higher')),
+        (TOC_DEPTH_H3, _('H3 and higher')),
         (TOC_DEPTH_H4, _('H4 and higher')),
     )
 
@@ -1793,9 +1786,9 @@ class Revision(models.Model):
         self.document.populate_attachments()
 
     def __str__(self):
-        return u'[%s] %s #%s' % (self.document.locale,
-                                 self.document.title,
-                                 self.id)
+        return '[%s] %s #%s' % (self.document.locale,
+                                self.document.title,
+                                self.id)
 
     def get_section_content(self, section_id):
         """Convenience method to extract the content for a single section"""
@@ -1873,7 +1866,6 @@ class Revision(models.Model):
         return abs((datetime.now() - self.created).days)
 
 
-@python_2_unicode_compatible
 class RevisionIP(models.Model):
     """
     IP Address for a Revision including User-Agent string and Referrer URL.
@@ -1912,7 +1904,6 @@ class RevisionIP(models.Model):
         return '%s (revision %d)' % (self.ip or 'No IP', self.revision.id)
 
 
-@python_2_unicode_compatible
 class RevisionAkismetSubmission(AkismetSubmission):
     """
     The Akismet submission per wiki document revision.
@@ -1936,7 +1927,7 @@ class RevisionAkismetSubmission(AkismetSubmission):
     def __str__(self):
         if self.revision:
             return (
-                u'%(type)s submission by %(sender)s (Revision %(revision_id)d)' % {
+                '%(type)s submission by %(sender)s (Revision %(revision_id)d)' % {
                     'type': self.get_type_display(),
                     'sender': self.sender,
                     'revision_id': self.revision.id,
@@ -1944,14 +1935,13 @@ class RevisionAkismetSubmission(AkismetSubmission):
             )
         else:
             return (
-                u'%(type)s submission by %(sender)s (no revision)' % {
+                '%(type)s submission by %(sender)s (no revision)' % {
                     'type': self.get_type_display(),
                     'sender': self.sender,
                 }
             )
 
 
-@python_2_unicode_compatible
 class EditorToolbar(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL,
                                 related_name='created_toolbars',
@@ -1964,7 +1954,6 @@ class EditorToolbar(models.Model):
         return self.name
 
 
-@python_2_unicode_compatible
 class DocumentSpamAttempt(SpamAttempt):
     """
     The wiki document specific spam attempt.
@@ -2028,7 +2017,7 @@ class DocumentSpamAttempt(SpamAttempt):
     )
 
     def __str__(self):
-        return u'%s (%s)' % (self.slug, self.title)
+        return f'{self.slug} ({self.title})'
 
 
 class BCSignal(models.Model):
@@ -2050,7 +2039,7 @@ class BCSignal(models.Model):
     submitted_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return u'BC Signal: {}'.format(self.document.slug)
+        return 'BC Signal: {}'.format(self.document.slug)
 
     class Meta:
         verbose_name = 'BC Signal'

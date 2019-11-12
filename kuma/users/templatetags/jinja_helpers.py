@@ -80,15 +80,15 @@ def public_email(email):
 
 def unicode_to_html(text):
     """Turns all unicode into html entities, e.g. &#69; -> E."""
-    return ''.join([u'&#%s;' % ord(i) for i in text])
+    return ''.join(['&#%s;' % ord(i) for i in text])
 
 
 @library.global_function
 def user_list(users):
     """Turn a list of users into a list of links to their profiles."""
-    link = u'<a href="%s">%s</a>'
-    list = u', '.join([link % (escape(u.get_absolute_url()), escape(u.username)) for
-                       u in users])
+    link = '<a href="%s">%s</a>'
+    list = ', '.join([link % (escape(u.get_absolute_url()), escape(u.username))
+                      for u in users])
     return Markup(list)
 
 
@@ -134,8 +134,8 @@ def providers_media_js(context):
     {{ providers_media_js() }}
     """
     request = context['request']
-    return Markup(u'\n'.join([p.media_js(request)
-                              for p in providers.registry.get_list()]))
+    return Markup('\n'.join([p.media_js(request)
+                             for p in providers.registry.get_list()]))
 
 
 @library.global_function

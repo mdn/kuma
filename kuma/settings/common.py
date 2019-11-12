@@ -5,13 +5,13 @@ import platform
 import re
 from collections import namedtuple
 from os.path import dirname
+from urllib.parse import parse_qs, urlencode, urlsplit, urlunsplit
 
 import dj_database_url
 import dj_email_url
 from decouple import config, Csv
-from six.moves.urllib.parse import parse_qs, urlencode, urlsplit, urlunsplit
 
-_Language = namedtuple(u'Language', u'english native')
+_Language = namedtuple('Language', 'english native')
 
 
 def path(*parts):
@@ -99,6 +99,14 @@ DATABASES = {
 
 SILENCED_SYSTEM_CHECKS = [
     'django_mysql.W003',
+
+    # As of django-recaptcha==2.0.4 it checks that you have set either
+    # settings.RECAPTCHA_PRIVATE_KEY or settings.RECAPTCHA_PUBLIC_KEY.
+    # If you haven't it assumes to use the default test keys (from Google).
+    # We don't set either of these keys so they think we haven't thought
+    # about using real values. However, we use django-constance for this
+    # and not django.conf.settings so the warning doesn't make sense to us.
+    'captcha.recaptcha_test_key_error',
 ]
 
 # Cache Settings
@@ -1862,3 +1870,11 @@ MDN_CLOUDFRONT_DISTRIBUTIONS = {
 # See https://bugzilla.mozilla.org/show_bug.cgi?id=1567587 for some more
 # details about why we don't want or need this.
 CACHEBACK_VERIFY_CACHE_WRITE = False
+
+# Write down the override location for where DB migrations for third-party
+# Django apps should go. This is relevant if an app we depend on requires
+# new migrations that aren't in the released upstream package.
+# One good example is: https://github.com/ubernostrum/django-soapbox/issues/5
+MIGRATION_MODULES = {
+    'soapbox': 'kuma.soap_migrations'
+}

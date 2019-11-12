@@ -7,13 +7,12 @@ TODO:
 - Permissions for tag namespaces (eg. system:* is superuser-only)
 - Machine tag assists
 """
-from __future__ import unicode_literals
+
 
 from datetime import date, timedelta
 
 from django.db import models
 from django.db.models.fields import BLANK_CHOICE_DASH
-from django.utils.encoding import python_2_unicode_compatible
 from taggit.managers import _TaggableManager, TaggableManager
 from taggit.models import Tag
 from taggit.utils import edit_string_for_tags, require_instance_manager
@@ -34,7 +33,6 @@ class NamespacedTaggableManager(TaggableManager):
         super(NamespacedTaggableManager, self).__init__(*args, **kwargs)
 
 
-@python_2_unicode_compatible
 class _NamespacedTaggableManager(_TaggableManager):
 
     def __str__(self):

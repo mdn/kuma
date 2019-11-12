@@ -1,8 +1,8 @@
 import json
+from urllib.parse import urlencode
 
 import pytest
 from django.conf import settings
-from django.utils.six.moves.urllib.parse import urlencode
 from waffle.testutils import override_switch
 
 from kuma.core.tests import assert_shared_cache_header
@@ -44,22 +44,22 @@ def test_autosuggest(client, redirect_doc, doc_hierarchy, locale_case, term):
         expected_status_code = 400
     if locale_case == 'non-english-locale':
         params.update(locale='it')
-        expected_titles = set(('Superiore Documento',))
+        expected_titles = {'Superiore Documento'}
     elif locale_case == 'current-locale':
         params.update(current_locale='true')
         # The root document is pulled-in by the redirect_doc fixture.
-        expected_titles = set(('Root Document', 'Top Document',
-                               'Middle-Top Document', 'Middle-Bottom Document',
-                               'Bottom Document'))
+        expected_titles = {'Root Document', 'Top Document',
+                           'Middle-Top Document', 'Middle-Bottom Document',
+                           'Bottom Document'}
     elif locale_case == 'exclude-current-locale':
         params.update(exclude_current_locale='true')
-        expected_titles = set(('Haut Document', 'Superiore Documento'))
+        expected_titles = {'Haut Document', 'Superiore Documento'}
     else:  # All locales
         # The root document is pulled-in by the redirect_doc fixture.
-        expected_titles = set(('Root Document', 'Top Document',
-                               'Haut Document', 'Superiore Documento',
-                               'Middle-Top Document', 'Middle-Bottom Document',
-                               'Bottom Document'))
+        expected_titles = {'Root Document', 'Top Document',
+                           'Haut Document', 'Superiore Documento',
+                           'Middle-Top Document', 'Middle-Bottom Document',
+                           'Bottom Document'}
 
     url = reverse('wiki.autosuggest_documents')
     if params:

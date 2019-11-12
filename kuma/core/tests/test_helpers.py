@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 
 from datetime import datetime
+from unittest import mock
 
-import mock
 import pytest
 import pytz
 from babel.dates import format_date, format_datetime, format_time

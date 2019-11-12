@@ -1,10 +1,11 @@
+from urllib.parse import parse_qs, urlparse
+
 import requests_mock
 from allauth.socialaccount.models import SocialApp
 from allauth.socialaccount.providers import registry
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
 from django.contrib.auth import get_user_model
 from django.utils.crypto import get_random_string
-from django.utils.six.moves.urllib_parse import parse_qs, urlparse
 
 from kuma.core.tests import KumaTestCase
 from kuma.core.urlresolvers import reverse

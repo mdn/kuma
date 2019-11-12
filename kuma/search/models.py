@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.dispatch import receiver
 from django.utils import timezone
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 from django.utils.text import slugify
 from elasticsearch.exceptions import NotFoundError
@@ -18,7 +16,6 @@ from .jobs import AvailableFiltersJob
 from .managers import FilterManager, IndexManager
 
 
-@python_2_unicode_compatible
 class Index(models.Model):
     """
     Model to store a bunch of metadata about search indexes including
@@ -114,7 +111,6 @@ class OutdatedObject(models.Model):
     content_object = GenericForeignKey('content_type', 'object_id')
 
 
-@python_2_unicode_compatible
 class FilterGroup(models.Model):
     """
     A way to group different kinds of filters from each other.
@@ -143,7 +139,6 @@ class FilterGroup(models.Model):
         return self.name
 
 
-@python_2_unicode_compatible
 class Filter(models.Model):
     """
     The model to store custom search filters in the database. This is

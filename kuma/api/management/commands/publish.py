@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 """
 Manually schedule the publishing of one or more documents to the document API.
 """
-from __future__ import unicode_literals
+
 
 from collections import namedtuple
 from math import ceil

@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 """Tests for the UserSource class (/profiles/USERNAME)."""
-from __future__ import unicode_literals
+
 
 from datetime import datetime
 

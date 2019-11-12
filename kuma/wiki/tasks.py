@@ -1,4 +1,4 @@
-from __future__ import with_statement
+
 
 import json
 import logging
@@ -77,7 +77,7 @@ def render_document_chunk(pks, cache_control='no-cache', base_url=None,
     Simple task to render a chunk of documents instead of one per each
     """
     logger = render_document_chunk.get_logger()
-    logger.info(u'Starting to render document chunk: %s' %
+    logger.info('Starting to render document chunk: %s' %
                 ','.join([str(pk) for pk in pks]))
     base_url = base_url or settings.SITE_URL
     for pk in pks:
@@ -86,9 +86,9 @@ def render_document_chunk(pks, cache_control='no-cache', base_url=None,
         result = render_document(pk, cache_control, base_url, force=force,
                                  invalidate_cdn_cache=invalidate_cdn_cache)
         if result:
-            logger.error(u'Error while rendering document %s with error: %s' %
+            logger.error('Error while rendering document %s with error: %s' %
                          (pk, result))
-    logger.info(u'Finished rendering of document chunk')
+    logger.info('Finished rendering of document chunk')
 
 
 @task
@@ -286,9 +286,9 @@ class WikiSitemap(GenericSitemap):
     priority = 0.5
 
 
-SITEMAP_START = u'<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-SITEMAP_ELEMENT = u'<sitemap><loc>%s</loc><lastmod>%s</lastmod></sitemap>'
-SITEMAP_END = u'</sitemapindex>'
+SITEMAP_START = '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+SITEMAP_ELEMENT = '<sitemap><loc>%s</loc><lastmod>%s</lastmod></sitemap>'
+SITEMAP_END = '</sitemapindex>'
 
 
 @task
@@ -402,7 +402,7 @@ def build_index_sitemap(results):
 
     index_path = os.path.join(settings.MEDIA_ROOT, 'sitemap.xml')
     sitemap_tree = etree.fromstringlist(sitemap_parts)
-    with open(index_path, 'w') as index_file:
+    with open(index_path, 'wb') as index_file:
         sitemap_tree.getroottree().write(index_file,
                                          encoding='utf-8',
                                          pretty_print=True)

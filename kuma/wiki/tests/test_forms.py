@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import json
 import unicodedata
 
@@ -28,9 +27,9 @@ class AkismetHistoricalDataTests(UserTestCase):
     rf = RequestFactory()
     base_akismet_payload = {
         'blog_charset': 'UTF-8',
-        'blog_lang': u'en_us',
-        'comment_author': u'Test User',
-        'comment_author_email': u'testuser@test.com',
+        'blog_lang': 'en_us',
+        'comment_author': 'Test User',
+        'comment_author_email': 'testuser@test.com',
         'comment_content': (
             'Sample\n'
             'SampleSlug\n'
@@ -220,7 +219,7 @@ def test_multiword_tags(root_doc, rf):
 def test_revision_form_normalize_unicode(root_doc, rf):
     """Revision slugs are normalized to NFKC, required for URLs."""
 
-    raw_slug = u'Εφαρμογές'  # "Applications" in Greek (el)
+    raw_slug = 'Εφαρμογές'  # "Applications" in Greek (el)
 
     # In NFC / NFKD, 'έ' is represented by two "decomposed" codepoints
     #  03B5 (GREEK SMALL LETTER EPSILON)
@@ -249,20 +248,20 @@ def test_revision_form_normalize_unicode(root_doc, rf):
 def test_document_form_normalize_unicode(root_doc, rf):
     """Document slugs are normalized to NFC, required for URLs."""
 
-    raw_slug = u'ফায়ারফক্স'  # "Firefox" in Bengali (bn)
+    raw_slug = 'ফায়ারফক্স'  # "Firefox" in Bengali (bn)
 
     # This slug is the same in NFC, NFD, NFKD, and NFKD. The second character
     # has these codepoints:
     # 09af BENGALI LETTER YA (য)
     # 09bc BENGALI SIGN NUKTA
     # 09be BENGALI VOWEL SIGN AA (non-breaking spacing mark)
-    nfkc_slug = u'\u09ab\u09be\u09af\u09bc\u09be\u09b0\u09ab\u0995\u09cd\u09b8'
+    nfkc_slug = '\u09ab\u09be\u09af\u09bc\u09be\u09b0\u09ab\u0995\u09cd\u09b8'
     assert nfkc_slug == unicodedata.normalize('NFKC', raw_slug)
 
     # An alternate representation of the second character is:
     # 09df BENGALI LETTER YYA (য়)
     # 09be BENGALI VOWEL SIGN AA (non-breaking spacing mark)
-    alt_slug = u'\u09ab\u09be\u09df\u09be\u09b0\u09ab\u0995\u09cd\u09b8'
+    alt_slug = '\u09ab\u09be\u09df\u09be\u09b0\u09ab\u0995\u09cd\u09b8'
     assert alt_slug != nfkc_slug
 
     rev = root_doc.current_revision
@@ -376,7 +375,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
 
     def setup_form(
             self, mock_requests, override_original=None, override_data=None,
-            is_spam='false'):
+            is_spam=b'false'):
         """
         Setup a RevisionForm for a POST to edit a page.
 
@@ -401,7 +400,11 @@ class RevisionFormEditTests(RevisionFormViewTests):
         request = self.rf.post('/en-US/docs/Web/CSS/display$edit')
         request.user = self.testuser
 
-        mock_requests.post(VERIFY_URL, content='valid')
+        # The mock request content has to be a byte string
+        if not isinstance(is_spam, bytes):
+            is_spam = is_spam.encode()
+
+        mock_requests.post(VERIFY_URL, content=b'valid')
         mock_requests.post(CHECK_URL, content=is_spam)
 
         section_id = None
@@ -528,7 +531,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
     def test_akismet_spam(self, mock_requests):
         assert DocumentSpamAttempt.objects.count() == 0
         assert len(mail.outbox) == 0
-        rev_form = self.setup_form(mock_requests, is_spam='true')
+        rev_form = self.setup_form(mock_requests, is_spam=b'true')
         assert not rev_form.is_valid()
         assert rev_form.errors == {'__all__': [rev_form.akismet_error_message]}
         admin_path = reverse('admin:wiki_documentspamattempt_changelist')
@@ -569,7 +572,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
     def test_akismet_error(self, mock_requests):
         assert DocumentSpamAttempt.objects.count() == 0
         assert len(mail.outbox) == 0
-        rev_form = self.setup_form(mock_requests, is_spam='terrible')
+        rev_form = self.setup_form(mock_requests, is_spam=b'terrible')
         assert not rev_form.is_valid()
         assert rev_form.errors == {'__all__': [rev_form.akismet_error_message]}
 
@@ -710,7 +713,7 @@ class RevisionFormCreateTests(RevisionFormViewTests):
         'toc_depth': Revision.TOC_DEPTH_ALL,
     }
 
-    def setup_form(self, mock_requests, is_spam='false'):
+    def setup_form(self, mock_requests, is_spam=b'false'):
         """
         Setup a RevisionForm for a POST to create a new page.
 
@@ -727,7 +730,7 @@ class RevisionFormCreateTests(RevisionFormViewTests):
         # In the view, the form data's locale is set from the request
         request.LANGUAGE_CODE = data['locale']
 
-        mock_requests.post(VERIFY_URL, content='valid')
+        mock_requests.post(VERIFY_URL, content=b'valid')
         mock_requests.post(CHECK_URL, content=is_spam)
 
         parent_slug = 'Web/Guide'
@@ -770,7 +773,7 @@ class RevisionFormCreateTests(RevisionFormViewTests):
     def test_akismet_spam(self, mock_requests):
         assert DocumentSpamAttempt.objects.count() == 0
         assert len(mail.outbox) == 0
-        rev_form = self.setup_form(mock_requests, is_spam='true')
+        rev_form = self.setup_form(mock_requests, is_spam=b'true')
         assert not rev_form.is_valid()
         assert rev_form.errors == {'__all__': [rev_form.akismet_error_message]}
 
@@ -808,12 +811,12 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
     }
 
     view_data = {  # Data passed by view, derived from POST
-        'comment': u'Traduction initiale',
+        'comment': 'Traduction initiale',
         'content': (
-            u'<h2 id="Summary">Summary</h2>\n'
-            u'<p><strong>HyperText Markup Language (HTML)</strong>, ou'
-            u' <em>langage de balisage hypertexte</em>, est le langage au cœur'
-            u' de presque tout contenu Web.</p>\n'
+            '<h2 id="Summary">Summary</h2>\n'
+            '<p><strong>HyperText Markup Language (HTML)</strong>, ou'
+            ' <em>langage de balisage hypertexte</em>, est le langage au cœur'
+            ' de presque tout contenu Web.</p>\n'
         ),
         'current_rev': '',
         'form': 'both',
@@ -821,7 +824,7 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
         'localization_tags': ['inprogress'],
         'slug': 'HTML',
         'tags': '"HTML" "Landing" "Web"',
-        'title': u'Guide de développement HTML',
+        'title': 'Guide de développement HTML',
         'toc_depth': Revision.TOC_DEPTH_ALL,
     }
 
@@ -855,9 +858,8 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
         request = self.rf.post('/en-US/docs/Web/Guide/HTML$translate')
         request.user = self.testuser
 
-        is_spam = 'false'
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(CHECK_URL, content=is_spam)
+        mock_requests.post(VERIFY_URL, content=b'valid')
+        mock_requests.post(CHECK_URL, content=b'false')
 
         parent_slug = 'Web/Guide'
         rev_form1 = RevisionForm(request=request,
@@ -884,11 +886,11 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
         assert sorted(parameters.keys()) == self.akismet_keys
         assert parameters['blog_lang'] == 'fr, en_us'
         expected_content = (
-            u'Guide de développement HTML\n'
-            u'<p><strong>HyperText Markup Language (HTML)</strong>, ou'
-            u' <em>langage de balisage hypertexte</em>, est le langage au cœur'
-            u' de presque tout contenu Web.</p>\n'
-            u'Traduction initiale'
+            'Guide de développement HTML\n'
+            '<p><strong>HyperText Markup Language (HTML)</strong>, ou'
+            ' <em>langage de balisage hypertexte</em>, est le langage au cœur'
+            ' de presque tout contenu Web.</p>\n'
+            'Traduction initiale'
         )
         assert parameters['comment_content'] == expected_content
 
@@ -910,26 +912,26 @@ class RevisionFormEditTranslationTests(RevisionFormViewTests):
 
     fr_original = {  # Default attributes of original French page
         'content': (
-            u'<h2 id="Summary">Summary</h2>\n'
-            u'<p><strong>HyperText Markup Language (HTML)</strong>, ou'
-            u' <em>langage de balisage hypertexte</em>, est le langage au cœur'
-            u' de presque tout contenu Web.</p>\n'
+            '<h2 id="Summary">Summary</h2>\n'
+            '<p><strong>HyperText Markup Language (HTML)</strong>, ou'
+            ' <em>langage de balisage hypertexte</em>, est le langage au cœur'
+            ' de presque tout contenu Web.</p>\n'
         ),
         'slug': 'Web/Guide/HTML',
         'tags': '"HTML" "Landing"',
-        'title': u'Guide de développement HTML',
+        'title': 'Guide de développement HTML',
         'toc_depth': Revision.TOC_DEPTH_ALL,
     }
 
     view_data = {  # Data passed by view, derived from POST
-        'comment': u'Traduction initiale terminée',
+        'comment': 'Traduction initiale terminée',
         'content': (
-            u'<h2 id="Summary">Summary</h2>\n'
-            u'<p><strong>HyperText Markup Language (HTML)</strong>, ou'
-            u' <em>langage de balisage hypertexte</em>, est le langage au cœur'
-            u' de presque tout contenu Web.</p>\n'
-            u'<p>La majorité de ce que vous voyez dans votre navigateur est'
-            u' décrit en utilisant HTML.<p>'
+            '<h2 id="Summary">Summary</h2>\n'
+            '<p><strong>HyperText Markup Language (HTML)</strong>, ou'
+            ' <em>langage de balisage hypertexte</em>, est le langage au cœur'
+            ' de presque tout contenu Web.</p>\n'
+            '<p>La majorité de ce que vous voyez dans votre navigateur est'
+            ' décrit en utilisant HTML.<p>'
         ),
         'current_rev': '',
         'form': 'both',
@@ -937,7 +939,7 @@ class RevisionFormEditTranslationTests(RevisionFormViewTests):
         'localization_tags': ['inprogress'],
         'slug': 'HTML',
         'tags': '"HTML" "Landing" "Web"',
-        'title': u'Guide de développement HTML',
+        'title': 'Guide de développement HTML',
         'toc_depth': Revision.TOC_DEPTH_ALL,
     }
 
@@ -966,9 +968,8 @@ class RevisionFormEditTranslationTests(RevisionFormViewTests):
         request = self.rf.post('/fr/docs/Web/Guide/HTML')
         request.user = self.testuser
 
-        is_spam = 'false'
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(CHECK_URL, content=is_spam)
+        mock_requests.post(VERIFY_URL, content=b'valid')
+        mock_requests.post(CHECK_URL, content=b'false')
 
         # Form #1 - Document validation
         data = self.view_data.copy()
@@ -1000,10 +1001,10 @@ class RevisionFormEditTranslationTests(RevisionFormViewTests):
         assert sorted(parameters.keys()) == self.akismet_keys_edit
         assert parameters['blog_lang'] == 'fr, en_us'
         expected_content = (
-            u'<p>La majorité de ce que vous voyez dans votre navigateur est'
-            u' décrit en utilisant HTML.<p>\n'
-            u'Traduction initiale terminée\n'
-            u'Web'
+            '<p>La majorité de ce que vous voyez dans votre navigateur est'
+            ' décrit en utilisant HTML.<p>\n'
+            'Traduction initiale terminée\n'
+            'Web'
         )
         assert parameters['comment_content'] == expected_content
         assert parameters['permalink'] == ('http://testserver/fr/docs/'
@@ -1039,5 +1040,5 @@ class TreeMoveFormTests(UserTestCase):
                              'slug': 'nothing/article'})
         form.is_valid()
         self.assertTrue(form.errors)
-        self.assertIn(u'Parent', form.errors.as_text())
-        self.assertIn(u'does not exist', form.errors.as_text())
+        self.assertIn('Parent', form.errors.as_text())
+        self.assertIn('does not exist', form.errors.as_text())

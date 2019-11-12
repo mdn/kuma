@@ -1,6 +1,6 @@
-import pytest
+from urllib.parse import urljoin
 
-from django.utils.six.moves.urllib.parse import urljoin
+import pytest
 
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
@@ -15,7 +15,7 @@ def test_revision_hash(client, db, method, settings):
     assert response['Content-Type'] == 'text/plain; charset=utf-8'
     assert_no_cache_header(response)
     if method == 'get':
-        assert response.content.decode('utf-8') == 'the_revision_hash'
+        assert response.content.decode() == 'the_revision_hash'
 
 
 @pytest.mark.parametrize(
@@ -42,7 +42,7 @@ def test_kumascript_revision_hash(client, db, method, mock_requests):
     assert response['Content-Type'] == 'text/plain; charset=utf-8'
     assert_no_cache_header(response)
     if method == 'get':
-        assert response.content.decode('utf-8') == hash
+        assert response.content.decode() == hash
 
 
 @pytest.mark.parametrize(

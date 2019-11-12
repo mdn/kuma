@@ -1,8 +1,8 @@
-from __future__ import unicode_literals
+
 
 import logging
+from unittest import mock
 
-import mock
 import pytest
 from django.conf import settings
 from django.core import mail
@@ -25,14 +25,14 @@ def sitemaps(db, settings, tmpdir):
     locale_dir = media_dir.mkdir('sitemaps').mkdir('en-US')
     sitemap_file = media_dir.join('sitemap.xml')
     locale_file = locale_dir.join('sitemap.xml')
-    sitemap_file.write_text(u"""
+    sitemap_file.write_text("""
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
     <loc>https://localhost:8000/sitemaps/en-US/sitemap.xml</loc>
     <lastmod>2017-09-06T23:24:37+00:00</lastmod>
   </sitemap>
 </sitemapindex>""", 'utf8')
-    locale_file.write_text(u"""
+    locale_file.write_text("""
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -178,7 +178,7 @@ def test_sitemap(client, settings, sitemaps, db, method):
     assert response['Content-Type'] == 'application/xml'
     if method == 'get':
         assert ''.join(
-            [chunk.decode('utf-8') for chunk in response.streaming_content]
+            [chunk.decode() for chunk in response.streaming_content]
         ) == sitemaps['index']
 
 
@@ -205,7 +205,7 @@ def test_sitemaps(client, settings, sitemaps, db, method):
     assert_shared_cache_header(response)
     assert response['Content-Type'] == 'application/xml'
     if method == 'get':
-        assert (''.join([chunk.decode('utf-8') for chunk in response.streaming_content]) ==
+        assert (''.join([chunk.decode() for chunk in response.streaming_content]) ==
                 sitemaps['locales']['en-US'])
 
 

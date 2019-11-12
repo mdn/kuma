@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+
+
 import json
 from string import ascii_lowercase
 
@@ -315,8 +316,8 @@ def akismet_data_as_dl(akismet_data):
         return SUBMISSION_NOT_AVAILABLE
     data = json.loads(akismet_data)
     keys = sorted(data.keys(), key=moderator_sort)
-    out = format_html(u'<dl>\n  {}\n</dl>',
-                      format_html_join(u'\n  ', u'<dt>{}</dt><dd>{}</dd>',
+    out = format_html('<dl>\n  {}\n</dl>',
+                      format_html_join('\n  ', '<dt>{}</dt><dd>{}</dd>',
                                        ((key, data[key]) for key in keys)))
     return out
 
@@ -417,7 +418,7 @@ class DocumentSpamAttemptAdmin(admin.ModelAdmin):
     slug_short.short_description = 'Slug'
 
     def doc_short(self, obj):
-        u"""
+        """
         Shorten document 'path (name)' representation in list view.
 
         The important part is having an HTML break character such as a space,
@@ -427,13 +428,13 @@ class DocumentSpamAttemptAdmin(admin.ModelAdmin):
         """
         doc = obj.document
         if doc:
-            full_path = u'/%s/docs/%s' % (doc.locale, doc.slug)
+            full_path = '/%s/docs/%s' % (doc.locale, doc.slug)
             if len(full_path) <= self.MAX_LENGTH:
                 path = full_path
             else:
-                path = Truncator(full_path).chars(self.MAX_LENGTH, u'…')
-            title = Truncator(doc.title).chars(self.MAX_LENGTH, u'…')
-            return u'%s (%s)' % (path, title)
+                path = Truncator(full_path).chars(self.MAX_LENGTH, '…')
+            title = Truncator(doc.title).chars(self.MAX_LENGTH, '…')
+            return '%s (%s)' % (path, title)
         else:
             return mark_safe('<em>new document</em>')
     doc_short.short_description = 'Document (if edit)'

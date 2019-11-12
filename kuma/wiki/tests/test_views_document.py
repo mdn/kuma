@@ -3,19 +3,21 @@ Tests for kuma/wiki/views/document.py
 
 Legacy tests are in test_views.py.
 """
+
+
 import base64
 import json
 from collections import namedtuple
 from datetime import datetime
+from unittest import mock
+from urllib.parse import quote, urlparse
 
-import mock
 import pytest
 import requests_mock
 from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.test.client import BOUNDARY, encode_multipart, MULTIPART_CONTENT
 from django.utils.http import quote_etag
-from django.utils.six.moves.urllib.parse import quote, urlparse
 from pyquery import PyQuery as pq
 from waffle.testutils import override_switch
 
@@ -106,8 +108,7 @@ def authkey(wiki_user):
     secret = key.generate_secret()
     key.save()
     auth = '%s:%s' % (key.key, secret)
-    # TODO: Once Python 2/3 is gone, replace encodestring by encodebytes
-    header = 'Basic %s' % base64.b64encode(auth.encode('utf-8')).decode('utf-8')
+    header = 'Basic %s' % base64.b64encode(auth.encode()).decode()
     return AuthKey(key=key, header=header)
 
 
@@ -175,7 +176,7 @@ def test_api_safe(client, section_doc, section_case, if_none_match, method):
                 str(section_doc.current_revision_id))
 
     if method == 'GET':
-        assert response.content == exp_content.decode('utf-8')
+        assert response.content.decode(response.charset) == exp_content
 
 
 @pytest.mark.parametrize('user_case', ('authenticated', 'anonymous'))
@@ -548,7 +549,7 @@ def test_kumascript_error_reporting(admin_client, root_doc, ks_toolbox,
         if endpoint == 'preview':
             response = admin_client.post(
                 reverse('wiki.preview'),
-                dict(content='anything truthy'),
+                dict(content=b'anything truthy'),
                 HTTP_HOST=settings.WIKI_HOST
             )
         else:
@@ -558,7 +559,9 @@ def test_kumascript_error_reporting(admin_client, root_doc, ks_toolbox,
 
     assert response.status_code == 200
 
-    response_html = pq(response.content)
+    content = response.content.decode(response.charset)
+
+    response_html = pq(content)
     macro_link = ('#kserrors-list a[href="https://github.com/'
                   'mdn/kumascript/blob/master/macros/{}.ejs"]')
     create_link = ('#kserrors-list a[href="https://github.com/'
@@ -568,7 +571,7 @@ def test_kumascript_error_reporting(admin_client, root_doc, ks_toolbox,
 
     assert mock_requests.request_history[0].headers['X-FireLogger'] == '1.2'
     for error in ks_toolbox.errors['logs']:
-        assert error['message'] in response.content
+        assert error['message'] in content
 
 
 @pytest.mark.tags

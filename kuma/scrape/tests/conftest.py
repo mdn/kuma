@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 """py.test fixtures"""
-from __future__ import unicode_literals
+
 
 from datetime import datetime
 

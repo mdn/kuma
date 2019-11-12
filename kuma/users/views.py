@@ -1,7 +1,7 @@
-import collections
 import json
 import operator
 from datetime import datetime, timedelta
+from functools import reduce
 
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
@@ -30,7 +30,6 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
 from honeypot.decorators import verify_honeypot_value
-from six.moves import reduce
 from taggit.utils import parse_tags
 
 from kuma.core.decorators import (ensure_wiki_domain, login_required,
@@ -309,7 +308,7 @@ def revision_by_distinct_doc(list_of_revisions):
 
 
 def ban_and_revert_notification(spammer, moderator, info):
-    subject = u'[MDN] %s has been banned by %s' % (spammer, moderator)
+    subject = '[MDN] %s has been banned by %s' % (spammer, moderator)
     context = {'spammer': spammer,
                'moderator': moderator}
     context.update(info)
@@ -475,7 +474,7 @@ class SignupView(BaseSignupView):
         Returns an instance of the form to be used in this view.
         """
         self.default_email = None
-        self.email_addresses = collections.OrderedDict()
+        self.email_addresses = {}
         form = super(SignupView, self).get_form(form_class)
         form.fields['email'].label = _('Email address')
         self.matching_user = None

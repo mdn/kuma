@@ -1,3 +1,5 @@
+
+
 import json
 import logging
 import unicodedata
@@ -12,7 +14,6 @@ from django.forms.widgets import CheckboxSelectMultiple
 from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.safestring import mark_safe
-from django.utils.six import string_types
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 from taggit.utils import parse_tags
@@ -34,46 +35,46 @@ from .models import (Document, DocumentSpamAttempt, DocumentTag, Revision,
 from .tasks import send_first_edit_email
 
 
-TITLE_REQUIRED = _(u'Please provide a title.')
-TITLE_SHORT = _(u'The title is too short (%(show_value)s characters). '
-                u'It must be at least %(limit_value)s characters.')
-TITLE_LONG = _(u'Please keep the length of the title to %(limit_value)s '
-               u'characters or less. It is currently %(show_value)s '
-               u'characters.')
-TITLE_PLACEHOLDER = _(u'Name Your Article')
-TAGS_LONG = _(u'The tags field is too long (%(show_value)s characters). '
-              u'Keep the total length to %(limit_value)s characters.')
-SLUG_REQUIRED = _(u'Please provide a slug.')
-SLUG_INVALID = _(u'The slug provided is not valid.')
-SLUG_SHORT = _(u'The slug is too short (%(show_value)s characters). '
-               u'It must be at least %(limit_value)s characters.')
-SLUG_LONG = _(u'Please keep the length of the slug to %(limit_value)s '
-              u'characters or less. It is currently %(show_value)s '
-              u'characters.')
-SUMMARY_REQUIRED = _(u'Please provide a summary.')
-SUMMARY_SHORT = _(u'The summary is too short (%(show_value)s characters). '
-                  u'It must be at least %(limit_value)s characters.')
-SUMMARY_LONG = _(u'Please keep the length of the summary to '
-                 u'%(limit_value)s characters or less. It is currently '
-                 u'%(show_value)s characters.')
-CONTENT_REQUIRED = _(u'Please provide content.')
-CONTENT_SHORT = _(u'The content is too short (%(show_value)s characters). '
-                  u'It must be at least %(limit_value)s characters.')
-CONTENT_LONG = _(u'Please keep the length of the content to '
-                 u'%(limit_value)s characters or less. It is currently '
-                 u'%(show_value)s characters.')
-COMMENT_LONG = _(u'Please keep the length of the comment to '
-                 u'%(limit_value)s characters or less. It is currently '
-                 u'%(show_value)s characters.')
-SLUG_COLLIDES = _(u'Another document with this slug already exists.')
-OTHER_COLLIDES = _(u'Another document with this metadata already exists.')
+TITLE_REQUIRED = _('Please provide a title.')
+TITLE_SHORT = _('The title is too short (%(show_value)s characters). '
+                'It must be at least %(limit_value)s characters.')
+TITLE_LONG = _('Please keep the length of the title to %(limit_value)s '
+               'characters or less. It is currently %(show_value)s '
+               'characters.')
+TITLE_PLACEHOLDER = _('Name Your Article')
+TAGS_LONG = _('The tags field is too long (%(show_value)s characters). '
+              'Keep the total length to %(limit_value)s characters.')
+SLUG_REQUIRED = _('Please provide a slug.')
+SLUG_INVALID = _('The slug provided is not valid.')
+SLUG_SHORT = _('The slug is too short (%(show_value)s characters). '
+               'It must be at least %(limit_value)s characters.')
+SLUG_LONG = _('Please keep the length of the slug to %(limit_value)s '
+              'characters or less. It is currently %(show_value)s '
+              'characters.')
+SUMMARY_REQUIRED = _('Please provide a summary.')
+SUMMARY_SHORT = _('The summary is too short (%(show_value)s characters). '
+                  'It must be at least %(limit_value)s characters.')
+SUMMARY_LONG = _('Please keep the length of the summary to '
+                 '%(limit_value)s characters or less. It is currently '
+                 '%(show_value)s characters.')
+CONTENT_REQUIRED = _('Please provide content.')
+CONTENT_SHORT = _('The content is too short (%(show_value)s characters). '
+                  'It must be at least %(limit_value)s characters.')
+CONTENT_LONG = _('Please keep the length of the content to '
+                 '%(limit_value)s characters or less. It is currently '
+                 '%(show_value)s characters.')
+COMMENT_LONG = _('Please keep the length of the comment to '
+                 '%(limit_value)s characters or less. It is currently '
+                 '%(show_value)s characters.')
+SLUG_COLLIDES = _('Another document with this slug already exists.')
+OTHER_COLLIDES = _('Another document with this metadata already exists.')
 
-MIDAIR_COLLISION = _(u'Publishing failed. Conflicting edit attempts detected. '
-                     u'Please copy and paste your edits to a safe place and '
-                     u'visit the <a href="%(url)s">revision history</a> page '
-                     u'to see what was changed before making further edits.')
-MOVE_REQUIRED = _(u"Changing this document's slug requires "
-                  u"moving it and its children.")
+MIDAIR_COLLISION = _('Publishing failed. Conflicting edit attempts detected. '
+                     'Please copy and paste your edits to a safe place and '
+                     'visit the <a href="%(url)s">revision history</a> page '
+                     'to see what was changed before making further edits.')
+MOVE_REQUIRED = _("Changing this document's slug requires "
+                  "moving it and its children.")
 
 
 log = logging.getLogger('kuma.wiki.forms')
@@ -111,11 +112,11 @@ class AkismetRevisionData(object):
         """Create a combined content string from form data."""
         parts = []
         for field in SPAM_SUBMISSION_REVISION_FIELDS:
-            value = cleaned_data.get(field, u'')
+            value = cleaned_data.get(field, '')
             if field == 'tags':
                 value = self.split_tags(value)
             parts.append(value)
-        return u'\n'.join(parts)
+        return '\n'.join(parts)
 
     def content_from_document(self, document):
         """Create a combined content string from a document."""
@@ -124,7 +125,7 @@ class AkismetRevisionData(object):
         assert current_revision, "document must have a current revision."
         for field in SPAM_SUBMISSION_REVISION_FIELDS:
             if field == 'comment':
-                value = u''
+                value = ''
             elif field == 'content':
                 value = current_revision.content
             elif field == 'tags':
@@ -132,17 +133,17 @@ class AkismetRevisionData(object):
             else:
                 value = getattr(document, field, '')
             parts.append(value)
-        return u'\n'.join(parts)
+        return '\n'.join(parts)
 
     def content_from_revision(self, revision):
         """Create a combined content string from a Revision."""
         parts = []
         for field in SPAM_SUBMISSION_REVISION_FIELDS:
-            value = getattr(revision, field) or u''
+            value = getattr(revision, field) or ''
             if field == 'tags':
                 value = self.split_tags(value)
             parts.append(value)
-        return u'\n'.join(parts)
+        return '\n'.join(parts)
 
     def set_blog(self, request):
         """Set the blog parameter from the request object."""
@@ -185,7 +186,7 @@ class AkismetRevisionData(object):
         })
 
         for key, value in meta.items():
-            if not isinstance(value, string_types):
+            if not isinstance(value, str):
                 continue
             if key.startswith('HTTP_COOKIE'):
                 continue
@@ -202,7 +203,7 @@ class AkismetRevisionData(object):
 
     def set_content(self, new_content, existing_content=None):
         """Set comment_content to the new and changed non-empty lines."""
-        existing_content = existing_content or u''
+        existing_content = existing_content or ''
         diff = ndiff(existing_content.splitlines(1), new_content.splitlines(1))
         lines = []
         for line in diff:
@@ -210,7 +211,7 @@ class AkismetRevisionData(object):
                 diff_content = line[2:].strip()
                 if diff_content:
                     lines.append(diff_content)
-        self.parameters['comment_content'] = u'\n'.join(lines)
+        self.parameters['comment_content'] = '\n'.join(lines)
 
     def set_permalink(self, document, request):
         """Set the permalink for the Document."""
@@ -219,7 +220,7 @@ class AkismetRevisionData(object):
 
     def split_tags(self, tag_string):
         """Turn '"Tag 2" "Tag 1"' into 'Tag 1\nTag 2'."""
-        return u'\n'.join(parse_tags(tag_string))
+        return '\n'.join(parse_tags(tag_string))
 
 
 class AkismetNewDocumentData(AkismetRevisionData):
@@ -338,8 +339,8 @@ class DocumentForm(forms.ModelForm):
                               max_length=255,
                               widget=forms.TextInput(
                                   attrs={'placeholder': TITLE_PLACEHOLDER}),
-                              label=_(u'Title:'),
-                              help_text=_(u'Title of article'),
+                              label=_('Title:'),
+                              help_text=_('Title of article'),
                               error_messages={'required': TITLE_REQUIRED,
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
@@ -347,15 +348,15 @@ class DocumentForm(forms.ModelForm):
     slug = StrippedCharField(min_length=1,
                              max_length=255,
                              widget=forms.TextInput(),
-                             label=_(u'Slug:'),
-                             help_text=_(u'Article URL'),
+                             label=_('Slug:'),
+                             help_text=_('Article URL'),
                              error_messages={'required': SLUG_REQUIRED,
                                              'min_length': SLUG_SHORT,
                                              'max_length': SLUG_LONG})
 
     parent_topic = forms.ModelChoiceField(queryset=Document.objects.all(),
                                           required=False,
-                                          label=_(u'Parent:'))
+                                          label=_('Parent:'))
 
     locale = forms.CharField(widget=forms.HiddenInput())
 
@@ -414,8 +415,8 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         max_length=255,
         required=False,
         widget=forms.TextInput(attrs={'placeholder': TITLE_PLACEHOLDER}),
-        label=_(u'Title:'),
-        help_text=_(u'Title of article'),
+        label=_('Title:'),
+        help_text=_('Title of article'),
         error_messages={
             'required': TITLE_REQUIRED,
             'min_length': TITLE_SHORT,
@@ -428,8 +429,8 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         max_length=255,
         required=False,
         widget=forms.TextInput(),
-        label=_(u'Slug:'),
-        help_text=_(u'Article URL'),
+        label=_('Slug:'),
+        help_text=_('Article URL'),
         error_messages={
             'required': SLUG_REQUIRED,
             'min_length': SLUG_SHORT,
@@ -440,7 +441,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
     tags = StrippedCharField(
         required=False,
         max_length=255,
-        label=_(u'Tags:'),
+        label=_('Tags:'),
         error_messages={
             'max_length': TAGS_LONG,
         }
@@ -448,8 +449,8 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
     keywords = StrippedCharField(
         required=False,
-        label=_(u'Keywords:'),
-        help_text=_(u'Affects search results'),
+        label=_('Keywords:'),
+        help_text=_('Affects search results'),
     )
 
     summary = StrippedCharField(
@@ -457,8 +458,8 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         min_length=5,
         max_length=1000,
         widget=forms.Textarea(),
-        label=_(u'Search result summary:'),
-        help_text=_(u'Only displayed on search results page'),
+        label=_('Search result summary:'),
+        help_text=_('Only displayed on search results page'),
         error_messages={
             'required': SUMMARY_REQUIRED,
             'min_length': SUMMARY_SHORT,
@@ -469,7 +470,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
     content = StrippedCharField(
         min_length=5,
         max_length=300000,
-        label=_(u'Content:'),
+        label=_('Content:'),
         widget=forms.Textarea(),
         error_messages={
             'required': CONTENT_REQUIRED,
@@ -480,7 +481,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
     comment = StrippedCharField(
         required=False,
-        label=_(u'Comment:')
+        label=_('Comment:')
     )
 
     review_tags = forms.MultipleChoiceField(
@@ -571,7 +572,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
         # then if there is a parent document we prefix the slug with its slug
         if self.parent_slug:
-            slug = u'/'.join([self.parent_slug, slug])
+            slug = '/'.join([self.parent_slug, slug])
 
         try:
             doc = Document.objects.get(locale=self.instance.document.locale,
@@ -622,7 +623,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
                 cleaned_tags.append(tag)
 
-        return ' '.join([u'"%s"' % t for t in cleaned_tags])
+        return ' '.join(['"%s"' % t for t in cleaned_tags])
 
     def clean_content(self):
         """
@@ -657,7 +658,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
         try:
             doc_current_rev = self.instance.document.current_revision.id
-            if unicode(current_rev) != unicode(doc_current_rev):
+            if str(current_rev) != str(doc_current_rev):
 
                 if (self.section_id and self.instance and
                         self.instance.document):
@@ -716,7 +717,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
             dsa_params = parameters.copy()
             dsa_params['akismet_status_code'] = exception.status_code
             dsa_params['akismet_debug_help'] = exception.debug_help
-            dsa_params['akismet_response'] = exception.response.content
+            dsa_params['akismet_response'] = exception.response.text
             review = DocumentSpamAttempt.AKISMET_ERROR
         else:
             # For detected spam, save the details for review
@@ -901,15 +902,15 @@ class TreeMoveForm(forms.Form):
                               required=False,
                               widget=forms.TextInput(
                                   attrs={'placeholder': TITLE_PLACEHOLDER}),
-                              label=_(u'Title:'),
-                              help_text=_(u'Title of article'),
+                              label=_('Title:'),
+                              help_text=_('Title of article'),
                               error_messages={'required': TITLE_REQUIRED,
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
     slug = StrippedCharField(min_length=1, max_length=255,
                              widget=forms.TextInput(),
-                             label=_(u'New slug:'),
-                             help_text=_(u'New article URL'),
+                             label=_('New slug:'),
+                             help_text=_('New article URL'),
                              error_messages={'required': SLUG_REQUIRED,
                                              'min_length': SLUG_SHORT,
                                              'max_length': SLUG_LONG})

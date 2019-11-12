@@ -1,4 +1,6 @@
 """Feeds for documents"""
+
+
 import datetime
 import json
 
@@ -323,40 +325,40 @@ class RevisionsFeed(DocumentsFeed):
         # TODO: put this in a jinja template if django syndication will let us
         previous = item.previous
         if previous is None:
-            action = u'Created'
+            action = 'Created'
         else:
-            action = u'Edited'
+            action = 'Edited'
 
-        by = u'<h3>%s by:</h3><p>%s</p>' % (action, item.creator.username)
+        by = '<h3>%s by:</h3><p>%s</p>' % (action, item.creator.username)
 
         if item.comment:
-            comment = u'<h3>Comment:</h3><p>%s</p>' % item.comment
+            comment = '<h3>Comment:</h3><p>%s</p>' % item.comment
         else:
-            comment = u''
+            comment = ''
 
-        review_diff = u''
-        tag_diff = u''
-        content_diff = u''
+        review_diff = ''
+        tag_diff = ''
+        content_diff = ''
 
         if previous:
             prev_review_tags = previous.review_tags.names()
             curr_review_tags = item.review_tags.names()
             if set(prev_review_tags) != set(curr_review_tags):
-                table = tag_diff_table(u','.join(prev_review_tags),
-                                       u','.join(curr_review_tags),
+                table = tag_diff_table(','.join(prev_review_tags),
+                                       ','.join(curr_review_tags),
                                        previous.id, item.id)
-                review_diff = u'<h3>Review changes:</h3>%s' % table
+                review_diff = '<h3>Review changes:</h3>%s' % table
                 review_diff = colorize_diff(review_diff)
 
             if previous.tags != item.tags:
                 table = tag_diff_table(previous.tags, item.tags,
                                        previous.id, item.id)
-                tag_diff = u'<h3>Tag changes:</h3>%s' % table
+                tag_diff = '<h3>Tag changes:</h3>%s' % table
                 tag_diff = colorize_diff(tag_diff)
 
         previous_content = ''
-        previous_id = u'N/A'
-        content_diff = u'<h3>Content changes:</h3>'
+        previous_id = 'N/A'
+        content_diff = '<h3>Content changes:</h3>'
         if previous:
             previous_content = previous.get_tidied_content()
             current_content = item.get_tidied_content()
@@ -369,7 +371,7 @@ class RevisionsFeed(DocumentsFeed):
         else:
             content_diff = content_diff + escape(item.content)
 
-        link_cell = u'<td><a href="%s">%s</a></td>'
+        link_cell = '<td><a href="%s">%s</a></td>'
         view_cell = link_cell % (add_utm(item.document.get_absolute_url(),
                                          'feed', medium='rss'),
                                  _('View Page'))
@@ -398,14 +400,14 @@ class RevisionsFeed(DocumentsFeed):
             ),
             _('History')
         )
-        links_table = u'<table border="0" width="80%">'
-        links_table = links_table + u'<tr>%s%s%s%s</tr>' % (view_cell,
-                                                            edit_cell,
-                                                            compare_cell,
-                                                            history_cell)
-        links_table = links_table + u'</table>'
-        return u''.join([by, comment,
-                         tag_diff, review_diff, content_diff, links_table])
+        links_table = '<table border="0" width="80%">'
+        links_table = links_table + '<tr>%s%s%s%s</tr>' % (view_cell,
+                                                           edit_cell,
+                                                           compare_cell,
+                                                           history_cell)
+        links_table = links_table + '</table>'
+        return ''.join([by, comment,
+                        tag_diff, review_diff, content_diff, links_table])
 
     def item_link(self, item):
         return add_utm(

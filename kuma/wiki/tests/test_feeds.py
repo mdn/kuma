@@ -1,9 +1,10 @@
-# -*- coding: utf-8 -*-
+
+
 import json
 from datetime import datetime
+from urllib.parse import parse_qs, urlparse
 
 import pytest
-from django.utils.six.moves.urllib_parse import parse_qs, urlparse
 from django.utils.timezone import make_aware
 from pyquery import PyQuery as pq
 from pytz import AmbiguousTimeError
@@ -386,7 +387,7 @@ def test_recent_documents_as_jsonp(root_doc, client):
     assert resp.status_code == 200
     assert_shared_cache_header(resp)
     wrapped = resp.content
-    assert wrapped == 'jsonp_callback(%s)' % raw_json
+    assert wrapped == b'jsonp_callback(%s)' % raw_json
 
     # Invalid callback names are rejected
     resp = client.get(feed_url, {'callback': 'try'})
@@ -452,14 +453,14 @@ def test_feeds_update_after_doc_tag_change(client, wiki_user, root_doc):
         response = client.get(reverse('wiki.feeds.recent_documents',
                                       args=['atom', tag]), follow=True)
         assert response.status_code == 200
-        assert root_doc.title.encode('utf-8') in response.content
+        assert root_doc.title in response.content.decode(response.charset)
 
     # Check document is not in the previous tags feed
     for tag in tags1:
         response = client.get(reverse('wiki.feeds.recent_documents',
                                       args=['atom', tag]), follow=True)
         assert response.status_code == 200
-        assert root_doc.title not in response.content.decode('utf-8')
+        assert root_doc.title not in response.content.decode(response.charset)
 
 
 def test_recent_documents_handles_ambiguous_time(root_doc, client):

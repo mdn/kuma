@@ -3,7 +3,10 @@ Test WikiDocumentType.
 
 Integration tests against an ElasticSearch server are in kuma/search/tests/
 """
-import mock
+
+
+from unittest import mock
+
 import pytest
 
 from kuma.wiki.search import WikiDocumentType

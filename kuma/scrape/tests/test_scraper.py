@@ -1,6 +1,5 @@
-from __future__ import unicode_literals
+from unittest import mock
 
-import mock
 import pytest
 import requests
 

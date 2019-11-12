@@ -1,6 +1,3 @@
-from __future__ import unicode_literals
-
-
 class ProgrammingError(Exception):
     """Somebody made a mistake in the code."""
 

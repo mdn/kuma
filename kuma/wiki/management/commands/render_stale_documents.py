@@ -1,6 +1,8 @@
 """
 Manually re-render stale documents
 """
+
+
 import logging
 
 from django.core.management.base import BaseCommand

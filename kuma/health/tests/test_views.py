@@ -1,8 +1,8 @@
-from __future__ import unicode_literals
+
 
 import json
+from unittest import mock
 
-import mock
 import pytest
 from django.db import DatabaseError
 from django.urls import reverse

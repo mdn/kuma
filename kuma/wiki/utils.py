@@ -1,5 +1,8 @@
+
+
 import datetime
 import json
+from urllib.parse import urlparse
 
 import tidylib
 from apiclient.discovery import build
@@ -10,7 +13,6 @@ from django.urls import resolve, Resolver404
 from django.utils import translation
 from httplib2 import Http
 from oauth2client.service_account import ServiceAccountCredentials
-from six.moves.urllib.parse import urlparse
 
 from kuma.core.urlresolvers import split_path
 
@@ -100,10 +102,10 @@ def tidy_content(content):
     except UnicodeDecodeError:
         # In case something happens in pytidylib we'll try again with
         # a proper encoding
-        content = tidylib.tidy_document(content.encode('utf-8'),
+        content = tidylib.tidy_document(content.encode(),
                                         options=options)
         tidied, errors = content
-        return tidied.decode('utf-8'), errors
+        return tidied.decode(), errors
     else:
         return content
 
@@ -153,7 +155,7 @@ def analytics_upageviews(revision_ids, start_date, end_date=None):
                             'filters': [
                                 {'dimensionName': 'ga:dimension12',
                                  'operator': 'IN_LIST',
-                                 'expressions': map(str, revision_ids)}
+                                 'expressions': [str(x) for x in revision_ids]}
                             ]
                         }
                     ],

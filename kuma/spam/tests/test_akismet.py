@@ -1,6 +1,5 @@
-from __future__ import unicode_literals
+from unittest import mock
 
-import mock
 import pytest
 import requests
 
@@ -122,7 +121,8 @@ def test_submit_spam_success(spam_check_everyone, constance_config,
     constance_config.AKISMET_KEY = 'spam'
     mock_requests.post(VERIFY_URL, content=b'valid')
     client = Akismet()
-    mock_requests.post(SPAM_URL, content=client.submission_success)
+    mock_requests.post(
+        SPAM_URL, content=client.submission_success.encode())
     result = client.submit_spam('0.0.0.0', 'Mozilla',
                                 comment_content='spam. spam spam. spam.')
     assert result is None
@@ -148,7 +148,8 @@ def test_submit_ham_success(spam_check_everyone, constance_config,
     constance_config.AKISMET_KEY = 'spam'
     mock_requests.post(VERIFY_URL, content=b'valid')
     client = Akismet()
-    mock_requests.post(HAM_URL, content=client.submission_success)
+    mock_requests.post(
+        HAM_URL, content=client.submission_success.encode())
     result = client.submit_ham('0.0.0.0', 'Mozilla',
                                comment_content='ham and bacon and pork.')
     assert result is None

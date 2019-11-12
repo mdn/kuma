@@ -1,10 +1,8 @@
-# -*- coding: utf-8 -*-
 """Tests for kuma.wiki.events."""
-from __future__ import unicode_literals
+
 
 from datetime import datetime
-
-import mock
+from unittest import mock
 
 from django.urls import reverse
 
@@ -206,7 +204,7 @@ def test_first_edit_email_on_translate(trans_revision):
     assert mail.subject == ('[MDN][fr][New] wiki_user made their first edit,'
                             ' creating: Racine du Document')
     assert mail.extra_headers == {
-        'X-Kuma-Editor-Username': u'wiki_user',
+        'X-Kuma-Editor-Username': 'wiki_user',
         'X-Kuma-Document-Url': trans_revision.document.get_full_url(),
         'X-Kuma-Document-Title': 'Racine du Document',
         'X-Kuma-Document-Locale': 'fr',

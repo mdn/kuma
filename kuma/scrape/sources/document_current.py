@@ -1,5 +1,5 @@
 """DocumentCurrent checks that the current revision is scraped."""
-from __future__ import absolute_import, unicode_literals
+
 
 import logging
 

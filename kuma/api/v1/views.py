@@ -136,7 +136,7 @@ def document_api_data(doc=None, redirect_url=None):
     other_translations = doc.get_other_translations(
         fields=('locale', 'slug', 'title', 'parent'))
     available_locales = (
-        set([doc.locale]) | set(t.locale for t in other_translations))
+        {doc.locale} | set(t.locale for t in other_translations))
 
     doc_absolute_url = doc.get_absolute_url()
     return {

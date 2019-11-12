@@ -1,5 +1,3 @@
-import collections
-
 from django.conf import settings
 from elasticsearch_dsl import Q, query
 from rest_framework.filters import BaseFilterBackend
@@ -24,8 +22,8 @@ def get_filters(getter_func):
 
     """
     if getter_func("none"):
-        return [u'none']
-    filters = collections.OrderedDict()
+        return ['none']
+    filters = {}
     for slug in FilterGroup.objects.values_list('slug', flat=True):
         for filters_slug in getter_func(slug, []):
             filters[filters_slug] = None

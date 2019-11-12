@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 
 from django.db import models, migrations
 
@@ -64,7 +63,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterUniqueTogether(
             name='entry',
-            unique_together=set([('feed', 'guid')]),
+            unique_together={('feed', 'guid')},
         ),
         migrations.AddField(
             model_name='bundle',

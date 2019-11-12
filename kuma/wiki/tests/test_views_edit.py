@@ -1,4 +1,6 @@
 '''Tests for kuma/wiki/views/edit.py'''
+
+
 import pytest
 from django.conf import settings
 

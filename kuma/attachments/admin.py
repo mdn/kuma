@@ -102,7 +102,7 @@ class AttachmentRevisionAdmin(DisabledDeleteActionMixin, admin.ModelAdmin):
         attachment = obj.attachment
         url = reverse('admin:attachments_attachment_change',
                       args=(attachment.pk,))
-        return format_html(u'<a href="{}">{}</a>', url, attachment.pk)
+        return format_html('<a href="{}">{}</a>', url, attachment.pk)
     attachment_url.short_description = 'Attachment'
 
     def save_model(self, request, obj, form, change):

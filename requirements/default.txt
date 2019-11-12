@@ -29,8 +29,9 @@ celery==4.3.0 \
     --hash=sha256:528e56767ae7e43a16cfef24ee1062491f5754368d38fcfffa861cdb9ef219be
 
 # Provides middleware for preventing Vary: Cookie
-commonware==0.4.3 \
-    --hash=sha256:a7b02a5f76d89a79f861926fb34e029cc4343c13802525c818542a39fe788cce
+commonware==0.5.0 \
+    --hash=sha256:97c2409834a328e47093932422cc7754b0439a6ad6849c5fa845f947239ad827 \
+    --hash=sha256:a812a700a7f29627e832b509b284694bf4634672ea66e8a83fea486288eb1f19
 
 # Check localization files for issues
 # Code: https://github.com/willkg/dennis
@@ -59,25 +60,25 @@ django-allauth==0.38.0 \
 # Code: https://github.com/codeinthehole/django-cacheback
 # Changes: https://github.com/codeinthehole/django-cacheback/blob/master/CHANGELOG.rst
 # Docs: http://django-cacheback.readthedocs.io/en/latest/
-django-cacheback==1.0 \
-    --hash=sha256:8feaa8df6cbe23e1fca5d858f518a235442a8ddc4aefb5be0846692c69d65a8e \
-    --hash=sha256:2fc21e0ed78ee8e4cc07ac2c5936b27f956c99c81fc4f965e96fb27171180819
+django-cacheback==1.4.0 \
+    --hash=sha256:6483eb8744d001b8505c38a5217be36998f9c11858b2126974a9060dfc74ae50 \
+    --hash=sha256:972c7697f1929bf9676893a8e6cb1f7873a2c14e835a8d24fbb59bbf37731c18
 
 # Store dynamic settings in the database
 # Code: https://github.com/jazzband/django-constance
 # Changes: https://github.com/jazzband/django-constance/blob/master/docs/changes.rst
 # Docs: https://django-constance.readthedocs.io/en/latest/
-django-constance==2.2.0 \
-    --hash=sha256:fe601fe384d1629f6f0460175e4ce3d66e8177654525bddd4bdb68025c816adc \
-    --hash=sha256:1d74fa615ee6c69512faa214ec7b4962aa039dfe802e967972c3fbdad7852977
+django-constance==2.4.0 \
+    --hash=sha256:19ff1ae8295aeffc2917ab67da4b310bfaf8c42f34d570f89e289fd54c4217b0 \
+    --hash=sha256:417f9866a4fcd93c198acd16d5bc22b68e491eaabb18efea4c70d183d42daa45
 
 # Provide a Content Security Policy header and related services
 # Code: https://github.com/mozilla/django-csp
 # Changes: https://github.com/mozilla/django-csp/blob/master/CHANGES
 # Docs: http://django-csp.readthedocs.org/
-django_csp==3.4 \
-    --hash=sha256:04c0ccd4e1339e8f6af48c55c3347dc996fde2d22d79e8bf2f6b7a920412e408 \
-    --hash=sha256:096b634430d8ea81c3d9f216f87be890f3a975c17bb9a4631f6a1619ac09c91e
+django_csp==3.5 \
+    --hash=sha256:04600237701e6d6ff78ed7d41209ff923988148bf292c128f6b474b9befe444f \
+    --hash=sha256:8b9997df89a7a936d7c397e051367f974aa1d1a97d0b32acb4300087b3bed071
 
 # Include Django URL patterns with decorators.
 # Code: https://github.com/twidi/django-decorator-include
@@ -91,9 +92,9 @@ django-decorator-include==1.4.1 \
 # Code: https://github.com/django-extensions/django-extensions
 # Changes: https://github.com/django-extensions/django-extensions/blob/master/CHANGELOG.md
 # Docs: http://django-extensions.readthedocs.io/en/latest/
-django-extensions==2.0.7 \
-    --hash=sha256:3be3debf53c77ca795bdf713726c923aa3c3f895e1a42e2e31a68c1a562346a4 \
-    --hash=sha256:94bfac99eb262c5ac27e53eda96925e2e53fe0b331af7dde37012d07639a649c
+django-extensions==2.1.9 \
+    --hash=sha256:097450a56fcfdef36bb4dd731b113d1b3e9a9de715fc8775e5e84ab3be50dd96 \
+    --hash=sha256:a1799a7eb4cf0f7aa0d111bac79047227b55a74d11741f387708023a012662f9
 
 # Modern flat theme for Django admin
 django-flat-theme==1.1.3 \
@@ -116,9 +117,9 @@ django-jinja==2.4.1 \
 # Code: https://github.com/adamchainz/django-mysql
 # Docs: https://django-mysql.readthedocs.io/en/latest/index.html
 # Changes: https://github.com/adamchainz/django-mysql/blob/master/HISTORY.rst
-django-mysql==2.3.1 \
-    --hash=sha256:53bf05dfa8e98db371adbd5b6c669a904e9f556f4ce7e3552cd42796c5f44841 \
-    --hash=sha256:7c13e453535f20e12b01c2b8f452d67e9973721f30ffd296ae6f0e5af0b475fb
+django-mysql==3.2.0 \
+    --hash=sha256:5ed13e3c4e4dc1671255bfc5a9f943320079af626a0c4d1a7f8baf276f5b9de2 \
+    --hash=sha256:6a6d3b2b4b094418d67cc064b110d8ac31ca98a67b535568cf829bf052c718db
 
 # Serialize objects with Python's pickle
 # Required by django-constance with database backend
@@ -128,9 +129,9 @@ django-picklefield==1.0.0 \
     --hash=sha256:57e4349c7f75eab08fe7ceb11e7135644fdf771e2777a754db4f07e5c63c191f
 
 # Asset packaging (CSS, JS concatenation and compression, etc.)
-django-pipeline==1.6.8 \
-    --hash=sha256:a6a9ce2003ae10e729768b6d79a4b3db330d876b86225eb7743b6f5696bafa59 \
-    --hash=sha256:b7cdc2efe27e478ddd38e878dd7b5e5ac121c2898fd85accf3187e19137fe6b7
+django-pipeline==1.6.14 \
+    --hash=sha256:b56f2cfdb113dc1cb05257d8eb8d145fc0ade6f0d1236fb425df15bd059dce15 \
+    --hash=sha256:ef67aaf58959a2959e13fc114001cee5beec05ac18a81cc700ea9f1c8e3f40a8
 
 # Rate limit access to some views
 # Code: https://github.com/jsocol/django-ratelimit
@@ -197,9 +198,9 @@ django-tidings==2.0.1 \
 # Code: https://github.com/jsocol/django-waffle
 # Changes: https://github.com/jsocol/django-waffle/blob/master/CHANGES
 # Docs: https://waffle.readthedocs.io/en/stable/
-django-waffle==0.14.0 \
-    --hash=sha256:f243a56db80bd28601222b1a8a0b1fa4e7e6ac1bbf809952c3725cb4cc0012d9 \
-    --hash=sha256:f3db39cc17d6e388a485230b6029095e5d6fba4ceaff8d4fcc21f95c47fe2e97
+django-waffle==0.16.0 \
+    --hash=sha256:806164c8e98fe6c20590bd642fa247d8554ab57faed45e2745253f0f3b8f3ff9 \
+    --hash=sha256:b48b80b01ea28a560a0d6df9322631f239f4088933137a39571d1c874cc89ce9
 
 # Configure Django DATABASES settings from an environment variable
 dj-database-url==0.4.0 \
@@ -231,9 +232,9 @@ google-api-python-client==1.5.1 \
     --hash=sha256:b32ab8e7337bc3a046506c1576d4987b30a52e5d40add6b0e9662e6dc1253b90
 
 # WSGI HTTP server
-gunicorn==19.7.1 \
-    --hash=sha256:75af03c99389535f218cc596c7de74df4763803f7b63eb09d77e92b3956b36c6 \
-    --hash=sha256:eee1169f0ca667be05db3351a0960765620dad53f53434262ff8901b68a1b622
+gunicorn==19.9.0 \
+    --hash=sha256:aa8e0b40b4157b36a5df5e599f45c9c76d6af43845ba3b3b0efe2c70473c2471 \
+    --hash=sha256:fa2662097c66f920f53f70621c6c58ca4a3c4d3434205e608e121b5b3b71f4f3
 
 # Improved template engine
 # Code: https://github.com/pallets/jinja
@@ -248,22 +249,23 @@ jsonpickle==0.9.2 \
     --hash=sha256:09bf1978d1d004943c2a359009fb5d09b67277bbaaf9aed281856b3c063979e7
 
 # Fix gunicorn worker timeout problems with default sync worker
-meinheld==0.6.1 \
-    --hash=sha256:40d9dbce0165b2d9142f364d26fd6d59d3682f89d0dfe2117717a8ddad1f4133 \
-    --hash=sha256:293eff4983b7fcbd9134b47706b22189883fe354993bd10163c65869d141e565
+meinheld==1.0.1 \
+    --hash=sha256:447de7189e4dc9c1f425aa1b9c8210aab492fda4d86f73a24059264e7d8b0134
 
 # MySQL driver with Python 3 support
 # Code: https://github.com/PyMySQL/mysqlclient-python
 # Changes: https://github.com/PyMySQL/mysqlclient-python/blob/master/HISTORY.rst
 # Docs: https://mysqlclient.readthedocs.io/
-mysqlclient==1.3.13 \
-    --hash=sha256:ff8ee1be84215e6c30a746b728c41eb0701a46ca76e343af445b35ce6250644f
+mysqlclient==1.4.4 \
+    --hash=sha256:79a498ddda955e488f80c82a6392bf6e07c323d48db236033f33825665d8ba5c \
+    --hash=sha256:8c3b61d89f7daaeab6aad6bf4c4bc3ef30bec1a8169f94dc59aea87ba2fabf80 \
+    --hash=sha256:9c737cc55a5dc8dd3583a942d5a9b21be58d16f00f5fefca4e575e7d9682e98c
 
 # Report performance metrics and exceptions to New Relic
 # Docs: https://docs.newrelic.com/docs/agents/python-agent/
 # Changes: https://docs.newrelic.com/docs/release-notes/agent-release-notes/python-release-notes
-newrelic==4.18.0.118 \
-    --hash=sha256:3cd496022c6906ee3cdbf27c67ec3e03922830bfebbca4549ef6f2e58cf719e2
+newrelic==4.20.1.121 \
+    --hash=sha256:708ac6a75c76a59e3d6c0d714e2fbb1e4ec7d540f7d34bddd81e61bdb636e895
 
 # Compile .po files into .mo files, used in locale/compile-mo.sh
 polib==1.1.0 \
@@ -285,21 +287,21 @@ python-decouple==3.1 \
     --hash=sha256:1317df14b43efee4337a4aa02914bf004f010cd56d6c4bd894e6474ec8c4fe2d
 
 # Use libmagic to identify uploaded attachments
-python-magic==0.4.10 \
-    --hash=sha256:79fd2865ec96074749825f9e9562953995d5bf12b6793f24d75c37479ad4a2c3 \
-    --hash=sha256:b1e5b9c81e976b90fa3a6b0b1b231b4d4c11786f19dee544c98837097c8e8fcc
+python-magic==0.4.15 \
+    --hash=sha256:f2674dcfad52ae6c49d4803fa027809540b130db1dec928cfbb9240316831375 \
+    --hash=sha256:f3765c0f582d2dfc72c15f3b5a82aecfae9498bd29ca840d72f37d7bd38bfcd5
 
 # Format MDN content for better difference reports
-pytidylib==0.2.4 \
-    --hash=sha256:0af07bd8ebd256af70ca925ada9337faf16d85b3072624f975136a5134150ab6
+pytidylib==0.3.2 \
+    --hash=sha256:22b1c8d75970d8064ff999c2369e98af1d0685417eda4c829a5c9f56764b0af3
 
 # Send tracebacks to Sentry instead of emailing admins
 # Code: https://github.com/getsentry/raven-python
 # Changes: https://github.com/getsentry/raven-python/blob/master/CHANGELOG.md
 # Docs: https://docs.sentry.io/hosted/clients/python/
-raven==6.9.0 \
-    --hash=sha256:3fd787d19ebb49919268f06f19310e8112d619ef364f7989246fc8753d469888 \
-    --hash=sha256:95f44f3ea2c1b176d5450df4becdb96c15bf2632888f9ab193e9dd22300ce46a
+raven==6.10.0 \
+    --hash=sha256:3fa6de6efa2493a7c827472e984ce9b020797d0da16f1db67197bcc23c8fae54 \
+    --hash=sha256:44a13f87670836e153951af9a3c80405d36b43097db869a36e92809673692ce4
 
 # Modern caching server, to replace memcached in AWS
 redis==3.2.1 \
@@ -312,26 +314,26 @@ requests-mock==0.7.0 \
     --hash=sha256:e61056cdb809fcc6ed47771b74054fe3ab4c3659d7f66c32a5256e8cf013e0af
 
 # Parse SQL statements, needed for RunSQL migrations
-sqlparse==0.2.3 \
-    --hash=sha256:740a023ef38ce11bbb99a9d143856f56ef4ec5b0d7a853f58c02c65b035114c4 \
-    --hash=sha256:becd7cc7cebbdf311de8ceedfcf2bd2403297024418801947f8c953025beeff8
+sqlparse==0.3.0 \
+    --hash=sha256:40afe6b8d4b1117e7dff5504d7a8ce07d9a1b15aeeade8a2d10f130a834f8177 \
+    --hash=sha256:7c3dca29c022744e95b547e867cee89f4fce4373f3549ccd8797d8eb52cdb873
 
 # A Python library for Stripe’s API.
 # Code: https://github.com/stripe/stripe-python
 # Changes: https://github.com/stripe/stripe-python/blob/master/CHANGELOG.md
 # Docs: https://stripe.com/docs/api/python#intro
-stripe==2.8.1 \
-    --hash=sha256:8f556bb9af0b0714753567b1ec8e31649bc9af96980333bffc903155db276c7f \
-    --hash=sha256:984b45d3c56242f23a1f3ad5a43cdaf07353b924193dd97bf8bc30203d4f541b
+stripe==2.31.0 \
+    --hash=sha256:d8aee3a51a030900cccc4008f945cb616d093130c55901f637e5e2b6af7fd97c \
+    --hash=sha256:eb666151dd64bb0a7efd9a32012f9903dd888ff57c07d1f146659e416288f0cf
 
 # Utility class for manipulating URLs, used in util functions
 URLObject==2.4.0 \
     --hash=sha256:f51272b12846db98af530b0a64f6593d2b1e8405f0aa580285b37ce8009b8d9c
 
 # Build wheel files for caching (recent pip installs them)
-wheel==0.29.0 \
-    --hash=sha256:ea8033fc9905804e652f75474d33410a07404c1a78dd3c949a66863bd1050ebd \
-    --hash=sha256:1ebb8ad7e26b448e9caa4773d2357849bf80ff9e313964bcaf79cbf0201a1648
+wheel==0.33.4 \
+    --hash=sha256:5e79117472686ac0c4aef5bad5172ea73a1c2d1646b808c35926bd26bdfb0c08 \
+    --hash=sha256:62fcfa03d45b5b722539ccbc07b190e4bfff4bb9e3a4d470dd9f6a0981002565
 
 # Serve static files with compression, etc. from Django
 whitenoise==3.3.1 \

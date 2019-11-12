@@ -1,11 +1,8 @@
 """LinksSource gathers wiki document links from a rendered page."""
-
-from __future__ import absolute_import, unicode_literals
-
 import logging
+from urllib.parse import urlparse
 
 from django.conf import settings
-from django.utils.six.moves.urllib.parse import urlparse
 
 from kuma.core.utils import safer_pyquery as pq
 
@@ -30,13 +27,13 @@ class LinksSource(Source):
 
     PARAM_NAME = 'path'
 
-    ignored_slugs = set((
+    ignored_slugs = {
         'dashboards',
         'profiles',
         'search',
         'users/signin',
         'docs/tag/',
-    ))
+    }
 
     def __init__(self, path=None, **options):
         """Process and validate the initial path."""

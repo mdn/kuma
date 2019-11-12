@@ -31,4 +31,4 @@ class Command(BaseCommand):
 
         message = WikiDocumentType.reindex_all(options['chunk_size'],
                                                percent=percent)
-        self.stdout.write(unicode(message) + '\n')
+        self.stdout.write(message + '\n')

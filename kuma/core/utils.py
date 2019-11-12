@@ -1,10 +1,11 @@
-from __future__ import unicode_literals
+
 
 import datetime
 import hashlib
 import logging
 import os
 from itertools import islice
+from urllib.parse import parse_qsl, ParseResult, urlparse, urlsplit, urlunsplit
 
 from babel import dates, localedata
 from celery import chain, chord
@@ -13,14 +14,12 @@ from django.core.paginator import EmptyPage, InvalidPage, Paginator
 from django.http import QueryDict
 from django.shortcuts import _get_queryset, redirect
 from django.utils.cache import patch_cache_control
-from django.utils.encoding import force_bytes, force_text, smart_bytes
+from django.utils.encoding import force_text, smart_bytes
 from django.utils.http import urlencode
-from django.utils.six import text_type
 from django.utils.translation import ugettext_lazy as _
 from polib import pofile
 from pyquery import PyQuery as pq
 from pytz import timezone
-from six.moves.urllib.parse import parse_qsl, ParseResult, urlparse, urlsplit, urlunsplit
 from taggit.utils import split_strip
 
 from .exceptions import DateTimeFormatError
@@ -184,17 +183,17 @@ def parse_tags(tagstring, sorted=True):
     i = iter(tagstring)
     try:
         while True:
-            c = i.next()
+            c = next(i)
             if c == '"':
                 if buffer:
                     to_be_split.append(''.join(buffer))
                     buffer = []
                 # Find the matching quote
                 open_quote = True
-                c = i.next()
+                c = next(i)
                 while c != '"':
                     buffer.append(c)
-                    c = i.next()
+                    c = next(i)
                 if buffer:
                     word = ''.join(buffer).strip()
                     if word:
@@ -242,7 +241,7 @@ def chunked(iterable, n):
     :returns: generator of chunks from the iterable
     """
     iterable = iter(iterable)
-    while 1:
+    while True:
         t = tuple(islice(iterable, n))
         if t:
             yield t
@@ -284,11 +283,17 @@ def get_unique(content_type, object_pk, name=None, request=None,
     # HACK: Build a hash of the fields that should be unique, let MySQL
     # chew on that for a unique index. Note that any changes to this algo
     # will create all new unique hashes that don't match any existing ones.
-    hash_text = "\n".join(text_type(x).encode('utf-8') for x in (
-        content_type.pk, object_pk, name or '', ip, user_agent,
-        (user and user.pk or 'None')
-    ))
-    unique_hash = hashlib.md5(hash_text).hexdigest()
+    hash_text = '\n'.join(
+        (
+            content_type.pk,
+            object_pk,
+            name or '',
+            ip,
+            user_agent,
+            user.pk if user else 'None',
+        )
+    )
+    unique_hash = hashlib.md5(hash_text.encode()).hexdigest()
 
     return (user, ip, user_agent, unique_hash)
 
@@ -440,8 +445,7 @@ def add_shared_cache_control(response, **kwargs):
 def order_params(original_url):
     """Standardize order of query parameters."""
     bits = urlsplit(original_url)
-    qs = parse_qsl(bits.query, keep_blank_values=True)
-    qs.sort()
+    qs = sorted(parse_qsl(bits.query, keep_blank_values=True))
     new_qs = urlencode(qs)
     new_url = urlunsplit((bits.scheme, bits.netloc, bits.path, new_qs, bits.fragment))
     return new_url
@@ -471,17 +475,17 @@ def safer_pyquery(*args, **kwargs):
     NOTE! As of May 10 2019, this risk exists the the latest release of
     PyQuery. Hopefully it will be fixed but it would a massively disruptive
     change and thus unlikely to happen any time soon.
+
+    NOTE 2! Unlikely to be fixed by core pyquery team any time soon
+    https://github.com/gawel/pyquery/issues/203
     """
 
-    if isinstance(args[0], unicode):
-        if args[0].split('://', 1)[0] in ('http', 'https'):
-            args = (' {}'.format(args[0]),) + args[1:]
-    elif isinstance(args[0], str):
-        # If the input is a byte string, deal with it a byte string.
-        # Since this file is using __future__.unicode_literals and
-        # type and quoted string automatically becomes a unicode string.
-        # In this case force it all to stay as byte strings.
-        if args[0].split(force_bytes('://'), 1)[0] in (force_bytes('http'), force_bytes('https')):
-            args = (force_bytes(' ') + args[0],) + args[1:]
+    # This "if" statement is exactly what PyQuery's constructor does.
+    # We'll run it ourselves once and if it matches, "ruin" it by
+    # injecting that extra space.
+    if (len(args) >= 1 and
+       isinstance(args[0], str) and
+       args[0].split('://', 1)[0] in ('http', 'https')):
+        args = (f' {args[0]}',) + args[1:]
 
     return pq(*args, **kwargs)

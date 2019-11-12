@@ -1,7 +1,8 @@
-from __future__ import unicode_literals
+
 
 import datetime
 import json
+from html.parser import HTMLParser
 
 import jinja2
 from django.conf import settings
@@ -11,7 +12,6 @@ from django.template import defaultfilters
 from django.template.loader import get_template
 from django.utils.encoding import force_text
 from django.utils.html import strip_tags
-from django.utils.six.moves import html_parser
 from django.utils.translation import ugettext_lazy as _
 from django_jinja import library
 from pytz import timezone, utc
@@ -24,7 +24,7 @@ from ..utils import (format_date_time, is_untrusted, is_wiki, order_params,
                      urlparams)
 
 
-htmlparser = html_parser.HTMLParser()
+htmlparser = HTMLParser()
 
 
 # Yanking filters from Django.

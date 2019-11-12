@@ -1,9 +1,8 @@
 from textwrap import dedent
+from unittest import mock
 
-import mock
 import pytest
 import requests_mock
-import six
 from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount
 from constance.test.utils import override_config
@@ -257,8 +256,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         """Enable Akismet and mock calls to it. Return the mock object."""
         self.submissions_flag = Flag.objects.create(
             name=SPAM_SUBMISSIONS_FLAG, everyone=True)
-        mock_requests.post(VERIFY_URL, content='valid')
-        mock_requests.post(SPAM_URL, content=Akismet.submission_success)
+        mock_requests.post(VERIFY_URL, content=b'valid')
+        mock_requests.post(
+            SPAM_URL, content=Akismet.submission_success.encode())
         return mock_requests
 
     def test_delete_document(self):
@@ -386,7 +386,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         assert_no_cache_header(resp)
 
         # All of self.testuser's revisions have been submitted
-        testuser_submissions = RevisionAkismetSubmission.objects.filter(revision__creator=self.testuser.id)
+        testuser_submissions = RevisionAkismetSubmission.objects.filter(
+            revision__creator=self.testuser.id)
         assert testuser_submissions.count() == num_revisions
         for submission in testuser_submissions:
             assert submission.revision in revisions_created
@@ -991,9 +992,8 @@ def test_user_edit_interests(wiki_user, wiki_user_github_account, user_client):
     doc = pq(response.content)
     assert doc.find('#user-head').length == 1
 
-    result_tags = [t.name.replace('profile:interest:', '')
-                   for t in wiki_user.tags.all_ns('profile:interest:')]
-    result_tags.sort()
+    result_tags = sorted([t.name.replace('profile:interest:', '')
+                          for t in wiki_user.tags.all_ns('profile:interest:')])
     test_tags.sort()
     assert result_tags == test_tags
 
@@ -1025,12 +1025,12 @@ def test_bug_709938_interests(wiki_user, wiki_user_github_account,
     response = user_client.get(url)
     doc = pq(response.content)
 
-    test_tags = [u'science,Technology,paradox,knowledge,modeling,big data,'
-                 u'vector,meme,heuristics,harmony,mathesis universalis,'
-                 u'symmetry,mathematics,computer graphics,field,chemistry,'
-                 u'religion,astronomy,physics,biology,literature,'
-                 u'spirituality,Art,Philosophy,Psychology,Business,Music,'
-                 u'Computer Science']
+    test_tags = ['science,Technology,paradox,knowledge,modeling,big data,'
+                 'vector,meme,heuristics,harmony,mathesis universalis,'
+                 'symmetry,mathematics,computer graphics,field,chemistry,'
+                 'religion,astronomy,physics,biology,literature,'
+                 'spirituality,Art,Philosophy,Psychology,Business,Music,'
+                 'Computer Science']
 
     form = _get_current_form_field_values(doc)
 
@@ -1051,7 +1051,7 @@ def test_bug_698126_l10n(wiki_user, user_client):
     for field in response.context['user_form'].fields:
         # if label is localized it's a lazy proxy object
         lbl = response.context['user_form'].fields[field].label
-        assert not isinstance(lbl, six.string_types), 'Field %s is a string!' % field
+        assert not isinstance(lbl, str), 'Field %s is a string!' % field
 
 
 def test_user_edit_github_is_public(wiki_user, wiki_user_github_account,

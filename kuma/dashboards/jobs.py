@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 
 from kuma.core.jobs import KumaJob
 

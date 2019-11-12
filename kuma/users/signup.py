@@ -4,13 +4,13 @@ from django.core import validators
 from django.utils.translation import ugettext_lazy as _
 
 
-USERNAME_REQUIRED = _(u'Username is required.')
-USERNAME_SHORT = _(u'Username is too short (%(show_value)s characters). '
-                   u'It must be at least %(limit_value)s characters.')
-USERNAME_LONG = _(u'Username is too long (%(show_value)s characters). '
-                  u'It must be %(limit_value)s characters or less.')
+USERNAME_REQUIRED = _('Username is required.')
+USERNAME_SHORT = _('Username is too short (%(show_value)s characters). '
+                   'It must be at least %(limit_value)s characters.')
+USERNAME_LONG = _('Username is too long (%(show_value)s characters). '
+                  'It must be %(limit_value)s characters or less.')
 
-TERMS_REQUIRED = _(u'You must agree to the terms of use.')
+TERMS_REQUIRED = _('You must agree to the terms of use.')
 
 
 class SignupForm(BaseSignupForm):
@@ -29,11 +29,11 @@ class SignupForm(BaseSignupForm):
                             widget=forms.TextInput(attrs={'type': 'email'}))
     other_email = forms.CharField(required=False,
                                   widget=forms.TextInput(attrs={'type': 'email'}))
-    terms = forms.BooleanField(label=_(u'I agree'),
+    terms = forms.BooleanField(label=_('I agree'),
                                required=True,
                                error_messages={'required': TERMS_REQUIRED})
     is_github_url_public = forms.BooleanField(
-        label=_(u'I would like to make my GitHub profile URL public'),
+        label=_('I would like to make my GitHub profile URL public'),
         required=False)
     other_email_value = '_other'
     duplicate_email_error_label = '_duplicate_email'

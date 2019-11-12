@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import pytest
 from django.conf import settings
 
@@ -20,7 +19,7 @@ class ViewTests(ElasticTestCase):
                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         assert_no_cache_header(response)
-        content = response.content.decode('utf-8')
+        content = response.content.decode()
         assert 'Results for' in content
         assert 'an article title' in content
         assert '4 documents found for "article" in English' in content
@@ -37,7 +36,7 @@ class ViewTests(ElasticTestCase):
                 assert serialized_filter['name'] == 'Tagged'
                 assert serialized_filter['slug'] == 'tagged'
                 assert serialized_filter['shortcut'] is None
-                assert list(serialized_filter['tags']) == [u'tagged']
+                assert list(serialized_filter['tags']) == ['tagged']
                 assert serialized_filter['operator'] == 'OR'
                 assert serialized_filter['group'] == {
                     'order': 1,
@@ -62,7 +61,7 @@ class ViewTests(ElasticTestCase):
                 assert filter_1['name'] == 'Tagged'
                 assert filter_1['slug'] == 'tagged'
                 assert filter_1['shortcut'] is None
-                assert list(filter_1['tags']) == [u'tagged']
+                assert list(filter_1['tags']) == ['tagged']
                 assert filter_1['operator'] == 'OR'
                 assert filter_1['group'] == {
                     'order': 1,
@@ -168,14 +167,14 @@ class ViewTests(ElasticTestCase):
             response = self.client.get('/en-US/search', {'q': q},
                                        HTTP_HOST=settings.WIKI_HOST)
             assert response.status_code == 200
-            assert 'camel-case-test' in response.content
+            assert b'camel-case-test' in response.content
 
     def test_index(self):
         self.client.login(username='admin', password='testpass')
         response = self.client.get('/en-US/search',
                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
-        expected = 'Search index: %s' % Index.objects.get_current().name
+        expected = f'Search index: {Index.objects.get_current().name}'
         assert expected in response.content.decode(response.charset)
 
     def test_api_redirect(self):
@@ -191,4 +190,4 @@ def test_search_plugin(db, client, locale):
     assert_shared_cache_header(response)
     assert response['Content-Type'] == 'application/opensearchdescription+xml'
     assert 'search/plugin.html' in [t.name for t in response.templates]
-    assert '/{}/search'.format(locale) in response.content.decode('utf-8')
+    assert '/{}/search'.format(locale) in response.content.decode()

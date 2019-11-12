@@ -1,8 +1,7 @@
-from __future__ import unicode_literals
+
 
 import jsonpickle
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 
 
@@ -14,7 +13,6 @@ class BundleManager(models.Manager):
         return Entry.objects.filter(feed__bundles__shortname=bundle)
 
 
-@python_2_unicode_compatible
 class Bundle(models.Model):
     """A bundle of several feeds. A feed can be in several (or no) bundles."""
 
@@ -29,7 +27,6 @@ class Bundle(models.Model):
         return self.shortname
 
 
-@python_2_unicode_compatible
 class Feed(models.Model):
     """A feed holds the metadata of an RSS feed."""
 
@@ -72,7 +69,6 @@ class Feed(models.Model):
             item.delete()
 
 
-@python_2_unicode_compatible
 class Entry(models.Model):
     """An entry is an item representing feed content."""
 

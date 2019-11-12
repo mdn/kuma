@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 import time
-import urllib
+from unittest import mock
+from urllib.parse import parse_qs, quote, urlparse
 
-import mock
 import pytest
 from constance import config
 from django.conf import settings
@@ -12,8 +11,6 @@ from django.core import mail
 from django.shortcuts import render
 from django.test.utils import override_settings
 from django.utils import translation
-from django.utils.http import urlquote
-from django.utils.six.moves.urllib.parse import parse_qs, urlparse
 from pyquery import PyQuery as pq
 
 from kuma.core.tests import (assert_no_cache_header,
@@ -360,7 +357,7 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
         assert response.status_code == 200
         assert b'Original Content.' in response.content
         assert b'dimension15' not in response.content
-        assert self.script_src.encode('utf-8') in response.content
+        assert self.script_src.encode() in response.content
 
     def test_user_no_variant_selected(self):
         """Users get original page without the experiment script."""
@@ -370,7 +367,7 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
         response = self.client.get(rev.document.get_absolute_url(),
                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
-        assert self.script_src.encode('utf-8') not in response.content
+        assert self.script_src.encode() not in response.content
 
     def test_anon_valid_variant_selected(self):
         """Anon users are in the Google Analytics cohort on the variant."""
@@ -383,9 +380,9 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
         assert response.status_code == 200
         assert b'Original Content.' not in response.content
         assert b'Variant Content.' in response.content
-        assert self.expected_15.encode('utf-8') in response.content
-        assert self.expected_16.encode('utf-8') in response.content
-        assert self.script_src.encode('utf-8') not in response.content
+        assert self.expected_15.encode() in response.content
+        assert self.expected_16.encode() in response.content
+        assert self.script_src.encode() not in response.content
         doc = pq(response.content)
         assert not doc('#edit-button')
 
@@ -399,7 +396,7 @@ class DocumentContentExperimentTests(UserTestCase, WikiTestCase):
         response = self.client.get(rev.document.get_absolute_url(),
                                    {'v': 'test'}, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
-        content = response.content.decode('utf-8')
+        content = response.content.decode(response.charset)
         assert 'Original Content.' not in content
         assert 'Variant Content.' in content
         assert self.expected_15 not in content
@@ -424,30 +421,30 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
         response = self.client.get(doc.get_absolute_url(),
                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
-        content = response.content.decode('utf8')
+        content = response.content.decode(response.charset)
         assert self.ga_create in content
         dim17 = self.dim17_tmpl % doc.slug
         assert dim17 in content
 
     def test_fr_doc(self):
         en_doc = _create_document(title='English Document')
-        fr_doc = _create_document(title=u'Document Français',
+        fr_doc = _create_document(title='Document Français',
                                   parent=en_doc, locale='fr')
         assert en_doc.slug != fr_doc.slug
         response = self.client.get(fr_doc.get_absolute_url(),
                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
-        content = response.content.decode('utf8')
+        content = response.content.decode(response.charset)
         assert self.ga_create in content
         dim17 = self.dim17_tmpl % en_doc.slug
         assert dim17 in content
 
     def test_orphan_doc(self):
-        orphan_doc = _create_document(title=u'Huérfano', locale='es')
+        orphan_doc = _create_document(title='Huérfano', locale='es')
         response = self.client.get(orphan_doc.get_absolute_url(),
                                    HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
-        content = response.content.decode('utf8')
+        content = response.content.decode(response.charset)
         assert self.ga_create in content
         dim17 = "ga('set', 'dimension17',"
         assert dim17 not in content
@@ -455,7 +452,7 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
     def test_anon_user(self):
         response = self.client.get('/en-US/', HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
-        content = response.content.decode('utf8')
+        content = response.content.decode(response.charset)
         assert self.ga_create in content
         assert self.dim1 not in content
         assert self.dim2 not in content
@@ -465,7 +462,7 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
         assert self.client.login(username='testuser', password='testpass')
         response = self.client.get('/en-US/', HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
-        content = response.content.decode('utf8')
+        content = response.content.decode(response.charset)
         assert self.ga_create in content
         assert self.dim1 in content
         assert self.dim2 not in content
@@ -478,7 +475,7 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
         assert self.client.login(username='testuser', password='testpass')
         response = self.client.get('/en-US/', HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
-        content = response.content.decode('utf8')
+        content = response.content.decode(response.charset)
         assert self.ga_create in content
         assert self.dim1 in content
         assert self.dim2 in content
@@ -488,7 +485,7 @@ class GoogleAnalyticsTests(UserTestCase, WikiTestCase):
         assert self.client.login(username='admin', password='testpass')
         response = self.client.get('/en-US/', HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
-        content = response.content.decode('utf8')
+        content = response.content.decode(response.charset)
         assert self.ga_create in content
         assert self.dim1 in content
         assert self.dim2 not in content
@@ -543,8 +540,9 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         assert 200 == response.status_code
 
         # TODO: push test_strings functionality up into a test helper
+        content = response.content.decode(response.charset)
         for test_string in test_strings:
-            assert test_string in response.content.decode('utf-8')
+            assert test_string in content
 
     def test_new_document_preview_button(self):
         """HTTP GET to new document URL shows preview button."""
@@ -737,7 +735,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         first_edit_email = mail.outbox[0]
         expected_to = [config.EMAIL_LIST_SPAM_WATCH]
         expected_subject = (
-            u'[MDN][%(loc)s] %(user)s made their first edit, to: %(title)s' %
+            '[MDN][%(loc)s] %(user)s made their first edit, to: %(title)s' %
             {'loc': self.d.locale,
              'user': new_rev.creator.username,
              'title': self.d.title}
@@ -746,16 +744,17 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         assert expected_to == first_edit_email.to
 
         edited_email = mail.outbox[1]
-        expected_to = [u'sam@example.com']
-        expected_subject = (u'[MDN][en-US] Page "%s" changed by %s'
+        expected_to = ['sam@example.com']
+        expected_subject = ('[MDN][en-US] Page "%s" changed by %s'
                             % (self.d.title, new_rev.creator))
 
         assert expected_subject == edited_email.subject
         assert expected_to == edited_email.to
 
-        assert '%s changed %s.' % (unicode(self.username), unicode(self.d.title)) in edited_email.body
+        assert ('{} changed {}.'.format(self.username, self.d.title) in
+                edited_email.body)
 
-        assert (self.d.get_full_url() + u'$history') in edited_email.body
+        assert (self.d.get_full_url() + '$history') in edited_email.body
         assert 'utm_campaign=' in edited_email.body
 
     @mock.patch.object(EditDocumentEvent, 'fire')
@@ -792,12 +791,11 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         that document."""
         self.d.current_revision = None
         self.d.save()
-        tags = [u'tag1', u'tag2', u'tag3']
+        tags = ['tag1', 'tag2', 'tag3']
         self.d.tags.add(*tags)
-        result_tags = list(self.d.tags.names())
-        result_tags.sort()
+        result_tags = sorted(self.d.tags.names())
         assert tags == result_tags
-        tags = [u'tag1', u'tag4']
+        tags = ['tag1', 'tag4']
         data = new_document_data(tags)
         data['form-type'] = 'rev'
         response = self.client.post(reverse('wiki.edit', args=[self.d.slug]),
@@ -892,8 +890,8 @@ def test_compare_revisions(edit_revision, client):
     assert response['X-Robots-Tag'] == 'noindex'
     assert_shared_cache_header(response)
     page = pq(response.content)
-    assert page('span.diff_sub').text() == u'Getting\xa0started...'
-    assert page('span.diff_add').text() == u'The\xa0root\xa0document.'
+    assert page('span.diff_sub').text() == 'Getting\xa0started...'
+    assert page('span.diff_add').text() == 'The\xa0root\xa0document.'
 
     change_link = page('a.change-revisions')
     assert change_link.text() == 'Change Revisions'
@@ -931,8 +929,8 @@ def test_compare_first_translation(trans_revision, client):
     assert response['X-Robots-Tag'] == 'noindex'
     assert_shared_cache_header(response)
     page = pq(response.content)
-    assert page('span.diff_sub').text() == u'Getting\xa0started...'
-    assert page('span.diff_add').text() == u'Mise\xa0en\xa0route...'
+    assert page('span.diff_sub').text() == 'Getting\xa0started...'
+    assert page('span.diff_add').text() == 'Mise\xa0en\xa0route...'
 
     # Change Revisions link goes to the French document history page
     change_link = page('a.change-revisions')
@@ -978,7 +976,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         assert response.status_code == 302
         assert_no_cache_header(response)
         expected_url = '%s?next=%s' % (reverse('account_login'),
-                                       urlquote(translate_uri))
+                                       quote(translate_uri))
         assert expected_url in response['Location']
 
     def test_translate_GET_with_perm(self):
@@ -992,7 +990,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         assert len(doc('form textarea[name="content"]')) == 1
         # initial translation should include slug input
         assert len(doc('form input[name="slug"]')) == 1
-        assert (u'Espa' in doc('div.title-locale').text())
+        assert ('Espa' in doc('div.title-locale').text())
 
     def test_translate_disallow(self):
         """HTTP GET to translate URL returns 400 when not localizable."""
@@ -1197,9 +1195,10 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
     meantime."""
     if trans_lang:
         translate_path = doc.slug
-        uri = urllib.quote(reverse('wiki.translate',
-                                   locale=trans_lang,
-                                   args=[translate_path]))
+        uri = quote(
+            reverse('wiki.translate',
+                    locale=trans_lang,
+                    args=[translate_path]))
     else:
         uri = reverse(view, locale=locale, args=[doc.slug])
     response = client.get(uri, HTTP_HOST=settings.WIKI_HOST)
@@ -1357,7 +1356,7 @@ def test_list_revisions(elem_num, has_prev, is_english, has_revert,
         assert prev_link is not None
         with translation.override(doc.locale):
             expected = translation.gettext('Previous')
-        assert prev_link.text == expected.decode('utf-8')
+        assert prev_link.text == expected
     else:
         assert prev_link is None
 
@@ -1367,7 +1366,7 @@ def test_list_revisions(elem_num, has_prev, is_english, has_revert,
         assert li_element.attrib['class'] == 'revision-list-en-source'
         with translation.override(doc.locale):
             expected = translation.gettext('English (US)')
-        assert comment_em.text == expected.decode('utf-8')
+        assert comment_em.text == expected
     else:
         assert li_element.attrib.get('class') is None
         assert comment_em is None

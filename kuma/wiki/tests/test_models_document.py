@@ -1,15 +1,14 @@
-# -*- coding: utf-8 -*-
 """
 Tests for kuma.wiki.models.Document.
 
 Legacy tests are in kuma/wiki/tests/test_models.py
 """
-from __future__ import unicode_literals
+
 
 import json
 from datetime import timedelta
+from unittest import mock
 
-import mock
 import pytest
 
 from . import HREFLANG_TEST_CASES, normalize_html
@@ -169,7 +168,7 @@ def test_build_json_data_unsaved_doc():
         'tags': [],
         'title': 'New Doc',
         'translations': [],
-        'url': u'/en-US/docs/NewDoc',
+        'url': '/en-US/docs/NewDoc',
         'uuid': '765203ea-c5b8-4385-a551-26c1ef9fc843'
     }
     assert new_json == expected

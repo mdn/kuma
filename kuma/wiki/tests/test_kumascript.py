@@ -1,11 +1,12 @@
-# -*- coding: utf-8 -*-
+
+
 import base64
 import json
+from unittest import mock
+from urllib.parse import urljoin
 
-import mock
 import pytest
 import requests_mock
-from django.utils.six.moves.urllib.parse import urljoin
 from elasticsearch import TransportError
 from elasticsearch_dsl.connections import connections
 from requests.exceptions import (ConnectionError, ContentDecodingError,
@@ -41,7 +42,7 @@ class KumascriptClientTests(WikiTestCase):
             title='Test title',
             slug='test-slug',
             locale='de',
-            tags=[u'foo', u'bar', u'baz']
+            tags=['foo', 'bar', 'baz']
         )
         kumascript.add_env_headers(headers, env_vars)
 
@@ -54,7 +55,7 @@ class KumascriptClientTests(WikiTestCase):
         # Ensure the env vars intended for kumascript match expected values.
         for n in ('title', 'slug', 'locale', 'path'):
             assert env_vars[n] == result_vars[n]
-        assert {u'foo', u'bar', u'baz'} == set(result_vars['tags'])
+        assert {'foo', 'bar', 'baz'} == set(result_vars['tags'])
 
 
 def test_macro_sources(mock_requests):
@@ -69,7 +70,7 @@ def test_macro_sources(mock_requests):
             'filename': 'APIFeatureList.ejs', 'name': 'APIFeatureList'
         }, {
             # Normal form D, common on OSX
-            'filename': u'traduccio\u0301n.ejs', 'name': u'traduccio\u0301n'
+            'filename': 'traduccio\u0301n.ejs', 'name': 'traduccio\u0301n'
         }]
     }
     mock_requests.get(macros_url, json=response)
@@ -78,7 +79,7 @@ def test_macro_sources(mock_requests):
         'A11yRoleQuicklinks': 'A11yRoleQuicklinks.ejs',
         'APIFeatureList': 'APIFeatureList.ejs',
         # Normal form C, used on GitHub, ElasticSearch
-        u'traducci\xf3n': u'traducci\xf3n.ejs',
+        'traducci\xf3n': 'traducci\xf3n.ejs',
     }
     assert macros == expected
 
@@ -139,7 +140,7 @@ def test_macro_page_count(db, mock_es_client):
 def test_macro_page_count_en(db, mock_es_client):
     """macro_page_count('en-US') returns macro usage in the en-US locale."""
     mock_es_client.search.return_value = {
-        '_shards': {'failed': 0, 'skipped': 0, 'successful': 2, u'total': 2},
+        '_shards': {'failed': 0, 'skipped': 0, 'successful': 2, 'total': 2},
         'aggregations': {'usage': {
             'doc_count_error_upper_bound': 0,
             'sum_other_doc_count': 0,

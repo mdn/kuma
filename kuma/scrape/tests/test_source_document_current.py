@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 """Tests for the DocumentCurrentSource class (document.current_revision)."""
-from __future__ import unicode_literals
 
-import mock
+
+from unittest import mock
 
 from . import mock_storage
 from ..sources import DocumentCurrentSource

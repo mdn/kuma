@@ -1,14 +1,11 @@
-# -*- coding: utf-8 -*-
 # see also: http://github.com/tav/scripts/raw/master/validate_jsonp.py
 # Placed into the Public Domain by tav <tav@espians.com>
 
 """Validate Javascript Identifiers for use as JSON-P callback parameters."""
-from __future__ import unicode_literals
+
 
 import re
 from unicodedata import category
-
-from django.utils.six import text_type, unichr
 
 
 # ------------------------------------------------------------------------------
@@ -64,9 +61,9 @@ def valid_javascript_identifier(identifier, escape='\\u', ucd_cat=category):
     if not identifier:
         return False
 
-    if not isinstance(identifier, text_type):
+    if not isinstance(identifier, str):
         try:
-            identifier = text_type(identifier, 'utf-8')
+            identifier = str(identifier, 'utf-8')
         except UnicodeDecodeError:
             return False
 
@@ -81,7 +78,7 @@ def valid_javascript_identifier(identifier, escape='\\u', ucd_cat=category):
             if len(segment) < 4:
                 return False
             try:
-                add_char(unichr(int('0x' + segment[:4], 16)))
+                add_char(chr(int('0x' + segment[:4], 16)))
             except Exception:
                 return False
             add_char(segment[4:])

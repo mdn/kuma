@@ -1,9 +1,8 @@
-from __future__ import unicode_literals
+from urllib.parse import urlparse
 
 from constance import config
 from django.conf import settings
 from django.utils import translation
-from six.moves.urllib.parse import urlparse
 
 from .i18n import get_language_mapping
 

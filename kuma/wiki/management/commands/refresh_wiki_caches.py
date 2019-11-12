@@ -4,9 +4,11 @@ Refresh cached wiki data.
 Run this periodically, it's useful for preventing redundant traffic between
 Kuma and other services like Kumascript.
 """
+
+
 import hashlib
 import logging
-import urlparse
+import urllib.parse
 
 import requests
 
@@ -54,7 +56,7 @@ class Command(BaseCommand):
                 to_prefetch.append(url)
 
             # Get an MD5 hash of the lowercased path
-            path = doc.slug.lower().encode('utf-8')
+            path = doc.slug.lower().encode()
             path_hash = hashlib.md5(path).hexdigest()
 
             # Warm up the page_exists cache
@@ -65,7 +67,7 @@ class Command(BaseCommand):
         pre_total, pre_cnt = len(to_prefetch), 0
         logging.info("Prefetching %s documents..." % (len(to_prefetch)))
         for url in to_prefetch:
-            full_url = urlparse.urljoin(options['baseurl'], url)
+            full_url = urllib.parse.urljoin(options['baseurl'], url)
             try:
                 pre_cnt += 1
                 logging.info("\t(%s/%s) %s" % (pre_cnt, pre_total, full_url))

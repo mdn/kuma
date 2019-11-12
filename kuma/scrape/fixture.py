@@ -1,5 +1,5 @@
 """Load test fixtures from a specification."""
-from __future__ import unicode_literals
+
 
 import logging
 

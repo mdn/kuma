@@ -25,11 +25,11 @@ REMOVE_BUG_URL = (
     '&status_whiteboard=[account-mod]'
     '&defined_groups=1'
     '&groups=mozilla-employee-confidential')
-REMOVE_MESSAGE = _(u"Sorry, you must have at least one connected account so "
-                   u"you can sign in. To disconnect this account connect a "
-                   u"different one first. To delete your MDN profile please "
-                   u'<a href="%(bug_form_url)s" rel="nofollow">file a bug</a>.')
-USERNAME_EMAIL = _(u'An email address cannot be used as a username.')
+REMOVE_MESSAGE = _("Sorry, you must have at least one connected account so "
+                   "you can sign in. To disconnect this account connect a "
+                   "different one first. To delete your MDN profile please "
+                   '<a href="%(bug_form_url)s" rel="nofollow">file a bug</a>.')
+USERNAME_EMAIL = _('An email address cannot be used as a username.')
 
 
 class KumaAccountAdapter(DefaultAccountAdapter):
@@ -56,8 +56,8 @@ class KumaAccountAdapter(DefaultAccountAdapter):
             raise forms.ValidationError(USERNAME_CHARACTERS)
         username = super(KumaAccountAdapter, self).clean_username(username)
         if get_user_model().objects.filter(username=username).exists():
-            raise forms.ValidationError(_(u'The username you entered '
-                                          u'already exists.'))
+            raise forms.ValidationError(_('The username you entered '
+                                          'already exists.'))
         return username
 
     def message_templates(self, *names):

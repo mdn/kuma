@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 
 import json
 import os
@@ -62,11 +62,11 @@ def _render(component_name, html, script, needs_serialization=False):
         assert isinstance(script, dict), type(script)
         script = json.dumps(script).replace('</', '<\\/')
     else:
-        script = u'JSON.parse({})'.format(script)
+        script = 'JSON.parse({})'.format(script)
 
     return (
-        u'<div id="react-container" data-component-name="{}">{}</div>\n'
-        u'<script>window._react_data = {};</script>\n'
+        '<div id="react-container" data-component-name="{}">{}</div>\n'
+        '<script>window._react_data = {};</script>\n'
     ).format(component_name, html, script)
 
 

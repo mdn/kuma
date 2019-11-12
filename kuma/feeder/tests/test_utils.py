@@ -1,14 +1,13 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 
 import socket
 from datetime import datetime
 from time import mktime, struct_time
+from unittest import mock
+from urllib.error import URLError
 
 import jsonpickle
-import mock
 import pytest
-from django.utils.six.moves.urllib.error import URLError
 from feedparser import FeedParserDict
 
 from ..models import Entry, Feed

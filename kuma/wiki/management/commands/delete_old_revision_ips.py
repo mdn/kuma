@@ -1,6 +1,8 @@
 """
 Delete old revision IPs
 """
+
+
 from django.core.management.base import BaseCommand
 
 from kuma.wiki.tasks import delete_old_revision_ips

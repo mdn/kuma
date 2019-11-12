@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+
+
 from datetime import datetime
 
 import pytest
@@ -57,7 +58,7 @@ def test_include_svg_no_title():
     assert svg_title.text() == 'Twitter'
 
 
-@pytest.mark.parametrize('title', ('New Title', u'Nuevo Título'))
+@pytest.mark.parametrize('title', ('New Title', 'Nuevo Título'))
 def test_include_svg_replace_title(title):
     """The SVG title can be replaced."""
     new_title = include_svg('includes/icons/social/twitter.svg', title)
@@ -85,23 +86,23 @@ def test_revisions_unified_diff_none(root_doc):
 
 def test_revisions_unified_diff_non_ascii(wiki_user):
     """Documents with non-ASCII titles do not have Unicode errors in diffs."""
-    title1 = u'Gänsefüßchen'
+    title1 = 'Gänsefüßchen'
     doc1 = Document.objects.create(
         locale='en-US', slug=title1, title=title1)
     rev1 = Revision.objects.create(
         document=doc1,
         creator=wiki_user,
-        content=u'<p>%s started...</p>' % title1,
+        content='<p>%s started...</p>' % title1,
         title=title1,
         created=datetime(2018, 11, 21, 18, 39))
 
-    title2 = u'Außendienstüberwachlösung'
+    title2 = 'Außendienstüberwachlösung'
     doc2 = Document.objects.create(
         locale='en-US', slug=title2, title=title2)
     rev2 = Revision.objects.create(
         document=doc2,
         creator=wiki_user,
-        content=u'<p>%s started...</p>' % title2,
+        content='<p>%s started...</p>' % title2,
         title=title1,
         created=datetime(2018, 11, 21, 18, 41))
 

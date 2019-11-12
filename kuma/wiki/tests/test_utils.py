@@ -1,8 +1,10 @@
+
+
 import datetime
 import os.path
+from unittest import mock
 
 
-import mock
 import pytest
 from constance.test import override_config
 from django.core.exceptions import ImproperlyConfigured
@@ -41,7 +43,7 @@ class RecordingHttpMockSequence(HttpMockSequence):
 @mock.patch('kuma.wiki.utils.ServiceAccountCredentials')
 class AnalyticsUpageviewsTests(KumaTestCase):
     start_date = datetime.date(2016, 1, 1)
-    valid_response = """{"reports": [
+    valid_response = b"""{"reports": [
             {
                 "data": {
                     "rows": [

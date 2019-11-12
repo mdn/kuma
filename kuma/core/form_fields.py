@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 
 from babel import Locale, localedata
 from babel.support import Format

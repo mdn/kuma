@@ -155,11 +155,6 @@ oauthlib==2.0.4 \
 defusedxml==0.5.0 \
     --hash=sha256:24d7f2f94f7f3cb6061acb215685e5125fbcdc40a857eff9de22518820b0a4f4 \
     --hash=sha256:702a91ade2968a82beb0db1e0766a6a273f33d4616a6ce8cde475d8e09853b20
-# OpenID library for Python 2
-# Code: https://github.com/openid/python-openid
-python-openid==2.2.5 \
-    --hash=sha256:92c51c3ecec846cbec4aeff11f9ff47303d4a63f93b0e6ac0ec02a091fed70ef \
-    --hash=sha256:c2d133e47e0a7705c9272eef00d7a09c174f5bf17a127fed8e2c6499556cc782
 # OpenID library for Python 3
 # Code: https://github.com/necaris/python3-openid
 # Changes: https://github.com/necaris/python3-openid/blob/master/CHANGES.md
@@ -173,16 +168,6 @@ python3-openid==3.1.0 \
 requests-oauthlib==0.8.0 \
     --hash=sha256:883ac416757eada6d3d07054ec7092ac21c7f35cb1d2cf82faf205637081f468 \
     --hash=sha256:50a8ae2ce8273e384895972b56193c7409601a66d4975774c60c2aed869639ca
-
-# django-extensions
-#
-# Backport of Python 3.5's type hints
-# Changes: https://pypi.python.org/pypi/typing
-# Docs: https://docs.python.org/3/library/typing.html
-typing==3.6.4 \
-    --hash=sha256:b2c689d54e1144bbcfd191b0832980a21c2dbcf7b5ff7a66248a60c90e951eb8 \
-    --hash=sha256:3a887b021a77b292e151afb75323dea88a7bc1b3dfa92176cff8e44c8b68bddf \
-    --hash=sha256:d400a9344254803a2368533e4533a4200d21eb7b6b729c173bc38201a74db3f2
 
 
 # django-statici18n
@@ -210,14 +195,6 @@ elasticsearch==6.3.1 \
     --hash=sha256:7546cc08e3899716e12fe67d12d7cfe9a64647014d1134b014c3c392b63cad42 \
     --hash=sha256:aada5cfdc4a543c47098eb3aca6663848ef5d04b4324935ced441debc11ec98b
 
-# elasticsearch-dsl
-#
-# Required by elasticsearch-dsl but only needed because we're on Python 2.7
-# Code: https://github.com/phihag/ipaddress
-ipaddress==1.0.22 \
-    --hash=sha256:64b28eec5e78e7510698f6d4da08800a5c575caa4a286c93d651c5d3ff7b6794 \
-    --hash=sha256:b146c751ea45cad6188dd6cf2d9b757f6f4f8d6ffb96a023e6f2e26eea02a72c
-
 
 # Extensions to datetime module
 # Code: https://github.com/dateutil/dateutil/
@@ -229,14 +206,6 @@ python-dateutil==2.7.3 \
 
 # flake8
 #
-# Backport of Python 3 configparser, version tracks Python 3 versions
-# Code: https://github.com/jaraco/configparser
-# Changes: https://github.com/jaraco/configparser/blob/master/CHANGES.rst
-# Docs: https://docs.python.org/3/library/configparser.html
-configparser==3.7.1 \
-    --hash=sha256:c114ff90ee2e762db972fa205f02491b1f5cf3ff950decd8542c62970c9bedac \
-    --hash=sha256:df28e045fbff307a28795b18df6ac8662be3219435560ddb068c283afab1ea7a \
-    --hash=sha256:5bd5fa2a491dc3cfe920a3f2a107510d65eceae10e9c6e547b90261a4710df32
 # Advertise objects with a common interface
 # Code: https://github.com/takluyver/entrypoints
 # Docs: https://entrypoints.readthedocs.io/en/latest/
@@ -315,47 +284,27 @@ MarkupSafe==1.0 \
     --hash=sha256:a6be69091dac236ea9c6bc7d012beab42010fa914c459791d627dad4910eb665
 
 # meinheld
-greenlet==0.4.12 \
-    --hash=sha256:96888e47898a471073b394ea641b7d675c1d054c580dd4a04a382bd34e67d89e \
-    --hash=sha256:bc339de0e0969de5118d0b62a080a7611e2ba729a90f4a3ad78559c51bc5576d \
-    --hash=sha256:b8ab98f8ae25938326dc4c21e3689a933531500ae4f3bfcefe36e3e25fda4dbf \
-    --hash=sha256:d2d5103f6cba131e1be660230018e21f276911d2b68b629ead1c5cb5e5472ac7 \
-    --hash=sha256:416a3328d7e0a19aa1df3ec09524a109061fd7b80e010ef0dff9f695b4ac5e20 \
-    --hash=sha256:6803d8c6b235c861c50afddf00c7467ffbcd5ab960d137ff0f9c36f2cb11ee4b \
-    --hash=sha256:76dab055476dd4dabb00a967b4df1990b25542d17eaa40a18f66971d10193e0b \
-    --hash=sha256:21232907c8c26838b16915bd8fbbf82fc70c996073464cc70981dd4a96bc841c \
-    --hash=sha256:70b9ff28921f5a3c03df4896ec8c55f5f94c593d7a79abd98b4c5c4a692ba873 \
-    --hash=sha256:7114b757b4146f4c87a0f00f1e58abd4c4729836679af0fc37266910a4a72eb0 \
-    --hash=sha256:0d90c709355ed13f16676f84e5a9cd67826a9f5c5143381c21e8fc3100ade1f1 \
-    --hash=sha256:ebae83b6247f83b1e8d887733dfa8046ce6e29d8b3e2a7380256e9de5c6ae55d \
-    --hash=sha256:e841e3ece633acae5e2bf6102140a605ffee7d5d4921dca1625c5fdc0f0b3248 \
-    --hash=sha256:3e5e9be157ece49e4f97f3225460caf758ccb00f934fcbc5db34367cc1ff0aee \
-    --hash=sha256:e77b708c37b652c7501b9f8f6056b23633c567aaa0d29edfef1c11673c64b949 \
-    --hash=sha256:0da1fc809c3bdb93fbacd0f921f461aacd53e554a7b7d4e9953ba09131c4206e \
-    --hash=sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 \
-    --hash=sha256:e5451e1ce06b74a4861576c2db74405a4398c4809a105774550a9e52cfc8c4da \
-    --hash=sha256:9c407aa6adfd4eea1232e81aa9f3cb3d9b955a9891c4819bf9b498c77efba14b \
-    --hash=sha256:b56ac981f07b77e72ad5154278b93396d706572ea52c2fce79fee2abfcc8bfa6 \
-    --hash=sha256:e4c99c6010a5d153d481fdaf63b8a0782825c0721506d880403a3b9b82ae347e
+greenlet==0.4.15 \
+    --hash=sha256:000546ad01e6389e98626c1367be58efa613fa82a1be98b0c6fc24b563acc6d0 \
+    --hash=sha256:0d48200bc50cbf498716712129eef819b1729339e34c3ae71656964dac907c28 \
+    --hash=sha256:23d12eacffa9d0f290c0fe0c4e81ba6d5f3a5b7ac3c30a5eaf0126bf4deda5c8 \
+    --hash=sha256:37c9ba82bd82eb6a23c2e5acc03055c0e45697253b2393c9a50cef76a3985304 \
+    --hash=sha256:51503524dd6f152ab4ad1fbd168fc6c30b5795e8c70be4410a64940b3abb55c0 \
+    --hash=sha256:8041e2de00e745c0e05a502d6e6db310db7faa7c979b3a5877123548a4c0b214 \
+    --hash=sha256:81fcd96a275209ef117e9ec91f75c731fa18dcfd9ffaa1c0adbdaa3616a86043 \
+    --hash=sha256:853da4f9563d982e4121fed8c92eea1a4594a2299037b3034c3c898cb8e933d6 \
+    --hash=sha256:8b4572c334593d449113f9dc8d19b93b7b271bdbe90ba7509eb178923327b625 \
+    --hash=sha256:9416443e219356e3c31f1f918a91badf2e37acf297e2fa13d24d1cc2380f8fbc \
+    --hash=sha256:9854f612e1b59ec66804931df5add3b2d5ef0067748ea29dc60f0efdcda9a638 \
+    --hash=sha256:99a26afdb82ea83a265137a398f570402aa1f2b5dfb4ac3300c026931817b163 \
+    --hash=sha256:a19bf883b3384957e4a4a13e6bd1ae3d85ae87f4beb5957e35b0be287f12f4e4 \
+    --hash=sha256:a9f145660588187ff835c55a7d2ddf6abfc570c2651c276d3d4be8a2766db490 \
+    --hash=sha256:ac57fcdcfb0b73bb3203b58a14501abb7e5ff9ea5e2edfa06bb03035f0cff248 \
+    --hash=sha256:bcb530089ff24f6458a81ac3fa699e8c00194208a724b644ecc68422e1111939 \
+    --hash=sha256:beeabe25c3b704f7d56b573f7d2ff88fc99f0138e43480cecdfcaa3b87fe4f87 \
+    --hash=sha256:d634a7ea1fc3380ff96f9e44d8d22f38418c1c381d5fac680b272d7d90883720 \
+    --hash=sha256:d97b0661e1aead761f0ded3b769044bb00ed5d33e1ec865e891a8b128bf7c656
 
-
-#
-# mock
-#
-# Backport of function signature features from Python 3.3's inspect
-# Code: https://github.com/aliles/funcsigs
-# Changes: https://github.com/aliles/funcsigs/blob/master/CHANGELOG
-# Docs: http://funcsigs.readthedocs.io/en/latest/
-funcsigs==0.4 \
-    --hash=sha256:ff5ad9e2f8d9e5d1e8bbfbcf47722ab527cf0d51caeeed9da6d0f40799383fde \
-    --hash=sha256:d83ce6df0b0ea6618700fe1db353526391a8a3ada1b7aba52fed7a61da772033
-# Automation for setuptools
-# Code: https://github.com/openstack-dev/pbr
-# Changes: https://docs.openstack.org/pbr/latest/user/history.html
-# Docs: https://docs.openstack.org/pbr/latest/
-pbr==1.8.1 \
-    --hash=sha256:46c8db75ae75a056bd1cc07fa21734fe2e603d11a07833ecc1eeb74c35c72e0c \
-    --hash=sha256:e2127626a91e6c885db89668976db31020f0af2da728924b56480fc7ccf09649
 
 #
 # PyPOM

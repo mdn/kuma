@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 
 from django.db import migrations, models
 import datetime
@@ -248,7 +247,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterUniqueTogether(
             name='document',
-            unique_together=set([('parent', 'locale'), ('slug', 'locale')]),
+            unique_together={('parent', 'locale'), ('slug', 'locale')},
         ),
         migrations.AlterField(
             model_name='document',

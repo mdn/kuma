@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
 """Tests for the Source class."""
-from __future__ import unicode_literals
 
-import mock
+
+from unittest import mock
+
 import pytest
 
 from kuma.scrape.sources import Source

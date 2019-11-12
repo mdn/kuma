@@ -1,5 +1,5 @@
 """Scrape a user profile from a Kuma website."""
-from __future__ import unicode_literals
+
 
 from django.core.management.base import CommandError
 

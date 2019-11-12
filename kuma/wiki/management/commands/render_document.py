@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
 """
 Manually schedule the rendering of a document
 """
-from __future__ import division
 
 import datetime
 import logging
@@ -116,16 +114,16 @@ class Command(BaseCommand):
                 if head == 'docs':
                     slug = tail
                 doc = Document.objects.get(locale=locale, slug=slug)
-                log.info(u'Rendering %s (%s)' % (doc, doc.get_absolute_url()))
+                log.info('Rendering %s (%s)' % (doc, doc.get_absolute_url()))
                 try:
                     render_document(
                         doc.pk, cache_control, base_url, force,
                         invalidate_cdn_cache=invalidate_cdn_cache
                     )
-                    log.debug(u'DONE.')
+                    log.debug('DONE.')
                 except DocumentRenderingInProgress:
                     log.error(
-                        u'Rendering is already in progress for this document.')
+                        'Rendering is already in progress for this document.')
 
     def chain_render_docs(self, docs, cache_control, base_url, force,
                           invalidate_cdn_cache=False):

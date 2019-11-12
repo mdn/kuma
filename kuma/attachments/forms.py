@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from .models import AttachmentRevision
 
 
-MIME_TYPE_INVALID = _(u'Files of this type are not permitted.')
+MIME_TYPE_INVALID = _('Files of this type are not permitted.')
 
 
 class AttachmentRevisionForm(forms.ModelForm):
@@ -55,7 +55,7 @@ class AttachmentRevisionForm(forms.ModelForm):
 
     def mime_type_from_file(self, file):
         m_mime = magic.Magic(mime=True)
-        mime_type = m_mime.from_buffer(file.read(1024)).decode('utf-8').split(';')[0]
+        mime_type = m_mime.from_buffer(file.read(1024)).split(';')[0]
         file.seek(0)
         return mime_type
 

@@ -1,4 +1,4 @@
-from urlparse import urlsplit, urlunsplit
+from urllib.parse import urlsplit, urlunsplit
 
 import pytest
 import requests
@@ -47,7 +47,7 @@ def pytest_configure(config):
     # Process the settings for this Kuma instance
     settings = _KUMA_STATUS['settings']
     allowed_hosts = set(settings['ALLOWED_HOSTS'])
-    host_urls = set((base_url,))
+    host_urls = {base_url}
     protocol = settings['PROTOCOL']
     for host in allowed_hosts:
         if host != '*':
@@ -71,7 +71,7 @@ def pytest_generate_tests(metafunc):
     """
     for name, params in _DYNAMIC_FIXTURES.items():
         if name in metafunc.fixturenames:
-            if type(params) is dict:
+            if isinstance(params, dict):
                 metafunc.parametrize(name, **params)
             else:
                 metafunc.parametrize(name, params)

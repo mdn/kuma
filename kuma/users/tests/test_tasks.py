@@ -1,4 +1,4 @@
-import mock
+from unittest import mock
 
 from allauth.account.models import EmailAddress, EmailConfirmationHMAC
 from allauth.account.signals import user_signed_up
@@ -49,7 +49,7 @@ class TestWelcomeEmails(UserTestCase):
         welcome_email = mail.outbox[0]
         expected_to = [testuser.email]
         self.assertEqual(expected_to, welcome_email.to)
-        self.assertTrue(u'utm_campaign=welcome' in welcome_email.body)
+        self.assertTrue('utm_campaign=welcome' in welcome_email.body)
 
     @mock.patch('kuma.users.tasks.strings_are_translated')
     def test_dont_send_untranslated_language_email(self,
@@ -88,7 +88,7 @@ class TestWelcomeEmails(UserTestCase):
         welcome_email = mail.outbox[0]
         expected_to = [testuser.email]
         self.assertEqual(expected_to, welcome_email.to)
-        self.assertTrue(u'utm_campaign=welcome' in welcome_email.body)
+        self.assertTrue('utm_campaign=welcome' in welcome_email.body)
 
     def test_signup_getting_started_message(self):
         testuser = user(username='welcome', email='welcome@tester.com',

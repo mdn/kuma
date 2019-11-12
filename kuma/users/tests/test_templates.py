@@ -1,4 +1,5 @@
 import json
+from unittest.mock import patch
 
 import pytest
 from allauth.account.models import EmailAddress
@@ -7,7 +8,6 @@ from constance.test.utils import override_config
 from django.conf import settings
 from django.db import IntegrityError
 from django.http import HttpResponse
-from mock import patch
 from pyquery import PyQuery as pq
 from waffle.testutils import override_switch
 
@@ -169,7 +169,7 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         """
         response = self.github_login()
         assert response.status_code == 200
-        assert 'Sign In Failure' not in response.content.decode('utf-8')
+        assert 'Sign In Failure' not in response.content.decode()
 
         # Test the signup form and our very custom email selector
         signup_url = reverse('socialaccount_signup')

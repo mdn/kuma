@@ -1,15 +1,12 @@
-# -*- coding: utf-8 -*-
 import re
 from collections import defaultdict
+from urllib.parse import unquote, urlencode, urlparse, urlsplit
 from xml.sax.saxutils import quoteattr
 
 import bleach
 import html5lib
 import newrelic.agent
 from django.conf import settings
-from django.utils.encoding import python_2_unicode_compatible
-from django.utils.six.moves.urllib.parse import (unquote, urlencode, urlparse,
-                                                 urlsplit)
 from django.utils.translation import ugettext
 from html5lib.filters.base import Filter as html5lib_Filter
 from lxml import etree
@@ -169,9 +166,9 @@ class Extractor(object):
             src = sample.find(selector).text(squash_space=False)
             if src is not None:
                 # Bug 819999: &nbsp; gets decoded to \xa0, which trips up CSS
-                src = src.replace(u'\xa0', u' ')
+                src = src.replace('\xa0', ' ')
                 # Bug 1284781: &nbsp; is incorrectly parsed on embed sample
-                src = src.replace(u'&nbsp;', u' ')
+                src = src.replace('&nbsp;', ' ')
             if src:
                 data[part] = src
 
@@ -259,7 +256,7 @@ def get_seo_description(content, locale=None, strip_markup=True):
                     text_match = (
                         text and len(text) and
                         'Redirect' not in text and
-                        text.find(u'«') == -1 and
+                        text.find('«') == -1 and
                         text.find('&laquo') == -1 and
                         item.parents().length == 2)
                     if text_match:
@@ -293,7 +290,6 @@ def filter_out_noinclude(src):
     return to_html(doc)
 
 
-@python_2_unicode_compatible
 class ContentSectionTool(object):
 
     def __init__(self, src=None, is_full_document=False):
@@ -341,7 +337,7 @@ class ContentSectionTool(object):
     def serialize(self, stream=None, **options):
         if stream is None:
             stream = self.stream
-        return u"".join(self._get_serializer(**options).serialize(stream))
+        return "".join(self._get_serializer(**options).serialize(stream))
 
     def __str__(self):
         return self.serialize()
@@ -461,18 +457,15 @@ class LinkAnnotationFilter(html5lib_Filter):
                 if skip:
                     continue
 
-                href_locale, href_path = href.split(u'/docs/', 1)
-                if href_locale.startswith(u'/'):
+                href_locale, href_path = href.split('/docs/', 1)
+                if href_locale.startswith('/'):
                     href_locale = href_locale[1:]
 
                 if '#' in href_path:
                     # If present, discard the hash anchor
                     href_path, _, _ = href_path.partition('#')
 
-                # Handle any URL-encoded UTF-8 characters in the path
-                href_path = href_path.encode('utf-8', 'ignore')
                 href_path = unquote(href_path)
-                href_path = href_path.decode('utf-8', 'ignore')
 
                 # Try to sort out the locale and slug through some of our
                 # redirection logic.
@@ -537,16 +530,16 @@ class LinkAnnotationFilter(html5lib_Filter):
                             """Add values to the attribute dictionary."""
                             if attr_name in names:
                                 values = set(
-                                    attrs[(namespace, attr_name)].split(u' '))
+                                    attrs[(namespace, attr_name)].split(' '))
                             else:
                                 values = set()
                             values.update(add_list)
                             if values:
                                 attrs[(namespace, attr_name)] = (
-                                    u' '.join(sorted(values)))
+                                    ' '.join(sorted(values)))
 
-                        add_to_attr(u'class', links[href]['classes'])
-                        add_to_attr(u'rel', links[href]['rel'])
+                        add_to_attr('class', links[href]['classes'])
+                        add_to_attr('rel', links[href]['rel'])
 
                 token['data'] = attrs
 
@@ -573,7 +566,7 @@ class SectionIDFilter(html5lib_Filter):
                 return id
 
     non_url_safe = '"#$%&+,/:;=?@[\\]^`{|}~\')('
-    translate_table = {ord(char): u'' for char in non_url_safe}
+    translate_table = {ord(char): '' for char in non_url_safe}
 
     def slugify(self, text):
         """
@@ -582,7 +575,7 @@ class SectionIDFilter(html5lib_Filter):
         text = text.translate(self.translate_table)
         # Strip leading, trailing and multiple whitespace,
         # convert remaining whitespace to _.
-        text = u'_'.join(text.split())
+        text = '_'.join(text.split())
         return text
 
     def process_header(self, token, buffer):
@@ -613,7 +606,7 @@ class SectionIDFilter(html5lib_Filter):
 
         # Slugify the text we found inside the header, generate an ID
         # as a last resort.
-        slug = self.slugify(u''.join(text))
+        slug = self.slugify(''.join(text))
         if not slug:
             slug = self.gen_id()
         else:
@@ -621,10 +614,10 @@ class SectionIDFilter(html5lib_Filter):
             start_inc = 2
             slug_base = slug
             while slug in self.known_ids:
-                slug = u'%s_%s' % (slug_base, start_inc)
+                slug = '%s_%s' % (slug_base, start_inc)
                 start_inc += 1
 
-        attrs[(None, u'id')] = slug
+        attrs[(None, 'id')] = slug
         start['data'] = attrs
         self.known_ids.add(slug)
 
@@ -679,7 +672,7 @@ class SectionIDFilter(html5lib_Filter):
                     # prevent the injection of spaces (which are illegal
                     # for the "id" attribute) or any of the non-URL-safe
                     # characters listed above.
-                    attrs[(None, u'id')] = self.slugify(attrs[(None, 'name')])
+                    attrs[(None, 'id')] = self.slugify(attrs[(None, 'name')])
                     token['data'] = attrs
                     yield token
                     continue
@@ -689,7 +682,7 @@ class SectionIDFilter(html5lib_Filter):
                 # from gen_id().
                 if token['name'] not in HEAD_TAGS:
                     if (None, 'id') not in attrs:
-                        attrs[(None, u'id')] = self.gen_id()
+                        attrs[(None, 'id')] = self.gen_id()
                         token['data'] = attrs
                     yield token
                     continue
@@ -727,26 +720,26 @@ class SectionEditLinkFilter(html5lib_Filter):
                         ts = ({'type': 'StartTag',
                                'name': 'a',
                                'data': {
-                                   (None, u'title'): ugettext('Edit section'),
-                                   (None, u'class'): 'edit-section',
-                                   (None, u'data-section-id'): value,
-                                   (None, u'data-section-src-url'): order_params(u'%s?%s' % (
+                                   (None, 'title'): ugettext('Edit section'),
+                                   (None, 'class'): 'edit-section',
+                                   (None, 'data-section-id'): value,
+                                   (None, 'data-section-src-url'): order_params('%s?%s' % (
                                        reverse('wiki.document',
                                                args=[self.slug],
                                                locale=self.locale),
-                                       urlencode({'section': value.encode('utf-8'),
+                                       urlencode({'section': value.encode(),
                                                   'raw': 'true'})
                                    )),
-                                   (None, u'href'): order_params(u'%s?%s' % (
+                                   (None, 'href'): order_params('%s?%s' % (
                                        reverse('wiki.edit',
                                                args=[self.slug],
                                                locale=self.locale),
-                                       (urlencode({'section': value.encode('utf-8'),
+                                       (urlencode({'section': value.encode(),
                                                    'edit_links': 'true'})
                                         )))
                                }},
                               {'type': 'Characters',
-                               'data': ugettext(u'Edit')},
+                               'data': ugettext('Edit')},
                               {'type': 'EndTag', 'name': 'a'})
                         for t in ts:
                             yield t
@@ -810,8 +803,8 @@ class SectionTOCFilter(html5lib_Filter):
                     out.extend([
                         {'type': 'StartTag', 'name': 'li', 'data': {}},
                         {'type': 'StartTag', 'name': 'a',
-                         'data': {(None, u'rel'): 'internal',
-                                  (None, u'href'): '#%s' % id}},
+                         'data': {(None, 'rel'): 'internal',
+                                  (None, 'href'): '#%s' % id}},
                     ])
                     self.in_hierarchy = True
                     for t in out:
@@ -1076,7 +1069,7 @@ class CodeSyntaxFilter(html5lib_Filter):
                         if m:
                             lang = m.group(1).lower()
                             brush = MT_SYNTAX_BRUSH_MAP.get(lang, lang)
-                            attrs[(namespace, u'class')] = "brush: %s" % brush
+                            attrs[(namespace, 'class')] = "brush: %s" % brush
                             del attrs[(None, 'function')]
                             token['data'] = attrs
             yield token

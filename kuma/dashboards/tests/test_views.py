@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 
 import datetime
 import json
+from unittest import mock
 
-import mock
 import pytest
 from django.conf import settings
 from django.contrib.auth.models import Group, Permission

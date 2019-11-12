@@ -1,3 +1,5 @@
+
+
 import json
 
 import pytest
@@ -34,8 +36,9 @@ def akismet_wiki_user_2(wiki_user_2, permission_add_revisionakismetsubmission):
 
 @pytest.fixture
 def akismet_mock_requests(mock_requests):
-    mock_requests.post(VERIFY_URL, content='valid')
-    mock_requests.post(SPAM_URL, content=Akismet.submission_success)
+    mock_requests.post(VERIFY_URL, content=b'valid')
+    mock_requests.post(
+        SPAM_URL, content=Akismet.submission_success.encode())
     return mock_requests
 
 
@@ -69,7 +72,7 @@ def test_spam_valid_response(create_revision, akismet_wiki_user, user_client,
 
     # One RevisionAkismetSubmission record should exist for this revision.
     ras = RevisionAkismetSubmission.objects.get(revision=create_revision)
-    assert ras.type == u'spam'
+    assert ras.type == 'spam'
 
     # Check that the Akismet endpoints were called.
     assert akismet_mock_requests.called
@@ -78,7 +81,7 @@ def test_spam_valid_response(create_revision, akismet_wiki_user, user_client,
     data = json.loads(response.content)
     assert len(data) == 1
     assert data[0]['sender'] == akismet_wiki_user.username
-    assert data[0]['type'] == u'spam'
+    assert data[0]['type'] == 'spam'
 
 
 @pytest.mark.spam

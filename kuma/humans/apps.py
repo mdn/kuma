@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 
 from celery.schedules import crontab
 from django.apps import AppConfig
