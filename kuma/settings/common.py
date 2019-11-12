@@ -1104,7 +1104,7 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/newsletter.js',
         'extra_context': {
-            'async': True,
+            'defer': True,
         },
     },
     'perf': {
