@@ -5,8 +5,8 @@ import hashlib
 import logging
 import os
 from itertools import islice
-from urllib.parse import parse_qsl, ParseResult, urlparse, urlsplit, urlunsplit
 from smtplib import SMTPServerDisconnected
+from urllib.parse import parse_qsl, ParseResult, urlparse, urlsplit, urlunsplit
 
 from babel import dates, localedata
 from celery import chain, chord
