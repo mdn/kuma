@@ -1145,25 +1145,6 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         doc = pq(resp.content)
         assert 'Account Sign In Failure' in doc.find('h1').text()
 
-    @override_config(RECAPTCHA_PRIVATE_KEY='private_key',
-                     RECAPTCHA_PUBLIC_KEY='public_key')
-    def test_signin_captcha(self):
-        resp = self.github_login()
-        self.assertRedirects(resp, self.signup_url)
-
-        data = {'website': '',
-                'username': 'octocat',
-                'email': 'octo.cat@github-inc.com',
-                'terms': True,
-                'g-recaptcha-response': 'FAILED'}
-
-        with mock.patch('captcha.client.request') as request_mock:
-            request_mock.return_value.read.return_value = '{"success": null}'
-            response = self.client.post(self.signup_url, data=data, follow=True)
-        assert response.status_code == 200
-        assert (response.context['form'].errors ==
-                {'captcha': [u'Incorrect, please try again.']})
-
     def test_matching_user(self):
         self.github_login()
         response = self.client.get(self.signup_url)
