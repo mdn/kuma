@@ -1,7 +1,7 @@
 import json
 import os
+from unittest import mock
 
-import mock
 from django.core.checks import Error, Warning
 
 from kuma.core import checks
