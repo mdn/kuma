@@ -56,7 +56,7 @@ class Command(BaseCommand):
             if social_app is None or input(OVERWRITE_PROMPT % provider) == 'yes':
                 print('\n')
 
-                print(GITHUB_INFO)
+                print(GITHUB_INFO if provider == 'github' else GOOGLE_INFO)
                 client_id = input('Client ID: ').strip()
                 client_secret = input('Client Secret: ').strip()
 
