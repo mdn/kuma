@@ -54,7 +54,7 @@
 {% block site_css %}
     {{ super() }}
     {% stylesheet 'prism' %}
-    {% if possible_waffle_flag('developer_needs') %}
+    {% if waffle.flag('developer_needs') %}
       {% stylesheet 'banners' %}
     {% endif %}
 {% endblock %}
@@ -302,7 +302,7 @@
   </menu>
 {% endblock %}
 
-{% if possible_waffle_flag('developer_needs') %}
+{% if waffle.flag('developer_needs') %}
     {%- block banners %}
         {% include "banners/cta-banners.html" %}
     {% endblock %}
@@ -352,7 +352,7 @@
     {% javascript 'newsletter' %}
   {% endif %}
 
-  {% if possible_waffle_flag('developer_needs') %}
+  {% if waffle.flag('developer_needs') %}
     {% javascript 'banners' %}
   {% endif %}
 {% endblock %}
