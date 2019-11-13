@@ -1,15 +1,6 @@
 import json
 import os
-try:
-    from json.decoder import JSONDecodeError
-except ImportError:
-    # Still in Python 2
-    JSONDecodeError = ValueError
-try:
-    FileNotFoundError
-except NameError:
-    # Still in Python 2
-    FileNotFoundError = IOError
+from json.decoder import JSONDecodeError
 
 from django.conf import settings
 from django.core.checks import Error, register as register_check, Warning
