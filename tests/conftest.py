@@ -84,7 +84,7 @@ def is_local_url(base_url):
     instance (localhost).
     """
     return (base_url and
-            urlsplit(base_url).hostname.split('.')[-1] == 'localhost')
+            'localhost' in urlsplit(base_url).hostname.split('.'))
 
 
 @pytest.fixture(scope='session')

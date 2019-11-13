@@ -17,9 +17,9 @@ def test_robots(any_host_url):
     urlbits = urlsplit(any_host_url)
     hostname = urlbits.netloc
     if hostname in INDEXED_ATTACHMENT_DOMAINS:
-        assert response.content.strip() == ''
+        assert response.text.strip() == ''
     elif hostname in INDEXED_WEB_DOMAINS:
-        assert 'Sitemap: ' in response.content
-        assert 'Disallow: /admin/\n' in response.content
+        assert 'Sitemap: ' in response.text
+        assert 'Disallow: /admin/\n' in response.text
     else:
-        assert 'Disallow: /\n' in response.content
+        assert 'Disallow: /\n' in response.text
