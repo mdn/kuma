@@ -1,13 +1,13 @@
-
-
 import datetime
 import json
+from functools import lru_cache
 from html.parser import HTMLParser
 
 import jinja2
 from django.conf import settings
 from django.contrib.messages.storage.base import LEVEL_TAGS
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.db.models import Q
 from django.template import defaultfilters
 from django.template.loader import get_template
 from django.utils.encoding import force_text
@@ -18,6 +18,7 @@ from pytz import timezone, utc
 from soapbox.models import Message
 from statici18n.templatetags.statici18n import statici18n
 from urlobject import URLObject
+from waffle.models import Flag
 
 from ..urlresolvers import reverse, split_path
 from ..utils import (format_date_time, is_untrusted, is_wiki, order_params,
@@ -194,3 +195,24 @@ def get_locale_localized(locale):
     language = settings.LOCALES[locale].english
 
     return _(language)
+
+
+@library.global_function
+@lru_cache()
+def possible_waffle_flag(*names):
+    """Return true if there is any Waffle flag by this name that MIGHT be
+    true for at least one user."""
+
+    def _any_waffle_flag_chance(name):
+        # This is basically the `Flag.is_active()` method as an ORM statement,
+        # but instead of using a `request` object it assumes *any* request
+        # which means the least common denominator.
+        return Flag.objects.filter(name=name).filter(
+            Q(everyone=True) |
+            Q(percent__gt=0.0) |
+            Q(superusers=True) |
+            Q(staff=True) |
+            Q(authenticated=True) |
+            Q(testing=True)).exists()
+
+    return any(_any_waffle_flag_chance(name) for name in names)

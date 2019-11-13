@@ -9,7 +9,7 @@
 
   {% stylesheet 'home' %}
 
-  {% if waffle.flag('developer_needs') %}
+  {% if possible_waffle_flag('developer_needs') %}
     {% stylesheet 'banners' %}
   {% endif %}
 {% endblock %}

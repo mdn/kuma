@@ -9,6 +9,7 @@ from babel.dates import format_date, format_datetime, format_time
 from django.conf import settings
 from django.test import override_settings, RequestFactory, TestCase
 from soapbox.models import Message
+from waffle.models import Flag
 
 from kuma.core.tests import KumaTestCase
 from kuma.core.urlresolvers import reverse
@@ -18,6 +19,7 @@ from ..exceptions import DateTimeFormatError
 from ..templatetags.jinja_helpers import (assert_function, datetimeformat,
                                           get_soapbox_messages, in_utc,
                                           jsonencode, page_title,
+                                          possible_waffle_flag,
                                           soapbox_messages, yesno)
 
 
@@ -231,3 +233,23 @@ class TestPageTitle(TestCase):
     def test_xss(self):
         pt = page_title('</title><Img src=x onerror=alert(1)>')
         assert pt == '&lt;/title&gt;&lt;Img src=x onerror=alert(1)&gt; | MDN'
+
+
+class TestPossibleWaffleFlag(KumaTestCase):
+
+    def test_happy_path(self):
+        assert not possible_waffle_flag('neverheardof')
+        flag = Flag.objects.create(
+            name='myflag',
+            superusers=False,
+            staff=False,
+            authenticated=False)
+        assert not possible_waffle_flag('myflag')
+        # the jinja helper function is memoized
+        flag.percent = 10.0
+        flag.save()
+        assert not possible_waffle_flag('myflag')
+        # but the memoization is undone if you rename it
+        flag.name = 'newflag'
+        flag.save()
+        assert possible_waffle_flag('newflag')
