@@ -8,6 +8,8 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
+from kuma.core.decorators import shared_cache_control
+
 from .i18n import get_kuma_languages
 
 
@@ -56,3 +58,11 @@ def rate_limited(request, exception):
     response = render(request, '429.html', status=429)
     response['Retry-After'] = '60'
     return response
+
+
+@shared_cache_control(s_maxage=60 * 60 * 24 * 30)
+def humans_txt(request):
+    """We no longer maintain an actual /humans.txt endpoint but to avoid the
+    sad 404 we instead now just encourage people to go and use the GitHub
+    UI to see the contributors."""
+    return HttpResponse("See https://github.com/mdn/kuma/graphs/contributors\n")
