@@ -203,7 +203,7 @@ def possible_waffle_flag(*names):
     """Return true if there is any Waffle flag by this name that MIGHT be
     true for at least one user."""
 
-    def _any_waffle_flag_chance(name):
+    def any_waffle_flag_chance(name):
         # This is basically the `Flag.is_active()` method as an ORM statement,
         # but instead of using a `request` object it assumes *any* request
         # which means the least common denominator.
@@ -215,4 +215,4 @@ def possible_waffle_flag(*names):
             Q(authenticated=True) |
             Q(testing=True)).exists()
 
-    return any(_any_waffle_flag_chance(name) for name in names)
+    return any(any_waffle_flag_chance(name) for name in names)
