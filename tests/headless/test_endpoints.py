@@ -111,7 +111,7 @@ def test_document(site_url, is_indexed):
     resp = request('get', url)
     assert resp.status_code == 200
     assert resp.headers['Content-Type'] == 'text/html; charset=utf-8'
-    meta = META_ROBOTS_RE.search(resp.content)
+    meta = META_ROBOTS_RE.search(resp.text)
     assert meta
     content = meta.group('content')
     if is_indexed:
@@ -127,7 +127,7 @@ def test_user_document(site_url):
     resp = request('get', url)
     assert resp.status_code == 200
     assert resp.headers['Content-Type'] == 'text/html; charset=utf-8'
-    meta = META_ROBOTS_RE.search(resp.content)
+    meta = META_ROBOTS_RE.search(resp.text)
     assert meta
     content = meta.group('content')
     # Pages with legacy MindTouch namespaces like 'User:' never get
@@ -168,7 +168,7 @@ def test_home(site_url, is_indexed):
     resp = request('get', url)
     assert resp.status_code == 200
     assert resp.headers['Content-Type'] == 'text/html; charset=utf-8'
-    meta = META_ROBOTS_RE.search(resp.content)
+    meta = META_ROBOTS_RE.search(resp.text)
     assert meta
     content = meta.group('content')
     if is_indexed:
@@ -248,7 +248,7 @@ LOCALE_SELECTORS = {
 @pytest.mark.nondestructive
 @pytest.mark.parametrize('expected,accept,cookie,param',
                          LOCALE_SELECTORS.values(),
-                         ids=LOCALE_SELECTORS.keys())
+                         ids=list(LOCALE_SELECTORS))
 @pytest.mark.parametrize(
     'slug', ['/search',
              '/events',

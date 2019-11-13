@@ -122,12 +122,16 @@ def assert_valid_url(url, location=None, status_code=requests.codes.moved_perman
             # strip off query for further comparison
             resp_location = resp_location.split('?')[0]
 
-        assert location == unquote(resp_location).decode()
+        assert location == unquote(resp_location)
 
     if resp_headers and not follow_redirects:
+
+        def convert_to_set(header):
+            return frozenset(d.strip() for d in header.lower().split(','))
+
         for name, value in resp_headers.items():
             assert name in resp.headers
-            assert resp.headers[name].lower() == value.lower()
+            assert convert_to_set(resp.headers[name]) == convert_to_set(value)
 
 
 # https://github.com/mozilla/bedrock/blob/master/tests/redirects/base.py
