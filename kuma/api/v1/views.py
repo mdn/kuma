@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.http import HttpResponsePermanentRedirect, JsonResponse
+from django.http import Http404, HttpResponsePermanentRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.utils.translation import activate, ugettext as _
 from django.views.decorators.cache import never_cache
@@ -21,6 +21,7 @@ from kuma.search.filters import (
     SearchQueryBackend,
     TagGroupFilterBackend)
 from kuma.search.search import SearchView
+from kuma.users.models import User
 from kuma.users.templatetags.jinja_helpers import get_avatar_url
 from kuma.wiki.models import Document
 from kuma.wiki.templatetags.jinja_helpers import absolutify
@@ -300,3 +301,22 @@ def bc_signal(request):
         serializer.save()
         return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@never_cache
+@require_GET
+def get_user(request, username):
+    """
+    Returns a JSON response with a small subset of public information if a
+    user with the given username exists, otherwise returns a status code of
+    404. The case of the username is not important, since the collation of
+    the username column of the user table in MySQL is case-insensitive.
+    """
+    fields = ('username', 'title', 'fullname', 'timezone', 'locale')
+    try:
+        user = User.objects.only(*fields).get(username=username)
+    except User.DoesNotExist:
+        raise Http404('No user exists with the username "{}".'.format(username))
+    data = {field: getattr(user, field) for field in fields}
+    data['avatar_url'] = get_avatar_url(user)
+    return JsonResponse(data)

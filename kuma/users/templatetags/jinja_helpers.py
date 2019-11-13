@@ -12,6 +12,8 @@ from jinja2 import contextfunction, escape, Markup
 from kuma.core.templatetags.jinja_helpers import datetimeformat
 from kuma.core.urlresolvers import reverse
 
+from ..models import User
+
 
 @library.global_function
 def get_avatar_url(user, provider='github'):
@@ -168,3 +170,12 @@ def get_primary_email(email_addresses):
     for email in email_addresses:
         if email_addresses[email].get('primary'):
             return email
+
+
+@library.global_function
+def is_username_taken(username):
+    """
+    Returns True if a user with the given username exists (case-insentive),
+    otherwise False.
+    """
+    return User.objects.filter(username=username).exists()
