@@ -157,6 +157,7 @@ shell_plus: up
 
 pythonlint:
 	flake8 kuma docs tests
+	black --check kuma docs tests
 
 jslint:
 	npm run eslint
