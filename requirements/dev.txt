@@ -17,20 +17,28 @@ django-debug-toolbar==1.10.1 \
     --hash=sha256:08e0e43f6c1fd9820af4cbdcd54b5fb80bf83a2e08b2cc952547a671174999b8 \
     --hash=sha256:1dcae28d430522debafde2602b3450eb784410b78e16c29a00448032df2a4c90
 
+# Automated code formatter
+# Code: https://pypi.org/project/black/
+# Docs: https://github.com/psf/black#installation-and-usage
+# Changes: https://github.com/psf/black#change-log
+black==19.10b0 \
+    --hash=sha256:1b30e59be925fafc1ee4565e5e08abef6b03fe455102883820fe5ee2e4734e0b \
+    --hash=sha256:c2edb73a08e9e0e6f65a0e6af18b059b8b1cdd5bef997d7a0b181df93dc81539
+
 # Code quality checker
 # Code: https://github.com/PyCQA/flake8
 # Docs: http://flake8.readthedocs.io/en/latest/
 # Changes: http://flake8.readthedocs.io/en/latest/release-notes/index.html
-flake8==3.7.3 \
-    --hash=sha256:806ec5785af23b4d9f3224a47cdd73714528923fccc95cc13cb1b74ba19c1820 \
-    --hash=sha256:b70f13ee944e536f22becfd716802b1f2fa4ca5ff7aea2c6423567569004f732
+flake8==3.7.9 \
+    --hash=sha256:45681a117ecc81e870cbf1262835ae4af5e7a8b08e40b944a8a6e6b895914cfb \
+    --hash=sha256:49356e766643ad15072a789a20915d3c91dc89fd313ccd71802303fd67e4deca
 
 # Standardize Python import order
 # Code: https://github.com/PyCQA/flake8-import-order
 # Changes: https://github.com/PyCQA/flake8-import-order/blob/master/CHANGELOG.rst
-flake8-import-order==0.18 \
-    --hash=sha256:9be5ca10d791d458eaa833dd6890ab2db37be80384707b0f76286ddd13c16cbf \
-    --hash=sha256:feca2fd0a17611b33b7fa84449939196c2c82764e262486d5c3e143ed77d387b
+flake8-import-order==0.18.1 \
+    --hash=sha256:90a80e46886259b9c396b578d75c749801a41ee969a235e163cfe1be7afd2543 \
+    --hash=sha256:a28dc39545ea4606c1ac3c24e9d05c849c6e5444a50fb7e9cdd430fc94de6e92
 
 # Test plugin: Record line and branch coverage
 pytest-cov==2.4.0 \
