@@ -557,5 +557,11 @@ WEBEXT_URLS = list(flatten(
          'publish/distribute-for-desktop-apps/'),
         ('WebExtensions/Distribution_options/Add-ons_in_the_enterprise',
          'enterprise/'),
+        ('AMO/Blocking_Process',
+         'publish/add-ons-blocking-process/'),
+        ('Third_Party_Library_Usage',
+         'publish/third-party-library-usage/'),
+        ('WebExtensions/What_does_review_rejection_mean_to_users',
+         'publish/what-does-review-rejection-mean-to-users/'),
     )
 ))
