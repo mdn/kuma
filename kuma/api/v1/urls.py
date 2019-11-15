@@ -16,4 +16,7 @@ urlpatterns = [
     url(r'^bc-signal/?$',
         views.bc_signal,
         name='api.v1.bc_signal'),
+    url(r'^users/(?P<username>[^/]+)/?$',
+        views.get_user,
+        name='api.v1.get_user'),
 ]
