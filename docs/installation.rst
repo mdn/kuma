@@ -231,7 +231,7 @@ To enable Google authentication, you'll need to first `create an API project on 
 After that we'll need to `configure credentials for that project`_ with settings like:
 
 * Name: MDN Development for (<username>).
-* Authorized JavaScript origins: http://localhost.org:8000.
+* Authorized JavaScript origins: http://localhost.org:8000
 * Authorized redirect URIs: http://localhost.org:8000/users/google/login/callback/
 
 As an admin user, `add a django-allauth social app`_ for both GitHub and Google do the
