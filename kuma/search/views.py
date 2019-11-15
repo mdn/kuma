@@ -24,20 +24,24 @@ def search(request, *args, **kwargs):
     """
     The search view.
     """
-    try:
-        if is_wiki(request):
-            return wiki_search(request, *args, **kwargs)
+    if is_wiki(request):
+        return wiki_search(request, *args, **kwargs)
 
-        results = search_api(request, *args, **kwargs).data
-        context = {
-            'results': {
-                'results': None if results.get('error') else results
-            }
+    results = search_api(request, *args, **kwargs).data
+    q = results.get('q')
+    has_error = True if results.get('error') else False
+    send_results = True if not has_error and q is None else False
+    send_error = True if not has_error and q else False
+    status = 200 if send_results else 400
+
+    context = {
+        'results': {
+            'results': results if send_results else None,
+            'error': q.get('error') if send_error else None
         }
-    except RequestError:
-        return render(request, 'handlers/400.html', {'reason': 'search_phase_execution_exception'}, status=400)
+    }
 
-    return render(request, 'search/react.html', context)
+    return render(request, 'search/react.html', context, status=status)
 
 
 wiki_search = SearchView.as_view()

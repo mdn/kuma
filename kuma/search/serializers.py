@@ -13,6 +13,13 @@ class SearchQuerySerializer(serializers.Serializer):
     html_attributes = serializers.CharField(required=False)
     kumascript_macros = serializers.CharField(required=False)
 
+    def validate_q(self, value):
+        # Check that \n not in query
+        if '\\n' in value.lower():
+            raise serializers.ValidationError(
+                {'error': 'New Line Character Forbidden'})
+        return value
+
 
 class FilterURLSerializer(serializers.Serializer):
     active = serializers.ReadOnlyField()
