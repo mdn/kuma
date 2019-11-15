@@ -108,7 +108,7 @@ class _NamespacedTaggableManager(_TaggableManager):
         ns_tags = []
         for t in tags:
             if not t.startswith(namespace):
-                t = '%s%s' % (namespace, t)
+                t = f'{namespace}{t}'
             ns_tags.append(t)
         return ns_tags
 

@@ -7,8 +7,9 @@ from .models import Key, KeyAction
 
 
 def history_link(self):
-    url = '%s?%s' % (reverse('admin:authkeys_keyaction_changelist'),
-                     'key__exact=%s' % (self.id))
+    url = (
+        f'{reverse("admin:authkeys_keyaction_changelist")}'
+        f'?key__exact={self.id}')
     count = self.history.count()
     what = 'action' if count == 1 else 'actions'
     return format_html('<a href="{}">{}&nbsp;{}</a>', url, count, what)
@@ -38,8 +39,7 @@ key_link.short_description = 'Key'
 
 def content_object_link(self):
     obj = self.content_object
-    url_key = 'admin:%s_%s_change' % (obj._meta.app_label,
-                                      obj._meta.model_name)
+    url_key = f'admin:{obj._meta.app_label}_{obj._meta.model_name}_change'
     url = reverse(url_key, args=[obj.id])
     return format_html('<a href="{}">{} (#{})</a>', url, self.content_type, obj.pk)
 
