@@ -332,11 +332,11 @@ class SearchViewTests(ElasticTestCase):
         assert data['locale'] == 'fr'
 
 
-@pytest.mark.parametrize(
-    'http_method', ['put', 'post', 'delete', 'options', 'head'])
+@pytest.mark.parametrize('http_method', ('put', 'post', 'delete', 'options'))
 def test_get_user_disallowed_methods(client, wiki_user, http_method):
     """
-    HTTP methods other than GET are not allowed on the api.v1.get_user endpoint.
+    HTTP methods other than GET and HEAD are not allowed on the api.v1.get_user
+    endpoint.
     """
     url = reverse('api.v1.get_user', args=(wiki_user.username,))
     response = getattr(client, http_method)(url)
@@ -345,27 +345,34 @@ def test_get_user_disallowed_methods(client, wiki_user, http_method):
 
 
 @pytest.mark.parametrize('case', ('upper', 'lower'))
-def test_get_existing_user(client, wiki_user, wiki_user_github_account, case):
+@pytest.mark.parametrize('http_method', ('get', 'head'))
+def test_get_existing_user(client, wiki_user, wiki_user_github_account,
+                           http_method, case):
     """
-    Test GET on the api.v1.get_user endpoint for an existing user, and also
-    that the username is case insensitive.
+    Test GET and HEAD on the api.v1.get_user endpoint for an existing user, and
+    also that the username is case insensitive.
     """
     username = getattr(str, case)(wiki_user.username)
     url = reverse('api.v1.get_user', args=(username,))
-    response = client.get(url)
+    response = getattr(client, http_method)(url)
     assert response.status_code == 200
     assert response['content-type'] == 'application/json'
-    data = response.json()
-    assert data['username'] == wiki_user.username
-    assert data['avatar_url'] == wiki_user_github_account.get_avatar_url()
-    for field in ('title', 'fullname', 'timezone', 'locale'):
-        assert field in data
     assert_no_cache_header(response)
+    if http_method == 'get':
+        data = response.json()
+        assert data['username'] == wiki_user.username
+        assert data['avatar_url'] == wiki_user_github_account.get_avatar_url()
+        for field in ('title', 'fullname', 'organization', 'location',
+                      'timezone', 'locale'):
+            assert data[field] == getattr(wiki_user, field)
 
 
-def test_get_nonexisting_user(client, wiki_user, wiki_user_github_account):
-    """Test GET on the api.v1.get_user endpoint for a non-existing user."""
+@pytest.mark.parametrize('http_method', ('get', 'head'))
+def test_get_nonexisting_user(db, client, http_method):
+    """
+    Test GET and HEAD on the api.v1.get_user endpoint for a non-existing user.
+    """
     url = reverse('api.v1.get_user', args=('nonexistent',))
-    response = client.get(url)
+    response = getattr(client, http_method)(url)
     assert response.status_code == 404
     assert_no_cache_header(response)

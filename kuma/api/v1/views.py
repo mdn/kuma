@@ -3,7 +3,7 @@ from django.http import Http404, HttpResponsePermanentRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.utils.translation import activate, ugettext as _
 from django.views.decorators.cache import never_cache
-from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_GET, require_safe
 from ratelimit.decorators import ratelimit
 from rest_framework import serializers, status
 from rest_framework.decorators import api_view
@@ -304,7 +304,7 @@ def bc_signal(request):
 
 
 @never_cache
-@require_GET
+@require_safe
 def get_user(request, username):
     """
     Returns a JSON response with a small subset of public information if a
@@ -312,11 +312,12 @@ def get_user(request, username):
     404. The case of the username is not important, since the collation of
     the username column of the user table in MySQL is case-insensitive.
     """
-    fields = ('username', 'title', 'fullname', 'timezone', 'locale')
+    fields = ('username', 'title', 'fullname', 'organization', 'location',
+              'timezone', 'locale')
     try:
         user = User.objects.only(*fields).get(username=username)
     except User.DoesNotExist:
-        raise Http404('No user exists with the username "{}".'.format(username))
+        raise Http404(f'No user exists with the username "{username}".')
     data = {field: getattr(user, field) for field in fields}
     data['avatar_url'] = get_avatar_url(user)
     return JsonResponse(data)
