@@ -24,8 +24,9 @@ GOOGLE_INFO = (
 )
 ENV_INFO = 'Putting SITE_ID and DOMAIN into .env'
 HOSTS_INFO = (
+    'You should should run "docker-compose restart" now, so that the .env updates are applied\n.'
     'Make sure your hosts file contains these lines:\n'
-    '127.0.0.1 localhost demos localhost.org wiki.localhost.org'
+    '127.0.0.1 localhost demos localhost.org wiki.localhost.org\n'
     '::1             localhost.org wiki.localhost.org'
 )
 
@@ -57,8 +58,11 @@ class Command(BaseCommand):
                 print('\n')
 
                 print(GITHUB_INFO if provider == 'github' else GOOGLE_INFO)
-                client_id = input('Client ID: ').strip()
-                client_secret = input('Client Secret: ').strip()
+
+                while not (client_id := input('Client ID:').strip()):
+                    pass
+                while not (client_secret := input('Client Secret:').strip()):
+                    pass
 
                 social_app, created = SocialApp.objects.update_or_create(
                     provider=provider,
