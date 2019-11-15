@@ -5,11 +5,12 @@ Django language code is lower case, like 'en-us'.
 Kuma language code is mixed case, like 'en-US'.
 """
 
+from functools import lru_cache
 
 from django.apps import apps
 from django.conf import settings
 from django.conf.locale import LANG_INFO
-from django.utils import lru_cache, translation
+from django.utils import translation
 from django.utils.translation.trans_real import (
     check_for_language, get_languages as _django_get_languages,
     language_code_prefix_re, language_code_re, parse_accept_lang_header)
@@ -42,7 +43,7 @@ def get_language():
     return django_language_code_to_kuma(translation.get_language())
 
 
-@lru_cache.lru_cache()
+@lru_cache()
 def get_django_languages():
     """
     Cache of settings.LANGUAGES, with Django keys, for easy lookups by key.
@@ -64,7 +65,7 @@ def get_kuma_languages():
     return _django_get_languages()
 
 
-@lru_cache.lru_cache(maxsize=1000)
+@lru_cache(maxsize=1000)
 def get_supported_language_variant(raw_lang_code):
     """
     Returns the language-code that's listed in supported languages, possibly

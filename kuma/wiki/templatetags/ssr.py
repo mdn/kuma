@@ -2,15 +2,15 @@
 
 import json
 import os
+from functools import lru_cache
 
 import requests
 import requests.exceptions
 from django.conf import settings
-from django.utils import lru_cache
 from django_jinja import library
 
 
-@lru_cache.lru_cache()
+@lru_cache()
 def get_localization_data(locale):
     """
     Read the frontend string catalog for the specified locale, parse

@@ -1,6 +1,7 @@
 import difflib
 import json
 import re
+from functools import lru_cache
 from urllib.parse import urlsplit, urlunparse
 
 import jinja2
@@ -9,7 +10,6 @@ from cssselect.parser import SelectorSyntaxError
 from django.conf import settings
 from django.core.serializers.json import DjangoJSONEncoder
 from django.template import loader
-from django.utils import lru_cache
 from django.utils.html import conditional_escape
 from django.utils.translation import ugettext
 from django_jinja import library
@@ -247,7 +247,7 @@ def wiki_url(path):
 
 
 @library.global_function
-@lru_cache.lru_cache()
+@lru_cache()
 def include_svg(path, title=None, title_id=None):
     """
     Embded an SVG file by path, optionally changing the title,
