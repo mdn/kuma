@@ -232,7 +232,7 @@ After that we'll need to `configure credentials for that project`_ with settings
 
 * Name: MDN Development for (<username>).
 * Authorized JavaScript origins: http://localhost.org:8000.
-* Authorized redirect URIs: http://localhost.org:8000/users/google/login/callback/.
+* Authorized redirect URIs: http://localhost.org:8000/users/google/login/callback/
 
 As an admin user, `add a django-allauth social app`_ for both GitHub and Google do the
 following:
