@@ -480,7 +480,7 @@ class SignupView(BaseSignupView):
 
         # When no username is provided, default to the local-part of the email address
         if form.initial.get('username', '') == '':
-            form.initial['username'] = form.initial.get('email', ('',))[0].split('@')[0]
+            form.initial['username'] = form.initial.get('email', '').split('@')[0]
 
         self.matching_user = None
         initial_username = form.initial.get('username', None)
