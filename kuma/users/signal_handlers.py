@@ -21,10 +21,6 @@ def on_user_signed_up(sender, request, user, **kwargs):
     """
     Signal handler to be called when a given user has signed up.
     """
-    url = reverse('wiki.document', args=['MDN/Getting_started'])
-    msg = _('You have completed the first step of '
-            '<a href="%s">getting started with MDN</a>') % url
-    messages.success(request, msg)
     if switch_is_active('welcome_email'):
         # only send if the user has already verified
         # at least one email address
