@@ -38,7 +38,7 @@ def full_attachment_url(attachment_id, filename):
         'attachment_id': attachment_id,
         'filename': filename,
     })
-    return '%s%s%s' % (settings.PROTOCOL, settings.ATTACHMENT_HOST, path)
+    return f'{settings.PROTOCOL}{settings.ATTACHMENT_HOST}{path}'
 
 
 def convert_to_utc(dt):

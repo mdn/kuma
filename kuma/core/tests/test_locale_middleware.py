@@ -100,7 +100,7 @@ def test_locale_middleware_language_cookie(client, db):
 def test_lang_selector_middleware(path, client):
     '''The LangSelectorMiddleware redirects on the ?lang query first.'''
     client.cookies.load({settings.LANGUAGE_COOKIE_NAME: 'bn'})
-    response = client.get('%s?lang=fr' % path,
+    response = client.get(f'{path}?lang=fr',
                           HTTP_ACCEPT_LANGUAGE='en;q=0.9, fr;q=0.8')
     assert response.status_code == 302
     assert response['Location'] == '/fr/'
@@ -113,7 +113,7 @@ def test_lang_selector_middleware_preserves_query(root_doc, client):
     query = {'lang': root_doc.locale, 'slug': root_doc.slug}
     response = client.get(url, query)
     assert response.status_code == 302
-    expected = '%s?slug=%s' % (url, root_doc.slug)
+    expected = f'{url}?slug={root_doc.slug}'
     assert response['Location'] == expected
     assert_shared_cache_header(response)
 

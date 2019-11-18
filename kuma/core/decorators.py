@@ -67,8 +67,7 @@ def user_access_decorator(redirect_func, redirect_url_func, deny_func=None,
                 # Redirect back here afterwards?
                 if redirect_field:
                     path = quote(request.get_full_path())
-                    redirect_url = '%s?%s=%s' % (
-                        redirect_url, redirect_field, path)
+                    redirect_url = f'{redirect_url}?{redirect_field}={path}'
 
                 return HttpResponseRedirect(redirect_url)
 

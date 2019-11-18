@@ -80,7 +80,7 @@ def paginate(request, queryset, per_page=20):
 
     qsa = urlencode(items)
 
-    paginated.url = '%s?%s' % (base, qsa)
+    paginated.url = f'{base}?{qsa}'
     return paginated
 
 

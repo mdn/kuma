@@ -25,7 +25,7 @@ class IPBan(models.Model):
         self.save()
 
     def __str__(self):
-        return '%s banned on %s' % (self.ip, self.created)
+        return f'{self.ip} banned on {self.created}'
 
 
 @receiver(models.signals.post_save, sender=IPBan)

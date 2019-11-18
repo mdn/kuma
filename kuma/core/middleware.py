@@ -47,10 +47,10 @@ class LangSelectorMiddleware(MiddlewareBase):
         # Check if the requested language is already embedded in URL
         language = get_language_from_request(request)
         script_prefix = get_script_prefix()
-        lang_prefix = '%s%s/' % (script_prefix, language)
+        lang_prefix = f'{script_prefix}{language}/'
         full_path = request.get_full_path()  # Includes querystring
         old_path = urlsplit(full_path).path
-        new_prefix = '%s%s/' % (script_prefix, query_lang)
+        new_prefix = f'{script_prefix}{query_lang}/'
         if full_path.startswith(lang_prefix):
             new_path = old_path.replace(lang_prefix, new_prefix, 1)
         else:
@@ -169,7 +169,7 @@ class LocaleMiddleware(MiddlewareBase):
         if response.status_code == 404 and not language_from_path:
             # Maybe the language code is missing in the URL? Try adding the
             # language prefix and redirecting to that URL.
-            language_path = '/%s%s' % (language, request.path_info)
+            language_path = f'/{language}{request.path_info}'
             path_valid = is_valid_path(language_path, language, urlconf)
             path_needs_slash = (
                 not path_valid and (
@@ -186,7 +186,7 @@ class LocaleMiddleware(MiddlewareBase):
                     request.get_full_path(force_append_slash=path_needs_slash)
                     .replace(
                         script_prefix,
-                        '%s%s/' % (script_prefix, language),
+                        f'{script_prefix}{language}/',
                         1
                     ))
                 # Kuma: Add caching headers to redirect

@@ -24,13 +24,12 @@ def test_auth_key_decorator(user_auth_key, settings, use_valid_key,
     request = HttpRequest()
     request.user = AnonymousUser()
 
-    auth = '%s:%s' % (
-        user_auth_key.key.key if use_valid_key else 'FAKE',
-        user_auth_key.secret if use_valid_secret else 'FAKE'
-    )
+    auth = (
+        f'{user_auth_key.key.key if use_valid_key else "FAKE"}:'
+        f'{user_auth_key.secret if use_valid_secret else "FAKE"}')
 
     b64_auth = base64.encodebytes(auth.encode()).decode()
-    request.META['HTTP_AUTHORIZATION'] = 'Basic %s' % b64_auth
+    request.META['HTTP_AUTHORIZATION'] = f'Basic {b64_auth}'
 
     settings.MAINTENANCE_MODE = maintenance_mode
 

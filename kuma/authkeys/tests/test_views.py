@@ -121,8 +121,7 @@ class KeyViewsTest(RefetchingUserTestCase):
 
         # Iterate through 2 expected pages...
         for qs, offset in (('', 0), ('?page=2', ITEMS_PER_PAGE)):
-            url = '%s%s' % (reverse('authkeys.history', args=(self.key1.pk,)),
-                            qs)
+            url = reverse('authkeys.history', args=(self.key1.pk,)) + qs
             resp = self.client.get(url, HTTP_HOST=settings.WIKI_HOST)
             assert resp.status_code == 200
             assert_no_cache_header(resp)

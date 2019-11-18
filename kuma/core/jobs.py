@@ -14,7 +14,7 @@ class KumaJob(Job):
     def key(self, *args, **kwargs):
         key = super(KumaJob, self).key(*args, **kwargs)
         if self.version is not None:
-            key = '%s#%s' % (key, self.version)
+            key = f'{key}#{self.version}'
         return key
 
 
@@ -46,7 +46,7 @@ class GenerationJob(KumaJob):
         base_key = super(GenerationJob, self).key(*args, **kwargs)
         gen_key = self.generation_key.key()
         gen_key_value = self.generation_key.get()
-        return '%s@%s:%s' % (base_key, gen_key, gen_key_value)
+        return f'{base_key}@{gen_key}:{gen_key_value}'
 
     def invalidate_generation(self):
         """Invalidate the shared generation."""
@@ -66,7 +66,7 @@ class GenerationKeyJob(Job):
     def key(self, *args, **kwargs):
         """Return a key that is derived only from the initial args."""
         generation_args = ':'.join([str(key) for key in self.generation_args])
-        return '%s:%s:generation' % (self.for_class, generation_args)
+        return f'{self.for_class}:{generation_args}:generation'
 
     def fetch(self, *args, **kwargs):
         """Create a unique generation identifier."""

@@ -45,5 +45,6 @@ class Command(BaseCommand):
 
         # Fetch feeds
         new_entry_count = update_feeds(force)
-        log.info("Finished run in %f seconds for %d new entries" % (
-            (time.time() - start), new_entry_count))
+        log.info(
+            f"Finished run in {time.time() - start:.2f} seconds "
+            f"for {new_entry_count} new entries")

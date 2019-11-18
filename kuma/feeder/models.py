@@ -93,7 +93,7 @@ class Entry(models.Model):
         verbose_name_plural = 'Entries'
 
     def __str__(self):
-        return '%s: %s' % (self.feed.shortname, self.guid)
+        return f'{self.feed.shortname}: {self.guid}'
 
     @cached_property
     def parsed(self):
