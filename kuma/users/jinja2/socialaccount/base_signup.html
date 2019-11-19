@@ -128,9 +128,6 @@
 
     {{ providers_media_js() }}
     {% javascript 'react-main' %}
-    <script>
-        if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
-    </script>
     {% for script in scripts %}
     {% javascript script %}
     {% endfor %}
