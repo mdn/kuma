@@ -143,10 +143,7 @@ urlpatterns += [
         name='sitemap'),
     url(r'^(?P<path>sitemaps/.+)$', serve_from_media_root, name='sitemaps'),
 
-    # Serve the humans.txt file.
-    url(r'^humans.txt$',
-        shared_cache_control(s_maxage=DAY)(serve),
-        {'document_root': settings.HUMANSTXT_ROOT, 'path': 'humans.txt'}),
+    url(r'^humans.txt$', core_views.humans_txt, name='humans_txt'),
 
     url(r'^miel$',
         shared_cache_control(s_maxage=WEEK)(render),

@@ -352,9 +352,6 @@ LOCALE_PATHS = (
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = config('MEDIA_ROOT', default=path('media'))
 
-# Absolute path to the directory for the humans.txt file.
-HUMANSTXT_ROOT = MEDIA_ROOT
-
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
@@ -387,7 +384,6 @@ LANGUAGE_URL_IGNORED_PATHS = (
     'users/github/login/callback/',
     'favicon.ico',
     '_kuma_status.json',
-    'humans.txt',
     # Legacy files, circa 2008, served in AWS
     'diagrams',
     'presentations',
@@ -570,7 +566,6 @@ INSTALLED_APPS = (
     'django_mysql',
 
     # other
-    'kuma.humans.apps.HumansConfig',
     'redirect_urls',
 )
 
@@ -1406,9 +1401,6 @@ CELERY_TASK_ROUTES = {
         'queue': 'mdn_purgeable'
     },
     'kuma.core.tasks.delete_old_ip_bans': {
-        'queue': 'mdn_purgeable'
-    },
-    'kuma.humans.tasks.humans_txt': {
         'queue': 'mdn_purgeable'
     },
     'kuma.wiki.tasks.build_index_sitemap': {
