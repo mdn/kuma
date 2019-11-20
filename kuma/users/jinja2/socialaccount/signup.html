@@ -85,7 +85,7 @@
           </fieldset>
         </li>
 
-        <li class="{{ 'error' if form.email.errors or form.other_email.errors }}">
+        <li class="email-signup {{ 'error' if form.email.errors or form.other_email.errors }}">
           <fieldset>
             <legend>{{ _('Email Address') }}</legend>
             <ul class="errorlist">
@@ -120,6 +120,15 @@
             </p>
           </fieldset>
         </li>
+
+        {% if settings.ENABLE_NEWSLETTER_SIGNUP %}
+          <li class="newsletter-signup">
+            <label for="newsletter-signup">
+              <input type="checkbox" id="newsletter-signup" name="newsletter" value="true" />
+              {{ _('Get updates on what’s new with MDN to your inbox.') }}
+            </label>
+          </li>
+        {% endif %}
         
         <li>
           <ul class="errorlist">

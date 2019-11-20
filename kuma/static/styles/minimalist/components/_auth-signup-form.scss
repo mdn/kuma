@@ -24,6 +24,7 @@
 
     label {
         @include label;
+        font-weight: normal;
     }
 
     input[type='text'],
@@ -47,11 +48,11 @@
         @include set-font-size($tiny-font-size);
     }
 
-    .email-choices-container {
-        label {
-            font-weight: normal;
-        }
+    .email-signup {
+        margin-bottom: 30px;
+    }
 
+    .email-choices-container {
         li {
             margin: 5px 0;
         }
@@ -59,7 +60,7 @@
 
     .terms-privacy {
         display: block;
-        margin: 20px 0 40px;
+        margin: 8px 0 40px;
         font-weight: normal;
     }
 
