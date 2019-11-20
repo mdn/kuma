@@ -1,4 +1,5 @@
-from django.core.paginator import EmptyPage, Page, PageNotAnInteger, Paginator
+from django.core.paginator import (
+    EmptyPage, InvalidPage, Page, PageNotAnInteger, Paginator)
 from django.utils.functional import cached_property
 
 
@@ -19,7 +20,7 @@ class SearchPaginator(Paginator):
         """
         Validates the given 1-based page number.
 
-        This class overrides the default behavior and ignores the upper bound.
+        We also check that the number isn't too large.
         """
         try:
             number = int(number)
@@ -27,6 +28,19 @@ class SearchPaginator(Paginator):
             raise PageNotAnInteger('That page number is not an integer')
         if number < 1:
             raise EmptyPage('That page number is less than 1')
+
+        if number >= 1000:
+            # Anything >=1,000 will result in a hard error in
+            # Elasticsearch which would happen before we even get a chance
+            # to validate that the range is too big. The error you would
+            # get from Elasticsearch 6.x is something like this:
+            #
+            #     Result window is too large, from + size must be less
+            #     than or equal to: [10000] but was [11000].
+            #
+            # See https://github.com/mdn/kuma/issues/6092
+            raise InvalidPage('Page number too large')
+
         return number
 
     def page(self, number):

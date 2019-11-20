@@ -162,6 +162,14 @@ class ViewTests(ElasticTestCase):
         response = view(request)
         assert response.data['pages'] == 2
 
+    def test_paginate_too_large(self):
+        response = self.client.get('/en-US/search', {'page': 1000},
+                                   HTTP_HOST=settings.WIKI_HOST)
+        # It's a bit odd that an invalid query string parameter
+        # causes a 404 Not Found but that's how the paginator for
+        # rest_framework works.
+        assert response.status_code == 404
+
     def test_tokenize_camelcase_titles(self):
         for q in ('get', 'element', 'by', 'id'):
             response = self.client.get('/en-US/search', {'q': q},
