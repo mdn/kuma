@@ -1792,6 +1792,9 @@ FOUNDATION_CALLOUT = config('FOUNDATION_CALLOUT', False, cast=bool)
 NEWSLETTER = True
 NEWSLETTER_ARTICLE = True
 
+# Newsletter Signup Settings
+ENABLE_NEWSLETTER_SIGNUP = config('ENABLE_NEWSLETTER_SIGNUP', default=False, cast=bool)
+
 # Content Experiments
 # Must be kept up to date with PIPELINE_JS setting and the JS client-side
 #  configuration. The 'id' should be a key in PIPELINE_JS, that loads
