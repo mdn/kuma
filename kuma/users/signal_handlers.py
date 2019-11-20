@@ -1,14 +1,11 @@
 from allauth.account.signals import email_confirmed, user_signed_up
 from allauth.socialaccount.signals import social_account_removed
-from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from django.db.models.signals import post_delete, post_save, pre_delete
 from django.dispatch import receiver
-from django.utils.translation import ugettext_lazy as _
 from waffle import switch_is_active
 
-from kuma.core.urlresolvers import reverse
 from kuma.payments.utils import cancel_stripe_customer_subscription
 from kuma.wiki.jobs import DocumentContributorsJob
 
