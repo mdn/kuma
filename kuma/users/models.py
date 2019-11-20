@@ -13,6 +13,7 @@ from django.utils.functional import cached_property
 from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import ugettext_lazy as _
 
+import kuma.users.basket as basket
 from kuma.core.managers import NamespacedTaggableManager
 from kuma.core.urlresolvers import reverse
 
@@ -99,6 +100,9 @@ class User(AbstractUser):
         verbose_name=_('IRC nickname'),
         max_length=255,
         blank=True,
+    )
+    is_subscribed = models.BooleanField(
+        default=False
     )
 
     tags = NamespacedTaggableManager(verbose_name=_('Tags'), blank=True)
@@ -230,3 +234,9 @@ class User(AbstractUser):
         link = reverse('users.recover',
                        kwargs={'token': token, 'uidb64': uidb64})
         return link
+
+    def save(self, *args, **kwargs):
+        old = type(self).objects.get(pk=self.pk) if self.pk else None
+        super().save(*args, **kwargs)
+        if self.is_subscribed and (old is None or not old.is_subscribed):
+            basket.subscribe(self)
