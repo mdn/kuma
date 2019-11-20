@@ -3,7 +3,6 @@ from unittest import mock
 from allauth.account.models import EmailAddress, EmailConfirmationHMAC
 from allauth.account.signals import user_signed_up
 from django.conf import settings
-from django.contrib import messages as django_messages
 from django.core import mail
 from django.test import RequestFactory, TestCase
 from waffle.testutils import override_switch
@@ -89,21 +88,6 @@ class TestWelcomeEmails(UserTestCase):
         expected_to = [testuser.email]
         self.assertEqual(expected_to, welcome_email.to)
         self.assertTrue('utm_campaign=welcome' in welcome_email.body)
-
-    def test_signup_getting_started_message(self):
-        testuser = user(username='welcome', email='welcome@tester.com',
-                        password='welcome', save=True)
-        request = self.setup_request_for_messages()
-        messages = self.get_messages(request)
-        self.assertEqual(len(messages), 0)
-
-        user_signed_up.send(sender=testuser.__class__, request=request,
-                            user=testuser)
-
-        queued_messages = list(messages)
-        self.assertEqual(len(queued_messages), 1)
-        self.assertEqual(django_messages.SUCCESS, queued_messages[0].level)
-        self.assertTrue('getting started' in queued_messages[0].message)
 
     @override_switch('welcome_email', True)
     @call_on_commit_immediately
