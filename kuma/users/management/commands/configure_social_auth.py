@@ -7,14 +7,14 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.management.base import BaseCommand
 
-LOCALHOST = 'localhost:8000'
+LOCALHOST = 'localhost.org:8000'
 DOMAIN = 'localhost.org'
 
 OVERWRITE_PROMPT = 'There\'s already a SocialApp for %s, if you want to overwrite it type "yes":'
 GITHUB_INFO = (
     'Visit https://github.com/settings/developers and click "New OAuth App"\n'
-    'Set "Homepage URL" to "http://mdn.localhost:8000/" and Authorization callback URL to ' +
-    '"http://mdn.localhost:8000/users/github/login/callback/" respectively'
+    'Set "Homepage URL" to "http://localhost.org:8000/" and Authorization callback URL to ' +
+    '"http://localhost.org:8000/users/github/login/callback/" respectively'
 )
 GOOGLE_INFO = (
     'Visit https://console.developers.google.com/projectcreate and create a new project\n'
