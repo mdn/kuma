@@ -132,53 +132,6 @@
 
             mdn.analytics.send(data);
         },
-        /*
-            Track all outgoing links
-        */
-        trackOutboundLinks: function(target) {
-            target = target || document.body;
-
-            target.addEventListener('click', function(e) {
-                var link = e.target.closest('a');
-                if (!link) {
-                    // If the click was not on a link there is nothing to track
-                    return;
-                }
-
-                // bug 1222864 - prevent links to data: uris
-                if (link.href.toLowerCase().indexOf('data') === 0) {
-                    e.preventDefault();
-                    analytics.trackError('XSS Attempt', 'data href');
-                    return;
-                }
-
-                // If we explicitly say not to track something, don't
-                if (link.classList.contains('no-track')) {
-                    return;
-                }
-
-                var host = link.hostname;
-                if(host && host !== location.hostname) {
-                    var newTab = (link.target === '_blank' || e.metaKey || e.ctrlKey);
-                    var href = link.href;
-                    var callback = function() {
-                        win.location = href;
-                    };
-                    var data = {
-                        category: 'Outbound Links',
-                        action: href
-                    };
-
-                    if(newTab) {
-                        analytics.trackEvent(data);
-                    } else {
-                        e.preventDefault();
-                        data.hitCallback = callback;
-                        analytics.trackEvent(data, callback);
-                    }
-                }
-            });
-        },
 
         trackLink: function(event, url, data) {
             // ctrl or cmd click or context menu
@@ -251,4 +204,56 @@
             });
         }
     };
+
+    /*
+        Track all outgoing links
+    */
+    function trackOutboundLinks() {
+        document.body.addEventListener('click', function(e) {
+
+            var link = e.target.closest('a');
+            if (!link) {
+                // If the click was not on a link there is nothing to track
+                return;
+            }
+
+            // bug 1222864 - prevent links to data: uris
+            if (link.href.toLowerCase().indexOf('data') === 0) {
+                e.preventDefault();
+                analytics.trackError('XSS Attempt', 'data href');
+                return;
+            }
+
+            // If we explicitly say not to track something, don't
+            if (link.classList.contains('no-track')) {
+                return;
+            }
+
+            var host = link.hostname;
+            if(host && host !== location.hostname) {
+                var newTab = (link.target === '_blank' || e.metaKey || e.ctrlKey);
+                var href = link.href;
+                var callback = function() {
+                    win.location = href;
+                };
+                var data = {
+                    category: 'Outbound Links',
+                    action: href
+                };
+
+                if(newTab) {
+                    analytics.trackEvent(data);
+                } else {
+                    e.preventDefault();
+                    data.hitCallback = callback;
+                    analytics.trackEvent(data, callback);
+                }
+            }
+        });
+    }
+
+
+    /* Some things we always trigger. */
+    trackOutboundLinks();
+
 })(window, document);

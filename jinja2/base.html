@@ -169,9 +169,6 @@
     {{ providers_media_js() }}
     <script src="{{ statici18n(request.LANGUAGE_CODE) }}"></script>
     {% javascript 'main' %}
-    <script>
-    if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
-  </script>
     {% for script in scripts %}
       {% javascript script %}
     {% endfor %}

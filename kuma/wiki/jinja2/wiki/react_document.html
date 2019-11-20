@@ -96,10 +96,6 @@
 
   <!-- site js -->
   {% javascript 'react-main' %}
-  <script>
-    if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
-  </script>
-
   {% if waffle.flag('bc-signals') %}
     {% javascript "bcd-signal" %}
   {% endif %}
