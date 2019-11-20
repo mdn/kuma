@@ -592,7 +592,7 @@ class SignupView(BaseSignupView):
     def get_context_data(self, **kwargs):
         context = super(SignupView, self).get_context_data(**kwargs)
 
-        # For GitHub users, find matching legacy Persona social accounts
+        # For GitHub/Google users, find matching legacy Persona social accounts
         assert self.sociallogin.account.provider in ('github', 'google')
         or_query = []
         for email_address in self.email_addresses.values():
@@ -601,6 +601,7 @@ class SignupView(BaseSignupView):
         if or_query:
             reduced_or_query = reduce(operator.or_, or_query)
             matching_accounts = (SocialAccount.objects
+                                              .filter(provider='persona')
                                               .filter(reduced_or_query))
         else:
             matching_accounts = SocialAccount.objects.none()
