@@ -101,7 +101,7 @@ class User(AbstractUser):
         max_length=255,
         blank=True,
     )
-    is_subscribed = models.BooleanField(
+    is_in_salesforce = models.BooleanField(
         default=False
     )
 
@@ -236,7 +236,11 @@ class User(AbstractUser):
         return link
 
     def save(self, *args, **kwargs):
-        old = type(self).objects.get(pk=self.pk) if self.pk else None
+        is_already_in_salesforce = (
+            User.objects.values_list('is_in_salesforce', flat=True).get(pk=self.pk)
+            if self.pk
+            else False
+        )
         super().save(*args, **kwargs)
-        if self.is_subscribed and (old is None or not old.is_subscribed):
-            basket.subscribe(self)
+        if self.is_in_salesforce and not is_already_in_salesforce:
+            basket.subscribe.delay(self)

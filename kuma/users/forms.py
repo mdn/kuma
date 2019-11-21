@@ -123,7 +123,7 @@ class UserEditForm(forms.ModelForm):
             'data-fa-icon': 'icon-discourse',
         }),
     )
-    is_subscribed = forms.BooleanField(
+    is_in_salesforce = forms.BooleanField(
         label=_("Keep me updated with what's new on MDN"),
         required=False,
     )
@@ -134,7 +134,7 @@ class UserEditForm(forms.ModelForm):
                   'locale', 'timezone', 'irc_nickname', 'interests',
                   'twitter_url', 'github_url', 'is_github_url_public',
                   'stackoverflow_url', 'linkedin_url', 'mozillians_url',
-                  'facebook_url', 'discourse_url', 'username', 'is_subscribed')
+                  'facebook_url', 'discourse_url', 'username', 'is_in_salesforce')
 
     def __init__(self, *args, **kwargs):
         super(UserEditForm, self).__init__(*args, **kwargs)

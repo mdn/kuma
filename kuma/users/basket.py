@@ -1,13 +1,12 @@
-import logging
-
 import requests
+from celery import task
 
 BASKET_SUBSCRIPTION_URL = 'https://basket.mozilla.org/news/subscribe/'
 
-logger = logging.getLogger('kuma.basket')
 
-
+@task
 def subscribe(user):
+    logger = subscribe.get_logger()
     data = {
         'newsletters': 'app-dev',
         'format': 'H',
@@ -15,8 +14,5 @@ def subscribe(user):
         'lang': user.locale,
         'first_name': user.username
     }
-    try:
-        requests.post(BASKET_SUBSCRIPTION_URL, data=data)
-        logger.info('Successfully subscribed user {} to newsletter', user.email)
-    except requests.exceptions.RequestException as e:
-        logger.error('Error while subscribing user {} to newsletter: {}', user.email, e)
+    requests.post(BASKET_SUBSCRIPTION_URL, data=data)
+    logger.info(f'Successfully subscribed user {user.email} to newsletter')
