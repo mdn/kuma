@@ -16,6 +16,11 @@ from kuma.wiki.models import Document, Revision
 
 
 @pytest.fixture(autouse=True)
+def clear_cache():
+    caches["default"].clear()
+
+
+@pytest.fixture(autouse=True)
 def set_default_language():
     activate('en-US')
 

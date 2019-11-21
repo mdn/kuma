@@ -2,12 +2,14 @@
 
 import pytest
 from waffle.models import Flag, Sample, Switch
+from waffle.testutils import override_flag
 
 from kuma.api.v1.views import (document_api_data, get_content_based_redirect,
                                get_s3_key)
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.search.tests import ElasticTestCase
+from kuma.wiki.models import BCSignal
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
@@ -376,3 +378,89 @@ def test_get_nonexisting_user(db, client, http_method):
     response = getattr(client, http_method)(url)
     assert response.status_code == 404
     assert_no_cache_header(response)
+
+
+@pytest.mark.django_db
+def test_bc_signal_happy_path(client, root_doc):
+    with override_flag('bc-signals', True):
+        url = reverse('api.v1.bc_signal')
+        response = client.post(url, {
+            'slug': root_doc.slug,
+            'locale': root_doc.locale,
+            'explanation': 'My explanation',
+            'feature': 'Feet',
+            'browsers': 'One,Two',
+            'supporting_material': 'Extra things',
+        })
+        assert response.status_code == 201
+
+    bc_signal = BCSignal.objects.all().first()
+    assert bc_signal.document == root_doc
+    assert bc_signal.browsers == 'One,Two'
+    assert bc_signal.explanation == 'My explanation'
+    assert bc_signal.feature == 'Feet'
+    assert bc_signal.supporting_material == 'Extra things'
+
+
+@pytest.mark.django_db
+def test_bc_signal_waffle_flag(client):
+    with override_flag('bc-signals', False):
+        url = reverse('api.v1.bc_signal')
+        response = client.post(url)
+        assert response.status_code == 404
+
+
+@pytest.mark.django_db
+def test_bc_signal_explanation_validation(client, root_doc):
+    with override_flag('bc-signals', True):
+        url = reverse('api.v1.bc_signal')
+        data = {
+            'slug': root_doc.slug,
+            'locale': root_doc.locale,
+            'explanation': '',
+            'feature': 'Feet',
+            'browsers': 'One,Two',
+            'supporting_material': 'Extra things',
+        }
+        response = client.post(url, data)
+        assert response.status_code == 400
+        assert response.json()['explanation']
+
+        data['explanation'] = 'tooshort'
+        response = client.post(url, data)
+        assert response.json()['explanation']
+
+        data['explanation'] = 'x' * 1001
+        response = client.post(url, data)
+        assert response.status_code == 400
+        assert response.json()['explanation']
+
+
+@pytest.mark.django_db
+def test_bc_signal_document_validation(client):
+    with override_flag('bc-signals', True):
+        url = reverse('api.v1.bc_signal')
+        response = client.post(url, {
+            'slug': 'xxx',
+            'locale': 'yyy',
+            'explanation': 'My explanation',
+            'feature': 'Feet',
+            'browsers': 'One,Two',
+            'supporting_material': 'Extra things',
+        })
+        assert response.status_code == 400
+        assert response.json() == ['Document not found']
+
+
+@pytest.mark.django_db
+def test_bc_signal_http_method(client):
+    with override_flag('bc-signals', True):
+        url = reverse('api.v1.bc_signal')
+        response = client.get(url)
+        assert response.status_code == 405
+
+        response = client.head(url)
+        assert response.status_code == 405
+
+        response = client.put(url)
+        assert response.status_code == 405
