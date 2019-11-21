@@ -24,6 +24,7 @@ class AttachmentRevisionForm(forms.ModelForm):
         fields = ('file', 'title', 'description', 'comment')
 
     def __init__(self, *args, **kwargs):
+        self.allow_svg_uploads = kwargs.pop('allow_svg_uploads', False)
         super(AttachmentRevisionForm, self).__init__(*args, **kwargs)
         self.mime_type = None
 
@@ -39,11 +40,21 @@ class AttachmentRevisionForm(forms.ModelForm):
         nulls = EMPTY_VALUES + (AttachmentRevision.DEFAULT_MIME_TYPE,)
         submitted_mime_type = cleaned_data.get('mime_type')
 
-        if (submitted_mime_type in nulls) and ('file' in cleaned_data):
+        if submitted_mime_type in nulls and 'file' in cleaned_data:
             self.mime_type = self.mime_type_from_file(cleaned_data['file'])
-            allowed_mime_types = config.WIKI_ATTACHMENT_ALLOWED_TYPES.split()
-            if self.mime_type not in allowed_mime_types:
-                raise forms.ValidationError(MIME_TYPE_INVALID, code='invalid')
+            if self.mime_type.startswith('image/svg') and self.allow_svg_uploads:
+                # The `magic.Magic()` will, for unknown reasons, sometimes
+                # think an SVG image's mime type is `image/svg` which not
+                # a valid mime type actually.
+                # See https://www.iana.org/assignments/media-types/media-types.xhtml#image
+                # So correct that.
+                if self.mime_type == 'image/svg':
+                    self.mime_type = 'image/svg+xml'
+            else:
+                allowed_mime_types = config.WIKI_ATTACHMENT_ALLOWED_TYPES.split()
+                if self.mime_type not in allowed_mime_types:
+                    raise forms.ValidationError(
+                        MIME_TYPE_INVALID, code='invalid')
 
         return cleaned_data
 

@@ -125,6 +125,47 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
         self.assertContains(response, 'Files of this type are not permitted.')
         _file.close()
 
+    def test_svg_mime_type_staff_override(self):
+        """
+        Staff users are allowed to upload SVG images. Only.
+        """
+        _file = make_test_file(
+            content='<svg viewBox="0 0 841.9 595.3"></svg>', suffix='.svg')
+        post_data = {
+            'title': 'Test Svg upload',
+            'description': 'Mime type only allowed for some users.',
+            'comment': 'Initial upload',
+            'file': _file,
+        }
+        # Remember, self.client use logged in as user 'admin'
+        response = self.client.post(self.files_url, data=post_data,
+                                    HTTP_HOST=settings.WIKI_HOST)
+        assert response.status_code == 302  # means it worked
+        assert_no_cache_header(response)
+        _file.close()
+        attachment_revision, = AttachmentRevision.objects.all()
+        assert attachment_revision.mime_type == 'image/svg+xml'
+
+    def test_svg_mime_type_non_staff(self):
+        """
+        Regular users are not allowed to upload SVG images.
+        """
+        _file = make_test_file(
+            content='<svg viewBox="0 0 841.9 595.3"></svg>', suffix='.svg')
+        post_data = {
+            'title': 'Test Svg upload',
+            'description': 'Mime type only allowed for some users.',
+            'comment': 'Initial upload',
+            'file': _file,
+        }
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.post(self.files_url, data=post_data,
+                                    HTTP_HOST=settings.WIKI_HOST)
+        assert response.status_code == 200  # means it didn't upload
+        assert_no_cache_header(response)
+        self.assertContains(response, 'Files of this type are not permitted.')
+        _file.close()
+
     def test_intermediate(self):
         """
         Test that the intermediate DocumentAttachment gets created

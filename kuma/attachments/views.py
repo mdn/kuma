@@ -84,7 +84,14 @@ def edit_attachment(request, document_slug, document_locale):
     if not allow_add_attachment_by(request.user):
         raise PermissionDenied
 
-    form = AttachmentRevisionForm(data=request.POST, files=request.FILES)
+    form = AttachmentRevisionForm(
+        data=request.POST,
+        files=request.FILES,
+        # Only staff users are allowed to upload SVG files because they
+        # can contain embedded inline scripts. But for staff users,
+        # we'll make an exception.
+        allow_svg_uploads=request.user.is_staff
+    )
     if form.is_valid():
         revision = form.save(commit=False)
         revision.creator = request.user
