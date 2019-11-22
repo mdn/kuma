@@ -482,6 +482,15 @@ def user_delete(request, username):
         user.location = ''
         user.bio = ''
         user.irc_nickname = ''
+        user.website_url = ''
+        user.github_url = ''
+        user.mozillians_url = ''
+        user.twitter_url = ''
+        user.linkedin_url = ''
+        user.facebook_url = ''
+        user.stackoverflow_url = ''
+        user.discourse_url = ''
+        user.stripe_customer_id = ''
         user.save()
 
         user.socialaccount_set.all().delete()

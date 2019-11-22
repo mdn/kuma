@@ -1413,6 +1413,15 @@ def test_delete_user_keep_attributions(db, user_client, wiki_user):
         location='Earth',
         bio='Doing stuff',
         irc_nickname='pb',
+        website_url='https://www.peterbe.com',
+        github_url='github/peterbe',
+        mozillians_url='mozillians/peterbe',
+        twitter_url='twitter/peterbe',
+        linkedin_url='linkedin/peterbe',
+        facebook_url='facebook/peterbe',
+        stackoverflow_url='stackoverflow/peterbe',
+        discourse_url='discourse/peterbe',
+        stripe_customer_id='123456',
     )
 
     document = create_document(save=True)
@@ -1462,6 +1471,16 @@ def test_delete_user_keep_attributions(db, user_client, wiki_user):
     assert wiki_user.location == ''
     assert wiki_user.bio == ''
     assert wiki_user.irc_nickname == ''
+    assert wiki_user.website_url == ''
+    assert wiki_user.github_url == ''
+    assert wiki_user.mozillians_url == ''
+    assert wiki_user.twitter_url == ''
+    assert wiki_user.linkedin_url == ''
+    assert wiki_user.facebook_url == ''
+    assert wiki_user.stackoverflow_url == ''
+    assert wiki_user.discourse_url == ''
+    assert wiki_user.stripe_customer_id == ''
+
     assert not SocialAccount.objects.filter(user=wiki_user).exists()
 
     # The user_client should now become "invalid" since its session
