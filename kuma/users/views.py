@@ -41,8 +41,8 @@ from kuma.wiki.models import (Document, DocumentDeletionLog, Revision,
 
 from .forms import (
     UserBanForm,
-    UserEditForm,
     UserDeleteForm,
+    UserEditForm,
     UserRecoveryEmailForm)
 from .models import User, UserBan
 # we have to import the signup form here due to allauth's odd form subclassing
