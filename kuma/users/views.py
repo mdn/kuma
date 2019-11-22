@@ -490,6 +490,7 @@ def user_delete(request, username):
         request.session.clear()
 
     def delete_user():
+        user.revisionakismetsubmission_set.all().delete()
         user.delete()
 
     revisions = Revision.objects.filter(creator=request.user)

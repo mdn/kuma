@@ -1330,6 +1330,18 @@ def test_delete_user_with_no_revisions(db, user_client, wiki_user):
 
 
 def test_delete_user_donate_attributions(db, user_client, wiki_user):
+
+    # Pretend the user logged in with GitHub
+    SocialAccount.objects.create(
+        user=wiki_user,
+        provider='github',
+        extra_data=dict(
+            email=wiki_user.email,
+            avatar_url='https://avatars0.githubusercontent.com/yada/yada',
+            html_url="https://github.com/{}".format(wiki_user.username)
+        )
+    )
+
     document = create_document(save=True)
     revision = create_revision(
         title='My First And Only Revision',
@@ -1337,6 +1349,9 @@ def test_delete_user_donate_attributions(db, user_client, wiki_user):
         creator=wiki_user,
         save=True)
     assert Revision.objects.filter(creator=wiki_user).exists()
+
+    RevisionAkismetSubmission.objects.create(
+        revision=revision, sender=wiki_user)
 
     attachment_revision = AttachmentRevision(
         attachment=Attachment.objects.create(title='test attachment'),
