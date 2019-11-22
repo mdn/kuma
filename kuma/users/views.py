@@ -20,7 +20,8 @@ from django.core.mail import send_mail
 from django.core.validators import validate_email, ValidationError
 from django.db import IntegrityError, transaction
 from django.db.models import Q
-from django.http import HttpResponseBadRequest, HttpResponseForbidden
+from django.http import (
+    HttpResponseBadRequest, HttpResponseForbidden, HttpResponseRedirect)
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_text
@@ -38,7 +39,11 @@ from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import (Document, DocumentDeletionLog, Revision,
                               RevisionAkismetSubmission)
 
-from .forms import UserBanForm, UserEditForm, UserRecoveryEmailForm
+from .forms import (
+    UserBanForm,
+    UserEditForm,
+    UserDeleteForm,
+    UserRecoveryEmailForm)
 from .models import User, UserBan
 # we have to import the signup form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
@@ -450,14 +455,77 @@ def user_edit(request, username):
 
 
 @redirect_in_maintenance_mode
+@login_required
 def user_delete(request, username):
-
-    edit_user = get_object_or_404(User, username=username)
-
-    if not edit_user.allows_editing_by(request.user):
+    user = get_object_or_404(User, username=username)
+    if user != request.user:
         return HttpResponseForbidden()
 
-    return render(request, 'users/user_delete.html')
+    def donate_attributions():
+        anon, _ = User.objects.get_or_create(username='Anonymous')
+        user.created_revisions.update(creator=anon)
+        user.created_attachment_revisions.update(creator=anon)
+
+    def scrub_user():
+        # From the User abstract class
+        user.first_name = ''
+        user.last_name = ''
+        user.email = ''
+
+        # All User attributes
+        user.timezone = ''
+        user.locale = ''
+        user.homepage = ''
+        user.title = ''
+        user.fullname = ''
+        user.organization = ''
+        user.location = ''
+        user.bio = ''
+        user.irc_nickname = ''
+        user.save()
+
+        user.socialaccount_set.all().delete()
+
+    def force_logout():
+        request.session.clear()
+
+    def delete_user():
+        user.delete()
+
+    revisions = Revision.objects.filter(creator=request.user)
+    context = {}
+    if request.method == 'POST':
+
+        # Double-check that you only delete your own account.
+        if request.user.username != username:
+            return HttpResponseForbidden()
+
+        # If the user has no revisions there's not choices on the form.
+        if revisions.exists():
+            form = UserDeleteForm(request.POST)
+            if form.is_valid():
+                with transaction.atomic():
+                    if form.cleaned_data['attributions'] == 'donate':
+                        donate_attributions()
+                        delete_user()
+                    elif form.cleaned_data['attributions'] == 'keep':
+                        scrub_user()
+                        force_logout()
+                    else:
+                        raise NotImplementedError(
+                            form.cleaned_data['attributions'])
+                    return HttpResponseRedirect('/')
+
+        else:
+            delete_user()
+            return HttpResponseRedirect('/')
+    else:
+        form = UserDeleteForm()
+
+    context['form'] = form
+    context['revisions'] = revisions
+
+    return render(request, 'users/user_delete.html', context)
 
 
 class SignupView(BaseSignupView):
