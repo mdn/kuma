@@ -6,7 +6,7 @@ from .fields import SiteURLField
 
 
 class SearchQuerySerializer(serializers.Serializer):
-    q = serializers.CharField(required=False)
+    q = serializers.CharField(required=False, max_length=1024)
     highlight = serializers.BooleanField(required=False, default=True)
     # Advanced search query paramenters.
     css_classnames = serializers.CharField(required=False)
@@ -17,7 +17,7 @@ class SearchQuerySerializer(serializers.Serializer):
         # Check that \n not in query
         if '\\n' in value.lower():
             raise serializers.ValidationError(
-                {'error': 'New Line Character Forbidden'})
+                'Search term must not contain new line')
         return value
 
 

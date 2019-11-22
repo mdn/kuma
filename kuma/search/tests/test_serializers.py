@@ -10,7 +10,7 @@ from . import ElasticTestCase
 from ..fields import SearchQueryField, SiteURLField
 from ..models import Filter, FilterGroup
 from ..serializers import (DocumentSerializer, FilterSerializer,
-                           FilterWithGroupSerializer)
+                           FilterWithGroupSerializer, SearchQuerySerializer)
 
 
 class SerializerTests(ElasticTestCase):
@@ -58,6 +58,25 @@ class SerializerTests(ElasticTestCase):
         dict_data = doc_serializer.data
         assert isinstance(dict_data, dict)
         assert dict_data['id'] == result[0].id
+
+    def test_search_query_serializer(self):
+        search_serializer = SearchQuerySerializer(
+            data={'q': 'test'}
+        )
+        self.assertTrue(search_serializer.is_valid())
+        assert {} == search_serializer.errors
+
+        search_serializer = SearchQuerySerializer(
+            data={'q': 'test\\nsomething'}
+        )
+        self.assertFalse(search_serializer.is_valid())
+        self.assertEqual(set(search_serializer.errors.keys()), set(['q']))
+
+        search_serializer = SearchQuerySerializer(
+            data={'q': 't' * 1025}
+        )
+        self.assertFalse(search_serializer.is_valid())
+        self.assertEqual(set(search_serializer.errors.keys()), set(['q']))
 
     def test_excerpt(self):
         search = WikiDocumentType.search()

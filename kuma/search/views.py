@@ -3,7 +3,6 @@ from django.urls import reverse_lazy
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET
 from django.views.generic import RedirectView
-from elasticsearch.exceptions import RequestError
 from ratelimit.decorators import ratelimit
 
 from kuma.api.v1.views import search as search_api
@@ -28,16 +27,19 @@ def search(request, *args, **kwargs):
         return wiki_search(request, *args, **kwargs)
 
     results = search_api(request, *args, **kwargs).data
-    q = results.get('q')
-    has_error = True if results.get('error') else False
-    send_results = True if not has_error and q is None else False
-    send_error = True if not has_error and q else False
-    status = 200 if send_results else 400
+
+    # Determine if there were validation errors
+    error = results.get('error') or results.get('q')
+    # Set flag to send results if no errors
+    send_results = True if error is None else False
+    # If q is returned in the data, there was a validation error for that field,
+    # so return 400 status.
+    status = 200 if results.get('q') is None else 400
 
     context = {
         'results': {
             'results': results if send_results else None,
-            'error': q.get('error') if send_error else None
+            'error': error
         }
     }
 
