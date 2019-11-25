@@ -21,9 +21,9 @@ django-debug-toolbar==1.10.1 \
 # Code: https://github.com/PyCQA/flake8
 # Docs: http://flake8.readthedocs.io/en/latest/
 # Changes: http://flake8.readthedocs.io/en/latest/release-notes/index.html
-flake8==3.7.3 \
-    --hash=sha256:806ec5785af23b4d9f3224a47cdd73714528923fccc95cc13cb1b74ba19c1820 \
-    --hash=sha256:b70f13ee944e536f22becfd716802b1f2fa4ca5ff7aea2c6423567569004f732
+flake8==3.7.9 \
+    --hash=sha256:45681a117ecc81e870cbf1262835ae4af5e7a8b08e40b944a8a6e6b895914cfb \
+    --hash=sha256:49356e766643ad15072a789a20915d3c91dc89fd313ccd71802303fd67e4deca
 
 # Standardize Python import order
 # Code: https://github.com/PyCQA/flake8-import-order
