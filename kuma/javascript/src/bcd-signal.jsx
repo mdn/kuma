@@ -431,6 +431,14 @@ window.activateBCDSignals = (slug: string, locale: string) => {
         textAreaControl.className = 'control-input';
         textAreaControl.id = 'brief-explanation';
         textAreaControl.maxLength = MAX_BRIEF_EXPLANATION;
+        // If you don't put this FlowFixMe on the next line you'd get this:
+        //
+        //    Cannot assign MIN_BRIEF_EXPLANATION to textAreaControl.minLength
+        //    because property minLength is missing in HMLTextAreaElement
+        //
+        // But it's not an insane property to have:
+        // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#Browser_Compatibility
+        // $FlowFixMe
         textAreaControl.minLength = MIN_BRIEF_EXPLANATION;
         textAreaControl.required = true;
 
