@@ -1077,13 +1077,6 @@ PIPELINE_JS = {
         'output_filename': 'build/js/wiki-compat-tables.js',
         'template_name': 'pipeline/javascript-array.jinja',
     },
-    'wiki-compat-signal': {
-        'source_filenames': (
-            'js/wiki-compat-signal.js',
-        ),
-        'output_filename': 'build/js/wiki-compat-signal.js',
-        'template_name': 'pipeline/javascript-array.jinja',
-    },
     'task-completion': {
         'source_filenames': (
             'js/task-completion.js',
