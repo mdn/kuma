@@ -227,9 +227,9 @@ pycodestyle==2.5.0 \
 # Checks Python source files for errors
 # Code: https://github.com/PyCQA/pyflakes
 # Changes: https://github.com/PyCQA/pyflakes/blob/master/NEWS.rst
-pyflakes==2.1.0 \
-    --hash=sha256:f277f9ca3e55de669fba45b7393a1449009cff5a37d1af10ebb76c52765269cd \
-    --hash=sha256:5e8c00e30c464c99e0b501dc160b13a14af7f27d4dffb529c556e30a159e231d
+pyflakes==2.1.1 \
+    --hash=sha256:17dbeb2e3f4d772725c777fabc446d5634d1038f234e77343108ce445ea69ce0 \
+    --hash=sha256:d976835886f8c5b31d47970ed689944a0262b5f3afa00a5a7b4dc81e5449f8a2
 
 # google-api-python-client
 httplib2==0.9.2 \
