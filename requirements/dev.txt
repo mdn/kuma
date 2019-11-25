@@ -53,10 +53,10 @@ urlwait==0.4 \
 # Enables ./manage.py runserver_plus with in-browser exception debugging
 # Code: https://github.com/pallets/werkzeug
 # Changes: https://github.com/pallets/werkzeug/blob/master/CHANGES.rst
-# Docs: http://werkzeug.pocoo.org/docs/0.14/
-Werkzeug==0.15.5 \
-    --hash=sha256:87ae4e5b5366da2347eb3116c0e6c681a0e939a33b2805e2c0cbd282664932c4 \
-    --hash=sha256:a13b74dd3c45f758d4ebdb224be8f1ab8ef58b3c0ffc1783a8c7d9f4f50227e6
+# Docs: https://palletsprojects.com/p/werkzeug/
+Werkzeug==0.16.0 \
+    --hash=sha256:7280924747b5733b246fe23972186c6b348f9ae29724135a6dfc1e53cea433e7 \
+    --hash=sha256:e5f4a1f98b52b18a93da705a7458e55afb26f32bff83ff5d19189f92462d65c4
 
 # Prints a query count of requests that incur a lot of ORM SQL queries.
 # Code: https://github.com/bradmontgomery/django-querycount
