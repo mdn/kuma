@@ -1,5 +1,6 @@
 # These requirements are for development and include the default requirements
 -r default.txt
+-r linting.txt
 
 # Extract messages from Django templates
 # Code: https://github.com/python-babel/django-babel
@@ -16,21 +17,6 @@ django-babel==0.6.2 \
 django-debug-toolbar==1.10.1 \
     --hash=sha256:08e0e43f6c1fd9820af4cbdcd54b5fb80bf83a2e08b2cc952547a671174999b8 \
     --hash=sha256:1dcae28d430522debafde2602b3450eb784410b78e16c29a00448032df2a4c90
-
-# Code quality checker
-# Code: https://github.com/PyCQA/flake8
-# Docs: http://flake8.readthedocs.io/en/latest/
-# Changes: http://flake8.readthedocs.io/en/latest/release-notes/index.html
-flake8==3.7.9 \
-    --hash=sha256:45681a117ecc81e870cbf1262835ae4af5e7a8b08e40b944a8a6e6b895914cfb \
-    --hash=sha256:49356e766643ad15072a789a20915d3c91dc89fd313ccd71802303fd67e4deca
-
-# Standardize Python import order
-# Code: https://github.com/PyCQA/flake8-import-order
-# Changes: https://github.com/PyCQA/flake8-import-order/blob/master/CHANGELOG.rst
-flake8-import-order==0.18 \
-    --hash=sha256:9be5ca10d791d458eaa833dd6890ab2db37be80384707b0f76286ddd13c16cbf \
-    --hash=sha256:feca2fd0a17611b33b7fa84449939196c2c82764e262486d5c3e143ed77d387b
 
 # Test plugin: Record line and branch coverage
 pytest-cov==2.4.0 \
