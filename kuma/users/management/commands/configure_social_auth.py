@@ -59,9 +59,15 @@ class Command(BaseCommand):
 
                 print(GITHUB_INFO if provider == 'github' else GOOGLE_INFO)
 
-                while not (client_id := input('Client ID:').strip()):
+                # TODO: changes this back to the walrus operator once pfylakes supports it
+                # related issue: https://github.com/PyCQA/pyflakes/pull/457
+                client_id = ''
+                while not client_id:
+                    client_id = input('Client ID:').strip()
                     pass
-                while not (client_secret := input('Client Secret:').strip()):
+                client_secret = ''
+                while not client_secret:
+                    client_secret = input('Client Secret:').strip()
                     pass
 
                 social_app, created = SocialApp.objects.update_or_create(
