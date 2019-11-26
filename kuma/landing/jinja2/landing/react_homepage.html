@@ -4,10 +4,10 @@
 
 {% block body_attributes %}id="home"{% endblock %}
 
+{% include "landing/includes/style.html" %}
+
 {% block site_css %}
   {{ super() }}
-
-  {% stylesheet 'home' %}
 
   {% if waffle.flag('developer_needs') %}
     {% stylesheet 'banners' %}
@@ -72,7 +72,7 @@
     {%- if settings.FOUNDATION_CALLOUT %}
       {% include "landing/includes/callouts/foundation.html" %}
     {% else %}
-      {% include "landing/includes/callouts/grid-tools.html" %}
+      {% include "landing/includes/callouts/featured.html" %}
     {% endif %}
     {% if settings.NEWSLETTER %}
     <div class="column-callout callout-newsletter">

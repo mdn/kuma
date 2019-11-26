@@ -717,6 +717,36 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/home.css',
     },
+    'home_base': {
+        'source_filenames': (
+            'styles/minimalist/home.scss',
+        ),
+        'output_filename': 'build/styles/home_base.css',
+    },
+    'callout': {
+        'source_filenames': (
+            'styles/minimalist/components/callout.scss',
+        ),
+        'output_filename': 'build/styles/callout.css',
+    },
+    'home_newsletter': {
+        'source_filenames': (
+            'styles/minimalist/components/home-newsletter.scss',
+        ),
+        'output_filename': 'build/styles/home_newsletter.css',
+    },
+    'mozilla_foundation': {
+        'source_filenames': (
+            'styles/minimalist/components/featured-banners/mozilla-foundation.scss',
+        ),
+        'output_filename': 'build/styles/mozilla_foundation.css',
+    },
+    'home_featured': {
+        'source_filenames': (
+            'styles/minimalist/components/featured-banners/featured.scss',
+        ),
+        'output_filename': 'build/styles/home_featured.css',
+    },
     'print': {
         'source_filenames': (
             'styles/minimalist/print.scss',

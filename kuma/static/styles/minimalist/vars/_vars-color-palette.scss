@@ -6,3 +6,6 @@ $border-color: #585858;
 
 $warning-border-color: #ffc543;
 $warning-background-color: scale-color($warning-border-color, $lightness: 50%);
+
+$featured-banner-hover-shadow: 2px 2px 5px
+    scale-color($brand-primary, $lightness: 70%);
