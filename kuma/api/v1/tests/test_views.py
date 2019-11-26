@@ -308,16 +308,16 @@ def test_search_validation_problems(user_client):
     assert response.json()['error'] == 'Not a valid locale code'
 
     # 'q' present but contains new line
-    response = user_client.get(url, {'q': '\\n'})
+    response = user_client.get(url, {'q': r'test\nsomething'})
     assert response.status_code == 400
     assert response.json()['q'] == ["Search term must not contain new line"]
 
-    # 'q' present but exceeds 1024 characters
-    response = user_client.get(url, {'q': 'x' * 1025})
+    # 'q' present but exceeds 200 characters
+    response = user_client.get(url, {'q': 'x' * 201})
     assert response.status_code == 400
     assert (
         response.json()['q'] ==
-        ["Ensure this field has no more than 1024 characters."]
+        ["Ensure this field has no more than 200 characters."]
     )
 
 

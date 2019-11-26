@@ -30,15 +30,13 @@ def search(request, *args, **kwargs):
 
     # Determine if there were validation errors
     error = results.get('error') or results.get('q')
-    # Set flag to send results if no errors
-    send_results = True if error is None else False
     # If q is returned in the data, there was a validation error for that field,
     # so return 400 status.
     status = 200 if results.get('q') is None else 400
 
     context = {
         'results': {
-            'results': results if send_results else None,
+            'results': None if error else results,
             'error': error
         }
     }

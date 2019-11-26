@@ -63,20 +63,20 @@ class SerializerTests(ElasticTestCase):
         search_serializer = SearchQuerySerializer(
             data={'q': 'test'}
         )
-        self.assertTrue(search_serializer.is_valid())
-        assert {} == search_serializer.errors
+        assert search_serializer.is_valid()
+        assert search_serializer.errors == {}
 
         search_serializer = SearchQuerySerializer(
-            data={'q': 'test\\nsomething'}
+            data={'q': r'test\nsomething'}
         )
-        self.assertFalse(search_serializer.is_valid())
-        self.assertEqual(set(search_serializer.errors.keys()), set(['q']))
+        assert not search_serializer.is_valid()
+        assert list(search_serializer.errors.keys()) == ['q']
 
         search_serializer = SearchQuerySerializer(
             data={'q': 't' * 1025}
         )
-        self.assertFalse(search_serializer.is_valid())
-        self.assertEqual(set(search_serializer.errors.keys()), set(['q']))
+        assert not search_serializer.is_valid()
+        assert list(search_serializer.errors.keys()) == ['q']
 
     def test_excerpt(self):
         search = WikiDocumentType.search()

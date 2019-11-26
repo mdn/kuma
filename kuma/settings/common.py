@@ -1632,6 +1632,9 @@ ES_INDEXES = {'default': 'main_index'}
 ES_INDEXING_TIMEOUT = 30
 ES_LIVE_INDEX = config('ES_LIVE_INDEX', default=False, cast=bool)
 ES_URLS = config('ES_URLS', default='127.0.0.1:9200', cast=Csv())
+# The default 200 is because searching for something using more than 200
+# characters should not be necessary.
+ES_Q_MAXLENGTH = config('ES_Q_MAXLENGTH', default=200, cast=int)
 
 
 # Logging is merged with the default logging
