@@ -1,5 +1,6 @@
 from unittest import mock
 
+from django.conf import settings
 from django.utils import translation
 from rest_framework import serializers
 from rest_framework.test import APIRequestFactory
@@ -73,7 +74,7 @@ class SerializerTests(ElasticTestCase):
         assert list(search_serializer.errors.keys()) == ['q']
 
         search_serializer = SearchQuerySerializer(
-            data={'q': 't' * 1025}
+            data={'q': 't' * (settings.ES_Q_MAXLENGTH + 1)}
         )
         assert not search_serializer.is_valid()
         assert list(search_serializer.errors.keys()) == ['q']

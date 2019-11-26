@@ -1,6 +1,7 @@
 
 
 import pytest
+from django.conf import settings
 from waffle.models import Flag, Sample, Switch
 
 from kuma.api.v1.views import (document_api_data, get_content_based_redirect,
@@ -312,12 +313,12 @@ def test_search_validation_problems(user_client):
     assert response.status_code == 400
     assert response.json()['q'] == ["Search term must not contain new line"]
 
-    # 'q' present but exceeds 200 characters
-    response = user_client.get(url, {'q': 'x' * 201})
+    # 'q' present but exceeds max allowed characters
+    response = user_client.get(url, {'q': 'x' * (settings.ES_Q_MAXLENGTH + 1)})
     assert response.status_code == 400
     assert (
         response.json()['q'] ==
-        ["Ensure this field has no more than 200 characters."]
+        [f"Ensure this field has no more than {settings.ES_Q_MAXLENGTH} characters."]
     )
 
 
