@@ -101,8 +101,11 @@ class User(AbstractUser):
         max_length=255,
         blank=True,
     )
-    is_in_salesforce = models.BooleanField(
-        default=False
+
+    salesforce_connection = models.CharField(
+        choices=[(c, c) for c in ('', 'pending', 'success', 'error')],
+        default='',
+        max_length=10
     )
 
     tags = NamespacedTaggableManager(verbose_name=_('Tags'), blank=True)
@@ -236,11 +239,12 @@ class User(AbstractUser):
         return link
 
     def save(self, *args, **kwargs):
-        is_already_in_salesforce = (
-            User.objects.values_list('is_in_salesforce', flat=True).get(pk=self.pk)
+        old_salesforce_connection = (
+            User.objects.values_list('salesforce_connection', flat=True).get(pk=self.pk)
             if self.pk
-            else False
+            else ''
         )
+        can_connect_to_salesforce = old_salesforce_connection in ('', 'error')
         super().save(*args, **kwargs)
-        if self.is_in_salesforce and not is_already_in_salesforce:
-            basket.subscribe.delay(self)
+        if self.salesforce_connection == 'pending' and can_connect_to_salesforce:
+            basket.subscribe.delay(self.pk, self.email, self.username, self.locale)

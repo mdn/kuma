@@ -5,14 +5,20 @@ BASKET_SUBSCRIPTION_URL = 'https://basket.mozilla.org/news/subscribe/'
 
 
 @task
-def subscribe(user):
+def subscribe(pk, email, username, locale):
+    from .models import User
     logger = subscribe.get_logger()
-    data = {
-        'newsletters': 'app-dev',
-        'format': 'H',
-        'email': user.email,
-        'lang': user.locale,
-        'first_name': user.username
-    }
-    requests.post(BASKET_SUBSCRIPTION_URL, data=data)
-    logger.info(f'Successfully subscribed user {user.email} to newsletter')
+    try:
+        data = {
+            'newsletters': 'app-dev',
+            'format': 'H',
+            'email': email,
+            'lang': locale,
+            'first_name': username
+        }
+        requests.post(BASKET_SUBSCRIPTION_URL, data=data)
+        User.objects.filter(pk=pk).update(salesforce_connection='success')
+        logger.info(f'Successfully subscribed user {email} to newsletter')
+    except Exception as e:
+        User.objects.filter(pk=pk).update(salesforce_connection='error')
+        raise e
