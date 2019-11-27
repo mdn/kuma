@@ -27,7 +27,7 @@ colorful callouts
             position: absolute;
             bottom: 11px;
             /* prettier-ignore */
-            @include set-bidi-icon($path-to-svg-arrow-icons + 'arrow-right.svg', $path-to-svg-arrow-icons + 'arrow-left.svg', $grid-spacing);
+            @include set-bidi-icon('../../../arrows/arrow-right.svg', '../../../arrows/arrow-left.svg', $grid-spacing);
             z-index: 4;
         }
     }
