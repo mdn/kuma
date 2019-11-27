@@ -11,13 +11,13 @@ Featured callout
     background: #fff url('../../../../img/embed/promos/grid-tools-bg.svg') 0
         100% no-repeat;
     background-size: contain;
-    border: 1px solid #999;
-    box-shadow: 2px 2px 5px #edecec, -2px -1px 5px #edecec;
+    border: 1px solid $light-border-color;
 
     a {
         position: relative;
+        color: $text-color;
         padding: $gutter-width / 2;
-        min-height: 200px;
+        min-height: 225px;
 
         @supports (display: flex) {
             display: flex;

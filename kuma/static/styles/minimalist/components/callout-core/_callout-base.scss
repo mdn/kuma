@@ -6,7 +6,6 @@ colorful callouts
     background: #00539f;
 
     > a {
-        color: #fff !important; /* stylelint-disable-line declaration-no-important */
         display: block;
         min-height: $callout-min-height;
         position: relative;

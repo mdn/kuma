@@ -6,7 +6,6 @@ Standard callout
 
     a {
         @include set-font-size(14px);
-        color: #000 !important; /* stylelint-disable-line declaration-no-important */
         font-weight: bold;
 
         &:after {
