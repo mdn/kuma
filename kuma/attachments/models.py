@@ -2,7 +2,6 @@ import os
 from datetime import datetime
 
 from django.conf import settings
-from django.core.files.storage import default_storage
 from django.db import models
 from django.db.utils import IntegrityError
 from django.utils.functional import cached_property
@@ -13,23 +12,28 @@ from storages.backends.s3boto3 import S3Boto3Storage
 from .utils import attachment_upload_to, full_attachment_url
 
 
-if settings.ATTACHMENTS_USE_S3:
-    storage = S3Boto3Storage(
-        access_key=settings.ATTACHMENTS_AWS_ACCESS_KEY_ID,
-        secret_key=settings.ATTACHMENTS_AWS_SECRET_ACCESS_KEY,
-        bucket_name=settings.ATTACHMENTS_AWS_STORAGE_BUCKET_NAME,
-        object_parameters={
-            'CacheControl': 'public, max-age=31536000, immutable',
-        },
-        default_acl='public-read',
-        querystring_auth=False,
-        custom_domain=settings.ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN,
-        secure_urls=settings.ATTACHMENTS_AWS_S3_SECURE_URLS,
-        region_name=settings.ATTACHMENTS_AWS_S3_REGION_NAME,
-        endpoint_url=settings.ATTACHMENTS_AWS_S3_ENDPOINT_URL,
-    )
-else:
-    storage = default_storage
+class AttachmentStorage(S3Boto3Storage):
+    def __init__(self, *args, **kwargs):
+        configuration = dict(
+            access_key=settings.ATTACHMENTS_AWS_ACCESS_KEY_ID,
+            secret_key=settings.ATTACHMENTS_AWS_SECRET_ACCESS_KEY,
+            bucket_name=settings.ATTACHMENTS_AWS_STORAGE_BUCKET_NAME,
+            object_parameters={
+                'CacheControl': 'public, max-age=31536000, immutable',
+            },
+            default_acl='public-read',
+            querystring_auth=False,
+            custom_domain=settings.ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN,
+            secure_urls=settings.ATTACHMENTS_AWS_S3_SECURE_URLS,
+            region_name=settings.ATTACHMENTS_AWS_S3_REGION_NAME,
+            endpoint_url=settings.ATTACHMENTS_AWS_S3_ENDPOINT_URL,
+        )
+        configuration.update(kwargs)
+
+        super(AttachmentStorage, self).__init__(*args, **configuration)
+
+
+storage = AttachmentStorage() if settings.ATTACHMENTS_USE_S3 else None
 
 
 class Attachment(models.Model):
