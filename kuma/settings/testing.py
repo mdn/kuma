@@ -78,3 +78,7 @@ MDN_CLOUDFRONT_DISTRIBUTIONS = {}
 
 # Never rely on the .env
 GOOGLE_ANALYTICS_ACCOUNT = None
+
+# Silence warnings about defaults that change in django-storages 2.0
+AWS_BUCKET_ACL = None
+AWS_DEFAULT_ACL = None
