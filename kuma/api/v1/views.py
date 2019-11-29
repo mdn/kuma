@@ -140,6 +140,10 @@ def document_api_data(doc=None, redirect_url=None):
         {doc.locale} | set(t.locale for t in other_translations))
 
     doc_absolute_url = doc.get_absolute_url()
+    revision = doc.current_or_latest_revision()
+    translation_status = None
+    if doc.parent_id and revision and revision.localization_in_progress:
+        translation_status = 'outdated' if revision.translation_age >= 10 else 'in-progress'
     return {
         'documentData': {
             'locale': doc.locale,
@@ -164,6 +168,7 @@ def document_api_data(doc=None, redirect_url=None):
                 if doc.is_localizable else
                 None
             ),
+            'translationStatus': translation_status,
             'bodyHTML': doc.get_body_html(),
             'quickLinksHTML': doc.get_quick_links_html(),
             'tocHTML': doc.get_toc_html(),
