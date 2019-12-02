@@ -30,6 +30,7 @@ export type DocumentData = {
     absoluteURL: string,
     wikiURL: string,
     translateURL: string,
+    translationStatus: null | 'in-progress' | 'outdated',
     bodyHTML: string,
     quickLinksHTML: string,
     tocHTML: string,

@@ -17,6 +17,38 @@ type DocumentProps = {
     document: DocumentData
 };
 
+function TranslationStatus({
+    document: { translationStatus, translateURL }
+}: DocumentProps) {
+    let content;
+
+    if (translationStatus === 'in-progress') {
+        content = gettext('This translation is in progress.');
+    } else if (translationStatus === 'outdated') {
+        content = (
+            <>
+                {gettext(
+                    'You’re reading the English version of this content since no translation exists yet for this locale.'
+                )}
+                &nbsp;
+                <a href={translateURL} rel="nofollow">
+                    {gettext('Help us translate this article!')}
+                </a>
+            </>
+        );
+    }
+
+    if (translationStatus == null || !content) {
+        return null;
+    }
+
+    return (
+        <p className="overheadIndicator translationInProgress">
+            <bdi>{content}</bdi>
+        </p>
+    );
+}
+
 export default function Article({ document }: DocumentProps) {
     const article = useRef(null);
     const userData = useContext(UserProvider.context);
@@ -112,21 +144,7 @@ export default function Article({ document }: DocumentProps) {
                     : 'article text-content'
             }
         >
-            {document.locale !== locale && (
-                <div className="warning">
-                    <p>
-                        <bdi>
-                            {gettext(
-                                'You’re reading the English version of this content since no translation exists yet for this locale.'
-                            )}
-                            &nbsp;
-                            <a href={document.translateURL} rel="nofollow">
-                                {gettext('Help us translate this article!')}
-                            </a>
-                        </bdi>
-                    </p>
-                </div>
-            )}
+            <TranslationStatus document={document} />
             <article
                 id="wikiArticle"
                 dangerouslySetInnerHTML={{ __html: document.bodyHTML }}
