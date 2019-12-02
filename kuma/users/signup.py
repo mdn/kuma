@@ -35,6 +35,7 @@ class SignupForm(BaseSignupForm):
     is_github_url_public = forms.BooleanField(
         label=_('I would like to make my GitHub profile URL public'),
         required=False)
+    newsletter_signup = forms.BooleanField(required=False)
     other_email_value = '_other'
     duplicate_email_error_label = '_duplicate_email'
 

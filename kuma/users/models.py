@@ -105,7 +105,8 @@ class User(AbstractUser):
     salesforce_connection = models.CharField(
         choices=[(c, c) for c in ('', 'pending', 'success', 'error')],
         default='',
-        max_length=10
+        max_length=10,
+        blank=True
     )
 
     tags = NamespacedTaggableManager(verbose_name=_('Tags'), blank=True)

@@ -123,13 +123,13 @@
 
         {% if settings.ENABLE_NEWSLETTER_SIGNUP %}
           <li class="newsletter-signup">
-            <label for="newsletter-signup">
-              <input type="checkbox" id="newsletter-signup" name="newsletter" value="true" />
+            <label for="{{ form.newsletter_signup.id_for_label  }}">
+              {{ form.newsletter_signup }}
               {{ _('Get updates on what’s new with MDN to your inbox.') }}
             </label>
           </li>
         {% endif %}
-        
+
         <li>
           <ul class="errorlist">
             {{ form.terms.errors }}
