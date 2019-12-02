@@ -4,9 +4,11 @@ import json
 import time
 
 import boto3
+from botocore.exceptions import ClientError
 from celery import task
 from django.conf import settings
 from django.utils.module_loading import import_string
+from redo import retriable
 
 from kuma.core.utils import chunked
 from kuma.wiki.models import Document
@@ -153,6 +155,7 @@ def publish(doc_pks, log=None, completion_message=None,
 
 
 @task
+@retriable(retry_exceptions=(ClientError,))
 def request_cdn_cache_invalidation(doc_locale_slug_pairs, log=None):
     """
     Trigger an attempt to purge the given documents from one or more
