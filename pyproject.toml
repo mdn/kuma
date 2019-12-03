@@ -68,7 +68,6 @@ redis = "3.2.1"
 requests-mock = "0.7.0"
 sqlparse = "0.3.0"
 stripe = "2.31.0"
-wheel = "0.33.4"
 whitenoise = "3.3.1"
 
 # From default_and_test.txt
@@ -90,7 +89,6 @@ Babel = "2.2.0" # django-babel, puente
 py = "1.4.33" # (pytest)
 pytest = "3.1.3" # pytest-{base-url,html,metadata,rerunfailures,variables} (dev), pytest-{cov,django}
 pytz = "2018.9" # celery, django, django-sundial, ...lots
-setuptools = "26.1.1" # django-honeypot, flake8-import-order
 pyasn1 = "0.1.9" # (oauth2client), ((pyasn1-modules)), ((rsa))
 urllib3 = "1.24.3" # requests, (requests), (botocore), ((elasticsearch))
 html5lib = "1.0.1" # bleach
