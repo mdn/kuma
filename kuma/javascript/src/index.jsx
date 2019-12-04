@@ -9,6 +9,21 @@ import { AppErrorBoundary } from './error-boundaries.jsx';
 import GAProvider from './ga-provider.jsx';
 import { localize } from './l10n.js';
 
+function addActiveSidebarItemStyle() {
+    const selector = `.sidebar a[href="${location.pathname}"]`;
+    const style = `
+        ${selector} { font-style: italic; color: black; }
+        ${selector}:hover { text-decoration: none }
+    `;
+    const node = document.createElement('style');
+    node.innerHTML = style;
+    if (document.body) {
+        document.body.appendChild(node);
+    }
+}
+
+addActiveSidebarItemStyle();
+
 let container = document.getElementById('react-container');
 if (container) {
     let componentName = container.dataset.componentName;
