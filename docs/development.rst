@@ -158,10 +158,10 @@ Managing dependencies
 
 Python dependencies
 -------------------
-Kuma tracks its Python dependencies with pip_.  See the
+Kuma tracks its Python dependencies with Poetry_.  See the
 `README in the requirements folder`_ for details.
 
-.. _pip: https://pip.pypa.io/
+.. _Poetry: https://poetry.eustace.io/
 .. _README in the requirements folder: https://github.com/mdn/kuma/tree/master/requirements
 
 .. _front-end-asset-dependencies:
