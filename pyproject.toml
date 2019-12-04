@@ -85,43 +85,43 @@ pytest-django = "3.1.2"
 urlwait = "0.4"
 
 # From constraints.txt
-babel = "2.2.0" # django-babel, puente
-py = "1.4.33" # (pytest)
-pytest = "3.1.3" # pytest-{base-url,html,metadata,rerunfailures,variables} (dev), pytest-{cov,django}
-pytz = "2018.9" # celery, django, django-sundial, ...lots
-pyasn1 = "0.1.9" # (oauth2client), ((pyasn1-modules)), ((rsa))
-urllib3 = "1.24.3" # requests, (requests), (botocore), ((elasticsearch))
-html5lib = "1.0.1" # bleach
-webencodings = "0.5.1" # (html5lib)
-botocore = "1.12.130" # boto3
-docutils = "0.12" # (botocore)
-jmespath = "0.9.4" # boto3, (botocore)
-s3transfer = "0.2.0" # boto3, ((botocore))
-amqp = "2.4.2" # (kombu)
-billiard = "3.6.0.0" # celery, (celery)
-kombu = "4.5.0" # celery, (celery)
-click = "6.7" # dennis
-oauthlib = "2.0.4" # (requests-oauthlib)
-defusedxml = "0.5.0" # (python3-openid)
-python3-openid = "3.1.0" # django-allauth
-requests-oauthlib = "0.8.0" # django-allauth
-django-appconf = "1.0.2" # django-statici18n
-elasticsearch = "6.3.1" # elasticsearch-dsl
-python-dateutil = "2.7.3" # elasticsearch-dsl, (botocore)
-httplib2 = "0.9.2" # google-api-python-client, (oauth2client)
-oauth2client = "3.0.0" # google-api-python-client
-pyasn1-modules = "0.0.8" # (oauth2client)
-rsa = "3.4.2" # (oauth2client)
-uritemplate = "0.6" # google-api-python-client
-markupsafe = "1.0" # jinja2, (jinja2)
-greenlet = "0.4.15" # meinheld
-cssselect = "1.0.3" # pyquery
-lxml = "4.2.5" # pyquery
-coverage = "4.3.4" # pytest-cov
-certifi = "2018.10.15" # requests, (requests)
-chardet = "3.0.4" # requests, (requests)
-idna = "2.7" # requests, (requests)
-vine = "1.3.0" # celery, (celery), ((amqp))
+babel = "2.2.0"
+py = "1.4.33"
+pytest = "3.1.3"
+pytz = "2018.9"
+pyasn1 = "0.1.9"
+urllib3 = "1.24.3"
+html5lib = "1.0.1"
+webencodings = "0.5.1"
+botocore = "1.12.130"
+docutils = "0.12"
+jmespath = "0.9.4"
+s3transfer = "0.2.0"
+amqp = "2.4.2"
+billiard = "3.6.0.0"
+kombu = "4.5.0"
+click = "6.7"
+oauthlib = "2.0.4"
+defusedxml = "0.5.0"
+python3-openid = "3.1.0"
+requests-oauthlib = "0.8.0"
+django-appconf = "1.0.2"
+elasticsearch = "6.3.1"
+python-dateutil = "2.7.3"
+httplib2 = "0.9.2"
+oauth2client = "3.0.0"
+pyasn1-modules = "0.0.8"
+rsa = "3.4.2"
+uritemplate = "0.6"
+markupsafe = "1.0"
+greenlet = "0.4.15"
+cssselect = "1.0.3"
+lxml = "4.2.5"
+coverage = "4.3.4"
+certifi = "2018.10.15"
+chardet = "3.0.4"
+idna = "2.7"
+vine = "1.3.0"
 
 [tool.poetry.dev-dependencies]
 # From test.txt
@@ -138,10 +138,10 @@ flake8 = "3.7.9"
 flake8-import-order = "0.18"
 
 # From constraints.txt
-entrypoints = "0.3" # flake8
-mccabe = "0.6.1" # flake8
-pycodestyle = "2.5.0" # flake8, flake8-import-order
-pyflakes = "2.1.1" # flake8
+entrypoints = "0.3"
+mccabe = "0.6.1"
+pycodestyle = "2.5.0"
+pyflakes = "2.1.1"
 
 [build-system]
 requires = ["poetry>=0.12"]
