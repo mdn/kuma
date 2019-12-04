@@ -138,10 +138,10 @@ flake8 = "3.7.9"
 flake8-import-order = "0.18"
 
 # From constraints.txt
-entrypoints = "==0.3" # flake8
-mccabe = "==0.6.1" # flake8
-pycodestyle = "==2.5.0" # flake8, flake8-import-order
-pyflakes = "==2.1.1" # flake8
+entrypoints = "0.3" # flake8
+mccabe = "0.6.1" # flake8
+pycodestyle = "2.5.0" # flake8, flake8-import-order
+pyflakes = "2.1.1" # flake8
 
 [build-system]
 requires = ["poetry>=0.12"]
