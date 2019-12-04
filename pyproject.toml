@@ -131,7 +131,7 @@ pytest-base-url = "1.4.1"
 pytest-html = "1.16.1"
 pytest-metadata = "1.5.1"
 pytest-variables = "1.7.1"
-urlwait = "0.4"
+urlwait = "0.4" # FIXME: Also present in dev.txt above
 
 # From linting.txt
 flake8 = "3.7.9"
