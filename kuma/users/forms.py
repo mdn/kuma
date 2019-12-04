@@ -123,10 +123,6 @@ class UserEditForm(forms.ModelForm):
             'data-fa-icon': 'icon-discourse',
         }),
     )
-    salesforce_connection = forms.ChoiceField(
-        choices=[(c, c) for c in ('', 'pending')],
-        required=False
-    )
 
     class Meta:
         model = User
@@ -134,7 +130,7 @@ class UserEditForm(forms.ModelForm):
                   'locale', 'timezone', 'irc_nickname', 'interests',
                   'twitter_url', 'github_url', 'is_github_url_public',
                   'stackoverflow_url', 'linkedin_url', 'mozillians_url',
-                  'facebook_url', 'discourse_url', 'username', 'salesforce_connection')
+                  'facebook_url', 'discourse_url', 'username')
 
     def __init__(self, *args, **kwargs):
         super(UserEditForm, self).__init__(*args, **kwargs)

@@ -13,9 +13,9 @@ from django.utils.functional import cached_property
 from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import ugettext_lazy as _
 
-import kuma.users.basket as basket
 from kuma.core.managers import NamespacedTaggableManager
 from kuma.core.urlresolvers import reverse
+from kuma.users import basket
 
 from .constants import USERNAME_REGEX
 
@@ -102,11 +102,21 @@ class User(AbstractUser):
         blank=True,
     )
 
+    SALESFORCE_CONNECTION_PENDING = 'pending'
+    SALESFORCE_CONNECTION_SUCCESS = 'success'
+    SALESFORCE_CONNECTION_ERROR = 'error'
     salesforce_connection = models.CharField(
-        choices=[(c, c) for c in ('', 'pending', 'success', 'error')],
-        default='',
-        max_length=10,
-        blank=True
+        choices=[
+            (c, c)
+            for c in (
+                SALESFORCE_CONNECTION_PENDING,
+                SALESFORCE_CONNECTION_SUCCESS,
+                SALESFORCE_CONNECTION_ERROR,
+            )
+        ],
+        null=True,
+        blank=True,
+        max_length=10
     )
 
     tags = NamespacedTaggableManager(verbose_name=_('Tags'), blank=True)
@@ -243,9 +253,15 @@ class User(AbstractUser):
         old_salesforce_connection = (
             User.objects.values_list('salesforce_connection', flat=True).get(pk=self.pk)
             if self.pk
-            else ''
+            else None
         )
-        can_connect_to_salesforce = old_salesforce_connection in ('', 'error')
+        can_connect_to_salesforce = old_salesforce_connection in (
+            None,
+            self.SALESFORCE_CONNECTION_ERROR,
+        )
         super().save(*args, **kwargs)
-        if self.salesforce_connection == 'pending' and can_connect_to_salesforce:
+        if (
+            self.salesforce_connection == self.SALESFORCE_CONNECTION_PENDING and
+            can_connect_to_salesforce
+        ):
             basket.subscribe.delay(self.pk, self.email, self.username, self.locale)

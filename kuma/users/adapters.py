@@ -109,8 +109,8 @@ class KumaAccountAdapter(DefaultAccountAdapter):
         is_github_url_public = form.cleaned_data.get('is_github_url_public')
         user.is_github_url_public = is_github_url_public
 
-        user.salesforce_connection = 'pending' \
-            if form.cleaned_data.get('newsletter_signup', '') else ''
+        user.salesforce_connection = user.SALESFORCE_CONNECTION_PENDING \
+            if form.cleaned_data.get('newsletter_signup', '') else None
 
         if commit:  # pragma: no cover
             # commit will be True, unless extended by a derived class
