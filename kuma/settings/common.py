@@ -1861,6 +1861,24 @@ SSR_TIMEOUT = float(config('SSR_TIMEOUT', default='1'))
 # Setting for configuring the AWS S3 bucket name used for the document API.
 MDN_API_S3_BUCKET_NAME = config('MDN_API_S3_BUCKET_NAME', default=None)
 
+# Serve and upload attachments via S3, instead of the local filesystem
+ATTACHMENTS_USE_S3 = config('ATTACHMENTS_USE_S3', default=False, cast=bool)
+
+# AWS S3 credentials and settings for uploading attachments
+ATTACHMENTS_AWS_ACCESS_KEY_ID = config('ATTACHMENTS_AWS_ACCESS_KEY_ID', default=None)
+ATTACHMENTS_AWS_SECRET_ACCESS_KEY = config('ATTACHMENTS_AWS_SECRET_ACCESS_KEY', default=None)
+ATTACHMENTS_AWS_STORAGE_BUCKET_NAME = config('ATTACHMENTS_AWS_STORAGE_BUCKET_NAME', default='mdn-attachments')
+
+ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN = config('ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN', default=None)  # For example, Cloudfront CDN domain
+ATTACHMENTS_AWS_S3_SECURE_URLS = config('ATTACHMENTS_AWS_S3_SECURE_URLS', default=True, cast=bool)  # Does the custom domain use TLS
+
+ATTACHMENTS_AWS_S3_REGION_NAME = config('ATTACHMENTS_AWS_S3_REGION_NAME', default='us-east-1')
+ATTACHMENTS_AWS_S3_ENDPOINT_URL = config('ATTACHMENTS_AWS_S3_ENDPOINT_URL', default=f'https://{ATTACHMENTS_AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com')
+
+# Silence warnings about defaults that change in django-storages 2.0
+AWS_BUCKET_ACL = None
+AWS_DEFAULT_ACL = None
+
 # When we potentially have multiple CDN distributions that do different
 # things.
 # Inside kuma, when a document is considered "changed", we trigger

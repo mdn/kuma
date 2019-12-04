@@ -30,7 +30,7 @@ class AttachmentModelTests(UserTestCase):
             is_approved=True)
         self.revision.creator = self.test_user
         self.revision.file.save('filename.txt',
-                                ContentFile('Meh meh I am a test file.'))
+                                ContentFile(b'Meh meh I am a test file.'))
 
         self.revision2 = AttachmentRevision(
             attachment=self.attachment,
@@ -41,7 +41,8 @@ class AttachmentModelTests(UserTestCase):
             is_approved=True)
         self.revision2.creator = self.test_user
         self.revision2.file.save('filename2.txt',
-                                 ContentFile('Meh meh I am a test file.'))
+                                 ContentFile(b'Meh meh I am a test file.'))
+        self.storage = AttachmentRevision.file.field.storage
 
     def test_document_attachment(self):
         doc = document(save=True)
@@ -78,21 +79,21 @@ class AttachmentModelTests(UserTestCase):
                                                   .exists())
 
     def test_trash_revision_with_username(self):
-        self.assertFileExists(self.revision.file.path)
+        self.assertTrue(self.storage.exists(self.revision.file.name))
         trashed_attachment = self.revision.trash(username='trasher')
         self.assertEqual(TrashedAttachment.objects.count(), 1)
         self.assertEqual(trashed_attachment.trashed_by, 'trasher')
-        self.assertFileExists(self.revision.file.path)
+        self.assertTrue(self.storage.exists(self.revision.file.name))
 
     def test_delete_revision_directly(self):
         # deleting a revision without providing information
         # still creates a trashedattachment item and leaves file in place
         pk = self.revision2.pk
-        self.assertFileExists(self.revision.file.path)
+        self.assertTrue(self.storage.exists(self.revision.file.name))
         trashed_attachment = self.revision2.delete()
         self.assertTrue(trashed_attachment)
         self.assertFalse(AttachmentRevision.objects.filter(pk=pk).exists())
-        self.assertFileExists(self.revision.file.path)
+        self.assertTrue(self.storage.exists(self.revision.file.name))
 
     def test_first_trash_then_delete_revision(self):
         pk = self.revision.pk
@@ -102,13 +103,13 @@ class AttachmentModelTests(UserTestCase):
 
     def test_deleting_trashed_item(self):
         pk = self.revision2.pk
-        path = self.revision2.file.path
+        path = self.revision2.file.name
         trashed_attachment = self.revision2.delete(username='trasher')
         self.assertTrue(trashed_attachment)
         self.assertFalse(AttachmentRevision.objects.filter(pk=pk).exists())
-        self.assertFileExists(path)
+        self.assertTrue(self.storage.exists(path))
         trashed_attachment.delete()
-        self.assertFileNotExists(path)
+        self.assertFalse(self.storage.exists(path))
 
     def test_delete_revision(self):
         # adding a new revision sets the current revision automatically

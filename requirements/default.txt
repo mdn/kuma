@@ -175,6 +175,14 @@ django-statici18n==1.7.0 \
     --hash=sha256:2c5214d520a25e2d226cae099947778cde593ba7b1b03924f70215ce9ec9e6ce \
     --hash=sha256:e84fc081166433886220a814356a66760f50196a4d00a3e25327427160e5ccd1
 
+# Alternative FileField storage backends; used for storing attachments in S3
+# Code: https://github.com/jschneier/django-storages
+# Changes: https://github.com/jschneier/django-storages/blob/master/CHANGELOG.rst
+# Docs: https://django-storages.readthedocs.io/
+django-storages==1.7.2 \
+    --hash=sha256:87287b7ad2e789cd603373439994e1ac6f94d9dc2e5f8173d2a87aa3ed458bd9 \
+    --hash=sha256:f3b3def96493d3ccde37b864cea376472baf6e8a596504b209278801c510b807
+
 # Better timezone picker for user profiles
 # Code: https://github.com/charettes/django-sundial/
 django-sundial==1.0.6 \
