@@ -478,19 +478,22 @@ class SignupView(BaseSignupView):
         form = super(SignupView, self).get_form(form_class)
         form.fields['email'].label = _('Email address')
 
+        User = get_user_model()
+
         # When no username is provided, default to the local-part of the email address
         if form.initial.get('username', '') == '':
             email = form.initial.get('email', '')
             if isinstance(email, tuple):
                 email = email[0]
-            form.initial['username'] = email.split('@')[0]
+            suggested_username = email.split('@')[0]
+            if not User.objects.filter(username__iexact=suggested_username).exists():
+                form.initial['username'] = suggested_username
 
         self.matching_user = None
         initial_username = form.initial.get('username', None)
 
         # For GitHub/Google users, see if we can find matching user by username
         assert self.sociallogin.account.provider in ('github', 'google')
-        User = get_user_model()
         try:
             self.matching_user = User.objects.get(username=initial_username)
             # deleting the initial username because we found a matching user
