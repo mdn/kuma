@@ -97,7 +97,7 @@ export default function Article({ document }: DocumentProps) {
         let rootElement = article.current;
         if (rootElement) {
             // The reasons it might NOT exist is because perhaps it's not
-            // loaded because a waffle flag tells it not to.
+            // loaded because a setting tells it not to.
             if (window.activateBCDSignals) {
                 try {
                     window.activateBCDSignals(document.slug, document.locale);

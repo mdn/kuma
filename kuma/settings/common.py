@@ -1821,6 +1821,10 @@ NEWSLETTER_ARTICLE = True
 # Newsletter Signup Settings
 ENABLE_NEWSLETTER_SIGNUP = config('ENABLE_NEWSLETTER_SIGNUP', default=False, cast=bool)
 
+# Whether or not to enable the BCD signalling feature.
+# Affects loading of CSS (statically) and JS (in runtime).
+ENABLE_BCD_SIGNAL = config('ENABLE_BCD_SIGNAL', default=True, cast=bool)
+
 # Content Experiments
 # Must be kept up to date with PIPELINE_JS setting and the JS client-side
 #  configuration. The 'id' should be a key in PIPELINE_JS, that loads

@@ -96,7 +96,7 @@
 
   <!-- site js -->
   {% javascript 'react-main' %}
-  {% if waffle.flag('bc-signals') %}
+  {% if settings.ENABLE_BCD_SIGNAL %}
     {% javascript "bcd-signal" %}
   {% endif %}
 </body>
