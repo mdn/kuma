@@ -597,11 +597,12 @@ class SignupView(BaseSignupView):
         or_query = []
         for email_address in self.email_addresses.values():
             if email_address['verified']:
-                or_query.append(Q(uid=email_address['email']))
+                # only persona accounts have emails as UIDs
+                # but adding the provider criteria makes this explicit and future-proof
+                or_query.append(Q(uid=email_address['email']) & Q(provider='persona'))
         if or_query:
             reduced_or_query = reduce(operator.or_, or_query)
             matching_accounts = (SocialAccount.objects
-                                              .filter(provider='persona')
                                               .filter(reduced_or_query))
         else:
             matching_accounts = SocialAccount.objects.none()
