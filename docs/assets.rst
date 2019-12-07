@@ -612,11 +612,6 @@ it is used to serve static assets in development as well as production. It
 made it easy to serve HTML and related assets on the same `HTTP/2`_
 connection.
 
-Kuma uses WhiteNoise as a middleware, included as
-``kuma.core.middleware.RestrictedWhiteNoiseMiddleware``. This is a wrapper
-around ``whitenoise.middleware.WhiteNoiseMiddleware`` which skips
-static file serving if Kuma is acting as the attachments / samples host.
-
 In development (``DEBUG`` = ``True``) and testing, WhiteNoise is in
 "autorefresh" mode, and uses the staticfiles-finder_. Each web request to
 ``/static`` scans for the file to use, which can be slow, but will catch
