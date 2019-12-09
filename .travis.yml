@@ -22,7 +22,7 @@ matrix:
             - set -x
             # Make sure there are no left-over git patch markers in
             - git --no-pager grep '>>>>>>>'
-            - pip install poetry~=1.0.0b8
+            - pip install poetry~=1.0.0b9
             - poetry --version
             - poetry install -vv
             - poetry run flake8 kuma docs tests
