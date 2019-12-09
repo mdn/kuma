@@ -24,7 +24,7 @@ GOOGLE_INFO = (
 )
 ENV_INFO = 'Putting SITE_ID and DOMAIN into .env'
 HOSTS_INFO = (
-    'You should should run "docker-compose restart" now, so that the .env updates are applied\n.'
+    'You should should run "docker-compose stop; docker-compose up" now, so that the .env updates are applied\n.'
     'Make sure your hosts file contains these lines:\n'
     '127.0.0.1 localhost demos localhost.org wiki.localhost.org\n'
     '::1             localhost.org wiki.localhost.org'
