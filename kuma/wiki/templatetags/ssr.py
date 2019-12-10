@@ -134,11 +134,7 @@ def server_side_render(component_name, data):
         result = response.json()
         return _render(component_name, result['html'], result['script'])
 
-    except requests.exceptions.ConnectionError:
-        print("Connection error contacting SSR server.")
-        print("Falling back to client side rendering.")
-        return client_side_render(component_name, data)
-    except requests.exceptions.ReadTimeout:
-        print("Timeout contacting SSR server.")
+    except requests.exceptions.RequestException as exception:
+        print(f"{exception.__class__} error contacting SSR server.")
         print("Falling back to client side rendering.")
         return client_side_render(component_name, data)
