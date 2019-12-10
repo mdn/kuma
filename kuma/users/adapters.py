@@ -259,9 +259,7 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         """
         We allow "auto-signup" (basically skipping the sign-up form page) only
         if there is an existing user that we can re-use instead of creating
-        a new one. An existing user is found if at least one of the user's
-        verified email addresses matches one of the verified email addresses
-        within the social login object.
+        a new one.
         """
         return bool(get_existing_user(sociallogin))
 
