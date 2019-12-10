@@ -99,8 +99,10 @@ RUN useradd --uid 1000 --shell /bin/bash --create-home kuma \
 
 # install Python libraries
 WORKDIR /app
-COPY --chown=kuma:kuma ./requirements /app/requirements
-RUN pip install --no-cache-dir -r requirements/dev.txt
+COPY --chown=kuma:kuma ./pyproject.toml ./poetry.lock /app/
+RUN pip install poetry~=1.0.0b9 \
+    && POETRY_VIRTUALENVS_CREATE=false poetry install --no-root \
+    && rm -rf ~/.cache/pip ~/.cache/pypoetry/cache
 
 # install Node.js tools
 # config files are symlinks to make updating easier
