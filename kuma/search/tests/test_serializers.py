@@ -1,5 +1,6 @@
 from unittest import mock
 
+from django.conf import settings
 from django.utils import translation
 from rest_framework import serializers
 from rest_framework.test import APIRequestFactory
@@ -10,7 +11,7 @@ from . import ElasticTestCase
 from ..fields import SearchQueryField, SiteURLField
 from ..models import Filter, FilterGroup
 from ..serializers import (DocumentSerializer, FilterSerializer,
-                           FilterWithGroupSerializer)
+                           FilterWithGroupSerializer, SearchQuerySerializer)
 
 
 class SerializerTests(ElasticTestCase):
@@ -58,6 +59,25 @@ class SerializerTests(ElasticTestCase):
         dict_data = doc_serializer.data
         assert isinstance(dict_data, dict)
         assert dict_data['id'] == result[0].id
+
+    def test_search_query_serializer(self):
+        search_serializer = SearchQuerySerializer(
+            data={'q': 'test'}
+        )
+        assert search_serializer.is_valid()
+        assert search_serializer.errors == {}
+
+        search_serializer = SearchQuerySerializer(
+            data={'q': r'test\nsomething'}
+        )
+        assert not search_serializer.is_valid()
+        assert list(search_serializer.errors.keys()) == ['q']
+
+        search_serializer = SearchQuerySerializer(
+            data={'q': 't' * (settings.ES_Q_MAXLENGTH + 1)}
+        )
+        assert not search_serializer.is_valid()
+        assert list(search_serializer.errors.keys()) == ['q']
 
     def test_excerpt(self):
         search = WikiDocumentType.search()

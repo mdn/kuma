@@ -22,8 +22,10 @@ matrix:
             - set -x
             # Make sure there are no left-over git patch markers in
             - git --no-pager grep '>>>>>>>'
-            - pip install -r requirements/linting.txt
-            - flake8 kuma docs tests
+            - pip install poetry~=1.0.0b9
+            - poetry --version
+            - poetry install -vv
+            - poetry run flake8 kuma docs tests
         - language: python
           name: "Python testing"
           python: 3.8

@@ -7,8 +7,33 @@ from django.db.utils import IntegrityError
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from django_mysql.models import Model as MySQLModel
+from storages.backends.s3boto3 import S3Boto3Storage
 
 from .utils import attachment_upload_to, full_attachment_url
+
+
+class AttachmentStorage(S3Boto3Storage):
+    def __init__(self, *args, **kwargs):
+        configuration = dict(
+            access_key=settings.ATTACHMENTS_AWS_ACCESS_KEY_ID,
+            secret_key=settings.ATTACHMENTS_AWS_SECRET_ACCESS_KEY,
+            bucket_name=settings.ATTACHMENTS_AWS_STORAGE_BUCKET_NAME,
+            object_parameters={
+                'CacheControl': 'public, max-age=31536000, immutable',
+            },
+            default_acl='public-read',
+            querystring_auth=False,
+            custom_domain=settings.ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN,
+            secure_urls=settings.ATTACHMENTS_AWS_S3_SECURE_URLS,
+            region_name=settings.ATTACHMENTS_AWS_S3_REGION_NAME,
+            endpoint_url=settings.ATTACHMENTS_AWS_S3_ENDPOINT_URL,
+        )
+        configuration.update(kwargs)
+
+        super(AttachmentStorage, self).__init__(*args, **configuration)
+
+
+storage = AttachmentStorage() if settings.ATTACHMENTS_USE_S3 else None
 
 
 class Attachment(models.Model):
@@ -47,6 +72,9 @@ class Attachment(models.Model):
         return self.title
 
     def get_file_url(self):
+        if self.current_revision is None:
+            return ""
+
         return full_attachment_url(self.id, self.current_revision.filename)
 
     @cached_property
@@ -100,7 +128,11 @@ class AttachmentRevision(models.Model):
     attachment = models.ForeignKey(Attachment, related_name='revisions',
                                    on_delete=models.CASCADE)
 
-    file = models.FileField(upload_to=attachment_upload_to, max_length=500)
+    file = models.FileField(
+        storage=storage,
+        upload_to=attachment_upload_to,
+        max_length=500,
+    )
 
     title = models.CharField(max_length=255, null=True, db_index=True)
 
@@ -147,7 +179,7 @@ class AttachmentRevision(models.Model):
 
     @property
     def filename(self):
-        return os.path.split(self.file.path)[-1]
+        return os.path.basename(self.file.name)
 
     def save(self, *args, **kwargs):
         super(AttachmentRevision, self).save(*args, **kwargs)
@@ -210,6 +242,7 @@ class AttachmentRevision(models.Model):
 class TrashedAttachment(MySQLModel):
 
     file = models.FileField(
+        storage=storage,
         upload_to=attachment_upload_to,
         max_length=500,
         help_text=_('The attachment file that was trashed'),
@@ -240,4 +273,4 @@ class TrashedAttachment(MySQLModel):
 
     @property
     def filename(self):
-        return os.path.split(self.file.path)[-1]
+        return os.path.basename(self.file.name)

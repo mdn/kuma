@@ -1,7 +1,7 @@
 FROM python:3.8.0-slim@sha256:7df1fd6bb894e03b488c01fd05eaa4dd677f5b57d800c209f7f0af9867137df9
 
 # Set the environment variables
-ENV NODE_VERSION=10.16.3 \
+ENV NODE_VERSION=12.13.1 \
     # extra python env
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -42,7 +42,7 @@ RUN set -x \
 
 # ----------------------------------------------------------------------------
 # add node.js 10.x, copied from:
-#     https://github.com/nodejs/docker-node/blob/master/10/stretch/Dockerfile
+#     https://github.com/nodejs/docker-node/blob/master/12/stretch/Dockerfile
 # but with:
 #  The NODE_VERSION environment variable is set above
 #  The node user gets uid/gid 1001 rather than 1000
@@ -99,8 +99,10 @@ RUN useradd --uid 1000 --shell /bin/bash --create-home kuma \
 
 # install Python libraries
 WORKDIR /app
-COPY --chown=kuma:kuma ./requirements /app/requirements
-RUN pip install --no-cache-dir -r requirements/dev.txt
+COPY --chown=kuma:kuma ./pyproject.toml ./poetry.lock /app/
+RUN pip install poetry~=1.0.0b9 \
+    && POETRY_VIRTUALENVS_CREATE=false poetry install --no-root \
+    && rm -rf ~/.cache/pip ~/.cache/pypoetry/cache
 
 # install Node.js tools
 # config files are symlinks to make updating easier

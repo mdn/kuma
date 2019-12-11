@@ -1,4 +1,4 @@
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 from django.core.exceptions import MiddlewareNotUsed
@@ -8,10 +8,8 @@ from django.test import RequestFactory
 from ..middleware import (
     ForceAnonymousSessionMiddleware,
     RestrictedEndpointsMiddleware,
-    RestrictedWhiteNoiseMiddleware,
     SetRemoteAddrFromForwardedFor,
     WaffleWithCookieDomainMiddleware,
-    WhiteNoiseMiddleware,
 )
 
 
@@ -95,27 +93,6 @@ def test_restricted_endpoints_middleware_when_disabled(settings):
     settings.ENABLE_RESTRICTIONS_BY_HOST = False
     with pytest.raises(MiddlewareNotUsed):
         RestrictedEndpointsMiddleware(lambda req: None)
-
-
-def test_restricted_whitenoise_middleware(rf, settings):
-    settings.ATTACHMENT_HOST = 'demos'
-    settings.ENABLE_RESTRICTIONS_BY_HOST = True
-    settings.ALLOWED_HOSTS.append('demos')
-
-    middleware = RestrictedWhiteNoiseMiddleware(lambda req: None)
-    sentinel = object()
-
-    with patch.object(WhiteNoiseMiddleware, 'process_request',
-                      return_value=sentinel):
-        request = rf.get('/foo', HTTP_HOST='demos')
-        assert middleware(request) is None
-
-        request = rf.get('/foo', HTTP_HOST='testserver')
-        assert middleware(request) is sentinel
-
-        settings.ENABLE_RESTRICTIONS_BY_HOST = False
-        request = rf.get('/foo', HTTP_HOST='demos')
-        assert middleware(request) is sentinel
 
 
 def test_waffle_cookie_domain_middleware(rf, settings):
