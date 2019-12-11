@@ -46,10 +46,10 @@ description = "The AWS SDK for Python"
 name = "boto3"
 optional = false
 python-versions = "*"
-version = "1.9.128"
+version = "1.10.37"
 
 [package.dependencies]
-botocore = ">=1.12.128,<1.13.0"
+botocore = ">=1.13.37,<1.14.0"
 jmespath = ">=0.7.1,<1.0.0"
 s3transfer = ">=0.2.0,<0.3.0"
 
@@ -59,19 +59,19 @@ description = "Low-level, data-driven core of boto 3."
 name = "botocore"
 optional = false
 python-versions = "*"
-version = "1.12.130"
+version = "1.13.37"
 
 [package.dependencies]
-docutils = ">=0.10"
+docutils = ">=0.10,<0.16"
 jmespath = ">=0.7.1,<1.0.0"
 
 [package.dependencies.python-dateutil]
 python = ">=2.7"
-version = ">=2.1,<3.0.0"
+version = ">=2.1,<2.8.1"
 
 [package.dependencies.urllib3]
 python = ">=3.4"
-version = ">=1.20,<1.25"
+version = ">=1.20,<1.26"
 
 [[package]]
 category = "dev"
@@ -547,8 +547,8 @@ category = "main"
 description = "Docutils -- Python Documentation Utilities"
 name = "docutils"
 optional = false
-python-versions = "*"
-version = "0.12"
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+version = "0.15.2"
 
 [[package]]
 category = "main"
@@ -1015,7 +1015,7 @@ description = "Extensions to the standard Python datetime module"
 name = "python-dateutil"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
-version = "2.7.3"
+version = "2.8.0"
 
 [package.dependencies]
 six = ">=1.5"
@@ -1156,7 +1156,7 @@ description = "An Amazon S3 Transfer Manager"
 name = "s3transfer"
 optional = false
 python-versions = "*"
-version = "0.2.0"
+version = "0.2.1"
 
 [package.dependencies]
 botocore = ">=1.12.36,<2.0.0"
@@ -1166,8 +1166,8 @@ category = "main"
 description = "Python 2 and 3 compatibility utilities"
 name = "six"
 optional = false
-python-versions = "*"
-version = "1.11.0"
+python-versions = ">=2.6, !=3.0.*, !=3.1.*"
+version = "1.13.0"
 
 [[package]]
 category = "main"
@@ -1264,7 +1264,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "4e2c2831e8f564fac0b747a514f0ee22b13aeb7ef0cd981784e53e34cc2839ee"
+content-hash = "86a4286aa0331fd2b2bde22cb8afe2ed6c757bdb28a9d861798367e7db4cd659"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1285,12 +1285,12 @@ bleach = [
     {file = "bleach-2.1.4.tar.gz", hash = "sha256:0ee95f6167129859c5dce9b1ca291ebdb5d8cd7e382ca0e237dfd0dad63f63d8"},
 ]
 boto3 = [
-    {file = "boto3-1.9.128-py2.py3-none-any.whl", hash = "sha256:9a133736098741ef8016fb22824c99f9bef8f39a0bfbb76f73fe8bf18373f726"},
-    {file = "boto3-1.9.128.tar.gz", hash = "sha256:5166f26bf364ae56765f79db07a6a3db25ad1b0af2707cafe721505085146f5b"},
+    {file = "boto3-1.10.37-py2.py3-none-any.whl", hash = "sha256:210b119965782feacadbdf46944b2ca83d52f7ac7c625ec2e5188c60621a6153"},
+    {file = "boto3-1.10.37.tar.gz", hash = "sha256:7dc118fafbc81e32d753ee3c00600f04fd032042cec9136fc8fdce3e6f58191d"},
 ]
 botocore = [
-    {file = "botocore-1.12.130-py2.py3-none-any.whl", hash = "sha256:128130b12f8ba4bf07a673b119135264060eb98f6a4a7419cbd1f2c6dc926827"},
-    {file = "botocore-1.12.130.tar.gz", hash = "sha256:59376112fdee707927b644dd44a1771861f8fe354a48d596131ced83d7a3c05b"},
+    {file = "botocore-1.13.37-py2.py3-none-any.whl", hash = "sha256:a5061854d117e4afb82c2f2da7ff1fb7492045e1968efdca6df80b9a9a1f31d5"},
+    {file = "botocore-1.13.37.tar.gz", hash = "sha256:cdecb25b58823784d6118d8f991bbd6a36ee220039ea7bf2001029d1bbff0cb0"},
 ]
 braceexpand = [
     {file = "braceexpand-0.1.1.tar.gz", hash = "sha256:f967ca39bdb98e16299a69c45a944c5d4345393615ed6470bb1e62ca3506bf41"},
@@ -1494,8 +1494,9 @@ djangorestframework = [
     {file = "djangorestframework-3.9.4.tar.gz", hash = "sha256:c12869cfd83c33d579b17b3cb28a2ae7322a53c3ce85580c2a2ebe4e3f56c4fb"},
 ]
 docutils = [
-    {file = "docutils-0.12-py3-none-any.whl", hash = "sha256:dcebd4928112631626f4c4d0df59787c748404e66dda952110030ea883d3b8cd"},
-    {file = "docutils-0.12.tar.gz", hash = "sha256:c7db717810ab6965f66c8cf0398a98c9d8df982da39b4cd7f162911eb89596fa"},
+    {file = "docutils-0.15.2-py2-none-any.whl", hash = "sha256:9e4d7ecfc600058e07ba661411a2b7de2fd0fafa17d1a7f7361cd47b1175c827"},
+    {file = "docutils-0.15.2-py3-none-any.whl", hash = "sha256:6c4f696463b79f1fb8ba0c594b63840ebd41f059e92b31957c46b74a4599b6d0"},
+    {file = "docutils-0.15.2.tar.gz", hash = "sha256:a2aeea129088da402665e92e0b25b04b073c04b2dce4ab65caaa38b7ce2e1a99"},
 ]
 elasticsearch = [
     {file = "elasticsearch-6.3.1-py2.py3-none-any.whl", hash = "sha256:7546cc08e3899716e12fe67d12d7cfe9a64647014d1134b014c3c392b63cad42"},
@@ -1718,8 +1719,8 @@ pytest-variables = [
     {file = "pytest_variables-1.7.1-py2.py3-none-any.whl", hash = "sha256:59c00b95779657532ac5f8209b28b5d447c8b4bc4210c1d6bdf9a42aa201f9b0"},
 ]
 python-dateutil = [
-    {file = "python-dateutil-2.7.3.tar.gz", hash = "sha256:e27001de32f627c22380a688bcc43ce83504a7bc5da472209b4c70f02829f0b8"},
-    {file = "python_dateutil-2.7.3-py2.py3-none-any.whl", hash = "sha256:1adb80e7a782c12e52ef9a8182bebeb73f1d7e24e374397af06fb4956c8dc5c0"},
+    {file = "python-dateutil-2.8.0.tar.gz", hash = "sha256:c89805f6f4d64db21ed966fda138f8a5ed7a4fdbc1a8ee329ce1b74e3c74da9e"},
+    {file = "python_dateutil-2.8.0-py2.py3-none-any.whl", hash = "sha256:7e6584c74aeed623791615e26efd690f29817a27c73085b78e4bad02493df2fb"},
 ]
 python-decouple = [
     {file = "python-decouple-3.1.tar.gz", hash = "sha256:1317df14b43efee4337a4aa02914bf004f010cd56d6c4bd894e6474ec8c4fe2d"},
@@ -1768,12 +1769,12 @@ rsa = [
     {file = "rsa-3.4.2.tar.gz", hash = "sha256:25df4e10c263fb88b5ace923dd84bf9aa7f5019687b5e55382ffcdb8bede9db5"},
 ]
 s3transfer = [
-    {file = "s3transfer-0.2.0-py2.py3-none-any.whl", hash = "sha256:7b9ad3213bff7d357f888e0fab5101b56fa1a0548ee77d121c3a3dbfbef4cb2e"},
-    {file = "s3transfer-0.2.0.tar.gz", hash = "sha256:f23d5cb7d862b104401d9021fc82e5fa0e0cf57b7660a1331425aab0c691d021"},
+    {file = "s3transfer-0.2.1-py2.py3-none-any.whl", hash = "sha256:b780f2411b824cb541dbcd2c713d0cb61c7d1bcadae204cdddda2b35cef493ba"},
+    {file = "s3transfer-0.2.1.tar.gz", hash = "sha256:6efc926738a3cd576c2a79725fed9afde92378aa5c6a957e3af010cb019fac9d"},
 ]
 six = [
-    {file = "six-1.11.0-py2.py3-none-any.whl", hash = "sha256:832dc0e10feb1aa2c68dcc57dbb658f1c7e65b9b61af69048abc87a2db00a0eb"},
-    {file = "six-1.11.0.tar.gz", hash = "sha256:70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9"},
+    {file = "six-1.13.0-py2.py3-none-any.whl", hash = "sha256:1f1b7d42e254082a9db6279deae68afb421ceba6158efa6131de7b3003ee93fd"},
+    {file = "six-1.13.0.tar.gz", hash = "sha256:30f610279e8b2578cab6db20741130331735c781b56053c59c4076da27f06b66"},
 ]
 sqlparse = [
     {file = "sqlparse-0.3.0-py2.py3-none-any.whl", hash = "sha256:40afe6b8d4b1117e7dff5504d7a8ce07d9a1b15aeeade8a2d10f130a834f8177"},
