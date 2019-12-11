@@ -13,6 +13,7 @@
 
 {% block site_css %}
   {{ super() }}
+  {% stylesheet 'user-delete' %}
 {% endblock %}
 
 {% block site_js %}
@@ -23,7 +24,7 @@
 
     <h1>{{ title }}</h1>
 
-    <div class="text-content readable-line-length">
+    <div class="text-content readable-line-length" id="user-delete">
 
         <p>{{ _('We\'re sorry to see you go.') }}</p>
 
@@ -32,7 +33,6 @@
           You have {{ count }} wiki revisions.
           {% endtrans %}
         </p>
-
 
         <form action="" method="post">
           {% csrf_token %}
