@@ -75,13 +75,13 @@ redis = "3.2.1"
 requests-mock = "0.7.0"
 sqlparse = "0.3.0"
 stripe = "2.31.0"
-urllib3 = "^1.24.3"
+urllib3 = "^1.25.7"
 urlobject = "2.4.0"
 whitenoise = "3.3.1"
 
 # From default_and_test.txt
 pyquery = "1.4.0"
-requests = "2.20.1"
+requests = "^2.22.0"
 six = "^1.13.0"
 
 # From dev.txt
@@ -94,14 +94,12 @@ urlwait = "0.4"
 werkzeug = "0.16.0"
 
 # From constraints.txt
-certifi = "2018.10.15"
 chardet = "3.0.4"
 click = "6.7"
 coverage = "4.3.4"
 defusedxml = "0.5.0"
 django-appconf = "1.0.2"
 greenlet = "0.4.15"
-idna = "2.7"
 markupsafe = "1.0"
 oauthlib = "2.0.4"
 py = "1.4.33"
