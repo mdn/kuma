@@ -906,7 +906,7 @@ description = "A jquery-like library for python"
 name = "pyquery"
 optional = false
 python-versions = "*"
-version = "1.4.0"
+version = "1.4.1"
 
 [package.dependencies]
 cssselect = ">0.7.9"
@@ -1265,7 +1265,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "cc2aadcac262cb55b29f3ad416e7a4da75a8bf5093dc7e6fb2fa2ad42ac855c3"
+content-hash = "07c2781c6f280a49f8074d7731f592a54b51d6c39755a3943e313c1794e67ea9"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1684,8 +1684,8 @@ pyflakes = [
     {file = "pyflakes-2.1.1.tar.gz", hash = "sha256:d976835886f8c5b31d47970ed689944a0262b5f3afa00a5a7b4dc81e5449f8a2"},
 ]
 pyquery = [
-    {file = "pyquery-1.4.0-py2.py3-none-any.whl", hash = "sha256:07987c2ed2aed5cba29ff18af95e56e9eb04a2249f42ce47bddfb37f487229a3"},
-    {file = "pyquery-1.4.0.tar.gz", hash = "sha256:4771db76bd14352eba006463656aef990a0147a0eeaf094725097acfa90442bf"},
+    {file = "pyquery-1.4.1-py2.py3-none-any.whl", hash = "sha256:710eac327b87f15f74a95c3378c6ba62ef6fcfb0a6d009a7d33349c9f7e65835"},
+    {file = "pyquery-1.4.1.tar.gz", hash = "sha256:8fcf77c72e3d602ce10a0bd4e65f57f0945c18e15627e49130c27172d4939d98"},
 ]
 pytest = [
     {file = "pytest-3.1.3-py2.py3-none-any.whl", hash = "sha256:2a4f483468954621fcc8f74784f3b42531e5b5008d49fc609b37bc4dbc6dead1"},
