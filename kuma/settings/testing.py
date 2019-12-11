@@ -78,3 +78,10 @@ MDN_CLOUDFRONT_DISTRIBUTIONS = {}
 
 # Never rely on the .env
 GOOGLE_ANALYTICS_ACCOUNT = None
+
+# Silence warnings about defaults that change in django-storages 2.0
+AWS_BUCKET_ACL = None
+AWS_DEFAULT_ACL = None
+
+# Use a dedicated minio bucket for tests
+ATTACHMENTS_AWS_STORAGE_BUCKET_NAME = 'test'

@@ -26,7 +26,7 @@ Here are some of the images used in the Kuma project:
 .. Published images
 .. include:: ../docker/images/kuma/README.rst
 .. include:: ../docker/images/kuma_base/README.rst
-.. include:: ../docker/images/kumascript/README.rst
+.. include:: ../kumascript/docker/README.rst
 
 .. Development and support images
 .. include:: ../docker/images/integration-tests/README.rst
