@@ -1388,19 +1388,12 @@ def test_delete_user_no_revisions_misc_related(db, user_client, wiki_user):
     assert user_ban_user.user.username == 'Anonymous'
 
 
-def test_delete_user_donate_attributions(db, user_client, wiki_user):
-
-    # Pretend the user logged in with GitHub
-    SocialAccount.objects.create(
-        user=wiki_user,
-        provider='github',
-        extra_data=dict(
-            email=wiki_user.email,
-            avatar_url='https://avatars0.githubusercontent.com/yada/yada',
-            html_url="https://github.com/{}".format(wiki_user.username)
-        )
-    )
-
+def test_delete_user_donate_attributions(
+    db,
+    user_client,
+    wiki_user,
+    wiki_user_github_account,
+):
     document = create_document(save=True)
     revision = create_revision(
         title='My First And Only Revision',
@@ -1426,6 +1419,8 @@ def test_delete_user_donate_attributions(db, user_client, wiki_user):
     response = user_client.post(url, {'attributions': 'donate'}, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
     assert not User.objects.filter(username=wiki_user.username).exists()
+    with pytest.raises(SocialAccount.DoesNotExist):
+        wiki_user_github_account.refresh_from_db()
 
     revision.refresh_from_db()
     assert revision.creator.username == 'Anonymous'
@@ -1446,19 +1441,12 @@ def test_delete_user_donate_attributions(db, user_client, wiki_user):
     assert not response.json()['is_authenticated']
 
 
-def test_delete_user_keep_attributions(db, user_client, wiki_user):
-
-    # Pretend the user logged in with GitHub
-    SocialAccount.objects.create(
-        user=wiki_user,
-        provider='github',
-        extra_data=dict(
-            email=wiki_user.email,
-            avatar_url='https://avatars0.githubusercontent.com/yada/yada',
-            html_url="https://github.com/{}".format(wiki_user.username)
-        )
-    )
-
+def test_delete_user_keep_attributions(
+    db,
+    user_client,
+    wiki_user,
+    wiki_user_github_account
+):
     # Also, pretend that the user has a rich profile
     User.objects.filter(id=wiki_user.id).update(
         first_name='Peter',
@@ -1518,6 +1506,8 @@ def test_delete_user_keep_attributions(db, user_client, wiki_user):
     assert response.status_code == 302
     # Should still exist
     assert User.objects.filter(username=wiki_user.username).exists()
+    with pytest.raises(SocialAccount.DoesNotExist):
+        wiki_user_github_account.refresh_from_db()
 
     # Should still be associated with the user
     revision.refresh_from_db()
