@@ -494,22 +494,30 @@ def user_delete(request, username):
         user.save()
 
         user.socialaccount_set.all().delete()
+        user.key_set.all().delete()
 
     def force_logout():
         request.session.clear()
 
     def delete_user():
-        user.revisionakismetsubmission_set.all().delete()
+        # Protected references to users need to be manually deleted first.
+        user.key_set.all().delete()
+
+        # Some records are worth keeping prior to deleting the user
+        # but "re-assign" to the anonymous user.
+        anon, _ = User.objects.get_or_create(username='Anonymous')
+        user.revisionakismetsubmission_set.update(sender=anon)
+        user.documentdeletionlog_set.update(user=anon)
+        user.documentspamattempt_set.update(user=anon)
+        user.documentspam_reviewed.update(reviewer=anon)
+        user.bans.update(user=anon)
+        user.bans_issued.update(by=anon)
+
         user.delete()
 
     revisions = Revision.objects.filter(creator=request.user)
     context = {}
     if request.method == 'POST':
-
-        # Double-check that you only delete your own account.
-        if request.user.username != username:
-            return HttpResponseForbidden()
-
         # If the user has no revisions there's not choices on the form.
         if revisions.exists():
             form = UserDeleteForm(request.POST)

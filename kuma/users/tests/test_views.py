@@ -16,13 +16,18 @@ from pytz import timezone, utc
 from waffle.models import Flag
 
 from kuma.attachments.models import Attachment, AttachmentRevision
+from kuma.authkeys.models import Key
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html
 from kuma.spam.akismet import Akismet
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
-from kuma.wiki.models import (Document, DocumentDeletionLog, Revision,
-                              RevisionAkismetSubmission)
+from kuma.wiki.models import (
+    Document,
+    DocumentDeletionLog,
+    DocumentSpamAttempt,
+    Revision,
+    RevisionAkismetSubmission)
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 from kuma.wiki.tests import document as create_document
 from kuma.wiki.tests import revision as create_revision
@@ -1329,6 +1334,60 @@ def test_delete_user_with_no_revisions(db, user_client, wiki_user):
     assert not User.objects.filter(username=wiki_user.username).exists()
 
 
+def test_delete_user_no_revisions_misc_related(db, user_client, wiki_user):
+    Key.objects.create(user=wiki_user)
+    revision_akismet_submission = RevisionAkismetSubmission.objects.create(
+        sender=wiki_user,
+        revision=Revision.objects.all().first(),
+        type='spam'
+    )
+    document_deletion_log = DocumentDeletionLog.objects.create(
+        locale='any',
+        slug='Any/Thing',
+        user=wiki_user,
+        reason='...'
+    )
+    document_spam_attempt_user = DocumentSpamAttempt.objects.create(
+        user=wiki_user,
+    )
+    throwaway_user = User.objects.create(username='throwaway')
+    document_spam_attempt_reviewer = DocumentSpamAttempt.objects.create(
+        user=throwaway_user,
+        reviewer=wiki_user,
+    )
+    user_ban_by = UserBan.objects.create(
+        user=throwaway_user,
+        by=wiki_user
+    )
+    user_ban_user = UserBan.objects.create(
+        user=wiki_user,
+        by=throwaway_user,
+        is_active=False,  # otherwise it logs the user out
+    )
+
+    url = reverse('users.user_delete', kwargs={'username': wiki_user.username})
+    response = user_client.post(url, HTTP_HOST=settings.WIKI_HOST)
+    assert response.status_code == 302
+    assert not User.objects.filter(username=wiki_user.username).exists()
+
+    # These are plainly deleted
+    assert not Key.objects.all().exists()
+
+    # Moved to anonymous user
+    revision_akismet_submission.refresh_from_db()
+    assert revision_akismet_submission.sender.username == 'Anonymous'
+    document_deletion_log.refresh_from_db()
+    assert document_deletion_log.user.username == 'Anonymous'
+    document_spam_attempt_user.refresh_from_db()
+    assert document_spam_attempt_user.user.username == 'Anonymous'
+    document_spam_attempt_reviewer.refresh_from_db()
+    assert document_spam_attempt_reviewer.reviewer.username == 'Anonymous'
+    user_ban_by.refresh_from_db()
+    assert user_ban_by.by.username == 'Anonymous'
+    user_ban_user.refresh_from_db()
+    assert user_ban_user.user.username == 'Anonymous'
+
+
 def test_delete_user_donate_attributions(db, user_client, wiki_user):
 
     # Pretend the user logged in with GitHub
@@ -1445,6 +1504,15 @@ def test_delete_user_keep_attributions(db, user_client, wiki_user):
     # Create some social logins
     assert SocialAccount.objects.filter(user=wiki_user).exists()
 
+    # Create a RevisionAkismetSubmission
+    RevisionAkismetSubmission.objects.create(
+        revision=revision,
+        sender=wiki_user,
+        type='ham')
+
+    # Create an authentication key
+    Key.objects.create(user=wiki_user)
+
     url = reverse('users.user_delete', kwargs={'username': wiki_user.username})
     response = user_client.post(url, {'attributions': 'keep'}, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
@@ -1494,6 +1562,9 @@ def test_delete_user_keep_attributions(db, user_client, wiki_user):
     assert response.status_code == 200
     assert not response.json()['username']
     assert not response.json()['is_authenticated']
+
+    # There should be no Key left
+    assert not Key.objects.all().exists()
 
 
 @pytest.mark.parametrize(
