@@ -184,7 +184,7 @@ description = "cssselect parses CSS3 Selectors and translates them to XPath 1.0"
 name = "cssselect"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.0.3"
+version = "1.1.0"
 
 [[package]]
 category = "main"
@@ -1265,7 +1265,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "07c2781c6f280a49f8074d7731f592a54b51d6c39755a3943e313c1794e67ea9"
+content-hash = "8d8b74cea5015312f4cef769996772ea019f0995e2f190d5584e7f6bfd49e9a2"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1367,8 +1367,8 @@ coverage = [
     {file = "coverage-4.3.4.win32-py3.6.exe", hash = "sha256:0962e9764e44172a72fa6e486aeb87d714f7018619ff41eb7c67b03fc53d122a"},
 ]
 cssselect = [
-    {file = "cssselect-1.0.3-py2.py3-none-any.whl", hash = "sha256:3b5103e8789da9e936a68d993b70df732d06b8bb9a337a05ed4eb52c17ef7206"},
-    {file = "cssselect-1.0.3.tar.gz", hash = "sha256:066d8bc5229af09617e24b3ca4d52f1f9092d9e061931f4184cd572885c23204"},
+    {file = "cssselect-1.1.0-py2.py3-none-any.whl", hash = "sha256:f612ee47b749c877ebae5bb77035d8f4202c6ad0f0fc1271b3c18ad6c4468ecf"},
+    {file = "cssselect-1.1.0.tar.gz", hash = "sha256:f95f8dedd925fd8f54edb3d2dfb44c190d9d18512377d3c1e2388d16126879bc"},
 ]
 defusedxml = [
     {file = "defusedxml-0.5.0-py2.py3-none-any.whl", hash = "sha256:702a91ade2968a82beb0db1e0766a6a273f33d4616a6ce8cde475d8e09853b20"},
