@@ -1,7 +1,5 @@
 import json
-import operator
 from datetime import datetime, timedelta
-from functools import reduce
 
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
@@ -477,12 +475,23 @@ class SignupView(BaseSignupView):
         self.email_addresses = {}
         form = super(SignupView, self).get_form(form_class)
         form.fields['email'].label = _('Email address')
+
+        User = get_user_model()
+
+        # When no username is provided, default to the local-part of the email address
+        if form.initial.get('username', '') == '':
+            email = form.initial.get('email', '')
+            if isinstance(email, tuple):
+                email = email[0]
+            suggested_username = email.split('@')[0]
+            if not User.objects.filter(username__iexact=suggested_username).exists():
+                form.initial['username'] = suggested_username
+
         self.matching_user = None
         initial_username = form.initial.get('username', None)
 
-        # For GitHub users, see if we can find matching user by username
-        assert self.sociallogin.account.provider == 'github'
-        User = get_user_model()
+        # For GitHub/Google users, see if we can find matching user by username
+        assert self.sociallogin.account.provider in ('github', 'google')
         try:
             self.matching_user = User.objects.get(username=initial_username)
             # deleting the initial username because we found a matching user
@@ -584,16 +593,16 @@ class SignupView(BaseSignupView):
     def get_context_data(self, **kwargs):
         context = super(SignupView, self).get_context_data(**kwargs)
 
-        # For GitHub users, find matching legacy Persona social accounts
-        assert self.sociallogin.account.provider == 'github'
-        or_query = []
+        # For GitHub/Google users, find matching legacy Persona social accounts
+        assert self.sociallogin.account.provider in ('github', 'google')
+        uids = Q()
         for email_address in self.email_addresses.values():
             if email_address['verified']:
-                or_query.append(Q(uid=email_address['email']))
-        if or_query:
-            reduced_or_query = reduce(operator.or_, or_query)
-            matching_accounts = (SocialAccount.objects
-                                              .filter(reduced_or_query))
+                uids |= Q(uid=email_address['email'])
+        if uids:
+            # only persona accounts have emails as UIDs
+            # but adding the provider criteria makes this explicit and future-proof
+            matching_accounts = SocialAccount.objects.filter(uids, provider='persona')
         else:
             matching_accounts = SocialAccount.objects.none()
 
