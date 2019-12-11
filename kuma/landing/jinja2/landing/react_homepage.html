@@ -9,7 +9,7 @@
 {% block site_css %}
   {{ super() }}
 
-  {% if waffle.flag('developer_needs') %}
+  {% if waffle.switch('developer_needs') %}
     {% stylesheet 'banners' %}
   {% endif %}
 {% endblock %}
