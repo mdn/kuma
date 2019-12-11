@@ -1069,7 +1069,7 @@ description = "World timezone definitions, modern and historical"
 name = "pytz"
 optional = false
 python-versions = "*"
-version = "2018.9"
+version = "2019.3"
 
 [[package]]
 category = "main"
@@ -1264,7 +1264,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "54591c218aa156935ff61875b982687b9918cf4808eacd4877f27e5ca9e91b44"
+content-hash = "08c064d8d317066fa5e3b15817f7012b54cdafbb7e1c078ad836b95ea3d02c76"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1739,8 +1739,8 @@ pytidylib = [
     {file = "pytidylib-0.3.2.tar.gz", hash = "sha256:22b1c8d75970d8064ff999c2369e98af1d0685417eda4c829a5c9f56764b0af3"},
 ]
 pytz = [
-    {file = "pytz-2018.9-py2.py3-none-any.whl", hash = "sha256:32b0891edff07e28efe91284ed9c31e123d84bea3fd98e1f72be2508f43ef8d9"},
-    {file = "pytz-2018.9.tar.gz", hash = "sha256:d5f05e487007e29e03409f9398d074e158d920d36eb82eaf66fb1136b0c5374c"},
+    {file = "pytz-2019.3-py2.py3-none-any.whl", hash = "sha256:1c557d7d0e871de1f5ccd5833f60fb2550652da6be2693c1e02300743d21500d"},
+    {file = "pytz-2019.3.tar.gz", hash = "sha256:b02c06db6cf09c12dd25137e563b31700d3b80fcc4ad23abb7a315f2789819be"},
 ]
 raven = [
     {file = "raven-6.10.0-py2.py3-none-any.whl", hash = "sha256:44a13f87670836e153951af9a3c80405d36b43097db869a36e92809673692ce4"},
