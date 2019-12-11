@@ -1,7 +1,5 @@
 import json
-import operator
 from datetime import datetime, timedelta
-from functools import reduce
 
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
@@ -597,16 +595,14 @@ class SignupView(BaseSignupView):
 
         # For GitHub/Google users, find matching legacy Persona social accounts
         assert self.sociallogin.account.provider in ('github', 'google')
-        or_query = []
+        uids = Q()
         for email_address in self.email_addresses.values():
             if email_address['verified']:
-                # only persona accounts have emails as UIDs
-                # but adding the provider criteria makes this explicit and future-proof
-                or_query.append(Q(uid=email_address['email']) & Q(provider='persona'))
-        if or_query:
-            reduced_or_query = reduce(operator.or_, or_query)
-            matching_accounts = (SocialAccount.objects
-                                              .filter(reduced_or_query))
+                uids |= Q(uid=email_address['email'])
+        if uids:
+            # only persona accounts have emails as UIDs
+            # but adding the provider criteria makes this explicit and future-proof
+            matching_accounts = SocialAccount.objects.filter(uids, provider='persona')
         else:
             matching_accounts = SocialAccount.objects.none()
 
