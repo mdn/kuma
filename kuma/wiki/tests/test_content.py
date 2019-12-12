@@ -893,7 +893,6 @@ def test_dont_annotate_links_with_trailing_slashes(db, root_doc):
         </ul>
     """
     actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
-    expected_raw = 'xxx'
     expected_raw = """
         <ul>
         <li><a href="/en-US/docs/Root/">Root</a></li>

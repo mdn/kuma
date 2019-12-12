@@ -476,7 +476,9 @@ class LinkAnnotationFilter(html5lib_Filter):
                 # Gather up this link for existence check
                 slug = slug.lower()
                 if slug.endswith('/'):
-                    # But put it into this dict so it gets considered NOT new
+                    # If the slug used in the document has a trailing /
+                    # remove that from here so that it stands a better chance
+                    # to match existing Document slugs.
                     slug = slug[:-1]
                 needs_existence_check[locale.lower()][slug].add(href)
 
