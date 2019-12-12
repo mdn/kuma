@@ -9,7 +9,6 @@ from rest_framework import serializers, status
 from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
-from waffle.decorators import waffle_flag
 from waffle.models import Flag, Sample, Switch
 
 from kuma.api.v1.serializers import BCSignalSerializer
@@ -298,9 +297,11 @@ search = never_cache(APISearchView.as_view())
 
 
 @ratelimit(key='user_or_ip', rate='10/d', block=True)
-@waffle_flag('bc-signals')
 @api_view(['POST'])
 def bc_signal(request):
+    if not settings.ENABLE_BCD_SIGNAL:
+        return Response("not enabled", status=status.HTTP_400_BAD_REQUEST)
+
     serializer = BCSignalSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
