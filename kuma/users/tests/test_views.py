@@ -30,8 +30,6 @@ from kuma.wiki.models import (
     RevisionAkismetSubmission)
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 from kuma.wiki.tests import document as create_document
-from kuma.wiki.tests import revision as create_revision
-
 
 from . import SampleRevisionsMixin, SocialTestMixin, user, UserTestCase
 from ..models import User, UserBan
@@ -1338,7 +1336,6 @@ def test_delete_user_no_revisions_misc_related(db, user_client, wiki_user):
     Key.objects.create(user=wiki_user)
     revision_akismet_submission = RevisionAkismetSubmission.objects.create(
         sender=wiki_user,
-        revision=Revision.objects.all().first(),
         type='spam'
     )
     document_deletion_log = DocumentDeletionLog.objects.create(
@@ -1393,17 +1390,13 @@ def test_delete_user_donate_attributions(
     user_client,
     wiki_user,
     wiki_user_github_account,
+    root_doc
 ):
-    document = create_document(save=True)
-    revision = create_revision(
-        title='My First And Only Revision',
-        document=document,
-        creator=wiki_user,
-        save=True)
-    assert Revision.objects.filter(creator=wiki_user).exists()
+    revision = root_doc.revisions.first()
+    # Sanity check the fixture
+    assert revision.creator == wiki_user
 
-    RevisionAkismetSubmission.objects.create(
-        revision=revision, sender=wiki_user)
+    RevisionAkismetSubmission.objects.create(sender=wiki_user)
 
     attachment_revision = AttachmentRevision(
         attachment=Attachment.objects.create(title='test attachment'),
@@ -1445,7 +1438,8 @@ def test_delete_user_keep_attributions(
     db,
     user_client,
     wiki_user,
-    wiki_user_github_account
+    wiki_user_github_account,
+    root_doc
 ):
     # Also, pretend that the user has a rich profile
     User.objects.filter(id=wiki_user.id).update(
@@ -1471,13 +1465,9 @@ def test_delete_user_keep_attributions(
         stripe_customer_id='123456',
     )
 
-    document = create_document(save=True)
-    revision = create_revision(
-        title='My First And Only Revision',
-        document=document,
-        creator=wiki_user,
-        save=True)
-    assert Revision.objects.filter(creator=wiki_user).exists()
+    revision = root_doc.revisions.first()
+    # Sanity check the fixture
+    assert revision.creator == wiki_user
 
     attachment_revision = AttachmentRevision(
         attachment=Attachment.objects.create(title='test attachment'),
