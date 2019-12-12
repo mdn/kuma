@@ -474,12 +474,17 @@ class LinkAnnotationFilter(html5lib_Filter):
                                               path_locale=href_locale))
 
                 # Gather up this link for existence check
-                needs_existence_check[locale.lower()][slug.lower()].add(href)
+                slug = slug.lower()
+                if slug.endswith('/'):
+                    # If the slug used in the document has a trailing /
+                    # remove that from here so that it stands a better chance
+                    # to match existing Document slugs.
+                    slug = slug[:-1]
+                needs_existence_check[locale.lower()][slug].add(href)
 
         # Perform existence checks for all the links, using one DB query per
         # locale for all the candidate slugs.
         for locale, slug_hrefs in needs_existence_check.items():
-
             existing_slugs = (Document.objects
                               .filter(locale=locale,
                                       slug__in=slug_hrefs.keys())

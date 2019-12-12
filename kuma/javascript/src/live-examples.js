@@ -48,20 +48,14 @@ export function addLiveExampleButtons(rootElement) {
         // direct siblings and also descendants of direct siblings
         // (because sometimes some of the source code is tucked inside
         // a hidden div).
-        let html = rootElement.querySelector(
-            `#${sectid} ~ pre[class*=html], #${sectid} ~ * pre[class*=html]`
-        );
-        let css = rootElement.querySelector(
-            `#${sectid} ~ pre[class*=css], #${sectid} ~ * pre[class*=css]`
-        );
-        let js = rootElement.querySelector(
-            `#${sectid} ~ pre[class*=js], #${sectid} ~ * pre[class*=js]`
-        );
+        let html = section.querySelectorAll('pre[class*=html]');
+        let css = section.querySelectorAll('pre[class*=css]');
+        let js = section.querySelectorAll('pre[class*=js]');
 
         // Now get the source code out of those pre elements
-        let htmlCode = html ? html.textContent : '';
-        let jsCode = js ? js.textContent : '';
-        let cssCode = css ? css.textContent : '';
+        let htmlCode = [...html].map(p => p.textContent).join('');
+        let jsCode = [...js].map(p => p.textContent).join('');
+        let cssCode = [...css].map(p => p.textContent).join('');
 
         // If we found any source code, then add buttons
         if (htmlCode || cssCode || jsCode) {

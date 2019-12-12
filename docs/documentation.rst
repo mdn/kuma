@@ -27,7 +27,7 @@ index is at ``docs/_build/html/index.html``.
 To generate the documentation in a virtualenv on the host machine, first
 install the requirements::
 
-    pip install -r requirements/docs.txt
+    pip install -r docs/requirements.txt
 
 Then switch to the ``docs`` folder to use the ``Makefile``::
 
@@ -38,10 +38,10 @@ Then switch to the ``docs`` folder to use the ``Makefile``::
 
 To generate the documentation with Docker::
 
-    docker-compose run --rm --user $(id -u) web sh -c "\
-      virtualenv /tmp/.venvs/docs && \
+    docker-compose run --rm web sh -c "\
+      python -m venv /tmp/.venvs/docs && \
       . /tmp/.venvs/docs/bin/activate && \
-      pip install -r /app/requirements/docs.txt && \
+      pip install -r /app/docs/requirements.txt && \
       cd /app/docs && \
       make html"
     python -m webbrowser file://${PWD}/docs/_build/html/index.html

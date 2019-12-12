@@ -114,6 +114,28 @@ export default function Article({ document }: DocumentProps) {
         }
     }, [document, userData, ga]);
 
+    /** Any link inside the article that matches `a.new` means it's a
+     * wiki page that hasn't yet been created. Clicking on it will
+     * 404, if you're on the read-only site. If you're viewing HTML
+     * like that on the Wiki and click it, it will take you to the
+     * form to *create* the page. Disable all of that here in the read-only
+     * site.
+     */
+    useEffect(() => {
+        let rootElement = article.current;
+        if (rootElement) {
+            for (let link of rootElement.querySelectorAll('a.new')) {
+                // Makes it not be clickable and no "pointer" cursor when
+                // hovering. Better than clicking on it and being
+                // disappointed.
+                link.removeAttribute('href');
+                if (!link.title) {
+                    link.title = gettext('Page has not yet been created.');
+                }
+            }
+        }
+    }, [document]);
+
     const isArchive =
         document.slug === 'Archive' || document.slug.startsWith('Archive/');
     const locale = getLocale();

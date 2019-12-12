@@ -158,11 +158,44 @@ Managing dependencies
 
 Python dependencies
 -------------------
-Kuma tracks its Python dependencies with pip_.  See the
-`README in the requirements folder`_ for details.
 
-.. _pip: https://pip.pypa.io/
-.. _README in the requirements folder: https://github.com/mdn/kuma/tree/master/requirements
+Kuma uses `Poetry`_ for dependency management. Poetry is configured in the
+``pyproject.toml`` file at the root of the repository, and exact versions of
+dependencies (along with hashes) are stored in the ``poetry.lock`` file.
+
+Please refer to the Poetry docs on `adding`_ and `updating`_ dependencies.
+
+A few examples:
+
+* Use ``poetry update`` to update and re-lock all dependencies to their latest
+  compatible versions, according to constraints in ``pyproject.toml``.
+
+* Use ``poetry update <name>`` to update only a single dependency to its latest
+  compatible version, according to constraints in ``pyproject.toml``. For
+  example ``poetry update pytz``.
+
+* Use ``poetry add <name>`` to modify or add new entries inside of
+  ``pyproject.toml``, for example, ``poetry add django~2.2`` or ``poetry add
+  flake8@latest``.
+
+* Use ``poetry lock`` to regenerate the ``poetry.lock``, for example, after
+  manually editing ``pyproject.toml``.
+
+* Use ``poetry show`` to report on the project's dependencies.
+
+In brief, ``update`` alters the lockfile, but does not modify entries within
+``pyproject.toml``. The ``add`` command changes both.
+
+You may wish to run these commands inside of Docker::
+
+    docker-compose exec web poetry update --dry-run
+
+Using Poetry directly on your host computer is also fine; the resulting
+``pyproject.toml`` and ``poetry.lock`` files should be the same either way.
+
+.. _Poetry: https://poetry.eustace.io/
+.. _adding: https://poetry.eustace.io/docs/cli/#add
+.. _updating: https://poetry.eustace.io/docs/cli/#update
 
 .. _front-end-asset-dependencies:
 

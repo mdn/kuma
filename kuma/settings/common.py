@@ -423,7 +423,7 @@ _CONTEXT_PROCESSORS = (
 
 MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
-    'kuma.core.middleware.RestrictedWhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     # must come before LocaleMiddleware
     'redirect_urls.middleware.RedirectsMiddleware',
     'kuma.core.middleware.SetRemoteAddrFromForwardedFor',
@@ -545,6 +545,7 @@ INSTALLED_APPS = (
     'allauth.account',
     'allauth.socialaccount',
     'kuma.users.providers.github',
+    'kuma.users.providers.google',
 
     # util
     'django_jinja',
@@ -621,7 +622,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    'VERSION': '2019.24',
+    'VERSION': '2019.25',
     'BASE_DIR': BASE_DIR,
     'TEXT_DOMAIN': 'django',
     # Tells the extract script what files to look for l10n in and what function

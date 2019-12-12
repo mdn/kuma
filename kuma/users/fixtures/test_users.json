@@ -215,6 +215,49 @@
     },
     {
         "fields": {
+            "date_joined": "2017-06-03 16:12:08",
+            "email": "gogl@test.com",
+            "first_name": "Gogl",
+            "groups": [2],
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false,
+            "last_login": "2011-06-03 16:12:08",
+            "last_name": "Goggler",
+            "password": "sha1$015f3$d7a6885afbb3e3ae453f1c68ab205fa0a24c3488",
+            "user_permissions": [],
+            "username": "gogol",
+            "bio": "I like to test things.2",
+            "fullname": "Gogol Goggler",
+            "homepage": "http://google.com/",
+            "irc_nickname": "gogol",
+            "location": "MV",
+            "organization": "Web Testers Anonymous23",
+            "timezone": "US/Pacific",
+            "title": "Dr.2"
+        },
+        "model": "users.user",
+        "pk": 23
+    },
+    {
+        "fields": {
+            "user": 23,
+            "uid": "23",
+            "provider": "google",
+            "last_login": "2018-06-03 16:12:08",
+            "date_joined": "2017-06-03 16:12:08",
+            "extra_data": {
+                "login": "gogolsocial",
+                "id": 23,
+                "email": "gogol@test.com",
+                "html_url": "https://google.com/gogol"
+            }
+        },
+        "model": "socialaccount.socialaccount",
+        "pk": 23
+    },
+    {
+        "fields": {
             "provider": "github",
             "name": "GitHub",
             "client_id": "fake_github_id",
@@ -223,5 +266,16 @@
         },
         "model": "socialaccount.socialapp",
         "pk": 1
+    },
+    {
+        "fields": {
+            "provider": "google",
+            "name": "Google",
+            "client_id": "fake_id",
+            "secret": "fake_secret_key",
+            "sites": [1]
+        },
+        "model": "socialaccount.socialapp",
+        "pk": 2
     }
 ]
