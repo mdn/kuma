@@ -199,3 +199,27 @@ class UserRecoveryEmailForm(forms.Form):
             # TODO figure out why this isn't a .delay() call.
             # https://bugzilla.mozilla.org/show_bug.cgi?id=1544925
             send_recovery_email(user_pk, email, request.LANGUAGE_CODE)
+
+
+class UserDeleteForm(forms.Form):
+
+    ATTRIBUTIONS_KEEP = 'keep'
+    ATTRIBUTIONS_DONATE = 'donate'
+    ATTRIBUTIONS_CHOICES = (
+        (
+            ATTRIBUTIONS_KEEP, _(
+                'Keep my attribution for my page changes; delete my email '
+                'address and freeze my account so I can\'t ever log in again.'
+            )
+        ),
+        (
+            ATTRIBUTIONS_DONATE, _(
+                'Switch all my attributions for page changes to "Anonymous", '
+                'and delete my account.'
+            )
+        ),
+    )
+
+    attributions = forms.ChoiceField(
+        required=True, choices=ATTRIBUTIONS_CHOICES,
+        widget=forms.widgets.RadioSelect())

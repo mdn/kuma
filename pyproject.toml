@@ -105,6 +105,7 @@ py = "1.4.33"
 python3-openid = "3.1.0"
 requests-oauthlib = "0.8.0"
 webencodings = "0.5.1"
+redo = "^2.0.3"
 
 [tool.poetry.dev-dependencies]
 # From test.txt

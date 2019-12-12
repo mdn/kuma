@@ -842,6 +842,12 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/user-banned.css',
     },
+    'user-delete': {
+        'source_filenames': (
+            'styles/user-delete.scss',
+        ),
+        'output_filename': 'build/styles/user-delete.css',
+    },
     'error-403-alternate': {
         'source_filenames': (
             'styles/error-403-alternate.scss',
