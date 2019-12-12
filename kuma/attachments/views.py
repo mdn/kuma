@@ -87,9 +87,8 @@ def edit_attachment(request, document_slug, document_locale):
     form = AttachmentRevisionForm(
         data=request.POST,
         files=request.FILES,
-        # Only staff users are allowed to upload SVG files because they
-        # can contain embedded inline scripts. But for staff users,
-        # we'll make an exception.
+        # Only staff users are allowed to upload SVG files because SVG files
+        # can contain embedded inline scripts.
         allow_svg_uploads=request.user.is_staff
     )
     if form.is_valid():
