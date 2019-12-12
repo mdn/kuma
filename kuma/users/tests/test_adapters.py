@@ -1,7 +1,7 @@
-
-
 import pytest
+from allauth.account.models import EmailAddress
 from allauth.exceptions import ImmediateHttpResponse
+from allauth.socialaccount.helpers import complete_social_login
 from allauth.socialaccount.models import SocialAccount, SocialLogin
 from django.contrib import messages as django_messages
 from django.contrib.auth.models import AnonymousUser
@@ -258,3 +258,140 @@ class KumaAccountAdapterTestCase(UserTestCase):
         messages = self.test_account_connected_message(next_url, True,
                                                        extra_tags='congrats')
         assert messages[0].tags == 'congrats account success'
+
+
+@pytest.mark.parametrize('provider', ('github', 'google'))
+@pytest.mark.parametrize('case', ('match',
+                                  'nomatch_address',
+                                  'nomatch_user_unverified',
+                                  'nomatch_social_unverified'))
+def test_user_reuse_on_social_login(wiki_user, client, rf, case, provider):
+    """
+    Test all cases related to re-using an existing user on social login.
+    """
+    # Make explicit the assumption that the social-login provider which we're
+    # signing-up with is not yet associated with the existing user.
+    wiki_user_social_account = (
+        SocialAccount.objects.filter(user=wiki_user, provider=provider))
+    assert not wiki_user_social_account.exists()
+
+    # Let's give the user a usable password so we can check later if that's
+    # been remedied if we find a match.
+    wiki_user.set_password('qwerty')
+    wiki_user.save()
+
+    social_email_address = ('user@nomatch.com'
+                            if case == 'nomatch_address' else
+                            wiki_user.email)
+    user_email_verified = case != 'nomatch_user_unverified'
+    social_email_verified = case != 'nomatch_social_unverified'
+
+    primary_social_email = {
+        'email': social_email_address,
+        'primary': True,
+        'verified': social_email_verified,
+        'visibility': 'public'
+    }
+    extra_social_email = {
+        'email': 'user@junk.com',
+        'primary': False,
+        'verified': False,
+        'visibility': None
+    }
+    social_emails = [primary_social_email, extra_social_email]
+
+    if provider == 'github':
+        other_provider = 'google'
+        social_login = SocialLogin(
+            user=User(username='new_user'),
+            account=SocialAccount(
+                uid=1234567,
+                provider='github',
+                extra_data={
+                    'email': None,
+                    'login': 'new_user',
+                    'name': 'Paul McCartney',
+                    'avatar_url': 'https://yada/yada',
+                    'html_url': 'https://github.com/new_user',
+                    'email_addresses': social_emails
+                }
+            ),
+            email_addresses=[EmailAddress(
+                email=a['email'],
+                verified=a['verified'],
+                primary=a['primary']
+            ) for a in social_emails]
+        )
+    else:
+        other_provider = 'github'
+        social_login = SocialLogin(
+            user=User(username='new_user'),
+            account=SocialAccount(
+                uid=123456789012345678901,
+                provider='google',
+                extra_data={
+                    'email': primary_social_email['email'],
+                    'verified_email': primary_social_email['verified'],
+                    'name': 'Paul McCartney',
+                    'given_name': 'Paul',
+                    'family_name': 'McCartney',
+                    'picture': 'https://yada/yada'
+                }
+            ),
+            email_addresses=[EmailAddress(
+                email=primary_social_email['email'],
+                verified=primary_social_email['verified'],
+                primary=primary_social_email['primary']
+            )]
+        )
+
+    # Associate social accounts with the wiki_user other than the social-login
+    # provider we're signing-up with.
+    for prov in ('persona', other_provider):
+        SocialAccount.objects.create(user=wiki_user, provider=prov)
+    # Associate an email address with the wiki_user.
+    EmailAddress.objects.create(
+        user=wiki_user,
+        email=wiki_user.email,
+        verified=user_email_verified
+    )
+
+    request = rf.get(f'/users/{provider}/login')
+    request.user = AnonymousUser()
+    request.session = client.session
+
+    # Run through the same steps that django-allauth takes after the OAuth2
+    # dance has completed. Doing it this way avoids having to mock the entire
+    # OAuth2 dance.
+    response = complete_social_login(request, social_login)
+
+    # The response should be an instance of HttpResponseRedirect.
+    assert response.status_code == 302
+    # If we found a matching user, we should have been logged-in without
+    # any further steps, and redirected to the home page. Otherwise we should
+    # have been redirected to the account-signup page to continue the process.
+    assert response.url == ('/en-US/'
+                            if case == 'match' else
+                            '/en-US/users/account/signup')
+    # The wiki_user's password should have been made unusable but only if we
+    # found a match.
+    wiki_user.refresh_from_db()
+    assert wiki_user.has_usable_password() == (case != 'match')
+
+    # A new GitHub social account should have been associated with the existing
+    # wiki_user only if we found a match.
+    assert wiki_user_social_account.exists() == (case == 'match')
+    if provider == 'github':
+        # The extra social-login email address not yet associated with the
+        # existing wiki_user should have been created only if we found a match.
+        assert (EmailAddress.objects
+                            .filter(user=wiki_user,
+                                    email=extra_social_email['email'],
+                                    verified=extra_social_email['verified'])
+                            .exists()) == (case == 'match')
+    # The associated Persona social account should have been deleted only if
+    # we found a match.
+    assert (SocialAccount.objects
+                         .filter(user=wiki_user,
+                                 provider='persona')
+                         .exists()) == (case != 'match')
