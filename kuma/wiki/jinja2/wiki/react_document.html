@@ -57,7 +57,7 @@
   <!-- basic favicon -->
   <link rel="shortcut icon" href="{{ favicon_url() }}">
 
-  {% if waffle.flag('developer_needs') %}
+  {% if waffle.switch('developer_needs') %}
     {% stylesheet 'banners' %}
   {% endif %}
 

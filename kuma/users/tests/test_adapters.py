@@ -75,7 +75,7 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         assert len(queued_messages) == 1
         assert queued_messages[0].level == django_messages.ERROR
 
-    def test_pre_social_login_matched_login(self):
+    def test_pre_social_login_matched_github_login(self):
         """
         When we detected a legacy Persona account, advise recovery of account.
 
@@ -110,6 +110,41 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         self.adapter.pre_social_login(request, github_login)
         session = request.session
         assert 'github' == session['sociallogin_provider']
+
+    def test_pre_social_login_matched_google_login(self):
+        """
+        When we detected a legacy Persona account, advise recovery of account.
+
+        A user tries to sign in with Google, but their Google email matches
+        an existing MDN account backed by Persona. They are prompted to
+        recover the existing account.
+
+        Same as above, but with Google instead of GitHub
+        """
+        # Set up a session-only Google SocialLogin
+        # These are created at the start of the signup process, and saved on
+        #  profile completion.
+        google_account = SocialAccount.objects.get(user__username='gogol')
+        google_login = SocialLogin(account=google_account, user=google_account.user)
+
+        # Setup existing Persona SocialLogin for the same email
+        SocialAccount.objects.create(
+            user=google_account.user,
+            provider='persona',
+            uid=google_account.user.email)
+
+        request = self.rf.get('/')
+        session = self.client.session
+        session['sociallogin_provider'] = 'google'
+        session['socialaccount_sociallogin'] = google_login.serialize()
+        session.save()
+        request.session = session
+
+        # Verify the social_login receiver over-writes the provider
+        # stored in the session
+        self.adapter.pre_social_login(request, google_login)
+        session = request.session
+        assert 'google' == session['sociallogin_provider']
 
     def test_pre_social_login_same_provider(self):
         """
