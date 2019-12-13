@@ -181,7 +181,7 @@ A few thousand lines will be printed, like::
 
 Visit the homepage
 ==================
-Open the homepage at http://localhost:8000 . You've installed Kuma!
+Open the homepage at http://localhost.org:8000 . You've installed Kuma!
 
 Create an admin user
 ====================
@@ -204,9 +204,24 @@ management command. Replace ``YOUR_USERNAME`` with your username and
     --password YOUR_PASSWORD
 
 With a password-enabled admin account, you can log into Django admin at
-http://localhost:8000/admin/login/
+http://localhost.org:8000/admin/login
 
 .. _enable-github-auth:
+
+Update the Sites section
+=======================================
+#. After logging in to the Django admin (an alternative is using the login ``test-super`` 
+   with password ``test-password``), scroll down to the Sites section. 
+
+#. Click on "Change". 
+
+#. Click on the entry that says ``localhost:8000``. 
+
+#. Change both the domain and display name from ``localhost:8000`` to ``localhost.org:8000``. 
+
+#. Click "Save".
+
+
 
 Enable GitHub/Google authentication (optional)
 =======================================
@@ -214,8 +229,8 @@ Since Google's OAuth requires us to use a valid top-level-domain, we're going to
 http://localhost.org:8000 as an example for every URL here.
 
 To automate setting Django up for social auth you can run
-``docker-compose exec web ./manage.py configure_social_auth`` and follow its steps (and
-ignore the rest of this section).
+``docker-compose exec web ./manage.py configure_github_social`` and follow its steps (and
+ignore the rest of this section). 
 
 If you want to do it manually, follow these steps:
 
@@ -248,14 +263,15 @@ to its actual ID. You'll also need to set ``DOMAIN=localhost.org`` (no port!) th
 
 Your hosts file should contain the following lines::
 
-    127.0.0.1 localhost demos localhost.org wiki.localhost.org
-    ::1             localhost.org wiki.localhost.org
+    127.0.0.1       localhost demos localhost.org wiki.localhost.org
+    255.255.255.255 broadcasthost
+    ::1             localhost demos localhost.org wiki.localhost.org
 
 Now you can sign in with GitHub.
 
 To associate your password-only admin account with GitHub:
 
-#. Login with your password at http://localhost:8000/admin/login/.
+#. Login with your password at http://localhost.org:8000/admin/login.
 #. Go to the Homepage at https://developer.mozilla.org/en-US/.
 #. Click your username at the top to view your profile.
 #. Click Edit to edit your profile.
@@ -276,7 +292,7 @@ Django shell::
 .. _register an OAuth application on GitHub: https://github.com/settings/applications/new
 .. _create an API project on Google: https://console.developers.google.com/projectcreate
 .. _configure credentials for that project: https://console.developers.google.com/apis/credentials
-.. _add a django-allauth social app: http://localhost:8000/admin/socialaccount/socialapp/add/
+.. _add a django-allauth social app: http://localhost.org:8000/admin/socialaccount/socialapp/add/
 .. _`Use your GitHub account to sign in`: https://developer.mozilla.org/users/github/login/?process=connect
 
 Interact with the Docker containers
@@ -305,6 +321,14 @@ To continuously view logs from all containers::
 To stop the containers::
 
     docker-compose stop
+
+If you have made changes to the .env or /etc/hosts file, it's a good idea to run::
+
+    docker-compose down
+    docker-compose pull
+    git pull --ff-only origin master
+    docker-compose up -d
+
 
 For further information, see the Docker documentation, such as the
 `Docker Overview`_ and the documentation for your operating system.
