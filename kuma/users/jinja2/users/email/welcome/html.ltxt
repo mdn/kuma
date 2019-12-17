@@ -3,18 +3,13 @@
 <html lang="en-US" dir="ltr">
     <head>
         <meta charset="utf-8" />
-        <title>{{ _('Take the next step to get involved on MDN!') }}</title>
+        <title>{{ _('Getting started with your new MDN account') }}</title>
     </head>
     <body>
-        <p>{{ _('Hi %(username)s!', username=username) }}</p>
+        <p>{{ _('Hey %(username)s!', username=username) }}</p>
         <p>
           {% trans mdn_link=add_utm('https://developer.mozilla.org', 'welcome') %}
-            Thanks for creating a profile on <a href="{{ mdn_link }}">MDN Web Docs</a> - a community making great resources for developers like you.
-          {% endtrans %}
-        </p>
-        <p>
-          {% trans started_link=add_utm('https://developer.mozilla.org/docs/MDN/Getting_started', 'welcome') %}
-            You've completed the first step of <a href="{{ started_link }}">Getting Started on MDN</a> by creating a profile.
+            Thanks for creating an account on <a href="{{ mdn_link }}">MDN Web Docs</a> - a community making great resources for developers like you.
           {% endtrans %}
         </p>
         <p>
@@ -24,11 +19,11 @@
               both_link=add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_3.3A_I_like_both_words_and_code', 'welcome'),
               translate_link=add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_4.3A_I_want_MDN_in_my_language', 'welcome')
           %}
-            Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose from, whether you
+            Soon, we'll share with you opportunities to customize MDN to get the most out of it. In the meantime, MDN is from web developers for web developers, it thrives on contributions from developers like you. We have a bunch of intro tasks you can choose based on your interests, and we can't wait for you to join us. Do you
             <a href="{{ words_link }}">like words</a>,
             <a href="{{ code_link }}">like code</a>,
             <a href="{{ both_link }}">like both words and code</a>,
-            or you want to <a href="{{ translate_link }}">translate MDN to your language</a>.
+            or want to <a href="{{ translate_link }}">translate MDN to your language</a>?
           {% endtrans %}
         </p>
         <strong>{{ _('Talk to us!') }}</strong>
