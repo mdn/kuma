@@ -1884,7 +1884,7 @@ ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN = config('ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN', de
 ATTACHMENTS_AWS_S3_SECURE_URLS = config('ATTACHMENTS_AWS_S3_SECURE_URLS', default=True, cast=bool)  # Does the custom domain use TLS
 
 ATTACHMENTS_AWS_S3_REGION_NAME = config('ATTACHMENTS_AWS_S3_REGION_NAME', default='us-east-1')
-ATTACHMENTS_AWS_S3_ENDPOINT_URL = config('ATTACHMENTS_AWS_S3_ENDPOINT_URL', default=f'https://{ATTACHMENTS_AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com')
+ATTACHMENTS_AWS_S3_ENDPOINT_URL = config('ATTACHMENTS_AWS_S3_ENDPOINT_URL', default=None)
 
 # Silence warnings about defaults that change in django-storages 2.0
 AWS_BUCKET_ACL = None
