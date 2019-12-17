@@ -9,6 +9,9 @@ exports[`LanguageMenu snapshot 1`] = `
     aria-label="Current language is English. Choose your preferred language."
     aria-owns="language-menu"
     className="dropdown-menu-label"
+    id="header-language-menu"
+    onFocus={[Function]}
+    onMouseOver={[Function]}
     type="button"
   >
     English

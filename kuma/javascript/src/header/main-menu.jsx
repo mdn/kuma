@@ -1,6 +1,8 @@
 //@flow
 import * as React from 'react';
-import { memo, useMemo, useState } from 'react';
+import { memo, useContext, useMemo, useState } from 'react';
+
+import GAProvider from '../ga-provider.jsx';
 
 import { gettext } from '../l10n.js';
 import type { DocumentData } from '../document.jsx';
@@ -18,6 +20,23 @@ const _MainMenu = ({ document, locale }: Props) => {
     // there's no mouse hover so for that we use a piece of state to
     // record onTouchStart events.
     const [showSubMenu, setShowSubMenu] = useState(null);
+    const ga = useContext(GAProvider.context);
+
+    /**
+     * Send a signal to GA when there is an interaction on one
+     * of the main menu items.
+     * @param {Object} event - The event object that was triggered
+     */
+    function sendMenuItemInteraction(event) {
+        const label = event.target.href || event.target.textContent;
+
+        ga('send', {
+            hitType: 'event',
+            eventCategory: 'Wiki',
+            eventAction: 'MainNav',
+            eventLabel: label
+        });
+    }
 
     // The menus array includes objects that define the set of
     // menus displayed by this header component. The data structure
@@ -180,6 +199,9 @@ const _MainMenu = ({ document, locale }: Props) => {
                             type="button"
                             className="top-level-entry"
                             aria-haspopup="true"
+                            onMouseOver={sendMenuItemInteraction}
+                            onContextMenu={sendMenuItemInteraction}
+                            onFocus={sendMenuItemInteraction}
                             onTouchStart={() => {
                                 // Ultimately, because there's no :hover on
                                 // mobile, we have to compensate for that using
@@ -218,11 +240,23 @@ const _MainMenu = ({ document, locale }: Props) => {
                                                 '{{PATH}}',
                                                 path
                                             )}
+                                            onClick={sendMenuItemInteraction}
+                                            onContextMenu={
+                                                sendMenuItemInteraction
+                                            }
                                         >
                                             {item.label} &#x1f310;
                                         </a>
                                     ) : (
-                                        <a href={item.url}>{item.label}</a>
+                                        <a
+                                            href={item.url}
+                                            onClick={sendMenuItemInteraction}
+                                            onContextMenu={
+                                                sendMenuItemInteraction
+                                            }
+                                        >
+                                            {item.label}
+                                        </a>
                                     )}
                                 </li>
                             ))}
