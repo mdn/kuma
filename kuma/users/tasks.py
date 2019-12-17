@@ -52,7 +52,7 @@ def send_welcome_email(user_pk, locale):
                                         context)
 
             email = EmailMultiAlternatives(
-                _('Take the next step to get involved on MDN!'),
+                _('Getting started with your new MDN account'),
                 content_plain,
                 config.WELCOME_EMAIL_FROM,
                 [user.email],

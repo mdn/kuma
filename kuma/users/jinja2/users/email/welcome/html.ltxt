@@ -3,7 +3,7 @@
 <html lang="en-US" dir="ltr">
     <head>
         <meta charset="utf-8" />
-        <title>{{ _('Take the next step to get involved on MDN!') }}</title>
+        <title>{{ _('Getting started with your new MDN account') }}</title>
     </head>
     <body>
         <p>{{ _('Hey %(username)s!', username=username) }}</p>
