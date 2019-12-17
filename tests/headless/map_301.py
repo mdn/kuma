@@ -563,5 +563,7 @@ WEBEXT_URLS = list(flatten(
          'publish/third-party-library-usage/'),
         ('WebExtensions/What_does_review_rejection_mean_to_users',
          'publish/what-does-review-rejection-mean-to-users/'),
+        ('AMO/Policy/Featured',
+         'publish/recommended-extensions/'),
     )
 ))
