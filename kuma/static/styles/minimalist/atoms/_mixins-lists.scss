@@ -1,0 +1,18 @@
+@mixin unordered-list-base {
+    margin: 0;
+    margin-left: 20px;
+    list-style: none;
+    text-align: left;
+}
+
+.list-item-base {
+    margin-bottom: 20px;
+}
+
+@mixin custom-checkmark-list-item() {
+    @extend .list-item-base;
+    background: transparent url('../../../general/checkmark-isolated.svg') 0 4px
+        no-repeat;
+    background-size: 16px;
+    padding-left: 25px;
+}

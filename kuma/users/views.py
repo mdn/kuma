@@ -544,6 +544,10 @@ def user_delete(request, username):
     return render(request, 'users/user_delete.html', context)
 
 
+def signin_landing(request):
+    return render(request, "socialaccount/signup-landing.html")
+
+
 class SignupView(BaseSignupView):
     """
     The default signup view from the allauth account app.
