@@ -65,7 +65,7 @@ export default function Login(): React.Node {
         return (
             <a
                 href={
-                    (window && window.mdn.multiAuthEnabled
+                    (window && window.mdn && window.mdn.multiAuthEnabled
                         ? '/users/account/signup-landing'
                         : '/users/github/login') + `?next=${LOCATION}`
                 }
