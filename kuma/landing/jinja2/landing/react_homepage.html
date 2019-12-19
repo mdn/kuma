@@ -4,10 +4,10 @@
 
 {% block body_attributes %}id="home"{% endblock %}
 
-{% include "landing/includes/style.html" %}
 
 {% block site_css %}
   {{ super() }}
+  {% include "landing/includes/style.html" %}
 
   {% if waffle.switch('developer_needs') %}
     {% stylesheet 'banners' %}
