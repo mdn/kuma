@@ -135,16 +135,19 @@
 
         </ul>
       </fieldset>
-      <p>
+      <div class="save-and-delete">
           <button type="submit" class="positive">
               {% include 'includes/icons/general/check-mark.svg' %}
               {{ _('Publish') }}
           </button>
-      </p>
-      {% if is_me %}
-      <a class="field-management" href="{{ url('users.user_delete', username=request.user.username) }}">{{ _('Delete your account.') }}</a>
-      {% endif %}
+          {% if is_me %}
+            <a href="{{ url('users.user_delete', username=request.user.username) }}">{{ _('Delete your account.') }}</a>
+          {% endif %}
+      </div>
     </form>
+    {% if is_me %}
+      {% include "users/includes/stripe_subscription.html" %}
+    {% endif %}
   </div>
   <div class="column-4">
     {% if settings.NEWSLETTER %}

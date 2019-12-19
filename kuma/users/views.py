@@ -22,6 +22,7 @@ from django.http import (
     HttpResponseBadRequest, HttpResponseForbidden, HttpResponseRedirect)
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
+from django.urls import reverse
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.utils.translation import ugettext_lazy as _
@@ -46,7 +47,7 @@ from .models import User, UserBan
 # we have to import the signup form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
 from .signup import SignupForm
-
+from .stripe import retrieve_stripe_subscription, stripe
 
 # TODO: Make this dynamic, editable from admin interface
 INTEREST_SUGGESTIONS = [
@@ -385,7 +386,7 @@ def my_edit_page(request):
 
 
 @redirect_in_maintenance_mode
-def user_edit(request, username):
+def user_edit(request, username, error_message=None):
     """
     View and edit user profile
     """
@@ -444,11 +445,29 @@ def user_edit(request, username):
 
             return redirect(edit_user)
 
+    stripe_customer = stripe.Customer.retrieve(
+        edit_user.stripe_customer_id,
+        expand=['default_source']
+    ) if settings.STRIPE_PLAN_ID and edit_user.stripe_customer_id else None
+    subscription_info = None
+    stripe_subscription = retrieve_stripe_subscription(stripe_customer) if stripe_customer else None
+    if stripe_subscription:
+        source = stripe_customer.default_source
+        subscription_info = {
+            'next_payment_at': datetime.fromtimestamp(stripe_subscription.current_period_end),
+            'brand': source.brand,
+            'expires_at': f'{source.exp_month}/{source.exp_year}',
+            'last4': source.last4,
+            'zip': source.address_zip
+        }
     context = {
         'edit_user': edit_user,
         'user_form': user_form,
         'INTEREST_SUGGESTIONS': INTEREST_SUGGESTIONS,
+        'subscription_info': subscription_info,
+        'error_message': error_message
     }
+
     return render(request, 'users/user_edit.html', context)
 
 
@@ -743,6 +762,36 @@ def recover(request, uidb64=None, token=None):
         login(request, user, 'kuma.users.auth_backends.KumaAuthBackend')
         return redirect('users.recover_done')
     return render(request, 'users/recover_failed.html')
+
+
+@require_POST
+def create_stripe_subscription(request):
+    user = request.user
+
+    error_message = None
+    try:
+        customer = None
+        if not user.stripe_customer_id:
+            customer = stripe.Customer.create(
+                email=request.POST.get('stripe_email', ''),
+                source=request.POST.get('stripe_token', ''),
+            )
+            user.stripe_customer_id = customer.id
+            user.save()
+        else:
+            customer = stripe.Customer.retrieve(user.stripe_customer_id)
+
+        if retrieve_stripe_subscription(customer) is None:
+            stripe.Subscription.create(
+                customer=customer.id,
+                items=[{
+                    'plan': settings.STRIPE_PLAN_ID,
+                }]
+            )
+    except stripe.error.StripeError as e:
+        error_message = e.message
+
+    return redirect(reverse('users.user_edit', args=[user.username]), error_message)
 
 
 recovery_email_sent = TemplateView.as_view(

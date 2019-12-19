@@ -1,0 +1,66 @@
+<noscript>
+  <style>
+    .stripe-subscription {
+      display: none
+    }
+  </style>
+</noscript>
+
+<section class="stripe-subscription">
+  {% stylesheet 'stripe-subscription' %}
+
+  {% if not subscription_info %}
+    <form id="stripe-form" action="{{ url('users.create_stripe_subscription') }}" method="post">
+      {% csrf_token %}
+      <h2>Help grow MDN</h2>
+      <p>
+        Be a part of making MDN even better. You'll get back more of the knowledge and tools you rely on for when your
+        work has to work.
+      </p>
+      <hr>
+      <div>
+        <b>$5 billed every month.</b> Cancel any time.
+      </div>
+      <hr>
+      <label class="payment-opt-in">
+        <input type="checkbox" required="required">
+        <small>
+          By clicking this button, I authorize Mozilla to charge this payment method each month, according to the
+          Payment Terms, until I cancel my subscription.
+        </small>
+      </label>
+      <input type="hidden" name="stripe_token">
+      <input type="hidden" name="stripe_email">
+      <button type="submit" disabled="disabled">
+        Continue
+        {% include 'includes/icons/arrows/arrow-right.svg' %}
+      </button>
+    </form>
+
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    <script type="application/json" id="stripe-config">
+      {"STRIPE_PUBLIC_KEY": "{{ settings.STRIPE_PUBLIC_KEY }}"}
+    </script>
+    {% javascript "stripe-subscription" %}
+  {% else %}
+    <h2>You're helping MDN grow</h2>
+    <p>
+      Next payment of $5 (monthly) occurs on {{ subscription_info.next_payment_at|date }}.
+    </p>
+    <hr>
+    <div class="card-info">
+      {% include 'includes/icons/general/credit-card.svg' %}
+      <p>
+        {{ subscription_info.brand }} ending in {{ subscription_info.last4 }}<br>
+        expires {{ subscription_info.expires_at }}<br>
+        Postal / ZIP code: {{ subscription_info.zip }}
+      </p>
+    </div>
+    <hr>
+    <p>
+      To cancel your subscription, please contact support. <br>
+      If you have questions, please read the <a href="{{ url('recurring_payment_initial') }}">FAQ</a> or you can also
+      contact support.
+    </p>
+  {% endif %}
+</section>

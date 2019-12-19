@@ -848,6 +848,12 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/user-delete.css',
     },
+    'stripe-subscription': {
+        'source_filenames': (
+            'styles/stripe-subscription.scss',
+        ),
+        'output_filename': 'build/styles/stripe-subscription.css',
+    },
     'error-403-alternate': {
         'source_filenames': (
             'styles/error-403-alternate.scss',
@@ -1044,6 +1050,12 @@ PIPELINE_JS = {
             'js/components/payments/payments-manage.js',
         ),
         'output_filename': 'build/js/payments.js',
+    },
+    'stripe-subscription': {
+        'source_filenames': (
+            'js/stripe-subscription.js',
+        ),
+        'output_filename': 'build/js/stripe-subscription.js',
     },
     'framebuster': {
         'source_filenames': (
@@ -1855,7 +1867,7 @@ CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE = config(
 # Stripe API KEY settings
 STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY', default='')
 STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
-STRIPE_PRODUCT_ID = config('STRIPE_PRODUCT_ID', default='')
+STRIPE_PLAN_ID = config('STRIPE_PLAN_ID', default='')
 MDN_CONTRIBUTION = config('MDN_CONTRIBUTION', False, cast=bool)
 CONTRIBUTION_SUPPORT_EMAIL = config('CONTRIBUTION_SUPPORT_EMAIL',
                                     default='mdn-support@mozilla.com')
