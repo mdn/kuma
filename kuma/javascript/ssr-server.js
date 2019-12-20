@@ -33,6 +33,23 @@ const MAX_BODY_SIZE = 1024 * 1024 * 5; // 5 megabyte max JSON payload
 // We're using the Express server framework
 const app = express();
 
+// Configure and initialize Sentry if a DSN has been provided.
+if (process.env.SENTRY_DSN) {
+    console.log('Configuring Sentry for the SSR server.');
+    let options = {
+        dsn: process.env.SENTRY_DSN
+    };
+    if (process.env.REVISION_HASH) {
+        options.release = process.env.REVISION_HASH;
+    }
+    if (process.env.SENTRY_ENVIRONMENT) {
+        options.environment = process.env.SENTRY_ENVIRONMENT;
+    }
+    Sentry.init(options);
+} else {
+    console.warn('SENTRY_DSN is not available so sentry is not initialized.');
+}
+
 // Log all requests, so we get timing data for SSR.
 app.use(morgan('tiny'));
 
@@ -69,28 +86,13 @@ app.post('/ssr/:componentName', (req, res) => {
     res.json(ssr(req.params.componentName, req.body));
 });
 
-// Note! It's important that the Sentry configuration is AFTER all the
-// handlers have been defined.
-// Configure and initialize Sentry iff a DSN has been provided.
+// Important that this is defined *after* the request handlers have been
+// added otherwise Sentry won't automatically hook in.
 if (process.env.SENTRY_DSN) {
-    console.log('Configuring Sentry for the SSR server.');
-    let options = {
-        dsn: process.env.SENTRY_DSN
-    };
-    if (process.env.REVISION_HASH) {
-        options.release = process.env.REVISION_HASH;
-    }
-    if (process.env.SENTRY_ENVIRONMENT) {
-        options.environment = process.env.SENTRY_ENVIRONMENT;
-    }
-    Sentry.init(options);
-
     // The request handler must be the first middleware on the app
     app.use(Sentry.Handlers.requestHandler());
     // The error handler must be before any other error middleware
     app.use(Sentry.Handlers.errorHandler());
-} else {
-    console.warn('SENTRY_DSN is not available so sentry is not initialized.');
 }
 
 if (require.main === module) {
