@@ -33,28 +33,6 @@ const MAX_BODY_SIZE = 1024 * 1024 * 5; // 5 megabyte max JSON payload
 // We're using the Express server framework
 const app = express();
 
-// Configure and initialize Sentry if a DSN has been provided.
-if (process.env.SENTRY_DSN) {
-    console.log('Configuring Sentry for the SSR server.');
-    let options = {
-        dsn: process.env.SENTRY_DSN
-    };
-    if (process.env.REVISION_HASH) {
-        options.release = process.env.REVISION_HASH;
-    }
-    if (process.env.SENTRY_ENVIRONMENT) {
-        options.environment = process.env.SENTRY_ENVIRONMENT;
-    }
-    Sentry.init(options);
-
-    // The request handler must be the first middleware on the app
-    app.use(Sentry.Handlers.requestHandler());
-    // The error handler must be before any other error middleware
-    app.use(Sentry.Handlers.errorHandler());
-} else {
-    console.warn('SENTRY_DSN is not available so sentry is not initialized.');
-}
-
 // Log all requests, so we get timing data for SSR.
 app.use(morgan('tiny'));
 
@@ -88,14 +66,32 @@ app.get('/readiness/?', (req, res) => {
  * not be parsed, escaped, or displayed as HTML.
  */
 app.post('/ssr/:componentName', (req, res) => {
-    try {
-        res.json(ssr(req.params.componentName, req.body));
-    } catch (err) {
-        console.error(`Error running ssr(): ${err.toString()}`);
-        Sentry.captureException(err);
-        res.status(500).json({ error: err.toString() });
-    }
+    res.json(ssr(req.params.componentName, req.body));
 });
+
+// Note! It's important that the Sentry configuration is AFTER all the
+// handlers have been defined.
+// Configure and initialize Sentry iff a DSN has been provided.
+if (process.env.SENTRY_DSN) {
+    console.log('Configuring Sentry for the SSR server.');
+    let options = {
+        dsn: process.env.SENTRY_DSN
+    };
+    if (process.env.REVISION_HASH) {
+        options.release = process.env.REVISION_HASH;
+    }
+    if (process.env.SENTRY_ENVIRONMENT) {
+        options.environment = process.env.SENTRY_ENVIRONMENT;
+    }
+    Sentry.init(options);
+
+    // The request handler must be the first middleware on the app
+    app.use(Sentry.Handlers.requestHandler());
+    // The error handler must be before any other error middleware
+    app.use(Sentry.Handlers.errorHandler());
+} else {
+    console.warn('SENTRY_DSN is not available so sentry is not initialized.');
+}
 
 if (require.main === module) {
     // If we're actually being run directly with node, then
