@@ -92,12 +92,6 @@ icons for both indicator types
 
 %indicator-with-icon {
     @include bidi(((padding-left, $icon-spacing, padding-right, $inline-horizontal-padding),));
-
-    #{$selector-icon} {
-        // For whatever reason, this gets placed before `display: inline-block` in react-mdn.css
-        /* stylelint-disable-next-line declaration-no-important */
-        display: none !important;
-    }
 }
 
 /*
