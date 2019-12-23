@@ -46,6 +46,8 @@ if (process.env.SENTRY_DSN) {
         options.environment = process.env.SENTRY_ENVIRONMENT;
     }
     Sentry.init(options);
+    // The request handler must be the first middleware on the app
+    app.use(Sentry.Handlers.requestHandler());
 } else {
     console.warn('SENTRY_DSN is not available so sentry is not initialized.');
 }
@@ -89,9 +91,8 @@ app.post('/ssr/:componentName', (req, res) => {
 // Important that this is defined *after* the request handlers have been
 // added otherwise Sentry won't automatically hook in.
 if (process.env.SENTRY_DSN) {
-    // The request handler must be the first middleware on the app
-    app.use(Sentry.Handlers.requestHandler());
-    // The error handler must be before any other error middleware
+    // The error handler must be before any other error middleware and after
+    // all controllers.
     app.use(Sentry.Handlers.errorHandler());
 }
 
