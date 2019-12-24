@@ -1026,7 +1026,7 @@ PIPELINE_JS = {
         ),
         'output_filename': 'build/js/auth-modal.js',
         'extra_context': {
-            'async': True,
+            'defer': True,
         },
     },
     'dashboard': {
