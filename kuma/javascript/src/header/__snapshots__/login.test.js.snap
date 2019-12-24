@@ -72,7 +72,7 @@ exports[`Login component when user is not logged in 1`] = `
 <a
   className="signin-link"
   data-service="GitHub"
-  href="/users/github/login/?next=/"
+  href="/users/github/login?next=/"
   onClick={[Function]}
   rel="nofollow"
 >

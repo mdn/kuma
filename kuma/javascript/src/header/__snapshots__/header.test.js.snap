@@ -398,7 +398,7 @@ exports[`Header snapshot 1`] = `
   <a
     className="signin-link"
     data-service="GitHub"
-    href="/users/github/login/?next=/[fake%20absolute%20url]"
+    href="/users/github/login?next=/[fake%20absolute%20url]"
     onClick={[Function]}
     rel="nofollow"
   >

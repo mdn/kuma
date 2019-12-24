@@ -28,6 +28,13 @@ const _MainMenu = ({ document, locale }: Props) => {
      * @param {Object} event - The event object that was triggered
      */
     function sendMenuItemInteraction(event) {
+        // What could happen is that this is a click and right before the
+        // click there was a mouseover on the same target. If that's the
+        // case bail early.
+        if (previousMouseover && event.target === previousMouseover) {
+            return;
+        }
+
         const label = event.target.href || event.target.textContent;
 
         ga('send', {
@@ -37,6 +44,25 @@ const _MainMenu = ({ document, locale }: Props) => {
             eventLabel: label
         });
     }
+
+    /**
+     * Selectively pass on a trigger to sendMenuItemInteraction() because
+     * onMouseOver is tricky. Not only might you trigger an onMouseover on
+     * an element that isn't the actual button, if you mousever, mouseout,
+     * and then mouseover the same thing again, it should only count once.
+     * @param {Object} event - the event object that was triggered
+     */
+    function menuMouseoverHandler(event) {
+        // Only the buttons that have this count.
+        if (event.target.getAttribute('aria-haspopup') === 'true') {
+            if (event.target !== previousMouseover) {
+                sendMenuItemInteraction(event);
+                previousMouseover = event.target;
+            }
+        }
+    }
+    // In-component memory of which DOM element was mouseover'ed last time
+    let previousMouseover = null;
 
     // The menus array includes objects that define the set of
     // menus displayed by this header component. The data structure
@@ -199,7 +225,7 @@ const _MainMenu = ({ document, locale }: Props) => {
                             type="button"
                             className="top-level-entry"
                             aria-haspopup="true"
-                            onMouseOver={sendMenuItemInteraction}
+                            onMouseOver={menuMouseoverHandler}
                             onContextMenu={sendMenuItemInteraction}
                             onFocus={sendMenuItemInteraction}
                             onTouchStart={() => {
