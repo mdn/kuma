@@ -1,10 +1,6 @@
 (function() {
     'use strict';
 
-    if (!window.mdn) {
-        window.mdn = {};
-    }
-
     /**
      * A modal dialog implemetation based on:
      * https://www.w3.org/TR/wai-aria-practices-1.1/#dialog_modal
