@@ -229,7 +229,7 @@ Since Google's OAuth requires us to use a valid top-level-domain, we're going to
 http://localhost.org:8000 as an example for every URL here.
 
 To automate setting Django up for social auth you can run
-``docker-compose exec web ./manage.py configure_github_social`` and follow its steps (and
+``docker-compose exec web ./manage.py configure_social_auth`` and follow its steps (and
 ignore the rest of this section). 
 
 If you want to do it manually, follow these steps:
@@ -324,10 +324,8 @@ To stop the containers::
 
 If you have made changes to the .env or /etc/hosts file, it's a good idea to run::
 
-    docker-compose down
-    docker-compose pull
-    git pull --ff-only origin master
-    docker-compose up -d
+    docker-compose stop
+    docker-compose up
 
 
 For further information, see the Docker documentation, such as the
