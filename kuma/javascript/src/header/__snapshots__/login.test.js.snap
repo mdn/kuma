@@ -10,6 +10,9 @@ exports[`Login component when user is logged in 1`] = `
     <button
       aria-haspopup="true"
       className="dropdown-menu-label"
+      id="user-avatar-menu"
+      onFocus={[Function]}
+      onMouseOver={[Function]}
       type="button"
     >
       <img
@@ -70,6 +73,7 @@ exports[`Login component when user is not logged in 1`] = `
   className="signin-link"
   data-service="GitHub"
   href="/users/github/login?next=/"
+  onClick={[Function]}
   rel="nofollow"
 >
   Sign in
