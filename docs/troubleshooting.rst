@@ -102,7 +102,7 @@ This most likely happens because the document isn't in the database yet, so it
 needs to be scraped. Run the command 
 ``./manage.py scrape_document [url of document]``, e.g.::
     
-    ./manage.py scrape_document https://developer.mozilla.org/en-US/docs/Glossary/HTML
+    docker-compose exec web ./manage.py scrape_document https://developer.mozilla.org/en-US/docs/Glossary/HTML
 
 💡Memorize or have handy the ``./manage.py scrape_document`` command since 
 this will come up often.
