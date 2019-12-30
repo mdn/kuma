@@ -120,7 +120,7 @@ If you have more problems running Kuma, please:
 
 #. Paste errors to `pastebin`_.
 #. Start a thread on `Discourse`_.
-#. After you email dev-mdn, you can also ask in `IRC`_ or the #mdn-dev Slack 
+#. After you email dev-mdn, you can also ask in the #mdn-dev Slack 
    channel.
 
 .. _pastebin: https://pastebin.mozilla.org/
