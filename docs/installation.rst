@@ -322,7 +322,7 @@ To stop the containers::
 
     docker-compose stop
 
-If you have made changes to the .env or /etc/hosts file, it's a good idea to run::
+If you have made changes to the ``.env`` or ``/etc/hosts`` file, it's a good idea to run::
 
     docker-compose stop
     docker-compose up
