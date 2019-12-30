@@ -230,7 +230,7 @@ http://localhost.org:8000 as an example for every URL here.
 
 To automate setting Django up for social auth you can run
 ``docker-compose exec web ./manage.py configure_social_auth`` and follow its steps (and
-ignore the rest of this section). 
+ignore the rest of this section).
 
 If you want to do it manually, follow these steps:
 
