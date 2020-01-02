@@ -85,3 +85,8 @@ AWS_DEFAULT_ACL = None
 
 # Use a dedicated minio bucket for tests
 ATTACHMENTS_AWS_STORAGE_BUCKET_NAME = 'test'
+
+# For legacy reasons, the tests assume these are always true so don't
+# let local overrides take effect.
+INDEX_HTML_ATTRIBUTES = True
+INDEX_CSS_CLASSNAMES = True

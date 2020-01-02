@@ -1948,3 +1948,16 @@ CACHEBACK_VERIFY_CACHE_WRITE = False
 MIGRATION_MODULES = {
     'soapbox': 'kuma.soap_migrations'
 }
+
+# html_attributes and css_classnames get indexed into Elasticsearch on every
+# document when sent in. These can be very memory consuming since the
+# 'html_attributes' makes up about 60% of the total weight.
+# Refer to this GitHub issue for an estimate of their weight contribution:
+# https://github.com/mdn/kuma/issues/6264#issue-539922604
+# Note that the only way to actually search on these fields is with a manual
+# use of the search v1 API. There is no UI at all for searching on something
+# in the 'html_attributes' or the 'css_classnames'.
+# By disabling indexing of these, in your local dev environment, your local
+# Elasticsearch instance will be a LOT smaller.
+INDEX_HTML_ATTRIBUTES = config('INDEX_HTML_ATTRIBUTES', cast=bool, default=not DEBUG)
+INDEX_CSS_CLASSNAMES = config('INDEX_CSS_CLASSNAMES', cast=bool, default=not DEBUG)
