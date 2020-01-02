@@ -293,27 +293,17 @@ def test_whoami(user_client, wiki_user, wiki_user_github_account,
 def test_search_validation_problems(user_client):
     url = reverse('api.v1.search', args=['en-US'])
 
-    # 'q' not present
-    response = user_client.get(url)
-    assert response.status_code == 400
-    assert response.json()['error'] == "Search term 'q' must be set"
-
-    # 'q' present but falsy
-    response = user_client.get(url, {'q': ''})
-    assert response.status_code == 400
-    assert response.json()['error'] == "Search term 'q' must be set"
-
-    # 'q' present but locale invalid
+    # locale invalid
     response = user_client.get(url, {'q': 'x', 'locale': 'xxx'})
     assert response.status_code == 400
     assert response.json()['error'] == 'Not a valid locale code'
 
-    # 'q' present but contains new line
+    # 'q' contains new line
     response = user_client.get(url, {'q': r'test\nsomething'})
     assert response.status_code == 400
     assert response.json()['q'] == ["Search term must not contain new line"]
 
-    # 'q' present but exceeds max allowed characters
+    # 'q' exceeds max allowed characters
     response = user_client.get(url, {'q': 'x' * (settings.ES_Q_MAXLENGTH + 1)})
     assert response.status_code == 400
     assert (

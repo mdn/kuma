@@ -101,7 +101,7 @@ class SoapboxViewsTest(KumaTestCase):
         m.save()
 
         url = reverse('search')
-        r = self.client.get(url, follow=True)
+        r = self.client.get(url, {'q': 'anything'}, follow=True)
         assert 200 == r.status_code
 
         doc = pq(r.content)
@@ -120,7 +120,7 @@ class SoapboxViewsTest(KumaTestCase):
         m.save()
 
         url = reverse('search')
-        r = self.client.get(url, follow=True)
+        r = self.client.get(url, {'q': 'anything'}, follow=True)
         assert 200 == r.status_code
 
         doc = pq(r.content)
