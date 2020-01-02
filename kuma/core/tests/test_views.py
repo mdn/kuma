@@ -95,32 +95,13 @@ class SoapboxViewsTest(KumaTestCase):
         doc = pq(r.content)
         assert m.message == doc.find('div.global-notice').text()
 
-    def test_subsection(self):
-        m = Message(message='Search', is_global=False, is_active=True,
-                    url='/search/')
-        m.save()
-
-        url = reverse('search')
-        r = self.client.get(url, {'q': 'anything'}, follow=True)
-        assert 200 == r.status_code
-
-        doc = pq(r.content)
-        assert m.message == doc.find('div.global-notice').text()
-
-        url = reverse('home')
-        r = self.client.get(url, follow=True)
-        assert 200 == r.status_code
-
-        doc = pq(r.content)
-        assert not doc.find('div.global-notice')
-
     def test_inactive(self):
         m = Message(message='Search', is_global=False, is_active=False,
                     url='/search/')
         m.save()
 
-        url = reverse('search')
-        r = self.client.get(url, {'q': 'anything'}, follow=True)
+        url = reverse('home')
+        r = self.client.get(url, follow=True)
         assert 200 == r.status_code
 
         doc = pq(r.content)
