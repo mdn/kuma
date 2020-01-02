@@ -268,24 +268,11 @@ class APILanguageFilterBackend(LanguageFilterBackend):
             request, queryset, view)
 
 
-class APISearchQueryBackend(SearchQueryBackend):
-    """Override of kuma.search.filters.SearchQueryBackend that makes a
-    stink if the 'q' query parameter is falsy."""
-
-    def filter_queryset(self, request, queryset, view):
-        search_term = (view.query_params.get('q') or '').strip()
-        if not search_term:
-            raise serializers.ValidationError(
-                {'error': "Search term 'q' must be set"})
-        return super(APISearchQueryBackend, self).filter_queryset(
-            request, queryset, view)
-
-
 class APISearchView(SearchView):
     serializer_class = APIDocumentSerializer
     renderer_classes = [JSONRenderer]
     filter_backends = (
-        APISearchQueryBackend,
+        SearchQueryBackend,
         KeywordQueryBackend,
         TagGroupFilterBackend,
         APILanguageFilterBackend,

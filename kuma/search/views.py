@@ -26,21 +26,29 @@ def search(request, *args, **kwargs):
     if is_wiki(request):
         return wiki_search(request, *args, **kwargs)
 
-    results = search_api(request, *args, **kwargs).data
-
-    # Determine if there were validation errors
-    error = results.get('error') or results.get('q')
-    # If q is returned in the data, there was a validation error for that field,
-    # so return 400 status.
-    status = 200 if results.get('q') is None else 400
-
-    context = {
-        'results': {
-            'results': None if error else results,
-            'error': error
+    # The underlying v1 API supports searching without a 'q' but the web
+    # UI doesn't. For example, the search input field requires a value.
+    # So we match that here too.
+    if not request.GET.get('q', '').strip():
+        status = 400
+        context = {
+            'results': {}
         }
-    }
+    else:
+        results = search_api(request, *args, **kwargs).data
 
+        # Determine if there were validation errors
+        error = results.get('error') or results.get('q')
+        # If q is returned in the data, there was a validation error for that field,
+        # so return 400 status.
+        status = 200 if results.get('q') is None else 400
+
+        context = {
+            'results': {
+                'results': None if error else results,
+                'error': error
+            }
+        }
     return render(request, 'search/react.html', context, status=status)
 
 
