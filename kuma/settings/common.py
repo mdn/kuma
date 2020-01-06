@@ -1868,6 +1868,9 @@ CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE = config(
 STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY', default='')
 STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
 STRIPE_PLAN_ID = config('STRIPE_PLAN_ID', default='')
+# Misc Stripe settings
+STRIPE_MAX_NETWORK_RETRIES = config('STRIPE_MAX_NETWORK_RETRIES', default=5, cast=int)
+
 MDN_CONTRIBUTION = config('MDN_CONTRIBUTION', False, cast=bool)
 CONTRIBUTION_SUPPORT_EMAIL = config('CONTRIBUTION_SUPPORT_EMAIL',
                                     default='mdn-support@mozilla.com')

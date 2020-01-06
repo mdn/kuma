@@ -1,10 +1,4 @@
-import stripe
 from django.conf import settings
-
-stripe.api_key = settings.STRIPE_SECRET_KEY
-stripe.max_network_retries = 5
-
-stripe = stripe
 
 
 def retrieve_stripe_subscription(customer):
