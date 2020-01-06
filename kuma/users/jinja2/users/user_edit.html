@@ -145,7 +145,7 @@
           {% endif %}
       </div>
     </form>
-    {% if is_me %}
+    {% if is_me and settings.STRIPE_PUBLIC_KEY %}
       {% include "users/includes/stripe_subscription.html" %}
     {% endif %}
   </div>
