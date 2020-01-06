@@ -15,24 +15,9 @@ if (process.env.NEW_RELIC_LICENSE_KEY && process.env.NEW_RELIC_APP_NAME) {
 
 const express = require('express'); // Express server framework
 const morgan = require('morgan');
-const sentry = require('@sentry/node');
+const Sentry = require('@sentry/node');
 
 const ssr = require('./dist/ssr.js'); // Function to do server-side rendering
-
-// Configure and initialize Sentry if a DSN has been provided.
-if (process.env.SENTRY_DSN) {
-    console.log('Configuring Sentry for the SSR server.');
-    let options = {
-        dsn: process.env.SENTRY_DSN
-    };
-    if (process.env.REVISION_HASH) {
-        options.release = process.env.REVISION_HASH;
-    }
-    if (process.env.SENTRY_ENVIRONMENT) {
-        options.environment = process.env.SENTRY_ENVIRONMENT;
-    }
-    sentry.init(options);
-}
 
 // Configuration
 const PID = process.pid;
@@ -47,6 +32,25 @@ const MAX_BODY_SIZE = 1024 * 1024 * 5; // 5 megabyte max JSON payload
 
 // We're using the Express server framework
 const app = express();
+
+// Configure and initialize Sentry if a DSN has been provided.
+if (process.env.SENTRY_DSN) {
+    console.log('Configuring Sentry for the SSR server.');
+    let options = {
+        dsn: process.env.SENTRY_DSN
+    };
+    if (process.env.REVISION_HASH) {
+        options.release = process.env.REVISION_HASH;
+    }
+    if (process.env.SENTRY_ENVIRONMENT) {
+        options.environment = process.env.SENTRY_ENVIRONMENT;
+    }
+    Sentry.init(options);
+    // The request handler must be the first middleware on the app
+    app.use(Sentry.Handlers.requestHandler());
+} else {
+    console.warn('SENTRY_DSN is not available so sentry is not initialized.');
+}
 
 // Log all requests, so we get timing data for SSR.
 app.use(morgan('tiny'));
@@ -83,6 +87,14 @@ app.get('/readiness/?', (req, res) => {
 app.post('/ssr/:componentName', (req, res) => {
     res.json(ssr(req.params.componentName, req.body));
 });
+
+// Important that this is defined *after* the request handlers have been
+// added otherwise Sentry won't automatically hook in.
+if (process.env.SENTRY_DSN) {
+    // The error handler must be before any other error middleware and after
+    // all controllers.
+    app.use(Sentry.Handlers.errorHandler());
+}
 
 if (require.main === module) {
     // If we're actually being run directly with node, then
