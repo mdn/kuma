@@ -174,6 +174,10 @@ A few examples:
   compatible version, according to constraints in ``pyproject.toml``. For
   example ``poetry update pytz``.
 
+* To update a package to the very latest and not just what matches what's
+  currently in ``pyproject.toml``, add the ``@latest``. For example
+  ``poetry update pytz@latest``.
+
 * Use ``poetry add <name>`` to modify or add new entries inside of
   ``pyproject.toml``, for example, ``poetry add django~2.2`` or ``poetry add
   flake8@latest``.
