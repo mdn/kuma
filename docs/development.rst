@@ -175,7 +175,7 @@ A few examples:
   example ``poetry update pytz``.
 
 * To update a package to the very latest and not just what matches what's
-  currently in ``pyproject.toml``, add the ``@latest``. For example
+  currently in ``pyproject.toml``, add ``@latest``. For example
   ``poetry update pytz@latest``.
 
 * Use ``poetry add <name>`` to modify or add new entries inside of
