@@ -1665,6 +1665,20 @@ CONSTANCE_CONFIG = dict(
 # Google Analytics Tracking Account Number (0 to disable)
 GOOGLE_ANALYTICS_ACCOUNT = config('GOOGLE_ANALYTICS_ACCOUNT', default=None)
 
+# When HTTP posting event to Google Analytics this is the combined connect
+# and read timeout.
+GOOGLE_ANALYTICS_EVENTS_TRACKING_TIMEOUT = config(
+    'GOOGLE_ANALYTICS_EVENTS_TRACKING_TIMEOUT',
+    cast=float,
+    default=2.0)
+# The only reason you'd want to override this is for local development where
+# you might want to substitute the events tracking URL to a local dev server.
+# https://developers.google.com/analytics/devguides/collection/protocol/v1/reference
+GOOGLE_ANALYTICS_TRACKING_URL = config(
+    'GOOGLE_ANALYTICS_TRACKING_URL',
+    default='https://www.google-analytics.com/collect'
+)
+
 KUMASCRIPT_URL_TEMPLATE = config('KUMASCRIPT_URL_TEMPLATE',
                                  default='http://localhost:9080/docs/{path}')
 
