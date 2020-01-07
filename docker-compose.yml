@@ -162,7 +162,6 @@ services:
     build:
       context: mockga
       dockerfile: Dockerfile
-    # command: server /data
     ports:
       - "7000:7000"
 
