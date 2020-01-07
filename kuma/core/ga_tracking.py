@@ -9,6 +9,32 @@ from requests.exceptions import RequestException
 
 log = logging.getLogger('kuma.core.ga_tracking')
 
+# The `track_event()` function can take any string but to minimize risk of
+# typos, it's highly recommended to use a constant instead.
+# Instead of doing:
+#
+#   # somefile.py
+#   from ga_tracking import track_event
+#   track_event('signup-flow', 'foo', 'bar')
+#
+#   # otherfile.py
+#   from ga_tracking import track_event
+#   track_event('signup-fluw', 'foo', 'bar')
+#
+# Do this instead:
+#
+#   # somefile.py
+#   from ga_tracking import track_event, CATEGORY_SIGNUP_FLOW
+#   track_event(CATEGORY_SIGNUP_FLOW, 'foo', 'bar')
+#
+#   # otherfile.py
+#   from ga_tracking import track_event, CATEGORY_SIGNUP_FLOW
+#   track_event(CATEGORY_SIGNUP_FLOW, 'foo', 'bar')
+#
+# Here are some of those useful constants...
+
+CATEGORY_SIGNUP_FLOW = 'signup-flow'
+
 
 def track_event(
     event_category,

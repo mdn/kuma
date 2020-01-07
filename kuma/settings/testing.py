@@ -88,3 +88,8 @@ ATTACHMENTS_AWS_STORAGE_BUCKET_NAME = 'test'
 
 # Never enabled in tests.
 SENTRY_DSN = None
+
+# To make absolutely sure we never accidentally trigger the GA tracking
+# within tests to the actual (and default) www.google-analytics.com this is
+# an extra safeguard.
+GOOGLE_ANALYTICS_TRACKING_URL = 'https://thisllneverwork.example.com/collect'
