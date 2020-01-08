@@ -25,12 +25,13 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.encoding import force_text
-from django.utils.http import urlsafe_base64_decode
+from django.utils.http import urlencode, urlsafe_base64_decode
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
 from honeypot.decorators import verify_honeypot_value
+from raven.contrib.django.models import client as raven_client
 from taggit.utils import parse_tags
 
 from kuma.core.decorators import (ensure_wiki_domain, login_required,
@@ -387,10 +388,11 @@ def my_edit_page(request):
 
 
 @redirect_in_maintenance_mode
-def user_edit(request, username, error_message=None):
+def user_edit(request, username):
     """
     View and edit user profile
     """
+    has_stripe_error = request.GET.get('has_stripe_error', 'False') == 'True'
     edit_user = get_object_or_404(User, username=username)
 
     if not edit_user.allows_editing_by(request.user):
@@ -466,7 +468,7 @@ def user_edit(request, username, error_message=None):
         'user_form': user_form,
         'INTEREST_SUGGESTIONS': INTEREST_SUGGESTIONS,
         'subscription_info': subscription_info,
-        'error_message': error_message
+        'has_stripe_error': has_stripe_error
     }
 
     return render(request, 'users/user_edit.html', context)
@@ -769,7 +771,7 @@ def recover(request, uidb64=None, token=None):
 def create_stripe_subscription(request):
     user = request.user
 
-    error_message = None
+    has_stripe_error = False
     try:
         customer = None
         if not user.stripe_customer_id:
@@ -789,10 +791,12 @@ def create_stripe_subscription(request):
                     'plan': settings.STRIPE_PLAN_ID,
                 }]
             )
-    except stripe.error.StripeError as e:
-        error_message = e.message
+    except stripe.error.StripeError:
+        raven_client.captureException()
+        has_stripe_error = True
 
-    return redirect(reverse('users.user_edit', args=[user.username]), error_message)
+    query_params = '?' + urlencode({'has_stripe_error': has_stripe_error})
+    return redirect(reverse('users.user_edit', args=[user.username]) + query_params)
 
 
 recovery_email_sent = TemplateView.as_view(

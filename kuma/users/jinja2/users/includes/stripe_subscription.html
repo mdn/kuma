@@ -13,6 +13,16 @@
     <form id="stripe-form" action="{{ url('users.create_stripe_subscription') }}" method="post">
       {% csrf_token %}
       <h2>Help grow MDN</h2>
+      {% if has_stripe_error %}
+          <div class="stripe-error">
+              <h3>Stripe error</h3>
+              <p>
+                  An error occurred trying to set up the subscription with Stripe's server. We've recorded the error and
+                  will investigate it.
+              </p>
+              <hr>
+          </div>
+      {% endif %}
       <p>
         Be a part of making MDN even better. You'll get back more of the knowledge and tools you rely on for when your
         work has to work.
@@ -41,7 +51,6 @@
     <script type="application/json" id="stripe-config">
       {"STRIPE_PUBLIC_KEY": "{{ settings.STRIPE_PUBLIC_KEY }}"}
     </script>
-    {% javascript "stripe-subscription" %}
   {% else %}
     <h2>You're helping MDN grow</h2>
     <p>
@@ -63,4 +72,5 @@
       contact support.
     </p>
   {% endif %}
+  {% javascript "stripe-subscription" %}
 </section>
