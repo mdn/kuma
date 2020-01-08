@@ -35,3 +35,19 @@ def test_unsubscribe_payments_on_user_delete_fails(mock_cancel, payments_user):
     with pytest.raises(InvalidRequestError):
         payments_user.delete()
     mock_cancel.assert_called_once_with('cust_test123')
+
+
+def test_signup_triggers_ga_tracking_event(mock_requests, settings):
+    # This will make sure ga_tracking.track_event does something
+    settings.GOOGLE_ANALYTICS_ACCOUNT = 'UA-XXXX-1'
+    signup_url = reverse('socialaccount_signup')
+
+    # POST user choices to complete signup
+    username = self.github_profile_data['login']
+    email = self.github_email_data[0]['email']
+    data = {'website': '',
+            'username': username,
+            'email': email,
+            'terms': True}
+    response = self.client.post(signup_url, data=data)
+    assert response.status_code == 302

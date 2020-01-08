@@ -34,6 +34,8 @@ log = logging.getLogger('kuma.core.ga_tracking')
 # Here are some of those useful constants...
 
 CATEGORY_SIGNUP_FLOW = 'signup-flow'
+ACTION_SIGN_UP = 'sign-up'
+ACTION_SIGN_IN = 'sign-in'
 
 
 def track_event(

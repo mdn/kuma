@@ -23,7 +23,7 @@ app.post('/collect', (req, res) => {
         if (s.length > maxLength) {
             return s.slice(0, maxLength - 1) + '…';
         }
-        return s.padEnd(maxLength);
+        return s;
     }
     const parts = [
         chalk.bold('ec: ') + chalk.green(showValue(ec, 20)),
@@ -33,7 +33,7 @@ app.post('/collect', (req, res) => {
     const output = `[${new Date().toISOString()}] GA TRACK EVENT cid=${showValue(
         cid,
         10
-    )} | ${parts.join(' ')}`;
+    )} | ${parts.join(', ')}`;
     console.log(output);
     res.status(201).send(`${output}\n`);
 });

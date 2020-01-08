@@ -1,4 +1,9 @@
-from allauth.account.signals import email_confirmed, user_signed_up
+from datetime import timedelta
+
+from allauth.account.signals import (
+    email_confirmed,
+    user_logged_in,
+    user_signed_up)
 from allauth.socialaccount.signals import social_account_removed
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
@@ -8,6 +13,11 @@ from waffle import switch_is_active
 
 from kuma.payments.utils import cancel_stripe_customer_subscription
 from kuma.wiki.jobs import DocumentContributorsJob
+from kuma.core.ga_tracking import (
+    ACTION_SIGN_IN,
+    ACTION_SIGN_UP,
+    CATEGORY_SIGNUP_FLOW,
+    track_event)
 
 from .models import User, UserBan
 from .tasks import send_welcome_email
@@ -25,6 +35,45 @@ def on_user_signed_up(sender, request, user, **kwargs):
             transaction.on_commit(
                 lambda: send_welcome_email.delay(user.pk, request.LANGUAGE_CODE)
             )
+
+
+@receiver(user_logged_in, dispatch_uid='users.user_logged_in')
+def on_user_logged_in(sender, request, user, **kwargs):
+    sociallogin = kwargs.get('sociallogin')
+    print("SOCIALLOGIN", repr(sociallogin))
+    assert False
+    if sociallogin:
+        # Thing is, if someone signs in for the very first time, it'll
+        # trigger two signals: 'user_signed_up' *and* 'user_logged_in'.
+        # If that happens, we only want to send *1* tracking event.
+        # If we listen to both signals we'd get potentially send one
+        # tracking event too many. So, use the `SocialAccount.last_login`
+        # and `SocialAccount.date_joined` to figure out if this was the
+        # the first time.
+        #
+        # Due to how the Django ORM assigns dates, it could be that the
+        # two dates are only different in the number of
+        if is_almost_same_dates(
+            sociallogin.account.last_login,
+            sociallogin.account.date_joined
+        ):
+            # It's a sign UP!
+            track_event(
+                CATEGORY_SIGNUP_FLOW,
+                ACTION_SIGN_UP,
+                sociallogin.account.provider)
+        else:
+            track_event(
+                CATEGORY_SIGNUP_FLOW,
+                ACTION_SIGN_IN,
+                sociallogin.account.provider)
+
+
+def is_almost_same_dates(date1, date2, epislon=timedelta(minutes=1)):
+    """Return true if both dates are truthy and sufficiently close"""
+    return (
+        date1 and date2 and
+        abs(date1 - date2) < epislon)
 
 
 @receiver(email_confirmed, dispatch_uid='users.email_confirmed')
