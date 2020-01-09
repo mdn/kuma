@@ -36,7 +36,8 @@
         <input type="checkbox" required="required">
         <small>
           By clicking this button, I authorize Mozilla to charge this payment method each month, according to the
-          Payment Terms, until I cancel my subscription.
+          <a target="_blank" rel="noopener" href="{{ url('payment_terms') }}">Payment Terms</a>, until I cancel my
+          subscription.
         </small>
       </label>
       <input type="hidden" name="stripe_token">
