@@ -41,7 +41,7 @@ def on_user_signed_up(sender, request, user, **kwargs):
 def on_user_logged_in(sender, request, user, **kwargs):
     sociallogin = kwargs.get('sociallogin')
     print("SOCIALLOGIN", repr(sociallogin))
-    assert False
+    # assert False
     if sociallogin:
         # Thing is, if someone signs in for the very first time, it'll
         # trigger two signals: 'user_signed_up' *and* 'user_logged_in'.

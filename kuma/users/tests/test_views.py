@@ -1249,6 +1249,26 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
     def test_signup_private_github(self):
         self.test_signup_public_github(is_public=False)
 
+    @requests_mock.mock()
+    def test_signup_github_event_tracking(self, mock_requests):
+        mock_requests.post(settings.GOOGLE_ANALYTICS_TRACKING_URL)
+        self.github_login()
+        with self.settings(
+            GOOGLE_ANALYTICS_ACCOUNT='UA-XXXX-1',
+            GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS=True
+        ):
+            data = {'website': '',
+                    'username': 'octocat',
+                    'email': 'octo.cat@github-inc.com',
+                    'terms': True,
+                    'is_github_url_public': True}
+            response = self.client.post(self.signup_url, data=data)
+            assert response.status_code == 302
+            assert User.objects.get(username='octocat')
+
+            print(mock_requests.request_history)
+            assert 0
+
     def test_account_tokens(self):
         testemail = 'account_token@acme.com'
         testuser = user(username='user', is_active=True,

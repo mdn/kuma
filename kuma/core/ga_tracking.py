@@ -43,10 +43,10 @@ def track_event(
     event_action,
     event_label,
     client_id=None,
-    tracking_id=settings.GOOGLE_ANALYTICS_ACCOUNT,
-    tracking_url=settings.GOOGLE_ANALYTICS_TRACKING_URL,
-    raise_errors=settings.DEBUG,
-    timeout=settings.GOOGLE_ANALYTICS_EVENTS_TRACKING_TIMEOUT,
+    tracking_id=None,
+    tracking_url=None,
+    raise_errors=None,
+    timeout=None,
 ):
     """Send an HTTPS POST to Google Analytics for an event.
     The function is, by default, made to be fault tolerant. Any network
@@ -55,7 +55,18 @@ def track_event(
     More information about the Measurement Protocol here:
     https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide
     """
-    tracking_id = settings.GOOGLE_ANALYTICS_ACCOUNT
+    print((raise_errors, settings.GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS, settings.DEBUG))
+    # The reason we're using `=None` in these and defaulting them to
+    # stuff from `settings` down here is for the benefit tests where we
+    # might change these values "in runtime". I.e. between tests.
+    tracking_id = tracking_id or settings.GOOGLE_ANALYTICS_ACCOUNT
+    tracking_url = tracking_url or settings.GOOGLE_ANALYTICS_TRACKING_URL
+    timeout = timeout or settings.GOOGLE_ANALYTICS_TRACKING_TIMEOUT
+    raise_errors = (
+        raise_errors if raise_errors is not None
+        else settings.GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS
+    )
+
     if not tracking_id:
         return
 
