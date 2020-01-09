@@ -44,7 +44,7 @@ This process works both in a development environment and in production:
 
 - Inside the ``web`` Docker container::
 
-    ./manage.py reindex
+    docker-compose exec web ./manage.py reindex
 
 - Refresh the search index list until the "populated" field changes to a green
   checkbox image.  In production, you will also get an email notifying you when
