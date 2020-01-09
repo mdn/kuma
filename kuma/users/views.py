@@ -767,6 +767,7 @@ def recover(request, uidb64=None, token=None):
     return render(request, 'users/recover_failed.html')
 
 
+@login_required
 @require_POST
 def create_stripe_subscription(request):
     user = request.user
