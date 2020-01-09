@@ -774,7 +774,6 @@ def create_stripe_subscription(request):
 
     has_stripe_error = False
     try:
-        customer = None
         if not user.stripe_customer_id:
             customer = stripe.Customer.create(
                 email=request.POST.get('stripe_email', ''),
