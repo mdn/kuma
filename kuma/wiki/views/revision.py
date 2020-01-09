@@ -1,15 +1,19 @@
-
+import json
 
 import newrelic.agent
+from django.conf import settings
 from django.core.exceptions import PermissionDenied
-from django.http import Http404
+from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
+                         HttpResponseForbidden)
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import etag, require_GET, require_POST
 from ratelimit.decorators import ratelimit
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import api_view, authentication_classes
 
 from kuma.core.decorators import (block_user_agents, ensure_wiki_domain,
                                   login_required, shared_cache_control)
@@ -17,6 +21,7 @@ from kuma.core.utils import smart_int
 
 from .. import kumascript
 from ..decorators import prevent_indexing, process_document_path
+from ..events import EditDocumentEvent
 from ..models import Document, Revision
 from ..templatetags.jinja_helpers import format_comment
 
@@ -188,3 +193,109 @@ def quick_review(request, document_slug, document_locale):
         else:
             new_rev.review_tags.clear()
     return redirect(doc)
+
+
+@never_cache
+@ensure_wiki_domain
+@api_view(['GET', 'HEAD', 'POST'])
+@authentication_classes([TokenAuthentication])
+@process_document_path
+def revision_api(request, document_slug, document_locale):
+    """
+    GET a document's raw HTML with select macros rendered or removed, or
+    POST new raw HTML to a document. POST's are allowed only for clients
+    using a valid token passed via the "Authorization" header. The "ETag"
+    header is returned, and conditional requests handled for both GET and
+    POST requests, but conditional request handling is only intended for
+    POST requests to avoid collisions.
+    """
+    doc = get_object_or_404(
+        Document,
+        slug=document_slug,
+        locale=document_locale
+    )
+
+    if request.method == 'POST':
+        if not (request.auth and request.user.is_authenticated):
+            return HttpResponseForbidden()
+        content_type = request.content_type
+        if content_type.startswith('application/json'):
+            encoding = request.encoding or settings.DEFAULT_CHARSET
+            data = json.loads(request.body.decode(encoding=encoding))
+        elif (content_type.startswith('multipart/form-data') or
+              content_type.startswith('application/x-www-form-urlencoded')):
+            data = request.POST
+        else:
+            return HttpResponseBadRequest(
+                'POST body must be of type "application/json", '
+                '"application/x-www-form-urlencoded", or "multipart/form-data".'
+            )
+        return do_revision_api_post(request, doc, data)
+
+    mode = request.GET.get('mode')
+    select_macros = request.GET.get('macros')
+
+    if mode:
+        if mode not in ('render', 'remove'):
+            return HttpResponseBadRequest(
+                'The "mode" query parameter must be "render" or "remove".')
+        if not select_macros:
+            return HttpResponseBadRequest(
+                'Please specify one or more comma-separated macro names via '
+                'the "macros" query parameter.')
+    elif select_macros:
+        return HttpResponseBadRequest(
+            'Please specify a "mode" query parameter.')
+
+    if select_macros:
+        # Convert potentially comma-separated macro names into a list.
+        select_macros = select_macros.replace(',', ' ').split()
+
+    return do_revision_api_get(request, doc, mode, select_macros)
+
+
+def get_etag(request, doc, *args):
+    """
+    Returns the id of the document's current revision as a string.
+    """
+    return str(doc.current_revision.id)
+
+
+@etag(get_etag)
+def do_revision_api_get(request, doc, mode, select_macros):
+    """
+    Handles the GET, including adding the ETag header, assuming that
+    validation has already been performed.
+    """
+    if mode and select_macros:
+        html, errors = kumascript.get(
+            doc, base_url=None, selective_mode=(mode, select_macros))
+    else:
+        html, errors = doc.html, []
+    response = HttpResponse(html)
+    response['X-Frame-Options'] = 'deny'
+    response['X-Robots-Tag'] = 'noindex'
+    return response
+
+
+@etag(get_etag)
+def do_revision_api_post(request, doc, data):
+    """
+    Handles the POST, including conditional POST's, given the document and
+    the POST data, assuming that the checks for a valid authorization token
+    and acceptable POST data have already been made.
+    """
+    # Create a new revision and make it the document's current revision.
+    doc.revise(request.user, data)
+    # Schedule an immediate re-rendering of the document.
+    doc.schedule_rendering(cache_control='max-age=0')
+    # Schedule event notifications.
+    EditDocumentEvent(doc.current_revision).fire(exclude=request.user)
+    response = HttpResponse(doc.html, status=201)
+    rev_url = f'{doc.get_absolute_url()}$revision/{doc.current_revision.id}'
+    response['Location'] = request.build_absolute_uri(rev_url)
+    # Set the "ETag" header or else the "etag" decorator will set it according
+    # to the document's previous revision, i.e. the current revision prior to
+    # the "revise" method call above.
+    response['ETag'] = f'"{str(doc.current_revision.id)}"'
+    return response
