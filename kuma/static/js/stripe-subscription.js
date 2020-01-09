@@ -28,9 +28,9 @@
         currency: 'usd',
         amount: 500,
         label: 'Subscribe',
+        email: stripeEmailInput.value,
         token: function(response) {
             stripeTokenInput.value = response.id;
-            stripeEmailInput.value = response.email;
             stripeForm.submit();
         }
     });

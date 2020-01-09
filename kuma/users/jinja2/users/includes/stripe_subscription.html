@@ -41,7 +41,7 @@
         </small>
       </label>
       <input type="hidden" name="stripe_token">
-      <input type="hidden" name="stripe_email">
+      <input type="hidden" name="stripe_email" value="{{ edit_user.email }}">
       <button type="submit" disabled="disabled">
         Continue
         {% include 'includes/icons/arrows/arrow-right.svg' %}
