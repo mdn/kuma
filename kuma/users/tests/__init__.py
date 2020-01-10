@@ -129,7 +129,8 @@ class SocialTestMixin(object):
             process='login',
             token_status_code=200,
             profile_status_code=200,
-            email_status_code=200):
+            email_status_code=200,
+            follow=True):
         """
         Mock a login to GitHub and return the response.
 
@@ -181,7 +182,7 @@ class SocialTestMixin(object):
 
             # Simulate the callback from Github
             data = {'code': 'github_code', 'state': state}
-            response = self.client.get(callback_url, data, follow=True)
+            response = self.client.get(callback_url, data, follow=follow)
 
         return response
 

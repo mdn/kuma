@@ -1,3 +1,4 @@
+from datetime import timedelta
 from textwrap import dedent
 from unittest import mock
 
@@ -17,6 +18,10 @@ from waffle.models import Flag
 
 from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.authkeys.models import Key
+from kuma.core.ga_tracking import (
+    ACTION_SIGN_IN,
+    ACTION_SIGN_UP,
+    CATEGORY_SIGNUP_FLOW)
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html
@@ -1249,25 +1254,60 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
     def test_signup_private_github(self):
         self.test_signup_public_github(is_public=False)
 
-    @requests_mock.mock()
-    def test_signup_github_event_tracking(self, mock_requests):
-        mock_requests.post(settings.GOOGLE_ANALYTICS_TRACKING_URL)
+    def test_signup_github_event_tracking(self):
+        """Tests that kuma.core.ga_tracking.track_event is called when you
+        sign up with GitHub for the first time."""
         self.github_login()
         with self.settings(
             GOOGLE_ANALYTICS_ACCOUNT='UA-XXXX-1',
             GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS=True
         ):
-            data = {'website': '',
-                    'username': 'octocat',
-                    'email': 'octo.cat@github-inc.com',
-                    'terms': True,
-                    'is_github_url_public': True}
-            response = self.client.post(self.signup_url, data=data)
-            assert response.status_code == 302
-            assert User.objects.get(username='octocat')
+            with mock.patch('kuma.users.signal_handlers.track_event') as track_event_mock:
+                data = {'website': '',
+                        'username': 'octocat',
+                        'email': 'octo.cat@github-inc.com',
+                        'terms': True,
+                        'is_github_url_public': True}
+                response = self.client.post(self.signup_url, data=data)
+                assert response.status_code == 302
+                assert User.objects.get(username='octocat')
 
-            print(mock_requests.request_history)
-            assert 0
+                track_event_mock.assert_called_with(
+                    CATEGORY_SIGNUP_FLOW,
+                    ACTION_SIGN_UP,
+                    'github')
+
+    def test_signin_github_event_tracking(self):
+        """Tests that kuma.core.ga_tracking.track_event is called when you
+        sign in with GitHub a consecutive time."""
+        # First sign up.
+        self.github_login()
+        data = {'website': '',
+                'username': 'octocat',
+                'email': 'octo.cat@github-inc.com',
+                'terms': True,
+                'is_github_url_public': True}
+        response = self.client.post(self.signup_url, data=data)
+        assert response.status_code == 302
+        user = User.objects.get(username='octocat')
+
+        # Pretend that some time goes by
+        user.date_joined -= timedelta(minutes=1)
+        user.save()
+
+        # Now, this time sign in.
+        with self.settings(
+            GOOGLE_ANALYTICS_ACCOUNT='UA-XXXX-1',
+            GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS=True
+        ):
+            with mock.patch('kuma.users.signal_handlers.track_event') as track_event_mock:
+                response = self.github_login(follow=False)
+                assert response.status_code == 302
+
+                track_event_mock.assert_called_with(
+                    CATEGORY_SIGNUP_FLOW,
+                    ACTION_SIGN_IN,
+                    'github')
 
     def test_account_tokens(self):
         testemail = 'account_token@acme.com'

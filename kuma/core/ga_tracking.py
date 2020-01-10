@@ -55,7 +55,6 @@ def track_event(
     More information about the Measurement Protocol here:
     https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide
     """
-    print((raise_errors, settings.GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS, settings.DEBUG))
     # The reason we're using `=None` in these and defaulting them to
     # stuff from `settings` down here is for the benefit tests where we
     # might change these values "in runtime". I.e. between tests.

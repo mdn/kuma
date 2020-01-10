@@ -11,13 +11,13 @@ from django.db.models.signals import post_delete, post_save, pre_delete
 from django.dispatch import receiver
 from waffle import switch_is_active
 
-from kuma.payments.utils import cancel_stripe_customer_subscription
-from kuma.wiki.jobs import DocumentContributorsJob
 from kuma.core.ga_tracking import (
     ACTION_SIGN_IN,
     ACTION_SIGN_UP,
     CATEGORY_SIGNUP_FLOW,
     track_event)
+from kuma.payments.utils import cancel_stripe_customer_subscription
+from kuma.wiki.jobs import DocumentContributorsJob
 
 from .models import User, UserBan
 from .tasks import send_welcome_email
@@ -40,8 +40,6 @@ def on_user_signed_up(sender, request, user, **kwargs):
 @receiver(user_logged_in, dispatch_uid='users.user_logged_in')
 def on_user_logged_in(sender, request, user, **kwargs):
     sociallogin = kwargs.get('sociallogin')
-    print("SOCIALLOGIN", repr(sociallogin))
-    # assert False
     if sociallogin:
         # Thing is, if someone signs in for the very first time, it'll
         # trigger two signals: 'user_signed_up' *and* 'user_logged_in'.
@@ -52,10 +50,23 @@ def on_user_logged_in(sender, request, user, **kwargs):
         # the first time.
         #
         # Due to how the Django ORM assigns dates, it could be that the
-        # two dates are only different in the number of
+        # two dates are only different in the number of milliseconds
+        # since the numbers get assigned by calling something like:
+        #
+        #   User.objects.create(
+        #       date_joined=timezone.now(),
+        #       last_login=timezone.now(),
+        #       ...
+        #
+        # NOTE! The SocialAccount (`sociallogin.account` in this context) has
+        # its own `.last_login` and `.date_joined` which is *different* from
+        # the same fields as they're stored in the `auth_user` database.
+        # (peterbe's note): Not sure how that works or why it's so.
+        # So, use the date stored on the user and not on the SocialAccount
+        # instance.
         if is_almost_same_dates(
-            sociallogin.account.last_login,
-            sociallogin.account.date_joined
+            sociallogin.account.user.last_login,
+            sociallogin.account.user.date_joined
         ):
             # It's a sign UP!
             track_event(
@@ -69,11 +80,9 @@ def on_user_logged_in(sender, request, user, **kwargs):
                 sociallogin.account.provider)
 
 
-def is_almost_same_dates(date1, date2, epislon=timedelta(minutes=1)):
+def is_almost_same_dates(date1, date2, epislon=timedelta(seconds=1)):
     """Return true if both dates are truthy and sufficiently close"""
-    return (
-        date1 and date2 and
-        abs(date1 - date2) < epislon)
+    return date1 and date2 and abs(date1 - date2) < epislon
 
 
 @receiver(email_confirmed, dispatch_uid='users.email_confirmed')

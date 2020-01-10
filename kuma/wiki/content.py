@@ -238,6 +238,9 @@ def get_seo_description(content, locale=None, strip_markup=True):
             if strip_markup:
                 seo_summary = summaryClasses.text()
             else:
+                from pprint import pprint
+                pprint([
+                    (item, to_html(item)) for item in summaryClasses.items()])
                 seo_summary = ''.join(
                     to_html(item) for item in summaryClasses.items())
         else:
