@@ -454,7 +454,11 @@ def user_edit(request, username):
         expand=['default_source']
     ) if settings.STRIPE_PLAN_ID and edit_user.stripe_customer_id else None
     subscription_info = None
-    stripe_subscription = retrieve_stripe_subscription(stripe_customer) if stripe_customer else None
+    stripe_subscription = (
+        retrieve_stripe_subscription(stripe_customer)
+        if stripe_customer and stripe_customer.email == edit_user.email
+        else None
+    )
     if stripe_subscription:
         source = stripe_customer.default_source
         subscription_info = {
@@ -778,15 +782,15 @@ def create_stripe_subscription(request):
 
     has_stripe_error = False
     try:
-        if not user.stripe_customer_id:
+        email = request.POST.get('stripe_email', '')
+        customer = stripe.Customer.retrieve(user.stripe_customer_id) if user.stripe_customer_id else None
+        if not customer or customer.email != email:
             customer = stripe.Customer.create(
-                email=request.POST.get('stripe_email', ''),
+                email=email,
                 source=request.POST.get('stripe_token', ''),
             )
             user.stripe_customer_id = customer.id
             user.save()
-        else:
-            customer = stripe.Customer.retrieve(user.stripe_customer_id)
 
         if retrieve_stripe_subscription(customer) is None:
             stripe.Subscription.create(
