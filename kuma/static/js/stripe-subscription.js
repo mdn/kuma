@@ -3,6 +3,7 @@
     var stripeSection = document.querySelector('.stripe-subscription');
     var stripeForm = document.getElementById('stripe-form');
 
+    // The query parameter is added when the user submits the form
     if (
         stripeSection.scrollIntoView &&
         location.search.indexOf('has_stripe_error') !== -1
@@ -10,6 +11,8 @@
         stripeSection.scrollIntoView({behavior: 'smooth'});
     }
 
+    // This script is loaded for both before and after form submission.
+    // In the latter case no form is rendered anymore
     if (!stripeForm) {
         return;
     }
