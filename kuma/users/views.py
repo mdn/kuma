@@ -33,6 +33,7 @@ from django.views.generic import TemplateView
 from honeypot.decorators import verify_honeypot_value
 from raven.contrib.django.models import client as raven_client
 from taggit.utils import parse_tags
+from waffle.decorators import waffle_flag
 
 from kuma.core.decorators import (ensure_wiki_domain, login_required,
                                   redirect_in_maintenance_mode)
@@ -769,7 +770,10 @@ def recover(request, uidb64=None, token=None):
 
 @login_required
 @require_POST
+@waffle_flag('subscription')
 def create_stripe_subscription(request):
+    assert settings.STRIPE_PLAN_ID
+
     user = request.user
 
     has_stripe_error = False
