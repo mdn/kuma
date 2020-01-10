@@ -18,8 +18,5 @@ class UserConfig(AuthConfig):
 
         # Configure global 'stripe' module
         if settings.STRIPE_SECRET_KEY:
-            # XXX Perhaps we ought to sanity check that *all* other Stripe
-            # related settings are properly set.
-
             stripe.api_key = settings.STRIPE_SECRET_KEY
             stripe.max_network_retries = settings.STRIPE_MAX_NETWORK_RETRIES
