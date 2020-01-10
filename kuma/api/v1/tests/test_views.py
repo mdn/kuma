@@ -218,6 +218,7 @@ def test_whoami_anonymous(client, settings, timezone):
                 'section_edit': False,
                 'flag_all': True,
                 'flag_none': False,
+                'subscription': False
             },
             'switches': {
                 'switch_on': True,
@@ -275,6 +276,7 @@ def test_whoami(user_client, wiki_user, wiki_user_github_account,
                 'section_edit': True,
                 'flag_all': True,
                 'flag_none': False,
+                'subscription': is_staff
             },
             'switches': {
                 'switch_on': True,
