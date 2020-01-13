@@ -47,10 +47,15 @@ mdn.perf = {
             return;
         }
 
-        performance.measure(
-            measureData.measureName,
-            measureData.startMark,
-            measureData.endMark
-        );
+        try {
+            performance.measure(
+                measureData.measureName,
+                measureData.startMark,
+                measureData.endMark
+            );
+        } catch (error) {
+            console.error('Error while setting performance measure: ', error);
+        }
+
     }
 };
