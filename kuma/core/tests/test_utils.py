@@ -2,8 +2,10 @@
 
 import pytest
 from django.utils.encoding import force_bytes
+from requests.exceptions import ConnectionError
 
-from kuma.core.utils import order_params, safer_pyquery, smart_int
+from kuma.core.utils import (
+    order_params, requests_retry_session, safer_pyquery, smart_int)
 
 
 def test_smart_int():
@@ -69,3 +71,22 @@ def test_safer_pyquery(mock_requests):
     </html>
     """)
     assert parsed('a[href]').text() == 'URL'
+
+
+def test_requests_retry_session(mock_requests):
+    def absolute_url(uri):
+        return 'http://example.com' + uri
+
+    mock_requests.get(absolute_url('/a/ok'), text='hi')
+    mock_requests.get(absolute_url('/oh/noes'), text='bad!', status_code=504)
+    mock_requests.get(absolute_url('/oh/crap'), exc=ConnectionError)
+
+    session = requests_retry_session(status_forcelist=(504,))
+    response_ok = session.get(absolute_url('/a/ok'))
+    assert response_ok.status_code == 200
+
+    response_bad = session.get(absolute_url('/oh/noes'))
+    assert response_bad.status_code == 504
+
+    with pytest.raises(ConnectionError):
+        session.get(absolute_url('/oh/crap'))
