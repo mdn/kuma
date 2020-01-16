@@ -130,7 +130,10 @@ class SocialTestMixin(object):
             token_status_code=200,
             profile_status_code=200,
             email_status_code=200,
-            follow=True):
+            follow=True,
+            token_exc=None,
+            profile_exc=None,
+            email_exc=None):
         """
         Mock a login to GitHub and return the response.
 
@@ -162,23 +165,40 @@ class SocialTestMixin(object):
         with requests_mock.Mocker() as mock_requests:
             # The callback view will make requests back to Github:
             # The OAuth2 authentication token (or error)
-            mock_requests.post(
-                GitHubOAuth2Adapter.access_token_url,
-                json=token_data or self.github_token_data,
-                headers={'content-type': 'application/json'},
-                status_code=token_status_code)
+            if token_exc:
+                mock_requests.post(
+                    GitHubOAuth2Adapter.access_token_url,
+                    exc=token_exc)
+            else:
+                mock_requests.post(
+                    GitHubOAuth2Adapter.access_token_url,
+                    json=token_data or self.github_token_data,
+                    headers={'content-type': 'application/json'},
+                    status_code=token_status_code)
+
             # The authenticated user's profile data
-            mock_requests.get(
-                GitHubOAuth2Adapter.profile_url,
-                json=profile_data or self.github_profile_data,
-                status_code=profile_status_code)
+            if profile_exc:
+                mock_requests.get(
+                    GitHubOAuth2Adapter.profile_url,
+                    exc=profile_exc)
+            else:
+                mock_requests.get(
+                    GitHubOAuth2Adapter.profile_url,
+                    json=profile_data or self.github_profile_data,
+                    status_code=profile_status_code)
             # The user's emails, which could be an empty list
             if email_data is None:
                 email_data = self.github_email_data
-            mock_requests.get(
-                GitHubOAuth2Adapter.emails_url,
-                json=email_data,
-                status_code=email_status_code)
+
+            if email_exc:
+                mock_requests.get(
+                    GitHubOAuth2Adapter.emails_url,
+                    exc=email_exc)
+            else:
+                mock_requests.get(
+                    GitHubOAuth2Adapter.emails_url,
+                    json=email_data,
+                    status_code=email_status_code)
 
             # Simulate the callback from Github
             data = {'code': 'github_code', 'state': state}

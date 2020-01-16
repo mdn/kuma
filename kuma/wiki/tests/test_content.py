@@ -1408,6 +1408,12 @@ def test_multiple_seo_summaries(markup, expected_markup, text, wrapper):
     assert normalize_html(get_seo_description(content, 'en-US', False)) == normalize_html(expected_markup)
 
 
+def test_empty_seo_summary():
+    content = '<p><span class="seoSummary"></span></p>'
+    assert get_seo_description(content, 'en-US', strip_markup=True) == ''
+    assert get_seo_description(content, 'en-US', strip_markup=False) == ''
+
+
 def test_empty_paragraph_content():
     content = """<p></p><div class="overheadIndicator draft draftHeader">
         <strong>DRAFT</strong>

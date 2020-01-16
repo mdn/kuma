@@ -14,6 +14,7 @@ from django.http import Http404
 from django.test import RequestFactory
 from pyquery import PyQuery as pq
 from pytz import timezone, utc
+from requests.exceptions import ProxyError, SSLError
 from waffle.models import Flag
 
 from kuma.attachments.models import Attachment, AttachmentRevision
@@ -1135,6 +1136,20 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
 
     def test_login_500_on_getting_email_addresses(self):
         resp = self.github_login(email_status_code=500)
+        # No redirect!
+        assert resp.status_code == 200
+        doc = pq(resp.content)
+        assert 'Account Sign In Failure' in doc.find('h1').text()
+
+    def test_login_SSLError_on_getting_profile(self):
+        resp = self.github_login(profile_exc=SSLError)
+        # No redirect!
+        assert resp.status_code == 200
+        doc = pq(resp.content)
+        assert 'Account Sign In Failure' in doc.find('h1').text()
+
+    def test_login_ProxyError_on_getting_email_addresses(self):
+        resp = self.github_login(email_exc=ProxyError)
         # No redirect!
         assert resp.status_code == 200
         doc = pq(resp.content)

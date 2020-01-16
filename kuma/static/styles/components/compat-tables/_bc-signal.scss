@@ -136,6 +136,10 @@ div.bc-signal-block {
         box-sizing: border-box;
         padding: 32px;
 
+        @media #{$mq-tablet-and-down} {
+            padding: 16px;
+        }
+
         .complete-left-block-image {
             display: block;
             width: 209px;
@@ -185,7 +189,8 @@ div.bc-signal-block {
         & > .close-btn {
             width: 32px;
             height: 32px;
-            background: url('/static/general/close.svg') center no-repeat;
+            background: #fff url('/static/general/close-light.svg') no-repeat center;
+            border-color: #000;
         }
 
         @media #{$mq-tablet-and-down} {
@@ -509,10 +514,6 @@ div.bc-signal-block {
 }
 
 @media #{$mq-tablet-and-down} {
-    .left-block {
-        padding: 0 32px;
-    }
-
     div.bc-signal-block {
         transition: max-height .8s ease-out, padding-top .1s ease .7s;
     }
