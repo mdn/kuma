@@ -111,6 +111,8 @@ class KumaAccountAdapter(DefaultAccountAdapter):
                                                   commit=False)
         is_github_url_public = form.cleaned_data.get('is_github_url_public')
         user.is_github_url_public = is_github_url_public
+        user.is_newsletter_subscribed = form.cleaned_data.get('is_newsletter_subscribed', False)
+
         if commit:  # pragma: no cover
             # commit will be True, unless extended by a derived class
             user.save()
