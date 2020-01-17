@@ -22,23 +22,6 @@ from . import SampleRevisionsMixin, SocialTestMixin, UserTestCase
 from ..models import User, UserBan
 
 
-def test_signin_landing(db, client, settings):
-    settings.MULTI_AUTH_ENABLED = True
-    response = client.get(reverse('socialaccount_signin'))
-    github_login_url = '/users/github/login/'
-    google_login_url = '/users/google/login/'
-    # first, make sure that the page loads
-    assert response.status_code == 200
-    doc = pq(response.content)
-    # ensure the title is accurate
-    assert 'Create your MDN Web Docs Account' in doc.find('h1').text()
-    # ensure that both auth buttons are present
-    assert doc('.auth-button-container a').length == 2
-    # ensure each button links to the appropriate endpoint
-    assert doc('.github-auth').attr.href == github_login_url
-    assert doc('.google-auth').attr.href == google_login_url
-
-
 class SignupTests(UserTestCase, SocialTestMixin):
     profile_create_strings = (
         'Create your MDN profile',
