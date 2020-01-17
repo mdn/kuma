@@ -22,7 +22,8 @@ from . import SampleRevisionsMixin, SocialTestMixin, UserTestCase
 from ..models import User, UserBan
 
 
-def test_signin_landing(db, client):
+def test_signin_landing(db, client, settings):
+    settings.MULTI_AUTH_ENABLED = True
     response = client.get(reverse('socialaccount_signin'))
     github_login_url = '/users/github/login/'
     google_login_url = '/users/google/login/'

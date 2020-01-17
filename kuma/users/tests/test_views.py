@@ -1604,14 +1604,14 @@ def test_invalid_uid_fails(wiki_user, client):
     assert b'This link is no longer valid.' in response.content
 
 
-def test_signin_landing(db, client):
+def test_signin_landing(db, client, settings):
+    settings.MULTI_AUTH_ENABLED = True
     response = client.get(reverse('socialaccount_signin'))
     assert response.status_code == 200
     doc = pq(response.content)
     assert 'Create your MDN Web Docs Account' in doc.find('h1').text()
 
 
-def test_signin_landing_multi_auth_disabled(db, client, settings):
-    settings.MULTI_AUTH_ENABLED = False
+def test_signin_landing_multi_auth_disabled(db, client):
     response = client.get(reverse('socialaccount_signin'))
     assert response.status_code == 404
