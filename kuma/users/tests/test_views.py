@@ -1602,3 +1602,24 @@ def test_invalid_uid_fails(wiki_user, client):
     assert response.status_code == 200
     assert_no_cache_header(response)
     assert b'This link is no longer valid.' in response.content
+
+
+def test_signin_landing(db, client, settings):
+    settings.MULTI_AUTH_ENABLED = True
+    response = client.get(reverse('socialaccount_signin'))
+    github_login_url = '/users/github/login/'
+    google_login_url = '/users/google/login/'
+    # first, make sure that the page loads
+    assert response.status_code == 200
+    doc = pq(response.content)
+    # ensure that both auth buttons are present
+    assert doc('.auth-button-container a').length == 2
+    # ensure each button links to the appropriate endpoint
+    assert doc('.github-auth').attr.href == github_login_url
+    assert doc('.google-auth').attr.href == google_login_url
+
+
+def test_signin_landing_multi_auth_disabled(db, client):
+    settings.MULTI_AUTH_ENABLED = False
+    response = client.get(reverse('socialaccount_signin'))
+    assert response.status_code == 404
