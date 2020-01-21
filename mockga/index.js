@@ -2,6 +2,8 @@
  * server endpoint.
  * It's not strictly working as Google Analytics does but enough to foreground
  * log the collect POSTs coming in.
+ *
+ * See the README.md for tips on how this works and to do development on it.
  */
 const express = require('express');
 const chalk = require('chalk');

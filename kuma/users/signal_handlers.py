@@ -1,5 +1,3 @@
-#from datetime import timedelta
-
 from allauth.account.signals import (
     email_confirmed,
     user_logged_in,
@@ -28,7 +26,6 @@ def on_user_signed_up(sender, request, user, **kwargs):
     """
     Signal handler to be called when a given user has signed up.
     """
-    print("SIGN UP!!!!!", kwargs.get('sociallogin'))
     sociallogin = kwargs.get('sociallogin')
     if sociallogin:
         # This is here to help us distinguish between sign INs and sign UPs
@@ -50,57 +47,18 @@ def on_user_signed_up(sender, request, user, **kwargs):
 
 @receiver(user_logged_in, dispatch_uid='users.user_logged_in')
 def on_user_logged_in(sender, request, user, **kwargs):
-    print("LOGGED IN!!!!!", kwargs.get('sociallogin'))
     sociallogin = kwargs.get('sociallogin')
     if sociallogin:
+        # Remember, if it's the first time someone logs in, it will trigger
+        # this signal but first it will trigger "user_signed_up" too (first).
+        # So we use the "request" object to put a little note that we've
+        # already processed this as a sign up. ...if it was the first time.
         if not getattr(request, 'is_signup', False):
             # It's a sign IN!
             track_event(
                 CATEGORY_SIGNUP_FLOW,
                 ACTION_SIGN_IN,
                 sociallogin.account.provider)
-#         # Thing is, if someone signs in for the very first time, it'll
-#         # trigger two signals: 'user_signed_up' *and* 'user_logged_in'.
-#         # If that happens, we only want to send *1* tracking event.
-#         # If we listen to both signals we'd get potentially send one
-#         # tracking event too many. So, use the `SocialAccount.last_login`
-#         # and `SocialAccount.date_joined` to figure out if this was the
-#         # the first time.
-#         #
-#         # Due to how the Django ORM assigns dates, it could be that the
-#         # two dates are only different in the number of milliseconds
-#         # since the numbers get assigned by calling something like:
-#         #
-#         #   User.objects.create(
-#         #       date_joined=timezone.now(),
-#         #       last_login=timezone.now(),
-#         #       ...
-#         #
-#         # NOTE! The SocialAccount (`sociallogin.account` in this context) has
-#         # its own `.last_login` and `.date_joined` which is *different* from
-#         # the same fields as they're stored in the `auth_user` database.
-#         # (peterbe's note): Not sure how that works or why it's so.
-#         # So, use the date stored on the user and not on the SocialAccount
-#         # instance.
-#         if is_almost_same_dates(
-#             sociallogin.account.user.last_login,
-#             sociallogin.account.user.date_joined
-#         ):
-#             # It's a sign UP!
-#             track_event(
-#                 CATEGORY_SIGNUP_FLOW,
-#                 ACTION_SIGN_UP,
-#                 sociallogin.account.provider)
-#         else:
-#             track_event(
-#                 CATEGORY_SIGNUP_FLOW,
-#                 ACTION_SIGN_IN,
-#                 sociallogin.account.provider)
-
-
-# def is_almost_same_dates(date1, date2, epislon=timedelta(seconds=1)):
-#     """Return true if both dates are truthy and sufficiently close"""
-#     return date1 and date2 and abs(date1 - date2) < epislon
 
 
 @receiver(email_confirmed, dispatch_uid='users.email_confirmed')

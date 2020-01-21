@@ -10,3 +10,15 @@ does but only for local development.
 ## To run
 
     docker run -t -i --rm -v ${pwd}:/app:rw -p 7000:7000 mockga
+
+You can also, run this outside of Docker if you have `yarn` and `node` etc.
+Simply type:
+
+    yarn start
+
+## To `curl` test
+
+Suppose you have the `mockga` server up and running on `localhost:7000` you
+can send a semi-realistic POST to it with:
+
+    curl -XPOST "http://localhost:7000/collect?v=1&cid=123&tid=UA-XX&ec=category&ea=something&el=foo+bar"

@@ -93,3 +93,6 @@ SENTRY_DSN = None
 # within tests to the actual (and default) www.google-analytics.com this is
 # an extra safeguard.
 GOOGLE_ANALYTICS_TRACKING_URL = 'https://thisllneverwork.example.com/collect'
+
+# The tests will always assume this.
+SITE_ID = 1
