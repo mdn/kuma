@@ -1,0 +1,102 @@
+/* A button that resembles a text link. These should
+   be use sparingly and *only* when a button truly is
+   the correct element */
+@mixin btn-simple-text() {
+    background: none;
+    color: $link-color;
+    border: 0;
+}
+
+.simple-text {
+    @include btn-simple-text();
+}
+
+.button-base {
+    background: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cta {
+    @extend .button-base;
+    min-width: 200px;
+    min-height: 40px;
+}
+
+.primary {
+    background-color: $brand-primary;
+    color: #fff;
+
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: scale-color($brand-primary, $lightness: -20%);
+    }
+}
+
+/* A button used inline. for exmaple at the end
+   of a string of text - ex. Change my name? [ button ] */
+.inline {
+    min-width: auto;
+    min-height: 30px;
+}
+
+/* Button states */
+.negative,
+.positive,
+a.negative,
+a.positive,
+a.disabled,
+button.negative,
+button.positive,
+button.disabled {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 3px solid #000;
+    border-radius: 3px;
+    min-height: 28px;
+    font-weight: bold;
+    box-sizing: content-box;
+    text-decoration: none;
+}
+
+.negative,
+a.negative,
+button.negative {
+    color: $brand-red;
+    border-color: $brand-red;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: $brand-red;
+        color: #fff;
+    }
+}
+
+.positive,
+a.positive,
+button.positive {
+    color: $brand-green;
+    border-color: $brand-green;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: $brand-green;
+        color: #fff;
+
+        svg {
+            fill: #fff;
+        }
+    }
+}
+
+a.disabled,
+button.disabled {
+    background-color: $brand-grey;
+    color: $text-color;
+    border-color: $brand-grey;
+    opacity: 1;
+}
