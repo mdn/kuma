@@ -12,7 +12,7 @@
 
     &:focus-visible {
         outline: 5px auto #e59700; // linux and windows
-        outline: 5px auto -webkit-focus-ring-color; // everyone else
+        outline-color: -webkit-focus-ring-color; // everyone else
     }
 
     .auth-button-container {
