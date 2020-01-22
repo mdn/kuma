@@ -20,8 +20,8 @@ from waffle.models import Flag
 from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.authkeys.models import Key
 from kuma.core.ga_tracking import (
-    ACTION_SIGN_IN,
-    ACTION_SIGN_UP,
+    ACTION_AUTH_SUCCESSFUL,
+    ACTION_PROFILE_CREATED,
     CATEGORY_SIGNUP_FLOW)
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
@@ -1287,10 +1287,16 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                 assert response.status_code == 302
                 assert User.objects.get(username='octocat')
 
-                track_event_mock.assert_called_with(
-                    CATEGORY_SIGNUP_FLOW,
-                    ACTION_SIGN_UP,
-                    'github')
+                track_event_mock.assert_has_calls([
+                    mock.call(
+                        CATEGORY_SIGNUP_FLOW,
+                        ACTION_PROFILE_CREATED,
+                        'github'),
+                    mock.call(
+                        CATEGORY_SIGNUP_FLOW,
+                        ACTION_AUTH_SUCCESSFUL,
+                        'github')
+                ])
 
     def test_signin_github_event_tracking(self):
         """Tests that kuma.core.ga_tracking.track_event is called when you
@@ -1321,7 +1327,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
 
                 track_event_mock.assert_called_with(
                     CATEGORY_SIGNUP_FLOW,
-                    ACTION_SIGN_IN,
+                    ACTION_AUTH_SUCCESSFUL,
                     'github')
 
     def test_account_tokens(self):

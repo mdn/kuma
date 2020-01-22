@@ -10,8 +10,8 @@ from django.dispatch import receiver
 from waffle import switch_is_active
 
 from kuma.core.ga_tracking import (
-    ACTION_SIGN_IN,
-    ACTION_SIGN_UP,
+    ACTION_AUTH_SUCCESSFUL,
+    ACTION_PROFILE_CREATED,
     CATEGORY_SIGNUP_FLOW,
     track_event)
 from kuma.payments.utils import cancel_stripe_customer_subscription
@@ -28,12 +28,9 @@ def on_user_signed_up(sender, request, user, **kwargs):
     """
     sociallogin = kwargs.get('sociallogin')
     if sociallogin:
-        # This is here to help us distinguish between sign INs and sign UPs
-        # which are both triggered when you sign UP.
-        request.is_signup = True
         track_event(
             CATEGORY_SIGNUP_FLOW,
-            ACTION_SIGN_UP,
+            ACTION_PROFILE_CREATED,
             sociallogin.account.provider)
 
     if switch_is_active('welcome_email'):
@@ -49,16 +46,10 @@ def on_user_signed_up(sender, request, user, **kwargs):
 def on_user_logged_in(sender, request, user, **kwargs):
     sociallogin = kwargs.get('sociallogin')
     if sociallogin:
-        # Remember, if it's the first time someone logs in, it will trigger
-        # this signal but first it will trigger "user_signed_up" too (first).
-        # So we use the "request" object to put a little note that we've
-        # already processed this as a sign up. ...if it was the first time.
-        if not getattr(request, 'is_signup', False):
-            # It's a sign IN!
-            track_event(
-                CATEGORY_SIGNUP_FLOW,
-                ACTION_SIGN_IN,
-                sociallogin.account.provider)
+        track_event(
+            CATEGORY_SIGNUP_FLOW,
+            ACTION_AUTH_SUCCESSFUL,
+            sociallogin.account.provider)
 
 
 @receiver(email_confirmed, dispatch_uid='users.email_confirmed')
