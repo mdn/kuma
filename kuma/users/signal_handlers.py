@@ -11,6 +11,7 @@ from waffle import switch_is_active
 
 from kuma.core.ga_tracking import (
     ACTION_AUTH_SUCCESSFUL,
+    ACTION_FREE_NEWSLETTER,
     ACTION_PROFILE_CREATED,
     CATEGORY_SIGNUP_FLOW,
     track_event)
@@ -32,6 +33,10 @@ def on_user_signed_up(sender, request, user, **kwargs):
             CATEGORY_SIGNUP_FLOW,
             ACTION_PROFILE_CREATED,
             sociallogin.account.provider)
+        track_event(
+            CATEGORY_SIGNUP_FLOW,
+            ACTION_FREE_NEWSLETTER,
+            'opt-in' if user.is_newsletter_subscribed else 'opt-out')
 
     if switch_is_active('welcome_email'):
         # only send if the user has already verified

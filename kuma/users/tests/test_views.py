@@ -21,6 +21,7 @@ from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.authkeys.models import Key
 from kuma.core.ga_tracking import (
     ACTION_AUTH_SUCCESSFUL,
+    ACTION_FREE_NEWSLETTER,
     ACTION_PROFILE_CREATED,
     CATEGORY_SIGNUP_FLOW)
 from kuma.core.tests import assert_no_cache_header
@@ -1294,8 +1295,12 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                         'github'),
                     mock.call(
                         CATEGORY_SIGNUP_FLOW,
+                        ACTION_FREE_NEWSLETTER,
+                        'opt-out'),
+                    mock.call(
+                        CATEGORY_SIGNUP_FLOW,
                         ACTION_AUTH_SUCCESSFUL,
-                        'github')
+                        'github'),
                 ])
 
     def test_signin_github_event_tracking(self):
