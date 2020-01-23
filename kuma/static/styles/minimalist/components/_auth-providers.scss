@@ -7,12 +7,7 @@
     }
 
     &:focus {
-        outline-style: none;
-    }
-
-    &:focus-visible {
-        outline: 5px auto #e59700; // linux and windows
-        outline-color: -webkit-focus-ring-color; // everyone else
+        outline: 0;
     }
 
     .auth-button-container {
