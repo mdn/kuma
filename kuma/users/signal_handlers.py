@@ -2,6 +2,7 @@ from allauth.account.signals import (
     email_confirmed,
     user_logged_in,
     user_signed_up)
+from allauth.socialaccount.signals import pre_social_login
 from allauth.socialaccount.signals import social_account_removed
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
@@ -12,6 +13,7 @@ from waffle import switch_is_active
 from kuma.core.ga_tracking import (
     ACTION_AUTH_SUCCESSFUL,
     ACTION_FREE_NEWSLETTER,
+    ACTION_LOGGED_IN,
     ACTION_PROFILE_CREATED,
     CATEGORY_SIGNUP_FLOW,
     track_event)
@@ -20,6 +22,23 @@ from kuma.wiki.jobs import DocumentContributorsJob
 
 from .models import User, UserBan
 from .tasks import send_welcome_email
+
+
+@receiver(pre_social_login, dispatch_uid='users.pre_social_login')
+def on_pre_social_login(sender, request, **kwargs):
+    """
+    Signal handler to be called when a given user has at least successfully
+    authenticated with a provider but not necessarily fully logged in on
+    our site. For example, if the user hasn't created a profile (e.g.
+    agreeing to terms and conditions) the 'user_logged_in' won't fire until
+    then.
+    """
+    sociallogin = kwargs.get('sociallogin')
+    if sociallogin:
+        track_event(
+            CATEGORY_SIGNUP_FLOW,
+            ACTION_AUTH_SUCCESSFUL,
+            sociallogin.account.provider)
 
 
 @receiver(user_signed_up, dispatch_uid='users.user_signed_up')
@@ -53,7 +72,7 @@ def on_user_logged_in(sender, request, user, **kwargs):
     if sociallogin:
         track_event(
             CATEGORY_SIGNUP_FLOW,
-            ACTION_AUTH_SUCCESSFUL,
+            ACTION_LOGGED_IN,
             sociallogin.account.provider)
 
 

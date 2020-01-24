@@ -20,7 +20,8 @@ from waffle.models import Flag
 from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.authkeys.models import Key
 from kuma.core.ga_tracking import (
-    ACTION_AUTH_SUCCESSFUL,
+    ACTION_AUTH_STARTED,
+    ACTION_LOGGED_IN,
     ACTION_FREE_NEWSLETTER,
     ACTION_PROFILE_CREATED,
     CATEGORY_SIGNUP_FLOW)
@@ -1299,7 +1300,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                         'opt-out'),
                     mock.call(
                         CATEGORY_SIGNUP_FLOW,
-                        ACTION_AUTH_SUCCESSFUL,
+                        ACTION_LOGGED_IN,
                         'github'),
                 ])
 
@@ -1326,13 +1327,22 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
             GOOGLE_ANALYTICS_ACCOUNT='UA-XXXX-1',
             GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS=True
         ):
-            with mock.patch('kuma.users.signal_handlers.track_event') as track_event_mock:
+            # This syntax looks a bit weird but it's just to avoid having
+            # to write all mock patches on one super long line in the
+            # 'with' statement.
+            p1 = mock.patch('kuma.users.signal_handlers.track_event')
+            p2 = mock.patch('kuma.users.providers.github.views.track_event')
+            with p1 as track_event_mock_signals, p2 as track_event_mock_github:
                 response = self.github_login(follow=False)
                 assert response.status_code == 302
 
-                track_event_mock.assert_called_with(
+                track_event_mock_signals.assert_called_with(
                     CATEGORY_SIGNUP_FLOW,
-                    ACTION_AUTH_SUCCESSFUL,
+                    ACTION_LOGGED_IN,
+                    'github')
+                track_event_mock_github.assert_called_with(
+                    CATEGORY_SIGNUP_FLOW,
+                    ACTION_AUTH_STARTED,
                     'github')
 
     def test_account_tokens(self):

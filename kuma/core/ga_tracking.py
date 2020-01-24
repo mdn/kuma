@@ -34,8 +34,9 @@ log = logging.getLogger('kuma.core.ga_tracking')
 # Here are some of those useful constants...
 
 CATEGORY_SIGNUP_FLOW = 'signup-flow'
-ACTION_AUTH_ATTEMPT = 'auth-attempt'
+ACTION_AUTH_STARTED = 'auth-started'
 ACTION_AUTH_SUCCESSFUL = 'auth-successful'
+ACTION_LOGGED_IN = 'logged-in'
 ACTION_PROFILE_CREATED = 'profile-created'
 ACTION_FREE_NEWSLETTER = 'free-newsletter'
 
