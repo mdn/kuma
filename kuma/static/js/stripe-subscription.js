@@ -8,6 +8,7 @@
         stripeSection.scrollIntoView &&
         location.search.indexOf('has_stripe_error') !== -1
     ) {
+        history.replaceState(null, '', location.pathname);
         stripeSection.scrollIntoView({behavior: 'smooth'});
     }
 

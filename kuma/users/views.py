@@ -28,19 +28,19 @@ from django.utils.encoding import force_text
 from django.utils.http import urlencode, urlsafe_base64_decode
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
 from honeypot.decorators import verify_honeypot_value
 from raven.contrib.django.models import client as raven_client
 from taggit.utils import parse_tags
-from waffle.decorators import waffle_flag
+from waffle import flag_is_active
 
 from kuma.core.decorators import (ensure_wiki_domain, login_required,
                                   redirect_in_maintenance_mode)
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import (Document, DocumentDeletionLog, Revision,
                               RevisionAkismetSubmission)
-
 from .forms import (
     UserBanForm,
     UserDeleteForm,
@@ -50,7 +50,11 @@ from .models import User, UserBan
 # we have to import the signup form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
 from .signup import SignupForm
-from .utils import retrieve_stripe_subscription
+from .utils import (
+    retrieve_stripe_subscription_info,
+    create_stripe_customer_and_subscription_for_user,
+    get_stripe_test_user,
+)
 
 # TODO: Make this dynamic, editable from admin interface
 INTEREST_SUGGESTIONS = [
@@ -394,9 +398,15 @@ def user_edit(request, username):
     View and edit user profile
     """
     has_stripe_error = request.GET.get('has_stripe_error', 'False') == 'True'
-    edit_user = get_object_or_404(User, username=username)
+    test_mode = request.GET.get('test_mode', 'False') == 'True'
 
-    if not edit_user.allows_editing_by(request.user):
+    edit_user = (
+        get_object_or_404(User, username=username)
+        if not test_mode
+        else get_stripe_test_user()
+    )
+
+    if not request.user and not test_mode and not edit_user.allows_editing_by(request.user):
         return HttpResponseForbidden()
 
     # Map of form field names to tag namespaces
@@ -449,31 +459,16 @@ def user_edit(request, username):
 
             return redirect(edit_user)
 
-    stripe_customer = stripe.Customer.retrieve(
-        edit_user.stripe_customer_id,
-        expand=['default_source']
-    ) if settings.STRIPE_PLAN_ID and edit_user.stripe_customer_id else None
-    subscription_info = None
-    stripe_subscription = (
-        retrieve_stripe_subscription(stripe_customer)
-        if stripe_customer and stripe_customer.email == edit_user.email
-        else None
-    )
-    if stripe_subscription:
-        source = stripe_customer.default_source
-        subscription_info = {
-            'next_payment_at': datetime.fromtimestamp(stripe_subscription.current_period_end),
-            'brand': source.brand,
-            'expires_at': f'{source.exp_month}/{source.exp_year}',
-            'last4': source.last4,
-            'zip': source.address_zip
-        }
     context = {
         'edit_user': edit_user,
         'user_form': user_form,
         'INTEREST_SUGGESTIONS': INTEREST_SUGGESTIONS,
-        'subscription_info': subscription_info,
-        'has_stripe_error': has_stripe_error
+        'subscription_info': retrieve_stripe_subscription_info(
+            edit_user,
+            test_mode
+        ),
+        'has_stripe_error': has_stripe_error,
+        'test_mode': test_mode
     }
 
     return render(request, 'users/user_edit.html', context)
@@ -772,38 +767,34 @@ def recover(request, uidb64=None, token=None):
     return render(request, 'users/recover_failed.html')
 
 
-@login_required
-@require_POST
-@waffle_flag('subscription')
-def create_stripe_subscription(request):
-    assert settings.STRIPE_PLAN_ID
+@csrf_exempt
+def testable_create_stripe_subscription(request):
+    if request.GET.get('test_mode'):
+        user = get_stripe_test_user(fresh=True)
+        test_mode = True
+        return create_stripe_subscription(request, user, test_mode)
+    else:
+        return create_stripe_subscription(request, request.user)
 
-    user = request.user
+
+@require_POST
+def create_stripe_subscription(request, user, test_mode=False):
+    assert user
+    if not test_mode:
+        assert flag_is_active(request, 'subscription')
 
     has_stripe_error = False
     try:
         email = request.POST.get('stripe_email', '')
-        customer = stripe.Customer.retrieve(user.stripe_customer_id) if user.stripe_customer_id else None
-        if not customer or customer.email != email:
-            customer = stripe.Customer.create(
-                email=email,
-                source=request.POST.get('stripe_token', ''),
-            )
-            user.stripe_customer_id = customer.id
-            user.save()
-
-        if retrieve_stripe_subscription(customer) is None:
-            stripe.Subscription.create(
-                customer=customer.id,
-                items=[{
-                    'plan': settings.STRIPE_PLAN_ID,
-                }]
-            )
+        stripe_token = request.POST.get('stripe_token', '')
+        create_stripe_customer_and_subscription_for_user(user, email, stripe_token, test_mode)
     except stripe.error.StripeError:
         raven_client.captureException()
         has_stripe_error = True
 
-    query_params = '?' + urlencode({'has_stripe_error': has_stripe_error})
+    query_params = "?" + urlencode(
+        {"has_stripe_error": has_stripe_error, "test_mode": test_mode}
+    )
     return redirect(reverse('users.user_edit', args=[user.username]) + query_params)
 
 

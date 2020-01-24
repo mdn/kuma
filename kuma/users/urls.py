@@ -96,7 +96,7 @@ lang_urlpatterns = [
         views.user_delete,
         name='users.user_delete'),
     url(r'^profile/stripe_subscription$',
-        views.create_stripe_subscription,
+        views.testable_create_stripe_subscription,
         name='users.create_stripe_subscription'),
     url(r'^profile/?$',
         views.my_detail_page,
