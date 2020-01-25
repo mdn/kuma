@@ -47,12 +47,12 @@ Enhancements!
 ====================================================================== */
 
 /* don't give operators, strings, etc a background color */
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string {
-    background: none!important;
+span.token.operator,
+span.token.entity,
+span.token.url,
+.language-css span.token.string,
+.style span.token.string {
+    background-color: transparent;
 }
 
 /*
