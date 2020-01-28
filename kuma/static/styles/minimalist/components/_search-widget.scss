@@ -23,6 +23,7 @@
         font-size: $tiny-font-size;
         min-width: 60px;
 
+        &:focus,
         &:invalid {
             border: 0;
             outline: none;
