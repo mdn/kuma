@@ -29,6 +29,13 @@
         }
     }
 
+    .github-auth,
+    .google-auth {
+        img {
+            filter: grayscale(100%);
+        }
+    }
+
     .checked::after {
         display: block;
         position: absolute;
