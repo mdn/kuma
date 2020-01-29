@@ -564,6 +564,7 @@ INSTALLED_APPS = (
     'kuma.dashboards',
     'statici18n',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_mysql',
 
     # other
