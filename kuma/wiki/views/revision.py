@@ -268,10 +268,10 @@ def do_revision_api_get(request, doc, mode, select_macros):
     validation has already been performed.
     """
     if mode and select_macros:
-        html, errors = kumascript.get(
+        html, _ = kumascript.get(
             doc, base_url=None, selective_mode=(mode, select_macros))
     else:
-        html, errors = doc.html, []
+        html, _ = doc.html, []
     response = HttpResponse(html)
     response['X-Frame-Options'] = 'deny'
     response['X-Robots-Tag'] = 'noindex'
