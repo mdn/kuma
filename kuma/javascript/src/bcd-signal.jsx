@@ -496,7 +496,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
 
         closeButton.className = 'button close-btn';
         closeButtonWrapper.className = 'close-button-wrapper';
-        leftBlockWrapper.className = 'column-5 left-block';
+        leftBlockWrapper.className = 'column-4 left-block';
         leftBlockHeader.className = 'left-block-header';
         leftBlockImage.className = 'left-block-image';
 
@@ -535,7 +535,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
         stepsInfoSpan = document.createElement('span');
 
         formControlBlockWrapper.className =
-            'column-7 right-block form-control-block';
+            'column-8 right-block form-control-block';
         stepsInfo.className = 'highlight-spanned';
         stepsInfoSpan.className = 'highlight-span';
 
