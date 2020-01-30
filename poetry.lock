@@ -230,7 +230,7 @@ description = "A high-level Python Web framework that encourages rapid developme
 name = "django"
 optional = false
 python-versions = "*"
-version = "1.11.23"
+version = "1.11.27"
 
 [package.dependencies]
 pytz = "*"
@@ -1303,7 +1303,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "e304cebe664eb7b26897212b6d721b570b1ac07dd1e136c3429c8e8a45407652"
+content-hash = "7b70d161bc6762b4532e22eebc73d96bbb8b0e99446f5b75d898b626dfe266f4"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1428,8 +1428,8 @@ dj-email-url = [
     {file = "dj_email_url-0.0.4-py2-none-any.whl", hash = "sha256:c4a62a75499183cc645f060785760946dd422000dffbcaa264953b1abd6e5255"},
 ]
 django = [
-    {file = "Django-1.11.23-py2.py3-none-any.whl", hash = "sha256:c85b8c95366e187ca0581d45a6e508107ca4bd38cb45c24aa09d3572074c523d"},
-    {file = "Django-1.11.23.tar.gz", hash = "sha256:52a66d7f8b036d02da0a4472359e8be1727424fc1e4b4f5c684ef97de7b569e1"},
+    {file = "Django-1.11.27-py2.py3-none-any.whl", hash = "sha256:372faee5b93c92f19e9d65f52b278a1b689d3e3b4a7d9d30db73a78ebc729770"},
+    {file = "Django-1.11.27.tar.gz", hash = "sha256:20111383869ad1b11400c94b0c19d4ab12975316cd058eabd17452e0546169b8"},
 ]
 django-allauth = [
     {file = "django-allauth-0.38.0.tar.gz", hash = "sha256:45661b6fe308466154adf54461679fab6f0c6850b10c56dc322fbbb9d47e03d9"},
