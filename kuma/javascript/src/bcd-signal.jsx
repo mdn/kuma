@@ -281,7 +281,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
 
         controlDescription.className = 'control-description';
 
-        controlHeader.appendChild(createStepNumLabel(controlObj.index, true));
+        controlHeader.appendChild(createStepNumLabel(controlObj.index));
         controlHeader.appendChild(document.createTextNode(controlObj.header));
         controlDescription.innerText = controlObj.description;
 
@@ -301,7 +301,6 @@ window.activateBCDSignals = (slug: string, locale: string) => {
             controlInnerWrapper.appendChild(controlObj.el);
         }
 
-        control.appendChild(createStepNumLabel(controlObj.index));
         control.appendChild(controlInnerWrapper);
 
         return control;
