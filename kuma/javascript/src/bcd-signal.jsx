@@ -267,11 +267,13 @@ window.activateBCDSignals = (slug: string, locale: string) => {
         const control = document.createElement('div');
         const controlInnerWrapper = document.createElement('div');
         const controlHeader = document.createElement('div');
+        const controlInnerHeaderWrapper = document.createElement('div');
         const controlDescription = document.createElement('div');
 
         control.className = 'control';
         controlInnerWrapper.className = 'control-wrap';
         controlHeader.className = 'control-header';
+        controlInnerHeaderWrapper.className = 'control-header-wrap';
         if (controlObj.inline) {
             controlHeader.classList.add('has-control');
         }
@@ -280,9 +282,14 @@ window.activateBCDSignals = (slug: string, locale: string) => {
         }
 
         controlDescription.className = 'control-description';
+        controlInnerHeaderWrapper.appendChild(
+            createStepNumLabel(controlObj.index)
+        );
+        controlInnerHeaderWrapper.appendChild(
+            document.createTextNode(controlObj.header)
+        );
+        controlHeader.appendChild(controlInnerHeaderWrapper);
 
-        controlHeader.appendChild(createStepNumLabel(controlObj.index));
-        controlHeader.appendChild(document.createTextNode(controlObj.header));
         controlDescription.innerText = controlObj.description;
 
         controlInnerWrapper.appendChild(controlHeader);
