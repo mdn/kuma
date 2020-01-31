@@ -348,7 +348,7 @@ description = "Extensions for Django"
 name = "django-extensions"
 optional = false
 python-versions = "*"
-version = "2.2.5"
+version = "2.2.6"
 
 [package.dependencies]
 six = ">=1.2"
@@ -1282,12 +1282,12 @@ python-versions = "*"
 version = "0.5.1"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "The comprehensive WSGI web application library."
 name = "werkzeug"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "0.16.0"
+version = "0.16.1"
 
 [package.extras]
 dev = ["pytest", "coverage", "tox", "sphinx", "pallets-sphinx-themes", "sphinx-issues"]
@@ -1303,7 +1303,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "3b440914759b5c0ea7fee2c2c2f010c5207535ce84bf60c7988f3d7cdf58c07c"
+content-hash = "0fd92a20bcb5c4fbe91a84ba95fe3dc0312fd30d86fe5af6efb0e4414a95fc6c"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1463,8 +1463,8 @@ django-decorator-include = [
     {file = "django_decorator_include-1.4.1-py2.py3-none-any.whl", hash = "sha256:5514ab61381613959b40321dc97daca3e0449b04b65dac8373534a030f1238fc"},
 ]
 django-extensions = [
-    {file = "django-extensions-2.2.5.tar.gz", hash = "sha256:b58320d3fe3d6ae7d1d8e38959713fa92272f4921e662d689058d942a5b444f7"},
-    {file = "django_extensions-2.2.5-py2.py3-none-any.whl", hash = "sha256:a9db7c56a556d244184f589f2437b4228de86ee45e5ebb837fb20c6d54e95ea5"},
+    {file = "django-extensions-2.2.6.tar.gz", hash = "sha256:936e8e3962024d3c75ea54f4e0248002404ca7ca7fb698430e60b06b5555b4e7"},
+    {file = "django_extensions-2.2.6-py2.py3-none-any.whl", hash = "sha256:4524eca892d23fa6e93b0620901983b287ff5dc806f1b978d6a98541f06b9471"},
 ]
 django-flat-theme = [
     {file = "django-flat-theme-1.1.3.tar.gz", hash = "sha256:323011c7eda4fb57604fd9feee568c5a789bff4c0c0892128f05246936e8013a"},
@@ -1896,8 +1896,8 @@ webencodings = [
     {file = "webencodings-0.5.1.tar.gz", hash = "sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923"},
 ]
 werkzeug = [
-    {file = "Werkzeug-0.16.0-py2.py3-none-any.whl", hash = "sha256:e5f4a1f98b52b18a93da705a7458e55afb26f32bff83ff5d19189f92462d65c4"},
-    {file = "Werkzeug-0.16.0.tar.gz", hash = "sha256:7280924747b5733b246fe23972186c6b348f9ae29724135a6dfc1e53cea433e7"},
+    {file = "Werkzeug-0.16.1-py2.py3-none-any.whl", hash = "sha256:1e0dedc2acb1f46827daa2e399c1485c8fa17c0d8e70b6b875b4e7f54bf408d2"},
+    {file = "Werkzeug-0.16.1.tar.gz", hash = "sha256:b353856d37dec59d6511359f97f6a4b2468442e454bd1c98298ddce53cac1f04"},
 ]
 whitenoise = [
     {file = "whitenoise-3.3.1-py2.py3-none-any.whl", hash = "sha256:15f43b2e701821b95c9016cf469d29e2a546cb1c7dead584ba82c36f843995cf"},
