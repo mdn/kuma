@@ -780,8 +780,8 @@ def testable_create_stripe_subscription(request):
 @require_POST
 def create_stripe_subscription(request, user, test_mode=False):
     assert user
-    if not test_mode:
-        assert flag_is_active(request, 'subscription')
+    if not test_mode and not flag_is_active(request, 'subscription'):
+        return HttpResponseForbidden('subscription flag not active for this user')
 
     has_stripe_error = False
     try:
