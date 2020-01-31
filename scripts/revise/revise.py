@@ -119,13 +119,13 @@ def do_commit(dir, token, log):
         metadata = get_metadata(rev.with_name("metadata.yaml"), log)
         if not metadata:
             continue
-        etag = metadata["etag"]
+        last_modified = metadata["last_modified"]
         parts = urlsplit(metadata["url"])
         doc = parts.path
         url = urlunsplit((parts.scheme, parts.netloc, parts.path, "", ""))
         headers = {
-            "If-Match": etag,
             "Authorization": f"Token {token}",
+            "If-Unmodified-Since": last_modified,
         }
         try:
             with rev.open() as f:
@@ -179,7 +179,8 @@ def do_edit(cmd, config_path, output_dir, log):
         rev_url = f"{ref_url}?{qs}"
 
         try:
-            ref_text, rev_text, etag = get_ref_and_rev(ref_url, rev_url)
+            ref_text, rev_text, last_modified = get_ref_and_rev(ref_url,
+                                                                rev_url)
         except requests.HTTPError as e:
             log(f"error: while getting data for {doc} ({str(e)})", fg="red")
             continue
@@ -207,7 +208,7 @@ def do_edit(cmd, config_path, output_dir, log):
 
         log(f"- {metadata_path}")
         with metadata_path.open("w") as f:
-            yaml.dump(dict(url=rev_url, etag=etag), f)
+            yaml.dump(dict(url=rev_url, last_modified=last_modified), f)
 
 
 def get_ref_and_rev(ref_url, rev_url):
@@ -215,12 +216,12 @@ def get_ref_and_rev(ref_url, rev_url):
     while not done:
         ref_resp = get(ref_url)
         ref_resp.raise_for_status()
-        ref_etag = ref_resp.headers.get("etag")
+        ref_last_modified = ref_resp.headers.get("last-modified")
         rev_resp = get(rev_url)
         rev_resp.raise_for_status()
-        rev_etag = rev_resp.headers.get("etag")
-        done = ref_etag == rev_etag
-    return (ref_resp.text, rev_resp.text, rev_etag)
+        rev_last_modified = rev_resp.headers.get("last-modified")
+        done = ref_last_modified == rev_last_modified
+    return (ref_resp.text, rev_resp.text, rev_last_modified)
 
 
 def get_fresh_output_dir(output_dir):
@@ -261,7 +262,7 @@ def get_metadata(path, log):
     except (OSError, yaml.YAMLError) as e:
         log(f"error: {str(e)}", fg="red")
         return None
-    for k in ("etag", "url"):
+    for k in ("last_modified", "url"):
         if not metadata.get(k):
             log(f'error: {path} has no "{k}" key or its value is empty', fg="red")
             return None
