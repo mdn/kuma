@@ -1256,7 +1256,7 @@ description = "A utility class for manipulating URLs."
 name = "urlobject"
 optional = false
 python-versions = "*"
-version = "2.4.0"
+version = "2.4.3"
 
 [[package]]
 category = "main"
@@ -1304,7 +1304,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "473df0fbdc835da04ba059901eb0ca29190fcab0d8ac553832e910159b782dd3"
+content-hash = "836d7fe48f03ab7f0db48a5e116c5b84ac26e6d10d70b3961fdada6154e0105f"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1883,7 +1883,7 @@ urllib3 = [
     {file = "urllib3-1.25.8.tar.gz", hash = "sha256:87716c2d2a7121198ebcb7ce7cccf6ce5e9ba539041cfbaeecfb641dc0bf6acc"},
 ]
 urlobject = [
-    {file = "URLObject-2.4.0.tar.gz", hash = "sha256:f51272b12846db98af530b0a64f6593d2b1e8405f0aa580285b37ce8009b8d9c"},
+    {file = "URLObject-2.4.3.tar.gz", hash = "sha256:47b2e20e6ab9c8366b2f4a3566b6ff4053025dad311c4bb71279bbcfa2430caa"},
 ]
 urlwait = [
     {file = "urlwait-0.4-py2.py3-none-any.whl", hash = "sha256:fc39ff2c8abbcaad5043e1f79699dcb15a036cc4b0ff4d1aa825ea105d4889ff"},
