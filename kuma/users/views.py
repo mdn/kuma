@@ -36,6 +36,10 @@ from taggit.utils import parse_tags
 
 from kuma.core.decorators import (ensure_wiki_domain, login_required,
                                   redirect_in_maintenance_mode)
+from kuma.core.ga_tracking import (
+    ACTION_PROFILE_AUDIT,
+    CATEGORY_SIGNUP_FLOW,
+    track_event)
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import (Document, DocumentDeletionLog, Revision,
                               RevisionAkismetSubmission)
@@ -716,8 +720,16 @@ class SignupView(BaseSignupView):
         return super(SignupView, self).dispatch(request, *args, **kwargs)
 
 
-signup = redirect_in_maintenance_mode(SignupView.as_view())
-
+signup_as_view = SignupView.as_view()
+@redirect_in_maintenance_mode
+def signup(request, *args, **kwargs):
+    """Wrapper function just so we can trigger a track_event() call"""
+    if request.session.get('sociallogin_provider'):
+        track_event(
+            CATEGORY_SIGNUP_FLOW,
+            ACTION_PROFILE_AUDIT,
+            request.session['sociallogin_provider'])
+    return signup_as_view(request, *args, **kwargs)
 
 @require_POST
 @redirect_in_maintenance_mode

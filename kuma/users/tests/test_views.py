@@ -21,7 +21,6 @@ from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.authkeys.models import Key
 from kuma.core.ga_tracking import (
     ACTION_AUTH_STARTED,
-    ACTION_LOGGED_IN,
     ACTION_FREE_NEWSLETTER,
     ACTION_PROFILE_CREATED,
     CATEGORY_SIGNUP_FLOW)

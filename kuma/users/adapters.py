@@ -13,6 +13,10 @@ from django.utils.cache import add_never_cache_headers
 from django.utils.translation import ugettext_lazy as _
 from waffle import switch_is_active
 
+from kuma.core.ga_tracking import (
+    ACTION_SOCIAL_AUTH_ADD,
+    CATEGORY_SIGNUP_FLOW,
+    track_event)
 from kuma.core.urlresolvers import reverse
 
 from .constants import USERNAME_CHARACTERS, USERNAME_REGEX
@@ -247,6 +251,15 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
             # multiple associated Persona social accounts (each identified
             # by a unique email address).
             user.socialaccount_set.filter(provider='persona').delete()
+            # Send an event to Google Analytics that the authentication
+            # from one provider could be added to an account created by a
+            # *different* provider (originally).
+            track_event(
+                CATEGORY_SIGNUP_FLOW,
+                ACTION_SOCIAL_AUTH_ADD,
+                f'{sociallogin.account.provider}-added'
+            )
+            raise Exception('HI GREGOR')
         else:
             user = super().save_user(request, sociallogin, form)
 

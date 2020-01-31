@@ -34,11 +34,21 @@ log = logging.getLogger('kuma.core.ga_tracking')
 # Here are some of those useful constants...
 
 CATEGORY_SIGNUP_FLOW = 'signup-flow'
+# Right before redirecting to the auth provider.
 ACTION_AUTH_STARTED = 'auth-started'
+# When redirected back from auth provider and it worked.
 ACTION_AUTH_SUCCESSFUL = 'auth-successful'
-ACTION_LOGGED_IN = 'logged-in'
+# When we don't need to ask the user to create a profile.
+ACTION_PROFILE_ALREADY_CREATED = 'profile-already-created'
+# Presented with the "Create Profile" form.
+ACTION_PROFILE_AUDIT = 'profile-audit'
+# Have completed the profile creation form.
 ACTION_PROFILE_CREATED = 'profile-created'
+# Checked or didn't check the "Newsletter" checkbox on sign up.
 ACTION_FREE_NEWSLETTER = 'free-newsletter'
+# When logging in with one provider and benefitting from a verified email
+# existing based on a *different* (already created profile) provider.
+ACTION_SOCIAL_AUTH_ADD = 'social-auth-add'
 
 
 def track_event(

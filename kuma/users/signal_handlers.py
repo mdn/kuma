@@ -13,7 +13,7 @@ from waffle import switch_is_active
 from kuma.core.ga_tracking import (
     ACTION_AUTH_SUCCESSFUL,
     ACTION_FREE_NEWSLETTER,
-    ACTION_LOGGED_IN,
+    ACTION_PROFILE_ALREADY_CREATED,
     ACTION_PROFILE_CREATED,
     CATEGORY_SIGNUP_FLOW,
     track_event)
@@ -52,6 +52,11 @@ def on_user_signed_up(sender, request, user, **kwargs):
             CATEGORY_SIGNUP_FLOW,
             ACTION_PROFILE_CREATED,
             sociallogin.account.provider)
+
+        # This puts a hint to the 'user_logged_in' signal, which'll happen
+        # next, that the user needed to create a profile.
+        request.signed_up = True
+
         track_event(
             CATEGORY_SIGNUP_FLOW,
             ACTION_FREE_NEWSLETTER,
@@ -69,10 +74,10 @@ def on_user_signed_up(sender, request, user, **kwargs):
 @receiver(user_logged_in, dispatch_uid='users.user_logged_in')
 def on_user_logged_in(sender, request, user, **kwargs):
     sociallogin = kwargs.get('sociallogin')
-    if sociallogin:
+    if sociallogin and not getattr(request, 'signed_up', False):
         track_event(
             CATEGORY_SIGNUP_FLOW,
-            ACTION_LOGGED_IN,
+            ACTION_PROFILE_ALREADY_CREATED,
             sociallogin.account.provider)
 
 
