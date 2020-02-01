@@ -259,7 +259,6 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
                 ACTION_SOCIAL_AUTH_ADD,
                 f'{sociallogin.account.provider}-added'
             )
-            raise Exception('HI GREGOR')
         else:
             user = super().save_user(request, sociallogin, form)
 

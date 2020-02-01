@@ -21,7 +21,10 @@ from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.authkeys.models import Key
 from kuma.core.ga_tracking import (
     ACTION_AUTH_STARTED,
+    ACTION_AUTH_SUCCESSFUL,
     ACTION_FREE_NEWSLETTER,
+    ACTION_PROFILE_ALREADY_CREATED,
+    ACTION_PROFILE_AUDIT,
     ACTION_PROFILE_CREATED,
     CATEGORY_SIGNUP_FLOW)
 from kuma.core.tests import assert_no_cache_header
@@ -1278,7 +1281,9 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
             GOOGLE_ANALYTICS_ACCOUNT='UA-XXXX-1',
             GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS=True
         ):
-            with mock.patch('kuma.users.signal_handlers.track_event') as track_event_mock:
+            p1 = mock.patch('kuma.users.signal_handlers.track_event')
+            p2 = mock.patch('kuma.users.views.track_event')
+            with p1 as track_event_mock_signals, p2 as track_event_mock_github:
                 data = {'website': '',
                         'username': 'octocat',
                         'email': 'octo.cat@github-inc.com',
@@ -1288,7 +1293,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                 assert response.status_code == 302
                 assert User.objects.get(username='octocat')
 
-                track_event_mock.assert_has_calls([
+                track_event_mock_signals.assert_has_calls([
                     mock.call(
                         CATEGORY_SIGNUP_FLOW,
                         ACTION_PROFILE_CREATED,
@@ -1297,11 +1302,12 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                         CATEGORY_SIGNUP_FLOW,
                         ACTION_FREE_NEWSLETTER,
                         'opt-out'),
-                    mock.call(
-                        CATEGORY_SIGNUP_FLOW,
-                        ACTION_LOGGED_IN,
-                        'github'),
                 ])
+                track_event_mock_github.assert_called_with(
+                    CATEGORY_SIGNUP_FLOW,
+                    ACTION_PROFILE_AUDIT,
+                    'github'
+                )
 
     def test_signin_github_event_tracking(self):
         """Tests that kuma.core.ga_tracking.track_event is called when you
@@ -1335,10 +1341,16 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                 response = self.github_login(follow=False)
                 assert response.status_code == 302
 
-                track_event_mock_signals.assert_called_with(
-                    CATEGORY_SIGNUP_FLOW,
-                    ACTION_LOGGED_IN,
-                    'github')
+                track_event_mock_signals.assert_has_calls([
+                    mock.call(
+                        CATEGORY_SIGNUP_FLOW,
+                        ACTION_AUTH_SUCCESSFUL,
+                        'github'),
+                    mock.call(
+                        CATEGORY_SIGNUP_FLOW,
+                        ACTION_PROFILE_ALREADY_CREATED,
+                        'github'),
+                ])
                 track_event_mock_github.assert_called_with(
                     CATEGORY_SIGNUP_FLOW,
                     ACTION_AUTH_STARTED,

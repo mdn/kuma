@@ -731,6 +731,7 @@ def signup(request, *args, **kwargs):
             request.session['sociallogin_provider'])
     return signup_as_view(request, *args, **kwargs)
 
+
 @require_POST
 @redirect_in_maintenance_mode
 def send_recovery_email(request):
