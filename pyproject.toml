@@ -116,14 +116,8 @@ pytest-rerunfailures = "2.1.0"
 pytest-variables = "1.7.1"
 
 # From linting.txt
-flake8 = "3.7.9"
-flake8-import-order = "0.18"
-
-# From constraints.txt
-entrypoints = "0.3"
-mccabe = "0.6.1"
-pycodestyle = "2.5.0"
-pyflakes = "2.1.1"
+flake8 = "^3.7.9"
+flake8-import-order = "^0.18.1"
 
 [build-system]
 requires = ["poetry>=0.12"]
