@@ -619,7 +619,7 @@ description = "Flake8 and pylama plugin that checks the ordering of import state
 name = "flake8-import-order"
 optional = false
 python-versions = "*"
-version = "0.18"
+version = "0.18.1"
 
 [package.dependencies]
 pycodestyle = "*"
@@ -1303,7 +1303,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "63949001fc8957631cdfc80101145f72c1af20a8a3a22fd0ea273c0f74c7d613"
+content-hash = "3b440914759b5c0ea7fee2c2c2f010c5207535ce84bf60c7988f3d7cdf58c07c"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1563,8 +1563,8 @@ flake8 = [
     {file = "flake8-3.7.9.tar.gz", hash = "sha256:45681a117ecc81e870cbf1262835ae4af5e7a8b08e40b944a8a6e6b895914cfb"},
 ]
 flake8-import-order = [
-    {file = "flake8-import-order-0.18.tar.gz", hash = "sha256:9be5ca10d791d458eaa833dd6890ab2db37be80384707b0f76286ddd13c16cbf"},
-    {file = "flake8_import_order-0.18-py2.py3-none-any.whl", hash = "sha256:feca2fd0a17611b33b7fa84449939196c2c82764e262486d5c3e143ed77d387b"},
+    {file = "flake8-import-order-0.18.1.tar.gz", hash = "sha256:a28dc39545ea4606c1ac3c24e9d05c849c6e5444a50fb7e9cdd430fc94de6e92"},
+    {file = "flake8_import_order-0.18.1-py2.py3-none-any.whl", hash = "sha256:90a80e46886259b9c396b578d75c749801a41ee969a235e163cfe1be7afd2543"},
 ]
 google-api-python-client = [
     {file = "google-api-python-client-1.7.11.tar.gz", hash = "sha256:a8a88174f66d92aed7ebbd73744c2c319b4b1ce828e565f9ec721352d2e2fb8c"},
