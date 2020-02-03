@@ -11,11 +11,11 @@ from kuma.core.utils import safer_pyquery as pq
 from kuma.users.models import User
 
 
-def mock_create_stripe_customer_and_subscription_for_user(user, email, stripe_token, test_mode):
+def mock_create_stripe_customer_and_subscription_for_user(user, email, stripe_token):
     pass
 
 
-def mock_retrieve_stripe_subscription_info(user, test_mode):
+def mock_retrieve_stripe_subscription_info(user):
     return {
         'next_payment_at': '',
         'brand': 'MagicCard',
