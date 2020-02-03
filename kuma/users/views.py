@@ -20,7 +20,10 @@ from django.core.validators import validate_email, ValidationError
 from django.db import IntegrityError, transaction
 from django.db.models import Q
 from django.http import (
-    HttpResponseBadRequest, HttpResponseForbidden, HttpResponseRedirect)
+    Http404,
+    HttpResponseBadRequest,
+    HttpResponseForbidden,
+    HttpResponseRedirect)
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -558,6 +561,8 @@ def user_delete(request, username):
 
 
 def signin_landing(request):
+    if not settings.MULTI_AUTH_ENABLED:
+        raise Http404("Multi-auth is not enabled.")
     return render(request, "socialaccount/signup-landing.html")
 
 

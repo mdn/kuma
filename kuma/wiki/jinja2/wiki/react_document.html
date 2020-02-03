@@ -95,13 +95,16 @@
                   document_data)|safe }}
 
   {% block auth_modal %}
-    {% include "includes/auth-modal.html" %}
+    {% if settings.MULTI_AUTH_ENABLED %}
+      {% include "includes/auth-modal.html" %}
+    {% endif %}
   {% endblock %}
 
   <!-- site js -->
   {% javascript 'react-main' %}
-  {% javascript 'auth-modal' %}
-
+  {% if settings.MULTI_AUTH_ENABLED %}
+    {% javascript 'auth-modal' %}
+  {% endif %}
   {% if settings.ENABLE_BCD_SIGNAL %}
     {% javascript "bcd-signal" %}
   {% endif %}

@@ -101,6 +101,8 @@ class User(AbstractUser):
         blank=True,
     )
 
+    is_newsletter_subscribed = models.BooleanField(default=False)
+
     tags = NamespacedTaggableManager(verbose_name=_('Tags'), blank=True)
 
     WEBSITE_VALIDATORS = {

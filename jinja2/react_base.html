@@ -133,14 +133,18 @@
   </footer>
 
   {% block auth_modal %}
-    {% include "includes/auth-modal.html" %}
+    {% if settings.MULTI_AUTH_ENABLED %}
+      {% include "includes/auth-modal.html" %}
+    {% endif %}
   {% endblock %}
 
   <!-- site js -->
   {% block site_js %}
     {{ providers_media_js() }}
     {% javascript 'react-main' %}
-    {% javascript 'auth-modal' %}
+    {% if settings.MULTI_AUTH_ENABLED %}
+      {% javascript 'auth-modal' %}
+    {% endif %}
     {% for script in scripts %}
       {% javascript script %}
     {% endfor %}

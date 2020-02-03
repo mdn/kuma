@@ -1,6 +1,5 @@
-
-
 from django.contrib import admin
+from rest_framework.authtoken.admin import TokenAdmin
 
 from kuma.core.models import IPBan
 
@@ -35,3 +34,6 @@ class IPBanAdmin(admin.ModelAdmin):
     actions = None
     readonly_fields = ('deleted',)
     list_display = ('ip', 'created', 'deleted')
+
+
+TokenAdmin.raw_id_fields = ['user']
