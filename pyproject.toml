@@ -76,7 +76,7 @@ requests-mock = "0.7.0"
 sqlparse = "0.3.0"
 stripe = "2.31.0"
 urllib3 = "^1.25.7"
-urlobject = "2.4.0"
+urlobject = "^2.4.3"
 whitenoise = "3.3.1"
 
 # From default_and_test.txt
