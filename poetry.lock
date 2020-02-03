@@ -1120,7 +1120,7 @@ description = "Python client for Redis key-value store"
 name = "redis"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-version = "3.4.0"
+version = "3.4.1"
 
 [package.extras]
 hiredis = ["hiredis (>=0.1.3)"]
@@ -1304,7 +1304,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "43b9e1cfdb5a2e9dc33442f2cc0d4b4614858fc75cb058a22428d3ec5a7e1e3e"
+content-hash = "d82a0d29e0fe75ad0abf4dc68d5bfa32f4ae905d64b79fac9a157e9a4cd3c501"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1835,8 +1835,8 @@ raven = [
     {file = "raven-6.10.0.tar.gz", hash = "sha256:3fa6de6efa2493a7c827472e984ce9b020797d0da16f1db67197bcc23c8fae54"},
 ]
 redis = [
-    {file = "redis-3.4.0-py2.py3-none-any.whl", hash = "sha256:e933bdb504c69cbd5bdf4e2bb819a99644a36731cef4c59aa637cebfd5ddd4f9"},
-    {file = "redis-3.4.0.tar.gz", hash = "sha256:7595976eb0b4e1fc3ad5478f1fd44215a814ee184a7820de92726f559bdff9cd"},
+    {file = "redis-3.4.1-py2.py3-none-any.whl", hash = "sha256:b205cffd05ebfd0a468db74f0eedbff8df1a7bfc47521516ade4692991bb0833"},
+    {file = "redis-3.4.1.tar.gz", hash = "sha256:0dcfb335921b88a850d461dc255ff4708294943322bd55de6cfd68972490ca1f"},
 ]
 redo = [
     {file = "redo-2.0.3-py2.py3-none-any.whl", hash = "sha256:36784bf8ae766e14f9db0e377ccfa02835d648321d2007b6ae0bf4fd612c0f94"},
