@@ -54,8 +54,8 @@ from .models import User, UserBan
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
 from .signup import SignupForm
 from .utils import (
-    retrieve_stripe_subscription_info,
     create_stripe_customer_and_subscription_for_user,
+    retrieve_stripe_subscription_info,
 )
 
 # TODO: Make this dynamic, editable from admin interface
