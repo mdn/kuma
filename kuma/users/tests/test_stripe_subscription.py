@@ -11,9 +11,6 @@ from kuma.core.utils import safer_pyquery as pq
 from kuma.users.models import User
 
 
-def mock_create_stripe_customer_and_subscription_for_user(user, email, stripe_token):
-    pass
-
 
 def mock_retrieve_stripe_subscription_info(user):
     return {
@@ -44,10 +41,7 @@ def normal_user(db, django_user_model):
     )
 
 
-@patch(
-    "kuma.users.utils.create_stripe_customer_and_subscription_for_user",
-    side_effect=mock_create_stripe_customer_and_subscription_for_user,
-)
+@patch("kuma.users.utils.create_stripe_customer_and_subscription_for_user")
 @patch(
     "kuma.users.utils.retrieve_stripe_subscription_info",
     side_effect=mock_retrieve_stripe_subscription_info
@@ -64,14 +58,14 @@ def test_create_stripe_subscription(mock1, mock2, staff_user):
         follow=True,
         HTTP_HOST=settings.WIKI_HOST
     )
+
+    assert response.status_code == 200
+
     page = pq(response.content)
     assert 'MagicCard ending in 4242' in page('.card-info p').text()
 
 
-@patch(
-    "kuma.users.utils.create_stripe_customer_and_subscription_for_user",
-    side_effect=mock_create_stripe_customer_and_subscription_for_user,
-)
+@patch("kuma.users.utils.create_stripe_customer_and_subscription_for_user")
 @patch(
     "kuma.users.utils.retrieve_stripe_subscription_info",
     side_effect=mock_retrieve_stripe_subscription_info
