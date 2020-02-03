@@ -443,8 +443,8 @@ category = "main"
 description = "Full featured redis cache backend for Django."
 name = "django-redis"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "4.10.0"
+python-versions = ">=3.5"
+version = "4.11.0"
 
 [package.dependencies]
 Django = ">=1.11"
@@ -1119,8 +1119,8 @@ category = "main"
 description = "Python client for Redis key-value store"
 name = "redis"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "3.2.1"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+version = "3.4.0"
 
 [package.extras]
 hiredis = ["hiredis (>=0.1.3)"]
@@ -1304,7 +1304,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "836d7fe48f03ab7f0db48a5e116c5b84ac26e6d10d70b3961fdada6154e0105f"
+content-hash = "43b9e1cfdb5a2e9dc33442f2cc0d4b4614858fc75cb058a22428d3ec5a7e1e3e"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1503,8 +1503,8 @@ django-redirect-urls = [
     {file = "django_redirect_urls-1.0-py2.py3-none-any.whl", hash = "sha256:c4cd7818b06ccf0a5307656a33f3ecea47ee22f0cceb374ea559eb2d1402d5d8"},
 ]
 django-redis = [
-    {file = "django-redis-4.10.0.tar.gz", hash = "sha256:af0b393864e91228dd30d8c85b5c44d670b5524cb161b7f9e41acc98b6e5ace7"},
-    {file = "django_redis-4.10.0-py2.py3-none-any.whl", hash = "sha256:f46115577063d00a890867c6964ba096057f07cb756e78e0503b89cd18e4e083"},
+    {file = "django-redis-4.11.0.tar.gz", hash = "sha256:a5b1e3ffd3198735e6c529d9bdf38ca3fcb3155515249b98dc4d966b8ddf9d2b"},
+    {file = "django_redis-4.11.0-py3-none-any.whl", hash = "sha256:e1aad4cc5bd743d8d0b13d5cae0cef5410eaace33e83bff5fc3a139ad8db50b4"},
 ]
 django-soapbox = [
     {file = "django-soapbox-1.5.tar.gz", hash = "sha256:a65810a406416e3a945feb6c834a58fac341f506e7d1ea1b8abc488df5562f7e"},
@@ -1835,8 +1835,8 @@ raven = [
     {file = "raven-6.10.0.tar.gz", hash = "sha256:3fa6de6efa2493a7c827472e984ce9b020797d0da16f1db67197bcc23c8fae54"},
 ]
 redis = [
-    {file = "redis-3.2.1-py2.py3-none-any.whl", hash = "sha256:6946b5dca72e86103edc8033019cc3814c031232d339d5f4533b02ea85685175"},
-    {file = "redis-3.2.1.tar.gz", hash = "sha256:8ca418d2ddca1b1a850afa1680a7d2fd1f3322739271de4b704e0d4668449273"},
+    {file = "redis-3.4.0-py2.py3-none-any.whl", hash = "sha256:e933bdb504c69cbd5bdf4e2bb819a99644a36731cef4c59aa637cebfd5ddd4f9"},
+    {file = "redis-3.4.0.tar.gz", hash = "sha256:7595976eb0b4e1fc3ad5478f1fd44215a814ee184a7820de92726f559bdff9cd"},
 ]
 redo = [
     {file = "redo-2.0.3-py2.py3-none-any.whl", hash = "sha256:36784bf8ae766e14f9db0e377ccfa02835d648321d2007b6ae0bf4fd612c0f94"},
