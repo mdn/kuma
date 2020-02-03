@@ -382,11 +382,11 @@ jinja2 = ">=2.10"
 
 [[package]]
 category = "main"
-description = "Extensions to Django for use with MySQL/MariaDB"
+description = "Django-MySQL extends Django's built-in MySQL and MariaDB support their specific features not available on other databases."
 name = "django-mysql"
 optional = false
 python-versions = ">=3.5"
-version = "3.2.0"
+version = "3.3.0"
 
 [package.dependencies]
 Django = ">=1.11"
@@ -1301,7 +1301,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "397576a0eb0c38d824cb9cbf2a43032b490efa5a477a7284d80ffcc9b5e2aa4c"
+content-hash = "63a05c922c1b75295f0ce353c8775f842d42c409bdfd8bb814ec747cbf4bef8f"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1474,8 +1474,8 @@ django-jinja = [
     {file = "django_jinja-2.6.0-py3-none-any.whl", hash = "sha256:4e3e97d7b40669926a9517eb4522cd98dce2e32dcba908aad156810b74744148"},
 ]
 django-mysql = [
-    {file = "django-mysql-3.2.0.tar.gz", hash = "sha256:6a6d3b2b4b094418d67cc064b110d8ac31ca98a67b535568cf829bf052c718db"},
-    {file = "django_mysql-3.2.0-py3-none-any.whl", hash = "sha256:5ed13e3c4e4dc1671255bfc5a9f943320079af626a0c4d1a7f8baf276f5b9de2"},
+    {file = "django-mysql-3.3.0.tar.gz", hash = "sha256:b984dfe75bedeb01bfcb974fe8400c224a6b55677b98a799f1c96274d96c5a72"},
+    {file = "django_mysql-3.3.0-py3-none-any.whl", hash = "sha256:ceaf6d93396b7f7b3798ac5f9a819dd70d5f0e1112850f2a34c57f062fa19398"},
 ]
 django-picklefield = [
     {file = "django-picklefield-1.0.0.tar.gz", hash = "sha256:61e3ba7f6df82d8df9e6be3a8c55ef589eb3bf926c3d25d2b7949b07eae78354"},
