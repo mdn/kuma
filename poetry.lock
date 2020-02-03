@@ -259,7 +259,11 @@ description = "A helper class for handling configuration defaults of packaged ap
 name = "django-appconf"
 optional = false
 python-versions = "*"
-version = "1.0.2"
+version = "1.0.3"
+
+[package.dependencies]
+django = "*"
+six = "*"
 
 [[package]]
 category = "main"
@@ -1304,7 +1308,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "d82a0d29e0fe75ad0abf4dc68d5bfa32f4ae905d64b79fac9a157e9a4cd3c501"
+content-hash = "4c983f9fe41315d16f7d590930c8838cc0ff0f0574bf12ccacaa3dd33228de80"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1437,8 +1441,8 @@ django-allauth = [
     {file = "django-allauth-0.38.0.tar.gz", hash = "sha256:45661b6fe308466154adf54461679fab6f0c6850b10c56dc322fbbb9d47e03d9"},
 ]
 django-appconf = [
-    {file = "django-appconf-1.0.2.tar.gz", hash = "sha256:6a4d9aea683b4c224d97ab8ee11ad2d29a37072c0c6c509896dd9857466fb261"},
-    {file = "django_appconf-1.0.2-py2.py3-none-any.whl", hash = "sha256:ddab987d14b26731352c01ee69c090a4ebfc9141ed223bef039d79587f22acd9"},
+    {file = "django-appconf-1.0.3.tar.gz", hash = "sha256:35f13ca4d567f132b960e2cd4c832c2d03cb6543452d34e29b7ba10371ba80e3"},
+    {file = "django_appconf-1.0.3-py2.py3-none-any.whl", hash = "sha256:c98a7af40062e996b921f5962a1c4f3f0c979fa7885f7be4710cceb90ebe13a6"},
 ]
 django-babel = [
     {file = "django-babel-0.6.2.tar.gz", hash = "sha256:1e621b198e1f98ae4f93e43463cf78cbedbace475eb6e0853ba1e2567f3b8119"},
