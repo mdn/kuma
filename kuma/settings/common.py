@@ -622,7 +622,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    'VERSION': '2019.26',
+    'VERSION': '2020.01',
     'BASE_DIR': BASE_DIR,
     'TEXT_DOMAIN': 'django',
     # Tells the extract script what files to look for l10n in and what function
@@ -836,6 +836,12 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/signup-flow.css',
     },
+    'auth-modal': {
+        'source_filenames': (
+            'styles/minimalist/components/auth-modal.scss',
+        ),
+        'output_filename': 'build/styles/auth-modal.css',
+    },
     'user-banned': {
         'source_filenames': (
             'styles/user-banned.scss',
@@ -1017,6 +1023,16 @@ PIPELINE_JS = {
         'output_filename': 'build/js/signup.js',
         'extra_context': {
             'async': True,
+        },
+    },
+    'auth-modal': {
+        'source_filenames': (
+            'js/components/modal.js',
+            'js/components/user-signup/auth-modal.js',
+        ),
+        'output_filename': 'build/js/auth-modal.js',
+        'extra_context': {
+            'defer': True,
         },
     },
     'dashboard': {
@@ -1844,6 +1860,10 @@ ENABLE_NEWSLETTER_SIGNUP = config('ENABLE_NEWSLETTER_SIGNUP', default=False, cas
 # Affects loading of CSS (statically) and JS (in runtime).
 ENABLE_BCD_SIGNAL = config('ENABLE_BCD_SIGNAL', default=True, cast=bool)
 
+# Enable or disable the multi auth(Google and Github) sign-in flow
+# When disabled, Github will be the default and only Auth provider
+MULTI_AUTH_ENABLED = config('MULTI_AUTH_ENABLED', default=False, cast=bool)
+
 # Content Experiments
 # Must be kept up to date with PIPELINE_JS setting and the JS client-side
 #  configuration. The 'id' should be a key in PIPELINE_JS, that loads
@@ -1899,7 +1919,7 @@ ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN = config('ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN', de
 ATTACHMENTS_AWS_S3_SECURE_URLS = config('ATTACHMENTS_AWS_S3_SECURE_URLS', default=True, cast=bool)  # Does the custom domain use TLS
 
 ATTACHMENTS_AWS_S3_REGION_NAME = config('ATTACHMENTS_AWS_S3_REGION_NAME', default='us-east-1')
-ATTACHMENTS_AWS_S3_ENDPOINT_URL = config('ATTACHMENTS_AWS_S3_ENDPOINT_URL', default=f'https://{ATTACHMENTS_AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com')
+ATTACHMENTS_AWS_S3_ENDPOINT_URL = config('ATTACHMENTS_AWS_S3_ENDPOINT_URL', default=None)
 
 # Silence warnings about defaults that change in django-storages 2.0
 AWS_BUCKET_ACL = None

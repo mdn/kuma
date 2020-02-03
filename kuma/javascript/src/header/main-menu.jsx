@@ -1,6 +1,8 @@
 //@flow
 import * as React from 'react';
-import { memo, useMemo, useState } from 'react';
+import { memo, useContext, useMemo, useState } from 'react';
+
+import GAProvider from '../ga-provider.jsx';
 
 import { gettext } from '../l10n.js';
 import type { DocumentData } from '../document.jsx';
@@ -18,6 +20,49 @@ const _MainMenu = ({ document, locale }: Props) => {
     // there's no mouse hover so for that we use a piece of state to
     // record onTouchStart events.
     const [showSubMenu, setShowSubMenu] = useState(null);
+    const ga = useContext(GAProvider.context);
+
+    /**
+     * Send a signal to GA when there is an interaction on one
+     * of the main menu items.
+     * @param {Object} event - The event object that was triggered
+     */
+    function sendMenuItemInteraction(event) {
+        // What could happen is that this is a click and right before the
+        // click there was a mouseover on the same target. If that's the
+        // case bail early.
+        if (previousMouseover && event.target === previousMouseover) {
+            return;
+        }
+
+        const label = event.target.href || event.target.textContent;
+
+        ga('send', {
+            hitType: 'event',
+            eventCategory: 'Wiki',
+            eventAction: 'MainNav',
+            eventLabel: label
+        });
+    }
+
+    /**
+     * Selectively pass on a trigger to sendMenuItemInteraction() because
+     * onMouseOver is tricky. Not only might you trigger an onMouseover on
+     * an element that isn't the actual button, if you mousever, mouseout,
+     * and then mouseover the same thing again, it should only count once.
+     * @param {Object} event - the event object that was triggered
+     */
+    function menuMouseoverHandler(event) {
+        // Only the buttons that have this count.
+        if (event.target.getAttribute('aria-haspopup') === 'true') {
+            if (event.target !== previousMouseover) {
+                sendMenuItemInteraction(event);
+                previousMouseover = event.target;
+            }
+        }
+    }
+    // In-component memory of which DOM element was mouseover'ed last time
+    let previousMouseover = null;
 
     // The menus array includes objects that define the set of
     // menus displayed by this header component. The data structure
@@ -180,6 +225,9 @@ const _MainMenu = ({ document, locale }: Props) => {
                             type="button"
                             className="top-level-entry"
                             aria-haspopup="true"
+                            onMouseOver={menuMouseoverHandler}
+                            onContextMenu={sendMenuItemInteraction}
+                            onFocus={sendMenuItemInteraction}
                             onTouchStart={() => {
                                 // Ultimately, because there's no :hover on
                                 // mobile, we have to compensate for that using
@@ -218,11 +266,23 @@ const _MainMenu = ({ document, locale }: Props) => {
                                                 '{{PATH}}',
                                                 path
                                             )}
+                                            onClick={sendMenuItemInteraction}
+                                            onContextMenu={
+                                                sendMenuItemInteraction
+                                            }
                                         >
                                             {item.label} &#x1f310;
                                         </a>
                                     ) : (
-                                        <a href={item.url}>{item.label}</a>
+                                        <a
+                                            href={item.url}
+                                            onClick={sendMenuItemInteraction}
+                                            onContextMenu={
+                                                sendMenuItemInteraction
+                                            }
+                                        >
+                                            {item.label}
+                                        </a>
                                     )}
                                 </li>
                             ))}

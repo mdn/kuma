@@ -37,5 +37,4 @@ class SiteURLField(serializers.ReadOnlyField):
         args = [getattr(value, arg) for arg in self.args]
         kwargs = {arg: getattr(value, arg) for arg in self.kwargs}
         locale = getattr(value, 'locale', settings.LANGUAGE_CODE)
-        path = reverse(self.url_name, locale=locale, args=args, kwargs=kwargs)
-        return '%s%s' % (settings.SITE_URL, path)
+        return reverse(self.url_name, locale=locale, args=args, kwargs=kwargs)

@@ -86,6 +86,9 @@ AWS_DEFAULT_ACL = None
 # Use a dedicated minio bucket for tests
 ATTACHMENTS_AWS_STORAGE_BUCKET_NAME = 'test'
 
+# Never enabled in tests.
+SENTRY_DSN = None
+
 # Stripe API KEY settings
 STRIPE_PUBLIC_KEY = 'wubba lubba dub duab'
 STRIPE_SECRET_KEY = 'wubba lubba dub dub'

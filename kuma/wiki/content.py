@@ -239,7 +239,7 @@ def get_seo_description(content, locale=None, strip_markup=True):
                 seo_summary = summaryClasses.text()
             else:
                 seo_summary = ''.join(
-                    to_html(item) for item in summaryClasses.items())
+                    to_html(item) or '' for item in summaryClasses.items())
         else:
             paragraphs = page.find('p')
             if paragraphs.length:

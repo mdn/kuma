@@ -17,7 +17,8 @@ kuma/static/js/libs/
 # white-list files we want to process
 !*.js
 !*.jsx
-!/kuma/static/js/components/user-signup/signup.js
+!/kuma/static/js/components/user-signup/**/*.js
+!/kuma/static/js/components/modal.js
 !/kuma/static/styles/minimalist/**/*.scss
 
 # Exceptions to specific .js files
