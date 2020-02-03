@@ -26,7 +26,7 @@ description = "Python multiprocessing fork with improvements and bugfixes"
 name = "billiard"
 optional = false
 python-versions = "*"
-version = "3.6.1.0"
+version = "3.6.2.0"
 
 [[package]]
 category = "main"
@@ -259,7 +259,11 @@ description = "A helper class for handling configuration defaults of packaged ap
 name = "django-appconf"
 optional = false
 python-versions = "*"
-version = "1.0.2"
+version = "1.0.3"
+
+[package.dependencies]
+django = "*"
+six = "*"
 
 [[package]]
 category = "main"
@@ -307,14 +311,14 @@ description = "Django Content Security Policy support."
 name = "django-csp"
 optional = false
 python-versions = "*"
-version = "3.5"
+version = "3.6"
 
 [package.dependencies]
 Django = ">=1.8"
 
 [package.extras]
 jinja2 = ["jinja2 (>=2.9.6)"]
-tests = ["jinja2 (>=2.9.6)", "mock (1.0.1)", "pep8 (1.4.6)", "pytest (2.9.1)", "pytest-django (2.9.1)", "pytest-flakes (1.0.1)", "pytest-pep8 (1.0.6)"]
+tests = ["pytest (<4.0)", "pytest-django", "pytest-flakes (1.0.1)", "pytest-pep8 (1.0.6)", "pep8 (1.4.6)", "mock (1.0.1)", "six (1.12.0)", "jinja2 (>=2.9.6)"]
 
 [[package]]
 category = "main"
@@ -355,14 +359,6 @@ six = ">=1.2"
 
 [[package]]
 category = "main"
-description = "A flat theme for Django admin interface. Modern, fresh, simple."
-name = "django-flat-theme"
-optional = false
-python-versions = "*"
-version = "1.1.3"
-
-[[package]]
-category = "main"
 description = "Django honeypot field utilities"
 name = "django-honeypot"
 optional = false
@@ -378,19 +374,19 @@ description = "Jinja2 templating language integrated in Django."
 name = "django-jinja"
 optional = false
 python-versions = "*"
-version = "2.5.0"
+version = "2.6.0"
 
 [package.dependencies]
 django = ">=1.11,<3.1"
-jinja2 = ">=2.5"
+jinja2 = ">=2.10"
 
 [[package]]
 category = "main"
-description = "Extensions to Django for use with MySQL/MariaDB"
+description = "Django-MySQL extends Django's built-in MySQL and MariaDB support their specific features not available on other databases."
 name = "django-mysql"
 optional = false
 python-versions = ">=3.5"
-version = "3.2.0"
+version = "3.3.0"
 
 [package.dependencies]
 Django = ">=1.11"
@@ -467,11 +463,12 @@ description = "A Django app that provides helper for generating Javascript catal
 name = "django-statici18n"
 optional = false
 python-versions = "*"
-version = "1.7.0"
+version = "1.9.0"
 
 [package.dependencies]
 Django = ">=1.8"
 django-appconf = ">=0.6"
+six = "*"
 
 [[package]]
 category = "main"
@@ -479,17 +476,16 @@ description = "Support for many storage backends in Django"
 name = "django-storages"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.7.2"
+version = "1.9"
 
 [package.dependencies]
 Django = ">=1.11"
 
 [package.extras]
-azure = ["azure-storage-blob (>=1.3.1)"]
-boto = ["boto (>=2.32.0)"]
+azure = ["azure-storage-blob (>=1.3.1,<12.0.0)"]
 boto3 = ["boto3 (>=1.4.4)"]
 dropbox = ["dropbox (>=7.2.1)"]
-google = ["google-cloud-storage (>=0.22.0)"]
+google = ["google-cloud-storage (>=1.15.0)"]
 libcloud = ["apache-libcloud"]
 sftp = ["paramiko"]
 
@@ -1304,7 +1300,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "d82a0d29e0fe75ad0abf4dc68d5bfa32f4ae905d64b79fac9a157e9a4cd3c501"
+content-hash = "c404f2e8d9128fd4ea659cf0c0ae3ab1a5b754b5092e3c23754184cee1a33bff"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1317,8 +1313,8 @@ babel = [
     {file = "Babel-2.8.0.tar.gz", hash = "sha256:1aac2ae2d0d8ea368fa90906567f5c08463d98ade155c0c4bfedd6a0f7160e38"},
 ]
 billiard = [
-    {file = "billiard-3.6.1.0-py3-none-any.whl", hash = "sha256:01afcb4e7c4fd6480940cfbd4d9edc19d7a7509d6ada533984d0d0f49901ec82"},
-    {file = "billiard-3.6.1.0.tar.gz", hash = "sha256:b8809c74f648dfe69b973c8e660bcec00603758c9db8ba89d7719f88d5f01f26"},
+    {file = "billiard-3.6.2.0-py3-none-any.whl", hash = "sha256:26fd494dc3251f8ce1f5559744f18aeed427fdaf29a75d7baae26752a5d3816f"},
+    {file = "billiard-3.6.2.0.tar.gz", hash = "sha256:f4e09366653aa3cb3ae8ed16423f9ba1665ff426f087bcdbbed86bf3664fe02c"},
 ]
 bleach = [
     {file = "bleach-2.1.4-py2.py3-none-any.whl", hash = "sha256:24754b9a7d530bf30ce7cbc805bc6cce785660b4a10ff3a43633728438c105ab"},
@@ -1437,8 +1433,8 @@ django-allauth = [
     {file = "django-allauth-0.38.0.tar.gz", hash = "sha256:45661b6fe308466154adf54461679fab6f0c6850b10c56dc322fbbb9d47e03d9"},
 ]
 django-appconf = [
-    {file = "django-appconf-1.0.2.tar.gz", hash = "sha256:6a4d9aea683b4c224d97ab8ee11ad2d29a37072c0c6c509896dd9857466fb261"},
-    {file = "django_appconf-1.0.2-py2.py3-none-any.whl", hash = "sha256:ddab987d14b26731352c01ee69c090a4ebfc9141ed223bef039d79587f22acd9"},
+    {file = "django-appconf-1.0.3.tar.gz", hash = "sha256:35f13ca4d567f132b960e2cd4c832c2d03cb6543452d34e29b7ba10371ba80e3"},
+    {file = "django_appconf-1.0.3-py2.py3-none-any.whl", hash = "sha256:c98a7af40062e996b921f5962a1c4f3f0c979fa7885f7be4710cceb90ebe13a6"},
 ]
 django-babel = [
     {file = "django-babel-0.6.2.tar.gz", hash = "sha256:1e621b198e1f98ae4f93e43463cf78cbedbace475eb6e0853ba1e2567f3b8119"},
@@ -1453,8 +1449,8 @@ django-constance = [
     {file = "django_constance-2.4.0-py2.py3-none-any.whl", hash = "sha256:19ff1ae8295aeffc2917ab67da4b310bfaf8c42f34d570f89e289fd54c4217b0"},
 ]
 django-csp = [
-    {file = "django_csp-3.5-py2.py3-none-any.whl", hash = "sha256:8b9997df89a7a936d7c397e051367f974aa1d1a97d0b32acb4300087b3bed071"},
-    {file = "django_csp-3.5.tar.gz", hash = "sha256:04600237701e6d6ff78ed7d41209ff923988148bf292c128f6b474b9befe444f"},
+    {file = "django_csp-3.6-py2.py3-none-any.whl", hash = "sha256:d9ee5a8c6442aa54854e8de627c2826786208ed38fb4ea8ced08c42332673eb1"},
+    {file = "django_csp-3.6.tar.gz", hash = "sha256:0a38aa9618c675cbf5f5e517e20d5846a3e100ef7b307e32e7fb18c58aa47723"},
 ]
 django-debug-toolbar = [
     {file = "django-debug-toolbar-1.10.1.tar.gz", hash = "sha256:08e0e43f6c1fd9820af4cbdcd54b5fb80bf83a2e08b2cc952547a671174999b8"},
@@ -1468,20 +1464,17 @@ django-extensions = [
     {file = "django-extensions-2.2.6.tar.gz", hash = "sha256:936e8e3962024d3c75ea54f4e0248002404ca7ca7fb698430e60b06b5555b4e7"},
     {file = "django_extensions-2.2.6-py2.py3-none-any.whl", hash = "sha256:4524eca892d23fa6e93b0620901983b287ff5dc806f1b978d6a98541f06b9471"},
 ]
-django-flat-theme = [
-    {file = "django-flat-theme-1.1.3.tar.gz", hash = "sha256:323011c7eda4fb57604fd9feee568c5a789bff4c0c0892128f05246936e8013a"},
-]
 django-honeypot = [
     {file = "django-honeypot-0.5.0.tar.gz", hash = "sha256:cb9ae7a42bf9db5b4d2b4a3812bcbe874ed3ab979c4ceb38b32d6e7ff4791e8e"},
     {file = "django_honeypot-0.5.0-py2.py3-none-any.whl", hash = "sha256:962304f21055f05c73c41f2506f5a94f5b941e831a203b68e54cb5016bdb8d5e"},
 ]
 django-jinja = [
-    {file = "django-jinja-2.5.0.tar.gz", hash = "sha256:741250fecf57fd67187edc290c4aa9cf16ad2ca7ca4b78ac2d6be6a473802186"},
-    {file = "django_jinja-2.5.0-py3-none-any.whl", hash = "sha256:41323a14d8390efaebb1272ef6bc1406ee604c890de981a58e5cb4fdf257f045"},
+    {file = "django-jinja-2.6.0.tar.gz", hash = "sha256:7459985c25ddb6584c6bab345761c8c5557713448e6fbb322af1b6dd7f5512bd"},
+    {file = "django_jinja-2.6.0-py3-none-any.whl", hash = "sha256:4e3e97d7b40669926a9517eb4522cd98dce2e32dcba908aad156810b74744148"},
 ]
 django-mysql = [
-    {file = "django-mysql-3.2.0.tar.gz", hash = "sha256:6a6d3b2b4b094418d67cc064b110d8ac31ca98a67b535568cf829bf052c718db"},
-    {file = "django_mysql-3.2.0-py3-none-any.whl", hash = "sha256:5ed13e3c4e4dc1671255bfc5a9f943320079af626a0c4d1a7f8baf276f5b9de2"},
+    {file = "django-mysql-3.3.0.tar.gz", hash = "sha256:b984dfe75bedeb01bfcb974fe8400c224a6b55677b98a799f1c96274d96c5a72"},
+    {file = "django_mysql-3.3.0-py3-none-any.whl", hash = "sha256:ceaf6d93396b7f7b3798ac5f9a819dd70d5f0e1112850f2a34c57f062fa19398"},
 ]
 django-picklefield = [
     {file = "django-picklefield-1.0.0.tar.gz", hash = "sha256:61e3ba7f6df82d8df9e6be3a8c55ef589eb3bf926c3d25d2b7949b07eae78354"},
@@ -1511,12 +1504,12 @@ django-soapbox = [
     {file = "django_soapbox-1.5-py2.py3-none-any.whl", hash = "sha256:9f330db2b4098d24d7a2c4c9de63b0cc4d5579c69c2a904621914371f8039200"},
 ]
 django-statici18n = [
-    {file = "django-statici18n-1.7.0.tar.gz", hash = "sha256:2c5214d520a25e2d226cae099947778cde593ba7b1b03924f70215ce9ec9e6ce"},
-    {file = "django_statici18n-1.7.0-py2.py3-none-any.whl", hash = "sha256:e84fc081166433886220a814356a66760f50196a4d00a3e25327427160e5ccd1"},
+    {file = "django-statici18n-1.9.0.tar.gz", hash = "sha256:913dd056c1abcbe129b1db806cb4cfb821c4077d7e857d6eb29043ea64f4d1d0"},
+    {file = "django_statici18n-1.9.0-py2.py3-none-any.whl", hash = "sha256:d9524a0af20be789e623bc60e0950b660ae33a0d1d1fecdecbd1c056eda56631"},
 ]
 django-storages = [
-    {file = "django-storages-1.7.2.tar.gz", hash = "sha256:f3b3def96493d3ccde37b864cea376472baf6e8a596504b209278801c510b807"},
-    {file = "django_storages-1.7.2-py2.py3-none-any.whl", hash = "sha256:87287b7ad2e789cd603373439994e1ac6f94d9dc2e5f8173d2a87aa3ed458bd9"},
+    {file = "django-storages-1.9.tar.gz", hash = "sha256:9bc1fff05d45eafeaedd3973defbb301e4065e1d813e71b0251c756108aad2dd"},
+    {file = "django_storages-1.9-py2.py3-none-any.whl", hash = "sha256:2b02f9e24ae617a075c8e3f39a56fa26faa250c052f42958c2a3ee1c56d7a06e"},
 ]
 django-sundial = [
     {file = "django-sundial-1.0.6.tar.gz", hash = "sha256:7dd7deff7aea8b2283b8795d5bd19f93d77484518efed6a7605dada7be965665"},
