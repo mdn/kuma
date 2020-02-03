@@ -471,11 +471,12 @@ description = "A Django app that provides helper for generating Javascript catal
 name = "django-statici18n"
 optional = false
 python-versions = "*"
-version = "1.7.0"
+version = "1.9.0"
 
 [package.dependencies]
 Django = ">=1.8"
 django-appconf = ">=0.6"
+six = "*"
 
 [[package]]
 category = "main"
@@ -1308,7 +1309,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "4c983f9fe41315d16f7d590930c8838cc0ff0f0574bf12ccacaa3dd33228de80"
+content-hash = "36998fdd947ce382227ba40b77ff3374a549c26a75c86fe64301640ec5ab2eb6"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1515,8 +1516,8 @@ django-soapbox = [
     {file = "django_soapbox-1.5-py2.py3-none-any.whl", hash = "sha256:9f330db2b4098d24d7a2c4c9de63b0cc4d5579c69c2a904621914371f8039200"},
 ]
 django-statici18n = [
-    {file = "django-statici18n-1.7.0.tar.gz", hash = "sha256:2c5214d520a25e2d226cae099947778cde593ba7b1b03924f70215ce9ec9e6ce"},
-    {file = "django_statici18n-1.7.0-py2.py3-none-any.whl", hash = "sha256:e84fc081166433886220a814356a66760f50196a4d00a3e25327427160e5ccd1"},
+    {file = "django-statici18n-1.9.0.tar.gz", hash = "sha256:913dd056c1abcbe129b1db806cb4cfb821c4077d7e857d6eb29043ea64f4d1d0"},
+    {file = "django_statici18n-1.9.0-py2.py3-none-any.whl", hash = "sha256:d9524a0af20be789e623bc60e0950b660ae33a0d1d1fecdecbd1c056eda56631"},
 ]
 django-storages = [
     {file = "django-storages-1.7.2.tar.gz", hash = "sha256:f3b3def96493d3ccde37b864cea376472baf6e8a596504b209278801c510b807"},
