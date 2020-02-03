@@ -3,7 +3,6 @@ from datetime import datetime
 import pytest
 import requests_mock
 from allauth.socialaccount.models import SocialAccount
-from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.cache import caches
 from django.urls import set_urlconf
@@ -13,6 +12,14 @@ from waffle.testutils import override_flag
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.constants import REDIRECT_CONTENT
 from kuma.wiki.models import Document, Revision
+
+
+@pytest.fixture(autouse=True)
+def clear_cache():
+    """
+    Before every pytest test function starts, it clears the cache.
+    """
+    caches["default"].clear()
 
 
 @pytest.fixture(autouse=True)
@@ -49,13 +56,6 @@ def reset_urlconf():
     set_urlconf(None)
     yield
     set_urlconf(None)
-
-
-@pytest.fixture()
-def cleared_cacheback_cache():
-    caches[settings.CACHEBACK_CACHE_ALIAS].clear()
-    yield
-    caches[settings.CACHEBACK_CACHE_ALIAS].clear()
 
 
 class ConstanceConfigWrapper(object):
