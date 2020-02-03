@@ -519,7 +519,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'flat',
     'django.contrib.admin',
 
     'django.contrib.sitemaps',

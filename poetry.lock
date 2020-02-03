@@ -359,14 +359,6 @@ six = ">=1.2"
 
 [[package]]
 category = "main"
-description = "A flat theme for Django admin interface. Modern, fresh, simple."
-name = "django-flat-theme"
-optional = false
-python-versions = "*"
-version = "1.1.3"
-
-[[package]]
-category = "main"
 description = "Django honeypot field utilities"
 name = "django-honeypot"
 optional = false
@@ -1309,7 +1301,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "36998fdd947ce382227ba40b77ff3374a549c26a75c86fe64301640ec5ab2eb6"
+content-hash = "b9e7f8df1453a9dc33151fe561666d4538e59b52c382cc29459778c8e574e6d9"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1472,9 +1464,6 @@ django-decorator-include = [
 django-extensions = [
     {file = "django-extensions-2.2.6.tar.gz", hash = "sha256:936e8e3962024d3c75ea54f4e0248002404ca7ca7fb698430e60b06b5555b4e7"},
     {file = "django_extensions-2.2.6-py2.py3-none-any.whl", hash = "sha256:4524eca892d23fa6e93b0620901983b287ff5dc806f1b978d6a98541f06b9471"},
-]
-django-flat-theme = [
-    {file = "django-flat-theme-1.1.3.tar.gz", hash = "sha256:323011c7eda4fb57604fd9feee568c5a789bff4c0c0892128f05246936e8013a"},
 ]
 django-honeypot = [
     {file = "django-honeypot-0.5.0.tar.gz", hash = "sha256:cb9ae7a42bf9db5b4d2b4a3812bcbe874ed3ab979c4ceb38b32d6e7ff4791e8e"},
