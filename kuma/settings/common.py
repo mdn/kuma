@@ -123,8 +123,6 @@ CACHES = {
     }
 }
 
-CACHEBACK_CACHE_ALIAS = 'default'
-
 # Email
 vars().update(config('EMAIL_URL',
                      default='console://',
