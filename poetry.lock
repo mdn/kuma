@@ -476,17 +476,16 @@ description = "Support for many storage backends in Django"
 name = "django-storages"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.7.2"
+version = "1.9"
 
 [package.dependencies]
 Django = ">=1.11"
 
 [package.extras]
-azure = ["azure-storage-blob (>=1.3.1)"]
-boto = ["boto (>=2.32.0)"]
+azure = ["azure-storage-blob (>=1.3.1,<12.0.0)"]
 boto3 = ["boto3 (>=1.4.4)"]
 dropbox = ["dropbox (>=7.2.1)"]
-google = ["google-cloud-storage (>=0.22.0)"]
+google = ["google-cloud-storage (>=1.15.0)"]
 libcloud = ["apache-libcloud"]
 sftp = ["paramiko"]
 
@@ -1301,7 +1300,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "63a05c922c1b75295f0ce353c8775f842d42c409bdfd8bb814ec747cbf4bef8f"
+content-hash = "c404f2e8d9128fd4ea659cf0c0ae3ab1a5b754b5092e3c23754184cee1a33bff"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1509,8 +1508,8 @@ django-statici18n = [
     {file = "django_statici18n-1.9.0-py2.py3-none-any.whl", hash = "sha256:d9524a0af20be789e623bc60e0950b660ae33a0d1d1fecdecbd1c056eda56631"},
 ]
 django-storages = [
-    {file = "django-storages-1.7.2.tar.gz", hash = "sha256:f3b3def96493d3ccde37b864cea376472baf6e8a596504b209278801c510b807"},
-    {file = "django_storages-1.7.2-py2.py3-none-any.whl", hash = "sha256:87287b7ad2e789cd603373439994e1ac6f94d9dc2e5f8173d2a87aa3ed458bd9"},
+    {file = "django-storages-1.9.tar.gz", hash = "sha256:9bc1fff05d45eafeaedd3973defbb301e4065e1d813e71b0251c756108aad2dd"},
+    {file = "django_storages-1.9-py2.py3-none-any.whl", hash = "sha256:2b02f9e24ae617a075c8e3f39a56fa26faa250c052f42958c2a3ee1c56d7a06e"},
 ]
 django-sundial = [
     {file = "django-sundial-1.0.6.tar.gz", hash = "sha256:7dd7deff7aea8b2283b8795d5bd19f93d77484518efed6a7605dada7be965665"},
