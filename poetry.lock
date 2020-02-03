@@ -73,7 +73,7 @@ description = "Bash-style brace expansion for Python"
 name = "braceexpand"
 optional = false
 python-versions = "*"
-version = "0.1.1"
+version = "0.1.5"
 
 [[package]]
 category = "main"
@@ -996,7 +996,7 @@ description = "pytest plugin for generating HTML reports"
 name = "pytest-html"
 optional = false
 python-versions = "*"
-version = "1.16.1"
+version = "1.22.1"
 
 [package.dependencies]
 pytest = ">=3.0"
@@ -1008,7 +1008,7 @@ description = "pytest plugin for test session metadata"
 name = "pytest-metadata"
 optional = false
 python-versions = "*"
-version = "1.5.1"
+version = "1.8.0"
 
 [package.dependencies]
 pytest = ">=2.9.0"
@@ -1019,10 +1019,10 @@ description = "pytest plugin to re-run tests to eliminate flaky failures"
 name = "pytest-rerunfailures"
 optional = false
 python-versions = "*"
-version = "2.1.0"
+version = "4.2"
 
 [package.dependencies]
-pytest = ">=2.4.2"
+pytest = ">=2.8.7"
 
 [[package]]
 category = "dev"
@@ -1030,13 +1030,14 @@ description = "pytest plugin for providing variables to tests/fixtures"
 name = "pytest-variables"
 optional = false
 python-versions = "*"
-version = "1.7.1"
+version = "1.9.0"
 
 [package.dependencies]
 pytest = ">=2.4.2"
 
 [package.extras]
 hjson = ["hjson"]
+toml = ["toml"]
 yaml = ["pyyaml"]
 
 [[package]]
@@ -1303,7 +1304,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "0fd92a20bcb5c4fbe91a84ba95fe3dc0312fd30d86fe5af6efb0e4414a95fc6c"
+content-hash = "473df0fbdc835da04ba059901eb0ca29190fcab0d8ac553832e910159b782dd3"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1332,7 +1333,8 @@ botocore = [
     {file = "botocore-1.14.9.tar.gz", hash = "sha256:1909424c9544f92142c8e551888731e32a99f9c99cfe8d21fea3ec0c32981dae"},
 ]
 braceexpand = [
-    {file = "braceexpand-0.1.1.tar.gz", hash = "sha256:f967ca39bdb98e16299a69c45a944c5d4345393615ed6470bb1e62ca3506bf41"},
+    {file = "braceexpand-0.1.5-py2.py3-none-any.whl", hash = "sha256:ae6b7de1e88d3132177bd6cbda8b22487ea645b25c4ca5b1cf948b326ac27e34"},
+    {file = "braceexpand-0.1.5.tar.gz", hash = "sha256:d3d932030c3ab4740b33df68a58d70f3a10368f33b3a56eb951da649bec0bb52"},
 ]
 cachetools = [
     {file = "cachetools-4.0.0-py3-none-any.whl", hash = "sha256:b304586d357c43221856be51d73387f93e2a961598a9b6b6670664746f3b6c6c"},
@@ -1787,20 +1789,20 @@ pytest-django = [
     {file = "pytest_django-3.1.2-py2.py3-none-any.whl", hash = "sha256:00995c2999b884a38ae9cd30a8c00ed32b3d38c1041250ea84caf18085589662"},
 ]
 pytest-html = [
-    {file = "pytest-html-1.16.1.tar.gz", hash = "sha256:d6ae1ae5d10158d290b603ccf46b5d103e93cf7d67df42bb7d6516fb4f1317f3"},
-    {file = "pytest_html-1.16.1-py2.py3-none-any.whl", hash = "sha256:135ea10b9ec0a5e370dc1820a5552d761aa3fec8400eabc0b06646f90f5c820e"},
+    {file = "pytest-html-1.22.1.tar.gz", hash = "sha256:f0fae6de71f02f62f9460f628d0c5f70b0cdc86bb393239860c7dec70fd2973d"},
+    {file = "pytest_html-1.22.1-py2.py3-none-any.whl", hash = "sha256:06e7e13131649b4fe522cf04054efb7b4749ff2c7160755e4acfd8e89a7e5955"},
 ]
 pytest-metadata = [
-    {file = "pytest-metadata-1.5.1.tar.gz", hash = "sha256:26761319ecc916f16dc95f166e41e041d50a6d587d8332300594dfcfda6a7199"},
-    {file = "pytest_metadata-1.5.1-py2.py3-none-any.whl", hash = "sha256:e126a4ab80b77f08d3bc7da6ec1ed053317eaed042690eb5b4272b79a25c7f88"},
+    {file = "pytest-metadata-1.8.0.tar.gz", hash = "sha256:2071a59285de40d7541fde1eb9f1ddea1c9db165882df82781367471238b66ba"},
+    {file = "pytest_metadata-1.8.0-py2.py3-none-any.whl", hash = "sha256:c29a1fb470424926c63154c1b632c02585f2ba4282932058a71d35295ff8c96d"},
 ]
 pytest-rerunfailures = [
-    {file = "pytest-rerunfailures-2.1.0.tar.gz", hash = "sha256:e867cec5eabb20ed38e04b6b9c277e34b0603143ee315beab56296d8329fe3f2"},
-    {file = "pytest_rerunfailures-2.1.0-py2.py3-none-any.whl", hash = "sha256:82e6cd823c50ff2d1b2b183642302d42c1650bcf387b17d46f5711e08fa0995f"},
+    {file = "pytest-rerunfailures-4.2.tar.gz", hash = "sha256:97216f8a549f74da3cc786236d9093fbd43150a6fbe533ba622cb311f7431774"},
+    {file = "pytest_rerunfailures-4.2-py2.py3-none-any.whl", hash = "sha256:b6124f66a7a636ab5e0108281563165480a6d66ae84b7cdd8dc9146162a28499"},
 ]
 pytest-variables = [
-    {file = "pytest-variables-1.7.1.tar.gz", hash = "sha256:7808b77b643b9f8a24f1ee1c32132648b1c62ab93956f20fe101dde66db6d09a"},
-    {file = "pytest_variables-1.7.1-py2.py3-none-any.whl", hash = "sha256:59c00b95779657532ac5f8209b28b5d447c8b4bc4210c1d6bdf9a42aa201f9b0"},
+    {file = "pytest-variables-1.9.0.tar.gz", hash = "sha256:f79851e4c92a94c93d3f1d02377b5ac97cc8800392e87d108d2cbfda774ecc2a"},
+    {file = "pytest_variables-1.9.0-py2.py3-none-any.whl", hash = "sha256:ccf4afcd70de1f5f18b4463758a19f24647a9def1805f675e80db851c9e00ac0"},
 ]
 python-dateutil = [
     {file = "python-dateutil-2.8.1.tar.gz", hash = "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"},
