@@ -767,7 +767,7 @@ description = "Python library for serializing any arbitrary object graph into JS
 name = "jsonpickle"
 optional = false
 python-versions = "*"
-version = "0.9.2"
+version = "1.2"
 
 [[package]]
 category = "main"
@@ -1311,7 +1311,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "eef4f1884aada257009db82bd82ddf548ec5245b9897481e848f0d3bfe05222e"
+content-hash = "ae924a2b1f20bd3888f3f2362b2786cf8250d6e4040089994ef1488658ef84c4"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1631,7 +1631,8 @@ jmespath = [
     {file = "jmespath-0.9.4.tar.gz", hash = "sha256:bde2aef6f44302dfb30320115b17d030798de8c4110e28d5cf6cf91a7a31074c"},
 ]
 jsonpickle = [
-    {file = "jsonpickle-0.9.2.tar.gz", hash = "sha256:09bf1978d1d004943c2a359009fb5d09b67277bbaaf9aed281856b3c063979e7"},
+    {file = "jsonpickle-1.2-py2.py3-none-any.whl", hash = "sha256:d0c5a4e6cb4e58f6d5406bdded44365c2bcf9c836c4f52910cc9ba7245a59dc2"},
+    {file = "jsonpickle-1.2.tar.gz", hash = "sha256:d3e922d781b1d0096df2dad89a2e1f47177d7969b596aea806a9d91b4626b29b"},
 ]
 kombu = [
     {file = "kombu-4.6.7-py2.py3-none-any.whl", hash = "sha256:2a9e7adff14d046c9996752b2c48b6d9185d0b992106d5160e1a179907a5d4ac"},
