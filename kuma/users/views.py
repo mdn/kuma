@@ -1,4 +1,5 @@
 import json
+import traceback
 from datetime import datetime, timedelta
 
 import stripe
@@ -782,6 +783,7 @@ def create_stripe_subscription(request):
         create_stripe_customer_and_subscription_for_user(user, email, stripe_token)
     except stripe.error.StripeError as e:
         print('encountered a stripe error', e)
+        print(traceback.format_exc())
         raven_client.captureException()
         has_stripe_error = True
 
