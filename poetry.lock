@@ -1226,7 +1226,7 @@ description = "Python bindings for the Stripe API"
 name = "stripe"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "2.31.0"
+version = "2.42.0"
 
 [package.dependencies]
 [package.dependencies.requests]
@@ -1308,7 +1308,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "4f3884b40dffbb0593e992dadbb9d061d6ebbb4161ac3d845f88c50a49d7f53c"
+content-hash = "346018700eaec3617f6c918ea199d2e9de7f8a87a87094c16ef0ff19592dcc66"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1870,8 +1870,8 @@ sqlparse = [
     {file = "sqlparse-0.3.0.tar.gz", hash = "sha256:7c3dca29c022744e95b547e867cee89f4fce4373f3549ccd8797d8eb52cdb873"},
 ]
 stripe = [
-    {file = "stripe-2.31.0-py2.py3-none-any.whl", hash = "sha256:d8aee3a51a030900cccc4008f945cb616d093130c55901f637e5e2b6af7fd97c"},
-    {file = "stripe-2.31.0.tar.gz", hash = "sha256:eb666151dd64bb0a7efd9a32012f9903dd888ff57c07d1f146659e416288f0cf"},
+    {file = "stripe-2.42.0-py2.py3-none-any.whl", hash = "sha256:eb5c2c35b2d31eaccb43983ca83de513b335100d9b71e79ca4c60085da464b77"},
+    {file = "stripe-2.42.0.tar.gz", hash = "sha256:89b2dcf6a84f0433cc15908c7be23f06a88e472065bb4f7542470ad97c053aef"},
 ]
 uritemplate = [
     {file = "uritemplate-3.0.1-py2.py3-none-any.whl", hash = "sha256:07620c3f3f8eed1f12600845892b0e036a2420acf513c53f7de0abd911a5894f"},
