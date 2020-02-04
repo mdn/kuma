@@ -324,12 +324,12 @@ jinja2 = ["jinja2 (>=2.9.6)"]
 tests = ["pytest (<4.0)", "pytest-django", "pytest-flakes (1.0.1)", "pytest-pep8 (1.0.6)", "pep8 (1.4.6)", "mock (1.0.1)", "six (1.12.0)", "jinja2 (>=2.9.6)"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "A configurable set of panels that display various debug information about the current request/response."
 name = "django-debug-toolbar"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.10.1"
+python-versions = ">=3.5"
+version = "2.2"
 
 [package.dependencies]
 Django = ">=1.11"
@@ -1298,7 +1298,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "d0dad776426c1906f8207ca5b61d9f8aabd22caa3814dfd3669e7fecbb9b0e17"
+content-hash = "99143f41ab259f72019155f3e0f445b801f0d8eb87b15d5514bfe26dd5f4d4f3"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1452,8 +1452,8 @@ django-csp = [
     {file = "django_csp-3.6.tar.gz", hash = "sha256:0a38aa9618c675cbf5f5e517e20d5846a3e100ef7b307e32e7fb18c58aa47723"},
 ]
 django-debug-toolbar = [
-    {file = "django-debug-toolbar-1.10.1.tar.gz", hash = "sha256:08e0e43f6c1fd9820af4cbdcd54b5fb80bf83a2e08b2cc952547a671174999b8"},
-    {file = "django_debug_toolbar-1.10.1-py2.py3-none-any.whl", hash = "sha256:1dcae28d430522debafde2602b3450eb784410b78e16c29a00448032df2a4c90"},
+    {file = "django-debug-toolbar-2.2.tar.gz", hash = "sha256:eabbefe89881bbe4ca7c980ff102e3c35c8e8ad6eb725041f538988f2f39a943"},
+    {file = "django_debug_toolbar-2.2-py3-none-any.whl", hash = "sha256:ff94725e7aae74b133d0599b9bf89bd4eb8f5d2c964106e61d11750228c8774c"},
 ]
 django-decorator-include = [
     {file = "django-decorator-include-1.4.1.tar.gz", hash = "sha256:715d00054bcbebd5f65575a7bd97d4823c1a459ed283a8c499f5a8b25cc75099"},

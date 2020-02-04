@@ -84,7 +84,6 @@ six = "^1.13.0"
 
 # From dev.txt
 django-babel = "0.6.2"
-django-debug-toolbar = "1.10.1"
 django-querycount = "0.7.0"
 pytest-cov = "2.4.0"
 pytest-django = "3.1.2"
@@ -101,6 +100,7 @@ webencodings = "0.5.1"
 redo = "^2.0.3"
 
 [tool.poetry.dev-dependencies]
+django-debug-toolbar = "^2.2"
 werkzeug = "^0.16.1" # Enables runserver_plus from django-extensions
 
 # From test.txt
