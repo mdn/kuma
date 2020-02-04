@@ -54,6 +54,7 @@ def test_create_stripe_subscription(mock1, mock2, test_user):
     assert response.status_code == 200
 
     page = pq(response.content)
+    assert page('.stripe-error').size() == 0
     assert 'MagicCard ending in 4242' in page('.card-info p').text()
 
 
