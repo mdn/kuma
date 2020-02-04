@@ -476,7 +476,7 @@ description = "Support for many storage backends in Django"
 name = "django-storages"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.9"
+version = "1.9.1"
 
 [package.dependencies]
 Django = ">=1.11"
@@ -1508,8 +1508,8 @@ django-statici18n = [
     {file = "django_statici18n-1.9.0-py2.py3-none-any.whl", hash = "sha256:d9524a0af20be789e623bc60e0950b660ae33a0d1d1fecdecbd1c056eda56631"},
 ]
 django-storages = [
-    {file = "django-storages-1.9.tar.gz", hash = "sha256:9bc1fff05d45eafeaedd3973defbb301e4065e1d813e71b0251c756108aad2dd"},
-    {file = "django_storages-1.9-py2.py3-none-any.whl", hash = "sha256:2b02f9e24ae617a075c8e3f39a56fa26faa250c052f42958c2a3ee1c56d7a06e"},
+    {file = "django-storages-1.9.1.tar.gz", hash = "sha256:a59e9923cbce7068792f75344ed7727021ee4ac20f227cf17297d0d03d141e91"},
+    {file = "django_storages-1.9.1-py2.py3-none-any.whl", hash = "sha256:3103991c2ee8cef8a2ff096709973ffe7106183d211a79f22cf855f33533d924"},
 ]
 django-sundial = [
     {file = "django-sundial-1.0.6.tar.gz", hash = "sha256:7dd7deff7aea8b2283b8795d5bd19f93d77484518efed6a7605dada7be965665"},
