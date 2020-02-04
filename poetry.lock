@@ -823,7 +823,7 @@ description = "Python interface to MySQL"
 name = "mysqlclient"
 optional = false
 python-versions = "*"
-version = "1.4.4"
+version = "1.4.6"
 
 [[package]]
 category = "main"
@@ -1300,7 +1300,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "c404f2e8d9128fd4ea659cf0c0ae3ab1a5b754b5092e3c23754184cee1a33bff"
+content-hash = "447bcd1c935cfd81fb8783b9bcf61a6722220a1824489870c91ad528b621270e"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1697,9 +1697,10 @@ meinheld = [
     {file = "meinheld-1.0.1.tar.gz", hash = "sha256:447de7189e4dc9c1f425aa1b9c8210aab492fda4d86f73a24059264e7d8b0134"},
 ]
 mysqlclient = [
-    {file = "mysqlclient-1.4.4-cp36-cp36m-win_amd64.whl", hash = "sha256:8c3b61d89f7daaeab6aad6bf4c4bc3ef30bec1a8169f94dc59aea87ba2fabf80"},
-    {file = "mysqlclient-1.4.4-cp37-cp37m-win_amd64.whl", hash = "sha256:79a498ddda955e488f80c82a6392bf6e07c323d48db236033f33825665d8ba5c"},
-    {file = "mysqlclient-1.4.4.tar.gz", hash = "sha256:9c737cc55a5dc8dd3583a942d5a9b21be58d16f00f5fefca4e575e7d9682e98c"},
+    {file = "mysqlclient-1.4.6-cp36-cp36m-win_amd64.whl", hash = "sha256:4c82187dd6ab3607150fbb1fa5ef4643118f3da122b8ba31c3149ddd9cf0cb39"},
+    {file = "mysqlclient-1.4.6-cp37-cp37m-win_amd64.whl", hash = "sha256:9e6080a7aee4cc6a06b58b59239f20f1d259c1d2fddf68ddeed242d2311c7087"},
+    {file = "mysqlclient-1.4.6-cp38-cp38-win_amd64.whl", hash = "sha256:f646f8d17d02be0872291f258cce3813497bc7888cd4712a577fd1e719b2f213"},
+    {file = "mysqlclient-1.4.6.tar.gz", hash = "sha256:f3fdaa9a38752a3b214a6fe79d7cae3653731a53e577821f9187e67cbecb2e16"},
 ]
 newrelic = [
     {file = "newrelic-4.20.1.121.tar.gz", hash = "sha256:708ac6a75c76a59e3d6c0d714e2fbb1e4ec7d540f7d34bddd81e61bdb636e895"},
