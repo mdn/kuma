@@ -93,7 +93,6 @@ urlwait = "0.4"
 # From constraints.txt
 chardet = "3.0.4"
 coverage = "4.3.4"
-defusedxml = "0.5.0"
 greenlet = "0.4.15"
 oauthlib = "2.0.4"
 py = "1.4.33"
