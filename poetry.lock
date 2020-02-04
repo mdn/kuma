@@ -245,11 +245,11 @@ description = "Integrated set of Django applications addressing authentication, 
 name = "django-allauth"
 optional = false
 python-versions = "*"
-version = "0.38.0"
+version = "0.40.0"
 
 [package.dependencies]
 Django = ">=1.11"
-python-openid = ">=2.2.5"
+python3-openid = ">=3.0.8"
 requests = "*"
 requests-oauthlib = ">=0.3.0"
 
@@ -1065,14 +1065,6 @@ version = "0.4.15"
 
 [[package]]
 category = "main"
-description = "OpenID support for servers and consumers."
-name = "python-openid"
-optional = false
-python-versions = "*"
-version = "2.2.5"
-
-[[package]]
-category = "main"
 description = "OpenID support for modern servers and consumers."
 name = "python3-openid"
 optional = false
@@ -1300,7 +1292,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "006ab6a33f7657cbfd2d99522a1e066d6a31027dfadddfa0d2d6ded04a9b9fa4"
+content-hash = "5ae3e160c6202936d2488d42a646c91dd8ec43fe1dd7b9cc5236ca93b785ad40"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1431,7 +1423,7 @@ django = [
     {file = "Django-1.11.28.tar.gz", hash = "sha256:b33ce35f47f745fea6b5aa3cf3f4241069803a3712d423ac748bd673a39741eb"},
 ]
 django-allauth = [
-    {file = "django-allauth-0.38.0.tar.gz", hash = "sha256:45661b6fe308466154adf54461679fab6f0c6850b10c56dc322fbbb9d47e03d9"},
+    {file = "django-allauth-0.40.0.tar.gz", hash = "sha256:6a189fc4d3ee23596c3fd6e9f49c59b5b15618980118171a50675dd6a27cc589"},
 ]
 django-appconf = [
     {file = "django-appconf-1.0.3.tar.gz", hash = "sha256:35f13ca4d567f132b960e2cd4c832c2d03cb6543452d34e29b7ba10371ba80e3"},
@@ -1809,10 +1801,6 @@ python-decouple = [
 python-magic = [
     {file = "python-magic-0.4.15.tar.gz", hash = "sha256:f3765c0f582d2dfc72c15f3b5a82aecfae9498bd29ca840d72f37d7bd38bfcd5"},
     {file = "python_magic-0.4.15-py2.py3-none-any.whl", hash = "sha256:f2674dcfad52ae6c49d4803fa027809540b130db1dec928cfbb9240316831375"},
-]
-python-openid = [
-    {file = "python-openid-2.2.5.tar.gz", hash = "sha256:92c51c3ecec846cbec4aeff11f9ff47303d4a63f93b0e6ac0ec02a091fed70ef"},
-    {file = "python-openid-2.2.5.zip", hash = "sha256:c2d133e47e0a7705c9272eef00d7a09c174f5bf17a127fed8e2c6499556cc782"},
 ]
 python3-openid = [
     {file = "python3-openid-3.1.0.tar.gz", hash = "sha256:628d365d687e12da12d02c6691170f4451db28d6d68d050007e4a40065868502"},
