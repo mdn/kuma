@@ -418,7 +418,7 @@ description = "Pipeline is an asset packaging library for Django."
 name = "django-pipeline"
 optional = false
 python-versions = "*"
-version = "1.6.14"
+version = "1.7.0"
 
 [[package]]
 category = "main"
@@ -1311,7 +1311,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "cde4f0dd8f4f32aa339b2b489a243a7f9c14da493aad726b1577738ca67ed786"
+content-hash = "eef4f1884aada257009db82bd82ddf548ec5245b9897481e848f0d3bfe05222e"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1493,8 +1493,8 @@ django-picklefield = [
     {file = "django_picklefield-2.1.1-py2.py3-none-any.whl", hash = "sha256:e03cb181b7161af38ad6b573af127e4fe9b7cc2c455b42c1ec43eaad525ade0a"},
 ]
 django-pipeline = [
-    {file = "django-pipeline-1.6.14.tar.gz", hash = "sha256:ef67aaf58959a2959e13fc114001cee5beec05ac18a81cc700ea9f1c8e3f40a8"},
-    {file = "django_pipeline-1.6.14-py2.py3-none-any.whl", hash = "sha256:b56f2cfdb113dc1cb05257d8eb8d145fc0ade6f0d1236fb425df15bd059dce15"},
+    {file = "django-pipeline-1.7.0.tar.gz", hash = "sha256:0ded22b974e3d627c27fc490ef5b23fcdcf0cdb00b704d628b5ca6d0b010d6fe"},
+    {file = "django_pipeline-1.7.0-py2.py3-none-any.whl", hash = "sha256:f7da70f00aa4baea3e0811f88927a116425deee05871fa2bfd2f8247f42d8847"},
 ]
 django-querycount = [
     {file = "django-querycount-0.7.0.tar.gz", hash = "sha256:8f5123d78716ff0704f2373e746a7200b8d8417798ce4a99bf2de87e3768f9ce"},
