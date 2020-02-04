@@ -1,4 +1,5 @@
 <div id="change-email-container" class="hidden">
     <label for="{{ form.email.id_for_label }}" class="visually-hidden">{{ default_email }}</label>
     {{ form.email }}
+    <div id="{{ form.email.id_for_label }}-error" class="error hidden">{{ _('The email field is required.') }}</div>
 </div>

@@ -73,4 +73,10 @@
         @include set-font-size(16px);
         text-align: center;
     }
+
+    .error {
+        color: $red;
+        margin: 10px 0;
+        font-weight: bold;
+    }
 }

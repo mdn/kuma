@@ -6,36 +6,72 @@
 
     /**
      * Hides the specified static content container, shows the edit
-     * container and sets focus to the specified element.
+     * container and sets focus to input element.
      * @param {Object} staticContainer - The container to hide
-     * @param {Object} editContainer - The container to show
-     * @param {Object} focusElement - The element to focus
      */
-    function showEditFields(staticContainer, editContainer, focusElement) {
+    function showEditFields(staticContainer) {
         staticContainer.classList.add('hidden');
-        editContainer.classList.remove('hidden');
-        focusElement.focus();
+        staticContainer.nextElementSibling.classList.remove('hidden');
+        staticContainer.nextElementSibling.querySelector('input').focus();
+    }
+
+    /**
+     * Hide all containers with class `error` inside the `form`
+     * @param {Object} form - The form from which to clear visible error messages
+     */
+    function clearErrors(form) {
+        var errors = form.querySelectorAll('.error');
+
+        for (var i = 0, l = errors.length; i < l; i++) {
+            errors[i].classList.add('hidden');
+        }
     }
 
     signupForm.addEventListener('click', function(event) {
-        var editContainer;
-        var focusElement;
         var staticContainer;
+
+        var editUsernameContainer = document.getElementById(
+            'change-username-container'
+        );
+        var editEmailContainer = document.getElementById(
+            'change-email-container'
+        );
 
         if (event.target.id === 'change-username') {
             staticContainer = document.getElementById(
                 'username-static-container'
             );
-            editContainer = document.getElementById(
-                'change-username-container'
-            );
-            focusElement = editContainer.querySelector('input');
-            showEditFields(staticContainer, editContainer, focusElement);
+            showEditFields(staticContainer);
         } else if (event.target.id === 'change-email') {
             staticContainer = document.getElementById('email-static-container');
-            editContainer = document.getElementById('change-email-container');
-            focusElement = editContainer.querySelector('label');
-            showEditFields(staticContainer, editContainer, focusElement);
+            showEditFields(staticContainer);
+        } else if (event.target.id === 'create-mdn-account') {
+            var formValid = true;
+            var signupFields = [
+                editUsernameContainer.querySelector('input'),
+                editEmailContainer.querySelector('input')
+            ];
+
+            clearErrors(signupForm);
+
+            for (var i = 0, l = signupFields.length; i < l; i++) {
+                var currentField = signupFields[i];
+                if (currentField.value === '') {
+                    signupForm
+                        .querySelector('#' + currentField.id + '-error')
+                        .classList.remove('hidden');
+                    showEditFields(
+                        signupForm.querySelector(
+                            '#' + currentField.name + '-static-container'
+                        )
+                    );
+                    formValid = false;
+                }
+            }
+
+            if (!formValid) {
+                event.preventDefault();
+            }
         }
     });
 

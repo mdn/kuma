@@ -77,7 +77,6 @@
             {% else %}
               <div id="username-static-container" class="username-static">
                 {% set provider_username = form.username.value() %}
-                <input type="hidden" name="username" value="{{ provider_username }}" />
                 {{ provider_username }}
                 <button id="change-username" type="button" class="edit-default" aria-label="{{ _('Your’re current username is %s. Change username?'%(provider_username)) }}">{{ _('change username') }}</button>
               </div>
@@ -103,13 +102,11 @@
             {% set primary_email = get_primary_email(email_addresses) %}
             {% if primary_email %}
               <div id="email-static-container" class="email-static">
-                <input type="hidden" name="email" value="{{ primary_email }}" />
                 {{ primary_email }}
                 <button id="change-email" type="button" class="edit-default" aria-label="{{ _('Your’re current email address is %s. Change email address?'%(primary_email)) }}">{{ _('change email address') }}</button>
               </div>
             {% else %}
               <div id="email-static-container" class="email-static">
-                <input type="hidden" name="email" value="{{ default_email }}" />
                 {{ default_email }}
                 <button id="change-email" type="button" class="edit-default" aria-label="{{ _('Your’re current email address is %s. Change email address?'%(default_email)) }}">{{ _('change email address') }}</button>
               </div>
