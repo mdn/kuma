@@ -214,7 +214,7 @@ description = "Use Database URLs in your Django Application."
 name = "dj-database-url"
 optional = false
 python-versions = "*"
-version = "0.4.0"
+version = "0.5.0"
 
 [[package]]
 category = "main"
@@ -1300,7 +1300,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "2a9662cd7d41c5bb89ba008390652bf3d8772f857aa23bed9f329870f9419be3"
+content-hash = "5fbd1a2f8dc87bd724bf9f12bb858c98df85b83d3dab1983b9d7f8624246a8e5"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1419,7 +1419,8 @@ dennis = [
     {file = "dennis-0.9.tar.gz", hash = "sha256:8c942dd5da7d03c65daebc069c5ee5c7f1374ac9b0c8c89c627caa66fe822604"},
 ]
 dj-database-url = [
-    {file = "dj-database-url-0.4.0.tar.gz", hash = "sha256:858312abb7b330ea875733a65806a36ad04d7b8451c6ce8835118a2fa10d6870"},
+    {file = "dj-database-url-0.5.0.tar.gz", hash = "sha256:4aeaeb1f573c74835b0686a2b46b85990571159ffc21aa57ecd4d1e1cb334163"},
+    {file = "dj_database_url-0.5.0-py2.py3-none-any.whl", hash = "sha256:851785365761ebe4994a921b433062309eb882fedd318e1b0fcecc607ed02da9"},
 ]
 dj-email-url = [
     {file = "dj-email-url-0.0.4.tar.gz", hash = "sha256:319a8726d1a4755b78d17f9966e07a81184929817767051096f9669d329784c8"},
