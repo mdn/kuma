@@ -530,7 +530,10 @@ description = "A feature flipper for Django."
 name = "django-waffle"
 optional = false
 python-versions = "*"
-version = "0.16.0"
+version = "0.19.0"
+
+[package.dependencies]
+six = ">=1.13.0"
 
 [[package]]
 category = "main"
@@ -1292,7 +1295,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "627ad1d7d38e4e760f7633ddb1b6d25314ef0fca843b3ada31618849ece5982f"
+content-hash = "d5510525ef5192196d8cdaaf937caf0cb7b7a6715f0e650eccfe677c35bd55be"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1517,8 +1520,8 @@ django-tidings = [
     {file = "django_tidings-2.0.1-py2.py3-none-any.whl", hash = "sha256:a144628acdd9ddafdc921cdb70fb8ee297886b1dc38b00fab8fffbbf46163012"},
 ]
 django-waffle = [
-    {file = "django-waffle-0.16.0.tar.gz", hash = "sha256:b48b80b01ea28a560a0d6df9322631f239f4088933137a39571d1c874cc89ce9"},
-    {file = "django_waffle-0.16.0-py2.py3-none-any.whl", hash = "sha256:806164c8e98fe6c20590bd642fa247d8554ab57faed45e2745253f0f3b8f3ff9"},
+    {file = "django-waffle-0.19.0.tar.gz", hash = "sha256:714d64307458c71daf22ef607d36034d56a538e04bde774f13a2c67c58faa055"},
+    {file = "django_waffle-0.19.0-py2.py3-none-any.whl", hash = "sha256:24e24d21df1f6710c1e6654786da414ad461371d73828a60ee42561b537ceb95"},
 ]
 djangorestframework = [
     {file = "djangorestframework-3.9.4-py2.py3-none-any.whl", hash = "sha256:376f4b50340a46c15ae15ddd0c853085f4e66058f97e4dbe7d43ed62f5e60651"},
