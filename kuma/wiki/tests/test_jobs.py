@@ -9,7 +9,7 @@ from ..models import Revision
 
 
 @pytest.mark.parametrize("mode", ["maintenance-mode", "normal-mode"])
-def test_contributors(db, cleared_cacheback_cache, settings, wiki_user_3,
+def test_contributors(db, settings, wiki_user_3,
                       root_doc_with_mixed_contributors, mode):
     """
     Tests basic operation, ordering, caching, and handling of banned and

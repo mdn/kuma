@@ -123,8 +123,6 @@ CACHES = {
     }
 }
 
-CACHEBACK_CACHE_ALIAS = 'default'
-
 # Email
 vars().update(config('EMAIL_URL',
                      default='console://',
@@ -521,7 +519,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'flat',
     'django.contrib.admin',
 
     'django.contrib.sitemaps',
@@ -564,6 +561,7 @@ INSTALLED_APPS = (
     'kuma.dashboards',
     'statici18n',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_mysql',
 
     # other
@@ -622,7 +620,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    'VERSION': '2020.02',
+    'VERSION': '2020.03',
     'BASE_DIR': BASE_DIR,
     'TEXT_DOMAIN': 'django',
     # Tells the extract script what files to look for l10n in and what function
