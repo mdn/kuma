@@ -780,7 +780,8 @@ def create_stripe_subscription(request):
         email = request.POST.get('stripe_email', '')
         stripe_token = request.POST.get('stripe_token', '')
         create_stripe_customer_and_subscription_for_user(user, email, stripe_token)
-    except stripe.error.StripeError:
+    except stripe.error.StripeError as e:
+        print('encountered a stripe error', e)
         raven_client.captureException()
         has_stripe_error = True
 
