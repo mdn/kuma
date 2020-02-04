@@ -15,10 +15,9 @@
       <h2>{{ _('Help grow MDN') }}</h2>
       {% if has_stripe_error %}
           <div class="stripe-error">
-              <h3>Stripe error</h3>
+              <h3>{{ _('Stripe error') }}</h3>
               <p>
-                  An error occurred trying to set up the subscription with Stripe's server. We've recorded the error and
-                  will investigate it.
+                  {{ _("An error occurred trying to set up the subscription with Stripe's server. We've recorded the error and will investigate it.") }}
               </p>
               <hr>
           </div>
@@ -65,7 +64,7 @@
     </div>
     <hr>
     <p>
-      {{ _('To cancel your subscription, please <a href="mailto:mdn-support@mozilla.com">contact support</a>. <br>If you have questions, please read the <a href="%(terms_url)s">FAQ</a> or you can also contact support.', terms_url=url('recurring_payment_initial')) }}
+      {{ _('To cancel your subscription, please <a href="%(support_email)s">contact support</a>. <br>If you have questions, please read the <a href="%(terms_url)s">FAQ</a> or you can also contact support.', support_email='mailto:mdn-support@mozilla.com', terms_url=url('recurring_payment_initial')) }}
     </p>
   {% endif %}
   {% javascript "stripe-subscription" %}
