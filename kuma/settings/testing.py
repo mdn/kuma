@@ -32,9 +32,6 @@ LOGGING['loggers'].update({
     },
 })
 
-# Use the local memory cache in tests, so that test cacheback jobs
-# will expire at the end of the test.
-CACHEBACK_CACHE_ALIAS = 'default'
 
 # Change the cache key prefix for tests, to avoid overwriting runtime.
 for cache_settings in CACHES.values():
@@ -94,5 +91,5 @@ SENTRY_DSN = None
 # an extra safeguard.
 GOOGLE_ANALYTICS_TRACKING_URL = 'https://thisllneverwork.example.com/collect'
 
-# The tests will always assume this.
+# Because that's what all the tests presume.
 SITE_ID = 1

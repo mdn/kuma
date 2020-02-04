@@ -123,8 +123,6 @@ CACHES = {
     }
 }
 
-CACHEBACK_CACHE_ALIAS = 'default'
-
 # Email
 vars().update(config('EMAIL_URL',
                      default='console://',
@@ -521,7 +519,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'flat',
     'django.contrib.admin',
 
     'django.contrib.sitemaps',
