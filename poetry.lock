@@ -299,7 +299,10 @@ description = "Django live settings with pluggable backends, including Redis."
 name = "django-constance"
 optional = false
 python-versions = "*"
-version = "2.4.0"
+version = "2.5.0"
+
+[package.dependencies]
+six = "*"
 
 [package.extras]
 database = ["django-picklefield"]
@@ -1295,7 +1298,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "d5510525ef5192196d8cdaaf937caf0cb7b7a6715f0e650eccfe677c35bd55be"
+content-hash = "d0dad776426c1906f8207ca5b61d9f8aabd22caa3814dfd3669e7fecbb9b0e17"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1441,8 +1444,8 @@ django-cacheback = [
     {file = "django_cacheback-1.4.0-py2.py3-none-any.whl", hash = "sha256:972c7697f1929bf9676893a8e6cb1f7873a2c14e835a8d24fbb59bbf37731c18"},
 ]
 django-constance = [
-    {file = "django-constance-2.4.0.tar.gz", hash = "sha256:417f9866a4fcd93c198acd16d5bc22b68e491eaabb18efea4c70d183d42daa45"},
-    {file = "django_constance-2.4.0-py2.py3-none-any.whl", hash = "sha256:19ff1ae8295aeffc2917ab67da4b310bfaf8c42f34d570f89e289fd54c4217b0"},
+    {file = "django-constance-2.5.0.tar.gz", hash = "sha256:c47db4abd5788584115db681c0e8fef8ff870d49af90aa359076f0833a537199"},
+    {file = "django_constance-2.5.0-py2.py3-none-any.whl", hash = "sha256:1b536d153c168ef548fea5bdcdea84afab83892e2163ec4e896557a3139effd7"},
 ]
 django-csp = [
     {file = "django_csp-3.6-py2.py3-none-any.whl", hash = "sha256:d9ee5a8c6442aa54854e8de627c2826786208ed38fb4ea8ced08c42332673eb1"},
