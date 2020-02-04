@@ -6,10 +6,10 @@ import pytest
 from django.conf import settings
 from django.test import Client
 from django.urls import reverse
+from waffle.testutils import override_flag
 
 from kuma.core.utils import safer_pyquery as pq
 from kuma.users.models import User
-
 
 
 def mock_retrieve_stripe_subscription_info(user):
@@ -23,21 +23,11 @@ def mock_retrieve_stripe_subscription_info(user):
 
 
 @pytest.fixture
-def staff_user(db, django_user_model):
+def test_user(db, django_user_model):
     return User.objects.create(
-        username='staff_user',
+        username='test_user',
         email='staff@example.com',
         date_joined=datetime(2019, 1, 17, 15, 42),
-        is_staff=True
-    )
-
-
-@pytest.fixture
-def normal_user(db, django_user_model):
-    return User.objects.create(
-        username='normal_user',
-        email='user@example.com',
-        date_joined=datetime(2019, 1, 17, 15, 42)
     )
 
 
@@ -46,9 +36,11 @@ def normal_user(db, django_user_model):
     "kuma.users.utils.retrieve_stripe_subscription_info",
     side_effect=mock_retrieve_stripe_subscription_info
 )
-def test_create_stripe_subscription(mock1, mock2, staff_user):
+@override_flag('subscription', True)
+def test_create_stripe_subscription(mock1, mock2, test_user):
     client = Client()
-    client.force_login(staff_user)
+    client.force_login(test_user)
+
     response = client.post(
         reverse('users.create_stripe_subscription'),
         data={
@@ -70,9 +62,10 @@ def test_create_stripe_subscription(mock1, mock2, staff_user):
     "kuma.users.utils.retrieve_stripe_subscription_info",
     side_effect=mock_retrieve_stripe_subscription_info
 )
-def test_create_stripe_subscription_fail(mock1, mock2, normal_user):
+@override_flag('subscription', False)
+def test_create_stripe_subscription_fail(mock1, mock2, test_user):
     client = Client()
-    client.force_login(normal_user)
+    client.force_login(test_user)
     response = client.post(
         reverse('users.create_stripe_subscription'),
         data={
