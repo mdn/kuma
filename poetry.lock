@@ -304,6 +304,10 @@ version = "2.5.0"
 [package.dependencies]
 six = "*"
 
+[package.dependencies.django-picklefield]
+optional = true
+version = "*"
+
 [package.extras]
 database = ["django-picklefield"]
 redis = ["redis"]
@@ -400,7 +404,13 @@ description = "Pickled object field for Django"
 name = "django-picklefield"
 optional = false
 python-versions = "*"
-version = "1.0.0"
+version = "2.1.1"
+
+[package.dependencies]
+Django = ">=1.11"
+
+[package.extras]
+tests = ["tox"]
 
 [[package]]
 category = "main"
@@ -1298,7 +1308,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "99143f41ab259f72019155f3e0f445b801f0d8eb87b15d5514bfe26dd5f4d4f3"
+content-hash = "2e6374c65154c4e904c7b59b9643517652f2ea835695f5fba6edf6f60cfeeea1"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1476,8 +1486,8 @@ django-mysql = [
     {file = "django_mysql-3.3.0-py3-none-any.whl", hash = "sha256:ceaf6d93396b7f7b3798ac5f9a819dd70d5f0e1112850f2a34c57f062fa19398"},
 ]
 django-picklefield = [
-    {file = "django-picklefield-1.0.0.tar.gz", hash = "sha256:61e3ba7f6df82d8df9e6be3a8c55ef589eb3bf926c3d25d2b7949b07eae78354"},
-    {file = "django_picklefield-1.0.0-py2.py3-none-any.whl", hash = "sha256:57e4349c7f75eab08fe7ceb11e7135644fdf771e2777a754db4f07e5c63c191f"},
+    {file = "django-picklefield-2.1.1.tar.gz", hash = "sha256:67a5e156343e3b032cac2f65565f0faa81635a99c7da74b0f07a0f5db467b646"},
+    {file = "django_picklefield-2.1.1-py2.py3-none-any.whl", hash = "sha256:e03cb181b7161af38ad6b573af127e4fe9b7cc2c455b42c1ec43eaad525ade0a"},
 ]
 django-pipeline = [
     {file = "django-pipeline-1.6.14.tar.gz", hash = "sha256:ef67aaf58959a2959e13fc114001cee5beec05ac18a81cc700ea9f1c8e3f40a8"},
