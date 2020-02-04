@@ -709,7 +709,7 @@ description = "A comprehensive HTTP client library."
 name = "httplib2"
 optional = false
 python-versions = "*"
-version = "0.14.0"
+version = "0.17.0"
 
 [[package]]
 category = "main"
@@ -1300,7 +1300,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "21359c6818782ddffb8251789f8715cc0331e59b0c6eec2e56f408ba1ab888d6"
+content-hash = "006ab6a33f7657cbfd2d99522a1e066d6a31027dfadddfa0d2d6ded04a9b9fa4"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1604,8 +1604,8 @@ html5lib = [
     {file = "html5lib-1.0.1.tar.gz", hash = "sha256:66cb0dcfdbbc4f9c3ba1a63fdb511ffdbd4f513b2b6d81b80cd26ce6b3fb3736"},
 ]
 httplib2 = [
-    {file = "httplib2-0.14.0-py3-none-any.whl", hash = "sha256:409fa5509298f739b34d5a652df762cb0042507dc93f6633e306b11289d6249d"},
-    {file = "httplib2-0.14.0.tar.gz", hash = "sha256:34537dcdd5e0f2386d29e0e2c6d4a1703a3b982d34c198a5102e6e5d6194b107"},
+    {file = "httplib2-0.17.0-py3-none-any.whl", hash = "sha256:79751cc040229ec896aa01dced54de0cd0bf042f928e84d5761294422dde4454"},
+    {file = "httplib2-0.17.0.tar.gz", hash = "sha256:de96d0a49f46d0ee7e0aae80141d37b8fcd6a68fb05d02e0b82c128592dd8261"},
 ]
 idna = [
     {file = "idna-2.8-py2.py3-none-any.whl", hash = "sha256:ea8b7f6188e6fa117537c3df7da9fc686d485087abf6ac197f9c46432f7e4a3c"},
