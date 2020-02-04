@@ -13,7 +13,7 @@ def create_subscription_waffle_flag(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0013_auto_20191023_0741'),
+        ('users', '0014_user_is_newsletter_subscribed'),
     ]
 
     operations = [
