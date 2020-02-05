@@ -72,7 +72,7 @@ class GenerationKeyJob(Job):
         """Create a unique generation identifier."""
         return crypto.get_random_string(length=12)
 
-    def get_constructor_kwargs(self):
+    def get_init_kwargs(self):
         """
         Get named arguments for re-initialization.
 
