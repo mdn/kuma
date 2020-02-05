@@ -785,6 +785,12 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/users.css',
     },
+    'delete-user-modal': {
+        'source_filenames': (
+            'styles/minimalist/components/delete-user-modal.scss',
+        ),
+        'output_filename': 'build/styles/delete-user-modal.css',
+    },
     'tagit': {
         'source_filenames': (
             'styles/libs/jquery.tagit.css',
@@ -1008,6 +1014,26 @@ PIPELINE_JS = {
         'output_filename': 'build/js/signup.js',
         'extra_context': {
             'async': True,
+        },
+    },
+    'delete-user-page': {
+        'source_filenames': (
+            'js/components/account-management/delete-user-confirmation-button.js',
+        ),
+        'output_filename': 'build/js/delete-user-confirmation-button.js',
+        'extra_context': {
+            'defer': True,
+        },
+    },
+    'delete-user-modal': {
+        'source_filenames': (
+            'js/components/modal.js',
+            'js/components/account-management/delete-user-modal.js',
+            'js/components/account-management/delete-user-confirmation-button.js',
+        ),
+        'output_filename': 'build/js/delete-user-modal.js',
+        'extra_context': {
+            'defer': True,
         },
     },
     'auth-modal': {
