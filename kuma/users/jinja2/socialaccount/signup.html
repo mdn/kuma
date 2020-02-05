@@ -9,7 +9,6 @@
 {% endblock %}
 
 {% set provider = account.get_provider() %}
-{% set github_connect_url = provider_login_url('github', process='connect', next=request.session.sociallogin_next_url|default('/')) %}
 
 {% block pageheader %}
 {{ render_react("signupflow", request.LANGUAGE_CODE, request.get_full_path(),
@@ -26,10 +25,17 @@
 <main id="content-main" role="main">
   <article id="browser_register" class="readable-line-length center">
     <ol class="auth-service-header">
-      <li class="github-auth checked">
-        <img src="{{ static('auth/github-auth.svg') }}" width="90px" alt="Github" />
-        {{ _('Authorize with Github') }}
-      </li>
+      {% if provider.name == "GitHub" %}
+        <li class="github-auth checked">
+          <img src="{{ static('auth/github-auth.svg') }}" width="90px" alt="Github" />
+          {{ _('Authorize with Github') }}
+        </li>
+      {% elif provider.name == "Google" %}
+        <li class="google-auth checked">
+          <img src="{{ static('auth/google-auth.svg') }}" width="90px" alt="Google" />
+          {{ _('Authorize with Google') }}
+        </li>
+      {% endif %}
       <li class="mdn-profile">
         <img src="{{ static('auth/mdn-auth.svg') }}" width="90px" alt="{{ _('User avatar') }}" />
         {{ _('Create MDN Profile') }}
@@ -70,10 +76,10 @@
               {% include 'socialaccount/includes/change_username.html' %}
             {% else %}
               <div id="username-static-container" class="username-static">
-                {% set github_username = account.get_provider_account() %}
-                <input type="hidden" name="username" value="{{ github_username }}" />
-                {{ github_username }}
-                <button id="change-username" type="button" class="edit-default" aria-label="{{ _('Your’re current username is %s. Change username?'%(github_username)) }}">{{ _('change username') }}</button>
+                {% set provider_username = form.username.value() %}
+                <input type="hidden" name="username" value="{{ provider_username }}" />
+                {{ provider_username }}
+                <button id="change-username" type="button" class="edit-default" aria-label="{{ _('Your’re current username is %s. Change username?'%(provider_username)) }}">{{ _('change username') }}</button>
               </div>
               {% set is_hidden = true %}
               {% include 'socialaccount/includes/change_username.html' %}
@@ -123,13 +129,13 @@
 
         {% if settings.ENABLE_NEWSLETTER_SIGNUP %}
           <li class="newsletter-signup">
-            <label for="newsletter-signup">
-              <input type="checkbox" id="newsletter-signup" name="newsletter" value="true" />
+            <label for="{{ form.is_newsletter_subscribed.id_for_label  }}">
+              {{ form.is_newsletter_subscribed }}
               {{ _('Get updates on what’s new with MDN to your inbox.') }}
             </label>
           </li>
         {% endif %}
-        
+
         <li>
           <ul class="errorlist">
             {{ form.terms.errors }}

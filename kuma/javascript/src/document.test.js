@@ -21,6 +21,7 @@ export const fakeDocumentData = {
     language: 'English (US)',
     hrefLang: 'en',
     absoluteURL: '[fake absolute url]',
+    translationStatus: null,
     translateURL: '[fake translate url]',
     wikiURL:
         'https://wiki.mdn.developer.mozilla.org/en-US/docs/Web/CSS/box-shadow',

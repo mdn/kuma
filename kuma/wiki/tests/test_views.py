@@ -544,7 +544,7 @@ def test_editor_safety(root_doc, editor_client, content, expected):
         response = editor_client.get(url, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
         page = pq(response.content)
-        editor_src = page.find('#id_content').text()
+        editor_src = page.find('#id_content').text().strip()
         assert editor_src == expected
 
 

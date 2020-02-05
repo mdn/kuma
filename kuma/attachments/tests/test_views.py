@@ -85,7 +85,7 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
             creator=test_user,
             is_approved=True)
         revision1.file.save('get_previous_test_file.txt',
-                            ContentFile('I am a test file for get_previous'))
+                            ContentFile(b'I am a test file for get_previous'))
         revision1.save()
         revision1.make_current()
 
@@ -99,7 +99,7 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
             creator=test_user,
             is_approved=True)
         revision2.file.save('get_previous_test_file.txt',
-                            ContentFile('I am a test file for get_previous'))
+                            ContentFile(b'I am a test file for get_previous'))
         revision2.save()
         revision2.make_current()
 
@@ -121,6 +121,47 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
         response = self.client.post(self.files_url, data=post_data,
                                     HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 200
+        assert_no_cache_header(response)
+        self.assertContains(response, 'Files of this type are not permitted.')
+        _file.close()
+
+    def test_svg_mime_type_staff_override(self):
+        """
+        Staff users are allowed to upload SVG images. Only.
+        """
+        _file = make_test_file(
+            content='<svg viewBox="0 0 841.9 595.3"></svg>', suffix='.svg')
+        post_data = {
+            'title': 'Test Svg upload',
+            'description': 'Mime type only allowed for some users.',
+            'comment': 'Initial upload',
+            'file': _file,
+        }
+        # Remember, self.client use logged in as user 'admin'
+        response = self.client.post(self.files_url, data=post_data,
+                                    HTTP_HOST=settings.WIKI_HOST)
+        assert response.status_code == 302  # means it worked
+        assert_no_cache_header(response)
+        _file.close()
+        attachment_revision, = AttachmentRevision.objects.all()
+        assert attachment_revision.mime_type == 'image/svg+xml'
+
+    def test_svg_mime_type_non_staff(self):
+        """
+        Regular users are not allowed to upload SVG images.
+        """
+        _file = make_test_file(
+            content='<svg viewBox="0 0 841.9 595.3"></svg>', suffix='.svg')
+        post_data = {
+            'title': 'Test Svg upload',
+            'description': 'Mime type only allowed for some users.',
+            'comment': 'Initial upload',
+            'file': _file,
+        }
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.post(self.files_url, data=post_data,
+                                    HTTP_HOST=settings.WIKI_HOST)
+        assert response.status_code == 200  # means it didn't upload
         assert_no_cache_header(response)
         self.assertContains(response, 'Files of this type are not permitted.')
         _file.close()
@@ -174,7 +215,7 @@ class AttachmentViewTests(UserTestCase, WikiTestCase):
             creator=test_user,
             is_approved=True)
         revision.file.save('get_previous_test_file.txt',
-                           ContentFile('I am a test file for get_previous'))
+                           ContentFile(b'I am a test file for get_previous'))
         revision.save()
         revision.make_current()
 
@@ -257,9 +298,21 @@ def test_raw_file_requires_attachment_host(client, settings, file_attachment):
     assert 'Vary' not in response
 
     response = client.get(url, HTTP_HOST=settings.ATTACHMENT_HOST)
-    assert response.status_code == 200
-    assert response.streaming
-    assert response['x-frame-options'] == 'ALLOW-FROM %s' % settings.DOMAIN
+    if settings.ATTACHMENTS_USE_S3:
+        # Figure out the external scheme + host for our attachments bucket
+        endpoint_url = settings.ATTACHMENTS_AWS_S3_ENDPOINT_URL
+        custom_proto = "https" if settings.ATTACHMENTS_AWS_S3_SECURE_URLS else 'http'
+        custom_url = f'{custom_proto}://{settings.ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN}'
+        bucket_url = custom_url if settings.ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN else endpoint_url
+
+        # Verify we're redirecting to the intended bucket or custom frontend
+        assert response.status_code == 302
+        assert response['location'].startswith(bucket_url)
+    else:
+        assert response.status_code == 200
+        assert response.streaming
+
+    assert response['x-frame-options'] == f'ALLOW-FROM {settings.DOMAIN}'
     assert response['Last-Modified'] == convert_to_http_date(created)
     assert 'public' in response['Cache-Control']
     assert 'max-age=900' in response['Cache-Control']

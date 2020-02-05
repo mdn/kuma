@@ -1,10 +1,13 @@
 from allauth.account.adapter import DefaultAccountAdapter, get_adapter
+from allauth.account.models import EmailAddress
+from allauth.account.utils import cleanup_email_addresses
 from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.socialaccount.models import SocialLogin
 from django import forms
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 from django.shortcuts import redirect, render
 from django.utils.cache import add_never_cache_headers
 from django.utils.translation import ugettext_lazy as _
@@ -108,6 +111,8 @@ class KumaAccountAdapter(DefaultAccountAdapter):
                                                   commit=False)
         is_github_url_public = form.cleaned_data.get('is_github_url_public')
         user.is_github_url_public = is_github_url_public
+        user.is_newsletter_subscribed = form.cleaned_data.get('is_newsletter_subscribed', False)
+
         if commit:  # pragma: no cover
             # commit will be True, unless extended by a derived class
             user.save()
@@ -207,17 +212,89 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
                            kwargs={'username': request.user.username})
         return user_url
 
-    def save_user(self, request, sociallogin, form):
+    def save_user(self, request, sociallogin, form=None):
         """
-        Update the session after creating a new user account.
+        Checks for an existing user (via verified email addresses within the
+        social login object) and, if one is found, associates the incoming
+        social account with that existing user instead of a new user.
 
-        If the socialaccount_sociallogin remains in the session, then the user
-        will be unable to connect a second account unless they log out and
-        log in again.
+        It also removes the "socialaccount_sociallogin" key from the session.
+        If the "socialaccount_sociallogin" key remains in the session, then the
+        user will be unable to connect a second account unless they log out and
+        log in again. (TODO: Check if this part of the method is still
+        needed/used. I suspect not.)
         """
-        super(KumaSocialAccountAdapter, self).save_user(request, sociallogin,
-                                                        form)
+        # We have to call get_existing_user() again. The result of the earlier
+        # call (within the is_auto_signup_allowed() method), can't be cached as
+        # an attribute on the instance because a different instance of this
+        # class is used when calling this method from the one used when calling
+        # is_auto_signup_allowed().
+        user = get_existing_user(sociallogin)
+        if user:
+            # We can re-use an existing user instead of creating a new one.
+            # Let's guarantee this user has an unusable password, just in case
+            # we're recovering an old user that has never had this done before.
+            user.set_unusable_password()
+            # This associates this new social account with the existing user.
+            sociallogin.connect(request, user)
+            # Since the "connect" call above does not add any email addresses
+            # from the social login that are missing from the user's current
+            # associated set, let's add them here.
+            add_user_email(request, user, sociallogin.email_addresses)
+            # Now that we've successfully associated a GitHub/Google social
+            # account with this existing user, let's delete all of the user's
+            # associated Persona social accounts (if any). Users may have
+            # multiple associated Persona social accounts (each identified
+            # by a unique email address).
+            user.socialaccount_set.filter(provider='persona').delete()
+        else:
+            user = super().save_user(request, sociallogin, form)
+
         try:
             del request.session['socialaccount_sociallogin']
         except KeyError:  # pragma: no cover
             pass
+
+        return user
+
+    def is_auto_signup_allowed(self, request, sociallogin):
+        """
+        We allow "auto-signup" (basically skipping the sign-up form page) only
+        if there is an existing user that we can re-use instead of creating
+        a new one.
+        """
+        return bool(get_existing_user(sociallogin))
+
+
+def get_existing_user(sociallogin):
+    """
+    Attempts to find an existing user that is associated with a verified email
+    address that matches one of the verified email addresses within the
+    "sociallogin" object.
+    """
+    emails = Q()
+    for email_address in sociallogin.email_addresses:
+        if email_address.verified:
+            emails |= Q(emailaddress__email=email_address.email)
+    if emails:
+        # Users can have multiple associated EmailAddress objects, so
+        # let's use "distinct()" to remove any duplicate users.
+        users = list(get_user_model().objects
+                                     .filter(emails,
+                                             emailaddress__verified=True)
+                                     .distinct())
+        # For now, we're only going to return a user if there's only one.
+        if len(users) == 1:
+            return users[0]
+    return None
+
+
+def add_user_email(request, user, addresses):
+    """
+    This is based on allauth.account.utils.setup_user_email, but targets
+    the addition of email-address objects to an existing user.
+    """
+    for a in cleanup_email_addresses(request, addresses)[0]:
+        if not EmailAddress.objects.filter(user=user, email=a.email).exists():
+            a.user = user
+            a.save()

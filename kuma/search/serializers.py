@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.utils.translation import ugettext
 from rest_framework import serializers
 
@@ -6,12 +7,20 @@ from .fields import SiteURLField
 
 
 class SearchQuerySerializer(serializers.Serializer):
-    q = serializers.CharField(required=False)
+    q = serializers.CharField(
+        required=False, max_length=settings.ES_Q_MAXLENGTH)
     highlight = serializers.BooleanField(required=False, default=True)
     # Advanced search query paramenters.
     css_classnames = serializers.CharField(required=False)
     html_attributes = serializers.CharField(required=False)
     kumascript_macros = serializers.CharField(required=False)
+
+    def validate_q(self, value):
+        # Check that \n not in query
+        if r'\n' in value:
+            raise serializers.ValidationError(
+                'Search term must not contain new line')
+        return value
 
 
 class FilterURLSerializer(serializers.Serializer):

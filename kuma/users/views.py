@@ -1,7 +1,5 @@
 import json
-import operator
 from datetime import datetime, timedelta
-from functools import reduce
 
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
@@ -20,7 +18,11 @@ from django.core.mail import send_mail
 from django.core.validators import validate_email, ValidationError
 from django.db import IntegrityError, transaction
 from django.db.models import Q
-from django.http import HttpResponseBadRequest, HttpResponseForbidden
+from django.http import (
+    Http404,
+    HttpResponseBadRequest,
+    HttpResponseForbidden,
+    HttpResponseRedirect)
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_text
@@ -38,7 +40,11 @@ from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import (Document, DocumentDeletionLog, Revision,
                               RevisionAkismetSubmission)
 
-from .forms import UserBanForm, UserEditForm, UserRecoveryEmailForm
+from .forms import (
+    UserBanForm,
+    UserDeleteForm,
+    UserEditForm,
+    UserRecoveryEmailForm)
 from .models import User, UserBan
 # we have to import the signup form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
@@ -450,14 +456,101 @@ def user_edit(request, username):
 
 
 @redirect_in_maintenance_mode
+@login_required
 def user_delete(request, username):
-
-    edit_user = get_object_or_404(User, username=username)
-
-    if not edit_user.allows_editing_by(request.user):
+    user = get_object_or_404(User, username=username)
+    if user != request.user:
         return HttpResponseForbidden()
 
-    return render(request, 'users/user_delete.html')
+    def donate_attributions():
+        anon, _ = User.objects.get_or_create(username='Anonymous')
+        user.created_revisions.update(creator=anon)
+        user.created_attachment_revisions.update(creator=anon)
+
+    def scrub_user():
+        # From the User abstract class
+        user.first_name = ''
+        user.last_name = ''
+        user.email = ''
+
+        # All User attributes
+        user.timezone = ''
+        user.locale = ''
+        user.homepage = ''
+        user.title = ''
+        user.fullname = ''
+        user.organization = ''
+        user.location = ''
+        user.bio = ''
+        user.irc_nickname = ''
+        user.website_url = ''
+        user.github_url = ''
+        user.mozillians_url = ''
+        user.twitter_url = ''
+        user.linkedin_url = ''
+        user.facebook_url = ''
+        user.stackoverflow_url = ''
+        user.discourse_url = ''
+        user.stripe_customer_id = ''
+        user.save()
+
+        user.socialaccount_set.all().delete()
+        user.key_set.all().delete()
+
+    def force_logout():
+        request.session.clear()
+
+    def delete_user():
+        # Protected references to users need to be manually deleted first.
+        user.key_set.all().delete()
+
+        # Some records are worth keeping prior to deleting the user
+        # but "re-assign" to the anonymous user.
+        anon, _ = User.objects.get_or_create(username='Anonymous')
+        user.revisionakismetsubmission_set.update(sender=anon)
+        user.documentdeletionlog_set.update(user=anon)
+        user.documentspamattempt_set.update(user=anon)
+        user.documentspam_reviewed.update(reviewer=anon)
+        user.bans.update(user=anon)
+        user.bans_issued.update(by=anon)
+
+        user.delete()
+
+    revisions = Revision.objects.filter(creator=request.user)
+    context = {}
+    if request.method == 'POST':
+        # If the user has no revisions there's not choices on the form.
+        if revisions.exists():
+            form = UserDeleteForm(request.POST)
+            if form.is_valid():
+                with transaction.atomic():
+                    if form.cleaned_data['attributions'] == 'donate':
+                        donate_attributions()
+                        delete_user()
+                    elif form.cleaned_data['attributions'] == 'keep':
+                        scrub_user()
+                        force_logout()
+                    else:
+                        raise NotImplementedError(
+                            form.cleaned_data['attributions'])
+                    return HttpResponseRedirect('/')
+
+        else:
+            delete_user()
+            return HttpResponseRedirect('/')
+    else:
+        form = UserDeleteForm()
+
+    context['form'] = form
+    context['revisions'] = revisions
+
+    return render(request, 'users/user_delete.html', context)
+
+
+def signin_landing(request):
+    if not settings.MULTI_AUTH_ENABLED:
+        raise Http404("Multi-auth is not enabled.")
+    return render(request, "socialaccount/signup-landing.html")
 
 
 class SignupView(BaseSignupView):
@@ -477,12 +570,23 @@ class SignupView(BaseSignupView):
         self.email_addresses = {}
         form = super(SignupView, self).get_form(form_class)
         form.fields['email'].label = _('Email address')
+
+        User = get_user_model()
+
+        # When no username is provided, default to the local-part of the email address
+        if form.initial.get('username', '') == '':
+            email = form.initial.get('email', '')
+            if isinstance(email, tuple):
+                email = email[0]
+            suggested_username = email.split('@')[0]
+            if not User.objects.filter(username__iexact=suggested_username).exists():
+                form.initial['username'] = suggested_username
+
         self.matching_user = None
         initial_username = form.initial.get('username', None)
 
-        # For GitHub users, see if we can find matching user by username
-        assert self.sociallogin.account.provider == 'github'
-        User = get_user_model()
+        # For GitHub/Google users, see if we can find matching user by username
+        assert self.sociallogin.account.provider in ('github', 'google')
         try:
             self.matching_user = User.objects.get(username=initial_username)
             # deleting the initial username because we found a matching user
@@ -584,16 +688,16 @@ class SignupView(BaseSignupView):
     def get_context_data(self, **kwargs):
         context = super(SignupView, self).get_context_data(**kwargs)
 
-        # For GitHub users, find matching legacy Persona social accounts
-        assert self.sociallogin.account.provider == 'github'
-        or_query = []
+        # For GitHub/Google users, find matching legacy Persona social accounts
+        assert self.sociallogin.account.provider in ('github', 'google')
+        uids = Q()
         for email_address in self.email_addresses.values():
             if email_address['verified']:
-                or_query.append(Q(uid=email_address['email']))
-        if or_query:
-            reduced_or_query = reduce(operator.or_, or_query)
-            matching_accounts = (SocialAccount.objects
-                                              .filter(reduced_or_query))
+                uids |= Q(uid=email_address['email'])
+        if uids:
+            # only persona accounts have emails as UIDs
+            # but adding the provider criteria makes this explicit and future-proof
+            matching_accounts = SocialAccount.objects.filter(uids, provider='persona')
         else:
             matching_accounts = SocialAccount.objects.none()
 

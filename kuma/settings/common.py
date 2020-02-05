@@ -123,8 +123,6 @@ CACHES = {
     }
 }
 
-CACHEBACK_CACHE_ALIAS = 'default'
-
 # Email
 vars().update(config('EMAIL_URL',
                      default='console://',
@@ -423,7 +421,7 @@ _CONTEXT_PROCESSORS = (
 
 MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
-    'kuma.core.middleware.RestrictedWhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     # must come before LocaleMiddleware
     'redirect_urls.middleware.RedirectsMiddleware',
     'kuma.core.middleware.SetRemoteAddrFromForwardedFor',
@@ -521,7 +519,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'flat',
     'django.contrib.admin',
 
     'django.contrib.sitemaps',
@@ -545,6 +542,7 @@ INSTALLED_APPS = (
     'allauth.account',
     'allauth.socialaccount',
     'kuma.users.providers.github',
+    'kuma.users.providers.google',
 
     # util
     'django_jinja',
@@ -563,6 +561,7 @@ INSTALLED_APPS = (
     'kuma.dashboards',
     'statici18n',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_mysql',
 
     # other
@@ -621,7 +620,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    'VERSION': '2019.23',
+    'VERSION': '2020.03',
     'BASE_DIR': BASE_DIR,
     'TEXT_DOMAIN': 'django',
     # Tells the extract script what files to look for l10n in and what function
@@ -717,6 +716,36 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/home.css',
     },
+    'home_base': {
+        'source_filenames': (
+            'styles/minimalist/home.scss',
+        ),
+        'output_filename': 'build/styles/home_base.css',
+    },
+    'callout': {
+        'source_filenames': (
+            'styles/minimalist/components/callout.scss',
+        ),
+        'output_filename': 'build/styles/callout.css',
+    },
+    'home_newsletter': {
+        'source_filenames': (
+            'styles/minimalist/components/home-newsletter.scss',
+        ),
+        'output_filename': 'build/styles/home_newsletter.css',
+    },
+    'mozilla_foundation': {
+        'source_filenames': (
+            'styles/minimalist/components/featured-banners/mozilla-foundation.scss',
+        ),
+        'output_filename': 'build/styles/mozilla_foundation.css',
+    },
+    'home_featured': {
+        'source_filenames': (
+            'styles/minimalist/components/featured-banners/featured.scss',
+        ),
+        'output_filename': 'build/styles/home_featured.css',
+    },
     'print': {
         'source_filenames': (
             'styles/minimalist/print.scss',
@@ -805,11 +834,23 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/signup-flow.css',
     },
+    'auth-modal': {
+        'source_filenames': (
+            'styles/minimalist/components/auth-modal.scss',
+        ),
+        'output_filename': 'build/styles/auth-modal.css',
+    },
     'user-banned': {
         'source_filenames': (
             'styles/user-banned.scss',
         ),
         'output_filename': 'build/styles/user-banned.css',
+    },
+    'user-delete': {
+        'source_filenames': (
+            'styles/user-delete.scss',
+        ),
+        'output_filename': 'build/styles/user-delete.css',
     },
     'error-403-alternate': {
         'source_filenames': (
@@ -976,6 +1017,16 @@ PIPELINE_JS = {
             'async': True,
         },
     },
+    'auth-modal': {
+        'source_filenames': (
+            'js/components/modal.js',
+            'js/components/user-signup/auth-modal.js',
+        ),
+        'output_filename': 'build/js/auth-modal.js',
+        'extra_context': {
+            'defer': True,
+        },
+    },
     'dashboard': {
         'source_filenames': (
             'js/dashboard.js',
@@ -1075,13 +1126,6 @@ PIPELINE_JS = {
             'js/wiki-compat-tables.js',
         ),
         'output_filename': 'build/js/wiki-compat-tables.js',
-        'template_name': 'pipeline/javascript-array.jinja',
-    },
-    'wiki-compat-signal': {
-        'source_filenames': (
-            'js/wiki-compat-signal.js',
-        ),
-        'output_filename': 'build/js/wiki-compat-signal.js',
         'template_name': 'pipeline/javascript-array.jinja',
     },
     'task-completion': {
@@ -1632,6 +1676,9 @@ ES_INDEXES = {'default': 'main_index'}
 ES_INDEXING_TIMEOUT = 30
 ES_LIVE_INDEX = config('ES_LIVE_INDEX', default=False, cast=bool)
 ES_URLS = config('ES_URLS', default='127.0.0.1:9200', cast=Csv())
+# Specify a max length for the q param to avoid unnecessary burden on
+# elasticsearch for queries that are probably either mistakes or junk.
+ES_Q_MAXLENGTH = config('ES_Q_MAXLENGTH', default=200, cast=int)
 
 
 # Logging is merged with the default logging
@@ -1795,6 +1842,14 @@ NEWSLETTER_ARTICLE = True
 # Newsletter Signup Settings
 ENABLE_NEWSLETTER_SIGNUP = config('ENABLE_NEWSLETTER_SIGNUP', default=False, cast=bool)
 
+# Whether or not to enable the BCD signalling feature.
+# Affects loading of CSS (statically) and JS (in runtime).
+ENABLE_BCD_SIGNAL = config('ENABLE_BCD_SIGNAL', default=True, cast=bool)
+
+# Enable or disable the multi auth(Google and Github) sign-in flow
+# When disabled, Github will be the default and only Auth provider
+MULTI_AUTH_ENABLED = config('MULTI_AUTH_ENABLED', default=False, cast=bool)
+
 # Content Experiments
 # Must be kept up to date with PIPELINE_JS setting and the JS client-side
 #  configuration. The 'id' should be a key in PIPELINE_JS, that loads
@@ -1834,6 +1889,24 @@ SSR_TIMEOUT = float(config('SSR_TIMEOUT', default='1'))
 
 # Setting for configuring the AWS S3 bucket name used for the document API.
 MDN_API_S3_BUCKET_NAME = config('MDN_API_S3_BUCKET_NAME', default=None)
+
+# Serve and upload attachments via S3, instead of the local filesystem
+ATTACHMENTS_USE_S3 = config('ATTACHMENTS_USE_S3', default=False, cast=bool)
+
+# AWS S3 credentials and settings for uploading attachments
+ATTACHMENTS_AWS_ACCESS_KEY_ID = config('ATTACHMENTS_AWS_ACCESS_KEY_ID', default=None)
+ATTACHMENTS_AWS_SECRET_ACCESS_KEY = config('ATTACHMENTS_AWS_SECRET_ACCESS_KEY', default=None)
+ATTACHMENTS_AWS_STORAGE_BUCKET_NAME = config('ATTACHMENTS_AWS_STORAGE_BUCKET_NAME', default='mdn-attachments')
+
+ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN = config('ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN', default=None)  # For example, Cloudfront CDN domain
+ATTACHMENTS_AWS_S3_SECURE_URLS = config('ATTACHMENTS_AWS_S3_SECURE_URLS', default=True, cast=bool)  # Does the custom domain use TLS
+
+ATTACHMENTS_AWS_S3_REGION_NAME = config('ATTACHMENTS_AWS_S3_REGION_NAME', default='us-east-1')
+ATTACHMENTS_AWS_S3_ENDPOINT_URL = config('ATTACHMENTS_AWS_S3_ENDPOINT_URL', default=None)
+
+# Silence warnings about defaults that change in django-storages 2.0
+AWS_BUCKET_ACL = None
+AWS_DEFAULT_ACL = None
 
 # When we potentially have multiple CDN distributions that do different
 # things.

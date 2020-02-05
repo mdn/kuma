@@ -57,7 +57,7 @@
   <!-- basic favicon -->
   <link rel="shortcut icon" href="{{ favicon_url() }}">
 
-  {% if waffle.flag('developer_needs') %}
+  {% if waffle.switch('developer_needs') %}
     {% stylesheet 'banners' %}
   {% endif %}
 
@@ -94,9 +94,18 @@
   {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(),
                   document_data)|safe }}
 
+  {% block auth_modal %}
+    {% if settings.MULTI_AUTH_ENABLED %}
+      {% include "includes/auth-modal.html" %}
+    {% endif %}
+  {% endblock %}
+
   <!-- site js -->
   {% javascript 'react-main' %}
-  {% if waffle.flag('bc-signals') %}
+  {% if settings.MULTI_AUTH_ENABLED %}
+    {% javascript 'auth-modal' %}
+  {% endif %}
+  {% if settings.ENABLE_BCD_SIGNAL %}
     {% javascript "bcd-signal" %}
   {% endif %}
 </body>

@@ -1,6 +1,7 @@
 
 
 import pytest
+from django.conf import settings
 from waffle.models import Flag, Sample, Switch
 from waffle.testutils import override_flag
 
@@ -76,7 +77,7 @@ def test_doc_api_404(client, root_doc):
     assert_no_cache_header(response)
 
 
-def test_doc_api(client, trans_doc, cleared_cacheback_cache):
+def test_doc_api(client, trans_doc):
     """On success we get document details in a JSON response."""
     url = reverse('api.v1.doc', args=[trans_doc.locale, trans_doc.slug])
     response = client.get(url)
@@ -111,8 +112,7 @@ def test_doc_api(client, trans_doc, cleared_cacheback_cache):
     assert doc_data['lastModified'] == '2017-04-14T12:20:00'
 
 
-def test_doc_api_for_redirect_to_doc(client, root_doc, redirect_doc,
-                                     cleared_cacheback_cache):
+def test_doc_api_for_redirect_to_doc(client, root_doc, redirect_doc):
     """
     Test the document API when we're requesting data for a document that
     redirects to another document.
@@ -308,6 +308,19 @@ def test_search_validation_problems(user_client):
     response = user_client.get(url, {'q': 'x', 'locale': 'xxx'})
     assert response.status_code == 400
     assert response.json()['error'] == 'Not a valid locale code'
+
+    # 'q' present but contains new line
+    response = user_client.get(url, {'q': r'test\nsomething'})
+    assert response.status_code == 400
+    assert response.json()['q'] == ["Search term must not contain new line"]
+
+    # 'q' present but exceeds max allowed characters
+    response = user_client.get(url, {'q': 'x' * (settings.ES_Q_MAXLENGTH + 1)})
+    assert response.status_code == 400
+    assert (
+        response.json()['q'] ==
+        [f"Ensure this field has no more than {settings.ES_Q_MAXLENGTH} characters."]
+    )
 
 
 class SearchViewTests(ElasticTestCase):

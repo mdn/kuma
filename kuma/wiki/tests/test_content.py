@@ -879,6 +879,30 @@ def test_annotate_links_nonexisting_doc(db, anchor, full_url, has_class):
     assert normalize_html(actual_raw) == normalize_html(expected_raw)
 
 
+def test_dont_annotate_links_with_trailing_slashes(db, root_doc):
+    """
+    Links like this: <a href="/en-US/docs/Root/">Root</a>
+    should NOT become this: <a class="new" href="/en-US/docs/Root/">Root</a>
+    """
+    # Sanity check our fixture
+    assert Document.objects.filter(locale='en-US', slug='Root').exists()
+    html = """
+        <ul>
+        <li><a href="/en-US/docs/Root/">Root</a></li>
+        <li><a href="/en-US/docs/Hopeless/">Hopeless</a></li>
+        </ul>
+    """
+    actual_raw = parse(html).annotateLinks(base_url=AL_BASE_URL).serialize()
+    expected_raw = """
+        <ul>
+        <li><a href="/en-US/docs/Root/">Root</a></li>
+        <li><a class="new" rel="nofollow"
+        href="/en-US/docs/Hopeless/">Hopeless</a></li>
+        </ul>
+    """
+    assert normalize_html(actual_raw) == normalize_html(expected_raw)
+
+
 def test_annotate_links_uilocale_to_existing_doc(root_doc):
     """Links to existing docs with embeded locales are unmodified."""
     assert root_doc.get_absolute_url() == '/en-US/docs/Root'
@@ -1382,6 +1406,12 @@ def test_multiple_seo_summaries(markup, expected_markup, text, wrapper):
     content = wrapper.format(markup)
     assert get_seo_description(content, 'en-US') == text
     assert normalize_html(get_seo_description(content, 'en-US', False)) == normalize_html(expected_markup)
+
+
+def test_empty_seo_summary():
+    content = '<p><span class="seoSummary"></span></p>'
+    assert get_seo_description(content, 'en-US', strip_markup=True) == ''
+    assert get_seo_description(content, 'en-US', strip_markup=False) == ''
 
 
 def test_empty_paragraph_content():

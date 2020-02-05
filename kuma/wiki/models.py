@@ -841,11 +841,10 @@ class Document(NotificationsMixin, models.Model):
         # Accept optional field edits...
 
         new_title = data.get('title', False)
-        new_rev.title = new_title and new_title or self.title
+        new_rev.title = new_title or self.title
 
         new_tags = data.get('tags', False)
-        new_rev.tags = (new_tags and new_tags or
-                        edit_string_for_tags(self.tags.all()))
+        new_rev.tags = new_tags or edit_string_for_tags(self.tags.all())
 
         new_review_tags = data.get('review_tags', False)
         if new_review_tags:

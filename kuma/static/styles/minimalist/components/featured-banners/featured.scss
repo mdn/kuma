@@ -1,0 +1,124 @@
+@import '../../../includes/_vars.scss';
+@import '../../../includes/_mixins.scss';
+@import '../../vars/_vars-color-palette.scss';
+
+/*
+Featured callout
+-------------------------------------------------------------- */
+
+.callout-featured {
+    box-sizing: border-box;
+    background: #fff url('../../../../img/embed/promos/grid-tools-bg.svg') 0
+        100% no-repeat;
+    background-size: contain;
+    border: 1px solid $light-border-color;
+
+    a {
+        position: relative;
+        color: $text-color;
+        padding: $gutter-width / 2;
+        min-height: 225px;
+
+        @supports (display: flex) {
+            display: flex;
+            flex-flow: column;
+            justify-content: space-between;
+        }
+
+        &:before {
+            position: absolute;
+            top: 20%;
+            left: 5%;
+            content: '';
+            display: inline-block;
+            background: transparent
+                url('../../../../img/embed/promos/inactive-css.png') 0 0
+                no-repeat;
+            background-size: 330px 118px;
+            width: 330px;
+            height: 118px;
+            vertical-align: middle;
+
+            @media #{$mq-tablet-and-up} {
+                display: none;
+            }
+
+            @media #{$mq-small-desktop-and-up} {
+                left: 15%;
+                display: inline-block;
+                background-size: 280px 100px;
+                width: 280px;
+                height: 100px;
+            }
+
+            @media #{$mq-large-desktop-and-up} {
+                top: 25%;
+                left: 10%;
+                background-size: 330px 118px;
+                width: 330px;
+                height: 118px;
+            }
+        }
+
+        &:hover,
+        &:visited,
+        &:focus,
+        &:active {
+            text-decoration: none;
+            box-shadow: $featured-banner-hover-shadow;
+        }
+    }
+
+    .main-copy {
+        margin-left: 5px;
+        margin-bottom: 12px;
+        @include set-font-size(1.2rem);
+        font-family: zillaslab;
+        line-height: 1.2;
+
+        &:before {
+            content: '';
+            display: inline-block;
+            background: transparent
+                url('../../../../img/embed/promos/devedition-logo.png') 0 0
+                no-repeat;
+            background-size: 40px;
+            /* prettier-ignore */
+            @include bidi(((margin-right, 5px, margin-left, 5px),));
+            width: 40px;
+            height: 42px;
+            vertical-align: middle;
+
+            @media #{$mq-large-desktop-and-up} {
+                background-size: 50px;
+                width: 50px;
+                height: 52px;
+            }
+        }
+
+        @media #{$mq-tablet-and-up} {
+            @include set-font-size(1.7rem);
+        }
+    }
+
+    .callout-subtext {
+        display: block;
+        margin-top: 12px;
+        font-weight: normal;
+    }
+
+    button {
+        background-color: $brand-primary;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 6px;
+        min-width: 170px;
+        text-align: unset;
+        line-height: 1.2;
+
+        @supports (display: flex) {
+            align-self: flex-end;
+        }
+    }
+}

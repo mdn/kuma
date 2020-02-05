@@ -32,6 +32,7 @@ VERSION=latest make build-kuma
 
 docker-compose --version
 docker-compose up -d
+
 # Hang tight until MySQL appears to be working
 docker-compose exec -T web urlwait mysql://root:kuma@mysql:3306/developer_mozilla_org 30
 # Hang tight until Elasticsearch appears to be working

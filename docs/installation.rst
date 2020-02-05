@@ -181,7 +181,7 @@ A few thousand lines will be printed, like::
 
 Visit the homepage
 ==================
-Open the homepage at http://localhost:8000 . You've installed Kuma!
+Open the homepage at http://localhost.org:8000 . You've installed Kuma!
 
 Create an admin user
 ====================
@@ -204,44 +204,74 @@ management command. Replace ``YOUR_USERNAME`` with your username and
     --password YOUR_PASSWORD
 
 With a password-enabled admin account, you can log into Django admin at
-http://localhost:8000/admin/login/
+http://localhost.org:8000/admin/login
 
 .. _enable-github-auth:
 
-Enable GitHub authentication (optional)
+Update the Sites section
 =======================================
+#. After logging in to the Django admin (an alternative is using the login ``test-super`` 
+   with password ``test-password``), scroll down to the Sites section. 
+
+#. Click on "Change". 
+
+#. Click on the entry that says ``localhost:8000``. 
+
+#. Change both the domain and display name from ``localhost:8000`` to ``localhost.org:8000``. 
+
+#. Click "Save".
+
+
+
+Enable GitHub/Google authentication (optional)
+=======================================
+Since Google's OAuth requires us to use a valid top-level-domain, we're going to use
+http://localhost.org:8000 as an example for every URL here.
+
+To automate setting Django up for social auth you can run
+``docker-compose exec web ./manage.py configure_social_auth`` and follow its steps (and
+ignore the rest of this section).
+
+If you want to do it manually, follow these steps:
+
 To enable GitHub authentication, you'll need to
 `register an OAuth application on GitHub`_, with settings like:
 
 * Application name: MDN Development for (<username>).
-* Homepage URL: http://localhost:8000/.
+* Homepage URL: http://localhost.org:8000/.
 * Application description: My own GitHub app for MDN!
-* Authorization callback URL: http://localhost:8000/users/github/login/callback/.
+* Authorization callback URL: http://localhost.org:8000/users/github/login/callback/.
 
-To automate setting Django up for Github auth you can run
-``docker-compose exec web ./manage.py configure_github_social`` and follow its steps.
+To enable Google authentication, you'll need to first `create an API project on Google`_.
+After that we'll need to `configure credentials for that project`_ with settings like:
 
-If you want to do it manually, as an admin user, `add a django-allauth social app`_ for GitHub:
+* Name: MDN Development for (<username>).
+* Authorized JavaScript origins: http://localhost.org:8000
+* Authorized redirect URIs: http://localhost.org:8000/users/google/login/callback/
 
-* Provider: GitHub.
+As an admin user, `add a django-allauth social app`_ for both GitHub and Google do the
+following:
+
+* Provider: GitHub/Google.
 * Name: MDN Development.
-* Client id: <*your GitHub App Client ID*>.
-* Secret key: <*your GitHub App Client Secret*>.
+* Client id: <*your Client ID*>.
+* Secret key: <*your Client Secret*>.
 * Sites: Move ``locahost:8000`` from "Available sites" to "Chosen sites".
 
 ``locahost:8000`` needs to either have ID 1 or ``SITE_ID=1`` has to be set in ``.env``
-to its actual ID. You'll also need to set ``DOMAIN=mdn.localhost`` there.
+to its actual ID. You'll also need to set ``DOMAIN=localhost.org`` (no port!) there.
 
 Your hosts file should contain the following lines::
 
-    127.0.0.1 localhost demos mdn.localhost beta.mdn.localhost wiki.mdn.localhost
-    ::1             mdn.localhost beta.mdn.localhost wiki.mdn.localhost
+    127.0.0.1       localhost demos localhost.org wiki.localhost.org
+    255.255.255.255 broadcasthost
+    ::1             localhost demos localhost.org wiki.localhost.org
 
 Now you can sign in with GitHub.
 
 To associate your password-only admin account with GitHub:
 
-#. Login with your password at http://localhost:8000/admin/login/.
+#. Login with your password at http://localhost.org:8000/admin/login.
 #. Go to the Homepage at https://developer.mozilla.org/en-US/.
 #. Click your username at the top to view your profile.
 #. Click Edit to edit your profile.
@@ -260,7 +290,9 @@ Django shell::
     >>> exit()
 
 .. _register an OAuth application on GitHub: https://github.com/settings/applications/new
-.. _add a django-allauth social app: http://localhost:8000/admin/socialaccount/socialapp/add/
+.. _create an API project on Google: https://console.developers.google.com/projectcreate
+.. _configure credentials for that project: https://console.developers.google.com/apis/credentials
+.. _add a django-allauth social app: http://localhost.org:8000/admin/socialaccount/socialapp/add/
 .. _`Use your GitHub account to sign in`: https://developer.mozilla.org/users/github/login/?process=connect
 
 Interact with the Docker containers
@@ -289,6 +321,12 @@ To continuously view logs from all containers::
 To stop the containers::
 
     docker-compose stop
+
+If you have made changes to the ``.env`` or ``/etc/hosts`` file, it's a good idea to run::
+
+    docker-compose stop
+    docker-compose up
+
 
 For further information, see the Docker documentation, such as the
 `Docker Overview`_ and the documentation for your operating system.

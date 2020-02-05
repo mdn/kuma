@@ -4,12 +4,12 @@
 
 {% block body_attributes %}id="home"{% endblock %}
 
+
 {% block site_css %}
   {{ super() }}
+  {% include "landing/includes/style.html" %}
 
-  {% stylesheet 'home' %}
-
-  {% if waffle.flag('developer_needs') %}
+  {% if waffle.switch('developer_needs') %}
     {% stylesheet 'banners' %}
   {% endif %}
 {% endblock %}
@@ -72,7 +72,7 @@
     {%- if settings.FOUNDATION_CALLOUT %}
       {% include "landing/includes/callouts/foundation.html" %}
     {% else %}
-      {% include "landing/includes/callouts/grid-tools.html" %}
+      {% include "landing/includes/callouts/featured.html" %}
     {% endif %}
     {% if settings.NEWSLETTER %}
     <div class="column-callout callout-newsletter">

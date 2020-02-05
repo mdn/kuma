@@ -13,18 +13,24 @@ from django.http import Http404
 from django.test import RequestFactory
 from pyquery import PyQuery as pq
 from pytz import timezone, utc
+from requests.exceptions import ProxyError, SSLError
 from waffle.models import Flag
 
+from kuma.attachments.models import Attachment, AttachmentRevision
+from kuma.authkeys.models import Key
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html
 from kuma.spam.akismet import Akismet
 from kuma.spam.constants import SPAM_SUBMISSIONS_FLAG, SPAM_URL, VERIFY_URL
-from kuma.wiki.models import (Document, DocumentDeletionLog, Revision,
-                              RevisionAkismetSubmission)
+from kuma.wiki.models import (
+    Document,
+    DocumentDeletionLog,
+    DocumentSpamAttempt,
+    Revision,
+    RevisionAkismetSubmission)
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 from kuma.wiki.tests import document as create_document
-
 
 from . import SampleRevisionsMixin, SocialTestMixin, user, UserTestCase
 from ..models import User, UserBan
@@ -1130,6 +1136,20 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         doc = pq(resp.content)
         assert 'Account Sign In Failure' in doc.find('h1').text()
 
+    def test_login_SSLError_on_getting_profile(self):
+        resp = self.github_login(profile_exc=SSLError)
+        # No redirect!
+        assert resp.status_code == 200
+        doc = pq(resp.content)
+        assert 'Account Sign In Failure' in doc.find('h1').text()
+
+    def test_login_ProxyError_on_getting_email_addresses(self):
+        resp = self.github_login(email_exc=ProxyError)
+        # No redirect!
+        assert resp.status_code == 200
+        doc = pq(resp.content)
+        assert 'Account Sign In Failure' in doc.find('h1').text()
+
     def test_matching_user(self):
         self.github_login()
         response = self.client.get(self.signup_url)
@@ -1295,26 +1315,251 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         assert refresh_token == social_token.token_secret
 
 
-def test_missing_user_is_missing(db, client):
-    assert not User.objects.filter(username='missing').exists()
+def test_delete_user_login_always_required(db, client):
+    # Anonymous client gets redirected to sign in page.
     url = reverse('users.user_delete', kwargs={'username': 'missing'})
-    response = client.get(url)
+    response = client.get(url, HTTP_HOST=settings.WIKI_HOST)
+    assert response.status_code == 302
+    assert reverse('account_login') in response['Location']
+
+
+def test_delete_user_not_allowed(db, user_client, wiki_user_2):
+    # A username that doesn't exist.
+    url = reverse('users.user_delete', kwargs={'username': 'missing'})
+    response = user_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 404
-    assert_no_cache_header(response)
+
+    # Attempting to delete someone else.
+    url = reverse('users.user_delete', kwargs={'username': wiki_user_2.username})
+    response = user_client.get(url, HTTP_HOST=settings.WIKI_HOST)
+    assert response.status_code == 403
 
 
-@pytest.mark.parametrize('user_case', ['wrong_user', 'right_user'])
-def test_user_can_delete(wiki_user, wiki_user_2, user_client, user_case):
-    if user_case == 'wrong_user':
-        user = wiki_user_2
-        expected_status = 403
-    else:
-        user = wiki_user
-        expected_status = 200
-    url = reverse('users.user_delete', kwargs={'username': user.username})
-    response = user_client.get(url)
-    assert response.status_code == expected_status
-    assert_no_cache_header(response)
+def test_delete_user_with_no_revisions(db, user_client, wiki_user):
+    # sanity check fixtures
+    assert not Revision.objects.filter(creator=wiki_user).exists()
+    assert not AttachmentRevision.objects.filter(creator=wiki_user).exists()
+    url = reverse('users.user_delete', kwargs={'username': wiki_user.username})
+    response = user_client.get(url, HTTP_HOST=settings.WIKI_HOST)
+    assert response.status_code == 200
+    response = user_client.post(url, HTTP_HOST=settings.WIKI_HOST)
+    assert response.status_code == 302
+    assert not User.objects.filter(username=wiki_user.username).exists()
+
+
+def test_delete_user_no_revisions_misc_related(db, user_client, wiki_user):
+    Key.objects.create(user=wiki_user)
+    revision_akismet_submission = RevisionAkismetSubmission.objects.create(
+        sender=wiki_user,
+        type='spam'
+    )
+    document_deletion_log = DocumentDeletionLog.objects.create(
+        locale='any',
+        slug='Any/Thing',
+        user=wiki_user,
+        reason='...'
+    )
+    document_spam_attempt_user = DocumentSpamAttempt.objects.create(
+        user=wiki_user,
+    )
+    throwaway_user = User.objects.create(username='throwaway')
+    document_spam_attempt_reviewer = DocumentSpamAttempt.objects.create(
+        user=throwaway_user,
+        reviewer=wiki_user,
+    )
+    user_ban_by = UserBan.objects.create(
+        user=throwaway_user,
+        by=wiki_user
+    )
+    user_ban_user = UserBan.objects.create(
+        user=wiki_user,
+        by=throwaway_user,
+        is_active=False,  # otherwise it logs the user out
+    )
+
+    url = reverse('users.user_delete', kwargs={'username': wiki_user.username})
+    response = user_client.post(url, HTTP_HOST=settings.WIKI_HOST)
+    assert response.status_code == 302
+    assert not User.objects.filter(username=wiki_user.username).exists()
+
+    # These are plainly deleted
+    assert not Key.objects.all().exists()
+
+    # Moved to anonymous user
+    revision_akismet_submission.refresh_from_db()
+    assert revision_akismet_submission.sender.username == 'Anonymous'
+    document_deletion_log.refresh_from_db()
+    assert document_deletion_log.user.username == 'Anonymous'
+    document_spam_attempt_user.refresh_from_db()
+    assert document_spam_attempt_user.user.username == 'Anonymous'
+    document_spam_attempt_reviewer.refresh_from_db()
+    assert document_spam_attempt_reviewer.reviewer.username == 'Anonymous'
+    user_ban_by.refresh_from_db()
+    assert user_ban_by.by.username == 'Anonymous'
+    user_ban_user.refresh_from_db()
+    assert user_ban_user.user.username == 'Anonymous'
+
+
+def test_delete_user_donate_attributions(
+    db,
+    user_client,
+    wiki_user,
+    wiki_user_github_account,
+    root_doc
+):
+    revision = root_doc.revisions.first()
+    # Sanity check the fixture
+    assert revision.creator == wiki_user
+
+    RevisionAkismetSubmission.objects.create(sender=wiki_user)
+
+    attachment_revision = AttachmentRevision(
+        attachment=Attachment.objects.create(title='test attachment'),
+        file='some/path.ext',
+        mime_type='application/kuma',
+        creator=wiki_user,
+        title='test attachment',
+    )
+    attachment_revision.save()
+    assert AttachmentRevision.objects.filter(creator=wiki_user).exists()
+
+    url = reverse('users.user_delete', kwargs={'username': wiki_user.username})
+    response = user_client.post(url, {'attributions': 'donate'}, HTTP_HOST=settings.WIKI_HOST)
+    assert response.status_code == 302
+    assert not User.objects.filter(username=wiki_user.username).exists()
+    with pytest.raises(SocialAccount.DoesNotExist):
+        wiki_user_github_account.refresh_from_db()
+
+    revision.refresh_from_db()
+    assert revision.creator.username == 'Anonymous'
+
+    attachment_revision.refresh_from_db()
+    assert attachment_revision.creator.username == 'Anonymous'
+
+    # The user_client should now become "invalid" since its session
+    # is going to point to no user.
+    response = user_client.get(url, HTTP_HOST=settings.WIKI_HOST)
+    assert response.status_code == 302
+    assert reverse('account_login') in response['Location']
+    # Let's doublecheck that
+    whoami_url = reverse('api.v1.whoami')
+    response = user_client.get(whoami_url)
+    assert response.status_code == 200
+    assert not response.json()['username']
+    assert not response.json()['is_authenticated']
+
+
+def test_delete_user_keep_attributions(
+    db,
+    user_client,
+    wiki_user,
+    wiki_user_github_account,
+    root_doc
+):
+    # Also, pretend that the user has a rich profile
+    User.objects.filter(id=wiki_user.id).update(
+        first_name='Peter',
+        last_name='B',
+        timezone='Ocean',
+        locale='sv-SE',
+        homepage='https://www.peterbe.com',
+        title='Web Dev',
+        fullname='Peter B',
+        organization='Mozilla',
+        location='Earth',
+        bio='Doing stuff',
+        irc_nickname='pb',
+        website_url='https://www.peterbe.com',
+        github_url='github/peterbe',
+        mozillians_url='mozillians/peterbe',
+        twitter_url='twitter/peterbe',
+        linkedin_url='linkedin/peterbe',
+        facebook_url='facebook/peterbe',
+        stackoverflow_url='stackoverflow/peterbe',
+        discourse_url='discourse/peterbe',
+        stripe_customer_id='123456',
+    )
+
+    revision = root_doc.revisions.first()
+    # Sanity check the fixture
+    assert revision.creator == wiki_user
+
+    attachment_revision = AttachmentRevision(
+        attachment=Attachment.objects.create(title='test attachment'),
+        file='some/path.ext',
+        mime_type='application/kuma',
+        creator=wiki_user,
+        title='test attachment',
+    )
+    attachment_revision.save()
+    assert AttachmentRevision.objects.filter(creator=wiki_user).exists()
+
+    # Create some social logins
+    assert SocialAccount.objects.filter(user=wiki_user).exists()
+
+    # Create a RevisionAkismetSubmission
+    RevisionAkismetSubmission.objects.create(
+        revision=revision,
+        sender=wiki_user,
+        type='ham')
+
+    # Create an authentication key
+    Key.objects.create(user=wiki_user)
+
+    url = reverse('users.user_delete', kwargs={'username': wiki_user.username})
+    response = user_client.post(url, {'attributions': 'keep'}, HTTP_HOST=settings.WIKI_HOST)
+    assert response.status_code == 302
+    # Should still exist
+    assert User.objects.filter(username=wiki_user.username).exists()
+    with pytest.raises(SocialAccount.DoesNotExist):
+        wiki_user_github_account.refresh_from_db()
+
+    # Should still be associated with the user
+    revision.refresh_from_db()
+    assert revision.creator.username == wiki_user.username
+    attachment_revision.refresh_from_db()
+    assert attachment_revision.creator.username == wiki_user.username
+
+    # But the account should be clean, apart from the username.
+    wiki_user.refresh_from_db()
+    assert wiki_user.email == ''
+    assert wiki_user.first_name == ''
+    assert wiki_user.last_name == ''
+    assert wiki_user.timezone == ''
+    assert wiki_user.locale == ''
+    assert wiki_user.homepage == ''
+    assert wiki_user.title == ''
+    assert wiki_user.fullname == ''
+    assert wiki_user.organization == ''
+    assert wiki_user.location == ''
+    assert wiki_user.bio == ''
+    assert wiki_user.irc_nickname == ''
+    assert wiki_user.website_url == ''
+    assert wiki_user.github_url == ''
+    assert wiki_user.mozillians_url == ''
+    assert wiki_user.twitter_url == ''
+    assert wiki_user.linkedin_url == ''
+    assert wiki_user.facebook_url == ''
+    assert wiki_user.stackoverflow_url == ''
+    assert wiki_user.discourse_url == ''
+    assert wiki_user.stripe_customer_id == ''
+
+    assert not SocialAccount.objects.filter(user=wiki_user).exists()
+
+    # The user_client should now become "invalid" since its session
+    # is going to point to no user.
+    response = user_client.get(url, HTTP_HOST=settings.WIKI_HOST)
+    assert response.status_code == 302
+    assert reverse('account_login') in response['Location']
+    # Let's doublecheck that
+    whoami_url = reverse('api.v1.whoami')
+    response = user_client.get(whoami_url)
+    assert response.status_code == 200
+    assert not response.json()['username']
+    assert not response.json()['is_authenticated']
+
+    # There should be no Key left
+    assert not Key.objects.all().exists()
 
 
 @pytest.mark.parametrize(
@@ -1357,3 +1602,24 @@ def test_invalid_uid_fails(wiki_user, client):
     assert response.status_code == 200
     assert_no_cache_header(response)
     assert b'This link is no longer valid.' in response.content
+
+
+def test_signin_landing(db, client, settings):
+    settings.MULTI_AUTH_ENABLED = True
+    response = client.get(reverse('socialaccount_signin'))
+    github_login_url = '/users/github/login/'
+    google_login_url = '/users/google/login/'
+    # first, make sure that the page loads
+    assert response.status_code == 200
+    doc = pq(response.content)
+    # ensure that both auth buttons are present
+    assert doc('.auth-button-container a').length == 2
+    # ensure each button links to the appropriate endpoint
+    assert doc('.github-auth').attr.href == github_login_url
+    assert doc('.google-auth').attr.href == google_login_url
+
+
+def test_signin_landing_multi_auth_disabled(db, client):
+    settings.MULTI_AUTH_ENABLED = False
+    response = client.get(reverse('socialaccount_signin'))
+    assert response.status_code == 404

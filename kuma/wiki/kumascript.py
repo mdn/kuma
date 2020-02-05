@@ -90,7 +90,8 @@ def post(request, content, locale=settings.LANGUAGE_CODE):
 # be renamed to render_document(), and the post() method above should
 # be renamed to render_string(), maybe. For now, though, there are so
 # many tests that mock kumascript.get() that I've left the name unchanged.
-def get(document, base_url, cache_control=None, timeout=None):
+def get(document, base_url, cache_control=None, timeout=None,
+        selective_mode=None):
     """Request a rendered version of document.html from KumaScript."""
 
     if not base_url:
@@ -111,6 +112,7 @@ def get(document, base_url, cache_control=None, timeout=None):
         tags=list(document.tags.names()),
         review_tags=list(document.current_revision.review_tags.names()),
         modified=time.mktime(document.modified.timetuple()),
+        selective_mode=selective_mode,
     )
 
     return _post(document.html, env_vars, cache_control, timeout)

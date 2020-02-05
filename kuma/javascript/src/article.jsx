@@ -17,6 +17,36 @@ type DocumentProps = {
     document: DocumentData
 };
 
+function TranslationStatus({
+    document: { translationStatus, translateURL }
+}: DocumentProps) {
+    let content;
+
+    if (translationStatus === 'in-progress') {
+        content = gettext('This translation is in progress.');
+    } else if (translationStatus === 'outdated') {
+        content = (
+            <>
+                {gettext('This translation is incomplete.')}
+                &nbsp;
+                <a href={translateURL} rel="nofollow">
+                    {gettext('Please help translate this article from English')}
+                </a>
+            </>
+        );
+    }
+
+    if (translationStatus == null || !content) {
+        return null;
+    }
+
+    return (
+        <p className="overheadIndicator translationInProgress">
+            <bdi>{content}</bdi>
+        </p>
+    );
+}
+
 export default function Article({ document }: DocumentProps) {
     const article = useRef(null);
     const userData = useContext(UserProvider.context);
@@ -65,7 +95,7 @@ export default function Article({ document }: DocumentProps) {
         let rootElement = article.current;
         if (rootElement) {
             // The reasons it might NOT exist is because perhaps it's not
-            // loaded because a waffle flag tells it not to.
+            // loaded because a setting tells it not to.
             if (window.activateBCDSignals) {
                 try {
                     window.activateBCDSignals(document.slug, document.locale);
@@ -81,6 +111,28 @@ export default function Article({ document }: DocumentProps) {
             }
         }
     }, [document, userData, ga]);
+
+    /** Any link inside the article that matches `a.new` means it's a
+     * wiki page that hasn't yet been created. Clicking on it will
+     * 404, if you're on the read-only site. If you're viewing HTML
+     * like that on the Wiki and click it, it will take you to the
+     * form to *create* the page. Disable all of that here in the read-only
+     * site.
+     */
+    useEffect(() => {
+        let rootElement = article.current;
+        if (rootElement) {
+            for (let link of rootElement.querySelectorAll('a.new')) {
+                // Makes it not be clickable and no "pointer" cursor when
+                // hovering. Better than clicking on it and being
+                // disappointed.
+                link.removeAttribute('href');
+                if (!link.title) {
+                    link.title = gettext('Page has not yet been created.');
+                }
+            }
+        }
+    }, [document]);
 
     const isArchive =
         document.slug === 'Archive' || document.slug.startsWith('Archive/');
@@ -112,21 +164,7 @@ export default function Article({ document }: DocumentProps) {
                     : 'article text-content'
             }
         >
-            {document.locale !== locale && (
-                <div className="warning">
-                    <p>
-                        <bdi>
-                            {gettext(
-                                'You’re reading the English version of this content since no translation exists yet for this locale.'
-                            )}
-                            &nbsp;
-                            <a href={document.translateURL} rel="nofollow">
-                                {gettext('Help us translate this article!')}
-                            </a>
-                        </bdi>
-                    </p>
-                </div>
-            )}
+            <TranslationStatus document={document} />
             <article
                 id="wikiArticle"
                 dangerouslySetInnerHTML={{ __html: document.bodyHTML }}

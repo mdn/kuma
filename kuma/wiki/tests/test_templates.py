@@ -1081,7 +1081,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         assert response['X-Robots-Tag'] == 'noindex'
         assert_no_cache_header(response)
         doc = pq(response.content)
-        assert doc('#id_content').text() == rev_es.content
+        assert doc('#id_content').text().strip() == rev_es.content
         assert (doc('article.approved .translate-rendered').text() ==
                 rev_enUS.content)
 
@@ -1184,7 +1184,7 @@ class TranslateTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         document = Document.objects.filter(locale='es')[0]
         existing_rev = document.revisions.all()[0]
-        assert doc('#id_content').text() == existing_rev.content
+        assert doc('#id_content').text().strip() == existing_rev.content
 
 
 def _test_form_maintains_based_on_rev(client, doc, view, post_data,

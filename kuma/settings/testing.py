@@ -32,9 +32,6 @@ LOGGING['loggers'].update({
     },
 })
 
-# Use the local memory cache in tests, so that test cacheback jobs
-# will expire at the end of the test.
-CACHEBACK_CACHE_ALIAS = 'default'
 
 # Change the cache key prefix for tests, to avoid overwriting runtime.
 for cache_settings in CACHES.values():
@@ -78,3 +75,16 @@ MDN_CLOUDFRONT_DISTRIBUTIONS = {}
 
 # Never rely on the .env
 GOOGLE_ANALYTICS_ACCOUNT = None
+
+# Silence warnings about defaults that change in django-storages 2.0
+AWS_BUCKET_ACL = None
+AWS_DEFAULT_ACL = None
+
+# Use a dedicated minio bucket for tests
+ATTACHMENTS_AWS_STORAGE_BUCKET_NAME = 'test'
+
+# Never enabled in tests.
+SENTRY_DSN = None
+
+# Because that's what all the tests presume.
+SITE_ID = 1

@@ -458,8 +458,6 @@ Special snowflakes
 .readOnly {
     border-color: #4b4b4b;
     background: #595959;
-    @extend %indicator-text-invert;
-    @extend %indicator-link-invert;
 }
 
 /* heading that goes in with geckoVersionNote */

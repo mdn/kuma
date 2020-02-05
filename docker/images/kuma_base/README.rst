@@ -7,7 +7,7 @@ installing the kuma source and building assets needed for production.
 The image can be recreated locally with ``make build-base``.
 
 The image tagged ``latest`` is used by default for development. It can be
-created localled with ``make build-base VERSION=latest``. The official
+created locally with ``make build-base VERSION=latest``. The official
 latest image is created from the master branch in Jenkins__ and published to
 DockerHub__
 

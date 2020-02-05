@@ -48,8 +48,8 @@ Development
 
                 https://developer.mozilla.org/ (prod)
 
-.. _`P1 Bugs`: https://mzl.la/2BGZy44
-.. _`P2 Bugs`: https://mzl.la/2oniZa3
+.. _`P1 Bugs`: https://github.com/mdn/kuma/issues?q=is%3Aopen+is%3Aissue+label%3Ap1
+.. _`P2 Bugs`: https://github.com/mdn/kuma/issues?q=is%3Aopen+is%3Aissue+label%3Ap2
 .. _`All developer.mozilla.org bugs`: https://mzl.la/2onLvZ8
 .. _`Pull Request Queues`: http://prs.mozilla.io/mdn:kuma,kumascript,infra,mdn-fiori
 .. _`What's Deployed on MDN?`: https://whatsdeployed.io/s/HC0/mdn/kuma

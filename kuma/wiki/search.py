@@ -76,7 +76,7 @@ class WikiDocumentType(document.Document):
             'summary': obj.get_summary_text(),
             'locale': obj.locale,
             'modified': obj.modified,
-            'content': strip_tags(obj.rendered_html or ''),
+            'content': strip_tags(obj.get_body_html() or ''),
             'tags': [o.name for o in obj.tags.all()],
             'kumascript_macros': cls.case_insensitive_keywords(
                 obj.extract.macro_names()),

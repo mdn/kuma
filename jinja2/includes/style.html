@@ -1,2 +1,5 @@
 {% stylesheet 'react-header' %}
+{% if settings.MULTI_AUTH_ENABLED %}
+    {% stylesheet 'auth-modal' %}
+{% endif %}
 {% stylesheet 'react-mdn' %}

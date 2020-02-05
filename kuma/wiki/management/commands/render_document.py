@@ -35,6 +35,9 @@ class Command(BaseCommand):
             help='Render ALL documents (rather than by path)',
             action='store_true')
         parser.add_argument(
+            '--slugsearch',
+            help='Matches exclusive slugs. E.g. Web/CSS/* (only with --all)')
+        parser.add_argument(
             '--locale',
             help='Publish ALL documents in this locale (rather than by path)')
         parser.add_argument(
@@ -88,6 +91,14 @@ class Command(BaseCommand):
                 docs = docs.filter(locale=options['locale'])
             if options['not_locale']:
                 docs = docs.exclude(locale=options['not_locale'])
+            if options['slugsearch']:
+                if options['slugsearch'].endswith('*'):
+                    docs = docs.exclude(
+                        slug__startswith=options['slugsearch'].rstrip('*'))
+                elif '*' in options['slugsearch']:
+                    raise NotImplementedError('* can only be on the end')
+                else:
+                    docs = docs.exclude(slug__contains=options['slugsearch'])
             docs = docs.order_by('-modified')
             docs = docs.values_list('id', flat=True)
 
@@ -114,7 +125,7 @@ class Command(BaseCommand):
                 if head == 'docs':
                     slug = tail
                 doc = Document.objects.get(locale=locale, slug=slug)
-                log.info('Rendering %s (%s)' % (doc, doc.get_absolute_url()))
+                log.info(f'Rendering {doc} ({doc.get_absolute_url()})')
                 try:
                     render_document(
                         doc.pk, cache_control, base_url, force,

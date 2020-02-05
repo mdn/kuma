@@ -8,11 +8,12 @@
 
 {% block bodyclass %}user user-delete{% endblock %}
 
-{% set title=_("Delete your profile") %}
+{% set title=_("Delete your account") %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 
 {% block site_css %}
   {{ super() }}
+  {% stylesheet 'user-delete' %}
 {% endblock %}
 
 {% block site_js %}
@@ -23,51 +24,25 @@
 
     <h1>{{ title }}</h1>
 
-    <div class="text-content readable-line-length">
+    <div class="text-content readable-line-length" id="user-delete">
 
         <p>{{ _('We\'re sorry to see you go.') }}</p>
 
         <p>
-          {% trans %}
-          While it's possible delete your account, we can't delete any revisions
-          (page changes) you've made, and our content license requires that your
-          revisions have an attribution.
-          {% endtrans %}
-        </p>
-        <p>
-          {% trans %}
-          Please file a bug to request closing your account, and ensure one of
-          these options is in the the description field:
+          {% trans count=revisions.count() %}
+          You have made {{ count }} wiki revisions.
           {% endtrans %}
         </p>
 
-        <form action="https://bugzilla.mozilla.org/enter_bug.cgi">
-            {% set encoded_username = delete_user.username | urlencode %}
-            <input type="hidden" name="short_desc" value="Please delete my MDN account. My username is {{encoded_username}}">
-            <input type="hidden" name="bug_severity" value="normal">
-            <input type="hidden" name="bug_status" value="NEW">
-            <input type="hidden" name="component" value="User management">
-            <input type="hidden" name="form_name" value="enter_bug">
-            <input type="hidden" name="product" value="developer.mozilla.org">
-            <input type="hidden" name="format" value="__standard__">
-            <input type="hidden" name="status_whiteboard" value="[account-mod]">
+        <form action="" method="post">
+          {% csrf_token %}
 
-            <div class="form-group">
-                <input id="delete" name="comment" type="radio" value="I haven't changed any pages; just delete my account.">
-                <label for="delete">{{ _('I haven\'t changed any pages; just delete my account.') }}</label>
-            </div>
+          {# If the user no revisions, there's nothing to ask. #}
+          {% if revisions.exists() %}
+          {{ form }}
+          {% endif %}
 
-            <div class="form-group">
-                <input id="disable" name="comment" type="radio" value="Keep my attribution for my page changes; delete my email address and freeze my account so I can't ever log in again.">
-                <label for="disable">{{ _('Keep my attribution for my page changes; delete my email address and freeze my account so I can\'t ever log in again.') }}</label>
-            </div>
-
-            <div class="form-group">
-                <input id="anonymous" name="comment" type="radio" value="Switch all my attributions for page changes to 'Anonymous', and delete my account.">
-                <label for="anonymous">{{ _('Switch all my attributions for page changes to "Anonymous", and delete my account.') }}</label>
-            </div>
-
-            <button type="submit" class="button positive">{{ _('File a bug to close your account') }}</button>
+          <button type="submit" class="button positive">{{ _('Delete my account') }}</button>
         </form>
     </div>
 

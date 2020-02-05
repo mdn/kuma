@@ -12,41 +12,23 @@ The tests directory comprises of:
 
 .. _`pytest`: http://pytest.org/latest/
 
-Setting up test virtual environment
-===================================
+Setting up test environment
+===========================
 
 #. In the terminal go to the directory where you have downloaded kuma.
 
-#. Create a virtual environment for the tests to run in (the example uses the
-   name mdntests)::
-
-   $ virtualenv mdntests
-
-#. Activate the virtual environment::
-
-   $ source mdntests/bin/activate
-
-#. Make sure the version of pip in the virtual environment is high enough to support hashes::
-
-   $ pip install "pip>=8"
-
 #. Install the requirements the tests need to run::
 
-   $ pip install -r requirements/test.txt
-
-You may want to add your virtual environment folder to your local .gitignore
-file.
+   $ poetry install
 
 Running the tests
 =================
 
 The minimum amount of information necessary to run the tests against the staging
 server is the directory the tests are in. Currently, all of the tests should run
-successfully against the staging server.
+successfully against the staging server.::
 
-In the virtual environment run::
-
-   $ pytest tests
+   $ poetry run pytest tests
 
 This basic command can be modified to run the tests against a local environment,
 or to run tests concurrently.
@@ -56,7 +38,7 @@ Only running tests in one file
 
 Add the name of the file to the test location::
 
-   $ pytest tests/headless/test_cdn.py
+   $ poetry run pytest tests/headless/test_cdn.py
 
 Run the tests against a different url
 -------------------------------------
@@ -65,7 +47,7 @@ By default the tests will run against the staging server. If you'd like to run
 the tests against a different URL (e.g., your local environment) pass the
 desired URL to the command with ``--base-url``::
 
-   $ pytest tests --base-url http://mdn.localhost:8000
+   $ poetry run pytest tests --base-url http://mdn.localhost:8000
 
 Run the tests in parallel
 -------------------------
@@ -73,7 +55,7 @@ Run the tests in parallel
 By default the tests will run one after the other but you can run several at
 the same time by specifying a value for ``-n``::
 
-   $ pytest tests -n auto
+   $ poetry run pytest tests -n auto
 
 Using Alternate Environments
 ============================

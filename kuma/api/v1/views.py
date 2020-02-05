@@ -9,7 +9,6 @@ from rest_framework import serializers, status
 from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
-from waffle.decorators import waffle_flag
 from waffle.models import Flag, Sample, Switch
 
 from kuma.api.v1.serializers import BCSignalSerializer
@@ -140,6 +139,10 @@ def document_api_data(doc=None, redirect_url=None):
         {doc.locale} | set(t.locale for t in other_translations))
 
     doc_absolute_url = doc.get_absolute_url()
+    revision = doc.current_or_latest_revision()
+    translation_status = None
+    if doc.parent_id and revision and revision.localization_in_progress:
+        translation_status = 'outdated' if revision.translation_age >= 10 else 'in-progress'
     return {
         'documentData': {
             'locale': doc.locale,
@@ -164,6 +167,7 @@ def document_api_data(doc=None, redirect_url=None):
                 if doc.is_localizable else
                 None
             ),
+            'translationStatus': translation_status,
             'bodyHTML': doc.get_body_html(),
             'quickLinksHTML': doc.get_quick_links_html(),
             'tocHTML': doc.get_toc_html(),
@@ -293,9 +297,11 @@ search = never_cache(APISearchView.as_view())
 
 
 @ratelimit(key='user_or_ip', rate='10/d', block=True)
-@waffle_flag('bc-signals')
 @api_view(['POST'])
 def bc_signal(request):
+    if not settings.ENABLE_BCD_SIGNAL:
+        return Response("not enabled", status=status.HTTP_400_BAD_REQUEST)
+
     serializer = BCSignalSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()

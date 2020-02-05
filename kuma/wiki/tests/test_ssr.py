@@ -99,7 +99,8 @@ def test_client_side_render(mock_get_l10n_data, mock_dumps):
 
 @pytest.mark.parametrize('failure_class', [
     requests.exceptions.ConnectionError,
-    requests.exceptions.ReadTimeout])
+    requests.exceptions.ReadTimeout,
+    requests.exceptions.HTTPError])
 @mock.patch('json.dumps')
 @mock.patch('kuma.wiki.templatetags.ssr.get_localization_data')
 def test_failed_server_side_render(mock_get_l10n_data,
@@ -109,7 +110,7 @@ def test_failed_server_side_render(mock_get_l10n_data,
     localization_data = {'catalog': {'s': 't'}, 'plural': None}
     mock_get_l10n_data.side_effect = lambda l: localization_data
     mock_dumps.side_effect = sorted_json_dumps
-    url = '{}/{}'.format(settings.SSR_URL, 'page')
+    url = f'{settings.SSR_URL}/page'
     mock_requests.post(url, exc=failure_class('message'))
     document_data = {'x': 'one', 'y': 2, 'z': ['a', 'b']}
     path = '/en-US/docs/foo'

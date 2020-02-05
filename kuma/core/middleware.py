@@ -9,7 +9,6 @@ from django.http import (HttpResponseForbidden,
 from django.urls import get_script_prefix, resolve, Resolver404
 from django.utils.encoding import smart_str
 from waffle.middleware import WaffleMiddleware
-from whitenoise.middleware import WhiteNoiseMiddleware
 
 from kuma.wiki.views.legacy import (mindtouch_to_kuma_redirect,
                                     mindtouch_to_kuma_url)
@@ -334,17 +333,6 @@ class RestrictedEndpointsMiddleware(MiddlewareBase):
         if is_untrusted(request):
             request.urlconf = 'kuma.urls_untrusted'
         return self.get_response(request)
-
-
-class RestrictedWhiteNoiseMiddleware(WhiteNoiseMiddleware):
-    """Restricts the use of WhiteNoiseMiddleware based on the host."""
-
-    def process_request(self, request):
-        if settings.ENABLE_RESTRICTIONS_BY_HOST and is_untrusted(request):
-            return None
-        return super(RestrictedWhiteNoiseMiddleware, self).process_request(
-            request
-        )
 
 
 class WaffleWithCookieDomainMiddleware(WaffleMiddleware):
