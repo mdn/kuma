@@ -553,8 +553,11 @@ category = "main"
 description = "Web APIs for Django, made easy."
 name = "djangorestframework"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "3.9.4"
+python-versions = ">=3.5"
+version = "3.11.0"
+
+[package.dependencies]
+django = ">=1.11"
 
 [[package]]
 category = "main"
@@ -1299,7 +1302,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "f8f800ecd842fe09b82626469d872881a75f9b137d9a96008dbba79e183d712e"
+content-hash = "05edea92a72bc6c4c623f507d69967e91e561d0b105f6b44cdeaad37e2332e38"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1528,8 +1531,8 @@ django-waffle = [
     {file = "django_waffle-0.19.0-py2.py3-none-any.whl", hash = "sha256:24e24d21df1f6710c1e6654786da414ad461371d73828a60ee42561b537ceb95"},
 ]
 djangorestframework = [
-    {file = "djangorestframework-3.9.4-py2.py3-none-any.whl", hash = "sha256:376f4b50340a46c15ae15ddd0c853085f4e66058f97e4dbe7d43ed62f5e60651"},
-    {file = "djangorestframework-3.9.4.tar.gz", hash = "sha256:c12869cfd83c33d579b17b3cb28a2ae7322a53c3ce85580c2a2ebe4e3f56c4fb"},
+    {file = "djangorestframework-3.11.0-py3-none-any.whl", hash = "sha256:05809fc66e1c997fd9a32ea5730d9f4ba28b109b9da71fccfa5ff241201fd0a4"},
+    {file = "djangorestframework-3.11.0.tar.gz", hash = "sha256:e782087823c47a26826ee5b6fa0c542968219263fb3976ec3c31edab23a4001f"},
 ]
 docutils = [
     {file = "docutils-0.15.2-py2-none-any.whl", hash = "sha256:9e4d7ecfc600058e07ba661411a2b7de2fd0fafa17d1a7f7361cd47b1175c827"},
