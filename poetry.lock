@@ -1063,7 +1063,7 @@ description = "Strict separation of settings from code."
 name = "python-decouple"
 optional = false
 python-versions = "*"
-version = "3.1"
+version = "3.3"
 
 [[package]]
 category = "main"
@@ -1302,7 +1302,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "05edea92a72bc6c4c623f507d69967e91e561d0b105f6b44cdeaad37e2332e38"
+content-hash = "7abb35f5c5a664a090171ddf9500609418359c174de13d179950c03c3e3ac2c8"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1804,7 +1804,7 @@ python-dateutil = [
     {file = "python_dateutil-2.8.1-py2.py3-none-any.whl", hash = "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"},
 ]
 python-decouple = [
-    {file = "python-decouple-3.1.tar.gz", hash = "sha256:1317df14b43efee4337a4aa02914bf004f010cd56d6c4bd894e6474ec8c4fe2d"},
+    {file = "python-decouple-3.3.tar.gz", hash = "sha256:55c546b85b0c47a15a47a4312d451a437f7344a9be3e001660bccd93b637de95"},
 ]
 python-magic = [
     {file = "python-magic-0.4.15.tar.gz", hash = "sha256:f3765c0f582d2dfc72c15f3b5a82aecfae9498bd29ca840d72f37d7bd38bfcd5"},
