@@ -719,17 +719,22 @@ class SignupView(BaseSignupView):
             return response
         return super(SignupView, self).dispatch(request, *args, **kwargs)
 
+    def get(self, request, *args, **kwargs):
+        """This exists so we can squeeze in a tracking event exclusively
+        about viewing the profile creation page. If we did it to all
+        dispatch() it would trigger on things like submitting form, which
+        might trigger repeatedly if the form submission has validation
+        errors that the user has to address.
+        """
+        if request.session.get('sociallogin_provider'):
+            track_event(
+                CATEGORY_SIGNUP_FLOW,
+                ACTION_PROFILE_AUDIT,
+                request.session['sociallogin_provider'])
+        return super().get(request, *args, **kwargs)
 
-signup_as_view = SignupView.as_view()
-@redirect_in_maintenance_mode
-def signup(request, *args, **kwargs):
-    """Wrapper function just so we can trigger a track_event() call"""
-    if request.session.get('sociallogin_provider'):
-        track_event(
-            CATEGORY_SIGNUP_FLOW,
-            ACTION_PROFILE_AUDIT,
-            request.session['sociallogin_provider'])
-    return signup_as_view(request, *args, **kwargs)
+
+signup = redirect_in_maintenance_mode(SignupView.as_view())
 
 
 @require_POST

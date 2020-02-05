@@ -259,6 +259,10 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
                 ACTION_SOCIAL_AUTH_ADD,
                 f'{sociallogin.account.provider}-added'
             )
+            # This is to help the 'users.user_signed_up' signal, which will
+            # later kick in, to remember that we've already sent a tracking
+            # event about the the "social auth add".
+            request.social_auth_added = True
         else:
             user = super().save_user(request, sociallogin, form)
 
