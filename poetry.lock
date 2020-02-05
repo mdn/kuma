@@ -850,8 +850,8 @@ category = "main"
 description = "New Relic Python Agent"
 name = "newrelic"
 optional = false
-python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*"
-version = "4.20.1.121"
+python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*"
+version = "5.6.0.135"
 
 [[package]]
 category = "main"
@@ -1311,7 +1311,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "ae924a2b1f20bd3888f3f2362b2786cf8250d6e4040089994ef1488658ef84c4"
+content-hash = "989bd7186d0310e6e31992847b7530391153ae0192e2c666bd49ae24d5d1d062"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1716,7 +1716,7 @@ mysqlclient = [
     {file = "mysqlclient-1.4.6.tar.gz", hash = "sha256:f3fdaa9a38752a3b214a6fe79d7cae3653731a53e577821f9187e67cbecb2e16"},
 ]
 newrelic = [
-    {file = "newrelic-4.20.1.121.tar.gz", hash = "sha256:708ac6a75c76a59e3d6c0d714e2fbb1e4ec7d540f7d34bddd81e61bdb636e895"},
+    {file = "newrelic-5.6.0.135.tar.gz", hash = "sha256:8283dd54299b3fd2818a262f38f9193a2ee52b2a02fecca1a1d04764be533c92"},
 ]
 oauth2client = [
     {file = "oauth2client-4.1.3-py2.py3-none-any.whl", hash = "sha256:b8a81cc5d60e2d364f0b1b98f958dbd472887acaf1a5b05e21c28c31a2d6d3ac"},
