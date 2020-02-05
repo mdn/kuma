@@ -463,9 +463,11 @@ div.bc-signal-block {
             transition: border-color .1s;
         }
 
-        &:hover {
+        &:hover:not(.selected) {
             .browser-logo {
                 border-color: #3d7e9a;
+                outline: 3px $blue solid;
+                outline-offset: -3px;
             }
         }
 
