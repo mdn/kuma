@@ -24,7 +24,7 @@ from ..models import User, UserBan
 
 class SignupTests(UserTestCase, SocialTestMixin):
     profile_create_strings = (
-        'Create your MDN profile',
+        'Create your MDN account',
         'choose a username',
         'Having trouble',
         'I agree',
@@ -53,7 +53,7 @@ class SignupTests(UserTestCase, SocialTestMixin):
         # re-enable registration
         with override_switch('registration_disabled', False):
             response = self.github_login()
-        test_strings = ['Create your MDN profile',
+        test_strings = ['Create your MDN account',
                         'choose a username',
                         'Having trouble']
         for test_string in test_strings:
