@@ -13,7 +13,7 @@ from waffle import switch_is_active
 from kuma.core.ga_tracking import (
     ACTION_AUTH_SUCCESSFUL,
     ACTION_FREE_NEWSLETTER,
-    ACTION_PROFILE_ALREADY_CREATED,
+    ACTION_RETURNING_USER_SIGNIN,
     ACTION_PROFILE_CREATED,
     CATEGORY_SIGNUP_FLOW,
     track_event)
@@ -77,7 +77,7 @@ def on_user_logged_in(sender, request, user, **kwargs):
     if sociallogin and not getattr(request, 'signed_up', False):
         track_event(
             CATEGORY_SIGNUP_FLOW,
-            ACTION_PROFILE_ALREADY_CREATED,
+            ACTION_RETURNING_USER_SIGNIN,
             sociallogin.account.provider)
 
 

@@ -23,7 +23,7 @@ from kuma.core.ga_tracking import (
     ACTION_AUTH_STARTED,
     ACTION_AUTH_SUCCESSFUL,
     ACTION_FREE_NEWSLETTER,
-    ACTION_PROFILE_ALREADY_CREATED,
+    ACTION_RETURNING_USER_SIGNIN,
     ACTION_PROFILE_AUDIT,
     ACTION_PROFILE_CREATED,
     CATEGORY_SIGNUP_FLOW)
@@ -1348,7 +1348,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                         'github'),
                     mock.call(
                         CATEGORY_SIGNUP_FLOW,
-                        ACTION_PROFILE_ALREADY_CREATED,
+                        ACTION_RETURNING_USER_SIGNIN,
                         'github'),
                 ])
                 track_event_mock_github.assert_called_with(

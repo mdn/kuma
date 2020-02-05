@@ -39,7 +39,7 @@ ACTION_AUTH_STARTED = 'auth-started'
 # When redirected back from auth provider and it worked.
 ACTION_AUTH_SUCCESSFUL = 'auth-successful'
 # When we don't need to ask the user to create a profile.
-ACTION_PROFILE_ALREADY_CREATED = 'profile-already-created'
+ACTION_RETURNING_USER_SIGNIN = 'returning-user-signin'
 # Presented with the "Create Profile" form.
 ACTION_PROFILE_AUDIT = 'profile-audit'
 # Have completed the profile creation form.
