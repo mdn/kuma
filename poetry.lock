@@ -1007,18 +1007,6 @@ pytest = ">=2.9"
 
 [[package]]
 category = "dev"
-description = "pytest plugin for generating HTML reports"
-name = "pytest-html"
-optional = false
-python-versions = "*"
-version = "1.22.1"
-
-[package.dependencies]
-pytest = ">=3.0"
-pytest-metadata = "*"
-
-[[package]]
-category = "dev"
 description = "pytest plugin for test session metadata"
 name = "pytest-metadata"
 optional = false
@@ -1311,7 +1299,7 @@ python-versions = "*"
 version = "3.3.1"
 
 [metadata]
-content-hash = "989bd7186d0310e6e31992847b7530391153ae0192e2c666bd49ae24d5d1d062"
+content-hash = "f8f800ecd842fe09b82626469d872881a75f9b137d9a96008dbba79e183d712e"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1795,10 +1783,6 @@ pytest-cov = [
 pytest-django = [
     {file = "pytest-django-3.1.2.tar.gz", hash = "sha256:038ccc5a9daa1b1b0eb739ab7dce54e495811eca5ea3af4815a2a3ac45152309"},
     {file = "pytest_django-3.1.2-py2.py3-none-any.whl", hash = "sha256:00995c2999b884a38ae9cd30a8c00ed32b3d38c1041250ea84caf18085589662"},
-]
-pytest-html = [
-    {file = "pytest-html-1.22.1.tar.gz", hash = "sha256:f0fae6de71f02f62f9460f628d0c5f70b0cdc86bb393239860c7dec70fd2973d"},
-    {file = "pytest_html-1.22.1-py2.py3-none-any.whl", hash = "sha256:06e7e13131649b4fe522cf04054efb7b4749ff2c7160755e4acfd8e89a7e5955"},
 ]
 pytest-metadata = [
     {file = "pytest-metadata-1.8.0.tar.gz", hash = "sha256:2071a59285de40d7541fde1eb9f1ddea1c9db165882df82781367471238b66ba"},

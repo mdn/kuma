@@ -102,7 +102,6 @@ werkzeug = "^0.16.1" # Enables runserver_plus from django-extensions
 # From test.txt
 braceexpand = "^0.1.5"
 pytest-base-url = "^1.4.1"
-pytest-html = "^1.22.1"
 pytest-metadata = "^1.8.0"
 pytest-rerunfailures = "^4.2"
 pytest-variables = "^1.9.0"
