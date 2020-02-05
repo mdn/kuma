@@ -403,6 +403,8 @@ def user_edit(request, username):
         ('expertise', 'profile:expertise:')
     )
 
+    revisions = Revision.objects.filter(creator=edit_user)
+
     if request.method != 'POST':
         initial = {
             'beta': edit_user.is_beta_tester,
@@ -450,7 +452,10 @@ def user_edit(request, username):
     context = {
         'edit_user': edit_user,
         'user_form': user_form,
+        'username': user_form['username'].value(),
+        'form': UserDeleteForm(),
         'INTEREST_SUGGESTIONS': INTEREST_SUGGESTIONS,
+        'revisions': revisions,
     }
     return render(request, 'users/user_edit.html', context)
 
@@ -542,6 +547,7 @@ def user_delete(request, username):
         form = UserDeleteForm()
 
     context['form'] = form
+    context['username'] = username
     context['revisions'] = revisions
 
     return render(request, 'users/user_delete.html', context)

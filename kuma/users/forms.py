@@ -208,14 +208,12 @@ class UserDeleteForm(forms.Form):
     ATTRIBUTIONS_CHOICES = (
         (
             ATTRIBUTIONS_KEEP, _(
-                'Keep my attribution for my page changes; delete my email '
-                'address and freeze my account so I can\'t ever log in again.'
+                'Keep my attribution for my page changes'
             )
         ),
         (
             ATTRIBUTIONS_DONATE, _(
-                'Switch all my attributions for page changes to "Anonymous", '
-                'and delete my account.'
+                'Switch my attribution for my page changes to "Anonymous"'
             )
         ),
     )

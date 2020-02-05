@@ -1,0 +1,42 @@
+.delete-user {
+    @include card();
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 550px;
+
+    header {
+        text-align: center;
+    }
+
+    p {
+        padding: 0;
+        text-align: left;
+    }
+
+    form {
+        text-align: right;
+
+        .simple-text {
+            margin-right: 10px;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-align: left;
+
+            li {
+                margin-bottom: 12px;
+
+                &:last-child {
+                    margin-bottom: 24px;
+                }
+            }
+        }
+    }
+}
+
+.hidden {
+    display: none;
+}

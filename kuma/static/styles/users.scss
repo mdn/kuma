@@ -28,6 +28,10 @@ Profile edit
 @import 'components/_tagit.scss';
 @import 'components/users/_user-edit.scss';
 
+@import 'minimalist/components/user-settings/layout.scss';
+@import 'minimalist/vars/vars-color-palette.scss';
+@import 'minimalist/atoms/buttons.scss';
+
 /*
 Manage Payments
 ====================================================================== */
