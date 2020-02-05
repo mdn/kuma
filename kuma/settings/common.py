@@ -18,13 +18,6 @@ def path(*parts):
     return os.path.join(BASE_DIR, *parts)
 
 
-class TupleCsv(Csv):
-
-    def __call__(self, value):
-        split_values = super(TupleCsv, self).__call__(value)
-        return tuple((value, value) for value in split_values)
-
-
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # BASE_DIR used by django-extensions, such as ./manage.py notes
