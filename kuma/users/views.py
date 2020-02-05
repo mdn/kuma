@@ -578,9 +578,12 @@ class SignupView(BaseSignupView):
             email = form.initial.get('email', '')
             if isinstance(email, tuple):
                 email = email[0]
-            suggested_username = email.split('@')[0]
-            if not User.objects.filter(username__iexact=suggested_username).exists():
-                form.initial['username'] = suggested_username
+            suggested_username = suggested_username_base = email.split('@')[0]
+            increment = 1
+            while User.objects.filter(username__iexact=suggested_username).exists():
+                increment += 1
+                suggested_username = f'{suggested_username_base}{increment}'
+            form.initial['username'] = suggested_username
 
         self.matching_user = None
         initial_username = form.initial.get('username', None)

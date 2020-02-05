@@ -4,6 +4,7 @@ import requests_mock
 from allauth.socialaccount.models import SocialApp
 from allauth.socialaccount.providers import registry
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from django.contrib.auth import get_user_model
 from django.utils.crypto import get_random_string
 
@@ -13,6 +14,7 @@ from kuma.wiki.tests import document as create_document
 from kuma.wiki.tests import revision as create_revision
 
 from ..providers.github.provider import KumaGitHubProvider
+from ..providers.google.provider import KumaGoogleProvider
 
 
 class UserTestMixin(object):
@@ -124,6 +126,22 @@ class SocialTestMixin(object):
         }
     ]
 
+    google_token_data = {
+        'uid': 2,
+        'access_token': 'google_token',
+    }
+    # These fields come from the google provider unit tests in django-allauth
+    google_profile_data = {
+        'family_name': 'Page',
+        'name': 'Sergey',
+        'picture': 'https://lh5.googleusercontent.com/photo.jpg',
+        'locale': 'le',
+        'email': 'example@gmail.com',
+        'given_name': 'Ser',
+        'id': '108204268033311374519',
+        'verified_email': True,
+    }
+
     def github_login(
             self, token_data=None, profile_data=None, email_data=None,
             process='login',
@@ -210,3 +228,75 @@ class SocialTestMixin(object):
         provider = registry.by_id(KumaGitHubProvider.id)
         app = SocialApp.objects.get(provider=provider.id)
         return app
+
+    def google_login(
+            self,
+            token_data=None, profile_data=None, email_data=None,
+            process='login',
+            token_status_code=200,
+            profile_status_code=200,
+            email_status_code=200,
+            token_exc=None,
+            profile_exc=None,
+            email_exc=None):
+        """
+        Mock a login to Google and return the response.
+
+        Keyword Arguments:
+        token_data - OAuth token data, or None for default
+        profile_data - Google profile data, or None for default
+        email_data - Google email data, or None for default
+        process - 'login', 'connect', or 'redirect'
+        token_status_code - HTTP code for posting token (default 200)
+        profile_status_code - HTTP code for getting profile (default 200)
+        email_status_code - HTTP code for getting email addresses (default 200)
+        """
+        login_url = reverse('google_login')
+        callback_url = reverse('google_callback')
+        self.ensure_google_app()
+
+        # Start the login process
+        # Store state in the session, and redirect the user to Google
+        login_response = self.client.get(login_url, {'process': process})
+        assert login_response.status_code == 302
+        location = urlparse(login_response['location'])
+        query = parse_qs(location.query)
+        assert callback_url in query['redirect_uri'][0]
+        state = query['state'][0]
+
+        # Callback from Google, mock follow-on Google responses
+        with requests_mock.Mocker() as mock_requests:
+            # The callback view will make requests back to Google:
+            # The OAuth2 authentication token (or error)
+            if token_exc:
+                mock_requests.post(
+                    GoogleOAuth2Adapter.access_token_url,
+                    exc=token_exc)
+            else:
+                mock_requests.post(
+                    GoogleOAuth2Adapter.access_token_url,
+                    json=token_data or self.google_token_data,
+                    headers={'content-type': 'application/json'},
+                    status_code=token_status_code)
+
+            # The authenticated user's profile data
+            if profile_exc:
+                mock_requests.get(
+                    GoogleOAuth2Adapter.profile_url,
+                    exc=profile_exc)
+            else:
+                mock_requests.get(
+                    GoogleOAuth2Adapter.profile_url,
+                    json=profile_data or self.google_profile_data,
+                    status_code=profile_status_code)
+
+            # Simulate the callback from Google
+            data = {'code': 'google_code', 'state': state}
+            response = self.client.get(callback_url, data, follow=True)
+
+        return response
+
+    def ensure_google_app(self):
+        """Ensure a Google SocialApp is installed, configured."""
+        provider = registry.by_id(KumaGoogleProvider.id)
+        return SocialApp.objects.get(provider=provider.id)
