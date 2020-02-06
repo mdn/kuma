@@ -1,3 +1,5 @@
+from unittest import mock
+
 import pytest
 from allauth.account.models import EmailAddress
 from allauth.exceptions import ImmediateHttpResponse
@@ -7,6 +9,9 @@ from django.contrib import messages as django_messages
 from django.contrib.auth.models import AnonymousUser
 from django.test import RequestFactory
 
+from kuma.core.ga_tracking import (
+    ACTION_SOCIAL_AUTH_ADD,
+    CATEGORY_SIGNUP_FLOW)
 from kuma.core.urlresolvers import reverse
 from kuma.users.adapters import KumaAccountAdapter, KumaSocialAccountAdapter
 from kuma.users.models import User, UserBan
@@ -395,3 +400,90 @@ def test_user_reuse_on_social_login(wiki_user, client, rf, case, provider):
                          .filter(user=wiki_user,
                                  provider='persona')
                          .exists()) == (case != 'match')
+
+
+@pytest.fixture
+def mock_track_event():
+    mock1 = mock.patch('kuma.users.adapters.track_event')
+    mock2 = mock.patch('kuma.users.signal_handlers.track_event')
+    with mock1 as func, mock2:
+        yield func
+
+
+def test_ga_tracking_reuse_social_login(settings, client, wiki_user, rf, mock_track_event):
+    """Specifically triggering the GA tracking when it reuses a social login.
+
+    This test is a condensed and not commented version of
+    test_user_reuse_on_social_login() above but with the specific case of
+    a user with a verified Google account this time logged in using GitHub.
+
+    The most important thing is to test that the track_event() function is
+    called.
+    """
+    provider = 'github'
+    # When this is set, track_event() will do things.
+    settings.GOOGLE_ANALYTICS_ACCOUNT = 'UA-XXXX-1'
+    # This unhides potential errors that should otherwise be swallowed
+    # in regular production use.
+    settings.GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS = True
+
+    wiki_user_social_account = (
+        SocialAccount.objects.filter(user=wiki_user, provider=provider))
+    assert not wiki_user_social_account.exists()
+    wiki_user.set_password('qwerty')
+    wiki_user.save()
+
+    # social_email_address = wiki_user.email
+    user_email_verified = True
+    primary_social_email = {
+        'email': wiki_user.email,
+        'primary': True,
+        'verified': user_email_verified,
+        'visibility': 'public'
+    }
+    extra_social_email = {
+        'email': 'user@junk.com',
+        'primary': False,
+        'verified': False,
+        'visibility': None
+    }
+    social_emails = [primary_social_email, extra_social_email]
+
+    social_login = SocialLogin(
+        user=User(username='new_user'),
+        account=SocialAccount(
+            uid=1234567,
+            provider='github',
+            extra_data={
+                'email': None,
+                'login': 'new_user',
+                'name': 'Paul McCartney',
+                'avatar_url': 'https://yada/yada',
+                'html_url': 'https://github.com/new_user',
+                'email_addresses': social_emails
+            }
+        ),
+        email_addresses=[EmailAddress(
+            email=a['email'],
+            verified=a['verified'],
+            primary=a['primary']
+        ) for a in social_emails]
+    )
+    EmailAddress.objects.create(
+        user=wiki_user,
+        email=wiki_user.email,
+        verified=user_email_verified
+    )
+    request = rf.get(f'/users/{provider}/login')
+    request.user = AnonymousUser()
+    request.session = client.session
+
+    response = complete_social_login(request, social_login)
+    assert response.status_code == 302
+    assert response.url == '/en-US/'
+
+    mock_track_event.assert_called_with(
+        CATEGORY_SIGNUP_FLOW,
+        ACTION_SOCIAL_AUTH_ADD,
+        'github-added'
+    )

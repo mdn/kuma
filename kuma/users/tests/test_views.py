@@ -1,3 +1,4 @@
+from datetime import timedelta
 from textwrap import dedent
 from unittest import mock
 
@@ -18,6 +19,14 @@ from waffle.models import Flag
 
 from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.authkeys.models import Key
+from kuma.core.ga_tracking import (
+    ACTION_AUTH_STARTED,
+    ACTION_AUTH_SUCCESSFUL,
+    ACTION_FREE_NEWSLETTER,
+    ACTION_PROFILE_AUDIT,
+    ACTION_PROFILE_CREATED,
+    ACTION_RETURNING_USER_SIGNIN,
+    CATEGORY_SIGNUP_FLOW)
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html
@@ -1278,6 +1287,100 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
 
     def test_signup_private_github(self):
         self.test_signup_public_github(is_public=False)
+
+    def test_signup_github_event_tracking(self):
+        """Tests that kuma.core.ga_tracking.track_event is called when you
+        sign up with GitHub for the first time."""
+        with self.settings(
+            GOOGLE_ANALYTICS_ACCOUNT='UA-XXXX-1',
+            GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS=True
+        ):
+            p1 = mock.patch('kuma.users.signal_handlers.track_event')
+            p2 = mock.patch('kuma.users.views.track_event')
+            p3 = mock.patch('kuma.users.providers.github.views.track_event')
+            with p1 as track_event_mock_signals, p2 as track_event_mock_views, p3 as track_event_mock_github:
+
+                self.github_login()
+
+                data = {'website': '',
+                        'username': 'octocat',
+                        'email': 'octo.cat@github-inc.com',
+                        'terms': True,
+                        'is_github_url_public': True}
+                response = self.client.post(self.signup_url, data=data)
+                assert response.status_code == 302
+                assert User.objects.get(username='octocat')
+
+                track_event_mock_signals.assert_has_calls([
+                    mock.call(
+                        CATEGORY_SIGNUP_FLOW,
+                        ACTION_AUTH_SUCCESSFUL,
+                        'github'),
+                    mock.call(
+                        CATEGORY_SIGNUP_FLOW,
+                        ACTION_PROFILE_CREATED,
+                        'github'),
+                    mock.call(
+                        CATEGORY_SIGNUP_FLOW,
+                        ACTION_FREE_NEWSLETTER,
+                        'opt-out'),
+                ])
+                track_event_mock_github.assert_called_with(
+                    CATEGORY_SIGNUP_FLOW,
+                    ACTION_AUTH_STARTED,
+                    'github')
+
+                track_event_mock_views.assert_called_with(
+                    CATEGORY_SIGNUP_FLOW,
+                    ACTION_PROFILE_AUDIT,
+                    'github')
+
+    def test_signin_github_event_tracking(self):
+        """Tests that kuma.core.ga_tracking.track_event is called when you
+        sign in with GitHub a consecutive time."""
+        # First sign up.
+        self.github_login()
+        data = {'website': '',
+                'username': 'octocat',
+                'email': 'octo.cat@github-inc.com',
+                'terms': True,
+                'is_github_url_public': True}
+        response = self.client.post(self.signup_url, data=data)
+        assert response.status_code == 302
+        user = User.objects.get(username='octocat')
+
+        # Pretend that some time goes by
+        user.date_joined -= timedelta(minutes=1)
+        user.save()
+
+        # Now, this time sign in.
+        with self.settings(
+            GOOGLE_ANALYTICS_ACCOUNT='UA-XXXX-1',
+            GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS=True
+        ):
+            # This syntax looks a bit weird but it's just to avoid having
+            # to write all mock patches on one super long line in the
+            # 'with' statement.
+            p1 = mock.patch('kuma.users.signal_handlers.track_event')
+            p2 = mock.patch('kuma.users.providers.github.views.track_event')
+            with p1 as track_event_mock_signals, p2 as track_event_mock_github:
+                response = self.github_login(follow=False)
+                assert response.status_code == 302
+
+                track_event_mock_signals.assert_has_calls([
+                    mock.call(
+                        CATEGORY_SIGNUP_FLOW,
+                        ACTION_AUTH_SUCCESSFUL,
+                        'github'),
+                    mock.call(
+                        CATEGORY_SIGNUP_FLOW,
+                        ACTION_RETURNING_USER_SIGNIN,
+                        'github'),
+                ])
+                track_event_mock_github.assert_called_with(
+                    CATEGORY_SIGNUP_FLOW,
+                    ACTION_AUTH_STARTED,
+                    'github')
 
     def test_account_tokens(self):
         testemail = 'account_token@acme.com'
