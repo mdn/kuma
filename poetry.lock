@@ -46,10 +46,10 @@ description = "The AWS SDK for Python"
 name = "boto3"
 optional = false
 python-versions = "*"
-version = "1.11.10"
+version = "1.11.11"
 
 [package.dependencies]
-botocore = ">=1.14.10,<1.15.0"
+botocore = ">=1.14.11,<1.15.0"
 jmespath = ">=0.7.1,<1.0.0"
 s3transfer = ">=0.3.0,<0.4.0"
 
@@ -59,7 +59,7 @@ description = "Low-level, data-driven core of boto 3."
 name = "botocore"
 optional = false
 python-versions = "*"
-version = "1.14.10"
+version = "1.14.11"
 
 [package.dependencies]
 docutils = ">=0.10,<0.16"
@@ -1155,11 +1155,15 @@ description = "Mock out responses from the requests package"
 name = "requests-mock"
 optional = false
 python-versions = "*"
-version = "0.7.0"
+version = "1.7.0"
 
 [package.dependencies]
-requests = ">=1.1"
+requests = ">=2.3,<3"
 six = "*"
+
+[package.extras]
+fixture = ["fixtures"]
+test = ["fixtures", "mock", "purl", "pytest", "sphinx", "testrepository (>=0.0.18)", "testtools"]
 
 [[package]]
 category = "main"
@@ -1305,7 +1309,7 @@ version = "5.0.1"
 brotli = ["brotli"]
 
 [metadata]
-content-hash = "aa97292a45f2fdf4cf54e50a623fa9ca37b6dcccd9b959e44d6f42a3977eee42"
+content-hash = "1a029065408ed38d13ec9ab25d873062df1e81926126c42ba8d358645a0550eb"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1326,12 +1330,12 @@ bleach = [
     {file = "bleach-3.1.0.tar.gz", hash = "sha256:3fdf7f77adcf649c9911387df51254b813185e32b2c6619f690b593a617e19fa"},
 ]
 boto3 = [
-    {file = "boto3-1.11.10-py2.py3-none-any.whl", hash = "sha256:27e221d3868f35687807e5c920f7e8d4872f722f64196a7fd274a06ad65beec0"},
-    {file = "boto3-1.11.10.tar.gz", hash = "sha256:8ff4e3d9e5d6a26dd7494afc68dc96afe6b7bda88130cca84cd58702d888ed27"},
+    {file = "boto3-1.11.11-py2.py3-none-any.whl", hash = "sha256:25e6af364243673bacfe4bd422582f4a891e02ae433e266b03de6a6bfdd63d51"},
+    {file = "boto3-1.11.11.tar.gz", hash = "sha256:4ba878e6ea38d3821b571e29018e00f8a9ddab2678dd59433b1ecda331cf9aa6"},
 ]
 botocore = [
-    {file = "botocore-1.14.10-py2.py3-none-any.whl", hash = "sha256:cf3144994191847e30ef76781af867009bdc233b3f1f4736615e5330687a891e"},
-    {file = "botocore-1.14.10.tar.gz", hash = "sha256:f11ff8616f46ca04697df031e622c9ed50931b9d649d4e719f961e9d80771e8d"},
+    {file = "botocore-1.14.11-py2.py3-none-any.whl", hash = "sha256:ac783a87bd90be8a4d08101bfc0d29a4b35fe0ced387f5c8bc91d01cdaa7a168"},
+    {file = "botocore-1.14.11.tar.gz", hash = "sha256:5ad6f4b80f3151fc5aa940f89fb6bf2db3064bf8d3f8919f5b60f5c741054ba5"},
 ]
 braceexpand = [
     {file = "braceexpand-0.1.5-py2.py3-none-any.whl", hash = "sha256:ae6b7de1e88d3132177bd6cbda8b22487ea645b25c4ca5b1cf948b326ac27e34"},
@@ -1841,8 +1845,8 @@ requests = [
     {file = "requests-2.22.0.tar.gz", hash = "sha256:11e007a8a2aa0323f5a921e9e6a2d7e4e67d9877e85773fba9ba6419025cbeb4"},
 ]
 requests-mock = [
-    {file = "requests-mock-0.7.0.tar.gz", hash = "sha256:ee2816992d4505596ec3c98c7b4ab57475539ac037d08dd3a81370b1e3cdd568"},
-    {file = "requests_mock-0.7.0-py2.py3-none-any.whl", hash = "sha256:e61056cdb809fcc6ed47771b74054fe3ab4c3659d7f66c32a5256e8cf013e0af"},
+    {file = "requests-mock-1.7.0.tar.gz", hash = "sha256:88d3402dd8b3c69a9e4f9d3a73ad11b15920c6efd36bc27bf1f701cf4a8e4646"},
+    {file = "requests_mock-1.7.0-py2.py3-none-any.whl", hash = "sha256:510df890afe08d36eca5bb16b4aa6308a6f85e3159ad3013bac8b9de7bd5a010"},
 ]
 requests-oauthlib = [
     {file = "requests-oauthlib-1.3.0.tar.gz", hash = "sha256:b4261601a71fd721a8bd6d7aa1cc1d6a8a93b4a9f5e96626f8e4d91e8beeaa6a"},
