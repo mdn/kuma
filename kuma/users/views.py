@@ -412,6 +412,8 @@ def user_edit(request, username):
         ('expertise', 'profile:expertise:')
     )
 
+    revisions = Revision.objects.filter(creator=edit_user)
+
     if request.method != 'POST':
         initial = {
             'beta': edit_user.is_beta_tester,
@@ -459,7 +461,10 @@ def user_edit(request, username):
     context = {
         'edit_user': edit_user,
         'user_form': user_form,
+        'username': user_form['username'].value(),
+        'form': UserDeleteForm(),
         'INTEREST_SUGGESTIONS': INTEREST_SUGGESTIONS,
+        'revisions': revisions,
         'subscription_info': retrieve_stripe_subscription_info(
             edit_user,
         ),
@@ -556,6 +561,7 @@ def user_delete(request, username):
         form = UserDeleteForm()
 
     context['form'] = form
+    context['username'] = username
     context['revisions'] = revisions
 
     return render(request, 'users/user_delete.html', context)
@@ -592,9 +598,12 @@ class SignupView(BaseSignupView):
             email = form.initial.get('email', '')
             if isinstance(email, tuple):
                 email = email[0]
-            suggested_username = email.split('@')[0]
-            if not User.objects.filter(username__iexact=suggested_username).exists():
-                form.initial['username'] = suggested_username
+            suggested_username = suggested_username_base = email.split('@')[0]
+            increment = 1
+            while User.objects.filter(username__iexact=suggested_username).exists():
+                increment += 1
+                suggested_username = f'{suggested_username_base}{increment}'
+            form.initial['username'] = suggested_username
 
         self.matching_user = None
         initial_username = form.initial.get('username', None)

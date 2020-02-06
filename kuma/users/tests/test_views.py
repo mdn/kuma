@@ -1163,6 +1163,21 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         assert_no_cache_header(response)
         assert response.context['matching_user'] == octocat
 
+    def test_clashing_username(self):
+        """First a GitHub user exists. Then a Google user tries to sign up
+        whose email address, when `email.split('@')[0]` would become the same
+        as the existing GitHub user.
+        """
+        user(username='octocat', save=True)
+        self.google_login(profile_data=dict(
+            self.google_profile_data,
+            email='octocat@gmail.com',
+        ))
+        response = self.client.get(self.signup_url)
+        assert response.status_code == 200
+        doc = pq(response.content)
+        assert doc.find('input[name="username"]').val() == 'octocat2'
+
     def test_email_addresses(self):
         public_email = 'octocat-public@example.com'
         private_email = 'octocat-private@example.com'

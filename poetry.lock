@@ -34,11 +34,11 @@ description = "An easy safelist-based HTML-sanitizing tool."
 name = "bleach"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "2.1.4"
+version = "3.1.0"
 
 [package.dependencies]
-html5lib = ">=0.99999999pre,<1.0b1 || >1.0b1,<1.0b2 || >1.0b2,<1.0b3 || >1.0b3,<1.0b4 || >1.0b4,<1.0b5 || >1.0b5,<1.0b6 || >1.0b6,<1.0b7 || >1.0b7,<1.0b8 || >1.0b8"
-six = "*"
+six = ">=1.9.0"
+webencodings = "*"
 
 [[package]]
 category = "main"
@@ -46,10 +46,10 @@ description = "The AWS SDK for Python"
 name = "boto3"
 optional = false
 python-versions = "*"
-version = "1.11.9"
+version = "1.11.10"
 
 [package.dependencies]
-botocore = ">=1.14.9,<1.15.0"
+botocore = ">=1.14.10,<1.15.0"
 jmespath = ">=0.7.1,<1.0.0"
 s3transfer = ">=0.3.0,<0.4.0"
 
@@ -59,7 +59,7 @@ description = "Low-level, data-driven core of boto 3."
 name = "botocore"
 optional = false
 python-versions = "*"
-version = "1.14.9"
+version = "1.14.10"
 
 [package.dependencies]
 docutils = ">=0.10,<0.16"
@@ -193,8 +193,8 @@ category = "main"
 description = "XML bomb protection for Python stdlib modules"
 name = "defusedxml"
 optional = false
-python-versions = "*"
-version = "0.5.0"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+version = "0.6.0"
 
 [[package]]
 category = "main"
@@ -214,7 +214,7 @@ description = "Use Database URLs in your Django Application."
 name = "dj-database-url"
 optional = false
 python-versions = "*"
-version = "0.4.0"
+version = "0.5.0"
 
 [[package]]
 category = "main"
@@ -222,7 +222,7 @@ description = "Use an URL to configure email backend settings in your Django App
 name = "dj-email-url"
 optional = false
 python-versions = "*"
-version = "0.0.4"
+version = "0.2.0"
 
 [[package]]
 category = "main"
@@ -245,11 +245,11 @@ description = "Integrated set of Django applications addressing authentication, 
 name = "django-allauth"
 optional = false
 python-versions = "*"
-version = "0.38.0"
+version = "0.40.0"
 
 [package.dependencies]
 Django = ">=1.11"
-python-openid = ">=2.2.5"
+python3-openid = ">=3.0.8"
 requests = "*"
 requests-oauthlib = ">=0.3.0"
 
@@ -299,7 +299,14 @@ description = "Django live settings with pluggable backends, including Redis."
 name = "django-constance"
 optional = false
 python-versions = "*"
-version = "2.4.0"
+version = "2.5.0"
+
+[package.dependencies]
+six = "*"
+
+[package.dependencies.django-picklefield]
+optional = true
+version = "*"
 
 [package.extras]
 database = ["django-picklefield"]
@@ -321,12 +328,12 @@ jinja2 = ["jinja2 (>=2.9.6)"]
 tests = ["pytest (<4.0)", "pytest-django", "pytest-flakes (1.0.1)", "pytest-pep8 (1.0.6)", "pep8 (1.4.6)", "mock (1.0.1)", "six (1.12.0)", "jinja2 (>=2.9.6)"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "A configurable set of panels that display various debug information about the current request/response."
 name = "django-debug-toolbar"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.10.1"
+python-versions = ">=3.5"
+version = "2.2"
 
 [package.dependencies]
 Django = ">=1.11"
@@ -363,7 +370,7 @@ description = "Django honeypot field utilities"
 name = "django-honeypot"
 optional = false
 python-versions = "*"
-version = "0.5.0"
+version = "0.7.0"
 
 [package.dependencies]
 setuptools = "*"
@@ -397,7 +404,13 @@ description = "Pickled object field for Django"
 name = "django-picklefield"
 optional = false
 python-versions = "*"
-version = "1.0.0"
+version = "2.1.1"
+
+[package.dependencies]
+Django = ">=1.11"
+
+[package.extras]
+tests = ["tox"]
 
 [[package]]
 category = "main"
@@ -405,7 +418,7 @@ description = "Pipeline is an asset packaging library for Django."
 name = "django-pipeline"
 optional = false
 python-versions = "*"
-version = "1.6.14"
+version = "1.7.0"
 
 [[package]]
 category = "main"
@@ -476,7 +489,7 @@ description = "Support for many storage backends in Django"
 name = "django-storages"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.9"
+version = "1.9.1"
 
 [package.dependencies]
 Django = ">=1.11"
@@ -530,15 +543,21 @@ description = "A feature flipper for Django."
 name = "django-waffle"
 optional = false
 python-versions = "*"
-version = "0.16.0"
+version = "0.19.0"
+
+[package.dependencies]
+six = ">=1.13.0"
 
 [[package]]
 category = "main"
 description = "Web APIs for Django, made easy."
 name = "djangorestframework"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "3.9.4"
+python-versions = ">=3.5"
+version = "3.11.0"
+
+[package.dependencies]
+django = ">=1.11"
 
 [[package]]
 category = "main"
@@ -676,12 +695,16 @@ category = "main"
 description = "WSGI HTTP Server for UNIX"
 name = "gunicorn"
 optional = false
-python-versions = ">=2.6, !=3.0.*, !=3.1.*"
-version = "19.9.0"
+python-versions = ">=3.4"
+version = "20.0.4"
+
+[package.dependencies]
+setuptools = ">=3.0"
 
 [package.extras]
 eventlet = ["eventlet (>=0.9.7)"]
 gevent = ["gevent (>=0.13)"]
+setproctitle = ["setproctitle"]
 tornado = ["tornado (>=0.2)"]
 
 [[package]]
@@ -709,7 +732,7 @@ description = "A comprehensive HTTP client library."
 name = "httplib2"
 optional = false
 python-versions = "*"
-version = "0.14.0"
+version = "0.17.0"
 
 [[package]]
 category = "main"
@@ -747,7 +770,7 @@ description = "Python library for serializing any arbitrary object graph into JS
 name = "jsonpickle"
 optional = false
 python-versions = "*"
-version = "0.9.2"
+version = "1.2"
 
 [[package]]
 category = "main"
@@ -823,15 +846,15 @@ description = "Python interface to MySQL"
 name = "mysqlclient"
 optional = false
 python-versions = "*"
-version = "1.4.4"
+version = "1.4.6"
 
 [[package]]
 category = "main"
 description = "New Relic Python Agent"
 name = "newrelic"
 optional = false
-python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*"
-version = "4.20.1.121"
+python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*"
+version = "5.6.0.135"
 
 [[package]]
 category = "main"
@@ -853,14 +876,13 @@ category = "main"
 description = "A generic, spec-compliant, thorough implementation of the OAuth request-signing logic"
 name = "oauthlib"
 optional = false
-python-versions = "*"
-version = "2.0.4"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "3.1.0"
 
 [package.extras]
 rsa = ["cryptography"]
 signals = ["blinker"]
 signedtoken = ["cryptography", "pyjwt (>=1.0.0)"]
-test = ["nose", "unittest2", "cryptography", "mock", "pyjwt (>=1.0.0)", "blinker"]
 
 [[package]]
 category = "main"
@@ -888,8 +910,8 @@ category = "main"
 description = "library with cross-python path, ini-parsing, io, code, log facilities"
 name = "py"
 optional = false
-python-versions = "*"
-version = "1.4.33"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "1.8.1"
 
 [[package]]
 category = "main"
@@ -988,18 +1010,6 @@ pytest = ">=2.9"
 
 [[package]]
 category = "dev"
-description = "pytest plugin for generating HTML reports"
-name = "pytest-html"
-optional = false
-python-versions = "*"
-version = "1.22.1"
-
-[package.dependencies]
-pytest = ">=3.0"
-pytest-metadata = "*"
-
-[[package]]
-category = "dev"
 description = "pytest plugin for test session metadata"
 name = "pytest-metadata"
 optional = false
@@ -1053,7 +1063,7 @@ description = "Strict separation of settings from code."
 name = "python-decouple"
 optional = false
 python-versions = "*"
-version = "3.1"
+version = "3.3"
 
 [[package]]
 category = "main"
@@ -1062,14 +1072,6 @@ name = "python-magic"
 optional = false
 python-versions = "*"
 version = "0.4.15"
-
-[[package]]
-category = "main"
-description = "OpenID support for servers and consumers."
-name = "python-openid"
-optional = false
-python-versions = "*"
-version = "2.2.5"
 
 [[package]]
 category = "main"
@@ -1164,15 +1166,15 @@ category = "main"
 description = "OAuthlib authentication support for Requests."
 name = "requests-oauthlib"
 optional = false
-python-versions = "*"
-version = "0.8.0"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "1.3.0"
 
 [package.dependencies]
-oauthlib = ">=0.6.2"
+oauthlib = ">=3.0.0"
 requests = ">=2.0.0"
 
 [package.extras]
-rsa = ["oauthlib (>=0.6.2)", "requests (>=2.0.0)"]
+rsa = ["oauthlib (>=3.0.0)"]
 
 [[package]]
 category = "main"
@@ -1218,7 +1220,7 @@ description = "Python bindings for the Stripe API"
 name = "stripe"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "2.41.1"
+version = "2.42.0"
 
 [package.dependencies]
 [package.dependencies.requests]
@@ -1296,11 +1298,14 @@ category = "main"
 description = "Radically simplified static file serving for WSGI applications"
 name = "whitenoise"
 optional = false
-python-versions = "*"
-version = "3.3.1"
+python-versions = ">=3.5, <4"
+version = "5.0.1"
+
+[package.extras]
+brotli = ["brotli"]
 
 [metadata]
-content-hash = "c404f2e8d9128fd4ea659cf0c0ae3ab1a5b754b5092e3c23754184cee1a33bff"
+content-hash = "aa97292a45f2fdf4cf54e50a623fa9ca37b6dcccd9b959e44d6f42a3977eee42"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1317,16 +1322,16 @@ billiard = [
     {file = "billiard-3.6.2.0.tar.gz", hash = "sha256:f4e09366653aa3cb3ae8ed16423f9ba1665ff426f087bcdbbed86bf3664fe02c"},
 ]
 bleach = [
-    {file = "bleach-2.1.4-py2.py3-none-any.whl", hash = "sha256:24754b9a7d530bf30ce7cbc805bc6cce785660b4a10ff3a43633728438c105ab"},
-    {file = "bleach-2.1.4.tar.gz", hash = "sha256:0ee95f6167129859c5dce9b1ca291ebdb5d8cd7e382ca0e237dfd0dad63f63d8"},
+    {file = "bleach-3.1.0-py2.py3-none-any.whl", hash = "sha256:213336e49e102af26d9cde77dd2d0397afabc5a6bf2fed985dc35b5d1e285a16"},
+    {file = "bleach-3.1.0.tar.gz", hash = "sha256:3fdf7f77adcf649c9911387df51254b813185e32b2c6619f690b593a617e19fa"},
 ]
 boto3 = [
-    {file = "boto3-1.11.9-py2.py3-none-any.whl", hash = "sha256:3480c87b530e7f41d9264a6725dda68208de2697822cf02cd3a541b001872410"},
-    {file = "boto3-1.11.9.tar.gz", hash = "sha256:05f7ae180813fbf11cb7397b43b6bd29463abdc246bee58127836f1a8f6a9a2f"},
+    {file = "boto3-1.11.10-py2.py3-none-any.whl", hash = "sha256:27e221d3868f35687807e5c920f7e8d4872f722f64196a7fd274a06ad65beec0"},
+    {file = "boto3-1.11.10.tar.gz", hash = "sha256:8ff4e3d9e5d6a26dd7494afc68dc96afe6b7bda88130cca84cd58702d888ed27"},
 ]
 botocore = [
-    {file = "botocore-1.14.9-py2.py3-none-any.whl", hash = "sha256:e3e3c0f59dc30c86dd2116aece3bd554f8476446cf1c5770bbf5111993d676c8"},
-    {file = "botocore-1.14.9.tar.gz", hash = "sha256:1909424c9544f92142c8e551888731e32a99f9c99cfe8d21fea3ec0c32981dae"},
+    {file = "botocore-1.14.10-py2.py3-none-any.whl", hash = "sha256:cf3144994191847e30ef76781af867009bdc233b3f1f4736615e5330687a891e"},
+    {file = "botocore-1.14.10.tar.gz", hash = "sha256:f11ff8616f46ca04697df031e622c9ed50931b9d649d4e719f961e9d80771e8d"},
 ]
 braceexpand = [
     {file = "braceexpand-0.1.5-py2.py3-none-any.whl", hash = "sha256:ae6b7de1e88d3132177bd6cbda8b22487ea645b25c4ca5b1cf948b326ac27e34"},
@@ -1411,26 +1416,27 @@ cssselect = [
     {file = "cssselect-1.1.0.tar.gz", hash = "sha256:f95f8dedd925fd8f54edb3d2dfb44c190d9d18512377d3c1e2388d16126879bc"},
 ]
 defusedxml = [
-    {file = "defusedxml-0.5.0-py2.py3-none-any.whl", hash = "sha256:702a91ade2968a82beb0db1e0766a6a273f33d4616a6ce8cde475d8e09853b20"},
-    {file = "defusedxml-0.5.0.tar.gz", hash = "sha256:24d7f2f94f7f3cb6061acb215685e5125fbcdc40a857eff9de22518820b0a4f4"},
+    {file = "defusedxml-0.6.0-py2.py3-none-any.whl", hash = "sha256:6687150770438374ab581bb7a1b327a847dd9c5749e396102de3fad4e8a3ef93"},
+    {file = "defusedxml-0.6.0.tar.gz", hash = "sha256:f684034d135af4c6cbb949b8a4d2ed61634515257a67299e5f940fbaa34377f5"},
 ]
 dennis = [
     {file = "dennis-0.9-py2.py3-none-any.whl", hash = "sha256:f6487392ac91800c5f0684a99b404b7fd0f72ceb48faeb5a0ce4e2c24fb62d3f"},
     {file = "dennis-0.9.tar.gz", hash = "sha256:8c942dd5da7d03c65daebc069c5ee5c7f1374ac9b0c8c89c627caa66fe822604"},
 ]
 dj-database-url = [
-    {file = "dj-database-url-0.4.0.tar.gz", hash = "sha256:858312abb7b330ea875733a65806a36ad04d7b8451c6ce8835118a2fa10d6870"},
+    {file = "dj-database-url-0.5.0.tar.gz", hash = "sha256:4aeaeb1f573c74835b0686a2b46b85990571159ffc21aa57ecd4d1e1cb334163"},
+    {file = "dj_database_url-0.5.0-py2.py3-none-any.whl", hash = "sha256:851785365761ebe4994a921b433062309eb882fedd318e1b0fcecc607ed02da9"},
 ]
 dj-email-url = [
-    {file = "dj-email-url-0.0.4.tar.gz", hash = "sha256:319a8726d1a4755b78d17f9966e07a81184929817767051096f9669d329784c8"},
-    {file = "dj_email_url-0.0.4-py2-none-any.whl", hash = "sha256:c4a62a75499183cc645f060785760946dd422000dffbcaa264953b1abd6e5255"},
+    {file = "dj-email-url-0.2.0.tar.gz", hash = "sha256:0362e390c17cc377f03bcbf6daf3f671797c929c1bf78a9f439d78f215ebe3fd"},
+    {file = "dj_email_url-0.2.0-py2.py3-none-any.whl", hash = "sha256:136ac43c7f29022130fc4769b4ca8b01cd1c39fedf1659c641c143808182a084"},
 ]
 django = [
     {file = "Django-1.11.28-py2.py3-none-any.whl", hash = "sha256:a3b01cdff845a43830d7ccacff55e0b8ff08305a4cbf894517a686e53ba3ad2d"},
     {file = "Django-1.11.28.tar.gz", hash = "sha256:b33ce35f47f745fea6b5aa3cf3f4241069803a3712d423ac748bd673a39741eb"},
 ]
 django-allauth = [
-    {file = "django-allauth-0.38.0.tar.gz", hash = "sha256:45661b6fe308466154adf54461679fab6f0c6850b10c56dc322fbbb9d47e03d9"},
+    {file = "django-allauth-0.40.0.tar.gz", hash = "sha256:6a189fc4d3ee23596c3fd6e9f49c59b5b15618980118171a50675dd6a27cc589"},
 ]
 django-appconf = [
     {file = "django-appconf-1.0.3.tar.gz", hash = "sha256:35f13ca4d567f132b960e2cd4c832c2d03cb6543452d34e29b7ba10371ba80e3"},
@@ -1445,16 +1451,16 @@ django-cacheback = [
     {file = "django_cacheback-1.4.0-py2.py3-none-any.whl", hash = "sha256:972c7697f1929bf9676893a8e6cb1f7873a2c14e835a8d24fbb59bbf37731c18"},
 ]
 django-constance = [
-    {file = "django-constance-2.4.0.tar.gz", hash = "sha256:417f9866a4fcd93c198acd16d5bc22b68e491eaabb18efea4c70d183d42daa45"},
-    {file = "django_constance-2.4.0-py2.py3-none-any.whl", hash = "sha256:19ff1ae8295aeffc2917ab67da4b310bfaf8c42f34d570f89e289fd54c4217b0"},
+    {file = "django-constance-2.5.0.tar.gz", hash = "sha256:c47db4abd5788584115db681c0e8fef8ff870d49af90aa359076f0833a537199"},
+    {file = "django_constance-2.5.0-py2.py3-none-any.whl", hash = "sha256:1b536d153c168ef548fea5bdcdea84afab83892e2163ec4e896557a3139effd7"},
 ]
 django-csp = [
     {file = "django_csp-3.6-py2.py3-none-any.whl", hash = "sha256:d9ee5a8c6442aa54854e8de627c2826786208ed38fb4ea8ced08c42332673eb1"},
     {file = "django_csp-3.6.tar.gz", hash = "sha256:0a38aa9618c675cbf5f5e517e20d5846a3e100ef7b307e32e7fb18c58aa47723"},
 ]
 django-debug-toolbar = [
-    {file = "django-debug-toolbar-1.10.1.tar.gz", hash = "sha256:08e0e43f6c1fd9820af4cbdcd54b5fb80bf83a2e08b2cc952547a671174999b8"},
-    {file = "django_debug_toolbar-1.10.1-py2.py3-none-any.whl", hash = "sha256:1dcae28d430522debafde2602b3450eb784410b78e16c29a00448032df2a4c90"},
+    {file = "django-debug-toolbar-2.2.tar.gz", hash = "sha256:eabbefe89881bbe4ca7c980ff102e3c35c8e8ad6eb725041f538988f2f39a943"},
+    {file = "django_debug_toolbar-2.2-py3-none-any.whl", hash = "sha256:ff94725e7aae74b133d0599b9bf89bd4eb8f5d2c964106e61d11750228c8774c"},
 ]
 django-decorator-include = [
     {file = "django-decorator-include-1.4.1.tar.gz", hash = "sha256:715d00054bcbebd5f65575a7bd97d4823c1a459ed283a8c499f5a8b25cc75099"},
@@ -1465,8 +1471,8 @@ django-extensions = [
     {file = "django_extensions-2.2.6-py2.py3-none-any.whl", hash = "sha256:4524eca892d23fa6e93b0620901983b287ff5dc806f1b978d6a98541f06b9471"},
 ]
 django-honeypot = [
-    {file = "django-honeypot-0.5.0.tar.gz", hash = "sha256:cb9ae7a42bf9db5b4d2b4a3812bcbe874ed3ab979c4ceb38b32d6e7ff4791e8e"},
-    {file = "django_honeypot-0.5.0-py2.py3-none-any.whl", hash = "sha256:962304f21055f05c73c41f2506f5a94f5b941e831a203b68e54cb5016bdb8d5e"},
+    {file = "django-honeypot-0.7.0.tar.gz", hash = "sha256:04de2778c60532d664efa1c271e2cee889fb01b1cb8c8934759f879315ce825f"},
+    {file = "django_honeypot-0.7.0-py2.py3-none-any.whl", hash = "sha256:bbf25d12f9427690e104b17f8a0b5d14de26fe3d44e327c2ff7b74e6ebbb213b"},
 ]
 django-jinja = [
     {file = "django-jinja-2.6.0.tar.gz", hash = "sha256:7459985c25ddb6584c6bab345761c8c5557713448e6fbb322af1b6dd7f5512bd"},
@@ -1477,12 +1483,12 @@ django-mysql = [
     {file = "django_mysql-3.3.0-py3-none-any.whl", hash = "sha256:ceaf6d93396b7f7b3798ac5f9a819dd70d5f0e1112850f2a34c57f062fa19398"},
 ]
 django-picklefield = [
-    {file = "django-picklefield-1.0.0.tar.gz", hash = "sha256:61e3ba7f6df82d8df9e6be3a8c55ef589eb3bf926c3d25d2b7949b07eae78354"},
-    {file = "django_picklefield-1.0.0-py2.py3-none-any.whl", hash = "sha256:57e4349c7f75eab08fe7ceb11e7135644fdf771e2777a754db4f07e5c63c191f"},
+    {file = "django-picklefield-2.1.1.tar.gz", hash = "sha256:67a5e156343e3b032cac2f65565f0faa81635a99c7da74b0f07a0f5db467b646"},
+    {file = "django_picklefield-2.1.1-py2.py3-none-any.whl", hash = "sha256:e03cb181b7161af38ad6b573af127e4fe9b7cc2c455b42c1ec43eaad525ade0a"},
 ]
 django-pipeline = [
-    {file = "django-pipeline-1.6.14.tar.gz", hash = "sha256:ef67aaf58959a2959e13fc114001cee5beec05ac18a81cc700ea9f1c8e3f40a8"},
-    {file = "django_pipeline-1.6.14-py2.py3-none-any.whl", hash = "sha256:b56f2cfdb113dc1cb05257d8eb8d145fc0ade6f0d1236fb425df15bd059dce15"},
+    {file = "django-pipeline-1.7.0.tar.gz", hash = "sha256:0ded22b974e3d627c27fc490ef5b23fcdcf0cdb00b704d628b5ca6d0b010d6fe"},
+    {file = "django_pipeline-1.7.0-py2.py3-none-any.whl", hash = "sha256:f7da70f00aa4baea3e0811f88927a116425deee05871fa2bfd2f8247f42d8847"},
 ]
 django-querycount = [
     {file = "django-querycount-0.7.0.tar.gz", hash = "sha256:8f5123d78716ff0704f2373e746a7200b8d8417798ce4a99bf2de87e3768f9ce"},
@@ -1508,8 +1514,8 @@ django-statici18n = [
     {file = "django_statici18n-1.9.0-py2.py3-none-any.whl", hash = "sha256:d9524a0af20be789e623bc60e0950b660ae33a0d1d1fecdecbd1c056eda56631"},
 ]
 django-storages = [
-    {file = "django-storages-1.9.tar.gz", hash = "sha256:9bc1fff05d45eafeaedd3973defbb301e4065e1d813e71b0251c756108aad2dd"},
-    {file = "django_storages-1.9-py2.py3-none-any.whl", hash = "sha256:2b02f9e24ae617a075c8e3f39a56fa26faa250c052f42958c2a3ee1c56d7a06e"},
+    {file = "django-storages-1.9.1.tar.gz", hash = "sha256:a59e9923cbce7068792f75344ed7727021ee4ac20f227cf17297d0d03d141e91"},
+    {file = "django_storages-1.9.1-py2.py3-none-any.whl", hash = "sha256:3103991c2ee8cef8a2ff096709973ffe7106183d211a79f22cf855f33533d924"},
 ]
 django-sundial = [
     {file = "django-sundial-1.0.6.tar.gz", hash = "sha256:7dd7deff7aea8b2283b8795d5bd19f93d77484518efed6a7605dada7be965665"},
@@ -1524,12 +1530,12 @@ django-tidings = [
     {file = "django_tidings-2.0.1-py2.py3-none-any.whl", hash = "sha256:a144628acdd9ddafdc921cdb70fb8ee297886b1dc38b00fab8fffbbf46163012"},
 ]
 django-waffle = [
-    {file = "django-waffle-0.16.0.tar.gz", hash = "sha256:b48b80b01ea28a560a0d6df9322631f239f4088933137a39571d1c874cc89ce9"},
-    {file = "django_waffle-0.16.0-py2.py3-none-any.whl", hash = "sha256:806164c8e98fe6c20590bd642fa247d8554ab57faed45e2745253f0f3b8f3ff9"},
+    {file = "django-waffle-0.19.0.tar.gz", hash = "sha256:714d64307458c71daf22ef607d36034d56a538e04bde774f13a2c67c58faa055"},
+    {file = "django_waffle-0.19.0-py2.py3-none-any.whl", hash = "sha256:24e24d21df1f6710c1e6654786da414ad461371d73828a60ee42561b537ceb95"},
 ]
 djangorestframework = [
-    {file = "djangorestframework-3.9.4-py2.py3-none-any.whl", hash = "sha256:376f4b50340a46c15ae15ddd0c853085f4e66058f97e4dbe7d43ed62f5e60651"},
-    {file = "djangorestframework-3.9.4.tar.gz", hash = "sha256:c12869cfd83c33d579b17b3cb28a2ae7322a53c3ce85580c2a2ebe4e3f56c4fb"},
+    {file = "djangorestframework-3.11.0-py3-none-any.whl", hash = "sha256:05809fc66e1c997fd9a32ea5730d9f4ba28b109b9da71fccfa5ff241201fd0a4"},
+    {file = "djangorestframework-3.11.0.tar.gz", hash = "sha256:e782087823c47a26826ee5b6fa0c542968219263fb3976ec3c31edab23a4001f"},
 ]
 docutils = [
     {file = "docutils-0.15.2-py2-none-any.whl", hash = "sha256:9e4d7ecfc600058e07ba661411a2b7de2fd0fafa17d1a7f7361cd47b1175c827"},
@@ -1595,16 +1601,16 @@ greenlet = [
     {file = "greenlet-0.4.15.tar.gz", hash = "sha256:9416443e219356e3c31f1f918a91badf2e37acf297e2fa13d24d1cc2380f8fbc"},
 ]
 gunicorn = [
-    {file = "gunicorn-19.9.0-py2.py3-none-any.whl", hash = "sha256:aa8e0b40b4157b36a5df5e599f45c9c76d6af43845ba3b3b0efe2c70473c2471"},
-    {file = "gunicorn-19.9.0.tar.gz", hash = "sha256:fa2662097c66f920f53f70621c6c58ca4a3c4d3434205e608e121b5b3b71f4f3"},
+    {file = "gunicorn-20.0.4-py2.py3-none-any.whl", hash = "sha256:cd4a810dd51bf497552cf3f863b575dabd73d6ad6a91075b65936b151cbf4f9c"},
+    {file = "gunicorn-20.0.4.tar.gz", hash = "sha256:1904bb2b8a43658807108d59c3f3d56c2b6121a701161de0ddf9ad140073c626"},
 ]
 html5lib = [
     {file = "html5lib-1.0.1-py2.py3-none-any.whl", hash = "sha256:20b159aa3badc9d5ee8f5c647e5efd02ed2a66ab8d354930bd9ff139fc1dc0a3"},
     {file = "html5lib-1.0.1.tar.gz", hash = "sha256:66cb0dcfdbbc4f9c3ba1a63fdb511ffdbd4f513b2b6d81b80cd26ce6b3fb3736"},
 ]
 httplib2 = [
-    {file = "httplib2-0.14.0-py3-none-any.whl", hash = "sha256:409fa5509298f739b34d5a652df762cb0042507dc93f6633e306b11289d6249d"},
-    {file = "httplib2-0.14.0.tar.gz", hash = "sha256:34537dcdd5e0f2386d29e0e2c6d4a1703a3b982d34c198a5102e6e5d6194b107"},
+    {file = "httplib2-0.17.0-py3-none-any.whl", hash = "sha256:79751cc040229ec896aa01dced54de0cd0bf042f928e84d5761294422dde4454"},
+    {file = "httplib2-0.17.0.tar.gz", hash = "sha256:de96d0a49f46d0ee7e0aae80141d37b8fcd6a68fb05d02e0b82c128592dd8261"},
 ]
 idna = [
     {file = "idna-2.8-py2.py3-none-any.whl", hash = "sha256:ea8b7f6188e6fa117537c3df7da9fc686d485087abf6ac197f9c46432f7e4a3c"},
@@ -1619,7 +1625,8 @@ jmespath = [
     {file = "jmespath-0.9.4.tar.gz", hash = "sha256:bde2aef6f44302dfb30320115b17d030798de8c4110e28d5cf6cf91a7a31074c"},
 ]
 jsonpickle = [
-    {file = "jsonpickle-0.9.2.tar.gz", hash = "sha256:09bf1978d1d004943c2a359009fb5d09b67277bbaaf9aed281856b3c063979e7"},
+    {file = "jsonpickle-1.2-py2.py3-none-any.whl", hash = "sha256:d0c5a4e6cb4e58f6d5406bdded44365c2bcf9c836c4f52910cc9ba7245a59dc2"},
+    {file = "jsonpickle-1.2.tar.gz", hash = "sha256:d3e922d781b1d0096df2dad89a2e1f47177d7969b596aea806a9d91b4626b29b"},
 ]
 kombu = [
     {file = "kombu-4.6.7-py2.py3-none-any.whl", hash = "sha256:2a9e7adff14d046c9996752b2c48b6d9185d0b992106d5160e1a179907a5d4ac"},
@@ -1697,19 +1704,21 @@ meinheld = [
     {file = "meinheld-1.0.1.tar.gz", hash = "sha256:447de7189e4dc9c1f425aa1b9c8210aab492fda4d86f73a24059264e7d8b0134"},
 ]
 mysqlclient = [
-    {file = "mysqlclient-1.4.4-cp36-cp36m-win_amd64.whl", hash = "sha256:8c3b61d89f7daaeab6aad6bf4c4bc3ef30bec1a8169f94dc59aea87ba2fabf80"},
-    {file = "mysqlclient-1.4.4-cp37-cp37m-win_amd64.whl", hash = "sha256:79a498ddda955e488f80c82a6392bf6e07c323d48db236033f33825665d8ba5c"},
-    {file = "mysqlclient-1.4.4.tar.gz", hash = "sha256:9c737cc55a5dc8dd3583a942d5a9b21be58d16f00f5fefca4e575e7d9682e98c"},
+    {file = "mysqlclient-1.4.6-cp36-cp36m-win_amd64.whl", hash = "sha256:4c82187dd6ab3607150fbb1fa5ef4643118f3da122b8ba31c3149ddd9cf0cb39"},
+    {file = "mysqlclient-1.4.6-cp37-cp37m-win_amd64.whl", hash = "sha256:9e6080a7aee4cc6a06b58b59239f20f1d259c1d2fddf68ddeed242d2311c7087"},
+    {file = "mysqlclient-1.4.6-cp38-cp38-win_amd64.whl", hash = "sha256:f646f8d17d02be0872291f258cce3813497bc7888cd4712a577fd1e719b2f213"},
+    {file = "mysqlclient-1.4.6.tar.gz", hash = "sha256:f3fdaa9a38752a3b214a6fe79d7cae3653731a53e577821f9187e67cbecb2e16"},
 ]
 newrelic = [
-    {file = "newrelic-4.20.1.121.tar.gz", hash = "sha256:708ac6a75c76a59e3d6c0d714e2fbb1e4ec7d540f7d34bddd81e61bdb636e895"},
+    {file = "newrelic-5.6.0.135.tar.gz", hash = "sha256:8283dd54299b3fd2818a262f38f9193a2ee52b2a02fecca1a1d04764be533c92"},
 ]
 oauth2client = [
     {file = "oauth2client-4.1.3-py2.py3-none-any.whl", hash = "sha256:b8a81cc5d60e2d364f0b1b98f958dbd472887acaf1a5b05e21c28c31a2d6d3ac"},
     {file = "oauth2client-4.1.3.tar.gz", hash = "sha256:d486741e451287f69568a4d26d70d9acd73a2bbfa275746c535b4209891cccc6"},
 ]
 oauthlib = [
-    {file = "oauthlib-2.0.4.tar.gz", hash = "sha256:514e293cb356dd53d596692207d48d9231b997995c9a4167eefa868583d74d13"},
+    {file = "oauthlib-3.1.0-py2.py3-none-any.whl", hash = "sha256:df884cd6cbe20e32633f1db1072e9356f53638e4361bef4e8b03c9127c9328ea"},
+    {file = "oauthlib-3.1.0.tar.gz", hash = "sha256:bee41cc35fcca6e988463cacc3bcb8a96224f470ca547e697b604cc697b2f889"},
 ]
 polib = [
     {file = "polib-1.1.0-py2.py3-none-any.whl", hash = "sha256:93b730477c16380c9a96726c54016822ff81acfa553977fdd131f2b90ba858d7"},
@@ -1720,8 +1729,8 @@ puente = [
     {file = "puente-0.5.0.tar.gz", hash = "sha256:4a17958f7d6a83cb9ff92593c40f34911abafaec6ad959916b754aaa3869f11f"},
 ]
 py = [
-    {file = "py-1.4.33-py2.py3-none-any.whl", hash = "sha256:81b5e37db3cc1052de438375605fb5d3b3e97f950f415f9143f04697c684d7eb"},
-    {file = "py-1.4.33.tar.gz", hash = "sha256:1f9a981438f2acc20470b301a07a496375641f902320f70e31916fe3377385a9"},
+    {file = "py-1.8.1-py2.py3-none-any.whl", hash = "sha256:c20fdd83a5dbc0af9efd622bee9a5564e278f6380fffcacc43ba6f43db2813b0"},
+    {file = "py-1.8.1.tar.gz", hash = "sha256:5e27081401262157467ad6e7f851b7aa402c5852dbcb3dae06768434de5752aa"},
 ]
 pyasn1 = [
     {file = "pyasn1-0.4.8-py2.4.egg", hash = "sha256:fec3e9d8e36808a28efb59b489e4528c10ad0f480e57dcc32b4de5c9d8c9fdf3"},
@@ -1781,10 +1790,6 @@ pytest-django = [
     {file = "pytest-django-3.1.2.tar.gz", hash = "sha256:038ccc5a9daa1b1b0eb739ab7dce54e495811eca5ea3af4815a2a3ac45152309"},
     {file = "pytest_django-3.1.2-py2.py3-none-any.whl", hash = "sha256:00995c2999b884a38ae9cd30a8c00ed32b3d38c1041250ea84caf18085589662"},
 ]
-pytest-html = [
-    {file = "pytest-html-1.22.1.tar.gz", hash = "sha256:f0fae6de71f02f62f9460f628d0c5f70b0cdc86bb393239860c7dec70fd2973d"},
-    {file = "pytest_html-1.22.1-py2.py3-none-any.whl", hash = "sha256:06e7e13131649b4fe522cf04054efb7b4749ff2c7160755e4acfd8e89a7e5955"},
-]
 pytest-metadata = [
     {file = "pytest-metadata-1.8.0.tar.gz", hash = "sha256:2071a59285de40d7541fde1eb9f1ddea1c9db165882df82781367471238b66ba"},
     {file = "pytest_metadata-1.8.0-py2.py3-none-any.whl", hash = "sha256:c29a1fb470424926c63154c1b632c02585f2ba4282932058a71d35295ff8c96d"},
@@ -1802,15 +1807,11 @@ python-dateutil = [
     {file = "python_dateutil-2.8.1-py2.py3-none-any.whl", hash = "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"},
 ]
 python-decouple = [
-    {file = "python-decouple-3.1.tar.gz", hash = "sha256:1317df14b43efee4337a4aa02914bf004f010cd56d6c4bd894e6474ec8c4fe2d"},
+    {file = "python-decouple-3.3.tar.gz", hash = "sha256:55c546b85b0c47a15a47a4312d451a437f7344a9be3e001660bccd93b637de95"},
 ]
 python-magic = [
     {file = "python-magic-0.4.15.tar.gz", hash = "sha256:f3765c0f582d2dfc72c15f3b5a82aecfae9498bd29ca840d72f37d7bd38bfcd5"},
     {file = "python_magic-0.4.15-py2.py3-none-any.whl", hash = "sha256:f2674dcfad52ae6c49d4803fa027809540b130db1dec928cfbb9240316831375"},
-]
-python-openid = [
-    {file = "python-openid-2.2.5.tar.gz", hash = "sha256:92c51c3ecec846cbec4aeff11f9ff47303d4a63f93b0e6ac0ec02a091fed70ef"},
-    {file = "python-openid-2.2.5.zip", hash = "sha256:c2d133e47e0a7705c9272eef00d7a09c174f5bf17a127fed8e2c6499556cc782"},
 ]
 python3-openid = [
     {file = "python3-openid-3.1.0.tar.gz", hash = "sha256:628d365d687e12da12d02c6691170f4451db28d6d68d050007e4a40065868502"},
@@ -1844,8 +1845,9 @@ requests-mock = [
     {file = "requests_mock-0.7.0-py2.py3-none-any.whl", hash = "sha256:e61056cdb809fcc6ed47771b74054fe3ab4c3659d7f66c32a5256e8cf013e0af"},
 ]
 requests-oauthlib = [
-    {file = "requests-oauthlib-0.8.0.tar.gz", hash = "sha256:883ac416757eada6d3d07054ec7092ac21c7f35cb1d2cf82faf205637081f468"},
-    {file = "requests_oauthlib-0.8.0-py2.py3-none-any.whl", hash = "sha256:50a8ae2ce8273e384895972b56193c7409601a66d4975774c60c2aed869639ca"},
+    {file = "requests-oauthlib-1.3.0.tar.gz", hash = "sha256:b4261601a71fd721a8bd6d7aa1cc1d6a8a93b4a9f5e96626f8e4d91e8beeaa6a"},
+    {file = "requests_oauthlib-1.3.0-py2.py3-none-any.whl", hash = "sha256:7f71572defaecd16372f9006f33c2ec8c077c3cfa6f5911a9a90202beb513f3d"},
+    {file = "requests_oauthlib-1.3.0-py3.7.egg", hash = "sha256:fa6c47b933f01060936d87ae9327fead68768b69c6c9ea2109c48be30f2d4dbc"},
 ]
 rsa = [
     {file = "rsa-4.0-py2.py3-none-any.whl", hash = "sha256:14ba45700ff1ec9eeb206a2ce76b32814958a98e372006c8fb76ba820211be66"},
@@ -1864,8 +1866,8 @@ sqlparse = [
     {file = "sqlparse-0.3.0.tar.gz", hash = "sha256:7c3dca29c022744e95b547e867cee89f4fce4373f3549ccd8797d8eb52cdb873"},
 ]
 stripe = [
-    {file = "stripe-2.41.1-py2.py3-none-any.whl", hash = "sha256:a84d67bfd0baaf732e7aaf434092923b840d46a94871eb560ed9fac9c531e962"},
-    {file = "stripe-2.41.1.tar.gz", hash = "sha256:31b26a3d6d7c396fe9dee1a7b38c241d158a3e68eac5e4bf52b87af970260c93"},
+    {file = "stripe-2.42.0-py2.py3-none-any.whl", hash = "sha256:eb5c2c35b2d31eaccb43983ca83de513b335100d9b71e79ca4c60085da464b77"},
+    {file = "stripe-2.42.0.tar.gz", hash = "sha256:89b2dcf6a84f0433cc15908c7be23f06a88e472065bb4f7542470ad97c053aef"},
 ]
 uritemplate = [
     {file = "uritemplate-3.0.1-py2.py3-none-any.whl", hash = "sha256:07620c3f3f8eed1f12600845892b0e036a2420acf513c53f7de0abd911a5894f"},
@@ -1895,6 +1897,6 @@ werkzeug = [
     {file = "Werkzeug-0.16.1.tar.gz", hash = "sha256:b353856d37dec59d6511359f97f6a4b2468442e454bd1c98298ddce53cac1f04"},
 ]
 whitenoise = [
-    {file = "whitenoise-3.3.1-py2.py3-none-any.whl", hash = "sha256:15f43b2e701821b95c9016cf469d29e2a546cb1c7dead584ba82c36f843995cf"},
-    {file = "whitenoise-3.3.1.tar.gz", hash = "sha256:9d81515f2b5b27051910996e1e860b1332e354d9e7bcf30c98f21dcb6713e0dd"},
+    {file = "whitenoise-5.0.1-py2.py3-none-any.whl", hash = "sha256:62556265ec1011bd87113fb81b7516f52688887b7a010ee899ff1fd18fd22700"},
+    {file = "whitenoise-5.0.1.tar.gz", hash = "sha256:0f9137f74bd95fa54329ace88d8dc695fbe895369a632e35f7a136e003e41d73"},
 ]

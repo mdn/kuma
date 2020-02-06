@@ -18,13 +18,6 @@ def path(*parts):
     return os.path.join(BASE_DIR, *parts)
 
 
-class TupleCsv(Csv):
-
-    def __call__(self, value):
-        split_values = super(TupleCsv, self).__call__(value)
-        return tuple((value, value) for value in split_values)
-
-
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # BASE_DIR used by django-extensions, such as ./manage.py notes
@@ -792,6 +785,12 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/users.css',
     },
+    'delete-user-modal': {
+        'source_filenames': (
+            'styles/minimalist/components/delete-user-modal.scss',
+        ),
+        'output_filename': 'build/styles/delete-user-modal.css',
+    },
     'tagit': {
         'source_filenames': (
             'styles/libs/jquery.tagit.css',
@@ -1021,6 +1020,26 @@ PIPELINE_JS = {
         'output_filename': 'build/js/signup.js',
         'extra_context': {
             'async': True,
+        },
+    },
+    'delete-user-page': {
+        'source_filenames': (
+            'js/components/account-management/delete-user-confirmation-button.js',
+        ),
+        'output_filename': 'build/js/delete-user-confirmation-button.js',
+        'extra_context': {
+            'defer': True,
+        },
+    },
+    'delete-user-modal': {
+        'source_filenames': (
+            'js/components/modal.js',
+            'js/components/account-management/delete-user-modal.js',
+            'js/components/account-management/delete-user-confirmation-button.js',
+        ),
+        'output_filename': 'build/js/delete-user-modal.js',
+        'extra_context': {
+            'defer': True,
         },
     },
     'auth-modal': {
