@@ -11,7 +11,7 @@ div.signal-link-container {
     transition: all 1s ease-out;
 
     & > hr {
-        background-color: #3d7e9a;
+        background-color: $blue;
         margin: 0;
         max-width: 100%;
         height: 8px;
@@ -20,7 +20,7 @@ div.signal-link-container {
 
     & > a {
         float: right;
-        background-color: #3d7e9a;
+        background-color: $blue;
         color: #fff;
         padding-right: 15px;
         padding-left: 15px;
@@ -177,7 +177,7 @@ div.bc-signal-block {
             font-family: ZillaSlab;
             font-size: 37px;
             font-weight: normal;
-            color: #3d7e9a;
+            color: $blue;
             text-align: center;
         }
     }
@@ -463,9 +463,11 @@ div.bc-signal-block {
             transition: border-color .1s;
         }
 
-        &:hover {
+        &:hover:not(.selected) {
             .browser-logo {
-                border-color: #3d7e9a;
+                border-color: $blue;
+                outline: 3px $blue solid;
+                outline-offset: -3px;
             }
         }
 
