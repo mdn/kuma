@@ -1298,11 +1298,14 @@ category = "main"
 description = "Radically simplified static file serving for WSGI applications"
 name = "whitenoise"
 optional = false
-python-versions = "*"
-version = "3.3.1"
+python-versions = ">=3.5, <4"
+version = "5.0.1"
+
+[package.extras]
+brotli = ["brotli"]
 
 [metadata]
-content-hash = "7abb35f5c5a664a090171ddf9500609418359c174de13d179950c03c3e3ac2c8"
+content-hash = "e00526b2c17f3bfe2fde49bf8face667cfbd26cfc235c09e96387bc6cf07df9f"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1894,6 +1897,6 @@ werkzeug = [
     {file = "Werkzeug-0.16.1.tar.gz", hash = "sha256:b353856d37dec59d6511359f97f6a4b2468442e454bd1c98298ddce53cac1f04"},
 ]
 whitenoise = [
-    {file = "whitenoise-3.3.1-py2.py3-none-any.whl", hash = "sha256:15f43b2e701821b95c9016cf469d29e2a546cb1c7dead584ba82c36f843995cf"},
-    {file = "whitenoise-3.3.1.tar.gz", hash = "sha256:9d81515f2b5b27051910996e1e860b1332e354d9e7bcf30c98f21dcb6713e0dd"},
+    {file = "whitenoise-5.0.1-py2.py3-none-any.whl", hash = "sha256:62556265ec1011bd87113fb81b7516f52688887b7a010ee899ff1fd18fd22700"},
+    {file = "whitenoise-5.0.1.tar.gz", hash = "sha256:0f9137f74bd95fa54329ace88d8dc695fbe895369a632e35f7a136e003e41d73"},
 ]
