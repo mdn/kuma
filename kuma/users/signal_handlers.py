@@ -33,12 +33,6 @@ def on_pre_social_login(sender, request, **kwargs):
     agreeing to terms and conditions) the 'user_logged_in' won't fire until
     then.
     """
-    # If the user did the "social_auth_add" they already logged in and
-    # all we needed to do was to "combine" their user (from two different
-    # providers) can be reduce to the same.
-    if getattr(request, 'social_auth_added', False):
-        return
-
     sociallogin = kwargs.get('sociallogin')
     if sociallogin:
         track_event(
@@ -54,6 +48,12 @@ def on_user_signed_up(sender, request, user, **kwargs):
     """
     sociallogin = kwargs.get('sociallogin')
     if sociallogin:
+        # If the user did the "social_auth_add" they already logged in and
+        # all we needed to do was to "combine" their github social account
+        # with their google social account. Or vice versa.
+        if getattr(request, 'social_auth_added', False):
+            return
+
         track_event(
             CATEGORY_SIGNUP_FLOW,
             ACTION_PROFILE_CREATED,
@@ -79,7 +79,7 @@ def on_user_signed_up(sender, request, user, **kwargs):
 
 @receiver(user_logged_in, dispatch_uid='users.user_logged_in')
 def on_user_logged_in(sender, request, user, **kwargs):
-    # We've already recorded that the have signed up. No point sending one
+    # We've already recorded that they have signed up. No point sending one
     # about them logged in too.
     if getattr(request, 'signed_up', False):
         return
