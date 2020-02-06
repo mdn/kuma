@@ -36,6 +36,10 @@ from taggit.utils import parse_tags
 
 from kuma.core.decorators import (ensure_wiki_domain, login_required,
                                   redirect_in_maintenance_mode)
+from kuma.core.ga_tracking import (
+    ACTION_PROFILE_AUDIT,
+    CATEGORY_SIGNUP_FLOW,
+    track_event)
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import (Document, DocumentDeletionLog, Revision,
                               RevisionAkismetSubmission)
@@ -723,6 +727,20 @@ class SignupView(BaseSignupView):
         if isinstance(response, HttpResponseBadRequest):
             return response
         return super(SignupView, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        """This exists so we can squeeze in a tracking event exclusively
+        about viewing the profile creation page. If we did it to all
+        dispatch() it would trigger on things like submitting form, which
+        might trigger repeatedly if the form submission has validation
+        errors that the user has to address.
+        """
+        if request.session.get('sociallogin_provider'):
+            track_event(
+                CATEGORY_SIGNUP_FLOW,
+                ACTION_PROFILE_AUDIT,
+                request.session['sociallogin_provider'])
+        return super().get(request, *args, **kwargs)
 
 
 signup = redirect_in_maintenance_mode(SignupView.as_view())

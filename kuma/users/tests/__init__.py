@@ -148,6 +148,7 @@ class SocialTestMixin(object):
             token_status_code=200,
             profile_status_code=200,
             email_status_code=200,
+            follow=True,
             token_exc=None,
             profile_exc=None,
             email_exc=None):
@@ -219,7 +220,7 @@ class SocialTestMixin(object):
 
             # Simulate the callback from Github
             data = {'code': 'github_code', 'state': state}
-            response = self.client.get(callback_url, data, follow=True)
+            response = self.client.get(callback_url, data, follow=follow)
 
         return response
 
