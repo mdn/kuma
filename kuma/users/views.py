@@ -1,5 +1,4 @@
 import json
-import traceback
 from datetime import datetime, timedelta
 
 import stripe
