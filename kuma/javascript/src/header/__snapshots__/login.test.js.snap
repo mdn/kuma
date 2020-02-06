@@ -23,13 +23,8 @@ exports[`Login component when user is logged in 1`] = `
       />
     </button>
     <ul
-      className="dropdown-menu-items"
+      className="dropdown-menu-items right"
       role="menu"
-      style={
-        Object {
-          "right": 0,
-        }
-      }
     >
       <li>
         <a
