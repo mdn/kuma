@@ -31,9 +31,9 @@ def test_user(db, django_user_model):
     )
 
 
-@patch("kuma.users.utils.create_stripe_customer_and_subscription_for_user")
+@patch("kuma.users.views.create_stripe_customer_and_subscription_for_user")
 @patch(
-    "kuma.users.utils.retrieve_stripe_subscription_info",
+    "kuma.users.views.retrieve_stripe_subscription_info",
     side_effect=mock_retrieve_stripe_subscription_info
 )
 @override_flag('subscription', True)
