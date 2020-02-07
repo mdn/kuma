@@ -93,3 +93,8 @@ GOOGLE_ANALYTICS_TRACKING_URL = 'https://thisllneverwork.example.com/collect'
 
 # Because that's what all the tests presume.
 SITE_ID = 1
+
+# Stripe API KEY settings
+STRIPE_PUBLIC_KEY = 'wubba lubba dub duab'
+STRIPE_SECRET_KEY = 'wubba lubba dub dub'
+STRIPE_PLAN_ID = 'wubba lubba dub dub'
