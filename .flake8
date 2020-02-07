@@ -1,8 +1,12 @@
 [flake8]
 exclude = **/migrations/**
-max-line-length = 80
+
+# based on recommendations from
+# https://pypi.org/project/black/#installation-and-usage
+max-line-length = 88
 select = C,E,F,W,B,B950
 ignore = E203, E501, W503
+
 # flake8-import-order settings
 import-order-style=edited
 application-import-names=kuma,pages,utils
