@@ -152,14 +152,28 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         assert response.status_code == 200
 
     def test_signin_form_present(self):
-        """When not authenticated, the GitHub login link is present."""
+        """When not authenticated, the GitHub login link is present or a
+        link to the read-only site's signup landing page."""
         all_docs_url = reverse('wiki.all_documents')
-        response = self.client.get(all_docs_url, follow=True)
-        parsed = pq(response.content)
-        github_link = parsed.find("a.login-link[data-service='GitHub']")[0]
-        github_url = urlparams(reverse('github_login'),
-                               next=all_docs_url)
-        assert github_link.attrib['href'] == github_url
+
+        with self.settings(MULTI_AUTH_ENABLED=False):
+            response = self.client.get(all_docs_url, follow=True, HTTP_HOST=settings.WIKI_HOST)
+            assert response.status_code == 200
+            parsed = pq(response.content)
+            github_link = parsed.find("a.login-link[data-service='GitHub']")[0]
+            github_url = urlparams(reverse('github_login'), next=all_docs_url)
+            assert github_link.attrib['href'] == github_url
+
+        with self.settings(MULTI_AUTH_ENABLED=True):
+            # http:// because it's always that in test client.
+            wiki_url_base = f'http://{settings.WIKI_HOST}'
+            response = self.client.get(all_docs_url, follow=True, HTTP_HOST=settings.WIKI_HOST)
+            assert response.status_code == 200
+            parsed = pq(response.content)
+            link = parsed.find("a.login-link")[0]
+            url = urlparams(reverse('socialaccount_signin'), next=wiki_url_base + all_docs_url)
+            expect_url = wiki_url_base.replace('/wiki.', '/') + url
+            assert link.attrib['href'] == expect_url
 
     def test_signup(self):
         """

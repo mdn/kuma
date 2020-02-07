@@ -1,3 +1,5 @@
+from urllib.parse import urlencode
+
 from allauth.account.utils import user_display
 from allauth.socialaccount import providers
 from allauth.socialaccount.templatetags.socialaccount import get_providers
@@ -130,6 +132,25 @@ def provider_login_url(context, provider_id, **params):
             del params['next']
     # get the login url and append params as url parameters
     return Markup(provider.get_login_url(request, **params))
+
+
+@library.global_function
+@contextfunction
+def remote_login_url(context, **params):
+    """Redirects to the read-only site and makes sure the 'next' query
+    string is fully domained."""
+    request = context['request']
+    next = None
+    if 'next' not in params:
+        next = get_request_param(request, 'next')
+    if not next:
+        next = request.get_full_path()
+    next = request.build_absolute_uri(next)
+    url = request.build_absolute_uri(reverse('socialaccount_signin')).replace(
+        '/wiki.', '/'
+    )
+    url += f"?{urlencode({'next': next})}"
+    return Markup(url)
 
 
 @library.global_function
