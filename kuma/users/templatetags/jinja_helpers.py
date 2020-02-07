@@ -145,7 +145,6 @@ def remote_login_url(context, **params):
         next = get_request_param(request, 'next')
     if not next:
         next = request.get_full_path()
-    next = request.build_absolute_uri(next)
     url = request.build_absolute_uri(reverse('socialaccount_signin')).replace(
         '/wiki.', '/'
     )

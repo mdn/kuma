@@ -171,7 +171,7 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
             assert response.status_code == 200
             parsed = pq(response.content)
             link = parsed.find("a.login-link")[0]
-            url = urlparams(reverse('socialaccount_signin'), next=wiki_url_base + all_docs_url)
+            url = urlparams(reverse('socialaccount_signin'), next=all_docs_url)
             expect_url = wiki_url_base.replace('/wiki.', '/') + url
             assert link.attrib['href'] == expect_url
 
