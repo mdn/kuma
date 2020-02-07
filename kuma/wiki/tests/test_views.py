@@ -1,8 +1,8 @@
 
 
 import datetime
+import html
 import json
-from html.parser import HTMLParser
 from unittest import mock
 from urllib.parse import parse_qs, urlencode, urlparse
 
@@ -1474,7 +1474,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             # Add an some extra characters to the end, since the unescaped length
             # is a little less than the escaped length
             end_of_error = start_of_error + len(collision_err) + 20
-            location_of_error = HTMLParser().unescape(
+            location_of_error = html.unescape(
                 content[start_of_error: end_of_error]
             )
         assert collision_err in location_of_error
