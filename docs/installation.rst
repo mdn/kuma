@@ -306,6 +306,9 @@ Enable Stripe payments (optional)
 #. Once created copy the plan ID and also put it into ``.env`` as ``STRIPE_PLAN_ID``. Unless you
    set a custom ID it should start with ``plan_``.
 
+If you're using Stripe in testing mode you can also get test numbers from this site:
+https://stripe.com/docs/testing#cards
+
 
 Interact with the Docker containers
 ===================================
