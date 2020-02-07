@@ -274,7 +274,7 @@ def test_warn_percent_in_param(scraper, mock_logger):
     scraper.add_source('fake', 'loop%0d', depth=1)
     scraper.scrape()
     expected_fmt = 'Source "%s" has a percent in deps'
-    mock_logger.warn.assert_called_once_with(expected_fmt, 'fake:loop%0d')
+    mock_logger.warning.assert_called_once_with(expected_fmt, 'fake:loop%0d')
 
 
 def test_warn_dependency_block(scraper, mock_logger):
@@ -287,4 +287,4 @@ def test_warn_dependency_block(scraper, mock_logger):
     scraper.add_source('fake', 'bad_document', length=2, error=True)
     scraper.scrape()
     expected_msg = 'Dependency block detected. Aborting after %d second%s.'
-    mock_logger.warn.assert_called_once_with(expected_msg, 1, '')
+    mock_logger.warning.assert_called_once_with(expected_msg, 1, '')

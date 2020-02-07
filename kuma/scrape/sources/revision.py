@@ -34,7 +34,7 @@ class RevisionSource(Source):
         try:
             self.locale, self.slug, self.revision_id = self.split_path(path)
         except ValueError as exception:
-            logger.warn(exception)
+            logger.warning(exception)
             self.state = self.STATE_ERROR
 
     @classmethod
@@ -118,10 +118,10 @@ class RevisionSource(Source):
             data['creator'] = creator
             data['document'] = self.document
             if data['is_current'] and data['slug'] != self.document.slug:
-                logger.warn('Current revision %d has slug "%s". Setting'
-                            ' to document slug "%s".',
-                            self.revision_id, data['slug'],
-                            self.document.slug)
+                logger.warning('Current revision %d has slug "%s". Setting'
+                               ' to document slug "%s".',
+                               self.revision_id, data['slug'],
+                               self.document.slug)
                 data['slug'] = self.document.slug
             if data['is_current']:
                 data['review_tags'] = meta.get('review_tags', [])
