@@ -12,7 +12,7 @@ meta_with_trans = {
     "locale": "en-US",
     "slug": "Learn/Getting_started_with_the_web",
     "translations": [
-        {"locale": "fr", "url": "/fr/docs/Apprendre/Commencer_avec_le_web",},
+        {"locale": "fr", "url": "/fr/docs/Apprendre/Commencer_avec_le_web"},
         {
             "locale": "tr",
             "url": "/tr/docs/%C3%96%C4%9Fren/Getting_started_with_the_web",

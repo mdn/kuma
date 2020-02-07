@@ -23,7 +23,7 @@ class FixtureLoader(object):
     model_metadata = {
         "account.emailaddress": {
             "natural_key": ("email",),
-            "relations": {"user": {"link": "to_one", "resource": "users.user",}},
+            "relations": {"user": {"link": "to_one", "resource": "users.user"}},
         },
         "auth.group": {
             "natural_key": ("name",),
@@ -41,12 +41,12 @@ class FixtureLoader(object):
             },
         },
         "contenttypes.contenttype": {"natural_key": ("app_label", "model")},
-        "database.constance": {"natural_key": ("key",),},
+        "database.constance": {"natural_key": ("key",)},
         "feeder.bundle": {
             "natural_key": ("shortname",),
-            "relations": {"feeds": {"link": "to_many", "resource": "feeder.feed",}},
+            "relations": {"feeds": {"link": "to_many", "resource": "feeder.feed"}},
         },
-        "feeder.feed": {"natural_key": ("shortname",),},
+        "feeder.feed": {"natural_key": ("shortname",)},
         "search.filter": {
             "natural_key": ("name", "slug"),
             "relations": {
@@ -55,30 +55,30 @@ class FixtureLoader(object):
             },
         },
         "search.filtergroup": {"natural_key": ("name", "slug")},
-        "sites.site": {"natural_key": ("id",),},
+        "sites.site": {"natural_key": ("id",)},
         "socialaccount.socialaccount": {
             "natural_key": ("uid", "provider"),
-            "relations": {"user": {"link": "to_one", "resource": "users.user",}},
+            "relations": {"user": {"link": "to_one", "resource": "users.user"}},
         },
         "socialaccount.socialapp": {
             "natural_key": ("name",),
             "relations": {"sites": {"link": "to_many", "resource": "sites.site"}},
         },
-        "taggit.tag": {"natural_key": ("name",),},
+        "taggit.tag": {"natural_key": ("name",)},
         "users.user": {
             "natural_key": ("username",),
-            "relations": {"groups": {"link": "to_many", "resource": "auth.group",},},
-            "filters": {"password": "make_password",},
+            "relations": {"groups": {"link": "to_many", "resource": "auth.group"}},
+            "filters": {"password": "make_password"},
         },
         "users.userban": {
             "natural_key": ("user", "by"),
             "relations": {
-                "user": {"link": "to_one", "resource": "users.user",},
-                "by": {"link": "to_one", "resource": "users.user",},
+                "user": {"link": "to_one", "resource": "users.user"},
+                "by": {"link": "to_one", "resource": "users.user"},
             },
         },
-        "waffle.flag": {"natural_key": ("name",),},
-        "waffle.switch": {"natural_key": ("name",),},
+        "waffle.flag": {"natural_key": ("name",)},
+        "waffle.switch": {"natural_key": ("name",)},
     }
 
     class NeedsDependency(Exception):

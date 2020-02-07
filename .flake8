@@ -1,11 +1,12 @@
 [flake8]
-exclude = **/migrations/**
+exclude = **/migrations/**,kuma/settings/local.py
 
 # based on recommendations from
 # https://pypi.org/project/black/#installation-and-usage
+# The only "Kuma addtion" is F405 and E731 which we ought to not have to do
 max-line-length = 88
 select = C,E,F,W,B,B950
-ignore = E203, E501, W503
+ignore = E203, E501, W503, F405, E731
 
 # flake8-import-order settings
 import-order-style=edited
