@@ -14,6 +14,7 @@ import time
 from functools import partial, wraps
 from http import HTTPStatus
 from pathlib import Path
+from subprocess import run
 from urllib.parse import urlencode, urljoin, urlsplit, urlunsplit
 
 import click
@@ -102,6 +103,20 @@ def commit(dir):
     handle_commit(dir)
 
 
+@revise.command()
+@click.argument("dir", required=True)
+@click.option("--no-pager", is_flag=True)
+def diff(dir, no_pager):
+    dir = Path(dir)
+    if not dir.exists():
+        raise ReviseException(f"{dir} does not exist")
+    pager = "--no-pager" if no_pager else "--paginate"
+    cmd = f"git {pager} diff {{rev}} {{ref}}"
+    for rev in dir.rglob(f"rev.html"):
+        ref = rev.with_name("ref.html")
+        run(cmd.format(rev=rev, ref=ref).split())
+
+
 def handle_commit(dir):
     token = get_token()
     dir = Path(dir)
@@ -179,8 +194,7 @@ def do_edit(cmd, config_path, output_dir, log):
         rev_url = f"{ref_url}?{qs}"
 
         try:
-            ref_text, rev_text, last_modified = get_ref_and_rev(ref_url,
-                                                                rev_url)
+            ref_text, rev_text, last_modified = get_ref_and_rev(ref_url, rev_url)
         except requests.HTTPError as e:
             log(f"error: while getting data for {doc} ({str(e)})", fg="red")
             continue
@@ -252,6 +266,13 @@ def get_config(path):
     for s in ("render", "remove"):
         if (s in macros) and not macros[s]:
             raise ReviseException(f'the "{s}" block within {path} is empty')
+    # Let's ensure we use the wiki site (mainly so POST's don't redirect).
+    site = config["site"]
+    status_url = urljoin(site, "_kuma_status.json")
+    resp = get(status_url)
+    if resp.status_code != requests.codes.ok:
+        raise ReviseException(f"{site} doesn't seem to be an MDN site")
+    config["site"] = resp.json()["settings"]["WIKI_SITE_URL"]
     return config
 
 
