@@ -612,7 +612,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
                 # Write a log we can grep to help find pre-existing duplicate
                 # document tags for cleanup.
                 if len(doc_tag) > 1:
-                    log.warn('Found duplicate document tags: %s' % doc_tag)
+                    log.warning('Found duplicate document tags: %s' % doc_tag)
 
                 if doc_tag:
                     if doc_tag[0] != tag and doc_tag[0].lower() == tag.lower():

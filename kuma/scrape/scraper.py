@@ -51,12 +51,12 @@ class Requester(object):
             try:
                 response = request_function(url, timeout=timeout)
             except requests.exceptions.Timeout as err:
-                logger.warn("Timeout on request %d for %s", attempts, url)
+                logger.warning("Timeout on request %d for %s", attempts, url)
                 time.sleep(timeout)
                 timeout *= 2
                 error = err
             except requests.exceptions.ConnectionError as err:
-                logger.warn("Error request %d for %s: %s", attempts, url, err)
+                logger.warning("Error request %d for %s: %s", attempts, url, err)
                 error = err
             if response is None:
                 if attempts >= self.MAX_ATTEMPTS:
@@ -70,12 +70,12 @@ class Requester(object):
                     pause = max(1, int(pause_raw))
                 except ValueError:
                     pause = 30
-                logger.warn(("Request limit (429) returned for %s."
-                             " Pausing for %d seconds."), url, pause)
+                logger.warning(("Request limit (429) returned for %s."
+                                " Pausing for %d seconds."), url, pause)
                 time.sleep(pause)
             elif response.status_code == 504:
                 retry = True
-                logger.warn("Gateway timeout (504) returned for %s.", url)
+                logger.warning("Gateway timeout (504) returned for %s.", url)
                 time.sleep(timeout)
                 timeout *= 2
 
@@ -147,7 +147,7 @@ class Scraper(object):
     def scrape(self):
         """Scrape data from MDN sources."""
         if not self.sources:
-            logger.warn("No sources to scrape.")
+            logger.warning("No sources to scrape.")
             return self.sources
         first = True     # Always run it once
         repeat = False   # Run another round if there are new sources to scrape
@@ -184,8 +184,8 @@ class Scraper(object):
                 state_counts[source.state] += 1
                 for dep in dependencies:
                     if "%" in dep[1]:
-                        logger.warn('Source "%s" has a percent in deps',
-                                    source_key)
+                        logger.warning('Source "%s" has a percent in deps',
+                                       source_key)
 
                 # Detect unfinished work and report on changed state (in debug)
                 log_func = logger.debug
@@ -229,8 +229,8 @@ class Scraper(object):
                 blocked = True
         duration = int(ceil((datetime.now() - start).total_seconds()))
         if blocked:
-            logger.warn('Dependency block detected. Aborting after %d'
-                        ' second%s.', duration, '' if duration == 1 else 's')
+            logger.warning('Dependency block detected. Aborting after %d'
+                           ' second%s.', duration, '' if duration == 1 else 's')
         else:
             logger.info('Scrape complete in %d second%s.',
                         duration, '' if duration == 1 else 's')
