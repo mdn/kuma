@@ -12,8 +12,12 @@ from django.conf import settings
 from django.conf.locale import LANG_INFO
 from django.utils import translation
 from django.utils.translation.trans_real import (
-    check_for_language, get_languages as _django_get_languages,
-    language_code_prefix_re, language_code_re, parse_accept_lang_header)
+    check_for_language,
+    get_languages as _django_get_languages,
+    language_code_prefix_re,
+    language_code_re,
+    parse_accept_lang_header,
+)
 from jinja2 import nodes
 from jinja2.ext import Extension
 
@@ -51,8 +55,10 @@ def get_django_languages():
     This would be the same as Django's get_languages, if we were using Django
     language codes.
     """
-    return {kuma_language_code_to_django(locale): name
-            for locale, name in settings.LANGUAGES}
+    return {
+        kuma_language_code_to_django(locale): name
+        for locale, name in settings.LANGUAGES
+    }
 
 
 def get_kuma_languages():
@@ -97,10 +103,10 @@ def get_supported_language_variant(raw_lang_code):
         # If 'fr-ca' is not supported, try special fallback or language-only 'fr'.
         possible_lang_codes = [lang_code]
         try:
-            possible_lang_codes.extend(LANG_INFO[lang_code]['fallback'])
+            possible_lang_codes.extend(LANG_INFO[lang_code]["fallback"])
         except KeyError:
             pass
-        generic_lang_code = lang_code.split('-')[0]
+        generic_lang_code = lang_code.split("-")[0]
         possible_lang_codes.append(generic_lang_code)
         supported_lang_codes = get_django_languages()
 
@@ -111,7 +117,7 @@ def get_supported_language_variant(raw_lang_code):
                 return django_language_code_to_kuma(code)
         # If fr-fr is not supported, try fr-ca.
         for supported_code in supported_lang_codes:
-            if supported_code.startswith(generic_lang_code + '-'):
+            if supported_code.startswith(generic_lang_code + "-"):
                 # Kuma: Convert to Kuma language code
                 return django_language_code_to_kuma(supported_code)
     raise LookupError(raw_lang_code)
@@ -174,9 +180,9 @@ def get_language_from_request(request):
         pass
 
     # Pick the closest langauge based on the Accept Language header
-    accept = request.META.get('HTTP_ACCEPT_LANGUAGE', '')
+    accept = request.META.get("HTTP_ACCEPT_LANGUAGE", "")
     for accept_lang, unused in parse_accept_lang_header(accept):
-        if accept_lang == '*':
+        if accept_lang == "*":
             break
 
         # Kuma: Assert accept_lang fits the language code pattern
@@ -202,7 +208,7 @@ def get_language_from_request(request):
 
 
 def get_language_mapping():
-    return apps.get_app_config('core').language_mapping
+    return apps.get_app_config("core").language_mapping
 
 
 def activate_language_from_request(request):
@@ -246,7 +252,8 @@ class TranslationExtension(Extension):
 
     http://jinja.pocoo.org/docs/2.10/extensions/#module-jinja2.ext
     """
-    tags = {'translation'}
+
+    tags = {"translation"}
 
     def parse(self, parser):
         """Parse a stream starting with {% translation %}."""
@@ -255,12 +262,12 @@ class TranslationExtension(Extension):
         block_language = parser.parse_expression()
 
         # Parse the block body until {% endtranslation %}
-        body = parser.parse_statements(['name:endtranslation'],
-                                       drop_needle=True)
+        body = parser.parse_statements(["name:endtranslation"], drop_needle=True)
 
         # Return a node that will render body in the desired translation
-        return nodes.CallBlock(self.call_method('_override', [block_language]),
-                               [], [], body).set_lineno(lineno)
+        return nodes.CallBlock(
+            self.call_method("_override", [block_language]), [], [], body
+        ).set_lineno(lineno)
 
     def _override(self, block_language, caller):
         """Render a {% translation %} block with the requested language."""

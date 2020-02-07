@@ -1,5 +1,10 @@
 from django.core.paginator import (
-    EmptyPage, InvalidPage, Page, PageNotAnInteger, Paginator)
+    EmptyPage,
+    InvalidPage,
+    Page,
+    PageNotAnInteger,
+    Paginator,
+)
 from django.utils.functional import cached_property
 
 
@@ -25,9 +30,9 @@ class SearchPaginator(Paginator):
         try:
             number = int(number)
         except (TypeError, ValueError):
-            raise PageNotAnInteger('That page number is not an integer')
+            raise PageNotAnInteger("That page number is not an integer")
         if number < 1:
-            raise EmptyPage('That page number is less than 1')
+            raise EmptyPage("That page number is less than 1")
 
         if number >= 1000:
             # Anything >=1,000 will result in a hard error in
@@ -39,7 +44,7 @@ class SearchPaginator(Paginator):
             #     than or equal to: [10000] but was [11000].
             #
             # See https://github.com/mdn/kuma/issues/6092
-            raise InvalidPage('Page number too large')
+            raise InvalidPage("Page number too large")
 
         return number
 
@@ -62,7 +67,7 @@ class SearchPaginator(Paginator):
         # Set the count to the results after post_filter
         self._result_total = result.hits.total
         # Also store the aggregations, if any.
-        page.aggregations = getattr(result, 'aggregations', None)
+        page.aggregations = getattr(result, "aggregations", None)
 
         # Now that we have the count validate that the page number isn't higher
         # than the possible number of pages and adjust accordingly.
@@ -70,7 +75,7 @@ class SearchPaginator(Paginator):
             if number == 1 and self.allow_empty_first_page:
                 pass
             else:
-                raise EmptyPage('That page contains no results')
+                raise EmptyPage("That page contains no results")
         return page
 
     @cached_property

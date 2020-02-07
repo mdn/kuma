@@ -9,12 +9,20 @@ from math import ceil
 import requests
 
 from .sources import (
-    DocumentChildrenSource, DocumentCurrentSource, DocumentHistorySource,
-    DocumentMetaSource, DocumentRedirectSource, DocumentSource, LinksSource,
-    RevisionSource, Source, UserSource)
+    DocumentChildrenSource,
+    DocumentCurrentSource,
+    DocumentHistorySource,
+    DocumentMetaSource,
+    DocumentRedirectSource,
+    DocumentSource,
+    LinksSource,
+    RevisionSource,
+    Source,
+    UserSource,
+)
 from .storage import Storage
 
-logger = logging.getLogger('kuma.scraper')
+logger = logging.getLogger("kuma.scraper")
 
 
 class Requester(object):
@@ -27,8 +35,8 @@ class Requester(object):
         self.host = host
         self.ssl = ssl
         self._session = None
-        scheme = 'https' if ssl else 'http'
-        self.base_url = '%s://%s' % (scheme, host)
+        scheme = "https" if ssl else "http"
+        self.base_url = "%s://%s" % (scheme, host)
 
     @property
     def session(self):
@@ -36,7 +44,7 @@ class Requester(object):
             self._session = requests.Session()
         return self._session
 
-    def request(self, path, raise_for_status=True, method='GET'):
+    def request(self, path, raise_for_status=True, method="GET"):
         url = self.base_url + path
         logger.debug("%s %s", method, url)
         attempts = 0
@@ -65,13 +73,16 @@ class Requester(object):
                     retry = True
             elif response.status_code == 429:
                 retry = True
-                pause_raw = response.headers.get('retry-after', 30)
+                pause_raw = response.headers.get("retry-after", 30)
                 try:
                     pause = max(1, int(pause_raw))
                 except ValueError:
                     pause = 30
-                logger.warning(("Request limit (429) returned for %s."
-                                " Pausing for %d seconds."), url, pause)
+                logger.warning(
+                    ("Request limit (429) returned for %s." " Pausing for %d seconds."),
+                    url,
+                    pause,
+                )
                 time.sleep(pause)
             elif response.status_code == 504:
                 retry = True
@@ -89,18 +100,18 @@ class Scraper(object):
     """Scrape data from a running MDN instance."""
 
     source_types = {
-        'document': DocumentSource,
-        'document_children': DocumentChildrenSource,
-        'document_current': DocumentCurrentSource,
-        'document_history': DocumentHistorySource,
-        'document_meta': DocumentMetaSource,
-        'document_redirect': DocumentRedirectSource,
-        'links': LinksSource,
-        'revision': RevisionSource,
-        'user': UserSource,
+        "document": DocumentSource,
+        "document_children": DocumentChildrenSource,
+        "document_current": DocumentCurrentSource,
+        "document_history": DocumentHistorySource,
+        "document_meta": DocumentMetaSource,
+        "document_redirect": DocumentRedirectSource,
+        "links": LinksSource,
+        "revision": RevisionSource,
+        "user": UserSource,
     }
 
-    def __init__(self, host='wiki.developer.mozilla.org', ssl=True):
+    def __init__(self, host="wiki.developer.mozilla.org", ssl=True):
         """Initialize Scraper."""
         self.requester = Requester(host, ssl)
         self.sources = {}
@@ -108,14 +119,15 @@ class Scraper(object):
         self.defaults = {}
         self.overrides = {}
 
-    def add_source(self, source_type, source_param='', **options):
+    def add_source(self, source_type, source_param="", **options):
         """Add a source of MDN data."""
         source_key = "%s:%s" % (source_type, source_param)
         if source_key in self.sources:
             changes = self.sources[source_key].merge_options(**options)
             if changes:
-                logger.debug('Updating source "%s" with options %s',
-                             source_key, changes)
+                logger.debug(
+                    'Updating source "%s" with options %s', source_key, changes
+                )
                 return True
             else:
                 return False
@@ -128,29 +140,33 @@ class Scraper(object):
             return True
 
     def create_source(self, source_key, **options):
-        source_type, source_param = source_key.split(':', 1)
+        source_type, source_param = source_key.split(":", 1)
         return self.source_types[source_type](source_param, **options)
 
     # Scrape progress report patterns
-    _report_prefix = ('Round %(cycle)d, Source %(source_num)d of'
-                      ' %(source_total)d: %(source_key)s ')
-    _report_done = (_report_prefix +
-                    'complete, freshness=%(freshness)s, with %(dep_count)s'
-                    ' dependent source%(dep_s)s.')
-    _report_error = (_report_prefix +
-                     'errored %(err_msg)s, with %(dep_count)s dependent'
-                     ' source%(dep_s)s.')
-    _report_progress = (_report_prefix +
-                        'in state "%(state)s" with %(dep_count)s dependent'
-                        ' source%(dep_s)s.')
+    _report_prefix = (
+        "Round %(cycle)d, Source %(source_num)d of" " %(source_total)d: %(source_key)s "
+    )
+    _report_done = (
+        _report_prefix + "complete, freshness=%(freshness)s, with %(dep_count)s"
+        " dependent source%(dep_s)s."
+    )
+    _report_error = (
+        _report_prefix + "errored %(err_msg)s, with %(dep_count)s dependent"
+        " source%(dep_s)s."
+    )
+    _report_progress = (
+        _report_prefix + 'in state "%(state)s" with %(dep_count)s dependent'
+        " source%(dep_s)s."
+    )
 
     def scrape(self):
         """Scrape data from MDN sources."""
         if not self.sources:
             logger.warning("No sources to scrape.")
             return self.sources
-        first = True     # Always run it once
-        repeat = False   # Run another round if there are new sources to scrape
+        first = True  # Always run it once
+        repeat = False  # Run another round if there are new sources to scrape
         blocked = False  # Stop if we're stuck on a blocked dependency
         cycle = 0
         start = datetime.now()
@@ -159,9 +175,11 @@ class Scraper(object):
         while (first or repeat) and not blocked:
             first = False
             repeat = False
-            source_total = (len(self.sources) -
-                            state_counts[Source.STATE_DONE] -
-                            state_counts[Source.STATE_ERROR])
+            source_total = (
+                len(self.sources)
+                - state_counts[Source.STATE_DONE]
+                - state_counts[Source.STATE_ERROR]
+            )
             last_counts = state_counts
             state_counts = dict.fromkeys(Source.STATES, 0)
             new_sources = []
@@ -184,8 +202,7 @@ class Scraper(object):
                 state_counts[source.state] += 1
                 for dep in dependencies:
                     if "%" in dep[1]:
-                        logger.warning('Source "%s" has a percent in deps',
-                                       source_key)
+                        logger.warning('Source "%s" has a percent in deps', source_key)
 
                 # Detect unfinished work and report on changed state (in debug)
                 log_func = logger.debug
@@ -199,18 +216,23 @@ class Scraper(object):
                 else:
                     repeat = True
                     log_fmt = self._report_progress
-                log_func(log_fmt, {'cycle': cycle,
-                                   'source_num': source_num,
-                                   'source_total': source_total,
-                                   'source_key': source_key,
-                                   'err_msg': err_msg,
-                                   'state': source.state,
-                                   'freshness': source.freshness,
-                                   'dep_count': dep_count,
-                                   'dep_s': '' if dep_count == 1 else 's'})
+                log_func(
+                    log_fmt,
+                    {
+                        "cycle": cycle,
+                        "source_num": source_num,
+                        "source_total": source_total,
+                        "source_key": source_key,
+                        "err_msg": err_msg,
+                        "state": source.state,
+                        "freshness": source.freshness,
+                        "dep_count": dep_count,
+                        "dep_s": "" if dep_count == 1 else "s",
+                    },
+                )
                 if source.state not in (Source.STATE_DONE, Source.STATE_ERROR):
                     for num, dep in enumerate(dependencies):
-                        logger.debug('* Dep %d: %s', num + 1, dep)
+                        logger.debug("* Dep %d: %s", num + 1, dep)
 
             # Add new sources
             repeat = repeat or bool(new_sources)
@@ -218,20 +240,26 @@ class Scraper(object):
                 if self.add_source(source_type, source_param, **options):
                     state_counts[Source.STATE_INIT] += 1
 
-            logger.info('Scrape progress, cycle %d: %s',
-                        cycle,
-                        ", ".join(("%d %s" % (v, k)
-                                   for k, v in state_counts.items()
-                                   if v > 0)))
+            logger.info(
+                "Scrape progress, cycle %d: %s",
+                cycle,
+                ", ".join(("%d %s" % (v, k) for k, v in state_counts.items() if v > 0)),
+            )
             if last_counts == state_counts:
                 # It looks like nothing changed state this round, so we have
                 # a blocked dependency and won't finish.
                 blocked = True
         duration = int(ceil((datetime.now() - start).total_seconds()))
         if blocked:
-            logger.warning('Dependency block detected. Aborting after %d'
-                           ' second%s.', duration, '' if duration == 1 else 's')
+            logger.warning(
+                "Dependency block detected. Aborting after %d" " second%s.",
+                duration,
+                "" if duration == 1 else "s",
+            )
         else:
-            logger.info('Scrape complete in %d second%s.',
-                        duration, '' if duration == 1 else 's')
+            logger.info(
+                "Scrape complete in %d second%s.",
+                duration,
+                "" if duration == 1 else "s",
+            )
         return self.sources

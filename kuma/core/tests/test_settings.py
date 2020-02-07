@@ -1,4 +1,4 @@
-'''Check that settings are consistent.'''
+"""Check that settings are consistent."""
 
 
 import pytest
@@ -11,14 +11,11 @@ def test_accepted_locales():
     assert settings.ACCEPTED_LOCALES[0] == settings.LANGUAGE_CODE
 
 
-@pytest.mark.parametrize(
-    'primary,secondary',
-    (('pt-PT', 'pt-BR'),
-     ('zh-CN', 'zh-TW'),
-     ))
+@pytest.mark.parametrize("primary,secondary", (("pt-PT", "pt-BR"), ("zh-CN", "zh-TW"),))
 def test_preferred_locale_codes(primary, secondary):
-    assert (settings.ACCEPTED_LOCALES.index(primary) <
-            settings.ACCEPTED_LOCALES.index(secondary))
+    assert settings.ACCEPTED_LOCALES.index(primary) < settings.ACCEPTED_LOCALES.index(
+        secondary
+    )
 
 
 @pytest.mark.parametrize("locale", settings.RTL_LANGUAGES)

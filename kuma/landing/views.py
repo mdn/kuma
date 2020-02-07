@@ -1,5 +1,3 @@
-
-
 from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
@@ -18,7 +16,7 @@ from .utils import favicon_url
 
 @shared_cache_control
 def contribute_json(request):
-    return static.serve(request, 'contribute.json', document_root=settings.ROOT)
+    return static.serve(request, "contribute.json", document_root=settings.ROOT)
 
 
 @shared_cache_control
@@ -26,14 +24,13 @@ def home(request):
     """Home page."""
     context = {}
     # Need for both wiki and react homepage
-    context['updates'] = list(
-        Bundle.objects.recent_entries(SECTION_HACKS.updates)[:5])
+    context["updates"] = list(Bundle.objects.recent_entries(SECTION_HACKS.updates)[:5])
 
     # The default template name
-    template_name = 'landing/react_homepage.html'
+    template_name = "landing/react_homepage.html"
     if is_wiki(request):
-        template_name = 'landing/homepage.html'
-        context['default_filters'] = Filter.objects.default_filters()
+        template_name = "landing/homepage.html"
+        context["default_filters"] = Filter.objects.default_filters()
     return render(request, template_name, context)
 
 
@@ -41,19 +38,19 @@ def home(request):
 @never_cache
 def maintenance_mode(request):
     if settings.MAINTENANCE_MODE:
-        return render(request, 'landing/maintenance-mode.html')
+        return render(request, "landing/maintenance-mode.html")
     else:
-        return redirect('home')
+        return redirect("home")
 
 
 @ensure_wiki_domain
 @shared_cache_control
 def promote_buttons(request):
     """Bug 646192: MDN affiliate buttons"""
-    return render(request, 'landing/promote_buttons.html')
+    return render(request, "landing/promote_buttons.html")
 
 
-ROBOTS_ALLOWED_TXT = '''\
+ROBOTS_ALLOWED_TXT = """\
 User-agent: *
 Sitemap: https://developer.mozilla.org/sitemap.xml
 
@@ -104,13 +101,15 @@ Disallow: /*profiles*/edit
 Disallow: /skins
 Disallow: /*type=feed
 Disallow: /*users/
-''' + '\n'.join('Disallow: /{locale}/search'.format(locale=locale)
-                for locale in settings.ENABLED_LOCALES)
+""" + "\n".join(
+    "Disallow: /{locale}/search".format(locale=locale)
+    for locale in settings.ENABLED_LOCALES
+)
 
-ROBOTS_GO_AWAY_TXT = '''\
+ROBOTS_GO_AWAY_TXT = """\
 User-Agent: *
 Disallow: /
-'''
+"""
 
 
 @shared_cache_control
@@ -123,7 +122,7 @@ def robots_txt(request):
         robots = ROBOTS_ALLOWED_TXT
     else:
         robots = ROBOTS_GO_AWAY_TXT
-    return HttpResponse(robots, content_type='text/plain')
+    return HttpResponse(robots, content_type="text/plain")
 
 
 class FaviconRedirect(RedirectView):

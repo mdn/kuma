@@ -23,10 +23,10 @@ def allow_add_attachment_by(user):
     if user.is_superuser or user.is_staff:
         # Superusers and staff always allowed
         return True
-    if user.has_perm('attachments.add_attachment'):
+    if user.has_perm("attachments.add_attachment"):
         # Explicit add permission overrides disallow
         return True
-    if user.has_perm('attachments.disallow_add_attachment'):
+    if user.has_perm("attachments.disallow_add_attachment"):
         # Disallow generally applied via group, so per-user allow can
         # override
         return False
@@ -34,11 +34,11 @@ def allow_add_attachment_by(user):
 
 
 def full_attachment_url(attachment_id, filename):
-    path = reverse('attachments.raw_file', kwargs={
-        'attachment_id': attachment_id,
-        'filename': filename,
-    })
-    return f'{settings.PROTOCOL}{settings.ATTACHMENT_HOST}{path}'
+    path = reverse(
+        "attachments.raw_file",
+        kwargs={"attachment_id": attachment_id, "filename": filename,},
+    )
+    return f"{settings.PROTOCOL}{settings.ATTACHMENT_HOST}{path}"
 
 
 def convert_to_utc(dt):
@@ -79,8 +79,8 @@ def attachment_upload_to(instance, filename):
     # microsecond, of when the path is generated.
     now = datetime.now()
     return "attachments/%(date)s/%(id)s/%(md5)s/%(filename)s" % {
-        'date': now.strftime('%Y/%m/%d'),
-        'id': instance.attachment.id,
-        'md5': hashlib.md5(str(now).encode()).hexdigest(),
-        'filename': filename
+        "date": now.strftime("%Y/%m/%d"),
+        "id": instance.attachment.id,
+        "md5": hashlib.md5(str(now).encode()).hexdigest(),
+        "filename": filename,
     }

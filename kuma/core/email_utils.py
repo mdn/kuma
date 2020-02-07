@@ -1,5 +1,3 @@
-
-
 import logging
 from functools import wraps
 
@@ -10,7 +8,7 @@ from django.test import RequestFactory
 from django.utils import translation
 
 
-log = logging.getLogger('kuma.core.email')
+log = logging.getLogger("kuma.core.email")
 
 
 def safe_translation(f):
@@ -20,6 +18,7 @@ def safe_translation(f):
 
     NB: This means `f` will be called up to two times!
     """
+
     @wraps(f)
     def wrapper(locale, *args, **kwargs):
         try:
@@ -57,7 +56,7 @@ def render_email(template, context):
         Because of safe_translation decorator, if this fails,
         the function will be run again in English.
         """
-        req = RequestFactory().get('/')
+        req = RequestFactory().get("/")
         req.META = {}
         req.LANGUAGE_CODE = locale
 
@@ -66,14 +65,16 @@ def render_email(template, context):
     return _render(translation.get_language())
 
 
-def emails_with_users_and_watches(subject,
-                                  text_template,
-                                  html_template,
-                                  context_vars,
-                                  users_and_watches,
-                                  from_email=settings.TIDINGS_FROM_ADDRESS,
-                                  default_locale=settings.WIKI_DEFAULT_LANGUAGE,
-                                  **extra_kwargs):
+def emails_with_users_and_watches(
+    subject,
+    text_template,
+    html_template,
+    context_vars,
+    users_and_watches,
+    from_email=settings.TIDINGS_FROM_ADDRESS,
+    default_locale=settings.WIKI_DEFAULT_LANGUAGE,
+    **extra_kwargs
+):
     """Return iterable of EmailMessages with user and watch values substituted.
 
     A convenience function for generating emails by repeatedly
@@ -97,27 +98,30 @@ def emails_with_users_and_watches(subject,
     :returns: generator of EmailMessage objects
 
     """
+
     @safe_translation
     def _make_mail(locale, user, watch):
-        context_vars['user'] = user
-        context_vars['watch'] = watch[0]
-        context_vars['watches'] = watch
+        context_vars["user"] = user
+        context_vars["watch"] = watch[0]
+        context_vars["watches"] = watch
 
         msg = EmailMultiAlternatives(
             subject % context_vars,
             render_email(text_template, context_vars),
             from_email,
             [user.email],
-            **extra_kwargs)
+            **extra_kwargs
+        )
 
         if html_template:
             msg.attach_alternative(
-                render_email(html_template, context_vars), 'text/html')
+                render_email(html_template, context_vars), "text/html"
+            )
 
         return msg
 
     for user, watch in users_and_watches:
-        if hasattr(user, 'locale'):
+        if hasattr(user, "locale"):
             locale = user.locale
         else:
             locale = default_locale
