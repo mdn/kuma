@@ -1,0 +1,71 @@
+<noscript>
+  <style>
+    .stripe-subscription {
+      display: none
+    }
+  </style>
+</noscript>
+
+<section class="stripe-subscription">
+  {% stylesheet 'stripe-subscription' %}
+
+  {% if not subscription_info %}
+    <form id="stripe-form" action="{{ url('users.create_stripe_subscription') }}" method="post">
+      {% csrf_token %}
+      <h2>{{ _('Help grow MDN') }}</h2>
+      {% if has_stripe_error %}
+          <div class="stripe-error">
+              <h3>{{ _('Stripe error') }}</h3>
+              <p>
+                  {{ _("An error occurred trying to set up the subscription with Stripe's server. We've recorded the error and will investigate it.") }}
+              </p>
+              <hr>
+          </div>
+      {% endif %}
+      <p>
+        {{ _("Be a part of making MDN even better. You'll get back more of the knowledge and tools you rely on for when your work has to work.") }}
+      </p>
+      <hr>
+      <div>
+        <b>{{ _('$5 billed every month.') }}</b> {{ _('Cancel any time.') }}
+      </div>
+      <hr>
+      <label class="payment-opt-in">
+        <input type="checkbox" required="required">
+        <small>
+          {{ _('By clicking this button, I authorize Mozilla to charge this payment method each month, according to the <a target="_blank" rel="noopener" href="%(url)s">Payment Terms</a>, until I cancel my subscription.', url=url('payment_terms')) }}
+        </small>
+      </label>
+      <input type="hidden" name="stripe_token">
+      <input type="hidden" name="stripe_email" value="{{ edit_user.email }}">
+      <button type="submit" disabled="disabled">
+        {{ _('Continue') }}
+        {% include 'includes/icons/arrows/arrow-right.svg' %}
+      </button>
+    </form>
+
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    <script type="application/json" id="stripe-config">
+      {"STRIPE_PUBLIC_KEY": "{{ settings.STRIPE_PUBLIC_KEY }}"}
+    </script>
+  {% else %}
+    <h2>{{ _("You're helping MDN grow") }}</h2>
+    <p>
+      {{ _('Next payment of $5 (monthly) occurs on %(date)s', date=subscription_info.next_payment_at|date) }}
+    </p>
+    <hr>
+    <div class="card-info">
+      {% include 'includes/icons/general/credit-card.svg' %}
+      <p>
+        {{ _('%(brand)s ending in %(last4)s', brand=subscription_info.brand, last4=subscription_info.last4) }}<br>
+        {{ _('expires %(expires_at)s', expires_at=subscription_info.expires_at) }}<br>
+        {{ _('Postal / ZIP code: %(zip)s', zip=subscription_info.zip) }}<br>
+      </p>
+    </div>
+    <hr>
+    <p>
+      {{ _('To cancel your subscription, please <a href="%(support_email)s">contact support</a>. <br>If you have questions, please read the <a href="%(terms_url)s">FAQ</a> or you can also contact support.', support_email='mailto:mdn-support@mozilla.com', terms_url=url('recurring_payment_initial')) }}
+    </p>
+  {% endif %}
+  {% javascript "stripe-subscription" %}
+</section>

@@ -1,6 +1,7 @@
 import json
 from datetime import datetime, timedelta
 
+import stripe
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
 from allauth.socialaccount import helpers
@@ -25,14 +26,17 @@ from django.http import (
     HttpResponseRedirect)
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
+from django.urls import reverse
 from django.utils.encoding import force_text
-from django.utils.http import urlsafe_base64_decode
+from django.utils.http import urlencode, urlsafe_base64_decode
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
 from honeypot.decorators import verify_honeypot_value
+from raven.contrib.django.models import client as raven_client
 from taggit.utils import parse_tags
+from waffle import flag_is_active
 
 from kuma.core.decorators import (ensure_wiki_domain, login_required,
                                   redirect_in_maintenance_mode)
@@ -53,7 +57,10 @@ from .models import User, UserBan
 # we have to import the signup form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
 from .signup import SignupForm
-
+from .utils import (
+    create_stripe_customer_and_subscription_for_user,
+    retrieve_stripe_subscription_info,
+)
 
 # TODO: Make this dynamic, editable from admin interface
 INTEREST_SUGGESTIONS = [
@@ -396,6 +403,7 @@ def user_edit(request, username):
     """
     View and edit user profile
     """
+    has_stripe_error = request.GET.get('has_stripe_error', 'False') == 'True'
     edit_user = get_object_or_404(User, username=username)
 
     if not edit_user.allows_editing_by(request.user):
@@ -460,7 +468,12 @@ def user_edit(request, username):
         'form': UserDeleteForm(),
         'INTEREST_SUGGESTIONS': INTEREST_SUGGESTIONS,
         'revisions': revisions,
+        'subscription_info': retrieve_stripe_subscription_info(
+            edit_user,
+        ),
+        'has_stripe_error': has_stripe_error
     }
+
     return render(request, 'users/user_edit.html', context)
 
 
@@ -779,6 +792,29 @@ def recover(request, uidb64=None, token=None):
         login(request, user, 'kuma.users.auth_backends.KumaAuthBackend')
         return redirect('users.recover_done')
     return render(request, 'users/recover_failed.html')
+
+
+@login_required
+@require_POST
+def create_stripe_subscription(request):
+    user = request.user
+
+    if not flag_is_active(request, 'subscription'):
+        return HttpResponseForbidden('subscription flag not active for this user')
+
+    has_stripe_error = False
+    try:
+        email = request.POST.get('stripe_email', '')
+        stripe_token = request.POST.get('stripe_token', '')
+        create_stripe_customer_and_subscription_for_user(user, email, stripe_token)
+    except stripe.error.StripeError:
+        raven_client.captureException()
+        has_stripe_error = True
+
+    query_params = "?" + urlencode(
+        {"has_stripe_error": has_stripe_error}
+    )
+    return redirect(reverse('users.user_edit', args=[user.username]) + query_params)
 
 
 recovery_email_sent = TemplateView.as_view(
