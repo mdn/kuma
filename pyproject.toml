@@ -104,6 +104,7 @@ pytest-rerunfailures = "^4.2"
 pytest-variables = "^1.9.0"
 
 # From linting.txt
+black = "^19.10b0"
 flake8 = "^3.7.9"
 flake8-import-order = "^0.18.1"
 
