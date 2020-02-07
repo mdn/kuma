@@ -210,14 +210,14 @@ http://localhost.org:8000/admin/login
 
 Update the Sites section
 =======================================
-#. After logging in to the Django admin (an alternative is using the login ``test-super`` 
-   with password ``test-password``), scroll down to the Sites section. 
+#. After logging in to the Django admin (an alternative is using the login ``test-super``
+   with password ``test-password``), scroll down to the Sites section.
 
-#. Click on "Change". 
+#. Click on "Change".
 
-#. Click on the entry that says ``localhost:8000``. 
+#. Click on the entry that says ``localhost:8000``.
 
-#. Change both the domain and display name from ``localhost:8000`` to ``localhost.org:8000``. 
+#. Change both the domain and display name from ``localhost:8000`` to ``localhost.org:8000``.
 
 #. Click "Save".
 
@@ -294,6 +294,18 @@ Django shell::
 .. _configure credentials for that project: https://console.developers.google.com/apis/credentials
 .. _add a django-allauth social app: http://localhost.org:8000/admin/socialaccount/socialapp/add/
 .. _`Use your GitHub account to sign in`: https://developer.mozilla.org/users/github/login/?process=connect
+
+
+Enable Stripe payments (optional)
+=======================================
+#. Go to https://dashboard.stripe.com and create a Stripe account (if you don't have one already).
+#. Go to https://dashboard.stripe.com/apikeys and copy both the publishable and secret key
+   into your ``.env`` file. The respective config keys are ``STRIPE_PUBLIC_KEY`` and
+   ``STRIPE_SECRET_KEY``.
+#. Go to https://dashboard.stripe.com/test/subscriptions/products and create a new product and plan.
+#. Once created copy the plan ID and also put it into ``.env`` as ``STRIPE_PLAN_ID``. Unless you
+   set a custom ID it should start with ``plan_``.
+
 
 Interact with the Docker containers
 ===================================
