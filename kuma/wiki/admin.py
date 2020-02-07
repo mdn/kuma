@@ -1,5 +1,3 @@
-
-
 import json
 from string import ascii_lowercase
 
@@ -24,9 +22,17 @@ from kuma.spam.akismet import Akismet, AkismetError
 
 from .decorators import check_readonly
 from .forms import RevisionAkismetSubmissionAdminForm
-from .models import (BCSignal, Document, DocumentDeletionLog, DocumentSpamAttempt,
-                     DocumentTag, EditorToolbar, Revision,
-                     RevisionAkismetSubmission, RevisionIP)
+from .models import (
+    BCSignal,
+    Document,
+    DocumentDeletionLog,
+    DocumentSpamAttempt,
+    DocumentTag,
+    EditorToolbar,
+    Revision,
+    RevisionAkismetSubmission,
+    RevisionIP,
+)
 
 
 def repair_breadcrumbs(self, request, queryset):
@@ -38,9 +44,9 @@ repair_breadcrumbs.short_description = "Repair translation breadcrumbs"
 
 
 def purge_documents(self, request, queryset):
-    redirect_url = '/admin/wiki/document/purge/?ids=%s'
+    redirect_url = "/admin/wiki/document/purge/?ids=%s"
     selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
-    return HttpResponseRedirect(redirect_url % ','.join(selected))
+    return HttpResponseRedirect(redirect_url % ",".join(selected))
 
 
 purge_documents.short_description = "Permanently purge deleted documents"
@@ -49,25 +55,25 @@ purge_documents.short_description = "Permanently purge deleted documents"
 @never_cache
 @login_required
 @staff_member_required
-@permission_required('wiki.purge_document')
+@permission_required("wiki.purge_document")
 @check_readonly
 def purge_view(request):
     """
     Interstitial admin view for purging multiple Documents.
     """
-    selected = request.GET.get('ids', '').split(',')
+    selected = request.GET.get("ids", "").split(",")
     to_purge = Document.deleted_objects.filter(id__in=selected)
-    if request.method == 'POST':
-        if request.POST.get('confirm_purge', False):
+    if request.method == "POST":
+        if request.POST.get("confirm_purge", False):
             purged = 0
             for doc in to_purge:
                 doc.purge()
                 purged += 1
             messages.info(request, "%s document(s) were purged." % purged)
-        return HttpResponseRedirect('/admin/wiki/document/')
-    return TemplateResponse(request,
-                            'admin/wiki/purge_documents.html',
-                            {'to_purge': to_purge})
+        return HttpResponseRedirect("/admin/wiki/document/")
+    return TemplateResponse(
+        request, "admin/wiki/purge_documents.html", {"to_purge": to_purge}
+    )
 
 
 def restore_documents(self, request, queryset):
@@ -80,38 +86,43 @@ restore_documents.short_description = "Restore deleted documents"
 
 def enable_deferred_rendering_for_documents(self, request, queryset):
     queryset.update(defer_rendering=True)
-    self.message_user(request, 'Enabled deferred rendering for %s Documents' %
-                               queryset.count())
+    self.message_user(
+        request, "Enabled deferred rendering for %s Documents" % queryset.count()
+    )
 
 
 enable_deferred_rendering_for_documents.short_description = (
-    "Enable deferred rendering for selected documents")
+    "Enable deferred rendering for selected documents"
+)
 
 
 def disable_deferred_rendering_for_documents(self, request, queryset):
     queryset.update(defer_rendering=False)
-    self.message_user(request, 'Disabled deferred rendering for %s Documents' %
-                               queryset.count())
+    self.message_user(
+        request, "Disabled deferred rendering for %s Documents" % queryset.count()
+    )
 
 
 disable_deferred_rendering_for_documents.short_description = (
-    "Disable deferred rendering for selected documents")
+    "Disable deferred rendering for selected documents"
+)
 
 
 def force_render_documents(self, request, queryset):
     count, bad_count = 0, 0
     for doc in queryset:
         try:
-            doc.render(cache_control='no-cache')
+            doc.render(cache_control="no-cache")
             count += 1
         except Exception:
             bad_count += 1
-    self.message_user(request, "Rendered %s documents, failed on %s "
-                               "documents." % (count, bad_count))
+    self.message_user(
+        request,
+        "Rendered %s documents, failed on %s " "documents." % (count, bad_count),
+    )
 
 
-force_render_documents.short_description = (
-    "Perform rendering for selected documents")
+force_render_documents.short_description = "Perform rendering for selected documents"
 
 
 def resave_current_revision(self, request, queryset):
@@ -122,23 +133,26 @@ def resave_current_revision(self, request, queryset):
         else:
             doc.current_revision.save()
             count += 1
-    self.message_user(request, "Resaved current revision for %s documents. %s "
-                               "documents had no current revision." %
-                               (count, bad_count))
+    self.message_user(
+        request,
+        "Resaved current revision for %s documents. %s "
+        "documents had no current revision." % (count, bad_count),
+    )
 
 
 resave_current_revision.short_description = (
-    "Re-save current revision for selected documents")
+    "Re-save current revision for selected documents"
+)
 
 
 def related_revisions_link(obj):
     """HTML link to related revisions for admin change list"""
-    link = '%s?%s' % (
-        reverse('admin:wiki_revision_changelist', args=[]),
-        'document__exact=%s' % (obj.id)
+    link = "%s?%s" % (
+        reverse("admin:wiki_revision_changelist", args=[]),
+        "document__exact=%s" % (obj.id),
     )
     count = obj.revisions.count()
-    what = (count == 1) and 'revision' or 'revisions'
+    what = (count == 1) and "revision" or "revisions"
     return format_html('<a href="{}">{}&nbsp;{}</a>', link, count, what)
 
 
@@ -150,7 +164,7 @@ def current_revision_link(obj):
     if not obj.current_revision:
         return "None"
     rev = obj.current_revision
-    rev_url = reverse('admin:wiki_revision_change', args=[rev.id])
+    rev_url = reverse("admin:wiki_revision_change", args=[rev.id])
     return format_html(
         '<a href="{}">Current&nbsp;Revision&nbsp;(#{})</a>', rev_url, rev.id
     )
@@ -162,8 +176,8 @@ current_revision_link.short_description = "Current Revision"
 def parent_document_link(obj):
     """HTML link to the topical parent document for admin change list"""
     if not obj.parent:
-        return ''
-    url = reverse('admin:wiki_document_change', args=[obj.parent.id])
+        return ""
+    url = reverse("admin:wiki_document_change", args=[obj.parent.id])
     return format_html(
         '<a href="{}">Translated&nbsp;from&nbsp;(#{})</a>', url, obj.parent.id
     )
@@ -175,9 +189,8 @@ parent_document_link.short_description = "Translation Parent"
 def topic_parent_document_link(obj):
     """HTML link to the parent document for admin change list"""
     if not obj.parent_topic:
-        return ''
-    url = reverse('admin:wiki_document_change',
-                  args=[obj.parent_topic.id])
+        return ""
+    url = reverse("admin:wiki_document_change", args=[obj.parent_topic.id])
     return format_html(
         '<a href="{}">Topic&nbsp;Parent&nbsp;(#{})</a>', url, obj.parent_topic.id
     )
@@ -190,12 +203,12 @@ def topic_children_documents_link(obj):
     """HTML link to a list of child documents"""
     count = obj.children.count()
     if not count:
-        return ''
-    link = '%s?%s' % (
-        reverse('admin:wiki_document_changelist', args=[]),
-        'parent_topic__exact=%s' % (obj.id)
+        return ""
+    link = "%s?%s" % (
+        reverse("admin:wiki_document_changelist", args=[]),
+        "parent_topic__exact=%s" % (obj.id),
     )
-    what = 'child' if count == 1 else 'children'
+    what = "child" if count == 1 else "children"
     return format_html('<a href="{}">{}&nbsp;{}</a>', link, count, what)
 
 
@@ -205,15 +218,15 @@ topic_children_documents_link.short_description = "Child Documents"
 def topic_sibling_documents_link(obj):
     """HTML link to a list of sibling documents"""
     if not obj.parent_topic:
-        return ''
+        return ""
     count = obj.parent_topic.children.count()
     if not count:
-        return ''
-    link = '%s?%s' % (
-        reverse('admin:wiki_document_changelist', args=[]),
-        'parent_topic__exact=%s' % (obj.parent_topic.id)
+        return ""
+    link = "%s?%s" % (
+        reverse("admin:wiki_document_changelist", args=[]),
+        "parent_topic__exact=%s" % (obj.parent_topic.id),
     )
-    what = 'sibling' if count == 1 else 'siblings'
+    what = "sibling" if count == 1 else "siblings"
     return format_html('<a href="{}">{}&nbsp;{}</a>', link, count, what)
 
 
@@ -236,18 +249,21 @@ document_link.short_description = "Public"
 def combine_funcs(obj, funcs):
     """Combine several field functions into one block of lines"""
     items = (func(obj) for func in funcs)
-    list_body = format_html_join('', '<li>{}</li>', ([item] for item in items if item))
-    return format_html('<ul>{}</ul>', list_body)
+    list_body = format_html_join("", "<li>{}</li>", ([item] for item in items if item))
+    return format_html("<ul>{}</ul>", list_body)
 
 
 def document_nav_links(obj):
     """Combine the document hierarchy nav links"""
-    return combine_funcs(obj, (
-        parent_document_link,
-        topic_parent_document_link,
-        topic_sibling_documents_link,
-        topic_children_documents_link,
-    ))
+    return combine_funcs(
+        obj,
+        (
+            parent_document_link,
+            topic_parent_document_link,
+            topic_sibling_documents_link,
+            topic_children_documents_link,
+        ),
+    )
 
 
 document_nav_links.short_description = "Hierarchy"
@@ -255,10 +271,7 @@ document_nav_links.short_description = "Hierarchy"
 
 def revision_links(obj):
     """Combine the revision nav links"""
-    return combine_funcs(obj, (
-        current_revision_link,
-        related_revisions_link,
-    ))
+    return combine_funcs(obj, (current_revision_link, related_revisions_link,))
 
 
 revision_links.short_description = "Revisions"
@@ -275,33 +288,33 @@ def rendering_info(obj):
                     settings.STATIC_URL,
                     "yes" if obj.defer_rendering else "no",
                     obj.defer_rendering,
-                ]
+                ],
             ),
-            ('{} (last)', [obj.last_rendered_at]),
-            ('{} (started)', [obj.render_started_at]),
-            ('{} (scheduled)', [obj.render_scheduled_at]),
+            ("{} (last)", [obj.last_rendered_at]),
+            ("{} (started)", [obj.render_started_at]),
+            ("{} (scheduled)", [obj.render_scheduled_at]),
         )
         if any(data)
     )
 
-    list_body = format_html_join('', '<li>{}</li>', ([item] for item in items))
-    return format_html('<ul>{}</ul>', list_body)
+    list_body = format_html_join("", "<li>{}</li>", ([item] for item in items))
+    return format_html("<ul>{}</ul>", list_body)
 
 
-rendering_info.short_description = 'Rendering'
-rendering_info.admin_order_field = 'last_rendered_at'
+rendering_info.short_description = "Rendering"
+rendering_info.admin_order_field = "last_rendered_at"
 
-SUBMISSION_NOT_AVAILABLE = mark_safe(
-    '<em>Akismet submission not available.</em>')
+SUBMISSION_NOT_AVAILABLE = mark_safe("<em>Akismet submission not available.</em>")
 
 
 def akismet_data_as_dl(akismet_data):
     """Format Akismet data as a definition list."""
     favorites = (
-        'comment_content',
-        'permalink',
-        'comment_author',
-        'comment_author_email')
+        "comment_content",
+        "permalink",
+        "comment_author",
+        "comment_author_email",
+    )
 
     def moderator_sort(key):
         """Sort data by 1) favorites, 2) data values, 3) headers"""
@@ -316,55 +329,71 @@ def akismet_data_as_dl(akismet_data):
         return SUBMISSION_NOT_AVAILABLE
     data = json.loads(akismet_data)
     keys = sorted(data.keys(), key=moderator_sort)
-    out = format_html('<dl>\n  {}\n</dl>',
-                      format_html_join('\n  ', '<dt>{}</dt><dd>{}</dd>',
-                                       ((key, data[key]) for key in keys)))
+    out = format_html(
+        "<dl>\n  {}\n</dl>",
+        format_html_join(
+            "\n  ", "<dt>{}</dt><dd>{}</dd>", ((key, data[key]) for key in keys)
+        ),
+    )
     return out
 
 
 @admin.register(Document)
 class DocumentAdmin(DisabledDeletionMixin, admin.ModelAdmin):
-
     class Media:
-        js = ('js/wiki-admin.js',)
+        js = ("js/wiki-admin.js",)
 
     list_per_page = 25
-    actions = (resave_current_revision,
-               force_render_documents,
-               enable_deferred_rendering_for_documents,
-               disable_deferred_rendering_for_documents,
-               repair_breadcrumbs,
-               purge_documents,
-               restore_documents)
-    fieldsets = (
-        (None, {
-            'fields': ('locale', 'title')
-        }),
-        ('Rendering', {
-            'fields': ('defer_rendering', 'render_expires', 'render_max_age')
-        }),
-        ('Topical Hierarchy', {
-            'fields': ('parent_topic',)
-        }),
-        ('Localization', {
-            'description': "The document should be <strong>either</strong> "
-                           "localizable, <strong>or</strong> have a parent - "
-                           "never both.",
-            'fields': ('is_localizable', 'parent')
-        })
+    actions = (
+        resave_current_revision,
+        force_render_documents,
+        enable_deferred_rendering_for_documents,
+        disable_deferred_rendering_for_documents,
+        repair_breadcrumbs,
+        purge_documents,
+        restore_documents,
     )
-    list_display = ('id', 'locale', 'slug', 'title',
-                    document_link,
-                    'modified',
-                    'render_expires', 'render_max_age',
-                    rendering_info,
-                    document_nav_links,
-                    revision_links,)
-    list_display_links = ('id', 'slug',)
-    list_filter = ('defer_rendering', 'is_localizable', 'locale', 'deleted')
-    raw_id_fields = ('parent', 'parent_topic',)
-    readonly_fields = ('id', 'current_revision')
-    search_fields = ('title', 'slug', 'html', 'current_revision__tags')
+    fieldsets = (
+        (None, {"fields": ("locale", "title")}),
+        (
+            "Rendering",
+            {"fields": ("defer_rendering", "render_expires", "render_max_age")},
+        ),
+        ("Topical Hierarchy", {"fields": ("parent_topic",)}),
+        (
+            "Localization",
+            {
+                "description": "The document should be <strong>either</strong> "
+                "localizable, <strong>or</strong> have a parent - "
+                "never both.",
+                "fields": ("is_localizable", "parent"),
+            },
+        ),
+    )
+    list_display = (
+        "id",
+        "locale",
+        "slug",
+        "title",
+        document_link,
+        "modified",
+        "render_expires",
+        "render_max_age",
+        rendering_info,
+        document_nav_links,
+        revision_links,
+    )
+    list_display_links = (
+        "id",
+        "slug",
+    )
+    list_filter = ("defer_rendering", "is_localizable", "locale", "deleted")
+    raw_id_fields = (
+        "parent",
+        "parent_topic",
+    )
+    readonly_fields = ("id", "current_revision")
+    search_fields = ("title", "slug", "html", "current_revision__tags")
 
     def get_queryset(self, request):
         """
@@ -377,45 +406,53 @@ class DocumentAdmin(DisabledDeletionMixin, admin.ModelAdmin):
 
 @admin.register(DocumentDeletionLog)
 class DocumentDeletionLogAdmin(DisabledDeletionMixin, admin.ModelAdmin):
-    list_display = ['slug', 'locale', 'user', 'timestamp']
-    list_filter = ['timestamp', 'locale']
-    search_fields = ['slug', 'reason']
-    ordering = ['-timestamp']
-    readonly_fields = ['locale', 'slug', 'user', 'timestamp']
+    list_display = ["slug", "locale", "user", "timestamp"]
+    list_filter = ["timestamp", "locale"]
+    search_fields = ["slug", "reason"]
+    ordering = ["-timestamp"]
+    readonly_fields = ["locale", "slug", "user", "timestamp"]
 
 
 @admin.register(DocumentTag)
 class DocumentTagAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug')
-    search_fields = ('name',)
-    ordering = ('name',)
+    list_display = ("name", "slug")
+    search_fields = ("name",)
+    ordering = ("name",)
 
 
 @admin.register(DocumentSpamAttempt)
 class DocumentSpamAttemptAdmin(admin.ModelAdmin):
-    list_display = [
-        'id', 'user', 'title_short', 'slug_short', 'doc_short', 'review']
-    list_display_links = ['id', 'title_short', 'slug_short']
-    list_filter = [
-        'created', 'review', 'document__deleted', 'document__locale']
-    list_editable = ('review',)
-    ordering = ['-created']
-    search_fields = ['title', 'slug', 'user__username']
-    raw_id_fields = ['user', 'document']
+    list_display = ["id", "user", "title_short", "slug_short", "doc_short", "review"]
+    list_display_links = ["id", "title_short", "slug_short"]
+    list_filter = ["created", "review", "document__deleted", "document__locale"]
+    list_editable = ("review",)
+    ordering = ["-created"]
+    search_fields = ["title", "slug", "user__username"]
+    raw_id_fields = ["user", "document"]
     fields = [
-        'created', 'user', 'title', 'slug', 'document',
-        'review', 'reviewed', 'reviewer', 'submitted_data']
-    readonly_fields = ['created', 'submitted_data', 'reviewer', 'reviewed']
+        "created",
+        "user",
+        "title",
+        "slug",
+        "document",
+        "review",
+        "reviewed",
+        "reviewer",
+        "submitted_data",
+    ]
+    readonly_fields = ["created", "submitted_data", "reviewer", "reviewed"]
 
     MAX_LENGTH = 25
 
     def title_short(self, obj):
         return truncatechars(obj.title, self.MAX_LENGTH)
-    title_short.short_description = 'Title'
+
+    title_short.short_description = "Title"
 
     def slug_short(self, obj):
         return truncatechars(obj.slug, self.MAX_LENGTH)
-    slug_short.short_description = 'Slug'
+
+    slug_short.short_description = "Slug"
 
     def doc_short(self, obj):
         """
@@ -428,16 +465,17 @@ class DocumentSpamAttemptAdmin(admin.ModelAdmin):
         """
         doc = obj.document
         if doc:
-            full_path = '/%s/docs/%s' % (doc.locale, doc.slug)
+            full_path = "/%s/docs/%s" % (doc.locale, doc.slug)
             if len(full_path) <= self.MAX_LENGTH:
                 path = full_path
             else:
-                path = Truncator(full_path).chars(self.MAX_LENGTH, '…')
-            title = Truncator(doc.title).chars(self.MAX_LENGTH, '…')
-            return '%s (%s)' % (path, title)
+                path = Truncator(full_path).chars(self.MAX_LENGTH, "…")
+            title = Truncator(doc.title).chars(self.MAX_LENGTH, "…")
+            return "%s (%s)" % (path, title)
         else:
-            return mark_safe('<em>new document</em>')
-    doc_short.short_description = 'Document (if edit)'
+            return mark_safe("<em>new document</em>")
+
+    doc_short.short_description = "Document (if edit)"
 
     class NotEnabled(Exception):
         """Akismet is not enabled"""
@@ -452,19 +490,21 @@ class DocumentSpamAttemptAdmin(admin.ModelAdmin):
         """
         client = Akismet()
         if not client.ready:
-            raise self.NotEnabled('Akismet is not configured.')
-        spam_submission = flag_is_active(request,
-                                         constants.SPAM_SUBMISSIONS_FLAG)
+            raise self.NotEnabled("Akismet is not configured.")
+        spam_submission = flag_is_active(request, constants.SPAM_SUBMISSIONS_FLAG)
         if not spam_submission:
-            raise self.NotEnabled('Akismet spam submission is not enabled.')
-        user_ip = data.pop('user_ip', '')
-        user_agent = data.pop('user_agent', '')
+            raise self.NotEnabled("Akismet spam submission is not enabled.")
+        user_ip = data.pop("user_ip", "")
+        user_agent = data.pop("user_agent", "")
         client.submit_ham(user_ip=user_ip, user_agent=user_agent, **data)
 
     def save_model(self, request, obj, form, change):
         """If reviewed, set the reviewer, and submit ham as requested."""
-        send_ham = (obj.review == DocumentSpamAttempt.HAM and
-                    obj.reviewed is None and obj.data is not None)
+        send_ham = (
+            obj.review == DocumentSpamAttempt.HAM
+            and obj.reviewed is None
+            and obj.data is not None
+        )
         if obj.review in (DocumentSpamAttempt.HAM, DocumentSpamAttempt.SPAM):
             obj.reviewer = obj.reviewer or request.user
             obj.reviewed = obj.reviewed or timezone.now()
@@ -476,12 +516,13 @@ class DocumentSpamAttemptAdmin(admin.ModelAdmin):
                 obj.reviewer = None
                 obj.reviewed = None
                 obj.review = DocumentSpamAttempt.NEEDS_REVIEW
-                message = (
-                    'Unable to submit ham for document spam attempt %s: %s' %
-                    (obj, error))
+                message = "Unable to submit ham for document spam attempt %s: %s" % (
+                    obj,
+                    error,
+                )
                 self.message_user(request, message, level=messages.ERROR)
             else:
-                message = 'Submitted ham for document spam attempt %s' % obj
+                message = "Submitted ham for document spam attempt %s" % obj
                 self.message_user(request, message, level=messages.INFO)
         obj.save()
 
@@ -491,21 +532,26 @@ class DocumentSpamAttemptAdmin(admin.ModelAdmin):
 
 @admin.register(Revision)
 class RevisionAdmin(admin.ModelAdmin):
-    fields = ('title', 'summary', 'content', 'keywords', 'tags',
-              'comment', 'is_approved')
-    list_display = ('id', 'slug', 'title', 'is_approved', 'created',
-                    'creator')
-    list_display_links = ('id', 'slug')
-    list_filter = ('is_approved',)
-    ordering = ('-created',)
-    search_fields = ('title', 'slug', 'summary', 'content', 'tags')
+    fields = (
+        "title",
+        "summary",
+        "content",
+        "keywords",
+        "tags",
+        "comment",
+        "is_approved",
+    )
+    list_display = ("id", "slug", "title", "is_approved", "created", "creator")
+    list_display_links = ("id", "slug")
+    list_filter = ("is_approved",)
+    ordering = ("-created",)
+    search_fields = ("title", "slug", "summary", "content", "tags")
 
 
 @admin.register(RevisionIP)
 class RevisionIPAdmin(admin.ModelAdmin):
-    readonly_fields = ('revision', 'ip', 'user_agent', 'referrer',
-                       'submitted_data')
-    list_display = ('revision', 'ip')
+    readonly_fields = ("revision", "ip", "user_agent", "referrer", "submitted_data")
+    list_display = ("revision", "ip")
 
     def submitted_data(self, obj):
         """Display Akismet data, if saved at edit time."""
@@ -515,19 +561,18 @@ class RevisionIPAdmin(admin.ModelAdmin):
 @admin.register(RevisionAkismetSubmission)
 class RevisionAkismetSubmissionAdmin(DisabledDeletionMixin, admin.ModelAdmin):
     form = RevisionAkismetSubmissionAdminForm
-    radio_fields = {'type': admin.VERTICAL}
-    raw_id_fields = ['revision']
-    list_display = ['id', 'sent', 'revision_with_link', 'type', 'sender']
-    list_display_links = ['id', 'sent']
-    list_filter = ['type', 'sent']
-    search_fields = ('sender__username', 'revision__id', 'revision__title')
+    radio_fields = {"type": admin.VERTICAL}
+    raw_id_fields = ["revision"]
+    list_display = ["id", "sent", "revision_with_link", "type", "sender"]
+    list_display_links = ["id", "sent"]
+    list_filter = ["type", "sent"]
+    search_fields = ("sender__username", "revision__id", "revision__title")
 
     def get_fields(self, request, obj=None):
         if obj is None:
-            return ['type', 'revision']
+            return ["type", "revision"]
         else:
-            return super(RevisionAkismetSubmissionAdmin,
-                         self).get_fields(request, obj)
+            return super(RevisionAkismetSubmissionAdmin, self).get_fields(request, obj)
 
     def revision_with_link(self, obj):
         """Link to the revision public page"""
@@ -539,7 +584,7 @@ class RevisionAkismetSubmissionAdmin(DisabledDeletionMixin, admin.ModelAdmin):
                 obj.revision,
             )
         else:
-            return 'None'
+            return "None"
 
     revision_with_link.short_description = "Revision"
 
@@ -548,17 +593,18 @@ class RevisionAkismetSubmissionAdmin(DisabledDeletionMixin, admin.ModelAdmin):
         Hook for specifying custom readonly fields.
         """
         if obj:
-            return ['type', 'revision', 'sender', 'sent']
+            return ["type", "revision", "sender", "sent"]
         else:
-            return ['sender', 'sent']
+            return ["sender", "sent"]
 
     def save_model(self, request, obj, form, change):
         obj.sender = request.user
         obj.save()
 
     def get_form(self, request, obj=None, **kwargs):
-        AdminForm = super(RevisionAkismetSubmissionAdmin,
-                          self).get_form(request, obj=obj, **kwargs)
+        AdminForm = super(RevisionAkismetSubmissionAdmin, self).get_form(
+            request, obj=obj, **kwargs
+        )
 
         class AdminFormWithRequest(AdminForm):
             """
@@ -566,23 +612,25 @@ class RevisionAkismetSubmissionAdmin(DisabledDeletionMixin, admin.ModelAdmin):
 
             Sigh.
             """
+
             def __new__(cls, *args, **kwargs):
                 return AdminForm(request, *args, **kwargs)
 
         return AdminFormWithRequest
 
-    def add_view(self, request, form_url='', extra_context=None):
+    def add_view(self, request, form_url="", extra_context=None):
         extra_context = extra_context or {}
-        extra_context['submitted_data'] = self.submitted_data(request)
+        extra_context["submitted_data"] = self.submitted_data(request)
         return super(RevisionAkismetSubmissionAdmin, self).add_view(
-            request, form_url, extra_context=extra_context)
+            request, form_url, extra_context=extra_context
+        )
 
-    def change_view(self, request, object_id, form_url='', extra_context=None):
+    def change_view(self, request, object_id, form_url="", extra_context=None):
         extra_context = extra_context or {}
-        extra_context['submitted_data'] = self.submitted_data(
-            request, object_id)
+        extra_context["submitted_data"] = self.submitted_data(request, object_id)
         return super(RevisionAkismetSubmissionAdmin, self).change_view(
-            request, object_id, form_url, extra_context=extra_context)
+            request, object_id, form_url, extra_context=extra_context
+        )
 
     def submitted_data(self, request, obj_id=None):
         """Display Akismet data, if saved at edit time."""
@@ -594,10 +642,9 @@ class RevisionAkismetSubmissionAdmin(DisabledDeletionMixin, admin.ModelAdmin):
         if obj and obj.revision_id:
             revision_ip = obj.revision.revisionip_set.first()
         else:
-            revision_id = request.GET.get('revision')
+            revision_id = request.GET.get("revision")
             if revision_id:
-                revision_ip = RevisionIP.objects.filter(
-                    revision_id=revision_id).first()
+                revision_ip = RevisionIP.objects.filter(revision_id=revision_id).first()
             else:
                 revision_ip = None
         return akismet_data_as_dl(revision_ip and revision_ip.data)
@@ -605,22 +652,23 @@ class RevisionAkismetSubmissionAdmin(DisabledDeletionMixin, admin.ModelAdmin):
 
 @admin.register(EditorToolbar)
 class EditorToolbarAdmin(admin.ModelAdmin):
-    list_display = ['name', 'creator', 'default']
-    list_filters = ['default']
-    raw_id_fields = ['creator']
+    list_display = ["name", "creator", "default"]
+    list_filters = ["default"]
+    raw_id_fields = ["creator"]
 
 
 @admin.register(BCSignal)
 class BCSignalAdmin(admin.ModelAdmin):
-    list_display = ['pk', 'document', 'submitted_at']
-    list_filter = ['submitted_at']
-    search_fields = ['document__slug', 'document__title', 'document__locale']
-    readonly_fields = ['document', 'browsers', 'feature']
+    list_display = ["pk", "document", "submitted_at"]
+    list_filter = ["submitted_at"]
+    search_fields = ["document__slug", "document__title", "document__locale"]
+    readonly_fields = ["document", "browsers", "feature"]
 
     def get_queryset(self, request):
-        only = (
-            'document__slug', 'document__title', 'document__locale',
-            'submitted_at'
+        only = ("document__slug", "document__title", "document__locale", "submitted_at")
+        return (
+            super(BCSignalAdmin, self)
+            .get_queryset(request)
+            .select_related("document")
+            .only(*only)
         )
-        return super(BCSignalAdmin, self).get_queryset(request).select_related(
-            'document').only(*only)

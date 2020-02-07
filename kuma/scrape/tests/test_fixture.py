@@ -38,7 +38,7 @@ def test_load_group():
             }
         ],
         "contenttypes.contenttype": [
-            {"app_label": "attachments", "model": "attachment",}
+            {"app_label": "attachments", "model": "attachment"}
         ],
     }
     ct_attachment = ContentType.objects.get(app_label="attachments", model="attachment")
@@ -56,7 +56,7 @@ def test_load_group():
 
 def test_underspecified_key_is_error():
     """A fixture must define all the natural key items."""
-    spec = {"users.user": [{"email": "email@example.com", "password": "password",}]}
+    spec = {"users.user": [{"email": "email@example.com", "password": "password"}]}
     with pytest.raises(ValueError) as error:
         FixtureLoader(spec)
     assert str(error.value) == 'users.user 0: Needs key "username"'
@@ -68,7 +68,7 @@ def test_relation_as_key():
     spec = {
         "users.user": [
             {"username": "admin", "is_staff": True},
-            {"username": "spammer",},
+            {"username": "spammer"},
         ],
         "users.userban": [{"user": ["spammer"], "by": ["admin"], "reason": "Spam"}],
     }
@@ -84,7 +84,7 @@ def test_update_m2m_of_existing_instance():
     user = User.objects.create(username="ironman")
     assert not user.groups.exists()
     spec = {
-        "auth.group": [{"name": "Avengers",}, {"name": "Illuminati",}],
+        "auth.group": [{"name": "Avengers"}, {"name": "Illuminati"}],
         "users.user": [
             {
                 "username": "ironman",
@@ -111,7 +111,7 @@ def test_missing_relation_is_error():
 def test_missing_key_relation_is_error():
     """An unspecified relation is detected, raises exception."""
     spec = {
-        "users.user": [{"username": "odin",}],
+        "users.user": [{"username": "odin"}],
         "users.userban": [{"user": ["loki"], "by": ["odin"], "reason": "Treason"}],
     }
     with pytest.raises(RuntimeError) as error:

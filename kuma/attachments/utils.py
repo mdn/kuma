@@ -36,7 +36,7 @@ def allow_add_attachment_by(user):
 def full_attachment_url(attachment_id, filename):
     path = reverse(
         "attachments.raw_file",
-        kwargs={"attachment_id": attachment_id, "filename": filename,},
+        kwargs={"attachment_id": attachment_id, "filename": filename},
     )
     return f"{settings.PROTOCOL}{settings.ATTACHMENT_HOST}{path}"
 

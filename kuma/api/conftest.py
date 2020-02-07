@@ -38,7 +38,7 @@ def redirect_to_home(wiki_user):
     Revision.objects.create(
         document=doc,
         creator=wiki_user,
-        content=REDIRECT_CONTENT % {"href": reverse("home"), "title": "MDN Web Docs",},
+        content=REDIRECT_CONTENT % {"href": reverse("home"), "title": "MDN Web Docs"},
         title="Redirect to Home Page",
         created=datetime(2015, 7, 4, 11, 15),
     )

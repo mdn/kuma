@@ -1,5 +1,3 @@
-
-
 import base64
 import json
 import time
@@ -31,27 +29,29 @@ def should_use_rendered(doc, params, html=None):
       * The request *has* asked for macro evaluation
         (eg. ?raw&macros)
     """
-    show_raw = params.get('raw', False) is not False
-    no_macros = params.get('nomacros', False) is not False
-    force_macros = params.get('macros', False) is not False
+    show_raw = params.get("raw", False) is not False
+    no_macros = params.get("nomacros", False) is not False
+    force_macros = params.get("macros", False) is not False
     if doc:
         html = doc.html
-    return (config.KUMASCRIPT_TIMEOUT > 0 and
-            html and
-            (force_macros or (not no_macros and not show_raw)))
+    return (
+        config.KUMASCRIPT_TIMEOUT > 0
+        and html
+        and (force_macros or (not no_macros and not show_raw))
+    )
 
 
 def _post(content, env_vars, cache_control=None, timeout=None):
-    url = settings.KUMASCRIPT_URL_TEMPLATE.format(path='')
+    url = settings.KUMASCRIPT_URL_TEMPLATE.format(path="")
     headers = {
-        'X-FireLogger': '1.2',
+        "X-FireLogger": "1.2",
     }
 
     # If the user does a hard reload we see Cache-Control:no-cache in
     # the request header. And we pass that header on to Kumascript so
     # that it does not use its cache when re-rendering the page.
-    if cache_control == 'no-cache':
-        headers['Cache-Control'] = cache_control
+    if cache_control == "no-cache":
+        headers["Cache-Control"] = cache_control
 
     # Load just-in-time, since constance requires DB and cache
     # TODO: Move to a standard Django setting w/ env override
@@ -61,15 +61,14 @@ def _post(content, env_vars, cache_control=None, timeout=None):
     add_env_headers(headers, env_vars)
 
     try:
-        response = requests.post(url,
-                                 data=content.encode(),
-                                 headers=headers,
-                                 timeout=timeout)
+        response = requests.post(
+            url, data=content.encode(), headers=headers, timeout=timeout
+        )
     except (ConnectionError, ReadTimeout) as err:
         error = {
             "level": "error",
             "message": str(err),
-            "args": [err.__class__.__name__]
+            "args": [err.__class__.__name__],
         }
         return content, [error]
 
@@ -79,10 +78,7 @@ def _post(content, env_vars, cache_control=None, timeout=None):
 
 
 def post(request, content, locale=settings.LANGUAGE_CODE):
-    return _post(content, {
-        'url': request.build_absolute_uri('/'),
-        'locale': locale,
-    })
+    return _post(content, {"url": request.build_absolute_uri("/"), "locale": locale})
 
 
 # TODO(djf): This get() function is actually implemented on top of
@@ -90,13 +86,12 @@ def post(request, content, locale=settings.LANGUAGE_CODE):
 # be renamed to render_document(), and the post() method above should
 # be renamed to render_string(), maybe. For now, though, there are so
 # many tests that mock kumascript.get() that I've left the name unchanged.
-def get(document, base_url, cache_control=None, timeout=None,
-        selective_mode=None):
+def get(document, base_url, cache_control=None, timeout=None, selective_mode=None):
     """Request a rendered version of document.html from KumaScript."""
 
     if not base_url:
         site = Site.objects.get_current()
-        base_url = 'http://%s' % site.domain
+        base_url = "http://%s" % site.domain
 
     # Assemble some KumaScript env vars
     path = document.get_absolute_url()
@@ -120,12 +115,15 @@ def get(document, base_url, cache_control=None, timeout=None,
 
 def add_env_headers(headers, env_vars):
     """Encode env_vars as kumascript headers, as base64 JSON-encoded values."""
-    headers.update(dict(
-        ('x-kumascript-env-%s' % k, base64.b64encode(
-            json.dumps(v).encode()
-        ).decode())
-        for k, v in env_vars.items()
-    ))
+    headers.update(
+        dict(
+            (
+                "x-kumascript-env-%s" % k,
+                base64.b64encode(json.dumps(v).encode()).decode(),
+            )
+            for k, v in env_vars.items()
+        )
+    )
     return headers
 
 
@@ -146,9 +144,9 @@ def process_errors(response):
         # Extract all the log packets from headers.
         packets = defaultdict(dict)
         for key, value in response.headers.items():
-            if not key.lower().startswith('firelogger-'):
+            if not key.lower().startswith("firelogger-"):
                 continue
-            prefix, id_, seq = key.split('-', 3)
+            prefix, id_, seq = key.split("-", 3)
             packets[id_][seq] = value
 
         # The FireLogger spec allows for multiple "packets". But,
@@ -156,10 +154,10 @@ def process_errors(response):
         msgs = []
         for contents in packets.values():
             keys = sorted(contents.keys(), key=int)
-            encoded = '\n'.join(contents[key] for key in keys)
+            encoded = "\n".join(contents[key] for key in keys)
             decoded_json = base64.decodebytes(encoded.encode())
             packet = json.loads(decoded_json)
-            msgs.extend(packet['logs'])
+            msgs.extend(packet["logs"])
 
         if len(msgs):
             errors = msgs
@@ -183,23 +181,25 @@ def macro_sources(force_lowercase_keys=False):
     on GitHub as the value.  The full URL of the GitHub source is:
     https://github.com/mdn/kumascript/tree/master/macros/{subpath}
     """
-    ks_macro_url = urljoin(KUMASCRIPT_BASE_URL, 'macros/')
+    ks_macro_url = urljoin(KUMASCRIPT_BASE_URL, "macros/")
     response = requests.get(ks_macro_url)
     if response.status_code == 200:
-        macros_raw = response.json()['macros']
+        macros_raw = response.json()["macros"]
         # Ensure Normal Form C used on GitHub
-        normalize_key = normalize = partial(unicodedata.normalize, 'NFC')
+        normalize_key = normalize = partial(unicodedata.normalize, "NFC")
         if force_lowercase_keys:
-            normalize_key = lambda x: normalize(x).lower()
+
+            def normalize_key(x):
+                return normalize(x).lower()
+
         return {
-            normalize_key(md['name']): normalize(md['filename'])
-            for md in macros_raw
+            normalize_key(md["name"]): normalize(md["filename"]) for md in macros_raw
         }
     else:
         return {}
 
 
-def macro_page_count(locale='*'):
+def macro_page_count(locale="*"):
     """
     Get the macros known to ElasticSearch with their page counts
 
@@ -211,13 +211,15 @@ def macro_page_count(locale='*'):
     locale - Filter by this locale (default no locale filter)
     """
     search = WikiDocumentType.search().extra(size=0)  # Return no documents
-    search.aggs.bucket('usage', 'terms', field='kumascript_macros',
-                       size=2000)  # Set to larger than number of macros
-    if locale != '*':
+    search.aggs.bucket(
+        "usage", "terms", field="kumascript_macros", size=2000
+    )  # Set to larger than number of macros
+    if locale != "*":
         search = search.filter("term", locale=locale)
     result = search.execute()  # Could raise TransportError
-    return {item['key']: item['doc_count'] for item
-            in result.aggregations.usage.buckets}
+    return {
+        item["key"]: item["doc_count"] for item in result.aggregations.usage.buckets
+    }
 
 
 def macro_usage():
@@ -243,11 +245,7 @@ def macro_usage():
     lowercase_names = {}
     macros = {}
     for name, github_subpath in macro_paths.items():
-        macros[name] = {
-            'github_subpath': github_subpath,
-            'count': 0,
-            'en_count': 0
-        }
+        macros[name] = {"github_subpath": github_subpath, "count": 0, "en_count": 0}
         lowercase_names[name.lower()] = name
 
     def annotate_counts(counts, count_type):
@@ -267,15 +265,15 @@ def macro_usage():
         # For the first call, gracefully handle missing ES server, etc.
         return macros
     else:
-        annotate_counts(all_counts, 'count')
+        annotate_counts(all_counts, "count")
 
     # Record page usage for active macros for English
     # For second call, ES Server issue _is_ exceptional, raise error
-    annotate_counts(macro_page_count('en-US'), 'en_count')
+    annotate_counts(macro_page_count("en-US"), "en_count")
 
     return macros
 
 
 def request_revision_hash():
-    ks_revision_url = urljoin(KUMASCRIPT_BASE_URL, 'revision/')
+    ks_revision_url = urljoin(KUMASCRIPT_BASE_URL, "revision/")
     return requests.get(ks_revision_url, timeout=config.KUMASCRIPT_TIMEOUT)

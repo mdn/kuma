@@ -18,7 +18,7 @@ class AttachmentStorage(S3Boto3Storage):
             access_key=settings.ATTACHMENTS_AWS_ACCESS_KEY_ID,
             secret_key=settings.ATTACHMENTS_AWS_SECRET_ACCESS_KEY,
             bucket_name=settings.ATTACHMENTS_AWS_STORAGE_BUCKET_NAME,
-            object_parameters={"CacheControl": "public, max-age=31536000, immutable",},
+            object_parameters={"CacheControl": "public, max-age=31536000, immutable"},
             default_acl="public-read",
             querystring_auth=False,
             custom_domain=settings.ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN,

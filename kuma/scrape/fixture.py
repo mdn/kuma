@@ -23,7 +23,7 @@ class FixtureLoader(object):
     model_metadata = {
         "account.emailaddress": {
             "natural_key": ("email",),
-            "relations": {"user": {"link": "to_one", "resource": "users.user",},},
+            "relations": {"user": {"link": "to_one", "resource": "users.user",}},
         },
         "auth.group": {
             "natural_key": ("name",),
@@ -40,11 +40,11 @@ class FixtureLoader(object):
                 },
             },
         },
-        "contenttypes.contenttype": {"natural_key": ("app_label", "model"),},
+        "contenttypes.contenttype": {"natural_key": ("app_label", "model")},
         "database.constance": {"natural_key": ("key",),},
         "feeder.bundle": {
             "natural_key": ("shortname",),
-            "relations": {"feeds": {"link": "to_many", "resource": "feeder.feed",},},
+            "relations": {"feeds": {"link": "to_many", "resource": "feeder.feed",}},
         },
         "feeder.feed": {"natural_key": ("shortname",),},
         "search.filter": {
@@ -54,7 +54,7 @@ class FixtureLoader(object):
                 "tags": {"link": "to_many", "resource": "taggit.tag"},
             },
         },
-        "search.filtergroup": {"natural_key": ("name", "slug"),},
+        "search.filtergroup": {"natural_key": ("name", "slug")},
         "sites.site": {"natural_key": ("id",),},
         "socialaccount.socialaccount": {
             "natural_key": ("uid", "provider"),
