@@ -1,0 +1,54 @@
+@import 'includes/vars';
+
+.stripe-subscription {
+    margin-top: 50px;
+
+    hr {
+        border-top-color: $grey;
+        border-top-width: 1px;
+    }
+
+    .stripe-error {
+        color: $red;
+    }
+
+    .payment-opt-in {
+        margin-bottom: 15px;
+        display: flex;
+        color: $grey;
+
+        input {
+            margin-top: 5px;
+            margin-right: 10px;
+        }
+    }
+
+    [type='submit'] {
+        border-radius: 5px;
+        padding: 10px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: $blue;
+        border-color: $blue;
+        color: $blue-background-text-color;
+
+        svg {
+            height: 15px;
+        }
+    }
+
+    .card-info {
+        display: flex;
+
+        svg {
+            margin-top: 5px;
+            margin-right: 10px;
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+}

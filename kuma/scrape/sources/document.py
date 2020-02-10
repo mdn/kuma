@@ -175,12 +175,12 @@ class DocumentSource(DocumentBaseSource):
                 if key in data:
                     doc_data[key] = data[key]
             if doc_data['slug'] != self.slug:
-                logger.warn(
+                logger.warning(
                     'Meta slug "%s" does not match slug for "%s".',
                     doc_data['slug'], self.path)
                 doc_data['slug'] = self.slug
             if doc_data['locale'] != self.locale:
-                logger.warn(
+                logger.warning(
                     'Meta locale "%s" does not match locale for "%s".',
                     doc_data['locale'], self.path)
                 doc_data['locale'] = self.locale

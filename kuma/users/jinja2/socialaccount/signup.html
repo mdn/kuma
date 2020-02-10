@@ -17,7 +17,7 @@
 
 {% block document_head %}
 <div class="titlebar-container">
-  <h1>{{ _('Create your MDN profile') }}</h1>
+  <h1>{{ _('Create your MDN account') }}</h1>
 </div>
 {% endblock %}
 
@@ -37,8 +37,8 @@
         </li>
       {% endif %}
       <li class="mdn-profile">
-        <img src="{{ account.get_avatar_url() }}" width="90px" alt="{{ _('User avatar') }}" />
-        {{ _('Create MDN Profile') }}
+        <img src="{{ static('auth/mdn-auth.svg') }}" width="90px" alt="{{ _('User avatar') }}" />
+        {{ _('Create MDN Account') }}
       </li>
     </ol>
 

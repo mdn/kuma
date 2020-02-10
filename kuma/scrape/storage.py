@@ -92,8 +92,8 @@ class Storage(object):
                     document = Document.objects.create(
                         locale=locale, slug=slug, **doc_data)
                 except IntegrityError as error:
-                    logger.warn('On locale "%s", slug "%s", got error %s',
-                                locale, slug, error)
+                    logger.warning('On locale "%s", slug "%s", got error %s',
+                                   locale, slug, error)
                     doc_data.pop('id', None)
             else:
                 for name, value in doc_data.items():

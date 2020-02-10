@@ -18,13 +18,6 @@ def path(*parts):
     return os.path.join(BASE_DIR, *parts)
 
 
-class TupleCsv(Csv):
-
-    def __call__(self, value):
-        split_values = super(TupleCsv, self).__call__(value)
-        return tuple((value, value) for value in split_values)
-
-
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # BASE_DIR used by django-extensions, such as ./manage.py notes
@@ -122,8 +115,6 @@ CACHES = {
                            default='127.0.0.1:6379'),
     }
 }
-
-CACHEBACK_CACHE_ALIAS = 'default'
 
 # Email
 vars().update(config('EMAIL_URL',
@@ -521,7 +512,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'flat',
     'django.contrib.admin',
 
     'django.contrib.sitemaps',
@@ -564,6 +554,7 @@ INSTALLED_APPS = (
     'kuma.dashboards',
     'statici18n',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_mysql',
 
     # other
@@ -622,7 +613,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    'VERSION': '2020.02',
+    'VERSION': '2020.04',
     'BASE_DIR': BASE_DIR,
     'TEXT_DOMAIN': 'django',
     # Tells the extract script what files to look for l10n in and what function
@@ -794,6 +785,12 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'build/styles/users.css',
     },
+    'delete-user-modal': {
+        'source_filenames': (
+            'styles/minimalist/components/delete-user-modal.scss',
+        ),
+        'output_filename': 'build/styles/delete-user-modal.css',
+    },
     'tagit': {
         'source_filenames': (
             'styles/libs/jquery.tagit.css',
@@ -853,6 +850,12 @@ PIPELINE_CSS = {
             'styles/user-delete.scss',
         ),
         'output_filename': 'build/styles/user-delete.css',
+    },
+    'stripe-subscription': {
+        'source_filenames': (
+            'styles/stripe-subscription.scss',
+        ),
+        'output_filename': 'build/styles/stripe-subscription.css',
     },
     'error-403-alternate': {
         'source_filenames': (
@@ -1019,6 +1022,26 @@ PIPELINE_JS = {
             'async': True,
         },
     },
+    'delete-user-page': {
+        'source_filenames': (
+            'js/components/account-management/delete-user-confirmation-button.js',
+        ),
+        'output_filename': 'build/js/delete-user-confirmation-button.js',
+        'extra_context': {
+            'defer': True,
+        },
+    },
+    'delete-user-modal': {
+        'source_filenames': (
+            'js/components/modal.js',
+            'js/components/account-management/delete-user-modal.js',
+            'js/components/account-management/delete-user-confirmation-button.js',
+        ),
+        'output_filename': 'build/js/delete-user-modal.js',
+        'extra_context': {
+            'defer': True,
+        },
+    },
     'auth-modal': {
         'source_filenames': (
             'js/components/modal.js',
@@ -1060,6 +1083,12 @@ PIPELINE_JS = {
             'js/components/payments/payments-manage.js',
         ),
         'output_filename': 'build/js/payments.js',
+    },
+    'stripe-subscription': {
+        'source_filenames': (
+            'js/stripe-subscription.js',
+        ),
+        'output_filename': 'build/js/stripe-subscription.js',
     },
     'framebuster': {
         'source_filenames': (
@@ -1665,6 +1694,30 @@ CONSTANCE_CONFIG = dict(
 # Google Analytics Tracking Account Number (0 to disable)
 GOOGLE_ANALYTICS_ACCOUNT = config('GOOGLE_ANALYTICS_ACCOUNT', default=None)
 
+# When HTTP posting event to Google Analytics this is the combined connect
+# and read timeout.
+GOOGLE_ANALYTICS_TRACKING_TIMEOUT = config(
+    'GOOGLE_ANALYTICS_TRACKING_TIMEOUT',
+    cast=float,
+    default=2.0)
+# The only reason you'd want to override this is for local development where
+# you might want to substitute the events tracking URL to a local dev server.
+# https://developers.google.com/analytics/devguides/collection/protocol/v1/reference
+GOOGLE_ANALYTICS_TRACKING_URL = config(
+    'GOOGLE_ANALYTICS_TRACKING_URL',
+    default='https://www.google-analytics.com/collect'
+)
+# This setting only really makes sense for the benefit of Django unit tests.
+# All tests are run with `settings.DEBUG === False` so we can't rely on that
+# for *avoid* any errors swallowed. And in tests we don't want to swallow
+# any `requests` errors because most possibly they happen because we
+# incorrectly mocked requests.
+GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS = config(
+    'GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS',
+    cast=bool,
+    default=DEBUG
+)
+
 KUMASCRIPT_URL_TEMPLATE = config('KUMASCRIPT_URL_TEMPLATE',
                                  default='http://localhost:9080/docs/{path}')
 
@@ -1875,7 +1928,10 @@ CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE = config(
 # Stripe API KEY settings
 STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY', default='')
 STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
-STRIPE_PRODUCT_ID = config('STRIPE_PRODUCT_ID', default='')
+STRIPE_PLAN_ID = config('STRIPE_PLAN_ID', default='')
+# Misc Stripe settings
+STRIPE_MAX_NETWORK_RETRIES = config('STRIPE_MAX_NETWORK_RETRIES', default=5, cast=int)
+
 MDN_CONTRIBUTION = config('MDN_CONTRIBUTION', False, cast=bool)
 CONTRIBUTION_SUPPORT_EMAIL = config('CONTRIBUTION_SUPPORT_EMAIL',
                                     default='mdn-support@mozilla.com')

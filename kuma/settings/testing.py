@@ -32,9 +32,6 @@ LOGGING['loggers'].update({
     },
 })
 
-# Use the local memory cache in tests, so that test cacheback jobs
-# will expire at the end of the test.
-CACHEBACK_CACHE_ALIAS = 'default'
 
 # Change the cache key prefix for tests, to avoid overwriting runtime.
 for cache_settings in CACHES.values():
@@ -88,3 +85,16 @@ ATTACHMENTS_AWS_STORAGE_BUCKET_NAME = 'test'
 
 # Never enabled in tests.
 SENTRY_DSN = None
+
+# To make absolutely sure we never accidentally trigger the GA tracking
+# within tests to the actual (and default) www.google-analytics.com this is
+# an extra safeguard.
+GOOGLE_ANALYTICS_TRACKING_URL = 'https://thisllneverwork.example.com/collect'
+
+# Because that's what all the tests presume.
+SITE_ID = 1
+
+# Stripe API KEY settings
+STRIPE_PUBLIC_KEY = 'wubba lubba dub duab'
+STRIPE_SECRET_KEY = 'wubba lubba dub dub'
+STRIPE_PLAN_ID = 'wubba lubba dub dub'

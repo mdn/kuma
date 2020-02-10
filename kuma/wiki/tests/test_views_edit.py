@@ -18,8 +18,7 @@ def test_edit_get(editor_client, root_doc):
 
 
 @pytest.mark.parametrize('method', ('GET', 'POST'))
-def test_edit_banned_ip_not_allowed(method, editor_client, root_doc,
-                                    cleared_cacheback_cache):
+def test_edit_banned_ip_not_allowed(method, editor_client, root_doc):
     ip = '127.0.0.1'
     IPBan.objects.create(ip=ip)
     url = reverse('wiki.edit', args=[root_doc.slug])

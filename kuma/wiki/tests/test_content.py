@@ -1108,21 +1108,19 @@ def test_clean_content_stripped_ie_comment():
 
 
 def test_clean_content_iframe_in_script():
-    """iframe in script should be filtered"""
-    content = ('<script><iframe src="data:text/plain,foo">'
-               '</iframe></script>')
-    expected = ('&lt;script&gt;&lt;iframe src="data:text/plain,foo"&gt;'
-                '&lt;/iframe&gt;&lt;/script&gt;')
+    """script tags should not be allowed, and markup inside should be cleaned"""
+    # Note that iframe tags _are_ allowed, but made safe; see ALLOWED_TAGS
+    content = '<script><iframe src="data:text/plain,foo">bar</iframe></script>'
+    expected = '&lt;script&gt;<iframe></iframe>&lt;/script&gt;'
     result = clean_content(content)
     assert normalize_html(expected) == normalize_html(result)
 
 
 def test_clean_content_iframe_in_style():
-    """iframe in style should be filtered"""
-    content = ('<style><iframe src="data:text/plain,foo">'
-               '</iframe></style>')
-    expected = ('&lt;style&gt;&lt;iframe src="data:text/plain,foo"&gt;'
-                '&lt;/iframe&gt;&lt;/style&gt;')
+    """style tags should not be allowed, and markup inside should be cleaned"""
+    # Note that iframe tags _are_ allowed, but made safe; see ALLOWED_TAGS
+    content = '<style><iframe src="data:text/plain,foo">bar</iframe></style>'
+    expected = '&lt;style&gt;<iframe></iframe>&lt;/style&gt;'
     result = clean_content(content)
     assert normalize_html(expected) == normalize_html(result)
 

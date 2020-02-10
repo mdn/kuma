@@ -1,6 +1,7 @@
 import json
 from datetime import datetime, timedelta
 
+import stripe
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
 from allauth.socialaccount import helpers
@@ -25,17 +26,24 @@ from django.http import (
     HttpResponseRedirect)
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
+from django.urls import reverse
 from django.utils.encoding import force_text
-from django.utils.http import urlsafe_base64_decode
+from django.utils.http import urlencode, urlsafe_base64_decode
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
 from honeypot.decorators import verify_honeypot_value
+from raven.contrib.django.models import client as raven_client
 from taggit.utils import parse_tags
+from waffle import flag_is_active
 
 from kuma.core.decorators import (ensure_wiki_domain, login_required,
                                   redirect_in_maintenance_mode)
+from kuma.core.ga_tracking import (
+    ACTION_PROFILE_AUDIT,
+    CATEGORY_SIGNUP_FLOW,
+    track_event)
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import (Document, DocumentDeletionLog, Revision,
                               RevisionAkismetSubmission)
@@ -49,7 +57,10 @@ from .models import User, UserBan
 # we have to import the signup form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
 from .signup import SignupForm
-
+from .utils import (
+    create_stripe_customer_and_subscription_for_user,
+    retrieve_stripe_subscription_info,
+)
 
 # TODO: Make this dynamic, editable from admin interface
 INTEREST_SUGGESTIONS = [
@@ -392,6 +403,7 @@ def user_edit(request, username):
     """
     View and edit user profile
     """
+    has_stripe_error = request.GET.get('has_stripe_error', 'False') == 'True'
     edit_user = get_object_or_404(User, username=username)
 
     if not edit_user.allows_editing_by(request.user):
@@ -402,6 +414,8 @@ def user_edit(request, username):
         ('interests', 'profile:interest:'),
         ('expertise', 'profile:expertise:')
     )
+
+    revisions = Revision.objects.filter(creator=edit_user)
 
     if request.method != 'POST':
         initial = {
@@ -450,8 +464,16 @@ def user_edit(request, username):
     context = {
         'edit_user': edit_user,
         'user_form': user_form,
+        'username': user_form['username'].value(),
+        'form': UserDeleteForm(),
         'INTEREST_SUGGESTIONS': INTEREST_SUGGESTIONS,
+        'revisions': revisions,
+        'subscription_info': retrieve_stripe_subscription_info(
+            edit_user,
+        ),
+        'has_stripe_error': has_stripe_error
     }
+
     return render(request, 'users/user_edit.html', context)
 
 
@@ -542,6 +564,7 @@ def user_delete(request, username):
         form = UserDeleteForm()
 
     context['form'] = form
+    context['username'] = username
     context['revisions'] = revisions
 
     return render(request, 'users/user_delete.html', context)
@@ -578,9 +601,12 @@ class SignupView(BaseSignupView):
             email = form.initial.get('email', '')
             if isinstance(email, tuple):
                 email = email[0]
-            suggested_username = email.split('@')[0]
-            if not User.objects.filter(username__iexact=suggested_username).exists():
-                form.initial['username'] = suggested_username
+            suggested_username = suggested_username_base = email.split('@')[0]
+            increment = 1
+            while User.objects.filter(username__iexact=suggested_username).exists():
+                increment += 1
+                suggested_username = f'{suggested_username_base}{increment}'
+            form.initial['username'] = suggested_username
 
         self.matching_user = None
         initial_username = form.initial.get('username', None)
@@ -715,6 +741,20 @@ class SignupView(BaseSignupView):
             return response
         return super(SignupView, self).dispatch(request, *args, **kwargs)
 
+    def get(self, request, *args, **kwargs):
+        """This exists so we can squeeze in a tracking event exclusively
+        about viewing the profile creation page. If we did it to all
+        dispatch() it would trigger on things like submitting form, which
+        might trigger repeatedly if the form submission has validation
+        errors that the user has to address.
+        """
+        if request.session.get('sociallogin_provider'):
+            track_event(
+                CATEGORY_SIGNUP_FLOW,
+                ACTION_PROFILE_AUDIT,
+                request.session['sociallogin_provider'])
+        return super().get(request, *args, **kwargs)
+
 
 signup = redirect_in_maintenance_mode(SignupView.as_view())
 
@@ -752,6 +792,29 @@ def recover(request, uidb64=None, token=None):
         login(request, user, 'kuma.users.auth_backends.KumaAuthBackend')
         return redirect('users.recover_done')
     return render(request, 'users/recover_failed.html')
+
+
+@login_required
+@require_POST
+def create_stripe_subscription(request):
+    user = request.user
+
+    if not flag_is_active(request, 'subscription'):
+        return HttpResponseForbidden('subscription flag not active for this user')
+
+    has_stripe_error = False
+    try:
+        email = request.POST.get('stripe_email', '')
+        stripe_token = request.POST.get('stripe_token', '')
+        create_stripe_customer_and_subscription_for_user(user, email, stripe_token)
+    except stripe.error.StripeError:
+        raven_client.captureException()
+        has_stripe_error = True
+
+    query_params = "?" + urlencode(
+        {"has_stripe_error": has_stripe_error}
+    )
+    return redirect(reverse('users.user_edit', args=[user.username]) + query_params)
 
 
 recovery_email_sent = TemplateView.as_view(

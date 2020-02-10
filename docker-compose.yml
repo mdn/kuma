@@ -53,6 +53,7 @@ services:
       - SSR_PORT=8000
       - SSR_URL=http://ssr:8000/ssr
       - SSR_TIMEOUT=1
+      - GOOGLE_ANALYTICS_TRACKING_URL=http://mockga:7000/collect
 
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:
@@ -65,6 +66,7 @@ services:
       - kumascript
       - ssr
       - minio
+      - mockga
     ports:
       - "8000:8000"
 
@@ -155,6 +157,13 @@ services:
       MC_HOST_minio: "http://${MINIO_ACCESS_KEY:-minio}:${MINIO_SECRET_KEY:-minio123}@minio:9000"
     entrypoint: ""
     command: /bin/sh -c "for BUCKET in 'test' 'mdn-attachments'; do mc mb -p minio/$$BUCKET && mc policy set download minio/$$BUCKET; done"
+
+  mockga:
+    build:
+      context: mockga
+      dockerfile: Dockerfile
+    ports:
+      - "7000:7000"
 
 volumes:
     miniodata:

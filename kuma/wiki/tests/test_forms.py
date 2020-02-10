@@ -96,7 +96,7 @@ class AkismetHistoricalDataTests(UserTestCase):
     ('<div onclick="alert(\'hacked!\')">click me</div>',
      '<div>click me</div>'),
     ('<svg><circle onload=confirm(3)>',
-     '&lt;svg&gt;&lt;circle onload="confirm(3)"&gt;&lt;/circle&gt;&lt;/svg&gt;')
+     '&lt;svg&gt;&lt;circle onload=confirm(3)&gt;')
 ], ids=('strip', 'escape'))
 def test_form_onload_attr_filter(root_doc, rf, content, expected):
     """

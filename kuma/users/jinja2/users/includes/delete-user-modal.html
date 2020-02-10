@@ -1,0 +1,9 @@
+{% extends "includes/modal.html" %}
+
+{% set modal_id = "delete-user-modal" %}
+{% set modal_content_class = "delete-user" %}
+{% set modal_title = _('Delete your account?') %}
+
+{% block modal_content %}
+    {% include "/users/includes/delete-user-content.html" %}
+{% endblock %}
