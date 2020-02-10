@@ -39,30 +39,6 @@ def test_local_storage(data_name, param_list):
     assert getter(*param_list) == value
 
 
-def test_safe_add_tags_new(simple_user):
-    """New tags are created."""
-    tag = "profile:interest:testing"
-    Storage().safe_add_tags([tag], Tag, simple_user.tags)
-    assert list(simple_user.tags.names()) == [tag]
-
-
-def test_safe_add_tags_existing(simple_user):
-    """Existing tags are reused."""
-    tag = "profile:expertise:existence"
-    Tag.objects.create(name=tag)
-    Storage().safe_add_tags([tag], Tag, simple_user.tags)
-    assert list(simple_user.tags.names()) == [tag]
-
-
-def test_safe_add_tags_case_mismatch(simple_user):
-    """Existing tags with different capitalization are reused."""
-    tag = "profile:interest:css"
-    Tag.objects.create(name=tag)
-    upper_tag = "profile:interest:CSS"
-    Storage().safe_add_tags([upper_tag], Tag, simple_user.tags)
-    assert list(simple_user.tags.names()) == [tag]
-
-
 @pytest.mark.django_db
 def test_get_document_missing():
     assert Storage().get_document("en-US", "Test") is None
@@ -377,14 +353,6 @@ def test_save_user(django_user_model):
     assert user.linkedin_url == "http://www.linkedin.com/in/joedev1999"
     assert user.mozillians_url == "http://mozillians.org/u/joedev/"
     assert user.date_joined == datetime(1999, 1, 1, 10, 40, 23)
-    tags = sorted(user.tags.names())
-    expected_tags = [
-        "profile:expertise:HTML",
-        "profile:interest:CSS",
-        "profile:interest:HTML",
-        "profile:interest:JavaScript",
-    ]
-    assert tags == expected_tags
 
 
 def test_save_user_banned(django_user_model):

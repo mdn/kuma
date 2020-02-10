@@ -774,16 +774,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
 def _get_current_form_field_values(doc):
     # Scrape out the existing significant form field values.
-    fields = (
-        "username",
-        "fullname",
-        "title",
-        "organization",
-        "location",
-        "irc_nickname",
-        "interests",
-        "is_github_url_public",
-    )
+    fields = ('username', 'fullname', 'title', 'organization',
+              'location', 'irc_nickname', 'is_github_url_public')
     form = dict()
     lookup_pattern = '#{prefix}edit *[name="{prefix}{field}"]'
     prefix = "user-"
@@ -997,84 +989,6 @@ def test_user_edit_websites(wiki_user, wiki_user_github_account, user_client):
     tmpl = "#user-edit #users .%s .errorlist"
     for n in ("linkedin", "twitter", "stackoverflow"):
         assert doc.find(tmpl % n).length == 1
-
-
-def test_user_edit_interests(wiki_user, wiki_user_github_account, user_client):
-    url = reverse("users.user_edit", args=(wiki_user.username,))
-    response = user_client.get(url)
-    assert response.status_code == 200
-    assert_no_cache_header(response)
-    doc = pq(response.content)
-
-    test_tags = ["javascript", "css", "canvas", "html", "homebrewing"]
-
-    form = _get_current_form_field_values(doc)
-
-    form["user-interests"] = ", ".join(test_tags)
-
-    response = user_client.post(url, form, follow=True)
-    doc = pq(response.content)
-    assert doc.find("#user-head").length == 1
-
-    result_tags = sorted(
-        [
-            t.name.replace("profile:interest:", "")
-            for t in wiki_user.tags.all_ns("profile:interest:")
-        ]
-    )
-    test_tags.sort()
-    assert result_tags == test_tags
-
-    test_expertise = ["css", "canvas"]
-    form["user-expertise"] = ", ".join(test_expertise)
-    response = user_client.post(url, form, follow=True)
-    doc = pq(response.content)
-
-    assert doc.find("#user-head").length == 1
-
-    result_tags = [
-        t.name.replace("profile:expertise:", "")
-        for t in wiki_user.tags.all_ns("profile:expertise")
-    ]
-    result_tags.sort()
-    test_expertise.sort()
-    assert result_tags == test_expertise
-
-    # Now, try some expertise tags not covered in interests
-    test_expertise = ["css", "canvas", "mobile", "movies"]
-    form["user-expertise"] = ", ".join(test_expertise)
-    response = user_client.post(url, form, follow=True)
-    doc = pq(response.content)
-
-    assert doc.find(".error #id_user-expertise").length == 1
-
-
-def test_bug_709938_interests(wiki_user, wiki_user_github_account, user_client):
-    url = reverse("users.user_edit", args=(wiki_user.username,))
-    response = user_client.get(url)
-    doc = pq(response.content)
-
-    test_tags = [
-        "science,Technology,paradox,knowledge,modeling,big data,"
-        "vector,meme,heuristics,harmony,mathesis universalis,"
-        "symmetry,mathematics,computer graphics,field,chemistry,"
-        "religion,astronomy,physics,biology,literature,"
-        "spirituality,Art,Philosophy,Psychology,Business,Music,"
-        "Computer Science"
-    ]
-
-    form = _get_current_form_field_values(doc)
-
-    form["user-interests"] = test_tags
-
-    response = user_client.post(url, form)
-    assert response.status_code == 200
-    doc = pq(response.content)
-    assert doc.find("ul.errorlist li").length == 1
-    assert (
-        "Ensure this value has at most 255 characters"
-        in doc.find("ul.errorlist li").text()
-    )
 
 
 def test_bug_698126_l10n(wiki_user, user_client):

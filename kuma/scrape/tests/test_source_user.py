@@ -22,14 +22,11 @@ def complex_user(db, django_user_model):
         organization="Acme, Inc.",
         location="Springfield, USA",
         date_joined=datetime(1999, 1, 1, 10, 40, 23),
-        twitter_url="http://twitter.com/jilldev1999",
-        github_url="https://github.com/jilldev1999",
-        stackoverflow_url="http://stackoverflow.com/users/1/jilldev1999",
-        linkedin_url="http://www.linkedin.com/in/jilldev1999",
-        mozillians_url="http://mozillians.org/u/jilldev/",
-    )
-    user.tags.set_ns("profile:interest:", "JavaScript", "HTML", "CSS")
-    user.tags.set_ns("profile:expertise:", "HTML")
+        twitter_url='http://twitter.com/jilldev1999',
+        github_url='https://github.com/jilldev1999',
+        stackoverflow_url='http://stackoverflow.com/users/1/jilldev1999',
+        linkedin_url='http://www.linkedin.com/in/jilldev1999',
+        mozillians_url='http://mozillians.org/u/jilldev/')
     return user
 
 

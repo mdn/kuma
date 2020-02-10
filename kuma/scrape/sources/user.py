@@ -73,17 +73,6 @@ class UserSource(Source):
                     else:
                         data[name] = elem[0].text
 
-        tags_divs = parsed.find("div.user-tags")
-        for tag_div in tags_divs:
-            h2 = tag_div.find("h2")
-            if "Interests" in h2.text:
-                tag_type = "interest"
-            else:
-                assert "Expertise" in h2.text
-                tag_type = "expertise"
-            tags = sorted([tag.text for tag in tag_div.cssselect("span")])
-            data[tag_type] = tags
-
         if self.social:
             socials = (
                 "twitter",

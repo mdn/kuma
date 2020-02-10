@@ -11,7 +11,6 @@ from django.utils.functional import cached_property
 from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import ugettext_lazy as _
 
-from kuma.core.managers import NamespacedTaggableManager
 from kuma.core.urlresolvers import reverse
 
 from .constants import USERNAME_REGEX
@@ -90,8 +89,6 @@ class User(AbstractUser):
     )
 
     is_newsletter_subscribed = models.BooleanField(default=False)
-
-    tags = NamespacedTaggableManager(verbose_name=_("Tags"), blank=True)
 
     WEBSITE_VALIDATORS = {
         "website": validators.RegexValidator(

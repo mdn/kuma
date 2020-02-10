@@ -36,7 +36,6 @@ from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
 from honeypot.decorators import verify_honeypot_value
 from raven.contrib.django.models import client as raven_client
-from taggit.utils import parse_tags
 from waffle import flag_is_active
 
 from kuma.core.decorators import (
@@ -66,38 +65,6 @@ from .utils import (
     create_stripe_customer_and_subscription_for_user,
     retrieve_stripe_subscription_info,
 )
-
-# TODO: Make this dynamic, editable from admin interface
-INTEREST_SUGGESTIONS = [
-    "audio",
-    "canvas",
-    "css3",
-    "device",
-    "files",
-    "fonts",
-    "forms",
-    "geolocation",
-    "javascript",
-    "html5",
-    "indexeddb",
-    "dragndrop",
-    "mobile",
-    "offlinesupport",
-    "svg",
-    "video",
-    "webgl",
-    "websockets",
-    "webworkers",
-    "xhr",
-    "multitouch",
-    "front-end development",
-    "web development",
-    "tech writing",
-    "user experience",
-    "design",
-    "technical review",
-    "editorial review",
-]
 
 
 @ensure_wiki_domain
@@ -464,12 +431,6 @@ def user_edit(request, username):
     if not edit_user.allows_editing_by(request.user):
         return HttpResponseForbidden()
 
-    # Map of form field names to tag namespaces
-    field_to_tag_ns = (
-        ("interests", "profile:interest:"),
-        ("expertise", "profile:expertise:"),
-    )
-
     revisions = Revision.objects.filter(creator=edit_user)
 
     if request.method != "POST":
@@ -478,12 +439,6 @@ def user_edit(request, username):
             "username": edit_user.username,
             "is_github_url_public": edit_user.is_github_url_public,
         }
-
-        # Form fields to receive tags filtered by namespace.
-        for field, ns in field_to_tag_ns:
-            initial[field] = ", ".join(
-                tag.name.replace(ns, "") for tag in edit_user.tags.all_ns(ns)
-            )
 
         # Finally, set up the forms.
         user_form = UserEditForm(instance=edit_user, initial=initial, prefix="user")
@@ -506,23 +461,18 @@ def user_edit(request, username):
                 # If there's no Beta Testers group, ignore that logic
                 pass
 
-            # Update tags from form fields
-            for field, tag_ns in field_to_tag_ns:
-                field_value = user_form.cleaned_data.get(field, "")
-                tags = parse_tags(field_value)
-                new_user.tags.set_ns(tag_ns, *tags)
-
             return redirect(edit_user)
 
     context = {
-        "edit_user": edit_user,
-        "user_form": user_form,
-        "username": user_form["username"].value(),
-        "form": UserDeleteForm(),
-        "INTEREST_SUGGESTIONS": INTEREST_SUGGESTIONS,
-        "revisions": revisions,
-        "subscription_info": retrieve_stripe_subscription_info(edit_user,),
-        "has_stripe_error": has_stripe_error,
+        'edit_user': edit_user,
+        'user_form': user_form,
+        'username': user_form['username'].value(),
+        'form': UserDeleteForm(),
+        'revisions': revisions,
+        'subscription_info': retrieve_stripe_subscription_info(
+            edit_user,
+        ),
+        'has_stripe_error': has_stripe_error
     }
 
     return render(request, "users/user_edit.html", context)
