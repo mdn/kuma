@@ -9,8 +9,9 @@ class UserConfig(AuthConfig):
     The Django App Config class to store information about the users app
     and do startup time things.
     """
-    name = 'kuma.users'
-    verbose_name = _('User')
+
+    name = "kuma.users"
+    verbose_name = _("User")
 
     def ready(self):
         # Connect signal handlers

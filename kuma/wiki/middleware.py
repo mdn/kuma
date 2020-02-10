@@ -1,5 +1,3 @@
-
-
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 
@@ -18,7 +16,6 @@ class ReadOnlyMiddleware(MiddlewareBase):
 
     def process_exception(self, request, exception):
         if isinstance(exception, ReadOnlyException):
-            context = {'reason': exception.args[0]}
-            return never_cache(render)(request, '403.html', context,
-                                       status=403)
+            context = {"reason": exception.args[0]}
+            return never_cache(render)(request, "403.html", context, status=403)
         return None
