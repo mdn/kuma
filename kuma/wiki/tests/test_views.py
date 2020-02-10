@@ -1258,9 +1258,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert review_tags == ["technical"]
 
         # Now, post an update with two tags
-        data.update(
-            {"form-type": "rev", "review_tags": ["editorial", "technical"]}
-        )
+        data.update({"form-type": "rev", "review_tags": ["editorial", "technical"]})
         response = self.client.post(
             reverse("wiki.edit", args=[doc.slug]), data, HTTP_HOST=settings.WIKI_HOST
         )
@@ -2926,9 +2924,7 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         self.client.login(username="testuser", password="testpass")
 
         data = new_document_data()
-        data.update(
-            {"form-type": "rev", "content": "This is an update"}
-        )
+        data.update({"form-type": "rev", "content": "This is an update"})
 
         edit_url = reverse("wiki.edit", args=[self.doc.slug])
         resp = self.client.post(edit_url, data, HTTP_HOST=settings.WIKI_HOST)
@@ -2937,9 +2933,7 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
 
         mock_document_schedule_rendering.reset_mock()
 
-        data.update(
-            {"form-type": "both", "content": "This is a translation"}
-        )
+        data.update({"form-type": "both", "content": "This is a translation"})
         translate_url = reverse("wiki.translate", args=[data["slug"]]) + "?tolocale=fr"
         response = self.client.post(translate_url, data, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 302

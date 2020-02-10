@@ -177,9 +177,7 @@ def csp_violation_capture(request):
         return HttpResponse()
 
     data = client.get_data_from_request(request)
-    data.update(
-        {"level": logging.INFO, "logger": "CSP"}
-    )
+    data.update({"level": logging.INFO, "logger": "CSP"})
     try:
         csp_data = json.loads(request.body)
     except ValueError:
