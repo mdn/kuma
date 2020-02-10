@@ -85,22 +85,22 @@ six = "^1.13.0"
 # From dev.txt
 django-babel = "0.6.2"
 django-querycount = "0.7.0"
-pytest-cov = "2.4.0"
+pytest-cov = "~2.8.1"
 pytest-django = "~3.4"
 urlwait = "0.4"
 
 # From constraints.txt
-coverage = "4.3.4"
+coverage = "~4.5.4"
 
 [tool.poetry.dev-dependencies]
 django-debug-toolbar = "^2.2"
-werkzeug = "^0.16.1" # Enables runserver_plus from django-extensions
+werkzeug = "^1.0" # Enables runserver_plus from django-extensions
 
 # From test.txt
 braceexpand = "^0.1.5"
 pytest-base-url = "^1.4.1"
 pytest-metadata = "^1.8.0"
-pytest-rerunfailures = "^4.2"
+pytest-rerunfailures = "^5.0"
 pytest-variables = "^1.9.0"
 
 # From linting.txt
