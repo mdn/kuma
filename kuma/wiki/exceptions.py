@@ -2,6 +2,7 @@ class UniqueCollision(Exception):
     """
     An attempt to create two pages with the same unique metadata
     """
+
     def __init__(self, existing):
         self.existing = existing
 

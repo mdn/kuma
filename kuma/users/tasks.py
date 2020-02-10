@@ -13,12 +13,12 @@ from kuma.core.email_utils import render_email
 from kuma.core.utils import strings_are_translated
 
 
-log = logging.getLogger('kuma.users.tasks')
+log = logging.getLogger("kuma.users.tasks")
 
 
 WELCOME_EMAIL_STRINGS = [
     "Like words?",
-    "Don't be shy, if you have any doubt, problems, questions: contact us! We are here to help."
+    "Don't be shy, if you have any doubt, problems, questions: contact us! We are here to help.",
 ]
 
 
@@ -28,12 +28,12 @@ def send_recovery_email(user_pk, email, locale=None):
     user = get_user_model().objects.get(pk=user_pk)
     locale = locale or settings.WIKI_DEFAULT_LANGUAGE
     url = settings.SITE_URL + user.get_recovery_url()
-    context = {'recovery_url': url, 'username': user.username}
+    context = {"recovery_url": url, "username": user.username}
     with translation.override(locale):
-        subject = render_email('users/email/recovery/subject.ltxt', context)
+        subject = render_email("users/email/recovery/subject.ltxt", context)
         # Email subject *must not* contain newlines
-        subject = ''.join(subject.splitlines())
-        plain = render_email('users/email/recovery/plain.ltxt', context)
+        subject = "".join(subject.splitlines())
+        plain = render_email("users/email/recovery/plain.ltxt", context)
         send_mail(subject, plain, settings.DEFAULT_FROM_EMAIL, [email])
 
 
@@ -41,21 +41,20 @@ def send_recovery_email(user_pk, email, locale=None):
 @skip_in_maintenance_mode
 def send_welcome_email(user_pk, locale):
     user = get_user_model().objects.get(pk=user_pk)
-    if (locale == settings.WIKI_DEFAULT_LANGUAGE or
-            strings_are_translated(WELCOME_EMAIL_STRINGS, locale)):
-        context = {'username': user.username}
-        log.debug('Using the locale %s to send the welcome email', locale)
+    if locale == settings.WIKI_DEFAULT_LANGUAGE or strings_are_translated(
+        WELCOME_EMAIL_STRINGS, locale
+    ):
+        context = {"username": user.username}
+        log.debug("Using the locale %s to send the welcome email", locale)
         with translation.override(locale):
-            content_plain = render_email('users/email/welcome/plain.ltxt',
-                                         context)
-            content_html = render_email('users/email/welcome/html.ltxt',
-                                        context)
+            content_plain = render_email("users/email/welcome/plain.ltxt", context)
+            content_html = render_email("users/email/welcome/html.ltxt", context)
 
             email = EmailMultiAlternatives(
-                _('Getting started with your new MDN account'),
+                _("Getting started with your new MDN account"),
                 content_plain,
                 config.WELCOME_EMAIL_FROM,
                 [user.email],
             )
-            email.attach_alternative(content_html, 'text/html')
+            email.attach_alternative(content_html, "text/html")
             email.send()

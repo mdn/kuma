@@ -5,9 +5,34 @@ from django.db import migrations
 
 
 DISCARDED_LOCALES = (
-    'af', 'az', 'cs', 'ee', 'ff', 'fy-NL', 'ga-IE', 'ha', 'hr', 'ig', 'ka',
-    'ln', 'mg', 'ml', 'ro', 'son', 'sq', 'sr', 'sr-Latn', 'sw', 'ta', 'te',
-    'tl', 'tn', 'wo', 'xh', 'yo', 'zu'
+    "af",
+    "az",
+    "cs",
+    "ee",
+    "ff",
+    "fy-NL",
+    "ga-IE",
+    "ha",
+    "hr",
+    "ig",
+    "ka",
+    "ln",
+    "mg",
+    "ml",
+    "ro",
+    "son",
+    "sq",
+    "sr",
+    "sr-Latn",
+    "sw",
+    "ta",
+    "te",
+    "tl",
+    "tn",
+    "wo",
+    "xh",
+    "yo",
+    "zu",
 )
 
 
@@ -16,18 +41,18 @@ def delete_documents_within_discarded_locales(apps, schema_editor):
     Delete all documents and document-deletion logs within the
     DISCARDED_LOCALES.
     """
-    Document = apps.get_model('wiki', 'Document')
+    Document = apps.get_model("wiki", "Document")
     docs_to_delete = Document.objects.filter(locale__in=DISCARDED_LOCALES)
     docs_to_delete.update(parent_topic=None)
     docs_to_delete.delete()
-    DocumentDeletionLog = apps.get_model('wiki', 'DocumentDeletionLog')
+    DocumentDeletionLog = apps.get_model("wiki", "DocumentDeletionLog")
     DocumentDeletionLog.objects.filter(locale__in=DISCARDED_LOCALES).delete()
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wiki', '0007_auto_20190914_2208'),
+        ("wiki", "0007_auto_20190914_2208"),
     ]
 
     operations = [

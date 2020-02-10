@@ -1,5 +1,3 @@
-
-
 from cacheback.base import Job
 from django.utils import crypto
 
@@ -9,12 +7,13 @@ class KumaJob(Job):
     A subclass of the cache base job class that implements an optional per job
     version key.
     """
+
     version = None
 
     def key(self, *args, **kwargs):
         key = super(KumaJob, self).key(*args, **kwargs)
         if self.version is not None:
-            key = f'{key}#{self.version}'
+            key = f"{key}#{self.version}"
         return key
 
 
@@ -24,6 +23,7 @@ class GenerationJob(KumaJob):
 
     The purpose is to refresh several cached values when a generation changes.
     """
+
     generation_lifetime = 60 * 60 * 24 * 365
     lifetime = 60 * 60 * 12
 
@@ -38,15 +38,17 @@ class GenerationJob(KumaJob):
         self.generation_args = generation_args or []
         super(KumaJob, self).__init__(*args, **kwargs)
         self.generation_key = GenerationKeyJob(
-            lifetime=self.generation_lifetime, for_class=self.class_path,
-            generation_args=self.generation_args)
+            lifetime=self.generation_lifetime,
+            for_class=self.class_path,
+            generation_args=self.generation_args,
+        )
 
     def key(self, *args, **kwargs):
         """Create a key that is derived from the generation."""
         base_key = super(GenerationJob, self).key(*args, **kwargs)
         gen_key = self.generation_key.key()
         gen_key_value = self.generation_key.get()
-        return f'{base_key}@{gen_key}:{gen_key_value}'
+        return f"{base_key}@{gen_key}:{gen_key_value}"
 
     def invalidate_generation(self):
         """Invalidate the shared generation."""
@@ -65,8 +67,8 @@ class GenerationKeyJob(Job):
 
     def key(self, *args, **kwargs):
         """Return a key that is derived only from the initial args."""
-        generation_args = ':'.join([str(key) for key in self.generation_args])
-        return f'{self.for_class}:{generation_args}:generation'
+        generation_args = ":".join([str(key) for key in self.generation_args])
+        return f"{self.for_class}:{generation_args}:generation"
 
     def fetch(self, *args, **kwargs):
         """Create a unique generation identifier."""
@@ -78,22 +80,26 @@ class GenerationKeyJob(Job):
 
         The async refresh task re-creates the GenerationKeyJob.
         """
-        return {'lifetime': self.lifetime,
-                'for_class': self.for_class,
-                'generation_args': self.generation_args}
+        return {
+            "lifetime": self.lifetime,
+            "for_class": self.for_class,
+            "generation_args": self.generation_args,
+        }
 
 
 class BannedIPsJob(KumaJob):
-    '''Get the current set of banned IPs.'''
+    """Get the current set of banned IPs."""
+
     lifetime = 60 * 60 * 3
     refresh_timeout = 60
 
     def fetch(self):
         """Get a (JSON-serializable) list of banned IPs."""
         from .models import IPBan
-        ips = list(IPBan.objects
-                   .filter(deleted__isnull=True)
-                   .values_list('ip', flat=True))
+
+        ips = list(
+            IPBan.objects.filter(deleted__isnull=True).values_list("ip", flat=True)
+        )
         return ips
 
     def empty(self):

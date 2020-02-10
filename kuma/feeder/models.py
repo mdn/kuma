@@ -1,5 +1,3 @@
-
-
 import jsonpickle
 from django.db import models
 from django.utils.functional import cached_property
@@ -17,9 +15,9 @@ class Bundle(models.Model):
     """A bundle of several feeds. A feed can be in several (or no) bundles."""
 
     shortname = models.SlugField(
-        help_text='Short name to find this bundle by.', unique=True)
-    feeds = models.ManyToManyField('feeder.Feed', related_name='bundles',
-                                   blank=True)
+        help_text="Short name to find this bundle by.", unique=True
+    )
+    feeds = models.ManyToManyField("feeder.Feed", related_name="bundles", blank=True)
 
     objects = BundleManager()
 
@@ -31,7 +29,8 @@ class Feed(models.Model):
     """A feed holds the metadata of an RSS feed."""
 
     shortname = models.SlugField(
-        help_text='Short name to find this feed by.', unique=True)
+        help_text="Short name to find this feed by.", unique=True
+    )
 
     title = models.CharField(max_length=140)
     url = models.CharField(max_length=2048)
@@ -45,13 +44,12 @@ class Feed(models.Model):
     disabled_reason = models.CharField(max_length=2048, blank=True)
 
     keep = models.PositiveIntegerField(
-        default=0, help_text=('Discard all but this amount of entries. 0 == '
-                              'do not discard.'))
+        default=0,
+        help_text=("Discard all but this amount of entries. 0 == " "do not discard."),
+    )
 
-    created = models.DateTimeField(
-        auto_now_add=True, verbose_name='Created On')
-    updated = models.DateTimeField(
-        auto_now=True, verbose_name='Last Modified')
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Created On")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Last Modified")
 
     def __str__(self):
         return self.shortname
@@ -61,7 +59,7 @@ class Feed(models.Model):
         if not self.keep > 0:
             return
 
-        to_delete = self.entries.order_by('-last_published')[self.keep:]
+        to_delete = self.entries.order_by("-last_published")[self.keep :]
         for item in to_delete:
             # This doesn't perform extremely well, but it's what we have to do
             # to keep exactly `n` entries around, as LIMIT is invalid in a
@@ -72,7 +70,7 @@ class Feed(models.Model):
 class Entry(models.Model):
     """An entry is an item representing feed content."""
 
-    feed = models.ForeignKey(Feed, related_name='entries', on_delete=models.CASCADE)
+    feed = models.ForeignKey(Feed, related_name="entries", on_delete=models.CASCADE)
     guid = models.CharField(max_length=255)
 
     raw = models.TextField()
@@ -82,18 +80,16 @@ class Entry(models.Model):
     # Feed entry updated field
     last_published = models.DateTimeField()
 
-    created = models.DateTimeField(
-        auto_now_add=True, verbose_name='Created On')
-    updated = models.DateTimeField(
-        auto_now=True, verbose_name='Last Modified')
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Created On")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Last Modified")
 
     class Meta:
-        ordering = ['-last_published']
-        unique_together = ('feed', 'guid')
-        verbose_name_plural = 'Entries'
+        ordering = ["-last_published"]
+        unique_together = ("feed", "guid")
+        verbose_name_plural = "Entries"
 
     def __str__(self):
-        return f'{self.feed.shortname}: {self.guid}'
+        return f"{self.feed.shortname}: {self.guid}"
 
     @cached_property
     def parsed(self):

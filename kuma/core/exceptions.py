@@ -4,6 +4,7 @@ class ProgrammingError(Exception):
 
 class DateTimeFormatError(Exception):
     """Called by the datetimeformat function when receiving invalid format."""
+
     pass
 
 

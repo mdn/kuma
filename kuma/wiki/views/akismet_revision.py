@@ -1,5 +1,3 @@
-
-
 import json
 
 from django.contrib.auth.decorators import permission_required
@@ -19,7 +17,7 @@ from ..models import RevisionAkismetSubmission
 @never_cache
 @csrf_exempt
 @require_POST
-@permission_required('wiki.add_revisionakismetsubmission')
+@permission_required("wiki.add_revisionakismetsubmission")
 def submit_akismet_spam(request):
     """
     Creates SPAM Akismet record for revision.
@@ -29,25 +27,35 @@ def submit_akismet_spam(request):
     """
 
     submission = RevisionAkismetSubmission(sender=request.user, type="spam")
-    data = RevisionAkismetSubmissionSpamForm(data=request.POST, instance=submission, request=request)
+    data = RevisionAkismetSubmissionSpamForm(
+        data=request.POST, instance=submission, request=request
+    )
 
     if data.is_valid():
         data.save()
 
-        revision = data.cleaned_data['revision']
-        akismet_revisions = (RevisionAkismetSubmission.objects.filter(revision=revision)
-                                                              .order_by('id')
-                                                              .values('sender__username', 'sent', 'type'))
+        revision = data.cleaned_data["revision"]
+        akismet_revisions = (
+            RevisionAkismetSubmission.objects.filter(revision=revision)
+            .order_by("id")
+            .values("sender__username", "sent", "type")
+        )
 
         data = [
             {
                 "sender": rev["sender__username"],
-                "sent": format_date_time(value=rev["sent"],
-                                         format='datetime', request=request)[0],
-                "type": rev["type"]}
-            for rev in akismet_revisions]
+                "sent": format_date_time(
+                    value=rev["sent"], format="datetime", request=request
+                )[0],
+                "type": rev["type"],
+            }
+            for rev in akismet_revisions
+        ]
 
-        return HttpResponse(json.dumps(data, sort_keys=True),
-                            content_type='application/json; charset=utf-8', status=201)
+        return HttpResponse(
+            json.dumps(data, sort_keys=True),
+            content_type="application/json; charset=utf-8",
+            status=201,
+        )
 
     return HttpResponseBadRequest()

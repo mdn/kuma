@@ -1,8 +1,17 @@
-
-
 import logging
 
-from . import (akismet_revision, code, create, delete, document, edit,  # noqa
-               legacy, list, misc, revision, translate)  # noqa
+from . import (  # noqa: F401
+    akismet_revision,
+    code,
+    create,
+    delete,
+    document,
+    edit,
+    legacy,
+    list,
+    misc,
+    revision,
+    translate,
+)
 
-log = logging.getLogger('kuma.wiki.views')
+log = logging.getLogger("kuma.wiki.views")

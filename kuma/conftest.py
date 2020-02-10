@@ -24,7 +24,7 @@ def clear_cache():
 
 @pytest.fixture(autouse=True)
 def set_default_language():
-    activate('en-US')
+    activate("en-US")
 
 
 @pytest.fixture(autouse=True)
@@ -60,10 +60,12 @@ def reset_urlconf():
 
 class ConstanceConfigWrapper(object):
     """A Constance configuration wrapper to allow overriding the config."""
+
     _original_values = []
 
     def __setattr__(self, attr, value):
         from constance import config
+
         self._original_values.append((attr, getattr(config, attr)))
         setattr(config, attr, value)
         # This can fail if Constance uses a cached database backend
@@ -72,6 +74,7 @@ class ConstanceConfigWrapper(object):
 
     def finalize(self):
         from constance import config
+
         for attr, value in reversed(self._original_values):
             setattr(config, attr, value)
         del self._original_values[:]
@@ -87,28 +90,29 @@ def constance_config(db, settings):
 
 @pytest.fixture
 def beta_testers_group(db):
-    return Group.objects.create(name='Beta Testers')
+    return Group.objects.create(name="Beta Testers")
 
 
 @pytest.fixture
 def wiki_user(db, django_user_model):
     """A test user."""
     return django_user_model.objects.create(
-        username='wiki_user',
-        email='wiki_user@example.com',
-        date_joined=datetime(2017, 4, 14, 12, 0))
+        username="wiki_user",
+        email="wiki_user@example.com",
+        date_joined=datetime(2017, 4, 14, 12, 0),
+    )
 
 
 @pytest.fixture
 def wiki_user_github_account(wiki_user):
     return SocialAccount.objects.create(
         user=wiki_user,
-        provider='github',
+        provider="github",
         extra_data=dict(
             email=wiki_user.email,
-            avatar_url='https://avatars0.githubusercontent.com/yada/yada',
-            html_url="https://github.com/{}".format(wiki_user.username)
-        )
+            avatar_url="https://avatars0.githubusercontent.com/yada/yada",
+            html_url="https://github.com/{}".format(wiki_user.username),
+        ),
     )
 
 
@@ -116,33 +120,35 @@ def wiki_user_github_account(wiki_user):
 def wiki_user_2(db, django_user_model):
     """A second test user."""
     return django_user_model.objects.create(
-        username='wiki_user_2',
-        email='wiki_user_2@example.com',
-        date_joined=datetime(2017, 4, 17, 10, 30))
+        username="wiki_user_2",
+        email="wiki_user_2@example.com",
+        date_joined=datetime(2017, 4, 17, 10, 30),
+    )
 
 
 @pytest.fixture
 def wiki_user_3(db, django_user_model):
     """A third test user."""
     return django_user_model.objects.create(
-        username='wiki_user_3',
-        email='wiki_user_3@example.com',
-        date_joined=datetime(2017, 4, 23, 11, 45))
+        username="wiki_user_3",
+        email="wiki_user_3@example.com",
+        date_joined=datetime(2017, 4, 23, 11, 45),
+    )
 
 
 @pytest.fixture
 def user_client(client, wiki_user):
     """A test client with wiki_user logged in."""
-    wiki_user.set_password('password')
+    wiki_user.set_password("password")
     wiki_user.save()
-    client.login(username=wiki_user.username, password='password')
+    client.login(username=wiki_user.username, password="password")
     return client
 
 
 @pytest.fixture
 def editor_client(user_client):
     """A test client with wiki_user logged in for editing."""
-    with override_flag('kumaediting', True):
+    with override_flag("kumaediting", True):
         yield user_client
 
 
@@ -150,13 +156,15 @@ def editor_client(user_client):
 def root_doc(wiki_user):
     """A newly-created top-level English document."""
     root_doc = Document.objects.create(
-        locale='en-US', slug='Root', title='Root Document')
+        locale="en-US", slug="Root", title="Root Document"
+    )
     Revision.objects.create(
         document=root_doc,
         creator=wiki_user,
-        content='<p>Getting started...</p>',
-        title='Root Document',
-        created=datetime(2017, 4, 14, 12, 15))
+        content="<p>Getting started...</p>",
+        title="Root Document",
+        created=datetime(2017, 4, 14, 12, 15),
+    )
     return root_doc
 
 
@@ -170,17 +178,19 @@ def create_revision(root_doc):
 def trans_doc(create_revision, wiki_user):
     """Translate the root document into French."""
     trans_doc = Document.objects.create(
-        locale='fr',
+        locale="fr",
         parent=create_revision.document,
-        slug='Racine',
-        title='Racine du Document')
+        slug="Racine",
+        title="Racine du Document",
+    )
     Revision.objects.create(
         document=trans_doc,
         creator=wiki_user,
         based_on=create_revision,
-        content='<p>Mise en route...</p>',
-        title='Racine du Document',
-        created=datetime(2017, 4, 14, 12, 20))
+        content="<p>Mise en route...</p>",
+        title="Racine du Document",
+        created=datetime(2017, 4, 14, 12, 20),
+    )
     return trans_doc
 
 
@@ -188,16 +198,19 @@ def trans_doc(create_revision, wiki_user):
 def redirect_doc(wiki_user, root_doc):
     """A newly-created top-level English redirect document."""
     redirect_doc = Document.objects.create(
-        locale='en-US', slug='Redirection', title='Redirect Document')
+        locale="en-US", slug="Redirection", title="Redirect Document"
+    )
     Revision.objects.create(
         document=redirect_doc,
         creator=wiki_user,
-        content=REDIRECT_CONTENT % {
-            'href': reverse('wiki.document', args=(root_doc.slug,)),
-            'title': root_doc.title,
+        content=REDIRECT_CONTENT
+        % {
+            "href": reverse("wiki.document", args=(root_doc.slug,)),
+            "title": root_doc.title,
         },
-        title='Redirect Document',
-        created=datetime(2017, 4, 17, 12, 15))
+        title="Redirect Document",
+        created=datetime(2017, 4, 17, 12, 15),
+    )
     return redirect_doc
 
 

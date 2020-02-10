@@ -15,33 +15,34 @@ class Source(object):
     PARAM_NAME - The attribute name of the "key" parameter for the data source
     OPTIONS - A dictionary of option names to (type, default value) pairs.
     """
+
     # Scraping states
     STATES = (
-        'Initializing',
-        'Gathering Requirements',
-        'Done',
-        'Error',
+        "Initializing",
+        "Gathering Requirements",
+        "Done",
+        "Error",
     )
     STATE_INIT, STATE_PREREQ, STATE_DONE, STATE_ERROR = STATES
 
     # Freshness of scraped data
     FRESHNESS = (
-        'Unknown',
-        'Fresh',
-        'Existing',
+        "Unknown",
+        "Fresh",
+        "Existing",
     )
     FRESH_UNKNOWN, FRESH_YES, FRESH_NO = FRESHNESS
 
     # Friendly name of the source's key parameter
-    PARAM_NAME = 'param'
+    PARAM_NAME = "param"
 
     # Types of source options. Used when merging options, to determine if
     # the new or existing option value should win, possible resetting scraping.
     OPTION_TYPES = {
-        'bool',     # True > False
-        'int',      # 2 > 1 > 0
-        'int_all',  # 'all' > 2 > 0
-        'text',     # any new value > old value > ''
+        "bool",  # True > False
+        "int",  # 2 > 1 > 0
+        "int_all",  # 'all' > 2 > 0
+        "text",  # any new value > old value > ''
     }
 
     # The scrape options for this source, defaulting to no valid settings
@@ -50,6 +51,7 @@ class Source(object):
 
     class SourceError(Exception):
         """An error raised during gathering."""
+
         def __init__(self, *args, **kwargs):
             self.format = args[0]
             self.format_args = args[1:]
@@ -74,19 +76,20 @@ class Source(object):
 
     def assert_option_value_allowed(self, option_type, value):
         """Assert that an option value is valid."""
-        if option_type == 'bool':
-            valid = (value is True or value is False)
-        elif option_type == 'int':
-            valid = (value == int(value))
-        elif option_type == 'int_all':
-            valid = (value == 'all' or value == int(value))
+        if option_type == "bool":
+            valid = value is True or value is False
+        elif option_type == "int":
+            valid = value == int(value)
+        elif option_type == "int_all":
+            valid = value == "all" or value == int(value)
         else:
-            assert option_type == 'text'
+            assert option_type == "text"
             valid = isinstance(value, str)
 
         if not valid:
-            raise ValueError('invalid value "%s" for type "%s"' %
-                             (repr(value), option_type))
+            raise ValueError(
+                'invalid value "%s" for type "%s"' % (repr(value), option_type)
+            )
 
     def merge_options(self, **options):
         """
@@ -99,27 +102,27 @@ class Source(object):
             option_type = self.OPTIONS[name][0]
             self.assert_option_value_allowed(option_type, value)
             current = getattr(self, name)
-            if option_type == 'bool':
+            if option_type == "bool":
                 if value and not current:
                     changed[name] = value
                     setattr(self, name, True)
-            elif option_type == 'int':
+            elif option_type == "int":
                 value = int(value)
                 if value > current:
                     changed[name] = value
                     setattr(self, name, value)
-            elif option_type == 'int_all':
-                if str(value).lower() == 'all':
-                    if current != 'all':
-                        changed[name] = 'all'
-                        setattr(self, name, 'all')
+            elif option_type == "int_all":
+                if str(value).lower() == "all":
+                    if current != "all":
+                        changed[name] = "all"
+                        setattr(self, name, "all")
                 else:
                     value = int(value)
                     if value > current:
                         changed[name] = value
                         setattr(self, name, value)
             else:
-                assert option_type == 'text'
+                assert option_type == "text"
                 if value and value != current:
                     changed[name] = value
                     setattr(self, name, value)
@@ -140,7 +143,7 @@ class Source(object):
     def decode_href(self, href):
         """Convert URL-escaped href attributes to unicode."""
         if isinstance(href, bytes):
-            uhref = href.decode('ascii')
+            uhref = href.decode("ascii")
         else:
             uhref = href
         decoded = unquote(uhref)
@@ -191,7 +194,7 @@ class Source(object):
                         return next_sources
                 else:
                     # Return the additional prerequisite sources
-                    return data['needs']
+                    return data["needs"]
 
         # Load no more sources in a "done" state
         assert self.state in [self.STATE_ERROR, self.STATE_DONE]
@@ -205,22 +208,22 @@ class Source(object):
 class DocumentBaseSource(Source):
     """Shared functionality for MDN Document sources."""
 
-    PARAM_NAME = 'path'
+    PARAM_NAME = "path"
 
     re_path = re.compile(r"/(?P<locale>[^/]+)/docs/(?P<slug>.*)")
 
     # Standard options for Document-based sources
     STANDARD_DOC_OPTIONS = {
-        'force': ('bool', False),         # Update existing Document records
-        'depth': ('int_all', 0),          # Scrape the topic tree to this depth
-        'revisions': ('int', 1),          # Scrape this many past revisions
-        'translations': ('bool', False),  # Scrape the alternate translations
+        "force": ("bool", False),  # Update existing Document records
+        "depth": ("int_all", 0),  # Scrape the topic tree to this depth
+        "revisions": ("int", 1),  # Scrape this many past revisions
+        "translations": ("bool", False),  # Scrape the alternate translations
     }
 
     def __init__(self, path, **options):
         super(DocumentBaseSource, self).__init__(path, **options)
         if path != unquote(path):
-            raise ValueError(f'URL-encoded path {path!r}')
+            raise ValueError(f"URL-encoded path {path!r}")
         try:
             self.locale, self.slug = self.locale_and_slug(path)
         except ValueError:
@@ -232,14 +235,14 @@ class DocumentBaseSource(Source):
         if match:
             return match.groups()
         else:
-            raise ValueError(f'Not a valid document path {path!r}')
+            raise ValueError(f"Not a valid document path {path!r}")
 
     @property
     def parent_slug(self):
-        if self.slug and '/' in self.slug:
-            return '/'.join(self.slug.split('/')[:-1])
+        if self.slug and "/" in self.slug:
+            return "/".join(self.slug.split("/")[:-1])
 
     @property
     def parent_path(self):
         if self.parent_slug:
-            return f'/{self.locale}/docs/{self.parent_slug}'
+            return f"/{self.locale}/docs/{self.parent_slug}"

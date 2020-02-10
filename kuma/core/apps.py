@@ -1,5 +1,3 @@
-
-
 from django.apps import AppConfig
 from django.conf import settings
 from django.utils.functional import cached_property
@@ -13,18 +11,17 @@ class CoreConfig(AppConfig):
     The Django App Config class to store information about the core app
     and do startup time things.
     """
-    name = 'kuma.core'
-    verbose_name = _('Core')
+
+    name = "kuma.core"
+    verbose_name = _("Core")
 
     def ready(self):
         """Configure kuma.core after models are loaded."""
 
         # Clean up expired sessions every 60 minutes
         from kuma.core.tasks import clean_sessions
-        app.add_periodic_task(
-            60 * 60,
-            clean_sessions.s()
-        )
+
+        app.add_periodic_task(60 * 60, clean_sessions.s())
 
     @cached_property
     def language_mapping(self):

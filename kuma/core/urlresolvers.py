@@ -1,11 +1,10 @@
-
-
 import re
 
 from django.conf import settings
 from django.urls import (
     LocaleRegexURLResolver as DjangoLocaleRegexURLResolver,
-    reverse as django_reverse)
+    reverse as django_reverse,
+)
 from django.utils import translation
 
 from .i18n import get_language
@@ -32,9 +31,8 @@ class LocaleRegexURLResolver(DjangoLocaleRegexURLResolver):
         if language_code not in self._regex_dict:
             # Kuma: Do not allow an implied default language
             assert self.prefix_default_language
-            regex_string = '^%s/' % language_code
-            self._regex_dict[language_code] = re.compile(
-                regex_string, re.UNICODE)
+            regex_string = "^%s/" % language_code
+            self._regex_dict[language_code] = re.compile(regex_string, re.UNICODE)
         return self._regex_dict[language_code]
 
 
@@ -53,20 +51,25 @@ def i18n_patterns(*urls, **kwargs):
     * Use our customized LocaleRegexURLResolver.
     """
     assert settings.USE_I18N
-    prefix_default_language = kwargs.pop('prefix_default_language', True)
-    assert not kwargs, 'Unexpected kwargs for i18n_patterns(): %s' % kwargs
+    prefix_default_language = kwargs.pop("prefix_default_language", True)
+    assert not kwargs, "Unexpected kwargs for i18n_patterns(): %s" % kwargs
 
     # Assumed to be True in:
     # kuma.core.i18n.activate_language_from_request
     # kuma.core.middleware.LocaleMiddleware
-    assert prefix_default_language, (
-        'Kuma does not support prefix_default_language=False')
-    return [LocaleRegexURLResolver(list(urls),
-            prefix_default_language=prefix_default_language)]
+    assert (
+        prefix_default_language
+    ), "Kuma does not support prefix_default_language=False"
+    return [
+        LocaleRegexURLResolver(
+            list(urls), prefix_default_language=prefix_default_language
+        )
+    ]
 
 
-def reverse(viewname, urlconf=None, args=None, kwargs=None,
-            current_app=None, locale=None):
+def reverse(
+    viewname, urlconf=None, args=None, kwargs=None, current_app=None, locale=None
+):
     """Wraps Django's reverse to prepend the requested locale.
     Keyword Arguments:
     * locale - Use this locale prefix rather than the current active locale.
@@ -79,11 +82,17 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None,
     """
     if locale:
         with translation.override(locale):
-            return django_reverse(viewname, urlconf=urlconf, args=args,
-                                  kwargs=kwargs, current_app=current_app)
+            return django_reverse(
+                viewname,
+                urlconf=urlconf,
+                args=args,
+                kwargs=kwargs,
+                current_app=current_app,
+            )
     else:
-        return django_reverse(viewname, urlconf=urlconf, args=args,
-                              kwargs=kwargs, current_app=current_app)
+        return django_reverse(
+            viewname, urlconf=urlconf, args=args, kwargs=kwargs, current_app=current_app
+        )
 
 
 def find_supported(ranked):
@@ -94,7 +103,7 @@ def find_supported(ranked):
         if lang in langs:
             return langs[lang]
         # Add derived language tags to the end of the list as a fallback.
-        pre = '-'.join(lang.split('-')[0:-1])
+        pre = "-".join(lang.split("-")[0:-1])
         if pre:
             ranked.append((pre, None))
     # Couldn't find any acceptable locale.
@@ -107,10 +116,10 @@ def split_path(path):
 
     locale will be empty if it isn't found.
     """
-    path = path.lstrip('/')
+    path = path.lstrip("/")
 
     # Use partition instead of split since it always returns 3 parts
-    first, _, rest = path.partition('/')
+    first, _, rest = path.partition("/")
 
     # Treat locale as a single-item ranked list.
     lang = find_supported([(first, 1.0)])
@@ -118,4 +127,4 @@ def split_path(path):
     if lang:
         return lang, rest
     else:
-        return '', path
+        return "", path
