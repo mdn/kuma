@@ -1,6 +1,6 @@
 import datetime
+import html
 import json
-from html.parser import HTMLParser
 
 import jinja2
 from django.conf import settings
@@ -19,9 +19,6 @@ from urlobject import URLObject
 
 from ..urlresolvers import reverse, split_path
 from ..utils import format_date_time, is_untrusted, is_wiki, order_params, urlparams
-
-
-htmlparser = HTMLParser()
 
 
 # Yanking filters from Django.
@@ -103,7 +100,7 @@ def yesno(boolean_value):
 @library.filter
 def entity_decode(str):
     """Turn HTML entities in a string into unicode."""
-    return htmlparser.unescape(str)
+    return html.unescape(str)
 
 
 @library.global_function
