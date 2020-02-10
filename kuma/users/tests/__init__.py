@@ -19,7 +19,8 @@ from ..providers.google.provider import KumaGoogleProvider
 
 class UserTestMixin(object):
     """Base TestCase for the users app test cases."""
-    fixtures = ['test_users.json']
+
+    fixtures = ["test_users.json"]
 
     def setUp(self):
         super(UserTestMixin, self).setUp()
@@ -31,10 +32,10 @@ class UserTestCase(UserTestMixin, KumaTestCase):
 
 
 def user(save=False, **kwargs):
-    if 'username' not in kwargs:
-        kwargs['username'] = get_random_string(length=15)
-    password = kwargs.pop('password', 'password')
-    groups = kwargs.pop('groups', [])
+    if "username" not in kwargs:
+        kwargs["username"] = get_random_string(length=15)
+    password = kwargs.pop("password", "password")
+    groups = kwargs.pop("groups", [])
     user = get_user_model()(**kwargs)
     user.set_password(password)
     if save:
@@ -46,21 +47,20 @@ def user(save=False, **kwargs):
 
 class SampleRevisionsMixin(object):
     """Mixin with an original revision and a method to create more revisions."""
+
     def setUp(self):
         super(SampleRevisionsMixin, self).setUp()
 
         # Some users to use in the tests
-        self.testuser = self.user_model.objects.get(username='testuser')
-        self.testuser2 = self.user_model.objects.get(username='testuser2')
-        self.admin = self.user_model.objects.get(username='admin')
+        self.testuser = self.user_model.objects.get(username="testuser")
+        self.testuser2 = self.user_model.objects.get(username="testuser2")
+        self.admin = self.user_model.objects.get(username="admin")
 
         # Create an original revision on a document by the admin user
         self.document = create_document(save=True)
         self.original_revision = create_revision(
-            title='Revision 0',
-            document=self.document,
-            creator=self.admin,
-            save=True)
+            title="Revision 0", document=self.document, creator=self.admin, save=True
+        )
 
     def create_revisions(self, num, creator, document=None):
         """Create as many revisions as requested, and return a list of them."""
@@ -71,87 +71,92 @@ class SampleRevisionsMixin(object):
             if create_new_documents is True:
                 document = create_document(save=True)
             new_revision = create_revision(
-                title='Doc id {} Revision {}'.format(document.id, i),
+                title="Doc id {} Revision {}".format(document.id, i),
                 document=document,
                 creator=creator,
-                save=True)
+                save=True,
+            )
             revisions_created.append(new_revision)
         return revisions_created
 
 
 class SocialTestMixin(object):
     github_token_data = {
-        'uid': 1,
-        'access_token': 'github_token',
+        "uid": 1,
+        "access_token": "github_token",
     }
     github_profile_data = {
-        'login': 'octocat',
-        'id': 1,
-        'email': 'octocat@example.com',
+        "login": "octocat",
+        "id": 1,
+        "email": "octocat@example.com",
         # Unused profile items
-        'avatar_url': 'https://github.com/images/error/octocat_happy.gif',
-        'gravatar_id': 'somehexcode',
-        'url': 'https://api.github.com/users/octocat',
-        'html_url': 'https://github.com/octocat',
-        'followers_url': 'https://api.github.com/users/octocat/followers',
-        'following_url': 'https://api.github.com/users/octocat/following{/other_user}',
-        'gists_url': 'https://api.github.com/users/octocat/gists{/gist_id}',
-        'starred_url': 'https://api.github.com/users/octocat/starred{/owner}{/repo}',
-        'subscriptions_url': 'https://api.github.com/users/octocat/subscriptions',
-        'organizations_url': 'https://api.github.com/users/octocat/orgs',
-        'repos_url': 'https://api.github.com/users/octocat/repos',
-        'events_url': 'https://api.github.com/users/octocat/events{/privacy}',
-        'received_events_url': 'https://api.github.com/users/octocat/received_events',
-        'type': 'User',
-        'site_admin': False,
-        'name': 'monalisa octocat',
-        'company': 'GitHub',
-        'blog': 'https://github.com/blog',
-        'location': 'San Francisco',
-        'hireable': False,
-        'public_repos': 2,
-        'public_gists': 1,
-        'followers': 20,
-        'following': 0,
-        'created_at': '2008-01-14T04:33:35Z',
-        'updated_at': '2008-01-14T04:33:35Z'
+        "avatar_url": "https://github.com/images/error/octocat_happy.gif",
+        "gravatar_id": "somehexcode",
+        "url": "https://api.github.com/users/octocat",
+        "html_url": "https://github.com/octocat",
+        "followers_url": "https://api.github.com/users/octocat/followers",
+        "following_url": "https://api.github.com/users/octocat/following{/other_user}",
+        "gists_url": "https://api.github.com/users/octocat/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/octocat/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/octocat/subscriptions",
+        "organizations_url": "https://api.github.com/users/octocat/orgs",
+        "repos_url": "https://api.github.com/users/octocat/repos",
+        "events_url": "https://api.github.com/users/octocat/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/octocat/received_events",
+        "type": "User",
+        "site_admin": False,
+        "name": "monalisa octocat",
+        "company": "GitHub",
+        "blog": "https://github.com/blog",
+        "location": "San Francisco",
+        "hireable": False,
+        "public_repos": 2,
+        "public_gists": 1,
+        "followers": 20,
+        "following": 0,
+        "created_at": "2008-01-14T04:33:35Z",
+        "updated_at": "2008-01-14T04:33:35Z",
     }
     github_email_data = [
         {
-            'email': 'octocat-private@example.com',
-            'verified': True,
-            'primary': True,
+            "email": "octocat-private@example.com",
+            "verified": True,
+            "primary": True,
             # Added Feb 2017, bug 1339375
-            'visibility': 'private'
+            "visibility": "private",
         }
     ]
 
     google_token_data = {
-        'uid': 2,
-        'access_token': 'google_token',
+        "uid": 2,
+        "access_token": "google_token",
     }
     # These fields come from the google provider unit tests in django-allauth
     google_profile_data = {
-        'family_name': 'Page',
-        'name': 'Sergey',
-        'picture': 'https://lh5.googleusercontent.com/photo.jpg',
-        'locale': 'le',
-        'email': 'example@gmail.com',
-        'given_name': 'Ser',
-        'id': '108204268033311374519',
-        'verified_email': True,
+        "family_name": "Page",
+        "name": "Sergey",
+        "picture": "https://lh5.googleusercontent.com/photo.jpg",
+        "locale": "le",
+        "email": "example@gmail.com",
+        "given_name": "Ser",
+        "id": "108204268033311374519",
+        "verified_email": True,
     }
 
     def github_login(
-            self, token_data=None, profile_data=None, email_data=None,
-            process='login',
-            token_status_code=200,
-            profile_status_code=200,
-            email_status_code=200,
-            follow=True,
-            token_exc=None,
-            profile_exc=None,
-            email_exc=None):
+        self,
+        token_data=None,
+        profile_data=None,
+        email_data=None,
+        process="login",
+        token_status_code=200,
+        profile_status_code=200,
+        email_status_code=200,
+        follow=True,
+        token_exc=None,
+        profile_exc=None,
+        email_exc=None,
+    ):
         """
         Mock a login to GitHub and return the response.
 
@@ -164,62 +169,59 @@ class SocialTestMixin(object):
         profile_status_code - HTTP code for getting profile (default 200)
         email_status_code - HTTP code for getting email addresses (default 200)
         """
-        login_url = reverse('github_login')
-        callback_url = reverse('github_callback')
+        login_url = reverse("github_login")
+        callback_url = reverse("github_callback")
 
         # Ensure GitHub is setup as an auth provider
         self.ensure_github_app()
 
         # Start the login process
         # Store state in the session, and redirect the user to GitHub
-        login_response = self.client.get(login_url, {'process': process})
+        login_response = self.client.get(login_url, {"process": process})
         assert login_response.status_code == 302
-        location = urlparse(login_response['location'])
+        location = urlparse(login_response["location"])
         query = parse_qs(location.query)
-        assert callback_url in query['redirect_uri'][0]
-        state = query['state'][0]
+        assert callback_url in query["redirect_uri"][0]
+        state = query["state"][0]
 
         # Callback from GitHub, mock follow-on GitHub responses
         with requests_mock.Mocker() as mock_requests:
             # The callback view will make requests back to Github:
             # The OAuth2 authentication token (or error)
             if token_exc:
-                mock_requests.post(
-                    GitHubOAuth2Adapter.access_token_url,
-                    exc=token_exc)
+                mock_requests.post(GitHubOAuth2Adapter.access_token_url, exc=token_exc)
             else:
                 mock_requests.post(
                     GitHubOAuth2Adapter.access_token_url,
                     json=token_data or self.github_token_data,
-                    headers={'content-type': 'application/json'},
-                    status_code=token_status_code)
+                    headers={"content-type": "application/json"},
+                    status_code=token_status_code,
+                )
 
             # The authenticated user's profile data
             if profile_exc:
-                mock_requests.get(
-                    GitHubOAuth2Adapter.profile_url,
-                    exc=profile_exc)
+                mock_requests.get(GitHubOAuth2Adapter.profile_url, exc=profile_exc)
             else:
                 mock_requests.get(
                     GitHubOAuth2Adapter.profile_url,
                     json=profile_data or self.github_profile_data,
-                    status_code=profile_status_code)
+                    status_code=profile_status_code,
+                )
             # The user's emails, which could be an empty list
             if email_data is None:
                 email_data = self.github_email_data
 
             if email_exc:
-                mock_requests.get(
-                    GitHubOAuth2Adapter.emails_url,
-                    exc=email_exc)
+                mock_requests.get(GitHubOAuth2Adapter.emails_url, exc=email_exc)
             else:
                 mock_requests.get(
                     GitHubOAuth2Adapter.emails_url,
                     json=email_data,
-                    status_code=email_status_code)
+                    status_code=email_status_code,
+                )
 
             # Simulate the callback from Github
-            data = {'code': 'github_code', 'state': state}
+            data = {"code": "github_code", "state": state}
             response = self.client.get(callback_url, data, follow=follow)
 
         return response
@@ -231,15 +233,18 @@ class SocialTestMixin(object):
         return app
 
     def google_login(
-            self,
-            token_data=None, profile_data=None, email_data=None,
-            process='login',
-            token_status_code=200,
-            profile_status_code=200,
-            email_status_code=200,
-            token_exc=None,
-            profile_exc=None,
-            email_exc=None):
+        self,
+        token_data=None,
+        profile_data=None,
+        email_data=None,
+        process="login",
+        token_status_code=200,
+        profile_status_code=200,
+        email_status_code=200,
+        token_exc=None,
+        profile_exc=None,
+        email_exc=None,
+    ):
         """
         Mock a login to Google and return the response.
 
@@ -252,47 +257,45 @@ class SocialTestMixin(object):
         profile_status_code - HTTP code for getting profile (default 200)
         email_status_code - HTTP code for getting email addresses (default 200)
         """
-        login_url = reverse('google_login')
-        callback_url = reverse('google_callback')
+        login_url = reverse("google_login")
+        callback_url = reverse("google_callback")
         self.ensure_google_app()
 
         # Start the login process
         # Store state in the session, and redirect the user to Google
-        login_response = self.client.get(login_url, {'process': process})
+        login_response = self.client.get(login_url, {"process": process})
         assert login_response.status_code == 302
-        location = urlparse(login_response['location'])
+        location = urlparse(login_response["location"])
         query = parse_qs(location.query)
-        assert callback_url in query['redirect_uri'][0]
-        state = query['state'][0]
+        assert callback_url in query["redirect_uri"][0]
+        state = query["state"][0]
 
         # Callback from Google, mock follow-on Google responses
         with requests_mock.Mocker() as mock_requests:
             # The callback view will make requests back to Google:
             # The OAuth2 authentication token (or error)
             if token_exc:
-                mock_requests.post(
-                    GoogleOAuth2Adapter.access_token_url,
-                    exc=token_exc)
+                mock_requests.post(GoogleOAuth2Adapter.access_token_url, exc=token_exc)
             else:
                 mock_requests.post(
                     GoogleOAuth2Adapter.access_token_url,
                     json=token_data or self.google_token_data,
-                    headers={'content-type': 'application/json'},
-                    status_code=token_status_code)
+                    headers={"content-type": "application/json"},
+                    status_code=token_status_code,
+                )
 
             # The authenticated user's profile data
             if profile_exc:
-                mock_requests.get(
-                    GoogleOAuth2Adapter.profile_url,
-                    exc=profile_exc)
+                mock_requests.get(GoogleOAuth2Adapter.profile_url, exc=profile_exc)
             else:
                 mock_requests.get(
                     GoogleOAuth2Adapter.profile_url,
                     json=profile_data or self.google_profile_data,
-                    status_code=profile_status_code)
+                    status_code=profile_status_code,
+                )
 
             # Simulate the callback from Google
-            data = {'code': 'google_code', 'state': state}
+            data = {"code": "google_code", "state": state}
             response = self.client.get(callback_url, data, follow=True)
 
         return response

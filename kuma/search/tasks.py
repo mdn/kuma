@@ -7,7 +7,7 @@ from django.core.mail import mail_admins
 from kuma.core.decorators import skip_in_maintenance_mode
 
 
-log = logging.getLogger('kuma.search.tasks')
+log = logging.getLogger("kuma.search.tasks")
 
 
 @task
@@ -26,7 +26,7 @@ def prepare_index(index_pk):
     from kuma.search.models import Index
 
     cls = WikiDocumentType
-    es = cls.get_connection('indexing')
+    es = cls.get_connection("indexing")
     index = Index.objects.get(pk=index_pk)
 
     # Check it if exists already. If so, delete.
@@ -34,10 +34,7 @@ def prepare_index(index_pk):
 
     # Disable automatic refreshing and replicas.
     temporary_settings = {
-        'index': {
-            'refresh_interval': '-1',
-            'number_of_replicas': '0',
-        }
+        "index": {"refresh_interval": "-1", "number_of_replicas": "0"}
     }
 
     es.indices.put_settings(temporary_settings, index=index.prefixed_name)
@@ -61,7 +58,7 @@ def finalize_index(index_pk):
     from kuma.search.models import Index
 
     cls = WikiDocumentType
-    es = cls.get_connection('indexing')
+    es = cls.get_connection("indexing")
     index = Index.objects.get(pk=index_pk)
 
     # Optimize.
@@ -69,9 +66,9 @@ def finalize_index(index_pk):
 
     # Update the settings.
     index_settings = {
-        'index': {
-            'refresh_interval': settings.ES_DEFAULT_REFRESH_INTERVAL,
-            'number_of_replicas': settings.ES_DEFAULT_NUM_REPLICAS,
+        "index": {
+            "refresh_interval": settings.ES_DEFAULT_REFRESH_INTERVAL,
+            "number_of_replicas": settings.ES_DEFAULT_NUM_REPLICAS,
         }
     }
     es.indices.put_settings(index=index.prefixed_name, body=index_settings)
@@ -80,6 +77,6 @@ def finalize_index(index_pk):
     index.populated = True
     index.save()
 
-    subject = 'Index %s completely populated' % index.prefixed_name
-    message = 'You may want to promote it now via the admin interface.'
+    subject = "Index %s completely populated" % index.prefixed_name
+    message = "You may want to promote it now via the admin interface."
     mail_admins(subject=subject, message=message)

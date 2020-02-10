@@ -6,20 +6,29 @@ from rest_framework.renderers import JSONRenderer
 
 from kuma.wiki.search import WikiDocumentType
 
-from .filters import (get_filters, HighlightFilterBackend, KeywordQueryBackend,
-                      LanguageFilterBackend, SearchQueryBackend,
-                      TagGroupFilterBackend)
+from .filters import (
+    get_filters,
+    HighlightFilterBackend,
+    KeywordQueryBackend,
+    LanguageFilterBackend,
+    SearchQueryBackend,
+    TagGroupFilterBackend,
+)
 from .jobs import AvailableFiltersJob
 from .pagination import SearchPagination
 from .queries import Filter, FilterGroup
 from .renderers import ExtendedTemplateHTMLRenderer
-from .serializers import (DocumentSerializer, FacetedFilterSerializer,
-                          FilterWithGroupSerializer, SearchQuerySerializer)
+from .serializers import (
+    DocumentSerializer,
+    FacetedFilterSerializer,
+    FilterWithGroupSerializer,
+    SearchQuerySerializer,
+)
 from .utils import QueryURLObject
 
 
 class SearchView(ListAPIView):
-    http_method_names = ['get']
+    http_method_names = ["get"]
     serializer_class = DocumentSerializer
     renderer_classes = (
         ExtendedTemplateHTMLRenderer,
@@ -39,12 +48,12 @@ class SearchView(ListAPIView):
     def initial(self, request, *args, **kwargs):
         super(SearchView, self).initial(request, *args, **kwargs)
         self.current_page = self.request.query_params.get(
-            self.pagination_class.page_query_param,
-            1,
+            self.pagination_class.page_query_param, 1,
         )
         self.available_filters = AvailableFiltersJob().get()
-        self.serialized_filters = (
-            FilterWithGroupSerializer(self.available_filters, many=True).data)
+        self.serialized_filters = FilterWithGroupSerializer(
+            self.available_filters, many=True
+        ).data
         self.selected_filters = get_filters(self.request.query_params.getlist)
         self.query_params = {}
 
@@ -65,15 +74,15 @@ class SearchView(ListAPIView):
     def get_filters(self, aggregations):
         url = QueryURLObject(self.url)
         filter_mapping = {
-            filter_['slug']: filter_
-            for filter_ in self.serialized_filters
+            filter_["slug"]: filter_ for filter_ in self.serialized_filters
         }
         filter_groups = {}
 
         try:
             aggs = aggregations or {}
-            facet_counts = [(slug, aggs[slug]['doc_count'])
-                            for slug in filter_mapping.keys()]
+            facet_counts = [
+                (slug, aggs[slug]["doc_count"]) for slug in filter_mapping.keys()
+            ]
         except KeyError:
             facet_counts = []
 
@@ -86,15 +95,13 @@ class SearchView(ListAPIView):
                 group_slug = None
             else:
                 # Let's check if we can get the name from the gettext catalog
-                filter_name = ugettext(filter_['name'])
-                group_name = ugettext(filter_['group']['name'])
-                group_slug = filter_['group']['slug']
+                filter_name = ugettext(filter_["name"])
+                group_name = ugettext(filter_["group"]["name"])
+                group_slug = filter_["group"]["slug"]
 
-            filter_groups.setdefault((
-                group_name,
-                group_slug,
-                filter_['group']['order']
-            ), []).append(
+            filter_groups.setdefault(
+                (group_name, group_slug, filter_["group"]["order"]), []
+            ).append(
                 Filter(
                     url=url,
                     page=self.current_page,
@@ -111,12 +118,14 @@ class SearchView(ListAPIView):
         grouped_filters = []
         for group_options, filters in filter_groups.items():
             group_name, group_slug, group_order = group_options
-            sorted_filters = sorted(filters, key=attrgetter('name'))
-            grouped_filters.append(FilterGroup(name=group_name,
-                                               slug=group_slug,
-                                               order=group_order,
-                                               options=sorted_filters))
-        sorted_filters = sorted(grouped_filters,
-                                key=attrgetter('order'),
-                                reverse=True)
+            sorted_filters = sorted(filters, key=attrgetter("name"))
+            grouped_filters.append(
+                FilterGroup(
+                    name=group_name,
+                    slug=group_slug,
+                    order=group_order,
+                    options=sorted_filters,
+                )
+            )
+        sorted_filters = sorted(grouped_filters, key=attrgetter("order"), reverse=True)
         return FacetedFilterSerializer(sorted_filters, many=True).data

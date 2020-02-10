@@ -1,5 +1,3 @@
-
-
 import datetime
 
 from constance import config
@@ -20,23 +18,29 @@ from .constants import USERNAME_REGEX
 
 
 class UserBan(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             related_name="bans",
-                             verbose_name="Banned user",
-                             on_delete=models.CASCADE)
-    by = models.ForeignKey(settings.AUTH_USER_MODEL,
-                           related_name="bans_issued",
-                           verbose_name="Banned by",
-                           on_delete=models.PROTECT)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="bans",
+        verbose_name="Banned user",
+        on_delete=models.CASCADE,
+    )
+    by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="bans_issued",
+        verbose_name="Banned by",
+        on_delete=models.PROTECT,
+    )
     reason = models.TextField()
     date = models.DateField(default=datetime.date.today)
     is_active = models.BooleanField(default=True, help_text="(Is ban active)")
 
     def __str__(self):
-        message = _('%(banned_user)s banned by %(banned_by)s') % {
-            'banned_user': self.user, 'banned_by': self.by}
+        message = _("%(banned_user)s banned by %(banned_by)s") % {
+            "banned_user": self.user,
+            "banned_by": self.by,
+        }
         if not self.is_active:
-            message = _('%s (no longer active)') % message
+            message = _("%s (no longer active)") % message
         return message
 
 
@@ -44,8 +48,9 @@ class User(AbstractUser):
     """
     Our custom user class.
     """
+
     timezone = models.CharField(
-        verbose_name=_('Timezone'),
+        verbose_name=_("Timezone"),
         max_length=42,
         blank=True,
         default=settings.TIME_ZONE,
@@ -58,148 +63,105 @@ class User(AbstractUser):
         max_length=7,
         default=settings.LANGUAGE_CODE,
         choices=settings.SORTED_LANGUAGES,
-        verbose_name=_('Language'),
+        verbose_name=_("Language"),
         blank=True,
         db_index=True,
     )
     homepage = models.URLField(
-        verbose_name=_('Homepage'),
+        verbose_name=_("Homepage"),
         max_length=255,
         blank=True,
         error_messages={
-            'invalid': _('This URL has an invalid format. '
-                         'Valid URLs look like http://example.com/my_page.')
+            "invalid": _(
+                "This URL has an invalid format. "
+                "Valid URLs look like http://example.com/my_page."
+            )
         },
     )
-    title = models.CharField(
-        verbose_name=_('Title'),
-        max_length=255,
-        blank=True,
-    )
-    fullname = models.CharField(
-        verbose_name=_('Name'),
-        max_length=255,
-        blank=True,
-    )
+    title = models.CharField(verbose_name=_("Title"), max_length=255, blank=True,)
+    fullname = models.CharField(verbose_name=_("Name"), max_length=255, blank=True,)
     organization = models.CharField(
-        verbose_name=_('Organization'),
-        max_length=255,
-        blank=True,
+        verbose_name=_("Organization"), max_length=255, blank=True,
     )
-    location = models.CharField(
-        verbose_name=_('Location'),
-        max_length=255,
-        blank=True,
-    )
-    bio = models.TextField(
-        verbose_name=_('About Me'),
-        blank=True,
-    )
+    location = models.CharField(verbose_name=_("Location"), max_length=255, blank=True,)
+    bio = models.TextField(verbose_name=_("About Me"), blank=True,)
     irc_nickname = models.CharField(
-        verbose_name=_('IRC nickname'),
-        max_length=255,
-        blank=True,
+        verbose_name=_("IRC nickname"), max_length=255, blank=True,
     )
 
     is_newsletter_subscribed = models.BooleanField(default=False)
 
-    tags = NamespacedTaggableManager(verbose_name=_('Tags'), blank=True)
+    tags = NamespacedTaggableManager(verbose_name=_("Tags"), blank=True)
 
     WEBSITE_VALIDATORS = {
-        'website': validators.RegexValidator(
-            r'^https?://',
-            _('Enter a valid website URL.'),
-            'invalid',
+        "website": validators.RegexValidator(
+            r"^https?://", _("Enter a valid website URL."), "invalid",
         ),
-        'twitter': validators.RegexValidator(
-            r'^https?://twitter\.com/',
-            _('Enter a valid Twitter URL.'),
-            'invalid',
+        "twitter": validators.RegexValidator(
+            r"^https?://twitter\.com/", _("Enter a valid Twitter URL."), "invalid",
         ),
-        'github': validators.RegexValidator(
-            r'^https?://github\.com/',
-            _('Enter a valid GitHub URL.'),
-            'invalid',
+        "github": validators.RegexValidator(
+            r"^https?://github\.com/", _("Enter a valid GitHub URL."), "invalid",
         ),
-        'stackoverflow': validators.RegexValidator(
-            r'^https?://([a-z]{2}\.)?stackoverflow\.com/users/',
-            _('Enter a valid Stack Overflow URL.'),
-            'invalid',
+        "stackoverflow": validators.RegexValidator(
+            r"^https?://([a-z]{2}\.)?stackoverflow\.com/users/",
+            _("Enter a valid Stack Overflow URL."),
+            "invalid",
         ),
-        'linkedin': validators.RegexValidator(
-            r'^https?://((www|\w\w)\.)?linkedin.com/((in/[^/]+/?)|(pub/[^/]+/((\w|\d)+/?){3}))$',
-            _('Enter a valid LinkedIn URL.'),
-            'invalid',
+        "linkedin": validators.RegexValidator(
+            r"^https?://((www|\w\w)\.)?linkedin.com/((in/[^/]+/?)|(pub/[^/]+/((\w|\d)+/?){3}))$",
+            _("Enter a valid LinkedIn URL."),
+            "invalid",
         ),
-        'mozillians': validators.RegexValidator(
-            r'^https?://mozillians\.org/u/',
-            _('Enter a valid Mozillians URL.'),
-            'invalid',
+        "mozillians": validators.RegexValidator(
+            r"^https?://mozillians\.org/u/",
+            _("Enter a valid Mozillians URL."),
+            "invalid",
         ),
-        'facebook': validators.RegexValidator(
-            r'^https?://www\.facebook\.com/',
-            _('Enter a valid Facebook URL.'),
-            'invalid',
+        "facebook": validators.RegexValidator(
+            r"^https?://www\.facebook\.com/",
+            _("Enter a valid Facebook URL."),
+            "invalid",
         ),
-        'discourse': validators.RegexValidator(
-            r'^https://discourse\.mozilla\.org/u/',
-            _('Enter a valid Discourse URL.'),
-            'invalid',
-        )
+        "discourse": validators.RegexValidator(
+            r"^https://discourse\.mozilla\.org/u/",
+            _("Enter a valid Discourse URL."),
+            "invalid",
+        ),
     }
 
     # a bunch of user URLs
     website_url = models.TextField(
-        _('Website'),
-        blank=True,
-        validators=[WEBSITE_VALIDATORS['website']],
+        _("Website"), blank=True, validators=[WEBSITE_VALIDATORS["website"]],
     )
     mozillians_url = models.TextField(
-        _('Mozillians'),
-        blank=True,
-        validators=[WEBSITE_VALIDATORS['mozillians']],
+        _("Mozillians"), blank=True, validators=[WEBSITE_VALIDATORS["mozillians"]],
     )
     github_url = models.TextField(
-        _('GitHub'),
-        blank=True,
-        validators=[WEBSITE_VALIDATORS['github']],
+        _("GitHub"), blank=True, validators=[WEBSITE_VALIDATORS["github"]],
     )
-    is_github_url_public = models.BooleanField(
-        _('Public GitHub URL'),
-        default=False,
-    )
+    is_github_url_public = models.BooleanField(_("Public GitHub URL"), default=False,)
     twitter_url = models.TextField(
-        _('Twitter'),
-        blank=True,
-        validators=[WEBSITE_VALIDATORS['twitter']],
+        _("Twitter"), blank=True, validators=[WEBSITE_VALIDATORS["twitter"]],
     )
     linkedin_url = models.TextField(
-        _('LinkedIn'),
-        blank=True,
-        validators=[WEBSITE_VALIDATORS['linkedin']],
+        _("LinkedIn"), blank=True, validators=[WEBSITE_VALIDATORS["linkedin"]],
     )
     facebook_url = models.TextField(
-        _('Facebook'),
-        blank=True,
-        validators=[WEBSITE_VALIDATORS['facebook']],
+        _("Facebook"), blank=True, validators=[WEBSITE_VALIDATORS["facebook"]],
     )
     stackoverflow_url = models.TextField(
-        _('Stack Overflow'),
+        _("Stack Overflow"),
         blank=True,
-        validators=[WEBSITE_VALIDATORS['stackoverflow']],
+        validators=[WEBSITE_VALIDATORS["stackoverflow"]],
     )
     discourse_url = models.TextField(
-        _('Discourse'),
-        blank=True,
-        validators=[WEBSITE_VALIDATORS['discourse']],
+        _("Discourse"), blank=True, validators=[WEBSITE_VALIDATORS["discourse"]],
     )
-    stripe_customer_id = models.CharField(
-        max_length=255,
-        blank=True
-    )
+    stripe_customer_id = models.CharField(max_length=255, blank=True)
 
     class Meta:
-        db_table = 'auth_user'
+        db_table = "auth_user"
 
     @property
     def has_legacy_username(self):
@@ -207,8 +169,7 @@ class User(AbstractUser):
 
     @cached_property
     def is_beta_tester(self):
-        return (config.BETA_GROUP_NAME in
-                self.groups.values_list('name', flat=True))
+        return config.BETA_GROUP_NAME in self.groups.values_list("name", flat=True)
 
     @cached_property
     def active_ban(self):
@@ -218,9 +179,11 @@ class User(AbstractUser):
         return self.bans.filter(is_active=True).first()
 
     def wiki_revisions(self, count=5):
-        return (self.created_revisions.prefetch_related('document')
-                                      .defer('content', 'summary')
-                                      .order_by('-id')[:count])
+        return (
+            self.created_revisions.prefetch_related("document")
+            .defer("content", "summary")
+            .order_by("-id")[:count]
+        )
 
     def allows_editing_by(self, user):
         return user.is_staff or user.is_superuser or user.pk == self.pk
@@ -229,6 +192,5 @@ class User(AbstractUser):
         """Creates a recovery URL for the user."""
         uidb64 = urlsafe_base64_encode(force_bytes(self.pk))
         token = default_token_generator.make_token(self)
-        link = reverse('users.recover',
-                       kwargs={'token': token, 'uidb64': uidb64})
+        link = reverse("users.recover", kwargs={"token": token, "uidb64": uidb64})
         return link

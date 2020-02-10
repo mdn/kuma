@@ -10,7 +10,8 @@ class WikiConfig(AppConfig):
     The Django App Config class to store information about the wiki app
     and do startup time things.
     """
-    name = 'kuma.wiki'
+
+    name = "kuma.wiki"
     verbose_name = _("Wiki")
 
     def ready(self):
@@ -20,14 +21,12 @@ class WikiConfig(AppConfig):
 
         # Build sitemaps every day at 05:00
         from kuma.wiki.tasks import build_sitemaps
+
         app.add_periodic_task(
-            crontab(minute=0, hour=5),
-            build_sitemaps.s(),
+            crontab(minute=0, hour=5), build_sitemaps.s(),
         )
 
         # Render stale documents: every 60 minutes
         from kuma.wiki.tasks import render_stale_documents
-        app.add_periodic_task(
-            60 * 60,
-            render_stale_documents.s()
-        )
+
+        app.add_periodic_task(60 * 60, render_stale_documents.s())

@@ -1,5 +1,3 @@
-
-
 import json
 import time
 
@@ -28,7 +26,7 @@ def get_s3_resource(config=None):
     """
     global _s3_resource
     if _s3_resource is None:
-        _s3_resource = boto3.resource('s3', config=config)
+        _s3_resource = boto3.resource("s3", config=config)
     return _s3_resource
 
 
@@ -45,7 +43,7 @@ def get_cloudfront_client(config=None):
     """
     global _cloudfront_client
     if _cloudfront_client is None:
-        _cloudfront_client = boto3.client('cloudfront', config=config)
+        _cloudfront_client = boto3.client("cloudfront", config=config)
     return _cloudfront_client
 
 
@@ -61,8 +59,9 @@ def get_s3_bucket(config=None):
 
 
 @task
-def unpublish(doc_locale_slug_pairs, log=None, completion_message=None,
-              invalidate_cdn_cache=True):
+def unpublish(
+    doc_locale_slug_pairs, log=None, completion_message=None, invalidate_cdn_cache=True
+):
     """
     Delete one or more documents from the S3 bucket serving the document API.
     """
@@ -71,24 +70,29 @@ def unpublish(doc_locale_slug_pairs, log=None, completion_message=None,
 
     s3_bucket = get_s3_bucket()
     if not s3_bucket:
-        log.info('Skipping unpublish of {!r}: no S3 bucket configured'.format(
-            doc_locale_slug_pairs))
+        log.info(
+            "Skipping unpublish of {!r}: no S3 bucket configured".format(
+                doc_locale_slug_pairs
+            )
+        )
         return
 
-    keys_to_delete = (get_s3_key(locale=locale, slug=slug)
-                      for locale, slug in doc_locale_slug_pairs)
+    keys_to_delete = (
+        get_s3_key(locale=locale, slug=slug) for locale, slug in doc_locale_slug_pairs
+    )
 
     for chunk in chunked(keys_to_delete, S3_MAX_KEYS_PER_DELETE):
         response = s3_bucket.delete_objects(
-            Delete={
-                'Objects': [{'Key': key} for key in chunk]
-            }
+            Delete={"Objects": [{"Key": key} for key in chunk]}
         )
-        for info in response.get('Deleted', ()):
-            log.info('Unpublished {}'.format(info['Key']))
-        for info in response.get('Errors', ()):
-            log.error('Unable to unpublish {}: ({}) {}'.format(
-                info['Key'], info['Code'], info['Message']))
+        for info in response.get("Deleted", ()):
+            log.info("Unpublished {}".format(info["Key"]))
+        for info in response.get("Errors", ()):
+            log.error(
+                "Unable to unpublish {}: ({}) {}".format(
+                    info["Key"], info["Code"], info["Message"]
+                )
+            )
 
     if completion_message:
         log.info(completion_message)
@@ -98,8 +102,7 @@ def unpublish(doc_locale_slug_pairs, log=None, completion_message=None,
 
 
 @task
-def publish(doc_pks, log=None, completion_message=None,
-            invalidate_cdn_cache=True):
+def publish(doc_pks, log=None, completion_message=None, invalidate_cdn_cache=True):
     """
     Publish one or more documents to the S3 bucket serving the document API.
     """
@@ -108,8 +111,7 @@ def publish(doc_pks, log=None, completion_message=None,
 
     s3_bucket = get_s3_bucket()
     if not s3_bucket:
-        log.info(
-            'Skipping publish of {!r}: no S3 bucket configured'.format(doc_pks))
+        log.info("Skipping publish of {!r}: no S3 bucket configured".format(doc_pks))
         return
 
     if invalidate_cdn_cache:
@@ -120,7 +122,7 @@ def publish(doc_pks, log=None, completion_message=None,
         try:
             doc = Document.objects.get(pk=pk)
         except Document.DoesNotExist:
-            log.error('Document with pk={} does not exist'.format(pk))
+            log.error("Document with pk={} does not exist".format(pk))
             continue
 
         if invalidate_cdn_cache:
@@ -129,9 +131,9 @@ def publish(doc_pks, log=None, completion_message=None,
             doc_locale_slug_pairs.append((doc.locale, doc.slug))
 
         kwargs = dict(
-            ACL='public-read',
+            ACL="public-read",
             Key=get_s3_key(doc),
-            ContentType='application/json',
+            ContentType="application/json",
             ContentLanguage=doc.locale,
         )
         redirect = get_content_based_redirect(doc)
@@ -145,7 +147,7 @@ def publish(doc_pks, log=None, completion_message=None,
             data = document_api_data(doc)
             kwargs.update(Body=json.dumps(data))
         s3_object = s3_bucket.put_object(**kwargs)
-        log.info('Published {!r}'.format(s3_object))
+        log.info("Published {!r}".format(s3_object))
 
     if completion_message:
         log.info(completion_message)
@@ -166,27 +168,21 @@ def request_cdn_cache_invalidation(doc_locale_slug_pairs, log=None):
 
     client = get_cloudfront_client()
     for label, conf in settings.MDN_CLOUDFRONT_DISTRIBUTIONS.items():
-        if not conf['id']:
-            log.info('No Distribution ID available for CloudFront {!r}'.format(
-                label
-            ))
+        if not conf["id"]:
+            log.info("No Distribution ID available for CloudFront {!r}".format(label))
             continue
-        transform_function = import_string(conf['transform_function'])
+        transform_function = import_string(conf["transform_function"])
         paths = (
-            transform_function(locale, slug)
-            for locale, slug in doc_locale_slug_pairs
+            transform_function(locale, slug) for locale, slug in doc_locale_slug_pairs
         )
         # In case the transform function decided to "opt-out" on a particular
         # (locale, slug) it might return a falsy value.
         paths = [x for x in paths if x]
         if paths:
             invalidation = client.create_invalidation(
-                DistributionId=conf['id'],
+                DistributionId=conf["id"],
                 InvalidationBatch={
-                    'Paths': {
-                        'Quantity': len(paths),
-                        'Items': paths
-                    },
+                    "Paths": {"Quantity": len(paths), "Items": paths},
                     # The 'CallerReference' just needs to be a unique string.
                     # By using a timestamp we get slightly more information
                     # than using a UUID or a random string. But it needs to
@@ -194,14 +190,12 @@ def request_cdn_cache_invalidation(doc_locale_slug_pairs, log=None):
                     # significant figures to avoid the unlikely chance that
                     # this code gets executed concurrently within a small
                     # time window.
-                    'CallerReference': '{:.6f}'.format(time.time())
-                }
+                    "CallerReference": "{:.6f}".format(time.time()),
+                },
             )
             log.info(
-                'Issued cache invalidation for {!r} in {} distribution'
-                ' (received with {})'.format(
-                    paths,
-                    label,
-                    invalidation['ResponseMetadata']['HTTPStatusCode']
+                "Issued cache invalidation for {!r} in {} distribution"
+                " (received with {})".format(
+                    paths, label, invalidation["ResponseMetadata"]["HTTPStatusCode"]
                 )
             )

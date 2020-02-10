@@ -13,10 +13,8 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            '--days',
-            help="How many days 'old' (default 30)",
-            default=30,
-            type=int)
+            "--days", help="How many days 'old' (default 30)", default=30, type=int
+        )
 
     def handle(self, *args, **options):
-        delete_old_revision_ips(days=options['days'])
+        delete_old_revision_ips(days=options["days"])

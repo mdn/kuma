@@ -1,5 +1,3 @@
-
-
 import logging
 import socket
 from datetime import datetime
@@ -14,7 +12,7 @@ from django.utils.encoding import smart_bytes
 
 from .models import Entry, Feed
 
-log = logging.getLogger('kuma.feeder')
+log = logging.getLogger("kuma.feeder")
 
 
 def update_feeds(include_disabled=True):
@@ -52,8 +50,7 @@ def update_feed(feed):
     stream = fetch_feed(feed)
 
     if stream:
-        log.debug('Processing %s (%s): %s' % (feed.title, feed.shortname,
-                                              feed.url))
+        log.debug("Processing %s (%s): %s" % (feed.title, feed.shortname, feed.url))
         for entry in stream.entries:
             if save_entry(feed, entry):
                 new_entry_count += 1
@@ -79,23 +76,27 @@ def fetch_feed(feed):
 
     if feed.last_modified is None:
         feed.last_modified = datetime(1975, 1, 10)
-    log.debug("feed id=%s feed url=%s etag=%s last_modified=%s" % (
-        feed.shortname, feed.url, feed.etag, str(feed.last_modified)))
-    stream = feedparser.parse(feed.url, etag=feed.etag or '',
-                              modified=feed.last_modified.timetuple())
+    log.debug(
+        "feed id=%s feed url=%s etag=%s last_modified=%s"
+        % (feed.shortname, feed.url, feed.etag, str(feed.last_modified))
+    )
+    stream = feedparser.parse(
+        feed.url, etag=feed.etag or "", modified=feed.last_modified.timetuple()
+    )
 
     url_status = 500
-    if 'status' in stream:
+    if "status" in stream:
         url_status = stream.status
 
-    elif (stream.bozo and
-          'bozo_exception' in stream and
-          isinstance(stream.bozo_exception, URLError) and
-          isinstance(stream.bozo_exception.reason, socket.timeout)):
+    elif (
+        stream.bozo
+        and "bozo_exception" in stream
+        and isinstance(stream.bozo_exception, URLError)
+        and isinstance(stream.bozo_exception.reason, socket.timeout)
+    ):
         url_status = 408
 
-    if url_status == 301 and ('entries' in stream and
-                              len(stream.entries) > 0):
+    if url_status == 301 and ("entries" in stream and len(stream.entries) > 0):
         # TODO: Should the feed be processed this round as well?
         log.info("Feed has moved from <%s> to <%s>", feed.url, stream.url)
         feed.url = stream.url
@@ -121,43 +122,46 @@ def fetch_feed(feed):
 
     elif url_status == 408:
         feed.enabled = False
-        feed.disabled_reason = ("This feed didn't respond after %d seconds" %
-                                settings.FEEDER_TIMEOUT)
+        feed.disabled_reason = (
+            "This feed didn't respond after %d seconds" % settings.FEEDER_TIMEOUT
+        )
         dirty_feed = True
 
     elif url_status >= 400:
         feed.enabled = False
         bozo_msg = ""
-        if 1 == stream.bozo and 'bozo_exception' in stream.keys():
-            log.error('Unable to fetch %s Exception: %s',
-                      feed.url, stream.bozo_exception)
+        if 1 == stream.bozo and "bozo_exception" in stream.keys():
+            log.error(
+                "Unable to fetch %s Exception: %s", feed.url, stream.bozo_exception
+            )
             bozo_msg = stream.bozo_exception
-        feed.disabled_reason = ("Error while reading the feed: %s __ %s" %
-                                (url_status, bozo_msg))
+        feed.disabled_reason = "Error while reading the feed: %s __ %s" % (
+            url_status,
+            bozo_msg,
+        )
         dirty_feed = True
     else:
         # We've got a live one...
         if not feed.enabled or feed.disabled_reason:
             # Reset disabled status.
             feed.enabled = True
-            feed.disabled_reason = ''
+            feed.disabled_reason = ""
             dirty_feed = True
         has_updates = True
 
-    if ('etag' in stream and stream.etag != feed.etag and
-            stream.etag is not None):
+    if "etag" in stream and stream.etag != feed.etag and stream.etag is not None:
         log.info("New etag %s" % stream.etag)
         feed.etag = stream.etag
         dirty_feed = True
 
-    if 'modified_parsed' in stream:
+    if "modified_parsed" in stream:
         stream_mod = datetime.fromtimestamp(mktime(stream.modified_parsed))
         if stream_mod != feed.last_modified:
             log.info("New last_modified %s" % stream_mod)
             feed.last_modified = stream_mod
             dirty_feed = True
 
-    if 'feed' in stream and 'title' in stream.feed:
+    if "feed" in stream and "title" in stream.feed:
         if feed.title != stream.feed.title:
             feed.title = stream.feed.title
             dirty_feed = True
@@ -174,7 +178,7 @@ def save_entry(feed, entry):
     """Save a new entry or update an existing one."""
     json_entry = jsonpickle.encode(entry)
 
-    max_guid_length = Entry._meta.get_field('guid').max_length
+    max_guid_length = Entry._meta.get_field("guid").max_length
     if len(entry.guid) <= max_guid_length:
         entry_guid = entry.guid
     else:
@@ -183,14 +187,17 @@ def save_entry(feed, entry):
     last_published = datetime.fromtimestamp(mktime(entry.published_parsed))
 
     entry, created = Entry.objects.get_or_create(
-        feed=feed, guid=entry_guid,
-        defaults={'raw': json_entry, 'visible': True,
-                  'last_published': last_published})
+        feed=feed,
+        guid=entry_guid,
+        defaults={"raw": json_entry, "visible": True, "last_published": last_published},
+    )
     if not created:
         # Did the entry change?
-        changed = (entry.raw != json_entry or
-                   not entry.visible or
-                   entry.last_published != last_published)
+        changed = (
+            entry.raw != json_entry
+            or not entry.visible
+            or entry.last_published != last_published
+        )
         if changed:
             entry.raw = json_entry
             entry.visible = True
