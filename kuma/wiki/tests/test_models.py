@@ -152,7 +152,7 @@ def test_document_has_legacy_namespace(slug, legacy):
 
 @pytest.mark.parametrize(
     "slug,should_noindex",
-    [("MDN/Doc_status", True), ("MDN/Doc_status/API", True), ("Web/CSS", False),],
+    [("MDN/Doc_status", True), ("MDN/Doc_status/API", True), ("Web/CSS", False)],
 )
 def test_document_has_noindex_slug(slug, should_noindex):
     assert Document(slug=slug).has_noindex_slug == should_noindex
