@@ -63,23 +63,11 @@ services:
       - mysql
       - elasticsearch
       - redis
-      - kumascript
       - ssr
       - minio
       - mockga
     ports:
       - "8000:8000"
-
-  # API is used by KumaScript for content and metadata
-  api:
-    <<: *worker
-    command: gunicorn -w ${GUNICORN_WORKERS:-4} --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 kuma.wsgi:application
-    depends_on:
-      - mysql
-      - elasticsearch
-      - redis
-    ports:
-      - "8001:8000"
 
   # ssr is a Node server that performs server-side rendering of our React UI
   ssr:
@@ -122,11 +110,11 @@ services:
     image: mdnwebdocs/kumascript
     command: node run.js
     depends_on:
-      - api
+      - web
       - redis
     environment:
-      - DOCUMENT_URL_TEMPLATE=http://api:8000/en-US/docs/{path}?raw=1&redirect=no
-      - DOCUMENT_URL=http://api:8000
+      - DOCUMENT_URL_TEMPLATE=http://web:8000/en-US/docs/{path}?raw=1&redirect=no
+      - DOCUMENT_URL=http://web:8000
       - INTERACTIVE_EXAMPLES_URL=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
       - LIVE_SAMPLES_URL=http://${ATTACHMENT_HOST:-localhost:8000}
       - REDIS_URL=redis://redis:6379/2
