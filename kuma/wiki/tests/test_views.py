@@ -2088,7 +2088,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert resp["X-Robots-Tag"] == "noindex"
         assert_no_cache_header(resp)
 
-        self.assertEquals(1, len(mail.outbox))
+        assert len(mail.outbox) == 1
         message = mail.outbox[0]
         assert testuser2.email in message.to
         assert str(rev.document.title) in message.body
@@ -2121,7 +2121,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             data,
             HTTP_HOST=settings.WIKI_HOST,
         )
-        self.assertEquals(2, len(mail.outbox))
+        assert len(mail.outbox) == 2
         message = mail.outbox[0]
         assert testuser2.email in message.to
         assert rev.document.title in message.body
