@@ -7,8 +7,9 @@ class AttachmentsConfig(AppConfig):
     The Django App Config class to store information about the users app
     and do startup time things.
     """
-    name = 'kuma.attachments'
-    verbose_name = _('Attachments')
+
+    name = "kuma.attachments"
+    verbose_name = _("Attachments")
 
     def ready(self):
         # Register signal handlers

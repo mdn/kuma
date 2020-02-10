@@ -1,5 +1,3 @@
-
-
 import datetime
 import os.path
 from unittest import mock
@@ -16,7 +14,11 @@ from kuma.users.tests import UserTestCase
 
 from . import revision
 from ..exceptions import NotDocumentView
-from ..utils import analytics_upageviews, analytics_upageviews_by_revisions, get_doc_components_from_url
+from ..utils import (
+    analytics_upageviews,
+    analytics_upageviews_by_revisions,
+    get_doc_components_from_url,
+)
 
 
 GA_TEST_CREDS = r"""{
@@ -39,8 +41,8 @@ class RecordingHttpMockSequence(HttpMockSequence):
 
 
 @override_config(GOOGLE_ANALYTICS_CREDENTIALS=GA_TEST_CREDS)
-@mock.patch('googleapiclient.discovery_cache.autodetect')
-@mock.patch('kuma.wiki.utils.ServiceAccountCredentials')
+@mock.patch("googleapiclient.discovery_cache.autodetect")
+@mock.patch("kuma.wiki.utils.ServiceAccountCredentials")
 class AnalyticsUpageviewsTests(KumaTestCase):
     start_date = datetime.date(2016, 1, 1)
     valid_response = b"""{"reports": [
@@ -79,7 +81,7 @@ class AnalyticsUpageviewsTests(KumaTestCase):
         super(AnalyticsUpageviewsTests, cls).setUpClass()
 
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(os.path.join(dir_path, 'analyticsreporting-discover.json')) as f:
+        with open(os.path.join(dir_path, "analyticsreporting-discover.json")) as f:
             cls.valid_discovery = f.read()
 
     def test_successful_query(self, mock_credclass, mock_cache):
@@ -88,10 +90,12 @@ class AnalyticsUpageviewsTests(KumaTestCase):
         mock_cache.return_value = None
 
         mock_creds = mock_credclass.from_json_keyfile_dict.return_value
-        mock_creds.authorize.return_value = HttpMockSequence([
-            ({'status': '200'}, self.valid_discovery),
-            ({'status': '200'}, self.valid_response)
-        ])
+        mock_creds.authorize.return_value = HttpMockSequence(
+            [
+                ({"status": "200"}, self.valid_discovery),
+                ({"status": "200"}, self.valid_response),
+            ]
+        )
 
         results = analytics_upageviews([1068728, 1074760], self.start_date)
 
@@ -103,10 +107,12 @@ class AnalyticsUpageviewsTests(KumaTestCase):
         mock_cache.return_value = None
 
         mock_creds = mock_credclass.from_json_keyfile_dict.return_value
-        sequence = RecordingHttpMockSequence([
-            ({'status': '200'}, self.valid_discovery),
-            ({'status': '200'}, self.valid_response)
-        ])
+        sequence = RecordingHttpMockSequence(
+            [
+                ({"status": "200"}, self.valid_discovery),
+                ({"status": "200"}, self.valid_response),
+            ]
+        )
         mock_creds.authorize.return_value = sequence
 
         start_date = datetime.datetime(2016, 1, 31, 17, 32)
@@ -115,7 +121,7 @@ class AnalyticsUpageviewsTests(KumaTestCase):
         # Check that the last request's parameters contain a
         # representation of the start date, not the starting datetime.
         args, kwargs = sequence.request_calls[-1]
-        self.assertIn('"startDate": "2016-01-31"', kwargs['body'])
+        self.assertIn('"startDate": "2016-01-31"', kwargs["body"])
 
         self.assertEqual(results, {1068728: 18775, 1074760: 753})
 
@@ -125,10 +131,12 @@ class AnalyticsUpageviewsTests(KumaTestCase):
         mock_cache.return_value = None
 
         mock_creds = mock_credclass.from_json_keyfile_dict.return_value
-        sequence = RecordingHttpMockSequence([
-            ({'status': '200'}, self.valid_discovery),
-            ({'status': '200'}, self.valid_response)
-        ])
+        sequence = RecordingHttpMockSequence(
+            [
+                ({"status": "200"}, self.valid_discovery),
+                ({"status": "200"}, self.valid_response),
+            ]
+        )
         mock_creds.authorize.return_value = sequence
 
         end_date = datetime.date(2016, 1, 31)
@@ -137,7 +145,7 @@ class AnalyticsUpageviewsTests(KumaTestCase):
         # Check that the last request's parameters contain a
         # representation of the end date, not the ending datetime.
         args, kwargs = sequence.request_calls[-1]
-        self.assertIn('"endDate": "2016-01-31"', kwargs['body'])
+        self.assertIn('"endDate": "2016-01-31"', kwargs["body"])
 
         self.assertEqual(results, {1068728: 18775, 1074760: 753})
 
@@ -147,10 +155,12 @@ class AnalyticsUpageviewsTests(KumaTestCase):
         mock_cache.return_value = None
 
         mock_creds = mock_credclass.from_json_keyfile_dict.return_value
-        sequence = RecordingHttpMockSequence([
-            ({'status': '200'}, self.valid_discovery),
-            ({'status': '200'}, self.valid_response)
-        ])
+        sequence = RecordingHttpMockSequence(
+            [
+                ({"status": "200"}, self.valid_discovery),
+                ({"status": "200"}, self.valid_response),
+            ]
+        )
         mock_creds.authorize.return_value = sequence
 
         end_date = datetime.datetime(2016, 1, 31, 17, 32)
@@ -159,7 +169,7 @@ class AnalyticsUpageviewsTests(KumaTestCase):
         # Check that the last request's parameters contain a
         # representation of the end date, not the ending datetime.
         args, kwargs = sequence.request_calls[-1]
-        self.assertIn('"endDate": "2016-01-31"', kwargs['body'])
+        self.assertIn('"endDate": "2016-01-31"', kwargs["body"])
 
         self.assertEqual(results, {1068728: 18775, 1074760: 753})
 
@@ -169,16 +179,18 @@ class AnalyticsUpageviewsTests(KumaTestCase):
         mock_cache.return_value = None
 
         mock_creds = mock_credclass.from_json_keyfile_dict.return_value
-        sequence = RecordingHttpMockSequence([
-            ({'status': '200'}, self.valid_discovery),
-            ({'status': '200'}, self.valid_response)
-        ])
+        sequence = RecordingHttpMockSequence(
+            [
+                ({"status": "200"}, self.valid_discovery),
+                ({"status": "200"}, self.valid_response),
+            ]
+        )
         mock_creds.authorize.return_value = sequence
 
         results = analytics_upageviews([1068728, 1074760], self.start_date)
 
         args, kwargs = sequence.request_calls[-1]
-        self.assertIn('["1068728", "1074760"]', kwargs['body'])
+        self.assertIn('["1068728", "1074760"]', kwargs["body"])
 
         self.assertEqual(results, {1068728: 18775, 1074760: 753})
 
@@ -207,10 +219,12 @@ class AnalyticsUpageviewsTests(KumaTestCase):
         ]}"""
 
         mock_creds = mock_credclass.from_json_keyfile_dict.return_value
-        mock_creds.authorize.return_value = HttpMockSequence([
-            ({'status': '200'}, self.valid_discovery),
-            ({'status': '200'}, empty_response)
-        ])
+        mock_creds.authorize.return_value = HttpMockSequence(
+            [
+                ({"status": "200"}, self.valid_discovery),
+                ({"status": "200"}, empty_response),
+            ]
+        )
 
         results = analytics_upageviews([42], self.start_date)
 
@@ -224,10 +238,9 @@ class AnalyticsUpageviewsTests(KumaTestCase):
         mock_cache.return_value = None
 
         mock_creds = mock_credclass.from_json_keyfile_dict.return_value
-        mock_creds.authorize.return_value = HttpMockSequence([
-            ({'status': '200'}, self.valid_discovery),
-            ({'status': '400'}, '')
-        ])
+        mock_creds.authorize.return_value = HttpMockSequence(
+            [({"status": "200"}, self.valid_discovery), ({"status": "400"}, "")]
+        )
 
         with self.assertRaises(HttpError):
             analytics_upageviews([1068728, 1074760], self.start_date)
@@ -240,10 +253,9 @@ class AnalyticsUpageviewsTests(KumaTestCase):
         mock_cache.return_value = None
 
         mock_creds = mock_credclass.from_json_keyfile_dict.return_value
-        mock_creds.authorize.return_value = HttpMockSequence([
-            ({'status': '200'}, self.valid_discovery),
-            ({'status': '401'}, '')
-        ])
+        mock_creds.authorize.return_value = HttpMockSequence(
+            [({"status": "200"}, self.valid_discovery), ({"status": "401"}, "")]
+        )
 
         with self.assertRaises(HttpError):
             analytics_upageviews([1068728, 1074760], self.start_date)
@@ -256,10 +268,9 @@ class AnalyticsUpageviewsTests(KumaTestCase):
         mock_cache.return_value = None
 
         mock_creds = mock_credclass.from_json_keyfile_dict.return_value
-        mock_creds.authorize.return_value = HttpMockSequence([
-            ({'status': '200'}, self.valid_discovery),
-            ({'status': '403'}, '')
-        ])
+        mock_creds.authorize.return_value = HttpMockSequence(
+            [({"status": "200"}, self.valid_discovery), ({"status": "403"}, "")]
+        )
 
         with self.assertRaises(HttpError):
             analytics_upageviews([1068728, 1074760], self.start_date)
@@ -270,10 +281,9 @@ class AnalyticsUpageviewsTests(KumaTestCase):
         mock_cache.return_value = None
 
         mock_creds = mock_credclass.from_json_keyfile_dict.return_value
-        mock_creds.authorize.return_value = HttpMockSequence([
-            ({'status': '200'}, self.valid_discovery),
-            ({'status': '400'}, '')
-        ])
+        mock_creds.authorize.return_value = HttpMockSequence(
+            [({"status": "200"}, self.valid_discovery), ({"status": "400"}, "")]
+        )
 
         with self.assertRaises(ImproperlyConfigured):
             analytics_upageviews([1068728, 1074760], self.start_date)
@@ -284,16 +294,15 @@ class AnalyticsUpageviewsTests(KumaTestCase):
         mock_cache.return_value = None
 
         mock_creds = mock_credclass.from_json_keyfile_dict.return_value
-        mock_creds.authorize.return_value = HttpMockSequence([
-            ({'status': '200'}, self.valid_discovery),
-            ({'status': '400'}, '')
-        ])
+        mock_creds.authorize.return_value = HttpMockSequence(
+            [({"status": "200"}, self.valid_discovery), ({"status": "400"}, "")]
+        )
 
         with self.assertRaises(ImproperlyConfigured):
             analytics_upageviews([1068728, 1074760], self.start_date)
 
 
-@mock.patch('kuma.wiki.utils.analytics_upageviews')
+@mock.patch("kuma.wiki.utils.analytics_upageviews")
 class AnalyticsUpageviewsByRevisionsTests(UserTestCase):
     def setUp(self):
         self.rev1 = revision(save=True)
@@ -308,8 +317,9 @@ class AnalyticsUpageviewsByRevisionsTests(UserTestCase):
     def test_success(self, mock_pageviews):
         analytics_upageviews_by_revisions([self.rev1, self.rev2])
 
-        mock_pageviews.assert_called_once_with([self.rev1.id, self.rev2.id],
-                                               min(self.rev1.created, self.rev2.created))
+        mock_pageviews.assert_called_once_with(
+            [self.rev1.id, self.rev2.id], min(self.rev1.created, self.rev2.created)
+        )
 
 
 def test_get_doc_components_from_url_absolute_url(root_doc):
@@ -317,15 +327,15 @@ def test_get_doc_components_from_url_absolute_url(root_doc):
     url = root_doc.get_absolute_url()
     locale, path, slug = get_doc_components_from_url(url)
     assert locale == root_doc.locale
-    assert path == '/docs/Root'
+    assert path == "/docs/Root"
     assert slug == root_doc.slug
 
 
 def test_get_doc_components_from_url_wrong_required_locale(root_doc):
     """get_doc_components_from_url returns False for wrong required_locale."""
     url = root_doc.get_absolute_url()
-    assert root_doc.locale != 'de'
-    components = get_doc_components_from_url(url, required_locale='de')
+    assert root_doc.locale != "de"
+    components = get_doc_components_from_url(url, required_locale="de")
     assert components is False
 
 
@@ -333,9 +343,10 @@ def test_get_doc_components_from_url_correct_required_locale(root_doc):
     """get_doc_components_from_url works for correct required_locale."""
     url = root_doc.get_absolute_url()
     locale, path, slug = get_doc_components_from_url(
-        url, required_locale=root_doc.locale)
+        url, required_locale=root_doc.locale
+    )
     assert locale == root_doc.locale
-    assert path == '/docs/Root'
+    assert path == "/docs/Root"
     assert slug == root_doc.slug
 
 
@@ -344,13 +355,13 @@ def test_get_doc_components_from_url_check_host_same_domain(root_doc):
     url = root_doc.get_full_url()
     locale, path, slug = get_doc_components_from_url(url, check_host=True)
     assert locale == root_doc.locale
-    assert path == '/docs/Root'
+    assert path == "/docs/Root"
     assert slug == root_doc.slug
 
 
 def test_get_doc_components_from_url_check_host_diff_domain(root_doc):
     """get_doc_components_from_url fails on check_host with remote URL."""
-    url = 'http://example.com' + root_doc.get_absolute_url()
+    url = "http://example.com" + root_doc.get_absolute_url()
     components = get_doc_components_from_url(url, check_host=True)
     assert components is False
 

@@ -6,16 +6,16 @@ from django.db import migrations
 
 
 def create_subscription_waffle_flag(apps, schema_editor):
-    Flag = apps.get_model('waffle', 'Flag')
-    Flag.objects.get_or_create(name='subscription', staff=True, note="Show stripe subscription form")
+    Flag = apps.get_model("waffle", "Flag")
+    Flag.objects.get_or_create(
+        name="subscription", staff=True, note="Show stripe subscription form"
+    )
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0014_user_is_newsletter_subscribed'),
+        ("users", "0014_user_is_newsletter_subscribed"),
     ]
 
-    operations = [
-        migrations.RunPython(create_subscription_waffle_flag)
-    ]
+    operations = [migrations.RunPython(create_subscription_waffle_flag)]

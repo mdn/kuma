@@ -7,13 +7,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('banners', '0001_initial'),
+        ("banners", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='banner',
-            name='theme',
-            field=models.CharField(choices=[('default', 'Default'), ('gradient', 'Gradient'), ('dinohead', 'Dinohead')], default='default', max_length=20, verbose_name='Theme'),
+            model_name="banner",
+            name="theme",
+            field=models.CharField(
+                choices=[
+                    ("default", "Default"),
+                    ("gradient", "Gradient"),
+                    ("dinohead", "Dinohead"),
+                ],
+                default="default",
+                max_length=20,
+                verbose_name="Theme",
+            ),
         ),
     ]

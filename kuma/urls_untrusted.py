@@ -11,14 +11,13 @@ handler404 = core_views.handler404
 handler500 = core_views.handler500
 
 urlpatterns = [
-    url('', include('kuma.attachments.urls')),
-    url(r'^robots.txt', robots_txt, name='robots_txt'),
+    url("", include("kuma.attachments.urls")),
+    url(r"^robots.txt", robots_txt, name="robots_txt"),
 ]
 
-if getattr(settings, 'DEBUG_TOOLBAR_INSTALLED', False):
+if getattr(settings, "DEBUG_TOOLBAR_INSTALLED", False):
     import debug_toolbar
-    urlpatterns.append(
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    )
 
-urlpatterns += i18n_patterns(url(r'^docs/', include(wiki_lang_urlpatterns)))
+    urlpatterns.append(url(r"^__debug__/", include(debug_toolbar.urls)),)
+
+urlpatterns += i18n_patterns(url(r"^docs/", include(wiki_lang_urlpatterns)))

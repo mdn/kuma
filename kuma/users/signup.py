@@ -4,13 +4,17 @@ from django.core import validators
 from django.utils.translation import ugettext_lazy as _
 
 
-USERNAME_REQUIRED = _('Username is required.')
-USERNAME_SHORT = _('Username is too short (%(show_value)s characters). '
-                   'It must be at least %(limit_value)s characters.')
-USERNAME_LONG = _('Username is too long (%(show_value)s characters). '
-                  'It must be %(limit_value)s characters or less.')
+USERNAME_REQUIRED = _("Username is required.")
+USERNAME_SHORT = _(
+    "Username is too short (%(show_value)s characters). "
+    "It must be at least %(limit_value)s characters."
+)
+USERNAME_LONG = _(
+    "Username is too long (%(show_value)s characters). "
+    "It must be %(limit_value)s characters or less."
+)
 
-TERMS_REQUIRED = _('You must agree to the terms of use.')
+TERMS_REQUIRED = _("You must agree to the terms of use.")
 
 
 class SignupForm(BaseSignupForm):
@@ -25,31 +29,34 @@ class SignupForm(BaseSignupForm):
 
     The heavy lifting happens in the view.
     """
-    email = forms.CharField(required=False,
-                            widget=forms.TextInput(attrs={'type': 'email'}))
-    other_email = forms.CharField(required=False,
-                                  widget=forms.TextInput(attrs={'type': 'email'}))
-    terms = forms.BooleanField(label=_('I agree'),
-                               required=True,
-                               error_messages={'required': TERMS_REQUIRED})
+
+    email = forms.CharField(
+        required=False, widget=forms.TextInput(attrs={"type": "email"})
+    )
+    other_email = forms.CharField(
+        required=False, widget=forms.TextInput(attrs={"type": "email"})
+    )
+    terms = forms.BooleanField(
+        label=_("I agree"), required=True, error_messages={"required": TERMS_REQUIRED}
+    )
     is_github_url_public = forms.BooleanField(
-        label=_('I would like to make my GitHub profile URL public'),
-        required=False)
+        label=_("I would like to make my GitHub profile URL public"), required=False
+    )
     is_newsletter_subscribed = forms.BooleanField(required=False)
-    other_email_value = '_other'
-    duplicate_email_error_label = '_duplicate_email'
+    other_email_value = "_other"
+    duplicate_email_error_label = "_duplicate_email"
 
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
         self.other_email_used = False
-        self.fields['username'].error_messages = {
-            'required': USERNAME_REQUIRED,
-            'min_length': USERNAME_SHORT,
-            'max_length': USERNAME_LONG,
+        self.fields["username"].error_messages = {
+            "required": USERNAME_REQUIRED,
+            "min_length": USERNAME_SHORT,
+            "max_length": USERNAME_LONG,
         }
 
     def clean_email(self):
-        value = self.cleaned_data['email']
+        value = self.cleaned_data["email"]
         # if the selected email address is "other" we cut things short
         # and clean the value in the form's clean method instead
         if value == self.other_email_value:
@@ -69,9 +76,9 @@ class SignupForm(BaseSignupForm):
         """
         cleaned_data = super(SignupForm, self).clean()
         # let's see if the email value was "other"
-        if cleaned_data.get('email') == self.other_email_value:
+        if cleaned_data.get("email") == self.other_email_value:
             # and set the cleaned data to the cleaned other_email value
-            self.cleaned_data['email'] = self.cleaned_data['other_email']
+            self.cleaned_data["email"] = self.cleaned_data["other_email"]
             # also store the fact of using the other value in an attribute
             # to be used in the view to check for it
             self.other_email_used = True
@@ -81,7 +88,7 @@ class SignupForm(BaseSignupForm):
             try:
                 self.clean_email()
             except forms.ValidationError as e:
-                self._errors['email'] = self.error_class(e.messages)
+                self._errors["email"] = self.error_class(e.messages)
         return cleaned_data
 
     def raise_duplicate_email_error(self):

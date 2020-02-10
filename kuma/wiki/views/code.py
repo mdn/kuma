@@ -1,5 +1,3 @@
-
-
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
@@ -25,17 +23,15 @@ def code_sample(request, document_slug, document_locale, sample_name):
     HTML document
     """
     # Restrict rendering of live code samples to specified hosts
-    if request.get_host() not in (settings.ATTACHMENT_HOST,
-                                  settings.ATTACHMENT_ORIGIN):
+    if request.get_host() not in (settings.ATTACHMENT_HOST, settings.ATTACHMENT_ORIGIN):
         raise PermissionDenied
 
-    document = get_object_or_404(Document, slug=document_slug,
-                                 locale=document_locale)
+    document = get_object_or_404(Document, slug=document_slug, locale=document_locale)
     job = DocumentCodeSampleJob(generation_args=[document.pk])
     data = job.get(document.pk, sample_name)
-    data['document'] = document
-    data['sample_name'] = sample_name
-    return render(request, 'wiki/code_sample.html', data)
+    data["document"] = document
+    data["sample_name"] = sample_name
+    return render(request, "wiki/code_sample.html", data)
 
 
 @cache_control(public=True, max_age=60 * 60 * 24 * 5)
@@ -43,8 +39,9 @@ def code_sample(request, document_slug, document_locale, sample_name):
 @allow_CORS_GET
 @xframe_options_exempt
 @process_document_path
-def raw_code_sample_file(request, document_slug, document_locale,
-                         sample_name, attachment_id, filename):
+def raw_code_sample_file(
+    request, document_slug, document_locale, sample_name, attachment_id, filename
+):
     """
     A view redirecting to the real file serving view of the attachments app.
     This exists so the writers can use relative paths to files in the

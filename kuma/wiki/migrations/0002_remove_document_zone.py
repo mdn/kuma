@@ -7,19 +7,11 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wiki', '0001_squashed_0036_update_locales'),
+        ("wiki", "0001_squashed_0036_update_locales"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='documentzone',
-            name='document',
-        ),
-        migrations.RemoveField(
-            model_name='document',
-            name='zone_subnav_local_html',
-        ),
-        migrations.DeleteModel(
-            name='DocumentZone',
-        ),
+        migrations.RemoveField(model_name="documentzone", name="document",),
+        migrations.RemoveField(model_name="document", name="zone_subnav_local_html",),
+        migrations.DeleteModel(name="DocumentZone",),
     ]

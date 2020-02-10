@@ -6,7 +6,6 @@ from ..models import Index
 
 
 class TestLiveIndexing(ElasticTestCase):
-
     def test_live_indexing_docs(self):
         # Live indexing uses tasks which pass the index by pk, so we need to
         # create and save one to the database here.

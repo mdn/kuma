@@ -1,5 +1,3 @@
-
-
 import random
 
 from django.conf import settings
@@ -18,6 +16,7 @@ class DocumentContributorsJob(KumaJob):
     everytime a profile is saved. Instead we accept that some contributor links
     may be wrong until the cache item's lifetime runs out for this edge case.
     """
+
     lifetime = 60 * 60 * 12
     refresh_timeout = 30
     version = 2
@@ -31,13 +30,14 @@ class DocumentContributorsJob(KumaJob):
 
     def fetch(self, pk):
         from .models import Revision
+
         User = get_user_model()
 
         # first get a list of user ID recently authoring revisions
         recent_creator_ids = (
             Revision.objects.filter(document_id=pk)
-            .order_by('-created')
-            .values_list('creator_id', flat=True)
+            .order_by("-created")
+            .values_list("creator_id", flat=True)
         )
 
         # remove duplicates, preserving order
@@ -49,15 +49,15 @@ class DocumentContributorsJob(KumaJob):
 
         # then return the ordered results given the ID list, MySQL only syntax
         select = {
-            'ordered_ids':
-            'FIELD(id,%s)' % ','.join(str(id) for id in recent_creator_ids),
+            "ordered_ids": "FIELD(id,%s)"
+            % ",".join(str(id) for id in recent_creator_ids),
         }
 
-        return list(User.objects.filter(id__in=recent_creator_ids,
-                                        is_active=True)
-                                .extra(select=select,
-                                       order_by=['ordered_ids'])
-                                .values('id', 'username', 'email'))
+        return list(
+            User.objects.filter(id__in=recent_creator_ids, is_active=True)
+            .extra(select=select, order_by=["ordered_ids"])
+            .values("id", "username", "email")
+        )
 
     def empty(self):
         # the empty result needs to be an empty list instead of None
@@ -70,6 +70,7 @@ class DocumentCodeSampleJob(GenerationJob):
 
     def fetch(self, pk, sample_name):
         from .models import Document
+
         document = Document.objects.get(pk=pk)
         return document.extract.code_sample(sample_name)
 
@@ -98,6 +99,10 @@ class DocumentTagsJob(KumaJob):
     def fetch(self, pk):
         from .models import Document
 
-        tags = (Document.objects.filter(id=pk).exclude(tags__name=None)
-                                .values_list('tags__name', flat=True).order_by('tags__name'))
+        tags = (
+            Document.objects.filter(id=pk)
+            .exclude(tags__name=None)
+            .values_list("tags__name", flat=True)
+            .order_by("tags__name")
+        )
         return list(tags)
