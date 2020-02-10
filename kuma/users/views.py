@@ -57,11 +57,10 @@ from kuma.wiki.models import (
     RevisionAkismetSubmission,
 )
 
+# we have to import the SignupForm form here due to allauth's odd form subclassing
+# that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
 from .forms import UserBanForm, UserDeleteForm, UserEditForm, UserRecoveryEmailForm
 from .models import User, UserBan
-
-# we have to import the signup form here due to allauth's odd form subclassing
-# that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
 from .signup import SignupForm
 from .utils import (
     create_stripe_customer_and_subscription_for_user,
