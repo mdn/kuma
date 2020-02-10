@@ -28,7 +28,7 @@ def create_stripe_customer_and_subscription_for_user(user, email, stripe_token):
 
     if retrieve_stripe_subscription(customer) is None:
         stripe.Subscription.create(
-            customer=customer.id, items=[{"plan": settings.STRIPE_PLAN_ID,}],
+            customer=customer.id, items=[{"plan": settings.STRIPE_PLAN_ID}],
         )
 
 

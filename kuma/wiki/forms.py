@@ -350,7 +350,7 @@ class AkismetHistoricalData(AkismetRevisionData):
                 )
         else:
             self.parameters.update(
-                {"user_ip": "0.0.0.0", "user_agent": "", "referrer": "",}
+                {"user_ip": "0.0.0.0", "user_agent": "", "referrer": ""}
             )
         document = revision.document
         self.set_blog_lang(document.locale)
@@ -488,7 +488,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         required=False,
         max_length=255,
         label=_("Tags:"),
-        error_messages={"max_length": TAGS_LONG,},
+        error_messages={"max_length": TAGS_LONG},
     )
 
     keywords = StrippedCharField(

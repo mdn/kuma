@@ -10,7 +10,7 @@ from kuma.payments.utils import (
 # https://stripe.com/docs/api/customers/retrieve
 simple_customer_data = {
     "sources": {"data": [{"card": {"last4": "0019"}}]},
-    "subscriptions": {"data": [{"id": "sub_id", "plan": {"amount": 6400},}]},
+    "subscriptions": {"data": [{"id": "sub_id", "plan": {"amount": 6400}}]},
 }
 
 
@@ -35,7 +35,7 @@ def test_cancel_stripe_customer_subscription(mock_sub, mock_cust):
 
 @mock.patch(
     "stripe.Customer.retrieve",
-    return_value={"subscriptions": {"data": [{"id": "sub_id1"}, {"id": "sub_id2"},]}},
+    return_value={"subscriptions": {"data": [{"id": "sub_id1"}, {"id": "sub_id2"}]}},
 )
 @mock.patch(
     "stripe.Subscription.retrieve",

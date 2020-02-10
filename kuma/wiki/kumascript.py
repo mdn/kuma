@@ -78,7 +78,7 @@ def _post(content, env_vars, cache_control=None, timeout=None):
 
 
 def post(request, content, locale=settings.LANGUAGE_CODE):
-    return _post(content, {"url": request.build_absolute_uri("/"), "locale": locale,})
+    return _post(content, {"url": request.build_absolute_uri("/"), "locale": locale})
 
 
 # TODO(djf): This get() function is actually implemented on top of

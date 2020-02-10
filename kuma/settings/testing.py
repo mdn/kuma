@@ -22,7 +22,7 @@ LOGGING["loggers"].update(
             "propagate": True,
             "level": "WARNING",
         },
-        "kuma.search.utils": {"handlers": [], "propagate": False, "level": "CRITICAL",},
+        "kuma.search.utils": {"handlers": [], "propagate": False, "level": "CRITICAL"},
     }
 )
 

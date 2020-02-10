@@ -161,5 +161,5 @@ def purge_document(request, document_slug, document_locale):
         return render(
             request,
             "wiki/confirm_purge.html",
-            {"document": document, "deletion_log": deletion_log,},
+            {"document": document, "deletion_log": deletion_log},
         )

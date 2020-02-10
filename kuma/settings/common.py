@@ -78,7 +78,7 @@ if "mysql" in DEFAULT_DATABASE["ENGINE"]:
                 "character_set_connection=utf8,"
                 "collation_connection=utf8_general_ci",
             },
-            "TEST": {"CHARSET": "utf8", "COLLATION": "utf8_general_ci",},
+            "TEST": {"CHARSET": "utf8", "COLLATION": "utf8_general_ci"},
         }
     )
 
@@ -703,7 +703,7 @@ PIPELINE_CSS = {
     "print": {
         "source_filenames": ("styles/minimalist/print.scss",),
         "output_filename": "build/styles/print.css",
-        "extra_context": {"media": "print",},
+        "extra_context": {"media": "print"},
     },
     "search": {
         "source_filenames": ("styles/search.scss",),
@@ -887,12 +887,12 @@ PIPELINE_JS = {
             "react.js",
         ),
         "output_filename": "build/js/react-main.js",
-        "extra_context": {"defer": True,},
+        "extra_context": {"defer": True},
     },
     "bcd-signal": {
         "source_filenames": ("bcd-signal.js",),
         "output_filename": "build/js/react-bcd-signal.js",
-        "extra_context": {"defer": True,},
+        "extra_context": {"defer": True},
     },
     "banners": {
         "source_filenames": (
@@ -901,7 +901,7 @@ PIPELINE_JS = {
             "js/components/banners/banners.js",
         ),
         "output_filename": "build/js/banners.js",
-        "extra_context": {"async": True,},
+        "extra_context": {"async": True},
     },
     "users": {
         "source_filenames": (
@@ -910,19 +910,19 @@ PIPELINE_JS = {
             "js/users.js",
         ),
         "output_filename": "build/js/users.js",
-        "extra_context": {"async": True,},
+        "extra_context": {"async": True},
     },
     "user-signup": {
         "source_filenames": ("js/components/user-signup/signup.js",),
         "output_filename": "build/js/signup.js",
-        "extra_context": {"async": True,},
+        "extra_context": {"async": True},
     },
     "delete-user-page": {
         "source_filenames": (
             "js/components/account-management/delete-user-confirmation-button.js",
         ),
         "output_filename": "build/js/delete-user-confirmation-button.js",
-        "extra_context": {"defer": True,},
+        "extra_context": {"defer": True},
     },
     "delete-user-modal": {
         "source_filenames": (
@@ -931,7 +931,7 @@ PIPELINE_JS = {
             "js/components/account-management/delete-user-confirmation-button.js",
         ),
         "output_filename": "build/js/delete-user-modal.js",
-        "extra_context": {"defer": True,},
+        "extra_context": {"defer": True},
     },
     "auth-modal": {
         "source_filenames": (
@@ -939,12 +939,12 @@ PIPELINE_JS = {
             "js/components/user-signup/auth-modal.js",
         ),
         "output_filename": "build/js/auth-modal.js",
-        "extra_context": {"defer": True,},
+        "extra_context": {"defer": True},
     },
     "dashboard": {
         "source_filenames": ("js/dashboard.js",),
         "output_filename": "build/js/dashboard.js",
-        "extra_context": {"async": True,},
+        "extra_context": {"async": True},
     },
     "jquery-ui": {
         "source_filenames": (
@@ -957,7 +957,7 @@ PIPELINE_JS = {
     "search": {
         "source_filenames": ("js/search.js",),
         "output_filename": "build/js/search.js",
-        "extra_context": {"async": True,},
+        "extra_context": {"async": True},
     },
     "payments": {
         "source_filenames": ("js/components/payments/payments-manage.js",),
@@ -1004,7 +1004,7 @@ PIPELINE_JS = {
             "js/components/page-load-actions.js",
         ),
         "output_filename": "build/js/wiki.js",
-        "extra_context": {"async": True,},
+        "extra_context": {"async": True},
     },
     "wiki-edit": {
         "source_filenames": (
@@ -1018,7 +1018,7 @@ PIPELINE_JS = {
     "wiki-move": {
         "source_filenames": ("js/wiki-move.js",),
         "output_filename": "build/js/wiki-move.js",
-        "extra_context": {"async": True,},
+        "extra_context": {"async": True},
     },
     "wiki-compat-tables": {
         "source_filenames": ("js/wiki-compat-tables.js",),
@@ -1028,12 +1028,12 @@ PIPELINE_JS = {
     "task-completion": {
         "source_filenames": ("js/task-completion.js",),
         "output_filename": "build/js/task-completion.js",
-        "extra_context": {"async": True,},
+        "extra_context": {"async": True},
     },
     "newsletter": {
         "source_filenames": ("js/newsletter.js",),
         "output_filename": "build/js/newsletter.js",
-        "extra_context": {"defer": True,},
+        "extra_context": {"defer": True},
     },
     "perf": {
         "source_filenames": (
@@ -1041,7 +1041,7 @@ PIPELINE_JS = {
             "js/utils/perf-post-message-handler.js",
         ),
         "output_filename": "build/js/perf.js",
-        "extra_context": {"async": True,},
+        "extra_context": {"async": True},
     },
     "fetch-polyfill": {
         "source_filenames": ("js/libs/unfetch-4.1.0.min.js",),
@@ -1320,7 +1320,7 @@ CELERY_IMPORTS = (
     "tidings.events",
 )
 
-CELERY_TASK_ANNOTATIONS = {"cacheback.tasks.refresh_cache": {"rate_limit": "120/m",}}
+CELERY_TASK_ANNOTATIONS = {"cacheback.tasks.refresh_cache": {"rate_limit": "120/m"}}
 
 CELERY_TASK_ROUTES = {
     "cacheback.tasks.refresh_cache": {"queue": "mdn_purgeable"},
@@ -1565,7 +1565,7 @@ ES_Q_MAXLENGTH = config("ES_Q_MAXLENGTH", default=200, cast=int)
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "filters": {"require_debug_true": {"()": "django.utils.log.RequireDebugTrue",}},
+    "filters": {"require_debug_true": {"()": "django.utils.log.RequireDebugTrue"}},
     "formatters": {"simple": {"format": "%(name)s:%(levelname)s %(message)s"}},
     "handlers": {
         "console": {
@@ -1581,8 +1581,8 @@ LOGGING = {
         },
     },
     "loggers": {
-        "django": {"handlers": ["console"], "level": "INFO",},  # Drop mail_admins
-        "kuma": {"handlers": ["console-simple"], "propagate": True, "level": "ERROR",},
+        "django": {"handlers": ["console"], "level": "INFO"},  # Drop mail_admins
+        "kuma": {"handlers": ["console-simple"], "propagate": True, "level": "ERROR"},
         "elasticsearch": {
             "handlers": ["console-simple"],
             "level": config("ES_LOG_LEVEL", default="ERROR"),
@@ -1592,8 +1592,8 @@ LOGGING = {
             "level": config("ES_TRACE_LOG_LEVEL", default="ERROR"),
             "propagate": False,
         },
-        "urllib3": {"handlers": ["console-simple"], "level": "ERROR",},
-        "cacheback": {"handlers": ["console-simple"], "level": "ERROR",},
+        "urllib3": {"handlers": ["console-simple"], "level": "ERROR"},
+        "cacheback": {"handlers": ["console-simple"], "level": "ERROR"},
     },
 }
 
@@ -1675,7 +1675,7 @@ if SENTRY_DSN:
     RAVEN_CONFIG = {
         "dsn": SENTRY_DSN,
         "transport": RequestsHTTPTransport,  # Sync transport
-        "ignore_exception": ["django.core.exceptions.DisallowedHost",],
+        "ignore_exception": ["django.core.exceptions.DisallowedHost"],
     }
     if REVISION_HASH and REVISION_HASH != "undefined":
         RAVEN_CONFIG["release"] = REVISION_HASH

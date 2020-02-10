@@ -1259,7 +1259,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Now, post an update with two tags
         data.update(
-            {"form-type": "rev", "review_tags": ["editorial", "technical"],}
+            {"form-type": "rev", "review_tags": ["editorial", "technical"]}
         )
         response = self.client.post(
             reverse("wiki.edit", args=[doc.slug]), data, HTTP_HOST=settings.WIKI_HOST
@@ -1333,7 +1333,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert doc_entry.encode() in response.content
 
         # Post an edit that removes the technical review tag.
-        data.update({"form-type": "rev", "review_tags": ["editorial",]})
+        data.update({"form-type": "rev", "review_tags": ["editorial"]})
         response = self.client.post(
             reverse("wiki.edit", args=[doc.slug]), data, HTTP_HOST=settings.WIKI_HOST
         )
@@ -1399,13 +1399,13 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                 "params": {"request_technical": 1},
                 "expected_tags": ["technical"],
                 "name": "technical",
-                "message_contains": ["Editorial review completed.",],
+                "message_contains": ["Editorial review completed."],
             },
             {
                 "params": {"request_editorial": 1},
                 "expected_tags": ["editorial"],
                 "name": "editorial",
-                "message_contains": ["Technical review completed.",],
+                "message_contains": ["Technical review completed."],
             },
             {
                 "params": {},
@@ -2927,7 +2927,7 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
 
         data = new_document_data()
         data.update(
-            {"form-type": "rev", "content": "This is an update",}
+            {"form-type": "rev", "content": "This is an update"}
         )
 
         edit_url = reverse("wiki.edit", args=[self.doc.slug])
@@ -2938,7 +2938,7 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         mock_document_schedule_rendering.reset_mock()
 
         data.update(
-            {"form-type": "both", "content": "This is a translation",}
+            {"form-type": "both", "content": "This is a translation"}
         )
         translate_url = reverse("wiki.translate", args=[data["slug"]]) + "?tolocale=fr"
         response = self.client.post(translate_url, data, HTTP_HOST=settings.WIKI_HOST)

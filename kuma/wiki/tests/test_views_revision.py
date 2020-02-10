@@ -93,7 +93,7 @@ def test_compare_revisions_without_tidied_content(edit_revision, client, raw):
 
 
 @pytest.mark.parametrize(
-    "id1,id2", [("1e309", "1e309"), ("", "invalid"), ("invalid", ""),]
+    "id1,id2", [("1e309", "1e309"), ("", "invalid"), ("invalid", "")]
 )
 def test_compare_revisions_invalid_ids(root_doc, client, id1, id2):
     """Comparing badly-formed revision parameters return 404, not error."""

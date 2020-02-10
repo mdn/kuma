@@ -401,7 +401,7 @@ def build_locale_sitemap(locale):
     # To avoid an extra query to see if the queryset is empty, let's just
     # start iterator and create the sitemap on the first found page.
     # Note, how we check if 'urls' became truthy before adding it.
-    sitemap = WikiSitemap({"queryset": queryset, "date_field": "modified",})
+    sitemap = WikiSitemap({"queryset": queryset, "date_field": "modified"})
     for page in range(1, sitemap.paginator.num_pages + 1):
         urls = sitemap.get_urls(page=page)
         if page == 1:

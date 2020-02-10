@@ -420,7 +420,7 @@ def test_apply_content_experiment_has_experiment(ce_settings, rf):
         "ga_name": "experiment-test",
         "param": "v",
         "original_path": "/en-US/docs/Original",
-        "variants": {"control": "Original", "test": "Experiment:Test/Variant",},
+        "variants": {"control": "Original", "test": "Experiment:Test/Variant"},
         "selected": None,
         "selection_is_valid": None,
     }

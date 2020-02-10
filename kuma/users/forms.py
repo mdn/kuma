@@ -70,7 +70,7 @@ class UserEditForm(forms.ModelForm):
         required=False,
         validators=[User.WEBSITE_VALIDATORS["github"]],
         widget=forms.TextInput(
-            attrs={"placeholder": "https://github.com/", "data-fa-icon": "icon-github",}
+            attrs={"placeholder": "https://github.com/", "data-fa-icon": "icon-github"}
         ),
     )
     is_github_url_public = forms.BooleanField(

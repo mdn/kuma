@@ -34,7 +34,7 @@ def prepare_index(index_pk):
 
     # Disable automatic refreshing and replicas.
     temporary_settings = {
-        "index": {"refresh_interval": "-1", "number_of_replicas": "0",}
+        "index": {"refresh_interval": "-1", "number_of_replicas": "0"}
     }
 
     es.indices.put_settings(temporary_settings, index=index.prefixed_name)

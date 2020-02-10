@@ -14,13 +14,13 @@ def test_get_avatar_url(wiki_user, providers):
     SOCIAL_ACCOUNT_DATA = {
         "github": {
             "uid": 1234567,
-            "extra_data": {"avatar_url": "https://github/yada/yada",},
+            "extra_data": {"avatar_url": "https://github/yada/yada"},
         },
         "google": {
             "uid": 123456789012345678901,
             "extra_data": {"picture": "https://google/yada/yada"},
         },
-        "persona": {"uid": wiki_user.email,},
+        "persona": {"uid": wiki_user.email},
     }
     first_valid_avatar_url = None
     for provider in providers:

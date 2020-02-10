@@ -789,7 +789,7 @@ def test_macros_no_counts(mock_usage, client, db):
             "count": 0,
             "en_count": 0,
         },
-        "CSSRef": {"github_subpath": "CSSRef.ejs", "count": 0, "en_count": 0,},
+        "CSSRef": {"github_subpath": "CSSRef.ejs", "count": 0, "en_count": 0},
     }
 
     response = client.get(reverse("dashboards.macros"), HTTP_HOST=settings.WIKI_HOST)

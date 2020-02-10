@@ -136,7 +136,7 @@ def create(request):
             doc_form.data["slug"] = posted_slug
 
         context.update(
-            {"document_form": doc_form, "revision_form": rev_form,}
+            {"document_form": doc_form, "revision_form": rev_form}
         )
 
     return render(request, "wiki/create.html", context)
