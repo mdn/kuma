@@ -283,3 +283,8 @@ WIKI_ONLY_DOCUMENT_QUERY_PARAMS = frozenset((
     'section',
     'summary',
 ))
+
+
+NOINDEX_SLUG_STARTS = (
+    'MDN/Doc_status',
+)

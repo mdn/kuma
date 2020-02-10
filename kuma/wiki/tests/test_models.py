@@ -145,6 +145,15 @@ def test_document_has_legacy_namespace(slug, legacy):
     assert Document(slug=slug).has_legacy_namespace == legacy
 
 
+@pytest.mark.parametrize('slug,should_noindex', [
+    ('MDN/Doc_status', True),
+    ('MDN/Doc_status/API', True),
+    ('Web/CSS', False),
+])
+def test_document_has_noindex_slug(slug, should_noindex):
+    assert Document(slug=slug).has_noindex_slug == should_noindex
+
+
 def test_document_delete_removes_tag_relationsip(root_doc):
     """Deleting a tagged document also deletes the tag relationship."""
     root_doc.tags.add('grape')

@@ -30,7 +30,8 @@ from kuma.spam.models import AkismetSubmission, SpamAttempt
 from . import kumascript
 from .constants import (DEKI_FILE_URL, EXPERIMENT_TITLE_PREFIX, KUMA_FILE_URL,
                         LEGACY_MINDTOUCH_NAMESPACES,
-                        REDIRECT_CONTENT, REDIRECT_HTML)
+                        NOINDEX_SLUG_STARTS,
+                        REDIRECT_CONTENT, REDIRECT_HTML, )
 from .content import (clean_content, Extractor, get_content_sections,
                       get_seo_description, H2TOCFilter, H3TOCFilter,
                       SectionTOCFilter)
@@ -1454,6 +1455,14 @@ Full traceback:
     def has_legacy_namespace(self):
         namespace, separator, _ = self.slug.partition(':')
         return namespace in LEGACY_MINDTOUCH_NAMESPACES if separator else False
+
+    @property
+    def has_noindex_slug(self):
+        """Return true if the slug is in hand-picked list of prefixes."""
+        for slug_start in NOINDEX_SLUG_STARTS:
+            if self.slug.startswith(slug_start):
+                return True
+        return False
 
     def get_hreflang(self, other_locales=None):
         """

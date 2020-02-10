@@ -877,6 +877,9 @@ def react_document(request, document_slug, document_locale):
         if doc.has_legacy_namespace:
             return False
 
+        if doc.has_noindex_slug:
+            return False
+
         if request.get_host() not in settings.ALLOW_ROBOTS_WEB_DOMAINS:
             return False
 
