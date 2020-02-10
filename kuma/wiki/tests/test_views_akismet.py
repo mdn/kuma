@@ -1,5 +1,3 @@
-
-
 import json
 
 import pytest
@@ -17,7 +15,7 @@ from ..models import RevisionAkismetSubmission
 
 @pytest.fixture
 def permission_add_revisionakismetsubmission(db):
-    return Permission.objects.get(codename='add_revisionakismetsubmission')
+    return Permission.objects.get(codename="add_revisionakismetsubmission")
 
 
 @pytest.fixture
@@ -36,43 +34,46 @@ def akismet_wiki_user_2(wiki_user_2, permission_add_revisionakismetsubmission):
 
 @pytest.fixture
 def akismet_mock_requests(mock_requests):
-    mock_requests.post(VERIFY_URL, content=b'valid')
-    mock_requests.post(
-        SPAM_URL, content=Akismet.submission_success.encode())
+    mock_requests.post(VERIFY_URL, content=b"valid")
+    mock_requests.post(SPAM_URL, content=Akismet.submission_success.encode())
     return mock_requests
 
 
 @pytest.fixture
 def enable_akismet_submissions(constance_config):
-    constance_config.AKISMET_KEY = 'dashboard'
+    constance_config.AKISMET_KEY = "dashboard"
     with override_flag(SPAM_SUBMISSIONS_FLAG, True):
         yield constance_config
 
 
 @pytest.mark.spam
-@pytest.mark.parametrize(
-    'http_method', ['get', 'put', 'delete', 'options', 'head'])
+@pytest.mark.parametrize("http_method", ["get", "put", "delete", "options", "head"])
 def test_disallowed_methods(db, client, http_method):
     """HTTP methods other than POST are not allowed."""
-    url = reverse('wiki.submit_akismet_spam')
+    url = reverse("wiki.submit_akismet_spam")
     response = getattr(client, http_method)(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 405
     assert_no_cache_header(response)
 
 
 @pytest.mark.spam
-def test_spam_valid_response(create_revision, akismet_wiki_user, user_client,
-                             enable_akismet_submissions,
-                             akismet_mock_requests):
-    url = reverse('wiki.submit_akismet_spam')
-    response = user_client.post(url, data={'revision': create_revision.id},
-                                HTTP_HOST=settings.WIKI_HOST)
+def test_spam_valid_response(
+    create_revision,
+    akismet_wiki_user,
+    user_client,
+    enable_akismet_submissions,
+    akismet_mock_requests,
+):
+    url = reverse("wiki.submit_akismet_spam")
+    response = user_client.post(
+        url, data={"revision": create_revision.id}, HTTP_HOST=settings.WIKI_HOST
+    )
     assert response.status_code == 201
     assert_no_cache_header(response)
 
     # One RevisionAkismetSubmission record should exist for this revision.
     ras = RevisionAkismetSubmission.objects.get(revision=create_revision)
-    assert ras.type == 'spam'
+    assert ras.type == "spam"
 
     # Check that the Akismet endpoints were called.
     assert akismet_mock_requests.called
@@ -80,19 +81,21 @@ def test_spam_valid_response(create_revision, akismet_wiki_user, user_client,
 
     data = json.loads(response.content)
     assert len(data) == 1
-    assert data[0]['sender'] == akismet_wiki_user.username
-    assert data[0]['type'] == 'spam'
+    assert data[0]["sender"] == akismet_wiki_user.username
+    assert data[0]["type"] == "spam"
 
 
 @pytest.mark.spam
-def test_spam_with_many_response(create_revision, akismet_wiki_user,
-                                 akismet_wiki_user_2, user_client,
-                                 enable_akismet_submissions,
-                                 akismet_mock_requests):
+def test_spam_with_many_response(
+    create_revision,
+    akismet_wiki_user,
+    akismet_wiki_user_2,
+    user_client,
+    enable_akismet_submissions,
+    akismet_mock_requests,
+):
     submission = RevisionAkismetSubmission(
-        type="ham",
-        sender=akismet_wiki_user_2,
-        revision=create_revision
+        type="ham", sender=akismet_wiki_user_2, revision=create_revision
     )
     submission.save()
 
@@ -101,17 +104,18 @@ def test_spam_with_many_response(create_revision, akismet_wiki_user,
     assert ras.count() == 1
 
     # Create another Akismet revision via the endpoint.
-    url = reverse('wiki.submit_akismet_spam')
-    response = user_client.post(url, data={'revision': create_revision.id},
-                                HTTP_HOST=settings.WIKI_HOST)
+    url = reverse("wiki.submit_akismet_spam")
+    response = user_client.post(
+        url, data={"revision": create_revision.id}, HTTP_HOST=settings.WIKI_HOST
+    )
     assert response.status_code == 201
     assert_no_cache_header(response)
     data = json.loads(response.content)
     assert len(data) == 2
-    assert data[0]['type'] == 'ham'
-    assert data[0]['sender'] == akismet_wiki_user_2.username
-    assert data[1]['type'] == 'spam'
-    assert data[1]['sender'] == akismet_wiki_user.username
+    assert data[0]["type"] == "ham"
+    assert data[0]["sender"] == akismet_wiki_user_2.username
+    assert data[1]["type"] == "spam"
+    assert data[1]["sender"] == akismet_wiki_user.username
 
     # Check that the Akismet endpoints were called.
     assert akismet_mock_requests.called
@@ -119,14 +123,20 @@ def test_spam_with_many_response(create_revision, akismet_wiki_user,
 
 
 @pytest.mark.spam
-def test_spam_no_permission(create_revision, wiki_user, user_client,
-                            enable_akismet_submissions, akismet_mock_requests):
-    url = reverse('wiki.submit_akismet_spam')
-    response = user_client.post(url, data={'revision': create_revision.id},
-                                HTTP_HOST=settings.WIKI_HOST)
+def test_spam_no_permission(
+    create_revision,
+    wiki_user,
+    user_client,
+    enable_akismet_submissions,
+    akismet_mock_requests,
+):
+    url = reverse("wiki.submit_akismet_spam")
+    response = user_client.post(
+        url, data={"revision": create_revision.id}, HTTP_HOST=settings.WIKI_HOST
+    )
     # Redirects to login page when without permission.
     assert response.status_code == 302
-    assert response['Location'].endswith('users/signin?next={}'.format(url))
+    assert response["Location"].endswith("users/signin?next={}".format(url))
     assert_no_cache_header(response)
 
     # No RevisionAkismetSubmission record should exist.
@@ -138,15 +148,20 @@ def test_spam_no_permission(create_revision, wiki_user, user_client,
 
 
 @pytest.mark.spam
-def test_spam_revision_does_not_exist(create_revision, akismet_wiki_user,
-                                      user_client, enable_akismet_submissions,
-                                      akismet_mock_requests):
+def test_spam_revision_does_not_exist(
+    create_revision,
+    akismet_wiki_user,
+    user_client,
+    enable_akismet_submissions,
+    akismet_mock_requests,
+):
     revision_id = create_revision.id
     create_revision.delete()
 
-    url = reverse('wiki.submit_akismet_spam')
-    response = user_client.post(url, data={'revision': revision_id},
-                                HTTP_HOST=settings.WIKI_HOST)
+    url = reverse("wiki.submit_akismet_spam")
+    response = user_client.post(
+        url, data={"revision": revision_id}, HTTP_HOST=settings.WIKI_HOST
+    )
     assert response.status_code == 400
     assert_no_cache_header(response)
 

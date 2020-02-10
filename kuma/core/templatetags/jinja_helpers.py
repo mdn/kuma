@@ -1,5 +1,3 @@
-
-
 import datetime
 import html
 import json
@@ -20,8 +18,7 @@ from statici18n.templatetags.statici18n import statici18n
 from urlobject import URLObject
 
 from ..urlresolvers import reverse, split_path
-from ..utils import (format_date_time, is_untrusted, is_wiki, order_params,
-                     urlparams)
+from ..utils import format_date_time, is_untrusted, is_wiki, order_params, urlparams
 
 
 # Yanking filters from Django.
@@ -37,15 +34,15 @@ library.global_function(is_wiki)
 library.global_function(is_untrusted)
 
 
-@library.global_function(name='assert')
+@library.global_function(name="assert")
 def assert_function(statement, message=None):
     """Add runtime assertions to Jinja2 templates."""
     if not statement:
         if message:
-            raise RuntimeError('Failed assertion: {}'.format(message))
+            raise RuntimeError("Failed assertion: {}".format(message))
         else:
-            raise RuntimeError('Failed assertion')
-    return ''
+            raise RuntimeError("Failed assertion")
+    return ""
 
 
 @library.filter
@@ -57,12 +54,11 @@ def paginator(pager):
 @library.global_function
 def url(viewname, *args, **kwargs):
     """Helper for Django's ``reverse`` in templates."""
-    locale = kwargs.pop('locale', None)
+    locale = kwargs.pop("locale", None)
     return reverse(viewname, args=args, kwargs=kwargs, locale=locale)
 
 
 class Paginator(object):
-
     def __init__(self, pager):
         self.pager = pager
 
@@ -91,15 +87,14 @@ class Paginator(object):
         return range(max(lower + 1, 1), min(total, upper) + 1)
 
     def render(self):
-        c = {'pager': self.pager, 'num_pages': self.num_pages,
-             'count': self.count}
-        t = get_template('includes/paginator.html').render(c)
+        c = {"pager": self.pager, "num_pages": self.num_pages, "count": self.count}
+        t = get_template("includes/paginator.html").render(c)
         return jinja2.Markup(t)
 
 
 @library.filter
 def yesno(boolean_value):
-    return jinja2.Markup(_('Yes') if boolean_value else _('No'))
+    return jinja2.Markup(_("Yes") if boolean_value else _("No"))
 
 
 @library.filter
@@ -110,13 +105,14 @@ def entity_decode(str):
 
 @library.global_function
 def page_title(title):
-    return jinja2.Markup('%s | MDN' % jinja2.escape(title))
+    return jinja2.Markup("%s | MDN" % jinja2.escape(title))
 
 
 @library.filter
 def level_tag(message):
-    return jinja2.Markup(force_text(LEVEL_TAGS.get(message.level, ''),
-                                    strings_only=True))
+    return jinja2.Markup(
+        force_text(LEVEL_TAGS.get(message.level, ""), strings_only=True)
+    )
 
 
 @library.global_function
@@ -137,35 +133,35 @@ def get_soapbox_messages(url):
 
 
 @library.global_function
-@library.render_with('core/elements/soapbox_messages.html')
+@library.render_with("core/elements/soapbox_messages.html")
 def soapbox_messages(soapbox_messages):
-    return {'soapbox_messages': soapbox_messages}
+    return {"soapbox_messages": soapbox_messages}
 
 
 @library.global_function
-def add_utm(url_, campaign, source='developer.mozilla.org', medium='email'):
+def add_utm(url_, campaign, source="developer.mozilla.org", medium="email"):
     """Add the utm_* tracking parameters to a URL."""
-    url_obj = URLObject(url_).add_query_params({
-        'utm_campaign': campaign,
-        'utm_source': source,
-        'utm_medium': medium})
+    url_obj = URLObject(url_).add_query_params(
+        {"utm_campaign": campaign, "utm_source": source, "utm_medium": medium}
+    )
     return order_params(str(url_obj))
 
 
 @library.global_function
 @jinja2.contextfunction
-def datetimeformat(context, value, format='shortdatetime', output='html'):
+def datetimeformat(context, value, format="shortdatetime", output="html"):
     """
     Returns date/time formatted using babel's locale settings. Uses the
     timezone from settings.py
     """
 
-    request = context['request']
+    request = context["request"]
     formatted, tzvalue = format_date_time(request, value, format)
-    if output == 'json':
+    if output == "json":
         return formatted
-    return jinja2.Markup('<time datetime="%s">%s</time>' %
-                         (tzvalue.isoformat(), formatted))
+    return jinja2.Markup(
+        '<time datetime="%s">%s</time>' % (tzvalue.isoformat(), formatted)
+    )
 
 
 @library.global_function

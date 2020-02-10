@@ -1,13 +1,10 @@
-
-
 import newrelic.agent
 from constance import config
 from django.shortcuts import redirect, render
 from django.views.decorators.cache import never_cache
 
 from kuma.attachments.forms import AttachmentRevisionForm
-from kuma.core.decorators import (block_user_agents, ensure_wiki_domain,
-                                  login_required)
+from kuma.core.decorators import block_user_agents, ensure_wiki_domain, login_required
 from kuma.core.urlresolvers import reverse
 
 from ..constants import DEV_DOC_REQUEST_FORM, REVIEW_FLAG_TAGS_DEFAULT
@@ -27,48 +24,47 @@ def create(request):
     """
     Create a new wiki page, which is a document and a revision.
     """
-    initial_slug = request.GET.get('slug', '')
+    initial_slug = request.GET.get("slug", "")
 
     # TODO: Integrate this into a new exception-handling middleware
-    if not request.user.has_perm('wiki.add_document'):
+    if not request.user.has_perm("wiki.add_document"):
         context = {
-            'reason': 'create-page',
-            'request_page_url': DEV_DOC_REQUEST_FORM,
-            'email_address': config.EMAIL_LIST_MDN_ADMINS
+            "reason": "create-page",
+            "request_page_url": DEV_DOC_REQUEST_FORM,
+            "email_address": config.EMAIL_LIST_MDN_ADMINS,
         }
-        return render(request, '403-create-page.html', context=context,
-                      status=403)
+        return render(request, "403-create-page.html", context=context, status=403)
 
     # a fake title based on the initial slug passed via a query parameter
-    initial_title = initial_slug.replace('_', ' ')
+    initial_title = initial_slug.replace("_", " ")
 
     # in case we want to create a sub page under a different document
     try:
         # If a parent ID is provided via GET, confirm it exists
-        initial_parent_id = int(request.GET.get('parent', ''))
+        initial_parent_id = int(request.GET.get("parent", ""))
         parent_doc = Document.objects.get(pk=initial_parent_id)
         parent_slug = parent_doc.slug
         parent_path = parent_doc.get_absolute_url()
     except (ValueError, Document.DoesNotExist):
-        initial_parent_id = parent_slug = parent_path = ''
+        initial_parent_id = parent_slug = parent_path = ""
 
     # in case we want to create a new page by cloning an existing document
     try:
-        clone_id = int(request.GET.get('clone', ''))
+        clone_id = int(request.GET.get("clone", ""))
     except ValueError:
         clone_id = None
 
     context = {
-        'attachment_form': AttachmentRevisionForm(),
-        'parent_path': parent_path,
-        'parent_slug': parent_slug,
+        "attachment_form": AttachmentRevisionForm(),
+        "parent_path": parent_path,
+        "parent_slug": parent_slug,
     }
 
-    if request.method == 'GET':
+    if request.method == "GET":
 
         initial_data = {}
-        initial_html = ''
-        initial_tags = ''
+        initial_html = ""
+        initial_tags = ""
         initial_toc = Revision.TOC_DEPTH_H4
 
         if clone_id:
@@ -86,60 +82,61 @@ def create(request):
                 pass
 
         if parent_slug:
-            initial_data['parent_topic'] = initial_parent_id
+            initial_data["parent_topic"] = initial_parent_id
 
         if initial_slug:
-            initial_data['title'] = initial_title
-            initial_data['slug'] = initial_slug
+            initial_data["title"] = initial_title
+            initial_data["slug"] = initial_slug
 
         review_tags = REVIEW_FLAG_TAGS_DEFAULT
 
         doc_form = DocumentForm(initial=initial_data, parent_slug=parent_slug)
 
         initial = {
-            'slug': initial_slug,
-            'title': initial_title,
-            'content': initial_html,
-            'review_tags': review_tags,
-            'tags': initial_tags,
-            'toc_depth': initial_toc
+            "slug": initial_slug,
+            "title": initial_title,
+            "content": initial_html,
+            "review_tags": review_tags,
+            "tags": initial_tags,
+            "toc_depth": initial_toc,
         }
         rev_form = RevisionForm(request=request, initial=initial)
 
-        context.update({
-            'parent_id': initial_parent_id,
-            'document_form': doc_form,
-            'revision_form': rev_form,
-            'initial_tags': initial_tags,
-        })
+        context.update(
+            {
+                "parent_id": initial_parent_id,
+                "document_form": doc_form,
+                "revision_form": rev_form,
+                "initial_tags": initial_tags,
+            }
+        )
 
     else:
 
         submitted_data = request.POST.copy()
-        posted_slug = submitted_data['slug']
-        submitted_data['locale'] = request.LANGUAGE_CODE
+        posted_slug = submitted_data["slug"]
+        submitted_data["locale"] = request.LANGUAGE_CODE
         if parent_slug:
-            submitted_data['parent_topic'] = initial_parent_id
+            submitted_data["parent_topic"] = initial_parent_id
 
         doc_form = DocumentForm(data=submitted_data, parent_slug=parent_slug)
-        rev_form = RevisionForm(request=request,
-                                data=submitted_data,
-                                parent_slug=parent_slug)
+        rev_form = RevisionForm(
+            request=request, data=submitted_data, parent_slug=parent_slug
+        )
 
         if doc_form.is_valid() and rev_form.is_valid():
             doc = doc_form.save(parent=None)
             rev_form.save(doc)
             if doc.current_revision.is_approved:
-                view = 'wiki.document'
+                view = "wiki.document"
             else:
-                view = 'wiki.document_revisions'
+                view = "wiki.document_revisions"
             return redirect(reverse(view, args=[doc.slug]))
         else:
-            doc_form.data['slug'] = posted_slug
+            doc_form.data["slug"] = posted_slug
 
-        context.update({
-            'document_form': doc_form,
-            'revision_form': rev_form,
-        })
+        context.update(
+            {"document_form": doc_form, "revision_form": rev_form,}
+        )
 
-    return render(request, 'wiki/create.html', context)
+    return render(request, "wiki/create.html", context)

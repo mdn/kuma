@@ -8,13 +8,13 @@ class DocumentChildrenSource(DocumentBaseSource):
     """Recursively gather child docs ($children API)."""
 
     OPTIONS = {
-        'depth': ('int_all', 0),    # Scrape the topic tree to this depth
-        'revisions': ('int', 1),    # Gather this many revisions for each doc
-        'translations': ('bool', False),  # Scrape the alternate translations
+        "depth": ("int_all", 0),  # Scrape the topic tree to this depth
+        "revisions": ("int", 1),  # Gather this many revisions for each doc
+        "translations": ("bool", False),  # Scrape the alternate translations
     }
 
     def source_path(self):
-        return '/%s/docs/%s$children?depth=1' % (self.locale, self.slug)
+        return "/%s/docs/%s$children?depth=1" % (self.locale, self.slug)
 
     def load_and_validate_existing(self, storage):
         """Load child data from a previous gather."""
@@ -39,15 +39,15 @@ class DocumentChildrenSource(DocumentBaseSource):
     def extract_data(self, data):
         """Process child API data."""
         children = []
-        if data['subpages']:
+        if data["subpages"]:
             new_opts = self.current_options()
-            depth = new_opts.get('depth')
-            if depth and depth != 'all':
+            depth = new_opts.get("depth")
+            if depth and depth != "all":
                 if depth == 1:
-                    del new_opts['depth']
+                    del new_opts["depth"]
                 else:
-                    new_opts['depth'] -= 1
-            for subpage in data['subpages']:
-                url = self.decode_href(subpage['url'])
-                children.append(('document', url, new_opts))
+                    new_opts["depth"] -= 1
+            for subpage in data["subpages"]:
+                url = self.decode_href(subpage["url"])
+                children.append(("document", url, new_opts))
         return children

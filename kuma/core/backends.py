@@ -1,5 +1,3 @@
-
-
 from constance.backends.database import DatabaseBackend
 
 

@@ -30,11 +30,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         names = []
-        for group in FilterGroup.objects.order_by('name'):
-            filter_names = group.filters.values_list('name', flat=True)
+        for group in FilterGroup.objects.order_by("name"):
+            filter_names = group.filters.values_list("name", flat=True)
             names.append((group.name, sorted(filter_names)))
 
-        engine = engines['jinja2']
+        engine = engines["jinja2"]
         template = engine.from_string(TEMPLATE)
-        out = template.render({'names': names})
+        out = template.render({"names": names})
         self.stdout.write(out)

@@ -1,5 +1,3 @@
-
-
 from pipeline.compilers.sass import SASSCompiler
 
 

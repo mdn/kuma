@@ -4,18 +4,19 @@ from django.utils.translation import ugettext_lazy as _
 from urlobject import URLObject
 
 
-log = logging.getLogger('kuma.search.utils')
+log = logging.getLogger("kuma.search.utils")
 
 
-SEARCH_DOWN_DETAIL = _('Search is temporarily unavailable. '
-                       'Please try again in a few minutes.')
+SEARCH_DOWN_DETAIL = _(
+    "Search is temporarily unavailable. " "Please try again in a few minutes."
+)
 
-SEARCH_ERROR_DETAIL = _('Something went wrong with the search query. '
-                        'Please try again in a few minutes.')
+SEARCH_ERROR_DETAIL = _(
+    "Something went wrong with the search query. " "Please try again in a few minutes."
+)
 
 
 class QueryURLObject(URLObject):
-
     def pop_query_param(self, name, value):
         """
         Removes the parameter with the given name and value -- if it exists.
@@ -28,8 +29,7 @@ class QueryURLObject(URLObject):
                         params.setdefault(param, []).append(default)
             else:
                 params[param] = defaults
-        return (self.del_query_param(name)
-                    .set_query_params(self.clean_params(params)))
+        return self.del_query_param(name).set_query_params(self.clean_params(params))
 
     def merge_query_param(self, name, value):
         """
@@ -55,7 +55,7 @@ class QueryURLObject(URLObject):
         for param, default in params.items():
             if isinstance(default, (list, tuple)):
                 # set all items with an empty value to an empty string
-                default = [item or '' for item in default]
+                default = [item or "" for item in default]
                 if len(default) == 1:
                     default = default[0]
             if isinstance(default, str):

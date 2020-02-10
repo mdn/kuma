@@ -9,21 +9,16 @@ class BCSignalSerializer(serializers.Serializer):
     browsers = serializers.CharField(max_length=255)
     slug = serializers.CharField(max_length=255)
     locale = serializers.CharField(max_length=7)
-    explanation = serializers.CharField(
-        allow_blank=True,
-        max_length=1000
-    )
+    explanation = serializers.CharField(allow_blank=True, max_length=1000)
     supporting_material = serializers.CharField(
-        allow_blank=True,
-        required=False,
-        max_length=1000
+        allow_blank=True, required=False, max_length=1000
     )
 
     def create(self, validated_data):
-        slug = validated_data.pop('slug')
-        locale = validated_data.pop('locale')
+        slug = validated_data.pop("slug")
+        locale = validated_data.pop("locale")
         document = Document.objects.filter(slug=slug, locale=locale).first()
 
         if document:
             return BCSignal.objects.create(document=document, **validated_data)
-        raise exceptions.ValidationError('Document not found')
+        raise exceptions.ValidationError("Document not found")

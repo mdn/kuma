@@ -7,7 +7,7 @@ from django.conf import settings
 from requests.exceptions import RequestException
 
 
-log = logging.getLogger('kuma.core.ga_tracking')
+log = logging.getLogger("kuma.core.ga_tracking")
 
 # The `track_event()` function can take any string but to minimize risk of
 # typos, it's highly recommended to use a constant instead.
@@ -33,22 +33,22 @@ log = logging.getLogger('kuma.core.ga_tracking')
 #
 # Here are some of those useful constants...
 
-CATEGORY_SIGNUP_FLOW = 'signup-flow'
+CATEGORY_SIGNUP_FLOW = "signup-flow"
 # Right before redirecting to the auth provider.
-ACTION_AUTH_STARTED = 'auth-started'
+ACTION_AUTH_STARTED = "auth-started"
 # When redirected back from auth provider and it worked.
-ACTION_AUTH_SUCCESSFUL = 'auth-successful'
+ACTION_AUTH_SUCCESSFUL = "auth-successful"
 # When we don't need to ask the user to create a profile.
-ACTION_RETURNING_USER_SIGNIN = 'returning-user-signin'
+ACTION_RETURNING_USER_SIGNIN = "returning-user-signin"
 # Presented with the "Create Profile" form.
-ACTION_PROFILE_AUDIT = 'profile-audit'
+ACTION_PROFILE_AUDIT = "profile-audit"
 # Have completed the profile creation form.
-ACTION_PROFILE_CREATED = 'profile-created'
+ACTION_PROFILE_CREATED = "profile-created"
 # Checked or didn't check the "Newsletter" checkbox on sign up.
-ACTION_FREE_NEWSLETTER = 'free-newsletter'
+ACTION_FREE_NEWSLETTER = "free-newsletter"
 # When logging in with one provider and benefitting from a verified email
 # existing based on a *different* (already created profile) provider.
-ACTION_SOCIAL_AUTH_ADD = 'social-auth-add'
+ACTION_SOCIAL_AUTH_ADD = "social-auth-add"
 
 
 def track_event(
@@ -75,7 +75,8 @@ def track_event(
     tracking_url = tracking_url or settings.GOOGLE_ANALYTICS_TRACKING_URL
     timeout = timeout or settings.GOOGLE_ANALYTICS_TRACKING_TIMEOUT
     raise_errors = (
-        raise_errors if raise_errors is not None
+        raise_errors
+        if raise_errors is not None
         else settings.GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS
     )
 
@@ -84,14 +85,14 @@ def track_event(
 
     client_id = client_id or str(uuid.uuid4())
     params = {
-        'v': '1',
-        't': 'event',
-        'tid': tracking_id,
-        'cid': client_id,
-        'ec': event_category,
-        'ea': event_action,
-        'el': event_label,
-        'aip': '1'  # anonymize IP
+        "v": "1",
+        "t": "event",
+        "tid": tracking_id,
+        "cid": client_id,
+        "ec": event_category,
+        "ea": event_action,
+        "el": event_label,
+        "aip": "1",  # anonymize IP
     }
     url = f"{tracking_url}?{urlencode(params)}"
     try:
@@ -104,4 +105,5 @@ def track_event(
         log.error(
             "Failed sending GA tracking event "
             f"{event_category!r}, {event_action!r}, {event_label!r}",
-            exc_info=True)
+            exc_info=True,
+        )
