@@ -85,7 +85,7 @@ def user_access_decorator(
 
 def logout_required(redirect):
     """Requires that the user *not* be logged in."""
-    redirect_func = lambda u: u.is_authenticated
+    redirect_func = lambda u: u.is_authenticated  # noqa: E731
     if hasattr(redirect, "__call__"):
         return user_access_decorator(
             redirect_func,
@@ -103,10 +103,10 @@ def login_required(
 ):
     """Requires that the user is logged in."""
     if only_active:
-        redirect_func = lambda u: not (u.is_authenticated and u.is_active)
+        redirect_func = lambda u: not (u.is_authenticated and u.is_active)  # noqa: E731
     else:
-        redirect_func = lambda u: not u.is_authenticated
-    redirect_url_func = lambda: login_url
+        redirect_func = lambda u: not u.is_authenticated  # noqa: E731
+    redirect_url_func = lambda: login_url  # noqa: E731
     return user_access_decorator(
         redirect_func, redirect_field=redirect, redirect_url_func=redirect_url_func
     )(func)
@@ -117,12 +117,12 @@ def permission_required(
 ):
     """A replacement for django.contrib.auth.decorators.permission_required
     that doesn't ask authenticated users to log in."""
-    redirect_func = lambda u: not u.is_authenticated
+    redirect_func = lambda u: not u.is_authenticated  # noqa: E731
     if only_active:
-        deny_func = lambda u: not (u.is_active and u.has_perm(perm))
+        deny_func = lambda u: not (u.is_active and u.has_perm(perm))  # noqa: E731
     else:
-        deny_func = lambda u: not u.has_perm(perm)
-    redirect_url_func = lambda: login_url
+        deny_func = lambda u: not u.has_perm(perm)  # noqa: E731
+    redirect_url_func = lambda: login_url  # noqa: E731
 
     return user_access_decorator(
         redirect_func,

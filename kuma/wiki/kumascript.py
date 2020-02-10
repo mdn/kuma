@@ -188,7 +188,7 @@ def macro_sources(force_lowercase_keys=False):
         # Ensure Normal Form C used on GitHub
         normalize_key = normalize = partial(unicodedata.normalize, "NFC")
         if force_lowercase_keys:
-            normalize_key = lambda x: normalize(x).lower()
+            normalize_key = lambda x: normalize(x).lower()  # noqa: E731
         return {
             normalize_key(md["name"]): normalize(md["filename"]) for md in macros_raw
         }

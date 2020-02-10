@@ -1,4 +1,4 @@
-from .local import *  # noqa
+from .local import *
 
 DEBUG = False
 ENABLE_RESTRICTIONS_BY_HOST = False

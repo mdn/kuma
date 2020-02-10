@@ -1,17 +1,17 @@
 import logging
 
-from . import (
+from . import (  # noqa: F401
     akismet_revision,
     code,
     create,
     delete,
     document,
-    edit,  # noqa
+    edit,
     legacy,
     list,
     misc,
     revision,
     translate,
-)  # noqa
+)
 
 log = logging.getLogger("kuma.wiki.views")

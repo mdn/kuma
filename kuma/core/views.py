@@ -46,9 +46,9 @@ def set_language(request):
     return response
 
 
-handler403 = lambda request, exception=None: _error_page(request, 403)
-handler404 = lambda request, exception=None: _error_page(request, 404)
-handler500 = lambda request, exception=None: _error_page(request, 500)
+handler403 = lambda request, exception=None: _error_page(request, 403)  # noqa: E731
+handler404 = lambda request, exception=None: _error_page(request, 404)  # noqa: E731
+handler500 = lambda request, exception=None: _error_page(request, 500)  # noqa: E731
 
 
 @never_cache

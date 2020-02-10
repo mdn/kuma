@@ -1,4 +1,4 @@
-from .common import *  # noqa
+from .common import *
 
 ATTACHMENT_HOST = config("ATTACHMENT_HOST", default="mdn.mozillademos.org")
 ALLOW_ROBOTS = config("ALLOW_ROBOTS", default=True, cast=bool)

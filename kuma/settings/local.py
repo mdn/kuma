@@ -1,4 +1,4 @@
-from .common import *  # noqa
+from .common import *
 
 # Settings for Docker Development
 # TODO: Use environment to override, not settings picker
