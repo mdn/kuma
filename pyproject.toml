@@ -9,9 +9,6 @@ repository = "https://github.com/mdn/kuma"
 documentation = "https://kuma.readthedocs.io"
 
 [tool.poetry.dependencies]
-# NOTE: Items from requirements/constraints.txt should be removed.
-# They are present only to ease the transition to Poetry
-
 python = "^3.8"
 
 # From default.txt
@@ -85,12 +82,8 @@ six = "^1.13.0"
 # From dev.txt
 django-babel = "0.6.2"
 django-querycount = "0.7.0"
-pytest-cov = "~2.8.1"
 pytest-django = "~3.4"
 urlwait = "0.4"
-
-# From constraints.txt
-coverage = "~4.5.4"
 
 [tool.poetry.dev-dependencies]
 django-debug-toolbar = "^2.2"
@@ -99,6 +92,7 @@ werkzeug = "^1.0" # Enables runserver_plus from django-extensions
 # From test.txt
 braceexpand = "^0.1.5"
 pytest-base-url = "^1.4.1"
+pytest-cov = "~2.8.1"
 pytest-metadata = "^1.8.0"
 pytest-rerunfailures = "^5.0"
 pytest-variables = "^1.9.0"
@@ -108,6 +102,16 @@ black = "^19.10b0"
 flake8 = "^3.7.9"
 flake8-import-order = "^0.18.1"
 
+# Pinned Dependencies
+coverage = {extras = ["toml"], version = "^5"} # Use optional toml support
+
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
+
+[tool.coverage.run]
+source = ["kuma"]
+branch = true
+
+[tool.coverage.report]
+omit = ["*migrations*", "*/management/commands/*"]
