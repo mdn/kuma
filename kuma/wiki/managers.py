@@ -104,6 +104,13 @@ class DeletedDocumentManager(BaseDocumentManager):
         return super(DeletedDocumentManager, self).get_queryset().filter(deleted=True)
 
 
+class AllDocumentManager(BaseDocumentManager):
+    """
+    Similar to DocumentAdminManager class but more explicit in its name.
+    Use this when you don't want *any* filtering by 'deleted'.
+    """
+
+
 class DocumentAdminManager(BaseDocumentManager):
     """
     A manager used only in the admin site, which does not perform any

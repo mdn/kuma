@@ -55,10 +55,10 @@ def translate(request, document_slug, document_locale):
 
     # The parent document to translate from
     try:
-        # Use '.deleted_objects' because the parent might have been soft deleted.
+        # Use '.all_objects' because the parent might have been soft deleted.
         # And if we don't respect that fact, it would become impossible to
         # edit a the child of it.
-        parent_doc = Document.deleted_objects.get(
+        parent_doc = Document.all_objects.get(
             locale=settings.WIKI_DEFAULT_LANGUAGE, slug=document_slug
         )
     except Document.DoesNotExist:
