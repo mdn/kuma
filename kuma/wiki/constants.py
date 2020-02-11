@@ -663,4 +663,4 @@ WIKI_ONLY_DOCUMENT_QUERY_PARAMS = frozenset(
 )
 
 
-NOINDEX_SLUG_STARTS = ("MDN/Doc_status",)
+NOINDEX_SLUG_PREFIXES = ("MDN/Doc_status",)

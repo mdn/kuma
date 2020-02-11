@@ -33,7 +33,7 @@ from .constants import (
     EXPERIMENT_TITLE_PREFIX,
     KUMA_FILE_URL,
     LEGACY_MINDTOUCH_NAMESPACES,
-    NOINDEX_SLUG_STARTS,
+    NOINDEX_SLUG_PREFIXES,
     REDIRECT_CONTENT,
     REDIRECT_HTML,
 )
@@ -1488,7 +1488,7 @@ Full traceback:
     @property
     def has_noindex_slug(self):
         """Return true if the slug is in hand-picked list of prefixes."""
-        for slug_start in NOINDEX_SLUG_STARTS:
+        for slug_start in NOINDEX_SLUG_PREFIXES:
             if self.slug.startswith(slug_start):
                 return True
         return False
