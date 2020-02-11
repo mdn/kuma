@@ -97,8 +97,6 @@ def test_extract_complex(complex_user, client):
         "title": "Web Developer",
         "organization": "Acme, Inc.",
         "location": "Springfield, USA",
-        "interest": ["CSS", "HTML", "JavaScript"],
-        "expertise": ["HTML"],
         "date_joined": datetime(1999, 1, 1, 10, 40, 23),
     }
     assert data == expected_data
@@ -114,8 +112,6 @@ def test_extract_complex_social(complex_user, client):
         "title": "Web Developer",
         "organization": "Acme, Inc.",
         "location": "Springfield, USA",
-        "interest": ["CSS", "HTML", "JavaScript"],
-        "expertise": ["HTML"],
         "twitter_url": "http://twitter.com/jilldev1999",
         "github_url": "https://github.com/jilldev1999",
         "stackoverflow_url": "http://stackoverflow.com/users/1/jilldev1999",

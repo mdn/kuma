@@ -331,8 +331,6 @@ def test_save_user(django_user_model):
         "organization": "Acme, Inc.",
         "location": "Springfield, USA",
         "irc_nickname": "joedev",
-        "interest": ["CSS", "HTML", "JavaScript"],
-        "expertise": ["HTML"],
         "twitter_url": "http://twitter.com/joedev1999",
         "github_url": "https://github.com/joedev1999",
         "stackoverflow_url": "http://stackoverflow.com/users/1/joedev1999",
