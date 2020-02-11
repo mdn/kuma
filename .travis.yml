@@ -26,6 +26,7 @@ matrix:
             - poetry --version
             - poetry install -vv
             - poetry run flake8 kuma docs tests
+            - poetry run black --check --diff kuma docs tests
         - language: python
           name: "Python testing"
           python: 3.8

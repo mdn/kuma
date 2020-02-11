@@ -13,8 +13,7 @@ def revision_hash(request):
     Return the kuma revision hash.
     """
     return HttpResponse(
-        settings.REVISION_HASH,
-        content_type='text/plain; charset=utf-8'
+        settings.REVISION_HASH, content_type="text/plain; charset=utf-8"
     )
 
 
@@ -29,5 +28,5 @@ def kumascript_revision_hash(request):
     return HttpResponse(
         response.text,
         status=response.status_code,
-        content_type=response.headers.get('content-type')
+        content_type=response.headers.get("content-type"),
     )

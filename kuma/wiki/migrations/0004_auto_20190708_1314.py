@@ -7,13 +7,11 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wiki', '0003_bcsignal'),
+        ("wiki", "0003_bcsignal"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='revision',
-            name='comment',
-            field=models.TextField(),
+            model_name="revision", name="comment", field=models.TextField(),
         ),
     ]

@@ -6,19 +6,17 @@ from django.db import migrations
 
 
 def remove_bcd_signal_waffle_flag(apps, schema_editor):
-    Flag = apps.get_model('waffle', 'Flag')
-    Flag.objects.filter(name='bc-signals').delete()
+    Flag = apps.get_model("waffle", "Flag")
+    Flag.objects.filter(name="bc-signals").delete()
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0002_auto_20191206_0805'),
+        ("core", "0002_auto_20191206_0805"),
         # This is needed otherwise `apps.get_model('waffle', 'Flag')`
         # will raise a Django app LookupError.
-        ('waffle', '0001_initial'),
+        ("waffle", "0001_initial"),
     ]
 
-    operations = [
-        migrations.RunPython(remove_bcd_signal_waffle_flag)
-    ]
+    operations = [migrations.RunPython(remove_bcd_signal_waffle_flag)]

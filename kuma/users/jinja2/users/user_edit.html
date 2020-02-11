@@ -110,9 +110,6 @@
             {% else %}
             <label for="{{ user_form.github_url.id_for_label }}">
                 {% include 'includes/icons/social/github.svg' %}GitHub
-              <a class="field-management" href="{{ provider_login_url('github', process='connect', next=next_url) }}">
-                {{ _('Use your GitHub account to sign in.') }}
-              </a>
             </label>
             {{ user_form.github_url }}
             {% endif %}
@@ -147,6 +144,9 @@
         </li>
       </ul>
     </form>
+    {% if is_me and waffle.flag('subscription') and settings.STRIPE_PUBLIC_KEY %}
+      {% include "users/includes/stripe_subscription.html" %}
+    {% endif %}
   </div>
   <div class="column-4">
     {% if settings.NEWSLETTER %}

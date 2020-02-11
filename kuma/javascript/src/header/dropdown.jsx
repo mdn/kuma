@@ -69,8 +69,7 @@ export default function Dropdown(props: DropdownProps) {
             </button>
             <ul
                 id={props.ariaOwns}
-                className="dropdown-menu-items"
-                style={props.right && { right: 0 }}
+                className={`dropdown-menu-items${props.right ? ' right' : ''}`}
                 role="menu"
             >
                 {props.children}

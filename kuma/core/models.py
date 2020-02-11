@@ -1,5 +1,3 @@
-
-
 from django.db import models
 from django.dispatch import receiver
 from django.utils import timezone
@@ -14,6 +12,7 @@ class IPBan(models.Model):
 
     Currently, this only bans an IP address from editing.
     """
+
     ip = models.GenericIPAddressField()
     created = models.DateTimeField(default=timezone.now, db_index=True)
     deleted = models.DateTimeField(null=True, blank=True)
@@ -25,7 +24,7 @@ class IPBan(models.Model):
         self.save()
 
     def __str__(self):
-        return f'{self.ip} banned on {self.created}'
+        return f"{self.ip} banned on {self.created}"
 
 
 @receiver(models.signals.post_save, sender=IPBan)

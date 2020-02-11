@@ -1,5 +1,3 @@
-
-
 import datetime
 import hashlib
 import logging
@@ -28,7 +26,7 @@ from taggit.utils import split_strip
 from .exceptions import DateTimeFormatError
 
 
-log = logging.getLogger('kuma.core.utils')
+log = logging.getLogger("kuma.core.utils")
 
 
 def to_html(pq):
@@ -41,7 +39,7 @@ def to_html(pq):
     "iframe" element would be "<iframe/>", which is illegal in HTML, instead of
     "<iframe></iframe>".
     """
-    return pq.html(method='html')
+    return pq.html(method="html")
 
 
 def is_wiki(request):
@@ -49,15 +47,12 @@ def is_wiki(request):
 
 
 def redirect_to_wiki(request, permanent=True):
-    request.META['HTTP_HOST'] = settings.WIKI_HOST
+    request.META["HTTP_HOST"] = settings.WIKI_HOST
     return redirect(request.build_absolute_uri(), permanent=permanent)
 
 
 def is_untrusted(request):
-    return request.get_host() in (
-        settings.ATTACHMENT_ORIGIN,
-        settings.ATTACHMENT_HOST,
-    )
+    return request.get_host() in (settings.ATTACHMENT_ORIGIN, settings.ATTACHMENT_HOST,)
 
 
 def paginate(request, queryset, per_page=20):
@@ -66,7 +61,7 @@ def paginate(request, queryset, per_page=20):
 
     # Get the page from the request, make sure it's an int.
     try:
-        page = int(request.GET.get('page', 1))
+        page = int(request.GET.get("page", 1))
     except ValueError:
         page = 1
 
@@ -78,12 +73,13 @@ def paginate(request, queryset, per_page=20):
 
     base = request.build_absolute_uri(request.path)
 
-    items = [(k, v) for k in request.GET if k != 'page'
-             for v in request.GET.getlist(k) if v]
+    items = [
+        (k, v) for k in request.GET if k != "page" for v in request.GET.getlist(k) if v
+    ]
 
     qsa = urlencode(items)
 
-    paginated.url = f'{base}?{qsa}'
+    paginated.url = f"{base}?{qsa}"
     return paginated
 
 
@@ -97,17 +93,22 @@ def smart_int(string, fallback=0):
 
 def strings_are_translated(strings, locale):
     # http://stackoverflow.com/a/24339946/571420
-    pofile_path = os.path.join(settings.ROOT, 'locale', locale, 'LC_MESSAGES',
-                               'django.po')
+    pofile_path = os.path.join(
+        settings.ROOT, "locale", locale, "LC_MESSAGES", "django.po"
+    )
     try:
         po = pofile(pofile_path)
     except IOError:  # in case the file doesn't exist or couldn't be parsed
         return False
     all_strings_translated = True
     for string in strings:
-        if not any(e for e in po if e.msgid == string and
-                   (e.translated() and 'fuzzy' not in e.flags) and
-                   not e.obsolete):
+        if not any(
+            e
+            for e in po
+            if e.msgid == string
+            and (e.translated() and "fuzzy" not in e.flags)
+            and not e.obsolete
+        ):
             all_strings_translated = False
     return all_strings_translated
 
@@ -123,9 +124,7 @@ def generate_filename_and_delete_previous(ffile, name, before_delete=None):
         # wasteful and dirty. But, I can't think of another way to get
         # to the original field's value. Should be cached, though.
         # see also - http://code.djangoproject.com/ticket/11663#comment:10
-        orig_instance = ffile.instance.__class__.objects.get(
-            id=ffile.instance.id
-        )
+        orig_instance = ffile.instance.__class__.objects.get(id=ffile.instance.id)
         orig_field_file = getattr(orig_instance, ffile.field.name)
         orig_filename = orig_field_file.name
 
@@ -170,8 +169,8 @@ def parse_tags(tagstring, sorted=True):
     # Special case - if there are no commas or double quotes in the
     # input, we don't *do* a recall... I mean, we know we only need to
     # split on spaces.
-    if ',' not in tagstring and '"' not in tagstring:
-        words = list(split_strip(tagstring, ' '))
+    if "," not in tagstring and '"' not in tagstring:
+        words = list(split_strip(tagstring, " "))
         if sorted:
             words.sort()
         return words
@@ -189,7 +188,7 @@ def parse_tags(tagstring, sorted=True):
             c = next(i)
             if c == '"':
                 if buffer:
-                    to_be_split.append(''.join(buffer))
+                    to_be_split.append("".join(buffer))
                     buffer = []
                 # Find the matching quote
                 open_quote = True
@@ -198,27 +197,27 @@ def parse_tags(tagstring, sorted=True):
                     buffer.append(c)
                     c = next(i)
                 if buffer:
-                    word = ''.join(buffer).strip()
+                    word = "".join(buffer).strip()
                     if word:
                         words.append(word)
                     buffer = []
                 open_quote = False
             else:
-                if not saw_loose_comma and c == ',':
+                if not saw_loose_comma and c == ",":
                     saw_loose_comma = True
                 buffer.append(c)
     except StopIteration:
         # If we were parsing an open quote which was never closed treat
         # the buffer as unquoted.
         if buffer:
-            if open_quote and ',' in buffer:
+            if open_quote and "," in buffer:
                 saw_loose_comma = True
-            to_be_split.append(''.join(buffer))
+            to_be_split.append("".join(buffer))
     if to_be_split:
         if saw_loose_comma:
-            delimiter = ','
+            delimiter = ","
         else:
-            delimiter = ' '
+            delimiter = " "
         for chunk in to_be_split:
             words.extend(split_strip(chunk, delimiter))
     words = list(words)
@@ -264,8 +263,15 @@ def chord_flow(pre_task, tasks, post_task):
         return chain(pre_task, chord(header=tasks, body=post_task))
 
 
-def get_unique(content_type, object_pk, name=None, request=None,
-               ip=None, user_agent=None, user=None):
+def get_unique(
+    content_type,
+    object_pk,
+    name=None,
+    request=None,
+    ip=None,
+    user_agent=None,
+    user=None,
+):
     """Extract a set of unique identifiers from the request.
 
     This set will be made up of one of the following combinations, depending
@@ -280,20 +286,20 @@ def get_unique(content_type, object_pk, name=None, request=None,
             ip = user_agent = None
         else:
             user = None
-            ip = request.META.get('REMOTE_ADDR', '')
-            user_agent = request.META.get('HTTP_USER_AGENT', '')[:255]
+            ip = request.META.get("REMOTE_ADDR", "")
+            user_agent = request.META.get("HTTP_USER_AGENT", "")[:255]
 
     # HACK: Build a hash of the fields that should be unique, let MySQL
     # chew on that for a unique index. Note that any changes to this algo
     # will create all new unique hashes that don't match any existing ones.
-    hash_text = '\n'.join(
+    hash_text = "\n".join(
         (
             content_type.pk,
             object_pk,
-            name or '',
+            name or "",
             ip,
             user_agent,
-            user.pk if user else 'None',
+            user.pk if user else "None",
         )
     )
     unique_hash = hashlib.md5(hash_text.encode()).hexdigest()
@@ -312,8 +318,9 @@ def urlparams(url_, fragment=None, query_dict=None, **query):
     fragment = fragment if fragment is not None else url_.fragment
 
     q = url_.query
-    new_query_dict = (QueryDict(smart_bytes(q), mutable=True) if
-                      q else QueryDict('', mutable=True))
+    new_query_dict = (
+        QueryDict(smart_bytes(q), mutable=True) if q else QueryDict("", mutable=True)
+    )
     if query_dict:
         for k, l in query_dict.lists():
             new_query_dict[k] = None  # Replace, don't append.
@@ -327,13 +334,16 @@ def urlparams(url_, fragment=None, query_dict=None, **query):
         else:
             new_query_dict[k] = v
 
-    query_string = urlencode([(k, v) for k, l in new_query_dict.lists() for
-                              v in l if v is not None])
-    new = ParseResult(url_.scheme, url_.netloc, url_.path, url_.params, query_string, fragment)
+    query_string = urlencode(
+        [(k, v) for k, l in new_query_dict.lists() for v in l if v is not None]
+    )
+    new = ParseResult(
+        url_.scheme, url_.netloc, url_.path, url_.params, query_string, fragment
+    )
     return new.geturl()
 
 
-def format_date_time(request, value, format='shortdatetime'):
+def format_date_time(request, value, format="shortdatetime"):
     """
     Returns date/time formatted using babel's locale settings. Uses the
     timezone from settings.py
@@ -341,8 +351,7 @@ def format_date_time(request, value, format='shortdatetime'):
     if not isinstance(value, datetime.datetime):
         if isinstance(value, datetime.date):
             # Turn a date into a datetime
-            value = datetime.datetime.combine(value,
-                                              datetime.datetime.min.time())
+            value = datetime.datetime.combine(value, datetime.datetime.min.time())
         else:
             # Expecting datetime value
             raise ValueError
@@ -367,7 +376,8 @@ def format_date_time(request, value, format='shortdatetime'):
         # e.g. bug #1247086
         # we fall back formatting the value with the default language code
         formatted = format_date_value(
-            value, tzvalue, language_to_locale(settings.LANGUAGE_CODE), format)
+            value, tzvalue, language_to_locale(settings.LANGUAGE_CODE), format
+        )
 
     return formatted, tzvalue
 
@@ -381,22 +391,20 @@ def _get_request_locale(request):
 
 
 def format_date_value(value, tzvalue, locale, format):
-    if format == 'shortdatetime':
+    if format == "shortdatetime":
         # Check if the date is today
         if value.toordinal() == datetime.date.today().toordinal():
-            formatted = dates.format_time(tzvalue, format='short',
-                                          locale=locale)
-            return _('Today at %s') % formatted
+            formatted = dates.format_time(tzvalue, format="short", locale=locale)
+            return _("Today at %s") % formatted
         else:
-            return dates.format_datetime(tzvalue, format='short',
-                                         locale=locale)
-    elif format == 'longdatetime':
-        return dates.format_datetime(tzvalue, format='long', locale=locale)
-    elif format == 'date':
+            return dates.format_datetime(tzvalue, format="short", locale=locale)
+    elif format == "longdatetime":
+        return dates.format_datetime(tzvalue, format="long", locale=locale)
+    elif format == "date":
         return dates.format_date(tzvalue, locale=locale)
-    elif format == 'time':
+    elif format == "time":
         return dates.format_time(tzvalue, locale=locale)
-    elif format == 'datetime':
+    elif format == "datetime":
         return dates.format_datetime(tzvalue, locale=locale)
     else:
         # Unknown format
@@ -413,7 +421,7 @@ def language_to_locale(language_code):
 
     https://docs.djangoproject.com/en/1.11/topics/i18n/#definitions
     """
-    return language_code.replace('-', '_')
+    return language_code.replace("-", "_")
 
 
 def add_shared_cache_control(response, **kwargs):
@@ -427,17 +435,18 @@ def add_shared_cache_control(response, **kwargs):
       cache for the default perioid of time
     - public - Allow intermediate proxies to cache response
     """
-    nocache = (response.has_header('Cache-Control') and
-               ('no-cache' in response['Cache-Control'] or
-                'no-store' in response['Cache-Control']))
+    nocache = response.has_header("Cache-Control") and (
+        "no-cache" in response["Cache-Control"]
+        or "no-store" in response["Cache-Control"]
+    )
     if nocache:
         return
 
     # Set the default values.
     cc_kwargs = {
-        'public': True,
-        'max_age': 0,
-        's_maxage': settings.CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE
+        "public": True,
+        "max_age": 0,
+        "s_maxage": settings.CACHE_CONTROL_DEFAULT_SHARED_MAX_AGE,
     }
     # Override the default values and/or add new ones.
     cc_kwargs.update(kwargs)
@@ -485,8 +494,8 @@ def requests_retry_session(
         status_forcelist=status_forcelist,
     )
     adapter = HTTPAdapter(max_retries=retry)
-    session.mount('http://', adapter)
-    session.mount('https://', adapter)
+    session.mount("http://", adapter)
+    session.mount("https://", adapter)
     return session
 
 
@@ -522,9 +531,11 @@ def safer_pyquery(*args, **kwargs):
     # This "if" statement is exactly what PyQuery's constructor does.
     # We'll run it ourselves once and if it matches, "ruin" it by
     # injecting that extra space.
-    if (len(args) >= 1 and
-       isinstance(args[0], str) and
-       args[0].split('://', 1)[0] in ('http', 'https')):
-        args = (f' {args[0]}',) + args[1:]
+    if (
+        len(args) >= 1
+        and isinstance(args[0], str)
+        and args[0].split("://", 1)[0] in ("http", "https")
+    ):
+        args = (f" {args[0]}",) + args[1:]
 
     return pq(*args, **kwargs)

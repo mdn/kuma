@@ -1,5 +1,3 @@
-
-
 import pytest
 
 from ..models import Banner
@@ -15,7 +13,7 @@ def test_add_new_banner():
         "button_copy": "Click Me!",
         "theme": "default",
         "active": True,
-        "priority": "2"
+        "priority": "2",
     }
     banner = Banner.objects.create(**sample_banner)
 
@@ -31,7 +29,7 @@ def test_default_theme_set():
         "main_copy": "Some sample main copy",
         "button_copy": "Click Me!",
         "active": False,
-        "priority": "1"
+        "priority": "1",
     }
     banner = Banner.objects.create(**sample_banner)
 
@@ -47,7 +45,7 @@ def test_default_priority_set():
         "main_copy": "Some sample main copy",
         "button_copy": "Click Me!",
         "theme": "default",
-        "active": False
+        "active": False,
     }
     banner = Banner.objects.create(**sample_banner)
 
@@ -64,7 +62,7 @@ def test_activate_banner():
         "button_copy": "Click Me!",
         "theme": "default",
         "active": False,
-        "priority": "1"
+        "priority": "1",
     }
     banner = Banner.objects.create(**sample_banner)
     assert banner.active is False

@@ -1,5 +1,3 @@
-
-
 import json
 import logging
 import unicodedata
@@ -24,60 +22,96 @@ from kuma.core.urlresolvers import reverse
 from kuma.spam.akismet import AkismetError
 from kuma.spam.forms import AkismetCheckFormMixin, AkismetSubmissionFormMixin
 
-from .constants import (DOCUMENT_PATH_RE, INVALID_DOC_SLUG_CHARS_RE,
-                        INVALID_REV_SLUG_CHARS_RE, LOCALIZATION_FLAG_TAGS,
-                        REVIEW_FLAG_TAGS, SLUG_CLEANSING_RE,
-                        SPAM_OTHER_HEADERS, SPAM_SUBMISSION_REVISION_FIELDS,
-                        SPAM_TRAINING_SWITCH)
+from .constants import (
+    DOCUMENT_PATH_RE,
+    INVALID_DOC_SLUG_CHARS_RE,
+    INVALID_REV_SLUG_CHARS_RE,
+    LOCALIZATION_FLAG_TAGS,
+    REVIEW_FLAG_TAGS,
+    SLUG_CLEANSING_RE,
+    SPAM_OTHER_HEADERS,
+    SPAM_SUBMISSION_REVISION_FIELDS,
+    SPAM_TRAINING_SWITCH,
+)
 from .events import EditDocumentEvent
-from .models import (Document, DocumentSpamAttempt, DocumentTag, Revision,
-                     RevisionAkismetSubmission, RevisionIP, valid_slug_parent)
+from .models import (
+    Document,
+    DocumentSpamAttempt,
+    DocumentTag,
+    Revision,
+    RevisionAkismetSubmission,
+    RevisionIP,
+    valid_slug_parent,
+)
 from .tasks import send_first_edit_email
 
 
-TITLE_REQUIRED = _('Please provide a title.')
-TITLE_SHORT = _('The title is too short (%(show_value)s characters). '
-                'It must be at least %(limit_value)s characters.')
-TITLE_LONG = _('Please keep the length of the title to %(limit_value)s '
-               'characters or less. It is currently %(show_value)s '
-               'characters.')
-TITLE_PLACEHOLDER = _('Name Your Article')
-TAGS_LONG = _('The tags field is too long (%(show_value)s characters). '
-              'Keep the total length to %(limit_value)s characters.')
-SLUG_REQUIRED = _('Please provide a slug.')
-SLUG_INVALID = _('The slug provided is not valid.')
-SLUG_SHORT = _('The slug is too short (%(show_value)s characters). '
-               'It must be at least %(limit_value)s characters.')
-SLUG_LONG = _('Please keep the length of the slug to %(limit_value)s '
-              'characters or less. It is currently %(show_value)s '
-              'characters.')
-SUMMARY_REQUIRED = _('Please provide a summary.')
-SUMMARY_SHORT = _('The summary is too short (%(show_value)s characters). '
-                  'It must be at least %(limit_value)s characters.')
-SUMMARY_LONG = _('Please keep the length of the summary to '
-                 '%(limit_value)s characters or less. It is currently '
-                 '%(show_value)s characters.')
-CONTENT_REQUIRED = _('Please provide content.')
-CONTENT_SHORT = _('The content is too short (%(show_value)s characters). '
-                  'It must be at least %(limit_value)s characters.')
-CONTENT_LONG = _('Please keep the length of the content to '
-                 '%(limit_value)s characters or less. It is currently '
-                 '%(show_value)s characters.')
-COMMENT_LONG = _('Please keep the length of the comment to '
-                 '%(limit_value)s characters or less. It is currently '
-                 '%(show_value)s characters.')
-SLUG_COLLIDES = _('Another document with this slug already exists.')
-OTHER_COLLIDES = _('Another document with this metadata already exists.')
+TITLE_REQUIRED = _("Please provide a title.")
+TITLE_SHORT = _(
+    "The title is too short (%(show_value)s characters). "
+    "It must be at least %(limit_value)s characters."
+)
+TITLE_LONG = _(
+    "Please keep the length of the title to %(limit_value)s "
+    "characters or less. It is currently %(show_value)s "
+    "characters."
+)
+TITLE_PLACEHOLDER = _("Name Your Article")
+TAGS_LONG = _(
+    "The tags field is too long (%(show_value)s characters). "
+    "Keep the total length to %(limit_value)s characters."
+)
+SLUG_REQUIRED = _("Please provide a slug.")
+SLUG_INVALID = _("The slug provided is not valid.")
+SLUG_SHORT = _(
+    "The slug is too short (%(show_value)s characters). "
+    "It must be at least %(limit_value)s characters."
+)
+SLUG_LONG = _(
+    "Please keep the length of the slug to %(limit_value)s "
+    "characters or less. It is currently %(show_value)s "
+    "characters."
+)
+SUMMARY_REQUIRED = _("Please provide a summary.")
+SUMMARY_SHORT = _(
+    "The summary is too short (%(show_value)s characters). "
+    "It must be at least %(limit_value)s characters."
+)
+SUMMARY_LONG = _(
+    "Please keep the length of the summary to "
+    "%(limit_value)s characters or less. It is currently "
+    "%(show_value)s characters."
+)
+CONTENT_REQUIRED = _("Please provide content.")
+CONTENT_SHORT = _(
+    "The content is too short (%(show_value)s characters). "
+    "It must be at least %(limit_value)s characters."
+)
+CONTENT_LONG = _(
+    "Please keep the length of the content to "
+    "%(limit_value)s characters or less. It is currently "
+    "%(show_value)s characters."
+)
+COMMENT_LONG = _(
+    "Please keep the length of the comment to "
+    "%(limit_value)s characters or less. It is currently "
+    "%(show_value)s characters."
+)
+SLUG_COLLIDES = _("Another document with this slug already exists.")
+OTHER_COLLIDES = _("Another document with this metadata already exists.")
 
-MIDAIR_COLLISION = _('Publishing failed. Conflicting edit attempts detected. '
-                     'Please copy and paste your edits to a safe place and '
-                     'visit the <a href="%(url)s">revision history</a> page '
-                     'to see what was changed before making further edits.')
-MOVE_REQUIRED = _("Changing this document's slug requires "
-                  "moving it and its children.")
+MIDAIR_COLLISION = _(
+    "Publishing failed. Conflicting edit attempts detected. "
+    "Please copy and paste your edits to a safe place and "
+    'visit the <a href="%(url)s">revision history</a> page '
+    "to see what was changed before making further edits."
+)
+MOVE_REQUIRED = _(
+    "Changing this document's slug requires " "moving it and its children."
+)
 
 
-log = logging.getLogger('kuma.wiki.forms')
+log = logging.getLogger("kuma.wiki.forms")
 
 
 class AkismetRevisionData(object):
@@ -96,10 +130,7 @@ class AkismetRevisionData(object):
     def __init__(self):
         """Initialize the parameters."""
         self.default_language = settings.WIKI_DEFAULT_LANGUAGE
-        self.parameters = {
-            'blog_charset': 'UTF-8',
-            'comment_type': 'wiki-revision'
-        }
+        self.parameters = {"blog_charset": "UTF-8", "comment_type": "wiki-revision"}
 
     def akismet_lang(self, language):
         """
@@ -112,11 +143,11 @@ class AkismetRevisionData(object):
         """Create a combined content string from form data."""
         parts = []
         for field in SPAM_SUBMISSION_REVISION_FIELDS:
-            value = cleaned_data.get(field, '')
-            if field == 'tags':
+            value = cleaned_data.get(field, "")
+            if field == "tags":
                 value = self.split_tags(value)
             parts.append(value)
-        return '\n'.join(parts)
+        return "\n".join(parts)
 
     def content_from_document(self, document):
         """Create a combined content string from a document."""
@@ -124,30 +155,30 @@ class AkismetRevisionData(object):
         current_revision = document.current_revision
         assert current_revision, "document must have a current revision."
         for field in SPAM_SUBMISSION_REVISION_FIELDS:
-            if field == 'comment':
-                value = ''
-            elif field == 'content':
+            if field == "comment":
+                value = ""
+            elif field == "content":
                 value = current_revision.content
-            elif field == 'tags':
+            elif field == "tags":
                 value = self.split_tags(current_revision.tags)
             else:
-                value = getattr(document, field, '')
+                value = getattr(document, field, "")
             parts.append(value)
-        return '\n'.join(parts)
+        return "\n".join(parts)
 
     def content_from_revision(self, revision):
         """Create a combined content string from a Revision."""
         parts = []
         for field in SPAM_SUBMISSION_REVISION_FIELDS:
-            value = getattr(revision, field) or ''
-            if field == 'tags':
+            value = getattr(revision, field) or ""
+            if field == "tags":
                 value = self.split_tags(value)
             parts.append(value)
-        return '\n'.join(parts)
+        return "\n".join(parts)
 
     def set_blog(self, request):
         """Set the blog parameter from the request object."""
-        self.parameters['blog'] = request.build_absolute_uri('/')
+        self.parameters["blog"] = request.build_absolute_uri("/")
 
     def set_blog_lang(self, language=None):
         """
@@ -160,10 +191,11 @@ class AkismetRevisionData(object):
         if language == self.default_language:
             blog_lang = self.akismet_lang(language)
         else:
-            blog_lang = '%s, %s' % (
+            blog_lang = "%s, %s" % (
                 self.akismet_lang(language),
-                self.akismet_lang(self.default_language))
-        self.parameters['blog_lang'] = blog_lang
+                self.akismet_lang(self.default_language),
+            )
+        self.parameters["blog_lang"] = blog_lang
 
     def set_by_edit_request(self, request):
         """
@@ -179,48 +211,53 @@ class AkismetRevisionData(object):
         self.set_blog(request)
         self.set_comment_author(request.user)
         meta = request.META
-        self.parameters.update({
-            'referrer': meta.get('HTTP_REFERER', ''),
-            'user_agent': meta.get('HTTP_USER_AGENT', ''),
-            'user_ip': meta.get('REMOTE_ADDR', ''),
-        })
+        self.parameters.update(
+            {
+                "referrer": meta.get("HTTP_REFERER", ""),
+                "user_agent": meta.get("HTTP_USER_AGENT", ""),
+                "user_ip": meta.get("REMOTE_ADDR", ""),
+            }
+        )
 
         for key, value in meta.items():
             if not isinstance(value, str):
                 continue
-            if key.startswith('HTTP_COOKIE'):
+            if key.startswith("HTTP_COOKIE"):
                 continue
-            if key.startswith('HTTP_') or key in SPAM_OTHER_HEADERS:
+            if key.startswith("HTTP_") or key in SPAM_OTHER_HEADERS:
                 self.parameters[key] = value
 
     def set_comment_author(self, user):
         """Set the comment author from a User object."""
-        self.parameters.update({
-            'comment_author': (user.fullname or user.get_full_name() or
-                               user.username),
-            'comment_author_email': user.email,
-        })
+        self.parameters.update(
+            {
+                "comment_author": (
+                    user.fullname or user.get_full_name() or user.username
+                ),
+                "comment_author_email": user.email,
+            }
+        )
 
     def set_content(self, new_content, existing_content=None):
         """Set comment_content to the new and changed non-empty lines."""
-        existing_content = existing_content or ''
+        existing_content = existing_content or ""
         diff = ndiff(existing_content.splitlines(1), new_content.splitlines(1))
         lines = []
         for line in diff:
-            if line.startswith('+ '):
+            if line.startswith("+ "):
                 diff_content = line[2:].strip()
                 if diff_content:
                     lines.append(diff_content)
-        self.parameters['comment_content'] = '\n'.join(lines)
+        self.parameters["comment_content"] = "\n".join(lines)
 
     def set_permalink(self, document, request):
         """Set the permalink for the Document."""
         doc_url = document.get_absolute_url()
-        self.parameters['permalink'] = request.build_absolute_uri(doc_url)
+        self.parameters["permalink"] = request.build_absolute_uri(doc_url)
 
     def split_tags(self, tag_string):
         """Turn '"Tag 2" "Tag 1"' into 'Tag 1\nTag 2'."""
-        return '\n'.join(parse_tags(tag_string))
+        return "\n".join(parse_tags(tag_string))
 
 
 class AkismetNewDocumentData(AkismetRevisionData):
@@ -304,17 +341,17 @@ class AkismetHistoricalData(AkismetRevisionData):
                 self.parameters = json.loads(revision_ip.data)
                 return
             else:
-                self.parameters.update({
-                    'user_ip': revision_ip.ip,
-                    'user_agent': revision_ip.user_agent,
-                    'referrer': revision_ip.referrer,
-                })
+                self.parameters.update(
+                    {
+                        "user_ip": revision_ip.ip,
+                        "user_agent": revision_ip.user_agent,
+                        "referrer": revision_ip.referrer,
+                    }
+                )
         else:
-            self.parameters.update({
-                'user_ip': '0.0.0.0',
-                'user_agent': '',
-                'referrer': '',
-            })
+            self.parameters.update(
+                {"user_ip": "0.0.0.0", "user_agent": "", "referrer": ""}
+            )
         document = revision.document
         self.set_blog_lang(document.locale)
         if request:
@@ -335,57 +372,65 @@ class DocumentForm(forms.ModelForm):
     Used for managing the wiki document data model that houses general
     data of a wiki page.
     """
-    title = StrippedCharField(min_length=1,
-                              max_length=255,
-                              widget=forms.TextInput(
-                                  attrs={'placeholder': TITLE_PLACEHOLDER}),
-                              label=_('Title:'),
-                              help_text=_('Title of article'),
-                              error_messages={'required': TITLE_REQUIRED,
-                                              'min_length': TITLE_SHORT,
-                                              'max_length': TITLE_LONG})
 
-    slug = StrippedCharField(min_length=1,
-                             max_length=255,
-                             widget=forms.TextInput(),
-                             label=_('Slug:'),
-                             help_text=_('Article URL'),
-                             error_messages={'required': SLUG_REQUIRED,
-                                             'min_length': SLUG_SHORT,
-                                             'max_length': SLUG_LONG})
+    title = StrippedCharField(
+        min_length=1,
+        max_length=255,
+        widget=forms.TextInput(attrs={"placeholder": TITLE_PLACEHOLDER}),
+        label=_("Title:"),
+        help_text=_("Title of article"),
+        error_messages={
+            "required": TITLE_REQUIRED,
+            "min_length": TITLE_SHORT,
+            "max_length": TITLE_LONG,
+        },
+    )
 
-    parent_topic = forms.ModelChoiceField(queryset=Document.objects.all(),
-                                          required=False,
-                                          label=_('Parent:'))
+    slug = StrippedCharField(
+        min_length=1,
+        max_length=255,
+        widget=forms.TextInput(),
+        label=_("Slug:"),
+        help_text=_("Article URL"),
+        error_messages={
+            "required": SLUG_REQUIRED,
+            "min_length": SLUG_SHORT,
+            "max_length": SLUG_LONG,
+        },
+    )
+
+    parent_topic = forms.ModelChoiceField(
+        queryset=Document.objects.all(), required=False, label=_("Parent:")
+    )
 
     locale = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
         model = Document
-        fields = ('title', 'slug', 'locale')
+        fields = ("title", "slug", "locale")
 
     def __init__(self, *args, **kwargs):
         # when creating a new document with a parent, this will be set
-        self.parent_slug = kwargs.pop('parent_slug', None)
+        self.parent_slug = kwargs.pop("parent_slug", None)
         super(DocumentForm, self).__init__(*args, **kwargs)
 
     def clean_slug(self):
         from kuma.wiki.urls import non_document_patterns
-        slug = self.cleaned_data['slug']
-        if slug == '':
+
+        slug = self.cleaned_data["slug"]
+        if slug == "":
             # Default to the title, if missing.
-            slug = self.cleaned_data['title']
+            slug = self.cleaned_data["title"]
         elif self.parent_slug:
             # Prepend parent slug if given from view
-            slug = self.parent_slug + '/' + slug
+            slug = self.parent_slug + "/" + slug
 
         # Convert to NFKC, required for URLs (bug 1357416)
         # http://www.unicode.org/faq/normalization.html
-        slug = unicodedata.normalize('NFKC', slug)
+        slug = unicodedata.normalize("NFKC", slug)
 
         # check both for disallowed characters and match for the allowed
-        if (INVALID_DOC_SLUG_CHARS_RE.search(slug) or
-                not DOCUMENT_PATH_RE.search(slug)):
+        if INVALID_DOC_SLUG_CHARS_RE.search(slug) or not DOCUMENT_PATH_RE.search(slug):
             raise forms.ValidationError(SLUG_INVALID)
         # Guard against slugs that match reserved URL patterns.
         for url_pattern in non_document_patterns:
@@ -397,8 +442,8 @@ class DocumentForm(forms.ModelForm):
         """Persist the Document form, and return the saved Document."""
         doc = super(DocumentForm, self).save(commit=False, *args, **kwargs)
         doc.parent = parent
-        if 'parent_topic' in self.cleaned_data:
-            doc.parent_topic = self.cleaned_data['parent_topic']
+        if "parent_topic" in self.cleaned_data:
+            doc.parent_topic = self.cleaned_data["parent_topic"]
         doc.save()
         # not strictly necessary since we didn't change
         # any m2m data since we instantiated the doc
@@ -410,18 +455,19 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
     """
     Form to create new revisions.
     """
+
     title = StrippedCharField(
         min_length=1,
         max_length=255,
         required=False,
-        widget=forms.TextInput(attrs={'placeholder': TITLE_PLACEHOLDER}),
-        label=_('Title:'),
-        help_text=_('Title of article'),
+        widget=forms.TextInput(attrs={"placeholder": TITLE_PLACEHOLDER}),
+        label=_("Title:"),
+        help_text=_("Title of article"),
         error_messages={
-            'required': TITLE_REQUIRED,
-            'min_length': TITLE_SHORT,
-            'max_length': TITLE_LONG,
-        }
+            "required": TITLE_REQUIRED,
+            "min_length": TITLE_SHORT,
+            "max_length": TITLE_LONG,
+        },
     )
 
     slug = StrippedCharField(
@@ -429,28 +475,24 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         max_length=255,
         required=False,
         widget=forms.TextInput(),
-        label=_('Slug:'),
-        help_text=_('Article URL'),
+        label=_("Slug:"),
+        help_text=_("Article URL"),
         error_messages={
-            'required': SLUG_REQUIRED,
-            'min_length': SLUG_SHORT,
-            'max_length': SLUG_LONG,
-        }
+            "required": SLUG_REQUIRED,
+            "min_length": SLUG_SHORT,
+            "max_length": SLUG_LONG,
+        },
     )
 
     tags = StrippedCharField(
         required=False,
         max_length=255,
-        label=_('Tags:'),
-        error_messages={
-            'max_length': TAGS_LONG,
-        }
+        label=_("Tags:"),
+        error_messages={"max_length": TAGS_LONG},
     )
 
     keywords = StrippedCharField(
-        required=False,
-        label=_('Keywords:'),
-        help_text=_('Affects search results'),
+        required=False, label=_("Keywords:"), help_text=_("Affects search results"),
     )
 
     summary = StrippedCharField(
@@ -458,31 +500,28 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         min_length=5,
         max_length=1000,
         widget=forms.Textarea(),
-        label=_('Search result summary:'),
-        help_text=_('Only displayed on search results page'),
+        label=_("Search result summary:"),
+        help_text=_("Only displayed on search results page"),
         error_messages={
-            'required': SUMMARY_REQUIRED,
-            'min_length': SUMMARY_SHORT,
-            'max_length': SUMMARY_LONG
+            "required": SUMMARY_REQUIRED,
+            "min_length": SUMMARY_SHORT,
+            "max_length": SUMMARY_LONG,
         },
     )
 
     content = StrippedCharField(
         min_length=5,
         max_length=300000,
-        label=_('Content:'),
+        label=_("Content:"),
         widget=forms.Textarea(),
         error_messages={
-            'required': CONTENT_REQUIRED,
-            'min_length': CONTENT_SHORT,
-            'max_length': CONTENT_LONG,
-        }
+            "required": CONTENT_REQUIRED,
+            "min_length": CONTENT_SHORT,
+            "max_length": CONTENT_LONG,
+        },
     )
 
-    comment = StrippedCharField(
-        required=False,
-        label=_('Comment:')
-    )
+    comment = StrippedCharField(required=False, label=_("Comment:"))
 
     review_tags = forms.MultipleChoiceField(
         label=ugettext("Tag this revision for review?"),
@@ -498,52 +537,56 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         choices=LOCALIZATION_FLAG_TAGS,
     )
 
-    current_rev = forms.CharField(
-        required=False,
-        widget=forms.HiddenInput(),
-    )
+    current_rev = forms.CharField(required=False, widget=forms.HiddenInput(),)
 
     class Meta(object):
         model = Revision
-        fields = ('title', 'slug', 'tags', 'keywords', 'summary', 'content',
-                  'comment', 'based_on', 'toc_depth',
-                  'render_max_age')
+        fields = (
+            "title",
+            "slug",
+            "tags",
+            "keywords",
+            "summary",
+            "content",
+            "comment",
+            "based_on",
+            "toc_depth",
+            "render_max_age",
+        )
 
     def __init__(self, *args, **kwargs):
-        self.section_id = kwargs.pop('section_id', None)
-        self.is_async_submit = kwargs.pop('is_async_submit', None)
+        self.section_id = kwargs.pop("section_id", None)
+        self.is_async_submit = kwargs.pop("is_async_submit", None)
 
         # when creating a new document with a parent, this will be set
-        self.parent_slug = kwargs.pop('parent_slug', None)
+        self.parent_slug = kwargs.pop("parent_slug", None)
 
         super(RevisionForm, self).__init__(*args, **kwargs)
 
-        self.fields['based_on'].widget = forms.HiddenInput()
+        self.fields["based_on"].widget = forms.HiddenInput()
 
         if self.instance and self.instance.pk:
             # Ensure both title and slug are populated from parent document,
             # if last revision didn't have them
             if not self.instance.title:
-                self.initial['title'] = self.instance.document.title
+                self.initial["title"] = self.instance.document.title
             if not self.instance.slug:
-                self.initial['slug'] = self.instance.document.slug
+                self.initial["slug"] = self.instance.document.slug
 
             content = self.instance.content
             if self.section_id:
                 parsed_content = kuma.wiki.content.parse(content)
                 parsed_content.extractSection(self.section_id)
                 content = parsed_content.serialize()
-            self.initial['content'] = content
+            self.initial["content"] = content
 
-            self.initial['review_tags'] = list(self.instance
-                                                   .review_tags
-                                                   .names())
-            self.initial['localization_tags'] = list(self.instance
-                                                         .localization_tags
-                                                         .names())
+            self.initial["review_tags"] = list(self.instance.review_tags.names())
+            self.initial["localization_tags"] = list(
+                self.instance.localization_tags.names()
+            )
 
         if self.section_id:
-            self.fields['toc_depth'].required = False
+            self.fields["toc_depth"].required = False
 
     def clean_slug(self):
         # Since this form can change the URL of the page on which the editing
@@ -552,11 +595,11 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
             return self.instance.document.slug
 
         # Get the cleaned slug
-        slug = self.cleaned_data['slug']
+        slug = self.cleaned_data["slug"]
 
         # Convert to NFKC, required for URLs (bug 1357416)
         # http://www.unicode.org/faq/normalization.html
-        slug = unicodedata.normalize('NFKC', slug)
+        slug = unicodedata.normalize("NFKC", slug)
 
         # first check if the given slug doesn't contain slashes and other
         # characters not allowed in a revision slug component (without parent)
@@ -572,14 +615,12 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
         # then if there is a parent document we prefix the slug with its slug
         if self.parent_slug:
-            slug = '/'.join([self.parent_slug, slug])
+            slug = "/".join([self.parent_slug, slug])
 
         try:
-            doc = Document.objects.get(locale=self.instance.document.locale,
-                                       slug=slug)
+            doc = Document.objects.get(locale=self.instance.document.locale, slug=slug)
             if self.instance and self.instance.document:
-                if (not doc.get_redirect_url() and
-                        doc.pk != self.instance.document.pk):
+                if not doc.get_redirect_url() and doc.pk != self.instance.document.pk:
                     # There's another document with this value,
                     # and we're not a revision of it.
                     raise forms.ValidationError(SLUG_COLLIDES)
@@ -598,7 +639,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         """
         Validate the tags ensuring we have no case-sensitive duplicates.
         """
-        tags = self.cleaned_data['tags']
+        tags = self.cleaned_data["tags"]
         cleaned_tags = []
 
         if tags:
@@ -606,13 +647,14 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
                 # Note: The exact match query doesn't work correctly with
                 # MySQL with regards to case-sensitivity. If we move to
                 # Postgresql in the future this code may need to change.
-                doc_tag = (DocumentTag.objects.filter(name__exact=tag)
-                                              .values_list('name', flat=True))
+                doc_tag = DocumentTag.objects.filter(name__exact=tag).values_list(
+                    "name", flat=True
+                )
 
                 # Write a log we can grep to help find pre-existing duplicate
                 # document tags for cleanup.
                 if len(doc_tag) > 1:
-                    log.warn('Found duplicate document tags: %s' % doc_tag)
+                    log.warning("Found duplicate document tags: %s" % doc_tag)
 
                 if doc_tag:
                     if doc_tag[0] != tag and doc_tag[0].lower() == tag.lower():
@@ -623,13 +665,13 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
                 cleaned_tags.append(tag)
 
-        return ' '.join(['"%s"' % t for t in cleaned_tags])
+        return " ".join(['"%s"' % t for t in cleaned_tags])
 
     def clean_content(self):
         """
         Validate the content, performing any section editing if necessary
         """
-        content = self.cleaned_data['content']
+        content = self.cleaned_data["content"]
 
         # If we're editing a section, we need to replace the section content
         # from the current revision.
@@ -650,7 +692,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         difference, then an edit has occurred since the form was constructed
         and we treat it as a mid-air collision.
         """
-        current_rev = self.cleaned_data.get('current_rev', None)
+        current_rev = self.cleaned_data.get("current_rev", None)
 
         if not current_rev:
             # If there's no current_rev, just bail.
@@ -660,35 +702,34 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
             doc_current_rev = self.instance.document.current_revision.id
             if str(current_rev) != str(doc_current_rev):
 
-                if (self.section_id and self.instance and
-                        self.instance.document):
+                if self.section_id and self.instance and self.instance.document:
                     # This is a section edit. So, even though the revision has
                     # changed, it still might not be a collision if the section
                     # in particular hasn't changed.
-                    orig_ct = (Revision.objects
-                                       .get(pk=current_rev)
-                                       .get_section_content(self.section_id))
-                    curr_ct = (self.instance
-                                   .document.current_revision
-                                   .get_section_content(self.section_id))
+                    orig_ct = Revision.objects.get(pk=current_rev).get_section_content(
+                        self.section_id
+                    )
+                    curr_ct = self.instance.document.current_revision.get_section_content(
+                        self.section_id
+                    )
                     if orig_ct != curr_ct:
                         # Oops. Looks like the section did actually get
                         # changed, so yeah this is a collision.
                         url = reverse(
-                            'wiki.document_revisions',
-                            kwargs={'document_path': self.instance.document.slug}
+                            "wiki.document_revisions",
+                            kwargs={"document_path": self.instance.document.slug},
                         )
-                        raise forms.ValidationError(MIDAIR_COLLISION % {'url': url})
+                        raise forms.ValidationError(MIDAIR_COLLISION % {"url": url})
 
                     return current_rev
 
                 else:
                     # No section edit, so this is a flat-out collision.
                     url = reverse(
-                        'wiki.document_revisions',
-                        kwargs={'document_path': self.instance.document.slug}
+                        "wiki.document_revisions",
+                        kwargs={"document_path": self.instance.document.slug},
                     )
-                    raise forms.ValidationError(MIDAIR_COLLISION % {'url': url})
+                    raise forms.ValidationError(MIDAIR_COLLISION % {"url": url})
 
         except Document.DoesNotExist:
             # If there's no document yet, just bail.
@@ -696,10 +737,11 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
     @property
     def akismet_error_message(self):
-        request = getattr(self, 'request', None)
+        request = getattr(self, "request", None)
         user = request and request.user
-        return mark_safe(render_to_string('wiki/includes/spam_error.html',
-                                          {'user': user}))
+        return mark_safe(
+            render_to_string("wiki/includes/spam_error.html", {"user": user})
+        )
 
     def akismet_error(self, parameters, exception=None):
         """
@@ -715,9 +757,9 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         if exception and isinstance(exception, AkismetError):
             # For Akismet errors, save the submission and exception details
             dsa_params = parameters.copy()
-            dsa_params['akismet_status_code'] = exception.status_code
-            dsa_params['akismet_debug_help'] = exception.debug_help
-            dsa_params['akismet_response'] = exception.response.text
+            dsa_params["akismet_status_code"] = exception.status_code
+            dsa_params["akismet_debug_help"] = exception.debug_help
+            dsa_params["akismet_response"] = exception.response.text
             review = DocumentSpamAttempt.AKISMET_ERROR
         else:
             # For detected spam, save the details for review
@@ -729,12 +771,12 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         # method that raises a ValidationError
         try:
             DocumentSpamAttempt.objects.create(
-                title=self.cleaned_data['title'],
-                slug=self.cleaned_data['slug'],
+                title=self.cleaned_data["title"],
+                slug=self.cleaned_data["slug"],
                 user=self.request.user,
                 document=document,
                 data=json.dumps(dsa_params, indent=2, sort_keys=True),
-                review=review
+                review=review,
             )
         finally:
             if not waffle.switch_is_active(SPAM_TRAINING_SWITCH):
@@ -749,24 +791,29 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         initial form cleaning are cached in ._akismet_data, and returned for
         future calls, such as the unit tests.
         """
-        if not getattr(self, '_akismet_data', None):
+        if not getattr(self, "_akismet_data", None):
             try:
                 document = self.instance.document
             except ObjectDoesNotExist:
                 self._akismet_data = AkismetNewDocumentData(
-                    self.request, self.cleaned_data, self.data.get('locale'))
+                    self.request, self.cleaned_data, self.data.get("locale")
+                )
             else:
                 if document.current_revision:
                     self._akismet_data = AkismetEditDocumentData(
-                        self.request, self.cleaned_data, document)
+                        self.request, self.cleaned_data, document
+                    )
                 else:
                     # New translation, compare to English document
-                    based_on = self.cleaned_data.get('based_on')
-                    assert based_on, 'Expected a new translation.'
+                    based_on = self.cleaned_data.get("based_on")
+                    assert based_on, "Expected a new translation."
                     document = based_on.document
                     self._akismet_data = AkismetNewTranslationData(
-                        self.request, self.cleaned_data, document,
-                        self.data.get('locale'))
+                        self.request,
+                        self.cleaned_data,
+                        document,
+                        self.data.get("locale"),
+                    )
 
         parameters = self._akismet_data.parameters.copy()
         parameters.update(self.akismet_parameter_overrides())
@@ -779,7 +826,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         This happens if the edit is to a non-content field, such as
         setting or clearing the technical review flag.
         """
-        if not parameters['comment_content']:
+        if not parameters["comment_content"]:
             return False  # No content change, not spam
         return super(RevisionForm, self).akismet_call(parameters)
 
@@ -794,7 +841,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
 
         # Making sure we don't commit the saving right away since we
         # want to do other things here.
-        kwargs['commit'] = False
+        kwargs["commit"] = False
 
         if self.section_id and self.instance and self.instance.document:
             # The logic to save a section is slightly different and may
@@ -814,28 +861,27 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
             new_rev = super(RevisionForm, self).save(**kwargs)
             new_rev.document = document
             new_rev.creator = self.request.user
-            new_rev.toc_depth = self.cleaned_data['toc_depth']
+            new_rev.toc_depth = self.cleaned_data["toc_depth"]
             new_rev.save()
-            new_rev.review_tags.set(*self.cleaned_data['review_tags'])
-            new_rev.localization_tags.set(*self.cleaned_data['localization_tags'])
+            new_rev.review_tags.set(*self.cleaned_data["review_tags"])
+            new_rev.localization_tags.set(*self.cleaned_data["localization_tags"])
 
             # when enabled store the user's IP address
-            if waffle.switch_is_active('store_revision_ips'):
+            if waffle.switch_is_active("store_revision_ips"):
                 RevisionIP.objects.log(
                     revision=new_rev,
                     headers=self.request.META,
-                    data=json.dumps(self.akismet_parameters(),
-                                    indent=2, sort_keys=True)
+                    data=json.dumps(
+                        self.akismet_parameters(), indent=2, sort_keys=True
+                    ),
                 )
 
             # send first edit emails
             if is_first_edit:
-                transaction.on_commit(
-                    lambda: send_first_edit_email.delay(new_rev.pk)
-                )
+                transaction.on_commit(lambda: send_first_edit_email.delay(new_rev.pk))
 
             # schedule a document rendering
-            document.schedule_rendering('max-age=0')
+            document.schedule_rendering("max-age=0")
 
             # schedule event notifications
             EditDocumentEvent(new_rev).fire(exclude=new_rev.creator)
@@ -843,8 +889,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         return new_rev
 
 
-class RevisionAkismetSubmissionAdminForm(AkismetSubmissionFormMixin,
-                                         forms.ModelForm):
+class RevisionAkismetSubmissionAdminForm(AkismetSubmissionFormMixin, forms.ModelForm):
     """
     A model form used in the admin UI to submit missed spam or ham.
 
@@ -856,27 +901,28 @@ class RevisionAkismetSubmissionAdminForm(AkismetSubmissionFormMixin,
     classes.  Users of the form must set the ``sender`` to the request user
     before calling ``is_valid()``.
     """
+
     class Meta(object):
         model = RevisionAkismetSubmission
-        exclude = ['sender', 'sent']
+        exclude = ["sender", "sent"]
 
     def akismet_submission_type(self):
         """The submission type is determined from the submitted form data."""
-        return self.cleaned_data['type']
+        return self.cleaned_data["type"]
 
     def akismet_parameters(self):
         """
         Returns parameter dict to pass to Akismet's submission API endpoints.
         """
-        revision = self.cleaned_data['revision']
+        revision = self.cleaned_data["revision"]
         akismet_data = AkismetHistoricalData(revision, self.request)
         return akismet_data.parameters
 
     def clean(self):
-        if 'revision' not in self.cleaned_data:
+        if "revision" not in self.cleaned_data:
             raise forms.ValidationError(
-                _('Unable to make the Akismet submission (invalid revision).'),
-                code='invalid'
+                _("Unable to make the Akismet submission (invalid revision)."),
+                code="invalid",
             )
         return super(RevisionAkismetSubmissionAdminForm, self).clean()
 
@@ -890,7 +936,7 @@ class RevisionAkismetSubmissionSpamForm(RevisionAkismetSubmissionAdminForm):
     """
 
     class Meta(RevisionAkismetSubmissionAdminForm.Meta):
-        exclude = ['sender', 'sent', 'type']
+        exclude = ["sender", "sent", "type"]
 
     def akismet_submission_type(self):
         """Force the submission type to spam."""
@@ -898,46 +944,55 @@ class RevisionAkismetSubmissionSpamForm(RevisionAkismetSubmissionAdminForm):
 
 
 class TreeMoveForm(forms.Form):
-    title = StrippedCharField(min_length=1, max_length=255,
-                              required=False,
-                              widget=forms.TextInput(
-                                  attrs={'placeholder': TITLE_PLACEHOLDER}),
-                              label=_('Title:'),
-                              help_text=_('Title of article'),
-                              error_messages={'required': TITLE_REQUIRED,
-                                              'min_length': TITLE_SHORT,
-                                              'max_length': TITLE_LONG})
-    slug = StrippedCharField(min_length=1, max_length=255,
-                             widget=forms.TextInput(),
-                             label=_('New slug:'),
-                             help_text=_('New article URL'),
-                             error_messages={'required': SLUG_REQUIRED,
-                                             'min_length': SLUG_SHORT,
-                                             'max_length': SLUG_LONG})
-    locale = StrippedCharField(min_length=2, max_length=5,
-                               widget=forms.HiddenInput())
+    title = StrippedCharField(
+        min_length=1,
+        max_length=255,
+        required=False,
+        widget=forms.TextInput(attrs={"placeholder": TITLE_PLACEHOLDER}),
+        label=_("Title:"),
+        help_text=_("Title of article"),
+        error_messages={
+            "required": TITLE_REQUIRED,
+            "min_length": TITLE_SHORT,
+            "max_length": TITLE_LONG,
+        },
+    )
+    slug = StrippedCharField(
+        min_length=1,
+        max_length=255,
+        widget=forms.TextInput(),
+        label=_("New slug:"),
+        help_text=_("New article URL"),
+        error_messages={
+            "required": SLUG_REQUIRED,
+            "min_length": SLUG_SHORT,
+            "max_length": SLUG_LONG,
+        },
+    )
+    locale = StrippedCharField(min_length=2, max_length=5, widget=forms.HiddenInput())
 
     def clean_slug(self):
-        slug = self.cleaned_data['slug']
+        slug = self.cleaned_data["slug"]
         # We only want the slug here; inputting a full URL would lead
         # to disaster.
-        if '://' in slug:
-            raise forms.ValidationError('Please enter only the slug to move '
-                                        'to, not the full URL.')
+        if "://" in slug:
+            raise forms.ValidationError(
+                "Please enter only the slug to move " "to, not the full URL."
+            )
 
         # Removes leading slash and {locale/docs/} if necessary
         # IMPORTANT: This exact same regex is used on the client side, so
         # update both if doing so
-        slug = SLUG_CLEANSING_RE.sub('', slug)
+        slug = SLUG_CLEANSING_RE.sub("", slug)
 
         # Remove the trailing slash if one is present, because it
         # will screw up the page move, which doesn't expect one.
-        return slug.rstrip('/')
+        return slug.rstrip("/")
 
     def clean(self):
         cleaned_data = super(TreeMoveForm, self).clean()
-        if set(['slug', 'locale']).issubset(cleaned_data):
-            slug, locale = cleaned_data['slug'], cleaned_data['locale']
+        if set(["slug", "locale"]).issubset(cleaned_data):
+            slug, locale = cleaned_data["slug"], cleaned_data["locale"]
             try:
                 valid_slug_parent(slug, locale)
             except Exception as e:
@@ -946,4 +1001,4 @@ class TreeMoveForm(forms.Form):
 
 
 class DocumentDeletionForm(forms.Form):
-    reason = forms.CharField(widget=forms.Textarea(attrs={'autofocus': 'true'}))
+    reason = forms.CharField(widget=forms.Textarea(attrs={"autofocus": "true"}))

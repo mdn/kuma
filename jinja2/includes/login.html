@@ -19,7 +19,7 @@
         </div>
     {% else %}
         {% if settings.MULTI_AUTH_ENABLED %}
-            {% set login_url = remote_login_url(next=next_url) %}
+            {% set login_url = login_url(next=next_url) %}
             <a href="{{ login_url }}" class="login-link js-login-link" rel="nofollow">
                 {{ _('Sign in') }}
             </a>

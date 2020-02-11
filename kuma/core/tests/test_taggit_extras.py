@@ -1,13 +1,9 @@
-
-
-import pytest
 from django.test import TestCase
 from taggit.models import Tag
 
 from .taggit_extras.models import Food
 
 
-@pytest.mark.tags
 class NamespacedTaggableManagerTest(TestCase):
     food_model = Food
 
@@ -20,11 +16,11 @@ class NamespacedTaggableManagerTest(TestCase):
         apple = self.food_model.objects.create(name="apple")
 
         expected_tags = {
-            '': ['foo', 'bar', 'baz'],
-            'int:': ['int:1', 'int:2'],
-            'string:': ['string:asdf'],
-            'color:': ['color:red'],
-            'system:contest:': ['system:contest:finalist']
+            "": ["foo", "bar", "baz"],
+            "int:": ["int:1", "int:2"],
+            "string:": ["string:asdf"],
+            "color:": ["color:red"],
+            "system:contest:": ["system:contest:finalist"],
         }
 
         for tags in expected_tags.values():
@@ -43,25 +39,25 @@ class NamespacedTaggableManagerTest(TestCase):
     def test_clear_ns(self):
         """Tags can be selectively cleared by namespace"""
         apple = self.food_model.objects.create(name="apple")
-        tags_cleared = ['a:1', 'a:2', 'a:3']
-        tags_not_cleared = ['1', '2', 'b:1', 'b:2', 'c:1']
+        tags_cleared = ["a:1", "a:2", "a:3"]
+        tags_not_cleared = ["1", "2", "b:1", "b:2", "c:1"]
         apple.tags.add(*tags_cleared)
         apple.tags.add(*tags_not_cleared)
-        apple.tags.clear_ns('a:')
+        apple.tags.clear_ns("a:")
         self.assert_tags_equal(apple.tags.all(), tags_not_cleared)
 
     def test_set_ns(self):
         """Tags can be selectively set by namespace"""
         apple = self.food_model.objects.create(name="apple")
 
-        tags_before_set = ['a:1', 'a:2', 'a:3']
-        tags_after_set = ['a:4', 'a:5', 'a:6']
-        tags_not_set = ['1', '2', 'b:1', 'b:2', 'c:1']
+        tags_before_set = ["a:1", "a:2", "a:3"]
+        tags_after_set = ["a:4", "a:5", "a:6"]
+        tags_not_set = ["1", "2", "b:1", "b:2", "c:1"]
 
         apple.tags.add(*tags_before_set)
         apple.tags.add(*tags_not_set)
 
-        apple.tags.set_ns('a:', *tags_after_set)
+        apple.tags.set_ns("a:", *tags_after_set)
 
         self.assert_tags_equal(apple.tags.all(), tags_after_set + tags_not_set)
 
@@ -70,23 +66,23 @@ class NamespacedTaggableManagerTest(TestCase):
         namespace tacked on."""
         apple = self.food_model.objects.create(name="apple")
 
-        tags = ['foo', 'bar', 'baz']
-        apple.tags.add_ns('a:', *tags)
+        tags = ["foo", "bar", "baz"]
+        apple.tags.add_ns("a:", *tags)
 
-        self.assert_tags_equal(apple.tags.all(), ['a:%s' % t for t in tags])
+        self.assert_tags_equal(apple.tags.all(), ["a:%s" % t for t in tags])
 
     def test_duplicate_names_to_create(self):
         apple = self.food_model.objects.create(name="apple")
-        tags = ['tasty', 'Tasty']
-        apple.tags.add_ns('a:', *tags)
+        tags = ["tasty", "Tasty"]
+        apple.tags.add_ns("a:", *tags)
         assert apple.tags.count() == 1
         tag = apple.tags.get()
-        assert tag.name in ('a:tasty', 'a:Tasty')
+        assert tag.name in ("a:tasty", "a:Tasty")
 
     def test_duplicate_names_existing(self):
         apple = self.food_model.objects.create(name="apple")
-        Tag.objects.create(name='a:Red')
-        Tag.objects.create(name='a:Tasty')
-        tags = ['tasty', 'Tasty', 'Red', 'red']
-        apple.tags.add_ns('a:', *tags)
-        self.assert_tags_equal(apple.tags.all(), ['a:Tasty', 'a:Red'])
+        Tag.objects.create(name="a:Red")
+        Tag.objects.create(name="a:Tasty")
+        tags = ["tasty", "Tasty", "Red", "red"]
+        apple.tags.add_ns("a:", *tags)
+        self.assert_tags_equal(apple.tags.all(), ["a:Tasty", "a:Red"])

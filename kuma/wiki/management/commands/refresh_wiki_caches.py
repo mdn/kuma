@@ -19,10 +19,10 @@ from django.core.management.base import BaseCommand
 from kuma.wiki.models import Document
 
 
-PAGE_EXISTS_KEY_TMPL = getattr(settings, 'wiki_page_exists_key_tmpl',
-                               'kuma:page_exists:%s')
-PAGE_EXISTS_TIMEOUT = getattr(settings, 'wiki_page_exists_timeout',
-                              86400)
+PAGE_EXISTS_KEY_TMPL = getattr(
+    settings, "wiki_page_exists_key_tmpl", "kuma:page_exists:%s"
+)
+PAGE_EXISTS_TIMEOUT = getattr(settings, "wiki_page_exists_timeout", 86400)
 
 
 class Command(BaseCommand):
@@ -30,22 +30,18 @@ class Command(BaseCommand):
     help = "Refresh cached wiki data"
 
     def add_arguments(self, parser):
-        parser.add_argument(
-            '--baseurl',
-            help="Base URL to site",
-            default='')
+        parser.add_argument("--baseurl", help="Base URL to site", default="")
 
     def handle(self, *args, **options):
         to_prefetch = []
         logging.info("Querying all Documents...")
         doc_cnt, doc_total = 0, Document.objects.count()
-        for doc in Document.objects.order_by('-modified').iterator():
+        for doc in Document.objects.order_by("-modified").iterator():
 
             # Give some indication of progress, occasionally
             doc_cnt += 1
             if (doc_cnt % 5000) == 0:
-                logging.info("\t(%s / %s)" %
-                             (doc_cnt, doc_total))
+                logging.info("\t(%s / %s)" % (doc_cnt, doc_total))
 
             url = doc.get_absolute_url()
             if 'class="noinclude"' in doc.html:
@@ -67,7 +63,7 @@ class Command(BaseCommand):
         pre_total, pre_cnt = len(to_prefetch), 0
         logging.info("Prefetching %s documents..." % (len(to_prefetch)))
         for url in to_prefetch:
-            full_url = urllib.parse.urljoin(options['baseurl'], url)
+            full_url = urllib.parse.urljoin(options["baseurl"], url)
             try:
                 pre_cnt += 1
                 logging.info("\t(%s/%s) %s" % (pre_cnt, pre_total, full_url))
