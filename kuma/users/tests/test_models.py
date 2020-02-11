@@ -1,5 +1,3 @@
-import pytest
-
 from django.core.exceptions import ValidationError
 from django.utils.translation import deactivate_all
 
@@ -120,12 +118,13 @@ class TestUser(UserTestCase):
         url2 = user.get_recovery_url()
         assert url == url2
 
-    @pytest.mark.bug(1477016)
     def test_get_recovery_url_no_active_translation(self):
         """
         When no translation is active, the locale is /en-US/.
 
         This happens in management commands, such as the Django shell.
+
+        See: https://bugzilla.mozilla.org/show_bug.cgi?id=1477016
         """
         user = self.user_model.objects.get(username="testuser")
         deactivate_all()
@@ -134,7 +133,6 @@ class TestUser(UserTestCase):
 
 
 class BanTestCase(UserTestCase):
-    @pytest.mark.bans
     def test_ban_user(self):
         testuser = self.user_model.objects.get(username="testuser")
         admin = self.user_model.objects.get(username="admin")

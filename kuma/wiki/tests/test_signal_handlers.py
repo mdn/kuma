@@ -1,12 +1,9 @@
 from unittest import mock
 
-import pytest
-
 from ..models import Document, Revision
 from ..signals import render_done
 
 
-@pytest.mark.tags
 def test_on_document_save_signal_invalidated_tags_cache(root_doc, wiki_user):
 
     tags1 = ("JavaScript", "AJAX", "DOM")

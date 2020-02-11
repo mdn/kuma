@@ -46,7 +46,6 @@ def enable_akismet_submissions(constance_config):
         yield constance_config
 
 
-@pytest.mark.spam
 @pytest.mark.parametrize("http_method", ["get", "put", "delete", "options", "head"])
 def test_disallowed_methods(db, client, http_method):
     """HTTP methods other than POST are not allowed."""
@@ -56,7 +55,6 @@ def test_disallowed_methods(db, client, http_method):
     assert_no_cache_header(response)
 
 
-@pytest.mark.spam
 def test_spam_valid_response(
     create_revision,
     akismet_wiki_user,
@@ -85,7 +83,6 @@ def test_spam_valid_response(
     assert data[0]["type"] == "spam"
 
 
-@pytest.mark.spam
 def test_spam_with_many_response(
     create_revision,
     akismet_wiki_user,
@@ -122,7 +119,6 @@ def test_spam_with_many_response(
     assert akismet_mock_requests.call_count == 2
 
 
-@pytest.mark.spam
 def test_spam_no_permission(
     create_revision,
     wiki_user,
@@ -147,7 +143,6 @@ def test_spam_no_permission(
     assert not akismet_mock_requests.called
 
 
-@pytest.mark.spam
 def test_spam_revision_does_not_exist(
     create_revision,
     akismet_wiki_user,

@@ -561,7 +561,6 @@ def test_kumascript_error_reporting(
         assert error["message"] in content
 
 
-@pytest.mark.tags
 def test_tags_show_in_document(root_doc, client, wiki_user):
     """Test tags are showing correctly in document view"""
     tags = ("JavaScript", "AJAX", "DOM")
@@ -576,7 +575,6 @@ def test_tags_show_in_document(root_doc, client, wiki_user):
     assert response_tags == sorted(tags)
 
 
-@pytest.mark.tags
 def test_tags_not_show_while_empty(root_doc, client, wiki_user):
     # Create a revision with no tags
     Revision.objects.create(document=root_doc, tags=",".join([]), creator=wiki_user)

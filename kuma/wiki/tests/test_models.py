@@ -477,7 +477,6 @@ class UserDocumentTests(UserTestCase):
         assert 2 == len(grandchild_doc.parent_trees_watched_by(testuser2))
 
 
-@pytest.mark.tags
 class TaggedDocumentTests(UserTestCase):
     """Tests for tags in Documents and Revisions"""
 
@@ -640,7 +639,6 @@ class RevisionTests(UserTestCase):
         assert last_rev.previous == next_rev
         assert trans_rev.previous == last_rev
 
-    @pytest.mark.toc
     def test_show_toc(self):
         """Setting toc_depth appropriately affects the Document's
         show_toc property."""
@@ -1030,7 +1028,6 @@ class RenderExpiresTests(UserTestCase):
 class PageMoveTests(UserTestCase):
     """Tests for page-moving and associated functionality."""
 
-    @pytest.mark.move
     def test_children_simple(self):
         """A basic tree with two direct children and no sub-trees on
         either."""
@@ -1100,7 +1097,6 @@ class PageMoveTests(UserTestCase):
 
         assert [c1, gc1, c2, gc2, gc3, ggc1] == top.get_descendants()
 
-    @pytest.mark.move
     def test_circular_dependency(self):
         """Make sure we can detect potential circular dependencies in
         parent/child relationships."""
@@ -1119,7 +1115,6 @@ class PageMoveTests(UserTestCase):
 
         assert child.is_child_of(grandparent)
 
-    @pytest.mark.move
     def test_move_tree(self):
         """Moving a tree of documents does the correct thing"""
 
@@ -1237,7 +1232,6 @@ class PageMoveTests(UserTestCase):
             ).get_redirect_url()
         )
 
-    @pytest.mark.move
     def test_conflicts(self):
         top = revision(
             title="Test page-move conflict detection",
@@ -1296,7 +1290,6 @@ class PageMoveTests(UserTestCase):
             "moved/test-move-conflict-detection"
         )
 
-    @pytest.mark.move
     def test_additional_conflicts(self):
         top = revision(
             title="WebRTC", slug="WebRTC", content="WebRTC", is_approved=True, save=True
@@ -1323,7 +1316,6 @@ class PageMoveTests(UserTestCase):
         child2_doc.save()
         assert not top_doc._tree_conflicts("NativeRTC")
 
-    @pytest.mark.move
     def test_preserve_tags(self):
         tags = "'moving', 'tests'"
         rev = revision(
@@ -1351,7 +1343,6 @@ class PageMoveTests(UserTestCase):
         assert tags == new_rev.tags
         assert ["technical"] == [str(tag) for tag in new_rev.review_tags.all()]
 
-    @pytest.mark.move
     def test_move_tree_breadcrumbs(self):
         """Moving a tree of documents under an existing doc updates breadcrumbs"""
 
@@ -1425,7 +1416,6 @@ class PageMoveTests(UserTestCase):
         )
         assert mom_moved.parent_topic == grandma_moved
 
-    @pytest.mark.move
     def test_move_tree_no_new_parent(self):
         """Moving a tree to a slug that doesn't exist throws error."""
 
@@ -1435,7 +1425,6 @@ class PageMoveTests(UserTestCase):
         with pytest.raises(Exception):
             doc._move_tree("slug-that-doesnt-exist/doc1")
 
-    @pytest.mark.move
     def test_move_top_level_docs(self):
         """Moving a top document to a new slug location"""
         page_to_move_title = "Page Move Root"
@@ -1483,7 +1472,6 @@ class PageMoveTests(UserTestCase):
         # TODO: Fix this assertion?
         # assert 'admin' == page_moved_doc.current_revision.creator.username)
 
-    @pytest.mark.move
     def test_mid_move(self):
         root_title = "Root"
         root_slug = "Root"
@@ -1525,7 +1513,6 @@ class PageMoveTests(UserTestCase):
         assert "REDIRECT" in redirected_grandchild.html
         assert moved_grandchild_slug in redirected_grandchild.html
 
-    @pytest.mark.move
     def test_move_special(self):
         root_slug = "User:foo"
         child_slug = "%s/child" % root_slug

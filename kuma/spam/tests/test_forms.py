@@ -5,9 +5,6 @@ from ..constants import CHECK_URL, VERIFY_URL
 from ..forms import AkismetCheckFormMixin
 
 
-pytestmark = pytest.mark.spam
-
-
 class AkismetCheckTestForm(AkismetCheckFormMixin, forms.Form):
     """Test form for checking AkismetCheckFormMixin."""
 
