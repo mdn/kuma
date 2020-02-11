@@ -18,7 +18,7 @@ python-versions = "*"
 version = "1.4.3"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Atomic file writes."
 name = "atomicwrites"
 optional = false
@@ -26,7 +26,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "1.3.0"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Classes Without Boilerplate"
 name = "attrs"
 optional = false
@@ -209,9 +209,9 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "7.0"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Cross-platform colored terminal text."
-marker = "sys_platform == \"win32\""
+marker = "sys_platform == \"win32\" and python_version != \"3.4\""
 name = "colorama"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
@@ -902,8 +902,9 @@ version = "1.0.1"
 greenlet = ">=0.4.5,<0.5"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "More routines for operating on iterables, beyond itertools"
+marker = "python_version > \"2.7\""
 name = "more-itertools"
 optional = false
 python-versions = ">=3.5"
@@ -955,6 +956,18 @@ signedtoken = ["cryptography", "pyjwt (>=1.0.0)"]
 
 [[package]]
 category = "dev"
+description = "Core utilities for Python packages"
+name = "packaging"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "20.1"
+
+[package.dependencies]
+pyparsing = ">=2.0.2"
+six = "*"
+
+[[package]]
+category = "dev"
 description = "Utility library for gitignore style pattern matching of file paths."
 name = "pathspec"
 optional = false
@@ -962,7 +975,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 version = "0.7.0"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "plugin and hook calling mechanisms for python"
 name = "pluggy"
 optional = false
@@ -994,7 +1007,7 @@ django = ">=1.8"
 jinja2 = ">=2.7"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "library with cross-python path, ini-parsing, io, code, log facilities"
 name = "py"
 optional = false
@@ -1037,6 +1050,14 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "2.1.1"
 
 [[package]]
+category = "dev"
+description = "Python parsing module"
+name = "pyparsing"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+version = "2.4.6"
+
+[[package]]
 category = "main"
 description = "A jquery-like library for python"
 name = "pyquery"
@@ -1049,22 +1070,32 @@ cssselect = ">0.7.9"
 lxml = ">=2.1"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "pytest: simple powerful testing with Python"
 name = "pytest"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "3.10.1"
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7"
+version = "4.6.9"
 
 [package.dependencies]
 atomicwrites = ">=1.0"
 attrs = ">=17.4.0"
-colorama = "*"
-more-itertools = ">=4.0.0"
-pluggy = ">=0.7"
+packaging = "*"
+pluggy = ">=0.12,<1.0"
 py = ">=1.5.0"
-setuptools = "*"
 six = ">=1.10.0"
+wcwidth = "*"
+
+[package.dependencies.colorama]
+python = "<3.4.0 || >=3.5.0"
+version = "*"
+
+[package.dependencies.more-itertools]
+python = ">=2.8"
+version = ">=4.0.0"
+
+[package.extras]
+testing = ["argcomplete", "hypothesis (>=3.56)", "nose", "requests", "mock"]
 
 [[package]]
 category = "dev"
@@ -1094,7 +1125,7 @@ pytest = ">=3.6"
 testing = ["fields", "hunter", "process-tests (2.0.2)", "six", "virtualenv"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "A Django plugin for pytest."
 name = "pytest-django"
 optional = false
@@ -1125,10 +1156,11 @@ description = "pytest plugin to re-run tests to eliminate flaky failures"
 name = "pytest-rerunfailures"
 optional = false
 python-versions = "*"
-version = "7.0"
+version = "8.0"
 
 [package.dependencies]
-pytest = ">=3.10"
+pytest = ">=4.4"
+setuptools = ">=40.0"
 
 [[package]]
 category = "dev"
@@ -1401,6 +1433,14 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "1.3.0"
 
 [[package]]
+category = "dev"
+description = "Measures number of Terminal column cells of wide-character codes"
+name = "wcwidth"
+optional = false
+python-versions = "*"
+version = "0.1.8"
+
+[[package]]
 category = "main"
 description = "Character encoding aliases for legacy web content"
 name = "webencodings"
@@ -1432,7 +1472,7 @@ version = "5.0.1"
 brotli = ["brotli"]
 
 [metadata]
-content-hash = "0508e713d8faa24d84a551addf8457e2af7a0a27f4932853e214be821cbbee0d"
+content-hash = "3bfc004289aff586bd9a9f06366bb1a33f8f10305dea221a8cb80d057a5541b4"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1857,6 +1897,10 @@ oauthlib = [
     {file = "oauthlib-3.1.0-py2.py3-none-any.whl", hash = "sha256:df884cd6cbe20e32633f1db1072e9356f53638e4361bef4e8b03c9127c9328ea"},
     {file = "oauthlib-3.1.0.tar.gz", hash = "sha256:bee41cc35fcca6e988463cacc3bcb8a96224f470ca547e697b604cc697b2f889"},
 ]
+packaging = [
+    {file = "packaging-20.1-py2.py3-none-any.whl", hash = "sha256:170748228214b70b672c581a3dd610ee51f733018650740e98c7df862a583f73"},
+    {file = "packaging-20.1.tar.gz", hash = "sha256:e665345f9eef0c621aa0bf2f8d78cf6d21904eef16a93f020240b704a57f1334"},
+]
 pathspec = [
     {file = "pathspec-0.7.0-py2.py3-none-any.whl", hash = "sha256:163b0632d4e31cef212976cf57b43d9fd6b0bac6e67c26015d611a647d5e7424"},
     {file = "pathspec-0.7.0.tar.gz", hash = "sha256:562aa70af2e0d434367d9790ad37aed893de47f1693e4201fd1d3dca15d19b96"},
@@ -1915,13 +1959,17 @@ pyflakes = [
     {file = "pyflakes-2.1.1-py2.py3-none-any.whl", hash = "sha256:17dbeb2e3f4d772725c777fabc446d5634d1038f234e77343108ce445ea69ce0"},
     {file = "pyflakes-2.1.1.tar.gz", hash = "sha256:d976835886f8c5b31d47970ed689944a0262b5f3afa00a5a7b4dc81e5449f8a2"},
 ]
+pyparsing = [
+    {file = "pyparsing-2.4.6-py2.py3-none-any.whl", hash = "sha256:c342dccb5250c08d45fd6f8b4a559613ca603b57498511740e65cd11a2e7dcec"},
+    {file = "pyparsing-2.4.6.tar.gz", hash = "sha256:4c830582a84fb022400b85429791bc551f1f4871c33f23e44f353119e92f969f"},
+]
 pyquery = [
     {file = "pyquery-1.4.1-py2.py3-none-any.whl", hash = "sha256:710eac327b87f15f74a95c3378c6ba62ef6fcfb0a6d009a7d33349c9f7e65835"},
     {file = "pyquery-1.4.1.tar.gz", hash = "sha256:8fcf77c72e3d602ce10a0bd4e65f57f0945c18e15627e49130c27172d4939d98"},
 ]
 pytest = [
-    {file = "pytest-3.10.1-py2.py3-none-any.whl", hash = "sha256:3f193df1cfe1d1609d4c583838bea3d532b18d6160fd3f55c9447fdca30848ec"},
-    {file = "pytest-3.10.1.tar.gz", hash = "sha256:e246cf173c01169b9617fc07264b7b1316e78d7a650055235d6d897bc80d9660"},
+    {file = "pytest-4.6.9-py2.py3-none-any.whl", hash = "sha256:c77a5f30a90e0ce24db9eaa14ddfd38d4afb5ea159309bdd2dae55b931bc9324"},
+    {file = "pytest-4.6.9.tar.gz", hash = "sha256:19e8f75eac01dd3f211edd465b39efbcbdc8fc5f7866d7dd49fedb30d8adf339"},
 ]
 pytest-base-url = [
     {file = "pytest-base-url-1.4.1.tar.gz", hash = "sha256:7425e8163345494ac7f544e99c6f3e5a08f4228bee5e26013b98c462a4d31f6e"},
@@ -1940,8 +1988,8 @@ pytest-metadata = [
     {file = "pytest_metadata-1.8.0-py2.py3-none-any.whl", hash = "sha256:c29a1fb470424926c63154c1b632c02585f2ba4282932058a71d35295ff8c96d"},
 ]
 pytest-rerunfailures = [
-    {file = "pytest-rerunfailures-7.0.tar.gz", hash = "sha256:f3c9cf31339bf87b048c09dadb633a81156fa4899527fffc55cde105d04ed5fd"},
-    {file = "pytest_rerunfailures-7.0-py2.py3-none-any.whl", hash = "sha256:1180a0f98975e1e1a2e055c87c1159cbd3bace8ceb71b1e7ffe4ace6121e7801"},
+    {file = "pytest-rerunfailures-8.0.tar.gz", hash = "sha256:17c1236b9f8463f74a5df6c807f301c53c2ea1ab81b7509b7e23fab3b7cbe812"},
+    {file = "pytest_rerunfailures-8.0-py2.py3-none-any.whl", hash = "sha256:4997cda1b82f74cc0c280f6a5a0470d36deb318e3d8bd6da71efc32a3e0c9ae4"},
 ]
 pytest-variables = [
     {file = "pytest-variables-1.9.0.tar.gz", hash = "sha256:f79851e4c92a94c93d3f1d02377b5ac97cc8800392e87d108d2cbfda774ecc2a"},
@@ -2083,6 +2131,10 @@ urlwait = [
 vine = [
     {file = "vine-1.3.0-py2.py3-none-any.whl", hash = "sha256:ea4947cc56d1fd6f2095c8d543ee25dad966f78692528e68b4fada11ba3f98af"},
     {file = "vine-1.3.0.tar.gz", hash = "sha256:133ee6d7a9016f177ddeaf191c1f58421a1dcc6ee9a42c58b34bed40e1d2cd87"},
+]
+wcwidth = [
+    {file = "wcwidth-0.1.8-py2.py3-none-any.whl", hash = "sha256:8fd29383f539be45b20bd4df0dc29c20ba48654a41e661925e612311e9f3c603"},
+    {file = "wcwidth-0.1.8.tar.gz", hash = "sha256:f28b3e8a6483e5d49e7f8949ac1a78314e740333ae305b4ba5defd3e74fb37a8"},
 ]
 webencodings = [
     {file = "webencodings-0.5.1-py2.py3-none-any.whl", hash = "sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78"},
