@@ -1,7 +1,6 @@
 import pytest
 
 
-@pytest.mark.current
 @pytest.mark.django_db
 def test_secret_generation(user_auth_key):
     """Generated secret should be saved as a hash and pass a check"""

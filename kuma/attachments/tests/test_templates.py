@@ -1,4 +1,3 @@
-import pytest
 from pyquery import PyQuery as pq
 
 from kuma.core.urlresolvers import reverse
@@ -9,7 +8,6 @@ from . import make_test_file
 from ..models import Attachment
 
 
-@pytest.mark.security
 def test_xss_file_attachment_title(
     admin_client, constance_config, root_doc, wiki_user, editor_client, settings
 ):

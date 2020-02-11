@@ -681,7 +681,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         response = self.client.get(subpage_url, HTTP_HOST=settings.WIKI_HOST)
         assert response.status_code == 404
 
-    @pytest.mark.retitle
     def test_retitling_solo_doc(self):
         """ Editing just title of non-parent doc:
             * Changes title
@@ -709,7 +708,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert Document.objects.get(slug=doc.slug, locale=doc.locale).title == new_title
         assert not Document.objects.filter(title=old_title).exists()
 
-    @pytest.mark.retitle
     def test_retitling_parent_doc(self):
         """ Editing just title of parent doc:
             * Changes title
@@ -765,7 +763,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         )
         assert "REDIRECT" not in Document.objects.get(slug=old_slug).html
 
-    @pytest.mark.clobber
     def test_slug_collision_errors(self):
         """When an attempt is made to retitle an article and another with that
         title already exists, there should be form errors"""
@@ -803,7 +800,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert p.find(".errorlist").length > 0
         assert p.find('.errorlist a[href="#id_slug"]').length > 0
 
-    @pytest.mark.clobber
     def test_redirect_can_be_clobbered(self):
         """When an attempt is made to retitle an article, and another article
         with that title exists but is a redirect, there should be no errors and
@@ -1182,7 +1178,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert content("li.metadata-choose-parent")
         assert str(parent.id) in to_html(content)
 
-    @pytest.mark.tags
     def test_tags_while_document_update(self):
         self.client.login(username="admin", password="testpass")
         ts1 = ("JavaScript", "AJAX", "DOM")
@@ -1205,7 +1200,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         doc_tags = doc.tags.all().values_list("name", flat=True)
         assert sorted(doc_tags) == sorted(ts2)
 
-    @pytest.mark.tags
     def test_tags_showing_correctly_after_doc_update(self):
         """After any update to the document, the new tags should show correctly"""
         self.client.login(username="admin", password="testpass")
@@ -1235,7 +1229,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         response_tags = page.find(".tags li a").contents()
         assert response_tags == sorted(ts2)
 
-    @pytest.mark.review_tags
     @mock.patch.object(Site.objects, "get_current")
     def test_review_tags(self, get_current):
         """Review tags can be managed on document revisions"""
@@ -1387,7 +1380,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         )
         assert doc_entry in response.content.decode()
 
-    @pytest.mark.review_tags
     def test_quick_review(self):
         """Test the quick-review button."""
         self.client.login(username="admin", password="testpass")
@@ -1440,7 +1432,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                 assert expected_str in rev.comment
             assert review_tags == data_dict["expected_tags"]
 
-    @pytest.mark.midair
     def test_edit_midair_collisions(self, is_ajax=False, translate_locale=None):
         """Tests midair collisions for non-ajax submissions."""
         self.client.login(username="admin", password="testpass")
@@ -1557,7 +1548,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
             location_of_error = html.unescape(content[start_of_error:end_of_error])
         assert collision_err in location_of_error
 
-    @pytest.mark.midair
     def test_edit_midair_collisions_ajax(self):
         """Tests midair collisions for ajax submissions."""
         self.test_edit_midair_collisions(is_ajax=True)
@@ -1700,7 +1690,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         """Tests attempted translation spam edits that occur on Ajax POSTs."""
         self.test_edit_spam_ajax(translate_locale="ru")
 
-    @pytest.mark.toc
     def test_toc_toggle_off(self):
         """Toggling of table of contents in revisions"""
         self.client.login(username="admin", password="testpass")
@@ -1721,7 +1710,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         doc = Document.objects.get(slug=doc.slug, locale=doc.locale)
         assert doc.current_revision.toc_depth == 0
 
-    @pytest.mark.toc
     def test_toc_toggle_on(self):
         """Toggling of table of contents in revisions"""
         self.client.login(username="admin", password="testpass")
@@ -2001,7 +1989,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert rev_ip.user_agent == "Mozilla Firefox"
         assert rev_ip.referrer == "http://localhost/"
 
-    @pytest.mark.edit_emails
     @call_on_commit_immediately
     def test_email_for_first_edits(self):
         self.client.login(username="testuser", password="testpass")
@@ -2132,7 +2119,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert rev.document.title in message.body
         assert "sub-articles" not in message.body
 
-    @pytest.mark.edit_emails
     def test_email_for_child_edit_in_watched_tree(self):
         """
         When a user edits a child document in a watched document tree, we
@@ -2166,7 +2152,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert testuser2.email in message.to
         assert "sub-articles" in message.body
 
-    @pytest.mark.edit_emails
     def test_email_for_grandchild_edit_in_watched_tree(self):
         """
         When a user edits a grandchild document in a watched document tree, we
@@ -2197,7 +2182,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert testuser2.email in message.to
         assert "sub-articles" in message.body
 
-    @pytest.mark.edit_emails
     def test_single_email_when_watching_doc_and_tree(self):
         """
         When a user edits a watched document in a watched document tree, we
@@ -2382,7 +2366,6 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         assert_no_cache_header(response)
         assert normalize_html(expected) == normalize_html(response.content)
 
-    @pytest.mark.midair
     def test_raw_section_edit_ajax(self):
         self.client.login(username="admin", password="testpass")
         rev = revision(
@@ -2442,7 +2425,6 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
         assert_no_cache_header(response)
         assert normalize_html(expected) == normalize_html(response.content)
 
-    @pytest.mark.midair
     def test_midair_section_merge_ajax(self):
         """If a page was changed while someone was editing, but the changes
         didn't affect the specific section being edited, then ignore the midair
@@ -2560,7 +2542,6 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             ).current_revision.id
         ) == str(response["x-kuma-revision"])
 
-    @pytest.mark.midair
     def test_midair_section_collision_ajax(self):
         """If both a revision and the edited section has changed, then a
         section edit is a collision."""

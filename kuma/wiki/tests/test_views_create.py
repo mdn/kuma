@@ -75,7 +75,6 @@ def test_user_add_document_permission(editor_client):
     assert_no_cache_header(response)
 
 
-@pytest.mark.toc
 def test_get(add_doc_client):
     response = add_doc_client.get(reverse("wiki.create"), HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
@@ -95,8 +94,6 @@ def test_get(add_doc_client):
     assert page.find(".btn-discard").attr("href") == reverse("wiki.create")
 
 
-@pytest.mark.tags
-@pytest.mark.review_tags
 def test_create_valid(add_doc_client):
     """Test creating a new document with valid and invalid slugs."""
     slug = "Foobar"
@@ -128,8 +125,6 @@ def test_create_valid(add_doc_client):
     ]
 
 
-@pytest.mark.tags
-@pytest.mark.review_tags
 @pytest.mark.parametrize(
     "slug",
     list(SLUG_SIMPLE_CASES.values()) + list(SLUG_RESERVED_CASES.values()),
@@ -159,8 +154,6 @@ def test_create_invalid(add_doc_client, slug):
     assert pq(resp.content).find("input[name=slug]")[0].value == slug
 
 
-@pytest.mark.tags
-@pytest.mark.review_tags
 @pytest.mark.parametrize("slug", ["Foobar", "Root"])
 def test_create_child_valid(root_doc, add_doc_client, slug):
     """Test creating a new child document with valid and invalid slugs."""
@@ -197,8 +190,6 @@ def test_create_child_valid(root_doc, add_doc_client, slug):
     ]
 
 
-@pytest.mark.tags
-@pytest.mark.review_tags
 @pytest.mark.parametrize(
     "slug", list(SLUG_SIMPLE_CASES.values()), ids=list(SLUG_SIMPLE_CASES)
 )
