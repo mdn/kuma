@@ -12,7 +12,6 @@ def fake_view(request, foo, bar):
     return (foo, bar)
 
 
-@pytest.mark.current
 @pytest.mark.django_db
 @pytest.mark.parametrize("maintenance_mode", [False, True])
 @pytest.mark.parametrize(
@@ -50,7 +49,6 @@ def test_auth_key_decorator(
         assert request.authkey == user_auth_key.key
 
 
-@pytest.mark.current
 @pytest.mark.django_db
 def test_auth_key_decorator_with_invalid_header(user_auth_key, settings):
     # Test with incorrect auth header

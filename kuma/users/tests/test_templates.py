@@ -1,7 +1,6 @@
 import json
 from unittest.mock import patch
 
-import pytest
 from allauth.account.models import EmailAddress
 from constance import config as constance_config
 from constance.test.utils import override_config
@@ -216,7 +215,6 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         assert not csrf_input
 
 
-@pytest.mark.bans
 class BanTestCase(UserTestCase):
     def test_common_reasons_in_template(self):
         # The common reasons to ban users (from constance) should be in template
@@ -282,7 +280,6 @@ class BanTestCase(UserTestCase):
             assert reason.text in reasons_to_ban_expected
 
 
-@pytest.mark.bans
 class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
     def test_user_revisions_in_one_click_page_template(self):
         """The user's revisions show up in the ban and cleanup template."""
@@ -519,7 +516,6 @@ class BanAndCleanupTestCase(SampleRevisionsMixin, UserTestCase):
         assert len(ban_other_reasons) == 0
 
 
-@pytest.mark.bans
 class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
     def test_no_revisions_posted(self):
         """If user has no revisions, it should be stated in summary template."""

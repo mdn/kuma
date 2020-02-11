@@ -54,7 +54,6 @@ def test_old_profile_url_gone(db, client):
     assert response.status_code == 404
 
 
-@pytest.mark.bans
 class BanTestCase(UserTestCase):
     def test_ban_permission(self):
         """The ban permission controls access to the ban view."""
@@ -198,7 +197,6 @@ class BanTestCase(UserTestCase):
         assert testuser.get_absolute_url() in resp["Location"]
 
 
-@pytest.mark.bans
 class BanAndCleanupTestCase(UserTestCase):
     def test_ban_permission(self):
         """The ban permission controls access to the ban and cleanup view."""
@@ -240,7 +238,6 @@ class BanAndCleanupTestCase(UserTestCase):
         assert_no_cache_header(resp)
 
 
-@pytest.mark.bans
 class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
     def setUp(self):
         super(BanUserAndCleanupSummaryTestCase, self).setUp()

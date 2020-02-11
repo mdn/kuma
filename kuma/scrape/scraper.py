@@ -210,7 +210,7 @@ class Scraper(object):
                 if source.state == Source.STATE_DONE:
                     log_fmt = self._report_done
                 elif source.state == Source.STATE_ERROR:
-                    log_func = logger.warn
+                    log_func = logger.warning
                     err_msg = '"%s"' % source.error
                     log_fmt = self._report_error
                 else:

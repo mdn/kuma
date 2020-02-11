@@ -445,7 +445,6 @@ def test_recent_documents_feed_filter_by_tag(edit_revision, client):
     assert len(data) == 1
 
 
-@pytest.mark.tags
 def test_feeds_update_after_doc_tag_change(client, wiki_user, root_doc):
     """Tag feeds should be updated after document tags change"""
     tags1 = ["foo", "bar", "js"]
