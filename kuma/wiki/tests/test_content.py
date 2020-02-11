@@ -487,7 +487,6 @@ def test_non_ascii_section_headers():
         assert slugified == section_filter.slugify(original)
 
 
-@pytest.mark.toc
 def test_generate_toc():
     doc_src = """
         <h2 id="HTML">HTML</h2>
@@ -536,7 +535,6 @@ def test_generate_toc():
     assert normalize_html(expected) == normalize_html(result)
 
 
-@pytest.mark.toc
 def test_generate_toc_h2():
     doc_src = """
         <h2 id="HTML">HTML</h2>
@@ -563,7 +561,6 @@ def test_generate_toc_h2():
     assert normalize_html(expected) == normalize_html(result)
 
 
-@pytest.mark.toc
 def test_generate_toc_h3():
     doc_src = """
         <h2 id="HTML">HTML</h2>
@@ -601,7 +598,6 @@ def test_generate_toc_h3():
     assert normalize_html(expected) == normalize_html(result)
 
 
-@pytest.mark.toc
 def test_bug_925043():
     """Bug 925043 - Redesign TOC has a bunch of empty <code> tags in markup"""
     doc_src = """

@@ -437,7 +437,6 @@ class RevisionFormEditTests(RevisionFormViewTests):
         rev_form.instance.document = previous_revision.document
         return rev_form
 
-    @pytest.mark.spam
     @requests_mock.mock()
     def test_standard_edit(self, mock_requests):
         """Test Akismet parameters for edited English pages."""
@@ -461,7 +460,6 @@ class RevisionFormEditTests(RevisionFormViewTests):
             "http://testserver/en-US/docs/" "Web/CSS/display"
         )
 
-    @pytest.mark.spam
     @requests_mock.mock()
     def test_change_tags_edit(self, mock_requests):
         """
@@ -484,7 +482,6 @@ class RevisionFormEditTests(RevisionFormViewTests):
         )
         assert parameters["comment_content"] == expected_content
 
-    @pytest.mark.spam
     @requests_mock.mock()
     def test_legacy_edit(self, mock_requests):
         """
@@ -516,7 +513,6 @@ class RevisionFormEditTests(RevisionFormViewTests):
         )
         assert parameters["comment_content"] == expected_content
 
-    @pytest.mark.spam
     @requests_mock.mock()
     def test_quoteless_tags(self, mock_requests):
         """
@@ -541,7 +537,6 @@ class RevisionFormEditTests(RevisionFormViewTests):
         assert parameters["comment_content"] == expected_content
 
     @requests_mock.mock()
-    @pytest.mark.spam
     def test_akismet_ham(self, mock_requests):
         assert DocumentSpamAttempt.objects.count() == 0
         assert len(mail.outbox) == 0
@@ -550,7 +545,6 @@ class RevisionFormEditTests(RevisionFormViewTests):
         assert DocumentSpamAttempt.objects.count() == 0
 
     @requests_mock.mock()
-    @pytest.mark.spam
     def test_akismet_spam(self, mock_requests):
         assert DocumentSpamAttempt.objects.count() == 0
         assert len(mail.outbox) == 0
@@ -579,7 +573,6 @@ class RevisionFormEditTests(RevisionFormViewTests):
         assert attempt.user.username in body
 
     @requests_mock.mock()
-    @pytest.mark.spam
     def test_akismet_spam_moderator_prompt(self, mock_requests):
         rev_form = self.setup_form(mock_requests, is_spam="true")
         change_perm = Permission.objects.get(codename="change_documentspamattempt")
@@ -591,7 +584,6 @@ class RevisionFormEditTests(RevisionFormViewTests):
         assert admin_url in rev_form.akismet_error_message
 
     @requests_mock.mock()
-    @pytest.mark.spam
     def test_akismet_error(self, mock_requests):
         assert DocumentSpamAttempt.objects.count() == 0
         assert len(mail.outbox) == 0
@@ -610,7 +602,6 @@ class RevisionFormEditTests(RevisionFormViewTests):
 
         assert len(mail.outbox) == 1
 
-    @pytest.mark.spam
     @requests_mock.mock()
     @override_switch(SPAM_TRAINING_SWITCH, True)
     def test_akismet_spam_training(self, mock_requests):
@@ -622,7 +613,6 @@ class RevisionFormEditTests(RevisionFormViewTests):
         assert attempt.user == self.testuser
         assert attempt.review == DocumentSpamAttempt.NEEDS_REVIEW
 
-    @pytest.mark.spam
     @requests_mock.mock()
     @override_switch(SPAM_TRAINING_SWITCH, True)
     def test_akismet_error_training(self, mock_requests):
@@ -634,7 +624,6 @@ class RevisionFormEditTests(RevisionFormViewTests):
         assert attempt.user == self.testuser
         assert attempt.review == DocumentSpamAttempt.AKISMET_ERROR
 
-    @pytest.mark.spam
     @requests_mock.mock()
     @override_flag(SPAM_ADMIN_FLAG, True)
     def test_akismet_parameters_admin_flag(self, mock_requests):
@@ -643,7 +632,6 @@ class RevisionFormEditTests(RevisionFormViewTests):
         parameters = rev_form.akismet_parameters()
         assert parameters["user_role"] == "administrator"
 
-    @pytest.mark.spam
     @requests_mock.mock()
     @override_flag(SPAM_SPAMMER_FLAG, True)
     def test_akismet_parameters_spammer_flag(self, mock_requests):
@@ -652,7 +640,6 @@ class RevisionFormEditTests(RevisionFormViewTests):
         parameters = rev_form.akismet_parameters()
         assert parameters["comment_author"] == "viagra-test-123"
 
-    @pytest.mark.spam
     @requests_mock.mock()
     @override_flag(SPAM_TESTING_FLAG, True)
     def test_akismet_parameters_testing_flag(self, mock_requests):
@@ -661,7 +648,6 @@ class RevisionFormEditTests(RevisionFormViewTests):
         parameters = rev_form.akismet_parameters()
         assert parameters["is_test"]
 
-    @pytest.mark.spam
     @requests_mock.mock()
     def test_akismet_set_review_flags(self, mock_requests):
         only_set_review_flags = {
@@ -678,7 +664,6 @@ class RevisionFormEditTests(RevisionFormViewTests):
         assert parameters["comment_content"] == ""
         assert mock_requests.call_count == 1  # Only verify key called
 
-    @pytest.mark.spam
     @requests_mock.mock()
     def test_akismet_significant_normalized_whitespace(self, mock_requests):
         """
@@ -764,7 +749,6 @@ class RevisionFormCreateTests(RevisionFormViewTests):
         rev_form = RevisionForm(request=request, data=data, parent_slug=parent_slug)
         return rev_form
 
-    @pytest.mark.spam
     @requests_mock.mock()
     def test_standard_new(self, mock_requests):
         """Test that new English pages get the standard Akismet parameters."""
@@ -794,7 +778,6 @@ class RevisionFormCreateTests(RevisionFormViewTests):
         assert parameters["user_ip"] == "127.0.0.1"
 
     @requests_mock.mock()
-    @pytest.mark.spam
     def test_akismet_spam(self, mock_requests):
         assert DocumentSpamAttempt.objects.count() == 0
         assert len(mail.outbox) == 0
@@ -899,7 +882,6 @@ class RevisionFormNewTranslationTests(RevisionFormViewTests):
         rev_form.instance.document = fr_html_doc
         return rev_form
 
-    @pytest.mark.spam
     @requests_mock.mock()
     def test_new_translation(self, mock_requests):
         """Test Akismet dual locale setting for new translations."""
@@ -1011,7 +993,6 @@ class RevisionFormEditTranslationTests(RevisionFormViewTests):
 
         return rev_form1, rev_form2
 
-    @pytest.mark.spam
     @requests_mock.mock()
     def test_edit_translation(self, mock_requests):
         rev_form1, rev_form2 = self.setup_forms(mock_requests)

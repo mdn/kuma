@@ -175,7 +175,6 @@ def test_tags(root_doc, client):
     assert_shared_cache_header(resp)
 
 
-@pytest.mark.tags
 @pytest.mark.parametrize("tag", ["foo", "bar"])
 @pytest.mark.parametrize("tag_case", ["lower", "upper"])
 @pytest.mark.parametrize("locale_case", ["root", "trans"])

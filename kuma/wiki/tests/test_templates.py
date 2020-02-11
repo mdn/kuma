@@ -74,7 +74,6 @@ class DocumentTests(UserTestCase, WikiTestCase):
         assert doc("main#content div.document-head h1").text() == str(r.document.title)
         assert doc("article#wikiArticle").text() == r.document.html
 
-    @pytest.mark.breadcrumbs
     def test_document_no_breadcrumbs(self):
         """Create docs with topical parent/child rel, verify no breadcrumbs."""
         d1, d2 = create_topical_parents_docs()
@@ -90,7 +89,6 @@ class DocumentTests(UserTestCase, WikiTestCase):
         assert doc("main#content div.document-head h1").text() == d2.title
         assert len(doc("nav.crumbs")) == 0
 
-    @pytest.mark.breadcrumbs
     def test_document_has_breadcrumbs(self):
         """Documents with parents and a left column have breadcrumbs."""
         d1, d2 = create_topical_parents_docs()
@@ -232,7 +230,6 @@ class DocumentTests(UserTestCase, WikiTestCase):
         doc = pq(resp.content)
         assert "Add a translation" not in doc(".page-buttons #translations li").text()
 
-    @pytest.mark.toc
     def test_toc_depth(self):
         """Toggling show_toc on/off through the toc_depth field should
         cause table of contents to appear/disappear."""

@@ -1,6 +1,5 @@
 from urllib.parse import parse_qsl
 
-import pytest
 import requests_mock
 from constance.test import override_config
 from django.contrib.admin import AdminSite
@@ -20,7 +19,6 @@ from ..admin import DocumentSpamAttemptAdmin, SUBMISSION_NOT_AVAILABLE
 from ..models import DocumentSpamAttempt, RevisionAkismetSubmission, RevisionIP
 
 
-@pytest.mark.spam
 class DocumentSpamAttemptAdminTestCase(UserTestCase):
     fixtures = UserTestCase.fixtures + ["wiki/documents.json"]
     sample_data = """{
@@ -200,7 +198,6 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
         self.assert_needs_review()
 
 
-@pytest.mark.spam
 @override_config(AKISMET_KEY="admin")
 class RevisionAkismetSubmissionAdminTestCase(UserTestCase):
     fixtures = UserTestCase.fixtures + ["wiki/documents.json"]

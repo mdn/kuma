@@ -1,11 +1,9 @@
-import pytest
 from django.test import TestCase
 from taggit.models import Tag
 
 from .taggit_extras.models import Food
 
 
-@pytest.mark.tags
 class NamespacedTaggableManagerTest(TestCase):
     food_model = Food
 
