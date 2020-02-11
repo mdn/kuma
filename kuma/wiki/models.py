@@ -33,6 +33,7 @@ from .constants import (
     EXPERIMENT_TITLE_PREFIX,
     KUMA_FILE_URL,
     LEGACY_MINDTOUCH_NAMESPACES,
+    NOINDEX_SLUG_PREFIXES,
     REDIRECT_CONTENT,
     REDIRECT_HTML,
 )
@@ -1483,6 +1484,14 @@ Full traceback:
     def has_legacy_namespace(self):
         namespace, separator, _ = self.slug.partition(":")
         return namespace in LEGACY_MINDTOUCH_NAMESPACES if separator else False
+
+    @property
+    def has_noindex_slug(self):
+        """Return true if the slug is in hand-picked list of prefixes."""
+        for slug_start in NOINDEX_SLUG_PREFIXES:
+            if self.slug.startswith(slug_start):
+                return True
+        return False
 
     def get_hreflang(self, other_locales=None):
         """
