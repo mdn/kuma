@@ -76,7 +76,6 @@ def test_account_email_page_requires_signin(db, client, settings):
     response = client.get(reverse("account_email"))
     assert response.status_code == 302
     assert_no_cache_header(response)
-    print(response["Location"])
     response = client.get(response["Location"], follow=True)
     assert response.status_code == 200
     assert b"Please sign in" in response.content
