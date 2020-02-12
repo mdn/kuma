@@ -1,4 +1,7 @@
 import hashlib
+from calendar import timegm
+
+from django.utils.http import http_date
 
 
 def split_slug(slug):
@@ -50,3 +53,7 @@ def document_form_initial(document):
 
 def calculate_etag(content):
     return hashlib.md5(content.encode()).hexdigest()
+
+
+def get_last_modified_header(dt):
+    return http_date(timegm(dt.utctimetuple()))

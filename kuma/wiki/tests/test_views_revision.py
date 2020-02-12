@@ -12,6 +12,7 @@ from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 
 from ..models import Document, Revision
+from ..views.utils import get_last_modified_header
 
 
 @pytest.fixture
@@ -246,7 +247,9 @@ def test_revision_api_get(doc_with_macros, client, constance_config, qs, expecte
     assert_no_cache_header(response)
     assert response["X-Frame-Options"] == "deny"
     assert response["X-Robots-Tag"] == "noindex"
-    assert response["ETag"] == f'"{str(doc_with_macros.current_revision.id)}"'
+    assert response["Last-Modified"] == get_last_modified_header(
+        doc_with_macros.current_revision.created
+    )
 
 
 @pytest.mark.parametrize("case", ("json", "form-data", "form-urlencoded"))
@@ -285,7 +288,7 @@ def test_revision_api_post(
         )
     )
     assert response.content.decode() == "yada"
-    assert response["ETag"] == f'"{str(new_rev.id)}"'
+    assert response["Last-Modified"] == get_last_modified_header(new_rev.created)
     assert_no_cache_header(response)
 
 
@@ -301,12 +304,12 @@ def test_revision_api_conditional_post(
         "wiki.revision_api", args=[doc_with_macros.slug], locale=doc_with_macros.locale
     )
 
-    # First let's get some revised content and the ETag header.
+    # First let's get some revised content and the Last-Modified header.
     response = client.get(url + "?mode=remove&macros=m1", HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     revised_content = response.content.decode()
     assert revised_content == '{{M2("z")}}'
-    etag_from_get = response["ETag"]
+    last_modified_from_get = response["Last-Modified"]
 
     # Let's POST the revised content, but with the condition that no one else
     # has created a new revision for the document since we performed our GET.
@@ -314,7 +317,7 @@ def test_revision_api_conditional_post(
         url,
         data=dict(content=revised_content),
         HTTP_HOST=settings.WIKI_HOST,
-        HTTP_IF_MATCH=etag_from_get,
+        HTTP_IF_UNMODIFIED_SINCE=last_modified_from_get,
         HTTP_AUTHORIZATION=f"Token {wiki_user_2_token.key}",
     )
     doc_with_macros.refresh_from_db()
@@ -331,9 +334,9 @@ def test_revision_api_conditional_post(
     )
     assert response.content.decode() == revised_content
     assert_no_cache_header(response)
-    assert response["ETag"] == f'"{str(new_rev.id)}"'
+    assert response["Last-Modified"] == get_last_modified_header(new_rev.created)
 
-    # Now let's pretend we're someone else, holding the same "etag_from_get"
+    # This time we're someone else, holding the same "last_modified_from_get"
     # value, who also wants to conditionally revise the document, but since
     # it has changed, the condition will not be satisfied and the POST will
     # fail.
@@ -341,7 +344,7 @@ def test_revision_api_conditional_post(
         url,
         data=dict(content="yada"),
         HTTP_HOST=settings.WIKI_HOST,
-        HTTP_IF_MATCH=etag_from_get,
+        HTTP_IF_UNMODIFIED_SINCE=last_modified_from_get,
         HTTP_AUTHORIZATION=f"Token {wiki_user_2_token.key}",
     )
     assert response.status_code == 412

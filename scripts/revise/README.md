@@ -37,6 +37,11 @@ macros:
         - geckoRelease
         - Note
 ```
+- Create and configure your **API token**. If you don't, your `revise commit` command will complain.
+    - Create a new token for yourself via the Django admin
+    - Copy the token and inform `revise` in one of two ways:
+        - via the `MDN_REVISE_TOKEN` environment variable
+        - save it in `$HOME/.revise/token`
 
 ### Render
 - `cd js-docs`
@@ -72,6 +77,13 @@ macros:
 
 - You can also remove your selected macros (the ones listed under the `remove` section of your configuration file) from your selected douments using the `revise remove` command.
 - It will create the same kinds of files (`rev.html`, `ref.html`, and `metadata.yaml`) for each of your selected documents, but of course this time it will remove any trace of each of your selected macros from each of your selected documents (without committing the results, of course).
+
+### Diff
+
+- After running `revise remove` or `revise render` you'll probably want to visually check the differences between each of the `rev.html` and `ref.html` pairs in your results directory. You can do this using `revise diff <results-dir>` or in this case `revise commit results`.
+- It uses `git diff`, so assumes you have `git` installed.
+- By default it paginates the results (i.e., the results are piped into `less`) so you can view a page of differences at a time. Remember that each time you reach the end of the differences for a pair of files, you can use the `q` command to move to the differences for the next pair of files.
+- If you'd prefer to see all the differences for all pairs of files at once, you can use `revise diff --no-pager <results-dir>`.
 
 ### Commit
 
