@@ -108,7 +108,6 @@ coverage = {extras = ["toml"], version = "^5"} # Use optional toml support
 
 [tool.black]
 target-version = ["py38"]
-exclude = "/migrations/"
 
 [tool.coverage.run]
 source = ["kuma"]

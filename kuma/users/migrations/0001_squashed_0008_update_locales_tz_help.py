@@ -1,9 +1,11 @@
-from django.db import migrations, models
 import datetime
+
 import django.contrib.auth.models
+import django.core.validators
 import django.utils.timezone
 from django.conf import settings
-import django.core.validators
+from django.db import migrations, models
+
 import kuma.core.managers
 
 
@@ -923,7 +925,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"db_table": "auth_user",},
+            options={"db_table": "auth_user"},
         ),
         migrations.CreateModel(
             name="UserBan",
@@ -965,7 +967,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterModelManagers(
             name="user",
-            managers=[("objects", django.contrib.auth.models.UserManager()),],
+            managers=[("objects", django.contrib.auth.models.UserManager())],
         ),
         migrations.AlterField(
             model_name="user",
