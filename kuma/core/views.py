@@ -1,5 +1,3 @@
-
-
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.http import HttpResponse
@@ -21,11 +19,11 @@ def _error_page(request, status):
     Sometimes, an error is raised by a middleware, and the request is not
     fully populated with a user or language code. Add in good defaults.
     """
-    if not hasattr(request, 'user'):
+    if not hasattr(request, "user"):
         request.user = AnonymousUser()
-    if not hasattr(request, 'LANGUAGE_CODE'):
-        request.LANGUAGE_CODE = 'en-US'
-    return render(request, '%d.html' % status, status=status)
+    if not hasattr(request, "LANGUAGE_CODE"):
+        request.LANGUAGE_CODE = "en-US"
+    return render(request, "%d.html" % status, status=status)
 
 
 @never_cache
@@ -37,26 +35,27 @@ def set_language(request):
 
     if lang_code and lang_code in get_kuma_languages():
 
-        response.set_cookie(key=settings.LANGUAGE_COOKIE_NAME,
-                            value=lang_code,
-                            max_age=settings.LANGUAGE_COOKIE_AGE,
-                            path=settings.LANGUAGE_COOKIE_PATH,
-                            domain=settings.LANGUAGE_COOKIE_DOMAIN,
-                            )
+        response.set_cookie(
+            key=settings.LANGUAGE_COOKIE_NAME,
+            value=lang_code,
+            max_age=settings.LANGUAGE_COOKIE_AGE,
+            path=settings.LANGUAGE_COOKIE_PATH,
+            domain=settings.LANGUAGE_COOKIE_DOMAIN,
+        )
 
     return response
 
 
-handler403 = lambda request, exception=None: _error_page(request, 403)
-handler404 = lambda request, exception=None: _error_page(request, 404)
-handler500 = lambda request, exception=None: _error_page(request, 500)
+handler403 = lambda request, exception=None: _error_page(request, 403)  # noqa: E731
+handler404 = lambda request, exception=None: _error_page(request, 404)  # noqa: E731
+handler500 = lambda request, exception=None: _error_page(request, 500)  # noqa: E731
 
 
 @never_cache
 def rate_limited(request, exception):
     """Render a rate-limited exception."""
-    response = render(request, '429.html', status=429)
-    response['Retry-After'] = '60'
+    response = render(request, "429.html", status=429)
+    response["Retry-After"] = "60"
     return response
 
 

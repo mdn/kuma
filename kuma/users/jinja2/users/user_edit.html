@@ -12,16 +12,18 @@
 {% block robots_value %}noindex, nofollow{% endblock %}
 
 {% block site_css %}
-{{ super() }}
-{% stylesheet 'jquery-ui' %}
-{% stylesheet 'users' %}
-{% stylesheet 'submission' %}
+  {{ super() }}
+  {% stylesheet 'jquery-ui' %}
+  {% stylesheet 'users' %}
+  {% stylesheet 'submission' %}
+  {% stylesheet 'delete-user-modal' %}
 {% endblock %}
 
 {% block site_js %}
-{{ super() }}
-{% javascript 'jquery-ui' %}
-{% javascript 'users' %}
+  {{ super() }}
+  {% javascript 'jquery-ui' %}
+  {% javascript 'users' %}
+  {% javascript 'delete-user-modal' %}
 {% endblock %}
 
 {% block content %}
@@ -130,16 +132,24 @@
 
         </ul>
       </fieldset>
-      <p>
+      <ul class="button-container">
+        <li>
           <button type="submit" class="positive">
-              {% include 'includes/icons/general/check-mark.svg' %}
-              {{ _('Publish') }}
+            {% include 'includes/icons/general/check-mark.svg' %}
+            {{ _('Publish') }}
           </button>
-      </p>
-      {% if is_me %}
-      <a class="field-management" href="{{ url('users.user_delete', username=request.user.username) }}">{{ _('Delete your account.') }}</a>
-      {% endif %}
+        </li>
+        <li>
+          {% if is_me %}
+            <a id="delete-user-button" class="negative"
+              href="{{ url('users.user_delete', username=request.user.username) }}">{{ _('Delete Account.') }}</a>
+          {% endif %}
+        </li>
+      </ul>
     </form>
+    {% if is_me and waffle.flag('subscription') and settings.STRIPE_PUBLIC_KEY %}
+      {% include "users/includes/stripe_subscription.html" %}
+    {% endif %}
   </div>
   <div class="column-4">
     {% if settings.NEWSLETTER %}
@@ -149,6 +159,8 @@
     {% endif %}
   </div>
 </div>
+
+{% include "/users/includes/delete-user-modal.html" %}
 
 {% endblock %}
 

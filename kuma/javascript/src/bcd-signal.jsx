@@ -277,11 +277,13 @@ window.activateBCDSignals = (slug: string, locale: string) => {
         const control = document.createElement('div');
         const controlInnerWrapper = document.createElement('div');
         const controlHeader = document.createElement('div');
+        const controlInnerHeaderWrapper = document.createElement('div');
         const controlDescription = document.createElement('div');
 
         control.className = 'control';
         controlInnerWrapper.className = 'control-wrap';
         controlHeader.className = 'control-header';
+        controlInnerHeaderWrapper.className = 'control-header-wrap';
         if (controlObj.inline) {
             controlHeader.classList.add('has-control');
         }
@@ -290,9 +292,14 @@ window.activateBCDSignals = (slug: string, locale: string) => {
         }
 
         controlDescription.className = 'control-description';
+        controlInnerHeaderWrapper.appendChild(
+            createStepNumLabel(controlObj.index)
+        );
+        controlInnerHeaderWrapper.appendChild(
+            document.createTextNode(controlObj.header)
+        );
+        controlHeader.appendChild(controlInnerHeaderWrapper);
 
-        controlHeader.appendChild(createStepNumLabel(controlObj.index, true));
-        controlHeader.appendChild(document.createTextNode(controlObj.header));
         controlDescription.innerText = controlObj.description;
 
         controlInnerWrapper.appendChild(controlHeader);
@@ -311,7 +318,6 @@ window.activateBCDSignals = (slug: string, locale: string) => {
             controlInnerWrapper.appendChild(controlObj.el);
         }
 
-        control.appendChild(createStepNumLabel(controlObj.index));
         control.appendChild(controlInnerWrapper);
 
         return control;
@@ -523,7 +529,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
 
         closeButton.className = 'button close-btn';
         closeButtonWrapper.className = 'close-button-wrapper';
-        leftBlockWrapper.className = 'column-5 left-block';
+        leftBlockWrapper.className = 'column-4 left-block';
         leftBlockHeader.className = 'left-block-header';
         leftBlockImage.className = 'left-block-image';
 
@@ -562,7 +568,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
         stepsInfoSpan = document.createElement('span');
 
         formControlBlockWrapper.className =
-            'column-7 right-block form-control-block';
+            'column-8 right-block form-control-block';
         stepsInfo.className = 'highlight-spanned';
         stepsInfoSpan.className = 'highlight-span';
 

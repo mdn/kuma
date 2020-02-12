@@ -15,4 +15,10 @@
         width: 100%;
         @include vendorize(box-sizing, border-box);
     }
+
+    .save-and-delete {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 }

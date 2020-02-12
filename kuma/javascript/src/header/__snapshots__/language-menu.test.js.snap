@@ -23,14 +23,9 @@ exports[`LanguageMenu snapshot 1`] = `
     </span>
   </button>
   <ul
-    className="dropdown-menu-items"
+    className="dropdown-menu-items right"
     id="language-menu"
     role="menu"
-    style={
-      Object {
-        "right": 0,
-      }
-    }
   >
     <li
       lang="es"

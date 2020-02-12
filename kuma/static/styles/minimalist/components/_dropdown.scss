@@ -34,6 +34,21 @@
         min-width: 100%;
         z-index: $menu-zindex;
 
+        // Mirror left and right positions for LTR and RTL languages
+        /* prettier-ignore */
+        @include bidi((
+            (left, 0, auto),
+            (right, auto, 0),
+        ));
+
+        &.right {
+            /* prettier-ignore */
+            @include bidi((
+                (left, auto, 0),
+                (right, 0, auto),
+            ));
+        }
+
         li a,
         li button {
             display: inline-block;

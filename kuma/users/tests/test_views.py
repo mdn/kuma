@@ -1,3 +1,4 @@
+from datetime import timedelta
 from textwrap import dedent
 from unittest import mock
 
@@ -18,6 +19,15 @@ from waffle.models import Flag
 
 from kuma.attachments.models import Attachment, AttachmentRevision
 from kuma.authkeys.models import Key
+from kuma.core.ga_tracking import (
+    ACTION_AUTH_STARTED,
+    ACTION_AUTH_SUCCESSFUL,
+    ACTION_FREE_NEWSLETTER,
+    ACTION_PROFILE_AUDIT,
+    ACTION_PROFILE_CREATED,
+    ACTION_RETURNING_USER_SIGNIN,
+    CATEGORY_SIGNUP_FLOW,
+)
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import to_html
@@ -28,7 +38,8 @@ from kuma.wiki.models import (
     DocumentDeletionLog,
     DocumentSpamAttempt,
     Revision,
-    RevisionAkismetSubmission)
+    RevisionAkismetSubmission,
+)
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 from kuma.wiki.tests import document as create_document
 
@@ -39,117 +50,107 @@ from ..views import delete_document, revert_document
 
 
 def test_old_profile_url_gone(db, client):
-    response = client.get('/users/edit', follow=True)
+    response = client.get("/users/edit", follow=True)
     assert response.status_code == 404
 
 
-@pytest.mark.bans
 class BanTestCase(UserTestCase):
-
     def test_ban_permission(self):
         """The ban permission controls access to the ban view."""
-        admin = self.user_model.objects.get(username='admin')
-        testuser = self.user_model.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username="admin")
+        testuser = self.user_model.objects.get(username="testuser")
 
         # testuser doesn't have ban permission, can't ban.
-        self.client.login(username='testuser',
-                          password='testpass')
-        ban_url = reverse('users.ban_user',
-                          kwargs={'username': admin.username})
+        self.client.login(username="testuser", password="testpass")
+        ban_url = reverse("users.ban_user", kwargs={"username": admin.username})
         resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert_no_cache_header(resp)
-        assert reverse(settings.LOGIN_URL) in resp['Location']
+        assert reverse(settings.LOGIN_URL) in resp["Location"]
         self.client.logout()
 
         # admin has ban permission, can ban.
-        self.client.login(username='admin',
-                          password='testpass')
-        ban_url = reverse('users.ban_user',
-                          kwargs={'username': testuser.username})
+        self.client.login(username="admin", password="testpass")
+        ban_url = reverse("users.ban_user", kwargs={"username": testuser.username})
         resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
     def test_ban_view(self):
-        testuser = self.user_model.objects.get(username='testuser')
-        admin = self.user_model.objects.get(username='admin')
+        testuser = self.user_model.objects.get(username="testuser")
+        admin = self.user_model.objects.get(username="admin")
 
-        self.client.login(username='admin', password='testpass')
+        self.client.login(username="admin", password="testpass")
 
-        data = {'reason': 'Banned by unit test.'}
-        ban_url = reverse('users.ban_user',
-                          kwargs={'username': testuser.username})
+        data = {"reason": "Banned by unit test."}
+        ban_url = reverse("users.ban_user", kwargs={"username": testuser.username})
 
         resp = self.client.post(ban_url, data, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert_no_cache_header(resp)
-        assert testuser.get_absolute_url() in resp['Location']
+        assert testuser.get_absolute_url() in resp["Location"]
 
-        testuser_banned = self.user_model.objects.get(username='testuser')
+        testuser_banned = self.user_model.objects.get(username="testuser")
         assert not testuser_banned.is_active
 
-        bans = UserBan.objects.filter(user=testuser,
-                                      by=admin,
-                                      reason='Banned by unit test.')
+        bans = UserBan.objects.filter(
+            user=testuser, by=admin, reason="Banned by unit test."
+        )
         assert bans.count()
 
     def test_ban_nonexistent_user(self):
         # Attempting to ban a non-existent user should 404
-        admin = self.user_model.objects.get(username='admin')
+        admin = self.user_model.objects.get(username="admin")
 
-        self.client.login(username='admin', password='testpass')
+        self.client.login(username="admin", password="testpass")
 
-        nonexistent_username = 'foo'
-        data = {'reason': 'Banned by unit test.'}
-        ban_url = reverse('users.ban_user',
-                          kwargs={'username': nonexistent_username})
+        nonexistent_username = "foo"
+        data = {"reason": "Banned by unit test."}
+        ban_url = reverse("users.ban_user", kwargs={"username": nonexistent_username})
 
         resp = self.client.post(ban_url, data, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 404
         assert_no_cache_header(resp)
 
-        bans = UserBan.objects.filter(user__username=nonexistent_username,
-                                      by=admin,
-                                      reason='Banned by unit test.')
+        bans = UserBan.objects.filter(
+            user__username=nonexistent_username, by=admin, reason="Banned by unit test."
+        )
         assert bans.count() == 0
 
     def test_ban_without_reason(self):
         # Attempting to ban without a reason should return the form
-        testuser = self.user_model.objects.get(username='testuser')
-        admin = self.user_model.objects.get(username='admin')
+        testuser = self.user_model.objects.get(username="testuser")
+        admin = self.user_model.objects.get(username="admin")
 
-        self.client.login(username='admin', password='testpass')
+        self.client.login(username="admin", password="testpass")
 
-        ban_url = reverse('users.ban_user',
-                          kwargs={'username': testuser.username})
+        ban_url = reverse("users.ban_user", kwargs={"username": testuser.username})
 
         # POST without data kwargs
         resp = self.client.post(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
-        bans = UserBan.objects.filter(user=testuser,
-                                      by=admin,
-                                      reason='Banned by unit test.')
+        bans = UserBan.objects.filter(
+            user=testuser, by=admin, reason="Banned by unit test."
+        )
         assert bans.count() == 0
 
         # POST with a blank reason
-        data = {'reason': ''}
+        data = {"reason": ""}
         resp = self.client.post(ban_url, data, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
-        bans = UserBan.objects.filter(user=testuser,
-                                      by=admin,
-                                      reason='Banned by unit test.')
+        bans = UserBan.objects.filter(
+            user=testuser, by=admin, reason="Banned by unit test."
+        )
         assert bans.count() == 0
 
     def test_bug_811751_banned_user(self):
         """A banned user should not be viewable"""
-        testuser = self.user_model.objects.get(username='testuser')
-        url = reverse('users.user_detail',
-                      args=(testuser.username,))
+        testuser = self.user_model.objects.get(username="testuser")
+        url = reverse("users.user_detail", args=(testuser.username,))
 
         # User viewable if not banned
         response = self.client.get(url)
@@ -157,11 +158,11 @@ class BanTestCase(UserTestCase):
         assert_no_cache_header(response)
 
         # Ban User
-        admin = self.user_model.objects.get(username='admin')
-        testuser = self.user_model.objects.get(username='testuser')
-        UserBan.objects.create(user=testuser, by=admin,
-                               reason='Banned by unit test.',
-                               is_active=True)
+        admin = self.user_model.objects.get(username="admin")
+        testuser = self.user_model.objects.get(username="testuser")
+        UserBan.objects.create(
+            user=testuser, by=admin, reason="Banned by unit test.", is_active=True
+        )
 
         # User not viewable if banned
         response = self.client.get(url)
@@ -169,88 +170,87 @@ class BanTestCase(UserTestCase):
         assert_no_cache_header(response)
 
         # Admin can view banned user
-        self.client.login(username='admin', password='testpass')
+        self.client.login(username="admin", password="testpass")
         response = self.client.get(url)
         assert response.status_code == 200
         assert_no_cache_header(response)
 
     def test_get_ban_user_view(self):
         # For an unbanned user get the ban_user view
-        testuser = self.user_model.objects.get(username='testuser')
-        admin = self.user_model.objects.get(username='admin')
+        testuser = self.user_model.objects.get(username="testuser")
+        admin = self.user_model.objects.get(username="admin")
 
-        self.client.login(username='admin', password='testpass')
-        ban_url = reverse('users.ban_user',
-                          kwargs={'username': testuser.username})
+        self.client.login(username="admin", password="testpass")
+        ban_url = reverse("users.ban_user", kwargs={"username": testuser.username})
 
         resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
         # For a banned user redirect to user detail page
-        UserBan.objects.create(user=testuser, by=admin,
-                               reason='Banned by unit test.',
-                               is_active=True)
+        UserBan.objects.create(
+            user=testuser, by=admin, reason="Banned by unit test.", is_active=True
+        )
         resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert_no_cache_header(resp)
-        assert testuser.get_absolute_url() in resp['Location']
+        assert testuser.get_absolute_url() in resp["Location"]
 
 
-@pytest.mark.bans
 class BanAndCleanupTestCase(UserTestCase):
-
     def test_ban_permission(self):
         """The ban permission controls access to the ban and cleanup view."""
-        admin = self.user_model.objects.get(username='admin')
-        testuser = self.user_model.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username="admin")
+        testuser = self.user_model.objects.get(username="testuser")
 
         # testuser doesn't have ban permission, can't ban.
-        self.client.login(username='testuser',
-                          password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup',
-                          kwargs={'username': admin.username})
+        self.client.login(username="testuser", password="testpass")
+        ban_url = reverse(
+            "users.ban_user_and_cleanup", kwargs={"username": admin.username}
+        )
         resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 302
         assert_no_cache_header(resp)
-        assert reverse(settings.LOGIN_URL) in resp['Location']
+        assert reverse(settings.LOGIN_URL) in resp["Location"]
         self.client.logout()
 
         # admin has ban permission, can ban.
-        self.client.login(username='admin',
-                          password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup',
-                          kwargs={'username': testuser.username})
+        self.client.login(username="admin", password="testpass")
+        ban_url = reverse(
+            "users.ban_user_and_cleanup", kwargs={"username": testuser.username}
+        )
         resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
     def test_ban_nonexistent_user(self):
         """GETs to ban_user_and_cleanup for nonexistent user return 404."""
-        testuser = self.user_model.objects.get(username='testuser')
+        testuser = self.user_model.objects.get(username="testuser")
 
         # GET request
-        self.client.login(username='admin',
-                          password='testpass')
-        ban_url = reverse('users.ban_user_and_cleanup',
-                          kwargs={'username': testuser.username})
+        self.client.login(username="admin", password="testpass")
+        ban_url = reverse(
+            "users.ban_user_and_cleanup", kwargs={"username": testuser.username}
+        )
         testuser.delete()
         resp = self.client.get(ban_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 404
         assert_no_cache_header(resp)
 
 
-@pytest.mark.bans
 class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
-
     def setUp(self):
         super(BanUserAndCleanupSummaryTestCase, self).setUp()
 
-        self.ban_testuser_url = reverse('users.ban_user_and_cleanup_summary',
-                                        kwargs={'username': self.testuser.username})
-        self.ban_testuser2_url = reverse('users.ban_user_and_cleanup_summary',
-                                         kwargs={'username': self.testuser2.username})
-        self.client.login(username='admin', password='testpass')
+        self.ban_testuser_url = reverse(
+            "users.ban_user_and_cleanup_summary",
+            kwargs={"username": self.testuser.username},
+        )
+        self.ban_testuser2_url = reverse(
+            "users.ban_user_and_cleanup_summary",
+            kwargs={"username": self.testuser2.username},
+        )
+        self.client.login(username="admin", password="testpass")
         self.submissions_flag = None
 
     def tearDown(self):
@@ -261,10 +261,10 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
     def enable_akismet_and_mock_requests(self, mock_requests):
         """Enable Akismet and mock calls to it. Return the mock object."""
         self.submissions_flag = Flag.objects.create(
-            name=SPAM_SUBMISSIONS_FLAG, everyone=True)
-        mock_requests.post(VERIFY_URL, content=b'valid')
-        mock_requests.post(
-            SPAM_URL, content=Akismet.submission_success.encode())
+            name=SPAM_SUBMISSIONS_FLAG, everyone=True
+        )
+        mock_requests.post(VERIFY_URL, content=b"valid")
+        mock_requests.post(SPAM_URL, content=Akismet.submission_success.encode())
         return mock_requests
 
     def test_delete_document(self):
@@ -293,9 +293,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         # Create a spam revision on top of the original good rev.
         revisions_created = self.create_revisions(
-            num=1,
-            document=self.document,
-            creator=self.testuser)
+            num=1, document=self.document, creator=self.testuser
+        )
         revision_id = revisions_created[0].id
 
         # Reverting a non-existent rev raises a 404
@@ -305,58 +304,55 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # Reverting an existing rev succeeds
         success = revert_document(request, revision_id)
         assert success
-        self.document.refresh_from_db(fields=['current_revision'])
+        self.document.refresh_from_db(fields=["current_revision"])
         assert self.document.current_revision.id != revision_id
 
         # If an IntegrityError is raised when we try to revert, it fails without error.
         revision_id = self.document.current_revision.id
-        with mock.patch('kuma.wiki.models.datetime') as datetime_mock:
+        with mock.patch("kuma.wiki.models.datetime") as datetime_mock:
             # Just get any old thing inside the call to raise an IntegrityError
             datetime_mock.now.side_effect = IntegrityError()
 
             success = revert_document(request, revision_id)
         assert not success
-        self.document.refresh_from_db(fields=['current_revision'])
+        self.document.refresh_from_db(fields=["current_revision"])
         assert self.document.current_revision.id == revision_id
 
     def test_ban_nonexistent_user(self):
         """POSTs to ban_user_and_cleanup for nonexistent user return 404."""
         self.testuser.delete()
-        resp = self.client.post(self.ban_testuser_url,
-                                HTTP_HOST=settings.WIKI_HOST)
+        resp = self.client.post(self.ban_testuser_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 404
         assert_no_cache_header(resp)
 
     def test_post_returns_summary_page(self):
         """POSTing to ban_user_and_cleanup returns the summary page."""
-        resp = self.client.post(self.ban_testuser_url,
-                                HTTP_HOST=settings.WIKI_HOST)
+        resp = self.client.post(self.ban_testuser_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
     def test_post_bans_user(self):
         """POSTing to the ban_user_and_cleanup bans user for "spam" reason."""
-        resp = self.client.post(self.ban_testuser_url,
-                                HTTP_HOST=settings.WIKI_HOST)
+        resp = self.client.post(self.ban_testuser_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
-        testuser_banned = self.user_model.objects.get(username='testuser')
+        testuser_banned = self.user_model.objects.get(username="testuser")
         assert not testuser_banned.is_active
 
-        bans = UserBan.objects.filter(user=self.testuser,
-                                      by=self.admin,
-                                      reason='Spam')
+        bans = UserBan.objects.filter(user=self.testuser, by=self.admin, reason="Spam")
         assert bans.count()
 
     def test_post_banned_user(self):
         """POSTing to ban_user_and_cleanup for a banned user updates UserBan."""
-        UserBan.objects.create(user=self.testuser, by=self.testuser2,
-                               reason='Banned by unit test.',
-                               is_active=True)
+        UserBan.objects.create(
+            user=self.testuser,
+            by=self.testuser2,
+            reason="Banned by unit test.",
+            is_active=True,
+        )
 
-        resp = self.client.post(self.ban_testuser_url,
-                                HTTP_HOST=settings.WIKI_HOST)
+        resp = self.client.post(self.ban_testuser_url, HTTP_HOST=settings.WIKI_HOST)
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -368,9 +364,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         assert bans.count()
         assert bans.first().is_active
         assert bans.first().by == self.admin
-        assert bans.first().reason == 'Spam'
+        assert bans.first().reason == "Spam"
 
-    @override_config(AKISMET_KEY='dashboard')
+    @override_config(AKISMET_KEY="dashboard")
     @requests_mock.mock()
     def test_post_submits_revisions_to_akismet_as_spam(self, mock_requests):
         """POSTing to ban_user_and_cleanup url submits revisions to akismet."""
@@ -378,22 +374,24 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # Don't specify document so a new one is created for each revision
         num_revisions = 3
         revisions_created = self.create_revisions(
-            num=num_revisions,
-            creator=self.testuser)
+            num=num_revisions, creator=self.testuser
+        )
 
         # Enable Akismet and mock calls to it
         mock_requests = self.enable_akismet_and_mock_requests(mock_requests)
 
         # The request
-        data = {'revision-id': [rev.id for rev in revisions_created]}
-        resp = self.client.post(self.ban_testuser_url, data=data,
-                                HTTP_HOST=settings.WIKI_HOST)
+        data = {"revision-id": [rev.id for rev in revisions_created]}
+        resp = self.client.post(
+            self.ban_testuser_url, data=data, HTTP_HOST=settings.WIKI_HOST
+        )
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
         # All of self.testuser's revisions have been submitted
         testuser_submissions = RevisionAkismetSubmission.objects.filter(
-            revision__creator=self.testuser.id)
+            revision__creator=self.testuser.id
+        )
         assert testuser_submissions.count() == num_revisions
         for submission in testuser_submissions:
             assert submission.revision in revisions_created
@@ -401,79 +399,87 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         assert mock_requests.called
         assert mock_requests.call_count == 2 * num_revisions
 
-    @override_config(AKISMET_KEY='dashboard')
+    @override_config(AKISMET_KEY="dashboard")
     @requests_mock.mock()
-    def test_post_submits_no_revisions_to_akismet_when_no_user_revisions(self, mock_requests):
+    def test_post_submits_no_revisions_to_akismet_when_no_user_revisions(
+        self, mock_requests
+    ):
         """POSTing to ban_user_and_cleanup url for a user with no revisions."""
         # Enable Akismet and mock calls to it
         mock_requests = self.enable_akismet_and_mock_requests(mock_requests)
 
         # User has no revisions
-        data = {'revision-id': []}
+        data = {"revision-id": []}
 
-        resp = self.client.post(self.ban_testuser_url, data=data,
-                                HTTP_HOST=settings.WIKI_HOST)
+        resp = self.client.post(
+            self.ban_testuser_url, data=data, HTTP_HOST=settings.WIKI_HOST
+        )
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
         # Akismet endpoints were not called
         assert mock_requests.call_count == 0
 
-    @override_config(AKISMET_KEY='dashboard')
+    @override_config(AKISMET_KEY="dashboard")
     @requests_mock.mock()
-    def test_post_submits_no_revisions_to_akismet_when_revisions_not_in_request(self, mock_requests):
+    def test_post_submits_no_revisions_to_akismet_when_revisions_not_in_request(
+        self, mock_requests
+    ):
         """POSTing to ban_user_and_cleanup url without revisions in request."""
         # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
         # Don't specify document so a new one is created for each revision
         num_revisions = 3
-        self.create_revisions(
-            num=num_revisions,
-            creator=self.testuser)
+        self.create_revisions(num=num_revisions, creator=self.testuser)
 
         # Enable Akismet and mock calls to it
         mock_requests = self.enable_akismet_and_mock_requests(mock_requests)
 
         # User's revisions were not in request.POST (not selected in the template)
-        data = {'revision-id': []}
+        data = {"revision-id": []}
 
-        resp = self.client.post(self.ban_testuser_url, data=data,
-                                HTTP_HOST=settings.WIKI_HOST)
+        resp = self.client.post(
+            self.ban_testuser_url, data=data, HTTP_HOST=settings.WIKI_HOST
+        )
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
         # No revisions submitted for self.testuser, since no revisions were selected
         testuser_submissions = RevisionAkismetSubmission.objects.filter(
-            revision__creator=self.testuser.id)
+            revision__creator=self.testuser.id
+        )
         assert testuser_submissions.count() == 0
         # Akismet endpoints were not called
         assert mock_requests.call_count == 0
 
-    @override_config(AKISMET_KEY='dashboard')
+    @override_config(AKISMET_KEY="dashboard")
     @requests_mock.mock()
-    def test_post_submits_no_revisions_to_akismet_when_wrong_revisions_in_request(self, mock_requests):
+    def test_post_submits_no_revisions_to_akismet_when_wrong_revisions_in_request(
+        self, mock_requests
+    ):
         """POSTing to ban_user_and_cleanup url with non-user revisions."""
         # Create 3 revisions for self.testuser, titled 'Revision 1', 'Revision 2'...
         num_revisions = 3
         revisions_created = self.create_revisions(
-            num=num_revisions,
-            document=self.document,
-            creator=self.testuser)
+            num=num_revisions, document=self.document, creator=self.testuser
+        )
 
         # Enable Akismet and mock calls to it
         mock_requests = self.enable_akismet_and_mock_requests(mock_requests)
 
         # User being banned did not create the revisions being POSTed
-        data = {'revision-id': [rev.id for rev in revisions_created]}
+        data = {"revision-id": [rev.id for rev in revisions_created]}
 
-        resp = self.client.post(self.ban_testuser2_url, data=data,
-                                HTTP_HOST=settings.WIKI_HOST)
+        resp = self.client.post(
+            self.ban_testuser2_url, data=data, HTTP_HOST=settings.WIKI_HOST
+        )
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
         # No revisions submitted for self.testuser2, since revisions in the POST
         # were made by self.testuser
         testuser2_submissions = RevisionAkismetSubmission.objects.filter(
-            revision__creator=self.testuser2.id)
+            revision__creator=self.testuser2.id
+        )
         assert testuser2_submissions.count() == 0
         # Akismet endpoints were not called
         assert mock_requests.call_count == 0
@@ -484,17 +490,17 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # Revisions will be reverted and then document will be deleted.
         new_document = create_document(save=True)
         new_revisions = self.create_revisions(
-            num=3,
-            document=new_document,
-            creator=self.testuser)
+            num=3, document=new_document, creator=self.testuser
+        )
 
         # Pass in all revisions, each should be reverted then the
         # document will be deleted as well
-        data = {'revision-id': [rev.id for rev in new_revisions]}
+        data = {"revision-id": [rev.id for rev in new_revisions]}
 
-        self.client.login(username='admin', password='testpass')
-        resp = self.client.post(self.ban_testuser_url, data=data,
-                                HTTP_HOST=settings.WIKI_HOST)
+        self.client.login(username="admin", password="testpass")
+        resp = self.client.post(
+            self.ban_testuser_url, data=data, HTTP_HOST=settings.WIKI_HOST
+        )
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -511,9 +517,8 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         self.create_revisions(num=1, document=new_document, creator=self.admin)
         original_content = new_document.current_revision.content
         spam_revisions = self.create_revisions(
-            num=3,
-            document=new_document,
-            creator=self.testuser)
+            num=3, document=new_document, creator=self.testuser
+        )
         for rev in spam_revisions:
             rev.content = "Spam!"
             rev.save()
@@ -526,11 +531,12 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
         # Pass in all spam revisions, each should be reverted then the
         # document should return to the original revision
-        data = {'revision-id': [rev.id for rev in spam_revisions]}
+        data = {"revision-id": [rev.id for rev in spam_revisions]}
 
-        self.client.login(username='admin', password='testpass')
-        resp = self.client.post(self.ban_testuser_url, data=data,
-                                HTTP_HOST=settings.WIKI_HOST)
+        self.client.login(username="admin", password="testpass")
+        resp = self.client.post(
+            self.ban_testuser_url, data=data, HTTP_HOST=settings.WIKI_HOST
+        )
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -539,7 +545,7 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         for revision in spam_revisions:
             assert revision.id != new_document.current_revision.id
         # The most recent Revision object should be the document's current revision
-        latest_revision = Revision.objects.order_by('-id').first()
+        latest_revision = Revision.objects.order_by("-id").first()
         assert new_document.current_revision.id == latest_revision.id
         # Admin is the creator of this current revision
         assert new_document.current_revision.creator == self.admin
@@ -554,31 +560,27 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         # Document B will revert
         new_document_a = create_document(save=True)
         new_document_b = create_document(save=True)
-        self.create_revisions(
-            num=1, document=new_document_a, creator=self.admin)
-        self.create_revisions(
-            num=1, document=new_document_b, creator=self.admin)
+        self.create_revisions(num=1, document=new_document_a, creator=self.admin)
+        self.create_revisions(num=1, document=new_document_b, creator=self.admin)
         spam_revisions_a = self.create_revisions(
-            num=3,
-            document=new_document_a,
-            creator=self.testuser)
+            num=3, document=new_document_a, creator=self.testuser
+        )
         safe_revision_a = self.create_revisions(
-            num=1,
-            document=new_document_a,
-            creator=self.admin)
+            num=1, document=new_document_a, creator=self.admin
+        )
         spam_revisions_b = self.create_revisions(
-            num=3,
-            document=new_document_b,
-            creator=self.testuser)
+            num=3, document=new_document_b, creator=self.testuser
+        )
 
         # Pass in all spam revisions:
         # A revisions will not be reverted
         # B revisions will be reverted
-        data = {'revision-id': [rev.id for rev in spam_revisions_a + spam_revisions_b]}
+        data = {"revision-id": [rev.id for rev in spam_revisions_a + spam_revisions_b]}
 
-        self.client.login(username='admin', password='testpass')
-        resp = self.client.post(self.ban_testuser_url, data=data,
-                                HTTP_HOST=settings.WIKI_HOST)
+        self.client.login(username="admin", password="testpass")
+        resp = self.client.post(
+            self.ban_testuser_url, data=data, HTTP_HOST=settings.WIKI_HOST
+        )
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -586,7 +588,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         new_document_a = Document.objects.filter(id=new_document_a.id).first()
         assert new_document_a.current_revision.id == safe_revision_a[0].id
         revisions_a = Revision.objects.filter(document=new_document_a)
-        assert revisions_a.count() == 5  # Total of 5 revisions, no new revisions were made
+        assert (
+            revisions_a.count() == 5
+        )  # Total of 5 revisions, no new revisions were made
 
         # Document B: Make sure that the current revision is not the spam revision
         new_document_b = Document.objects.filter(id=new_document_b.id).first()
@@ -594,8 +598,9 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
             assert revision.id != new_document_b.current_revision.id
         # The most recent Revision for this document
         # should be the document's current revision
-        latest_revision_b = Revision.objects.filter(
-            document=new_document_b).order_by('-id').first()
+        latest_revision_b = (
+            Revision.objects.filter(document=new_document_b).order_by("-id").first()
+        )
         assert new_document_b.current_revision.id == latest_revision_b.id
         # Admin is the creator of this current revision
         assert new_document_b.current_revision.creator == self.admin
@@ -605,23 +610,21 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
     def test_current_rev_is_non_spam(self):
         new_document = create_document(save=True)
-        self.create_revisions(
-            num=1, document=new_document, creator=self.admin)
+        self.create_revisions(num=1, document=new_document, creator=self.admin)
         spam_revisions = self.create_revisions(
-            num=3,
-            document=new_document,
-            creator=self.testuser)
+            num=3, document=new_document, creator=self.testuser
+        )
         safe_revision = self.create_revisions(
-            num=1,
-            document=new_document,
-            creator=self.admin)
+            num=1, document=new_document, creator=self.admin
+        )
 
         # Pass in spam revisions:
-        data = {'revision-id': [rev.id for rev in spam_revisions]}
+        data = {"revision-id": [rev.id for rev in spam_revisions]}
 
-        self.client.login(username='admin', password='testpass')
-        resp = self.client.post(self.ban_testuser_url, data=data,
-                                HTTP_HOST=settings.WIKI_HOST)
+        self.client.login(username="admin", password="testpass")
+        resp = self.client.post(
+            self.ban_testuser_url, data=data, HTTP_HOST=settings.WIKI_HOST
+        )
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -629,35 +632,34 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
         new_document = Document.objects.get(id=new_document.id)
         assert new_document.current_revision.id == safe_revision[0].id
         revisions = Revision.objects.filter(document=new_document)
-        assert revisions.count() == 5  # Total of 5 revisions, no new revisions were made
+        assert (
+            revisions.count() == 5
+        )  # Total of 5 revisions, no new revisions were made
 
     def test_intermediate_non_spam_rev(self):
         new_document = create_document(save=True)
         # Create 4 revisions: one good, one spam, one good, then finally one spam
-        self.create_revisions(
-            num=1, document=new_document, creator=self.admin)
+        self.create_revisions(num=1, document=new_document, creator=self.admin)
         spam_revision1 = self.create_revisions(
-            num=1,
-            document=new_document,
-            creator=self.testuser)
+            num=1, document=new_document, creator=self.testuser
+        )
         safe_revision = self.create_revisions(
-            num=1,
-            document=new_document,
-            creator=self.admin)
+            num=1, document=new_document, creator=self.admin
+        )
         # Set the content of the last good revision, so we can compare afterwards
         safe_revision[0].content = "Safe"
         safe_revision[0].save()
         spam_revision2 = self.create_revisions(
-            num=1,
-            document=new_document,
-            creator=self.testuser)
+            num=1, document=new_document, creator=self.testuser
+        )
 
         # Pass in spam revisions:
-        data = {'revision-id': [rev.id for rev in spam_revision1 + spam_revision2]}
+        data = {"revision-id": [rev.id for rev in spam_revision1 + spam_revision2]}
 
-        self.client.login(username='admin', password='testpass')
-        resp = self.client.post(self.ban_testuser_url, data=data,
-                                HTTP_HOST=settings.WIKI_HOST)
+        self.client.login(username="admin", password="testpass")
+        resp = self.client.post(
+            self.ban_testuser_url, data=data, HTTP_HOST=settings.WIKI_HOST
+        )
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
@@ -678,47 +680,45 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
     def test_post_sends_email(self):
         # Add an existing good document with a spam rev
         new_document1 = create_document(save=True)
-        self.create_revisions(
-            num=1, document=new_document1, creator=self.admin)
+        self.create_revisions(num=1, document=new_document1, creator=self.admin)
         spam_revision1 = self.create_revisions(
-            num=1,
-            document=new_document1,
-            creator=self.testuser)
+            num=1, document=new_document1, creator=self.testuser
+        )
 
         # Add a new purely spam document
         new_document2 = create_document(save=True)
         spam_revision2 = self.create_revisions(
-            num=1,
-            document=new_document2,
-            creator=self.testuser)
+            num=1, document=new_document2, creator=self.testuser
+        )
 
         # Add a spammed document where a user submits a good rev on top
         new_document3 = create_document(save=True)
-        self.create_revisions(
-            num=1, document=new_document3, creator=self.admin)
+        self.create_revisions(num=1, document=new_document3, creator=self.admin)
         spam_revision3 = self.create_revisions(
-            num=1,
-            document=new_document3,
-            creator=self.testuser)
-        self.create_revisions(
-            num=1, document=new_document3, creator=self.admin)
+            num=1, document=new_document3, creator=self.testuser
+        )
+        self.create_revisions(num=1, document=new_document3, creator=self.admin)
 
         assert len(mail.outbox) == 0
 
         # Pass in spam revisions:
-        data = {'revision-id':
-                [rev.id for rev in spam_revision1 + spam_revision2 + spam_revision3]}
+        data = {
+            "revision-id": [
+                rev.id for rev in spam_revision1 + spam_revision2 + spam_revision3
+            ]
+        }
 
-        self.client.login(username='admin', password='testpass')
-        resp = self.client.post(self.ban_testuser_url, data=data,
-                                HTTP_HOST=settings.WIKI_HOST)
+        self.client.login(username="admin", password="testpass")
+        resp = self.client.post(
+            self.ban_testuser_url, data=data, HTTP_HOST=settings.WIKI_HOST
+        )
         assert resp.status_code == 200
         assert_no_cache_header(resp)
 
         tz = timezone(settings.TIME_ZONE)
 
         assert len(mail.outbox) == 1
-        assert (mail.outbox[0].body == dedent(
+        assert mail.outbox[0].body == dedent(
             """
             * ACTIONS TAKEN *
 
@@ -764,191 +764,207 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
                 rev1_url=absolutify(spam_revision1[0].get_absolute_url()),
                 rev2_url=absolutify(spam_revision2[0].get_absolute_url()),
                 rev3_url=absolutify(spam_revision3[0].get_absolute_url()),
-                rev2_doc_url=spam_revision2[0].document.get_full_url()
-            ))
+                rev2_doc_url=spam_revision2[0].document.get_full_url(),
+            )
         )
 
 
 def _get_current_form_field_values(doc):
     # Scrape out the existing significant form field values.
-    fields = ('username', 'fullname', 'title', 'organization',
-              'location', 'irc_nickname', 'interests',
-              'is_github_url_public')
+    fields = (
+        "username",
+        "fullname",
+        "title",
+        "organization",
+        "location",
+        "irc_nickname",
+        "interests",
+        "is_github_url_public",
+    )
     form = dict()
     lookup_pattern = '#{prefix}edit *[name="{prefix}{field}"]'
-    prefix = 'user-'
+    prefix = "user-"
     for field in fields:
         lookup = lookup_pattern.format(prefix=prefix, field=field)
         elements = doc.find(lookup)
-        assert len(elements) == 1, 'field = {}'.format(field)
+        assert len(elements) == 1, "field = {}".format(field)
         element = elements[0]
-        if element.type == 'text':
+        if element.type == "text":
             form[prefix + field] = element.value
         else:
-            assert element.type == 'checkbox'
+            assert element.type == "checkbox"
             form[prefix + field] = element.checked
 
-    form[prefix + 'country'] = 'us'
-    form[prefix + 'format'] = 'html'
+    form[prefix + "country"] = "us"
+    form[prefix + "format"] = "html"
     return form
 
 
 def test_user_detail_view(wiki_user, client):
     """A user can be viewed."""
-    wiki_user.irc_nickname = 'wooki'
+    wiki_user.irc_nickname = "wooki"
     wiki_user.save()
-    url = reverse('users.user_detail', args=(wiki_user.username,))
+    url = reverse("users.user_detail", args=(wiki_user.username,))
     response = client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
     doc = pq(response.content)
-    assert doc.find('#user-head.vcard .nickname').text() == wiki_user.username
-    assert doc.find('#user-head.vcard .fn').text() == wiki_user.fullname
-    assert doc.find('#user-head.vcard .title').text() == wiki_user.title
-    assert doc.find('#user-head.vcard .org').text() == wiki_user.organization
-    assert doc.find('#user-head.vcard .loc').text() == wiki_user.location
-    assert (doc.find('#user-head.vcard .irc').text() ==
-            ('IRC: ' + wiki_user.irc_nickname))
+    assert doc.find("#user-head.vcard .nickname").text() == wiki_user.username
+    assert doc.find("#user-head.vcard .fn").text() == wiki_user.fullname
+    assert doc.find("#user-head.vcard .title").text() == wiki_user.title
+    assert doc.find("#user-head.vcard .org").text() == wiki_user.organization
+    assert doc.find("#user-head.vcard .loc").text() == wiki_user.location
+    assert doc.find("#user-head.vcard .irc").text() == (
+        "IRC: " + wiki_user.irc_nickname
+    )
 
 
 def test_my_user_page(wiki_user, user_client):
-    resp = user_client.get(reverse('users.my_detail_page'))
+    resp = user_client.get(reverse("users.my_detail_page"))
     assert resp.status_code == 302
     assert_no_cache_header(resp)
-    assert resp['Location'].endswith(reverse('users.user_detail',
-                                             args=(wiki_user.username,)))
+    assert resp["Location"].endswith(
+        reverse("users.user_detail", args=(wiki_user.username,))
+    )
 
 
 def test_bug_698971(wiki_user, client):
     """A non-numeric page number should not raise an error."""
-    url = reverse('users.user_detail', args=(wiki_user.username,))
+    url = reverse("users.user_detail", args=(wiki_user.username,))
 
-    response = client.get(url, dict(page='asdf'))
+    response = client.get(url, dict(page="asdf"))
     assert response.status_code == 200
     assert_no_cache_header(response)
 
 
 def test_user_edit(wiki_user, client, user_client):
-    url = reverse('users.user_detail', args=(wiki_user.username,))
+    url = reverse("users.user_detail", args=(wiki_user.username,))
     response = client.get(url, follow=True)
     assert response.status_code == 200
     assert_no_cache_header(response)
     doc = pq(response.content)
-    assert doc.find('#user-head .edit .button').length == 0
+    assert doc.find("#user-head .edit .button").length == 0
 
-    url = reverse('users.user_detail', args=(wiki_user.username,))
+    url = reverse("users.user_detail", args=(wiki_user.username,))
     response = user_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
     doc = pq(response.content)
-    edit_button = doc.find('#user-head .user-buttons #edit-user')
+    edit_button = doc.find("#user-head .user-buttons #edit-user")
     assert edit_button.length == 1
 
-    url = edit_button.attr('href')
+    url = edit_button.attr("href")
     response = user_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
     doc = pq(response.content)
 
-    assert (doc.find('#user-edit input[name="user-fullname"]').val() ==
-            wiki_user.fullname)
-    assert (doc.find('#user-edit input[name="user-title"]').val() ==
-            wiki_user.title)
-    assert (doc.find('#user-edit input[name="user-organization"]').val() ==
-            wiki_user.organization)
-    assert (doc.find('#user-edit input[name="user-location"]').val() ==
-            wiki_user.location)
-    assert (doc.find('#user-edit input[name="user-irc_nickname"]').val() ==
-            wiki_user.irc_nickname)
+    assert (
+        doc.find('#user-edit input[name="user-fullname"]').val() == wiki_user.fullname
+    )
+    assert doc.find('#user-edit input[name="user-title"]').val() == wiki_user.title
+    assert (
+        doc.find('#user-edit input[name="user-organization"]').val()
+        == wiki_user.organization
+    )
+    assert (
+        doc.find('#user-edit input[name="user-location"]').val() == wiki_user.location
+    )
+    assert (
+        doc.find('#user-edit input[name="user-irc_nickname"]').val()
+        == wiki_user.irc_nickname
+    )
 
     new_attrs = {
-        'user-username': wiki_user.username,
-        'user-fullname': "Another Name",
-        'user-title': "Another title",
-        'user-organization': "Another org",
+        "user-username": wiki_user.username,
+        "user-fullname": "Another Name",
+        "user-title": "Another title",
+        "user-organization": "Another org",
     }
 
     response = user_client.post(url, new_attrs, follow=True)
     doc = pq(response.content)
 
-    assert doc.find('#user-head').length == 1
-    assert doc.find('#user-head .fn').text() == new_attrs['user-fullname']
-    assert (doc.find('#user-head .user-info .title').text() ==
-            new_attrs['user-title'])
-    assert (doc.find('#user-head .user-info .org').text() ==
-            new_attrs['user-organization'])
+    assert doc.find("#user-head").length == 1
+    assert doc.find("#user-head .fn").text() == new_attrs["user-fullname"]
+    assert doc.find("#user-head .user-info .title").text() == new_attrs["user-title"]
+    assert (
+        doc.find("#user-head .user-info .org").text() == new_attrs["user-organization"]
+    )
 
     wiki_user.refresh_from_db()
 
-    assert wiki_user.fullname == new_attrs['user-fullname']
-    assert wiki_user.title == new_attrs['user-title']
-    assert wiki_user.organization == new_attrs['user-organization']
+    assert wiki_user.fullname == new_attrs["user-fullname"]
+    assert wiki_user.title == new_attrs["user-title"]
+    assert wiki_user.organization == new_attrs["user-organization"]
 
 
 def test_my_user_edit(wiki_user, user_client):
-    response = user_client.get(reverse('users.my_edit_page'))
+    response = user_client.get(reverse("users.my_edit_page"))
     assert response.status_code == 302
     assert_no_cache_header(response)
-    assert response['Location'].endswith(
-        reverse('users.user_edit', args=(wiki_user.username,)))
+    assert response["Location"].endswith(
+        reverse("users.user_edit", args=(wiki_user.username,))
+    )
 
 
-def test_user_edit_beta(wiki_user, wiki_user_github_account,
-                        beta_testers_group, user_client):
-    url = reverse('users.user_edit', args=(wiki_user.username,))
+def test_user_edit_beta(
+    wiki_user, wiki_user_github_account, beta_testers_group, user_client
+):
+    url = reverse("users.user_edit", args=(wiki_user.username,))
     response = user_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
     doc = pq(response.content)
-    assert doc.find('input#id_user-beta').attr('checked') is None
+    assert doc.find("input#id_user-beta").attr("checked") is None
 
     form = _get_current_form_field_values(doc)
-    form['user-beta'] = True
+    form["user-beta"] = True
 
     response = user_client.post(url, form)
     assert response.status_code == 302
     assert_no_cache_header(response)
-    assert response['Location'].endswith(
-        reverse('users.user_detail', args=(wiki_user.username,)))
+    assert response["Location"].endswith(
+        reverse("users.user_detail", args=(wiki_user.username,))
+    )
 
     response = user_client.get(url)
     assert response.status_code == 200
     doc = pq(response.content)
-    assert doc.find('input#id_user-beta').attr('checked') == 'checked'
+    assert doc.find("input#id_user-beta").attr("checked") == "checked"
 
 
 def test_user_edit_websites(wiki_user, wiki_user_github_account, user_client):
-    url = reverse('users.user_edit', args=(wiki_user.username,))
+    url = reverse("users.user_edit", args=(wiki_user.username,))
     response = user_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
     doc = pq(response.content)
 
     test_sites = {
-        'twitter': 'http://twitter.com/lmorchard',
-        'stackoverflow': 'http://stackoverflow.com/users/lmorchard',
-        'linkedin': 'https://www.linkedin.com/in/testuser',
-        'mozillians': 'https://mozillians.org/u/testuser',
-        'facebook': 'https://www.facebook.com/test.user'
+        "twitter": "http://twitter.com/lmorchard",
+        "stackoverflow": "http://stackoverflow.com/users/lmorchard",
+        "linkedin": "https://www.linkedin.com/in/testuser",
+        "mozillians": "https://mozillians.org/u/testuser",
+        "facebook": "https://www.facebook.com/test.user",
     }
 
     form = _get_current_form_field_values(doc)
 
     # Fill out the form with websites.
-    form.update(dict(('user-%s_url' % k, v)
-                     for k, v in test_sites.items()))
+    form.update(dict(("user-%s_url" % k, v) for k, v in test_sites.items()))
 
     # Submit the form, verify redirect to user detail
     response = user_client.post(url, form, follow=True)
     assert response.status_code == 200
     doc = pq(response.content)
-    assert doc.find('#user-head').length == 1
+    assert doc.find("#user-head").length == 1
 
     wiki_user.refresh_from_db()
 
     # Verify the websites are saved in the user.
     for site, site_url in test_sites.items():
-        url_attr_name = '%s_url' % site
+        url_attr_name = "%s_url" % site
         assert getattr(wiki_user, url_attr_name) == site_url
 
     # Verify the saved websites appear in the editing form
@@ -965,151 +981,160 @@ def test_user_edit_websites(wiki_user, wiki_user_github_account, user_client):
 
     # Come up with some bad sites, either invalid URL or bad URL prefix
     bad_sites = {
-        'linkedin': 'HAHAHA WHAT IS A WEBSITE',
-        'twitter': 'http://facebook.com/lmorchard',
-        'stackoverflow': 'http://overqueueblah.com/users/lmorchard',
+        "linkedin": "HAHAHA WHAT IS A WEBSITE",
+        "twitter": "http://facebook.com/lmorchard",
+        "stackoverflow": "http://overqueueblah.com/users/lmorchard",
     }
-    form.update(dict(('user-%s_url' % k, v)
-                     for k, v in bad_sites.items()))
+    form.update(dict(("user-%s_url" % k, v) for k, v in bad_sites.items()))
 
     # Submit the form, verify errors for all of the bad sites
     response = user_client.post(url, form, follow=True)
     doc = pq(response.content)
-    assert doc.find('#user-edit').length == 1
-    tmpl = '#user-edit #users .%s .errorlist'
-    for n in ('linkedin', 'twitter', 'stackoverflow'):
+    assert doc.find("#user-edit").length == 1
+    tmpl = "#user-edit #users .%s .errorlist"
+    for n in ("linkedin", "twitter", "stackoverflow"):
         assert doc.find(tmpl % n).length == 1
 
 
 def test_user_edit_interests(wiki_user, wiki_user_github_account, user_client):
-    url = reverse('users.user_edit', args=(wiki_user.username,))
+    url = reverse("users.user_edit", args=(wiki_user.username,))
     response = user_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
     doc = pq(response.content)
 
-    test_tags = ['javascript', 'css', 'canvas', 'html', 'homebrewing']
+    test_tags = ["javascript", "css", "canvas", "html", "homebrewing"]
 
     form = _get_current_form_field_values(doc)
 
-    form['user-interests'] = ', '.join(test_tags)
+    form["user-interests"] = ", ".join(test_tags)
 
     response = user_client.post(url, form, follow=True)
     doc = pq(response.content)
-    assert doc.find('#user-head').length == 1
+    assert doc.find("#user-head").length == 1
 
-    result_tags = sorted([t.name.replace('profile:interest:', '')
-                          for t in wiki_user.tags.all_ns('profile:interest:')])
+    result_tags = sorted(
+        [
+            t.name.replace("profile:interest:", "")
+            for t in wiki_user.tags.all_ns("profile:interest:")
+        ]
+    )
     test_tags.sort()
     assert result_tags == test_tags
 
-    test_expertise = ['css', 'canvas']
-    form['user-expertise'] = ', '.join(test_expertise)
+    test_expertise = ["css", "canvas"]
+    form["user-expertise"] = ", ".join(test_expertise)
     response = user_client.post(url, form, follow=True)
     doc = pq(response.content)
 
-    assert doc.find('#user-head').length == 1
+    assert doc.find("#user-head").length == 1
 
-    result_tags = [t.name.replace('profile:expertise:', '')
-                   for t in wiki_user.tags.all_ns('profile:expertise')]
+    result_tags = [
+        t.name.replace("profile:expertise:", "")
+        for t in wiki_user.tags.all_ns("profile:expertise")
+    ]
     result_tags.sort()
     test_expertise.sort()
     assert result_tags == test_expertise
 
     # Now, try some expertise tags not covered in interests
-    test_expertise = ['css', 'canvas', 'mobile', 'movies']
-    form['user-expertise'] = ', '.join(test_expertise)
+    test_expertise = ["css", "canvas", "mobile", "movies"]
+    form["user-expertise"] = ", ".join(test_expertise)
     response = user_client.post(url, form, follow=True)
     doc = pq(response.content)
 
-    assert doc.find('.error #id_user-expertise').length == 1
+    assert doc.find(".error #id_user-expertise").length == 1
 
 
-def test_bug_709938_interests(wiki_user, wiki_user_github_account,
-                              user_client):
-    url = reverse('users.user_edit', args=(wiki_user.username,))
+def test_bug_709938_interests(wiki_user, wiki_user_github_account, user_client):
+    url = reverse("users.user_edit", args=(wiki_user.username,))
     response = user_client.get(url)
     doc = pq(response.content)
 
-    test_tags = ['science,Technology,paradox,knowledge,modeling,big data,'
-                 'vector,meme,heuristics,harmony,mathesis universalis,'
-                 'symmetry,mathematics,computer graphics,field,chemistry,'
-                 'religion,astronomy,physics,biology,literature,'
-                 'spirituality,Art,Philosophy,Psychology,Business,Music,'
-                 'Computer Science']
+    test_tags = [
+        "science,Technology,paradox,knowledge,modeling,big data,"
+        "vector,meme,heuristics,harmony,mathesis universalis,"
+        "symmetry,mathematics,computer graphics,field,chemistry,"
+        "religion,astronomy,physics,biology,literature,"
+        "spirituality,Art,Philosophy,Psychology,Business,Music,"
+        "Computer Science"
+    ]
 
     form = _get_current_form_field_values(doc)
 
-    form['user-interests'] = test_tags
+    form["user-interests"] = test_tags
 
     response = user_client.post(url, form)
     assert response.status_code == 200
     doc = pq(response.content)
-    assert doc.find('ul.errorlist li').length == 1
-    assert ('Ensure this value has at most 255 characters'
-            in doc.find('ul.errorlist li').text())
+    assert doc.find("ul.errorlist li").length == 1
+    assert (
+        "Ensure this value has at most 255 characters"
+        in doc.find("ul.errorlist li").text()
+    )
 
 
 def test_bug_698126_l10n(wiki_user, user_client):
     """Test that the form field names are localized"""
-    url = reverse('users.user_edit', args=(wiki_user.username,))
+    url = reverse("users.user_edit", args=(wiki_user.username,))
     response = user_client.get(url, follow=True)
-    for field in response.context['user_form'].fields:
+    for field in response.context["user_form"].fields:
         # if label is localized it's a lazy proxy object
-        lbl = response.context['user_form'].fields[field].label
-        assert not isinstance(lbl, str), 'Field %s is a string!' % field
+        lbl = response.context["user_form"].fields[field].label
+        assert not isinstance(lbl, str), "Field %s is a string!" % field
 
 
-def test_user_edit_github_is_public(wiki_user, wiki_user_github_account,
-                                    user_client):
+def test_user_edit_github_is_public(wiki_user, wiki_user_github_account, user_client):
     """A user can set that they want their GitHub to be public."""
     assert not wiki_user.is_github_url_public
-    url = reverse('users.user_edit', args=(wiki_user.username,))
+    url = reverse("users.user_edit", args=(wiki_user.username,))
     response = user_client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
     form = _get_current_form_field_values(pq(response.content))
-    assert not form['user-is_github_url_public']
-    form['user-is_github_url_public'] = True
+    assert not form["user-is_github_url_public"]
+    form["user-is_github_url_public"] = True
     response = user_client.post(url, form)
     assert response.status_code == 302
     assert_no_cache_header(response)
-    assert response['Location'].endswith(
-        reverse('users.user_detail', args=(wiki_user.username,)))
+    assert response["Location"].endswith(
+        reverse("users.user_detail", args=(wiki_user.username,))
+    )
     wiki_user.refresh_from_db()
     assert wiki_user.is_github_url_public
 
 
-@pytest.mark.parametrize('case', ('DOMAIN', 'WIKI_HOST'))
+@pytest.mark.parametrize("case", ("DOMAIN", "WIKI_HOST"))
 def test_404_logins(db, client, case):
     """The login buttons should display on the 404 page."""
-    response = client.get('/something-doesnt-exist', follow=True,
-                          HTTP_HOST=getattr(settings, case))
+    response = client.get(
+        "/something-doesnt-exist", follow=True, HTTP_HOST=getattr(settings, case)
+    )
     assert response.status_code == 404
-    providers_shown = pq(response.content).find('.socialaccount-providers')
-    if case == 'WIKI_HOST':
+    providers_shown = pq(response.content).find(".socialaccount-providers")
+    if case == "WIKI_HOST":
         assert providers_shown
     else:
         assert not providers_shown
 
 
-@pytest.mark.parametrize('case', ('DOMAIN', 'WIKI_HOST'))
+@pytest.mark.parametrize("case", ("DOMAIN", "WIKI_HOST"))
 def test_404_already_logged_in(user_client, case):
     """
     The login buttons should not display on the 404 page when the
     user is logged-in.
     """
     # View page as a logged in user
-    response = user_client.get('/something-doesnt-exist', follow=True,
-                               HTTP_HOST=getattr(settings, case))
+    response = user_client.get(
+        "/something-doesnt-exist", follow=True, HTTP_HOST=getattr(settings, case)
+    )
     assert response.status_code == 404
-    assert not pq(response.content).find('.socialaccount-providers')
+    assert not pq(response.content).find(".socialaccount-providers")
 
 
 class KumaGitHubTests(UserTestCase, SocialTestMixin):
-
     def setUp(self):
-        self.signup_url = reverse('socialaccount_signup')
+        self.signup_url = reverse("socialaccount_signup")
 
     def test_login(self):
         resp = self.github_login()
@@ -1120,107 +1145,116 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         # No redirect!
         assert resp.status_code == 200
         doc = pq(resp.content)
-        assert 'Account Sign In Failure' in doc.find('h1').text()
+        assert "Account Sign In Failure" in doc.find("h1").text()
 
     def test_login_500_on_getting_profile(self):
         resp = self.github_login(profile_status_code=500)
         # No redirect!
         assert resp.status_code == 200
         doc = pq(resp.content)
-        assert 'Account Sign In Failure' in doc.find('h1').text()
+        assert "Account Sign In Failure" in doc.find("h1").text()
 
     def test_login_500_on_getting_email_addresses(self):
         resp = self.github_login(email_status_code=500)
         # No redirect!
         assert resp.status_code == 200
         doc = pq(resp.content)
-        assert 'Account Sign In Failure' in doc.find('h1').text()
+        assert "Account Sign In Failure" in doc.find("h1").text()
 
     def test_login_SSLError_on_getting_profile(self):
         resp = self.github_login(profile_exc=SSLError)
         # No redirect!
         assert resp.status_code == 200
         doc = pq(resp.content)
-        assert 'Account Sign In Failure' in doc.find('h1').text()
+        assert "Account Sign In Failure" in doc.find("h1").text()
 
     def test_login_ProxyError_on_getting_email_addresses(self):
         resp = self.github_login(email_exc=ProxyError)
         # No redirect!
         assert resp.status_code == 200
         doc = pq(resp.content)
-        assert 'Account Sign In Failure' in doc.find('h1').text()
+        assert "Account Sign In Failure" in doc.find("h1").text()
 
     def test_matching_user(self):
         self.github_login()
         response = self.client.get(self.signup_url)
         assert response.status_code == 200
         assert_no_cache_header(response)
-        assert 'matching_user' in response.context
-        assert response.context['matching_user'] is None
-        octocat = user(username='octocat', save=True)
+        assert "matching_user" in response.context
+        assert response.context["matching_user"] is None
+        octocat = user(username="octocat", save=True)
         response = self.client.get(self.signup_url)
         assert response.status_code == 200
         assert_no_cache_header(response)
-        assert response.context['matching_user'] == octocat
+        assert response.context["matching_user"] == octocat
+
+    def test_clashing_username(self):
+        """First a GitHub user exists. Then a Google user tries to sign up
+        whose email address, when `email.split('@')[0]` would become the same
+        as the existing GitHub user.
+        """
+        user(username="octocat", save=True)
+        self.google_login(
+            profile_data=dict(self.google_profile_data, email="octocat@gmail.com",)
+        )
+        response = self.client.get(self.signup_url)
+        assert response.status_code == 200
+        doc = pq(response.content)
+        assert doc.find('input[name="username"]').val() == "octocat2"
 
     def test_email_addresses(self):
-        public_email = 'octocat-public@example.com'
-        private_email = 'octocat-private@example.com'
-        unverified_email = 'octocat-trash@example.com'
-        invalid_email = 'xss><svg/onload=alert(document.cookie)>@example.com'
+        public_email = "octocat-public@example.com"
+        private_email = "octocat-private@example.com"
+        unverified_email = "octocat-trash@example.com"
+        invalid_email = "xss><svg/onload=alert(document.cookie)>@example.com"
         profile_data = self.github_profile_data.copy()
-        profile_data['email'] = public_email
+        profile_data["email"] = public_email
         email_data = [
-            {
-                'email': private_email,
-                'verified': True,
-                'primary': True
-            }, {
-                'email': unverified_email,
-                'verified': False,
-                'primary': False
-            }, {
-                'email': invalid_email,
-                'verified': False,
-                'primary': False
-            }
+            {"email": private_email, "verified": True, "primary": True},
+            {"email": unverified_email, "verified": False, "primary": False},
+            {"email": invalid_email, "verified": False, "primary": False},
         ]
         self.github_login(profile_data=profile_data, email_data=email_data)
         response = self.client.get(self.signup_url)
         assert response.status_code == 200
         assert_no_cache_header(response)
         assert private_email not in response.context
-        email_address = response.context['email_addresses']
+        email_address = response.context["email_addresses"]
 
         # first check if the public email address has been found
         assert public_email in email_address
-        assert (email_address[public_email] ==
-                {'verified': False, 'email': public_email, 'primary': False})
+        assert email_address[public_email] == {
+            "verified": False,
+            "email": public_email,
+            "primary": False,
+        }
         # then check if the private and verified-at-GitHub email address
         # has been found
         assert private_email in email_address
-        assert (email_address[private_email] ==
-                {'verified': True, 'email': private_email, 'primary': True})
+        assert email_address[private_email] == {
+            "verified": True,
+            "email": private_email,
+            "primary": True,
+        }
         # then check that the invalid email is not present
         assert invalid_email not in email_address
         # then check if the radio button's default value is the primary email
         # address
-        assert response.context['form'].initial['email'][1] == private_email
+        assert response.context["form"].initial["email"][1] == private_email
 
-        unverified_email = 'o.ctocat@gmail.com'
+        unverified_email = "o.ctocat@gmail.com"
         data = {
-            'website': '',
-            'username': 'octocat',
-            'email': SignupForm.other_email_value,  # = use other_email
-            'other_email': unverified_email,
-            'terms': True,
+            "website": "",
+            "username": "octocat",
+            "email": SignupForm.other_email_value,  # = use other_email
+            "other_email": unverified_email,
+            "terms": True,
         }
         assert not EmailAddress.objects.filter(email=unverified_email).exists()
         response = self.client.post(self.signup_url, data=data)
         assert response.status_code == 302
         assert_no_cache_header(response)
-        unverified_email_addresses = EmailAddress.objects.filter(
-            email=unverified_email)
+        unverified_email_addresses = EmailAddress.objects.filter(email=unverified_email)
         assert unverified_email_addresses.exists()
         assert unverified_email_addresses.count() == 1
         assert unverified_email_addresses[0].primary
@@ -1228,10 +1262,10 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
 
     def test_email_addresses_with_no_public(self):
         profile_data = self.github_profile_data.copy()
-        profile_data['email'] = None
+        profile_data["email"] = None
         email_data = self.github_email_data[:]
-        private_email = 'octocat.private@example.com'
-        email_data[0]['email'] = private_email
+        private_email = "octocat.private@example.com"
+        email_data[0]["email"] = private_email
         self.github_login(profile_data=profile_data, email_data=email_data)
         response = self.client.get(self.signup_url)
         assert response.status_code == 200
@@ -1239,7 +1273,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         assert response.context["form"].initial["email"] == private_email
 
     def test_email_addresses_with_no_alternatives(self):
-        private_email = self.github_profile_data['email']
+        private_email = self.github_profile_data["email"]
         self.github_login(email_data=[])
         response = self.client.get(self.signup_url)
         assert response.status_code == 200
@@ -1250,37 +1284,134 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         resp = self.github_login()
         assert resp.redirect_chain[-1][0].endswith(self.signup_url)
 
-        data = {'website': '',
-                'username': 'octocat',
-                'email': 'octo.cat@github-inc.com',
-                'terms': True,
-                'is_github_url_public': is_public}
+        data = {
+            "website": "",
+            "username": "octocat",
+            "email": "octo.cat@github-inc.com",
+            "terms": True,
+            "is_github_url_public": is_public,
+        }
         response = self.client.post(self.signup_url, data=data)
         assert response.status_code == 302
         assert_no_cache_header(response)
-        user = User.objects.get(username='octocat')
+        user = User.objects.get(username="octocat")
         assert user.is_github_url_public == is_public
 
     def test_signup_private_github(self):
         self.test_signup_public_github(is_public=False)
 
+    def test_signup_github_event_tracking(self):
+        """Tests that kuma.core.ga_tracking.track_event is called when you
+        sign up with GitHub for the first time."""
+        with self.settings(
+            GOOGLE_ANALYTICS_ACCOUNT="UA-XXXX-1",
+            GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS=True,
+        ):
+            p1 = mock.patch("kuma.users.signal_handlers.track_event")
+            p2 = mock.patch("kuma.users.views.track_event")
+            p3 = mock.patch("kuma.users.providers.github.views.track_event")
+            with p1 as track_event_mock_signals, p2 as track_event_mock_views, p3 as track_event_mock_github:
+
+                self.github_login()
+
+                data = {
+                    "website": "",
+                    "username": "octocat",
+                    "email": "octo.cat@github-inc.com",
+                    "terms": True,
+                    "is_github_url_public": True,
+                }
+                response = self.client.post(self.signup_url, data=data)
+                assert response.status_code == 302
+                assert User.objects.get(username="octocat")
+
+                track_event_mock_signals.assert_has_calls(
+                    [
+                        mock.call(
+                            CATEGORY_SIGNUP_FLOW, ACTION_AUTH_SUCCESSFUL, "github"
+                        ),
+                        mock.call(
+                            CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_CREATED, "github"
+                        ),
+                        mock.call(
+                            CATEGORY_SIGNUP_FLOW, ACTION_FREE_NEWSLETTER, "opt-out"
+                        ),
+                    ]
+                )
+                track_event_mock_github.assert_called_with(
+                    CATEGORY_SIGNUP_FLOW, ACTION_AUTH_STARTED, "github"
+                )
+
+                track_event_mock_views.assert_called_with(
+                    CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_AUDIT, "github"
+                )
+
+    def test_signin_github_event_tracking(self):
+        """Tests that kuma.core.ga_tracking.track_event is called when you
+        sign in with GitHub a consecutive time."""
+        # First sign up.
+        self.github_login()
+        data = {
+            "website": "",
+            "username": "octocat",
+            "email": "octo.cat@github-inc.com",
+            "terms": True,
+            "is_github_url_public": True,
+        }
+        response = self.client.post(self.signup_url, data=data)
+        assert response.status_code == 302
+        user = User.objects.get(username="octocat")
+
+        # Pretend that some time goes by
+        user.date_joined -= timedelta(minutes=1)
+        user.save()
+
+        # Now, this time sign in.
+        with self.settings(
+            GOOGLE_ANALYTICS_ACCOUNT="UA-XXXX-1",
+            GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS=True,
+        ):
+            # This syntax looks a bit weird but it's just to avoid having
+            # to write all mock patches on one super long line in the
+            # 'with' statement.
+            p1 = mock.patch("kuma.users.signal_handlers.track_event")
+            p2 = mock.patch("kuma.users.providers.github.views.track_event")
+            with p1 as track_event_mock_signals, p2 as track_event_mock_github:
+                response = self.github_login(follow=False)
+                assert response.status_code == 302
+
+                track_event_mock_signals.assert_has_calls(
+                    [
+                        mock.call(
+                            CATEGORY_SIGNUP_FLOW, ACTION_AUTH_SUCCESSFUL, "github"
+                        ),
+                        mock.call(
+                            CATEGORY_SIGNUP_FLOW, ACTION_RETURNING_USER_SIGNIN, "github"
+                        ),
+                    ]
+                )
+                track_event_mock_github.assert_called_with(
+                    CATEGORY_SIGNUP_FLOW, ACTION_AUTH_STARTED, "github"
+                )
+
     def test_account_tokens(self):
-        testemail = 'account_token@acme.com'
-        testuser = user(username='user', is_active=True,
-                        email=testemail, password='test', save=True)
-        EmailAddress.objects.create(user=testuser, email=testemail,
-                                    primary=True, verified=True)
-        self.client.login(username=testuser.username, password='test')
+        testemail = "account_token@acme.com"
+        testuser = user(
+            username="user", is_active=True, email=testemail, password="test", save=True
+        )
+        EmailAddress.objects.create(
+            user=testuser, email=testemail, primary=True, verified=True
+        )
+        self.client.login(username=testuser.username, password="test")
 
-        token = 'access_token'
-        refresh_token = 'refresh_token'
+        token = "access_token"
+        refresh_token = "refresh_token"
         token_data = self.github_token_data.copy()
-        token_data['access_token'] = token
-        token_data['refresh_token'] = refresh_token
+        token_data["access_token"] = token
+        token_data["refresh_token"] = refresh_token
 
-        self.github_login(token_data=token_data, process='connect')
-        social_account = SocialAccount.objects.get(user=testuser,
-                                                   provider='github')
+        self.github_login(token_data=token_data, process="connect")
+        social_account = SocialAccount.objects.get(user=testuser, provider="github")
         social_token = social_account.socialtoken_set.get()
         assert token == social_token.token
         assert refresh_token == social_token.token_secret
@@ -1292,21 +1423,23 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         a refresh token on first login.
         """
         # Setup a user with a token and refresh token
-        testemail = 'account_token@acme.com'
-        testuser = user(username='user', is_active=True,
-                        email=testemail, password='test', save=True)
-        EmailAddress.objects.create(user=testuser, email=testemail,
-                                    primary=True, verified=True)
-        token = 'access_token'
-        refresh_token = 'refresh_token'
+        testemail = "account_token@acme.com"
+        testuser = user(
+            username="user", is_active=True, email=testemail, password="test", save=True
+        )
+        EmailAddress.objects.create(
+            user=testuser, email=testemail, primary=True, verified=True
+        )
+        token = "access_token"
+        refresh_token = "refresh_token"
         app = self.ensure_github_app()
         sa = testuser.socialaccount_set.create(provider=app.provider)
         sa.socialtoken_set.create(app=app, token=token, token_secret=refresh_token)
 
         # Login without a refresh token
         token_data = self.github_token_data.copy()
-        token_data['access_token'] = token
-        self.github_login(token_data=token_data, process='login')
+        token_data["access_token"] = token
+        self.github_login(token_data=token_data, process="login")
 
         # Refresh token is still in database
         sa.refresh_from_db()
@@ -1317,20 +1450,20 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
 
 def test_delete_user_login_always_required(db, client):
     # Anonymous client gets redirected to sign in page.
-    url = reverse('users.user_delete', kwargs={'username': 'missing'})
+    url = reverse("users.user_delete", kwargs={"username": "missing"})
     response = client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
-    assert reverse('account_login') in response['Location']
+    assert reverse("account_login") in response["Location"]
 
 
 def test_delete_user_not_allowed(db, user_client, wiki_user_2):
     # A username that doesn't exist.
-    url = reverse('users.user_delete', kwargs={'username': 'missing'})
+    url = reverse("users.user_delete", kwargs={"username": "missing"})
     response = user_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 404
 
     # Attempting to delete someone else.
-    url = reverse('users.user_delete', kwargs={'username': wiki_user_2.username})
+    url = reverse("users.user_delete", kwargs={"username": wiki_user_2.username})
     response = user_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 403
 
@@ -1339,7 +1472,7 @@ def test_delete_user_with_no_revisions(db, user_client, wiki_user):
     # sanity check fixtures
     assert not Revision.objects.filter(creator=wiki_user).exists()
     assert not AttachmentRevision.objects.filter(creator=wiki_user).exists()
-    url = reverse('users.user_delete', kwargs={'username': wiki_user.username})
+    url = reverse("users.user_delete", kwargs={"username": wiki_user.username})
     response = user_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 200
     response = user_client.post(url, HTTP_HOST=settings.WIKI_HOST)
@@ -1350,34 +1483,24 @@ def test_delete_user_with_no_revisions(db, user_client, wiki_user):
 def test_delete_user_no_revisions_misc_related(db, user_client, wiki_user):
     Key.objects.create(user=wiki_user)
     revision_akismet_submission = RevisionAkismetSubmission.objects.create(
-        sender=wiki_user,
-        type='spam'
+        sender=wiki_user, type="spam"
     )
     document_deletion_log = DocumentDeletionLog.objects.create(
-        locale='any',
-        slug='Any/Thing',
-        user=wiki_user,
-        reason='...'
+        locale="any", slug="Any/Thing", user=wiki_user, reason="..."
     )
-    document_spam_attempt_user = DocumentSpamAttempt.objects.create(
-        user=wiki_user,
-    )
-    throwaway_user = User.objects.create(username='throwaway')
+    document_spam_attempt_user = DocumentSpamAttempt.objects.create(user=wiki_user,)
+    throwaway_user = User.objects.create(username="throwaway")
     document_spam_attempt_reviewer = DocumentSpamAttempt.objects.create(
-        user=throwaway_user,
-        reviewer=wiki_user,
+        user=throwaway_user, reviewer=wiki_user,
     )
-    user_ban_by = UserBan.objects.create(
-        user=throwaway_user,
-        by=wiki_user
-    )
+    user_ban_by = UserBan.objects.create(user=throwaway_user, by=wiki_user)
     user_ban_user = UserBan.objects.create(
         user=wiki_user,
         by=throwaway_user,
         is_active=False,  # otherwise it logs the user out
     )
 
-    url = reverse('users.user_delete', kwargs={'username': wiki_user.username})
+    url = reverse("users.user_delete", kwargs={"username": wiki_user.username})
     response = user_client.post(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
     assert not User.objects.filter(username=wiki_user.username).exists()
@@ -1387,25 +1510,21 @@ def test_delete_user_no_revisions_misc_related(db, user_client, wiki_user):
 
     # Moved to anonymous user
     revision_akismet_submission.refresh_from_db()
-    assert revision_akismet_submission.sender.username == 'Anonymous'
+    assert revision_akismet_submission.sender.username == "Anonymous"
     document_deletion_log.refresh_from_db()
-    assert document_deletion_log.user.username == 'Anonymous'
+    assert document_deletion_log.user.username == "Anonymous"
     document_spam_attempt_user.refresh_from_db()
-    assert document_spam_attempt_user.user.username == 'Anonymous'
+    assert document_spam_attempt_user.user.username == "Anonymous"
     document_spam_attempt_reviewer.refresh_from_db()
-    assert document_spam_attempt_reviewer.reviewer.username == 'Anonymous'
+    assert document_spam_attempt_reviewer.reviewer.username == "Anonymous"
     user_ban_by.refresh_from_db()
-    assert user_ban_by.by.username == 'Anonymous'
+    assert user_ban_by.by.username == "Anonymous"
     user_ban_user.refresh_from_db()
-    assert user_ban_user.user.username == 'Anonymous'
+    assert user_ban_user.user.username == "Anonymous"
 
 
 def test_delete_user_donate_attributions(
-    db,
-    user_client,
-    wiki_user,
-    wiki_user_github_account,
-    root_doc
+    db, user_client, wiki_user, wiki_user_github_account, root_doc
 ):
     revision = root_doc.revisions.first()
     # Sanity check the fixture
@@ -1414,70 +1533,68 @@ def test_delete_user_donate_attributions(
     RevisionAkismetSubmission.objects.create(sender=wiki_user)
 
     attachment_revision = AttachmentRevision(
-        attachment=Attachment.objects.create(title='test attachment'),
-        file='some/path.ext',
-        mime_type='application/kuma',
+        attachment=Attachment.objects.create(title="test attachment"),
+        file="some/path.ext",
+        mime_type="application/kuma",
         creator=wiki_user,
-        title='test attachment',
+        title="test attachment",
     )
     attachment_revision.save()
     assert AttachmentRevision.objects.filter(creator=wiki_user).exists()
 
-    url = reverse('users.user_delete', kwargs={'username': wiki_user.username})
-    response = user_client.post(url, {'attributions': 'donate'}, HTTP_HOST=settings.WIKI_HOST)
+    url = reverse("users.user_delete", kwargs={"username": wiki_user.username})
+    response = user_client.post(
+        url, {"attributions": "donate"}, HTTP_HOST=settings.WIKI_HOST
+    )
     assert response.status_code == 302
     assert not User.objects.filter(username=wiki_user.username).exists()
     with pytest.raises(SocialAccount.DoesNotExist):
         wiki_user_github_account.refresh_from_db()
 
     revision.refresh_from_db()
-    assert revision.creator.username == 'Anonymous'
+    assert revision.creator.username == "Anonymous"
 
     attachment_revision.refresh_from_db()
-    assert attachment_revision.creator.username == 'Anonymous'
+    assert attachment_revision.creator.username == "Anonymous"
 
     # The user_client should now become "invalid" since its session
     # is going to point to no user.
     response = user_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
-    assert reverse('account_login') in response['Location']
+    assert reverse("account_login") in response["Location"]
     # Let's doublecheck that
-    whoami_url = reverse('api.v1.whoami')
+    whoami_url = reverse("api.v1.whoami")
     response = user_client.get(whoami_url)
     assert response.status_code == 200
-    assert not response.json()['username']
-    assert not response.json()['is_authenticated']
+    assert not response.json()["username"]
+    assert not response.json()["is_authenticated"]
 
 
 def test_delete_user_keep_attributions(
-    db,
-    user_client,
-    wiki_user,
-    wiki_user_github_account,
-    root_doc
+    db, user_client, wiki_user, wiki_user_github_account, root_doc
 ):
     # Also, pretend that the user has a rich profile
     User.objects.filter(id=wiki_user.id).update(
-        first_name='Peter',
-        last_name='B',
-        timezone='Ocean',
-        locale='sv-SE',
-        homepage='https://www.peterbe.com',
-        title='Web Dev',
-        fullname='Peter B',
-        organization='Mozilla',
-        location='Earth',
-        bio='Doing stuff',
-        irc_nickname='pb',
-        website_url='https://www.peterbe.com',
-        github_url='github/peterbe',
-        mozillians_url='mozillians/peterbe',
-        twitter_url='twitter/peterbe',
-        linkedin_url='linkedin/peterbe',
-        facebook_url='facebook/peterbe',
-        stackoverflow_url='stackoverflow/peterbe',
-        discourse_url='discourse/peterbe',
-        stripe_customer_id='123456',
+        first_name="Peter",
+        last_name="B",
+        timezone="Ocean",
+        locale="sv-SE",
+        homepage="https://www.peterbe.com",
+        title="Web Dev",
+        fullname="Peter B",
+        organization="Mozilla",
+        location="Earth",
+        bio="Doing stuff",
+        irc_nickname="pb",
+        website_url="https://www.peterbe.com",
+        github_url="github/peterbe",
+        mozillians_url="mozillians/peterbe",
+        twitter_url="twitter/peterbe",
+        linkedin_url="linkedin/peterbe",
+        facebook_url="facebook/peterbe",
+        stackoverflow_url="stackoverflow/peterbe",
+        discourse_url="discourse/peterbe",
+        stripe_customer_id="123456",
     )
 
     revision = root_doc.revisions.first()
@@ -1485,11 +1602,11 @@ def test_delete_user_keep_attributions(
     assert revision.creator == wiki_user
 
     attachment_revision = AttachmentRevision(
-        attachment=Attachment.objects.create(title='test attachment'),
-        file='some/path.ext',
-        mime_type='application/kuma',
+        attachment=Attachment.objects.create(title="test attachment"),
+        file="some/path.ext",
+        mime_type="application/kuma",
         creator=wiki_user,
-        title='test attachment',
+        title="test attachment",
     )
     attachment_revision.save()
     assert AttachmentRevision.objects.filter(creator=wiki_user).exists()
@@ -1499,15 +1616,16 @@ def test_delete_user_keep_attributions(
 
     # Create a RevisionAkismetSubmission
     RevisionAkismetSubmission.objects.create(
-        revision=revision,
-        sender=wiki_user,
-        type='ham')
+        revision=revision, sender=wiki_user, type="ham"
+    )
 
     # Create an authentication key
     Key.objects.create(user=wiki_user)
 
-    url = reverse('users.user_delete', kwargs={'username': wiki_user.username})
-    response = user_client.post(url, {'attributions': 'keep'}, HTTP_HOST=settings.WIKI_HOST)
+    url = reverse("users.user_delete", kwargs={"username": wiki_user.username})
+    response = user_client.post(
+        url, {"attributions": "keep"}, HTTP_HOST=settings.WIKI_HOST
+    )
     assert response.status_code == 302
     # Should still exist
     assert User.objects.filter(username=wiki_user.username).exists()
@@ -1522,27 +1640,27 @@ def test_delete_user_keep_attributions(
 
     # But the account should be clean, apart from the username.
     wiki_user.refresh_from_db()
-    assert wiki_user.email == ''
-    assert wiki_user.first_name == ''
-    assert wiki_user.last_name == ''
-    assert wiki_user.timezone == ''
-    assert wiki_user.locale == ''
-    assert wiki_user.homepage == ''
-    assert wiki_user.title == ''
-    assert wiki_user.fullname == ''
-    assert wiki_user.organization == ''
-    assert wiki_user.location == ''
-    assert wiki_user.bio == ''
-    assert wiki_user.irc_nickname == ''
-    assert wiki_user.website_url == ''
-    assert wiki_user.github_url == ''
-    assert wiki_user.mozillians_url == ''
-    assert wiki_user.twitter_url == ''
-    assert wiki_user.linkedin_url == ''
-    assert wiki_user.facebook_url == ''
-    assert wiki_user.stackoverflow_url == ''
-    assert wiki_user.discourse_url == ''
-    assert wiki_user.stripe_customer_id == ''
+    assert wiki_user.email == ""
+    assert wiki_user.first_name == ""
+    assert wiki_user.last_name == ""
+    assert wiki_user.timezone == ""
+    assert wiki_user.locale == ""
+    assert wiki_user.homepage == ""
+    assert wiki_user.title == ""
+    assert wiki_user.fullname == ""
+    assert wiki_user.organization == ""
+    assert wiki_user.location == ""
+    assert wiki_user.bio == ""
+    assert wiki_user.irc_nickname == ""
+    assert wiki_user.website_url == ""
+    assert wiki_user.github_url == ""
+    assert wiki_user.mozillians_url == ""
+    assert wiki_user.twitter_url == ""
+    assert wiki_user.linkedin_url == ""
+    assert wiki_user.facebook_url == ""
+    assert wiki_user.stackoverflow_url == ""
+    assert wiki_user.discourse_url == ""
+    assert wiki_user.stripe_customer_id == ""
 
     assert not SocialAccount.objects.filter(user=wiki_user).exists()
 
@@ -1550,30 +1668,30 @@ def test_delete_user_keep_attributions(
     # is going to point to no user.
     response = user_client.get(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
-    assert reverse('account_login') in response['Location']
+    assert reverse("account_login") in response["Location"]
     # Let's doublecheck that
-    whoami_url = reverse('api.v1.whoami')
+    whoami_url = reverse("api.v1.whoami")
     response = user_client.get(whoami_url)
     assert response.status_code == 200
-    assert not response.json()['username']
-    assert not response.json()['is_authenticated']
+    assert not response.json()["username"]
+    assert not response.json()["is_authenticated"]
 
     # There should be no Key left
     assert not Key.objects.all().exists()
 
 
 @pytest.mark.parametrize(
-    'email, expected_status',
-    [('test@example.com', 302), ('not an email', 400)],
-    ids=('good_email', 'bad_email'))
+    "email, expected_status",
+    [("test@example.com", 302), ("not an email", 400)],
+    ids=("good_email", "bad_email"),
+)
 def test_send_recovery_email(db, client, email, expected_status):
-    url = reverse('users.send_recovery_email')
-    response = client.post(url, {'email': email})
+    url = reverse("users.send_recovery_email")
+    response = client.post(url, {"email": email})
     assert response.status_code == expected_status
     assert_no_cache_header(response)
     if expected_status == 302:
-        assert response['Location'].endswith(
-            reverse('users.recovery_email_sent'))
+        assert response["Location"].endswith(reverse("users.recovery_email_sent"))
 
 
 def test_recover_valid(wiki_user, client):
@@ -1581,17 +1699,17 @@ def test_recover_valid(wiki_user, client):
     response = client.get(recover_url)
     assert response.status_code == 302
     assert_no_cache_header(response)
-    assert response['Location'].endswith(reverse('users.recover_done'))
+    assert response["Location"].endswith(reverse("users.recover_done"))
     wiki_user.refresh_from_db()
     assert not wiki_user.has_usable_password()
 
 
 def test_invalid_token_fails(wiki_user, client):
     recover_url = wiki_user.get_recovery_url()
-    bad_last_char = '2' if recover_url[-1] == '3' else '3'
+    bad_last_char = "2" if recover_url[-1] == "3" else "3"
     bad_recover_url = recover_url[:-1] + bad_last_char
     response = client.get(bad_recover_url)
-    assert b'This link is no longer valid.' in response.content
+    assert b"This link is no longer valid." in response.content
 
 
 def test_invalid_uid_fails(wiki_user, client):
@@ -1601,25 +1719,25 @@ def test_invalid_uid_fails(wiki_user, client):
     response = client.get(bad_recover_url)
     assert response.status_code == 200
     assert_no_cache_header(response)
-    assert b'This link is no longer valid.' in response.content
+    assert b"This link is no longer valid." in response.content
 
 
 def test_signin_landing(db, client, settings):
     settings.MULTI_AUTH_ENABLED = True
-    response = client.get(reverse('socialaccount_signin'))
-    github_login_url = '/users/github/login/'
-    google_login_url = '/users/google/login/'
+    response = client.get(reverse("socialaccount_signin"))
+    github_login_url = "/users/github/login/"
+    google_login_url = "/users/google/login/"
     # first, make sure that the page loads
     assert response.status_code == 200
     doc = pq(response.content)
     # ensure that both auth buttons are present
-    assert doc('.auth-button-container a').length == 2
+    assert doc(".auth-button-container a").length == 2
     # ensure each button links to the appropriate endpoint
-    assert doc('.github-auth').attr.href == github_login_url
-    assert doc('.google-auth').attr.href == google_login_url
+    assert doc(".github-auth").attr.href == github_login_url
+    assert doc(".google-auth").attr.href == google_login_url
 
 
 def test_signin_landing_multi_auth_disabled(db, client):
     settings.MULTI_AUTH_ENABLED = False
-    response = client.get(reverse('socialaccount_signin'))
+    response = client.get(reverse("socialaccount_signin"))
     assert response.status_code == 404

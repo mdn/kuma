@@ -7,18 +7,27 @@ import kuma.attachments.utils
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('attachments', '0002_auto_20191023_0405'),
+        ("attachments", "0002_auto_20191023_0405"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='attachmentrevision',
-            name='file',
-            field=models.FileField(max_length=500, storage=kuma.attachments.models.AttachmentStorage(), upload_to=kuma.attachments.utils.attachment_upload_to),
+            model_name="attachmentrevision",
+            name="file",
+            field=models.FileField(
+                max_length=500,
+                storage=kuma.attachments.models.AttachmentStorage(),
+                upload_to=kuma.attachments.utils.attachment_upload_to,
+            ),
         ),
         migrations.AlterField(
-            model_name='trashedattachment',
-            name='file',
-            field=models.FileField(help_text='The attachment file that was trashed', max_length=500, storage=kuma.attachments.models.AttachmentStorage(), upload_to=kuma.attachments.utils.attachment_upload_to),
+            model_name="trashedattachment",
+            name="file",
+            field=models.FileField(
+                help_text="The attachment file that was trashed",
+                max_length=500,
+                storage=kuma.attachments.models.AttachmentStorage(),
+                upload_to=kuma.attachments.utils.attachment_upload_to,
+            ),
         ),
     ]
