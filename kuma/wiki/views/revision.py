@@ -14,7 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import etag, require_GET, require_POST
+from django.views.decorators.http import last_modified, require_GET, require_POST
 from ratelimit.decorators import ratelimit
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes
@@ -27,6 +27,7 @@ from kuma.core.decorators import (
 )
 from kuma.core.utils import smart_int
 
+from .utils import get_last_modified_header
 from .. import kumascript
 from ..decorators import prevent_indexing, process_document_path
 from ..events import EditDocumentEvent
@@ -212,10 +213,10 @@ def revision_api(request, document_slug, document_locale):
     """
     GET a document's raw HTML with select macros rendered or removed, or
     POST new raw HTML to a document. POST's are allowed only for clients
-    using a valid token passed via the "Authorization" header. The "ETag"
-    header is returned, and conditional requests handled for both GET and
-    POST requests, but conditional request handling is only intended for
-    POST requests to avoid collisions.
+    using a valid token passed via the "Authorization" header. The "Last-
+    Modified" header is returned, and conditional requests handled for both
+    GET and POST requests, but conditional request handling is only intended
+    for POST requests to avoid collisions.
     """
     doc = get_object_or_404(Document, slug=document_slug, locale=document_locale)
 
@@ -260,17 +261,17 @@ def revision_api(request, document_slug, document_locale):
     return do_revision_api_get(request, doc, mode, select_macros)
 
 
-def get_etag(request, doc, *args):
+def get_last_modified(request, doc, *args):
     """
-    Returns the id of the document's current revision as a string.
+    Returns the datetime of the creation of the document's current revision.
     """
-    return str(doc.current_revision.id)
+    return doc.current_revision.created
 
 
-@etag(get_etag)
+@last_modified(get_last_modified)
 def do_revision_api_get(request, doc, mode, select_macros):
     """
-    Handles the GET, including adding the ETag header, assuming that
+    Handles the GET, including adding the Last-Modified header, assuming that
     validation has already been performed.
     """
     if mode and select_macros:
@@ -285,7 +286,7 @@ def do_revision_api_get(request, doc, mode, select_macros):
     return response
 
 
-@etag(get_etag)
+@last_modified(get_last_modified)
 def do_revision_api_post(request, doc, data):
     """
     Handles the POST, including conditional POST's, given the document and
@@ -301,8 +302,8 @@ def do_revision_api_post(request, doc, data):
     response = HttpResponse(doc.html, status=201)
     rev_url = f"{doc.get_absolute_url()}$revision/{doc.current_revision.id}"
     response["Location"] = request.build_absolute_uri(rev_url)
-    # Set the "ETag" header or else the "etag" decorator will set it according
-    # to the document's previous revision, i.e. the current revision prior to
-    # the "revise" method call above.
-    response["ETag"] = f'"{str(doc.current_revision.id)}"'
+    # Set the "Last-Modified" header or else the "last_modified" decorator will
+    # set it according to the document's previous revision, i.e. the current
+    # revision prior to the "revise" method call above.
+    response["Last-Modified"] = get_last_modified_header(doc.current_revision.created)
     return response
