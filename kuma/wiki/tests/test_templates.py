@@ -1298,24 +1298,6 @@ class ArticlePreviewTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         assert doc("article#wikiArticle h1").text() == "Test Content"
 
-    @pytest.mark.xfail(reason="broken test")
-    def test_preview_locale(self):
-        """Preview the wiki syntax content."""
-        # Create a test document and translation.
-        d = _create_document()
-        _create_document(title="Prueba", parent=d, locale="es")
-        # Preview content that links to it and verify link is in locale.
-        url = reverse("wiki.preview", locale="es")
-        response = self.client.post(
-            url, {"content": "[[Test Document]]"}, HTTP_HOST=settings.WIKI_HOST
-        )
-        assert response.status_code == 200
-        assert_no_cache_header(response)
-        doc = pq(response.content)
-        link = doc("#doc-content a")
-        assert link.text() == "Prueba"
-        assert "/es/docs/prueba" == link[0].attrib["href"]
-
 
 class SelectLocaleTests(UserTestCase, WikiTestCase):
     """Test the locale selection page"""
