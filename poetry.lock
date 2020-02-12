@@ -20,6 +20,7 @@ version = "1.4.3"
 [[package]]
 category = "dev"
 description = "Atomic file writes."
+marker = "sys_platform == \"win32\""
 name = "atomicwrites"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
@@ -211,7 +212,7 @@ version = "7.0"
 [[package]]
 category = "dev"
 description = "Cross-platform colored terminal text."
-marker = "sys_platform == \"win32\" and python_version != \"3.4\""
+marker = "sys_platform == \"win32\""
 name = "colorama"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
@@ -904,7 +905,6 @@ greenlet = ">=0.4.5,<0.5"
 [[package]]
 category = "dev"
 description = "More routines for operating on iterables, beyond itertools"
-marker = "python_version > \"2.7\""
 name = "more-itertools"
 optional = false
 python-versions = ">=3.5"
@@ -1074,28 +1074,22 @@ category = "dev"
 description = "pytest: simple powerful testing with Python"
 name = "pytest"
 optional = false
-python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7"
-version = "4.6.9"
+python-versions = ">=3.5"
+version = "5.3.5"
 
 [package.dependencies]
 atomicwrites = ">=1.0"
 attrs = ">=17.4.0"
+colorama = "*"
+more-itertools = ">=4.0.0"
 packaging = "*"
 pluggy = ">=0.12,<1.0"
 py = ">=1.5.0"
-six = ">=1.10.0"
 wcwidth = "*"
 
-[package.dependencies.colorama]
-python = "<3.4.0 || >=3.5.0"
-version = "*"
-
-[package.dependencies.more-itertools]
-python = ">=2.8"
-version = ">=4.0.0"
-
 [package.extras]
-testing = ["argcomplete", "hypothesis (>=3.56)", "nose", "requests", "mock"]
+checkqa-mypy = ["mypy (v0.761)"]
+testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xmlschema"]
 
 [[package]]
 category = "dev"
@@ -1130,7 +1124,7 @@ description = "A Django plugin for pytest."
 name = "pytest-django"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "3.4.8"
+version = "3.8.0"
 
 [package.dependencies]
 pytest = ">=3.6"
@@ -1472,7 +1466,7 @@ version = "5.0.1"
 brotli = ["brotli"]
 
 [metadata]
-content-hash = "3bfc004289aff586bd9a9f06366bb1a33f8f10305dea221a8cb80d057a5541b4"
+content-hash = "5bf1745427ac92e6f090f7b188c2f6edd211291883d886ef8b1142df2d8ca512"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1968,8 +1962,8 @@ pyquery = [
     {file = "pyquery-1.4.1.tar.gz", hash = "sha256:8fcf77c72e3d602ce10a0bd4e65f57f0945c18e15627e49130c27172d4939d98"},
 ]
 pytest = [
-    {file = "pytest-4.6.9-py2.py3-none-any.whl", hash = "sha256:c77a5f30a90e0ce24db9eaa14ddfd38d4afb5ea159309bdd2dae55b931bc9324"},
-    {file = "pytest-4.6.9.tar.gz", hash = "sha256:19e8f75eac01dd3f211edd465b39efbcbdc8fc5f7866d7dd49fedb30d8adf339"},
+    {file = "pytest-5.3.5-py3-none-any.whl", hash = "sha256:ff615c761e25eb25df19edddc0b970302d2a9091fbce0e7213298d85fb61fef6"},
+    {file = "pytest-5.3.5.tar.gz", hash = "sha256:0d5fe9189a148acc3c3eb2ac8e1ac0742cb7618c084f3d228baaec0c254b318d"},
 ]
 pytest-base-url = [
     {file = "pytest-base-url-1.4.1.tar.gz", hash = "sha256:7425e8163345494ac7f544e99c6f3e5a08f4228bee5e26013b98c462a4d31f6e"},
@@ -1980,8 +1974,8 @@ pytest-cov = [
     {file = "pytest_cov-2.8.1-py2.py3-none-any.whl", hash = "sha256:cdbdef4f870408ebdbfeb44e63e07eb18bb4619fae852f6e760645fa36172626"},
 ]
 pytest-django = [
-    {file = "pytest-django-3.4.8.tar.gz", hash = "sha256:4d3283e774fe1d40630ee58bf34929b83875e4751b525eeb07a7506996eb42ee"},
-    {file = "pytest_django-3.4.8-py2.py3-none-any.whl", hash = "sha256:30d773f1768e8f214a3106f1090e00300ce6edfcac8c55fd13b675fe1cbd1c85"},
+    {file = "pytest-django-3.8.0.tar.gz", hash = "sha256:489b904f695f9fb880ce591cf5a4979880afb467763b1f180c07574554bdfd26"},
+    {file = "pytest_django-3.8.0-py2.py3-none-any.whl", hash = "sha256:456fa6854d04ee625d6bbb8b38ca2259e7040a6f93333bfe8bc8159b7e987203"},
 ]
 pytest-metadata = [
     {file = "pytest-metadata-1.8.0.tar.gz", hash = "sha256:2071a59285de40d7541fde1eb9f1ddea1c9db165882df82781367471238b66ba"},
