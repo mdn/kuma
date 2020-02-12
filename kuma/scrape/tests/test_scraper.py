@@ -227,7 +227,7 @@ def scraper():
     return scraper
 
 
-@pytest.yield_fixture()
+@pytest.fixture()
 def mock_logger():
     with mock.patch("kuma.scrape.scraper.logger") as mock_logger:
         yield mock_logger

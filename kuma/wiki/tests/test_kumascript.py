@@ -19,19 +19,17 @@ from .. import kumascript
 from ..constants import KUMASCRIPT_BASE_URL
 
 
-@pytest.yield_fixture
+@pytest.fixture
 def mock_es_client(request):
     """
     Mock ElasticSearch client.
 
     User should override client.search.return_value.
-    Based on test fixture from elasticsearch_dsl
     """
     client = mock.Mock()
-    connections.add_connection("default", client)
+    connections._conns["default"] = client
     yield client
-    connections._conn = {}
-    connections._kwargs = {}
+    del connections._conns["default"]
 
 
 class KumascriptClientTests(WikiTestCase):
@@ -104,7 +102,6 @@ def test_macro_sources_error(mock_requests):
     assert macros == {}
 
 
-@pytest.mark.skip(reason="Breaks subsequent Elasticsearch tests")
 def test_macro_page_count(db, mock_es_client):
     """macro_page_count returns macro usage across all locales by default."""
     mock_es_client.search.return_value = {
@@ -136,7 +133,6 @@ def test_macro_page_count(db, mock_es_client):
     assert macros == {"a11yrolequicklinks": 200, "othermacro": 50}
 
 
-@pytest.mark.skip(reason="Breaks subsequent Elasticsearch tests")
 def test_macro_page_count_en(db, mock_es_client):
     """macro_page_count('en-US') returns macro usage in the en-US locale."""
     mock_es_client.search.return_value = {
