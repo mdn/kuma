@@ -8,12 +8,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0014_auto_20200110_0519'),
+        ("users", "0014_auto_20200110_0519"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='user',
-            name='tags',
-        ),
+        migrations.RemoveField(model_name="user", name="tags",),
     ]
