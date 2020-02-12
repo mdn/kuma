@@ -973,7 +973,7 @@ def test_compare_first_translation(trans_revision, client):
     params = {"from": en_revision.id, "to": trans_revision.id}
     url = urlparams(
         reverse("wiki.compare_revisions", args=[fr_doc.slug], locale=fr_doc.locale),
-        **params
+        **params,
     )
 
     response = client.get(url, HTTP_HOST=settings.WIKI_HOST)
