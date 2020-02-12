@@ -56,7 +56,7 @@
 
             for (var i = 0, l = signupFields.length; i < l; i++) {
                 var currentField = signupFields[i];
-                if (currentField.value === '') {
+                if (currentField.value.trim() === '') {
                     signupForm
                         .querySelector('#' + currentField.id + '-error')
                         .classList.remove('hidden');
