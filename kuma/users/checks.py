@@ -12,7 +12,9 @@ def stripe_check(app_configs, **kwargs):
     errors = []
 
     if settings.STRIPE_SECRET_KEY == "testing" or (
-        not settings.STRIPE_SECRET_KEY and not settings.STRIPE_PLAN_ID
+        not settings.STRIPE_SECRET_KEY
+        and not settings.STRIPE_PUBLIC_KEY
+        and not settings.STRIPE_PLAN_ID
     ):
         return errors
 
