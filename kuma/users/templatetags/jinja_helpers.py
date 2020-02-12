@@ -1,3 +1,5 @@
+from urllib.parse import urlencode
+
 from allauth.account.utils import user_display
 from allauth.socialaccount import providers
 from allauth.socialaccount.templatetags.socialaccount import get_providers
@@ -143,6 +145,23 @@ def provider_login_url(context, provider_id, **params):
             del params["next"]
     # get the login url and append params as url parameters
     return Markup(provider.get_login_url(request, **params))
+
+
+@library.global_function
+@contextfunction
+def login_url(context, **params):
+    """
+    Redirects to the signup landing page.
+    """
+    request = context["request"]
+    next = (
+        params.get("next")
+        or get_request_param(request, "next")
+        or request.get_full_path()
+    )
+    url = reverse("socialaccount_signin")
+    url += f"?{urlencode({'next': next})}"
+    return Markup(url)
 
 
 @library.global_function
