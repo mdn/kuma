@@ -39,7 +39,7 @@
 
       {% if wiki and not untrusted and not user.is_authenticated %}
         {% if settings.MULTI_AUTH_ENABLED %}
-          {% trans login_url=url('socialaccount_signin')|urlparams(next=request.get_full_path()) %}
+          {% trans login_url=login_url() %}
             <p><a href="{{ login_url }}">Sign in</a> to try again.</p>
           {% endtrans %}
         {% else %}
