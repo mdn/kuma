@@ -886,8 +886,8 @@ PIPELINE_JS = {
             # placed in the kuma/javascript/dist/ directory.
             "react.js",
         ),
-        "output_filename": "build/js/banners.js",
-        "extra_context": {"async": True},
+        "output_filename": "build/js/react-main.js",
+        "extra_context": {"defer": True},
     },
     "bcd-signal": {
         "source_filenames": ("bcd-signal.js",),
