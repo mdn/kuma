@@ -448,8 +448,6 @@ def user_edit(request, username):
         )
 
         if user_form.is_valid():
-            new_user = user_form.save()
-
             try:
                 # Beta
                 beta_group = Group.objects.get(name=config.BETA_GROUP_NAME)

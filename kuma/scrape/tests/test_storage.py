@@ -3,7 +3,6 @@ from unittest import mock
 
 import pytest
 from django.db import IntegrityError
-from taggit.models import Tag
 
 from kuma.wiki.constants import REDIRECT_CONTENT
 from kuma.wiki.models import Document, DocumentTag, Revision

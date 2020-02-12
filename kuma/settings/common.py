@@ -887,19 +887,24 @@ PIPELINE_JS = {
             "react.js",
         ),
         "output_filename": "build/js/banners.js",
-        "extra_context": {"async": True,},
+        "extra_context": {"async": True},
     },
-    "users": {
-        "source_filenames": ("js/users.js",),
+    "bcd-signal": {
+        "source_filenames": ("bcd-signal.js",),
+        "output_filename": "build/js/react-bcd-signal.js",
+        "extra_context": {"defer": True},
+    },
+    "banners": {
+        "source_filenames": (
+            "js/components/banners/utils/banners-event-util.js",
+            "js/components/banners/utils/banners-state-util.js",
+            "js/components/banners/banners.js",
+        ),
         "output_filename": "build/js/banners.js",
         "extra_context": {"async": True},
     },
     "users": {
-        "source_filenames": (
-            "js/libs/tag-it.js",
-            "js/moz-jquery-plugins.js",
-            "js/users.js",
-        ),
+        "source_filenames": ("js/users.js",),
         "output_filename": "build/js/users.js",
         "extra_context": {"async": True},
     },
