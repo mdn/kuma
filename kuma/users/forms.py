@@ -32,10 +32,7 @@ class UserEditForm(forms.ModelForm):
         choices=COMMON_GROUPED_CHOICES,
         required=False,
     )
-    beta = forms.BooleanField(
-        label=_('Beta tester'),
-        required=False,
-    )
+    beta = forms.BooleanField(label=_("Beta tester"), required=False,)
     username = forms.RegexField(
         label=_("Username"),
         regex=USERNAME_REGEX,
@@ -123,11 +120,24 @@ class UserEditForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('fullname', 'title', 'organization', 'location',
-                  'locale', 'timezone', 'irc_nickname', 'twitter_url',
-                  'github_url', 'is_github_url_public',
-                  'stackoverflow_url', 'linkedin_url', 'mozillians_url',
-                  'facebook_url', 'discourse_url', 'username')
+        fields = (
+            "fullname",
+            "title",
+            "organization",
+            "location",
+            "locale",
+            "timezone",
+            "irc_nickname",
+            "twitter_url",
+            "github_url",
+            "is_github_url_public",
+            "stackoverflow_url",
+            "linkedin_url",
+            "mozillians_url",
+            "facebook_url",
+            "discourse_url",
+            "username",
+        )
 
     def __init__(self, *args, **kwargs):
         super(UserEditForm, self).__init__(*args, **kwargs)

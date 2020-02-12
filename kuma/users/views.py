@@ -464,15 +464,13 @@ def user_edit(request, username):
             return redirect(edit_user)
 
     context = {
-        'edit_user': edit_user,
-        'user_form': user_form,
-        'username': user_form['username'].value(),
-        'form': UserDeleteForm(),
-        'revisions': revisions,
-        'subscription_info': retrieve_stripe_subscription_info(
-            edit_user,
-        ),
-        'has_stripe_error': has_stripe_error
+        "edit_user": edit_user,
+        "user_form": user_form,
+        "username": user_form["username"].value(),
+        "form": UserDeleteForm(),
+        "revisions": revisions,
+        "subscription_info": retrieve_stripe_subscription_info(edit_user,),
+        "has_stripe_error": has_stripe_error,
     }
 
     return render(request, "users/user_edit.html", context)

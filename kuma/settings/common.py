@@ -886,15 +886,11 @@ PIPELINE_JS = {
             # placed in the kuma/javascript/dist/ directory.
             "react.js",
         ),
-        'output_filename': 'build/js/banners.js',
-        'extra_context': {
-            'async': True,
-        },
+        "output_filename": "build/js/banners.js",
+        "extra_context": {"async": True,},
     },
-    'users': {
-        'source_filenames': (
-            'js/users.js',
-        ),
+    "users": {
+        "source_filenames": ("js/users.js",),
         "output_filename": "build/js/banners.js",
         "extra_context": {"async": True},
     },

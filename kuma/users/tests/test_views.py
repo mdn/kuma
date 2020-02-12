@@ -774,8 +774,15 @@ class BanUserAndCleanupSummaryTestCase(SampleRevisionsMixin, UserTestCase):
 
 def _get_current_form_field_values(doc):
     # Scrape out the existing significant form field values.
-    fields = ('username', 'fullname', 'title', 'organization',
-              'location', 'irc_nickname', 'is_github_url_public')
+    fields = (
+        "username",
+        "fullname",
+        "title",
+        "organization",
+        "location",
+        "irc_nickname",
+        "is_github_url_public",
+    )
     form = dict()
     lookup_pattern = '#{prefix}edit *[name="{prefix}{field}"]'
     prefix = "user-"
