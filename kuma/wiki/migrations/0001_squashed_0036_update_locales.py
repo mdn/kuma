@@ -1,11 +1,12 @@
-from django.db import migrations, models
 import datetime
-import django_extensions.db.fields
-import django.utils.timezone
-import django.db.models.deletion
-from django.conf import settings
-import taggit.managers
 import uuid
+
+import django.db.models.deletion
+import django.utils.timezone
+import django_extensions.db.fields
+import taggit.managers
+from django.conf import settings
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
@@ -217,7 +218,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"db_table": "attachments_documentattachment",},
+            options={"db_table": "attachments_documentattachment"},
         ),
         migrations.CreateModel(
             name="DocumentDeletionLog",
@@ -462,7 +463,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"abstract": False,},
+            options={"abstract": False},
         ),
         migrations.CreateModel(
             name="ReviewTag",
@@ -503,7 +504,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"abstract": False,},
+            options={"abstract": False},
         ),
         migrations.CreateModel(
             name="Revision",
@@ -671,7 +672,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"abstract": False,},
+            options={"abstract": False},
         ),
         migrations.AddField(
             model_name="reviewtaggedrevision",
