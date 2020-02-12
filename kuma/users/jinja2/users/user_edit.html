@@ -95,9 +95,6 @@
             {% else %}
             <label for="{{ user_form.github_url.id_for_label }}">
                 {% include 'includes/icons/social/github.svg' %}GitHub
-              <a class="field-management" href="{{ provider_login_url('github', process='connect', next=next_url) }}">
-                {{ _('Use your GitHub account to sign in.') }}
-              </a>
             </label>
             {{ user_form.github_url }}
             {% endif %}

@@ -92,3 +92,9 @@ SITE_ID = 1
 STRIPE_PUBLIC_KEY = "wubba lubba dub duab"
 STRIPE_SECRET_KEY = "wubba lubba dub dub"
 STRIPE_PLAN_ID = "wubba lubba dub dub"
+
+# (peterbe) All existing tests will now assume this is always the case.
+# The day the *default* is to set MULTI_AUTH_ENABLED=True in settings/common.py
+# this needs to change too! It would also mean having to change a bunch of legacy
+# tests that depend on multi-auth not being enabled.
+MULTI_AUTH_ENABLED = False

@@ -1628,10 +1628,6 @@ SECURE_HSTS_SECONDS = config("SECURE_HSTS_SECONDS", default=0, cast=int)
 # Honor the X-Forwarded-Proto header, to assume HTTPS instead of HTTP
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# Auth and permissions related constants
-LOGIN_URL = "account_login"
-LOGIN_REDIRECT_URL = "home"
-
 # django-allauth configuration
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = config("ACCOUNT_DEFAULT_HTTP_PROTOCOL", default="https")
@@ -1698,6 +1694,10 @@ ENABLE_BCD_SIGNAL = config("ENABLE_BCD_SIGNAL", default=True, cast=bool)
 # Enable or disable the multi auth(Google and Github) sign-in flow
 # When disabled, Github will be the default and only Auth provider
 MULTI_AUTH_ENABLED = config("MULTI_AUTH_ENABLED", default=False, cast=bool)
+
+# Auth and permissions related constants
+LOGIN_URL = "socialaccount_signin" if MULTI_AUTH_ENABLED else "account_login"
+LOGIN_REDIRECT_URL = "home"
 
 # Content Experiments
 # Must be kept up to date with PIPELINE_JS setting and the JS client-side

@@ -18,9 +18,16 @@
             </div>
         </div>
     {% else %}
-        {% set github_url = provider_login_url('github', next=next_url) %}
-        <a href="{{ github_url }}" class="login-link js-login-link" data-service="GitHub" rel="nofollow">
-            {{ _('Sign in') }}{% include 'includes/icons/social/github.svg' %}
-        </a>
+        {% if settings.MULTI_AUTH_ENABLED %}
+            {% set login_url = login_url(next=next_url) %}
+            <a href="{{ login_url }}" class="login-link js-login-link" rel="nofollow">
+                {{ _('Sign in') }}
+            </a>
+        {% else %}
+            {% set github_url = provider_login_url('github', next=next_url) %}
+            <a href="{{ github_url }}" class="login-link js-login-link" data-service="GitHub" rel="nofollow">
+                {{ _('Sign in') }}{% include 'includes/icons/social/github.svg' %}
+            </a>
+        {% endif %}
     {% endif %}
 </div>
