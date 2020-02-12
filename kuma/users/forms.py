@@ -3,7 +3,6 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from sundial.forms import TimezoneChoiceField
 from sundial.zones import COMMON_GROUPED_CHOICES
-from taggit.utils import parse_tags
 
 
 from .constants import USERNAME_CHARACTERS, USERNAME_LEGACY_REGEX, USERNAME_REGEX
@@ -24,8 +23,7 @@ class UserEditForm(forms.ModelForm):
     The main form to edit user profile data.
 
     It dynamically adds a bunch of fields for maintaining information
-    about a user's websites and handles expertise and interests fields
-    specially.
+    about a user's websites
     """
 
     timezone = TimezoneChoiceField(
@@ -35,18 +33,6 @@ class UserEditForm(forms.ModelForm):
         required=False,
     )
     beta = forms.BooleanField(label=_("Beta tester"), required=False,)
-    interests = forms.CharField(
-        label=_("Interests"),
-        max_length=255,
-        required=False,
-        widget=forms.TextInput(attrs={"class": "tags"}),
-    )
-    expertise = forms.CharField(
-        label=_("Expertise"),
-        max_length=255,
-        required=False,
-        widget=forms.TextInput(attrs={"class": "tags"}),
-    )
     username = forms.RegexField(
         label=_("Username"),
         regex=USERNAME_REGEX,
@@ -142,7 +128,6 @@ class UserEditForm(forms.ModelForm):
             "locale",
             "timezone",
             "irc_nickname",
-            "interests",
             "twitter_url",
             "github_url",
             "is_github_url_public",
@@ -164,19 +149,6 @@ class UserEditForm(forms.ModelForm):
             and self.instance.has_legacy_username
         ):
             self.fields["username"].regex = USERNAME_LEGACY_REGEX
-
-    def clean_expertise(self):
-        """Enforce expertise as a subset of interests"""
-        # bug 709938 - don't assume interests passed validation
-        interests = set(parse_tags(self.cleaned_data.get("interests", "")))
-        expertise = set(parse_tags(self.cleaned_data["expertise"]))
-
-        if len(expertise) > 0 and not expertise.issubset(interests):
-            raise forms.ValidationError(
-                _("Areas of expertise must be a " "subset of interests")
-            )
-
-        return self.cleaned_data["expertise"]
 
     def clean_username(self):
         new_username = self.cleaned_data["username"]

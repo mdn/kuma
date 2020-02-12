@@ -13,7 +13,6 @@
 
 {% block site_css %}
   {{ super() }}
-  {% stylesheet 'jquery-ui' %}
   {% stylesheet 'users' %}
   {% stylesheet 'submission' %}
   {% stylesheet 'delete-user-modal' %}
@@ -67,20 +66,6 @@
           {{ li_field(user_form, 'locale') }}
           {{ li_field(user_form, 'timezone') }}
           {{ li_field(user_form, 'irc_nickname') }}
-
-          <li class="{{ ' error' if user_form.interests.errors }}">
-            <label for="{{ user_form.interests.id_for_label }}">{{ _('Interests (tags)') }}</label>
-            <p class="field-note">{{ _('Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".') }}</p>
-            {{ user_form.interests }}
-            {{ user_form.interests.errors }}
-          </li>
-
-          <li class="{{ ' error' if user_form.expertise.errors }}">
-            <label for="{{ user_form.expertise.id_for_label }}">{{ _('Areas of expertise') }}</label>
-            <p class="field-note">{{ _('Add your interests first, then declare yourself an expert in selected topics.') }}</p>
-            {{ user_form.expertise }}
-            {{ user_form.expertise.errors }}
-          </li>
         </ul>
       </fieldset>
       {%- if recurring_payment_enabled %}
@@ -165,11 +150,6 @@
 {% endblock %}
 
 {% block js %}
-<script>
-  // <![CDATA[
-    var INTEREST_SUGGESTIONS = {{ INTEREST_SUGGESTIONS|jsonencode }};
-  // ]]>
-</script>
 
 {% if settings.NEWSLETTER %}
   {% javascript 'newsletter' %}
