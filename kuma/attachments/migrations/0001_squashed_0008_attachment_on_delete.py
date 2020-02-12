@@ -1,8 +1,10 @@
-from django.db import migrations, models
 import datetime
-import kuma.attachments.utils
+
 import django.db.models.deletion
 from django.conf import settings
+from django.db import migrations, models
+
+import kuma.attachments.utils
 
 
 class Migration(migrations.Migration):
