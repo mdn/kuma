@@ -27,7 +27,7 @@ def get_compare_url(doc, from_id, to_id):
     return order_params(
         urlparams(
             reverse("wiki.compare_revisions", args=[doc.slug], locale=doc.locale),
-            **{"from": from_id, "to": to_id}
+            **{"from": from_id, "to": to_id},
         )
     )
 

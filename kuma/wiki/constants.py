@@ -661,3 +661,8 @@ DEV_DOC_REQUEST_FORM = "https://github.com/mdn/sprints/issues/new?template=issue
 WIKI_ONLY_DOCUMENT_QUERY_PARAMS = frozenset(
     ("edit_links", "include", "macros", "nomacros", "raw", "section", "summary",)
 )
+
+# Any slug that, case *sensitively*, matches this list get the
+# <meta name="robots" content="noindex, nofollow"> HTML header and they get
+# excluded from the sitemap XML files.
+NOINDEX_SLUG_PREFIXES = ("MDN/Doc_status",)

@@ -21,7 +21,11 @@ from kuma.core.utils import chunked
 from kuma.search.models import Index
 from kuma.users.models import User
 
-from .constants import EXPERIMENT_TITLE_PREFIX, LEGACY_MINDTOUCH_NAMESPACES
+from .constants import (
+    EXPERIMENT_TITLE_PREFIX,
+    LEGACY_MINDTOUCH_NAMESPACES,
+    NOINDEX_SLUG_PREFIXES,
+)
 from .events import first_edit_email
 from .exceptions import PageMoveError
 from .models import (
@@ -385,6 +389,8 @@ def build_locale_sitemap(locale):
     q = Q(slug__startswith=EXPERIMENT_TITLE_PREFIX)
     for legacy_mindtouch_namespace in LEGACY_MINDTOUCH_NAMESPACES:
         q |= Q(slug__startswith="{}:".format(legacy_mindtouch_namespace))
+    for slug_start in NOINDEX_SLUG_PREFIXES:
+        q |= Q(slug__startswith=slug_start)
     queryset = queryset.exclude(q)
 
     # We have to make the queryset ordered. Otherwise the GenericSitemap

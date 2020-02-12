@@ -701,7 +701,7 @@ for zone_root, wiki_slug, child_path, locales in zone_redirects:
                 url_test(
                     path + "/" + child_path + "?raw&macros",
                     redirect_path + "/" + child_path + "?raw&macros",
-                    **zone_url_test_kwargs
+                    **zone_url_test_kwargs,
                 )
             )
             # The zone root with $edit.

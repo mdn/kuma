@@ -1,6 +1,6 @@
-from django.db import migrations, models
 import django.utils.timezone
 import taggit.managers
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
@@ -104,7 +104,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"ordering": ("-order", "name"),},
+            options={"ordering": ("-order", "name")},
         ),
         migrations.CreateModel(
             name="Index",

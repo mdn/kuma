@@ -1,6 +1,4 @@
 [flake8]
-exclude = **/migrations/**
-
 # Black recommends 88-char lines and ignoring the following lints:
 # - E203 - whitespace before ':'
 # - E501 - line too long

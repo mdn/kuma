@@ -106,6 +106,9 @@ flake8-import-order = "^0.18.1"
 # Pinned Dependencies
 coverage = {extras = ["toml"], version = "^5"} # Use optional toml support
 
+[tool.black]
+target-version = ["py38"]
+
 [tool.coverage.run]
 source = ["kuma"]
 branch = true

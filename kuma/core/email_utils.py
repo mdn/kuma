@@ -73,7 +73,7 @@ def emails_with_users_and_watches(
     users_and_watches,
     from_email=settings.TIDINGS_FROM_ADDRESS,
     default_locale=settings.WIKI_DEFAULT_LANGUAGE,
-    **extra_kwargs
+    **extra_kwargs,
 ):
     """Return iterable of EmailMessages with user and watch values substituted.
 
@@ -110,7 +110,7 @@ def emails_with_users_and_watches(
             render_email(text_template, context_vars),
             from_email,
             [user.email],
-            **extra_kwargs
+            **extra_kwargs,
         )
 
         if html_template:
