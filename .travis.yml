@@ -5,16 +5,16 @@ language: minimal
 git: { submodules: false }
 matrix:
     include:
-        - language: python
-          name: "Documentation"
+        - name: "Documentation"
+          language: python
           python: 3.8
           cache: pip
           install:
             - pip install -r docs/requirements.txt
           script:
             - sphinx-build -b html -d doctrees docs html
-        - language: python
-          name: "Python linting"
+        - name: "Python linting"
+          language: python
           python: 3.8
           cache: pip
           script:
@@ -26,8 +26,8 @@ matrix:
             - poetry install -vv
             - poetry run flake8 kuma docs tests
             - poetry run black --check --diff kuma docs tests
-        - language: python
-          name: "Python testing"
+        - name: "Python testing"
+          language: python
           python: 3.8
           services: docker
           git: { submodules: true }
@@ -45,8 +45,8 @@ matrix:
             - scripts/ci-jest
             - scripts/ci-localerefresh
             - bash <(curl -s https://codecov.io/bash)
-        - language: node_js
-          name: "Javascript linting"
+        - name: "Javascript linting"
+          language: node_js
           node_js: 10
           cache: npm
           script:
