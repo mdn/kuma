@@ -54,9 +54,15 @@ def translate(request, document_slug, document_locale):
     # That might help reduce the headache-inducing branchiness.
 
     # The parent document to translate from
-    parent_doc = get_object_or_404(
-        Document, locale=settings.WIKI_DEFAULT_LANGUAGE, slug=document_slug
-    )
+    try:
+        # Use '.all_objects' because the parent might have been soft deleted.
+        # And if we don't respect that fact, it would become impossible to
+        # edit a the child of it.
+        parent_doc = Document.all_objects.get(
+            locale=settings.WIKI_DEFAULT_LANGUAGE, slug=document_slug
+        )
+    except Document.DoesNotExist:
+        raise Http404("Parent document does not exist")
 
     # Get the mapping here and now so it can be used for input validation
     language_mapping = get_language_mapping()

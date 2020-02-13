@@ -30,6 +30,18 @@
       </div>
     </div>
   </div>
+
+  {% if parent.deleted %}
+  <div class="warning">
+    <p>
+      {% trans parent_url=parent.get_absolute_url() %}
+      <b>Note!</b>
+      The <a href="{{ parent_url }}">parent document</a> is deleted.
+      {% endtrans %}
+    </p>
+  </div>
+{% endif %}
+
 {% endblock%}
 
 {% block content %}
