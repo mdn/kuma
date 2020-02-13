@@ -1,35 +1,46 @@
-branches:
-    only:
-        - master
-language: python
-python:
-    - "3.8"
-services:
-    - docker
-matrix:
+branches: master
+language: minimal
+git: { submodules: false }
+jobs:
     include:
-        - language: python
-          name: "Documentation"
+        - stage: "Lint"
+          name: "General Lints"
+          script:
+            - "! git grep -n '^<<<<<<< '"  # Check for Git conflict markers
+
+        - name: "Python Lints"
+          language: python
           python: 3.8
           cache: pip
+          install:
+            - >-
+              pip install --disable-pip-version-check
+              black flake8 flake8-import-order
           script:
-            - scripts/ci-docs
-        - language: python
-          name: "Python linting"
+            - flake8 kuma docs tests
+            - black --check --diff kuma docs tests
+
+        - name: "JavaScript Lints"
+          language: node_js
+          node_js: 12
+          cache: npm
+          script:
+            - scripts/ci-jslint
+            - scripts/ci-flow
+
+        - stage: "Test"
+          name: "Documentation Build"
+          language: python
           python: 3.8
           cache: pip
+          install:
+            - pip install -r docs/requirements.txt
           script:
-            - set -x
-            # Make sure there are no left-over git patch markers in
-            - git --no-pager grep '>>>>>>>'
-            - pip install poetry~=1.0.0b9
-            - poetry --version
-            - poetry install -vv
-            - poetry run flake8 kuma docs tests
-            - poetry run black --check --diff kuma docs tests
-        - language: python
-          name: "Python testing"
-          python: 3.8
+            - sphinx-build -b html -d doctrees docs html
+
+        - name: "Dockerized Tests"
+          services: docker
+          git: { submodules: true }
           env:
             UID=0
             DOCKER_COMPOSE_VERSION=1.23.2
@@ -44,10 +55,3 @@ matrix:
             - scripts/ci-jest
             - scripts/ci-localerefresh
             - bash <(curl -s https://codecov.io/bash)
-        - language: node_js
-          name: "Javascript linting"
-          node_js: 10
-          cache: npm
-          script:
-            - scripts/ci-jslint
-            - scripts/ci-flow
