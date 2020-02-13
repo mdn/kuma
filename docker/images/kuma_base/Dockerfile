@@ -1,7 +1,7 @@
 FROM python:3.8.0-slim@sha256:7df1fd6bb894e03b488c01fd05eaa4dd677f5b57d800c209f7f0af9867137df9
 
 # Set the environment variables
-ENV NODE_VERSION=12.13.1 \
+ENV NODE_VERSION=12.16.0 \
     # extra python env
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
