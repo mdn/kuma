@@ -57,6 +57,7 @@ from .exceptions import (
 )
 from .jobs import DocumentContributorsJob, DocumentTagsJob
 from .managers import (
+    AllDocumentManager,
     DeletedDocumentManager,
     DocumentAdminManager,
     DocumentManager,
@@ -331,6 +332,7 @@ class Document(NotificationsMixin, models.Model):
 
     objects = DocumentManager()
     deleted_objects = DeletedDocumentManager()
+    all_objects = AllDocumentManager()
     admin_objects = DocumentAdminManager()
 
     def __str__(self):
