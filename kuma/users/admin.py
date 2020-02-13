@@ -43,7 +43,6 @@ class UserAdmin(BaseUserAdmin):
         "organization",
         "location",
         "email",
-        "tags__name",
     )
 
     def revisions(self, obj):
