@@ -78,12 +78,12 @@ six = "^1.13.0"
 
 # From dev.txt
 django-babel = "0.6.2"
-django-querycount = "0.7.0"
 urlwait = "0.4"
 
 [tool.poetry.dev-dependencies]
 # Development Tools
 django-debug-toolbar = "^2.2"
+django-querycount = "^0.7.0"
 werkzeug = "^1.0" # Enables runserver_plus from django-extensions
 
 # Testing

@@ -475,7 +475,7 @@ python-versions = "*"
 version = "1.7.0"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Middleware that Prints the number of DB queries to the runserver console."
 name = "django-querycount"
 optional = false
@@ -1458,7 +1458,7 @@ version = "5.0.1"
 brotli = ["brotli"]
 
 [metadata]
-content-hash = "3eafcbb923c263b60da355802c43af332b2a11f5fda00762db3f5ffd050ba2e4"
+content-hash = "31110159452fca399b05fb05c3634dbeb59e8c2ea8f4a41919a8beb92148bdac"
 python-versions = "^3.8"
 
 [metadata.files]
