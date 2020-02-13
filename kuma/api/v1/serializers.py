@@ -9,7 +9,11 @@ class BCSignalSerializer(serializers.Serializer):
     browsers = serializers.CharField(max_length=255)
     slug = serializers.CharField(max_length=255)
     locale = serializers.CharField(max_length=7)
-    explanation = serializers.CharField(allow_blank=True, max_length=1000)
+    explanation = serializers.CharField(
+        # Make sure these match the constants in bcd-signal.jsx
+        max_length=1000,
+        min_length=10,
+    )
     supporting_material = serializers.CharField(
         allow_blank=True, required=False, max_length=1000
     )
