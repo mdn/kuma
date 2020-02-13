@@ -38,6 +38,7 @@ from honeypot.decorators import verify_honeypot_value
 from raven.contrib.django.models import client as raven_client
 from waffle import flag_is_active
 
+from kuma.attachments.models import AttachmentRevision
 from kuma.core.decorators import (
     ensure_wiki_domain,
     login_required,
@@ -432,6 +433,7 @@ def user_edit(request, username):
         return HttpResponseForbidden()
 
     revisions = Revision.objects.filter(creator=edit_user)
+    attachment_revisions = AttachmentRevision.objects.filter(creator=edit_user)
 
     if request.method != "POST":
         initial = {
@@ -469,6 +471,7 @@ def user_edit(request, username):
         "username": user_form["username"].value(),
         "form": UserDeleteForm(),
         "revisions": revisions,
+        "attachment_revisions": attachment_revisions,
         "subscription_info": retrieve_stripe_subscription_info(edit_user,),
         "has_stripe_error": has_stripe_error,
     }
@@ -538,6 +541,7 @@ def user_delete(request, username):
         user.delete()
 
     revisions = Revision.objects.filter(creator=request.user)
+    attachment_revisions = AttachmentRevision.objects.filter(creator=request.user)
     context = {}
     if request.method == "POST":
         # If the user has no revisions there's not choices on the form.
@@ -564,6 +568,7 @@ def user_delete(request, username):
     context["form"] = form
     context["username"] = username
     context["revisions"] = revisions
+    context["attachment_revisions"] = attachment_revisions
 
     return render(request, "users/user_delete.html", context)
 
