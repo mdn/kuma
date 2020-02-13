@@ -27,17 +27,17 @@
     <ol class="auth-service-header">
       {% if provider.name == "GitHub" %}
         <li class="github-auth checked">
-          <img src="{{ static('auth/github-auth.svg') }}" width="90px" alt="Github" />
+          <img src="{{ static('auth/github-auth.svg') }}" width="90" alt="Github" />
           {{ _('Authorize with Github') }}
         </li>
       {% elif provider.name == "Google" %}
         <li class="google-auth checked">
-          <img src="{{ static('auth/google-auth.svg') }}" width="90px" alt="Google" />
+          <img src="{{ static('auth/google-auth.svg') }}" width="90" alt="Google" />
           {{ _('Authorize with Google') }}
         </li>
       {% endif %}
       <li class="mdn-profile">
-        <img src="{{ static('auth/mdn-auth.svg') }}" width="90px" alt="{{ _('User avatar') }}" />
+        <img src="{{ account.get_avatar_url() }}" width="90" alt="{{ _('User avatar') }}" />
         {{ _('Create MDN Account') }}
       </li>
     </ol>
@@ -149,7 +149,7 @@
         </li>
 
         <li class="submit">
-          <button id="create-mdn-account" class="cta primary" type="submit" name="create" data-avatar="{{ account.get_avatar_url() }}">{{ _('Create profile') }}</button>
+          <button id="create-mdn-account" class="cta primary" type="submit" name="create">{{ _('Create profile') }}</button>
         </li>
       </ul>
 
