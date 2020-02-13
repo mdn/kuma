@@ -2,6 +2,7 @@ branches:
     only:
         - master
 language: minimal
+git: { submodules: false }
 matrix:
     include:
         - language: python
@@ -29,6 +30,7 @@ matrix:
           name: "Python testing"
           python: 3.8
           services: docker
+          git: { submodules: true }
           env:
             UID=0
             DOCKER_COMPOSE_VERSION=1.23.2
