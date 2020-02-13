@@ -15,15 +15,15 @@ jobs:
           language: python
           python: 3.8
           cache: pip
+          install:
+            - >-
+              pip install --disable-pip-version-check
+              black flake8 flake8-import-order
           script:
-            - set -x
             # Make sure there are no left-over git patch markers in
             - git --no-pager grep '>>>>>>>'
-            - pip install poetry~=1.0.0b9
-            - poetry --version
-            - poetry install -vv
-            - poetry run flake8 kuma docs tests
-            - poetry run black --check --diff kuma docs tests
+            - flake8 kuma docs tests
+            - black --check --diff kuma docs tests
         - name: "Python testing"
           language: python
           python: 3.8
