@@ -20,8 +20,7 @@ jobs:
               pip install --disable-pip-version-check
               black flake8 flake8-import-order
           script:
-            # Make sure there are no left-over git patch markers in
-            - git --no-pager grep '>>>>>>>'
+            - "! git grep -n '^<<<<<<< '"  # Check for Git conflict markers
             - flake8 kuma docs tests
             - black --check --diff kuma docs tests
         - name: "Python testing"
