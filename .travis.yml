@@ -1,9 +1,7 @@
 branches:
     only:
         - master
-language: python
-python:
-    - "3.8"
+language: minimal
 services:
     - docker
 matrix:
