@@ -3,15 +3,12 @@ language: minimal
 git: { submodules: false }
 jobs:
     include:
-        - name: "Documentation"
-          language: python
-          python: 3.8
-          cache: pip
-          install:
-            - pip install -r docs/requirements.txt
+        - stage: "Lint"
+          name: "General Lints"
           script:
-            - sphinx-build -b html -d doctrees docs html
-        - name: "Python linting"
+            - "! git grep -n '^<<<<<<< '"  # Check for Git conflict markers
+
+        - name: "Python Lints"
           language: python
           python: 3.8
           cache: pip
@@ -20,12 +17,28 @@ jobs:
               pip install --disable-pip-version-check
               black flake8 flake8-import-order
           script:
-            - "! git grep -n '^<<<<<<< '"  # Check for Git conflict markers
             - flake8 kuma docs tests
             - black --check --diff kuma docs tests
-        - name: "Python testing"
+
+        - name: "JavaScript Lints"
+          language: node_js
+          node_js: 10
+          cache: npm
+          script:
+            - scripts/ci-jslint
+            - scripts/ci-flow
+
+        - stage: "Test"
+          name: "Documentation Build"
           language: python
           python: 3.8
+          cache: pip
+          install:
+            - pip install -r docs/requirements.txt
+          script:
+            - sphinx-build -b html -d doctrees docs html
+
+        - name: "Dockerized Tests"
           services: docker
           git: { submodules: true }
           env:
@@ -42,10 +55,3 @@ jobs:
             - scripts/ci-jest
             - scripts/ci-localerefresh
             - bash <(curl -s https://codecov.io/bash)
-        - name: "Javascript linting"
-          language: node_js
-          node_js: 10
-          cache: npm
-          script:
-            - scripts/ci-jslint
-            - scripts/ci-flow
