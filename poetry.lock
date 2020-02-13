@@ -202,7 +202,7 @@ python-versions = "*"
 version = "3.0.4"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Composable command line interface toolkit"
 name = "click"
 optional = false
@@ -251,7 +251,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 version = "0.6.0"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Utilities for working with PO and POT files to ease development and improve localization quality"
 name = "dennis"
 optional = false
@@ -1458,7 +1458,7 @@ version = "5.0.1"
 brotli = ["brotli"]
 
 [metadata]
-content-hash = "344e0a6841bff3088d045dd7fe31794f87dd2fa0565792f83f1293e70400bbcb"
+content-hash = "3eafcbb923c263b60da355802c43af332b2a11f5fda00762db3f5ffd050ba2e4"
 python-versions = "^3.8"
 
 [metadata.files]
