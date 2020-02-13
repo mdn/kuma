@@ -2,8 +2,6 @@ branches:
     only:
         - master
 language: minimal
-services:
-    - docker
 matrix:
     include:
         - language: python
@@ -30,6 +28,7 @@ matrix:
         - language: python
           name: "Python testing"
           python: 3.8
+          services: docker
           env:
             UID=0
             DOCKER_COMPOSE_VERSION=1.23.2
