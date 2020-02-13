@@ -1,5 +1,0 @@
-<<<<<<< HEAD
-Hello World
-=======
-test
->>>>>>> initial commit
