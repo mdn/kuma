@@ -1,6 +1,4 @@
-branches:
-    only:
-        - master
+branches: master
 language: minimal
 git: { submodules: false }
 jobs:
