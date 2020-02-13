@@ -1,6 +1,0 @@
-#!/bin/bash
-set -e  # Exit on non-zero status
-set -u  # Treat unset variables as an error
-
-pip install -r docs/requirements.txt
-sphinx-build -b html -d doctrees docs html
