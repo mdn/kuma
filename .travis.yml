@@ -10,8 +10,10 @@ matrix:
           name: "Documentation"
           python: 3.8
           cache: pip
+          install:
+            - pip install -r docs/requirements.txt
           script:
-            - scripts/ci-docs
+            - sphinx-build -b html -d doctrees docs html
         - language: python
           name: "Python linting"
           python: 3.8
