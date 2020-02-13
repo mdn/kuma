@@ -3,7 +3,7 @@ branches:
         - master
 language: minimal
 git: { submodules: false }
-matrix:
+jobs:
     include:
         - name: "Documentation"
           language: python
