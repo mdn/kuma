@@ -5,15 +5,6 @@
     var signupForm = document.getElementById('social-signup-form');
 
     /**
-     * A simple test to determine if `onanimationend` is supported
-     * @returns {Boolean}
-     */
-    function isOnAnimationEndSupported() {
-        var elem = document.createElement('img');
-        return 'onanimationend' in elem;
-    }
-
-    /**
      * Hides the specified static content container, shows the edit
      * container and sets focus to the specified element.
      * @param {Object} staticContainer - The container to hide
@@ -24,26 +15,6 @@
         staticContainer.classList.add('hidden');
         editContainer.classList.remove('hidden');
         focusElement.focus();
-    }
-
-    /**
-     * Adds checkmark to MDN auth avatar, loads and animates the users Github avatar
-     * @param {HTMLFormElement} form - The form to submit after `onanimationend`
-     */
-    function animateAvatar(form) {
-        var avatarURL = event.target.dataset['avatar'];
-        var mdnProfileImgContainer = document.querySelector('.mdn-profile');
-        var mdnProfileImg = mdnProfileImgContainer.querySelector('img');
-
-        mdnProfileImg.src = avatarURL;
-        mdnProfileImg.addEventListener('load', function() {
-            mdnProfileImgContainer.classList.add('checked');
-            mdnProfileImg.classList.add('animate');
-
-            mdnProfileImg.onanimationend = function() {
-                form.submit();
-            };
-        });
     }
 
     signupForm.addEventListener('click', function(event) {
@@ -66,13 +37,8 @@
             focusElement = editContainer.querySelector('label');
             showEditFields(staticContainer, editContainer, focusElement);
         } else if (event.target.id === 'create-mdn-account') {
-            if (isOnAnimationEndSupported()) {
-                event.preventDefault();
-                animateAvatar(signupForm);
-            } else {
-                var mdnProfileImgContainer = document.querySelector('.mdn-profile');
-                mdnProfileImgContainer.classList.add('checked');
-            }
+            var mdnProfileImgContainer = document.querySelector('.mdn-profile');
+            mdnProfileImgContainer.classList.add('checked');
         }
     });
 
