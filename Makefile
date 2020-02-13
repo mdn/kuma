@@ -25,8 +25,6 @@ KUMASCRIPT_IMAGE_LATEST ?= ${IMAGE_PREFIX}/${KUMASCRIPT_IMAGE_NAME}\:latest
 
 target = kuma
 requirements = -r requirements/local.txt
-# set Django settings module if not already set as env var
-export DJANGO_SETTINGS_MODULE ?= kuma.settings.testing
 
 # Note: these targets should be run from the kuma vm
 test:
