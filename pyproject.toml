@@ -73,7 +73,6 @@ whitenoise = "^5.0.1"
 # From default_and_test.txt
 pyquery = "1.4.1"
 requests = "^2.22.0"
-six = "^1.13.0"
 
 # From dev.txt
 django-babel = "0.6.2"
