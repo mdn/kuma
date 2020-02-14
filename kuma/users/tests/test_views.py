@@ -1647,6 +1647,45 @@ def test_delete_user_keep_attributions(
     assert not Key.objects.all().exists()
 
 
+def test_delete_user_no_revisions_but_attachment_revisions_donate(
+    db, user_client, wiki_user, django_user_model
+):
+    """
+    This test is based on the bug report
+    https://github.com/mdn/kuma/issues/6479
+
+    The user didn't have any revisions to confront the legacy of, but there might be
+    other things attached to the user.
+    """
+    assert not Revision.objects.filter(creator=wiki_user).exists()
+
+    attachment_revision = AttachmentRevision(
+        attachment=Attachment.objects.create(title="test attachment"),
+        file="some/path.ext",
+        mime_type="application/kuma",
+        creator=wiki_user,
+        title="test attachment",
+    )
+    attachment_revision.save()
+    url = reverse("users.user_delete", kwargs={"username": wiki_user.username})
+    response = user_client.post(url, HTTP_HOST=settings.WIKI_HOST)
+    # This means it didn't work! The form rejects.
+    assert response.status_code == 200
+
+    # Ok, let's donate the attachment revisions to "Anonymous"
+    response = user_client.post(
+        url, {"attributions": "donate"}, HTTP_HOST=settings.WIKI_HOST
+    )
+    # This means it worked! The user's attributions have been donated to the Anonymous user.
+    assert response.status_code == 302
+
+    with pytest.raises(User.DoesNotExist):
+        wiki_user.refresh_from_db()
+
+    attachment_revision.refresh_from_db()
+    assert attachment_revision.creator.username == "Anonymous"
+
+
 @pytest.mark.parametrize(
     "email, expected_status",
     [("test@example.com", 302), ("not an email", 400)],

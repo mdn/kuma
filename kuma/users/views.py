@@ -482,6 +482,7 @@ def user_edit(request, username):
 
 @redirect_in_maintenance_mode
 @login_required
+@transaction.atomic()
 def user_delete(request, username):
     user = get_object_or_404(User, username=username)
     if user != request.user:
@@ -546,19 +547,18 @@ def user_delete(request, username):
     context = {}
     if request.method == "POST":
         # If the user has no revisions there's not choices on the form.
-        if revisions.exists():
+        if revisions.exists() or attachment_revisions.exists():
             form = UserDeleteForm(request.POST)
             if form.is_valid():
-                with transaction.atomic():
-                    if form.cleaned_data["attributions"] == "donate":
-                        donate_attributions()
-                        delete_user()
-                    elif form.cleaned_data["attributions"] == "keep":
-                        scrub_user()
-                        force_logout()
-                    else:
-                        raise NotImplementedError(form.cleaned_data["attributions"])
-                    return HttpResponseRedirect("/")
+                if form.cleaned_data["attributions"] == "donate":
+                    donate_attributions()
+                    delete_user()
+                elif form.cleaned_data["attributions"] == "keep":
+                    scrub_user()
+                    force_logout()
+                else:
+                    raise NotImplementedError(form.cleaned_data["attributions"])
+                return HttpResponseRedirect("/")
 
         else:
             delete_user()
