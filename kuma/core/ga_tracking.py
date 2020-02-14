@@ -44,6 +44,8 @@ ACTION_RETURNING_USER_SIGNIN = "returning-user-signin"
 ACTION_PROFILE_AUDIT = "profile-audit"
 # Have completed the profile creation form.
 ACTION_PROFILE_CREATED = "profile-created"
+# Have detected an error in the edited profile creation form.
+ACTION_PROFILE_EDIT_ERROR = "profile-edit-error"
 # Checked or didn't check the "Newsletter" checkbox on sign up.
 ACTION_FREE_NEWSLETTER = "free-newsletter"
 # When logging in with one provider and benefitting from a verified email
