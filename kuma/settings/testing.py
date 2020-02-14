@@ -92,9 +92,9 @@ SITE_ID = 1
 ENABLE_BCD_SIGNAL = True
 
 # Stripe API KEY settings
-STRIPE_PUBLIC_KEY = "wubba lubba dub duab"
-STRIPE_SECRET_KEY = "wubba lubba dub dub"
-STRIPE_PLAN_ID = "wubba lubba dub dub"
+STRIPE_PUBLIC_KEY = "testing"
+STRIPE_SECRET_KEY = "testing"
+STRIPE_PLAN_ID = "testing"
 
 # (peterbe) All existing tests will now assume this is always the case.
 # The day the *default* is to set MULTI_AUTH_ENABLED=True in settings/common.py
