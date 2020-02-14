@@ -3,7 +3,7 @@ from django.conf import settings
 from django.core.checks import Error, register
 
 
-STRIPE_ERROR_ID = "kuma.users.E001"
+STRIPE_PLAN_ERROR = "kuma.users.E001"
 STRIPE_PLAN_INACTIVE_ERROR = "kuma.users.E002"
 
 
@@ -32,7 +32,7 @@ def stripe_check(app_configs, **kwargs):
             )
     except stripe.error.StripeError as error:
         errors.append(
-            Error(f"unable to retrieve stripe plan: {error}", id=STRIPE_ERROR_ID)
+            Error(f"unable to retrieve stripe plan: {error}", id=STRIPE_PLAN_ERROR)
         )
 
     return errors
