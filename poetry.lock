@@ -1149,22 +1149,6 @@ pytest = ">=4.4"
 setuptools = ">=40.0"
 
 [[package]]
-category = "dev"
-description = "pytest plugin for providing variables to tests/fixtures"
-name = "pytest-variables"
-optional = false
-python-versions = "*"
-version = "1.9.0"
-
-[package.dependencies]
-pytest = ">=2.4.2"
-
-[package.extras]
-hjson = ["hjson"]
-toml = ["toml"]
-yaml = ["pyyaml"]
-
-[[package]]
 category = "main"
 description = "Extensions to the standard Python datetime module"
 name = "python-dateutil"
@@ -1458,7 +1442,7 @@ version = "5.0.1"
 brotli = ["brotli"]
 
 [metadata]
-content-hash = "ef89e77a88cf18c1006f6355eb22af3e1ed035a2727b871b48b12ad2fadf20dc"
+content-hash = "793e59d3205a597fa37b803ae2260e0308760c744babbb7b3c8cdd80321dc8fd"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1972,10 +1956,6 @@ pytest-metadata = [
 pytest-rerunfailures = [
     {file = "pytest-rerunfailures-8.0.tar.gz", hash = "sha256:17c1236b9f8463f74a5df6c807f301c53c2ea1ab81b7509b7e23fab3b7cbe812"},
     {file = "pytest_rerunfailures-8.0-py2.py3-none-any.whl", hash = "sha256:4997cda1b82f74cc0c280f6a5a0470d36deb318e3d8bd6da71efc32a3e0c9ae4"},
-]
-pytest-variables = [
-    {file = "pytest-variables-1.9.0.tar.gz", hash = "sha256:f79851e4c92a94c93d3f1d02377b5ac97cc8800392e87d108d2cbfda774ecc2a"},
-    {file = "pytest_variables-1.9.0-py2.py3-none-any.whl", hash = "sha256:ccf4afcd70de1f5f18b4463758a19f24647a9def1805f675e80db851c9e00ac0"},
 ]
 python-dateutil = [
     {file = "python-dateutil-2.8.1.tar.gz", hash = "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"},
