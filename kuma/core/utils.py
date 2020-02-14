@@ -20,8 +20,8 @@ from polib import pofile
 from pyquery import PyQuery as pq
 from pytz import timezone
 from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
 from taggit.utils import split_strip
+from urllib3.util.retry import Retry
 
 from .exceptions import DateTimeFormatError
 

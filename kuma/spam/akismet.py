@@ -7,7 +7,7 @@ from django.conf import settings
 from requests import Session
 from requests.adapters import HTTPAdapter
 from requests.exceptions import RequestException
-from requests.packages.urllib3.util import Retry
+from urllib3.util import Retry
 
 
 class AkismetError(Exception):

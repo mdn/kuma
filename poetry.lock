@@ -202,7 +202,7 @@ python-versions = "*"
 version = "3.0.4"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Composable command line interface toolkit"
 name = "click"
 optional = false
@@ -217,14 +217,6 @@ name = "colorama"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 version = "0.4.3"
-
-[[package]]
-category = "main"
-description = "A place to keep stuff we want to share, like middleware."
-name = "commonware"
-optional = false
-python-versions = "*"
-version = "0.5.0"
 
 [[package]]
 category = "dev"
@@ -259,7 +251,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 version = "0.6.0"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Utilities for working with PO and POT files to ease development and improve localization quality"
 name = "dennis"
 optional = false
@@ -483,7 +475,7 @@ python-versions = "*"
 version = "1.7.0"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Middleware that Prints the number of DB queries to the runserver console."
 name = "django-querycount"
 optional = false
@@ -1157,22 +1149,6 @@ pytest = ">=4.4"
 setuptools = ">=40.0"
 
 [[package]]
-category = "dev"
-description = "pytest plugin for providing variables to tests/fixtures"
-name = "pytest-variables"
-optional = false
-python-versions = "*"
-version = "1.9.0"
-
-[package.dependencies]
-pytest = ">=2.4.2"
-
-[package.extras]
-hjson = ["hjson"]
-toml = ["toml"]
-yaml = ["pyyaml"]
-
-[[package]]
 category = "main"
 description = "Extensions to the standard Python datetime module"
 name = "python-dateutil"
@@ -1284,7 +1260,7 @@ security = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)"]
 socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7)", "win-inet-pton"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Mock out responses from the requests package"
 name = "requests-mock"
 optional = false
@@ -1466,7 +1442,7 @@ version = "5.0.1"
 brotli = ["brotli"]
 
 [metadata]
-content-hash = "5bf1745427ac92e6f090f7b188c2f6edd211291883d886ef8b1142df2d8ca512"
+content-hash = "2c78b977169efcd3291d0352543e4810ce31ef7dde408c5e507c3581be33c86a"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1537,10 +1513,6 @@ click = [
 colorama = [
     {file = "colorama-0.4.3-py2.py3-none-any.whl", hash = "sha256:7d73d2a99753107a36ac6b455ee49046802e59d9d076ef8e47b61499fa29afff"},
     {file = "colorama-0.4.3.tar.gz", hash = "sha256:e96da0d330793e2cb9485e9ddfd918d456036c7149416295932478192f4436a1"},
-]
-commonware = [
-    {file = "commonware-0.5.0-py2.py3-none-any.whl", hash = "sha256:a812a700a7f29627e832b509b284694bf4634672ea66e8a83fea486288eb1f19"},
-    {file = "commonware-0.5.0.tar.gz", hash = "sha256:97c2409834a328e47093932422cc7754b0439a6ad6849c5fa845f947239ad827"},
 ]
 coverage = [
     {file = "coverage-5.0.3-cp27-cp27m-macosx_10_12_x86_64.whl", hash = "sha256:cc1109f54a14d940b8512ee9f1c3975c181bbb200306c6d8b87d93376538782f"},
@@ -1984,10 +1956,6 @@ pytest-metadata = [
 pytest-rerunfailures = [
     {file = "pytest-rerunfailures-8.0.tar.gz", hash = "sha256:17c1236b9f8463f74a5df6c807f301c53c2ea1ab81b7509b7e23fab3b7cbe812"},
     {file = "pytest_rerunfailures-8.0-py2.py3-none-any.whl", hash = "sha256:4997cda1b82f74cc0c280f6a5a0470d36deb318e3d8bd6da71efc32a3e0c9ae4"},
-]
-pytest-variables = [
-    {file = "pytest-variables-1.9.0.tar.gz", hash = "sha256:f79851e4c92a94c93d3f1d02377b5ac97cc8800392e87d108d2cbfda774ecc2a"},
-    {file = "pytest_variables-1.9.0-py2.py3-none-any.whl", hash = "sha256:ccf4afcd70de1f5f18b4463758a19f24647a9def1805f675e80db851c9e00ac0"},
 ]
 python-dateutil = [
     {file = "python-dateutil-2.8.1.tar.gz", hash = "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"},

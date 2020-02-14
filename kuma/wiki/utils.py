@@ -3,12 +3,12 @@ import json
 from urllib.parse import urlparse
 
 import tidylib
-from apiclient.discovery import build
 from constance import config
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.urls import resolve, Resolver404
 from django.utils import translation
+from googleapiclient.discovery import build
 from httplib2 import Http
 from oauth2client.service_account import ServiceAccountCredentials
 
