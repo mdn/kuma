@@ -665,4 +665,7 @@ WIKI_ONLY_DOCUMENT_QUERY_PARAMS = frozenset(
 # Any slug that, case *sensitively*, matches this list get the
 # <meta name="robots" content="noindex, nofollow"> HTML header and they get
 # excluded from the sitemap XML files.
-NOINDEX_SLUG_PREFIXES = ("MDN/Doc_status",)
+NOINDEX_SLUG_PREFIXES = (
+    "MDN/Doc_status",
+    "MDN/Jobs",
+)
