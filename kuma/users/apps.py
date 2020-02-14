@@ -3,6 +3,9 @@ from django.conf import settings
 from django.contrib.auth.apps import AuthConfig
 from django.utils.translation import ugettext_lazy as _
 
+# the checks self-register so we don't need to use anything from the import
+import kuma.users.checks  # noqa: F401
+
 
 class UserConfig(AuthConfig):
     """
