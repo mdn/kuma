@@ -11,13 +11,10 @@ STRIPE_PLAN_INACTIVE_ERROR = "kuma.users.E002"
 def stripe_check(app_configs, **kwargs):
     errors = []
 
-    # Unfortunately system checks get run with testing settings in our CI,
-    # so we need to check for the testing setting value
-    # Related issue: https://github.com/mdn/kuma/issues/6481
-    if settings.STRIPE_SECRET_KEY == "testing" or (
-        not settings.STRIPE_SECRET_KEY
-        and not settings.STRIPE_PUBLIC_KEY
-        and not settings.STRIPE_PLAN_ID
+    if not (
+        settings.STRIPE_SECRET_KEY
+        or settings.STRIPE_PUBLIC_KEY
+        or settings.STRIPE_PLAN_ID
     ):
         return errors
 
