@@ -576,8 +576,11 @@ category = "main"
 description = "django-taggit is a reusable Django application for simple tagging."
 name = "django-taggit"
 optional = false
-python-versions = "*"
-version = "0.21.6"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "0.24.0"
+
+[package.dependencies]
+Django = ">=1.11"
 
 [[package]]
 category = "main"
@@ -627,7 +630,7 @@ description = "Python client for Elasticsearch"
 name = "elasticsearch"
 optional = false
 python-versions = "*"
-version = "6.3.1"
+version = "6.4.0"
 
 [package.dependencies]
 urllib3 = ">=1.21.1"
@@ -824,7 +827,7 @@ description = "Python library for serializing any arbitrary object graph into JS
 name = "jsonpickle"
 optional = false
 python-versions = "*"
-version = "1.2"
+version = "1.3"
 
 [[package]]
 category = "main"
@@ -1442,7 +1445,7 @@ version = "5.0.1"
 brotli = ["brotli"]
 
 [metadata]
-content-hash = "2c78b977169efcd3291d0352543e4810ce31ef7dde408c5e507c3581be33c86a"
+content-hash = "f468039e88c4d7ef1a5023fa026864122dfcdae98bbb394c32d76ca61189eadf"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1658,8 +1661,8 @@ django-sundial = [
     {file = "django_sundial-1.0.6-py2.py3-none-any.whl", hash = "sha256:08361afffc0da2358d4283e83a0426b862342af211e60d50f273213093306208"},
 ]
 django-taggit = [
-    {file = "django-taggit-0.21.6.tar.gz", hash = "sha256:5d0a2d7c3933badb36bcbe1cdee62514fbc8949cd2b92ed1c351b724282318fd"},
-    {file = "django_taggit-0.21.6-py2.py3-none-any.whl", hash = "sha256:80e22fdf41fba66a3c6f4807e283f38c4557838e35766a942370fb90f21d7435"},
+    {file = "django-taggit-0.24.0.tar.gz", hash = "sha256:bb8f27684814cd1414b2af75b857b5e26a40912631904038a7ecacd2bfafc3ac"},
+    {file = "django_taggit-0.24.0-py2.py3-none-any.whl", hash = "sha256:710b4d15ec1996550cc68a0abbc41903ca7d832540e52b1336e6858737e410d8"},
 ]
 django-tidings = [
     {file = "django-tidings-2.0.1.tar.gz", hash = "sha256:0900f28c332f30fd7b2d4f92578c8504601584762524876786dd0a266cf06cd6"},
@@ -1679,8 +1682,8 @@ docutils = [
     {file = "docutils-0.15.2.tar.gz", hash = "sha256:a2aeea129088da402665e92e0b25b04b073c04b2dce4ab65caaa38b7ce2e1a99"},
 ]
 elasticsearch = [
-    {file = "elasticsearch-6.3.1-py2.py3-none-any.whl", hash = "sha256:7546cc08e3899716e12fe67d12d7cfe9a64647014d1134b014c3c392b63cad42"},
-    {file = "elasticsearch-6.3.1.tar.gz", hash = "sha256:aada5cfdc4a543c47098eb3aca6663848ef5d04b4324935ced441debc11ec98b"},
+    {file = "elasticsearch-6.4.0-py2.py3-none-any.whl", hash = "sha256:1f0f633e3b500d5042424f75a505badf8c4b9962c1b4734cdfb3087fb67920be"},
+    {file = "elasticsearch-6.4.0.tar.gz", hash = "sha256:fb5ab15ee283f104b5a7a5695c7e879cb2927e4eb5aed9c530811590b41259ad"},
 ]
 elasticsearch-dsl = [
     {file = "elasticsearch-dsl-6.4.0.tar.gz", hash = "sha256:26416f4dd46ceca43d62ef74970d9de4bdd6f4b0f163316f0b432c9e61a08bec"},
@@ -1764,8 +1767,8 @@ jmespath = [
     {file = "jmespath-0.9.4.tar.gz", hash = "sha256:bde2aef6f44302dfb30320115b17d030798de8c4110e28d5cf6cf91a7a31074c"},
 ]
 jsonpickle = [
-    {file = "jsonpickle-1.2-py2.py3-none-any.whl", hash = "sha256:d0c5a4e6cb4e58f6d5406bdded44365c2bcf9c836c4f52910cc9ba7245a59dc2"},
-    {file = "jsonpickle-1.2.tar.gz", hash = "sha256:d3e922d781b1d0096df2dad89a2e1f47177d7969b596aea806a9d91b4626b29b"},
+    {file = "jsonpickle-1.3-py2.py3-none-any.whl", hash = "sha256:efc6839cb341985f0c24f98650a4c1063a2877c236ffd3d7e1662f0c482bac93"},
+    {file = "jsonpickle-1.3.tar.gz", hash = "sha256:71bca2b80ae28af4e3f86629ef247100af7f97032b5ca8d791c1f8725b411d95"},
 ]
 kombu = [
     {file = "kombu-4.6.7-py2.py3-none-any.whl", hash = "sha256:2a9e7adff14d046c9996752b2c48b6d9185d0b992106d5160e1a179907a5d4ac"},
