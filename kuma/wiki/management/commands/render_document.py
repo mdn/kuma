@@ -103,13 +103,13 @@ class Command(BaseCommand):
                 docs = docs.exclude(locale=options["not_locale"])
             if options["slugsearch"]:
                 if options["slugsearch"].endswith("*"):
-                    docs = docs.exclude(
+                    docs = docs.filter(
                         slug__startswith=options["slugsearch"].rstrip("*")
                     )
                 elif "*" in options["slugsearch"]:
                     raise NotImplementedError("* can only be on the end")
                 else:
-                    docs = docs.exclude(slug__contains=options["slugsearch"])
+                    docs = docs.filter(slug__contains=options["slugsearch"])
             docs = docs.order_by("-modified")
             docs = docs.values_list("id", flat=True)
 
