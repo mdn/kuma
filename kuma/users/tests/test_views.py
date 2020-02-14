@@ -1614,7 +1614,7 @@ def test_delete_user_no_revisions_but_attachment_revisions_donate(
     other_user = django_user_model.objects.create(
         username="other", email="other@example.com"
     )
-    assert not Revision.objects.filter(creator=wiki_user).update(creator=other_user)
+    assert not Revision.objects.filter(creator=wiki_user).exists()
 
     attachment_revision = AttachmentRevision(
         attachment=Attachment.objects.create(title="test attachment"),
@@ -1633,7 +1633,7 @@ def test_delete_user_no_revisions_but_attachment_revisions_donate(
     response = user_client.post(
         url, {"attributions": "donate"}, HTTP_HOST=settings.WIKI_HOST
     )
-    # This means it didn't work! The form rejects.
+    # This means it worked! The user's attributions have been donated to the Anonymous user.
     assert response.status_code == 302
 
     with pytest.raises(User.DoesNotExist):
