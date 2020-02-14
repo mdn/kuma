@@ -112,6 +112,8 @@ RUN mkdir /tools \
     && chmod 775 /tools
 WORKDIR /tools
 USER kuma
+# So that npm doesn't try to suggest we upgrade itself.
+ENV NPM_CONFIG_UPDATE_NOTIFIER=false
 RUN ln -s /app/package.json /tools \
     && ln -s /app/package-lock.json /tools \
     && npm ci
