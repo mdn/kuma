@@ -1611,9 +1611,6 @@ def test_delete_user_no_revisions_but_attachment_revisions_donate(
     The user didn't have any revisions to confront the legacy of, but there might be
     other things attached to the user.
     """
-    other_user = django_user_model.objects.create(
-        username="other", email="other@example.com"
-    )
     assert not Revision.objects.filter(creator=wiki_user).exists()
 
     attachment_revision = AttachmentRevision(
