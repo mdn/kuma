@@ -25,6 +25,7 @@ from kuma.core.ga_tracking import (
     ACTION_FREE_NEWSLETTER,
     ACTION_PROFILE_AUDIT,
     ACTION_PROFILE_CREATED,
+    ACTION_PROFILE_EDIT_ERROR,
     ACTION_RETURNING_USER_SIGNIN,
     CATEGORY_SIGNUP_FLOW,
 )
@@ -1265,6 +1266,51 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
 
                 track_event_mock_views.assert_called_with(
                     CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_AUDIT, "github"
+                )
+
+    def test_signup_username_and_email_errors_event_tracking(self):
+        """
+        Tests that GA tracking events are sent for errors in the username
+        and/or email fields submitted when signing-up with a new account.
+        """
+        user(username="octocat", save=True)
+        with self.settings(
+            GOOGLE_ANALYTICS_ACCOUNT="UA-XXXX-1",
+            GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS=True,
+        ):
+            p1 = mock.patch("kuma.users.signal_handlers.track_event")
+            p2 = mock.patch("kuma.users.views.track_event")
+            p3 = mock.patch("kuma.users.providers.google.views.track_event")
+            with p1 as track_event_mock_signals, p2 as track_event_mock_views, p3 as track_event_mock_google:
+
+                self.google_login()
+
+                data = {
+                    "website": "",
+                    "username": "octocat",
+                    "email": "invalid@email",
+                    "terms": True,
+                    "is_newsletter_subscribed": True,
+                }
+                response = self.client.post(self.signup_url, data=data)
+                assert response.status_code == 200
+
+                track_event_mock_signals.assert_called_with(
+                    CATEGORY_SIGNUP_FLOW, ACTION_AUTH_SUCCESSFUL, "google"
+                )
+                track_event_mock_google.assert_called_with(
+                    CATEGORY_SIGNUP_FLOW, ACTION_AUTH_STARTED, "google"
+                )
+                track_event_mock_views.assert_has_calls(
+                    [
+                        mock.call(CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_AUDIT, "google"),
+                        mock.call(
+                            CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT_ERROR, "username"
+                        ),
+                        mock.call(
+                            CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT_ERROR, "email"
+                        ),
+                    ]
                 )
 
     def test_signin_github_event_tracking(self):

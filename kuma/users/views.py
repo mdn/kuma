@@ -45,6 +45,7 @@ from kuma.core.decorators import (
 )
 from kuma.core.ga_tracking import (
     ACTION_PROFILE_AUDIT,
+    ACTION_PROFILE_EDIT_ERROR,
     CATEGORY_SIGNUP_FLOW,
     track_event,
 )
@@ -706,6 +707,19 @@ class SignupView(BaseSignupView):
         with transaction.atomic():
             form.save(self.request)
         return helpers.complete_social_signup(self.request, self.sociallogin)
+
+    def form_invalid(self, form):
+        """
+        This is called on POST but only when the form is invalid. We're
+        overriding this method simply to send GA events when we find an
+        error in the username and/or email fields.
+        """
+        for name in ("username", "email"):
+            if form.errors.get(name) is not None:
+                track_event(
+                    CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT_ERROR, name,
+                )
+        return super().form_invalid(form)
 
     def get_context_data(self, **kwargs):
         context = super(SignupView, self).get_context_data(**kwargs)
