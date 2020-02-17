@@ -283,11 +283,12 @@ category = "main"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
 name = "django"
 optional = false
-python-versions = "*"
-version = "1.11.28"
+python-versions = ">=3.5"
+version = "2.2.10"
 
 [package.dependencies]
 pytz = "*"
+sqlparse = "*"
 
 [package.extras]
 argon2 = ["argon2-cffi (>=16.1.0)"]
@@ -395,14 +396,14 @@ sqlparse = ">=0.2.0"
 
 [[package]]
 category = "main"
-description = "Include Django URL patterns with decorators (python 2.7/3.4+/django 1.11)"
+description = "Include Django URL patterns with decorators"
 name = "django-decorator-include"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.4.1"
+python-versions = ">=3.4"
+version = "2.1"
 
 [package.dependencies]
-Django = ">=1.11"
+Django = ">=2.0"
 
 [package.extras]
 dev = ["flake8", "isort"]
@@ -518,11 +519,11 @@ category = "main"
 description = "Site-wide and page-specific announcements/messages for Django sites"
 name = "django-soapbox"
 optional = false
-python-versions = "*"
-version = "1.5"
+python-versions = ">=3.5"
+version = "1.6"
 
 [package.dependencies]
-Django = ">=1.8,<1.9.0 || >=1.10.0"
+Django = ">=2.2"
 
 [[package]]
 category = "main"
@@ -1445,7 +1446,7 @@ version = "5.0.1"
 brotli = ["brotli"]
 
 [metadata]
-content-hash = "f73a8e54dd62f201fc510cf5c2b047a324b3f59a9857bc9f72a68f8608bf91e6"
+content-hash = "eff942af1c29bd5b1c98b6ab50a3be4cf649ade6295482dcdfcfa68d78796586"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1571,8 +1572,8 @@ dj-email-url = [
     {file = "dj_email_url-1.0.0-py2.py3-none-any.whl", hash = "sha256:19a0450378831e2707e00404866e632837efc67dcc2e7e7a98f72df94b89c1f6"},
 ]
 django = [
-    {file = "Django-1.11.28-py2.py3-none-any.whl", hash = "sha256:a3b01cdff845a43830d7ccacff55e0b8ff08305a4cbf894517a686e53ba3ad2d"},
-    {file = "Django-1.11.28.tar.gz", hash = "sha256:b33ce35f47f745fea6b5aa3cf3f4241069803a3712d423ac748bd673a39741eb"},
+    {file = "Django-2.2.10-py3-none-any.whl", hash = "sha256:9a4635813e2d498a3c01b10c701fe4a515d76dd290aaa792ccb65ca4ccb6b038"},
+    {file = "Django-2.2.10.tar.gz", hash = "sha256:1226168be1b1c7efd0e66ee79b0e0b58b2caa7ed87717909cd8a57bb13a7079a"},
 ]
 django-allauth = [
     {file = "django-allauth-0.40.0.tar.gz", hash = "sha256:6a189fc4d3ee23596c3fd6e9f49c59b5b15618980118171a50675dd6a27cc589"},
@@ -1602,8 +1603,8 @@ django-debug-toolbar = [
     {file = "django_debug_toolbar-2.2-py3-none-any.whl", hash = "sha256:ff94725e7aae74b133d0599b9bf89bd4eb8f5d2c964106e61d11750228c8774c"},
 ]
 django-decorator-include = [
-    {file = "django-decorator-include-1.4.1.tar.gz", hash = "sha256:715d00054bcbebd5f65575a7bd97d4823c1a459ed283a8c499f5a8b25cc75099"},
-    {file = "django_decorator_include-1.4.1-py2.py3-none-any.whl", hash = "sha256:5514ab61381613959b40321dc97daca3e0449b04b65dac8373534a030f1238fc"},
+    {file = "django-decorator-include-2.1.tar.gz", hash = "sha256:41df70c2b9bd5fe0143d01d6469c522c5e301d3e34f2df5c22a25cae798d8971"},
+    {file = "django_decorator_include-2.1-py3-none-any.whl", hash = "sha256:fd2d6735a6225c3836908b3cca6366e0f5b556a44a47ac92cc1f08c86fa5a3dc"},
 ]
 django-extensions = [
     {file = "django-extensions-2.2.8.tar.gz", hash = "sha256:2699cc1d6fb4bd393c0b5832fea4bc685f2ace5800b3c9ff222b2080f161ac04"},
@@ -1645,8 +1646,8 @@ django-redis = [
     {file = "django_redis-4.11.0-py3-none-any.whl", hash = "sha256:e1aad4cc5bd743d8d0b13d5cae0cef5410eaace33e83bff5fc3a139ad8db50b4"},
 ]
 django-soapbox = [
-    {file = "django-soapbox-1.5.tar.gz", hash = "sha256:a65810a406416e3a945feb6c834a58fac341f506e7d1ea1b8abc488df5562f7e"},
-    {file = "django_soapbox-1.5-py2.py3-none-any.whl", hash = "sha256:9f330db2b4098d24d7a2c4c9de63b0cc4d5579c69c2a904621914371f8039200"},
+    {file = "django-soapbox-1.6.tar.gz", hash = "sha256:debd41b4186bc1249fcb3a16e8b645b2a7a5271b9046b5f34ce4b8cac6caae76"},
+    {file = "django_soapbox-1.6-py3-none-any.whl", hash = "sha256:ba5cc6719e712607296e4759e6198b5fd12d131a0f22f44d7feb98a19a177556"},
 ]
 django-statici18n = [
     {file = "django-statici18n-1.9.0.tar.gz", hash = "sha256:913dd056c1abcbe129b1db806cb4cfb821c4077d7e857d6eb29043ea64f4d1d0"},
