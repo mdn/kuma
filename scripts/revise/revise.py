@@ -111,7 +111,7 @@ def diff(dir, no_pager):
     if not dir.exists():
         raise ReviseException(f"{dir} does not exist")
     pager = "--no-pager" if no_pager else "--paginate"
-    cmd = f"git {pager} diff {{rev}} {{ref}}"
+    cmd = f"git {pager} diff {{ref}} {{rev}}"
     for rev in dir.rglob(f"rev.html"):
         ref = rev.with_name("ref.html")
         run(cmd.format(rev=rev, ref=ref).split())
