@@ -7,7 +7,20 @@
             <p>{{ _('Deleting your account loses any preferences you have set.') }}</p>
             <p>{{ _('Although we can delete your account, any revisions you have made to pages on MDN will remain. Please select how would like us to handle the attribution for your changes.') }}</p>
             {{ form.attributions.errors }}
-            {{ form.attributions }}
+            <ul>
+                {% for field in form.attributions %}
+                    <li>
+                        <label for="{{ field.id_for_label }}">
+                            {{ field.tag() }}
+                            {% if "Anonymous" not in field.choice_label %}
+                                {{ field.choice_label }} ({{ username }})
+                            {% else %}
+                                {{ field.choice_label }}
+                            {% endif %}
+                        </label>
+                    </li>
+                {% endfor %}
+            </ul>
         {% else %}
             <p>{{ _('Deleting your account loses any preferences you have set, as well as makes your username available for others to use.') }}</p>
         {% endif %}
