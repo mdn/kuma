@@ -97,10 +97,10 @@ description = "The AWS SDK for Python"
 name = "boto3"
 optional = false
 python-versions = "*"
-version = "1.11.17"
+version = "1.12.0"
 
 [package.dependencies]
-botocore = ">=1.14.17,<1.15.0"
+botocore = ">=1.15.0,<1.16.0"
 jmespath = ">=0.7.1,<1.0.0"
 s3transfer = ">=0.3.0,<0.4.0"
 
@@ -110,7 +110,7 @@ description = "Low-level, data-driven core of boto 3."
 name = "botocore"
 optional = false
 python-versions = "*"
-version = "1.14.17"
+version = "1.15.0"
 
 [package.dependencies]
 docutils = ">=0.10,<0.16"
@@ -276,7 +276,7 @@ description = "Use an URL to configure email backend settings in your Django App
 name = "dj-email-url"
 optional = false
 python-versions = "*"
-version = "0.2.0"
+version = "1.0.0"
 
 [[package]]
 category = "main"
@@ -600,7 +600,7 @@ description = "A feature flipper for Django."
 name = "django-waffle"
 optional = false
 python-versions = "*"
-version = "0.19.0"
+version = "0.20.0"
 
 [package.dependencies]
 six = ">=1.13.0"
@@ -718,7 +718,7 @@ description = "Google Authentication Library"
 name = "google-auth"
 optional = false
 python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*"
-version = "1.11.1"
+version = "1.11.2"
 
 [package.dependencies]
 cachetools = ">=2.0.0,<5.0"
@@ -1445,7 +1445,7 @@ version = "5.0.1"
 brotli = ["brotli"]
 
 [metadata]
-content-hash = "f468039e88c4d7ef1a5023fa026864122dfcdae98bbb394c32d76ca61189eadf"
+content-hash = "f73a8e54dd62f201fc510cf5c2b047a324b3f59a9857bc9f72a68f8608bf91e6"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1482,12 +1482,12 @@ bleach = [
     {file = "bleach-3.1.0.tar.gz", hash = "sha256:3fdf7f77adcf649c9911387df51254b813185e32b2c6619f690b593a617e19fa"},
 ]
 boto3 = [
-    {file = "boto3-1.11.17-py2.py3-none-any.whl", hash = "sha256:435fc7220e76894228f9ceebc19ab226de78f515652f8643e3e22581a7e08ed7"},
-    {file = "boto3-1.11.17.tar.gz", hash = "sha256:3f02c5ec585fe0c7c843026f0f3db3a7bb98a830072b0eb151456ed07ba8e46d"},
+    {file = "boto3-1.12.0-py2.py3-none-any.whl", hash = "sha256:34f9a04f529dc849f0e427782d6f3c6b62f7fb734d8f4859b17e5dee0855323e"},
+    {file = "boto3-1.12.0.tar.gz", hash = "sha256:33462a79d57c9c4a215e075472509537d03545f54566fc4f776fb0f4cfa616f6"},
 ]
 botocore = [
-    {file = "botocore-1.14.17-py2.py3-none-any.whl", hash = "sha256:02fe4673ab0c62393dc81c85fe0c65ae84f66cf55b0e0dbda785cf3e68b25762"},
-    {file = "botocore-1.14.17.tar.gz", hash = "sha256:75c759fcd89c4b2c717b40c2bd43915716bf15cfb7fb5bfccdc9bd9f697ac75f"},
+    {file = "botocore-1.15.0-py2.py3-none-any.whl", hash = "sha256:1f7cecfcd38c7cac17b5386014eb04626d1c7559ee8d8ec1526058cd23f6d1d4"},
+    {file = "botocore-1.15.0.tar.gz", hash = "sha256:055da4826f6c9158e4a61549d57a2ce449c27d44ce34ab4c96c7bb7b5c993efc"},
 ]
 braceexpand = [
     {file = "braceexpand-0.1.5-py2.py3-none-any.whl", hash = "sha256:ae6b7de1e88d3132177bd6cbda8b22487ea645b25c4ca5b1cf948b326ac27e34"},
@@ -1567,8 +1567,8 @@ dj-database-url = [
     {file = "dj_database_url-0.5.0-py2.py3-none-any.whl", hash = "sha256:851785365761ebe4994a921b433062309eb882fedd318e1b0fcecc607ed02da9"},
 ]
 dj-email-url = [
-    {file = "dj-email-url-0.2.0.tar.gz", hash = "sha256:0362e390c17cc377f03bcbf6daf3f671797c929c1bf78a9f439d78f215ebe3fd"},
-    {file = "dj_email_url-0.2.0-py2.py3-none-any.whl", hash = "sha256:136ac43c7f29022130fc4769b4ca8b01cd1c39fedf1659c641c143808182a084"},
+    {file = "dj-email-url-1.0.0.tar.gz", hash = "sha256:0cb37ac18ffdfecf362a7ff59a8e4ddeb01ac0b0325092e69206656a50bd068a"},
+    {file = "dj_email_url-1.0.0-py2.py3-none-any.whl", hash = "sha256:19a0450378831e2707e00404866e632837efc67dcc2e7e7a98f72df94b89c1f6"},
 ]
 django = [
     {file = "Django-1.11.28-py2.py3-none-any.whl", hash = "sha256:a3b01cdff845a43830d7ccacff55e0b8ff08305a4cbf894517a686e53ba3ad2d"},
@@ -1669,8 +1669,8 @@ django-tidings = [
     {file = "django_tidings-2.0.1-py2.py3-none-any.whl", hash = "sha256:a144628acdd9ddafdc921cdb70fb8ee297886b1dc38b00fab8fffbbf46163012"},
 ]
 django-waffle = [
-    {file = "django-waffle-0.19.0.tar.gz", hash = "sha256:714d64307458c71daf22ef607d36034d56a538e04bde774f13a2c67c58faa055"},
-    {file = "django_waffle-0.19.0-py2.py3-none-any.whl", hash = "sha256:24e24d21df1f6710c1e6654786da414ad461371d73828a60ee42561b537ceb95"},
+    {file = "django-waffle-0.20.0.tar.gz", hash = "sha256:744c3fe6cedbd175d2247cb93904e931f056b503f6e4a4836a0b9b66b43be625"},
+    {file = "django_waffle-0.20.0-py2.py3-none-any.whl", hash = "sha256:73ec03d28c60af0a6fd6327933e615e92dd936137d25b25d3ebaf64e9963c463"},
 ]
 djangorestframework = [
     {file = "djangorestframework-3.11.0-py3-none-any.whl", hash = "sha256:05809fc66e1c997fd9a32ea5730d9f4ba28b109b9da71fccfa5ff241201fd0a4"},
@@ -1711,8 +1711,8 @@ google-api-python-client = [
     {file = "google_api_python_client-1.7.11-py2-none-any.whl", hash = "sha256:3121d55d106ef1a2756e8074239512055bd99eb44da417b3dd680f9a1385adec"},
 ]
 google-auth = [
-    {file = "google-auth-1.11.1.tar.gz", hash = "sha256:74655ad79b89611f93b899ea8fe1194970a1701fe1d692bf2beb0e67bcb0f4d4"},
-    {file = "google_auth-1.11.1-py2.py3-none-any.whl", hash = "sha256:5b6f71953db7d9bee2e967120f90e45ccdc12a219b89fa1209bec3e10bb245b3"},
+    {file = "google-auth-1.11.2.tar.gz", hash = "sha256:1ee22e22f35d6e00f068d7b3999b2ce24ecb5d0dcbd485aa6896d2b83c8907d6"},
+    {file = "google_auth-1.11.2-py2.py3-none-any.whl", hash = "sha256:28a848d47c55075a0f29d7e26b7a213515c137ab8f0670e546e46d1277060e47"},
 ]
 google-auth-httplib2 = [
     {file = "google-auth-httplib2-0.0.3.tar.gz", hash = "sha256:098fade613c25b4527b2c08fa42d11f3c2037dda8995d86de0745228e965d445"},
