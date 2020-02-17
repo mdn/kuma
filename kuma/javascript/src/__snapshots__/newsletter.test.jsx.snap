@@ -19,19 +19,38 @@ exports[`Newsletter de-DE 1`] = `
         <h2
           className="newsletter-teaser"
         >
-          Learn the best of web development
-        </h2>
-        <p
-          className="newsletter-description"
-        >
+          Learn the best of web development.
+          <br />
           Get the latest and greatest from MDN delivered straight to your inbox.
-        </p>
+        </h2>
         <p
           aria-hidden={false}
           className="newsletter-lang"
         >
           The newsletter is offered in English only at the moment.
         </p>
+        <div
+          className="form-group form-group-agree newsletter-group-privacy"
+          id="newsletter-privacy"
+        >
+          <input
+            id="newsletter-privacy-input"
+            name="privacy"
+            required={true}
+            type="checkbox"
+          />
+          <label
+            htmlFor="newsletter-privacy-input"
+          >
+            I’m okay with Mozilla handling my info as explained in this 
+            <a
+              href="https://www.mozilla.org/privacy/"
+            >
+              Privacy Policy
+            </a>
+            .
+          </label>
+        </div>
       </section>
       <fieldset
         className="newsletter-fields"
@@ -64,29 +83,6 @@ exports[`Newsletter de-DE 1`] = `
             required={true}
             type="email"
           />
-        </div>
-        <div
-          aria-hidden={true}
-          className="hidden"
-          id="newsletter-privacy"
-        >
-          <input
-            id="newsletter-privacy-input"
-            name="privacy"
-            required={true}
-            type="checkbox"
-          />
-          <label
-            htmlFor="newsletter-privacy-input"
-          >
-            I’m okay with Mozilla handling my info as explained in this 
-            <a
-              href="https://www.mozilla.org/privacy/"
-            >
-              Privacy Policy
-            </a>
-            .
-          </label>
         </div>
         <div
           className="newsletter-group-submit"
@@ -135,19 +131,38 @@ exports[`Newsletter en-US 1`] = `
         <h2
           className="newsletter-teaser"
         >
-          Learn the best of web development
-        </h2>
-        <p
-          className="newsletter-description"
-        >
+          Learn the best of web development.
+          <br />
           Get the latest and greatest from MDN delivered straight to your inbox.
-        </p>
+        </h2>
         <p
           aria-hidden={true}
           className="hidden"
         >
           The newsletter is offered in English only at the moment.
         </p>
+        <div
+          className="form-group form-group-agree newsletter-group-privacy"
+          id="newsletter-privacy"
+        >
+          <input
+            id="newsletter-privacy-input"
+            name="privacy"
+            required={true}
+            type="checkbox"
+          />
+          <label
+            htmlFor="newsletter-privacy-input"
+          >
+            I’m okay with Mozilla handling my info as explained in this 
+            <a
+              href="https://www.mozilla.org/privacy/"
+            >
+              Privacy Policy
+            </a>
+            .
+          </label>
+        </div>
       </section>
       <fieldset
         className="newsletter-fields"
@@ -180,29 +195,6 @@ exports[`Newsletter en-US 1`] = `
             required={true}
             type="email"
           />
-        </div>
-        <div
-          aria-hidden={true}
-          className="hidden"
-          id="newsletter-privacy"
-        >
-          <input
-            id="newsletter-privacy-input"
-            name="privacy"
-            required={true}
-            type="checkbox"
-          />
-          <label
-            htmlFor="newsletter-privacy-input"
-          >
-            I’m okay with Mozilla handling my info as explained in this 
-            <a
-              href="https://www.mozilla.org/privacy/"
-            >
-              Privacy Policy
-            </a>
-            .
-          </label>
         </div>
         <div
           className="newsletter-group-submit"

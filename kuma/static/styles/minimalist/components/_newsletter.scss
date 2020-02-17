@@ -2,7 +2,7 @@
 .newsletter-thanks {
     position: relative;
     margin: 40px auto 0;
-    padding: 40px;
+    padding: 43.5px 30px; // to line up with side promo box on homepage
     border-top: 3px solid $text-color;
     max-width: $max-width-default;
 
@@ -11,7 +11,7 @@
 
         @media #{$mq-small-desktop-and-up} {
             display: grid;
-            column-gap: 20px;
+            column-gap: 30px;
             grid-template-columns: 2fr 1fr;
         }
     }

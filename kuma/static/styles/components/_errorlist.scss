@@ -1,6 +1,6 @@
 ul.errorlist {
     color: $error;
-    font-weight: bold;
+    @include set-font-size(13px);
 
     li {
         margin: 5px 0;

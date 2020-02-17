@@ -28,7 +28,6 @@
 
     function newsletter() {
         var newsletterEmailInput = doc.getElementById('newsletterEmailInput');
-        var newsletterPrivacy = doc.getElementById('newsletterPrivacy');
 
         // handle errors
         var errorArray = [];
@@ -167,7 +166,6 @@
         newsletterForm.addEventListener('submit', newsletterSubscribe, false);
 
         newsletterEmailInput.addEventListener('focus', function() {
-            newsletterPrivacy.classList.remove('hidden');
             mdn.analytics.trackEvent({
                 'category': 'newsletter',
                 'action': 'prompt',

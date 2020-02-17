@@ -44,7 +44,6 @@ export default function Newsletter() {
     const newsletterFormat = 'H';
 
     const [showNewsletter, setShowNewsletter] = useState(true);
-    const [showPrivacyCheckbox, setShowPrivacyCheckbox] = useState(false);
     const [errors, setError] = useState([]);
     const [
         showSuccessfulSubscription,
@@ -77,7 +76,6 @@ export default function Newsletter() {
      * input field receives focus.
      */
     const inputFocusHandler = () => {
-        setShowPrivacyCheckbox(true);
         ga('send', {
             hitType: 'event',
             eventCategory: 'newsletter',
@@ -181,13 +179,13 @@ export default function Newsletter() {
                 >
                     <section className="newsletter-head">
                         <h2 className="newsletter-teaser">
-                            {gettext('Learn the best of web development')}
-                        </h2>
-                        <p className="newsletter-description">
+                            {gettext('Learn the best of web development.')}
+                            <br />
                             {gettext(
                                 'Get the latest and greatest from MDN delivered straight to your inbox.'
                             )}
-                        </p>
+                        </h2>
+
                         <p
                             className={
                                 showNewsletterLang
@@ -200,6 +198,30 @@ export default function Newsletter() {
                                 'The newsletter is offered in English only at the moment.'
                             )}
                         </p>
+
+                        <div
+                            id="newsletter-privacy"
+                            className="form-group form-group-agree newsletter-group-privacy"
+                        >
+                            <input
+                                type="checkbox"
+                                id="newsletter-privacy-input"
+                                name="privacy"
+                                required
+                            />
+                            <label htmlFor="newsletter-privacy-input">
+                                <Interpolated
+                                    id={gettext(
+                                        'I’m okay with Mozilla handling my info as explained in this <privacyLink/>.'
+                                    )}
+                                    privacyLink={
+                                        <a href={PRIVACY_POLICY_URL}>
+                                            {gettext('Privacy Policy')}
+                                        </a>
+                                    }
+                                />
+                            </label>
+                        </div>
                     </section>
                     <fieldset className="newsletter-fields">
                         <input
@@ -240,34 +262,6 @@ export default function Newsletter() {
                             />
                         </div>
 
-                        <div
-                            id="newsletter-privacy"
-                            className={
-                                showPrivacyCheckbox
-                                    ? 'form-group form-group-agree newsletter-group-privacy'
-                                    : 'hidden'
-                            }
-                            aria-hidden={showPrivacyCheckbox ? false : true}
-                        >
-                            <input
-                                type="checkbox"
-                                id="newsletter-privacy-input"
-                                name="privacy"
-                                required
-                            />
-                            <label htmlFor="newsletter-privacy-input">
-                                <Interpolated
-                                    id={gettext(
-                                        'I’m okay with Mozilla handling my info as explained in this <privacyLink/>.'
-                                    )}
-                                    privacyLink={
-                                        <a href={PRIVACY_POLICY_URL}>
-                                            {gettext('Privacy Policy')}
-                                        </a>
-                                    }
-                                />
-                            </label>
-                        </div>
                         <div className="newsletter-group-submit">
                             <button
                                 id="newsletter-submit"

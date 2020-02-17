@@ -1,11 +1,13 @@
 /*
 Newsletter styles
 ********************************************************************** */
+.newsletter {
+    line-height: 1.3;
+}
 
 /* big heading */
 .newsletter-teaser {
-    margin-top: 0;
-    margin-bottom: $grid-spacing;
+    margin: 0 0 10px;
     @include set-font-size($h2-font-size);
 }
 
@@ -18,6 +20,11 @@ Newsletter styles
 /* wraps email input, privacy checkbox and submit button */
 .newsletter-fields {
     margin-bottom: $grid-spacing;
+}
+
+.newsletter-input-email,
+.newsletter-submit {
+    height: 50px;
 }
 
 input.newsletter-input-email {
@@ -44,9 +51,10 @@ input.newsletter-input-email {
 
 /* English only language warning */
 .newsletter-lang {
-    margin-top: $grid-spacing;
+    margin-top: 5px;
     margin-bottom: 0;
     font-style: italic;
+    @include set-font-size(16px);
 }
 
 /* thank you message */
@@ -82,6 +90,19 @@ input.newsletter-input-email {
     }
 }
 
+.newsletter-group-privacy {
+    display: flex;
+    margin: $grid-spacing 0;
+    input {
+        margin: 3px 0 0;
+    }
+    label {
+        margin-bottom: 0;
+        @include set-heading-font-family();
+        @include bidi(((padding-left, $grid-spacing / 2, 0),));
+        @include bidi(((padding-right, 0, $grid-spacing / 2),));
+    }
+}
 /*
 input and submit on same line
 - for both homepage and article footers
@@ -93,6 +114,7 @@ input and submit on same line
 
         .form-input {
             padding: 7px 10px 6px 10px; // same height as submit button
+            margin-top: $grid-spacing / 2;
         }
 
         .newsletter-fields {
@@ -111,6 +133,8 @@ input and submit on same line
         }
 
         .newsletter-group-privacy {
+            display: flex;
+            align-items: flex-start;
             order: 4;
         }
 
@@ -122,6 +146,7 @@ input and submit on same line
 
         .newsletter-submit {
             width: 100%;
+            margin-top: $grid-spacing / 2;
         }
     }
 }
@@ -159,7 +184,7 @@ text side by side with form fields
             .newsletter-group-email {
                 // override from flex layout
                 width: auto;
-                margin-bottom: $grid-spacing;
+                margin-bottom: $grid-spacing / 2;
             }
 
             .newsletter-input-email {
@@ -174,11 +199,6 @@ text side by side with form fields
             .newsletter-submit {
                 width: 100%;
             }
-
-            .newsletter-description {
-                margin-bottom: 0;
-                @include set-font-size(18px);
-            }
         }
 
         /* this grid stuff does not need .newsletter-box specificity
@@ -189,7 +209,6 @@ text side by side with form fields
 
         .newsletter-fields {
             grid-column: 2 / 3;
-            align-self: end;
         }
 
         input.newsletter-input-email {
@@ -203,14 +222,8 @@ text side by side with form fields
     @supports (display: grid) {
         .callout-newsletter,
         .newsletter-box {
-
             .newsletter-form {
                 grid-template-columns: 2fr 1fr;
-            }
-
-            .newsletter-input-email,
-            .newsletter-submit {
-                height: 50px;
             }
         }
     }
