@@ -470,7 +470,7 @@ def user_edit(request, username):
         "edit_user": edit_user,
         "user_form": user_form,
         "username": user_form["username"].value(),
-        "form": UserDeleteForm(),
+        "form": UserDeleteForm(username=username),
         "revisions": revisions,
         "attachment_revisions": attachment_revisions,
         "subscription_info": retrieve_stripe_subscription_info(edit_user,),
@@ -548,7 +548,7 @@ def user_delete(request, username):
     if request.method == "POST":
         # If the user has no revisions there's not choices on the form.
         if revisions.exists() or attachment_revisions.exists():
-            form = UserDeleteForm(request.POST)
+            form = UserDeleteForm(request.POST, username=username)
             if form.is_valid():
                 if form.cleaned_data["attributions"] == "donate":
                     donate_attributions()
@@ -564,7 +564,7 @@ def user_delete(request, username):
             delete_user()
             return HttpResponseRedirect("/")
     else:
-        form = UserDeleteForm()
+        form = UserDeleteForm(username=username)
 
     context["form"] = form
     context["username"] = username
