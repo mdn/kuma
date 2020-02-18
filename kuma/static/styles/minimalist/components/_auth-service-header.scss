@@ -7,6 +7,10 @@
     text-align: center;
     font-weight: bold;
 
+    @media #{$mq-tablet-and-up} {
+        list-style-type: decimal;
+    }
+
     .github-auth,
     .google-auth,
     .mdn-profile {
@@ -57,10 +61,6 @@
                 right: 20px;
             }
         }
-    }
-
-    .animate {
-        @include fade-in();
     }
 
     .lead-in {
