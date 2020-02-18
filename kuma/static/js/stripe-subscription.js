@@ -36,11 +36,17 @@
         token: function(response) {
             stripeTokenInput.value = response.id;
             stripeForm.submit();
+        },
+        closed: function() {
+            if (!stripeTokenInput.value) {
+                stripeForm.classList.remove('disabled');
+            }
         }
     });
 
     stripeForm.addEventListener('submit', function(e) {
         if (!stripeTokenInput.value) {
+            this.classList.add('disabled');
             handler.open();
             e.preventDefault();
         }
