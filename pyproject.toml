@@ -105,9 +105,13 @@ target-version = ["py38"]
 [tool.coverage.run]
 source = ["kuma"]
 branch = true
+dynamic_context = "test_function"
 
 [tool.coverage.report]
 omit = ["*migrations*", "*/management/commands/*"]
+
+[tool.coverage.html]
+show_contexts = true
 
 [build-system]
 requires = ["poetry>=0.12"]
