@@ -51,7 +51,9 @@ def retrieve_stripe_subscription_info(user):
         elif source.object == "source":
             card = source.card
         else:
-            return None
+            raise ValueError(
+                f"unexpected stripe customer default_source of type {source.object}"
+            )
 
         return {
             "next_payment_at": datetime.fromtimestamp(
