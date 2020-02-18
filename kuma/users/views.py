@@ -716,7 +716,7 @@ class SignupView(BaseSignupView):
             if form.initial[name] != self.request.POST[name]:
                 # The user chose to edit this field!
                 track_event(
-                    CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT, name,
+                    CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT, f"{name} edit",
                 )
 
         with transaction.atomic():
