@@ -46,6 +46,7 @@ from kuma.core.decorators import (
 )
 from kuma.core.ga_tracking import (
     ACTION_PROFILE_AUDIT,
+    ACTION_PROFILE_EDIT,
     ACTION_PROFILE_EDIT_ERROR,
     CATEGORY_SIGNUP_FLOW,
     track_event,
@@ -708,6 +709,15 @@ class SignupView(BaseSignupView):
                 # so that no email verification is sent again
                 # this is done by adding the email address to the session
                 get_adapter().stash_verified_email(self.request, data["email"])
+
+        # Form is valid, all is well. Let's see if the user overrode the default
+        # suggested username or email.
+        for name in ("username", "email"):
+            if form.initial[name] != self.request.POST[name]:
+                # The user chose to edit this field!
+                track_event(
+                    CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT, name,
+                )
 
         with transaction.atomic():
             form.save(self.request)
