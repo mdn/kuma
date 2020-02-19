@@ -64,7 +64,7 @@
     </div>
     <hr>
     <p>
-      {{ _('To cancel your subscription, please <a href="%(support_email)s">contact support</a>. <br>If you have questions, please read the <a href="%(terms_url)s">FAQ</a> or you can also contact support.', support_email='mailto:mdn-support@mozilla.com', terms_url=url('recurring_payment_initial')) }}
+      {{ _('To cancel your subscription <a href="%(manage_url)s">click here</a>. <br>If you have questions, please read the <a href="%(terms_url)s">FAQ</a> or you can also contact support.', manage_url=url('recurring_payment_management'), terms_url=url('recurring_payment_initial')) }}
     </p>
   {% endif %}
   {% javascript "stripe-subscription" %}

@@ -44,9 +44,16 @@ def get_stripe_customer_data(stripe_customer_id):
             customer["subscriptions"]["data"][0]["plan"]["amount"] / 100
         )
     if customer["sources"]["data"]:
-        stripe_data["stripe_card_last4"] = customer["sources"]["data"][0]["card"][
-            "last4"
-        ]
+        source = customer["sources"]["data"][0]
+        if source["object"] == "card":
+            card = source
+        elif source["object"] == "source":
+            card = source["card"]
+        else:
+            raise ValueError(
+                f"unexpected stripe customer source of type {source['object']!r}"
+            )
+        stripe_data["stripe_card_last4"] = card["last4"]
     return stripe_data
 
 

@@ -6,6 +6,7 @@ from django.http import Http404
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 from stripe.error import StripeError
+from waffle.decorators import waffle_flag
 
 from kuma.core.decorators import ensure_wiki_domain, login_required
 
@@ -44,7 +45,7 @@ def payment_terms(request):
     return render(request, "payments/terms.html")
 
 
-@skip_if_disabled
+@waffle_flag("subscription")
 @ensure_wiki_domain
 @login_required
 @never_cache

@@ -3,6 +3,7 @@ from unittest import mock
 import pytest
 import stripe
 from django.conf import settings
+from waffle.testutils import override_flag
 
 from kuma.core.tests import assert_no_cache_header, assert_redirect_to_wiki
 from kuma.core.urlresolvers import reverse
@@ -34,6 +35,7 @@ def test_payment_terms_view(mock_enabled, client):
 
 
 @pytest.mark.django_db
+@override_flag("subscription", True)
 @mock.patch("kuma.payments.views.enabled", return_value=True)
 @mock.patch("kuma.payments.views.get_stripe_customer_data", return_value=True)
 def test_recurring_payment_management_no_customer_id(enabled_, get, user_client):
@@ -52,6 +54,7 @@ def test_recurring_payment_management_no_customer_id(enabled_, get, user_client)
 
 
 @pytest.mark.django_db
+@override_flag("subscription", True)
 @mock.patch("kuma.payments.views.enabled", return_value=True)
 @mock.patch(
     "kuma.payments.views.get_stripe_customer_data",
@@ -80,6 +83,7 @@ def test_recurring_payment_management_api_failure(
 
 
 @pytest.mark.django_db
+@override_flag("subscription", True)
 @mock.patch("kuma.payments.views.enabled", return_value=True)
 @mock.patch(
     "kuma.payments.views.get_stripe_customer_data",
@@ -106,7 +110,7 @@ def test_recurring_payment_management_customer_id(
 
 
 @pytest.mark.django_db
-@mock.patch("kuma.payments.views.enabled", return_value=True)
+@override_flag("subscription", True)
 @mock.patch(
     "kuma.payments.views.cancel_stripe_customer_subscription", return_value=True
 )
@@ -118,9 +122,7 @@ def test_recurring_payment_management_customer_id(
         "active_subscriptions": False,
     },
 )
-def test_recurring_payment_management_cancel(
-    enabled_, get, cancel_, user_client, stripe_user
-):
+def test_recurring_payment_management_cancel(_cancel, get, user_client, stripe_user):
     """A subscription can be cancelled from the recurring payments page."""
     response = user_client.post(
         reverse("recurring_payment_management"),
@@ -128,7 +130,6 @@ def test_recurring_payment_management_cancel(
         HTTP_HOST=settings.WIKI_HOST,
     )
     assert response.status_code == 200
-    assert cancel_.called
     assert get.called
     text = "Your monthly subscription has been successfully canceled"
     content = response.content.decode(response.charset)
@@ -136,7 +137,7 @@ def test_recurring_payment_management_cancel(
 
 
 @pytest.mark.django_db
-@mock.patch("kuma.payments.views.enabled", return_value=True)
+@override_flag("subscription", True)
 @mock.patch(
     "kuma.payments.views.cancel_stripe_customer_subscription",
     side_effect=stripe.error.InvalidRequestError(
@@ -155,7 +156,7 @@ def test_recurring_payment_management_cancel(
     },
 )
 def test_recurring_payment_management_cancel_fails(
-    enabled_, get, cancel_, user_client, stripe_user
+    _cancel, get, user_client, stripe_user
 ):
     """A message is displayed if cancelling fails due to unknow customer."""
     response = user_client.post(
@@ -164,7 +165,6 @@ def test_recurring_payment_management_cancel_fails(
         HTTP_HOST=settings.WIKI_HOST,
     )
     assert response.status_code == 200
-    assert cancel_.called
     assert get.called
     text = "There was a problem canceling your subscription"
     content = response.content.decode(response.charset)
@@ -172,6 +172,7 @@ def test_recurring_payment_management_cancel_fails(
 
 
 @pytest.mark.django_db
+@override_flag("subscription", True)
 @mock.patch("kuma.payments.views.enabled", return_value=True)
 @mock.patch(
     "kuma.payments.views.cancel_stripe_customer_subscription", return_value=True
@@ -188,6 +189,7 @@ def test_recurring_payment_management_not_logged_in(enabled_, get, cancel_, clie
     )
 
 
+@override_flag("subscription", True)
 @pytest.mark.parametrize(
     "endpoint",
     [

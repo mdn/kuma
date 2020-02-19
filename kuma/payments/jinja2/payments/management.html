@@ -92,7 +92,7 @@
                 <h3>{{_('Monthly Subscription')}}</h3>
                 <div class="bordered-info">
                     <span>
-                        {% trans url=url('recurring_payment_initial') %}
+                        {% trans url=url('users.user_edit', username=user.username) + '?has_stripe_error=False' %}
                             You have no active subscriptions.
                             Why not <a href="{{ url }}">set one up</a>?
                         {% endtrans %}
@@ -121,7 +121,5 @@
 {% endblock %}
 
 {% block js %}
-  {%- if contribution_enabled %}
     {% javascript 'payments' %}
-  {%- endif %}
 {% endblock %}
