@@ -52,7 +52,7 @@ def retrieve_stripe_subscription_info(user):
             card = source.card
         else:
             raise ValueError(
-                f"unexpected stripe customer default_source of type {source.object}"
+                f"unexpected stripe customer default_source of type {source.object!r}"
             )
 
         return {
