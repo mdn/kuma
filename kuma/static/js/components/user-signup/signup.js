@@ -36,9 +36,6 @@
             editContainer = document.getElementById('change-email-container');
             focusElement = editContainer.querySelector('label');
             showEditFields(staticContainer, editContainer, focusElement);
-        } else if (event.target.id === 'create-mdn-account') {
-            var mdnProfileImgContainer = document.querySelector('.mdn-profile');
-            mdnProfileImgContainer.classList.add('checked');
         }
     });
 
