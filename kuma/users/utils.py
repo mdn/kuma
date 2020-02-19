@@ -46,14 +46,23 @@ def retrieve_stripe_subscription_info(user):
     )
     if stripe_subscription:
         source = stripe_customer.default_source
+        if source.object == "card":
+            card = source
+        elif source.object == "source":
+            card = source.card
+        else:
+            raise ValueError(
+                f"unexpected stripe customer default_source of type {source.object!r}"
+            )
+
         return {
             "next_payment_at": datetime.fromtimestamp(
                 stripe_subscription.current_period_end
             ),
-            "brand": source.brand,
-            "expires_at": f"{source.exp_month}/{source.exp_year}",
-            "last4": source.last4,
-            "zip": source.address_zip,
+            "brand": card.brand,
+            "expires_at": f"{card.exp_month}/{card.exp_year}",
+            "last4": card.last4,
+            "zip": card.address_zip,
         }
 
     return None
