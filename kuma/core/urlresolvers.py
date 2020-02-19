@@ -1,70 +1,49 @@
-import re
-
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 from django.urls import (
-    LocaleRegexURLResolver as DjangoLocaleRegexURLResolver,
+    LocalePrefixPattern,
     reverse as django_reverse,
+    URLResolver,
 )
 from django.utils import translation
 
 from .i18n import get_language
 
 
-class LocaleRegexURLResolver(DjangoLocaleRegexURLResolver):
+class KumaLocalePrefixPattern(LocalePrefixPattern):
     """
-    A URL resolver that always matches the active language code as URL prefix.
+    A prefix pattern for localized URLs that uses Kuma's case-sensitive locale
+    codes instead of Django's, which are all lowercase.
 
-    Rather than taking a regex argument, we just override the ``regex``
-    function to always return the active language-code as regex.
+    We do this via a customized get_language function in kuma/core/i18n.py.
 
-    Based on Django 1.11.16's LocaleRegexURLResolver from
-    django/urls/resolvers, with changes:
-
-    * Use Kuma language code (via get_language()) in URL pattern.
-    * Assert prefix_default_language is True, so that the default locale must
-      be included in the path.
+    NOTE: See upstream LocalePrefixPattern for Django 2.2 / 3.0:
+    https://github.com/django/django/blob/3.0/django/urls/resolvers.py#L288-L319
     """
 
     @property
-    def regex(self):
+    def language_prefix(self):
         language_code = get_language() or settings.LANGUAGE_CODE
-        if language_code not in self._regex_dict:
-            # Kuma: Do not allow an implied default language
-            assert self.prefix_default_language
-            regex_string = "^%s/" % language_code
-            self._regex_dict[language_code] = re.compile(regex_string, re.UNICODE)
-        return self._regex_dict[language_code]
+        return "%s/" % language_code
 
 
-def i18n_patterns(*urls, **kwargs):
+def i18n_patterns(*urls):
     """
-    Adds the language code prefix to every URL pattern within this
-    function. This may only be used in the root URLconf, not in an included
-    URLconf.
+    Add the language code prefix to every URL pattern within this function.
+    This may only be used in the root URLconf, not in an included URLconf.
 
-    Based on Django 1.11.16's i18n_patterns from django/conf/urls/i18n,
-    with changes:
+    NOTE: Modified from i18n_patterns in Django 2.2 / 3.0, see:
+    https://github.com/django/django/blob/3.0/django/conf/urls/i18n.py#L8-L20
 
-    * Assert USE_I18N is set, rather than fallback to list.
-    * Assert prefix_default_language is True, so that the default locale must
-      be included in the path.
-    * Use our customized LocaleRegexURLResolver.
+    Modifications:
+    - Raises ImproperlyConfigured if settings.USE_I18N is False
+    - Forces prefix_default_language to True, so urls always include the locale
+    - Does not accept prefix_default_language as a kwarg, due to the above
+    - Uses our custom URL prefix pattern, to support our locale codes
     """
-    assert settings.USE_I18N
-    prefix_default_language = kwargs.pop("prefix_default_language", True)
-    assert not kwargs, "Unexpected kwargs for i18n_patterns(): %s" % kwargs
-
-    # Assumed to be True in:
-    # kuma.core.i18n.activate_language_from_request
-    # kuma.core.middleware.LocaleMiddleware
-    assert (
-        prefix_default_language
-    ), "Kuma does not support prefix_default_language=False"
-    return [
-        LocaleRegexURLResolver(
-            list(urls), prefix_default_language=prefix_default_language
-        )
-    ]
+    if not settings.USE_I18N:
+        raise ImproperlyConfigured("Kuma requires settings.USE_I18N to be True.")
+    return [URLResolver(KumaLocalePrefixPattern(), list(urls))]
 
 
 def reverse(
