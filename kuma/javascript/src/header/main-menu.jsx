@@ -48,7 +48,7 @@ const _MainMenu = ({ document, locale }: Props) => {
     /**
      * Selectively pass on a trigger to sendMenuItemInteraction() because
      * onMouseOver is tricky. Not only might you trigger an onMouseover on
-     * an element that isn't the actual button, if you mousever, mouseout,
+     * an element that isn't the actual button, if you mouseover, mouseout,
      * and then mouseover the same thing again, it should only count once.
      * @param {Object} event - the event object that was triggered
      */
