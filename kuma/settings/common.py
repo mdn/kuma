@@ -882,6 +882,7 @@ PIPELINE_JS = {
             "js/libs/prism/prism-wasm.js",
             "js/libs/prism/prism-line-highlight.js",
             "js/libs/prism/prism-line-numbers.js",
+            "js/components/mathml.js",
             # The react.js file is created by webpack and
             # placed in the kuma/javascript/dist/ directory.
             "react.js",
