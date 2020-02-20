@@ -1,6 +1,6 @@
 //@flow
 import * as React from 'react';
-import { memo, useContext, useMemo, useState } from 'react';
+import { memo, useContext, useMemo } from 'react';
 
 import GAProvider from '../ga-provider.jsx';
 
@@ -15,11 +15,6 @@ type Props = {
 // To avoid problems with flow and React.memo(), define the component
 // in this plain way first. See bottom of file for the final memo() and export.
 const _MainMenu = ({ document, locale }: Props) => {
-    // The CSS that supports this is sufficiently smart to understand
-    // hovering over the top-level menu items and stuff. But for mobile,
-    // there's no mouse hover so for that we use a piece of state to
-    // record onTouchStart events.
-    const [showSubMenu, setShowSubMenu] = useState(null);
     const ga = useContext(GAProvider.context);
 
     /**
@@ -228,16 +223,6 @@ const _MainMenu = ({ document, locale }: Props) => {
                             onMouseOver={menuMouseoverHandler}
                             onContextMenu={sendMenuItemInteraction}
                             onFocus={sendMenuItemInteraction}
-                            onTouchStart={() => {
-                                // Ultimately, because there's no :hover on
-                                // mobile, we have to compensate for that using
-                                // JavaScript.
-                                setShowSubMenu(
-                                    showSubMenu === menuEntry.label
-                                        ? null
-                                        : menuEntry.label
-                                );
-                            }}
                         >
                             {menuEntry.label}
                             <span
@@ -247,11 +232,7 @@ const _MainMenu = ({ document, locale }: Props) => {
                                 ▼
                             </span>
                         </button>
-                        <ul
-                            className={
-                                menuEntry.label === showSubMenu ? 'show' : null
-                            }
-                        >
+                        <ul>
                             {menuEntry.items.map(item => (
                                 <li
                                     key={item.url}

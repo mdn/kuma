@@ -64,17 +64,22 @@
     .top-level-entry-container {
         position: relative;
 
+        &:focus ul,
+        &:focus-within ul {
+            display: block;
+        }
+
         @media #{$mq-tablet-and-up} {
-            &:hover ul,
-            &:focus-within ul {
+            &:hover ul {
                 display: block;
+            }
+
+            &:hover ul,
+            &:focus ul,
+            &:focus-within ul {
                 position: absolute;
                 width: max-content;
             }
-        }
-
-        ul.show {
-            display: block;
         }
 
         button {
