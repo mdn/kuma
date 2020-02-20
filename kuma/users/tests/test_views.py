@@ -25,6 +25,7 @@ from kuma.core.ga_tracking import (
     ACTION_FREE_NEWSLETTER,
     ACTION_PROFILE_AUDIT,
     ACTION_PROFILE_CREATED,
+    ACTION_PROFILE_EDIT,
     ACTION_PROFILE_EDIT_ERROR,
     ACTION_RETURNING_USER_SIGNIN,
     CATEGORY_SIGNUP_FLOW,
@@ -1312,6 +1313,130 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                         ),
                     ]
                 )
+
+    def test_signup_username_edit_event_tracking(self):
+        """
+        Tests that GA tracking events are sent for editing the default suggested
+        username when signing-up with a new account.
+        """
+        # user(username="octocat", save=True)
+        with self.settings(
+            GOOGLE_ANALYTICS_ACCOUNT="UA-XXXX-1",
+            GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS=True,
+        ):
+            p1 = mock.patch("kuma.users.signal_handlers.track_event")
+            p2 = mock.patch("kuma.users.views.track_event")
+            p3 = mock.patch("kuma.users.providers.google.views.track_event")
+            with p1, p2 as track_event_mock_views, p3:
+
+                response = self.google_login()
+
+                doc = pq(response.content)
+                # Just sanity check what's the defaults in the form.
+                # Remember, the self.google_login relies on the provider giving an
+                # email that is 'example@gmail.com'
+                assert doc.find('input[name="username"]').val() == "example"
+                assert doc.find('input[name="email"]').val() == "example@gmail.com"
+
+                data = {
+                    "website": "",
+                    "username": "better",
+                    "email": "example@gmail.com",
+                    "terms": False,  # Note!
+                    "is_newsletter_subscribed": True,
+                }
+                response = self.client.post(self.signup_url, data=data)
+                assert response.status_code == 200
+
+                track_event_mock_views.assert_has_calls(
+                    [
+                        mock.call(CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_AUDIT, "google"),
+                        # Note the lack of 'ACTION_PROFILE_EDIT' because the form
+                        # submission was invalid and the save didn't go ahead.
+                    ]
+                )
+
+                # This time, the form submission will work.
+                data["terms"] = True
+                response = self.client.post(self.signup_url, data=data)
+                assert response.status_code == 302
+
+                # Sanity check that the right user got created
+                assert User.objects.get(username="better")
+
+                track_event_mock_views.assert_has_calls(
+                    [
+                        mock.call(CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_AUDIT, "google"),
+                        mock.call(
+                            CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT, "username edit"
+                        ),
+                    ]
+                )
+
+    def test_signup_email_edit_event_tracking(self):
+        """
+        Tests that GA tracking events are sent for editing the default suggested
+        username when signing-up with a new account.
+        """
+        # user(username="octocat", save=True)
+        with self.settings(
+            GOOGLE_ANALYTICS_ACCOUNT="UA-XXXX-1",
+            GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS=True,
+        ):
+            p1 = mock.patch("kuma.users.signal_handlers.track_event")
+            p2 = mock.patch("kuma.users.views.track_event")
+            p3 = mock.patch("kuma.users.providers.github.views.track_event")
+            with p1, p2 as track_event_mock_views, p3:
+                response = self.github_login()
+
+                doc = pq(response.content)
+                # Just sanity check what's the defaults in the form.
+                # Remember, the self.github_login relies on the provider giving an
+                # username that is 'octocat' and an email that
+                # is 'octocat-private@example.com'.
+                assert doc.find('input[name="username"]').val() == "octocat"
+                assert (
+                    doc.find('input[name="email"]').val()
+                    == "octocat-private@example.com"
+                )
+
+                data = {
+                    "website": "",
+                    "username": "octocat",
+                    "email": "better@example.com",
+                    "terms": False,  # Note!
+                    "is_newsletter_subscribed": True,
+                }
+                response = self.client.post(self.signup_url, data=data)
+                assert response.status_code == 200
+
+                track_event_mock_views.assert_has_calls(
+                    [
+                        mock.call(CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_AUDIT, "github"),
+                        # Note the lack of 'ACTION_PROFILE_EDIT' because the form
+                        # submission was invalid and the save didn't go ahead.
+                    ]
+                )
+
+                # This time, the form submission will work.
+                data["terms"] = True
+                response = self.client.post(self.signup_url, data=data)
+                assert response.status_code == 302
+
+                # Sanity check that the right user got created
+                print({x.username: x.email for x in User.objects.all()})
+                print(User.objects.get(username="octocat").emailaddress_set.all())
+                assert User.objects.get(email="better@example.com")
+
+                track_event_mock_views.assert_has_calls(
+                    [
+                        mock.call(CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_AUDIT, "github"),
+                        mock.call(
+                            CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT, "email edit"
+                        ),
+                    ]
+                )
+                assert 0
 
     def test_signin_github_event_tracking(self):
         """Tests that kuma.core.ga_tracking.track_event is called when you

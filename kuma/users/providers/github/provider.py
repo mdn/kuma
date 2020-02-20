@@ -43,6 +43,9 @@ class KumaGitHubProvider(GitHubProvider):
                         email=email, verified=True, primary=email_address["primary"]
                     )
                 )
+
+        for x in result:
+            print((x.email, x.verified, x.primary))
         return result
 
 
