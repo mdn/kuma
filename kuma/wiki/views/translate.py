@@ -220,7 +220,10 @@ def translate(request, document_slug, document_locale):
                 # Attempt to set a parent
                 if parent_id:
                     try:
-                        parent_doc = get_object_or_404(Document, id=parent_id)
+                        try:
+                            parent_doc = Document.all_objects.get(id=parent_id)
+                        except Document.DoesNotExist:
+                            raise Http404("Parent document does not exist")
                         rev_form.instance.document.parent = parent_doc
                         doc.parent = parent_doc
                         rev_form.instance.based_on.document = doc.original
