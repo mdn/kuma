@@ -324,7 +324,6 @@ class Document(NotificationsMixin, models.Model):
             ("slug", "locale"),
         )
         permissions = (
-            ("view_document", "Can view document"),
             ("move_tree", "Can move a tree of documents"),
             ("purge_document", "Can permanently delete document"),
             ("restore_document", "Can restore deleted document"),
