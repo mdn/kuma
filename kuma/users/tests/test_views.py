@@ -1132,75 +1132,49 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         profile_data = self.github_profile_data.copy()
         profile_data["email"] = public_email
         email_data = [
-            {"email": private_email, "verified": True, "primary": True},
+            # It might be unrealistic but let's make sure the primary email
+            # is NOT first in the list. Just to prove that pick that email not
+            # on it coming first but that's the primary verified one.
             {"email": unverified_email, "verified": False, "primary": False},
+            {"email": private_email, "verified": True, "primary": True},
             {"email": invalid_email, "verified": False, "primary": False},
         ]
         self.github_login(profile_data=profile_data, email_data=email_data)
         response = self.client.get(self.signup_url)
         assert response.status_code == 200
         assert_no_cache_header(response)
-        assert private_email not in response.context
-        email_address = response.context["email_addresses"]
+        doc = pq(response.content)
 
-        # first check if the public email address has been found
-        assert public_email in email_address
-        assert email_address[public_email] == {
-            "verified": False,
-            "email": public_email,
-            "primary": False,
-        }
-        # then check if the private and verified-at-GitHub email address
-        # has been found
-        assert private_email in email_address
-        assert email_address[private_email] == {
-            "verified": True,
-            "email": private_email,
-            "primary": True,
-        }
-        # then check that the invalid email is not present
-        assert invalid_email not in email_address
-        # then check if the radio button's default value is the primary email
-        # address
-        assert response.context["form"].initial["email"][1] == private_email
+        # The hidden input should display the primary verified email
+        assert doc.find('input[name="email"]').val() == email_data[1]["email"]
+        # But whatever's in the hidden email input is always displayed to the user
+        # as "plain text". Check that that also is right.
+        assert doc.find("#email-static-container").text() == email_data[1]["email"]
 
         unverified_email = "o.ctocat@gmail.com"
         data = {
             "website": "",
             "username": "octocat",
-            "email": SignupForm.other_email_value,  # = use other_email
-            "other_email": unverified_email,
+            "email": email_data[1]["email"],
             "terms": True,
         }
         assert not EmailAddress.objects.filter(email=unverified_email).exists()
         response = self.client.post(self.signup_url, data=data)
         assert response.status_code == 302
         assert_no_cache_header(response)
+
+        # Check that the user.email field became the primary verified one.
+        user = User.objects.get(username=data["username"])
+        assert user.email == email_data[1]["email"]
+        print(user.emailaddress_set.all())
+
         unverified_email_addresses = EmailAddress.objects.filter(email=unverified_email)
         assert unverified_email_addresses.exists()
         assert unverified_email_addresses.count() == 1
         assert unverified_email_addresses[0].primary
         assert not unverified_email_addresses[0].verified
 
-    def test_email_addresses_with_no_public(self):
-        profile_data = self.github_profile_data.copy()
-        profile_data["email"] = None
-        email_data = self.github_email_data[:]
-        private_email = "octocat.private@example.com"
-        email_data[0]["email"] = private_email
-        self.github_login(profile_data=profile_data, email_data=email_data)
-        response = self.client.get(self.signup_url)
-        assert response.status_code == 200
-        assert_no_cache_header(response)
-        assert response.context["form"].initial["email"] == private_email
-
-    def test_email_addresses_with_no_alternatives(self):
-        private_email = self.github_profile_data["email"]
-        self.github_login(email_data=[])
-        response = self.client.get(self.signup_url)
-        assert response.status_code == 200
-        assert_no_cache_header(response)
-        assert response.context["form"].initial["email"] == private_email
+        assert 0
 
     def test_signup_public_github(self, is_public=True):
         resp = self.github_login()
@@ -1268,10 +1242,10 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                     CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_AUDIT, "github"
                 )
 
-    def test_signup_username_and_email_errors_event_tracking(self):
+    def test_signup_username_error_event_tracking(self):
         """
         Tests that GA tracking events are sent for errors in the username
-        and/or email fields submitted when signing-up with a new account.
+        field submitted when signing-up with a new account.
         """
         user(username="octocat", save=True)
         with self.settings(
@@ -1288,7 +1262,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                 data = {
                     "website": "",
                     "username": "octocat",
-                    "email": "invalid@email",
+                    "email": "valid@example.com",
                     "terms": True,
                     "is_newsletter_subscribed": True,
                 }
@@ -1306,9 +1280,6 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                         mock.call(CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_AUDIT, "google"),
                         mock.call(
                             CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT_ERROR, "username"
-                        ),
-                        mock.call(
-                            CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT_ERROR, "email"
                         ),
                     ]
                 )

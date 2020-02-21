@@ -9,7 +9,6 @@ from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.views import ConnectionsView
 from allauth.socialaccount.views import SignupView as BaseSignupView
 from constance import config
-from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import permission_required
@@ -660,22 +659,22 @@ class SignupView(BaseSignupView):
                     "verified": False,
                     "primary": False,
                 }
-            choices = []
-            verified_emails = []
-            for email_data in self.email_addresses.values():
-                email_address = email_data["email"]
-                if email_data["verified"]:
-                    verified_emails.append(email_address)
-                choices.append((email_address, email_address))
-            if extra_email_addresses:
-                choices.append((form.other_email_value, _("Other:")))
-            else:
-                choices.append((form.other_email_value, _("Email:")))
-            email_select = forms.RadioSelect(choices=choices, attrs={"id": "email"})
-            form.fields["email"].widget = email_select
-            form.initial.update(email=choices[0])
-            if not email and len(verified_emails) == 1:
-                form.initial.update(email=verified_emails[0])
+            # choices = []
+            # verified_emails = []
+            # for email_data in self.email_addresses.values():
+            #     email_address = email_data["email"]
+            #     if email_data["verified"]:
+            #         verified_emails.append(email_address)
+            #     choices.append((email_address, email_address))
+            # if extra_email_addresses:
+            #     choices.append((form.other_email_value, _("Other:")))
+            # else:
+            #     choices.append((form.other_email_value, _("Email:")))
+            # email_select = forms.RadioSelect(choices=choices, attrs={"id": "email"})
+            # form.fields["email"].widget = email_select
+            # form.initial.update(email=choices[0])
+            # if not email and len(verified_emails) == 1:
+            #     form.initial.update(email=verified_emails[0])
         return form
 
     def form_valid(self, form):
@@ -717,13 +716,12 @@ class SignupView(BaseSignupView):
         """
         This is called on POST but only when the form is invalid. We're
         overriding this method simply to send GA events when we find an
-        error in the username and/or email fields.
+        error in the username field.
         """
-        for name in ("username", "email"):
-            if form.errors.get(name) is not None:
-                track_event(
-                    CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT_ERROR, name,
-                )
+        if form.errors.get("username") is not None:
+            track_event(
+                CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT_ERROR, "username",
+            )
         return super().form_invalid(form)
 
     def get_context_data(self, **kwargs):
