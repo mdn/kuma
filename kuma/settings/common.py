@@ -904,9 +904,7 @@ PIPELINE_JS = {
         "extra_context": {"async": True},
     },
     "mathml": {
-        "source_filenames": (
-            "js/components/mathml.js",
-        ),
+        "source_filenames": ("js/components/mathml.js",),
         "output_filename": "build/js/mathml.js",
         "extra_context": {"defer": True},
     },
