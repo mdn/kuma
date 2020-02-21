@@ -34,7 +34,7 @@ transitioning to Docker containers for deployment as well.
 .. _`Docker for Mac`: https://docs.docker.com/docker-for-mac/
 .. _`Docker's Ubuntu packages`: https://docs.docker.com/engine/installation/linux/ubuntulinux/
 .. _`DockerHub`: https://hub.docker.com/r/mdnwebdocs/kuma_base/tags/
-.. _TravisCI: https://travis-ci.org/mdn/kuma/
+.. _TravisCI: https://travis-ci.com/mdn/kuma/
 .. _Jenkins: https://ci.us-west-2.mdn.mozit.cloud/blue/organizations/jenkins/kuma/activity
 .. _discourse: https://discourse.mozilla.org/c/mdn
 
