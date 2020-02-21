@@ -1,7 +1,3 @@
-/**
- * vanilla version of the function at:
- * https://github.com/mdn/kuma/blob/master/kuma/static/js/wiki.js#L252
- */
 (function() {
     'use strict';
 
@@ -19,10 +15,13 @@
     }
 
     /**
-     * Returns a `math` element wrapped in a `div` that is positioned offscreen
-     * @returns `div` element
+     * Tests whether MathML is supported(at least in terms of mspace),
+     * and returns true or false.
+     * @returns {Boolean} isMathMLSupported
      */
-    function getMathElement() {
+    function isMathMLSupported() {
+        var box = null;
+        var mathMLTestElement = null;
         var offscreenContainer = document.createElement('div');
         var mathMLNamespace = 'http://www.w3.org/1998/Math/MathML';
         var mathElement = document.createElementNS(mathMLNamespace, 'math');
@@ -35,17 +34,14 @@
         offscreenContainer.append(mathElement);
         offscreenContainer.classList.add('offscreen');
 
-        return offscreenContainer;
+        mathMLTestElement = document.body.appendChild(offscreenContainer);
+        box = mathMLTestElement.querySelector('mspace').getBoundingClientRect();
+        document.body.removeChild(mathMLTestElement);
+
+        return Math.abs(box.height - 23) <= 1 && Math.abs(box.width - 77) <= 1;
     }
 
-    // Test for MathML support
-    var mathMLTestElement = document.body.appendChild(getMathElement());
-    var box = mathMLTestElement.querySelector('mspace').getBoundingClientRect();
-    document.body.removeChild(mathMLTestElement);
-
-    var supportsMathML =
-        Math.abs(box.height - 23) <= 1 && Math.abs(box.width - 77) <= 1;
-    if (!supportsMathML) {
+    if (!isMathMLSupported()) {
         // Add CSS fallback
         var polyfill = document.createElement('link');
         polyfill.href = mdn.staticPath + 'styles/libs/mathml.css';
