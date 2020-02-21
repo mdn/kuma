@@ -2,17 +2,13 @@
 Kuma
 ====
 
-.. image:: https://travis-ci.org/mdn/kuma.svg?branch=master
-   :target: https://travis-ci.org/mdn/kuma
+.. image:: https://travis-ci.com/mdn/kuma.svg?branch=master
+   :target: https://travis-ci.com/mdn/kuma
    :alt: Build Status
 
 .. image:: https://codecov.io/github/mdn/kuma/coverage.svg?branch=master
    :target: https://codecov.io/github/mdn/kuma?branch=master
    :alt: Code Coverage Status
-
-.. image:: https://requires.io/github/mdn/kuma/requirements.svg?branch=master
-   :target: https://requires.io/github/mdn/kuma/requirements/?branch=master
-   :alt: Requirements Status
 
 .. image:: http://img.shields.io/badge/license-MPL2-blue.svg
    :target: https://raw.githubusercontent.com/mdn/kuma/master/LICENSE
@@ -39,7 +35,7 @@ Development
 
                 `Pull Request Queues`_
 :Dev Docs:      https://kuma.readthedocs.io/en/latest/installation.html
-:CI Server:     https://travis-ci.org/mdn/kuma
+:CI Server:     https://travis-ci.com/mdn/kuma
 :Forum:         https://discourse.mozilla.org/c/mdn
 :IRC:           irc://irc.mozilla.org/mdndev
 :Servers:       `What's Deployed on MDN?`_
