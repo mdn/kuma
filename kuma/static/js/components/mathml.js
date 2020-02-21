@@ -49,21 +49,5 @@
         polyfill.type = 'text/css';
 
         document.head.append(polyfill);
-
-        // if we do not do this, React hydrate is unhappy and removes the element
-        // Warning: Did not expect server HTML to contain a <div> in <div>.
-        setTimeout(function() {
-            // Add notification
-            var wikiArticleContainer = document.getElementById('wikiArticle');
-            var notice = document.createElement('div');
-            var messageContainer = document.createElement('p');
-
-            messageContainer.textContent =
-                'Your browser does not support MathML. A CSS fallback has been used instead.';
-            notice.append(messageContainer);
-            notice.classList.add('notice');
-
-            wikiArticleContainer.insertAdjacentElement('beforebegin', notice);
-        }, 500);
     }
 })();
