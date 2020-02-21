@@ -46,7 +46,6 @@ from kuma.wiki.tests import document as create_document
 
 from . import SampleRevisionsMixin, SocialTestMixin, user, UserTestCase
 from ..models import User, UserBan
-from ..signup import SignupForm
 from ..views import delete_document, revert_document
 
 
@@ -1166,15 +1165,10 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         # Check that the user.email field became the primary verified one.
         user = User.objects.get(username=data["username"])
         assert user.email == email_data[1]["email"]
-        print(user.emailaddress_set.all())
-
-        unverified_email_addresses = EmailAddress.objects.filter(email=unverified_email)
-        assert unverified_email_addresses.exists()
-        assert unverified_email_addresses.count() == 1
-        assert unverified_email_addresses[0].primary
-        assert not unverified_email_addresses[0].verified
-
-        assert 0
+        assert user.emailaddress_set.count() == 1
+        assert user.emailaddress_set.first().email == user.email
+        assert user.emailaddress_set.first().verified
+        assert user.emailaddress_set.first().primary
 
     def test_signup_public_github(self, is_public=True):
         resp = self.github_login()
@@ -1183,7 +1177,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         data = {
             "website": "",
             "username": "octocat",
-            "email": "octo.cat@github-inc.com",
+            "email": "octocat-private@example.com",
             "terms": True,
             "is_github_url_public": is_public,
         }
@@ -1213,7 +1207,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                 data = {
                     "website": "",
                     "username": "octocat",
-                    "email": "octo.cat@github-inc.com",
+                    "email": "octocat-private@example.com",
                     "terms": True,
                     "is_github_url_public": True,
                 }
@@ -1262,7 +1256,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                 data = {
                     "website": "",
                     "username": "octocat",
-                    "email": "valid@example.com",
+                    "email": "octocat-private@example.com",
                     "terms": True,
                     "is_newsletter_subscribed": True,
                 }
@@ -1284,6 +1278,26 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                     ]
                 )
 
+    def test_signup_github_email_manual_override(self):
+        """Tests if a POST request comes in with an email that is NOT one of the
+        options, it should reject it.
+        Basically, in the sign up, you are shown what you primary default is and
+        it's also in a hidden input.
+        So, the only want to try to sign up with anything outside of that would
+        be if you manually control the POST request or fiddle with the DOM to
+        edit the hidden email input.
+        """
+        self.github_login()
+        data = {
+            "website": "",
+            "username": "octocat",
+            "email": "wasnot@anoption.biz",
+            "terms": True,
+            "is_github_url_public": True,
+        }
+        response = self.client.post(self.signup_url, data=data)
+        assert response.status_code == 400
+
     def test_signin_github_event_tracking(self):
         """Tests that kuma.core.ga_tracking.track_event is called when you
         sign in with GitHub a consecutive time."""
@@ -1292,7 +1306,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         data = {
             "website": "",
             "username": "octocat",
-            "email": "octo.cat@github-inc.com",
+            "email": "octocat-private@example.com",
             "terms": True,
             "is_github_url_public": True,
         }

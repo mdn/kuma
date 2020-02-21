@@ -659,22 +659,6 @@ class SignupView(BaseSignupView):
                     "verified": False,
                     "primary": False,
                 }
-            # choices = []
-            # verified_emails = []
-            # for email_data in self.email_addresses.values():
-            #     email_address = email_data["email"]
-            #     if email_data["verified"]:
-            #         verified_emails.append(email_address)
-            #     choices.append((email_address, email_address))
-            # if extra_email_addresses:
-            #     choices.append((form.other_email_value, _("Other:")))
-            # else:
-            #     choices.append((form.other_email_value, _("Email:")))
-            # email_select = forms.RadioSelect(choices=choices, attrs={"id": "email"})
-            # form.fields["email"].widget = email_select
-            # form.initial.update(email=choices[0])
-            # if not email and len(verified_emails) == 1:
-            #     form.initial.update(email=verified_emails[0])
         return form
 
     def form_valid(self, form):
@@ -686,27 +670,21 @@ class SignupView(BaseSignupView):
         So, we need to manually commit the user to the db for it.
         """
         selected_email = form.cleaned_data["email"]
-        if form.other_email_used:
-            data = {
-                "email": selected_email,
-                "verified": False,
-                "primary": True,
-            }
-        else:
-            data = self.email_addresses.get(selected_email, None)
+        if selected_email not in self.email_addresses:
+            return HttpResponseBadRequest("email not the default suggested one")
+        data = self.email_addresses[selected_email]
 
-        if data:
-            primary_email_address = EmailAddress(
-                email=data["email"], verified=data["verified"], primary=True
-            )
-            form.sociallogin.email_addresses = self.sociallogin.email_addresses = [
-                primary_email_address
-            ]
-            if data["verified"]:
-                # we have to stash the selected email address here
-                # so that no email verification is sent again
-                # this is done by adding the email address to the session
-                get_adapter().stash_verified_email(self.request, data["email"])
+        primary_email_address = EmailAddress(
+            email=data["email"], verified=data["verified"], primary=True
+        )
+        form.sociallogin.email_addresses = self.sociallogin.email_addresses = [
+            primary_email_address
+        ]
+        if data["verified"]:
+            # we have to stash the selected email address here
+            # so that no email verification is sent again
+            # this is done by adding the email address to the session
+            get_adapter().stash_verified_email(self.request, data["email"])
 
         with transaction.atomic():
             form.save(self.request)
