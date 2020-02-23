@@ -903,6 +903,11 @@ PIPELINE_JS = {
         "output_filename": "build/js/banners.js",
         "extra_context": {"async": True},
     },
+    "mathml": {
+        "source_filenames": ("js/components/mathml.js",),
+        "output_filename": "build/js/mathml.js",
+        "extra_context": {"defer": True},
+    },
     "users": {
         "source_filenames": ("js/users.js",),
         "output_filename": "build/js/users.js",
