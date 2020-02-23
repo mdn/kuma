@@ -105,19 +105,6 @@ class TestUser(UserTestCase):
         url2 = user.get_recovery_url()
         assert url == url2
 
-    def test_get_recovery_url_blank_password(self):
-        user = self.user_model.objects.get(username="testuser")
-        user.password = ""
-        user.save()
-        url = user.get_recovery_url()
-        assert url
-        assert not user.has_usable_password()
-
-        # The same URL is returned on second call
-        user.refresh_from_db()
-        url2 = user.get_recovery_url()
-        assert url == url2
-
     def test_get_recovery_url_no_active_translation(self):
         """
         When no translation is active, the locale is /en-US/.

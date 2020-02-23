@@ -1818,8 +1818,6 @@ def test_recover_valid(wiki_user, client):
     assert response.status_code == 302
     assert_no_cache_header(response)
     assert response["Location"].endswith(reverse("users.recover_done"))
-    wiki_user.refresh_from_db()
-    assert not wiki_user.has_usable_password()
 
 
 def test_invalid_token_fails(wiki_user, client):
