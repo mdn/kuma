@@ -57,7 +57,7 @@ def sitemaps(db, settings, tmpdir):
     ROOT_URLCONF="kuma.core.tests.logging_urls",
 )
 class LoggingTests(KumaTestCase):
-    logger = logging.getLogger("django")
+    logger = logging.getLogger("django.security")
     suspicous_path = "/en-US/suspicious/"
 
     def setUp(self):
