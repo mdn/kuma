@@ -669,10 +669,18 @@ class SignupView(BaseSignupView):
         We send our welcome email via celery during complete_signup.
         So, we need to manually commit the user to the db for it.
         """
+
         selected_email = form.cleaned_data["email"]
-        if selected_email not in self.email_addresses:
-            return HttpResponseBadRequest("email not the default suggested one")
-        data = self.email_addresses[selected_email]
+        if selected_email in self.email_addresses:
+            data = self.email_addresses[selected_email]
+        elif selected_email == self.default_email:
+            data = {
+                "email": selected_email,
+                "verified": True,
+                "primary": True,
+            }
+        else:
+            return HttpResponseBadRequest("email not a valid choice")
 
         primary_email_address = EmailAddress(
             email=data["email"], verified=data["verified"], primary=True
