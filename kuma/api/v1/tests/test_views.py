@@ -89,7 +89,10 @@ def test_doc_api(client, trans_doc):
     assert doc_data["wikiURL"] == absolutify(
         trans_doc.get_absolute_url(), for_wiki_site=True
     )
-    assert doc_data["translateURL"] is None
+    assert doc_data["translateURL"] == absolutify(
+        reverse("wiki.edit", args=(trans_doc.slug,), locale=trans_doc.locale),
+        for_wiki_site=True,
+    )
     assert doc_data["bodyHTML"] == trans_doc.get_body_html()
     assert doc_data["quickLinksHTML"] == trans_doc.get_quick_links_html()
     assert doc_data["tocHTML"] == trans_doc.get_toc_html()
@@ -130,10 +133,8 @@ def test_doc_api_for_redirect_to_doc(client, root_doc, redirect_doc):
     assert doc_data["wikiURL"] == absolutify(
         root_doc.get_absolute_url(), for_wiki_site=True
     )
-    assert doc_data["translateURL"] == absolutify(
-        reverse("wiki.select_locale", args=(root_doc.slug,), locale=root_doc.locale,),
-        for_wiki_site=True,
-    )
+    # Because 'root_doc' doesn't have a parent
+    assert doc_data["translateURL"] is None
     assert doc_data["bodyHTML"] == root_doc.get_body_html()
     assert doc_data["quickLinksHTML"] == root_doc.get_quick_links_html()
     assert doc_data["tocHTML"] == root_doc.get_toc_html()

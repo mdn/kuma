@@ -20,6 +20,9 @@ type DocumentProps = {
 function TranslationStatus({
     document: { translationStatus, translateURL }
 }: DocumentProps) {
+    if (!translateURL) {
+        return null;
+    }
     let content;
 
     if (translationStatus === 'in-progress') {

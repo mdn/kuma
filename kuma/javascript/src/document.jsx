@@ -29,7 +29,7 @@ export type DocumentData = {
     hrefLang: string,
     absoluteURL: string,
     wikiURL: string,
-    translateURL: string,
+    translateURL: string | null,
     translationStatus: null | 'in-progress' | 'outdated',
     bodyHTML: string,
     quickLinksHTML: string,
