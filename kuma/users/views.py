@@ -45,6 +45,7 @@ from kuma.core.decorators import (
 )
 from kuma.core.ga_tracking import (
     ACTION_PROFILE_AUDIT,
+    ACTION_PROFILE_EDIT,
     ACTION_PROFILE_EDIT_ERROR,
     CATEGORY_SIGNUP_FLOW,
     track_event,
@@ -625,7 +626,7 @@ class SignupView(BaseSignupView):
             pass
 
         email = self.sociallogin.account.extra_data.get("email") or None
-        email_data = (self.sociallogin.account.extra_data.get("email_addresses")) or []
+        email_data = self.sociallogin.account.extra_data.get("email_addresses") or []
 
         # Discard email addresses that won't validate
         extra_email_addresses = []
@@ -695,7 +696,13 @@ class SignupView(BaseSignupView):
             get_adapter().stash_verified_email(self.request, data["email"])
 
         with transaction.atomic():
-            form.save(self.request)
+            saved_user = form.save(self.request)
+
+            if saved_user.username != form.initial["username"]:
+                track_event(
+                    CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT, "username edit",
+                )
+
         return helpers.complete_social_signup(self.request, self.sociallogin)
 
     def form_invalid(self, form):
