@@ -11,13 +11,7 @@
   <title>{% block title %}{{ _('MDN Web Docs') }}{% endblock %}</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content=
-    {%- if request.get_host() in settings.ALLOW_ROBOTS_WEB_DOMAINS -%}
-        "{% block robots_value%}index, follow{% endblock %}"
-    {%- else -%}
-        "noindex, nofollow"
-    {%- endif -%}
-  >
+  <meta name="robots" content="noindex, nofollow">
 
   {% include "includes/preload.html" %}
 
