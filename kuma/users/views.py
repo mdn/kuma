@@ -9,7 +9,6 @@ from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.views import ConnectionsView
 from allauth.socialaccount.views import SignupView as BaseSignupView
 from constance import config
-from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import permission_required
@@ -471,7 +470,7 @@ def user_edit(request, username):
         "edit_user": edit_user,
         "user_form": user_form,
         "username": user_form["username"].value(),
-        "form": UserDeleteForm(),
+        "form": UserDeleteForm(username=username),
         "revisions": revisions,
         "attachment_revisions": attachment_revisions,
         "subscription_info": retrieve_stripe_subscription_info(edit_user,),
@@ -549,7 +548,7 @@ def user_delete(request, username):
     if request.method == "POST":
         # If the user has no revisions there's not choices on the form.
         if revisions.exists() or attachment_revisions.exists():
-            form = UserDeleteForm(request.POST)
+            form = UserDeleteForm(request.POST, username=username)
             if form.is_valid():
                 if form.cleaned_data["attributions"] == "donate":
                     donate_attributions()
@@ -565,7 +564,7 @@ def user_delete(request, username):
             delete_user()
             return HttpResponseRedirect("/")
     else:
-        form = UserDeleteForm()
+        form = UserDeleteForm(username=username)
 
     context["form"] = form
     context["username"] = username
@@ -661,22 +660,6 @@ class SignupView(BaseSignupView):
                     "verified": False,
                     "primary": False,
                 }
-            choices = []
-            verified_emails = []
-            for email_data in self.email_addresses.values():
-                email_address = email_data["email"]
-                if email_data["verified"]:
-                    verified_emails.append(email_address)
-                choices.append((email_address, email_address))
-            if extra_email_addresses:
-                choices.append((form.other_email_value, _("Other:")))
-            else:
-                choices.append((form.other_email_value, _("Email:")))
-            email_select = forms.RadioSelect(choices=choices, attrs={"id": "email"})
-            form.fields["email"].widget = email_select
-            form.initial.update(email=choices[0])
-            if not email and len(verified_emails) == 1:
-                form.initial.update(email=verified_emails[0])
         return form
 
     def form_valid(self, form):
@@ -687,28 +670,30 @@ class SignupView(BaseSignupView):
         We send our welcome email via celery during complete_signup.
         So, we need to manually commit the user to the db for it.
         """
+
         selected_email = form.cleaned_data["email"]
-        if form.other_email_used:
+        if selected_email in self.email_addresses:
+            data = self.email_addresses[selected_email]
+        elif selected_email == self.default_email:
             data = {
                 "email": selected_email,
-                "verified": False,
+                "verified": True,
                 "primary": True,
             }
         else:
-            data = self.email_addresses.get(selected_email, None)
+            return HttpResponseBadRequest("email not a valid choice")
 
-        if data:
-            primary_email_address = EmailAddress(
-                email=data["email"], verified=data["verified"], primary=True
-            )
-            form.sociallogin.email_addresses = self.sociallogin.email_addresses = [
-                primary_email_address
-            ]
-            if data["verified"]:
-                # we have to stash the selected email address here
-                # so that no email verification is sent again
-                # this is done by adding the email address to the session
-                get_adapter().stash_verified_email(self.request, data["email"])
+        primary_email_address = EmailAddress(
+            email=data["email"], verified=data["verified"], primary=True
+        )
+        form.sociallogin.email_addresses = self.sociallogin.email_addresses = [
+            primary_email_address
+        ]
+        if data["verified"]:
+            # we have to stash the selected email address here
+            # so that no email verification is sent again
+            # this is done by adding the email address to the session
+            get_adapter().stash_verified_email(self.request, data["email"])
 
         # # Form is valid, all is well. Let's see if the user overrode the default
         # # suggested username or email.
@@ -776,13 +761,12 @@ class SignupView(BaseSignupView):
         """
         This is called on POST but only when the form is invalid. We're
         overriding this method simply to send GA events when we find an
-        error in the username and/or email fields.
+        error in the username field.
         """
-        for name in ("username", "email"):
-            if form.errors.get(name) is not None:
-                track_event(
-                    CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT_ERROR, name,
-                )
+        if form.errors.get("username") is not None:
+            track_event(
+                CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT_ERROR, "username",
+            )
         return super().form_invalid(form)
 
     def get_context_data(self, **kwargs):

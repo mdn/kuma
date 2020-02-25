@@ -136,10 +136,10 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         parsed = pq(response.content)
         username = parsed("#id_username")[0]
         assert username.value == self.github_profile_data["login"]
-        email0 = parsed("#email_0")[0].attrib["value"]
-        assert email0 == self.github_email_data[0]["email"]
-        email1 = parsed("#email_1")[0].attrib["value"]
-        assert email1 == self.github_profile_data["email"]
+        assert (
+            parsed.find('input[name="email"]').val()
+            == self.github_email_data[0]["email"]
+        )
 
     def test_signin(self):
         """Successful auth to existing account is reflected in tools."""

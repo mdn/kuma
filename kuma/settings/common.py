@@ -593,7 +593,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    "VERSION": "2020.06",
+    "VERSION": "2020.07",
     "BASE_DIR": BASE_DIR,
     "TEXT_DOMAIN": "django",
     # Tells the extract script what files to look for l10n in and what function
@@ -902,6 +902,11 @@ PIPELINE_JS = {
         ),
         "output_filename": "build/js/banners.js",
         "extra_context": {"async": True},
+    },
+    "mathml": {
+        "source_filenames": ("js/components/mathml.js",),
+        "output_filename": "build/js/mathml.js",
+        "extra_context": {"defer": True},
     },
     "users": {
         "source_filenames": ("js/users.js",),
