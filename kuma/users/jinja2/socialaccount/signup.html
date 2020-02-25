@@ -45,7 +45,7 @@
     <p class="lead-in">
       {% trans provider_name=provider.name %}
       Thanks for signing in to MDN with {{ provider_name }}. To finish setting up your
-      MDN Web Docs account, please choose a username and email address.
+      MDN Web Docs account, please choose a username.
       {% endtrans %}
     </p>
 
@@ -91,35 +91,19 @@
           </fieldset>
         </li>
 
-        <li class="email-signup {{ 'error' if form.email.errors or form.other_email.errors }}">
+        <li class="email-signup">
           <fieldset>
             <legend>{{ _('Email Address') }}</legend>
-            <ul class="errorlist">
-              {% for error in form.email.errors %}
-                <li>{{ error }}</li>
-              {% endfor %}
-            </ul>
-
             {% set primary_email = get_primary_email(email_addresses) %}
+            <div id="email-static-container" class="email-static">
             {% if primary_email %}
-              <div id="email-static-container" class="email-static">
-                <input type="hidden" name="email" value="{{ primary_email }}" />
-                {{ primary_email }}
-                <button id="change-email" type="button" class="edit-default" aria-label="{{ _('Your’re current email address is %s. Change email address?'%(primary_email)) }}">{{ _('change email address') }}</button>
-              </div>
+              <input type="hidden" name="email" value="{{ primary_email }}" />
+              {{ primary_email }}
             {% else %}
-              <div id="email-static-container" class="email-static">
-                <input type="hidden" name="email" value="{{ default_email }}" />
-                {{ default_email }}
-                <button id="change-email" type="button" class="edit-default" aria-label="{{ _('Your’re current email address is %s. Change email address?'%(default_email)) }}">{{ _('change email address') }}</button>
-              </div>
+              <input type="hidden" name="email" value="{{ default_email }}" />
+              {{ default_email }}
             {% endif %}
-
-            {% if email_addresses|length > 1 %}
-              {% include 'socialaccount/includes/email_choices.html' %}
-            {% else %}
-              {% include 'socialaccount/includes/change_email_address.html' %}
-            {% endif %}
+            </div>
 
             <p class="field-explanation">
               {{ _('This will be the email address MDN Web Docs messages and notifications will be sent to. This will <strong>not</strong> be displayed on MDN Web Docs and will be used in accordance with our <a href="%(privacy_url)s">privacy policy</a>.', privacy_url='//www.mozilla.org/privacy/websites/')|safe }}

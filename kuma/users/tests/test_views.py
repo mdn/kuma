@@ -46,7 +46,6 @@ from kuma.wiki.tests import document as create_document
 
 from . import SampleRevisionsMixin, SocialTestMixin, user, UserTestCase
 from ..models import User, UserBan
-from ..signup import SignupForm
 from ..views import delete_document, revert_document
 
 
@@ -1110,20 +1109,6 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         assert_no_cache_header(response)
         assert response.context["matching_user"] == octocat
 
-    def test_clashing_username(self):
-        """First a GitHub user exists. Then a Google user tries to sign up
-        whose email address, when `email.split('@')[0]` would become the same
-        as the existing GitHub user.
-        """
-        user(username="octocat", save=True)
-        self.google_login(
-            profile_data=dict(self.google_profile_data, email="octocat@gmail.com",)
-        )
-        response = self.client.get(self.signup_url)
-        assert response.status_code == 200
-        doc = pq(response.content)
-        assert doc.find('input[name="username"]').val() == "octocat2"
-
     def test_email_addresses(self):
         public_email = "octocat-public@example.com"
         private_email = "octocat-private@example.com"
@@ -1132,75 +1117,44 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         profile_data = self.github_profile_data.copy()
         profile_data["email"] = public_email
         email_data = [
-            {"email": private_email, "verified": True, "primary": True},
+            # It might be unrealistic but let's make sure the primary email
+            # is NOT first in the list. Just to prove that pick that email not
+            # on it coming first but that's the primary verified one.
             {"email": unverified_email, "verified": False, "primary": False},
+            {"email": private_email, "verified": True, "primary": True},
             {"email": invalid_email, "verified": False, "primary": False},
         ]
         self.github_login(profile_data=profile_data, email_data=email_data)
         response = self.client.get(self.signup_url)
         assert response.status_code == 200
         assert_no_cache_header(response)
-        assert private_email not in response.context
-        email_address = response.context["email_addresses"]
+        doc = pq(response.content)
 
-        # first check if the public email address has been found
-        assert public_email in email_address
-        assert email_address[public_email] == {
-            "verified": False,
-            "email": public_email,
-            "primary": False,
-        }
-        # then check if the private and verified-at-GitHub email address
-        # has been found
-        assert private_email in email_address
-        assert email_address[private_email] == {
-            "verified": True,
-            "email": private_email,
-            "primary": True,
-        }
-        # then check that the invalid email is not present
-        assert invalid_email not in email_address
-        # then check if the radio button's default value is the primary email
-        # address
-        assert response.context["form"].initial["email"][1] == private_email
+        # The hidden input should display the primary verified email
+        assert doc.find('input[name="email"]').val() == email_data[1]["email"]
+        # But whatever's in the hidden email input is always displayed to the user
+        # as "plain text". Check that that also is right.
+        assert doc.find("#email-static-container").text() == email_data[1]["email"]
 
         unverified_email = "o.ctocat@gmail.com"
         data = {
             "website": "",
             "username": "octocat",
-            "email": SignupForm.other_email_value,  # = use other_email
-            "other_email": unverified_email,
+            "email": email_data[1]["email"],
             "terms": True,
         }
         assert not EmailAddress.objects.filter(email=unverified_email).exists()
         response = self.client.post(self.signup_url, data=data)
         assert response.status_code == 302
         assert_no_cache_header(response)
-        unverified_email_addresses = EmailAddress.objects.filter(email=unverified_email)
-        assert unverified_email_addresses.exists()
-        assert unverified_email_addresses.count() == 1
-        assert unverified_email_addresses[0].primary
-        assert not unverified_email_addresses[0].verified
 
-    def test_email_addresses_with_no_public(self):
-        profile_data = self.github_profile_data.copy()
-        profile_data["email"] = None
-        email_data = self.github_email_data[:]
-        private_email = "octocat.private@example.com"
-        email_data[0]["email"] = private_email
-        self.github_login(profile_data=profile_data, email_data=email_data)
-        response = self.client.get(self.signup_url)
-        assert response.status_code == 200
-        assert_no_cache_header(response)
-        assert response.context["form"].initial["email"] == private_email
-
-    def test_email_addresses_with_no_alternatives(self):
-        private_email = self.github_profile_data["email"]
-        self.github_login(email_data=[])
-        response = self.client.get(self.signup_url)
-        assert response.status_code == 200
-        assert_no_cache_header(response)
-        assert response.context["form"].initial["email"] == private_email
+        # Check that the user.email field became the primary verified one.
+        user = User.objects.get(username=data["username"])
+        assert user.email == email_data[1]["email"]
+        assert user.emailaddress_set.count() == 1
+        assert user.emailaddress_set.first().email == user.email
+        assert user.emailaddress_set.first().verified
+        assert user.emailaddress_set.first().primary
 
     def test_signup_public_github(self, is_public=True):
         resp = self.github_login()
@@ -1209,7 +1163,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         data = {
             "website": "",
             "username": "octocat",
-            "email": "octo.cat@github-inc.com",
+            "email": "octocat-private@example.com",
             "terms": True,
             "is_github_url_public": is_public,
         }
@@ -1239,7 +1193,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                 data = {
                     "website": "",
                     "username": "octocat",
-                    "email": "octo.cat@github-inc.com",
+                    "email": "octocat-private@example.com",
                     "terms": True,
                     "is_github_url_public": True,
                 }
@@ -1268,50 +1222,25 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
                     CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_AUDIT, "github"
                 )
 
-    def test_signup_username_and_email_errors_event_tracking(self):
+    def test_signup_github_email_manual_override(self):
+        """Tests if a POST request comes in with an email that is NOT one of the
+        options, it should reject it.
+        Basically, in the sign up, you are shown what you primary default is and
+        it's also in a hidden input.
+        So, the only want to try to sign up with anything outside of that would
+        be if you manually control the POST request or fiddle with the DOM to
+        edit the hidden email input.
         """
-        Tests that GA tracking events are sent for errors in the username
-        and/or email fields submitted when signing-up with a new account.
-        """
-        user(username="octocat", save=True)
-        with self.settings(
-            GOOGLE_ANALYTICS_ACCOUNT="UA-XXXX-1",
-            GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS=True,
-        ):
-            p1 = mock.patch("kuma.users.signal_handlers.track_event")
-            p2 = mock.patch("kuma.users.views.track_event")
-            p3 = mock.patch("kuma.users.providers.google.views.track_event")
-            with p1 as track_event_mock_signals, p2 as track_event_mock_views, p3 as track_event_mock_google:
-
-                self.google_login()
-
-                data = {
-                    "website": "",
-                    "username": "octocat",
-                    "email": "invalid@email",
-                    "terms": True,
-                    "is_newsletter_subscribed": True,
-                }
-                response = self.client.post(self.signup_url, data=data)
-                assert response.status_code == 200
-
-                track_event_mock_signals.assert_called_with(
-                    CATEGORY_SIGNUP_FLOW, ACTION_AUTH_SUCCESSFUL, "google"
-                )
-                track_event_mock_google.assert_called_with(
-                    CATEGORY_SIGNUP_FLOW, ACTION_AUTH_STARTED, "google"
-                )
-                track_event_mock_views.assert_has_calls(
-                    [
-                        mock.call(CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_AUDIT, "google"),
-                        mock.call(
-                            CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT_ERROR, "username"
-                        ),
-                        mock.call(
-                            CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT_ERROR, "email"
-                        ),
-                    ]
-                )
+        self.github_login()
+        data = {
+            "website": "",
+            "username": "octocat",
+            "email": "wasnot@anoption.biz",
+            "terms": True,
+            "is_github_url_public": True,
+        }
+        response = self.client.post(self.signup_url, data=data)
+        assert response.status_code == 400
 
     def test_signin_github_event_tracking(self):
         """Tests that kuma.core.ga_tracking.track_event is called when you
@@ -1321,7 +1250,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         data = {
             "website": "",
             "username": "octocat",
-            "email": "octo.cat@github-inc.com",
+            "email": "octocat-private@example.com",
             "terms": True,
             "is_github_url_public": True,
         }
@@ -1413,6 +1342,122 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         social_token = sa.socialtoken_set.get()
         assert token == social_token.token
         assert refresh_token == social_token.token_secret
+
+
+class KumaGoogleTests(UserTestCase, SocialTestMixin):
+    def setUp(self):
+        self.signup_url = reverse("socialaccount_signup")
+
+    def test_signup_google(self):
+        response = self.google_login()
+        assert response.status_code == 200
+
+        doc = pq(response.content)
+        # The default suggested username should be the `email.split('@')[0]`
+        email = self.google_profile_data["email"]
+        username = email.split("@")[0]
+        assert doc.find('input[name="username"]').val() == username
+        # first remove the button from that container
+        doc("#username-static-container button").remove()
+        # so that what's left is just the username
+        assert doc.find("#username-static-container").text() == username
+
+        # The hidden input should display the primary verified email
+        assert doc.find('input[name="email"]').val() == email
+        # But whatever's in the hidden email input is always displayed to the user
+        # as "plain text". Check that that also is right.
+        assert doc.find("#email-static-container").text() == email
+
+        data = {
+            "website": "",  # for the honeypot
+            "username": username,
+            "email": email,
+            "terms": True,
+        }
+        response = self.client.post(self.signup_url, data=data)
+        assert response.status_code == 302
+        assert_no_cache_header(response)
+
+        user = User.objects.get(username=username)
+        assert user.email == email
+
+        assert EmailAddress.objects.filter(
+            email=email, primary=True, verified=True
+        ).exists()
+
+    def test_signup_google_changed_email(self):
+        """When you load the signup form, our backend recognizes what your valid
+        email address can be. But what if someone changes the hidden input to
+        something other that what's there by default. That should get kicked out.
+        """
+        self.google_login()
+        email = self.google_profile_data["email"]
+        username = email.split("@")[0]
+
+        data = {
+            "website": "",  # for the honeypot
+            "username": username,
+            "email": "somethingelse@example.biz",
+            "terms": True,
+        }
+        response = self.client.post(self.signup_url, data=data)
+        assert response.status_code == 400
+
+    def test_clashing_username(self):
+        """First a GitHub user exists. Then a Google user tries to sign up
+        whose email address, when `email.split('@')[0]` would become the same
+        as the existing GitHub user.
+        """
+        user(username="octocat", save=True)
+        self.google_login(
+            profile_data=dict(self.google_profile_data, email="octocat@gmail.com",)
+        )
+        response = self.client.get(self.signup_url)
+        assert response.status_code == 200
+        doc = pq(response.content)
+        assert doc.find('input[name="username"]').val() == "octocat2"
+
+    def test_signup_username_error_event_tracking(self):
+        """
+        Tests that GA tracking events are sent for errors in the username
+        field submitted when signing-up with a new account.
+        """
+        user(username="octocat", save=True)
+        with self.settings(
+            GOOGLE_ANALYTICS_ACCOUNT="UA-XXXX-1",
+            GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS=True,
+        ):
+            p1 = mock.patch("kuma.users.signal_handlers.track_event")
+            p2 = mock.patch("kuma.users.views.track_event")
+            p3 = mock.patch("kuma.users.providers.google.views.track_event")
+            with p1 as track_event_mock_signals, p2 as track_event_mock_views, p3 as track_event_mock_google:
+
+                self.google_login()
+
+                data = {
+                    "website": "",
+                    "username": "octocat",
+                    "email": "octocat-private@example.com",
+                    "terms": True,
+                    "is_newsletter_subscribed": True,
+                }
+                response = self.client.post(self.signup_url, data=data)
+                assert response.status_code == 200
+
+                track_event_mock_signals.assert_called_with(
+                    CATEGORY_SIGNUP_FLOW, ACTION_AUTH_SUCCESSFUL, "google"
+                )
+                track_event_mock_google.assert_called_with(
+                    CATEGORY_SIGNUP_FLOW, ACTION_AUTH_STARTED, "google"
+                )
+                track_event_mock_views.assert_has_calls(
+                    [
+                        mock.call(CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_AUDIT, "google"),
+                        mock.call(
+                            CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT_ERROR, "username"
+                        ),
+                    ]
+                )
 
 
 def test_delete_user_login_always_required(db, client):
