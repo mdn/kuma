@@ -695,17 +695,6 @@ class SignupView(BaseSignupView):
             # this is done by adding the email address to the session
             get_adapter().stash_verified_email(self.request, data["email"])
 
-        # # Form is valid, all is well. Let's see if the user overrode the default
-        # # suggested username or email.
-        # for name in ("username", "email"):
-        #     if form.initial[name] != self.request.POST[name]:
-        #         # The user chose to edit this field!
-        #         track_event(
-        #             CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT, f"{name} edit",
-        #         )
-        #         print(name.upper(), form.initial[name], "<>", self.request.POST[name])
-        #         assert False
-
         with transaction.atomic():
             saved_user = form.save(self.request)
 
@@ -713,47 +702,6 @@ class SignupView(BaseSignupView):
                 track_event(
                     CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT, "username edit",
                 )
-
-            print(
-                "SAVED", (saved_user.email,), "FORM", (form.initial["email"],),
-            )
-            # if form["email"].value() == "_other":
-            #     print("ALLFORM_VALUES", {x: form[x].value() for x in form.fields})
-            # print(list(self.request.POST.items()))
-            # print(list(form.initial))
-            # print("username?", repr(form["username"].value()))
-            # print("email?", repr(form["email"].value()))
-            # print('form.cleaned_data["email"]', repr(form.cleaned_data["email"]))
-            # print("self.default_email:", self.default_email)
-
-            # assert 0
-            # # Form is valid, all is well. Let's see if the user overrode the default
-            # # suggested username or email.
-            # for name in ("username", "email"):
-            #     # Assume that the POST key is the same as the name.
-            #     post_name = name
-            #     if name == "email":
-            #         post_name = "other_email"
-            #     if form.initial[name] != self.request.POST[post_name]:
-            #         # The user chose to edit this field!
-            #         track_event(
-            #             CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT, f"{name} edit",
-            #         )
-            #         # print(list(self.request.POST.items()))
-            #         # print(list(form.initial))
-            #         # print("username?", repr(form.username.value()))
-            #         # print("email?", repr(form.email.value()))
-            #         # print(
-            #         #     name.upper(),
-            #         #     form.initial[name],
-            #         #     "<>",
-            #         #     self.request.POST[post_name],
-            #         # )
-            #         # print(
-            #         #     'form.cleaned_data["email"]', repr(form.cleaned_data["email"])
-            #         # )
-            #         # print("self.default_email:", self.default_email)
-            # assert False
 
         return helpers.complete_social_signup(self.request, self.sociallogin)
 
