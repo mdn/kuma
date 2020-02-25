@@ -132,7 +132,7 @@ def test_spam_no_permission(
     )
     # Redirects to login page when without permission.
     assert response.status_code == 302
-    assert response["Location"].endswith("users/signin?next={}".format(url))
+    assert response["Location"].endswith(f"{reverse(settings.LOGIN_URL)}?next={url}")
     assert_no_cache_header(response)
 
     # No RevisionAkismetSubmission record should exist.
