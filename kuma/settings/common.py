@@ -901,7 +901,6 @@ PIPELINE_JS = {
             "js/components/banners/banners.js",
         ),
         "output_filename": "build/js/banners.js",
-        "extra_context": {"async": True},
     },
     "mathml": {
         "source_filenames": ("js/components/mathml.js",),
@@ -911,12 +910,10 @@ PIPELINE_JS = {
     "users": {
         "source_filenames": ("js/users.js",),
         "output_filename": "build/js/users.js",
-        "extra_context": {"async": True},
     },
     "user-signup": {
         "source_filenames": ("js/components/user-signup/signup.js",),
         "output_filename": "build/js/signup.js",
-        "extra_context": {"async": True},
     },
     "delete-user-page": {
         "source_filenames": (
@@ -945,7 +942,6 @@ PIPELINE_JS = {
     "dashboard": {
         "source_filenames": ("js/dashboard.js",),
         "output_filename": "build/js/dashboard.js",
-        "extra_context": {"async": True},
     },
     "jquery-ui": {
         "source_filenames": (
@@ -958,7 +954,6 @@ PIPELINE_JS = {
     "search": {
         "source_filenames": ("js/search.js",),
         "output_filename": "build/js/search.js",
-        "extra_context": {"async": True},
     },
     "payments": {
         "source_filenames": ("js/components/payments/payments-manage.js",),
@@ -1005,7 +1000,6 @@ PIPELINE_JS = {
             "js/components/page-load-actions.js",
         ),
         "output_filename": "build/js/wiki.js",
-        "extra_context": {"async": True},
     },
     "wiki-edit": {
         "source_filenames": (
@@ -1019,7 +1013,6 @@ PIPELINE_JS = {
     "wiki-move": {
         "source_filenames": ("js/wiki-move.js",),
         "output_filename": "build/js/wiki-move.js",
-        "extra_context": {"async": True},
     },
     "wiki-compat-tables": {
         "source_filenames": ("js/wiki-compat-tables.js",),
@@ -1029,7 +1022,6 @@ PIPELINE_JS = {
     "task-completion": {
         "source_filenames": ("js/task-completion.js",),
         "output_filename": "build/js/task-completion.js",
-        "extra_context": {"async": True},
     },
     "newsletter": {
         "source_filenames": ("js/newsletter.js",),
