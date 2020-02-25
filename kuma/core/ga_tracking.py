@@ -44,6 +44,8 @@ ACTION_RETURNING_USER_SIGNIN = "returning-user-signin"
 ACTION_PROFILE_AUDIT = "profile-audit"
 # Have completed the profile creation form.
 ACTION_PROFILE_CREATED = "profile-created"
+# Have changed a suggested default. E.g. not "peterbe2" but "peterbe_new"
+ACTION_PROFILE_EDIT = "profile-edit"
 # Have detected an error in the edited profile creation form.
 ACTION_PROFILE_EDIT_ERROR = "profile-edit-error"
 # Checked or didn't check the "Newsletter" checkbox on sign up.
