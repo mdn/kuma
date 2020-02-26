@@ -100,7 +100,8 @@ def delete_document(request, document_slug, document_locale):
             document.delete()
             return redirect(document)
     else:
-        form = DocumentDeletionForm()
+
+        form = DocumentDeletionForm(initial={"reason": request.GET.get("reason", "")})
 
     context = {
         "document": document,
