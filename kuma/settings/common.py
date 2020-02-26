@@ -602,7 +602,7 @@ PUENTE = {
         "django": [
             ("kumascript/node_modules/**", "ignore"),
             ("kuma/**.py", "python"),
-            ("**/templates/**.html", "django_babel.extract.extract_django"),
+            ("**/templates/**.html", "enmerkar.extract.extract_django"),
             ("**/jinja2/**.html", "jinja2"),
             ("**/jinja2/**.ltxt", "jinja2"),
         ],
