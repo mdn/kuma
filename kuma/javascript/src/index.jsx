@@ -14,7 +14,7 @@ if (container) {
     let componentName = container.dataset.componentName;
 
     // The HTML page that loads this code is expected to have an inline
-    // script that sets this window._document_data property to an object
+    // script that sets this window._react_data property to an object
     // with all the data needed to hydrate or render the UI.
     let data = window._react_data;
 
