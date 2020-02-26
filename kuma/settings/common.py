@@ -1140,7 +1140,11 @@ ENABLE_RESTRICTIONS_BY_HOST = config(
 # Allow robots, but restrict some paths
 # If the domain is a CDN, the CDN origin should be included.
 ALLOW_ROBOTS_WEB_DOMAINS = set(
-    config("ALLOW_ROBOTS_WEB_DOMAINS", default="developer.mozilla.org", cast=Csv())
+    config(
+        "ALLOW_ROBOTS_WEB_DOMAINS",
+        default="developer.mozilla.org,wiki.developer.mozilla.org",
+        cast=Csv(),
+    )
 )
 
 # Allow robots, no path restrictions
