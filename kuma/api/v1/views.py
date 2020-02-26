@@ -1,3 +1,5 @@
+from urllib.parse import urlencode
+
 from django.conf import settings
 from django.http import Http404, HttpResponsePermanentRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
@@ -165,9 +167,10 @@ def document_api_data(doc=None, redirect_url=None):
             "wikiURL": absolutify(doc_absolute_url, for_wiki_site=True),
             "translateURL": (
                 absolutify(
-                    reverse("wiki.edit", args=(doc.slug,), locale=doc.locale,),
+                    reverse("wiki.translate", args=(doc.slug,), locale=doc.locale),
                     for_wiki_site=True,
                 )
+                + f"?{urlencode(dict(tolocale=doc.locale))}"
                 if doc.parent and doc.parent.is_localizable
                 else None
             ),

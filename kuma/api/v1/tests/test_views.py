@@ -90,7 +90,8 @@ def test_doc_api(client, trans_doc):
         trans_doc.get_absolute_url(), for_wiki_site=True
     )
     assert doc_data["translateURL"] == absolutify(
-        reverse("wiki.edit", args=(trans_doc.slug,), locale=trans_doc.locale),
+        reverse("wiki.translate", args=(trans_doc.slug,), locale=trans_doc.locale)
+        + "?tolocale=fr",
         for_wiki_site=True,
     )
     assert doc_data["bodyHTML"] == trans_doc.get_body_html()
