@@ -171,15 +171,10 @@ def document_api_data(doc=None, redirect_url=None):
             ),
             "translateURL": (
                 absolutify(
-                    reverse(
-                        "wiki.select_locale",
-                        args=(doc.parent.slug,),
-                        locale=doc.parent.locale,
-                    ),
+                    reverse("wiki.select_locale", args=(doc.slug,), locale=doc.locale),
                     for_wiki_site=True,
                 )
-                + f"?{urlencode(dict(tolocale=doc.locale))}"
-                if doc.parent and doc.parent.is_localizable
+                if doc.is_localizable
                 else None
             ),
             "translationStatus": translation_status,
