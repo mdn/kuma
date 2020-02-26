@@ -62,7 +62,8 @@ def retrieve_stripe_subscription_info(user):
             "brand": card.brand,
             "expires_at": f"{card.exp_month}/{card.exp_year}",
             "last4": card.last4,
-            "zip": card.address_zip,
+            # Cards that are part of a "source" don't have a zip
+            "zip": card.get("address_zip", None),
         }
 
     return None
