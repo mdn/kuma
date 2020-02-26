@@ -1,5 +1,3 @@
-from urllib.parse import urlencode
-
 from django.conf import settings
 from django.http import Http404, HttpResponsePermanentRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
