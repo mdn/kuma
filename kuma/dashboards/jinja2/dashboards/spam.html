@@ -3,7 +3,6 @@
 {% set title = _('Spam Dashboard') %}
 
 {% block title %}{{ page_title(title) }}{% endblock %}
-{% block robots_value %}noindex, nofollow{% endblock %}
 
 {% set stat_ids=(('spam_viewers_change', '% Change', 'rate'),
                  ('spam_viewers', 'Spam Viewers', 'data'),
