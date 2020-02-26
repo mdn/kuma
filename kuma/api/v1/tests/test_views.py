@@ -89,6 +89,10 @@ def test_doc_api(client, trans_doc):
     assert doc_data["wikiURL"] == absolutify(
         trans_doc.get_absolute_url(), for_wiki_site=True
     )
+    assert doc_data["editURL"] == absolutify(
+        reverse("wiki.edit", args=(trans_doc.slug,), locale=trans_doc.locale),
+        for_wiki_site=True,
+    )
     assert doc_data["translateURL"] is None
     assert doc_data["bodyHTML"] == trans_doc.get_body_html()
     assert doc_data["quickLinksHTML"] == trans_doc.get_quick_links_html()
