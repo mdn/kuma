@@ -322,18 +322,6 @@ six = "*"
 
 [[package]]
 category = "main"
-description = "Utilities for using Babel in Django"
-name = "django-babel"
-optional = false
-python-versions = "*"
-version = "0.6.2"
-
-[package.dependencies]
-babel = ">=1.3"
-django = ">=1.8,<3.0"
-
-[[package]]
-category = "main"
 description = "Caching library for Django that uses Celery or RQ to refresh cache items asynchronously"
 name = "django-cacheback"
 optional = false
@@ -655,6 +643,18 @@ six = "*"
 
 [package.extras]
 develop = ["mock", "pytest (>=3.0.0)", "pytest-cov", "pytz", "coverage (<5.0.0)", "sphinx", "sphinx-rtd-theme"]
+
+[[package]]
+category = "main"
+description = "Utilities for using Babel in Django"
+name = "enmerkar"
+optional = false
+python-versions = "*"
+version = "0.7.1"
+
+[package.dependencies]
+babel = ">=1.3"
+django = ">=2.2"
 
 [[package]]
 category = "dev"
@@ -1446,7 +1446,7 @@ version = "5.0.1"
 brotli = ["brotli"]
 
 [metadata]
-content-hash = "eff942af1c29bd5b1c98b6ab50a3be4cf649ade6295482dcdfcfa68d78796586"
+content-hash = "287d65633d68ba52e30a23bcde896b8e019194d10ec3711011480cfa8e637693"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1582,10 +1582,6 @@ django-appconf = [
     {file = "django-appconf-1.0.3.tar.gz", hash = "sha256:35f13ca4d567f132b960e2cd4c832c2d03cb6543452d34e29b7ba10371ba80e3"},
     {file = "django_appconf-1.0.3-py2.py3-none-any.whl", hash = "sha256:c98a7af40062e996b921f5962a1c4f3f0c979fa7885f7be4710cceb90ebe13a6"},
 ]
-django-babel = [
-    {file = "django-babel-0.6.2.tar.gz", hash = "sha256:1e621b198e1f98ae4f93e43463cf78cbedbace475eb6e0853ba1e2567f3b8119"},
-    {file = "django_babel-0.6.2-py2.py3-none-any.whl", hash = "sha256:b62084a6f0cbf2e7af719bd129abfe54608a52645c0677aff5a728f586873af7"},
-]
 django-cacheback = [
     {file = "django-cacheback-1.4.0.tar.gz", hash = "sha256:6483eb8744d001b8505c38a5217be36998f9c11858b2126974a9060dfc74ae50"},
     {file = "django_cacheback-1.4.0-py2.py3-none-any.whl", hash = "sha256:972c7697f1929bf9676893a8e6cb1f7873a2c14e835a8d24fbb59bbf37731c18"},
@@ -1689,6 +1685,10 @@ elasticsearch = [
 elasticsearch-dsl = [
     {file = "elasticsearch-dsl-6.4.0.tar.gz", hash = "sha256:26416f4dd46ceca43d62ef74970d9de4bdd6f4b0f163316f0b432c9e61a08bec"},
     {file = "elasticsearch_dsl-6.4.0-py2.py3-none-any.whl", hash = "sha256:f60aea7fd756ac1fbe7ce114bbf4949aefbf495dfe8896640e787c67344f12f6"},
+]
+enmerkar = [
+    {file = "enmerkar-0.7.1-py3-none-any.whl", hash = "sha256:ba5a79e022963580c994ce8f4fe8477d574159adbe86e5271b1a3d4127b8794d"},
+    {file = "enmerkar-0.7.1.tar.gz", hash = "sha256:a4a6c859b4ed293deee40ff61d6695b3ff7bc153770a1799f2be872181282e00"},
 ]
 entrypoints = [
     {file = "entrypoints-0.3-py2.py3-none-any.whl", hash = "sha256:589f874b313739ad35be6e0cd7efde2a4e9b6fea91edcc34e58ecbb8dbe56d19"},
