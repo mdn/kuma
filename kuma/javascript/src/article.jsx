@@ -18,11 +18,8 @@ type DocumentProps = {
 };
 
 function TranslationStatus({
-    document: { translationStatus, translateURL }
+    document: { translationStatus, editURL }
 }: DocumentProps) {
-    if (!translateURL) {
-        return null;
-    }
     let content;
 
     if (translationStatus === 'in-progress') {
@@ -32,7 +29,7 @@ function TranslationStatus({
             <>
                 {gettext('This translation is incomplete.')}
                 &nbsp;
-                <a href={translateURL} rel="nofollow">
+                <a href={editURL} rel="nofollow">
                     {gettext('Please help translate this article from English')}
                 </a>
             </>
