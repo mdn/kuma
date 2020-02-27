@@ -92,7 +92,7 @@
                 <h3>{{_('Monthly Subscription')}}</h3>
                 <div class="bordered-info">
                     <span>
-                        {% trans url=url('users.user_edit', username=user.username) + '?has_stripe_error=False' %}
+                        {% trans url=url('users.user_edit', username=user.username)|urlparams(has_stripe_error=False) %}
                             You have no active subscriptions.
                             Why not <a href="{{ url }}">set one up</a>?
                         {% endtrans %}
