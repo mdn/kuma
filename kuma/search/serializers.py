@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.utils.translation import ugettext
+from django.utils.translation import gettext
 from rest_framework import serializers
 
 from . import models
@@ -79,7 +79,7 @@ class FilterSerializer(serializers.ModelSerializer):
         fields = ("name", "slug", "shortcut")
 
     def get_localized_name(self, obj):
-        return ugettext(obj.name)
+        return gettext(obj.name)
 
 
 class GroupSerializer(serializers.Serializer):

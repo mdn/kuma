@@ -1,7 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.forms.fields import CharField
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 LANG_CHOICES = [("", _("All Locales"))] + settings.SORTED_LANGUAGES

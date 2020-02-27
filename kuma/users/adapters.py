@@ -10,7 +10,7 @@ from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.shortcuts import redirect, render
 from django.utils.cache import add_never_cache_headers
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from waffle import switch_is_active
 
 from kuma.core.ga_tracking import (

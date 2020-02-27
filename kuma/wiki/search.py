@@ -5,7 +5,7 @@ from celery import chain
 from django.conf import settings
 from django.db.models import Q
 from django.utils.html import strip_tags
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from elasticsearch.helpers import bulk
 from elasticsearch_dsl import document, field
 from elasticsearch_dsl.connections import connections

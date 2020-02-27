@@ -11,7 +11,7 @@ This is generated from the production database using the management command:
 
 ./manage.py generate_search_names.py
 '''
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 FILTER_NAMES = {
   {%- for group_name, filter_names in names %}

@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.http import Http404, HttpResponsePermanentRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
-from django.utils.translation import activate, ugettext as _
+from django.utils.translation import activate, gettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET, require_safe
 from ratelimit.decorators import ratelimit

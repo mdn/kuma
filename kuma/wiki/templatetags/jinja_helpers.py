@@ -11,7 +11,7 @@ from django.conf import settings
 from django.core.serializers.json import DjangoJSONEncoder
 from django.template import loader
 from django.utils.html import conditional_escape
-from django.utils.translation import ugettext
+from django.utils.translation import gettext
 from django_jinja import library
 
 from kuma.core.urlresolvers import reverse
@@ -113,14 +113,14 @@ def diff_table(content_from, content_to, prev_id, curr_id, tidy=False):
         diff = html_diff.make_table(
             content_from.splitlines(),
             content_to.splitlines(),
-            ugettext("Revision %s") % prev_id,
-            ugettext("Revision %s") % curr_id,
+            gettext("Revision %s") % prev_id,
+            gettext("Revision %s") % curr_id,
             context=True,
             numlines=config.DIFF_CONTEXT_LINES,
         )
     except RuntimeError:
         # some diffs hit a max recursion error
-        message = ugettext("There was an error generating the content.")
+        message = gettext("There was an error generating the content.")
         diff = '<div class="warning"><p>%s</p></div>' % message
     return jinja2.Markup(diff)
 
@@ -132,8 +132,8 @@ def tag_diff_table(prev_tags, curr_tags, prev_id, curr_id):
     diff = html_diff.make_table(
         [prev_tags],
         [curr_tags],
-        ugettext("Revision %s") % prev_id,
-        ugettext("Revision %s") % curr_id,
+        gettext("Revision %s") % prev_id,
+        gettext("Revision %s") % curr_id,
     )
 
     # Simple formatting update: 784877

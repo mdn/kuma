@@ -13,8 +13,8 @@ from django.forms.widgets import CheckboxSelectMultiple
 from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 from taggit.utils import parse_tags
 
 import kuma.wiki.content
@@ -524,14 +524,14 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
     comment = CharField(required=False, label=_("Comment:"))
 
     review_tags = forms.MultipleChoiceField(
-        label=ugettext("Tag this revision for review?"),
+        label=gettext("Tag this revision for review?"),
         widget=CheckboxSelectMultiple,
         required=False,
         choices=REVIEW_FLAG_TAGS,
     )
 
     localization_tags = forms.MultipleChoiceField(
-        label=ugettext("Tag this revision for localization?"),
+        label=gettext("Tag this revision for localization?"),
         widget=CheckboxSelectMultiple,
         required=False,
         choices=LOCALIZATION_FLAG_TAGS,
