@@ -200,9 +200,8 @@ def test_recurring_payment_management_not_logged_in(enabled_, get, cancel_, clie
         "recurring_payment_management",
     ],
 )
-def test_redirect(db, client, endpoint, settings):
+def test_redirect(db, client, endpoint):
     """Redirect to the wiki domain if not already."""
-    settings.MDN_CONTRIBUTION = True
     url = reverse(endpoint)
     response = client.get(url)
     assert_redirect_to_wiki(response, url)

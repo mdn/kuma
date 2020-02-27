@@ -1728,15 +1728,13 @@ STRIPE_PLAN_ID = config("STRIPE_PLAN_ID", default="")
 # Misc Stripe settings
 STRIPE_MAX_NETWORK_RETRIES = config("STRIPE_MAX_NETWORK_RETRIES", default=5, cast=int)
 
-MDN_CONTRIBUTION = config("MDN_CONTRIBUTION", False, cast=bool)
 CONTRIBUTION_SUPPORT_EMAIL = config(
     "CONTRIBUTION_SUPPORT_EMAIL", default="mdn-support@mozilla.com"
 )
-if MDN_CONTRIBUTION:
-    CSP_CONNECT_SRC.append("https://checkout.stripe.com")
-    CSP_FRAME_SRC.append("https://checkout.stripe.com")
-    CSP_IMG_SRC.append("https://*.stripe.com")
-    CSP_SCRIPT_SRC.append("https://checkout.stripe.com")
+CSP_CONNECT_SRC.append("https://checkout.stripe.com")
+CSP_FRAME_SRC.append("https://checkout.stripe.com")
+CSP_IMG_SRC.append("https://*.stripe.com")
+CSP_SCRIPT_SRC.append("https://checkout.stripe.com")
 
 # Settings used for communication with the React server side rendering server
 SSR_URL = config("SSR_URL", default="http://localhost:8002/ssr")

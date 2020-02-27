@@ -7,18 +7,9 @@ from .constants import CONTRIBUTION_BETA_FLAG, RECURRING_PAYMENT_BETA_FLAG
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-def enabled(request):
-    """Return True if contributions are enabled."""
-    return bool(settings.MDN_CONTRIBUTION)
-
-
 def popup_enabled(request):
     """Returns True if the popup is enabled for the user."""
-    return (
-        enabled(request)
-        and hasattr(request, "user")
-        and flag_is_active(request, CONTRIBUTION_BETA_FLAG)
-    )
+    return hasattr(request, "user") and flag_is_active(request, CONTRIBUTION_BETA_FLAG)
 
 
 def recurring_payment_enabled(request):
