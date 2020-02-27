@@ -24,28 +24,11 @@
 {% block content %}
 <main id="content-main" role="main">
   <article id="browser_register" class="readable-line-length center">
-    <ol class="auth-service-header">
-      {% if provider.name == "GitHub" %}
-        <li class="github-auth checked">
-          <img src="{{ static('auth/github-auth.svg') }}" width="90" alt="Github" />
-          {{ _('Authorize with Github') }}
-        </li>
-      {% elif provider.name == "Google" %}
-        <li class="google-auth checked">
-          <img src="{{ static('auth/google-auth.svg') }}" width="90" alt="Google" />
-          {{ _('Authorize with Google') }}
-        </li>
-      {% endif %}
-      <li class="mdn-profile">
-        <img src="{{ account.get_avatar_url() }}" width="90" alt="{{ _('User avatar') }}" />
-        {{ _('Create MDN Account') }}
-      </li>
-    </ol>
 
     <p class="lead-in">
       {% trans provider_name=provider.name %}
-      Thanks for signing in to MDN with {{ provider_name }}. To finish setting up your
-      MDN Web Docs account, please choose a username.
+      You are signing in to MDN with <strong>{{ provider_name }}</strong>.
+      <br />Choose a username to finish creating your MDN account.
       {% endtrans %}
     </p>
 

@@ -23,7 +23,7 @@ from ..models import User, UserBan
 class SignupTests(UserTestCase, SocialTestMixin):
     profile_create_strings = (
         "Create your MDN account",
-        "choose a username",
+        "Choose a username",
         "Having trouble",
         "I agree",
         "to Mozilla",
@@ -54,7 +54,7 @@ class SignupTests(UserTestCase, SocialTestMixin):
             response = self.github_login()
         test_strings = [
             "Create your MDN account",
-            "choose a username",
+            "Choose a username",
             "Having trouble",
         ]
         for test_string in test_strings:
@@ -130,7 +130,7 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         response = self.github_login()
         assert response.status_code == 200
         content = response.content
-        assert b"Thanks for signing in to MDN with GitHub." in content
+        assert b"You are signing in to MDN with <strong>GitHub</strong>." in content
         assert b"Account Sign In Failure" not in content
 
         parsed = pq(response.content)
