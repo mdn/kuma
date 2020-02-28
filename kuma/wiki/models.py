@@ -13,7 +13,6 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models, transaction
 from django.db.models import signals
-from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
 from django.utils.translation import gettext, gettext_lazy as _
 from taggit.managers import TaggableManager
@@ -79,7 +78,7 @@ def cache_with_field(field_name):
     """
 
     def decorator(fn):
-        @wraps(fn, assigned=available_attrs(fn))
+        @wraps(fn)
         def wrapper(self, *args, **kwargs):
             force_fresh = kwargs.pop("force_fresh", False)
 
