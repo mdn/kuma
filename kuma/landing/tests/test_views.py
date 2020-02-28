@@ -22,6 +22,7 @@ def cleared_cache():
 
 def test_contribute_json(client, db):
     response = client.get(reverse("contribute_json"))
+    response.close()  # Discard response body; prevents an unclosed file warning
     assert response.status_code == 200
     assert_shared_cache_header(response)
     assert response["Content-Type"].startswith("application/json")

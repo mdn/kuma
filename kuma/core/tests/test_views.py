@@ -178,6 +178,8 @@ def test_sitemap(client, settings, sitemaps, db, method):
             "".join([chunk.decode() for chunk in response.streaming_content])
             == sitemaps["index"]
         )
+    else:
+        response.close()  # Discard response body; prevents an unclosed file warning
 
 
 @pytest.mark.parametrize("method", ["post", "put", "delete", "options", "patch"])
@@ -201,6 +203,8 @@ def test_sitemaps(client, settings, sitemaps, db, method):
             "".join([chunk.decode() for chunk in response.streaming_content])
             == sitemaps["locales"]["en-US"]
         )
+    else:
+        response.close()  # Discard response body; prevents an unclosed file warning
 
 
 @pytest.mark.parametrize("method", ["post", "put", "delete", "options", "patch"])
