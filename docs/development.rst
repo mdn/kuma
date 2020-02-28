@@ -517,15 +517,27 @@ not work.
 Enabling ``PYTHONWARNINGS``
 ===========================
 
-By default, ``PYTHONWARNINGS`` is not set, leaving it to be ``default``
-(which is like regular ``python`` on the command line). To change its
-value you can edit your ``.env`` file. For example::
+Python `ignores some warnings`_ by default, including ``DeprecationWarning``.
+To see these warnings, you can set the `PYTHONWARNINGS`_ environment variable
+in your ``.env`` file. For example::
 
-    # Unmask all possible Python warnings
-    PYTHONWARNINGS=all
+    # Show every warning, every time it occurs
+    PYTHONWARNINGS=always
 
-The ``docker-compose.yml`` will read this and start ``gunicorn`` and the
-``celery`` worker with this setting.
+Or alternatively::
+
+    # Show every warning, but ignore repeats
+    PYTHONWARNINGS=default
+
+Note: Explicitly setting ``PYTHONWARNINGS=default`` will not do what you expect.
+It actually *disables* the default filters, ensuring that *every* warning gets
+displayed, but only the first time it occurs on a given line.
+
+See the `PYTHONWARNINGS`_ docs for more information on possible values.
+
+.. _`ignores some warnings`: https://docs.python.org/3/library/warnings.html#default-warning-filter
+.. _`PYTHONWARNINGS`: https://docs.python.org/3/using/cmdline.html#envvar-PYTHONWARNINGS
+
 
 Configuring AWS S3
 ==================
