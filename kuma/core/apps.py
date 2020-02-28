@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 from django.conf import settings
 from django.utils.functional import cached_property
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from kuma.celery import app
 

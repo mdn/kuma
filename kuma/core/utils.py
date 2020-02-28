@@ -15,7 +15,7 @@ from django.shortcuts import _get_queryset, redirect
 from django.utils.cache import patch_cache_control
 from django.utils.encoding import force_text, smart_bytes
 from django.utils.http import urlencode
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from polib import pofile
 from pyquery import PyQuery as pq
 from pytz import timezone

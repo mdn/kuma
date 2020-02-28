@@ -10,7 +10,7 @@ from django.template import defaultfilters
 from django.template.loader import get_template
 from django.utils.encoding import force_text
 from django.utils.html import strip_tags
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django_jinja import library
 from pytz import timezone, utc
 from soapbox.models import Message
