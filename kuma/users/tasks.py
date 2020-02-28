@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.mail import EmailMultiAlternatives, send_mail
 from django.utils import translation
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from kuma.core.decorators import skip_in_maintenance_mode
 from kuma.core.email_utils import render_email

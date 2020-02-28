@@ -29,7 +29,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.encoding import force_text
 from django.utils.http import urlencode, urlsafe_base64_decode
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView

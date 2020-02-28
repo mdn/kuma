@@ -5,7 +5,7 @@ from django.conf import settings
 from django.db import models
 from django.db.utils import IntegrityError
 from django.utils.functional import cached_property
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django_mysql.models import Model as MySQLModel
 from storages.backends.s3boto3 import S3Boto3Storage
 

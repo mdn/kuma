@@ -3,7 +3,7 @@ from django.contrib import admin, messages
 from django.utils.encoding import force_text
 from django.utils.html import format_html
 from django.utils.text import get_text_list
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from kuma.core.admin import DisabledDeleteActionMixin
 from kuma.core.urlresolvers import reverse

@@ -10,7 +10,7 @@ from django.db.models import F
 from django.utils.feedgenerator import Atom1Feed, Rss201rev2Feed, SyndicationFeed
 from django.utils.html import escape
 from django.utils.timezone import get_current_timezone, is_naive
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 from kuma.core.templatetags.jinja_helpers import add_utm
 from kuma.core.urlresolvers import reverse

@@ -1,6 +1,6 @@
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect, render
-from django.utils.translation import ugettext
+from django.utils.translation import gettext
 from django.views.decorators.cache import never_cache
 
 from kuma.core.decorators import (
@@ -59,7 +59,7 @@ def revert_document(request, document_path, revision_id):
                 {
                     "revision": revision,
                     "document": revision.document,
-                    "error": ugettext(
+                    "error": gettext(
                         "Document already exists. Note: You cannot "
                         "revert a document that has been moved until you "
                         "delete its redirect."

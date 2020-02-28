@@ -15,7 +15,7 @@ from django.db import models, transaction
 from django.db.models import signals
 from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils.translation import gettext, gettext_lazy as _
 from taggit.managers import TaggableManager
 from taggit.models import ItemBase, TagBase
 from taggit.utils import edit_string_for_tags, parse_tags
@@ -108,9 +108,7 @@ def valid_slug_parent(slug, locale):
             parent = Document.objects.get(locale=locale, slug=parent_slug)
         except Document.DoesNotExist:
             raise Exception(
-                ugettext(
-                    "Parent %s does not exist." % ("%s/%s" % (locale, parent_slug))
-                )
+                gettext("Parent %s does not exist." % ("%s/%s" % (locale, parent_slug)))
             )
 
     return parent
@@ -1788,7 +1786,7 @@ class Revision(models.Model):
                     old = self.based_on
                     self.based_on = based_on  # Guess a correct value.
                     locale = settings.LOCALES[settings.WIKI_DEFAULT_LANGUAGE].native
-                    error = ugettext(
+                    error = gettext(
                         "A revision must be based on a revision of the "
                         "%(locale)s document. Revision ID %(id)s does "
                         "not fit those criteria."

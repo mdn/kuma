@@ -7,7 +7,7 @@ import bleach
 import html5lib
 import newrelic.agent
 from django.conf import settings
-from django.utils.translation import ugettext
+from django.utils.translation import gettext
 from html5lib.filters.base import Filter as html5lib_Filter
 from lxml import etree
 
@@ -733,7 +733,7 @@ class SectionEditLinkFilter(html5lib_Filter):
                                 "type": "StartTag",
                                 "name": "a",
                                 "data": {
-                                    (None, "title"): ugettext("Edit section"),
+                                    (None, "title"): gettext("Edit section"),
                                     (None, "class"): "edit-section",
                                     (None, "data-section-id"): value,
                                     (None, "data-section-src-url"): order_params(
@@ -772,7 +772,7 @@ class SectionEditLinkFilter(html5lib_Filter):
                                     ),
                                 },
                             },
-                            {"type": "Characters", "data": ugettext("Edit")},
+                            {"type": "Characters", "data": gettext("Edit")},
                             {"type": "EndTag", "name": "a"},
                         )
                         for t in ts:

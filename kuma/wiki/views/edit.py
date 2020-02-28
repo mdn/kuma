@@ -7,7 +7,7 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext
+from django.utils.translation import gettext
 from django.views.decorators.cache import never_cache
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.http import require_http_methods
@@ -122,7 +122,7 @@ def edit(request, document_slug, document_locale):
 
     section_id = request.GET.get("section", None)
     if section_id and not request.is_ajax():
-        return HttpResponse(ugettext("Sections may only be edited inline."))
+        return HttpResponse(gettext("Sections may only be edited inline."))
     disclose_description = bool(request.GET.get("opendescription"))
 
     doc_form = rev_form = None
