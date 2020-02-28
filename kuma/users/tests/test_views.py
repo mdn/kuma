@@ -921,6 +921,9 @@ def test_user_edit_beta(
     form = _get_current_form_field_values(doc)
     form["user-beta"] = True
 
+    # Filter out keys with `None` values
+    form = {k: v for k, v in form.items() if v is not None}
+
     response = user_client.post(url, form)
     assert response.status_code == 302
     assert_no_cache_header(response)
@@ -953,6 +956,9 @@ def test_user_edit_websites(wiki_user, wiki_user_github_account, user_client):
 
     # Fill out the form with websites.
     form.update(dict(("user-%s_url" % k, v) for k, v in test_sites.items()))
+
+    # Filter out keys with `None` values
+    form = {k: v for k, v in form.items() if v is not None}
 
     # Submit the form, verify redirect to user detail
     response = user_client.post(url, form, follow=True)
@@ -1016,6 +1022,8 @@ def test_user_edit_github_is_public(wiki_user, wiki_user_github_account, user_cl
     form = _get_current_form_field_values(pq(response.content))
     assert not form["user-is_github_url_public"]
     form["user-is_github_url_public"] = True
+    # Filter out keys with `None` values
+    form = {k: v for k, v in form.items() if v is not None}
     response = user_client.post(url, form)
     assert response.status_code == 302
     assert_no_cache_header(response)
@@ -1810,8 +1818,6 @@ def test_recover_valid(wiki_user, client):
     assert response.status_code == 302
     assert_no_cache_header(response)
     assert response["Location"].endswith(reverse("users.recover_done"))
-    wiki_user.refresh_from_db()
-    assert not wiki_user.has_usable_password()
 
 
 def test_invalid_token_fails(wiki_user, client):
