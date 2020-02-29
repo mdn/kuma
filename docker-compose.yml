@@ -46,7 +46,7 @@ services:
       # Other environment overrides
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=True
-      - PYTHONWARNINGS=${PYTHONWARNINGS:-default}
+      - PYTHONWARNINGS=${PYTHONWARNINGS:-}
       - MAINTENANCE_MODE=${MAINTENANCE_MODE:-False}
       - REVISION_HASH=${KUMA_REVISION_HASH:-undefined}
       # For the server side rendering server and the code that connects to it.
