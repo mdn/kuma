@@ -50,6 +50,7 @@ from kuma.core.ga_tracking import (
     CATEGORY_SIGNUP_FLOW,
     track_event,
 )
+from kuma.core.utils import urlparams
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import (
     Document,
@@ -820,8 +821,13 @@ def create_stripe_subscription(request):
         raven_client.captureException()
         has_stripe_error = True
 
-    query_params = "?" + urlencode({"has_stripe_error": has_stripe_error})
-    return redirect(reverse("users.user_edit", args=[user.username]) + query_params)
+    return redirect(
+        urlparams(
+            reverse("users.user_edit", args=[user.username]),
+            has_stripe_error=has_stripe_error,
+        )
+        + "#subscription"
+    )
 
 
 recovery_email_sent = TemplateView.as_view(
