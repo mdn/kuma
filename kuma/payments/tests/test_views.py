@@ -17,28 +17,9 @@ def stripe_user(wiki_user):
 
 
 @pytest.mark.django_db
-@mock.patch("kuma.payments.views.enabled", return_value=True)
-def test_payments_view(mock_enabled, client):
-    """The one-time payment page renders."""
-    response = client.get(reverse("payments"), HTTP_HOST=settings.WIKI_HOST)
-    assert_no_cache_header(response)
-    assert response.status_code == 200
-
-
-@pytest.mark.django_db
-@mock.patch("kuma.payments.views.enabled", return_value=True)
-def test_payment_terms_view(mock_enabled, client):
-    """The payment terms page renders."""
-    response = client.get(reverse("payment_terms"), HTTP_HOST=settings.WIKI_HOST)
-    assert_no_cache_header(response)
-    assert response.status_code == 200
-
-
-@pytest.mark.django_db
 @override_flag("subscription", True)
-@mock.patch("kuma.payments.views.enabled", return_value=True)
 @mock.patch("kuma.payments.views.get_stripe_customer_data", return_value=True)
-def test_recurring_payment_management_no_customer_id(enabled_, get, user_client):
+def test_recurring_payment_management_no_customer_id(get, user_client):
     """The recurring payments page shows there are no active subscriptions."""
     response = user_client.get(
         reverse("recurring_payment_management"), HTTP_HOST=settings.WIKI_HOST
@@ -55,7 +36,6 @@ def test_recurring_payment_management_no_customer_id(enabled_, get, user_client)
 
 @pytest.mark.django_db
 @override_flag("subscription", True)
-@mock.patch("kuma.payments.views.enabled", return_value=True)
 @mock.patch(
     "kuma.payments.views.get_stripe_customer_data",
     side_effect=stripe.error.InvalidRequestError(
@@ -65,9 +45,7 @@ def test_recurring_payment_management_no_customer_id(enabled_, get, user_client)
         http_status=404,
     ),
 )
-def test_recurring_payment_management_api_failure(
-    enabled_, get, stripe_user, user_client
-):
+def test_recurring_payment_management_api_failure(get, stripe_user, user_client):
     """The page shows no active subscriptions if ID is unknown."""
     response = user_client.get(
         reverse("recurring_payment_management"), HTTP_HOST=settings.WIKI_HOST
@@ -84,7 +62,6 @@ def test_recurring_payment_management_api_failure(
 
 @pytest.mark.django_db
 @override_flag("subscription", True)
-@mock.patch("kuma.payments.views.enabled", return_value=True)
 @mock.patch(
     "kuma.payments.views.get_stripe_customer_data",
     return_value={
@@ -93,9 +70,7 @@ def test_recurring_payment_management_api_failure(
         "active_subscriptions": True,
     },
 )
-def test_recurring_payment_management_customer_id(
-    enabled_, get, user_client, stripe_user
-):
+def test_recurring_payment_management_customer_id(get, user_client, stripe_user):
     """The recurring payments page shows there are active subscriptions."""
     response = user_client.get(
         reverse("recurring_payment_management"), HTTP_HOST=settings.WIKI_HOST
@@ -173,12 +148,11 @@ def test_recurring_payment_management_cancel_fails(
 
 @pytest.mark.django_db
 @override_flag("subscription", True)
-@mock.patch("kuma.payments.views.enabled", return_value=True)
 @mock.patch(
     "kuma.payments.views.cancel_stripe_customer_subscription", return_value=True
 )
 @mock.patch("kuma.payments.views.get_stripe_customer_data", return_value=True)
-def test_recurring_payment_management_not_logged_in(enabled_, get, cancel_, client):
+def test_recurring_payment_management_not_logged_in(get, cancel_, client):
     """The recurring payments form succeeds with a valid Stripe token."""
     response = client.get(
         reverse("recurring_payment_management"), HTTP_HOST=settings.WIKI_HOST

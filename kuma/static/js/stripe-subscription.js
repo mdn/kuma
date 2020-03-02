@@ -1,6 +1,5 @@
 (function() {
     var stripeConfigElement = document.getElementById('stripe-config');
-    var stripeSection = document.querySelector('.stripe-subscription');
     var stripeForm = document.getElementById('stripe-form');
 
     // This script is loaded for both before and after form submission.

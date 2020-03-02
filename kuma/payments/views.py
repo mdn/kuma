@@ -1,8 +1,6 @@
 import logging
-from functools import wraps
 
 from django.conf import settings
-from django.http import Http404
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 from stripe.error import StripeError
