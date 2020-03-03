@@ -66,7 +66,10 @@ export default function Router({
         params: ?RouteParams,
         // Data fetched asynchronously by the Route.fetch() function.
         // This value will be passed to the component as the data prop.
-        data: ?RouteData
+        data: ?RouteData,
+        // The loading status of the page. Defaults to 'true' until
+        // Route.fetch() resolves.
+        isLoading: Boolean
     };
 
     // Router state: this is the data we'll use below to render the page
@@ -75,7 +78,8 @@ export default function Router({
         route: null,
         component: null,
         params: null,
-        data: null
+        data: null,
+        isLoading: true
     });
 
     // We also need to access the current page state from our event
@@ -151,7 +155,9 @@ export default function Router({
         <>
             <div
                 className={
-                    loading ? 'loading-bar loading-animation' : 'loading-bar'
+                    pageState.isLoading
+                        ? 'loading-bar loading-animation'
+                        : 'loading-bar'
                 }
             />
             {pageState.component && (
@@ -227,7 +233,8 @@ export default function Router({
                 route: route,
                 component: route.getComponent(),
                 params: match,
-                data: null
+                data: null,
+                isLoading: true
             };
 
             // If we were called with initial data, then we already
@@ -236,6 +243,7 @@ export default function Router({
             // rerender.  And in this case we're done.
             if (data) {
                 newPageState.data = data;
+                newPageState.isLoading = false;
                 setPageState(newPageState);
                 return true;
             }
@@ -267,7 +275,7 @@ export default function Router({
 
             // In either case, we want to trigger the loading animation,
             // so we set that state variable now, too.
-            setLoading(true);
+            // setLoading(true);
 
             // Make a note of the time that we're starting this fetch
             // This should be within a millisecond of when the user
@@ -279,6 +287,7 @@ export default function Router({
             route
                 .fetch(match)
                 .then(data => {
+                    console.log('FETCH IS DONE', data);
                     // When the data arrives:
                     // 1) Note how much time passed since navigateStart()
                     navigateFetchComplete();
@@ -305,6 +314,7 @@ export default function Router({
                     // 4: call setPageState() to cause the Router to
                     //    rerender and display the new page.
                     newPageState.data = data;
+                    newPageState.isLoading = false;
                     setPageState(newPageState);
 
                     // 5: When the page has finished rendering, the

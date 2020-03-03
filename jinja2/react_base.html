@@ -104,33 +104,35 @@
 
   {%- block contrib_popup %}{# Inject contributions popup where needed #}{% endblock %}
 
-  <!-- Footer -->
-  <footer id="nav-footer" class="nav-footer">
-    <div class="center">
-        {% include "includes/footer/mdn-footer.html" %}
+  {% block footer %}
+    <!-- Footer -->
+    <footer id="nav-footer" class="nav-footer">
+      <div class="center">
+          {% include "includes/footer/mdn-footer.html" %}
 
-        {% include "includes/footer/moz-footer.html" %}
+          {% include "includes/footer/moz-footer.html" %}
 
-        {% block lang_switcher %}
-          {% include "includes/lang_switcher.html" %}
-        {% endblock %}
+          {% block lang_switcher %}
+            {% include "includes/lang_switcher.html" %}
+          {% endblock %}
 
-        {% block footer_copyright %}
-          <ul class="footer-tos">
-            <li><a href="https://www.mozilla.org/about/legal/terms/mozilla">{{ _('Terms') }}</a></li>
-            <li><a href="https://www.mozilla.org/privacy/websites/">{{ _('Privacy') }}</a></li>
-            <li><a href="https://www.mozilla.org/privacy/websites/#cookies">{{ _('Cookies') }}</a></li>
-          </ul>
+          {% block footer_copyright %}
+            <ul class="footer-tos">
+              <li><a href="https://www.mozilla.org/about/legal/terms/mozilla">{{ _('Terms') }}</a></li>
+              <li><a href="https://www.mozilla.org/privacy/websites/">{{ _('Privacy') }}</a></li>
+              <li><a href="https://www.mozilla.org/privacy/websites/#cookies">{{ _('Cookies') }}</a></li>
+            </ul>
 
-          <div id="license" class="contentinfo">
-            {% trans copyright_url='/en-US/docs/MDN/About#Copyrights_and_licenses', thisyear=thisyear() %}
-              <p>&copy; 2005-{{ thisyear }} Mozilla and individual contributors.</p>
-              <p>Content is available under <a href="{{ copyright_url }}">these licenses</a>.</p>
-            {% endtrans %}
-          </div>
-        {% endblock %}
-    </div>
-  </footer>
+            <div id="license" class="contentinfo">
+              {% trans copyright_url='/en-US/docs/MDN/About#Copyrights_and_licenses', thisyear=thisyear() %}
+                <p>&copy; 2005-{{ thisyear }} Mozilla and individual contributors.</p>
+                <p>Content is available under <a href="{{ copyright_url }}">these licenses</a>.</p>
+              {% endtrans %}
+            </div>
+          {% endblock %}
+      </div>
+    </footer>
+  {% endblock %}
 
   {% block auth_modal %}
     {% if settings.MULTI_AUTH_ENABLED %}
