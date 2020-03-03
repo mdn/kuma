@@ -51,26 +51,26 @@ jobs:
           script:
             - set -e
             # Build and boot containers
-            - VERSION=latest make build-base
-            - VERSION=latest make build-kuma
-            - docker-compose up -d
+            - VERSION=latest make build-base  # 5:17
+            - VERSION=latest make build-kuma  # 0:58
+            - docker-compose up -d # 0:52
             # Ensure services are ready
-            - docker-compose run --rm -T web urlwait mysql://root:kuma@mysql:3306/developer_mozilla_org 30
-            - docker-compose run --rm -T web urlwait http://elasticsearch:9200 30
+            - docker-compose exec -T web urlwait mysql://root:kuma@mysql:3306/developer_mozilla_org 30 # 0:12
+            - docker-compose exec -T web urlwait http://elasticsearch:9200 30 # 0:10
             # Build assets
-            - docker-compose exec -T web make clean
-            - docker-compose exec -T web make localecompile
-            - docker-compose exec -T web make build-static
+            - docker-compose exec -T web make clean # 0:01
+            - docker-compose exec -T web make localecompile # 0:02
+            - docker-compose exec -T web make build-static # 0:47
             # Django setup
-            - docker-compose exec -T web ./manage.py migrate
-            - docker-compose exec -T web ./manage.py makemigrations --check --dry-run
+            - docker-compose exec -T web ./manage.py migrate # 0:10
+            - docker-compose exec -T web ./manage.py makemigrations --check --dry-run # 0:03
             # Run tests
-            - docker-compose exec -T web make coveragetest
-            - docker-compose exec -T web npm test
+            - docker-compose exec -T web make coveragetest # 3:35
+            - docker-compose exec -T web npm test # 0:07
             # Refresh locales
-            - docker-compose exec -T web make localeextract
-            - docker-compose exec -T web make localetest
-            - docker-compose exec -T web make localecompile
-            - git -C locale diff -G "^msgid " templates/LC_MESSAGES
+            - docker-compose exec -T web make localeextract # 0:15
+            - docker-compose exec -T web make localetest # 0:05
+            - docker-compose exec -T web make localecompile # 0:02, redundant with above?
+            - git -C locale diff -G "^msgid " templates/LC_MESSAGES # 0:01
             # Upload coverage
-            - bash <(curl -s https://codecov.io/bash)
+            - bash <(curl -s https://codecov.io/bash) # 0:02
