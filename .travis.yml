@@ -54,13 +54,13 @@ jobs:
             - VERSION=latest make build-base  # 5:17
             - VERSION=latest make build-kuma  # 0:58
             - docker-compose up -d # 0:52
-            # Ensure services are ready
-            - docker-compose exec -T web urlwait mysql://root:kuma@mysql:3306/developer_mozilla_org 30 # 0:12
-            - docker-compose exec -T web urlwait http://elasticsearch:9200 30 # 0:10
             # Build assets
             - docker-compose exec -T web make clean # 0:01
             - docker-compose exec -T web make localecompile # 0:02
             - docker-compose exec -T web make build-static # 0:47
+            # Ensure services are ready
+            - docker-compose run --rm -T web urlwait mysql://root:kuma@mysql:3306/developer_mozilla_org 30 # 0:12
+            - docker-compose run --rm -T web urlwait http://elasticsearch:9200 30 # 0:10
             # Django setup
             - docker-compose exec -T web ./manage.py migrate # 0:10
             - docker-compose exec -T web ./manage.py makemigrations --check --dry-run # 0:03
