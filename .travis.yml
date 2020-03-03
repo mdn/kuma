@@ -43,7 +43,6 @@ jobs:
           git: { submodules: true }
           env:
             UID=0
-            DOCKER_COMPOSE_VERSION=1.23.2
           cache:
             directories:
               - downloads
@@ -51,7 +50,27 @@ jobs:
               - static
           script:
             - set -e
-            - scripts/ci-python
-            - scripts/ci-jest
-            - scripts/ci-localerefresh
+            # Build and boot containers
+            - VERSION=latest make build-base
+            - VERSION=latest make build-kuma
+            - docker-compose up -d
+            # Ensure services are ready
+            - docker-compose run --rm -T web urlwait mysql://root:kuma@mysql:3306/developer_mozilla_org 30
+            - docker-compose run --rm -T web urlwait http://elasticsearch:9200 30
+            # Build assets
+            - docker-compose exec -T web make clean
+            - docker-compose exec -T web make localecompile
+            - docker-compose exec -T web make build-static
+            # Django setup
+            - docker-compose exec -T web ./manage.py migrate
+            - docker-compose exec -T web ./manage.py makemigrations --check --dry-run
+            # Run tests
+            - docker-compose exec -T web make coveragetest
+            - docker-compose exec -T web npm test
+            # Refresh locales
+            - docker-compose exec -T web make localeextract
+            - docker-compose exec -T web make localetest
+            - docker-compose exec -T web make localecompile
+            - git -C locale diff -G "^msgid " templates/LC_MESSAGES
+            # Upload coverage
             - bash <(curl -s https://codecov.io/bash)
