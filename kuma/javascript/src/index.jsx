@@ -57,7 +57,7 @@ if (container) {
             // to handle it as a special case here.
             app = <SignupFlow />;
             break;
-        case 'default':
+        default:
             throw new Error(
                 `Cannot render or hydrate unknown component: ${componentName}`
             );
