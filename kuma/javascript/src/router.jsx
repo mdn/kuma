@@ -73,7 +73,6 @@ export default function Router({
     };
 
     // Router state: this is the data we'll use below to render the page
-    //
     let [pageState: PageState, setPageState] = useState({
         url: null,
         route: null,
