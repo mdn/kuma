@@ -18,6 +18,7 @@ export default function PaymentsLandingPage() {
             <UserProvider>
                 <A11yNav />
                 <Header />
+                <h1>Payments landing page</h1>
                 <Footer />
             </UserProvider>
         </>
