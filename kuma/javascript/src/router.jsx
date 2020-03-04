@@ -67,12 +67,13 @@ export default function Router({
         // Data fetched asynchronously by the Route.fetch() function.
         // This value will be passed to the component as the data prop.
         data: ?RouteData,
-        // The loading status of the page. Defaults to 'true' until
-        // Route.fetch() resolves.
-        isLoading: Boolean
+        // The loading state of the page. Defaults to `true`, as it should
+        // always appear until the component finishes rendering
+        isLoading: ?Boolean
     };
 
     // Router state: this is the data we'll use below to render the page
+    //
     let [pageState: PageState, setPageState] = useState({
         url: null,
         route: null,
@@ -236,7 +237,6 @@ export default function Router({
                 data: null,
                 isLoading: true
             };
-
             // If we were called with initial data, then we already
             // have all the pageState we need and can just call
             // setPageState() right away to cause the component to
@@ -273,10 +273,6 @@ export default function Router({
                 setPageState({ ...newPageState });
             }
 
-            // In either case, we want to trigger the loading animation,
-            // so we set that state variable now, too.
-            // setLoading(true);
-
             // Make a note of the time that we're starting this fetch
             // This should be within a millisecond of when the user
             // clicked on the link.
@@ -287,7 +283,6 @@ export default function Router({
             route
                 .fetch(match)
                 .then(data => {
-                    console.log('FETCH IS DONE', data);
                     // When the data arrives:
                     // 1) Note how much time passed since navigateStart()
                     navigateFetchComplete();
@@ -312,15 +307,15 @@ export default function Router({
                     }
 
                     // 4: call setPageState() to cause the Router to
-                    //    rerender and display the new page.
+                    //    rerender, display the new page, and remove
+                    //    the loading animation.
                     newPageState.data = data;
                     newPageState.isLoading = false;
                     setPageState(newPageState);
-
                     // 5: When the page has finished rendering, the
-                    //    stopLoading() and recordAndReportAnalytics()
-                    //    effect functions below will be invoked to
-                    //    finish up the client-side navigation process.
+                    //    recordAndReportAnalytics() effect function
+                    //    below will be invoked to finish up the
+                    //    client-side navigation process.
                 })
                 .catch(e => {
                     // If anything went wrong (such as a 404 when
