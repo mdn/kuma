@@ -55,7 +55,7 @@ import * as React from 'react';
 import { useContext, useMemo, useState } from 'react';
 
 import CloseIcon from './icons/close.svg';
-import { gettext } from './l10n.js';
+import { gettext, Interpolated } from './l10n.js';
 import UserProvider from './user-provider.jsx';
 
 // Set a localStorage key with a timestamp the specified number of
@@ -114,34 +114,42 @@ export type BannerProps = {
     // name of the waffle flag that controls the banner, and is also
     // used as part of a localStorage key.
     id: string,
+    // class name used on main banner container. Exclusively used
+    // for styling purposes.
+    classname: string,
     // The banner title. e.g. "MDN Survey"
     title: string,
     // The banner description. e.g. "Help us understand the top 10 needs..."
-    copy: string,
+    // Could also be a React Element such as that returned by `<Interpolated />`
+    copy: Object | string,
     // The call to action button text. e.g. "Take the survey"
     cta: string,
     // The URL of the page to open when the button is clicked
     url: string,
+    // An optional property. If present, it should be set to true to indicate
+    // that this banner is to be shown to authenticated users only
+    authenticated?: boolean,
     // An optional property. If present, it specifies the number of days
     // for which a dismissed banner will not be shown. If omitted, the
     // default is 5 days.
-    embargoDays?: number
+    embargoDays?: number,
+    // An optional property. If present, it should be set to true to indicate
+    // that the main cta link should open in a new window
+    newWindow?: boolean
 };
 
 function Banner(props: BannerProps) {
     const [isDismissed, setDismissed] = useState(false);
+    const containerClassNames = `${props.classname} mdn-cta-container cta-background-linear`;
 
     if (isDismissed) {
         return null;
     }
 
     return (
-        <div className="mdn-cta-container">
-            <div
-                id="mdn-cta-content"
-                className="mdn-cta-content cta-background-linear"
-            >
-                <div id="developer-needs" className="mdn-cta-content-container">
+        <div className={containerClassNames}>
+            <div id="mdn-cta-content" className="mdn-cta-content">
+                <div id={props.id} className="mdn-cta-content-container">
                     <h2 className="mdn-cta-title slab-text">{props.title}</h2>
                     <p className="mdn-cta-copy">{props.copy}</p>
                 </div>
@@ -149,8 +157,10 @@ function Banner(props: BannerProps) {
                     <a
                         href={props.url}
                         className="mdn-cta-button"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        {...(props.newWindow && {
+                            target: '_blank',
+                            rel: 'noopener noreferrer'
+                        })}
                     >
                         {props.cta}
                     </a>
@@ -177,6 +187,8 @@ function Banner(props: BannerProps) {
 type BannersProps = { banners?: Array<BannerProps> };
 
 export default function Banners(props: BannersProps) {
+    const userData = useContext(UserProvider.context);
+
     // This is the data structure that defines the default list of banners
     // that we need to consider displaying. To change the set of banners
     // displayed on MDN pages, just edit this data structure.
@@ -189,19 +201,38 @@ export default function Banners(props: BannersProps) {
         () => [
             {
                 id: 'developer_needs',
+                classname: 'developer-needs',
                 title: gettext('MDN Survey'),
                 copy: gettext(
                     'Help us understand the top 10 needs of Web developers and designers.'
                 ),
                 cta: gettext('Take the survey'),
                 url:
-                    'https://qsurvey.mozilla.com/s3/Developer-Needs-Assessment-2019'
+                    'https://qsurvey.mozilla.com/s3/Developer-Needs-Assessment-2019',
+                newWindow: true
+            },
+            {
+                id: 'mdn_subscriptions',
+                classname: 'mdn-subscriptions',
+                title: gettext('Become a monthly supporter'),
+                copy: (
+                    <Interpolated
+                        id={gettext(
+                            'Support MDN with a $5 monthly subscription <learnMore/>.'
+                        )}
+                        learnMore={
+                            <a href="payments/">{gettext('Learn more')}</a>
+                        }
+                    />
+                ),
+                cta: gettext('Subscribe'),
+                url: '',
+                embargoDays: 7,
+                authenticated: true
             }
         ],
         [] // This tells useMemo() to only compute this once.
     );
-
-    const userData = useContext(UserProvider.context);
 
     // If we have user data the loop through the specified banners
     // to see if we can find one that is enabled by waffle
@@ -211,6 +242,18 @@ export default function Banners(props: BannersProps) {
         let bannersList = props.banners || defaultBanners;
         for (const banner of bannersList) {
             if (userData.waffle.flags[banner.id]) {
+                // if this banner is to be shown to authenticated users only,
+                // and the current user is not authenticated, return `null`
+                if (banner.authenticated && !userData.isAuthenticated) {
+                    return null;
+                }
+
+                // special case for the subscriptions banner as we need access
+                // to the username as it forms part of the `url`
+                if (banner.id === 'mdn_subscriptions' && userData.username) {
+                    banner.url = `profiles/${userData.username}/edit#stripe-form`;
+                }
+
                 if (!isEmbargoed(banner.id)) {
                     return <Banner {...banner} />;
                 }

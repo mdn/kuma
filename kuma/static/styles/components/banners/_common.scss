@@ -18,13 +18,11 @@
     }
 
     .mdn-cta-content {
-        padding: 20px;
-
         @media #{$mq-small-desktop-and-up} {
             display: flex;
             flex-direction: row;
             justify-content: center;
-            padding: 0;
+            height: 100%;
         }
     }
 
@@ -52,9 +50,7 @@
         position: relative;
 
         @media #{$mq-small-desktop-and-up} {
-            background-color: #f3f7fd;
             margin: 0;
-            padding-top: 40px;
             flex-basis: 50%;
         }
     }

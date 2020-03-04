@@ -1,6 +1,16 @@
-.mdn-cta-container {
+@import '../../includes/vars';
+@import '../../includes/mixins';
+@import 'vars';
+
+.developer-needs {
     .mdn-cta-content {
+        padding-top: 16px;
         box-shadow: 5px 0 9px #c7c7c7;
+        height: 100%;
+
+        @media #{$mq-small-desktop-and-up} {
+            padding-top: 0;
+        }
     }
 
     .mdn-cta-content-container {
@@ -77,6 +87,12 @@
 
         @media #{$mq-large-desktop-and-up} {
             @include set-font-size(21px);
+        }
+    }
+
+    .mdn-cta-button {
+        @media #{$mq-small-desktop-and-up} {
+            margin-top: 35px;
         }
     }
 

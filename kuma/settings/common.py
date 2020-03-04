@@ -672,6 +672,14 @@ PIPELINE_CSS = {
         "source_filenames": ("styles/components/banners/base.scss",),
         "output_filename": "build/styles/banners.css",
     },
+    "banner_developer_needs": {
+        "source_filenames": ("styles/components/banners/developer-needs.scss",),
+        "output_filename": "build/styles/developer-needs.css",
+    },
+    "banner_mdn_subscriptions": {
+        "source_filenames": ("styles/components/banners/mdn-subscriptions.scss",),
+        "output_filename": "build/styles/mdn-subscriptions.css",
+    },
     "home": {
         "source_filenames": ("styles/home.scss",),
         "output_filename": "build/styles/home.css",
