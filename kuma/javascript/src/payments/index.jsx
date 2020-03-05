@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 
-import { gettext } from '../l10n.js';
+import { getLocale, gettext, Interpolated } from '../l10n.js';
 import A11yNav from '../a11y/a11y-nav.jsx';
 import Header from '../header/header.jsx';
 import Footer from '../footer.jsx';
@@ -15,6 +15,20 @@ type PaymentsRouteParams = {
 };
 
 export default function PaymentsLandingPage() {
+    const locale = getLocale();
+    const urls = {
+        annualReport:
+            'https://www.mozilla.org/en-US/foundation/annualreport/2016/',
+        email:
+            'mailto:mdn-support@mozilla.com?Subject=Manage%20monthly%20payment',
+        moco: 'https://www.mozilla.org/foundation/moco/',
+        mozillaFoundation: 'https://www.mozilla.org/foundation/',
+        managePayments: `/${locale}/payments/recurring/management`,
+        stripe: 'https://stripe.com/',
+        taxDeductible: 'https://donate.mozilla.org/faq#item_tax_a',
+        terms: `/${locale}/payments/terms`
+    };
+
     return (
         <>
             <UserProvider>
@@ -61,19 +75,20 @@ export default function PaymentsLandingPage() {
                                 number="2"
                             >
                                 <p>
-                                    {gettext(
-                                        'All payment information goes through payment processor'
-                                    )}{' '}
-                                    <a
-                                        href="https://stripe.com/"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        {gettext('Stripe')}
-                                    </a>
-                                    {gettext(
-                                        ', and a record of your payment will be stored by Mozilla. Mozilla does not receive or store your credit card number.'
-                                    )}
+                                    <Interpolated
+                                        id={gettext(
+                                            'All payment information goes through payment processor <stripeLink />, and a record of your payment will be stored by Mozilla. Mozilla does not receive or store your credit card number.'
+                                        )}
+                                        stripeLink={
+                                            <a
+                                                href={urls.stripe}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                {gettext('Stripe')}
+                                            </a>
+                                        }
+                                    />
                                 </p>
                             </ListItem>
                             <ListItem
@@ -101,25 +116,32 @@ export default function PaymentsLandingPage() {
                                 number="5"
                             >
                                 <p>
-                                    {gettext('The')}{' '}
-                                    <a href="https://www.mozilla.org/foundation/">
-                                        {gettext('Mozilla Foundation')}
-                                    </a>{' '}
-                                    {gettext(
-                                        'and MDN are separate organizations and programs. Donations to the Mozilla Foundation are'
-                                    )}{' '}
-                                    <a href="https://donate.mozilla.org/faq#item_tax_a">
-                                        {gettext('tax-deductible in the U.S.')}
-                                    </a>{' '}
-                                    {gettext(
-                                        'to the fullest extent permitted by law, and go to support Mozilla public and charitable programs in one general fund. MDN is part of'
-                                    )}{' '}
-                                    <a href="https://www.mozilla.org/foundation/moco/">
-                                        Mozilla Corporation
-                                    </a>{' '}
-                                    {gettext(
-                                        'and payments to MDN are not used in Mozilla’s charitable programs but are reinvested into MDN’s content, tools, and platform.'
-                                    )}
+                                    <Interpolated
+                                        id={gettext(
+                                            'The <mozillaLink /> and MDN are separate organizations and programs. Donations to the Mozilla Foundation are <taxLink /> to the fullest extent permitted by law, and go to support Mozilla public and charitable programs in one general fund. MDN is part of <mocoLink /> and payments to MDN are not used in Mozilla’s charitable programs but are reinvested into MDN’s content, tools, and platform.'
+                                        )}
+                                        mozillaLink={
+                                            <a
+                                                href={urls.mozillaFoundation}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                {gettext('Mozilla Foundation')}
+                                            </a>
+                                        }
+                                        taxLink={
+                                            <a href={urls.taxDeductible}>
+                                                {gettext(
+                                                    'tax-deductible in the U.S.'
+                                                )}
+                                            </a>
+                                        }
+                                        mocoLink={
+                                            <a href={urls.moco}>
+                                                {gettext('Mozilla Corporation')}
+                                            </a>
+                                        }
+                                    />
                                 </p>
                             </ListItem>
                             <ListItem
@@ -203,13 +225,18 @@ export default function PaymentsLandingPage() {
                                     )}
                                 </p>
                                 <p>
-                                    {gettext(
-                                        'Separately, the Mozilla Foundation is a not-for-profit, making its money primarily from donations and royalties from Mozilla Corporation. As a not-for-profit, the Mozilla Foundation reports these revenues publicly every trailing year, as in our most recent'
-                                    )}{' '}
-                                    <a href="https://www.mozilla.org/en-US/foundation/annualreport/2016/">
-                                        {gettext('2016 Mozilla Annual Report')}
-                                    </a>
-                                    {gettext('.')}
+                                    <Interpolated
+                                        id={gettext(
+                                            'Separately, the Mozilla Foundation is a not-for-profit, making its money primarily from donations and royalties from Mozilla Corporation. As a not-for-profit, the Mozilla Foundation reports these revenues publicly every trailing year, as in our most recent <annualReportLink />.'
+                                        )}
+                                        annualReportLink={
+                                            <a href={urls.annualReport}>
+                                                {gettext(
+                                                    '2016 Mozilla Annual Report'
+                                                )}
+                                            </a>
+                                        }
+                                    />
                                 </p>
                             </ListItem>
                         </ol>
@@ -224,18 +251,25 @@ export default function PaymentsLandingPage() {
                                 number="11"
                             >
                                 <p>
-                                    {gettext(
-                                        'If you would like to manage your monthly payment, such as changing your card account details or the amount you pay, please cancel your subscription on the'
-                                    )}{' '}
-                                    <a href="#a">
-                                        {gettext(
-                                            'manage monthly subscriptions page'
+                                    <Interpolated
+                                        id={gettext(
+                                            'If you would like to manage your monthly payment, such as changing your card account details or the amount you pay, please cancel your subscription on the <subscriptionsLink /> and sign up again using the new card details. If you have any questions please contact <emailLink />.'
                                         )}
-                                    </a>{' '}
-                                    {gettext(
-                                        'and sign up again using the new card details. If you have any questions please contact'
-                                    )}{' '}
-                                    <a href="#url">EMAIL</a>.
+                                        subscriptionsLink={
+                                            <a href={urls.managePayments}>
+                                                {gettext(
+                                                    'manage monthly subscriptions page'
+                                                )}
+                                            </a>
+                                        }
+                                        emailLink={
+                                            <a href={urls.email}>
+                                                {gettext(
+                                                    'mdn-support@mozilla.com'
+                                                )}
+                                            </a>
+                                        }
+                                    />
                                 </p>
                             </ListItem>
                             <ListItem
@@ -243,17 +277,18 @@ export default function PaymentsLandingPage() {
                                 number="12"
                             >
                                 <p>
-                                    {gettext(
-                                        'If you would like to cancel your monthly payment or apply for a refund, you are free to do so at any point. Please cancel your subscription on the'
-                                    )}{' '}
-                                    <a href="#a">
-                                        {gettext(
-                                            'manage monthly subscriptions page'
+                                    <Interpolated
+                                        id={gettext(
+                                            'If you would like to cancel your monthly payment or apply for a refund, you are free to do so at any point. Please cancel your subscription on the <subscriptionsLink /> . If you choose to cancel, we will not charge your payment card for subsequent months.'
                                         )}
-                                    </a>
-                                    {gettext(
-                                        '. If you choose to cancel, we will not charge your payment card for subsequent months.'
-                                    )}
+                                        subscriptionsLink={
+                                            <a href={urls.managePayments}>
+                                                {gettext(
+                                                    'manage monthly subscriptions page'
+                                                )}
+                                            </a>
+                                        }
+                                    />
                                 </p>
                             </ListItem>
 
@@ -262,9 +297,16 @@ export default function PaymentsLandingPage() {
                                 number="13"
                             >
                                 <p>
-                                    {gettext('Please read our')}{' '}
-                                    <a href="#c">{gettext('payment terms')}</a>{' '}
-                                    {gettext('for more information.')}
+                                    <Interpolated
+                                        id={gettext(
+                                            'Please read our <paymentLink /> for more information.'
+                                        )}
+                                        paymentLink={
+                                            <a href={urls.terms}>
+                                                {gettext('payment terms')}
+                                            </a>
+                                        }
+                                    />
                                 </p>
                             </ListItem>
                             <ListItem

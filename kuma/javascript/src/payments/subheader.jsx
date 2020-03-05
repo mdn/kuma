@@ -11,25 +11,25 @@ type Props = {
     columnWidth?: string
 };
 
-export default function SubHeader({
+const SubHeader = ({
     title,
     subtitle,
     description,
-    columnWidth = 'all',
+    columnWidth = 'all', // number of columns, based on grid system defined in _columns.scss
     children
-}: Props): React.Node {
-    return (
-        <div className="contribution-page-header">
-            <div className="column-container">
-                <div className={`column-${columnWidth}`}>
-                    <h1 className="highlight highlight-spanned">
-                        <span className="highlight-span">{gettext(title)}</span>
-                    </h1>
-                    {subtitle && <h2>{gettext(subtitle)}</h2>}
-                    {description && <p>{gettext(description)}</p>}
-                </div>
-                {children && <>{children}</>}
+}: Props): React.Node => (
+    <div className="contribution-page-header">
+        <div className="column-container">
+            <div className={`column-${columnWidth}`}>
+                <h1 className="highlight highlight-spanned">
+                    <span className="highlight-span">{gettext(title)}</span>
+                </h1>
+                {subtitle && <h2>{gettext(subtitle)}</h2>}
+                {description && <p>{gettext(description)}</p>}
             </div>
+            {children && <>{children}</>}
         </div>
-    );
-}
+    </div>
+);
+
+export default SubHeader;
