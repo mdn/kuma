@@ -57,12 +57,17 @@ jobs:
             - docker images --all
           script:
             - set -e
+            # Build and boot containers
+            - docker-compose up -d # 0:52
             # Gather info
             - id
             - pwd
             - ls -la .
-            # Build and boot containers
-            - docker-compose up -d # 0:52
+            - ls -lna .
+            - docker-compose exec -T web id
+            - docker-compose exec -T web pwd
+            - docker-compose exec -T web ls -la .
+            - docker-compose exec -T web ls -lna .
             # Build assets
             - docker-compose exec -T web make clean # 0:01
             - docker-compose exec -T web make localecompile # 0:02
