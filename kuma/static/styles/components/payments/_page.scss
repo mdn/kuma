@@ -22,6 +22,16 @@
             }
         }
 
+        h1 {
+            @extend %highlight;
+            @include set-font-size($h2-font-size);
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 0;
+        }
+
         @media #{$mq-mobile-and-down} {
             padding: $payment-header-padding-mobile;
         }
@@ -115,6 +125,10 @@
             ul {
                 list-style-type: initial;
                 padding-left: 1em;
+            }
+
+            p:last-of-type {
+                margin-bottom: 0;
             }
 
             .faq-number {

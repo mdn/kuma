@@ -15,7 +15,7 @@ General element over-rides
 ====================================================================== */
 @import '../components/wiki/_elements.scss';
 
-/*
+/*../components/wiki/glossaryLink.css\\nPlease
 Utitlity classes (reused in a variety of contexts)
 ====================================================================== */
 @import '../components/wiki/_document-list.scss';
@@ -30,11 +30,11 @@ Components that may appear on most wiki pages
 @import '../components/wiki/_toc.scss';
 @import '../components/wiki/_topicpage-table.scss';
 @import '../components/wiki/_kserrors.scss';
-@import '../components/wiki/intrinsic';
+@import '../components/wiki/intrinsic.scss';
 @import '../components/wiki/_properties.scss';
 @import '../components/wiki/_spec.scss';
 @import '../components/wiki/_indicators.scss';
-@import '../components/wiki/glossaryLink';
+@import '../components/wiki/glossaryLink.scss';
 @import '../components/wiki/_interactive.scss';
 
 @import './components/_dropdown.scss';
