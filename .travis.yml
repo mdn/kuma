@@ -35,7 +35,7 @@ jobs:
           script:
             - docker build -f docker/images/kuma_base/Dockerfile -t mdnwebdocs/kuma_base:latest .
           before_cache:
-            - docker save -o $HOME/docker/images.tar $(docker images -a -q)
+            - docker save -o $HOME/docker/images.tar $(docker images -a -q) mdnwebdocs/kuma_base:latest
         - stage: "Test"
           name: "Documentation Build"
           language: python
