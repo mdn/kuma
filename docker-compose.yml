@@ -1,7 +1,7 @@
 version: '2.1'
 services:
   worker: &worker
-    image: mdnwebdocs/kuma_base
+    image: mdnwebdocs/kuma_base:latest
     command: ./scripts/start-worker
     user: ${UID:-1000}
     volumes:
