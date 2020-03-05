@@ -37,9 +37,9 @@ export default function PaymentsLandingPage() {
                             alt=""
                             role="presentation"
                         />
-                        <div className="index">
+                        <header>
                             <h2>{gettext('FAQs')}</h2>
-                        </div>
+                        </header>
                         <ol id="contribute-faqs" className="faqs clear">
                             <ListItem
                                 title="Why is MDN asking me for money?"
@@ -215,9 +215,9 @@ export default function PaymentsLandingPage() {
                         </ol>
                     </section>
                     <section className="section">
-                        <div className="index">
+                        <header>
                             <h2>{gettext('Monthly payments')}</h2>
-                        </div>
+                        </header>
                         <ol id="contribute-monthly-faqs" className="faqs clear">
                             <ListItem
                                 title="How do I manage my monthly payment?"
