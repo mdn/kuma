@@ -15,7 +15,6 @@ export default function Footer() {
                 <a href={`/${locale}/`} className="nav-footer-logo">
                     {gettext('MDN Web Docs')}
                 </a>
-
                 <div className="footer-group footer-group-mdn">
                     <h2 className="footer-title">MDN</h2>
                     <ul className="footer-list">
@@ -101,6 +100,7 @@ export default function Footer() {
                         </a>
                     </li>
                 </ul>
+
                 <div id="license" className="contentinfo">
                     <p>
                         &copy; 2005-{new Date().getFullYear()} Mozilla and
