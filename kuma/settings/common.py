@@ -1692,12 +1692,11 @@ ENABLE_NEWSLETTER_SIGNUP = config("ENABLE_NEWSLETTER_SIGNUP", default=False, cas
 # Affects loading of CSS (statically) and JS (in runtime).
 ENABLE_BCD_SIGNAL = config("ENABLE_BCD_SIGNAL", default=True, cast=bool)
 
-# Enable or disable the multi auth(Google and Github) sign-in flow
-# When disabled, Github will be the default and only Auth provider
-MULTI_AUTH_ENABLED = config("MULTI_AUTH_ENABLED", default=False, cast=bool)
+# Enable the multi-auth (Google and Github) sign-in flow.
+MULTI_AUTH_ENABLED = True
 
 # Auth and permissions related constants
-LOGIN_URL = "socialaccount_signin" if MULTI_AUTH_ENABLED else "account_login"
+LOGIN_URL = "socialaccount_signin"
 LOGIN_REDIRECT_URL = "home"
 
 # Content Experiments
