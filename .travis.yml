@@ -3,7 +3,7 @@ language: minimal
 git: { submodules: false }
 jobs:
     include:
-        - stage: "Lint"
+        - stage: "Lint & Prebuild Docker Image"
           name: "General Lints"
           script:
             - "! git grep -n '^<<<<<<< '"  # Check for Git conflict markers
@@ -28,6 +28,14 @@ jobs:
             - scripts/ci-jslint
             - scripts/ci-flow
 
+        - name: "Build Docker Image"
+          cache:
+            directories:
+              - $HOME/docker
+          script:
+            - docker build -f docker/images/kuma_base/Dockerfile -t mdnwebdocs/kuma_base:latest .
+          before_cache:
+            - docker save -o $HOME/docker/images.tar $(docker images -a -q)
         - stage: "Test"
           name: "Documentation Build"
           language: python
@@ -41,18 +49,14 @@ jobs:
         - name: "Dockerized Tests"
           services: docker
           git: { submodules: true }
-          env:
-            UID=0
           cache:
             directories:
-              - downloads
-              - build
-              - static
+              - $HOME/docker
+          before_install:
+            - docker load -i $HOME/docker/images.tar
           script:
             - set -e
             # Build and boot containers
-            - VERSION=latest make build-base  # 5:17
-            - VERSION=latest make build-kuma  # 0:58
             - docker-compose up -d # 0:52
             # Build assets
             - docker-compose exec -T web make clean # 0:01
