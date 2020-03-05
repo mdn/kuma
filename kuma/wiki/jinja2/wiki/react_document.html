@@ -57,15 +57,7 @@
   <!-- basic favicon -->
   <link rel="shortcut icon" href="{{ favicon_url() }}">
 
-  {% if waffle.switch('developer_needs') %}
-    {% stylesheet 'banners' %}
-    {% stylesheet 'banner_developer_needs' %}
-  {% endif %}
-
-  {% if waffle.flag('mdn_subscriptions') %}
-    {% stylesheet 'banners' %}
-    {% stylesheet 'banner_mdn_subscriptions' %}
-  {% endif %}
+  {% include "wiki/includes/banner-styles.html" %}
 
   <link rel="preconnect" href="https://interactive-examples.mdn.mozilla.net" pr="0.75" />
 

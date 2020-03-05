@@ -8,17 +8,6 @@
 {% block site_css %}
   {{ super() }}
   {% include "landing/includes/style.html" %}
-
-  {% if waffle.switch('developer_needs') %}
-    {% stylesheet 'banners' %}
-    {% stylesheet 'banner_developer_needs' %}
-  {% endif %}
-
-  {% if waffle.flag('mdn_subscriptions') %}
-    {% stylesheet 'banners' %}
-    {% stylesheet 'banner_mdn_subscriptions' %}
-  {% endif %}
-
 {% endblock %}
 
 {% block extrahead %}
