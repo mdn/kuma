@@ -55,8 +55,6 @@
             {% if form.username.errors %}
               {{ form.username.errors }}
               {% include 'socialaccount/includes/change_username.html' %}
-            {% elif matching_user %}
-              {% include 'socialaccount/includes/change_username.html' %}
             {% else %}
               <div id="username-static-container" class="username-static">
                 {% set provider_username = form.username.value() %}
