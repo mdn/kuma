@@ -102,6 +102,7 @@ export default function Router({
     // calling any route.fetch() which means it won't need to be in a loading
     // state.
     const [loading, setLoading] = useState(!initialData);
+
     // Get the Google Analytics reporting function from our provider
     const ga = useContext(GAProvider.context);
 
