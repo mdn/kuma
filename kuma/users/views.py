@@ -5,7 +5,6 @@ import stripe
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
 from allauth.socialaccount import helpers
-from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.views import ConnectionsView
 from allauth.socialaccount.views import SignupView as BaseSignupView
 from constance import config
@@ -17,7 +16,6 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.core.validators import validate_email, ValidationError
 from django.db import IntegrityError, transaction
-from django.db.models import Q
 from django.http import (
     Http404,
     HttpResponseBadRequest,
