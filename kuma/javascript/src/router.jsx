@@ -66,21 +66,16 @@ export default function Router({
         params: ?RouteParams,
         // Data fetched asynchronously by the Route.fetch() function.
         // This value will be passed to the component as the data prop.
-        data: ?RouteData,
-        // The loading state of the page. Defaults to `true`, as it should
-        // always appear until the component finishes rendering
-        isLoading: ?Boolean
+        data: ?RouteData
     };
 
     // Router state: this is the data we'll use below to render the page
-    //
     let [pageState: PageState, setPageState] = useState({
         url: null,
         route: null,
         component: null,
         params: null,
-        data: null,
-        isLoading: true
+        data: null
     });
 
     // We also need to access the current page state from our event
@@ -107,7 +102,6 @@ export default function Router({
     // calling any route.fetch() which means it won't need to be in a loading
     // state.
     const [loading, setLoading] = useState(!initialData);
-
     // Get the Google Analytics reporting function from our provider
     const ga = useContext(GAProvider.context);
 
@@ -156,9 +150,7 @@ export default function Router({
         <>
             <div
                 className={
-                    pageState.isLoading
-                        ? 'loading-bar loading-animation'
-                        : 'loading-bar'
+                    loading ? 'loading-bar loading-animation' : 'loading-bar'
                 }
             />
             {pageState.component && (
@@ -234,16 +226,15 @@ export default function Router({
                 route: route,
                 component: route.getComponent(),
                 params: match,
-                data: null,
-                isLoading: true
+                data: null
             };
+
             // If we were called with initial data, then we already
             // have all the pageState we need and can just call
             // setPageState() right away to cause the component to
             // rerender.  And in this case we're done.
             if (data) {
                 newPageState.data = data;
-                newPageState.isLoading = false;
                 setPageState(newPageState);
                 return true;
             }
@@ -272,6 +263,10 @@ export default function Router({
                 // we'll get a re-render
                 setPageState({ ...newPageState });
             }
+
+            // In either case, we want to trigger the loading animation,
+            // so we set that state variable now, too.
+            setLoading(true);
 
             // Make a note of the time that we're starting this fetch
             // This should be within a millisecond of when the user
@@ -307,15 +302,14 @@ export default function Router({
                     }
 
                     // 4: call setPageState() to cause the Router to
-                    //    rerender, display the new page, and remove
-                    //    the loading animation.
+                    //    rerender and display the new page.
                     newPageState.data = data;
-                    newPageState.isLoading = false;
                     setPageState(newPageState);
+
                     // 5: When the page has finished rendering, the
-                    //    recordAndReportAnalytics() effect function
-                    //    below will be invoked to finish up the
-                    //    client-side navigation process.
+                    //    stopLoading() and recordAndReportAnalytics()
+                    //    effect functions below will be invoked to
+                    //    finish up the client-side navigation process.
                 })
                 .catch(e => {
                     // If anything went wrong (such as a 404 when
