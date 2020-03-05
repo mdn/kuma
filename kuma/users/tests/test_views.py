@@ -1105,19 +1105,6 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         doc = pq(resp.content)
         assert "Account Sign In Failure" in doc.find("h1").text()
 
-    def test_matching_user(self):
-        self.github_login()
-        response = self.client.get(self.signup_url)
-        assert response.status_code == 200
-        assert_no_cache_header(response)
-        assert "matching_user" in response.context
-        assert response.context["matching_user"] is None
-        octocat = user(username="octocat", save=True)
-        response = self.client.get(self.signup_url)
-        assert response.status_code == 200
-        assert_no_cache_header(response)
-        assert response.context["matching_user"] == octocat
-
     def test_email_addresses(self):
         public_email = "octocat-public@example.com"
         private_email = "octocat-private@example.com"

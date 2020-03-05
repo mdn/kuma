@@ -599,31 +599,31 @@ class SignupView(BaseSignupView):
         form = super(SignupView, self).get_form(form_class)
         form.fields["email"].label = _("Email address")
 
-        User = get_user_model()
-
-        # When no username is provided, default to the local-part of the email address
-        if form.initial.get("username", "") == "":
-            email = form.initial.get("email", "")
-            if isinstance(email, tuple):
-                email = email[0]
-            suggested_username = suggested_username_base = email.split("@")[0]
-            increment = 1
-            while User.objects.filter(username__iexact=suggested_username).exists():
-                increment += 1
-                suggested_username = f"{suggested_username_base}{increment}"
-            form.initial["username"] = suggested_username
-
-        self.matching_user = None
-        initial_username = form.initial.get("username", None)
-
-        # For GitHub/Google users, see if we can find matching user by username
+        # We should only see GitHub/Google users.
         assert self.sociallogin.account.provider in ("github", "google")
-        try:
-            self.matching_user = User.objects.get(username=initial_username)
-            # deleting the initial username because we found a matching user
-            del form.initial["username"]
-        except User.DoesNotExist:
-            pass
+
+        initial_username = form.initial.get("username")
+
+        # When no username is provided, try to derive one from the email address.
+        if not initial_username:
+            email = form.initial.get("email")
+            if email:
+                if isinstance(email, tuple):
+                    email = email[0]
+                initial_username = email.split("@")[0]
+
+        if initial_username:
+            # Find a new username if it clashes with an existing username.
+            increment = 1
+            User = get_user_model()
+            initial_username_base = initial_username
+            while User.objects.filter(username__iexact=initial_username).exists():
+                increment += 1
+                initial_username = f"{initial_username_base}{increment}"
+        else:
+            initial_username = ""
+
+        form.initial["username"] = initial_username
 
         email = self.sociallogin.account.extra_data.get("email") or None
         email_data = self.sociallogin.account.extra_data.get("email_addresses") or []
@@ -719,26 +719,10 @@ class SignupView(BaseSignupView):
 
     def get_context_data(self, **kwargs):
         context = super(SignupView, self).get_context_data(**kwargs)
-
-        # For GitHub/Google users, find matching legacy Persona social accounts
-        assert self.sociallogin.account.provider in ("github", "google")
-        uids = Q()
-        for email_address in self.email_addresses.values():
-            if email_address["verified"]:
-                uids |= Q(uid=email_address["email"])
-        if uids:
-            # only persona accounts have emails as UIDs
-            # but adding the provider criteria makes this explicit and future-proof
-            matching_accounts = SocialAccount.objects.filter(uids, provider="persona")
-        else:
-            matching_accounts = SocialAccount.objects.none()
-
         context.update(
             {
                 "default_email": self.default_email,
                 "email_addresses": self.email_addresses,
-                "matching_user": self.matching_user,
-                "matching_accounts": matching_accounts,
             }
         )
         return context
