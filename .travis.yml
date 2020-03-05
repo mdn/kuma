@@ -35,7 +35,7 @@ jobs:
           script:
             - docker build -f docker/images/kuma_base/Dockerfile -t mdnwebdocs/kuma_base:latest .
           before_cache:
-            - docker save $(docker images -a -q) | gzip > $HOME/docker/images.tar.gz
+            - docker save -o $HOME/docker/images.tar $(docker images -a -q)
         - stage: "Test"
           name: "Documentation Build"
           language: python
@@ -53,7 +53,7 @@ jobs:
             directories:
               - $HOME/docker
           before_install:
-            - zcat $HOME/docker/images.tar.gz | docker load
+            - docker load -i $HOME/docker/images.tar
           script:
             - set -e
             # Build and boot containers
