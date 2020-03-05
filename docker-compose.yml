@@ -3,7 +3,7 @@ services:
   worker: &worker
     image: mdnwebdocs/kuma_base:latest
     command: ./scripts/start-worker
-    user: ${UID:-1000}
+    #user: ${UID:-1000}
     volumes:
       - ./:/app:z
     depends_on:

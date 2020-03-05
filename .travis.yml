@@ -57,6 +57,10 @@ jobs:
             - docker images --all
           script:
             - set -e
+            # Gather info
+            - id
+            - pwd
+            - ls -la .
             # Build and boot containers
             - docker-compose up -d # 0:52
             # Build assets
