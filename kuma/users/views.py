@@ -600,7 +600,7 @@ class SignupView(BaseSignupView):
         # We should only see GitHub/Google users.
         assert self.sociallogin.account.provider in ("github", "google")
 
-        initial_username = form.initial.get("username", "")
+        initial_username = form.initial.get("username") or ""
 
         # When no username is provided, try to derive one from the email address.
         if not initial_username:
