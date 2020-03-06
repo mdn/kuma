@@ -95,9 +95,3 @@ ENABLE_BCD_SIGNAL = True
 STRIPE_PUBLIC_KEY = "testing"
 STRIPE_SECRET_KEY = "testing"
 STRIPE_PLAN_ID = "testing"
-
-# (peterbe) All existing tests will now assume this is always the case.
-# The day the *default* is to set MULTI_AUTH_ENABLED=True in settings/common.py
-# this needs to change too! It would also mean having to change a bunch of legacy
-# tests that depend on multi-auth not being enabled.
-MULTI_AUTH_ENABLED = False

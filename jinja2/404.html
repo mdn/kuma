@@ -38,13 +38,9 @@
       {% endif %}
 
       {% if wiki and not untrusted and not user.is_authenticated %}
-        {% if settings.MULTI_AUTH_ENABLED %}
-          {% trans login_url=login_url() %}
-            <p><a href="{{ login_url }}">Sign in</a> to try again.</p>
-          {% endtrans %}
-        {% else %}
-          {% include "socialaccount/snippets/provider_list.html" %}
-        {% endif %}
+        {% trans login_url=login_url() %}
+          <p><a href="{{ login_url }}">Sign in</a> to try again.</p>
+        {% endtrans %}
       {% endif %}
 
     <p class="attrib"><small>{% trans tumbeasts_url='http://theoatmeal.com/comics/state_web_summer#tumblr', oatmeal_url='http://theoatmeal.com' %}

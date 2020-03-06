@@ -17,7 +17,6 @@ from django.core.mail import send_mail
 from django.core.validators import validate_email, ValidationError
 from django.db import IntegrityError, transaction
 from django.http import (
-    Http404,
     HttpResponseBadRequest,
     HttpResponseForbidden,
     HttpResponseRedirect,
@@ -573,8 +572,6 @@ def user_delete(request, username):
 
 
 def signin_landing(request):
-    if not settings.MULTI_AUTH_ENABLED:
-        raise Http404("Multi-auth is not enabled.")
     return render(request, "socialaccount/signup-landing.html")
 
 
@@ -600,7 +597,7 @@ class SignupView(BaseSignupView):
         # We should only see GitHub/Google users.
         assert self.sociallogin.account.provider in ("github", "google")
 
-        initial_username = form.initial.get("username", "")
+        initial_username = form.initial.get("username") or ""
 
         # When no username is provided, try to derive one from the email address.
         if not initial_username:
