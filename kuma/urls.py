@@ -95,7 +95,7 @@ urlpatterns += i18n_patterns(
 )
 urlpatterns += [re_path("users/", include("kuma.users.urls"))]
 urlpatterns += i18n_patterns(
-    re_path(r"^payments/?$", payment_views.index, name="payments")
+    re_path(r"payments/?$", payment_views.index, name="payments")
 )
 urlpatterns += i18n_patterns(
     re_path(
