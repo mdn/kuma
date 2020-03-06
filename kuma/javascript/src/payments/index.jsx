@@ -47,7 +47,7 @@ export default function PaymentsLandingPage() {
                     <header>
                         <h2>{gettext('FAQs')}</h2>
                     </header>
-                    <ol className="faqs clear">
+                    <ol id="contribute-faqs" className="faqs clear">
                         <ListItem
                             title={gettext('Why is MDN asking me for money?')}
                             number="1"
@@ -232,7 +232,7 @@ export default function PaymentsLandingPage() {
                     <header>
                         <h2>{gettext('Monthly payments')}</h2>
                     </header>
-                    <ol className="faqs clear">
+                    <ol id="contribute-monthly-faqs" className="faqs clear">
                         <ListItem
                             title="How do I manage my monthly subscription?"
                             number="11"
