@@ -6,7 +6,10 @@ jobs:
         - stage: "Lint & Prebuild Docker Image"
           name: "General Lints"
           script:
+            - set -e
             - "! git grep -n '^<<<<<<< '"  # Check for Git conflict markers
+            - false
+            - true
 
         - name: "Python Lints"
           language: python
