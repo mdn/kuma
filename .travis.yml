@@ -7,7 +7,7 @@ jobs:
           name: "General Lints"
           script:
             - "! git grep -n '^<<<<<<< '"  # Check for Git conflict markers
-            - false
+            - false || travis_terminate 1
             - true
 
         - name: "Python Lints"
