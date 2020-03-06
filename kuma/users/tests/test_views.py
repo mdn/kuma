@@ -1036,16 +1036,17 @@ def test_user_edit_github_is_public(wiki_user, wiki_user_github_account, user_cl
 
 @pytest.mark.parametrize("case", ("DOMAIN", "WIKI_HOST"))
 def test_404_logins(db, client, case):
-    """The login buttons should display on the 404 page."""
+    """A login link should display within the body on the wiki 404 page."""
     response = client.get(
         "/something-doesnt-exist", follow=True, HTTP_HOST=getattr(settings, case)
     )
     assert response.status_code == 404
-    providers_shown = pq(response.content).find(".socialaccount-providers")
+    signin_url = reverse("socialaccount_signin")
+    signin_shown = pq(response.content).find(f'#content a[href^="{signin_url}"]')
     if case == "WIKI_HOST":
-        assert providers_shown
+        assert signin_shown
     else:
-        assert not providers_shown
+        assert not signin_shown
 
 
 @pytest.mark.parametrize("case", ("DOMAIN", "WIKI_HOST"))
@@ -1826,7 +1827,6 @@ def test_invalid_uid_fails(wiki_user, client):
 
 
 def test_signin_landing(db, client, settings):
-    settings.MULTI_AUTH_ENABLED = True
     response = client.get(reverse("socialaccount_signin"))
     github_login_url = "/users/github/login/"
     google_login_url = "/users/google/login/"
@@ -1838,9 +1838,3 @@ def test_signin_landing(db, client, settings):
     # ensure each button links to the appropriate endpoint
     assert doc(".github-auth").attr.href == github_login_url
     assert doc(".google-auth").attr.href == google_login_url
-
-
-def test_signin_landing_multi_auth_disabled(db, client):
-    settings.MULTI_AUTH_ENABLED = False
-    response = client.get(reverse("socialaccount_signin"))
-    assert response.status_code == 404
