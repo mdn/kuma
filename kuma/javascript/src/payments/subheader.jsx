@@ -27,7 +27,7 @@ const SubHeader = ({
                 {subtitle && <h2>{gettext(subtitle)}</h2>}
                 {description && <p>{gettext(description)}</p>}
             </div>
-            {children && <>{children}</>}
+            {children}
         </div>
     </div>
 );
