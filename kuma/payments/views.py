@@ -39,13 +39,6 @@ def index(request):
 @skip_if_disabled
 @ensure_wiki_domain
 @never_cache
-def index(request):
-    return render(request, "payments/index.html")
-
-
-@skip_if_disabled
-@ensure_wiki_domain
-@never_cache
 def contribute(request):
     return render(request, "payments/payments.html")
 

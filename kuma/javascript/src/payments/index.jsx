@@ -354,7 +354,7 @@ export class PaymentsRoute extends Route<PaymentsRouteParams, null> {
     match(url: string): ?PaymentsRouteParams {
         let path = new URL(url, BASEURL).pathname;
 
-        if (path !== `/${this.locale}/payments/`) {
+        if (path !== `/${this.locale}/payments`) {
             return null;
         }
 
