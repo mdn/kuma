@@ -44,12 +44,6 @@ export default function PaymentsLandingPage() {
                 role="main"
             >
                 <section className="section">
-                    <img
-                        src="/static/img/hero-dino-blank.png"
-                        className="backdrop-image"
-                        alt=""
-                        role="presentation"
-                    />
                     <header>
                         <h2>{gettext('FAQs')}</h2>
                     </header>
