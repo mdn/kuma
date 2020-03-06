@@ -18,9 +18,9 @@ export default function PaymentsLandingPage() {
     const locale = getLocale();
     const urls = {
         annualReport:
-            'https://www.mozilla.org/en-US/foundation/annualreport/2016/',
+            'https://www.mozilla.org/en-US/foundation/annualreport/2019/',
         email:
-            'mailto:mdn-support@mozilla.com?Subject=Manage%20monthly%20payment',
+            'mailto:mdn-support@mozilla.com?Subject=Manage%20monthly%20subscription',
         moco: 'https://www.mozilla.org/foundation/moco/',
         mozillaFoundation: 'https://www.mozilla.org/foundation/',
         managePayments: `/${locale}/payments/recurring/management`,
@@ -56,17 +56,19 @@ export default function PaymentsLandingPage() {
                         </header>
                         <ol id="contribute-faqs" className="faqs clear">
                             <ListItem
-                                title="Why is MDN asking me for money?"
+                                title={gettext(
+                                    'Why is MDN asking me for money?'
+                                )}
                                 number="1"
                             >
                                 <p>
                                     {gettext(
-                                        'MDN is experimenting with seeking direct support from our users in order to accelerate growing and maintaining our content and platform, with assistance from those who use it.'
+                                        'MDN is seeking direct support from our users. We’d like to accelerate our growth and extend the maintenance of MDN’s content and platform, with assistance from those who use it.'
                                     )}
                                 </p>
                                 <p>
                                     {gettext(
-                                        'Our user base has grown exponentially in the last few years (with corresponding costs of maintaining the platform) and we have a large list of improvements we’d like to make. While MDN is currently wholly funded by Mozilla, and has been since its inception, we are looking to create a tighter, healthier loop between our audience (you), our content (written for you), and our supporters (also, you, again) that lets us accelerate those improvements.'
+                                        'Our user base has grown exponentially in the last few years and we have a large list of improvements we’d like to make. While MDN is currently wholly funded by Mozilla, and has been from the beginning, we’d like to create a closer, more collaborative relationship between our audience (that’s you!), our content (written for you and sometimes by you), and our supporters (also, you, again)-- to accelerate those improvements.'
                                     )}
                                 </p>
                             </ListItem>
@@ -97,7 +99,7 @@ export default function PaymentsLandingPage() {
                             >
                                 <p>
                                     {gettext(
-                                        'Mozilla will collect and store your name and email, which will be used to send transactional emails (e.g. receipt). Mozilla will not have access to or store your credit card number.'
+                                        'Mozilla will collect and store your name and email, which will be used to send transactional emails (e.g. receipts and notifications). Mozilla will not have access to or store your credit card number.'
                                     )}
                                 </p>
                             </ListItem>
@@ -112,7 +114,7 @@ export default function PaymentsLandingPage() {
                                 </p>
                             </ListItem>
                             <ListItem
-                                title="If I just donate to the Mozilla Foundation, will that help MDN?"
+                                title="Can I help MDN by donating to the Mozilla Foundation?"
                                 number="5"
                             >
                                 <p>
@@ -160,7 +162,7 @@ export default function PaymentsLandingPage() {
                             >
                                 <p>
                                     {gettext(
-                                        'Currently, Mozilla pays for site operations and overhead (including writers and web developers). MDN user payments will fund accelerating current projects or launching new ones, including:'
+                                        'Currently, Mozilla pays for site operations and overhead (including staff writers and web developers). MDN user payments will fund accelerating current projects or launching new ones, including:'
                                     )}
                                 </p>
                                 <ul>
@@ -232,7 +234,7 @@ export default function PaymentsLandingPage() {
                                         annualReportLink={
                                             <a href={urls.annualReport}>
                                                 {gettext(
-                                                    '2016 Mozilla Annual Report'
+                                                    '2019 Mozilla Annual Report'
                                                 )}
                                             </a>
                                         }
@@ -247,23 +249,27 @@ export default function PaymentsLandingPage() {
                         </header>
                         <ol id="contribute-monthly-faqs" className="faqs clear">
                             <ListItem
-                                title="How do I manage my monthly payment?"
+                                title="How do I manage my monthly subscription?"
                                 number="11"
                             >
                                 <p>
                                     <Interpolated
                                         id={gettext(
-                                            'If you would like to manage your monthly payment, such as changing your card account details or the amount you pay, please cancel your subscription on the <subscriptionsLink /> and sign up again using the new card details. If you have any questions please contact <emailLink />.'
+                                            'If you would like to manage your monthly subscription, such as changing your card account details, you will need to cancel your subscription and sign up again using the new card details. To cancel, go to <subscriptionsLink />, or if you have any questions please contact <emailLink />.'
                                         )}
                                         subscriptionsLink={
                                             <a href={urls.managePayments}>
                                                 {gettext(
-                                                    'manage monthly subscriptions page'
+                                                    'manage monthly subscription page'
                                                 )}
                                             </a>
                                         }
                                         emailLink={
-                                            <a href={urls.email}>
+                                            <a
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                href={urls.email}
+                                            >
                                                 {gettext(
                                                     'mdn-support@mozilla.com'
                                                 )}
@@ -273,19 +279,28 @@ export default function PaymentsLandingPage() {
                                 </p>
                             </ListItem>
                             <ListItem
-                                title="How do I apply for a refund or cancel my payment?"
+                                title="How do I apply for a refund or cancel my subscription?"
                                 number="12"
                             >
                                 <p>
                                     <Interpolated
                                         id={gettext(
-                                            'If you would like to cancel your monthly payment or apply for a refund, you are free to do so at any point. Please cancel your subscription on the <subscriptionsLink /> . If you choose to cancel, we will not charge your payment card for subsequent months.'
+                                            'You can cancel your monthly subscription any time. Please go to <subscriptionsLink /> to cancel your subscription. If you choose to cancel, we will not charge your payment card for subsequent months. For any other questions or inquiries please <emailLink />.'
                                         )}
                                         subscriptionsLink={
                                             <a href={urls.managePayments}>
                                                 {gettext(
-                                                    'manage monthly subscriptions page'
+                                                    'manage monthly subscription page'
                                                 )}
+                                            </a>
+                                        }
+                                        emailLink={
+                                            <a
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                href={urls.email}
+                                            >
+                                                {gettext('contact support')}
                                             </a>
                                         }
                                     />
@@ -310,12 +325,12 @@ export default function PaymentsLandingPage() {
                                 </p>
                             </ListItem>
                             <ListItem
-                                title="Does deleting my MDN account cancel my subscription?"
+                                title="Does deleting my MDN account cancel my monthly subscription?"
                                 number="14"
                             >
                                 <p>
                                     {gettext(
-                                        'When you request to delete your account we will also cancel your subscription and not charge you for subsequent months.'
+                                        'When you request to delete your account we will also cancel your monthly subscription and not charge you for subsequent months.'
                                     )}
                                 </p>
                             </ListItem>
