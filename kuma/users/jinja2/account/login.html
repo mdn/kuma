@@ -36,15 +36,9 @@
       {% endif %}
 
       {% if socialaccount_providers  %}
-        {% if settings.MULTI_AUTH_ENABLED %}
-          {% trans login_url=login_url() %}
-            <p><a href="{{ login_url }}">Sign in</a></p>
-          {% endtrans %}
-        {% else %}
-          {% with process="login" %}
-            {% include "socialaccount/snippets/provider_list.html" %}
-          {% endwith %}
-        {% endif %}
+        {% trans login_url=login_url() %}
+          <p><a href="{{ login_url }}">Sign in</a></p>
+        {% endtrans %}
       {% endif %}
 
     {# hidden form to measure bot submissions from this page #}
