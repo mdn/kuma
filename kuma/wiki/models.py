@@ -652,6 +652,8 @@ class Document(NotificationsMixin, models.Model):
         if self.pk:
             for translation in self.other_translations:
                 revision = translation.current_revision
+                if not revision:
+                    continue
                 if revision.summary:
                     summary = revision.summary
                 else:
