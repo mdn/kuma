@@ -97,8 +97,11 @@ export default function Router({
     // use a property of the component instance and need to use a ref.
     let initialPageLoad = useRef(true);
 
-    // When loading is true we display a loading bar animation
-    const [loading, setLoading] = useState(true);
+    // When loading is true we display a loading bar animation.
+    // If the initialData prop is truthy, we're not going to bother
+    // calling any route.fetch() which means it won't need to be in a loading
+    // state.
+    const [loading, setLoading] = useState(!initialData);
 
     // Get the Google Analytics reporting function from our provider
     const ga = useContext(GAProvider.context);
@@ -115,12 +118,8 @@ export default function Router({
     // useEffect(interceptFormSubmissions, []);
     // useEffect(handleBackAndForwardButtons, []);
 
-    // These are effect functions that are run each time a page is
-    // rendered with new (non-null) data. One effect deals with
-    // analytics and the other stops the loading animation. Both
-    // functions are defined at the bottom of the component.
+    // This effect is run each time the page is rendered with new (non-null) data.
     useEffect(recordAndReportAnalytics, [pageState.data]);
-    useEffect(stopLoading, [pageState.data]);
 
     // When the page is first loaded, and this function is called for
     // the first time, we won't have a route defined in our state. In
@@ -338,6 +337,13 @@ export default function Router({
                     } else {
                         console.error('Error while routing', e);
                     }
+                })
+                .finally(() => {
+                    // Successful or not, the fetch is over. We're definitely
+                    // not loading any more. Also, note that this means it doesn't
+                    // matter if the data fetch worked and was truthy, if it was
+                    // falsy or if an error was thrown.
+                    setLoading(false);
                 });
 
             // Finally, return true to indicate that we found a
@@ -523,18 +529,5 @@ export default function Router({
         // We use 'dimension19' to mean client-side navigate
         ga('set', 'dimension19', 'Yes');
         ga('send', 'pageview');
-    }
-
-    // This is an effect function that runs after a new page (with new
-    // data) is rendered. It stops the loading animation if the data is ready.
-    // If the page is re-rendered with null data, then this effect doesn't
-    // do anything and waits until non-null data arrives.
-    function stopLoading() {
-        let pageState = pageStateRef.current;
-        if (!pageState.data) {
-            return;
-        }
-
-        setLoading(false);
     }
 }
