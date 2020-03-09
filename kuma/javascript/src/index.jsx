@@ -23,13 +23,8 @@ if (container) {
     // Store the string catalog so that l10n.gettext() can do translations
     localize(data.locale, data.stringCatalog, data.pluralFunction);
 
+    // Will throw an error for an unknown componentName.
     let app = <App componentName={componentName} data={data} />;
-
-    if (app === null) {
-        throw new Error(
-            `Cannot render or hydrate unknown component: ${componentName}`
-        );
-    }
 
     /* StrictMode is a tool for highlighting potential problems
        in an application. Like Fragment, StrictMode does not

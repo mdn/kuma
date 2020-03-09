@@ -1,4 +1,3 @@
-//@flow
 import React from 'react';
 import { create } from 'react-test-renderer';
 
@@ -21,12 +20,19 @@ jest.mock('./signup-flow', () => '<signup-flow />');
 jest.mock('./user-account/user-account', () => '<user-account />');
 
 describe('App', () => {
-    test('returs null when the componentName is unknown', () => {
-        let app = create(
-            <App componentName="UNKNOWN_COMPONENT_NAME" data={mockData} />
+    test('throws an Error when the componentName is unknown', () => {
+        const originalError = console.error;
+        console.error = jest.fn();
+
+        expect(() => {
+            create(
+                <App componentName="UNKNOWN_COMPONENT_NAME" data={mockData} />
+            );
+        }).toThrowError(
+            /Cannot render or hydrate unknown component: UNKNOWN_COMPONENT_NAME/
         );
 
-        expect(app.toJSON()).toBe(null);
+        console.error = originalError;
     });
 
     test('renders SinglePageApp when the componentName is SPA', () => {
@@ -51,9 +57,9 @@ describe('App', () => {
     });
 
     it('renders a UserAccount when componentName is user-account', () => {
-      let app = create(<App componentName="user-account" data={mockData} />);
+        let app = create(<App componentName="user-account" data={mockData} />);
 
-      const { root } = app;
-      expect(root.findAllByType(UserAccount).length).toBe(1);
+        const { root } = app;
+        expect(root.findAllByType(UserAccount).length).toBe(1);
     });
 });

@@ -36,11 +36,23 @@ export default function ssr(componentName, data) {
 
     localize(data.locale, data.stringCatalog, pluralFunction);
 
-    let app = <App componentName={componentName} data={data} />;
+    let html = '';
 
-    if (app === null) {
-        console.error('Can not render unknown component name:', componentName);
+    try {
+        html = renderToString(
+            <App componentName={componentName} data={data} />
+        );
+    } catch (error) {
+        if (
+            error.message.indexOf(
+                `Cannot render or hydrate unknown component: ${componentName}`
+            ) === -1
+        ) {
+            throw error;
+        }
+
+        console.error(error.message);
     }
 
-    return { html: renderToString(app), script: stringifySafely(data) };
+    return { html, script: stringifySafely(data) };
 }

@@ -49,6 +49,8 @@ export default function App({ componentName, data }: AppProps) {
             // to handle it as a special case here.
             return <UserAccount />;
         default:
-            return null;
+            throw new Error(
+                `Cannot render or hydrate unknown component: ${componentName}`
+            );
     }
 }
