@@ -211,7 +211,7 @@ export default function Banners(props: BannersProps) {
                 newWindow: true
             },
             {
-                id: 'mdn_subscription',
+                id: 'mdn_subscriptions',
                 classname: 'mdn-subscriptions',
                 title: gettext('Become a monthly supporter'),
                 copy: (
@@ -253,7 +253,7 @@ export default function Banners(props: BannersProps) {
 
                 // special case for the subscriptions banner as we need access
                 // to the username as it forms part of the `url`
-                if (banner.id === 'mdn_subscription' && userData.username) {
+                if (banner.id === 'mdn_subscriptions' && userData.username) {
                     banner.url = `/${locale}/profiles/${userData.username}/edit#subscription`;
                 }
 
