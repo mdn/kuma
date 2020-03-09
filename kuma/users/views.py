@@ -25,7 +25,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.encoding import force_text
-from django.utils.http import urlencode, urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_decode
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_POST
@@ -47,6 +47,7 @@ from kuma.core.ga_tracking import (
     CATEGORY_SIGNUP_FLOW,
     track_event,
 )
+from kuma.core.utils import urlparams
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import (
     Document,
@@ -797,8 +798,13 @@ def create_stripe_subscription(request):
         raven_client.captureException()
         has_stripe_error = True
 
-    query_params = "?" + urlencode({"has_stripe_error": has_stripe_error})
-    return redirect(reverse("users.user_edit", args=[user.username]) + query_params)
+    return redirect(
+        urlparams(
+            reverse("users.user_edit", args=[user.username]),
+            has_stripe_error=has_stripe_error,
+        )
+        + "#subscription"
+    )
 
 
 recovery_email_sent = TemplateView.as_view(

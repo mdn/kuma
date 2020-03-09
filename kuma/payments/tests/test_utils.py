@@ -9,7 +9,7 @@ from kuma.payments.utils import (
 # Subset of data returned for customer
 # https://stripe.com/docs/api/customers/retrieve
 simple_customer_data = {
-    "sources": {"data": [{"card": {"last4": "0019"}}]},
+    "sources": {"data": [{"card": {"last4": "0019"}, "object": "source"}]},
     "subscriptions": {"data": [{"id": "sub_id", "plan": {"amount": 6400}}]},
 }
 

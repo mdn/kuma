@@ -7,18 +7,9 @@ from .constants import CONTRIBUTION_BETA_FLAG, RECURRING_PAYMENT_BETA_FLAG
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-def enabled(request):
-    """Return True if contributions are enabled."""
-    return bool(settings.MDN_CONTRIBUTION)
-
-
 def popup_enabled(request):
     """Returns True if the popup is enabled for the user."""
-    return (
-        enabled(request)
-        and hasattr(request, "user")
-        and flag_is_active(request, CONTRIBUTION_BETA_FLAG)
-    )
+    return hasattr(request, "user") and flag_is_active(request, CONTRIBUTION_BETA_FLAG)
 
 
 def recurring_payment_enabled(request):
@@ -44,9 +35,16 @@ def get_stripe_customer_data(stripe_customer_id):
             customer["subscriptions"]["data"][0]["plan"]["amount"] / 100
         )
     if customer["sources"]["data"]:
-        stripe_data["stripe_card_last4"] = customer["sources"]["data"][0]["card"][
-            "last4"
-        ]
+        source = customer["sources"]["data"][0]
+        if source["object"] == "card":
+            card = source
+        elif source["object"] == "source":
+            card = source["card"]
+        else:
+            raise ValueError(
+                f"unexpected stripe customer source of type {source['object']!r}"
+            )
+        stripe_data["stripe_card_last4"] = card["last4"]
     return stripe_data
 
 
