@@ -126,6 +126,9 @@ export type BannerProps = {
     cta: string,
     // The URL of the page to open when the button is clicked
     url: string,
+    // An optional property. If present, it should be set to true to indicate
+    // that this banner is to be shown to authenticated users only
+    authenticated?: boolean,
     // An optional property. If present, it specifies the number of days
     // for which a dismissed banner will not be shown. If omitted, the
     // default is 5 days.
@@ -208,7 +211,7 @@ export default function Banners(props: BannersProps) {
                 newWindow: true
             },
             {
-                id: 'subscription',
+                id: 'mdn_subscription',
                 classname: 'mdn-subscriptions',
                 title: gettext('Become a monthly supporter'),
                 copy: (
@@ -224,9 +227,10 @@ export default function Banners(props: BannersProps) {
                     />
                 ),
                 cta: gettext('Subscribe'),
-                // The userData context isn't available yet so this gets fixed
-                // when the banner gets used.
+                // The userData context isn't available yet so
+                // this is set when the banner is used.
                 url: '',
+                authenticated: true,
                 embargoDays: 7
             }
         ],
@@ -243,15 +247,13 @@ export default function Banners(props: BannersProps) {
             if (userData.waffle.flags[banner.id]) {
                 // if this banner is to be shown to authenticated users only,
                 // and the current user is not authenticated, return `null`
-                if (!userData.isAuthenticated) {
-                    throw new Error(
-                        'This banner expects and assumes user to be authenticated'
-                    );
+                if (banner.authenticated && !userData.isAuthenticated) {
+                    return null;
                 }
 
                 // special case for the subscriptions banner as we need access
                 // to the username as it forms part of the `url`
-                if (banner.id === 'subscription') {
+                if (banner.id === 'mdn_subscription' && userData.username) {
                     banner.url = `/${locale}/profiles/${userData.username}/edit#subscription`;
                 }
 
