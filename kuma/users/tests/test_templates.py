@@ -65,20 +65,13 @@ class SignupTests(UserTestCase, SocialTestMixin):
 
 
 def test_account_email_page_requires_signin(db, client, settings):
-    # This is the default as per settings/testing.py
-    assert not settings.MULTI_AUTH_ENABLED  # sanity check
-    # But because the default settings.LOGIN_URL gets set statically before
-    # settings/testing.py gets a chance to force MULTI_AUTH_ENABLED=False
-    # the LOGIN_URL will be the wrong behavior.
-    # So force it back.
-    settings.LOGIN_URL = "account_login"
-
     response = client.get(reverse("account_email"))
     assert response.status_code == 302
     assert_no_cache_header(response)
     response = client.get(response["Location"], follow=True)
     assert response.status_code == 200
-    assert b"Please sign in" in response.content
+    assert b"Sign in with Github" in response.content
+    assert b"Sign in with Google" in response.content
 
 
 def test_account_email_page_single_email(user_client):
@@ -165,26 +158,14 @@ class AllauthGitHubTestCase(UserTestCase, SocialTestMixin):
         """When not authenticated, the GitHub login link is present or a
         link to the read-only site's signup landing page."""
         all_docs_url = reverse("wiki.all_documents")
-
-        with self.settings(MULTI_AUTH_ENABLED=False):
-            response = self.client.get(
-                all_docs_url, follow=True, HTTP_HOST=settings.WIKI_HOST
-            )
-            assert response.status_code == 200
-            parsed = pq(response.content)
-            github_link = parsed.find("a.login-link[data-service='GitHub']")[0]
-            github_url = urlparams(reverse("github_login"), next=all_docs_url)
-            assert github_link.attrib["href"] == github_url
-
-        with self.settings(MULTI_AUTH_ENABLED=True):
-            response = self.client.get(
-                all_docs_url, follow=True, HTTP_HOST=settings.WIKI_HOST
-            )
-            assert response.status_code == 200
-            parsed = pq(response.content)
-            link = parsed.find("a.login-link")[0]
-            expect_url = urlparams(reverse("socialaccount_signin"), next=all_docs_url)
-            assert link.attrib["href"] == expect_url
+        response = self.client.get(
+            all_docs_url, follow=True, HTTP_HOST=settings.WIKI_HOST
+        )
+        assert response.status_code == 200
+        parsed = pq(response.content)
+        link = parsed.find("a.login-link")[0]
+        expect_url = urlparams(reverse("socialaccount_signin"), next=all_docs_url)
+        assert link.attrib["href"] == expect_url
 
     def test_signup(self):
         """

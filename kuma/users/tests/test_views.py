@@ -1036,16 +1036,17 @@ def test_user_edit_github_is_public(wiki_user, wiki_user_github_account, user_cl
 
 @pytest.mark.parametrize("case", ("DOMAIN", "WIKI_HOST"))
 def test_404_logins(db, client, case):
-    """The login buttons should display on the 404 page."""
+    """A login link should display within the body on the wiki 404 page."""
     response = client.get(
         "/something-doesnt-exist", follow=True, HTTP_HOST=getattr(settings, case)
     )
     assert response.status_code == 404
-    providers_shown = pq(response.content).find(".socialaccount-providers")
+    signin_url = reverse("socialaccount_signin")
+    signin_shown = pq(response.content).find(f'#content a[href^="{signin_url}"]')
     if case == "WIKI_HOST":
-        assert providers_shown
+        assert signin_shown
     else:
-        assert not providers_shown
+        assert not signin_shown
 
 
 @pytest.mark.parametrize("case", ("DOMAIN", "WIKI_HOST"))
@@ -1104,19 +1105,6 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         assert resp.status_code == 200
         doc = pq(resp.content)
         assert "Account Sign In Failure" in doc.find("h1").text()
-
-    def test_matching_user(self):
-        self.github_login()
-        response = self.client.get(self.signup_url)
-        assert response.status_code == 200
-        assert_no_cache_header(response)
-        assert "matching_user" in response.context
-        assert response.context["matching_user"] is None
-        octocat = user(username="octocat", save=True)
-        response = self.client.get(self.signup_url)
-        assert response.status_code == 200
-        assert_no_cache_header(response)
-        assert response.context["matching_user"] == octocat
 
     def test_email_addresses(self):
         public_email = "octocat-public@example.com"
@@ -1839,7 +1827,6 @@ def test_invalid_uid_fails(wiki_user, client):
 
 
 def test_signin_landing(db, client, settings):
-    settings.MULTI_AUTH_ENABLED = True
     response = client.get(reverse("socialaccount_signin"))
     github_login_url = "/users/github/login/"
     google_login_url = "/users/google/login/"
@@ -1851,9 +1838,3 @@ def test_signin_landing(db, client, settings):
     # ensure each button links to the appropriate endpoint
     assert doc(".github-auth").attr.href == github_login_url
     assert doc(".google-auth").attr.href == google_login_url
-
-
-def test_signin_landing_multi_auth_disabled(db, client):
-    settings.MULTI_AUTH_ENABLED = False
-    response = client.get(reverse("socialaccount_signin"))
-    assert response.status_code == 404

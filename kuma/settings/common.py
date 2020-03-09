@@ -1700,12 +1700,8 @@ ENABLE_NEWSLETTER_SIGNUP = config("ENABLE_NEWSLETTER_SIGNUP", default=False, cas
 # Affects loading of CSS (statically) and JS (in runtime).
 ENABLE_BCD_SIGNAL = config("ENABLE_BCD_SIGNAL", default=True, cast=bool)
 
-# Enable or disable the multi auth(Google and Github) sign-in flow
-# When disabled, Github will be the default and only Auth provider
-MULTI_AUTH_ENABLED = config("MULTI_AUTH_ENABLED", default=False, cast=bool)
-
 # Auth and permissions related constants
-LOGIN_URL = "socialaccount_signin" if MULTI_AUTH_ENABLED else "account_login"
+LOGIN_URL = "socialaccount_signin"
 LOGIN_REDIRECT_URL = "home"
 
 # Content Experiments
@@ -1736,15 +1732,13 @@ STRIPE_PLAN_ID = config("STRIPE_PLAN_ID", default="")
 # Misc Stripe settings
 STRIPE_MAX_NETWORK_RETRIES = config("STRIPE_MAX_NETWORK_RETRIES", default=5, cast=int)
 
-MDN_CONTRIBUTION = config("MDN_CONTRIBUTION", False, cast=bool)
 CONTRIBUTION_SUPPORT_EMAIL = config(
     "CONTRIBUTION_SUPPORT_EMAIL", default="mdn-support@mozilla.com"
 )
-if MDN_CONTRIBUTION:
-    CSP_CONNECT_SRC.append("https://checkout.stripe.com")
-    CSP_FRAME_SRC.append("https://checkout.stripe.com")
-    CSP_IMG_SRC.append("https://*.stripe.com")
-    CSP_SCRIPT_SRC.append("https://checkout.stripe.com")
+CSP_CONNECT_SRC.append("https://checkout.stripe.com")
+CSP_FRAME_SRC.append("https://checkout.stripe.com")
+CSP_IMG_SRC.append("https://*.stripe.com")
+CSP_SCRIPT_SRC.append("https://checkout.stripe.com")
 
 # Settings used for communication with the React server side rendering server
 SSR_URL = config("SSR_URL", default="http://localhost:8002/ssr")

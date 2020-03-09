@@ -5,7 +5,6 @@
 
     if (
         !authModalContainer ||
-        !window.mdn.multiAuthEnabled ||
         !window.mdn.modalDialog.shouldShowModal()
     ) {
         return;

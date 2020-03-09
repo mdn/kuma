@@ -1,50 +1,36 @@
 import logging
-from functools import wraps
 
 from django.conf import settings
-from django.http import Http404
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 from stripe.error import StripeError
+from waffle.decorators import waffle_flag
 
 from kuma.core.decorators import ensure_wiki_domain, login_required
 
 from .utils import (
     cancel_stripe_customer_subscription,
-    enabled,
     get_stripe_customer_data,
 )
 
 log = logging.getLogger("kuma.payments.views")
 
 
-def skip_if_disabled(func):
-    """If contributions are not enabled, then 404."""
-
-    @wraps(func)
-    def wrapped(request, *args, **kwargs):
-        if enabled(request):
-            return func(request, *args, **kwargs)
-        raise Http404
-
-    return wrapped
-
-
-@skip_if_disabled
+@waffle_flag("subscription")
 @ensure_wiki_domain
 @never_cache
 def contribute(request):
     return render(request, "payments/payments.html")
 
 
-@skip_if_disabled
+@waffle_flag("subscription")
 @ensure_wiki_domain
 @never_cache
 def payment_terms(request):
     return render(request, "payments/terms.html")
 
 
-@skip_if_disabled
+@waffle_flag("subscription")
 @ensure_wiki_domain
 @login_required
 @never_cache

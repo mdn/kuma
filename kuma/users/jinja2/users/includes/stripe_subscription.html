@@ -6,7 +6,7 @@
   </style>
 </noscript>
 
-<section class="stripe-subscription">
+<section class="stripe-subscription" id="subscription">
   {% stylesheet 'stripe-subscription' %}
 
   {% if not subscription_info %}
@@ -64,7 +64,10 @@
     </div>
     <hr>
     <p>
-      {{ _('To cancel your subscription, please <a href="%(support_email)s">contact support</a>. <br>If you have questions, please read the <a href="%(terms_url)s">FAQ</a> or you can also contact support.', support_email='mailto:mdn-support@mozilla.com', terms_url=url('recurring_payment_initial')) }}
+      {% trans manage_url=url('recurring_payment_management'), terms_url=url('recurring_payment_initial'), support_email='mailto:' + settings.CONTRIBUTION_SUPPORT_EMAIL -%}
+        To cancel your subscription <a href="{{ manage_url }}">click here</a>. <br>If you have questions, please read
+        the <a href="{{ terms_url }}">FAQ</a> or you can also <a href="{{ support_email }}">contact support</a>.
+      {% endtrans -%}
     </p>
   {% endif %}
   {% javascript "stripe-subscription" %}
