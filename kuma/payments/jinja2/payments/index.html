@@ -1,0 +1,11 @@
+{% extends "react_base.html" %}
+
+{% block pageheader %}
+    {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), None)|safe }}
+{% endblock %}
+
+{% block document_head %}{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block footer %}{% endblock %}

@@ -22,6 +22,16 @@
             }
         }
 
+        h1 {
+            @extend %highlight;
+            @include set-font-size($h2-font-size);
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 0;
+        }
+
         @media #{$mq-mobile-and-down} {
             padding: $payment-header-padding-mobile;
         }
@@ -48,11 +58,16 @@
 }
 
 .contributions-page {
+
+    @media #{$mq-small-desktop-and-up} {
+        background: url('/static/img/hero-dino-blank.png') no-repeat 10% 1%;
+    }
+
     .section {
         display: flex;
         position: relative;
         margin: 0 auto;
-        padding: 56px 18px;
+        padding: 56px 25px;
         max-width: 1160px;
 
         .sub-section {
@@ -72,20 +87,7 @@
         }
     }
 
-    .backdrop-image {
-        display: none;
-
-        @media #{$mq-small-desktop-and-up} {
-            display: block;
-            position: absolute;
-            top: 30px;
-            left: 70px;
-            width: 410px;
-            height: auto;
-        }
-    }
-
-    .index {
+    header {
         flex: 30%;
         z-index: 99;
 
@@ -115,6 +117,10 @@
             ul {
                 list-style-type: initial;
                 padding-left: 1em;
+            }
+
+            p:last-of-type {
+                margin-bottom: 0;
             }
 
             .faq-number {

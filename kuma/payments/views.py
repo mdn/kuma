@@ -17,6 +17,12 @@ log = logging.getLogger("kuma.payments.views")
 
 
 @waffle_flag("subscription")
+@never_cache
+def index(request):
+    return render(request, "payments/index.html")
+
+
+@waffle_flag("subscription")
 @ensure_wiki_domain
 @never_cache
 def contribute(request):

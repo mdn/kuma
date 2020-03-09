@@ -95,9 +95,6 @@ urlpatterns += i18n_patterns(
 )
 urlpatterns += [re_path("users/", include("kuma.users.urls"))]
 urlpatterns += i18n_patterns(
-    re_path(r"^payments/$", payment_views.contribute, name="payments"),
-)
-urlpatterns += i18n_patterns(
     re_path(
         r"^contribute/$",
         ensure_wiki_domain(RedirectView.as_view(url=reverse_lazy("payments"))),
@@ -105,6 +102,9 @@ urlpatterns += i18n_patterns(
     ),
 )
 urlpatterns += i18n_patterns(re_path(r"^payments/", include(payments_lang_urlpatterns)))
+urlpatterns += i18n_patterns(
+    re_path(r"payments$", payment_views.index, name="payments")
+)
 urlpatterns += i18n_patterns(
     re_path("", decorator_include(never_cache, users_lang_urlpatterns))
 )
