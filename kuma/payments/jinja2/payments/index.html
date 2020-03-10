@@ -6,7 +6,7 @@
     <!--
         This page doesn't need to fetch data, so we pass `True`
         as an argument to indicate that we have the data we need, which
-        allows the component to load properly.
+        allows the component render in the server. 
     -->
     {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), True)|safe }}
 {% endblock %}
