@@ -1,9 +1,14 @@
 {% extends "react_base.html" %}
 
-{% block title %}{{ _('Become a monthly supporter') }}{% endblock %}
+{% block title %}{{ page_title(_('Become a monthly supporter')) }}{% endblock %}
 
 {% block document_head %}
-    {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), None)|safe }}
+    <!--
+        This page doesn't need to fetch data, so we pass `True`
+        as an argument to indicate that we have the data we need, which
+        allows the component to load properly.
+    -->
+    {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), True)|safe }}
 {% endblock %}
 
 {% block content %}{% endblock %}
