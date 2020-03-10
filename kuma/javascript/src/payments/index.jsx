@@ -18,7 +18,7 @@ export default function PaymentsLandingPage() {
     const locale = getLocale();
     const urls = {
         annualReport:
-            'https://www.mozilla.org/en-US/foundation/annualreport/2019/',
+            'https://www.mozilla.org/en-US/foundation/annualreport/2018/',
         email:
             'mailto:mdn-support@mozilla.com?Subject=Manage%20monthly%20subscription',
         moco: 'https://www.mozilla.org/foundation/moco/',
@@ -219,7 +219,7 @@ export default function PaymentsLandingPage() {
                                     annualReportLink={
                                         <a href={urls.annualReport}>
                                             {gettext(
-                                                '2019 Mozilla Annual Report'
+                                                '2018 Mozilla Annual Report'
                                             )}
                                         </a>
                                     }
