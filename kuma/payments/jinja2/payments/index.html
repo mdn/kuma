@@ -1,10 +1,10 @@
 {% extends "react_base.html" %}
 
-{% block pageheader %}
+{% block title %}{{ _('Become a monthly supporter') }}{% endblock %}
+
+{% block document_head %}
     {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), None)|safe }}
 {% endblock %}
-
-{% block document_head %}{% endblock %}
 
 {% block content %}{% endblock %}
 
