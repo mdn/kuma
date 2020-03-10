@@ -3,11 +3,11 @@
 {% block title %}{{ page_title(_('Become a monthly supporter')) }}{% endblock %}
 
 {% block document_head %}
-    <!--
+   {#
         This page doesn't need to fetch data, so we pass `True`
         as an argument to indicate that we have the data we need, which
-        allows the component render in the server. 
-    -->
+        allows the component to render in the server.
+    #}
     {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), True)|safe }}
 {% endblock %}
 
