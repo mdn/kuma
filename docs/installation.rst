@@ -309,6 +309,13 @@ Enable Stripe payments (optional)
 If you're using Stripe in testing mode you can also get test numbers from this site:
 https://stripe.com/docs/testing#cards
 
+Testing Stripe's hooks locally requires setting up a tunneling service, like ngrok (https://ngrok.com).
+After kuma has started you will have a webhook configured in stripe.
+You can view it on Stripe's dashboard: https://dashboard.stripe.com/test/webhooks
+After starting the tunneling service, edit the webhook inside of the dashboard to use your
+tunnel hostname instead of your local hostname. For ngrok it might look something like this:
+https://203ebfab.ngrok.io/en-US/stripe_payment_succeeded_hook
+
 
 Interact with the Docker containers
 ===================================
