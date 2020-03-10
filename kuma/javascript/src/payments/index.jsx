@@ -362,6 +362,6 @@ export class PaymentsRoute extends Route<PaymentsRouteParams, null> {
     }
 
     getTitle() {
-        return `${gettext('Contribute')} | MDN`;
+        return `${gettext('Become a monthly supporter')} | MDN`;
     }
 }
