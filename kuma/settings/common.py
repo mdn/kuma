@@ -1685,9 +1685,6 @@ FOUNDATION_CALLOUT = config("FOUNDATION_CALLOUT", False, cast=bool)
 NEWSLETTER = True
 NEWSLETTER_ARTICLE = True
 
-# Newsletter Signup Settings
-ENABLE_NEWSLETTER_SIGNUP = config("ENABLE_NEWSLETTER_SIGNUP", default=False, cast=bool)
-
 # Whether or not to enable the BCD signalling feature.
 # Affects loading of CSS (statically) and JS (in runtime).
 ENABLE_BCD_SIGNAL = config("ENABLE_BCD_SIGNAL", default=True, cast=bool)
