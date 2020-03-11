@@ -6,9 +6,11 @@ from django.db import migrations
 
 def create_subscription_banner_flag(apps, schema_editor):
     Flag = apps.get_model("waffle", "Flag")
-    Flag.objects.get_or_create(
-        name="subscription_banner", staff=True, note="Shows the subscription banner"
-    )
+    if not Flag.objects.filter(name="subscription_banner").exists():
+        flag = Flag.objects.create(
+            name="subscription_banner", staff=True, note="Shows the subscription banner"
+        )
+        flag.flush()
 
 
 class Migration(migrations.Migration):
