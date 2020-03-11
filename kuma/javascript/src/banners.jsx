@@ -254,7 +254,7 @@ export default function Banners(props: BannersProps) {
                 // special case for the subscriptions banner as we need access
                 // to the username as it forms part of the `url`
                 if (banner.id === 'subscription_banner' && userData.username) {
-                    banner.url = `/${locale}/profiles/${userData.username}/edit#subscription`;
+                    banner.url = `${window.mdn.wikiSiteUrl}/${locale}/profiles/${userData.username}/edit#subscription`;
                 }
 
                 if (!isEmbargoed(banner.id)) {
