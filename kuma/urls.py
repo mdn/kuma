@@ -14,7 +14,6 @@ from kuma.core.urlresolvers import i18n_patterns
 from kuma.dashboards.urls import lang_urlpatterns as dashboards_lang_urlpatterns
 from kuma.dashboards.views import index as dashboards_index
 from kuma.landing.urls import lang_urlpatterns as landing_lang_urlpatterns
-from kuma.payments import views as payment_views
 from kuma.payments.urls import lang_urlpatterns as payments_lang_urlpatterns
 from kuma.search.urls import (
     lang_base_urlpatterns as search_lang_base_urlpatterns,

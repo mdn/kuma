@@ -4,6 +4,7 @@ import * as React from 'react';
 import { getLocale, gettext, Interpolated } from '../l10n.js';
 import A11yNav from '../a11y/a11y-nav.jsx';
 import Header from '../header/header.jsx';
+import Footer from '../footer.jsx';
 import Route from '../route.js';
 import SubHeader from './subheader.jsx';
 import ListItem from './list-item.jsx';
@@ -318,6 +319,7 @@ export default function PaymentsLandingPage() {
                     </ol>
                 </section>
             </main>
+            <Footer />
         </>
     );
 }
