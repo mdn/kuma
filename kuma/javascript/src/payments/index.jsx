@@ -343,15 +343,16 @@ export class PaymentsRoute extends Route<PaymentsRouteParams, null> {
     }
 
     match(url: string): ?PaymentsRouteParams {
-        let path = new URL(url, BASEURL).pathname;
+        const path = new URL(url, BASEURL).pathname;
+        const paymentsPath = `/${this.locale}/payments`;
+        const regex = new RegExp(paymentsPath, 'g');
 
-        if (path !== `/${this.locale}/payments`) {
-            return null;
+        if (regex.test(path)) {
+            return {
+                locale: this.locale
+            };
         }
-
-        return {
-            locale: this.locale
-        };
+        return null;
     }
 
     fetch() {
