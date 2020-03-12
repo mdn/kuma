@@ -345,11 +345,10 @@ export class PaymentsRoute extends Route<PaymentsRouteParams, null> {
     }
 
     match(url: string): ?PaymentsRouteParams {
-        const path = new URL(url, BASEURL).pathname;
+        const currentPath = new URL(url, BASEURL).pathname;
         const paymentsPath = `/${this.locale}/payments`;
-        const regex = new RegExp(paymentsPath, 'g');
 
-        if (regex.test(path)) {
+        if (currentPath.startsWith(paymentsPath)) {
             return {
                 locale: this.locale
             };
