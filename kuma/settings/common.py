@@ -1807,4 +1807,4 @@ MIGRATION_MODULES = {"soapbox": "kuma.soap_migrations"}
 
 # For local development you might want to set this to a hostname provided to
 # you by a tunneling service such as ngrok.
-WEBHOOK_HOSTNAME = config("WEBHOOK_HOSTNAME", default=None)
+STRIPE_WEBHOOK_HOSTNAME = config("STRIPE_WEBHOOK_HOSTNAME", default=None)

@@ -75,8 +75,8 @@ def retrieve_stripe_subscription_info(user):
 def create_missing_stripe_webhook():
     url_path = reverse("users.stripe_payment_succeeded_hook")
     url = (
-        settings.WEBHOOK_HOSTNAME + url_path
-        if settings.WEBHOOK_HOSTNAME
+        "https://" + settings.STRIPE_WEBHOOK_HOSTNAME + url_path
+        if settings.STRIPE_WEBHOOK_HOSTNAME
         else absolutify(url_path)
     )
     event = "invoice.payment_succeeded"

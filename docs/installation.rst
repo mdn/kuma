@@ -310,7 +310,7 @@ If you're using Stripe in testing mode you can also get test numbers from this s
 https://stripe.com/docs/testing#cards
 
 Testing Stripe's hooks locally requires setting up a tunneling service, like ngrok (https://ngrok.com).
-You should then set ``WEBHOOK_HOSTNAME`` to the hostname you get from your tunneling service, e.g. for
+You should then set ``STRIPE_WEBHOOK_HOSTNAME`` to the hostname you get from your tunneling service, e.g. for
 ngrok it might be https://203ebfab.ngrok.io
 After kuma has started you will have a webhook configured in stripe. You can view it on Stripe's dashboard:
 https://dashboard.stripe.com/test/webhooks
