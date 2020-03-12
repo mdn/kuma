@@ -17,6 +17,7 @@ from django.core.mail import send_mail
 from django.core.validators import validate_email, ValidationError
 from django.db import IntegrityError, transaction
 from django.http import (
+    HttpResponse,
     HttpResponseBadRequest,
     HttpResponseForbidden,
     HttpResponseRedirect,
@@ -28,6 +29,7 @@ from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
 from honeypot.decorators import verify_honeypot_value
@@ -61,10 +63,11 @@ from kuma.wiki.models import (
 from .forms import UserBanForm, UserDeleteForm, UserEditForm, UserRecoveryEmailForm
 from .models import User, UserBan
 from .signup import SignupForm
-from .utils import (
+from .stripe_utils import (
     create_stripe_customer_and_subscription_for_user,
     retrieve_stripe_subscription_info,
 )
+from .tasks import send_payment_received_email
 
 
 @ensure_wiki_domain
@@ -815,3 +818,27 @@ recovery_email_sent = TemplateView.as_view(
 recover_done = login_required(
     never_cache(ConnectionsView.as_view(template_name="users/recover_done.html"))
 )
+
+
+@csrf_exempt
+def stripe_payment_succeeded_hook(request):
+    payload = request.body
+
+    try:
+        event = stripe.Event.construct_from(json.loads(payload), stripe.api_key)
+
+        if event.type != "invoice.payment_succeeded":
+            raise ValueError(f"Unexpected stripe event of type {event.type}")
+
+        payment_intent = event.data.object
+        send_payment_received_email.delay(
+            payment_intent.customer,
+            request.LANGUAGE_CODE,
+            payment_intent.created,
+            payment_intent.invoice_pdf,
+        )
+    except ValueError:
+        raven_client.captureException()
+        return HttpResponseBadRequest()
+
+    return HttpResponse()

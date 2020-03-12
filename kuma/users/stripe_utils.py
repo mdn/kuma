@@ -3,6 +3,9 @@ from datetime import datetime
 import stripe
 from django.conf import settings
 
+from kuma.core.urlresolvers import reverse
+from kuma.wiki.templatetags.jinja_helpers import absolutify
+
 
 def retrieve_stripe_subscription(customer):
     for subscription in customer.subscriptions.list().auto_paging_iter():
@@ -67,3 +70,21 @@ def retrieve_stripe_subscription_info(user):
         }
 
     return None
+
+
+def create_missing_stripe_webhook():
+    url_path = reverse("users.stripe_payment_succeeded_hook")
+    url = (
+        "https://" + settings.STRIPE_WEBHOOK_HOSTNAME + url_path
+        if settings.STRIPE_WEBHOOK_HOSTNAME
+        else absolutify(url_path)
+    )
+    event = "invoice.payment_succeeded"
+
+    for webhook in stripe.WebhookEndpoint.list().auto_paging_iter():
+        if webhook.url == url and event in webhook.enabled_events:
+            return
+
+    stripe.WebhookEndpoint.create(
+        url=url, enabled_events=[event],
+    )
