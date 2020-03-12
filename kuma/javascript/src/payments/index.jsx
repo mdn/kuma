@@ -94,7 +94,7 @@ export default function PaymentsLandingPage() {
                             </p>
                         </ListItem>
                         <ListItem
-                            title="What does money go towards?"
+                            title="What does the money go towards?"
                             number="4"
                         >
                             <p>
