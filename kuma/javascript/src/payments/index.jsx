@@ -267,7 +267,7 @@ export default function PaymentsLandingPage() {
                             <p>
                                 <Interpolated
                                     id={gettext(
-                                        'You can cancel your monthly subscription any time. Please go to <subscriptionsLink /> to cancel your subscription. If you choose to cancel, we will not charge your payment card for subsequent months. For any other questions or inquiries please <emailLink />.'
+                                        'You can cancel your monthly subscription at any time. Please go to the <subscriptionsLink /> to cancel your subscription. If you choose to cancel, we will not charge your payment card for subsequent months. For any other questions or inquiries please <emailLink />.'
                                     )}
                                     subscriptionsLink={
                                         <a href={urls.managePayments}>
