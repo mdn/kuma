@@ -826,11 +826,10 @@ def stripe_payment_succeeded_hook(request):
 
     try:
         event = stripe.Event.construct_from(json.loads(payload), stripe.api_key)
-    except ValueError:
-        raven_client.captureException()
-        return HttpResponseBadRequest()
 
-    if event.type == "invoice.payment_succeeded":
+        if event.type != "invoice.payment_succeeded":
+            raise ValueError(f"Unexpected stripe event of type {event.type}")
+
         payment_intent = event.data.object
         send_payment_received_email.delay(
             payment_intent.customer,
@@ -838,10 +837,8 @@ def stripe_payment_succeeded_hook(request):
             payment_intent.created,
             payment_intent.invoice_pdf,
         )
-        return HttpResponse()
-    else:
-        exception = ValueError(f"Unexpected stripe event of type {event.type}")
-        raven_client.captureException(
-            (type(exception), exception, exception.__traceback__)
-        )
+    except ValueError:
+        raven_client.captureException()
         return HttpResponseBadRequest()
+
+    return HttpResponse()
