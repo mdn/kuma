@@ -73,7 +73,12 @@ def retrieve_stripe_subscription_info(user):
 
 
 def create_missing_stripe_webhook():
-    url = absolutify(reverse("users.stripe_payment_succeeded_hook"))
+    url_path = reverse("users.stripe_payment_succeeded_hook")
+    url = (
+        settings.WEBHOOK_HOSTNAME + url_path
+        if settings.WEBHOOK_HOSTNAME
+        else absolutify(url_path)
+    )
     event = "invoice.payment_succeeded"
 
     for webhook in stripe.WebhookEndpoint.list().auto_paging_iter():

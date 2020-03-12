@@ -1804,3 +1804,7 @@ CACHEBACK_VERIFY_CACHE_WRITE = False
 # new migrations that aren't in the released upstream package.
 # One good example is: https://github.com/ubernostrum/django-soapbox/issues/5
 MIGRATION_MODULES = {"soapbox": "kuma.soap_migrations"}
+
+# For local development you might want to set this to a hostname provided to
+# you by a tunneling service such as ngrok.
+WEBHOOK_HOSTNAME = config("WEBHOOK_HOSTNAME", default=None)
