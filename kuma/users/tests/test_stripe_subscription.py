@@ -116,6 +116,5 @@ def test_stripe_payment_succeeded_sends_invoice_mail(mock1, client):
     assert len(mail.outbox) == 1
     payment_email = mail.outbox[0]
     assert payment_email.to == [testuser.email]
-    print(payment_email.body)
     assert "manage monthly subscriptions" in payment_email.body
     assert "invoice" in payment_email.subject
