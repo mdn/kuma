@@ -133,6 +133,137 @@ To get an idea about the size distribution of our react codebase you can run::
 
 This will open an interactively explorable report in your browser.
 
+Add a React page
+----------------
+
+First we need to set up a few things in Django:
+
+#. Create a new Jinja template that our view will render (we'll use ``example.html``). Paste the following code in ``example.html`` to get started::
+
+    {% extends "react_base.html" %}
+
+    {% block title %}{{ page_title(_('My Page Title')) }}{% endblock %}
+
+    {% block content %}This works!{% endblock %}
+
+    {# This overrides the Jinja footer, since we will be using the React footer instead. Without this line, two footers will render. #}
+    {% block footer %}{% endblock %}
+
+#. In ``views.py``, render the Jinja template we just created::
+
+    @never_cache
+    def example(request):
+        return render(request, "example.html")
+
+#. In ``kuma/urls.py``, add a new url that will render our view. This code will change slightly depending on your url and file structure::
+
+    from kuma.example.views import views
+    ....
+    urlpatterns += i18n_patterns(
+        re_path(r"example/?$", views.example, name="example"),
+    )
+
+#. We are done with the Django part! In your browser, go to ``/example`` and you should see a blank page that says "This works!"
+
+#. Now we can set up the React part. In ``example.html``, we can remove the "This works!" text and add the following code between ``{% block title %}`` and ``{% block content %}``::
+
+    {# Pass `True` for initial data if you do not have any data to fetch. Otherwise, change `True` to `None` or whatever your initial data will be. #}
+    {% block document_head %}
+        {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), True)|safe }}
+    {% endblock %}
+
+#. So your ``example.html`` file should now look something like this::
+
+    {% extends "react_base.html" %}
+
+    {% block title %}{{ page_title(_('My Page Title')) }}{% endblock %}
+
+    {% block document_head %}
+        {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), True)|safe }}
+    {% endblock %}
+
+    {% block content %}{% endblock %}
+
+    {% block footer %}{% endblock %}
+
+
+#. In ``kuma/javascript/src``, we need to create our React component, ``example.jsx``. Add the following lines as a starter::
+
+    // @flow
+    import * as React from 'react';
+
+    import { gettext } from './l10n.js';
+    import A11yNav from './a11y/a11y-nav.jsx';
+    import Header from './header/header.jsx';
+    import Footer from './footer.jsx';
+    import Route from './route.js';
+
+    type ExampleRouteParams = {
+        locale: string
+    };
+
+    export default function ExamplePage() {
+        return (
+            <>
+                <A11yNav />
+                <Header />
+                <Footer />
+            </>
+        );
+    }
+
+    // In order to use new URL() with relative URLs, we need an absolute base
+    // URL. If we're running in the browser we can use our current page URL.
+    // But if we're doing SSR, we just have to make something up.
+    const BASEURL =
+        typeof window !== 'undefined' && window.location
+            ? window.location.origin
+            : 'http://ssr.hack';
+
+    export class ExampleRoute extends Route<ExampleRouteParams, null> {
+        locale: string;
+
+        constructor(locale: string) {
+            super();
+            this.locale = locale;
+        }
+
+        getComponent() {
+            return ExamplePage;
+        }
+
+        match(url: string): ?ExampleRouteParams {
+            const path = new URL(url, BASEURL).pathname;
+            const examplePath = `/${this.locale}/example`;
+            const regex = new RegExp(examplePath, 'g');
+
+            if (regex.test(path)) {
+                return {
+                    locale: this.locale
+                };
+            }
+            return null;
+        }
+
+        fetch() {
+            return Promise.resolve(null);
+        }
+    }
+
+#. We need to tell the single-page-app component about our new Route handler, ``ExampleRoute``. In ``single-page-app.jsx``, add::
+
+    import { ExampleRoute } from './example.jsx';
+
+#. Further down in the same file, where you see ``const routes = [ ... ]``, add ``ExampleRoute``, so it should look like this::
+
+    const routes = [
+        ...
+        new ExampleRoute(locale)
+    ];
+
+#. We are done! Go to ``/example`` in your browser and you should see a header, footer, and the words, "Hello!"
+
+
 Database migrations
 ===================
 Apps are migrated using Django's migration system. To run the migrations::
