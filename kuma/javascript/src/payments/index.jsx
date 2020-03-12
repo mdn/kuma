@@ -358,6 +358,6 @@ export class PaymentsRoute extends Route<PaymentsRouteParams, null> {
     }
 
     fetch() {
-        return Promise.resolve(null);
+        throw new Error('Payments should never need to post-fetch more data');
     }
 }
