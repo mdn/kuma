@@ -1,5 +1,3 @@
-import logging
-
 import stripe
 from django.conf import settings
 from django.contrib.auth.apps import AuthConfig
@@ -9,8 +7,6 @@ from django.utils.translation import gettext_lazy as _
 import kuma.users.checks  # noqa: F401
 
 from .stripe_utils import create_missing_stripe_webhook
-
-log = logging.getLogger("kuma.users.apps")
 
 
 class UserConfig(AuthConfig):
@@ -31,7 +27,5 @@ class UserConfig(AuthConfig):
             stripe.api_key = settings.STRIPE_SECRET_KEY
             stripe.max_network_retries = settings.STRIPE_MAX_NETWORK_RETRIES
 
-            try:
+            if settings.STRIPE_PUBLIC_KEY != "testing":
                 create_missing_stripe_webhook()
-            except Exception as e:
-                log.error("error while setting up stripe webhook: %s", e)
