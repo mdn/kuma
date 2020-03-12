@@ -239,7 +239,7 @@ export default function PaymentsLandingPage() {
                             <p>
                                 <Interpolated
                                     id={gettext(
-                                        'If you would like to manage your monthly subscription, such as changing your card account details, you will need to cancel your subscription and sign up again using the new card details. To cancel, go to <subscriptionsLink />, or if you have any questions please contact <emailLink />.'
+                                        'If you would like to manage your monthly subscription, such as changing your card account details, you will need to cancel your subscription and sign up again using the new card details. To cancel, go to the <subscriptionsLink />, or if you have any questions please contact <emailLink />.'
                                     )}
                                     subscriptionsLink={
                                         <a href={urls.managePayments}>
