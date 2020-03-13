@@ -92,14 +92,12 @@
           </fieldset>
         </li>
 
-        {% if settings.ENABLE_NEWSLETTER_SIGNUP %}
-          <li class="newsletter-signup">
-            <label for="{{ form.is_newsletter_subscribed.id_for_label  }}">
-              {{ form.is_newsletter_subscribed }}
-              {{ _('Get updates on what’s new with MDN to your inbox.') }}
-            </label>
-          </li>
-        {% endif %}
+        <li class="newsletter-signup">
+          <label for="{{ form.is_newsletter_subscribed.id_for_label  }}">
+            {{ form.is_newsletter_subscribed }}
+            {{ _('Get updates on what’s new with MDN to your inbox.') }}
+          </label>
+        </li>
 
         <li>
           <ul class="errorlist">

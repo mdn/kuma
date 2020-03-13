@@ -593,7 +593,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    "VERSION": "2020.07",
+    "VERSION": "2020.08",
     "BASE_DIR": BASE_DIR,
     "TEXT_DOMAIN": "django",
     # Tells the extract script what files to look for l10n in and what function
@@ -1693,9 +1693,6 @@ FOUNDATION_CALLOUT = config("FOUNDATION_CALLOUT", False, cast=bool)
 NEWSLETTER = True
 NEWSLETTER_ARTICLE = True
 
-# Newsletter Signup Settings
-ENABLE_NEWSLETTER_SIGNUP = config("ENABLE_NEWSLETTER_SIGNUP", default=False, cast=bool)
-
 # Whether or not to enable the BCD signalling feature.
 # Affects loading of CSS (statically) and JS (in runtime).
 ENABLE_BCD_SIGNAL = config("ENABLE_BCD_SIGNAL", default=True, cast=bool)
@@ -1812,3 +1809,7 @@ CACHEBACK_VERIFY_CACHE_WRITE = False
 # new migrations that aren't in the released upstream package.
 # One good example is: https://github.com/ubernostrum/django-soapbox/issues/5
 MIGRATION_MODULES = {"soapbox": "kuma.soap_migrations"}
+
+# For local development you might want to set this to a hostname provided to
+# you by a tunneling service such as ngrok.
+STRIPE_WEBHOOK_HOSTNAME = config("STRIPE_WEBHOOK_HOSTNAME", default=None)

@@ -49,7 +49,7 @@
       {"STRIPE_PUBLIC_KEY": "{{ settings.STRIPE_PUBLIC_KEY }}"}
     </script>
   {% else %}
-    <h2>{{ _("You're helping MDN grow") }}</h2>
+    <h2>{{ _("You are an MDN member") }}</h2>
     <p>
       {{ _('Next payment of $5 (monthly) occurs on %(date)s', date=subscription_info.next_payment_at|date) }}
     </p>

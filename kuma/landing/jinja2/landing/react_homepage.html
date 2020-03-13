@@ -60,59 +60,60 @@
 
 
 {% block content %}
-
-<!-- callout area -->
-<div class="home-callouts">
-  <h2 class="offscreen">{{ _('Featured') }}</h2>
-  <div class="column-container center">
-    {%- if settings.FOUNDATION_CALLOUT %}
-      {% include "landing/includes/callouts/foundation.html" %}
-    {% else %}
-      {% include "landing/includes/callouts/featured.html" %}
-    {% endif %}
-    {% if settings.NEWSLETTER %}
-    <div class="column-callout callout-newsletter">
-      {% include "includes/newsletter.html" %}
+<div class="center clear">
+  <!-- callout area -->
+  <div class="home-callouts">
+    <h2 class="offscreen">{{ _('Featured') }}</h2>
+    <div class="column-container center">
+      {%- if settings.FOUNDATION_CALLOUT %}
+        {% include "landing/includes/callouts/foundation.html" %}
+      {% else %}
+        {% include "landing/includes/callouts/featured.html" %}
+      {% endif %}
+      {% if settings.NEWSLETTER %}
+      <div class="column-callout callout-newsletter">
+        {% include "includes/newsletter.html" %}
+      </div>
+      {% else %}
+        <div class="column-callout callout-learn">
+          <a href="{{ wiki_url('Learn') }}"><span>{{ _('Learn Web Development') }}</span></a>
+        </div>
+        <div class="column-callout callout-deved">
+          <a href="https://www.mozilla.org/firefox/developer/?utm_source=developer.mozilla.org&utm_medium=referral&utm_campaign=mdn-front-pg-promo"><span>{{ _('Get The Browser For Developers Like You') }}</span></a>
+        </div>
+      {% endif %}
     </div>
-    {% else %}
-      <div class="column-callout callout-learn">
-        <a href="{{ wiki_url('Learn') }}"><span>{{ _('Learn Web Development') }}</span></a>
-      </div>
-      <div class="column-callout callout-deved">
-        <a href="https://www.mozilla.org/firefox/developer/?utm_source=developer.mozilla.org&utm_medium=referral&utm_campaign=mdn-front-pg-promo"><span>{{ _('Get The Browser For Developers Like You') }}</span></a>
-      </div>
-    {% endif %}
   </div>
-</div>
 
-<!-- hacks area -->
-<div class="home-hacks">
-  <div class="column-container center">
-    <div class="column-hacks" dir="ltr">
-      <h2>
-          {% include 'includes/icons/general/star.svg' %} Hacks Blog
-          <span class="heading-link">
-              <a href="http://hacks.mozilla.org">
-                {{ _('read more at hacks.mozilla.org') }}
-                {% include 'includes/icons/arrows/arrow.svg' %}
-              </a>
-          </span>
-      </h2>
-      {{ newsfeed(updates) }}
-    </div>
-    <div class="column-involved">
-      <!-- contributions section -->
-      <h2>{% include 'includes/icons/emojis/smile.svg' %} {{ _('Help improve MDN') }}</h2>
-      <p>{{ _('All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:') }}</p>
-      <ul>
-        <li><a href="{{ wiki_url('MDN/Getting_started') }}">{{ _('Getting started') }}</a></li>
-        <li><a href="{{ wiki_url('MDN/Contribute/Howto/Do_an_editorial_review') }}">{{ _('Editorial review') }}</a></li>
-        <li><a href="{{ wiki_url('MDN/Contribute/Howto/Do_a_technical_review') }}">{{ _('Technical review') }}</a></li>
-        <li><a href="{{ wiki_url('MDN/Contribute/Localize/Translating_pages') }}">{{ _('Translating') }}</a></li>
-        <li><a href="{{ wiki_url('MDN/Promote') }}">{{ _('Promoting MDN') }}</a></li>
-        <li><a href="https://github.com/mdn/kuma#readme">{{ _('Contributing to the MDN codebase') }}</a></li>
-        <li><a href="https://github.com/mdn/browser-compat-data">{{ _('Updating browser compatibility data') }}</a></li>
-      </ul>
+  <!-- hacks area -->
+  <div class="home-hacks">
+    <div class="column-container center">
+      <div class="column-hacks" dir="ltr">
+        <h2>
+            {% include 'includes/icons/general/star.svg' %} Hacks Blog
+            <span class="heading-link">
+                <a href="http://hacks.mozilla.org">
+                  {{ _('read more at hacks.mozilla.org') }}
+                  {% include 'includes/icons/arrows/arrow.svg' %}
+                </a>
+            </span>
+        </h2>
+        {{ newsfeed(updates) }}
+      </div>
+      <div class="column-involved">
+        <!-- contributions section -->
+        <h2>{% include 'includes/icons/emojis/smile.svg' %} {{ _('Help improve MDN') }}</h2>
+        <p>{{ _('All parts of MDN (docs and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:') }}</p>
+        <ul>
+          <li><a href="{{ wiki_url('MDN/Getting_started') }}">{{ _('Getting started') }}</a></li>
+          <li><a href="{{ wiki_url('MDN/Contribute/Howto/Do_an_editorial_review') }}">{{ _('Editorial review') }}</a></li>
+          <li><a href="{{ wiki_url('MDN/Contribute/Howto/Do_a_technical_review') }}">{{ _('Technical review') }}</a></li>
+          <li><a href="{{ wiki_url('MDN/Contribute/Localize/Translating_pages') }}">{{ _('Translating') }}</a></li>
+          <li><a href="{{ wiki_url('MDN/Promote') }}">{{ _('Promoting MDN') }}</a></li>
+          <li><a href="https://github.com/mdn/kuma#readme">{{ _('Contributing to the MDN codebase') }}</a></li>
+          <li><a href="https://github.com/mdn/browser-compat-data">{{ _('Updating browser compatibility data') }}</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
