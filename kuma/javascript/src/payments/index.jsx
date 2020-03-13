@@ -9,7 +9,7 @@ import Route from '../route.js';
 import SubHeader from './subheader.jsx';
 import ListItem from './list-item.jsx';
 
-type PaymentsRouteParams = {
+type PaymentsIndexRouteParams = {
     locale: string
 };
 
@@ -332,7 +332,7 @@ const BASEURL =
         ? window.location.origin
         : 'http://ssr.hack';
 
-export class PaymentsRoute extends Route<PaymentsRouteParams, null> {
+export class PaymentsIndexRoute extends Route<PaymentsIndexRouteParams, null> {
     locale: string;
 
     constructor(locale: string) {
@@ -344,7 +344,7 @@ export class PaymentsRoute extends Route<PaymentsRouteParams, null> {
         return PaymentsLandingPage;
     }
 
-    match(url: string): ?PaymentsRouteParams {
+    match(url: string): ?PaymentsIndexRouteParams {
         const currentPath = new URL(url, BASEURL).pathname;
         const paymentsPath = `/${this.locale}/payments`;
 

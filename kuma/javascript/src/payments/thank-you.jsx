@@ -7,7 +7,7 @@ import Header from '../header/header.jsx';
 import Footer from '../footer.jsx';
 import Route from '../route.js';
 
-type ThankYouRouteParams = {
+type PaymentsThankYouRouteParams = {
     locale: string
 };
 
@@ -77,7 +77,10 @@ const BASEURL =
         ? window.location.origin
         : 'http://ssr.hack';
 
-export class ThankYouRoute extends Route<ThankYouRouteParams, null> {
+export class PaymentsThankYouRoute extends Route<
+    PaymentsThankYouRouteParams,
+    null
+> {
     locale: string;
 
     constructor(locale: string) {
@@ -89,7 +92,7 @@ export class ThankYouRoute extends Route<ThankYouRouteParams, null> {
         return ThankYouPage;
     }
 
-    match(url: string): ?ThankYouRouteParams {
+    match(url: string): ?PaymentsThankYouRouteParams {
         const currentPath = new URL(url, BASEURL).pathname;
         const thankYouPath = `/${this.locale}/payments/thank-you`;
         if (currentPath.startsWith(thankYouPath)) {
