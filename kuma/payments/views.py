@@ -23,7 +23,7 @@ def index(request):
 
 
 # @waffle_flag("subscription")
-@ensure_wiki_domain
+# @ensure_wiki_domain
 @never_cache
 def thank_you(request):
     return render(request, "payments/thank-you.html")

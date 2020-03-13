@@ -7,6 +7,7 @@ import Router from './router.jsx';
 import { SearchRoute } from './search-results-page.jsx';
 import UserProvider from './user-provider.jsx';
 import { PaymentsRoute } from './payments/index.jsx';
+import { ThankYouRoute } from './payments/thank-you.jsx';
 
 type SinglePageAppProps = {
     initialURL: string,
@@ -22,6 +23,7 @@ export default function SinglePageApp({
         new DocumentRoute(locale),
         new SearchRoute(locale),
         new PaymentsRoute(locale)
+        new ThankYouRoute(locale)
     ];
 
     return (
