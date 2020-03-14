@@ -173,4 +173,4 @@ def unsubscribe_payments_on_user_delete(sender, instance, **kwargs):
     if user.stripe_customer_id:
         # This may raise an exception if the Stripe API call fails.
         # This will stop User deletion while an admin investigates.
-        cancel_stripe_customer_subscription(user.stripe_customer_id)
+        list(cancel_stripe_customer_subscription(user.stripe_customer_id))

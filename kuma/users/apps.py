@@ -1,10 +1,8 @@
 import stripe
 from django.conf import settings
 from django.contrib.auth.apps import AuthConfig
+from django.core.checks import register
 from django.utils.translation import gettext_lazy as _
-
-# the checks self-register so we don't need to use anything from the import
-import kuma.users.checks  # noqa: F401
 
 
 class UserConfig(AuthConfig):
@@ -19,6 +17,10 @@ class UserConfig(AuthConfig):
     def ready(self):
         # Connect signal handlers
         from . import signal_handlers  # noqa
+
+        from kuma.users.checks import stripe_check
+
+        register(stripe_check)
 
         # Configure global 'stripe' module
         if settings.STRIPE_SECRET_KEY:

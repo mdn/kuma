@@ -7,6 +7,7 @@ from stripe.error import StripeError
 from waffle.decorators import waffle_flag
 
 from kuma.core.decorators import ensure_wiki_domain, login_required
+from kuma.users.models import UserSubscription
 
 from .utils import (
     cancel_stripe_customer_subscription,
@@ -48,7 +49,10 @@ def recurring_payment_management(request):
         context["cancel_request"] = True
         cancel_success = False
         try:
-            cancel_stripe_customer_subscription(request.user.stripe_customer_id)
+            for subscription in cancel_stripe_customer_subscription(
+                request.user.stripe_customer_id
+            ):
+                UserSubscription.set_canceled(request.user, subscription.id)
         except StripeError:
             log.exception(
                 "Stripe subscription cancellation: Stripe error for %s [%s]",

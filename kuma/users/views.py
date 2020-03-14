@@ -61,11 +61,12 @@ from kuma.wiki.models import (
 # we have to import the SignupForm form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
 from .forms import UserBanForm, UserDeleteForm, UserEditForm, UserRecoveryEmailForm
-from .models import User, UserBan
+from .models import User, UserBan, UserSubscription
 from .signup import SignupForm
 from .stripe_utils import (
     create_stripe_customer_and_subscription_for_user,
-    retrieve_stripe_subscription_info,
+    get_stripe_customer,
+    get_stripe_subscription_info,
 )
 from .tasks import send_payment_received_email
 
@@ -467,6 +468,37 @@ def user_edit(request, username):
 
             return redirect(edit_user)
 
+    subscription_info = None
+    stripe_customer = get_stripe_customer(edit_user)
+    # XXX Might be nice to explain WHY we're doublechecking the user email.
+    if stripe_customer and stripe_customer.email == edit_user.email:
+        stripe_subscription_info = get_stripe_subscription_info(stripe_customer)
+        if stripe_subscription_info:
+            source = stripe_customer.default_source
+            if source.object == "card":
+                card = source
+            elif source.object == "source":
+                card = source.card
+            else:
+                raise ValueError(
+                    f"unexpected stripe customer default_source of type {source.object!r}"
+                )
+
+            subscription_info = {
+                "next_payment_at": datetime.fromtimestamp(
+                    stripe_subscription_info.current_period_end
+                ),
+                "brand": card.brand,
+                "expires_at": f"{card.exp_month}/{card.exp_year}",
+                "last4": card.last4,
+                # Cards that are part of a "source" don't have a zip
+                "zip": card.get("address_zip", None),
+            }
+
+            # To perfect the synchronization, take this opportunity to make sure
+            # we have an up-to-date record of this.
+            UserSubscription.set_active(edit_user, stripe_subscription_info.id)
+
     context = {
         "edit_user": edit_user,
         "user_form": user_form,
@@ -474,7 +506,7 @@ def user_edit(request, username):
         "form": UserDeleteForm(username=username),
         "revisions": revisions,
         "attachment_revisions": attachment_revisions,
-        "subscription_info": retrieve_stripe_subscription_info(edit_user,),
+        "subscription_info": subscription_info,
         "has_stripe_error": has_stripe_error,
     }
 
@@ -796,7 +828,11 @@ def create_stripe_subscription(request):
     try:
         email = request.POST.get("stripe_email", "")
         stripe_token = request.POST.get("stripe_token", "")
-        create_stripe_customer_and_subscription_for_user(user, email, stripe_token)
+        subscription = create_stripe_customer_and_subscription_for_user(
+            user, email, stripe_token
+        )
+        UserSubscription.set_active(user, subscription.id)
+
     except stripe.error.StripeError:
         raven_client.captureException()
         has_stripe_error = True
