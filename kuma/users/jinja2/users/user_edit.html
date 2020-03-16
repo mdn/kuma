@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "react_base.html" %}
 {% from 'includes/common_macros.html' import li_field %}
 
 {% set accounts = social_accounts(edit_user) %}
@@ -24,8 +24,13 @@
   {% javascript 'delete-user-modal' %}
 {% endblock %}
 
+{% block pageheader %}
+{{ render_react("user-account", request.LANGUAGE_CODE, request.get_full_path(),
+                  None, False)|safe }}
+{% endblock %}
+
 {% block content %}
-<div class="column-container">
+<div class="column-container center clear">
 
   <div class="column-2 smaller">
     <img src="{{ get_avatar_url(edit_user) }}" alt="{{ edit_user.username }}" width="200" height="200" class="user-photo avatar" />

@@ -5,6 +5,8 @@ import ReactDOM from 'react-dom';
 import SinglePageApp from './single-page-app.jsx';
 import LandingPage from './landing-page.jsx';
 import SignupFlow from './signup-flow.jsx';
+import UserAccount from './user-account/user-account.jsx';
+
 import { AppErrorBoundary } from './error-boundaries.jsx';
 import GAProvider from './ga-provider.jsx';
 import { localize } from './l10n.js';
@@ -56,6 +58,14 @@ if (container) {
             // currently make it part of the single page app and have
             // to handle it as a special case here.
             app = <SignupFlow />;
+            break;
+        case 'user-account':
+            // This is the React UI for the MDN user account page.
+            // The user account has a React-based header, but most of the
+            // content is still based on Jinja templates, so we can't
+            // currently make it part of the single page app and have
+            // to handle it as a special case here.
+            app = <UserAccount />;
             break;
         default:
             throw new Error(
