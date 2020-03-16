@@ -50,6 +50,7 @@ from kuma.core.ga_tracking import (
     track_event,
 )
 from kuma.core.utils import urlparams
+from kuma.payments.utils import cancel_stripe_customer_subscription
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import (
     Document,
@@ -527,6 +528,13 @@ def user_delete(request, username):
         user.created_attachment_revisions.update(creator=anon)
 
     def scrub_user():
+        # Before doing anything, cancel any active subscriptions first.
+        if user.stripe_customer_id:
+            for subscription in cancel_stripe_customer_subscription(
+                user.stripe_customer_id
+            ):
+                UserSubscription.set_canceled(request.user, subscription.id)
+
         # From the User abstract class
         user.first_name = ""
         user.last_name = ""

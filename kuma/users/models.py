@@ -195,14 +195,17 @@ class User(AbstractUser):
 
 
 class UserSubscription(models.Model):
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     stripe_subscription_id = models.CharField(max_length=255, blank=True)
     canceled = models.DateTimeField(null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.user.username} ({self.stripe_subscription_id})"
+        return (
+            f"{self.user.username} ({self.stripe_subscription_id})"
+            f"{' CANCELED' if self.canceled else ''}"
+        )
 
     @classmethod
     def set_active(cls, user, stripe_subscription_id):

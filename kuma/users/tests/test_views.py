@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from datetime import timedelta
 from textwrap import dedent
 from unittest import mock
@@ -46,8 +47,13 @@ from kuma.wiki.templatetags.jinja_helpers import absolutify
 from kuma.wiki.tests import document as create_document
 
 from . import SampleRevisionsMixin, SocialTestMixin, user, UserTestCase
-from ..models import User, UserBan
+from ..models import User, UserBan, UserSubscription
 from ..views import delete_document, revert_document
+
+
+@dataclass
+class StripeSubscription:
+    id: str
 
 
 def test_old_profile_url_gone(db, client):
@@ -1637,6 +1643,31 @@ def test_delete_user_donate_attributions(
     assert not response.json()["is_authenticated"]
 
 
+@mock.patch("kuma.users.signal_handlers.cancel_stripe_customer_subscription")
+def test_delete_user_donate_attributions_and_cancel_subscriptions(
+    mocked_cancel_stripe_customer_subscription,
+    db,
+    user_client,
+    wiki_user,
+    wiki_user_github_account,
+    root_doc,
+):
+    wiki_user.stripe_customer_id = "cus_12345"
+    wiki_user.save()
+    UserSubscription.set_active(wiki_user, "sub_1234")
+
+    url = reverse("users.user_delete", kwargs={"username": wiki_user.username})
+    response = user_client.post(
+        url, {"attributions": "donate"}, HTTP_HOST=settings.WIKI_HOST
+    )
+    assert response.status_code == 302
+    assert not User.objects.filter(username=wiki_user.username).exists()
+
+    assert not UserSubscription.objects.filter(stripe_subscription_id="sub_1234")
+
+    mocked_cancel_stripe_customer_subscription.assert_called_with("cus_12345")
+
+
 def test_delete_user_keep_attributions(
     db, user_client, wiki_user, wiki_user_github_account, root_doc
 ):
@@ -1661,7 +1692,8 @@ def test_delete_user_keep_attributions(
         facebook_url="facebook/peterbe",
         stackoverflow_url="stackoverflow/peterbe",
         discourse_url="discourse/peterbe",
-        stripe_customer_id="123456",
+        # There's a whole test dedicated to this being something not-empty.
+        stripe_customer_id="",
     )
 
     revision = root_doc.revisions.first()
@@ -1745,6 +1777,41 @@ def test_delete_user_keep_attributions(
 
     # There should be no Key left
     assert not Key.objects.all().exists()
+
+
+@mock.patch("kuma.users.views.cancel_stripe_customer_subscription")
+def test_delete_user_keep_attributions_and_cancel_subscriptions(
+    mocked_cancel_stripe_customer_subscription,
+    db,
+    user_client,
+    wiki_user,
+    wiki_user_github_account,
+    root_doc,
+):
+    subscription_id = "sub_1234"
+    mocked_cancel_stripe_customer_subscription.return_value = [
+        StripeSubscription(id=subscription_id)
+    ]
+
+    # Also, pretend that the user has a rich profile
+    User.objects.filter(id=wiki_user.id).update(stripe_customer_id="cus_12345",)
+    UserSubscription.set_active(wiki_user, subscription_id)
+
+    revision = root_doc.revisions.first()
+    # Sanity check the fixture
+    assert revision.creator == wiki_user
+
+    url = reverse("users.user_delete", kwargs={"username": wiki_user.username})
+    response = user_client.post(
+        url, {"attributions": "keep"}, HTTP_HOST=settings.WIKI_HOST
+    )
+    assert response.status_code == 302
+    # Should still exist
+    assert User.objects.filter(username=wiki_user.username).exists()
+    user_subscription = UserSubscription.objects.get(
+        stripe_subscription_id=subscription_id
+    )
+    assert user_subscription.canceled
 
 
 def test_delete_user_no_revisions_but_attachment_revisions_donate(
