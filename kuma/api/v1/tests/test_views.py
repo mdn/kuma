@@ -292,12 +292,6 @@ def test_whoami_is_subscriber(
 ):
     """Test responses for logged-in users and whether they have an active
     subscription."""
-    # wiki_user.is_staff =
-    # wiki_user.is_superuser = is_superuser
-    # wiki_user.is_staff = is_staff
-    # if is_beta_tester:
-    #     wiki_user.groups.add(beta_testers_group)
-    # wiki_user.save()
     url = reverse("api.v1.whoami")
     response = user_client.get(url)
     assert response.status_code == 200
