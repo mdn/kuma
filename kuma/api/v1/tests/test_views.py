@@ -301,17 +301,17 @@ def test_whoami_is_subscriber(
     url = reverse("api.v1.whoami")
     response = user_client.get(url)
     assert response.status_code == 200
-    assert response.json()["is_subscriber"] == False
+    assert response.json()["is_subscriber"] is False
 
     UserSubscription.set_active(wiki_user, "abc123")
     response = user_client.get(url)
     assert response.status_code == 200
-    assert response.json()["is_subscriber"] == True
+    assert response.json()["is_subscriber"] is True
 
     UserSubscription.set_canceled(wiki_user, "abc123")
     response = user_client.get(url)
     assert response.status_code == 200
-    assert response.json()["is_subscriber"] == False
+    assert response.json()["is_subscriber"] is False
 
 
 @pytest.mark.django_db
