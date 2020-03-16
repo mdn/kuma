@@ -8,10 +8,6 @@
 {% block site_css %}
   {{ super() }}
   {% include "landing/includes/style.html" %}
-
-  {% if waffle.switch('developer_needs') %}
-    {% stylesheet 'banners' %}
-  {% endif %}
 {% endblock %}
 
 {% block extrahead %}
