@@ -1,9 +1,10 @@
 // @flow
 import * as React from 'react';
 
-import { gettext } from '../l10n.js';
+import { getLocale, gettext, Interpolated } from '../l10n.js';
 import A11yNav from '../a11y/a11y-nav.jsx';
 import Header from '../header/header.jsx';
+import SubHeader from './subheader.jsx';
 import Footer from '../footer.jsx';
 import Route from '../route.js';
 
@@ -12,56 +13,82 @@ type PaymentsThankYouRouteParams = {
 };
 
 export default function ThankYouPage() {
+    const locale = getLocale();
     return (
         <>
             <A11yNav />
             <Header />
-            <main
-                id="contributions-page"
-                className="contributions-page"
-                role="main"
-            >
+            <SubHeader title="Thank you for becoming a monthly supporter!" />
+            <main className="contributions-page thank-you" role="main">
                 <section className="section">
                     <header>
                         <h2>{gettext('Useful things')}</h2>
-                        <ul id="useful-things" className="faqs clear">
-                            <li>
-                                <h3>Cancel or manage your subscription</h3>
-                                <p>
-                                    If you would like to cancel or manage your
-                                    monthly subscription, go to manage monthly
-                                    subscription page.
-                                </p>
-                            </li>
-                            <li>
-                                <h3>Subscription terms</h3>
-                                <p>
-                                    Please read our subscription terms for more
-                                    information.
-                                </p>
-                            </li>
-                            <li>
-                                <h3>FAQ</h3>
-                                <p>
-                                    To find out more about why MDN is raising
-                                    money through monthly subscriptions, please
-                                    visit our FAQ.
-                                </p>
-                            </li>
-                        </ul>
                     </header>
+                    <ul id="useful-things" className="faqs clear">
+                        <li>
+                            <h3>
+                                {gettext('Cancel or manage your subscription')}
+                            </h3>
+                            <p>
+                                <Interpolated
+                                    id={gettext(
+                                        'If you would like to cancel or manage your monthly subscription, go to <subscriptionLink />.'
+                                    )}
+                                    subscriptionLink={
+                                        <a
+                                            href={`/${locale}/payments/recurring/management`}
+                                        >
+                                            {gettext(
+                                                'manage monthly subscription page'
+                                            )}
+                                        </a>
+                                    }
+                                />
+                            </p>
+                        </li>
+                        <li>
+                            <h3>{gettext('Subscription terms')}</h3>
+                            <p>
+                                <Interpolated
+                                    id={gettext(
+                                        'Please read our <termsLink /> for more information.'
+                                    )}
+                                    termsLink={
+                                        <a href={`/${locale}/payments/terms`}>
+                                            {gettext('subscription terms')}
+                                        </a>
+                                    }
+                                />
+                            </p>
+                        </li>
+                        <li>
+                            <h3>{gettext('FAQ')}</h3>
+                            <p>
+                                <Interpolated
+                                    id={gettext(
+                                        'To find out more about why MDN is raising money through monthly subscriptions, please visit our <faqLink />.'
+                                    )}
+                                    faqLink={
+                                        <a href={`/${locale}/payments/`}>
+                                            {gettext('FAQ')}
+                                        </a>
+                                    }
+                                />
+                            </p>
+                        </li>
+                    </ul>
                 </section>
                 <section className="section">
                     <header>
                         <h2>{gettext('Feedback')}</h2>
-                        <form>
-                            <input
-                                type="text"
-                                placeholder={gettext('Enter optional feedback')}
-                            />
-                            <button type="submit">{gettext('Send')}</button>
-                        </form>
                     </header>
+                    <form>
+                        <input
+                            type="text"
+                            placeholder={gettext('Enter optional feedback')}
+                        />
+                        <button type="submit">{gettext('Send')}</button>
+                    </form>
                 </section>
             </main>
             <Footer />

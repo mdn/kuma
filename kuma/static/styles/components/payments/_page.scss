@@ -6,12 +6,20 @@
 
     .column-container {
         box-sizing: border-box;
+        display: flex;
+        align-items: center;
         margin: 0 auto;
         max-height: 100%;
         max-width: $payment-header-max-width;
-        padding: $payment-header-padding;
+        padding: $payment-header-padding-mobile;
+
         position: relative;
         transition: padding .3s ease;
+
+        @media #{$mq-tablet-and-up} {
+            min-height: 200px;
+            padding: $payment-header-padding;
+        }
 
         > .column-half {
             box-sizing: border-box;
@@ -26,14 +34,14 @@
             @extend %highlight;
             @include set-font-size($h2-font-size);
             margin-bottom: 20px;
+
+            &:only-child {
+                margin-bottom: 0;
+            }
         }
 
         p {
             margin-bottom: 0;
-        }
-
-        @media #{$mq-mobile-and-down} {
-            padding: $payment-header-padding-mobile;
         }
     }
 
@@ -58,13 +66,13 @@
 }
 
 .contributions-page {
-
-    @media #{$mq-small-desktop-and-up} {
-        background: url('/static/img/hero-dino-blank.png') no-repeat 10% 1%;
+    &:not(.thank-you) {
+        @media #{$mq-tablet-and-up} {
+            background: url('/static/img/hero-dino-blank.png') no-repeat 10% 1%;
+        }
     }
-
     .section {
-        display: flex;
+        display: block;
         position: relative;
         margin: 0 auto;
         padding: 56px 25px;
@@ -74,14 +82,87 @@
             margin-bottom: 2em;
         }
 
-        @media #{$mq-mobile-and-down} {
-            display: block;
-            h2,
-            .faqs {
-                display: block;
+        @media #{$mq-tablet-and-up} {
+            display: flex;
+        }
 
-                .faq {
-                    margin: 30px 0;
+        > ul,
+        > ol {
+            flex: 60%;
+            display: block;
+
+            a {
+                border-bottom: 1px solid $payment-faq-base-color;
+                color: $payment-faq-base-color;
+                padding-bottom: 1px;
+                text-decoration: none;
+            }
+
+            > li {
+                background-color: #fff;
+                border: 2px solid $text-color;
+                border-radius: $payment-faq-border-radius;
+                margin: 30px 0;
+
+                padding: 48px;
+                position: relative;
+
+
+                > ul {
+                    list-style-type: initial;
+                    padding-left: 1em;
+                }
+
+                p:last-child {
+                    margin-bottom: 0;
+                }
+
+                .faq-number {
+                    background: #333;
+                    box-sizing: border-box;
+                    color: #fff;
+                    font-family: $heading-font-family;
+                    font-size: 36px;
+                    font-weight: 500;
+                    height: 45px;
+                    left: -22px;
+                    line-height: 40px;
+                    padding: 0;
+                    position: absolute;
+                    text-align: center;
+                    top: 42px;
+                    width: 45px;
+                }
+
+                .small {
+                    display: block;
+                    font-weight: 700;
+                }
+            }
+
+            h3 {
+                font-size: 1.8em;
+                font-weight: normal;
+                margin-top: 0;
+            }
+
+            @media #{$mq-tablet-and-up} {
+                > li {
+                    margin: 2em;
+                }
+            }
+        }
+
+
+        > ul {
+            > li {
+                border: none;
+                padding: 24px 48px 48px;
+            }
+
+            @media #{$mq-tablet-and-up} {
+                > li {
+                    margin: 0 2em;
                 }
             }
         }
@@ -93,63 +174,6 @@
 
         h2 {
             border-bottom: 2px solid $text-color;
-        }
-    }
-
-    .faqs {
-        flex: 60%;
-
-        a {
-            border-bottom: 1px solid $payment-faq-base-color;
-            color: $payment-faq-base-color;
-            padding-bottom: 1px;
-            text-decoration: none;
-        }
-
-        .faq {
-            background-color: #fff;
-            border: 2px solid $text-color;
-            border-radius: $payment-faq-border-radius;
-            margin: 2em;
-            padding: 48px;
-            position: relative;
-
-            ul {
-                list-style-type: initial;
-                padding-left: 1em;
-            }
-
-            p:last-child {
-                margin-bottom: 0;
-            }
-
-            .faq-number {
-                background: #333;
-                box-sizing: border-box;
-                color: #fff;
-                font-family: $heading-font-family;
-                font-size: 36px;
-                font-weight: 500;
-                height: 45px;
-                left: -22px;
-                line-height: 40px;
-                padding: 0;
-                position: absolute;
-                text-align: center;
-                top: 42px;
-                width: 45px;
-            }
-
-            .small {
-                display: block;
-                font-weight: 700;
-            }
-        }
-
-        h3 {
-            font-size: 1.8em;
-            font-weight: normal;
-            margin-top: 0;
         }
     }
 }
