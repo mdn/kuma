@@ -166,6 +166,14 @@ class ViewTests(ElasticTestCase):
         # rest_framework works.
         assert response.status_code == 404
 
+    def test_page_too_large(self):
+        # Note that this doesn't use the Wiki host
+        response = self.client.get("/en-US/search", {"page": 2, "q": "anything"})
+        # The search 'q' is fine and the page isn't too large on its own, but
+        # the pagination doesn't go beyond the first page so the rest_frameworks
+        # pagination will trigger an error.
+        assert response.status_code == 400
+
     def test_tokenize_camelcase_titles(self):
         for q in ("get", "element", "by", "id"):
             response = self.client.get(
