@@ -17,6 +17,11 @@ from .utils import (
 log = logging.getLogger("kuma.payments.views")
 
 
+@never_cache
+def index(request):
+    return render(request, "payments/index.html")
+
+
 @waffle_flag("subscription")
 @ensure_wiki_domain
 @never_cache

@@ -8,9 +8,23 @@ import type { BannerProps } from './banners.jsx';
 
 const mockUserData = { ...UserProvider.defaultUserData };
 
+const authRequiredBanner: Array<BannerProps> = [
+    {
+        id: 'auth-flag',
+        classname: 'auth-class',
+        title: 'auth-title',
+        copy: 'auth-copy',
+        cta: 'auth-cta',
+        url: 'auth-link',
+        embargoDays: 7,
+        authenticated: true
+    }
+];
+
 const banners: Array<BannerProps> = [
     {
         id: 'flag1',
+        classname: 'class1',
         title: 'title1',
         copy: 'copy1',
         cta: 'cta1',
@@ -19,11 +33,25 @@ const banners: Array<BannerProps> = [
     },
     {
         id: 'flag2',
+        classname: 'class2',
         title: 'title2',
         copy: 'copy2',
         cta: 'cta2',
         url: 'link2',
         embargoDays: 2
+    }
+];
+
+const opensInNewWindowBanner: Array<BannerProps> = [
+    {
+        id: 'newwin-flag',
+        classname: 'newwin-class',
+        title: 'newwin-title',
+        copy: 'newwin-copy',
+        cta: 'newwin-cta',
+        url: 'newwin-link',
+        embargoDays: 7,
+        newWindow: true
     }
 ];
 
@@ -48,10 +76,49 @@ describe('Banners', () => {
             );
 
             let snapshot = JSON.stringify(banner.toJSON());
+            expect(snapshot).toContain(b.classname);
             expect(snapshot).toContain(b.title);
             expect(snapshot).toContain(b.copy);
             expect(snapshot).toContain(b.cta);
             expect(snapshot).toContain(b.url);
+        }
+    });
+
+    test('renders banner for logged in users', () => {
+        for (let b of authRequiredBanner) {
+            mockUserData.isAuthenticated = true;
+            mockUserData.waffle.flags = {
+                [b.id]: true
+            };
+
+            let banner = create(
+                <UserProvider.context.Provider value={mockUserData}>
+                    <Banners banners={authRequiredBanner} />
+                </UserProvider.context.Provider>
+            );
+
+            let snapshot = JSON.stringify(banner.toJSON());
+            expect(snapshot).toContain(b.title);
+            expect(snapshot).toContain(b.copy);
+            expect(snapshot).toContain(b.cta);
+            expect(snapshot).toContain(b.url);
+        }
+    });
+
+    test('renders nothing if user not logged in', () => {
+        for (let b of authRequiredBanner) {
+            mockUserData.isAuthenticated = false;
+            mockUserData.waffle.flags = {
+                [b.id]: true
+            };
+
+            let banner = create(
+                <UserProvider.context.Provider value={mockUserData}>
+                    <Banners banners={authRequiredBanner} />
+                </UserProvider.context.Provider>
+            );
+
+            expect(banner.toJSON()).toBe(null);
         }
     });
 
@@ -249,5 +316,55 @@ describe('Banners', () => {
         );
 
         expect(banner.toJSON()).toBe(null);
+    });
+
+    test('adds target and rel for banners set to open in new window', () => {
+        for (let b of opensInNewWindowBanner) {
+            mockUserData.isAuthenticated = false;
+            mockUserData.waffle.flags = {
+                [b.id]: true
+            };
+
+            let banner = create(
+                <UserProvider.context.Provider value={mockUserData}>
+                    <Banners banners={opensInNewWindowBanner} />
+                </UserProvider.context.Provider>
+            );
+
+            let ctaButtonProps = banner.root.findByType('a').props;
+
+            let snapshot = JSON.stringify(banner.toJSON());
+            expect(snapshot).toContain(b.title);
+            expect(snapshot).toContain(b.copy);
+            expect(snapshot).toContain(b.cta);
+            expect(snapshot).toContain(b.url);
+            expect(ctaButtonProps.target).toBeDefined();
+            expect(ctaButtonProps.rel).toBeDefined();
+        }
+    });
+
+    test('does not add target and rel for default banners', () => {
+        for (let b of authRequiredBanner) {
+            mockUserData.isAuthenticated = true;
+            mockUserData.waffle.flags = {
+                [b.id]: true
+            };
+
+            let banner = create(
+                <UserProvider.context.Provider value={mockUserData}>
+                    <Banners banners={authRequiredBanner} />
+                </UserProvider.context.Provider>
+            );
+
+            let ctaButtonProps = banner.root.findByType('a').props;
+
+            let snapshot = JSON.stringify(banner.toJSON());
+            expect(snapshot).toContain(b.title);
+            expect(snapshot).toContain(b.copy);
+            expect(snapshot).toContain(b.cta);
+            expect(snapshot).toContain(b.url);
+            expect(ctaButtonProps.target).not.toBeDefined();
+            expect(ctaButtonProps.rel).not.toBeDefined();
+        }
     });
 });

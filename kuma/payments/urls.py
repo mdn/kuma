@@ -15,4 +15,5 @@ lang_urlpatterns = [
         views.recurring_payment_management,
         name="recurring_payment_management",
     ),
+    re_path(r"", views.index, name="payments_index"),
 ]

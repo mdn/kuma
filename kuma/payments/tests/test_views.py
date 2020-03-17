@@ -23,6 +23,13 @@ def stripe_user(wiki_user):
 
 
 @pytest.mark.django_db
+def test_payments_index(client):
+    """Viewing the payments index page doesn't require you to be logged in"""
+    response = client.get(reverse("payments_index"))
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
 @override_flag("subscription", True)
 @mock.patch("kuma.payments.views.get_stripe_customer_data", return_value=True)
 def test_recurring_payment_management_no_customer_id(get, user_client):
@@ -174,7 +181,6 @@ def test_recurring_payment_management_not_logged_in(get, cancel_, client):
 @pytest.mark.parametrize(
     "endpoint",
     [
-        "payments",
         "payment_terms",
         "recurring_payment_initial",
         "recurring_payment_subscription",
