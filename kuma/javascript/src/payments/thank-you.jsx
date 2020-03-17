@@ -24,7 +24,7 @@ export default function ThankYouPage() {
                     <header>
                         <h2>{gettext('Useful things')}</h2>
                     </header>
-                    <ul id="useful-things" className="faqs clear">
+                    <ul id="useful-things" className="clear">
                         <li>
                             <h3>
                                 {gettext('Cancel or manage your subscription')}
@@ -85,9 +85,11 @@ export default function ThankYouPage() {
                     <form>
                         <input
                             type="text"
-                            placeholder={gettext('Enter optional feedback')}
+                            placeholder={gettext('Enter optional feedback…')}
                         />
-                        <button type="submit">{gettext('Send')}</button>
+                        <div>
+                            <button type="submit">{gettext('Send')}</button>
+                        </div>
                     </form>
                 </section>
             </main>

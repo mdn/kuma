@@ -89,7 +89,6 @@
         > ul,
         > ol {
             flex: 60%;
-            display: block;
 
             a {
                 border-bottom: 1px solid $payment-faq-base-color;
@@ -166,11 +165,33 @@
                 }
             }
         }
+
+        > form {
+            flex: 60%;
+            box-sizing: border-box;
+
+            padding: 24px 48px 48px;
+            display: flex;
+            flex-direction: column;
+            input {
+                height: 40px;
+
+                border-radius: $payment-faq-border-radius;
+            }
+            button {
+                color: $link-color;
+                border: 2px solid $link-color;
+                border-radius: $payment-faq-border-radius;
+                float: right;
+                margin-top: 20px;
+                height: 40px;
+            }
+        }
     }
 
     header {
         flex: 30%;
-        z-index: 99;
+        // z-index: 99;
 
         h2 {
             border-bottom: 2px solid $text-color;
