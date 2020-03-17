@@ -48,18 +48,28 @@ def get_stripe_subscription_info(stripe_customer):
 
 
 def create_missing_stripe_webhook():
-    url_path = reverse("users.stripe_payment_succeeded_hook")
+    url_path = reverse("users.stripe_hooks")
     url = (
         "https://" + settings.STRIPE_WEBHOOK_HOSTNAME + url_path
         if settings.STRIPE_WEBHOOK_HOSTNAME
         else absolutify(url_path)
     )
-    event = "invoice.payment_succeeded"
+
+    # From https://stripe.com/docs/api/webhook_endpoints/create
+    events = (
+        # "Occurs whenever an invoice payment attempt succeeds."
+        "invoice.payment_succeeded",
+        # "Occurs whenever a customer’s subscription ends."
+        # Also, if you go into the Stripe Dashboard, click Billing, Subscriptions,
+        # and find a customer and click the "Cancel subscription" button, this
+        # triggers.
+        "customer.subscription.deleted",
+    )
 
     for webhook in stripe.WebhookEndpoint.list().auto_paging_iter():
-        if webhook.url == url and event in webhook.enabled_events:
+        if webhook.url == url and set(events) == set(webhook.enabled_events):
             return
 
     stripe.WebhookEndpoint.create(
-        url=url, enabled_events=[event],
+        url=url, enabled_events=events,
     )

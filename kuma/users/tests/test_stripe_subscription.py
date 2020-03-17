@@ -5,15 +5,15 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 import pytest
-
 from django.conf import settings
 from django.core import mail
 from django.test import Client
 from django.urls import reverse
+from stripe.error import APIError
 from waffle.testutils import override_flag
 
 from kuma.core.utils import safer_pyquery as pq
-from kuma.users.models import User
+from kuma.users.models import User, UserSubscription
 
 from . import user
 
@@ -124,43 +124,89 @@ def test_create_stripe_subscription_fail(mock1, mock2, test_user):
     assert response.status_code == 403
 
 
-def mock_stripe_payment_event(payload, api_key):
-    return SimpleNamespace(
-        **{
-            "type": "invoice.payment_succeeded",
-            "data": SimpleNamespace(
-                **{
-                    "object": SimpleNamespace(
-                        **{
-                            "customer": "cus_mock_testuser",
-                            "created": 1583842724,
-                            "invoice_pdf": "https://developer.mozilla.org/mock-invoice-pdf-url",
-                        }
-                    )
-                }
-            ),
-        }
-    )
-
-
-@patch(
-    "stripe.Event.construct_from", side_effect=mock_stripe_payment_event,
-)
+@patch("stripe.Event.construct_from")
 @pytest.mark.django_db
 def test_stripe_payment_succeeded_sends_invoice_mail(mock1, client):
+    mock1.return_value = SimpleNamespace(
+        type="invoice.payment_succeeded",
+        data=SimpleNamespace(
+            object=SimpleNamespace(
+                customer="cus_mock_testuser",
+                created=1583842724,
+                invoice_pdf="https://developer.mozilla.org/mock-invoice-pdf-url",
+            )
+        ),
+    )
+
     testuser = user(
         save=True,
         username="testuser",
         email="testuser@example.com",
         stripe_customer_id="cus_mock_testuser",
     )
-    client.post(
-        reverse("users.stripe_payment_succeeded_hook"),
-        content_type="application/json",
-        data={},
+    response = client.post(
+        reverse("users.stripe_hooks"), content_type="application/json", data={},
     )
+    assert response.status_code == 200
     assert len(mail.outbox) == 1
     payment_email = mail.outbox[0]
     assert payment_email.to == [testuser.email]
     assert "manage monthly subscriptions" in payment_email.body
     assert "invoice" in payment_email.subject
+
+
+@patch("stripe.Event.construct_from")
+@pytest.mark.django_db
+def test_stripe_subscription_canceled(mock1, client):
+    mock1.return_value = SimpleNamespace(
+        type="customer.subscription.deleted",
+        data=SimpleNamespace(
+            object=SimpleNamespace(customer="cus_mock_testuser", id="sub_123456789")
+        ),
+    )
+
+    testuser = user(
+        save=True,
+        username="testuser",
+        email="testuser@example.com",
+        stripe_customer_id="cus_mock_testuser",
+    )
+    UserSubscription.set_active(testuser, "sub_123456789")
+    response = client.post(
+        reverse("users.stripe_hooks"), content_type="application/json", data={},
+    )
+    assert response.status_code == 200
+    (user_subscription,) = UserSubscription.objects.filter(user=testuser)
+    assert user_subscription.canceled
+
+
+@pytest.mark.django_db
+def test_stripe_hook_invalid_json(client):
+    response = client.post(
+        reverse("users.stripe_hooks"),
+        content_type="application/json",
+        data="{not valid!",
+    )
+    assert response.status_code == 400
+
+
+@patch("stripe.Event.construct_from")
+@pytest.mark.django_db
+def test_stripe_hook_unexpected_type(mock1, client):
+    mock1.return_value = SimpleNamespace(
+        type="not.expected", data=SimpleNamespace(foo="bar"),
+    )
+    response = client.post(
+        reverse("users.stripe_hooks"), content_type="application/json", data={},
+    )
+    assert response.status_code == 400
+
+
+@patch("stripe.Event.construct_from")
+@pytest.mark.django_db
+def test_stripe_hook_stripe_api_error(mock1, client):
+    mock1.side_effect = APIError("badness")
+    response = client.post(
+        reverse("users.stripe_hooks"), content_type="application/json", data={},
+    )
+    assert response.status_code == 400

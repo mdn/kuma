@@ -117,11 +117,7 @@ lang_urlpatterns = [
         views.create_stripe_subscription,
         name="users.create_stripe_subscription",
     ),
-    re_path(
-        r"^stripe_payment_succeeded_hook",
-        views.stripe_payment_succeeded_hook,
-        name="users.stripe_payment_succeeded_hook",
-    ),
+    re_path(r"^stripe_hooks", views.stripe_hooks, name="users.stripe_hooks",),
     re_path(r"^profile/?$", views.my_detail_page, name="users.my_detail_page"),
     re_path(r"^profile/edit/?$", views.my_edit_page, name="users.my_edit_page"),
     re_path(r"^users/", include(users_patterns)),

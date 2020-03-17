@@ -25,6 +25,7 @@ from django.http import (
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.utils.translation import gettext_lazy as _
@@ -499,6 +500,15 @@ def user_edit(request, username):
             # To perfect the synchronization, take this opportunity to make sure
             # we have an up-to-date record of this.
             UserSubscription.set_active(edit_user, stripe_subscription_info.id)
+        else:
+            # The user has a stripe_customer_id but no active subscription
+            # on the current settings.STRIPE_PLAN_ID! Perhaps it has been cancelled
+            # and not updated in our own records.
+            for user_subscription in UserSubscription.objects.filter(
+                user=edit_user, canceled__isnull=True
+            ):
+                user_subscription.canceled = timezone.now()
+                user_subscription.save()
 
     context = {
         "edit_user": edit_user,
@@ -865,15 +875,24 @@ recover_done = login_required(
 
 
 @csrf_exempt
-def stripe_payment_succeeded_hook(request):
-    payload = request.body
+def stripe_hooks(request):
+    try:
+        payload = json.loads(request.body)
+    except ValueError:
+        return HttpResponseBadRequest("Invalid JSON payload")
 
     try:
-        event = stripe.Event.construct_from(json.loads(payload), stripe.api_key)
+        event = stripe.Event.construct_from(payload, stripe.api_key)
+    except stripe.error.StripeError:
+        raven_client.captureException()
+        return HttpResponseBadRequest()
 
-        if event.type != "invoice.payment_succeeded":
-            raise ValueError(f"Unexpected stripe event of type {event.type}")
+    # Generally, for this list of if-statements, see the create_missing_stripe_webhook
+    # function.
+    # The list of events there ought to at least minimally match what we're prepared
+    # to deal with here.
 
+    if event.type == "invoice.payment_succeeded":
         payment_intent = event.data.object
         send_payment_received_email.delay(
             payment_intent.customer,
@@ -881,8 +900,14 @@ def stripe_payment_succeeded_hook(request):
             payment_intent.created,
             payment_intent.invoice_pdf,
         )
-    except ValueError:
-        raven_client.captureException()
-        return HttpResponseBadRequest()
+    elif event.type == "customer.subscription.deleted":
+        obj = event.data.object
+        for user in User.objects.filter(stripe_customer_id=obj.customer):
+            UserSubscription.set_canceled(user, obj.id)
+
+    else:
+        return HttpResponseBadRequest(
+            f"We did not expect a Stripe webhook of type {event.type!r}"
+        )
 
     return HttpResponse()
