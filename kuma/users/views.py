@@ -470,7 +470,7 @@ def user_edit(request, username):
     try:
         subscription_info = retrieve_stripe_subscription_info(edit_user)
         has_stripe_crashed = False
-    except Exception:
+    except stripe.InvalidRequestError:
         raven_client.captureException()
         subscription_info = None
         has_stripe_crashed = True
