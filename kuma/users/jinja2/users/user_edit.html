@@ -128,7 +128,7 @@
         </li>
       </ul>
     </form>
-    {% if is_me and waffle.flag('subscription') and settings.STRIPE_PUBLIC_KEY %}
+    {% if is_me and waffle.flag('subscription') and settings.STRIPE_PUBLIC_KEY and not has_stripe_crashed %}
       {% include "users/includes/stripe_subscription.html" %}
     {% endif %}
   </div>

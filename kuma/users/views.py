@@ -467,6 +467,14 @@ def user_edit(request, username):
 
             return redirect(edit_user)
 
+    try:
+        subscription_info = retrieve_stripe_subscription_info(edit_user)
+        has_stripe_crashed = False
+    except Exception:
+        raven_client.captureException()
+        subscription_info = None
+        has_stripe_crashed = True
+
     context = {
         "edit_user": edit_user,
         "user_form": user_form,
@@ -474,8 +482,9 @@ def user_edit(request, username):
         "form": UserDeleteForm(username=username),
         "revisions": revisions,
         "attachment_revisions": attachment_revisions,
-        "subscription_info": retrieve_stripe_subscription_info(edit_user,),
+        "subscription_info": subscription_info,
         "has_stripe_error": has_stripe_error,
+        "has_stripe_crashed": has_stripe_crashed,
     }
 
     return render(request, "users/user_edit.html", context)
@@ -813,7 +822,6 @@ def create_stripe_subscription(request):
 recovery_email_sent = TemplateView.as_view(
     template_name="users/recovery_email_sent.html"
 )
-
 
 recover_done = login_required(
     never_cache(ConnectionsView.as_view(template_name="users/recover_done.html"))
