@@ -102,7 +102,6 @@
                 border: 2px solid $text-color;
                 border-radius: $payment-faq-border-radius;
                 margin: 30px 0;
-
                 padding: 48px;
                 position: relative;
 
@@ -147,7 +146,7 @@
 
             @media #{$mq-tablet-and-up} {
                 > li {
-                    margin: 2em;
+                    margin: 32px;
                 }
             }
         }
@@ -161,7 +160,7 @@
 
             @media #{$mq-tablet-and-up} {
                 > li {
-                    margin: 0 2em;
+                    margin: 0 32px;
                 }
             }
         }
@@ -169,10 +168,14 @@
         > form {
             flex: 60%;
             box-sizing: border-box;
-
-            padding: 24px 48px 48px;
+            padding: 24px 0 48px;
             display: flex;
             flex-direction: column;
+            @media #{$mq-tablet-and-up} {
+                padding-left: 80px;
+                padding-right: 80px;
+            }
+
             input {
                 height: 40px;
 
@@ -182,9 +185,12 @@
                 color: $link-color;
                 border: 2px solid $link-color;
                 border-radius: $payment-faq-border-radius;
-                float: right;
-                margin-top: 20px;
                 height: 40px;
+            }
+            .form-footer {
+                margin-top: 20px;
+                display: flex;
+                justify-content: space-between;
             }
         }
     }

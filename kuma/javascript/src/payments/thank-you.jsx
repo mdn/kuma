@@ -7,6 +7,7 @@ import Header from '../header/header.jsx';
 import SubHeader from './subheader.jsx';
 import Footer from '../footer.jsx';
 import Route from '../route.js';
+import FeedbackForm from './feedback-form.jsx';
 
 type PaymentsThankYouRouteParams = {
     locale: string
@@ -14,6 +15,7 @@ type PaymentsThankYouRouteParams = {
 
 export default function ThankYouPage() {
     const locale = getLocale();
+
     return (
         <>
             <A11yNav />
@@ -82,15 +84,7 @@ export default function ThankYouPage() {
                     <header>
                         <h2>{gettext('Feedback')}</h2>
                     </header>
-                    <form>
-                        <input
-                            type="text"
-                            placeholder={gettext('Enter optional feedback…')}
-                        />
-                        <div>
-                            <button type="submit">{gettext('Send')}</button>
-                        </div>
-                    </form>
+                    <FeedbackForm />
                 </section>
             </main>
             <Footer />
@@ -133,7 +127,6 @@ export class PaymentsThankYouRoute extends Route<
     }
 
     fetch() {
-        return Promise.resolve(null);
-        // throw new Error('Payments should never need to post-fetch more data');
+        throw new Error('Payments should never need to post-fetch more data');
     }
 }
