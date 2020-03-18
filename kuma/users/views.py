@@ -472,8 +472,7 @@ def user_edit(request, username):
 
     subscription_info = None
     stripe_customer = get_stripe_customer(edit_user)
-    # XXX Might be nice to explain WHY we're doublechecking the user email.
-    if stripe_customer and stripe_customer.email == edit_user.email:
+    if stripe_customer:
         stripe_subscription_info = get_stripe_subscription_info(stripe_customer)
         if stripe_subscription_info:
             source = stripe_customer.default_source
