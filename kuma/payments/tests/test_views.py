@@ -101,7 +101,7 @@ def test_recurring_payment_management_customer_id(get, user_client, stripe_user)
 @override_flag("subscription", True)
 @mock.patch(
     "kuma.payments.views.cancel_stripe_customer_subscription",
-    return_value=[MockSubscription()],
+    return_value=[MockSubscription().id],
 )
 @mock.patch(
     "kuma.payments.views.get_stripe_customer_data",

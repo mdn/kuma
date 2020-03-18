@@ -51,7 +51,9 @@ def get_stripe_customer_data(stripe_customer_id):
 def cancel_stripe_customer_subscription(stripe_customer_id):
     """Delete all subscriptions for a Stripe customer."""
     customer = stripe.Customer.retrieve(stripe_customer_id)
+    deleted_ids = []
     for sub in customer["subscriptions"]["data"]:
         s = stripe.Subscription.retrieve(sub["id"])
-        yield s
+        deleted_ids.append(s.id)
         s.delete()
+    return deleted_ids

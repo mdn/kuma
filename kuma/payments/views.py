@@ -54,10 +54,10 @@ def recurring_payment_management(request):
         context["cancel_request"] = True
         cancel_success = False
         try:
-            for subscription in cancel_stripe_customer_subscription(
+            for subscription_id in cancel_stripe_customer_subscription(
                 request.user.stripe_customer_id
             ):
-                UserSubscription.set_canceled(request.user, subscription.id)
+                UserSubscription.set_canceled(request.user, subscription_id)
         except StripeError:
             log.exception(
                 "Stripe subscription cancellation: Stripe error for %s [%s]",

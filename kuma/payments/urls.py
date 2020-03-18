@@ -3,7 +3,7 @@ from django.urls import re_path
 from . import views
 
 lang_urlpatterns = [
-    re_path(r"^recurring/?$", views.contribute, name="recurring_payment_initial"),
+    re_path(r"^recurring/$", views.contribute, name="recurring_payment_initial"),
     re_path(
         r"^recurring/subscription/?$",
         views.contribute,

@@ -26,10 +26,12 @@ def test_get_stripe_customer_data(mock_retrieve):
 
 
 @mock.patch("stripe.Customer.retrieve", return_value=simple_customer_data)
-@mock.patch("stripe.Subscription.retrieve", return_value=mock.Mock(spec_set=["delete"]))
+@mock.patch(
+    "stripe.Subscription.retrieve", return_value=mock.Mock(spec_set=["delete", "id"])
+)
 def test_cancel_stripe_customer_subscription(mock_sub, mock_cust):
     """A stripe customer's subscriptions can be cancelled."""
-    list(cancel_stripe_customer_subscription("cust_id"))
+    cancel_stripe_customer_subscription("cust_id")
     mock_sub.return_value.delete.assert_called_once_with()
 
 
@@ -39,11 +41,14 @@ def test_cancel_stripe_customer_subscription(mock_sub, mock_cust):
 )
 @mock.patch(
     "stripe.Subscription.retrieve",
-    side_effect=[mock.Mock(spec_set=["delete"]), mock.Mock(spec_set=["delete"])],
+    side_effect=[
+        mock.Mock(spec_set=["delete", "id"]),
+        mock.Mock(spec_set=["delete", "id"]),
+    ],
 )
 def test_cancel_stripe_customer_multiple_subscriptions(mock_sub, mock_cust):
     """A stripe customer's subscriptions can be cancelled."""
-    list(cancel_stripe_customer_subscription("cust_id"))
+    cancel_stripe_customer_subscription("cust_id")
     assert mock_sub.call_count == 2
 
 
@@ -51,5 +56,5 @@ def test_cancel_stripe_customer_multiple_subscriptions(mock_sub, mock_cust):
 @mock.patch("stripe.Subscription.retrieve", side_effect=Exception("Oops"))
 def test_cancel_stripe_customer_no_subscriptions(mock_sub, mock_cust):
     """A stripe customer with no subscriptions returns True."""
-    list(cancel_stripe_customer_subscription("cust_id"))
+    cancel_stripe_customer_subscription("cust_id")
     assert not mock_sub.called
