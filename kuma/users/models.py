@@ -6,6 +6,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.tokens import default_token_generator
 from django.core import validators
 from django.db import models
+from django.utils import timezone
 from django.utils.encoding import force_bytes
 from django.utils.functional import cached_property
 from django.utils.http import urlsafe_base64_encode
@@ -191,3 +192,33 @@ class User(AbstractUser):
         token = default_token_generator.make_token(self)
         link = reverse("users.recover", kwargs={"token": token, "uidb64": uidb64})
         return link
+
+
+class UserSubscription(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    stripe_subscription_id = models.CharField(max_length=255, blank=True)
+    canceled = models.DateTimeField(null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return (
+            f"{self.user.username} ({self.stripe_subscription_id})"
+            f"{' CANCELED' if self.canceled else ''}"
+        )
+
+    @classmethod
+    def set_active(cls, user, stripe_subscription_id):
+        cls.objects.update_or_create(
+            stripe_subscription_id=stripe_subscription_id,
+            user=user,
+            defaults={"canceled": None, "updated": timezone.now()},
+        )
+
+    @classmethod
+    def set_canceled(cls, user, stripe_subscription_id):
+        cls.objects.update_or_create(
+            stripe_subscription_id=stripe_subscription_id,
+            user=user,
+            defaults={"canceled": timezone.now(), "updated": timezone.now()},
+        )

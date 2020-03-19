@@ -4,7 +4,7 @@ from django.utils.translation import deactivate_all
 from kuma.wiki.tests import revision
 
 from . import UserTestCase
-from ..models import UserBan
+from ..models import UserBan, UserSubscription
 
 
 class TestUser(UserTestCase):
@@ -145,3 +145,35 @@ class BanTestCase(UserTestCase):
         testuser_unbanned = self.user_model.objects.get(username="testuser")
         assert testuser_unbanned.is_active
         assert testuser_unbanned.active_ban is None
+
+
+def test_user_subscription_set_active(wiki_user):
+    UserSubscription.set_active(wiki_user, "abc123")
+    assert UserSubscription.objects.filter(user=wiki_user).count() == 1
+    assert not UserSubscription.objects.filter(user=wiki_user).first().canceled
+    # idempotent
+    UserSubscription.set_active(wiki_user, "abc123")
+    assert UserSubscription.objects.filter(user=wiki_user).count() == 1
+    # different stripe_subscription_id
+    UserSubscription.set_active(wiki_user, "xyz789")
+    assert UserSubscription.objects.filter(user=wiki_user).count() == 2
+    assert (
+        UserSubscription.objects.filter(user=wiki_user, canceled__isnull=True).count()
+        == 2
+    )
+
+
+def test_user_subscription_set_canceled(wiki_user):
+    UserSubscription.set_canceled(wiki_user, "abc123")
+    assert UserSubscription.objects.filter(user=wiki_user).count() == 1
+    assert UserSubscription.objects.filter(user=wiki_user).first().canceled
+    # idempotent
+    UserSubscription.set_canceled(wiki_user, "abc123")
+    assert UserSubscription.objects.filter(user=wiki_user).count() == 1
+    # different stripe_subscription_id
+    UserSubscription.set_canceled(wiki_user, "xyz789")
+    assert UserSubscription.objects.filter(user=wiki_user).count() == 2
+    assert (
+        UserSubscription.objects.filter(user=wiki_user, canceled__isnull=False).count()
+        == 2
+    )

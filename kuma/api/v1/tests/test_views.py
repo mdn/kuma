@@ -6,6 +6,7 @@ from kuma.api.v1.views import document_api_data, get_content_based_redirect, get
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.search.tests import ElasticTestCase
+from kuma.users.models import UserSubscription
 from kuma.wiki.models import BCSignal
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
@@ -221,6 +222,7 @@ def test_whoami_anonymous(client, settings, timezone):
             "switches": {"switch_on": True, "switch_off": False},
             "samples": {"sample_always": True, "sample_never": False},
         },
+        "is_subscriber": False,
     }
     assert_no_cache_header(response)
 
@@ -281,8 +283,31 @@ def test_whoami(
             "switches": {"switch_on": True, "switch_off": False},
             "samples": {"sample_always": True, "sample_never": False},
         },
+        "is_subscriber": False,
     }
     assert_no_cache_header(response)
+
+
+@pytest.mark.django_db
+def test_whoami_is_subscriber(
+    user_client, wiki_user,
+):
+    """Test responses for logged-in users and whether they have an active
+    subscription."""
+    url = reverse("api.v1.whoami")
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert response.json()["is_subscriber"] is False
+
+    UserSubscription.set_active(wiki_user, "abc123")
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert response.json()["is_subscriber"] is True
+
+    UserSubscription.set_canceled(wiki_user, "abc123")
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert response.json()["is_subscriber"] is False
 
 
 @pytest.mark.django_db

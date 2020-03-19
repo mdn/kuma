@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from unittest import mock
 
 import pytest
@@ -7,6 +8,11 @@ from waffle.testutils import override_flag
 
 from kuma.core.tests import assert_no_cache_header, assert_redirect_to_wiki
 from kuma.core.urlresolvers import reverse
+
+
+@dataclass
+class MockSubscription:
+    id: str = "sub_123456789"
 
 
 @pytest.fixture
@@ -94,7 +100,8 @@ def test_recurring_payment_management_customer_id(get, user_client, stripe_user)
 @pytest.mark.django_db
 @override_flag("subscription", True)
 @mock.patch(
-    "kuma.payments.views.cancel_stripe_customer_subscription", return_value=True
+    "kuma.payments.views.cancel_stripe_customer_subscription",
+    return_value=[MockSubscription().id],
 )
 @mock.patch(
     "kuma.payments.views.get_stripe_customer_data",

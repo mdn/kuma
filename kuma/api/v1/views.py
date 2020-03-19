@@ -21,7 +21,7 @@ from kuma.search.filters import (
     TagGroupFilterBackend,
 )
 from kuma.search.search import SearchView
-from kuma.users.models import User
+from kuma.users.models import User, UserSubscription
 from kuma.users.templatetags.jinja_helpers import get_avatar_url
 from kuma.wiki.models import Document
 from kuma.wiki.templatetags.jinja_helpers import absolutify
@@ -219,6 +219,9 @@ def whoami(request):
             "is_superuser": user.is_superuser,
             "is_beta_tester": user.is_beta_tester,
             "avatar_url": get_avatar_url(user),
+            "is_subscriber": UserSubscription.objects.filter(
+                user=user, canceled__isnull=True
+            ).exists(),
         }
     else:
         data = {
@@ -229,6 +232,7 @@ def whoami(request):
             "is_superuser": False,
             "is_beta_tester": False,
             "avatar_url": None,
+            "is_subscriber": False,
         }
 
     # Add waffle data to the dict we're going to be returning.

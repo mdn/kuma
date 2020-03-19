@@ -5,7 +5,7 @@ from django.utils.html import format_html
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import urlparams
 
-from .models import User, UserBan
+from .models import User, UserBan, UserSubscription
 
 
 @admin.register(UserBan)
@@ -50,3 +50,12 @@ class UserAdmin(BaseUserAdmin):
         link = urlparams(reverse("dashboards.revisions"), user=obj.username)
         count = obj.created_revisions.count()
         return format_html('<a href="{}"><strong>{}</strong></a>', link, count)
+
+
+@admin.register(UserSubscription)
+class UserSubscriptionAdmin(admin.ModelAdmin):
+    readonly_fields = ("user", "updated", "created", "stripe_subscription_id")
+    list_display = ("user", "canceled", "updated", "created")
+    search_fields = ("user__username",)
+    list_filter = ("canceled", "created")
+    ordering = ("updated",)

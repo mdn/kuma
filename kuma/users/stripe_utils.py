@@ -1,5 +1,3 @@
-from datetime import datetime
-
 import stripe
 from django.conf import settings
 
@@ -29,62 +27,49 @@ def create_stripe_customer_and_subscription_for_user(user, email, stripe_token):
         user.stripe_customer_id = customer.id
         user.save()
 
-    if retrieve_stripe_subscription(customer) is None:
-        stripe.Subscription.create(
+    subscription = retrieve_stripe_subscription(customer)
+    if not subscription:
+        subscription = stripe.Subscription.create(
             customer=customer.id, items=[{"plan": settings.STRIPE_PLAN_ID}],
         )
 
+    return subscription
 
-def retrieve_stripe_subscription_info(user):
-    stripe_customer = (
-        stripe.Customer.retrieve(user.stripe_customer_id, expand=["default_source"],)
-        if settings.STRIPE_PLAN_ID and user.stripe_customer_id
-        else None
-    )
 
-    stripe_subscription = (
-        retrieve_stripe_subscription(stripe_customer)
-        if stripe_customer and stripe_customer.email == user.email
-        else None
-    )
-    if stripe_subscription:
-        source = stripe_customer.default_source
-        if source.object == "card":
-            card = source
-        elif source.object == "source":
-            card = source.card
-        else:
-            raise ValueError(
-                f"unexpected stripe customer default_source of type {source.object!r}"
-            )
+def get_stripe_customer(user):
+    if settings.STRIPE_PLAN_ID and user.stripe_customer_id:
+        return stripe.Customer.retrieve(
+            user.stripe_customer_id, expand=["default_source"]
+        )
 
-        return {
-            "next_payment_at": datetime.fromtimestamp(
-                stripe_subscription.current_period_end
-            ),
-            "brand": card.brand,
-            "expires_at": f"{card.exp_month}/{card.exp_year}",
-            "last4": card.last4,
-            # Cards that are part of a "source" don't have a zip
-            "zip": card.get("address_zip", None),
-        }
 
-    return None
+def get_stripe_subscription_info(stripe_customer):
+    return retrieve_stripe_subscription(stripe_customer)
 
 
 def create_missing_stripe_webhook():
-    url_path = reverse("users.stripe_payment_succeeded_hook")
+    url_path = reverse("users.stripe_hooks")
     url = (
         "https://" + settings.STRIPE_WEBHOOK_HOSTNAME + url_path
         if settings.STRIPE_WEBHOOK_HOSTNAME
         else absolutify(url_path)
     )
-    event = "invoice.payment_succeeded"
+
+    # From https://stripe.com/docs/api/webhook_endpoints/create
+    events = (
+        # "Occurs whenever an invoice payment attempt succeeds."
+        "invoice.payment_succeeded",
+        # "Occurs whenever a customer’s subscription ends."
+        # Also, if you go into the Stripe Dashboard, click Billing, Subscriptions,
+        # and find a customer and click the "Cancel subscription" button, this
+        # triggers.
+        "customer.subscription.deleted",
+    )
 
     for webhook in stripe.WebhookEndpoint.list().auto_paging_iter():
-        if webhook.url == url and event in webhook.enabled_events:
+        if webhook.url == url and set(events) == set(webhook.enabled_events):
             return
 
     stripe.WebhookEndpoint.create(
-        url=url, enabled_events=[event],
+        url=url, enabled_events=events,
     )
