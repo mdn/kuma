@@ -182,77 +182,70 @@ function Banner(props: BannerProps) {
 export const DEVELOPER_NEEDS_ID = 'developer_needs';
 export const SUBSCRIPTION_ID = 'subscription_banner';
 
-const BANNER_IDS = [DEVELOPER_NEEDS_ID, SUBSCRIPTION_ID];
-
 export default function ActiveBanner() {
     const userData = useContext(UserProvider.context);
     const locale = getLocale();
 
-    if (!userData) {
+    if (!userData || !userData.waffle.flags) {
         return null;
     }
 
-    const bannerId = userData.waffle.flags
-        ? BANNER_IDS.find(id => userData.waffle.flags[id] && !isEmbargoed(id))
-        : null;
+    for (const id in userData.waffle.flags) {
+        if (!userData.waffle.flags[id] || isEmbargoed(id)) {
+            continue;
+        }
 
-    if (!bannerId) {
-        return null;
+        switch (id) {
+            case DEVELOPER_NEEDS_ID:
+                return (
+                    <Banner
+                        id={id}
+                        classname="developer-needs"
+                        title={gettext('MDN Survey')}
+                        copy={gettext(
+                            'Help us understand the top 10 needs of Web developers and designers.'
+                        )}
+                        cta={gettext('Take the survey')}
+                        url={
+                            'https://qsurvey.mozilla.com/s3/Developer-Needs-Assessment-2019'
+                        }
+                        newWindow
+                    />
+                );
+
+            case SUBSCRIPTION_ID:
+                if (!userData.isAuthenticated) {
+                    return null;
+                }
+
+                return (
+                    <Banner
+                        id={id}
+                        classname="mdn-subscriptions"
+                        title={gettext('Become a monthly supporter')}
+                        copy={
+                            <Interpolated
+                                id={gettext(
+                                    'Support MDN with a $5 monthly subscription <learnMore/>.'
+                                )}
+                                learnMore={
+                                    <a href={`/${locale}/payments/`}>
+                                        {gettext('Learn more')}
+                                    </a>
+                                }
+                            />
+                        }
+                        cta={gettext('Subscribe')}
+                        url={`${
+                            window.mdn ? window.mdn.wikiSiteUrl : ''
+                        }/${locale}/profiles/${userData.username ||
+                            ''}/edit#subscription`}
+                        embargoDays={7}
+                    />
+                );
+        }
     }
 
-    switch (bannerId) {
-        case DEVELOPER_NEEDS_ID:
-            return (
-                <Banner
-                    id={bannerId}
-                    classname="developer-needs"
-                    title={gettext('MDN Survey')}
-                    copy={gettext(
-                        'Help us understand the top 10 needs of Web developers and designers.'
-                    )}
-                    cta={gettext('Take the survey')}
-                    url={
-                        'https://qsurvey.mozilla.com/s3/Developer-Needs-Assessment-2019'
-                    }
-                    newWindow
-                />
-            );
-
-        case SUBSCRIPTION_ID:
-            if (!userData.isAuthenticated) {
-                return null;
-            }
-
-            return (
-                <Banner
-                    id={bannerId}
-                    classname="mdn-subscriptions"
-                    title={gettext('Become a monthly supporter')}
-                    copy={
-                        <Interpolated
-                            id={gettext(
-                                'Support MDN with a $5 monthly subscription <learnMore/>.'
-                            )}
-                            learnMore={
-                                <a href={`/${locale}/payments/`}>
-                                    {gettext('Learn more')}
-                                </a>
-                            }
-                        />
-                    }
-                    cta={gettext('Subscribe')}
-                    url={`${
-                        window.mdn ? window.mdn.wikiSiteUrl : ''
-                    }/${locale}/profiles/${userData.username ||
-                        ''}/edit#subscription`}
-                    embargoDays={7}
-                />
-            );
-
-        default:
-            // TODO: throw it into Sentry once that's set-up for the frontend
-            // eslint-disable-next-line no-console
-            console.warn('Unknown banner for id', bannerId);
-            return null;
-    }
+    // No banner found in the waffle flags, so we have nothing to render
+    return null;
 }
