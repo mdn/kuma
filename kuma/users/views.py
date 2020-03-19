@@ -431,7 +431,6 @@ def user_edit(request, username):
     """
     View and edit user profile
     """
-    has_stripe_error = request.GET.get("has_stripe_error", "False") == "True"
     edit_user = get_object_or_404(User, username=username)
 
     if not edit_user.allows_editing_by(request.user):
@@ -470,8 +469,35 @@ def user_edit(request, username):
 
             return redirect(edit_user)
 
+    # Needed so the template can know to show a warning message and the
+    # template doesn't want to do code logic to look into the 'request' object.
+    has_stripe_error = request.GET.get("has_stripe_error", "False") == "True"
+
+    context = {
+        "edit_user": edit_user,
+        "user_form": user_form,
+        "username": user_form["username"].value(),
+        "form": UserDeleteForm(username=username),
+        "revisions": revisions,
+        "attachment_revisions": attachment_revisions,
+        "subscription_info": _retrieve_and_synchronize_subscription_info(edit_user),
+        "has_stripe_error": has_stripe_error,
+    }
+
+    return render(request, "users/user_edit.html", context)
+
+
+def _retrieve_and_synchronize_subscription_info(user):
+    """For the given user, if it has as 'stripe_customer_id' retrieve the info
+    about the subscription if it's there. All packaged in a way that is
+    practical for the stripe_subscription.html template.
+
+    Also, whilst doing this check, we also verify that the UserSubscription record
+    for this user is right. Doing that check is a second-layer check in case
+    our webhooks have failed us.
+    """
     subscription_info = None
-    stripe_customer = get_stripe_customer(edit_user)
+    stripe_customer = get_stripe_customer(user)
     if stripe_customer:
         stripe_subscription_info = get_stripe_subscription_info(stripe_customer)
         if stripe_subscription_info:
@@ -498,29 +524,18 @@ def user_edit(request, username):
 
             # To perfect the synchronization, take this opportunity to make sure
             # we have an up-to-date record of this.
-            UserSubscription.set_active(edit_user, stripe_subscription_info.id)
+            UserSubscription.set_active(user, stripe_subscription_info.id)
         else:
             # The user has a stripe_customer_id but no active subscription
             # on the current settings.STRIPE_PLAN_ID! Perhaps it has been cancelled
             # and not updated in our own records.
             for user_subscription in UserSubscription.objects.filter(
-                user=edit_user, canceled__isnull=True
+                user=user, canceled__isnull=True
             ):
                 user_subscription.canceled = timezone.now()
                 user_subscription.save()
 
-    context = {
-        "edit_user": edit_user,
-        "user_form": user_form,
-        "username": user_form["username"].value(),
-        "form": UserDeleteForm(username=username),
-        "revisions": revisions,
-        "attachment_revisions": attachment_revisions,
-        "subscription_info": subscription_info,
-        "has_stripe_error": has_stripe_error,
-    }
-
-    return render(request, "users/user_edit.html", context)
+    return subscription_info
 
 
 @redirect_in_maintenance_mode
