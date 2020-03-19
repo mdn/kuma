@@ -5,11 +5,8 @@
  * description and button call-to-action text of the banner, as well
  * as the URL of the page that clicking on the call-to-action button
  * takes the user to. The Banner component is not exported,
- * however. Instead, we export a Banners component that pages should
- * use. The Banners component takes an array of BannerProp objects as
- * a property, and also defines its own internal default array of
- * banner objects that is uses if no properties are passed. It loops
- * through the array looking for the first banner that is enabled by
+ * however. Instead, we export an ActiveBanner component that pages should
+ * use. It loops through an array of banner IDs for the first banner that is enabled by
  * Waffle and has not been dismissed by the user. If it finds such a
  * banner, it displays it with a <Banner>. Otherwise, if none of the
  * specified banners is enabled, or if all enabled banners have been
@@ -52,7 +49,7 @@
  * @flow
  */
 import * as React from 'react';
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useState } from 'react';
 
 import CloseIcon from './icons/close.svg';
 import { getLocale, gettext, Interpolated } from './l10n.js';
@@ -182,86 +179,73 @@ function Banner(props: BannerProps) {
     );
 }
 
-type BannersProps = { banners?: Array<BannerProps> };
+export const DEVELOPER_NEEDS_ID = 'developer_needs';
+export const SUBSCRIPTION_ID = 'subscription_banner';
 
-export default function Banners(props: BannersProps) {
+export default function ActiveBanner() {
     const userData = useContext(UserProvider.context);
     const locale = getLocale();
 
-    // This is the data structure that defines the default list of banners
-    // that we need to consider displaying. To change the set of banners
-    // displayed on MDN pages, just edit this data structure.
-    //
-    // It is defined here inside of the component so that the
-    // gettext() calls are made after our string catalog is ready. But
-    // we do it inside a useMemo() function so that the localization
-    // only happens once.
-    const defaultBanners = useMemo(
-        () => [
-            {
-                id: 'developer_needs',
-                classname: 'developer-needs',
-                title: gettext('MDN Survey'),
-                copy: gettext(
-                    'Help us understand the top 10 needs of Web developers and designers.'
-                ),
-                cta: gettext('Take the survey'),
-                url:
-                    'https://qsurvey.mozilla.com/s3/Developer-Needs-Assessment-2019',
-                newWindow: true
-            },
-            {
-                id: 'subscription_banner',
-                classname: 'mdn-subscriptions',
-                title: gettext('Become a monthly supporter'),
-                copy: (
-                    <Interpolated
-                        id={gettext(
-                            'Support MDN with a $5 monthly subscription <learnMore/>.'
-                        )}
-                        learnMore={
-                            <a href={`/${locale}/payments/`}>
-                                {gettext('Learn more')}
-                            </a>
-                        }
-                    />
-                ),
-                cta: gettext('Subscribe'),
-                // The userData context isn't available yet so
-                // this is set when the banner is used.
-                url: '',
-                authenticated: true,
-                embargoDays: 7
-            }
-        ],
-        [locale] // This tells useMemo() to only compute this once.
-    );
+    if (!userData || !userData.waffle.flags) {
+        return null;
+    }
 
-    // If we have user data the loop through the specified banners
-    // to see if we can find one that is enabled by waffle
-    // and has not been recently dismissed by the user. We render
-    // the first such banner that we find, or render nothing.
-    if (userData) {
-        let bannersList = props.banners || defaultBanners;
-        for (const banner of bannersList) {
-            if (userData.waffle.flags[banner.id]) {
-                // if this banner is to be shown to authenticated users only,
-                // and the current user is not authenticated, return `null`
-                if (banner.authenticated && !userData.isAuthenticated) {
+    for (const id in userData.waffle.flags) {
+        if (!userData.waffle.flags[id] || isEmbargoed(id)) {
+            continue;
+        }
+
+        switch (id) {
+            case DEVELOPER_NEEDS_ID:
+                return (
+                    <Banner
+                        id={id}
+                        classname="developer-needs"
+                        title={gettext('MDN Survey')}
+                        copy={gettext(
+                            'Help us understand the top 10 needs of Web developers and designers.'
+                        )}
+                        cta={gettext('Take the survey')}
+                        url={
+                            'https://qsurvey.mozilla.com/s3/Developer-Needs-Assessment-2019'
+                        }
+                        newWindow
+                    />
+                );
+
+            case SUBSCRIPTION_ID:
+                if (!userData.isAuthenticated) {
                     return null;
                 }
 
-                // special case for the subscriptions banner as we need access
-                // to the username as it forms part of the `url`
-                if (banner.id === 'subscription_banner' && userData.username) {
-                    banner.url = `${window.mdn.wikiSiteUrl}/${locale}/profiles/${userData.username}/edit#subscription`;
-                }
-
-                if (!isEmbargoed(banner.id)) {
-                    return <Banner {...banner} />;
-                }
-            }
+                return (
+                    <Banner
+                        id={id}
+                        classname="mdn-subscriptions"
+                        title={gettext('Become a monthly supporter')}
+                        copy={
+                            <Interpolated
+                                id={gettext(
+                                    'Support MDN with a $5 monthly subscription <learnMore/>.'
+                                )}
+                                learnMore={
+                                    <a href={`/${locale}/payments/`}>
+                                        {gettext('Learn more')}
+                                    </a>
+                                }
+                            />
+                        }
+                        cta={gettext('Subscribe')}
+                        url={`${
+                            window.mdn ? window.mdn.wikiSiteUrl : ''
+                        }/${locale}/profiles/${userData.username ||
+                            ''}/edit#subscription`}
+                        embargoDays={7}
+                    />
+                );
         }
     }
+
+    // No banner found in the waffle flags, so we have nothing to render
     return null;
 }
