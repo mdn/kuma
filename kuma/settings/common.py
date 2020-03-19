@@ -1732,6 +1732,15 @@ STRIPE_MAX_NETWORK_RETRIES = config("STRIPE_MAX_NETWORK_RETRIES", default=5, cas
 CONTRIBUTION_SUPPORT_EMAIL = config(
     "CONTRIBUTION_SUPPORT_EMAIL", default="mdn-support@mozilla.com"
 )
+
+# The default amount suggested for monthly subscription payments.
+# As of March 2020, we only have 1 plan and the number is fixed.
+# In the future, we might have multiple plans and this might a dict of amount
+# per plan.
+# The reason it's not an environment variable is to simply indicate that it
+# can't be overridden at the moment based on the environment.
+CONTRIBUTION_AMOUNT_USD = 5.0
+
 CSP_CONNECT_SRC.append("https://checkout.stripe.com")
 CSP_FRAME_SRC.append("https://checkout.stripe.com")
 CSP_IMG_SRC.append("https://*.stripe.com")

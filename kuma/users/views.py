@@ -47,6 +47,9 @@ from kuma.core.ga_tracking import (
     ACTION_PROFILE_AUDIT,
     ACTION_PROFILE_EDIT,
     ACTION_PROFILE_EDIT_ERROR,
+    ACTION_SUBSCRIPTION_CANCELED,
+    ACTION_SUBSCRIPTION_CREATED,
+    CATEGORY_MONTHLY_PAYMENTS,
     CATEGORY_SIGNUP_FLOW,
     track_event,
 )
@@ -914,10 +917,17 @@ def stripe_hooks(request):
             payment_intent.created,
             payment_intent.invoice_pdf,
         )
+        track_event(
+            CATEGORY_MONTHLY_PAYMENTS,
+            ACTION_SUBSCRIPTION_CREATED,
+            f"{settings.CONTRIBUTION_AMOUNT_USD:.2f}",
+        )
+
     elif event.type == "customer.subscription.deleted":
         obj = event.data.object
         for user in User.objects.filter(stripe_customer_id=obj.customer):
             UserSubscription.set_canceled(user, obj.id)
+        track_event(CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_CANCELED, "webhook")
 
     else:
         return HttpResponseBadRequest(
