@@ -68,6 +68,7 @@ describe('UserProvider', () => {
                         is_beta_tester: false,
                         is_staff: true,
                         is_super_user: false,
+                        is_subscriber: false,
                         timezone: null,
                         avatar_url: null,
                         waffle: waffleFlags
