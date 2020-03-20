@@ -88,6 +88,7 @@ DATABASES = {
 
 
 SILENCED_SYSTEM_CHECKS = [
+    # https://django-mysql.readthedocs.io/en/latest/checks.html#django-mysql-w003-utf8mb4
     "django_mysql.W003",
     # As of django-recaptcha==2.0.4 it checks that you have set either
     # settings.RECAPTCHA_PRIVATE_KEY or settings.RECAPTCHA_PUBLIC_KEY.
