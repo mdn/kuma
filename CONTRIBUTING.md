@@ -48,7 +48,7 @@ and give feedback, or to tell you when we plan to review it.
 
 [gh-flow]: https://guides.github.com/introduction/flow/
 [install]: https://kuma.readthedocs.io/en/latest/installation.html
-[travisci]: https://travis-ci.org/mdn/kuma/pull_requests
+[travisci]: https://travis-ci.com/mdn/kuma/pull_requests
 
 Conventions
 ===========
@@ -197,7 +197,7 @@ We **prefer** test functions, a small number of global
 that customize the global fixtures, and using [assert][assert] for test
 assertions.
 
-[travisci]: https://travis-ci.org/mdn/kuma/pull_requests
+[travisci]: https://travis-ci.com/mdn/kuma/pull_requests
 [testing]: https://kuma.readthedocs.io/en/latest/tests.html#running-the-test-suite
 [testcase]: https://docs.djangoproject.com/en/1.8/topics/testing/tools/#testcase
 [fixture_files]: https://docs.djangoproject.com/en/1.8/topics/testing/tools/#fixture-loading

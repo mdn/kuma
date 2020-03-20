@@ -50,7 +50,7 @@
           <li><a href="{{ logout_url }}">Sign out</a> to try again.</li>
         {% endtrans %}
       {% else %}
-        {% trans login_url=url('account_login')|urlparams(next=request.get_full_path()) %}
+        {% trans login_url=login_url() %}
           <li><a href="{{ login_url }}">Sign in</a> to try again.</li>
         {% endtrans %}
       {% endif %}

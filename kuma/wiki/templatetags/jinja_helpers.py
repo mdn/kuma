@@ -1,6 +1,7 @@
 import difflib
 import json
 import re
+from functools import lru_cache
 from urllib.parse import urlsplit, urlunparse
 
 import jinja2
@@ -9,9 +10,8 @@ from cssselect.parser import SelectorSyntaxError
 from django.conf import settings
 from django.core.serializers.json import DjangoJSONEncoder
 from django.template import loader
-from django.utils import lru_cache
 from django.utils.html import conditional_escape
-from django.utils.translation import ugettext
+from django.utils.translation import gettext
 from django_jinja import library
 
 from kuma.core.urlresolvers import reverse
@@ -24,23 +24,26 @@ from ..utils import tidy_content
 
 
 def get_compare_url(doc, from_id, to_id):
-    return order_params(urlparams(
-        reverse('wiki.compare_revisions', args=[doc.slug], locale=doc.locale),
-        **{'from': from_id, 'to': to_id}
-    ))
+    return order_params(
+        urlparams(
+            reverse("wiki.compare_revisions", args=[doc.slug], locale=doc.locale),
+            **{"from": from_id, "to": to_id},
+        )
+    )
 
 
 @library.filter
 def bugize_text(content):
     escaped = jinja2.escape(content)
-    regex = re.compile(r'(bug)\s+#?(\d+)', re.IGNORECASE)
+    regex = re.compile(r"(bug)\s+#?(\d+)", re.IGNORECASE)
 
     def replacer(match):
         return jinja2.Markup(
             '<a href="https://bugzilla.mozilla.org/'
             'show_bug.cgi?id={1}" '
             'target="_blank" rel="noopener">{0} {1}</a>'
-            ''.format(*match.groups()))
+            "".format(*match.groups())
+        )
 
     return jinja2.Markup(regex.sub(replacer, escaped))
 
@@ -63,9 +66,10 @@ def format_comment(rev, previous_revision=None, load_previous=True):
     if previous_revision and previous_revision.slug != rev.slug:
         comment += jinja2.Markup(
             '<span class="slug-change">'
-            '<span>%s</span>'
+            "<span>%s</span>"
             ' <i class="icon-long-arrow-right" aria-hidden="true"></i> '
-            '<span>%s</span></span>') % (previous_revision.slug, rev.slug)
+            "<span>%s</span></span>"
+        ) % (previous_revision.slug, rev.slug)
 
     return comment
 
@@ -79,18 +83,20 @@ def revisions_unified_diff(from_revision, to_revision):
     if from_revision is None or to_revision is None:
         return "Diff is unavailable."
 
-    fromfile = '[%s] #%s' % (from_revision.document.locale, from_revision.id)
-    tofile = '[%s] #%s' % (to_revision.document.locale, to_revision.id)
+    fromfile = "[%s] #%s" % (from_revision.document.locale, from_revision.id)
+    tofile = "[%s] #%s" % (to_revision.document.locale, to_revision.id)
 
     tidy_from = from_revision.get_tidied_content()
     tidy_to = to_revision.get_tidied_content()
 
-    return '\n'.join(difflib.unified_diff(
-        tidy_from.splitlines(),
-        tidy_to.splitlines(),
-        fromfile=fromfile,
-        tofile=tofile,
-    ))
+    return "\n".join(
+        difflib.unified_diff(
+            tidy_from.splitlines(),
+            tidy_to.splitlines(),
+            fromfile=fromfile,
+            tofile=tofile,
+        )
+    )
 
 
 @library.global_function
@@ -104,15 +110,17 @@ def diff_table(content_from, content_to, prev_id, curr_id, tidy=False):
 
     html_diff = difflib.HtmlDiff(wrapcolumn=DIFF_WRAP_COLUMN)
     try:
-        diff = html_diff.make_table(content_from.splitlines(),
-                                    content_to.splitlines(),
-                                    ugettext('Revision %s') % prev_id,
-                                    ugettext('Revision %s') % curr_id,
-                                    context=True,
-                                    numlines=config.DIFF_CONTEXT_LINES)
+        diff = html_diff.make_table(
+            content_from.splitlines(),
+            content_to.splitlines(),
+            gettext("Revision %s") % prev_id,
+            gettext("Revision %s") % curr_id,
+            context=True,
+            numlines=config.DIFF_CONTEXT_LINES,
+        )
     except RuntimeError:
         # some diffs hit a max recursion error
-        message = ugettext('There was an error generating the content.')
+        message = gettext("There was an error generating the content.")
         diff = '<div class="warning"><p>%s</p></div>' % message
     return jinja2.Markup(diff)
 
@@ -121,12 +129,15 @@ def diff_table(content_from, content_to, prev_id, curr_id, tidy=False):
 def tag_diff_table(prev_tags, curr_tags, prev_id, curr_id):
     html_diff = difflib.HtmlDiff(wrapcolumn=DIFF_WRAP_COLUMN)
 
-    diff = html_diff.make_table([prev_tags], [curr_tags],
-                                ugettext('Revision %s') % prev_id,
-                                ugettext('Revision %s') % curr_id)
+    diff = html_diff.make_table(
+        [prev_tags],
+        [curr_tags],
+        gettext("Revision %s") % prev_id,
+        gettext("Revision %s") % curr_id,
+    )
 
     # Simple formatting update: 784877
-    diff = diff.replace('",', '"<br />').replace('<td', '<td valign="top"')
+    diff = diff.replace('",', '"<br />').replace("<td", '<td valign="top"')
     return jinja2.Markup(diff)
 
 
@@ -134,12 +145,21 @@ def tag_diff_table(prev_tags, curr_tags, prev_id, curr_id):
 def colorize_diff(diff):
     # we're doing something horrible here because this will show up
     # in feed reader and other clients that don't load CSS files
-    diff = diff.replace('<span class="diff_add"', '<span class="diff_add" '
-                        'style="background-color: #afa; text-decoration: none;"')
-    diff = diff.replace('<span class="diff_sub"', '<span class="diff_sub" '
-                        'style="background-color: #faa; text-decoration: none;"')
-    diff = diff.replace('<span class="diff_chg"', '<span class="diff_chg" '
-                        'style="background-color: #fe0; text-decoration: none;"')
+    diff = diff.replace(
+        '<span class="diff_add"',
+        '<span class="diff_add" '
+        'style="background-color: #afa; text-decoration: none;"',
+    )
+    diff = diff.replace(
+        '<span class="diff_sub"',
+        '<span class="diff_sub" '
+        'style="background-color: #faa; text-decoration: none;"',
+    )
+    diff = diff.replace(
+        '<span class="diff_chg"',
+        '<span class="diff_chg" '
+        'style="background-color: #fe0; text-decoration: none;"',
+    )
     return diff
 
 
@@ -153,7 +173,7 @@ def selector_content_find(document, selector):
     """
     Provided a selector, returns the relevant content from the document
     """
-    content = ''
+    content = ""
     try:
         page = pq(document.rendered_html)
     except ValueError:
@@ -175,8 +195,7 @@ def _recursive_escape(value, esc=conditional_escape):
     by the JSON encoder.
     """
     if isinstance(value, dict):
-        return type(value)((esc(k), _recursive_escape(v))
-                           for (k, v) in value.items())
+        return type(value)((esc(k), _recursive_escape(v)) for (k, v) in value.items())
     elif isinstance(value, (list, tuple)):
         return type(value)(_recursive_escape(v) for v in value)
     elif isinstance(value, str):
@@ -200,14 +219,14 @@ def tojson(value):
         # arbitrary exceptions may be raised during escaping or serialization.
         result = json.dumps(_recursive_escape(value), cls=DjangoJSONEncoder)
     except Exception:
-        return ''
+        return ""
     return jinja2.Markup(result)
 
 
 @library.filter
 def absolutify(url, for_wiki_site=False):
     """Joins settings.SITE_URL with a URL path."""
-    if url.startswith('http'):
+    if url.startswith("http"):
         return url
 
     if for_wiki_site:
@@ -223,8 +242,8 @@ def absolutify(url, for_wiki_site=False):
     query = parts.query
     fragment = parts.fragment
 
-    if path == '':
-        path = '/'
+    if path == "":
+        path = "/"
 
     return urlunparse([scheme, netloc, path, None, query, fragment])
 
@@ -235,30 +254,30 @@ def wiki_url(path):
     Create a URL pointing to Kuma.
     Look for a wiki page in the current locale, or default to given path
     """
-    if '#' in path:
-        slug, fragment = path.split('#', 1)
+    if "#" in path:
+        slug, fragment = path.split("#", 1)
     else:
         slug = path
-        fragment = ''
-    new_path = reverse('wiki.document', args=[slug])
+        fragment = ""
+    new_path = reverse("wiki.document", args=[slug])
     if fragment:
-        new_path += '#' + fragment
+        new_path += "#" + fragment
     return new_path
 
 
 @library.global_function
-@lru_cache.lru_cache()
+@lru_cache()
 def include_svg(path, title=None, title_id=None):
     """
     Embded an SVG file by path, optionally changing the title,
     and adding an id
     """
     svg = loader.get_template(path).render()
-    if (title):
-        svg_parsed = pq(svg, namespaces={'svg': 'http://www.w3.org/2000/svg'})
-        svg_parsed('svg|title')[0].text = title
-        if (title_id):
-            svg_parsed('svg|title').attr['id'] = title_id
+    if title:
+        svg_parsed = pq(svg, namespaces={"svg": "http://www.w3.org/2000/svg"})
+        svg_parsed("svg|title")[0].text = title
+        if title_id:
+            svg_parsed("svg|title").attr["id"] = title_id
         svg_out = svg_parsed.outerHtml()
     else:
         svg_out = svg

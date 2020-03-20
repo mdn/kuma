@@ -9,6 +9,7 @@ __pycache__/
 
 # Distribution / packaging
 /build/
+*.egg-info/
 
 # Installer logs
 pip-log.txt
@@ -21,6 +22,7 @@ htmlcov/
 .cache
 .noseids
 .noserc
+.pytest_cache
 nosetests.xml
 coverage.xml
 /test_results/
@@ -69,7 +71,6 @@ docker-compose.locust.yml
 docker-compose.override.yml
 etc/nginx/ssl/developer.127.0.0.1.nip.io.crt
 etc/nginx/ssl/developer.127.0.0.1.nip.io.key
-humans.txt
 james.ini
 mdn_sample_db.sql
 mdn_sample_db.sql.gz
@@ -84,6 +85,9 @@ node_modules/
 kuma/javascript/dist/
 /tmp/emails/*.log
 npm-debug.log
+
+# Not an actual file any more but kept for simplicity.
+humans.txt
 
 # Selenium
 geckodriver.log
@@ -100,3 +104,4 @@ kuma/static/js/libs/ckeditor/source/ckbuilder/
 
 # Emacs backup files
 *~
+junit.xml

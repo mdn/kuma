@@ -36,9 +36,9 @@
       {% endif %}
 
       {% if socialaccount_providers  %}
-          {% with process="login" %}
-            {% include "socialaccount/snippets/provider_list.html" %}
-          {% endwith %}
+        {% trans login_url=login_url() %}
+          <p><a href="{{ login_url }}">Sign in</a></p>
+        {% endtrans %}
       {% endif %}
 
     {# hidden form to measure bot submissions from this page #}

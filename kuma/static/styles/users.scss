@@ -19,14 +19,16 @@ Profile view
 @import 'components/users/_user-links.scss';
 @import 'components/users/_user-head.scss';
 @import 'components/users/_user-section.scss';
-@import 'components/users/_user-tags.scss';
 
 
 /*
 Profile edit
 ====================================================================== */
-@import 'components/_tagit.scss';
 @import 'components/users/_user-edit.scss';
+
+@import 'minimalist/components/user-settings/layout.scss';
+@import 'minimalist/vars/vars-color-palette.scss';
+@import 'minimalist/atoms/buttons.scss';
 
 /*
 Manage Payments

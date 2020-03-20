@@ -1,13 +1,17 @@
-from django.conf.urls import url
+from django.urls import re_path
 
 from . import views
 
 
 urlpatterns = [
-    url(r'^files/(?P<attachment_id>\d+)/(?P<filename>.+)$',
+    re_path(
+        r"^files/(?P<attachment_id>\d+)/(?P<filename>.+)$",
         views.raw_file,
-        name='attachments.raw_file'),
-    url(r'^@api/deki/files/(?P<file_id>\d+)/=(?P<filename>.+)$',
+        name="attachments.raw_file",
+    ),
+    re_path(
+        r"^@api/deki/files/(?P<file_id>\d+)/=(?P<filename>.+)$",
         views.mindtouch_file_redirect,
-        name='attachments.mindtouch_file_redirect'),
+        name="attachments.mindtouch_file_redirect",
+    ),
 ]

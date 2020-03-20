@@ -2,5 +2,4 @@ pipeline:
   enabled: true
   script: "integration-tests"
 job:
-  dockerfile: "docker/images/integration-tests/Dockerfile"
   base_url: 'https://developer.allizom.org'

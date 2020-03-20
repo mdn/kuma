@@ -1,0 +1,27 @@
+@import 'includes/vars';
+@import './minimalist/vars/_vars-color-palette.scss';
+
+@import './minimalist/atoms/buttons.scss';
+
+.delete-user-content {
+    margin-top: 20px;
+
+    .simple-text {
+        margin-right: 10px;
+        padding-left: 0;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            margin-bottom: 12px;
+
+            &:last-child {
+                margin-bottom: 24px;
+            }
+        }
+    }
+}

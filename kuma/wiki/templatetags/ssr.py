@@ -1,26 +1,22 @@
-
-
 import json
 import os
+from functools import lru_cache
 
 import requests
 import requests.exceptions
 from django.conf import settings
-from django.utils import lru_cache
 from django_jinja import library
 
 
-@lru_cache.lru_cache()
+@lru_cache()
 def get_localization_data(locale):
     """
     Read the frontend string catalog for the specified locale, parse
     it as JSON, and return the resulting dict. The returned values
     are cached so that we don't have to read files all the time.
     """
-    path = os.path.join(settings.BASE_DIR,
-                        'static', 'jsi18n',
-                        locale, 'react.json')
-    with open(path, 'r') as f:
+    path = os.path.join(settings.BASE_DIR, "static", "jsi18n", locale, "react.json")
+    with open(path, "r") as f:
         return json.load(f)
 
 
@@ -39,11 +35,11 @@ def render_react(component_name, locale, url, document_data, ssr=True):
     localization_data = get_localization_data(locale)
 
     data = {
-        'locale': locale,
-        'stringCatalog': localization_data['catalog'],
-        'pluralExpression': localization_data['plural'],
-        'url': url,
-        'documentData': document_data,
+        "locale": locale,
+        "stringCatalog": localization_data["catalog"],
+        "pluralExpression": localization_data["plural"],
+        "url": url,
+        "documentData": document_data,
     }
 
     if ssr:
@@ -60,13 +56,13 @@ def _render(component_name, html, script, needs_serialization=False):
     """
     if needs_serialization:
         assert isinstance(script, dict), type(script)
-        script = json.dumps(script).replace('</', '<\\/')
+        script = json.dumps(script).replace("</", "<\\/")
     else:
-        script = 'JSON.parse({})'.format(script)
+        script = "JSON.parse({})".format(script)
 
     return (
         '<div id="react-container" data-component-name="{}">{}</div>\n'
-        '<script>window._react_data = {};</script>\n'
+        "<script>window._react_data = {};</script>\n"
     ).format(component_name, html, script)
 
 
@@ -75,7 +71,7 @@ def client_side_render(component_name, data):
     Output an empty <div> and a script with complete state so that
     the UI can be rendered on the client-side.
     """
-    return _render(component_name, '', data, needs_serialization=True)
+    return _render(component_name, "", data, needs_serialization=True)
 
 
 def server_side_render(component_name, data):
@@ -87,17 +83,19 @@ def server_side_render(component_name, data):
     If any exceptions are thrown during the server-side rendering, we
     fall back to client-side rendering instead.
     """
-    url = '{}/{}'.format(settings.SSR_URL, component_name)
+    url = "{}/{}".format(settings.SSR_URL, component_name)
     timeout = settings.SSR_TIMEOUT
     # Try server side rendering
     try:
         # POST the document data as JSON to the SSR server and we
         # should get HTML text (encoded as plain text) in the body
         # of the response
-        response = requests.post(url,
-                                 headers={'Content-Type': 'application/json'},
-                                 data=json.dumps(data).encode('utf8'),
-                                 timeout=timeout)
+        response = requests.post(
+            url,
+            headers={"Content-Type": "application/json"},
+            data=json.dumps(data).encode("utf8"),
+            timeout=timeout,
+        )
 
         # Even though we've got fully rendered HTML now, we still need to
         # send the document data along with it so that React can sync its
@@ -132,13 +130,9 @@ def server_side_render(component_name, data):
         #                                 quickLinksHTML='')
         response.raise_for_status()
         result = response.json()
-        return _render(component_name, result['html'], result['script'])
+        return _render(component_name, result["html"], result["script"])
 
-    except requests.exceptions.ConnectionError:
-        print("Connection error contacting SSR server.")
-        print("Falling back to client side rendering.")
-        return client_side_render(component_name, data)
-    except requests.exceptions.ReadTimeout:
-        print("Timeout contacting SSR server.")
+    except requests.exceptions.RequestException as exception:
+        print(f"{exception.__class__} error contacting SSR server.")
         print("Falling back to client side rendering.")
         return client_side_render(component_name, data)

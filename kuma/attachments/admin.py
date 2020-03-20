@@ -3,7 +3,7 @@ from django.contrib import admin, messages
 from django.utils.encoding import force_text
 from django.utils.html import format_html
 from django.utils.text import get_text_list
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from kuma.core.admin import DisabledDeleteActionMixin
 from kuma.core.urlresolvers import reverse
@@ -16,35 +16,34 @@ class AttachmentRevisionInline(admin.StackedInline):
     model = AttachmentRevision
     extra = 1
     can_delete = False
-    raw_id_fields = ['creator']
+    raw_id_fields = ["creator"]
     form = AdminAttachmentRevisionForm
 
 
 @admin.register(Attachment)
 class AttachmentAdmin(DisabledDeleteActionMixin, admin.ModelAdmin):
-    fields = ['current_revision', 'mindtouch_attachment_id']
-    list_display = ['id', 'title', 'modified', 'full_url']
-    list_display_links = ['id', 'title']
+    fields = ["current_revision", "mindtouch_attachment_id"]
+    list_display = ["id", "title", "modified", "full_url"]
+    list_display_links = ["id", "title"]
     list_filter = [
-        'modified',
-        'current_revision__is_approved',
-        'current_revision__mime_type',
+        "modified",
+        "current_revision__is_approved",
+        "current_revision__mime_type",
     ]
-    list_select_related = ['current_revision']
-    ordering = ['-modified']
-    search_fields = ['title']
-    raw_id_fields = ['current_revision']
-    date_hierarchy = 'modified'
+    list_select_related = ["current_revision"]
+    ordering = ["-modified"]
+    search_fields = ["title"]
+    raw_id_fields = ["current_revision"]
+    date_hierarchy = "modified"
     inlines = [AttachmentRevisionInline]
 
     def full_url(self, obj):
         url = obj.get_file_url()
         return format_html(
-            '<a href="{}" target="_blank" rel="noopener">{}</a>',
-            url,
-            url
+            '<a href="{}" target="_blank" rel="noopener">{}</a>', url, url
         )
-    full_url.short_description = 'Full URL'
+
+    full_url.short_description = "Full URL"
 
     def delete_revisions(self, request, revisions):
         # go through all revisions and trash them,
@@ -52,20 +51,24 @@ class AttachmentAdmin(DisabledDeleteActionMixin, admin.ModelAdmin):
         trashed_attachments = []
         for revision in revisions:
             trashed_attachment = revision.delete(
-                username=request.user.username,
-                individual=False,
+                username=request.user.username, individual=False,
             )
             trashed_attachments.append(trashed_attachment)
         if trashed_attachments:
             self.message_user(
                 request,
-                _('The following attachment files were moved to the trash: '
-                  '%(filenames)s. You may want to review them before their '
-                  'automatic purge after %(days)s days from the file '
-                  'storage.') %
-                {'filenames': get_text_list(trashed_attachments, _('and')),
-                 'days': config.WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS},
-                messages.SUCCESS)
+                _(
+                    "The following attachment files were moved to the trash: "
+                    "%(filenames)s. You may want to review them before their "
+                    "automatic purge after %(days)s days from the file "
+                    "storage."
+                )
+                % {
+                    "filenames": get_text_list(trashed_attachments, _("and")),
+                    "days": config.WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS,
+                },
+                messages.SUCCESS,
+            )
         return trashed_attachments
 
     def delete_model(self, request, obj):
@@ -84,26 +87,31 @@ class AttachmentAdmin(DisabledDeleteActionMixin, admin.ModelAdmin):
 
 @admin.register(AttachmentRevision)
 class AttachmentRevisionAdmin(DisabledDeleteActionMixin, admin.ModelAdmin):
-    fields = ['attachment', 'file', 'title', 'mime_type', 'description',
-              'is_approved']
-    list_display = ['id', 'title', 'created', 'mime_type', 'is_approved',
-                    'attachment_url']
-    list_display_links = ['id', 'title']
-    list_editable = ['is_approved']
-    list_filter = ['created', 'is_approved', 'mime_type']
-    ordering = ['-created']
-    search_fields = ['title', 'description', 'creator__username']
-    raw_id_fields = ['attachment']
-    date_hierarchy = 'created'
-    list_select_related = ['creator']
+    fields = ["attachment", "file", "title", "mime_type", "description", "is_approved"]
+    list_display = [
+        "id",
+        "title",
+        "created",
+        "mime_type",
+        "is_approved",
+        "attachment_url",
+    ]
+    list_display_links = ["id", "title"]
+    list_editable = ["is_approved"]
+    list_filter = ["created", "is_approved", "mime_type"]
+    ordering = ["-created"]
+    search_fields = ["title", "description", "creator__username"]
+    raw_id_fields = ["attachment"]
+    date_hierarchy = "created"
+    list_select_related = ["creator"]
     form = AdminAttachmentRevisionForm
 
     def attachment_url(self, obj):
         attachment = obj.attachment
-        url = reverse('admin:attachments_attachment_change',
-                      args=(attachment.pk,))
+        url = reverse("admin:attachments_attachment_change", args=(attachment.pk,))
         return format_html('<a href="{}">{}</a>', url, attachment.pk)
-    attachment_url.short_description = 'Attachment'
+
+    attachment_url.short_description = "Attachment"
 
     def save_model(self, request, obj, form, change):
         obj.creator = request.user
@@ -115,8 +123,9 @@ class AttachmentRevisionAdmin(DisabledDeleteActionMixin, admin.ModelAdmin):
         False for the permission check.
         """
         if obj is None:
-            return super(AttachmentRevisionAdmin,
-                         self).has_delete_permission(request, obj)
+            return super(AttachmentRevisionAdmin, self).has_delete_permission(
+                request, obj
+            )
         else:
             return obj.siblings().count() != 0
 
@@ -126,18 +135,23 @@ class AttachmentRevisionAdmin(DisabledDeleteActionMixin, admin.ModelAdmin):
         trash_item = obj.delete(username=request.user.username)
         self.message_user(
             request,
-            _('The attachment file "%(filename)s" was moved to the trash. '
-              'You may want to review the file before its automatic purge '
-              'after %(days)s days from the file storage system.') % {
-                'filename': force_text(trash_item.filename),
-                'days': config.WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS,
-            }, messages.SUCCESS)
+            _(
+                'The attachment file "%(filename)s" was moved to the trash. '
+                "You may want to review the file before its automatic purge "
+                "after %(days)s days from the file storage system."
+            )
+            % {
+                "filename": force_text(trash_item.filename),
+                "days": config.WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS,
+            },
+            messages.SUCCESS,
+        )
 
 
 @admin.register(TrashedAttachment)
 class TrashedAttachmentAdmin(DisabledDeleteActionMixin, admin.ModelAdmin):
-    list_display = ['file', 'trashed_at', 'trashed_by', 'was_current']
-    list_filter = ['trashed_at', 'was_current']
-    search_fields = ['file']
-    date_hierarchy = 'trashed_at'
-    readonly_fields = ['file', 'trashed_at', 'trashed_by', 'was_current']
+    list_display = ["file", "trashed_at", "trashed_by", "was_current"]
+    list_filter = ["trashed_at", "was_current"]
+    search_fields = ["file"]
+    date_hierarchy = "trashed_at"
+    readonly_fields = ["file", "trashed_at", "trashed_by", "was_current"]

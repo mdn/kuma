@@ -1,4 +1,4 @@
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from kuma.wiki.feeds import DocumentsFeed
 
@@ -10,19 +10,18 @@ class AttachmentsFeed(DocumentsFeed):
     subtitle = _("Recent revisions to MDN file attachments")
 
     def items(self):
-        return (AttachmentRevision.objects.prefetch_related('creator',
-                                                            'attachment')
-                                          .order_by('-created')[:50])
+        return AttachmentRevision.objects.prefetch_related(
+            "creator", "attachment"
+        ).order_by("-created")[:50]
 
     def item_title(self, item):
         return item.title
 
     def item_description(self, item):
         if item.get_previous() is None:
-            return '<p>Created by: %s</p>' % item.creator.username
+            return f"<p>Created by: {item.creator.username}</p>"
         else:
-            return '<p>Edited by %s: %s' % (item.creator.username,
-                                            item.comment)
+            return f"<p>Edited by {item.creator.username} {item.comment}"
 
     def item_link(self, item):
         return item.attachment.get_file_url()

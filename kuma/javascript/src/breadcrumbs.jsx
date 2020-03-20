@@ -1,5 +1,8 @@
 // @flow
 import * as React from 'react';
+import { useContext } from 'react';
+
+import GAProvider from './ga-provider.jsx';
 
 import type { DocumentData } from './document.jsx';
 
@@ -8,6 +11,24 @@ type DocumentProps = {
 };
 
 export default function Breadcrumbs({ document }: DocumentProps) {
+    const ga = useContext(GAProvider.context);
+
+    /**
+     * Send a signal to GA when there is an interaction on one
+     * of the breadcrumb menu links.
+     * @param {Object} event - The event object that was triggered
+     */
+    function sendBreadcrumbItemClick(event) {
+        const label = event.target.href;
+
+        ga('send', {
+            hitType: 'event',
+            eventCategory: 'Wiki',
+            eventAction: 'Crumbs',
+            eventLabel: label
+        });
+    }
+
     return (
         <nav className="breadcrumbs" role="navigation">
             <ol
@@ -26,6 +47,8 @@ export default function Breadcrumbs({ document }: DocumentProps) {
                             className="breadcrumb-chevron"
                             property="item"
                             typeof="WebPage"
+                            onClick={sendBreadcrumbItemClick}
+                            onContextMenu={sendBreadcrumbItemClick}
                         >
                             <span property="name">{p.title}</span>
                         </a>
@@ -38,6 +61,8 @@ export default function Breadcrumbs({ document }: DocumentProps) {
                         className="crumb-current-page"
                         property="item"
                         typeof="WebPage"
+                        onClick={sendBreadcrumbItemClick}
+                        onContextMenu={sendBreadcrumbItemClick}
                     >
                         <span property="name" aria-current="page">
                             {document.title}

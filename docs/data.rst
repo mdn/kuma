@@ -68,6 +68,7 @@ A local user can be promoted to staff with the command::
 
     ./manage.py ihavepower username --password=password
 
+.. _add-wiki-doc:
 Add an MDN Wiki Document
 ========================
 If you need a wiki page that is not in the sample database, you can scrape it

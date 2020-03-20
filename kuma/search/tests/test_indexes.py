@@ -9,15 +9,17 @@ from ..models import Index
 
 
 class TestIndexes(ElasticTestCase):
-    fixtures = ElasticTestCase.fixtures + ['wiki/documents.json']
+    fixtures = ElasticTestCase.fixtures + ["wiki/documents.json"]
 
     def tearDown(self):
         super(TestIndexes, self).tearDown()
         Index.objects.all().delete()
 
     def test_get_current(self):
-        assert ('%s-main_index' % settings.ES_INDEX_PREFIX ==
-                Index.objects.get_current().prefixed_name)
+        assert (
+            "%s-main_index" % settings.ES_INDEX_PREFIX
+            == Index.objects.get_current().prefixed_name
+        )
 
     def _reload(self, index):
         return Index.objects.get(pk=index.pk)
@@ -48,7 +50,7 @@ class TestIndexes(ElasticTestCase):
         index1 = Index.objects.get_current()
         assert index1.promoted
 
-        index2 = Index.objects.create(name='second')
+        index2 = Index.objects.create(name="second")
         index2.promote()
         index1 = self._reload(index1)
         assert index2.promoted
@@ -56,19 +58,18 @@ class TestIndexes(ElasticTestCase):
 
     def test_outdated(self):
         # first create and populate an index
-        main_index = Index.objects.create(name='first')
+        main_index = Index.objects.create(name="first")
         main_index.populate()
         main_index = self._reload(main_index)
         assert main_index.populated
         main_index.promote()
-        assert (main_index.prefixed_name ==
-                Index.objects.get_current().prefixed_name)
+        assert main_index.prefixed_name == Index.objects.get_current().prefixed_name
 
         # then create a successor and render a document against the old index
-        successor_index = Index.objects.create(name='second')
+        successor_index = Index.objects.create(name="second")
         doc = Document.objects.get(pk=1)
-        doc.title = 'test outdated'
-        doc.slug = 'test-outdated'
+        doc.title = "test outdated"
+        doc.slug = "test-outdated"
         doc.save()
         doc.render()
         assert 1 == successor_index.outdated_objects.count()
@@ -78,15 +79,20 @@ class TestIndexes(ElasticTestCase):
 
         S = WikiDocumentType.search
         assert 7 == S(index=successor_index.prefixed_name).count()
-        assert 'lorem-ipsum' == S().query('match', title='lorem').execute()[0].slug
+        assert "lorem-ipsum" == S().query("match", title="lorem").execute()[0].slug
 
         # Promotion reindexes outdated documents. Test that our change is
         # reflected in the index.
         successor_index.promote()
         self.refresh(index=successor_index.prefixed_name)
         assert 0 == successor_index.outdated_objects.count()
-        assert ('test-outdated' == S(index=successor_index.prefixed_name)
-                .query('match', title='outdated').execute()[0].slug)
+        assert (
+            "test-outdated"
+            == S(index=successor_index.prefixed_name)
+            .query("match", title="outdated")
+            .execute()[0]
+            .slug
+        )
 
     def test_delete_index(self):
         # first create and populate the index

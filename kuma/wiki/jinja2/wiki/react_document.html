@@ -57,9 +57,7 @@
   <!-- basic favicon -->
   <link rel="shortcut icon" href="{{ favicon_url() }}">
 
-  {% if waffle.flag('developer_needs') %}
-    {% stylesheet 'banners' %}
-  {% endif %}
+  {% include "wiki/includes/banner-styles.html" %}
 
   <link rel="preconnect" href="https://interactive-examples.mdn.mozilla.net" pr="0.75" />
 
@@ -94,13 +92,15 @@
   {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(),
                   document_data)|safe }}
 
+  {% block auth_modal %}
+    {% include "includes/auth-modal.html" %}
+  {% endblock %}
+
   <!-- site js -->
   {% javascript 'react-main' %}
-  <script>
-    if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
-  </script>
-
-  {% if waffle.flag('bc-signals') %}
+  {% javascript 'mathml' %}
+  {% javascript 'auth-modal' %}
+  {% if settings.ENABLE_BCD_SIGNAL %}
     {% javascript "bcd-signal" %}
   {% endif %}
 </body>

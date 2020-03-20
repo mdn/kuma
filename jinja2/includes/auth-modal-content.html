@@ -1,0 +1,11 @@
+<p>
+    {{ _('Sign in to enjoy the benefits of an MDN account. If you haven’t already created an account, you will be prompted to do so after signing in.') }}
+</p>
+<div class="auth-button-container">
+    <a href="{{ provider_login_url('github') }}" class="github-auth" data-first-focusable="true">
+        {{ _('Sign in with Github') }}
+    </a>
+    <a href="{{ provider_login_url('google') }}" class="google-auth">
+        {{ _('Sign in with Google') }}
+    </a>
+</div>

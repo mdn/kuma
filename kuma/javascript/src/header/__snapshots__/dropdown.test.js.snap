@@ -7,6 +7,8 @@ exports[`Dropdown closed and open snapshots 1`] = `
   <button
     aria-haspopup="true"
     className="dropdown-menu-label"
+    onFocus={[Function]}
+    onMouseOver={[Function]}
     type="button"
   >
     Test

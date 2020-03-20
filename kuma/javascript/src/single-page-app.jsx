@@ -6,6 +6,7 @@ import { getLocale } from './l10n.js';
 import Router from './router.jsx';
 import { SearchRoute } from './search-results-page.jsx';
 import UserProvider from './user-provider.jsx';
+import { PaymentsRoute } from './payments/index.jsx';
 
 type SinglePageAppProps = {
     initialURL: string,
@@ -17,7 +18,11 @@ export default function SinglePageApp({
     initialData
 }: SinglePageAppProps) {
     const locale = getLocale();
-    const routes = [new DocumentRoute(locale), new SearchRoute(locale)];
+    const routes = [
+        new DocumentRoute(locale),
+        new SearchRoute(locale),
+        new PaymentsRoute(locale)
+    ];
 
     return (
         <UserProvider>

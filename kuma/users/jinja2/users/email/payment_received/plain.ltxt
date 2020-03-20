@@ -1,0 +1,10 @@
+{% autoescape false -%}
+{{ _('Hello from MDN!') }}
+
+{{ invoice_pdf }}
+
+Cancel any time. To cancel your subscription, please go to the manage monthly subscriptions page: {{ manage_subscription_url }}.
+If you have questions, please read the FAQ ({{ faq_url }}) or you can also contact support: {{ contact_email }}
+
+{{ _('Thank you for using MDN!') }}
+{% endautoescape -%}

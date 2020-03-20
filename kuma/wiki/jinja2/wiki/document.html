@@ -38,14 +38,6 @@
   {% set content_class = 'column-main' %}
 {% endif %}
 
-{% block robots_value %}
-  {%- if document.is_experiment or document.has_legacy_namespace or fallback_reason or not document_html -%}
-    noindex, nofollow
-  {%- else -%}
-    {{ super() }}
-  {%- endif -%}
-{% endblock %}
-
 {% block bodyclass %}document{% endblock %}
 {% block body_attributes %}data-slug="{{ document.slug }}" contextmenu="edit-history-menu" data-search-url="{{ search_url }}"{% endblock body_attributes %}
 
@@ -54,8 +46,9 @@
 {% block site_css %}
     {{ super() }}
     {% stylesheet 'prism' %}
-    {% if waffle.flag('developer_needs') %}
+    {% if waffle.switch('developer_needs') %}
       {% stylesheet 'banners' %}
+      {% stylesheet 'banner_developer_needs' %}
     {% endif %}
 {% endblock %}
 
@@ -302,7 +295,7 @@
   </menu>
 {% endblock %}
 
-{% if waffle.flag('developer_needs') %}
+{% if waffle.switch('developer_needs') %}
     {%- block banners %}
         {% include "banners/cta-banners.html" %}
     {% endblock %}
@@ -352,7 +345,7 @@
     {% javascript 'newsletter' %}
   {% endif %}
 
-  {% if waffle.flag('developer_needs') %}
+  {% if waffle.switch('developer_needs') %}
     {% javascript 'banners' %}
   {% endif %}
 {% endblock %}

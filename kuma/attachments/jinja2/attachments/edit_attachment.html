@@ -2,7 +2,6 @@
 {# L10n: 'title' is the title of the document. #}
 {% set title = _('Attachments | %(title)s', title=document.title) %}
 {% block title %}{{ page_title(document.title) }}{% endblock %}
-{% block robots_value %}noindex, nofollow{% endblock %}
 {% set classes = 'document' %}
 {% from 'includes/common_macros.html' import li_field %}
 {% from "includes/error_list.html" import errorlist %}
