@@ -195,6 +195,15 @@ export default function ActiveBanner() {
             continue;
         }
 
+        // The Subscription banner is special. It should not be displayed
+        // if the user has a truthy `isSubscriber`.
+        if (id === SUBSCRIPTION_ID) {
+            if (userData.isSubscriber) {
+                // This user will NOT get this banner.
+                return true;
+            }
+        }
+
         switch (id) {
             case DEVELOPER_NEEDS_ID:
                 return (
