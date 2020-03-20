@@ -1,11 +1,17 @@
 [flake8]
-exclude = **/migrations/**,.tox,*.egg,vendor
-# E501 - line too long (82 > 79 characters)
-# E731 - do not assign a lambda expression, use a def
-# F405 - name may be undefined, or defined from star imports: module
-# W504 - line break after binary operator
-#        conflicts with W503 (line break before binary operator)
-ignore = E501,E731,F405,W504
+# Black recommends 88-char lines and ignoring the following lints:
+# - E203 - whitespace before ':'
+# - E501 - line too long
+# - W503 - line break before binary operator
+max-line-length=88
+ignore = E203, E501, W503
+
+# Allow star imports in config files:
+per-file-ignores =
+    kuma/settings/local.py:F403,F405
+    kuma/settings/prod.py:F403,F405
+    kuma/settings/testing.py:F403,F405
+
 # flake8-import-order settings
 import-order-style=edited
 application-import-names=kuma,pages,utils

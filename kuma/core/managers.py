@@ -29,12 +29,11 @@ class NamespacedTaggableManager(TaggableManager):
         return [(t.id, t.name) for t in Tag.objects.all()]
 
     def __init__(self, *args, **kwargs):
-        kwargs['manager'] = _NamespacedTaggableManager
+        kwargs["manager"] = _NamespacedTaggableManager
         super(NamespacedTaggableManager, self).__init__(*args, **kwargs)
 
 
 class _NamespacedTaggableManager(_TaggableManager):
-
     def __str__(self):
         """Return the list of tags as an editable string.
         Expensive: Does a DB query for the tags"""
@@ -45,9 +44,9 @@ class _NamespacedTaggableManager(_TaggableManager):
         """Fetch tags by namespace, or collate all into namespaces"""
         tags = self.all()
 
-        if namespace == '':
+        if namespace == "":
             # Empty namespace is special - just look for absence of ':'
-            return tags.exclude(name__contains=':')
+            return tags.exclude(name__contains=":")
 
         if namespace is not None:
             # Namespace requested, so generate filtered set
@@ -83,7 +82,7 @@ class _NamespacedTaggableManager(_TaggableManager):
     def clear_ns(self, namespace=None):
         """Clear tags within a namespace"""
         lookup_kwargs = self._lookup_kwargs()
-        lookup_kwargs['tag__name__startswith'] = namespace
+        lookup_kwargs["tag__name__startswith"] = namespace
         self.through.objects.filter(**lookup_kwargs).delete()
 
     @require_instance_manager
@@ -97,18 +96,18 @@ class _NamespacedTaggableManager(_TaggableManager):
         Namespace is tag name text up to and including the last
         occurrence of ':'
         """
-        if (':' in tag.name):
-            (ns, name) = tag.name.rsplit(':', 1)
-            return ('%s:' % ns, name)
+        if ":" in tag.name:
+            (ns, name) = tag.name.rsplit(":", 1)
+            return ("%s:" % ns, name)
         else:
-            return ('', tag.name)
+            return ("", tag.name)
 
     def _ensure_ns(self, namespace, tags):
         """Ensure each tag name in the list starts with the given namespace"""
         ns_tags = []
         for t in tags:
             if not t.startswith(namespace):
-                t = '%s%s' % (namespace, t)
+                t = f"{namespace}{t}"
             ns_tags.append(t)
         return ns_tags
 

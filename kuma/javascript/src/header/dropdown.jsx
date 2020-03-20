@@ -1,7 +1,13 @@
 //@flow
 import * as React from 'react';
+import { useContext } from 'react';
+
+import GAProvider from '../ga-provider.jsx';
 
 type DropdownProps = {|
+    // A string set as the id attribute to uniquely identify this
+    // Dropdown component
+    id?: string,
     // The string or component to display. Hovering over this will
     // display the menu
     label: string | React.Node,
@@ -24,14 +30,35 @@ type DropdownProps = {|
 |};
 
 export default function Dropdown(props: DropdownProps) {
+    const ga = useContext(GAProvider.context);
+
+    /**
+     * Send a signal to GA when there is an interaction on one
+     * of the dropdown menus. For example the language selector
+     * in the header section of documentation pages.
+     * @param {Object} event - The event object that was triggered
+     */
+    function sendDropdownInteraction(event) {
+        const action = event.target.id;
+
+        ga('send', {
+            hitType: 'event',
+            eventCategory: 'MozMenu',
+            eventAction: action
+        });
+    }
+
     return (
         <div className="dropdown-container">
             <button
+                id={props.id}
                 type="button"
                 className="dropdown-menu-label"
                 aria-haspopup="true"
                 aria-owns={props.ariaOwns}
                 aria-label={props.ariaLabel}
+                onMouseOver={sendDropdownInteraction}
+                onFocus={sendDropdownInteraction}
             >
                 {props.label}
                 {!props.hideArrow && (
@@ -42,8 +69,7 @@ export default function Dropdown(props: DropdownProps) {
             </button>
             <ul
                 id={props.ariaOwns}
-                className="dropdown-menu-items"
-                style={props.right && { right: 0 }}
+                className={`dropdown-menu-items${props.right ? ' right' : ''}`}
                 role="menu"
             >
                 {props.children}

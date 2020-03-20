@@ -9,8 +9,9 @@
 
   {% stylesheet 'home' %}
 
-  {% if waffle.flag('developer_needs') %}
+  {% if waffle.switch('developer_needs') %}
     {% stylesheet 'banners' %}
+    {% stylesheet 'banner_developer_needs' %}
   {% endif %}
 {% endblock %}
 
@@ -81,7 +82,7 @@
     {%- if settings.FOUNDATION_CALLOUT %}
       {% include "landing/includes/callouts/foundation.html" %}
     {% else %}
-      {% include "landing/includes/callouts/grid-tools.html" %}
+      {% include "landing/includes/callouts/featured.html" %}
     {% endif %}
     {% if settings.NEWSLETTER %}
     <div class="column-callout callout-newsletter">
@@ -131,7 +132,7 @@
 </div>
 {% endblock %}
 
-{% if waffle.flag('developer_needs') %}
+{% if waffle.switch('developer_needs') %}
     {%- block banners %}
         {% include "banners/cta-banners.html" %}
     {% endblock %}
@@ -143,7 +144,7 @@
     {% javascript 'newsletter' %}
   {% endif %}
 
-  {% if waffle.flag('developer_needs') %}
+  {% if waffle.switch('developer_needs') %}
     {% javascript 'banners' %}
   {% endif %}
 {% endblock %}

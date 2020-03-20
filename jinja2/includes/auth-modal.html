@@ -1,0 +1,9 @@
+{% extends "includes/modal.html" %}
+
+{% set modal_id = "auth-modal" %}
+{% set modal_content_class = "auth-providers" %}
+{% set modal_title = _('Sign In') %}
+
+{% block modal_content %}
+  {% include "includes/auth-modal-content.html" %}
+{% endblock %}

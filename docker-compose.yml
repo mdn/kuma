@@ -11,12 +11,19 @@ services:
       - elasticsearch
       - redis
       - kumascript
+      - minio
     environment:
       # Django settings overrides:
       - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
       - ALLOW_ALL_IFRAMES=${ALLOW_ALL_IFRAMES:-False}
       - ALLOWED_HOSTS=*
       - ATTACHMENT_HOST=${ATTACHMENT_HOST:-localhost:8000}
+      - ATTACHMENTS_USE_S3=${ATTACHMENTS_USE_S3:-True}
+      - ATTACHMENTS_AWS_ACCESS_KEY_ID=${ATTACHMENTS_AWS_ACCESS_KEY_ID:-minio}
+      - ATTACHMENTS_AWS_SECRET_ACCESS_KEY=${ATTACHMENTS_AWS_SECRET_ACCESS_KEY:-minio123}
+      - ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN=${ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN:-localhost:9000/mdn-attachments}
+      - ATTACHMENTS_AWS_S3_SECURE_URLS=${ATTACHMENTS_AWS_S3_SECURE_URLS:-False}
+      - ATTACHMENTS_AWS_S3_ENDPOINT_URL=${ATTACHMENTS_AWS_S3_ENDPOINT_URL:-http://minio:9000}
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
       - CELERY_BROKER_URL=redis://redis:6379/0
@@ -39,13 +46,14 @@ services:
       # Other environment overrides
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=True
-      - PYTHONWARNINGS=${PYTHONWARNINGS:-default}
+      - PYTHONWARNINGS=${PYTHONWARNINGS:-}
       - MAINTENANCE_MODE=${MAINTENANCE_MODE:-False}
       - REVISION_HASH=${KUMA_REVISION_HASH:-undefined}
       # For the server side rendering server and the code that connects to it.
       - SSR_PORT=8000
       - SSR_URL=http://ssr:8000/ssr
       - SSR_TIMEOUT=1
+      - GOOGLE_ANALYTICS_TRACKING_URL=http://mockga:7000/collect
 
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:
@@ -55,21 +63,11 @@ services:
       - mysql
       - elasticsearch
       - redis
-      - kumascript
       - ssr
+      - minio
+      - mockga
     ports:
       - "8000:8000"
-
-  # API is used by KumaScript for content and metadata
-  api:
-    <<: *worker
-    command: gunicorn -w ${GUNICORN_WORKERS:-4} --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 kuma.wsgi:application
-    depends_on:
-      - mysql
-      - elasticsearch
-      - redis
-    ports:
-      - "8001:8000"
 
   # ssr is a Node server that performs server-side rendering of our React UI
   ssr:
@@ -112,11 +110,11 @@ services:
     image: mdnwebdocs/kumascript
     command: node run.js
     depends_on:
-      - api
+      - web
       - redis
     environment:
-      - DOCUMENT_URL_TEMPLATE=http://api:8000/en-US/docs/{path}?raw=1&redirect=no
-      - DOCUMENT_URL=http://api:8000
+      - DOCUMENT_URL_TEMPLATE=http://web:8000/en-US/docs/{path}?raw=1&redirect=no
+      - DOCUMENT_URL=http://web:8000
       - INTERACTIVE_EXAMPLES_URL=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
       - LIVE_SAMPLES_URL=http://${ATTACHMENT_HOST:-localhost:8000}
       - REDIS_URL=redis://redis:6379/2
@@ -124,7 +122,39 @@ services:
       - "9080:9080"
     volumes:
       - ./kumascript:/app
+
+  # MinIO: S3-compatible object storage (https://min.io)
+  minio:
+    image: minio/minio
+    command: server /data
+    environment:
+      MINIO_ACCESS_KEY: "minio"
+      MINIO_SECRET_KEY: "minio123"
+    ports:
+      - "9000:9000"
+    volumes:
+      - miniodata:/data
+
+  # One-shot service that ensures Minio is properly configured for Kuma
+  # No need to explicitly wait for minio; mc automatically wailts
+  minio_setup:
+    image: minio/mc
+    depends_on:
+      - minio
+    environment:
+      MC_HOST_minio: "http://${MINIO_ACCESS_KEY:-minio}:${MINIO_SECRET_KEY:-minio123}@minio:9000"
+    entrypoint: ""
+    command: /bin/sh -c "for BUCKET in 'test' 'mdn-attachments'; do mc mb -p minio/$$BUCKET && mc policy set download minio/$$BUCKET; done"
+
+  mockga:
+    build:
+      context: mockga
+      dockerfile: Dockerfile
+    ports:
+      - "7000:7000"
+
 volumes:
+    miniodata:
     mysqlvolume:
     esdata:
       driver: local

@@ -1,0 +1,27 @@
+<div class="text-content delete-user-content" id="user-delete">
+
+    <form id="delete-user-form" action="{{ url('users.user_delete', username) }}" method="post">
+        {% csrf_token %}
+
+        {% if revisions.exists() or attachment_revisions.exists() %}
+            <p>{{ _('Deleting your account loses any preferences you have set.') }}
+                <br>
+                {{ _('It will also cancel any MDN subscription you might have.') }}
+            </p>
+            <p>{{ _('Although we can delete your account, any revisions you have made to pages on MDN will remain. Please select how would like us to handle the attribution for your changes.') }}</p>
+            {{ form.attributions.errors }}
+            {{ form.attributions }}
+        {% else %}
+            <p>
+                {{ _('Deleting your account loses any preferences you have set, as well as makes your username available for others to use.') }}
+                <br>
+                {{ _('It will also cancel any MDN subscription you might have.') }}
+            </p>
+        {% endif %}
+
+        <p>{{ _('Are you sure you want to continue?') }}</p>
+
+        <button type="button" id="cancel-button" class="simple-text" data-first-focusable="true">{{ _('Cancel') }}</button>
+        <button type="submit" id="delete-user-confirm" {% if revisions.exists() %}class="disabled" disabled{% else %}class="negative"{% endif %}>{{ _('Yes, Delete my Account') }}</button>
+    </form>
+</div>

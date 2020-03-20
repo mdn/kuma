@@ -17,22 +17,19 @@
   {% endif %}
 {% endblock %}
 
-{% block robots_value %}noindex, nofollow{% endblock %}
-
 {% block bodyclass %}search-results search-results-no-demo search-navigator-flush{% endblock %}
 
 {% macro doc_block(doc, index) -%}
-  {% set doc_url = wiki_url(doc.slug) %}
   <li class="result-{{ index }}">
     <div class="column-container">
       <div class="column-1">
           {% include 'includes/icons/file-icons/plain-text.svg' %}
       </div>
       <div class="column-5 result-list-item">
-        <h4><a href="{{ doc_url }}"{% if index == 1 %} tabindex="1"{% endif %}>{{ doc.title }}</a></h4>
+        <h4><a href="{{ doc.url }}"{% if index == 1 %} tabindex="1"{% endif %}>{{ doc.title }}</a></h4>
         <p>{{ doc.excerpt|safe }}</p>
-        <p class="search-meta"><a href="{{ doc_url }}">{{ doc_url }}</a>
-        {% if request.user.is_superuser %}Score: {{ doc.score }}{% endif %}
+        <p class="search-meta"><a href="{{ doc.url }}">/{{ doc.locale }}/{{ doc.slug }}</a>
+        {% if request.user.is_superuser %}Score: {{ doc.score|floatformat }}{% endif %}
         {% if doc.parent %}
             {% trans parent_url=doc.parent.url, parent_title=doc.parent.title, parent_language=settings.LOCALES[doc.parent.locale].native %}
             translated from <a href="{{ parent_url }}" title="{{ parent_title }}">{{ parent_title }} ({{ parent_language }})</a>

@@ -15,48 +15,47 @@ from ..sources import UserSource
 def complex_user(db, django_user_model):
     """A complex User record with social and other profile data."""
     user = django_user_model.objects.create(
-        username='JillDeveloper',
-        fullname='Jill Developer',
-        email='jill@example.com',
-        title='Web Developer',
-        organization='Acme, Inc.',
-        location='Springfield, USA',
+        username="JillDeveloper",
+        fullname="Jill Developer",
+        email="jill@example.com",
+        title="Web Developer",
+        organization="Acme, Inc.",
+        location="Springfield, USA",
         date_joined=datetime(1999, 1, 1, 10, 40, 23),
-        twitter_url='http://twitter.com/jilldev1999',
-        github_url='https://github.com/jilldev1999',
-        stackoverflow_url='http://stackoverflow.com/users/1/jilldev1999',
-        linkedin_url='http://www.linkedin.com/in/jilldev1999',
-        mozillians_url='http://mozillians.org/u/jilldev/')
-    user.tags.set_ns('profile:interest:', 'JavaScript', 'HTML', 'CSS')
-    user.tags.set_ns('profile:expertise:', 'HTML')
+        twitter_url="http://twitter.com/jilldev1999",
+        github_url="https://github.com/jilldev1999",
+        stackoverflow_url="http://stackoverflow.com/users/1/jilldev1999",
+        linkedin_url="http://www.linkedin.com/in/jilldev1999",
+        mozillians_url="http://mozillians.org/u/jilldev/",
+    )
     return user
 
 
-@pytest.mark.parametrize("email", ['', 'jack@example.com'])
+@pytest.mark.parametrize("email", ["", "jack@example.com"])
 def test_gather_simple(email, simple_user, client):
     html = client.get(simple_user.get_absolute_url(), follow=True).content
     source = UserSource(simple_user.username, email=email, social=True)
     requester = mock_requester(content=html, status_code=200)
-    storage = mock_storage(spec=['get_user', 'save_user'])
+    storage = mock_storage(spec=["get_user", "save_user"])
     resources = source.gather(requester, storage)
     assert resources == []
     assert source.state == source.STATE_DONE
     assert source.freshness == source.FRESH_YES
     storage.get_user.assert_called_once_with(simple_user.username)
     expected_data = {
-        'username': 'JackDeveloper',
-        'date_joined': datetime(2016, 11, 4, 9, 1)
+        "username": "JackDeveloper",
+        "date_joined": datetime(2016, 11, 4, 9, 1),
     }
     if email:
-        expected_data['email'] = email
+        expected_data["email"] = email
     storage.save_user.assert_called_once_with(expected_data)
 
 
 def test_gather_existing_user():
-    source = UserSource('existing', social=True)
+    source = UserSource("existing", social=True)
     requester = mock_requester(requester_spec=[])
-    storage = mock_storage(spec=['get_user'])
-    storage.get_user.return_value = {'username': 'existing'}
+    storage = mock_storage(spec=["get_user"])
+    storage.get_user.return_value = {"username": "existing"}
     resources = source.gather(requester, storage)
     assert resources == []
     assert source.state == source.STATE_DONE
@@ -64,27 +63,24 @@ def test_gather_existing_user():
 
 
 def test_gather_banned(simple_user, client):
-    UserBan.objects.create(user=simple_user, by=simple_user,
-                           reason='Turning myself in.')
-    user_path = '/en-US/profiles/' + simple_user.username
+    UserBan.objects.create(
+        user=simple_user, by=simple_user, reason="Turning myself in."
+    )
+    user_path = "/en-US/profiles/" + simple_user.username
     result = client.get(user_path)
     source = UserSource(simple_user.username, force=True)
-    requester = mock_requester(content=result.content,
-                               status_code=result.status_code)
-    storage = mock_storage(spec=['save_user'])
+    requester = mock_requester(content=result.content, status_code=result.status_code)
+    storage = mock_storage(spec=["save_user"])
     resources = source.gather(requester, storage)
     assert resources == []
     assert source.state == source.STATE_DONE
     assert source.freshness == source.FRESH_YES
-    expected_data = {
-        'username': simple_user.username,
-        'banned': True
-    }
+    expected_data = {"username": simple_user.username, "banned": True}
     storage.save_user.assert_called_once_with(expected_data)
 
 
 def test_gather_missing():
-    source = UserSource('missing', force=True)
+    source = UserSource("missing", force=True)
     requester = mock_requester(content="not found", status_code=404)
     storage = mock_storage()
     resources = source.gather(requester, storage)
@@ -97,14 +93,12 @@ def test_extract_complex(complex_user, client):
     source = UserSource(complex_user.username)
     data = source.extract_data(html)
     expected_data = {
-        'username': 'JillDeveloper',
-        'fullname': 'Jill Developer',
-        'title': 'Web Developer',
-        'organization': 'Acme, Inc.',
-        'location': 'Springfield, USA',
-        'interest': ['CSS', 'HTML', 'JavaScript'],
-        'expertise': ['HTML'],
-        'date_joined': datetime(1999, 1, 1, 10, 40, 23),
+        "username": "JillDeveloper",
+        "fullname": "Jill Developer",
+        "title": "Web Developer",
+        "organization": "Acme, Inc.",
+        "location": "Springfield, USA",
+        "date_joined": datetime(1999, 1, 1, 10, 40, 23),
     }
     assert data == expected_data
 
@@ -114,27 +108,25 @@ def test_extract_complex_social(complex_user, client):
     source = UserSource(complex_user.username, social=True)
     data = source.extract_data(html)
     expected_data = {
-        'username': 'JillDeveloper',
-        'fullname': 'Jill Developer',
-        'title': 'Web Developer',
-        'organization': 'Acme, Inc.',
-        'location': 'Springfield, USA',
-        'interest': ['CSS', 'HTML', 'JavaScript'],
-        'expertise': ['HTML'],
-        'twitter_url': 'http://twitter.com/jilldev1999',
-        'github_url': 'https://github.com/jilldev1999',
-        'stackoverflow_url': 'http://stackoverflow.com/users/1/jilldev1999',
-        'linkedin_url': 'http://www.linkedin.com/in/jilldev1999',
-        'mozillians_url': 'http://mozillians.org/u/jilldev/',
-        'date_joined': datetime(1999, 1, 1, 10, 40, 23),
+        "username": "JillDeveloper",
+        "fullname": "Jill Developer",
+        "title": "Web Developer",
+        "organization": "Acme, Inc.",
+        "location": "Springfield, USA",
+        "twitter_url": "http://twitter.com/jilldev1999",
+        "github_url": "https://github.com/jilldev1999",
+        "stackoverflow_url": "http://stackoverflow.com/users/1/jilldev1999",
+        "linkedin_url": "http://www.linkedin.com/in/jilldev1999",
+        "mozillians_url": "http://mozillians.org/u/jilldev/",
+        "date_joined": datetime(1999, 1, 1, 10, 40, 23),
     }
     assert data == expected_data
 
 
 def test_extract_irc(complex_user, client):
-    complex_user.irc_nickname = 'jilldev'
+    complex_user.irc_nickname = "jilldev"
     complex_user.save()
     html = client.get(complex_user.get_absolute_url(), follow=True).content
     source = UserSource(complex_user.username, social=True)
     data = source.extract_data(html)
-    assert data['irc_nickname'] == 'jilldev'
+    assert data["irc_nickname"] == "jilldev"

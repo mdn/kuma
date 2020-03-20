@@ -1,15 +1,13 @@
-from django.conf.urls import url
+from django.urls import re_path
 
 from . import views
 
 lang_base_urlpatterns = [
-    url(r'^$', views.search, name='search'),
-    url(r'^.(?P<format>json)$', views.SearchRedirectView.as_view())
+    re_path(r"^$", views.search, name="search"),
+    re_path(r"^.(?P<format>json)$", views.SearchRedirectView.as_view()),
 ]
 
 
 lang_urlpatterns = [
-    url(r'^xml$',
-        views.plugin,
-        name='search.plugin'),
+    re_path(r"^xml$", views.plugin, name="search.plugin"),
 ]

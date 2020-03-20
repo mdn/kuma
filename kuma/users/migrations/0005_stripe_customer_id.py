@@ -7,13 +7,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0004_add_choices_to_timezone'),
+        ("users", "0004_add_choices_to_timezone"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='stripe_customer_id',
+            model_name="user",
+            name="stripe_customer_id",
             field=models.CharField(blank=True, max_length=255),
         ),
     ]

@@ -1,16 +1,13 @@
 import json
-import operator
 from datetime import datetime, timedelta
-from functools import reduce
 
+import stripe
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
 from allauth.socialaccount import helpers
-from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.views import ConnectionsView
 from allauth.socialaccount.views import SignupView as BaseSignupView
 from constance import config
-from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import permission_required
@@ -19,51 +16,65 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.core.validators import validate_email, ValidationError
 from django.db import IntegrityError, transaction
-from django.db.models import Q
-from django.http import HttpResponseBadRequest, HttpResponseForbidden
+from django.http import (
+    HttpResponse,
+    HttpResponseBadRequest,
+    HttpResponseForbidden,
+    HttpResponseRedirect,
+)
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
+from django.urls import reverse
+from django.utils import timezone
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
 from honeypot.decorators import verify_honeypot_value
-from taggit.utils import parse_tags
+from raven.contrib.django.models import client as raven_client
+from waffle import flag_is_active
 
-from kuma.core.decorators import (ensure_wiki_domain, login_required,
-                                  redirect_in_maintenance_mode)
+from kuma.attachments.models import AttachmentRevision
+from kuma.core.decorators import (
+    ensure_wiki_domain,
+    login_required,
+    redirect_in_maintenance_mode,
+)
+from kuma.core.ga_tracking import (
+    ACTION_PROFILE_AUDIT,
+    ACTION_PROFILE_EDIT,
+    ACTION_PROFILE_EDIT_ERROR,
+    CATEGORY_SIGNUP_FLOW,
+    track_event,
+)
+from kuma.core.utils import urlparams
+from kuma.payments.utils import cancel_stripe_customer_subscription
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
-from kuma.wiki.models import (Document, DocumentDeletionLog, Revision,
-                              RevisionAkismetSubmission)
+from kuma.wiki.models import (
+    Document,
+    DocumentDeletionLog,
+    Revision,
+    RevisionAkismetSubmission,
+)
 
-from .forms import UserBanForm, UserEditForm, UserRecoveryEmailForm
-from .models import User, UserBan
-# we have to import the signup form here due to allauth's odd form subclassing
+# we have to import the SignupForm form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
+from .forms import UserBanForm, UserDeleteForm, UserEditForm, UserRecoveryEmailForm
+from .models import User, UserBan, UserSubscription
 from .signup import SignupForm
-
-
-# TODO: Make this dynamic, editable from admin interface
-INTEREST_SUGGESTIONS = [
-    "audio", "canvas", "css3", "device", "files", "fonts",
-    "forms", "geolocation", "javascript", "html5", "indexeddb", "dragndrop",
-    "mobile", "offlinesupport", "svg", "video", "webgl", "websockets",
-    "webworkers", "xhr", "multitouch",
-
-    "front-end development",
-    "web development",
-    "tech writing",
-    "user experience",
-    "design",
-    "technical review",
-    "editorial review",
-]
+from .stripe_utils import (
+    create_stripe_customer_and_subscription_for_user,
+    get_stripe_customer,
+    get_stripe_subscription_info,
+)
+from .tasks import send_payment_received_email
 
 
 @ensure_wiki_domain
-@permission_required('users.add_userban')
+@permission_required("users.add_userban")
 def ban_user(request, username):
     """
     Ban a user.
@@ -71,13 +82,15 @@ def ban_user(request, username):
     User = get_user_model()
     user = get_object_or_404(User, username=username)
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = UserBanForm(data=request.POST)
         if form.is_valid():
-            ban = UserBan(user=user,
-                          by=request.user,
-                          reason=form.cleaned_data['reason'],
-                          is_active=True)
+            ban = UserBan(
+                user=user,
+                by=request.user,
+                reason=form.cleaned_data["reason"],
+                is_active=True,
+            )
             ban.save()
             return redirect(user)
     else:
@@ -88,19 +101,19 @@ def ban_user(request, username):
     try:
         common_reasons = json.loads(config.COMMON_REASONS_TO_BAN_USERS)
     except (TypeError, ValueError):
-        common_reasons = ['Spam']
+        common_reasons = ["Spam"]
     else:
         if not common_reasons:
-            common_reasons = ['Spam']
-    return render(request,
-                  'users/ban_user.html',
-                  {'form': form,
-                   'detail_user': user,
-                   'common_reasons': common_reasons})
+            common_reasons = ["Spam"]
+    return render(
+        request,
+        "users/ban_user.html",
+        {"form": form, "detail_user": user, "common_reasons": common_reasons},
+    )
 
 
 @ensure_wiki_domain
-@permission_required('users.add_userban')
+@permission_required("users.add_userban")
 def ban_user_and_cleanup(request, username):
     """
     A page to ban a user for the reason of "Spam" and mark the user's revisions
@@ -113,23 +126,27 @@ def ban_user_and_cleanup(request, username):
 
     # Get revisions for the past 3 days for this user
     date_three_days_ago = datetime.now().date() - timedelta(days=3)
-    revisions = user.created_revisions.prefetch_related('document')
-    revisions = revisions.defer('content', 'summary').order_by('-id')
+    revisions = user.created_revisions.prefetch_related("document")
+    revisions = revisions.defer("content", "summary").order_by("-id")
     revisions = revisions.filter(created__gte=date_three_days_ago)
     revisions_not_spam = revisions.filter(akismet_submissions=None)
 
-    return render(request,
-                  'users/ban_user_and_cleanup.html',
-                  {'detail_user': user,
-                   'user_banned': user_ban,
-                   'revisions': revisions,
-                   'revisions_not_spam': revisions_not_spam,
-                   'on_ban_page': True})
+    return render(
+        request,
+        "users/ban_user_and_cleanup.html",
+        {
+            "detail_user": user,
+            "user_banned": user_ban,
+            "revisions": revisions,
+            "revisions_not_spam": revisions_not_spam,
+            "on_ban_page": True,
+        },
+    )
 
 
 @ensure_wiki_domain
 @require_POST
-@permission_required('users.add_userban')
+@permission_required("users.add_userban")
 def ban_user_and_cleanup_summary(request, username):
     """
     A summary page of actions taken when banning a user and reverting revisions
@@ -145,24 +162,26 @@ def ban_user_and_cleanup_summary(request, username):
 
     # If the user is not banned, ban user; else, update 'by' and 'reason'
     if not user_ban.exists():
-        ban = UserBan(user=user,
-                      by=request.user,
-                      reason='Spam',
-                      is_active=True)
+        ban = UserBan(user=user, by=request.user, reason="Spam", is_active=True)
         ban.save()
     else:
-        user_ban.update(by=request.user, reason='Spam')
+        user_ban.update(by=request.user, reason="Spam")
 
     date_three_days_ago = datetime.now().date() - timedelta(days=3)
-    revisions_from_last_three_days = user.created_revisions.prefetch_related('document')
-    revisions_from_last_three_days = revisions_from_last_three_days.defer('content', 'summary').order_by('-id')
-    revisions_from_last_three_days = revisions_from_last_three_days.filter(created__gte=date_three_days_ago)
+    revisions_from_last_three_days = user.created_revisions.prefetch_related("document")
+    revisions_from_last_three_days = revisions_from_last_three_days.defer(
+        "content", "summary"
+    ).order_by("-id")
+    revisions_from_last_three_days = revisions_from_last_three_days.filter(
+        created__gte=date_three_days_ago
+    )
 
     """ The "Actions Taken" section """
     # The revisions to be submitted to Akismet and reverted,
     # these must be sorted descending so that they are reverted accordingly
     revisions_to_mark_as_spam_and_revert = revisions_from_last_three_days.filter(
-        id__in=request.POST.getlist('revision-id')).order_by('-id')
+        id__in=request.POST.getlist("revision-id")
+    ).order_by("-id")
 
     # 1. Submit revisions to Akismet as spam
     # 2. If this is the most recent revision for a document:
@@ -175,19 +194,19 @@ def ban_user_and_cleanup_summary(request, username):
     revisions_deleted_list = []
     revisions_not_deleted_list = []
     latest_is_not_spam = [
-        rev for rev in revision_by_distinct_doc(revisions_to_mark_as_spam_and_revert)
+        rev
+        for rev in revision_by_distinct_doc(revisions_to_mark_as_spam_and_revert)
         if rev.document.current_revision != rev
     ]
     previous_good_rev = {}
 
     for revision in revisions_to_mark_as_spam_and_revert:
         submission = RevisionAkismetSubmission(sender=request.user, type="spam")
-        akismet_submission_data = {'revision': revision.id}
+        akismet_submission_data = {"revision": revision.id}
 
         data = RevisionAkismetSubmissionSpamForm(
-            data=akismet_submission_data,
-            instance=submission,
-            request=request)
+            data=akismet_submission_data, instance=submission, request=request
+        )
         # Submit to Akismet or note that validation & sending to Akismet failed
         if data.is_valid():
             data.save()
@@ -200,12 +219,17 @@ def ban_user_and_cleanup_summary(request, username):
         # If there is a current revision and the revision is not in the spam list,
         # to be reverted, do not revert any revisions
         try:
-            revision.document.refresh_from_db(fields=['current_revision'])
+            revision.document.refresh_from_db(fields=["current_revision"])
         except Document.DoesNotExist:
             continue  # This document was previously deleted in this loop, continue
-        if revision.document.current_revision not in revisions_to_mark_as_spam_and_revert:
+        if (
+            revision.document.current_revision
+            not in revisions_to_mark_as_spam_and_revert
+        ):
             if revision.document_id not in previous_good_rev:
-                previous_good_rev[revision.document_id] = revision.document.current_revision
+                previous_good_rev[
+                    revision.document_id
+                ] = revision.document.current_revision
 
             continue  # This document has a more current revision, no need to revert
 
@@ -217,8 +241,9 @@ def ban_user_and_cleanup_summary(request, username):
         if revision.previous:
             previous_good_rev[revision.document_id] = revision.previous
 
-            reverted = revert_document(request=request,
-                                       revision_id=revision.previous.id)
+            reverted = revert_document(
+                request=request, revision_id=revision.previous.id
+            )
             if reverted:
                 revisions_reverted_list.append(revision)
             else:
@@ -227,8 +252,7 @@ def ban_user_and_cleanup_summary(request, username):
 
         # If this is a new document/translation, delete it
         else:
-            deleted = delete_document(request=request,
-                                      document=revision.document)
+            deleted = delete_document(request=request, document=revision.document)
             if deleted:
                 revisions_deleted_list.append(revision)
             else:
@@ -236,65 +260,85 @@ def ban_user_and_cleanup_summary(request, username):
                 revisions_not_deleted_list.append(revision)
 
     # Find just the latest revision for each document
-    submitted_to_akismet_by_distinct_doc = revision_by_distinct_doc(submitted_to_akismet)
-    not_submitted_to_akismet_by_distinct_doc = revision_by_distinct_doc(not_submitted_to_akismet)
-    revisions_reverted_by_distinct_doc = revision_by_distinct_doc(revisions_reverted_list)
-    revisions_not_reverted_by_distinct_doc = revision_by_distinct_doc(revisions_not_reverted_list)
+    submitted_to_akismet_by_distinct_doc = revision_by_distinct_doc(
+        submitted_to_akismet
+    )
+    not_submitted_to_akismet_by_distinct_doc = revision_by_distinct_doc(
+        not_submitted_to_akismet
+    )
+    revisions_reverted_by_distinct_doc = revision_by_distinct_doc(
+        revisions_reverted_list
+    )
+    revisions_not_reverted_by_distinct_doc = revision_by_distinct_doc(
+        revisions_not_reverted_list
+    )
     revisions_deleted_by_distinct_doc = revision_by_distinct_doc(revisions_deleted_list)
-    revisions_not_deleted_by_distinct_doc = revision_by_distinct_doc(revisions_not_deleted_list)
+    revisions_not_deleted_by_distinct_doc = revision_by_distinct_doc(
+        revisions_not_deleted_list
+    )
 
     actions_taken = {
-        'revisions_reported_as_spam': submitted_to_akismet_by_distinct_doc,
-        'revisions_reverted_list': revisions_reverted_by_distinct_doc,
-        'revisions_deleted_list': revisions_deleted_by_distinct_doc
+        "revisions_reported_as_spam": submitted_to_akismet_by_distinct_doc,
+        "revisions_reverted_list": revisions_reverted_by_distinct_doc,
+        "revisions_deleted_list": revisions_deleted_by_distinct_doc,
     }
 
     """ The "Needs followup" section """
     # TODO: Phase V: If user made actions while reviewer was banning them
     new_action_by_user = []
-    skipped_revisions = [rev for rev in revisions_to_mark_as_spam_and_revert
-                         if rev.document_id in previous_good_rev and
-                         rev.id < previous_good_rev[rev.document_id].id]
+    skipped_revisions = [
+        rev
+        for rev in revisions_to_mark_as_spam_and_revert
+        if rev.document_id in previous_good_rev
+        and rev.id < previous_good_rev[rev.document_id].id
+    ]
     skipped_revisions = revision_by_distinct_doc(skipped_revisions)
 
     needs_follow_up = {
-        'manual_revert': new_action_by_user,
-        'skipped_revisions': skipped_revisions,
-        'not_submitted_to_akismet': not_submitted_to_akismet_by_distinct_doc,
-        'not_reverted_list': revisions_not_reverted_by_distinct_doc,
-        'not_deleted_list': revisions_not_deleted_by_distinct_doc
+        "manual_revert": new_action_by_user,
+        "skipped_revisions": skipped_revisions,
+        "not_submitted_to_akismet": not_submitted_to_akismet_by_distinct_doc,
+        "not_reverted_list": revisions_not_reverted_by_distinct_doc,
+        "not_deleted_list": revisions_not_deleted_by_distinct_doc,
     }
 
     """ The "No Actions Taken" section """
     revisions_already_spam = revisions_from_last_three_days.filter(
-        id__in=request.POST.getlist('revision-already-spam')
+        id__in=request.POST.getlist("revision-already-spam")
     )
     revisions_already_spam = list(revisions_already_spam)
-    revisions_already_spam_by_distinct_doc = revision_by_distinct_doc(revisions_already_spam)
+    revisions_already_spam_by_distinct_doc = revision_by_distinct_doc(
+        revisions_already_spam
+    )
 
-    identified_as_not_spam = [rev for rev in revisions_from_last_three_days
-                              if rev not in revisions_already_spam and
-                              rev not in revisions_to_mark_as_spam_and_revert]
-    identified_as_not_spam_by_distinct_doc = revision_by_distinct_doc(identified_as_not_spam)
+    identified_as_not_spam = [
+        rev
+        for rev in revisions_from_last_three_days
+        if rev not in revisions_already_spam
+        and rev not in revisions_to_mark_as_spam_and_revert
+    ]
+    identified_as_not_spam_by_distinct_doc = revision_by_distinct_doc(
+        identified_as_not_spam
+    )
 
     no_actions_taken = {
-        'latest_revision_is_not_spam': latest_is_not_spam,
-        'revisions_already_identified_as_spam': revisions_already_spam_by_distinct_doc,
-        'revisions_identified_as_not_spam': identified_as_not_spam_by_distinct_doc
+        "latest_revision_is_not_spam": latest_is_not_spam,
+        "revisions_already_identified_as_spam": revisions_already_spam_by_distinct_doc,
+        "revisions_identified_as_not_spam": identified_as_not_spam_by_distinct_doc,
     }
 
-    context = {'detail_user': user,
-               'form': UserBanForm(),
-               'actions_taken': actions_taken,
-               'needs_follow_up': needs_follow_up,
-               'no_actions_taken': no_actions_taken}
+    context = {
+        "detail_user": user,
+        "form": UserBanForm(),
+        "actions_taken": actions_taken,
+        "needs_follow_up": needs_follow_up,
+        "no_actions_taken": no_actions_taken,
+    }
 
     # Send an email to the spam watch mailing list.
     ban_and_revert_notification(user, request.user, context)
 
-    return render(request,
-                  'users/ban_user_and_cleanup_summary.html',
-                  context)
+    return render(request, "users/ban_user_and_cleanup_summary.html", context)
 
 
 def revision_by_distinct_doc(list_of_revisions):
@@ -308,23 +352,24 @@ def revision_by_distinct_doc(list_of_revisions):
 
 
 def ban_and_revert_notification(spammer, moderator, info):
-    subject = '[MDN] %s has been banned by %s' % (spammer, moderator)
-    context = {'spammer': spammer,
-               'moderator': moderator}
+    subject = "[MDN] %s has been banned by %s" % (spammer, moderator)
+    context = {"spammer": spammer, "moderator": moderator}
     context.update(info)
-    body = render_to_string('wiki/email/spam_ban.ltxt', context)
+    body = render_to_string("wiki/email/spam_ban.ltxt", context)
 
-    send_mail(subject, body, settings.DEFAULT_FROM_EMAIL,
-              [config.EMAIL_LIST_SPAM_WATCH])
+    send_mail(
+        subject, body, settings.DEFAULT_FROM_EMAIL, [config.EMAIL_LIST_SPAM_WATCH]
+    )
 
 
-@permission_required('users.add_userban')
+@permission_required("users.add_userban")
 def revert_document(request, revision_id):
     """
     Revert document to a specific revision.
     """
-    revision = get_object_or_404(Revision.objects.select_related('document'),
-                                 pk=revision_id)
+    revision = get_object_or_404(
+        Revision.objects.select_related("document"), pk=revision_id
+    )
 
     comment = "spam"
     document = revision.document
@@ -333,13 +378,13 @@ def revert_document(request, revision_id):
         new_revision = document.revert(revision, request.user, comment)
         # schedule a rendering of the new revision if it really was saved
         if new_revision.pk != old_revision_pk:  # pragma: no branch
-            document.schedule_rendering('max-age=0')
+            document.schedule_rendering("max-age=0")
     except IntegrityError:
         return False
     return True
 
 
-@permission_required('wiki.delete_document')
+@permission_required("wiki.delete_document")
 def delete_document(request, document):
     """
     Delete a Document.
@@ -349,7 +394,7 @@ def delete_document(request, document):
             locale=document.locale,
             slug=document.slug,
             user=request.user,
-            reason='Spam',
+            reason="Spam",
         )
         document.delete()
     except Exception:
@@ -364,11 +409,11 @@ def user_detail(request, username):
     """
     detail_user = get_object_or_404(User, username=username)
 
-    if (detail_user.active_ban and not request.user.has_perm('users.add_userban')):
-        return render(request, '404.html', {"reason": "banneduser"}, status=404)
+    if detail_user.active_ban and not request.user.has_perm("users.add_userban"):
+        return render(request, "404.html", {"reason": "banneduser"}, status=404)
 
-    context = {'detail_user': detail_user}
-    return render(request, 'users/user_detail.html', context)
+    context = {"detail_user": detail_user}
+    return render(request, "users/user_detail.html", context)
 
 
 @login_required
@@ -378,7 +423,7 @@ def my_detail_page(request):
 
 @login_required
 def my_edit_page(request):
-    return redirect('users.user_edit', request.user.username)
+    return redirect("users.user_edit", request.user.username)
 
 
 @redirect_in_maintenance_mode
@@ -391,41 +436,30 @@ def user_edit(request, username):
     if not edit_user.allows_editing_by(request.user):
         return HttpResponseForbidden()
 
-    # Map of form field names to tag namespaces
-    field_to_tag_ns = (
-        ('interests', 'profile:interest:'),
-        ('expertise', 'profile:expertise:')
-    )
+    revisions = Revision.objects.filter(creator=edit_user)
+    attachment_revisions = AttachmentRevision.objects.filter(creator=edit_user)
 
-    if request.method != 'POST':
+    if request.method != "POST":
         initial = {
-            'beta': edit_user.is_beta_tester,
-            'username': edit_user.username,
-            'is_github_url_public': edit_user.is_github_url_public,
+            "beta": edit_user.is_beta_tester,
+            "username": edit_user.username,
+            "is_github_url_public": edit_user.is_github_url_public,
         }
 
-        # Form fields to receive tags filtered by namespace.
-        for field, ns in field_to_tag_ns:
-            initial[field] = ', '.join(tag.name.replace(ns, '')
-                                       for tag in edit_user.tags.all_ns(ns))
-
         # Finally, set up the forms.
-        user_form = UserEditForm(instance=edit_user,
-                                 initial=initial,
-                                 prefix='user')
+        user_form = UserEditForm(instance=edit_user, initial=initial, prefix="user")
     else:
-        user_form = UserEditForm(data=request.POST,
-                                 files=request.FILES,
-                                 instance=edit_user,
-                                 prefix='user')
+        user_form = UserEditForm(
+            data=request.POST, files=request.FILES, instance=edit_user, prefix="user"
+        )
 
         if user_form.is_valid():
-            new_user = user_form.save()
+            user_form.save()
 
             try:
                 # Beta
                 beta_group = Group.objects.get(name=config.BETA_GROUP_NAME)
-                if user_form.cleaned_data['beta']:
+                if user_form.cleaned_data["beta"]:
                     beta_group.user_set.add(request.user)
                 else:
                     beta_group.user_set.remove(request.user)
@@ -433,31 +467,180 @@ def user_edit(request, username):
                 # If there's no Beta Testers group, ignore that logic
                 pass
 
-            # Update tags from form fields
-            for field, tag_ns in field_to_tag_ns:
-                field_value = user_form.cleaned_data.get(field, '')
-                tags = parse_tags(field_value)
-                new_user.tags.set_ns(tag_ns, *tags)
-
             return redirect(edit_user)
 
+    # Needed so the template can know to show a warning message and the
+    # template doesn't want to do code logic to look into the 'request' object.
+    has_stripe_error = request.GET.get("has_stripe_error", "False") == "True"
+
     context = {
-        'edit_user': edit_user,
-        'user_form': user_form,
-        'INTEREST_SUGGESTIONS': INTEREST_SUGGESTIONS,
+        "edit_user": edit_user,
+        "user_form": user_form,
+        "username": user_form["username"].value(),
+        "form": UserDeleteForm(username=username),
+        "revisions": revisions,
+        "attachment_revisions": attachment_revisions,
+        "subscription_info": _retrieve_and_synchronize_subscription_info(edit_user),
+        "has_stripe_error": has_stripe_error,
     }
-    return render(request, 'users/user_edit.html', context)
+
+    return render(request, "users/user_edit.html", context)
+
+
+def _retrieve_and_synchronize_subscription_info(user):
+    """For the given user, if it has as 'stripe_customer_id' retrieve the info
+    about the subscription if it's there. All packaged in a way that is
+    practical for the stripe_subscription.html template.
+
+    Also, whilst doing this check, we also verify that the UserSubscription record
+    for this user is right. Doing that check is a second-layer check in case
+    our webhooks have failed us.
+    """
+    subscription_info = None
+    stripe_customer = get_stripe_customer(user)
+    if stripe_customer:
+        stripe_subscription_info = get_stripe_subscription_info(stripe_customer)
+        if stripe_subscription_info:
+            source = stripe_customer.default_source
+            if source.object == "card":
+                card = source
+            elif source.object == "source":
+                card = source.card
+            else:
+                raise ValueError(
+                    f"unexpected stripe customer default_source of type {source.object!r}"
+                )
+
+            subscription_info = {
+                "next_payment_at": datetime.fromtimestamp(
+                    stripe_subscription_info.current_period_end
+                ),
+                "brand": card.brand,
+                "expires_at": f"{card.exp_month}/{card.exp_year}",
+                "last4": card.last4,
+                # Cards that are part of a "source" don't have a zip
+                "zip": card.get("address_zip", None),
+            }
+
+            # To perfect the synchronization, take this opportunity to make sure
+            # we have an up-to-date record of this.
+            UserSubscription.set_active(user, stripe_subscription_info.id)
+        else:
+            # The user has a stripe_customer_id but no active subscription
+            # on the current settings.STRIPE_PLAN_ID! Perhaps it has been cancelled
+            # and not updated in our own records.
+            for user_subscription in UserSubscription.objects.filter(
+                user=user, canceled__isnull=True
+            ):
+                user_subscription.canceled = timezone.now()
+                user_subscription.save()
+
+    return subscription_info
 
 
 @redirect_in_maintenance_mode
+@login_required
+@transaction.atomic()
 def user_delete(request, username):
-
-    edit_user = get_object_or_404(User, username=username)
-
-    if not edit_user.allows_editing_by(request.user):
+    user = get_object_or_404(User, username=username)
+    if user != request.user:
         return HttpResponseForbidden()
 
-    return render(request, 'users/user_delete.html')
+    def donate_attributions():
+        anon, _ = User.objects.get_or_create(username="Anonymous")
+        user.created_revisions.update(creator=anon)
+        user.created_attachment_revisions.update(creator=anon)
+
+    def scrub_user():
+        # Before doing anything, cancel any active subscriptions first.
+        if user.stripe_customer_id:
+            for subscription in cancel_stripe_customer_subscription(
+                user.stripe_customer_id
+            ):
+                UserSubscription.set_canceled(request.user, subscription.id)
+
+        # From the User abstract class
+        user.first_name = ""
+        user.last_name = ""
+        user.email = ""
+
+        # All User attributes
+        user.timezone = ""
+        user.locale = ""
+        user.homepage = ""
+        user.title = ""
+        user.fullname = ""
+        user.organization = ""
+        user.location = ""
+        user.bio = ""
+        user.irc_nickname = ""
+        user.website_url = ""
+        user.github_url = ""
+        user.mozillians_url = ""
+        user.twitter_url = ""
+        user.linkedin_url = ""
+        user.facebook_url = ""
+        user.stackoverflow_url = ""
+        user.discourse_url = ""
+        user.stripe_customer_id = ""
+        user.save()
+
+        user.socialaccount_set.all().delete()
+        user.key_set.all().delete()
+
+    def force_logout():
+        request.session.clear()
+
+    def delete_user():
+        # Protected references to users need to be manually deleted first.
+        user.key_set.all().delete()
+
+        # Some records are worth keeping prior to deleting the user
+        # but "re-assign" to the anonymous user.
+        anon, _ = User.objects.get_or_create(username="Anonymous")
+        user.revisionakismetsubmission_set.update(sender=anon)
+        user.documentdeletionlog_set.update(user=anon)
+        user.documentspamattempt_set.update(user=anon)
+        user.documentspam_reviewed.update(reviewer=anon)
+        user.bans.update(user=anon)
+        user.bans_issued.update(by=anon)
+
+        user.delete()
+
+    revisions = Revision.objects.filter(creator=request.user)
+    attachment_revisions = AttachmentRevision.objects.filter(creator=request.user)
+    context = {}
+    if request.method == "POST":
+        # If the user has no revisions there's not choices on the form.
+        if revisions.exists() or attachment_revisions.exists():
+            form = UserDeleteForm(request.POST, username=username)
+            if form.is_valid():
+                if form.cleaned_data["attributions"] == "donate":
+                    donate_attributions()
+                    delete_user()
+                elif form.cleaned_data["attributions"] == "keep":
+                    scrub_user()
+                    force_logout()
+                else:
+                    raise NotImplementedError(form.cleaned_data["attributions"])
+                return HttpResponseRedirect("/")
+
+        else:
+            delete_user()
+            return HttpResponseRedirect("/")
+    else:
+        form = UserDeleteForm(username=username)
+
+    context["form"] = form
+    context["username"] = username
+    context["revisions"] = revisions
+    context["attachment_revisions"] = attachment_revisions
+
+    return render(request, "users/user_delete.html", context)
+
+
+def signin_landing(request):
+    return render(request, "socialaccount/signup-landing.html")
 
 
 class SignupView(BaseSignupView):
@@ -467,6 +650,7 @@ class SignupView(BaseSignupView):
     You can remove this class if there is no other modification compared
     to it's parent class.
     """
+
     form_class = SignupForm
 
     def get_form(self, form_class=None):
@@ -476,29 +660,40 @@ class SignupView(BaseSignupView):
         self.default_email = None
         self.email_addresses = {}
         form = super(SignupView, self).get_form(form_class)
-        form.fields['email'].label = _('Email address')
-        self.matching_user = None
-        initial_username = form.initial.get('username', None)
+        form.fields["email"].label = _("Email address")
 
-        # For GitHub users, see if we can find matching user by username
-        assert self.sociallogin.account.provider == 'github'
-        User = get_user_model()
-        try:
-            self.matching_user = User.objects.get(username=initial_username)
-            # deleting the initial username because we found a matching user
-            del form.initial['username']
-        except User.DoesNotExist:
-            pass
+        # We should only see GitHub/Google users.
+        assert self.sociallogin.account.provider in ("github", "google")
 
-        email = self.sociallogin.account.extra_data.get('email') or None
-        email_data = (self.sociallogin.account.extra_data.get(
-                      'email_addresses')) or []
+        initial_username = form.initial.get("username") or ""
+
+        # When no username is provided, try to derive one from the email address.
+        if not initial_username:
+            email = form.initial.get("email")
+            if email:
+                if isinstance(email, tuple):
+                    email = email[0]
+                initial_username = email.split("@")[0]
+
+        if initial_username:
+            # Find a new username if it clashes with an existing username.
+            increment = 1
+            User = get_user_model()
+            initial_username_base = initial_username
+            while User.objects.filter(username__iexact=initial_username).exists():
+                increment += 1
+                initial_username = f"{initial_username_base}{increment}"
+
+        form.initial["username"] = initial_username
+
+        email = self.sociallogin.account.extra_data.get("email") or None
+        email_data = self.sociallogin.account.extra_data.get("email_addresses") or []
 
         # Discard email addresses that won't validate
         extra_email_addresses = []
         for data in email_data:
             try:
-                validate_email(data['email'])
+                validate_email(data["email"])
             except ValidationError:
                 pass
             else:
@@ -515,34 +710,17 @@ class SignupView(BaseSignupView):
             # build a mapping of the email addresses to their other values
             # to be used later for resetting the social accounts email addresses
             for email_address in extra_email_addresses:
-                self.email_addresses[email_address['email']] = email_address
+                self.email_addresses[email_address["email"]] = email_address
 
             # build the choice list with the given email addresses
             # if there is a main email address offer that as well (unless it's
             # already there)
             if email is not None and email not in self.email_addresses:
                 self.email_addresses[email] = {
-                    'email': email,
-                    'verified': False,
-                    'primary': False,
+                    "email": email,
+                    "verified": False,
+                    "primary": False,
                 }
-            choices = []
-            verified_emails = []
-            for email_data in self.email_addresses.values():
-                email_address = email_data['email']
-                if email_data['verified']:
-                    verified_emails.append(email_address)
-                choices.append((email_address, email_address))
-            if extra_email_addresses:
-                choices.append((form.other_email_value, _('Other:')))
-            else:
-                choices.append((form.other_email_value, _('Email:')))
-            email_select = forms.RadioSelect(choices=choices,
-                                             attrs={'id': 'email'})
-            form.fields['email'].widget = email_select
-            form.initial.update(email=choices[0])
-            if not email and len(verified_emails) == 1:
-                form.initial.update(email=verified_emails[0])
         return form
 
     def form_valid(self, form):
@@ -553,56 +731,61 @@ class SignupView(BaseSignupView):
         We send our welcome email via celery during complete_signup.
         So, we need to manually commit the user to the db for it.
         """
-        selected_email = form.cleaned_data['email']
-        if form.other_email_used:
+
+        selected_email = form.cleaned_data["email"]
+        if selected_email in self.email_addresses:
+            data = self.email_addresses[selected_email]
+        elif selected_email == self.default_email:
             data = {
-                'email': selected_email,
-                'verified': False,
-                'primary': True,
+                "email": selected_email,
+                "verified": True,
+                "primary": True,
             }
         else:
-            data = self.email_addresses.get(selected_email, None)
+            return HttpResponseBadRequest("email not a valid choice")
 
-        if data:
-            primary_email_address = EmailAddress(email=data['email'],
-                                                 verified=data['verified'],
-                                                 primary=True)
-            form.sociallogin.email_addresses = \
-                self.sociallogin.email_addresses = [primary_email_address]
-            if data['verified']:
-                # we have to stash the selected email address here
-                # so that no email verification is sent again
-                # this is done by adding the email address to the session
-                get_adapter().stash_verified_email(self.request,
-                                                   data['email'])
+        primary_email_address = EmailAddress(
+            email=data["email"], verified=data["verified"], primary=True
+        )
+        form.sociallogin.email_addresses = self.sociallogin.email_addresses = [
+            primary_email_address
+        ]
+        if data["verified"]:
+            # we have to stash the selected email address here
+            # so that no email verification is sent again
+            # this is done by adding the email address to the session
+            get_adapter().stash_verified_email(self.request, data["email"])
 
         with transaction.atomic():
-            form.save(self.request)
-        return helpers.complete_social_signup(self.request,
-                                              self.sociallogin)
+            saved_user = form.save(self.request)
+
+            if saved_user.username != form.initial["username"]:
+                track_event(
+                    CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT, "username edit",
+                )
+
+        return helpers.complete_social_signup(self.request, self.sociallogin)
+
+    def form_invalid(self, form):
+        """
+        This is called on POST but only when the form is invalid. We're
+        overriding this method simply to send GA events when we find an
+        error in the username field.
+        """
+        if form.errors.get("username") is not None:
+            track_event(
+                CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT_ERROR, "username",
+            )
+        return super().form_invalid(form)
 
     def get_context_data(self, **kwargs):
         context = super(SignupView, self).get_context_data(**kwargs)
-
-        # For GitHub users, find matching legacy Persona social accounts
-        assert self.sociallogin.account.provider == 'github'
-        or_query = []
-        for email_address in self.email_addresses.values():
-            if email_address['verified']:
-                or_query.append(Q(uid=email_address['email']))
-        if or_query:
-            reduced_or_query = reduce(operator.or_, or_query)
-            matching_accounts = (SocialAccount.objects
-                                              .filter(reduced_or_query))
-        else:
-            matching_accounts = SocialAccount.objects.none()
-
-        context.update({
-            'default_email': self.default_email,
-            'email_addresses': self.email_addresses,
-            'matching_user': self.matching_user,
-            'matching_accounts': matching_accounts,
-        })
+        context.update(
+            {
+                "default_email": self.default_email,
+                "email_addresses": self.email_addresses,
+            }
+        )
         return context
 
     def dispatch(self, request, *args, **kwargs):
@@ -610,6 +793,21 @@ class SignupView(BaseSignupView):
         if isinstance(response, HttpResponseBadRequest):
             return response
         return super(SignupView, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        """This exists so we can squeeze in a tracking event exclusively
+        about viewing the profile creation page. If we did it to all
+        dispatch() it would trigger on things like submitting form, which
+        might trigger repeatedly if the form submission has validation
+        errors that the user has to address.
+        """
+        if request.session.get("sociallogin_provider"):
+            track_event(
+                CATEGORY_SIGNUP_FLOW,
+                ACTION_PROFILE_AUDIT,
+                request.session["sociallogin_provider"],
+            )
+        return super().get(request, *args, **kwargs)
 
 
 signup = redirect_in_maintenance_mode(SignupView.as_view())
@@ -624,9 +822,9 @@ def send_recovery_email(request):
     form = UserRecoveryEmailForm(data=request.POST)
     if form.is_valid():
         form.save(request=request)
-        return redirect('users.recovery_email_sent')
+        return redirect("users.recovery_email_sent")
     else:
-        return HttpResponseBadRequest('Invalid request.')
+        return HttpResponseBadRequest("Invalid request.")
 
 
 @redirect_in_maintenance_mode
@@ -645,14 +843,85 @@ def recover(request, uidb64=None, token=None):
     except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
         user = None
     if user and default_token_generator.check_token(user, token):
-        login(request, user, 'kuma.users.auth_backends.KumaAuthBackend')
-        return redirect('users.recover_done')
-    return render(request, 'users/recover_failed.html')
+        login(request, user, "kuma.users.auth_backends.KumaAuthBackend")
+        return redirect("users.recover_done")
+    return render(request, "users/recover_failed.html")
+
+
+@login_required
+@require_POST
+def create_stripe_subscription(request):
+    user = request.user
+
+    if not flag_is_active(request, "subscription"):
+        return HttpResponseForbidden("subscription flag not active for this user")
+
+    has_stripe_error = False
+    try:
+        email = request.POST.get("stripe_email", "")
+        stripe_token = request.POST.get("stripe_token", "")
+        subscription = create_stripe_customer_and_subscription_for_user(
+            user, email, stripe_token
+        )
+        UserSubscription.set_active(user, subscription.id)
+
+    except stripe.error.StripeError:
+        raven_client.captureException()
+        has_stripe_error = True
+
+    return redirect(
+        urlparams(
+            reverse("users.user_edit", args=[user.username]),
+            has_stripe_error=has_stripe_error,
+        )
+        + "#subscription"
+    )
 
 
 recovery_email_sent = TemplateView.as_view(
-    template_name='users/recovery_email_sent.html')
+    template_name="users/recovery_email_sent.html"
+)
 
 
-recover_done = login_required(never_cache(ConnectionsView.as_view(
-    template_name='users/recover_done.html')))
+recover_done = login_required(
+    never_cache(ConnectionsView.as_view(template_name="users/recover_done.html"))
+)
+
+
+@csrf_exempt
+def stripe_hooks(request):
+    try:
+        payload = json.loads(request.body)
+    except ValueError:
+        return HttpResponseBadRequest("Invalid JSON payload")
+
+    try:
+        event = stripe.Event.construct_from(payload, stripe.api_key)
+    except stripe.error.StripeError:
+        raven_client.captureException()
+        return HttpResponseBadRequest()
+
+    # Generally, for this list of if-statements, see the create_missing_stripe_webhook
+    # function.
+    # The list of events there ought to at least minimally match what we're prepared
+    # to deal with here.
+
+    if event.type == "invoice.payment_succeeded":
+        payment_intent = event.data.object
+        send_payment_received_email.delay(
+            payment_intent.customer,
+            request.LANGUAGE_CODE,
+            payment_intent.created,
+            payment_intent.invoice_pdf,
+        )
+    elif event.type == "customer.subscription.deleted":
+        obj = event.data.object
+        for user in User.objects.filter(stripe_customer_id=obj.customer):
+            UserSubscription.set_canceled(user, obj.id)
+
+    else:
+        return HttpResponseBadRequest(
+            f"We did not expect a Stripe webhook of type {event.type!r}"
+        )
+
+    return HttpResponse()

@@ -18,9 +18,12 @@ class FilterManager(models.Manager):
         Converting to lists of lists so we can json encode it.
 
         """
-        return [list(f) for f in
-                self.filter(default=True).values_list('group__slug', 'slug',
-                                                      'shortcut')]
+        return [
+            list(f)
+            for f in self.filter(default=True).values_list(
+                "group__slug", "slug", "shortcut"
+            )
+        ]
 
 
 class IndexManager(models.Manager):
@@ -28,14 +31,15 @@ class IndexManager(models.Manager):
     The model manager to implement a couple of useful methods for handling
     search indexes.
     """
+
     def get_current(self):
         try:
-            return (self.filter(promoted=True, populated=True)
-                        .order_by('-created_at'))[0]
+            return (self.filter(promoted=True, populated=True).order_by("-created_at"))[
+                0
+            ]
         except (self.model.DoesNotExist, IndexError, AttributeError):
-            fallback_name = settings.ES_INDEXES['default']
-            index, created = self.get_or_create(name=fallback_name,
-                                                promoted=True)
+            fallback_name = settings.ES_INDEXES["default"]
+            index, created = self.get_or_create(name=fallback_name, promoted=True)
             return index
 
     def recreate_index(self, es=None, index=None):

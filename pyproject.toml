@@ -1,0 +1,117 @@
+[tool.poetry]
+name = "kuma"
+version = "0.0.0"
+license = "MPL-2.0"
+description = "The MDN Web Docs site"
+authors = ["MDN Devs <mdn-dev@mozilla.com>"]
+homepage = "https://developer.mozilla.org"
+repository = "https://github.com/mdn/kuma"
+documentation = "https://kuma.readthedocs.io"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+babel = "^2.8.0"
+bleach = "^3.1.0"
+boto3 = "^1.10.37"
+botocore = "^1.14.17"
+celery = "^4.3.0"
+cssselect = "^1.1.0"
+dj-database-url = "^0.5.0"
+dj-email-url = "^1"
+django = "^2.2"
+django-allauth = "^0.41.0"
+django-cacheback = "1.4.0"
+django-constance = {extras = ["database"], version = "~2.6.0"}
+django-csp = "^3.6"
+django-decorator-include = "^2.1"
+django-extensions = "^2.2.6"
+django-honeypot = "^0.8.0"
+django-jinja = "^2.6.0"
+django-mysql = "^3.3.0"
+django-pipeline = "^1.7.0"
+django-ratelimit = "2.0.0"
+django-redirect-urls = "1.0"
+django-redis = "^4.11.0" # (Django cache backend)
+django-soapbox = "^1.6"
+django-statici18n = "^1.9.0"
+django-storages = "^1.9.1"
+django-sundial = "1.0.6"
+django-taggit = "^0.24.0"
+django-tidings = "2.0.1"
+django-waffle = "^0.20.0"
+djangorestframework = "^3.11.0"
+elasticsearch = "^6.4.0"
+elasticsearch-dsl = "^6.4.0"
+enmerkar = "^0.7.1" # Maintained fork of django-babel
+feedparser = "5.2.1"
+google-api-python-client = "^1.7.11"
+gunicorn = "^20.0.4"
+html5lib = "1.0.1"
+httplib2 = "^0.17.0"
+jinja2 = "^2.11.1"
+jsonpickle = "^1.2"
+lxml = "^4.4.2"
+meinheld = "1.0.1"
+mysqlclient = "^1.4.6" # (Django database driver)
+newrelic = "^5.6.0.135"
+oauth2client = "^4.1.3"
+polib = "1.1.0"
+puente = "0.5.0"
+pyquery = "1.4.1"
+python-dateutil = "^2.8.0"
+python-decouple = "^3.3"
+python-magic = "0.4.15"
+pytidylib = "0.3.2"
+pytz = "^2019.3"
+raven = "6.10.0"
+redo = "^2.0.3"
+requests = "^2.22.0"
+stripe = "^2.42.0"
+urllib3 = "^1.25.7"
+urlobject = "^2.4.3"
+urlwait = "^1.0"
+whitenoise = "^5.0.1"
+
+[tool.poetry.dev-dependencies]
+# Development Tools
+django-debug-toolbar = "^2.2"
+django-querycount = "^0.7.0"
+werkzeug = "^1.0" # Enables runserver_plus from django-extensions
+
+# Testing
+braceexpand = "^0.1.5"
+pytest = "~5.3"
+pytest-base-url = "^1.4.1"
+pytest-cov = "~2.8.1"
+pytest-django = "~3.8.0"
+pytest-metadata = "^1.8.0"
+pytest-rerunfailures = "^8.0"
+requests-mock = "^1.7.0"
+
+# Linting
+black = "^19.10b0"
+flake8 = "^3.7.9"
+flake8-import-order = "^0.18.1"
+dennis = "^0.9" # Used by `make localetest` to lint po files
+
+# Pinned Dependencies
+coverage = {extras = ["toml"], version = "^5"} # Use optional toml support
+
+[tool.black]
+target-version = ["py38"]
+
+[tool.coverage.run]
+source = ["kuma"]
+branch = true
+dynamic_context = "test_function"
+
+[tool.coverage.report]
+omit = ["*migrations*", "*/management/commands/*"]
+
+[tool.coverage.html]
+show_contexts = true
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

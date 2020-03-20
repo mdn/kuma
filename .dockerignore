@@ -61,7 +61,6 @@ build.py
 developer.mozilla.org.tar.gz
 docker-compose.dev.yml
 docker-compose.locust.yml
-humans.txt
 james.ini
 mdn_sample_db.sql
 mdn_sample_db.sql.gz
@@ -74,6 +73,9 @@ media/kumascript-revision.txt
 **/node_modules/
 static/
 tmp
+
+# Not an actual file any more but kept for simplicity.
+humans.txt
 
 # Selenium
 geckodriver.log

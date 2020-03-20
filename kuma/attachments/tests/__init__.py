@@ -1,12 +1,12 @@
 from django.core.files import temp as tempfile
 
 
-def make_test_file(content=None, suffix='.txt'):
+def make_test_file(content=None, suffix=".txt"):
     """
     Create a fake file for testing purposes.
     """
     if content is None:
-        content = 'I am a test file for upload.'
+        content = "I am a test file for upload."
     # Shamelessly stolen from Django's own file-upload tests.
     tdir = tempfile.gettempdir()
     file_for_upload = tempfile.NamedTemporaryFile(suffix=suffix, dir=tdir)

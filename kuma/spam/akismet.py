@@ -7,7 +7,7 @@ from django.conf import settings
 from requests import Session
 from requests.adapters import HTTPAdapter
 from requests.exceptions import RequestException
-from requests.packages.urllib3.util import Retry
+from urllib3.util import Retry
 
 
 class AkismetError(Exception):
@@ -15,14 +15,18 @@ class AkismetError(Exception):
     A custom exception that takes the requests' response, its status code
     and an optional debug help directly from Akismet.
     """
+
     def __init__(self, response, status_code, debug_help):
         self.response = response
         self.status_code = status_code
         self.debug_help = debug_help
 
     def __str__(self):
-        return ('%s response, debug help: %s, full response: %s' %
-                (self.status_code, self.debug_help, self.response.text))
+        return "%s response, debug help: %s, full response: %s" % (
+            self.status_code,
+            self.debug_help,
+            self.response.text,
+        )
 
 
 class Akismet(object):
@@ -30,13 +34,14 @@ class Akismet(object):
     The Akismet client implementation wrapping a request session and
     having API specific methods for easy spam and ham handling.
     """
+
     # Warning: This is the documented success response from the Akismet API
     # Do not translate! Info: http://akismet.com/development/api/#submit-spam
-    submission_success = 'Thanks for making the web a better place.'
+    submission_success = "Thanks for making the web a better place."
 
     def __init__(self):
         self.domain = settings.DOMAIN
-        self.ssl = bool(getattr(settings, 'SECURE_PROXY_SSL_HEADER', False))
+        self.ssl = bool(getattr(settings, "SECURE_PROXY_SSL_HEADER", False))
         self.session = Session()
         self.adapter = HTTPAdapter(
             max_retries=Retry(
@@ -49,10 +54,11 @@ class Akismet(object):
                 # retry once in case we're redirect by Akismet
                 redirect=1,
                 # definitely retry if Akismet is unwell
-                status_forcelist=[500, 503])
+                status_forcelist=[500, 503],
+            )
         )
-        self.session.mount('http://', self.adapter)
-        self.session.mount('https://', self.adapter)
+        self.session.mount("http://", self.adapter)
+        self.session.mount("https://", self.adapter)
         self._verified = None
 
     @property
@@ -77,13 +83,13 @@ class Akismet(object):
 
     @property
     def url(self):
-        return 'https://%s.rest.akismet.com/1.1/' % self.key
+        return "https://%s.rest.akismet.com/1.1/" % self.key
 
     def send(self, method, **payload):
         # blog is the only parameter required by all API endpoints
-        if 'blog' not in payload:
-            scheme = 'https' if self.ssl else 'http'
-            payload['blog'] = '%s://%s/' % (scheme, self.domain)
+        if "blog" not in payload:
+            scheme = "https" if self.ssl else "http"
+            payload["blog"] = "%s://%s/" % (scheme, self.domain)
         url = urljoin(self.url, method)
         return self.session.post(url, data=payload)
 
@@ -104,10 +110,11 @@ class Akismet(object):
         so that we have a stable API for error handling when using this
         Akismet client.
         """
-        raise AkismetError(response,
-                           response.status_code,
-                           response.headers.get('X-Akismet-Debug-Help',
-                                                'Not provided'))
+        raise AkismetError(
+            response,
+            response.status_code,
+            response.headers.get("X-Akismet-Debug-Help", "Not provided"),
+        )
 
     def verify_key(self):
         """
@@ -121,13 +128,13 @@ class Akismet(object):
         if not self.key:
             return False
 
-        payload = {'key': self.key}
+        payload = {"key": self.key}
 
         # We'll catch requests' exceptions here since we can't assume
         # that the client will work if something went wrong during
         # verification. We'll retry later by returning right away.
         try:
-            response = self.send('verify-key', **payload)
+            response = self.send("verify-key", **payload)
         except RequestException:
             self.handle_exception(payload)
             return None
@@ -136,7 +143,7 @@ class Akismet(object):
         # the response matches one of our expected results.
         # Otherwise we assume it was not verified correctly.
         try:
-            return {'valid': True, 'invalid': False}[response.text]
+            return {"valid": True, "invalid": False}[response.text]
         except KeyError:
             return False
 
@@ -176,12 +183,11 @@ class Akismet(object):
                                  included in comment_* parameters,
                                  such as "UTF-8" or "ISO-8859-1".
         """
-        response = self.send('comment-check',
-                             user_ip=user_ip,
-                             user_agent=user_agent,
-                             **optional)
+        response = self.send(
+            "comment-check", user_ip=user_ip, user_agent=user_agent, **optional
+        )
         try:
-            return {'true': True, 'false': False}[response.text]
+            return {"true": True, "false": False}[response.text]
         except KeyError:
             self.handle_error(response)
 
@@ -194,10 +200,9 @@ class Akismet(object):
         :rtype: None
         :raises AkismetError: if the submission wasn't succesful
         """
-        response = self.send('submit-spam',
-                             user_ip=user_ip,
-                             user_agent=user_agent,
-                             **optional)
+        response = self.send(
+            "submit-spam", user_ip=user_ip, user_agent=user_agent, **optional
+        )
         if response.text != self.submission_success:
             self.handle_error(response)
 
@@ -210,9 +215,8 @@ class Akismet(object):
         :rtype: None
         :raises AkismetError: if the submission wasn't succesful
         """
-        response = self.send('submit-ham',
-                             user_ip=user_ip,
-                             user_agent=user_agent,
-                             **optional)
+        response = self.send(
+            "submit-ham", user_ip=user_ip, user_agent=user_agent, **optional
+        )
         if response.text != self.submission_success:
             self.handle_error(response)

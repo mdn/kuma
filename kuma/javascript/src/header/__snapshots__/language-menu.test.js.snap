@@ -9,6 +9,9 @@ exports[`LanguageMenu snapshot 1`] = `
     aria-label="Current language is English. Choose your preferred language."
     aria-owns="language-menu"
     className="dropdown-menu-label"
+    id="header-language-menu"
+    onFocus={[Function]}
+    onMouseOver={[Function]}
     type="button"
   >
     English
@@ -20,14 +23,9 @@ exports[`LanguageMenu snapshot 1`] = `
     </span>
   </button>
   <ul
-    className="dropdown-menu-items"
+    className="dropdown-menu-items right"
     id="language-menu"
     role="menu"
-    style={
-      Object {
-        "right": 0,
-      }
-    }
   >
     <li
       lang="es"

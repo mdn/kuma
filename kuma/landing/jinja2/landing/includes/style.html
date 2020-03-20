@@ -1,0 +1,9 @@
+{% stylesheet 'home_base' %}
+{% stylesheet 'callout' %}
+{% stylesheet 'home_newsletter' %}
+{%- if settings.FOUNDATION_CALLOUT %}
+    {% stylesheet 'mozilla_foundation' %}
+{% else %}
+    {% stylesheet 'home_featured' %}
+{% endif %}
+{% include "wiki/includes/banner-styles.html" %}

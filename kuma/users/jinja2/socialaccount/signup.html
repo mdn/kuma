@@ -9,7 +9,6 @@
 {% endblock %}
 
 {% set provider = account.get_provider() %}
-{% set github_connect_url = provider_login_url('github', process='connect', next=request.session.sociallogin_next_url|default('/')) %}
 
 {% block pageheader %}
 {{ render_react("signupflow", request.LANGUAGE_CODE, request.get_full_path(),
@@ -18,22 +17,18 @@
 
 {% block document_head %}
 <div class="titlebar-container">
-  <h1>{{ _('Create your MDN profile') }}</h1>
+  <h1>{{ _('Create your MDN account') }}</h1>
 </div>
 {% endblock %}
 
 {% block content %}
 <main id="content-main" role="main">
   <article id="browser_register" class="readable-line-length center">
-    <ol class="auth-service-header">
-      <li class="github-auth">{{ _('Authorize with Github') }}</li>
-      <li class="mdn-profile">{{ _('Create MDN Profile') }}</li>
-    </ol>
 
     <p class="lead-in">
       {% trans provider_name=provider.name %}
-      Thanks for signing in to MDN with {{ provider_name }}. To finish setting up your
-      MDN Web Docs account, please choose a username and email address.
+      You are signing in to MDN with <strong>{{ provider_name }}</strong>.
+      <br />Choose a username to finish creating your MDN account.
       {% endtrans %}
     </p>
 
@@ -60,14 +55,12 @@
             {% if form.username.errors %}
               {{ form.username.errors }}
               {% include 'socialaccount/includes/change_username.html' %}
-            {% elif matching_user %}
-              {% include 'socialaccount/includes/change_username.html' %}
             {% else %}
               <div id="username-static-container" class="username-static">
-                {% set github_username = account.get_provider_account() %}
-                <input type="hidden" name="username" value="{{ github_username }}" />
-                {{ github_username }}
-                <button id="change-username" type="button" class="simple-text" aria-label="{{ _('Your’re current username is %s. Change username?'%(github_username)) }}">{{ _('change username') }}</button>
+                {% set provider_username = form.username.value() %}
+                <input type="hidden" name="username" value="{{ provider_username }}" />
+                {{ provider_username }}
+                <button id="change-username" type="button" class="edit-default" aria-label="{{ _('Your’re current username is %s. Change username?'%(provider_username)) }}">{{ _('change username') }}</button>
               </div>
               {% set is_hidden = true %}
               {% include 'socialaccount/includes/change_username.html' %}
@@ -79,42 +72,33 @@
           </fieldset>
         </li>
 
-        <li class="{{ 'error' if form.email.errors or form.other_email.errors }}">
+        <li class="email-signup">
           <fieldset>
             <legend>{{ _('Email Address') }}</legend>
-            <ul class="errorlist">
-              {% for error in form.email.errors %}
-                <li>{{ error }}</li>
-              {% endfor %}
-            </ul>
-
             {% set primary_email = get_primary_email(email_addresses) %}
+            <div id="email-static-container" class="email-static">
             {% if primary_email %}
-              <div id="email-static-container" class="email-static">
-                <input type="hidden" name="email" value="{{ primary_email }}" />
-                {{ primary_email }}
-                <button id="change-email" type="button" class="simple-text" aria-label="{{ _('Your’re current email address is %s. Change email address?'%(primary_email)) }}">{{ _('change email address') }}</button>
-              </div>
+              <input type="hidden" name="email" value="{{ primary_email }}" />
+              {{ primary_email }}
             {% else %}
-              <div id="email-static-container" class="email-static">
-                <input type="hidden" name="email" value="{{ default_email }}" />
-                {{ default_email }}
-                <button id="change-email" type="button" class="simple-text" aria-label="{{ _('Your’re current email address is %s. Change email address?'%(default_email)) }}">{{ _('change email address') }}</button>
-              </div>
+              <input type="hidden" name="email" value="{{ default_email }}" />
+              {{ default_email }}
             {% endif %}
-
-            {% if email_addresses|length > 1 %}
-              {% include 'socialaccount/includes/email_choices.html' %}
-            {% else %}
-              {% include 'socialaccount/includes/change_email_address.html' %}
-            {% endif %}
+            </div>
 
             <p class="field-explanation">
               {{ _('This will be the email address MDN Web Docs messages and notifications will be sent to. This will <strong>not</strong> be displayed on MDN Web Docs and will be used in accordance with our <a href="%(privacy_url)s">privacy policy</a>.', privacy_url='//www.mozilla.org/privacy/websites/')|safe }}
             </p>
           </fieldset>
         </li>
-        
+
+        <li class="newsletter-signup">
+          <label for="{{ form.is_newsletter_subscribed.id_for_label  }}">
+            {{ form.is_newsletter_subscribed }}
+            {{ _('Get updates on what’s new with MDN to your inbox.') }}
+          </label>
+        </li>
+
         <li>
           <ul class="errorlist">
             {{ form.terms.errors }}
@@ -128,7 +112,7 @@
         </li>
 
         <li class="submit">
-          <button class="cta primary" type="submit" name="create">{{ _('Create profile') }}</button>
+          <button id="create-mdn-account" class="cta primary" type="submit" name="create">{{ _('Create profile') }}</button>
         </li>
       </ul>
 

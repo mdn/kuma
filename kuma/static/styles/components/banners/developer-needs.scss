@@ -1,0 +1,164 @@
+@import '../../includes/vars';
+@import '../../includes/mixins';
+@import 'vars';
+
+.developer-needs {
+    .mdn-cta-content {
+        padding-top: 16px;
+        box-shadow: 5px 0 9px #c7c7c7;
+        height: 100%;
+
+        @media #{$mq-small-desktop-and-up} {
+            padding-top: 0;
+        }
+    }
+
+    .mdn-cta-content-container {
+        margin: 0 auto;
+        max-width: 70%;
+        text-align: center;
+
+        @media #{$mq-tablet-and-up} {
+            max-width: 90%;
+        }
+
+        @media #{$mq-small-desktop-and-up} {
+            background-image: linear-gradient(to right, #83cff3, #ebf8e1);
+            margin: unset;
+            padding: 20px;
+            padding-left: 45px;
+            max-width: unset;
+            text-align: left;
+        }
+
+        @media #{$mq-large-desktop-and-up} {
+            @include bidi(((padding-left, 120px, padding-right, 120px),));
+        }
+    }
+
+    .mdn-cta-title:before {
+        display: none;
+
+        @media #{$mq-large-desktop-and-up} {
+            position: absolute;
+            left: -90px;
+            display: inline-block;
+            content: '';
+            background: transparent
+                url('../../../img/banners/developer-needs/icon-survey.svg') 0 0
+                no-repeat;
+            background-size: 75px;
+            width: 75px;
+            height: 75px;
+        }
+    }
+
+    .mdn-cta-button-container:before {
+        display: none;
+
+        @media #{$mq-small-desktop-and-up} {
+            position: absolute;
+            top: 0;
+            left: -40px;
+            display: inline-block;
+            content: '';
+            background: transparent
+                url('../../../img/banners/developer-needs/curve.svg') 0 0
+                no-repeat;
+            background-size: 100%;
+            width: 130px;
+            height: 130px;
+        }
+
+        @media #{$mq-large-desktop-and-up} {
+            left: -50px;
+            width: 140px;
+        }
+    }
+
+    .mdn-cta-copy {
+        @include set-font-size(16px);
+
+        @media #{$mq-small-desktop-and-up} {
+            @include set-font-size(18px);
+            line-height: 1.3;
+            max-width: 80%;
+        }
+
+        @media #{$mq-large-desktop-and-up} {
+            @include set-font-size(21px);
+        }
+    }
+
+    .mdn-cta-button {
+        @media #{$mq-small-desktop-and-up} {
+            margin-top: 35px;
+        }
+    }
+
+    .mdn-cta-button,
+    .mdn-cta-button:link,
+    .mdn-cta-button:visited {
+        background-color: $cta-deep-blue;
+    }
+}
+
+/* right to left */
+html[dir='rtl'] {
+    .mdn-cta-title:before {
+        display: none;
+    }
+
+    .mdn-cta-title:after {
+        display: none;
+
+        @media #{$mq-large-desktop-and-up} {
+            position: absolute;
+            top: 0;
+            right: -90px;
+            display: inline-block;
+            content: '';
+            background: transparent
+                url('../../../img/banners/developer-needs/icon-survey.svg') 0 0
+                no-repeat;
+            background-size: 75px;
+            width: 75px;
+            height: 75px;
+        }
+    }
+
+    .mdn-cta-content-container {
+        @media #{$mq-small-desktop-and-up} {
+            background-image: linear-gradient(to right, #ebf8e1, #83cff3);
+        }
+    }
+
+    .mdn-cta-button-container:before {
+        display: none;
+        background-image: none;
+    }
+
+    .mdn-cta-button-container:after {
+        display: none;
+
+        @media #{$mq-small-desktop-and-up} {
+            position: absolute;
+            top: 0;
+            right: -56px;
+            display: inline-block;
+            content: '';
+            background: transparent
+                url('../../../img/banners/developer-needs/curve.svg') 0 0
+                no-repeat;
+            background-size: 100%;
+            width: 130px;
+            height: 130px;
+            transform: rotateY(180deg);
+        }
+
+        @media #{$mq-large-desktop-and-up} {
+            left: -50px;
+            width: 140px;
+        }
+    }
+}

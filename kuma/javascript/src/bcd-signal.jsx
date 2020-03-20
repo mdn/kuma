@@ -4,6 +4,10 @@ import { getCookie } from './utils.js';
 
 let bcSignalsInvoked = false;
 
+// Make sure these match the serializers in api/v1/serializers.py
+const MIN_BRIEF_EXPLANATION = 10;
+const MAX_BRIEF_EXPLANATION = 1000;
+
 window.activateBCDSignals = (slug: string, locale: string) => {
     if (bcSignalsInvoked) {
         return;
@@ -134,10 +138,16 @@ window.activateBCDSignals = (slug: string, locale: string) => {
                 briefExplanation &&
                 briefExplanation instanceof HTMLTextAreaElement &&
                 briefExplanation.value &&
-                typeof briefExplanation.value === 'string' &&
-                briefExplanation.value.trim().length > 0
+                typeof briefExplanation.value === 'string'
             ) {
-                sendReportButton.classList.remove('disabled');
+                if (
+                    briefExplanation.value.trim().length >=
+                    MIN_BRIEF_EXPLANATION
+                ) {
+                    sendReportButton.classList.remove('disabled');
+                } else {
+                    sendReportButton.classList.add('disabled');
+                }
             } else {
                 sendReportButton.classList.add('disabled');
             }
@@ -267,11 +277,13 @@ window.activateBCDSignals = (slug: string, locale: string) => {
         const control = document.createElement('div');
         const controlInnerWrapper = document.createElement('div');
         const controlHeader = document.createElement('div');
+        const controlInnerHeaderWrapper = document.createElement('div');
         const controlDescription = document.createElement('div');
 
         control.className = 'control';
         controlInnerWrapper.className = 'control-wrap';
         controlHeader.className = 'control-header';
+        controlInnerHeaderWrapper.className = 'control-header-wrap';
         if (controlObj.inline) {
             controlHeader.classList.add('has-control');
         }
@@ -280,9 +292,14 @@ window.activateBCDSignals = (slug: string, locale: string) => {
         }
 
         controlDescription.className = 'control-description';
+        controlInnerHeaderWrapper.appendChild(
+            createStepNumLabel(controlObj.index)
+        );
+        controlInnerHeaderWrapper.appendChild(
+            document.createTextNode(controlObj.header)
+        );
+        controlHeader.appendChild(controlInnerHeaderWrapper);
 
-        controlHeader.appendChild(createStepNumLabel(controlObj.index, true));
-        controlHeader.appendChild(document.createTextNode(controlObj.header));
         controlDescription.innerText = controlObj.description;
 
         controlInnerWrapper.appendChild(controlHeader);
@@ -301,7 +318,6 @@ window.activateBCDSignals = (slug: string, locale: string) => {
             controlInnerWrapper.appendChild(controlObj.el);
         }
 
-        control.appendChild(createStepNumLabel(controlObj.index));
         control.appendChild(controlInnerWrapper);
 
         return control;
@@ -406,14 +422,31 @@ window.activateBCDSignals = (slug: string, locale: string) => {
      */
     const createBriefExplanationControl = () => {
         const headerText = gettext('Can you provide a brief explanation?');
-        const descriptionText = gettext(
-            'Briefly outline the issue you are highlighting.'
-        );
+        const descriptionText =
+            gettext('Briefly outline the issue you are highlighting.') +
+            ' ' +
+            interpolate(
+                gettext('Minimum %(min)s and maximum %(max)s characters.'),
+                {
+                    min: MIN_BRIEF_EXPLANATION,
+                    max: MAX_BRIEF_EXPLANATION.toLocaleString()
+                }
+            );
 
         const textAreaControl = document.createElement('textarea');
         textAreaControl.className = 'control-input';
         textAreaControl.id = 'brief-explanation';
-        textAreaControl.maxLength = 1000;
+        textAreaControl.maxLength = MAX_BRIEF_EXPLANATION;
+        // If you don't put this FlowFixMe on the next line you'd get this:
+        //
+        //    Cannot assign MIN_BRIEF_EXPLANATION to textAreaControl.minLength
+        //    because property minLength is missing in HMLTextAreaElement
+        //
+        // But it's not an insane property to have:
+        // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#Browser_Compatibility
+        // $FlowFixMe
+        textAreaControl.minLength = MIN_BRIEF_EXPLANATION;
+        textAreaControl.required = true;
 
         textAreaControl.addEventListener('input', () => {
             validateControls();
@@ -496,7 +529,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
 
         closeButton.className = 'button close-btn';
         closeButtonWrapper.className = 'close-button-wrapper';
-        leftBlockWrapper.className = 'column-5 left-block';
+        leftBlockWrapper.className = 'column-4 left-block';
         leftBlockHeader.className = 'left-block-header';
         leftBlockImage.className = 'left-block-image';
 
@@ -535,7 +568,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
         stepsInfoSpan = document.createElement('span');
 
         formControlBlockWrapper.className =
-            'column-7 right-block form-control-block';
+            'column-8 right-block form-control-block';
         stepsInfo.className = 'highlight-spanned';
         stepsInfoSpan.className = 'highlight-span';
 

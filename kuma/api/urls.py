@@ -1,6 +1,6 @@
-from django.conf.urls import include, url
+from django.urls import include, re_path
 
 
 urlpatterns = [
-    url('^v1/', include('kuma.api.v1.urls')),
+    re_path("^v1/", include("kuma.api.v1.urls")),
 ]

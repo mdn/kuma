@@ -1,15 +1,9 @@
-from django.conf.urls import url
+from django.urls import re_path
 
 from . import views
 
 urlpatterns = [
-    url(r'^new$',
-        views.new,
-        name='authkeys.new'),
-    url(r'^(?P<pk>\d+)/history$',
-        views.history,
-        name='authkeys.history'),
-    url(r'^(?P<pk>\d+)/delete$',
-        views.delete,
-        name='authkeys.delete'),
+    re_path(r"^new$", views.new, name="authkeys.new"),
+    re_path(r"^(?P<pk>\d+)/history$", views.history, name="authkeys.history"),
+    re_path(r"^(?P<pk>\d+)/delete$", views.delete, name="authkeys.delete"),
 ]
