@@ -1,5 +1,5 @@
 <div class="text-content delete-user-content" id="user-delete">
-
+    {% if username %}
     <form id="delete-user-form" action="{{ url('users.user_delete', username) }}" method="post">
         {% csrf_token %}
 
@@ -24,4 +24,5 @@
         <button type="button" id="cancel-button" class="simple-text" data-first-focusable="true">{{ _('Cancel') }}</button>
         <button type="submit" id="delete-user-confirm" {% if revisions.exists() %}class="disabled" disabled{% else %}class="negative"{% endif %}>{{ _('Yes, Delete my Account') }}</button>
     </form>
+    {% endif %}
 </div>
