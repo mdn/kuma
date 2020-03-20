@@ -55,9 +55,6 @@ import CloseIcon from './icons/close.svg';
 import { getLocale, gettext, Interpolated } from './l10n.js';
 import UserProvider from './user-provider.jsx';
 
-export const DEVELOPER_NEEDS_ID = 'developer_needs';
-export const SUBSCRIPTION_ID = 'subscription_banner';
-
 // Set a localStorage key with a timestamp the specified number of
 // days into the future. When the user dismisses a banner we use this
 // to prevent the redisplay of the banner for a while.
@@ -101,21 +98,6 @@ function isEmbargoed(id) {
         // just won't work
         return false;
     }
-}
-
-// Certain banners don't apply to the user based on other reasons.
-// For example, the Subscription banner should not be displayed
-// if the user is authenticated and has 'isSubscriber'.
-function notForThisUser(id, userData) {
-    // If the banner is the subscription banner, and the user has a truthy
-    // 'isSubscriber' they don't get this banner.
-    if (id === SUBSCRIPTION_ID) {
-        if (userData.isSubscriber) {
-            // This user will NOT get this banner.
-            return true;
-        }
-    }
-    return false;
 }
 
 // The <Banner> component displays a simple call-to-action banner at
@@ -197,6 +179,9 @@ function Banner(props: BannerProps) {
     );
 }
 
+export const DEVELOPER_NEEDS_ID = 'developer_needs';
+export const SUBSCRIPTION_ID = 'subscription_banner';
+
 export default function ActiveBanner() {
     const userData = useContext(UserProvider.context);
     const locale = getLocale();
@@ -206,12 +191,17 @@ export default function ActiveBanner() {
     }
 
     for (const id in userData.waffle.flags) {
-        if (
-            !userData.waffle.flags[id] ||
-            isEmbargoed(id) ||
-            notForThisUser(id, userData)
-        ) {
+        if (!userData.waffle.flags[id] || isEmbargoed(id)) {
             continue;
+        }
+
+        // The Subscription banner is special. It should not be displayed
+        // if the user has a truthy `isSubscriber`.
+        if (id === SUBSCRIPTION_ID) {
+            if (userData.isSubscriber) {
+                // This user will NOT get this banner.
+                return true;
+            }
         }
 
         switch (id) {
