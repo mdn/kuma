@@ -22,6 +22,7 @@ htmlcov/
 .cache
 .noseids
 .noserc
+.pytest_cache
 nosetests.xml
 coverage.xml
 /test_results/
@@ -103,3 +104,4 @@ kuma/static/js/libs/ckeditor/source/ckbuilder/
 
 # Emacs backup files
 *~
+junit.xml

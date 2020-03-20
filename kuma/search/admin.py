@@ -1,5 +1,5 @@
 from django.contrib import admin, messages
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from .forms import IndexModelForm
 from .models import Filter, FilterGroup, Index
@@ -7,8 +7,7 @@ from .models import Filter, FilterGroup, Index
 
 def promote(modeladmin, request, queryset):
     if queryset.count() > 1:
-        messages.error(request,
-                       _("Can't promote more than one index at once."))
+        messages.error(request, _("Can't promote more than one index at once."))
         return
     index = queryset[0]
     index.promote()
@@ -23,22 +22,27 @@ def demote(modeladmin, request, queryset):
         messages.error(request, _("Can't demote more than one index at once."))
         return
     if Index.objects.filter(promoted=True, populated=True).count() <= 1:
-        messages.error(request, _("Can't demote the index if there is only "
-                                  "one. Create and populate a new one first."))
+        messages.error(
+            request,
+            _(
+                "Can't demote the index if there is only "
+                "one. Create and populate a new one first."
+            ),
+        )
         return
     index = queryset[0]
     index.demote()
     messages.info(request, _("Demoted search index %s.") % index)
 
 
-demote.short_description = _("Demote selected search index "
-                             "(automatic fallback to previous index)")
+demote.short_description = _(
+    "Demote selected search index " "(automatic fallback to previous index)"
+)
 
 
 def populate(modeladmin, request, queryset):
     if queryset.count() > 1:
-        messages.error(request,
-                       _("Can't populate more than one index at once."))
+        messages.error(request, _("Can't populate more than one index at once."))
         return
     index = queryset[0]
     message = index.populate()
@@ -50,35 +54,35 @@ populate.short_description = _("Populate selected search index via Celery")
 
 @admin.register(Index)
 class IndexAdmin(admin.ModelAdmin):
-    list_display = ('name', 'promoted', 'populated', 'current',
-                    'created_at')
-    ordering = ('-created_at',)
+    list_display = ("name", "promoted", "populated", "current", "created_at")
+    ordering = ("-created_at",)
     actions = [populate, promote, demote]
-    readonly_fields = ['promoted', 'populated']
-    list_filter = ('promoted', 'populated', 'created_at')
+    readonly_fields = ["promoted", "populated"]
+    list_filter = ("promoted", "populated", "created_at")
     form = IndexModelForm
 
     def current(self, obj):
         return obj.prefixed_name == Index.objects.get_current().prefixed_name
-    current.short_description = _('Is current index?')
+
+    current.short_description = _("Is current index?")
     current.boolean = True
 
 
 @admin.register(FilterGroup)
 class FilterGroupAdmin(admin.ModelAdmin):
-    list_display = ('name', 'order')
-    list_editable = ('order',)
-    ordering = ('-order', 'name')
+    list_display = ("name", "order")
+    list_editable = ("order",)
+    ordering = ("-order", "name")
 
 
 @admin.register(Filter)
 class FilterAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'group', 'enabled', 'default')
-    list_filter = ('group',)
-    search_fields = ('name', 'slug')
-    list_editable = ('enabled', 'default')
+    list_display = ("name", "slug", "group", "enabled", "default")
+    list_filter = ("group",)
+    search_fields = ("name", "slug")
+    list_editable = ("enabled", "default")
     list_select_related = True
     radio_fields = {
-        'operator': admin.VERTICAL,
-        'group': admin.VERTICAL,
+        "operator": admin.VERTICAL,
+        "group": admin.VERTICAL,
     }

@@ -32,6 +32,7 @@ VERSION=latest make build-kuma
 
 docker-compose --version
 docker-compose up -d
+
 # Hang tight until MySQL appears to be working
 docker-compose exec -T web urlwait mysql://root:kuma@mysql:3306/developer_mozilla_org 30
 # Hang tight until Elasticsearch appears to be working
@@ -43,6 +44,6 @@ docker-compose exec -T web make clean
 docker-compose exec -T web make localecompile
 docker-compose exec -T web make build-static
 docker-compose exec -T web ./manage.py migrate
-docker-compose exec -T web make coveragetest
 # This checks that running `./manage.py makemigrations` wasn't forgotten
 docker-compose exec -T web ./manage.py makemigrations --check --dry-run
+docker-compose exec -T web make coveragetest

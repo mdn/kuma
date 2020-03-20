@@ -8,10 +8,9 @@ from taggit.models import Tag
 
 from kuma.users.models import User, UserBan
 from kuma.wiki.constants import REDIRECT_CONTENT
-from kuma.wiki.models import (Document, DocumentTag, LocalizationTag,
-                              ReviewTag, Revision)
+from kuma.wiki.models import Document, DocumentTag, LocalizationTag, ReviewTag, Revision
 
-logger = logging.getLogger('kuma.scraper')
+logger = logging.getLogger("kuma.scraper")
 
 
 class Storage(object):
@@ -19,11 +18,11 @@ class Storage(object):
 
     def __init__(self):
         self.local = {
-            'document_children': {},
-            'document_history': {},
-            'document_metadata': {},
-            'document_redirect': {},
-            'revision_html': {},
+            "document_children": {},
+            "document_history": {},
+            "document_metadata": {},
+            "document_redirect": {},
+            "revision_html": {},
         }
 
     def sorted_tags(self, tags):
@@ -35,8 +34,7 @@ class Storage(object):
         IntegrityError.  This returns the tags with the most capital letters
         first, so that 'Firefox' will be prioritized over 'firefox'.
         """
-        tag_sort = sorted([(sum(1 for c in tag if c.islower()), tag)
-                           for tag in tags])
+        tag_sort = sorted([(sum(1 for c in tag if c.islower()), tag) for tag in tags])
         return [tag for _, tag in tag_sort]
 
     def deduped_tags(self, tags):
@@ -68,11 +66,11 @@ class Storage(object):
 
     def save_document(self, data):
         doc_data = data.copy()
-        locale = doc_data.pop('locale')
-        slug = doc_data.pop('slug')
-        doc_id = doc_data.pop('id', None)
-        tags = doc_data.pop('tags', [])
-        redirect_to = doc_data.pop('redirect_to', None)
+        locale = doc_data.pop("locale")
+        slug = doc_data.pop("slug")
+        doc_id = doc_data.pop("id", None)
+        tags = doc_data.pop("tags", [])
+        redirect_to = doc_data.pop("redirect_to", None)
 
         attempt = 0
         document = None
@@ -87,21 +85,25 @@ class Storage(object):
                 document = Document.objects.get(locale=locale, slug=slug)
             except Document.DoesNotExist:
                 if doc_id and not Document.objects.filter(id=doc_id).exists():
-                    doc_data['id'] = doc_id
+                    doc_data["id"] = doc_id
                 try:
                     document = Document.objects.create(
-                        locale=locale, slug=slug, **doc_data)
+                        locale=locale, slug=slug, **doc_data
+                    )
                 except IntegrityError as error:
-                    logger.warn('On locale "%s", slug "%s", got error %s',
-                                locale, slug, error)
-                    doc_data.pop('id', None)
+                    logger.warning(
+                        'On locale "%s", slug "%s", got error %s', locale, slug, error
+                    )
+                    doc_data.pop("id", None)
             else:
                 for name, value in doc_data.items():
                     setattr(document, name, value)
                 if redirect_to:
                     document.is_redirect = True
                     document.html = REDIRECT_CONTENT % {
-                        'href': redirect_to, 'title': document.title}
+                        "href": redirect_to,
+                        "title": document.title,
+                    }
                 document.save()
         assert document is not None
         self.safe_add_tags(tags, DocumentTag, document.tags)
@@ -109,28 +111,28 @@ class Storage(object):
         Document.objects.filter(pk=document.pk).update(json=None)
 
     def get_document_metadata(self, locale, slug):
-        return self.local['document_metadata'].get((locale, slug), None)
+        return self.local["document_metadata"].get((locale, slug), None)
 
     def save_document_metadata(self, locale, slug, data):
-        self.local['document_metadata'][(locale, slug)] = data
+        self.local["document_metadata"][(locale, slug)] = data
 
     def get_document_history(self, locale, slug):
-        return self.local['document_history'].get((locale, slug), None)
+        return self.local["document_history"].get((locale, slug), None)
 
     def save_document_history(self, locale, slug, data):
-        self.local['document_history'][(locale, slug)] = data
+        self.local["document_history"][(locale, slug)] = data
 
     def get_document_redirect(self, locale, slug):
-        return self.local['document_redirect'].get((locale, slug), None)
+        return self.local["document_redirect"].get((locale, slug), None)
 
     def save_document_redirect(self, locale, slug, data):
-        self.local['document_redirect'][(locale, slug)] = data
+        self.local["document_redirect"][(locale, slug)] = data
 
     def get_document_children(self, locale, slug):
-        return self.local['document_children'].get((locale, slug), None)
+        return self.local["document_children"].get((locale, slug), None)
 
     def save_document_children(self, locale, slug, data):
-        self.local['document_children'][(locale, slug)] = data
+        self.local["document_children"][(locale, slug)] = data
 
     def get_revision(self, revision_id):
         try:
@@ -141,19 +143,21 @@ class Storage(object):
             return revision
 
     def save_revision(self, data):
-        revision_id = data.pop('id')
-        is_current = data.pop('is_current')
-        creator = data.pop('creator')
-        document = data.pop('document')
-        tags = data.pop('tags')
-        review_tags = data.pop('review_tags', [])
-        localization_tags = data.pop('localization_tags', [])
+        revision_id = data.pop("id")
+        is_current = data.pop("is_current")
+        creator = data.pop("creator")
+        document = data.pop("document")
+        tags = data.pop("tags")
+        review_tags = data.pop("review_tags", [])
+        localization_tags = data.pop("localization_tags", [])
         revision, created = Revision.objects.get_or_create(
             id=revision_id,
-            defaults={'creator': creator,
-                      'document': document,
-                      'is_approved': False,  # Don't make current rev
-                      })
+            defaults={
+                "creator": creator,
+                "document": document,
+                "is_approved": False,  # Don't make current rev
+            },
+        )
         for name, value in data.items():
             setattr(revision, name, value)
         revision.content = revision.content or ""
@@ -169,7 +173,7 @@ class Storage(object):
                 tag = DocumentTag.objects.create(name=tag)
             new_tags.append('"%s"' % tag.name)
         if new_tags:
-            revision.tags = ' '.join(new_tags)
+            revision.tags = " ".join(new_tags)
 
         # is_approved will update the document, avoid for old revisions
         revision.is_approved = is_current
@@ -178,11 +182,13 @@ class Storage(object):
         # Add review, localization tags
         for tag_name in review_tags:
             tag, created = ReviewTag.objects.get_or_create(
-                name=tag_name, defaults={'slug': tag_name})
+                name=tag_name, defaults={"slug": tag_name}
+            )
             revision.review_tags.add(tag)
         for tag_name in localization_tags:
             tag, created = LocalizationTag.objects.get_or_create(
-                name=tag_name, defaults={'slug': tag_name})
+                name=tag_name, defaults={"slug": tag_name}
+            )
             revision.localization_tags.add(tag)
 
         # Approve old revisions w/o making them current
@@ -190,10 +196,10 @@ class Storage(object):
             Revision.objects.filter(id=revision.id).update(is_approved=True)
 
     def get_revision_html(self, path):
-        return self.local['revision_html'].get((path), None)
+        return self.local["revision_html"].get((path), None)
 
     def save_revision_html(self, path, data):
-        self.local['revision_html'][path] = data
+        self.local["revision_html"][path] = data
 
     def get_user(self, username):
         try:
@@ -204,12 +210,12 @@ class Storage(object):
             return user
 
     def save_user(self, data):
-        username = data.pop('username')
-        banned = data.pop('banned', False)
+        username = data.pop("username")
+        banned = data.pop("banned", False)
         user, created = User.objects.get_or_create(username=username)
         for name, value in data.items():
-            if name in ('interest', 'expertise'):
-                tags = ['profile:%s:%s' % (name, tag) for tag in value]
+            if name in ("interest", "expertise"):
+                tags = ["profile:%s:%s" % (name, tag) for tag in value]
                 self.safe_add_tags(tags, Tag, user.tags)
             else:
                 setattr(user, name, value)
@@ -217,5 +223,5 @@ class Storage(object):
 
         if banned:
             ban, ban_created = UserBan.objects.get_or_create(
-                user=user,
-                defaults={'by': user, 'reason': 'Ban detected by scraper'})
+                user=user, defaults={"by": user, "reason": "Ban detected by scraper"}
+            )

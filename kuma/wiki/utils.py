@@ -1,16 +1,14 @@
-
-
 import datetime
 import json
 from urllib.parse import urlparse
 
 import tidylib
-from apiclient.discovery import build
 from constance import config
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.urls import resolve, Resolver404
 from django.utils import translation
+from googleapiclient.discovery import build
 from httplib2 import Http
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -24,13 +22,13 @@ def locale_and_slug_from_path(path, request=None, path_locale=None):
     locale or even a modern Kuma domain in the path. If so, signal for a
     redirect to a more canonical path. In any case, produce a locale and
     slug derived from the given path."""
-    locale, slug, needs_redirect = '', path, False
+    locale, slug, needs_redirect = "", path, False
     mdn_locales = {lang[0].lower(): lang[0] for lang in settings.LANGUAGES}
 
     # If there's a slash in the path, then the first segment could be a
     # locale. And, that locale could even be a legacy MindTouch locale.
-    if '/' in path:
-        maybe_locale, maybe_slug = path.split('/', 1)
+    if "/" in path:
+        maybe_locale, maybe_slug = path.split("/", 1)
         l_locale = maybe_locale.lower()
 
         if l_locale in settings.MT_TO_KUMA_LOCALE_MAP:
@@ -46,15 +44,15 @@ def locale_and_slug_from_path(path, request=None, path_locale=None):
             slug = maybe_slug
 
     # No locale yet? Try the locale detected by the request or in path
-    if locale == '':
+    if locale == "":
         if request:
             locale = request.LANGUAGE_CODE
         elif path_locale:
             locale = path_locale
 
     # Still no locale? Probably no request. Go with the site default.
-    if locale == '':
-        locale = getattr(settings, 'WIKI_DEFAULT_LANGUAGE', 'en-US')
+    if locale == "":
+        locale = getattr(settings, "WIKI_DEFAULT_LANGUAGE", "en-US")
 
     return (locale, slug, needs_redirect)
 
@@ -82,28 +80,29 @@ def get_doc_components_from_url(url, required_locale=None, check_host=True):
         return False
 
     # View imports Model, Model imports utils, utils import Views.
-    from kuma.wiki.views.document import (document as document_view,
-                                          react_document as react_document_view)
+    from kuma.wiki.views.document import (
+        document as document_view,
+        react_document as react_document_view,
+    )
 
     if view not in (document_view, react_document_view):
         raise NotDocumentView
 
-    path = '/' + path
-    return locale, path, view_kwargs['document_path']
+    path = "/" + path
+    return locale, path, view_kwargs["document_path"]
 
 
 def tidy_content(content):
     options = {
-        'output-xhtml': 0,
-        'force-output': 1,
+        "output-xhtml": 0,
+        "force-output": 1,
     }
     try:
         content = tidylib.tidy_document(content, options=options)
     except UnicodeDecodeError:
         # In case something happens in pytidylib we'll try again with
         # a proper encoding
-        content = tidylib.tidy_document(content.encode(),
-                                        options=options)
+        content = tidylib.tidy_document(content.encode(), options=options)
         tidied, errors = content
         return tidied.decode(), errors
     else:
@@ -117,63 +116,69 @@ def analytics_upageviews(revision_ids, start_date, end_date=None):
 
     """
 
-    scopes = ['https://www.googleapis.com/auth/analytics.readonly']
+    scopes = ["https://www.googleapis.com/auth/analytics.readonly"]
 
     try:
         ga_cred_dict = json.loads(config.GOOGLE_ANALYTICS_CREDENTIALS)
     except (ValueError, TypeError):
         raise ImproperlyConfigured(
-            "GOOGLE_ANALYTICS_CREDENTIALS Constance setting is badly formed.")
+            "GOOGLE_ANALYTICS_CREDENTIALS Constance setting is badly formed."
+        )
     if not ga_cred_dict:
         raise ImproperlyConfigured(
-            "An empty GOOGLE_ANALYTICS_CREDENTIALS Constance setting is not permitted.")
+            "An empty GOOGLE_ANALYTICS_CREDENTIALS Constance setting is not permitted."
+        )
 
-    credentials = ServiceAccountCredentials.from_json_keyfile_dict(ga_cred_dict,
-                                                                   scopes=scopes)
+    credentials = ServiceAccountCredentials.from_json_keyfile_dict(
+        ga_cred_dict, scopes=scopes
+    )
     http_auth = credentials.authorize(Http())
-    service = build('analyticsreporting', 'v4', http=http_auth)
+    service = build("analyticsreporting", "v4", http=http_auth)
 
     if end_date is None:
         end_date = datetime.date.today()
 
-    if hasattr(start_date, 'date'):
+    if hasattr(start_date, "date"):
         start_date = start_date.date()
-    if hasattr(end_date, 'date'):
+    if hasattr(end_date, "date"):
         end_date = end_date.date()
     start_date = start_date.isoformat()
     end_date = end_date.isoformat()
 
     request = service.reports().batchGet(
         body={
-            'reportRequests': [
+            "reportRequests": [
                 # `dimension12` is the custom variable containing a page's rev #.
                 {
-                    'dimensions': [{'name': 'ga:dimension12'}],
-                    'metrics': [{'expression': 'ga:uniquePageviews'}],
-                    'dimensionFilterClauses': [
+                    "dimensions": [{"name": "ga:dimension12"}],
+                    "metrics": [{"expression": "ga:uniquePageviews"}],
+                    "dimensionFilterClauses": [
                         {
-                            'filters': [
-                                {'dimensionName': 'ga:dimension12',
-                                 'operator': 'IN_LIST',
-                                 'expressions': [str(x) for x in revision_ids]}
+                            "filters": [
+                                {
+                                    "dimensionName": "ga:dimension12",
+                                    "operator": "IN_LIST",
+                                    "expressions": [str(x) for x in revision_ids],
+                                }
                             ]
                         }
                     ],
-                    'dateRanges': [
-                        {'startDate': start_date, 'endDate': end_date}
-                    ],
-                    'viewId': '66726481'  # PK of the developer.mozilla.org site on GA.
+                    "dateRanges": [{"startDate": start_date, "endDate": end_date}],
+                    "viewId": "66726481",  # PK of the developer.mozilla.org site on GA.
                 }
             ]
-        })
+        }
+    )
 
     response = request.execute()
 
     data = {int(r): 0 for r in revision_ids}
-    data.update({
-        int(row['dimensions'][0]): int(row['metrics'][0]['values'][0])
-        for row in response['reports'][0]['data'].get('rows', ())
-    })
+    data.update(
+        {
+            int(row["dimensions"][0]): int(row["metrics"][0]["values"][0])
+            for row in response["reports"][0]["data"].get("rows", ())
+        }
+    )
 
     return data
 

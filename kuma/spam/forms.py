@@ -1,12 +1,12 @@
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from waffle import flag_is_active
 
 from . import akismet, constants
 
 
 class AkismetFormMixin(object):
-    akismet_error_message = _('The submitted data contains invalid content.')
+    akismet_error_message = _("The submitted data contains invalid content.")
 
     def __init__(self, request, *args, **kwargs):
         self.request = request
@@ -34,7 +34,7 @@ class AkismetFormMixin(object):
         Upon receiving an error from the API client raises an "invalid"
         form validation error with a predefined error message.
         """
-        raise forms.ValidationError(self.akismet_error_message, code='invalid')
+        raise forms.ValidationError(self.akismet_error_message, code="invalid")
 
     def akismet_call(self):
         """
@@ -57,11 +57,11 @@ class AkismetFormMixin(object):
         """
         parameters = {}
         if flag_is_active(self.request, constants.SPAM_ADMIN_FLAG):
-            parameters['user_role'] = 'administrator'
+            parameters["user_role"] = "administrator"
         if flag_is_active(self.request, constants.SPAM_SPAMMER_FLAG):
-            parameters['comment_author'] = 'viagra-test-123'
+            parameters["comment_author"] = "viagra-test-123"
         if flag_is_active(self.request, constants.SPAM_TESTING_FLAG):
-            parameters['is_test'] = True
+            parameters["is_test"] = True
         return parameters
 
     def clean(self):
@@ -86,8 +86,7 @@ class AkismetCheckFormMixin(AkismetFormMixin):
         Checks the waffle flag additionally to the default behavior.
         """
         spam_checks = flag_is_active(self.request, constants.SPAM_CHECKS_FLAG)
-        return (spam_checks and
-                super(AkismetCheckFormMixin, self).akismet_enabled())
+        return spam_checks and super(AkismetCheckFormMixin, self).akismet_enabled()
 
     def akismet_call(self, parameters):
         try:
@@ -100,8 +99,9 @@ class AkismetCheckFormMixin(AkismetFormMixin):
 
 
 class AkismetSubmissionFormMixin(AkismetFormMixin):
-    akismet_error_message = _('The submitted data contains invalid content. '
-                              'Please try again.')
+    akismet_error_message = _(
+        "The submitted data contains invalid content. " "Please try again."
+    )
 
     def akismet_enabled(self):
         """
@@ -109,13 +109,10 @@ class AkismetSubmissionFormMixin(AkismetFormMixin):
 
         Checks the API client if it's ready by default.
         """
-        spam_submission = flag_is_active(
-            self.request,
-            constants.SPAM_SUBMISSIONS_FLAG
-        )
+        spam_submission = flag_is_active(self.request, constants.SPAM_SUBMISSIONS_FLAG)
         return (
-            spam_submission and
-            super(AkismetSubmissionFormMixin, self).akismet_enabled()
+            spam_submission
+            and super(AkismetSubmissionFormMixin, self).akismet_enabled()
         )
 
     def akismet_submission_type(self):
@@ -129,7 +126,7 @@ class AkismetSubmissionFormMixin(AkismetFormMixin):
         """"
         Get the submission function and call it with the parameters.
         """
-        submission_function = 'submit_%s' % self.akismet_submission_type()
+        submission_function = "submit_%s" % self.akismet_submission_type()
         try:
             getattr(self.akismet_client, submission_function)(**parameters)
         except akismet.AkismetError as exception:

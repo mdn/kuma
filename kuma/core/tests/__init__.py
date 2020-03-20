@@ -1,5 +1,3 @@
-
-
 import os
 from functools import wraps
 from unittest import mock
@@ -14,23 +12,23 @@ from django.utils.translation import trans_real
 
 def assert_redirect_to_wiki(response, url):
     assert response.status_code == 301
-    assert response['Location'].endswith(settings.WIKI_HOST + url)
+    assert response["Location"].endswith(settings.WIKI_HOST + url)
 
 
 def assert_no_cache_header(response):
-    assert 'max-age=0' in response['Cache-Control']
-    assert 'no-cache' in response['Cache-Control']
-    assert 'no-store' in response['Cache-Control']
-    assert 'must-revalidate' in response['Cache-Control']
-    assert 's-maxage' not in response['Cache-Control']
+    assert "max-age=0" in response["Cache-Control"]
+    assert "no-cache" in response["Cache-Control"]
+    assert "no-store" in response["Cache-Control"]
+    assert "must-revalidate" in response["Cache-Control"]
+    assert "s-maxage" not in response["Cache-Control"]
 
 
 def assert_shared_cache_header(response):
-    assert 'public' in response['Cache-Control']
-    assert 's-maxage' in response['Cache-Control']
+    assert "public" in response["Cache-Control"]
+    assert "s-maxage" in response["Cache-Control"]
 
 
-def get_user(username='testuser'):
+def get_user(username="testuser"):
     """Return a django user or raise FixtureMissingError"""
     User = get_user_model()
     return User.objects.get(username=username)
@@ -61,10 +59,10 @@ class KumaTestMixin(object):
         return messages
 
     def assertFileExists(self, path):
-        self.assertTrue(os.path.exists(path), 'Path %r does not exist' % path)
+        self.assertTrue(os.path.exists(path), "Path %r does not exist" % path)
 
     def assertFileNotExists(self, path):
-        self.assertFalse(os.path.exists(path), 'Path %r does exist' % path)
+        self.assertFalse(os.path.exists(path), "Path %r does exist" % path)
 
 
 class KumaTestCase(KumaTestMixin, TestCase):
@@ -106,7 +104,7 @@ def call_on_commit_immediately(test_method):
 
     @wraps(test_method)
     def inner(*args, **kwargs):
-        with mock.patch('django.db.transaction.on_commit') as mocker:
+        with mock.patch("django.db.transaction.on_commit") as mocker:
             mocker.side_effect = run_immediately
             return test_method(*args, **kwargs)
 

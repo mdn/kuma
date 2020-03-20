@@ -7,20 +7,12 @@
      */
     var modalDialog = {
         /**
-         * Returns `false` if either of the following conditions are true else, returns `true`:
-         * 1. Multi auth is not turned on
-         * 2. The modal we expect is not present
-         * 3. We are on a mobile phone
-         * @param {Object} modal - The modal as an `HTMLElement`
+         * Returns `false` if are on a mobile phone.
          * @returns {Boolean}
          */
-        showModal: function (modal) {
-            if (
-                !window.mdn.multiAuthEnabled ||
-                !modal ||
-                (window.matchMedia &&
-                    window.matchMedia('(max-width:47.9385em)').matches)
-            ) {
+        shouldShowModal: function () {
+            if (window.matchMedia &&
+                window.matchMedia('(max-width:47.9385em)').matches) {
                 return false;
             } else {
                 return true;
@@ -43,9 +35,8 @@
          * the modal as expected
          * 2. Closes the modal when the `Escape` key is pressed
          * @param {Object} modal - The modal HTMLElement
-         * @param {Object} modalTrigger - The element that triggered the modal
          */
-        handleKeyboardEvents: function(modal, modalTrigger) {
+        handleKeyboardEvents: function(modal) {
             var firstFocusable = document.querySelector(
                 '[data-first-focusable]'
             );
@@ -69,12 +60,6 @@
                 ) {
                     event.preventDefault();
                     lastFocusable.focus();
-                }
-            });
-
-            modal.addEventListener('keyup', function(event) {
-                if (event.key === 'Escape') {
-                    modalDialog.closeModal(modal, modalTrigger);
                 }
             });
         }

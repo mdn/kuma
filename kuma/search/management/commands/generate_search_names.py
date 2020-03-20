@@ -11,7 +11,7 @@ This is generated from the production database using the management command:
 
 ./manage.py generate_search_names.py
 '''
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 FILTER_NAMES = {
   {%- for group_name, filter_names in names %}
@@ -30,11 +30,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         names = []
-        for group in FilterGroup.objects.order_by('name'):
-            filter_names = group.filters.values_list('name', flat=True)
+        for group in FilterGroup.objects.order_by("name"):
+            filter_names = group.filters.values_list("name", flat=True)
             names.append((group.name, sorted(filter_names)))
 
-        engine = engines['jinja2']
+        engine = engines["jinja2"]
         template = engine.from_string(TEMPLATE)
-        out = template.render({'names': names})
+        out = template.render({"names": names})
         self.stdout.write(out)

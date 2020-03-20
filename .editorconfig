@@ -7,14 +7,14 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-# Indentiation
+# Indentation
 indent_style = space
 indent_size = 4
 
-# Jenkinsfile uses two spaces
-[Jenkinsfile]
+# YAML and Jenkins use two spaces
+[{*.yml,Jenkinsfile}]
 indent_size = 2
 
 # git and Makefile use the superior tabs
-[.git*,Makefile,make.bat]
+[{.git*,Makefile,make.bat}]
 indent_style = tab

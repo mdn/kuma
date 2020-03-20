@@ -61,10 +61,6 @@ collectstatic:
 
 build-static: webpack compilejsi18n compile-react-i18n collectstatic
 
-install:
-	@ echo "## Installing $(requirements) ##"
-	@ pip install $(requirements)
-
 clean:
 	rm -rf .coverage build/ tmp/emails/*.log
 	find . \( -name \*.pyc -o -name \*.pyo -o -name __pycache__ \) -delete
@@ -171,4 +167,4 @@ npmrefresh:
 	npm install
 
 # Those tasks don't have file targets
-.PHONY: test coveragetest clean locale install compilejsi18n collectstatic localetest localeextract localecompile localerefresh npmrefresh webpack compile-react-i18n
+.PHONY: test coveragetest clean locale compilejsi18n collectstatic localetest localeextract localecompile localerefresh npmrefresh webpack compile-react-i18n

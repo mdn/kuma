@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import A11yNav from './a11y/a11y-nav.jsx';
 import Article from './article.jsx';
-import Banners from './banners.jsx';
+import ActiveBanner from './active-banner.jsx';
 import Breadcrumbs from './breadcrumbs.jsx';
 import { gettext } from './l10n.js';
 import LanguageMenu from './header/language-menu.jsx';
@@ -29,7 +29,8 @@ export type DocumentData = {
     hrefLang: string,
     absoluteURL: string,
     wikiURL: string,
-    translateURL: string,
+    editURL: string,
+    translateURL: string | null,
     translationStatus: null | 'in-progress' | 'outdated',
     bodyHTML: string,
     quickLinksHTML: string,
@@ -113,7 +114,7 @@ function DocumentPage({ document }: DocumentProps) {
             <Newsletter />
             <Footer />
             <TaskCompletionSurvey document={document} />
-            <Banners />
+            <ActiveBanner />
         </>
     );
 }

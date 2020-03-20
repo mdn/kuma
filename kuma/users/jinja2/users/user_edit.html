@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "react_base.html" %}
 {% from 'includes/common_macros.html' import li_field %}
 
 {% set accounts = social_accounts(edit_user) %}
@@ -9,31 +9,31 @@
 {% block bodyclass %}user user-edit{% endblock %}
 
 {% block title %}{{ page_title(_('Edit Your Profile')) }}{% endblock %}
-{% block robots_value %}noindex, nofollow{% endblock %}
 
 {% block site_css %}
-{{ super() }}
-{% stylesheet 'jquery-ui' %}
-{% stylesheet 'users' %}
-{% stylesheet 'submission' %}
+  {{ super() }}
+  {% stylesheet 'users' %}
+  {% stylesheet 'submission' %}
+  {% stylesheet 'delete-user-modal' %}
 {% endblock %}
 
 {% block site_js %}
-{{ super() }}
-{% javascript 'jquery-ui' %}
-{% javascript 'users' %}
+  {{ super() }}
+  {% javascript 'jquery-ui' %}
+  {% javascript 'users' %}
+  {% javascript 'delete-user-modal' %}
+{% endblock %}
+
+{% block pageheader %}
+{{ render_react("user-account", request.LANGUAGE_CODE, request.get_full_path(),
+                  None, False)|safe }}
 {% endblock %}
 
 {% block content %}
-<div class="column-container">
+<div class="column-container center clear">
 
   <div class="column-2 smaller">
-    <figure class="acc-avatar">
-      <img src="{{ get_avatar_url(edit_user) }}" alt="{{ edit_user.username }}" width="200" height="200" class="user-photo avatar" />
-      <figcaption>
-        {{ _('Change your avatar at') }} <a href="https://github.com/settings/profile" rel="external">github.com</a>
-      </figcaption>
-    </figure>
+    <img src="{{ get_avatar_url(edit_user) }}" alt="{{ edit_user.username }}" width="200" height="200" class="user-photo avatar" />
   </div>
 
   <div id="user-edit" class="column-half">
@@ -70,20 +70,6 @@
           {{ li_field(user_form, 'locale') }}
           {{ li_field(user_form, 'timezone') }}
           {{ li_field(user_form, 'irc_nickname') }}
-
-          <li class="{{ ' error' if user_form.interests.errors }}">
-            <label for="{{ user_form.interests.id_for_label }}">{{ _('Interests (tags)') }}</label>
-            <p class="field-note">{{ _('Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".') }}</p>
-            {{ user_form.interests }}
-            {{ user_form.interests.errors }}
-          </li>
-
-          <li class="{{ ' error' if user_form.expertise.errors }}">
-            <label for="{{ user_form.expertise.id_for_label }}">{{ _('Areas of expertise') }}</label>
-            <p class="field-note">{{ _('Add your interests first, then declare yourself an expert in selected topics.') }}</p>
-            {{ user_form.expertise }}
-            {{ user_form.expertise.errors }}
-          </li>
         </ul>
       </fieldset>
       {%- if recurring_payment_enabled %}
@@ -113,9 +99,6 @@
             {% else %}
             <label for="{{ user_form.github_url.id_for_label }}">
                 {% include 'includes/icons/social/github.svg' %}GitHub
-              <a class="field-management" href="{{ provider_login_url('github', process='connect', next=next_url) }}">
-                {{ _('Use your GitHub account to sign in.') }}
-              </a>
             </label>
             {{ user_form.github_url }}
             {% endif %}
@@ -135,16 +118,24 @@
 
         </ul>
       </fieldset>
-      <p>
+      <ul class="button-container">
+        <li>
           <button type="submit" class="positive">
-              {% include 'includes/icons/general/check-mark.svg' %}
-              {{ _('Publish') }}
+            {% include 'includes/icons/general/check-mark.svg' %}
+            {{ _('Publish') }}
           </button>
-      </p>
-      {% if is_me %}
-      <a class="field-management" href="{{ url('users.user_delete', username=request.user.username) }}">{{ _('Delete your account.') }}</a>
-      {% endif %}
+        </li>
+        <li>
+          {% if is_me %}
+            <a id="delete-user-button" class="negative"
+              href="{{ url('users.user_delete', username=request.user.username) }}">{{ _('Delete Account.') }}</a>
+          {% endif %}
+        </li>
+      </ul>
     </form>
+    {% if is_me and waffle.flag('subscription') and settings.STRIPE_PUBLIC_KEY %}
+      {% include "users/includes/stripe_subscription.html" %}
+    {% endif %}
   </div>
   <div class="column-4">
     {% if settings.NEWSLETTER %}
@@ -155,14 +146,11 @@
   </div>
 </div>
 
+{% include "/users/includes/delete-user-modal.html" %}
+
 {% endblock %}
 
 {% block js %}
-<script>
-  // <![CDATA[
-    var INTEREST_SUGGESTIONS = {{ INTEREST_SUGGESTIONS|jsonencode }};
-  // ]]>
-</script>
 
 {% if settings.NEWSLETTER %}
   {% javascript 'newsletter' %}
