@@ -182,8 +182,6 @@ def test_recurring_payment_management_not_logged_in(get, cancel_, client):
     "endpoint",
     [
         "payment_terms",
-        "recurring_payment_initial",
-        "recurring_payment_subscription",
         "recurring_payment_management",
     ],
 )

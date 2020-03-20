@@ -32,13 +32,6 @@ def thank_you(request):
 @waffle_flag("subscription")
 @ensure_wiki_domain
 @never_cache
-def contribute(request):
-    return render(request, "payments/payments.html")
-
-
-@waffle_flag("subscription")
-@ensure_wiki_domain
-@never_cache
 def payment_terms(request):
     return render(request, "payments/terms.html")
 
