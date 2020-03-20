@@ -1,5 +1,3 @@
-
-
 from django.conf import settings
 from elasticsearch.exceptions import ConnectionError
 from elasticsearch_dsl.connections import connections
@@ -22,7 +20,7 @@ class ElasticTestCase(UserTestCase):
     def setUpClass(cls):
         super(ElasticTestCase, cls).setUpClass()
 
-        if not getattr(settings, 'ES_URLS', None):
+        if not getattr(settings, "ES_URLS", None):
             cls.skipme = True
             return
 
@@ -33,7 +31,7 @@ class ElasticTestCase(UserTestCase):
             return
 
         cls._old_es_index_prefix = settings.ES_INDEX_PREFIX
-        settings.ES_INDEX_PREFIX = 'test-%s' % settings.ES_INDEX_PREFIX
+        settings.ES_INDEX_PREFIX = "test-%s" % settings.ES_INDEX_PREFIX
         cls._old_es_live_index = settings.ES_LIVE_INDEX
         settings.ES_LIVE_INDEX = True
 

@@ -1,0 +1,11 @@
+.button-container {
+    display: flex;
+
+    li {
+        flex-basis: 50%;
+
+        &:last-child {
+            text-align: right;
+        }
+    }
+}

@@ -1,3 +1,5 @@
+{# This page will be replaced in the next sprint by https://github.com/mdn/kuma/issues/6581 #}
+
 {% extends 'base.html' %}
 
 {% block body_attributes %}id="contribute"{% endblock %}
@@ -42,10 +44,9 @@
 
     <main id="contributions-page" class="contributions-page" role="main">
         <section class="section">
-            <img src="{{ static('img/hero-dino-blank.png') }}" class="backdrop-image" alt="" role="presentation" />
-            <div class="index">
+            <header>
                 <h2>{{_('FAQs')}}</h2>
-            </div>
+            </header>
             <ol id="contribute-faqs" class="faqs clear">
                 {% call faq_entry(1, _("Why is MDN asking me for money?")) %}
                     <p>
@@ -173,7 +174,7 @@
                         {% trans %}
                             The Mozilla Corporation, which funds MDN, makes money
                             primarily from royalties from search providers on
-                            Firefox (such as Google, Amazon, Duck Duck Go, and
+                            Firefox (such as Google, Amazon, DuckDuckGo, and
                             others).
                         {% endtrans %}
                     </p>
@@ -191,9 +192,9 @@
             </ol>
         </section>
         <section class="section">
-            <div class="index">
+            <header>
                 <h2>{{_('Monthly payments')}}</h2>
-            </div>
+            </header>
             <ol id="contribute-monthly-faqs" class="faqs clear">
                 {%- call faq_entry(11, _("How do I manage my monthly payment?")) %}
                     <p>

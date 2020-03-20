@@ -49,32 +49,6 @@
 </ul>
 {% endif %}
 
-{% set tag_ns = 'profile:interest:' %}
-{% set tags = detail_user.tags.all_ns(tag_ns) %}
-{% if tags|length %}
-<div class="user-tags">
-  <h2>{{ _("Interests") }}</h2>
-  <ul>
-    {% for tag in tags %}
-      <li><span rel="tag">{{ tag.name.replace(tag_ns, '') }}</span></li>
-    {% endfor %}
-  </ul>
-</div>
-{% endif %}
-
-{% set tag_ns = 'profile:expertise:' %}
-{% set tags = detail_user.tags.all_ns(tag_ns) %}
-{% if tags|length %}
-<div class="user-tags">
-  <h2>{{ _("Areas of Expertise") }}</h2>
-  <ul>
-    {% for tag in tags %}
-      <li><span rel="tag">{{ tag.name.replace(tag_ns, '') }}</span></li>
-    {% endfor %}
-  </ul>
-</div>
-{% endif %}
-
 <ul class="user-links">
   {% if detail_user.twitter_url %}
     <li class="twitter">

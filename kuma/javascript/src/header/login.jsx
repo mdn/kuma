@@ -17,14 +17,11 @@ export default function Login(): React.Node {
         return null;
     }
 
-    // In order to render links properly, we need to know our own
-    // URL and the URL of the editable wiki site. We get these from
-    // window.location and from window.mdn. Neither of those are
-    // available during server side rendering, but this code will
-    // never run during server side rendering because we won't have
-    // user data then.
+    // In order to render links properly, we need to know our own URL.
+    // We get this from window.location. This is not available during
+    // server side rendering, but this code will never run during
+    // server side rendering because we won't have user data then.
     const LOCATION = window.location.pathname;
-    const WIKI = window.mdn ? window.mdn.wikiSiteUrl : '';
 
     /**
      * Send a signal to GA when a user clicks on the Sing In
@@ -55,7 +52,7 @@ export default function Login(): React.Node {
                 alt={userData.username}
             />
         );
-        let viewProfileLink = `${WIKI}/${locale}/profiles/${userData.username}`;
+        let viewProfileLink = `/${locale}/profiles/${userData.username}`;
         let editProfileLink = `${viewProfileLink}/edit`;
 
         return (
@@ -87,11 +84,7 @@ export default function Login(): React.Node {
         // Otherwise, show a login prompt
         return (
             <a
-                href={
-                    (window && window.mdn && window.mdn.multiAuthEnabled
-                        ? `/${locale}/users/account/signup-landing`
-                        : '/users/github/login') + `?next=${LOCATION}`
-                }
+                href={`/${locale}/users/account/signup-landing?next=${LOCATION}`}
                 data-service="GitHub"
                 rel="nofollow"
                 className="signin-link"

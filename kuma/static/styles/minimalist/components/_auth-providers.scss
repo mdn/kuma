@@ -6,6 +6,10 @@
         margin: 60px auto;
     }
 
+    &:focus {
+        outline: 0;
+    }
+
     .auth-button-container {
         margin: 0 auto;
         width: 350px;

@@ -2,7 +2,6 @@
 import * as React from 'react';
 
 import A11yNav from './a11y/a11y-nav.jsx';
-import Banners from './banners.jsx';
 import Header from './header/header.jsx';
 import UserProvider from './user-provider.jsx';
 
@@ -17,7 +16,6 @@ export default function SignupFlow() {
         <UserProvider>
             <A11yNav />
             <Header />
-            <Banners />
         </UserProvider>
     );
 }

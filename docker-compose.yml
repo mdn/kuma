@@ -46,13 +46,14 @@ services:
       # Other environment overrides
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=True
-      - PYTHONWARNINGS=${PYTHONWARNINGS:-default}
+      - PYTHONWARNINGS=${PYTHONWARNINGS:-}
       - MAINTENANCE_MODE=${MAINTENANCE_MODE:-False}
       - REVISION_HASH=${KUMA_REVISION_HASH:-undefined}
       # For the server side rendering server and the code that connects to it.
       - SSR_PORT=8000
       - SSR_URL=http://ssr:8000/ssr
       - SSR_TIMEOUT=1
+      - GOOGLE_ANALYTICS_TRACKING_URL=http://mockga:7000/collect
 
   # Web is based on worker b/c you cannot clear the "ports" with docker-compose.
   web:
@@ -62,22 +63,11 @@ services:
       - mysql
       - elasticsearch
       - redis
-      - kumascript
       - ssr
       - minio
+      - mockga
     ports:
       - "8000:8000"
-
-  # API is used by KumaScript for content and metadata
-  api:
-    <<: *worker
-    command: gunicorn -w ${GUNICORN_WORKERS:-4} --bind 0.0.0.0:8000 --access-logfile=- --timeout=120 kuma.wsgi:application
-    depends_on:
-      - mysql
-      - elasticsearch
-      - redis
-    ports:
-      - "8001:8000"
 
   # ssr is a Node server that performs server-side rendering of our React UI
   ssr:
@@ -120,11 +110,11 @@ services:
     image: mdnwebdocs/kumascript
     command: node run.js
     depends_on:
-      - api
+      - web
       - redis
     environment:
-      - DOCUMENT_URL_TEMPLATE=http://api:8000/en-US/docs/{path}?raw=1&redirect=no
-      - DOCUMENT_URL=http://api:8000
+      - DOCUMENT_URL_TEMPLATE=http://web:8000/en-US/docs/{path}?raw=1&redirect=no
+      - DOCUMENT_URL=http://web:8000
       - INTERACTIVE_EXAMPLES_URL=${INTERACTIVE_EXAMPLES_BASE:-https://interactive-examples.mdn.mozilla.net}
       - LIVE_SAMPLES_URL=http://${ATTACHMENT_HOST:-localhost:8000}
       - REDIS_URL=redis://redis:6379/2
@@ -155,6 +145,13 @@ services:
       MC_HOST_minio: "http://${MINIO_ACCESS_KEY:-minio}:${MINIO_SECRET_KEY:-minio123}@minio:9000"
     entrypoint: ""
     command: /bin/sh -c "for BUCKET in 'test' 'mdn-attachments'; do mc mb -p minio/$$BUCKET && mc policy set download minio/$$BUCKET; done"
+
+  mockga:
+    build:
+      context: mockga
+      dockerfile: Dockerfile
+    ports:
+      - "7000:7000"
 
 volumes:
     miniodata:

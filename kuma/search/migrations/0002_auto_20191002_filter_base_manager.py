@@ -7,12 +7,11 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('search', '0001_squashed_0003_filter_tags'),
+        ("search", "0001_squashed_0003_filter_tags"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='filter',
-            options={'base_manager_name': 'objects'},
+            name="filter", options={"base_manager_name": "objects"},
         ),
     ]

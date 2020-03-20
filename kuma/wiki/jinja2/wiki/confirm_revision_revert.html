@@ -1,7 +1,6 @@
 {% extends "wiki/base.html" %}
 {% set title = _('Revert Revision | %(document)s', document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
-{% block robots_value %}noindex, nofollow{% endblock %}
 {% block bodyclass %}revert-document{% endblock %}
 
 {% block content %}

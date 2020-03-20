@@ -1,5 +1,3 @@
-
-
 from celery import task
 
 from kuma.core.decorators import skip_in_maintenance_mode

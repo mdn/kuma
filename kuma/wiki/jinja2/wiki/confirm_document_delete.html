@@ -1,7 +1,6 @@
 {% extends "wiki/base.html" %}
 {% from "wiki/includes/document_macros.html" import build_document_crumbs with context %}
 {% block title %}{{ page_title(_('Delete Document | %(document)s', document=document.title)) }}{% endblock %}
-{% block robots_value %}noindex, nofollow{% endblock %}
 {% block content %}
 
   <article class="delete-document">

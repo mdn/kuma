@@ -9,15 +9,15 @@ from kuma.core.urlresolvers import reverse
 
 from .filters import get_filters
 
-QUERY_PARAM = 'q'
-PAGE_PARAM = 'page'
+QUERY_PARAM = "q"
+PAGE_PARAM = "page"
 
 
 def get_search_url_from_referer(request):
     """Returns search url from referer if it was an MDN search"""
     # Note: "HTTP_REFERER" is spelled wrong in the spec and we use "referer"
     # here to mirror that.
-    referer = request.META.get('HTTP_REFERER', None)
+    referer = request.META.get("HTTP_REFERER", None)
 
     # Non-ASCII referers can be problematic.
     # TODO: The 'ftfy' library can probably fix these, but may not be
@@ -31,10 +31,13 @@ def get_search_url_from_referer(request):
 
     # The referer url must be an MDN search--if not, then we return None.
     # We verify the protocol, host and path.
-    if (referer is None or url is None or
-            url.scheme != 'https' or
-            url.netloc != current_site.domain or
-            reverse('search') != url.path):
+    if (
+        referer is None
+        or url is None
+        or url.scheme != "https"
+        or url.netloc != current_site.domain
+        or reverse("search") != url.path
+    ):
         return None
     return referer
 
@@ -52,11 +55,11 @@ def ref_from_url(url):
     md5 = hashlib.md5()
 
     try:
-        query = url.query.dict.get(QUERY_PARAM, '')
+        query = url.query.dict.get(QUERY_PARAM, "")
         page = url.query.dict.get(PAGE_PARAM, 1)
         filters = get_filters(url.query.multi_dict.get)
     except UnicodeDecodeError:
-        query = ''
+        query = ""
         page = 1
         filters = []
 

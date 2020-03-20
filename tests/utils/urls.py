@@ -6,16 +6,24 @@ from braceexpand import braceexpand
 
 # https://github.com/mozilla/bedrock/blob/master/tests/redirects/base.py
 def get_abs_url(url, base_url):
-    if url.startswith('/'):
+    if url.startswith("/"):
         # urljoin messes with query strings too much
-        return ''.join([base_url, url])
+        return "".join([base_url, url])
     return url
 
 
 # https://github.com/mozilla/bedrock/blob/master/tests/redirects/base.py
-def url_test(url, location=None, status_code=requests.codes.moved_permanently,
-             req_headers=None, req_kwargs=None, resp_headers=None, query=None,
-             follow_redirects=False, final_status_code=requests.codes.ok):
+def url_test(
+    url,
+    location=None,
+    status_code=requests.codes.moved_permanently,
+    req_headers=None,
+    req_kwargs=None,
+    resp_headers=None,
+    query=None,
+    follow_redirects=False,
+    final_status_code=requests.codes.ok,
+):
     r"""
     Function for producing a config dict for the redirect test.
 
@@ -48,15 +56,15 @@ def url_test(url, location=None, status_code=requests.codes.moved_permanently,
     :return: dict or list of dicts
     """
     test_data = {
-        'url': url,
-        'location': location,
-        'status_code': status_code,
-        'req_headers': req_headers,
-        'req_kwargs': req_kwargs,
-        'resp_headers': resp_headers,
-        'query': query,
-        'follow_redirects': follow_redirects,
-        'final_status_code': final_status_code,
+        "url": url,
+        "location": location,
+        "status_code": status_code,
+        "req_headers": req_headers,
+        "req_kwargs": req_kwargs,
+        "resp_headers": resp_headers,
+        "query": query,
+        "follow_redirects": follow_redirects,
+        "final_status_code": final_status_code,
     }
     expanded_urls = list(braceexpand(url))
     num_urls = len(expanded_urls)
@@ -65,23 +73,31 @@ def url_test(url, location=None, status_code=requests.codes.moved_permanently,
 
     new_urls = []
     if location:
-        expanded_locations = list(braceexpand(test_data['location']))
+        expanded_locations = list(braceexpand(test_data["location"]))
         num_locations = len(expanded_locations)
 
     for i, url in enumerate(expanded_urls):
         data = test_data.copy()
-        data['url'] = url
+        data["url"] = url
         if location and num_urls == num_locations:
-            data['location'] = expanded_locations[i]
+            data["location"] = expanded_locations[i]
         new_urls.append(data)
 
     return new_urls
 
 
-def assert_valid_url(url, location=None, status_code=requests.codes.moved_permanently,
-                     req_headers=None, req_kwargs=None, resp_headers=None,
-                     query=None, base_url=None, follow_redirects=False,
-                     final_status_code=requests.codes.ok):
+def assert_valid_url(
+    url,
+    location=None,
+    status_code=requests.codes.moved_permanently,
+    req_headers=None,
+    req_kwargs=None,
+    resp_headers=None,
+    query=None,
+    base_url=None,
+    follow_redirects=False,
+    final_status_code=requests.codes.ok,
+):
     """
     Define a test of a URL's response.
     :param url: The URL in question (absolute or relative).
@@ -95,16 +111,16 @@ def assert_valid_url(url, location=None, status_code=requests.codes.moved_perman
     :param follow_redirects: Boolean indicating whether redirects should be followed.
     :param final_status_code: Expected status code after following any redirects.
     """
-    kwargs = {'allow_redirects': follow_redirects}
+    kwargs = {"allow_redirects": follow_redirects}
     if req_headers:
-        kwargs['headers'] = req_headers
+        kwargs["headers"] = req_headers
     if req_kwargs:
         kwargs.update(req_kwargs)
 
     abs_url = get_abs_url(url, base_url)
     resp = requests.get(abs_url, **kwargs)
     # so that the value will appear in locals in test output
-    resp_location = resp.headers.get('location')
+    resp_location = resp.headers.get("location")
     if follow_redirects:
         assert resp.status_code == final_status_code
     else:
@@ -120,14 +136,14 @@ def assert_valid_url(url, location=None, status_code=requests.codes.moved_perman
             resp_parsed = urlparse(resp_location)
             assert query == parse_qs(resp_parsed.query)
             # strip off query for further comparison
-            resp_location = resp_location.split('?')[0]
+            resp_location = resp_location.split("?")[0]
 
         assert location == unquote(resp_location)
 
     if resp_headers and not follow_redirects:
 
         def convert_to_set(header):
-            return frozenset(d.strip() for d in header.lower().split(','))
+            return frozenset(d.strip() for d in header.lower().split(","))
 
         for name, value in resp_headers.items():
             assert name in resp.headers

@@ -34,7 +34,7 @@ transitioning to Docker containers for deployment as well.
 .. _`Docker for Mac`: https://docs.docker.com/docker-for-mac/
 .. _`Docker's Ubuntu packages`: https://docs.docker.com/engine/installation/linux/ubuntulinux/
 .. _`DockerHub`: https://hub.docker.com/r/mdnwebdocs/kuma_base/tags/
-.. _TravisCI: https://travis-ci.org/mdn/kuma/
+.. _TravisCI: https://travis-ci.com/mdn/kuma/
 .. _Jenkins: https://ci.us-west-2.mdn.mozit.cloud/blue/organizations/jenkins/kuma/activity
 .. _discourse: https://discourse.mozilla.org/c/mdn
 
@@ -181,7 +181,7 @@ A few thousand lines will be printed, like::
 
 Visit the homepage
 ==================
-Open the homepage at http://localhost:8000 . You've installed Kuma!
+Open the homepage at http://localhost.org:8000 . You've installed Kuma!
 
 Create an admin user
 ====================
@@ -204,9 +204,24 @@ management command. Replace ``YOUR_USERNAME`` with your username and
     --password YOUR_PASSWORD
 
 With a password-enabled admin account, you can log into Django admin at
-http://localhost:8000/admin/login/
+http://localhost.org:8000/admin/login
 
 .. _enable-github-auth:
+
+Update the Sites section
+=======================================
+#. After logging in to the Django admin (an alternative is using the login ``test-super``
+   with password ``test-password``), scroll down to the Sites section.
+
+#. Click on "Change".
+
+#. Click on the entry that says ``localhost:8000``.
+
+#. Change both the domain and display name from ``localhost:8000`` to ``localhost.org:8000``.
+
+#. Click "Save".
+
+
 
 Enable GitHub/Google authentication (optional)
 =======================================
@@ -248,14 +263,15 @@ to its actual ID. You'll also need to set ``DOMAIN=localhost.org`` (no port!) th
 
 Your hosts file should contain the following lines::
 
-    127.0.0.1 localhost demos localhost.org wiki.localhost.org
-    ::1             localhost.org wiki.localhost.org
+    127.0.0.1       localhost demos localhost.org wiki.localhost.org
+    255.255.255.255 broadcasthost
+    ::1             localhost demos localhost.org wiki.localhost.org
 
 Now you can sign in with GitHub.
 
 To associate your password-only admin account with GitHub:
 
-#. Login with your password at http://localhost:8000/admin/login/.
+#. Login with your password at http://localhost.org:8000/admin/login.
 #. Go to the Homepage at https://developer.mozilla.org/en-US/.
 #. Click your username at the top to view your profile.
 #. Click Edit to edit your profile.
@@ -276,8 +292,30 @@ Django shell::
 .. _register an OAuth application on GitHub: https://github.com/settings/applications/new
 .. _create an API project on Google: https://console.developers.google.com/projectcreate
 .. _configure credentials for that project: https://console.developers.google.com/apis/credentials
-.. _add a django-allauth social app: http://localhost:8000/admin/socialaccount/socialapp/add/
+.. _add a django-allauth social app: http://localhost.org:8000/admin/socialaccount/socialapp/add/
 .. _`Use your GitHub account to sign in`: https://developer.mozilla.org/users/github/login/?process=connect
+
+
+Enable Stripe payments (optional)
+=======================================
+#. Go to https://dashboard.stripe.com and create a Stripe account (if you don't have one already).
+#. Go to https://dashboard.stripe.com/apikeys and copy both the publishable and secret key
+   into your ``.env`` file. The respective config keys are ``STRIPE_PUBLIC_KEY`` and
+   ``STRIPE_SECRET_KEY``.
+#. Go to https://dashboard.stripe.com/test/subscriptions/products and create a new product and plan.
+#. Once created copy the plan ID and also put it into ``.env`` as ``STRIPE_PLAN_ID``. Unless you
+   set a custom ID it should start with ``plan_``.
+
+If you're using Stripe in testing mode you can also get test numbers from this site:
+https://stripe.com/docs/testing#cards
+
+Testing Stripe's hooks locally requires setting up a tunneling service, like ngrok (https://ngrok.com).
+You should then set ``STRIPE_WEBHOOK_HOSTNAME`` to the hostname you get from your tunneling service, e.g. for
+ngrok it might be https://203ebfab.ngrok.io
+After kuma has started you will have a webhook configured in stripe. You can view it on Stripe's dashboard:
+https://dashboard.stripe.com/test/webhooks
+Note that with the free tier a restart of ngrok gives you a new hostname, so you'll have to change the config
+again and restart the server (or manually change the webhook in Stripe's dashboard).
 
 Interact with the Docker containers
 ===================================
@@ -305,6 +343,12 @@ To continuously view logs from all containers::
 To stop the containers::
 
     docker-compose stop
+
+If you have made changes to the ``.env`` or ``/etc/hosts`` file, it's a good idea to run::
+
+    docker-compose stop
+    docker-compose up
+
 
 For further information, see the Docker documentation, such as the
 `Docker Overview`_ and the documentation for your operating system.

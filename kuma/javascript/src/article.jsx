@@ -18,7 +18,7 @@ type DocumentProps = {
 };
 
 function TranslationStatus({
-    document: { translationStatus, translateURL }
+    document: { translationStatus, editURL }
 }: DocumentProps) {
     let content;
 
@@ -27,12 +27,10 @@ function TranslationStatus({
     } else if (translationStatus === 'outdated') {
         content = (
             <>
-                {gettext(
-                    'You’re reading the English version of this content since no translation exists yet for this locale.'
-                )}
+                {gettext('This translation is incomplete.')}
                 &nbsp;
-                <a href={translateURL} rel="nofollow">
-                    {gettext('Help us translate this article!')}
+                <a href={editURL} rel="nofollow">
+                    {gettext('Please help translate this article from English')}
                 </a>
             </>
         );

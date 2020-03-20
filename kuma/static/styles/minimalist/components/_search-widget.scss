@@ -22,8 +22,8 @@
         border-width: 0;
         font-size: $tiny-font-size;
         min-width: 60px;
-        max-width: 320px;
 
+        &:focus,
         &:invalid {
             border: 0;
             outline: none;

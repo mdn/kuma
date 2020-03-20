@@ -104,7 +104,7 @@ It is possible to break deployments by adding a bad translation. The TravisCI_
 job ``TOXENV=locales`` will test that the deployment should pass, and should
 pass before merging the PR.
 
-.. _`TravisCI`: https://travis-ci.org/mdn/kuma
+.. _`TravisCI`: https://travis-ci.com/mdn/kuma
 
 .. _Updating the localizable strings in Pontoon:
 

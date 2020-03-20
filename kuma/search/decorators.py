@@ -3,7 +3,7 @@ import logging
 from elasticsearch.exceptions import ConnectionError
 
 
-log = logging.getLogger('kuma.search.decorators')
+log = logging.getLogger("kuma.search.decorators")
 
 
 def requires_good_connection(fun):
@@ -14,11 +14,15 @@ def requires_good_connection(fun):
     with fixing it.
 
     """
+
     def _requires_good_connection(*args, **kwargs):
         try:
             return fun(*args, **kwargs)
         except ConnectionError:
-            log.error('Either your ElasticSearch process is not quite '
-                      'ready to rumble, is not running at all, or ES_URLS'
-                      'is set wrong in your .env file.')
+            log.error(
+                "Either your ElasticSearch process is not quite "
+                "ready to rumble, is not running at all, or ES_URLS"
+                "is set wrong in your .env file."
+            )
+
     return _requires_good_connection

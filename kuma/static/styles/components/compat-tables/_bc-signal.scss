@@ -11,7 +11,7 @@ div.signal-link-container {
     transition: all 1s ease-out;
 
     & > hr {
-        background-color: #3d7e9a;
+        background-color: $blue;
         margin: 0;
         max-width: 100%;
         height: 8px;
@@ -20,7 +20,7 @@ div.signal-link-container {
 
     & > a {
         float: right;
-        background-color: #3d7e9a;
+        background-color: $blue;
         color: #fff;
         padding-right: 15px;
         padding-left: 15px;
@@ -134,7 +134,11 @@ div.bc-signal-block {
 
     .left-block {
         box-sizing: border-box;
-        padding: 32px;
+        padding: 32px 0 32px 3%; // 3% to match .column margin right
+
+        @media #{$mq-tablet-and-down} {
+            padding: 16px;
+        }
 
         .complete-left-block-image {
             display: block;
@@ -173,7 +177,7 @@ div.bc-signal-block {
             font-family: ZillaSlab;
             font-size: 37px;
             font-weight: normal;
-            color: #3d7e9a;
+            color: $blue;
             text-align: center;
         }
     }
@@ -185,7 +189,8 @@ div.bc-signal-block {
         & > .close-btn {
             width: 32px;
             height: 32px;
-            background: url('/static/general/close.svg') center no-repeat;
+            background: #fff url('/static/general/close-light.svg') no-repeat center;
+            border-color: #000;
         }
 
         @media #{$mq-tablet-and-down} {
@@ -257,6 +262,7 @@ div.bc-signal-block {
 
     .step-num {
         background: $blue;
+        box-sizing: border-box;
         align-items: center;
         justify-content: center;
         width: 24px;
@@ -265,20 +271,13 @@ div.bc-signal-block {
         min-height: 24px;
         border-radius: 50%;
         padding: 2px 3px;
-        font-family: Arial;
         font-size: 14px;
         font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
-        letter-spacing: normal;
         text-align: center;
         color: #ffffff;
         margin-right: 8px;
         display: flex;
-
-        @media #{$mq-tablet-and-down} {
-            display: none;
-        }
+        float: left;
 
         &.inline {
             display: inline-flex;
@@ -317,7 +316,10 @@ div.bc-signal-block {
     }
 
     .control-wrap {
-        width: 90%;
+        width: 92%;
+        @media #{$mq-mobile-and-down} {
+            width: 100%;
+        }
     }
 
     .control-header {
@@ -331,34 +333,43 @@ div.bc-signal-block {
         margin-bottom: 8px;
         line-height: 1.31;
 
+
         &.has-control {
-            float: left;
+            display: flex;
+            align-items: center;
+            @media #{$mq-tablet-and-down} {
+                display: block;
+            }
         }
 
         &.with-optional-label {
+            display: flex;
             @media #{$mq-tablet-and-down} {
-                display: flex;
+                justify-content: space-between;
             }
         }
     }
 
     .control-description {
-        margin-top: 10px;
+        margin: 10px 0 16px 32px;
         font-size: 14px;
-        font-weight: normal;
-        font-style: normal;
-        font-stretch: normal;
         line-height: 1.4;
         letter-spacing: normal;
         color: #333333;
-        margin-bottom: 16px;
+        @media #{$mq-mobile-and-down} {
+            margin-left: 0;
+        }
     }
 
     .select-wrapper {
         position: relative;
-
+        margin-left: 32px;
         @media #{$mq-tablet-and-down} {
+            margin-left: 32px;
             width: 100%;
+        }
+        @media #{$mq-mobile-and-down} {
+            margin-left: 0;
         }
     }
 
@@ -400,18 +411,20 @@ div.bc-signal-block {
         box-sizing: border-box;
         border-color: $blue;
         height: 72px;
+        margin-left: 32px;
+        @media #{$mq-mobile-and-down} {
+            margin-left: 0;
+        }
     }
 
     span.optional-text {
         font-size: 17.6px;
         font-weight: normal;
         font-style: italic;
-        font-stretch: normal;
         line-height: normal;
-        letter-spacing: normal;
-        text-align: center;
         color: #9a3d3d;
-        margin: 0 10px;
+        margin: 2px 0 2px 15px;
+        float: right;
     }
 }
 
@@ -436,6 +449,11 @@ div.bc-signal-block {
 .select-browser-block {
     display: flex;
     flex-wrap: wrap;
+    margin-left: 32px;
+
+    @media #{$mq-mobile-and-down} {
+        margin-left: 0;
+    }
 
     & > .browser {
         box-sizing: border-box;
@@ -458,9 +476,11 @@ div.bc-signal-block {
             transition: border-color .1s;
         }
 
-        &:hover {
+        &:hover:not(.selected) {
             .browser-logo {
-                border-color: #3d7e9a;
+                border-color: $blue;
+                outline: 3px $blue solid;
+                outline-offset: -3px;
             }
         }
 
@@ -509,10 +529,6 @@ div.bc-signal-block {
 }
 
 @media #{$mq-tablet-and-down} {
-    .left-block {
-        padding: 0 32px;
-    }
-
     div.bc-signal-block {
         transition: max-height .8s ease-out, padding-top .1s ease .7s;
     }

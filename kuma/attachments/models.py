@@ -5,7 +5,7 @@ from django.conf import settings
 from django.db import models
 from django.db.utils import IntegrityError
 from django.utils.functional import cached_property
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django_mysql.models import Model as MySQLModel
 from storages.backends.s3boto3 import S3Boto3Storage
 
@@ -18,10 +18,8 @@ class AttachmentStorage(S3Boto3Storage):
             access_key=settings.ATTACHMENTS_AWS_ACCESS_KEY_ID,
             secret_key=settings.ATTACHMENTS_AWS_SECRET_ACCESS_KEY,
             bucket_name=settings.ATTACHMENTS_AWS_STORAGE_BUCKET_NAME,
-            object_parameters={
-                'CacheControl': 'public, max-age=31536000, immutable',
-            },
-            default_acl='public-read',
+            object_parameters={"CacheControl": "public, max-age=31536000, immutable"},
+            default_acl="public-read",
             querystring_auth=False,
             custom_domain=settings.ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN,
             secure_urls=settings.ATTACHMENTS_AWS_S3_SECURE_URLS,
@@ -44,11 +42,12 @@ class Attachment(models.Model):
     and documents; insertion of an attachment is handled through
     markup in the document.
     """
+
     current_revision = models.ForeignKey(
-        'AttachmentRevision',
+        "AttachmentRevision",
         null=True,
         blank=True,
-        related_name='current_for+',
+        related_name="current_for+",
         on_delete=models.SET_NULL,
     )
     # These get filled from the current revision.
@@ -60,13 +59,14 @@ class Attachment(models.Model):
     # new kuma file URLs.
     mindtouch_attachment_id = models.IntegerField(
         help_text="ID for migrated MindTouch resource",
-        null=True, blank=True, db_index=True)
+        null=True,
+        blank=True,
+        db_index=True,
+    )
     modified = models.DateTimeField(auto_now=True, null=True, db_index=True)
 
     class Meta(object):
-        permissions = (
-            ("disallow_add_attachment", "Cannot upload attachment"),
-        )
+        permissions = (("disallow_add_attachment", "Cannot upload attachment"),)
 
     def __str__(self):
         return self.title
@@ -99,9 +99,7 @@ class Attachment(models.Model):
         # for the current attachment, a.k.a. this was a previous uploaded file
         DocumentAttachment = document.files.through
         try:
-            document_attachment = DocumentAttachment.objects.get(
-                file_id=self.pk
-            )
+            document_attachment = DocumentAttachment.objects.get(file_id=self.pk)
         except document.files.through.DoesNotExist:
             # no previous uploads found, create a new document-attachment
             document_attachment = DocumentAttachment.objects.create(
@@ -123,15 +121,15 @@ class AttachmentRevision(models.Model):
     """
     A revision of an attachment.
     """
-    DEFAULT_MIME_TYPE = 'application/octet-stream'
 
-    attachment = models.ForeignKey(Attachment, related_name='revisions',
-                                   on_delete=models.CASCADE)
+    DEFAULT_MIME_TYPE = "application/octet-stream"
+
+    attachment = models.ForeignKey(
+        Attachment, related_name="revisions", on_delete=models.CASCADE
+    )
 
     file = models.FileField(
-        storage=storage,
-        upload_to=attachment_upload_to,
-        max_length=500,
+        storage=storage, upload_to=attachment_upload_to, max_length=500,
     )
 
     title = models.CharField(max_length=255, null=True, db_index=True)
@@ -141,9 +139,11 @@ class AttachmentRevision(models.Model):
         db_index=True,
         blank=True,
         default=DEFAULT_MIME_TYPE,
-        help_text=_('The MIME type is used when serving the attachment. '
-                    'Automatically populated by inspecting the file on '
-                    'upload. Please only override if needed.'),
+        help_text=_(
+            "The MIME type is used when serving the attachment. "
+            "Automatically populated by inspecting the file on "
+            "upload. Please only override if needed."
+        ),
     )
     # Does not allow wiki markup
     description = models.TextField(blank=True)
@@ -152,7 +152,7 @@ class AttachmentRevision(models.Model):
     comment = models.CharField(max_length=255, blank=True)
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        related_name='created_attachment_revisions',
+        related_name="created_attachment_revisions",
         on_delete=models.PROTECT,
     )
     is_approved = models.BooleanField(default=True, db_index=True)
@@ -164,18 +164,21 @@ class AttachmentRevision(models.Model):
     # MindTouch?
     mindtouch_old_id = models.IntegerField(
         help_text="ID for migrated MindTouch resource revision",
-        null=True, blank=True, db_index=True, unique=True)
+        null=True,
+        blank=True,
+        db_index=True,
+        unique=True,
+    )
     is_mindtouch_migration = models.BooleanField(
-        default=False, db_index=True,
-        help_text="Did this revision come from MindTouch?")
+        default=False, db_index=True, help_text="Did this revision come from MindTouch?"
+    )
 
     class Meta:
-        verbose_name = _('attachment revision')
-        verbose_name_plural = _('attachment revisions')
+        verbose_name = _("attachment revision")
+        verbose_name_plural = _("attachment revisions")
 
     def __str__(self):
-        return ('%s (file: "%s", ID: #%s)' %
-                (self.title, self.filename, self.pk))
+        return '%s (file: "%s", ID: #%s)' % (self.title, self.filename, self.pk)
 
     @property
     def filename(self):
@@ -184,8 +187,9 @@ class AttachmentRevision(models.Model):
     def save(self, *args, **kwargs):
         super(AttachmentRevision, self).save(*args, **kwargs)
         if self.is_approved and (
-                not self.attachment.current_revision or
-                self.attachment.current_revision.id < self.id):
+            not self.attachment.current_revision
+            or self.attachment.current_revision.id < self.id
+        ):
             self.make_current()
 
     def delete(self, username=None, individual=True, *args, **kwargs):
@@ -198,8 +202,10 @@ class AttachmentRevision(models.Model):
         therefor the check if there are other sibling revisions is moot.
         """
         if individual and self.siblings().count() == 0:
-            raise IntegrityError('You cannot delete the last revision of '
-                                 'attachment %s' % self.attachment)
+            raise IntegrityError(
+                "You cannot delete the last revision of "
+                "attachment %s" % self.attachment
+            )
         trash_item = self.trash(username=username)
         super(AttachmentRevision, self).delete(*args, **kwargs)
         return trash_item
@@ -213,12 +219,12 @@ class AttachmentRevision(models.Model):
         """
         trashed_attachment = TrashedAttachment(
             file=self.file,
-            trashed_by=username or 'unknown',
+            trashed_by=username or "unknown",
             was_current=(
-                self.attachment and
-                self.attachment.current_revision and
-                self.attachment.current_revision.pk == self.pk
-            )
+                self.attachment
+                and self.attachment.current_revision
+                and self.attachment.current_revision.pk == self.pk
+            ),
         )
         trashed_attachment.save()
         return trashed_attachment
@@ -230,10 +236,13 @@ class AttachmentRevision(models.Model):
         self.attachment.save()
 
     def get_previous(self):
-        return self.attachment.revisions.filter(
-            is_approved=True,
-            created__lt=self.created,
-        ).order_by('-created').first()
+        return (
+            self.attachment.revisions.filter(
+                is_approved=True, created__lt=self.created,
+            )
+            .order_by("-created")
+            .first()
+        )
 
     def siblings(self):
         return self.attachment.revisions.exclude(pk=self.pk)
@@ -245,28 +254,30 @@ class TrashedAttachment(MySQLModel):
         storage=storage,
         upload_to=attachment_upload_to,
         max_length=500,
-        help_text=_('The attachment file that was trashed'),
+        help_text=_("The attachment file that was trashed"),
     )
 
     trashed_at = models.DateTimeField(
         default=datetime.now,
-        help_text=_('The date and time the attachment was trashed'),
+        help_text=_("The date and time the attachment was trashed"),
     )
     trashed_by = models.CharField(
         max_length=30,
         blank=True,
-        help_text=_('The username of the user who trashed the attachment'),
+        help_text=_("The username of the user who trashed the attachment"),
     )
 
     was_current = models.BooleanField(
         default=False,
-        help_text=_('Whether or not this attachment was the current '
-                    'attachment revision at the time of trashing.'),
+        help_text=_(
+            "Whether or not this attachment was the current "
+            "attachment revision at the time of trashing."
+        ),
     )
 
     class Meta:
-        verbose_name = _('Trashed attachment')
-        verbose_name_plural = _('Trashed attachments')
+        verbose_name = _("Trashed attachment")
+        verbose_name_plural = _("Trashed attachments")
 
     def __str__(self):
         return self.filename

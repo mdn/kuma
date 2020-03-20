@@ -47,6 +47,7 @@ other advanced criteria.
 * ``spam_spammer_override`` - Tell Akismet that edits are always spam.
 * ``spam_submissions_enabled`` - Toggle Akismet spam/spam submission ability.
 * ``spam_testing_mode`` - Tell Akismet that edits are tests, not real content.
+* ``subscription_banner`` - Enable/disable the subscriptions banner
 
 Constance features
 ==================

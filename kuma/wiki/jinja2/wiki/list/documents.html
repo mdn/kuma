@@ -12,7 +12,6 @@
   {% set title = _('All documents') %}
 {% endif %}
 {% block title %}{{ page_title(title) }}{% endblock %}
-{% block robots_value %}noindex, nofollow{% endblock %}
 {% set crumbs = [(None, title)] %}
 
 {% block extrahead %}

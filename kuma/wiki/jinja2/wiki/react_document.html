@@ -57,9 +57,7 @@
   <!-- basic favicon -->
   <link rel="shortcut icon" href="{{ favicon_url() }}">
 
-  {% if waffle.switch('developer_needs') %}
-    {% stylesheet 'banners' %}
-  {% endif %}
+  {% include "wiki/includes/banner-styles.html" %}
 
   <link rel="preconnect" href="https://interactive-examples.mdn.mozilla.net" pr="0.75" />
 
@@ -100,8 +98,8 @@
 
   <!-- site js -->
   {% javascript 'react-main' %}
+  {% javascript 'mathml' %}
   {% javascript 'auth-modal' %}
-
   {% if settings.ENABLE_BCD_SIGNAL %}
     {% javascript "bcd-signal" %}
   {% endif %}
