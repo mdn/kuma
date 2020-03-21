@@ -96,6 +96,11 @@ STRIPE_PUBLIC_KEY = "testing"
 STRIPE_SECRET_KEY = "testing"
 STRIPE_PLAN_ID = "testing"
 
+# For legacy reasons, the tests assume these are always true so don't
+# let local overrides take effect.
+INDEX_HTML_ATTRIBUTES = True
+INDEX_CSS_CLASSNAMES = True
+
 # Amount for the monthly subscription.
 # It's hardcoded here in case some test depends on the number and it futureproofs
 # our tests to not deviate when the actual number changes since that number

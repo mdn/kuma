@@ -5,7 +5,6 @@ from celery import chain
 from django.conf import settings
 from django.db.models import Q
 from django.utils.html import strip_tags
-from django.utils.translation import gettext_lazy as _
 from elasticsearch.helpers import bulk
 from elasticsearch_dsl import document, field
 from elasticsearch_dsl.connections import connections
@@ -87,10 +86,14 @@ class WikiDocumentType(document.Document):
             ),
             "css_classnames": cls.case_insensitive_keywords(
                 obj.extract.css_classnames()
-            ),
+            )
+            if settings.INDEX_CSS_CLASSNAMES
+            else None,
             "html_attributes": cls.case_insensitive_keywords(
                 obj.extract.html_attributes()
-            ),
+            )
+            if settings.INDEX_HTML_ATTRIBUTES
+            else None,
         }
 
         if obj.parent:
@@ -298,14 +301,8 @@ class WikiDocumentType(document.Document):
             ]
             chord_flow(pre_task, index_tasks, post_task).apply_async()
 
-        message = _(
-            "Indexing %(total)d documents into %(total_chunks)d chunks of "
-            "size %(size)d into index %(index)s."
-            % {
-                "total": total,
-                "total_chunks": total_chunks,
-                "size": chunk_size,
-                "index": index.prefixed_name,
-            }
+        message = (
+            f"Indexing {total:,} documents into {total_chunks} chunks of "
+            f"size {chunk_size} into index {index.prefixed_name}."
         )
         return message
