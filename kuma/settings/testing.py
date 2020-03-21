@@ -100,3 +100,9 @@ STRIPE_PLAN_ID = "testing"
 # let local overrides take effect.
 INDEX_HTML_ATTRIBUTES = True
 INDEX_CSS_CLASSNAMES = True
+
+# Amount for the monthly subscription.
+# It's hardcoded here in case some test depends on the number and it futureproofs
+# our tests to not deviate when the actual number changes since that number
+# change shouldn't affect the tests.
+CONTRIBUTION_AMOUNT_USD = 4.99
