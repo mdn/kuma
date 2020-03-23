@@ -1,0 +1,30 @@
+.subscriptions-form-header {
+    background-color: $brand-primary-500;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    padding: 20px;
+    text-align: center;
+}
+
+.subscriptions-form {
+    display: none;
+
+    @media #{$mq-small-desktop-and-up} {
+        display: block;
+        background-color: #fff;
+        border-radius: 4px;
+        box-shadow: $box-shadow-blue;
+        max-width: 460px;
+        height: 300px;
+
+        form {
+            padding: 20px;
+
+            button {
+                display: block;
+                margin-top: 20px;
+                width: 100%;
+            }
+        }
+    }
+}

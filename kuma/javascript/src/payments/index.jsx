@@ -7,6 +7,7 @@ import Header from '../header/header.jsx';
 import Footer from '../footer.jsx';
 import Route from '../route.js';
 import SubHeader from './subheader.jsx';
+import SubscriptionForm from './subscription-form.jsx';
 import ListItem from './list-item.jsx';
 
 type PaymentsRouteParams = {
@@ -32,11 +33,14 @@ export default function PaymentsLandingPage() {
         <>
             <A11yNav />
             <Header />
-            <SubHeader
-                title="Become a monthly supporter"
-                description="Support MDN with a $5 monthly subscription and get back more of the knowledge and tools you rely on for when your work has to work."
-                columnWidth="7"
-            />
+            <div className="subscriptions subheader-container">
+                <SubHeader
+                    title="Become a monthly supporter"
+                    description="Support MDN with a $5 monthly subscription and get back more of the knowledge and tools you rely on for when your work has to work."
+                    columnWidth="7"
+                />
+                <SubscriptionForm />
+            </div>
             <main
                 id="contributions-page"
                 className="contributions-page"

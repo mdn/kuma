@@ -23,6 +23,8 @@
         {%- endif %}
 
         win.mdn.features = {};
+        win.mdn.stripePublicKey = '{{ settings.STRIPE_PUBLIC_KEY }}';
+
         win.mdn.siteUrl = '{{ settings.SITE_URL }}';
         win.mdn.wikiSiteUrl = '{{ settings.WIKI_SITE_URL }}';
         win.mdn.staticPath = '{{ settings.STATIC_URL }}';
