@@ -14,7 +14,9 @@ const FeedbackForm = () => {
 
         // cases where user submitted feedback already
         // and start typing in text input again
-        setShowMessage(false);
+        if (showMessage) {
+            setShowMessage(false);
+        }
     };
 
     const handleSubmit = event => {
