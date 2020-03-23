@@ -587,18 +587,16 @@ class EmailMultiAlternativesRetrying(EmailMultiAlternatives):
     Only list exceptions that have been known to happen and are safe.
     """
 
-    def send(self, *args, **kwargs):
+    def send(self, *args, retry_options=None, **kwargs):
         # See https://github.com/mozilla-releng/redo
         # for a list of the default options to the redo.retry function
         # which the redo.retrying context manager wraps.
-        retry_options = kwargs.pop(
-            "retrying",
-            {
-                "retry_exceptions": (SMTPServerDisconnected,),
-                # The default in redo is 60 seconds. Let's tone that down.
-                "sleeptime": 3,
-            },
-        )
+        retry_options = retry_options or {
+            "retry_exceptions": (SMTPServerDisconnected,),
+            # The default in redo is 60 seconds. Let's tone that down.
+            "sleeptime": 3,
+        }
+
         parent_method = super(EmailMultiAlternativesRetrying, self).send
         with retrying(parent_method, **retry_options) as method:
             return method(*args, **kwargs)

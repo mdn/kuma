@@ -126,7 +126,7 @@ def test_send_mail_retrying(settings):
         "Message",
         "from@example.com",
         ["to@example.com"],
-        retrying={
+        retry_options={
             "retry_exceptions": (SomeException,),
             # Overriding defaults to avoid the test being slow.
             "sleeptime": 0.02,
@@ -146,7 +146,7 @@ def test_EmailMultiAlternativesRetrying(settings):
     )
     email.attach_alternative("<p>Content</p>", "text/html")
     email.send(
-        retrying={
+        retry_options={
             "retry_exceptions": (SomeException,),
             # Overriding defaults to avoid the test being slow.
             "sleeptime": 0.02,
