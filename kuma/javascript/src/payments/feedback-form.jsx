@@ -23,9 +23,8 @@ const FeedbackForm = () => {
         ga('send', {
             hitType: 'event',
             eventCategory: 'monthly payments',
-            eventAction: feedback.trim(),
-            eventLabel: 'thank you page'
-            // eventValue: feedback
+            eventAction: 'feedback',
+            eventLabel: feedback.trim()
         });
 
         // Clear form and show thank you message
