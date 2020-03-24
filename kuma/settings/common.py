@@ -788,7 +788,9 @@ PIPELINE_CSS = {
         "output_filename": "build/styles/stripe-subscription.css",
     },
     "subscriptions": {
-        "source_filenames": ("styles/minimalist/components/subscriptions/subscriptions.scss",),
+        "source_filenames": (
+            "styles/minimalist/components/subscriptions/subscriptions.scss",
+        ),
         "output_filename": "build/styles/subscriptions.css",
     },
     "error-403-alternate": {
