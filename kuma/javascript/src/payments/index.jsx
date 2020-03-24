@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import { useContext } from 'react';
 
 import { getLocale, gettext, Interpolated } from '../l10n.js';
 import A11yNav from '../a11y/a11y-nav.jsx';
@@ -10,11 +11,14 @@ import SubHeader from './subheader.jsx';
 import SubscriptionForm from './subscription-form.jsx';
 import ListItem from './list-item.jsx';
 
+import UserProvider from '../user-provider.jsx';
+
 type PaymentsRouteParams = {
     locale: string
 };
 
 export default function PaymentsLandingPage() {
+    const userData = useContext(UserProvider.context);
     const locale = getLocale();
     const urls = {
         annualReport:
@@ -29,6 +33,13 @@ export default function PaymentsLandingPage() {
         terms: `/${locale}/payments/terms`
     };
 
+    let showSubscriptionForm = false;
+    // if the subscription banner is not enabled,
+    // do not show the <SubscriptionForm />
+    if (userData && userData.waffle.flags['subscription_banner']) {
+        showSubscriptionForm = true;
+    }
+
     return (
         <>
             <A11yNav />
@@ -39,7 +50,7 @@ export default function PaymentsLandingPage() {
                     description="Support MDN with a $5 monthly subscription and get back more of the knowledge and tools you rely on for when your work has to work."
                     columnWidth="7"
                 />
-                <SubscriptionForm />
+                <SubscriptionForm showSubscriptionForm={showSubscriptionForm} />
             </div>
             <main
                 id="contributions-page"

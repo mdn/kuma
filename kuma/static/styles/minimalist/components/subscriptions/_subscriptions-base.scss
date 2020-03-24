@@ -4,6 +4,7 @@
     @media #{$mq-small-desktop-and-up} {
         display: flex;
         align-items: center;
+        justify-content: center;
         min-height: 400px;
 
         .contribution-page-header {

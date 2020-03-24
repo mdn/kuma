@@ -1,25 +1,25 @@
+// @flow
 import * as React from 'react';
-import { useContext, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { getLocale, gettext, Interpolated } from '../l10n.js';
-import UserProvider from '../user-provider.jsx';
 
-export default function SubscriptionForm() {
+type Props = {
+    showSubscriptionForm: boolean
+};
+
+export default function SubscriptionForm({ showSubscriptionForm }: Props) {
     const locale = getLocale();
     const subscriptionFormRef = useRef(null);
-    const userData = useContext(UserProvider.context);
     const [subscribeFormDisabled, setSubscribeFormDisabled] = useState(false);
-    const [enableSubscribeButton, setEnableSubscribeButton] = useState(false);
+    const [subscribeButtonEnabled, setSubscribeButtonEnabled] = useState(false);
 
-    /**
-     * Toggles the enabled state of the subscription button
-     */
-    const enableButton = () => {
-        if (!enableSubscribeButton) {
-            setEnableSubscribeButton(true);
-        } else {
-            setEnableSubscribeButton(false);
-        }
+    if (!showSubscriptionForm) {
+        return null;
+    }
+
+    const toggleButton = () => {
+        setSubscribeButtonEnabled(!subscribeButtonEnabled);
     };
 
     /**
@@ -30,30 +30,31 @@ export default function SubscriptionForm() {
         event.preventDefault();
 
         const subscriptionForm = subscriptionFormRef.current;
-        const formData = new FormData(subscriptionForm);
+        if (subscriptionForm) {
+            const formData = new FormData(subscriptionForm);
+            setSubscribeFormDisabled(true);
 
-        setSubscribeFormDisabled(true);
-
-        const stripeHandler = window.StripeCheckout.configure({
-            key: window.mdn.stripePublicKey,
-            locale: 'auto',
-            name: 'MDN Web Docs',
-            zipCode: true,
-            currency: 'usd',
-            amount: 500,
-            email: userData ? userData.email : '', // TODO: email is not currently exposed
-            token: function(response) {
-                formData.set('stripe_token', response.id);
-                subscriptionForm.submit();
-            },
-            closed: function() {
-                if (!formData.get('stripe_token')) {
-                    setSubscribeFormDisabled(false);
+            const stripeHandler = window.StripeCheckout.configure({
+                key: window.mdn.stripePublicKey,
+                locale: 'auto',
+                name: 'MDN Web Docs',
+                zipCode: true,
+                currency: 'usd',
+                amount: 500,
+                email: '',
+                token: function(response) {
+                    formData.set('stripe_token', response.id);
+                    subscriptionForm.submit();
+                },
+                closed: function() {
+                    if (!formData.get('stripe_token')) {
+                        setSubscribeFormDisabled(false);
+                    }
                 }
-            }
-        });
+            });
 
-        stripeHandler.open();
+            stripeHandler.open();
+        }
     };
 
     return (
@@ -77,7 +78,7 @@ export default function SubscriptionForm() {
                     <input
                         type="checkbox"
                         required="required"
-                        onClick={enableButton}
+                        onClick={toggleButton}
                     />
                     <small>
                         <Interpolated
@@ -101,7 +102,7 @@ export default function SubscriptionForm() {
                 <button
                     type="submit"
                     className="button cta primary"
-                    disabled={enableSubscribeButton ? '' : 'disabled'}
+                    disabled={subscribeButtonEnabled ? '' : 'disabled'}
                 >
                     {gettext('Continue')}
                 </button>
