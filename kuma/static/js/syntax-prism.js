@@ -7,8 +7,8 @@
     languages.js = languages.javascript;
     languages.cpp = languages.clike;
 
-    // Assume no styling is necessary initially
-    var defaultBrush = null;
+    // Style all as HTML initially
+    var defaultBrush = 'html';
 
     // Treat and highlight PRE elements!
     $('article pre:not(.twopartsyntaxbox):not(.syntaxbox)').each(function() {
@@ -18,9 +18,10 @@
         var brush = defaultBrush;
         var lineSearch;
 
-        // If the PRE has a child <code> tag, it's likely a copy/pasted, already-prism'd code samples.
-        // Bail to avoid an error
-        if ($pre.find('code').length) {
+        // If there are *any* tags within the $pre block, then bail. It might be
+        // existing <code> tags (put there for a copy-and-paste) or the pre block
+        // has its own tags like <sub>. Don't attempt to syntax highlight these.
+        if ($pre.find('*').length) {
             return;
         }
 
@@ -36,22 +37,20 @@
             );
         }
 
-        if (brush) {
-            if (!$pre.hasClass('no-line-numbers')) {
-                // Prism upgrade requires adding a class to use line numbering
-                $pre.addClass('line-numbers');
-            }
-
-            // Format <pre> content for Prism highlighting
-            $pre.html(
-                '<code class="' +
-                    // Don't highlight languages unknown to Prism
-                    (brush in languages ? 'language-' + brush : '') +
-                    '">' +
-                    $.trim($pre.html()) +
-                    '</code>'
-            );
+        if (!$pre.hasClass('no-line-numbers')) {
+            // Prism upgrade requires adding a class to use line numbering
+            $pre.addClass('line-numbers');
         }
+
+        // Format <pre> content for Prism highlighting
+        $pre.html(
+            '<code class="' +
+                // Don't highlight languages unknown to Prism
+                (brush in languages ? 'language-' + brush : '') +
+                '">' +
+                $.trim($pre.html()) +
+                '</code>'
+        );
 
         // Do we need to highlight any lines?
         // Legacy format: highlight:[8,9,10,11,17,18,19,20]
