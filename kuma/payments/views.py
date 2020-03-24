@@ -16,6 +16,7 @@ from .utils import (
 
 log = logging.getLogger("kuma.payments.views")
 
+
 @ensure_wiki_domain
 @never_cache
 def index(request):
