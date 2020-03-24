@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Payments Thank You page it renders 1`] = `
+<React.Fragment>
+  <A11yNav />
+  <Header />
+  <SubHeader
+    title="Thank you for becoming a monthly supporter!"
+  />
+  <main
+    className="contributions-page thank-you"
+    role="main"
+  >
+    <section
+      className="section"
+    >
+      <header>
+        <h2>
+          Useful things
+        </h2>
+      </header>
+      <ul
+        className="clear"
+        id="useful-things"
+      >
+        <li>
+          <h3>
+            Cancel or manage your subscription
+          </h3>
+          <p>
+            <Interpolated
+              id="If you would like to cancel or manage your monthly subscription, go to <subscriptionLink />."
+              subscriptionLink={
+                <a
+                  href="/en-US/payments/recurring/management"
+                >
+                  manage monthly subscription page
+                </a>
+              }
+            />
+          </p>
+        </li>
+        <li>
+          <h3>
+            Subscription terms
+          </h3>
+          <p>
+            <Interpolated
+              id="Please read our <termsLink /> for more information."
+              termsLink={
+                <a
+                  href="/en-US/payments/terms"
+                >
+                  subscription terms
+                </a>
+              }
+            />
+          </p>
+        </li>
+        <li>
+          <h3>
+            FAQ
+          </h3>
+          <p>
+            <Interpolated
+              faqLink={
+                <a
+                  href="/en-US/payments/"
+                >
+                  FAQ
+                </a>
+              }
+              id="To find out more about why MDN is raising money through monthly subscriptions, please visit our <faqLink />."
+            />
+          </p>
+        </li>
+      </ul>
+    </section>
+    <section
+      className="section"
+    >
+      <header>
+        <h2>
+          Feedback
+        </h2>
+      </header>
+      <FeedbackForm />
+    </section>
+  </main>
+  <Footer />
+</React.Fragment>
+`;
