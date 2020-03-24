@@ -897,7 +897,7 @@ def react_document(request, document_slug, document_locale):
             # the reason we're not finding a fallback is because the slug
             # doesn't match.
             # E.g. you're trying to view `/sv-SE/docs/Foö/Bår` but that document
-            # was deleted and as a soft-delete its parent was `/en-US/docs/Foo/Bar`
+            # was soft-deleted and its parent was `/en-US/docs/Foo/Bar`
             if document_locale != settings.LANGUAGE_CODE:  # Not in English!
                 redirect_url = _get_deleted_parent_redirect_url(
                     document_locale, document_slug
