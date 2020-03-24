@@ -15,7 +15,7 @@
         border-radius: 4px;
         box-shadow: $box-shadow-blue;
         max-width: 460px;
-        height: 300px;
+        height: 320px;
 
         form {
             padding: 20px;
@@ -25,6 +25,12 @@
                 margin-top: 20px;
                 width: 100%;
             }
+        }
+
+        .subtext {
+            display: block;
+            padding: 5px 0;
+            text-align: right;
         }
     }
 }

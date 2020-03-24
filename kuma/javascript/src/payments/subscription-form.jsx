@@ -105,6 +105,9 @@ export default function SubscriptionForm() {
                 >
                     {gettext('Continue')}
                 </button>
+                <small className="subtext">
+                    {gettext('Payments are not tax deductible')}
+                </small>
             </form>
         </div>
     );
