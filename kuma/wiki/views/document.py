@@ -894,7 +894,7 @@ def react_document(request, document_slug, document_locale):
                 return redirect(redirect_url)
         else:
             # It could be that the document you're trying to view was deleted and
-            # the reason we're not finding a fallback is the because the slug
+            # the reason we're not finding a fallback is because the slug
             # doesn't match.
             # E.g. you're trying to view `/sv-SE/docs/Foö/Bår` but that document
             # was deleted and as a soft-delete its parent was `/en-US/docs/Foo/Bar`
