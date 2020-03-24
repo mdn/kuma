@@ -247,6 +247,14 @@ def _default_locale_fallback(request, document_slug, document_locale):
     return fallback_doc, fallback_reason, redirect_url
 
 
+def _get_deleted_parent_redirect_url(document_locale, document_slug):
+    for document in Document.deleted_objects.filter(
+        locale=document_locale, slug=document_slug, parent__isnull=False
+    ):
+        if document.parent:
+            return document.parent.get_absolute_url()
+
+
 def _get_doc_and_fallback_reason(document_locale, document_slug):
     """
     Attempt to fetch a Document at the given locale and slug, and
@@ -885,6 +893,18 @@ def react_document(request, document_slug, document_locale):
             if redirect_url is not None:
                 return redirect(redirect_url)
         else:
+            # It could be that the document you're trying to view was deleted and
+            # the reason we're not finding a fallback is because the slug
+            # doesn't match.
+            # E.g. you're trying to view `/sv-SE/docs/Foö/Bår` but that document
+            # was soft-deleted and its parent was `/en-US/docs/Foo/Bar`
+            if document_locale != settings.LANGUAGE_CODE:  # Not in English!
+                redirect_url = _get_deleted_parent_redirect_url(
+                    document_locale, document_slug
+                )
+                if redirect_url:
+                    return redirect(redirect_url)
+
             raise Http404
 
     # We found a Document. Now we need to figure out how we're going
