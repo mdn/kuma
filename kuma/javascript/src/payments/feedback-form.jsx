@@ -21,7 +21,6 @@ const FeedbackForm = () => {
 
     const handleSubmit = event => {
         event.preventDefault();
-
         ga('send', {
             hitType: 'event',
             eventCategory: 'monthly payments',
@@ -33,6 +32,7 @@ const FeedbackForm = () => {
         setFeedback('');
         setShowMessage(true);
     };
+
     return (
         <form onSubmit={handleSubmit}>
             <input
