@@ -7,8 +7,8 @@
     languages.js = languages.javascript;
     languages.cpp = languages.clike;
 
-    // Style all as HTML initially
-    var defaultBrush = 'html';
+    // Assume no styling is necessary initially
+    var defaultBrush = null;
 
     // Treat and highlight PRE elements!
     $('article pre:not(.twopartsyntaxbox):not(.syntaxbox)').each(function() {
@@ -36,20 +36,22 @@
             );
         }
 
-        if (!$pre.hasClass('no-line-numbers')) {
-            // Prism upgrade requires adding a class to use line numbering
-            $pre.addClass('line-numbers');
-        }
+        if (brush) {
+            if (!$pre.hasClass('no-line-numbers')) {
+                // Prism upgrade requires adding a class to use line numbering
+                $pre.addClass('line-numbers');
+            }
 
-        // Format <pre> content for Prism highlighting
-        $pre.html(
-            '<code class="' +
-                // Don't highlight languages unknown to Prism
-                (brush in languages ? 'language-' + brush : '') +
-                '">' +
-                $.trim($pre.html()) +
-                '</code>'
-        );
+            // Format <pre> content for Prism highlighting
+            $pre.html(
+                '<code class="' +
+                    // Don't highlight languages unknown to Prism
+                    (brush in languages ? 'language-' + brush : '') +
+                    '">' +
+                    $.trim($pre.html()) +
+                    '</code>'
+            );
+        }
 
         // Do we need to highlight any lines?
         // Legacy format: highlight:[8,9,10,11,17,18,19,20]
