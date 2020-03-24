@@ -33,12 +33,8 @@ export default function PaymentsLandingPage() {
         terms: `/${locale}/payments/terms`
     };
 
-    let showSubscriptionForm = false;
-    // if the subscription banner is not enabled,
-    // do not show the <SubscriptionForm />
-    if (userData && userData.waffle.flags['subscription_banner']) {
-        showSubscriptionForm = true;
-    }
+    const showSubscriptionForm =
+        userData && userData.waffle.flags.subscription_banner;
 
     return (
         <>
@@ -50,7 +46,7 @@ export default function PaymentsLandingPage() {
                     description="Support MDN with a $5 monthly subscription and get back more of the knowledge and tools you rely on for when your work has to work."
                     columnWidth="7"
                 />
-                <SubscriptionForm showSubscriptionForm={showSubscriptionForm} />
+                {showSubscriptionForm && <SubscriptionForm />}
             </div>
             <main
                 id="contributions-page"

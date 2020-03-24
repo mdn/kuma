@@ -4,19 +4,11 @@ import { useRef, useState } from 'react';
 
 import { getLocale, gettext, Interpolated } from '../l10n.js';
 
-type Props = {
-    showSubscriptionForm: boolean
-};
-
-export default function SubscriptionForm({ showSubscriptionForm }: Props) {
+export default function SubscriptionForm() {
     const locale = getLocale();
     const subscriptionFormRef = useRef(null);
     const [subscribeFormDisabled, setSubscribeFormDisabled] = useState(false);
     const [subscribeButtonEnabled, setSubscribeButtonEnabled] = useState(false);
-
-    if (!showSubscriptionForm) {
-        return null;
-    }
 
     const toggleButton = () => {
         setSubscribeButtonEnabled(!subscribeButtonEnabled);
