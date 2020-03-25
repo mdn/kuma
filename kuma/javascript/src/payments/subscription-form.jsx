@@ -64,7 +64,7 @@ export default function SubscriptionForm() {
                 name="subscription-form"
                 method="post"
                 onSubmit={submit}
-                disabled={subscribeFormDisabled ? 'disabled' : ''}
+                disabled={subscribeFormDisabled}
             >
                 <label className="payment-opt-in">
                     <input
@@ -81,7 +81,7 @@ export default function SubscriptionForm() {
                                 <a
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    href={`/${locale}/payments/`}
+                                    href={`/${locale}/payments/terms/`}
                                 >
                                     {gettext('Payment Terms')}
                                 </a>
@@ -94,7 +94,7 @@ export default function SubscriptionForm() {
                 <button
                     type="submit"
                     className="button cta primary"
-                    disabled={subscribeButtonEnabled ? '' : 'disabled'}
+                    disabled={subscribeButtonEnabled}
                 >
                     {gettext('Continue')}
                 </button>
