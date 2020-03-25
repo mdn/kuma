@@ -222,6 +222,7 @@ def whoami(request):
             "is_subscriber": UserSubscription.objects.filter(
                 user=user, canceled__isnull=True
             ).exists(),
+            "email": user.email,
         }
     else:
         data = {
@@ -233,6 +234,7 @@ def whoami(request):
             "is_beta_tester": False,
             "avatar_url": None,
             "is_subscriber": False,
+            "email": None,
         }
 
     # Add waffle data to the dict we're going to be returning.
