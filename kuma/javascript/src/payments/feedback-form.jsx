@@ -5,22 +5,17 @@ import GAProvider from '../ga-provider.jsx';
 
 const FeedbackForm = () => {
     const [feedback, setFeedback] = React.useState('');
-    const [showMessage, setShowMessage] = React.useState(false);
+    const [submitted, setSubmitted] = React.useState(false);
     const ga = React.useContext(GAProvider.context);
 
     const handleChange = event => {
         const { value } = event.target;
         setFeedback(value);
-
-        // cases where user submitted feedback already
-        // and start typing in text input again
-        if (showMessage) {
-            setShowMessage(false);
-        }
     };
 
     const handleSubmit = event => {
         event.preventDefault();
+
         ga('send', {
             hitType: 'event',
             eventCategory: 'monthly payments',
@@ -28,9 +23,9 @@ const FeedbackForm = () => {
             eventLabel: feedback.trim()
         });
 
-        // Clear form and show thank you message
+        // Clear form, show thank you message, disable input
         setFeedback('');
-        setShowMessage(true);
+        setSubmitted(true);
     };
 
     return (
@@ -42,10 +37,12 @@ const FeedbackForm = () => {
                 value={feedback}
                 onChange={handleChange}
                 required
+                disabled={!!submitted}
             />
             <div className="form-footer">
                 <strong>
-                    {showMessage && gettext('Thank you for your feedback!')}
+                    {submitted &&
+                        gettext('Thank you for submitting your feedback!')}
                 </strong>
                 <button type="submit">{gettext('Send')}</button>
             </div>

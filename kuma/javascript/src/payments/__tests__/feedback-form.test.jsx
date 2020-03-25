@@ -7,7 +7,7 @@ const setup = () => {
     const utils = render(<FeedbackForm />);
     const input = utils.getByPlaceholderText(/enter optional feedback…/i);
     const button = utils.getByText(/send/i);
-    const successMessage = 'Thank you for your feedback!';
+    const successMessage = 'Thank you for submitting your feedback!';
     return {
         input,
         button,
@@ -19,7 +19,7 @@ const setup = () => {
 describe('Payments Feedback Form', () => {
     afterEach(cleanup);
 
-    test('it shows a success message and clears input after submission', () => {
+    test('it shows a success message, clears and disables input after submission', () => {
         const { input, button, successMessage, queryByText } = setup();
         fireEvent.change(input, {
             target: { value: 'Here is my feedback. Thank you for listening.' }
@@ -36,29 +36,9 @@ describe('Payments Feedback Form', () => {
 
         // Ensure that form is cleared
         expect(input.value).toBe('');
-    });
 
-    test('it hides success message when user edits input after submission', () => {
-        const { input, button, successMessage, queryByText } = setup();
-
-        // edit input
-        fireEvent.change(input, {
-            target: { value: 'Here is my feedback.' }
-        });
-
-        // submit form
-        fireEvent.click(button);
-
-        // check that success message is there
-        expect(queryByText(successMessage)).toBeTruthy();
-
-        // edit input again
-        fireEvent.change(input, {
-            target: { value: 'I have more to say' }
-        });
-
-        // check that message is not there
-        expect(queryByText(successMessage)).toBeNull();
+        // Ensure that the input is disabled
+        expect(input.disabled).toBeTruthy();
     });
 
     test('a call to GA is made', () => {
