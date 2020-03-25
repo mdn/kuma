@@ -3,17 +3,17 @@ import * as React from 'react';
 import { gettext } from '../l10n.js';
 import GAProvider from '../ga-provider.jsx';
 
-const FeedbackForm = () => {
-    const [feedback, setFeedback] = React.useState('');
-    const [submitted, setSubmitted] = React.useState(false);
+const FeedbackForm = (): React.Node => {
+    const [feedback, setFeedback] = React.useState<string>('');
+    const [submitted, setSubmitted] = React.useState<boolean>(false);
     const ga = React.useContext(GAProvider.context);
 
-    const handleChange = event => {
+    const handleChange = (event: SyntheticInputEvent<HTMLInputElement>) => {
         const { value } = event.target;
         setFeedback(value);
     };
 
-    const handleSubmit = event => {
+    const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         ga('send', {
@@ -37,7 +37,7 @@ const FeedbackForm = () => {
                 value={feedback}
                 onChange={handleChange}
                 required
-                disabled={!!submitted}
+                disabled={submitted}
             />
             <div className="form-footer">
                 <strong>
