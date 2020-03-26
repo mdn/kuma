@@ -71,3 +71,33 @@ def test_translate_post(root_doc, trans_doc_client):
         len(Document.objects.filter(title=root_doc.title + " Redirect 1", locale="fr"))
         == 0
     )
+
+
+def test_translate_over_deleted_document(root_doc, trans_doc_client):
+    """Trying to create a new translation when there already existed a document
+    for that locale, but it was soft-deleted.
+    If this is the case, it should fully delete the soft-deleted document and
+    proceed with the new translation.
+
+    Much of this is to assert that the fix in https://github.com/mdn/kuma/issues/6673
+    worked.
+    """
+    # Create the soft-delete document that would otherwise "be in the way".
+    Document.objects.create(slug=root_doc.slug, locale="fr").delete()
+
+    data = {
+        "slug": root_doc.slug,
+        "title": root_doc.title,
+        "content": root_doc.current_revision.content,
+        "form-type": "both",
+        "toc_depth": 1,
+    }
+
+    url = reverse("wiki.translate", args=(root_doc.slug,))
+    url += "?tolocale=fr"
+
+    response = trans_doc_client.post(url, data, HTTP_HOST=settings.WIKI_HOST)
+    assert response.status_code == 302
+
+    assert not Document.deleted_objects.filter(slug=root_doc.slug, locale="fr")
+    assert Document.objects.filter(slug=root_doc.slug, locale="fr")
