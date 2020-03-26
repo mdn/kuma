@@ -13,26 +13,11 @@ export default function SubscriptionForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [paymentAuthorized, setPaymentAuthorized] = useState(false);
 
-    const [redirectingTo, setRedirectingTo] = useState(null);
-
-    useEffect(() => {
-        let dismounted = false;
-        if (redirectingTo) {
-            window.setTimeout(() => {
-                window.location.href = redirectingTo;
-                if (!dismounted) {
-                    setRedirectingTo(null);
-                }
-            }, 300000);
-        }
-        return () => {
-            dismounted = true;
-        };
-    }, [redirectingTo]);
-
     const toggleButton = event => {
         setPaymentAuthorized(event.target.checked);
     };
+
+    const STRIPE_CONTINUE_SESSIONSTORAGE_KEY = 'strip-form-continue';
 
     /**
      * If you arrived on this page, being anonymous, you'd have to first sign in.
@@ -42,14 +27,24 @@ export default function SubscriptionForm() {
      * checkbox and press the "Continue" button.
      */
     useEffect(() => {
-        if (
-            window.location.hash === '#continuestripe' &&
-            userData.isAuthenticated
-        ) {
-            const subscriptionForm = subscriptionFormRef.current;
-            if (subscriptionForm) {
-                setPaymentAuthorized(true);
-                initStripeForm();
+        if (userData.isAuthenticated) {
+            let autoTriggerStripe = false;
+            try {
+                autoTriggerStripe = JSON.parse(
+                    sessionStorage.getItem(
+                        STRIPE_CONTINUE_SESSIONSTORAGE_KEY
+                    ) || 'false'
+                );
+            } catch (e) {
+                // If sessionStorage is not supported, they'll have to manually click
+                // the Continue button again.
+            }
+            if (autoTriggerStripe) {
+                const subscriptionForm = subscriptionFormRef.current;
+                if (subscriptionForm) {
+                    setPaymentAuthorized(true);
+                    initStripeForm();
+                }
             }
         }
     }, [userData.isAuthenticated]);
@@ -62,12 +57,23 @@ export default function SubscriptionForm() {
         event.preventDefault();
 
         if (!userData.isAuthenticated) {
-            const next = encodeURIComponent(
-                window.location.pathname + '#continuestripe'
-            );
-            setRedirectingTo(
-                `/${locale}/users/account/signup-landing?next=${next}`
-            );
+            try {
+                sessionStorage.setItem(
+                    STRIPE_CONTINUE_SESSIONSTORAGE_KEY,
+                    JSON.stringify(true)
+                );
+            } catch (e) {
+                // No sessionStorage, no remembering to trigger opening the Stripe
+                // form automatically next time.
+            }
+            const next = encodeURIComponent(window.location.pathname);
+            // XXX Waiting for window.mdn.triggerAuthModal
+            // https://github.com/mdn/kuma/pull/6749
+            if (window.mdn && window.mdn.triggerAuthModal) {
+                window.mdn.triggerAuthModal();
+            } else {
+                window.location.href = `/${locale}/users/account/signup-landing?next=${next}`;
+            }
             return;
         }
 
@@ -111,56 +117,50 @@ export default function SubscriptionForm() {
                     />
                 </h2>
             </header>
-            {redirectingTo ? (
-                <p className="redirecting">
-                    <i>Redirecting to sign in...</i>
-                </p>
-            ) : (
-                <form
-                    ref={subscriptionFormRef}
-                    name="subscription-form"
-                    method="post"
-                    onSubmit={submit}
-                    disabled={isSubmitting}
-                >
-                    <label className="payment-opt-in">
-                        <input
-                            type="checkbox"
-                            required="required"
-                            checked={paymentAuthorized}
-                            onChange={toggleButton}
+            <form
+                ref={subscriptionFormRef}
+                name="subscription-form"
+                method="post"
+                onSubmit={submit}
+                disabled={isSubmitting}
+            >
+                <label className="payment-opt-in">
+                    <input
+                        type="checkbox"
+                        required="required"
+                        checked={paymentAuthorized}
+                        onChange={toggleButton}
+                    />
+                    <small>
+                        <Interpolated
+                            id={gettext(
+                                'By clicking this button, I authorize Mozilla to charge this payment method each month, according to the <paymentTermsLink />, until I cancel my subscription.'
+                            )}
+                            paymentTermsLink={
+                                <a
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    href={`/${locale}/payments/terms/`}
+                                >
+                                    {gettext('Payment Terms')}
+                                </a>
+                            }
                         />
-                        <small>
-                            <Interpolated
-                                id={gettext(
-                                    'By clicking this button, I authorize Mozilla to charge this payment method each month, according to the <paymentTermsLink />, until I cancel my subscription.'
-                                )}
-                                paymentTermsLink={
-                                    <a
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        href={`/${locale}/payments/terms/`}
-                                    >
-                                        {gettext('Payment Terms')}
-                                    </a>
-                                }
-                            />
-                        </small>
-                    </label>
-                    <input type="hidden" name="stripe_token" />
-                    <input type="hidden" name="stripe_email" />
-                    <button
-                        type="submit"
-                        className="button cta primary"
-                        disabled={!paymentAuthorized}
-                    >
-                        {gettext('Continue')}
-                    </button>
-                    <small className="subtext">
-                        {gettext('Payments are not tax deductible')}
                     </small>
-                </form>
-            )}
+                </label>
+                <input type="hidden" name="stripe_token" />
+                <input type="hidden" name="stripe_email" />
+                <button
+                    type="submit"
+                    className="button cta primary"
+                    disabled={!paymentAuthorized}
+                >
+                    {gettext('Continue')}
+                </button>
+                <small className="subtext">
+                    {gettext('Payments are not tax deductible')}
+                </small>
+            </form>
         </div>
     );
 }
