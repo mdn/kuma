@@ -1,12 +1,24 @@
 import logging
+import json
 
 from django.conf import settings
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.http import (
+    HttpResponse,
+)
+
 from stripe.error import StripeError
 from waffle.decorators import waffle_flag
 
 from kuma.core.decorators import ensure_wiki_domain, login_required
+from kuma.core.ga_tracking import (
+    CATEGORY_MONTHLY_PAYMENTS,
+    ACTION_FEEDBACK,
+    track_event,
+)
 from kuma.users.models import UserSubscription
 
 from .utils import (
@@ -30,10 +42,25 @@ def thank_you(request):
 
 @waffle_flag("subscription")
 @never_cache
+@require_POST
+def send_feedback(request):
+    """
+    Sends feedback to Google Analytics. This is done on the
+    backend to ensure that all feedback is collected, even
+    from users with DNT or where GA is disabled.
+    """
+    data = json.loads(request.body)
+    track_event(CATEGORY_MONTHLY_PAYMENTS, ACTION_FEEDBACK, data["feedback"])
+    return HttpResponse(status=204)
+
+
+@waffle_flag("subscription")
+@never_cache
 def payment_terms(request):
     return render(request, "payments/terms.html")
 
 
+@ensure_wiki_domain
 @waffle_flag("subscription")
 @login_required
 @never_cache

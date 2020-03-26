@@ -70,6 +70,14 @@
             background: url('/static/img/hero-dino-blank.png') no-repeat 10% 1%;
         }
     }
+
+    a {
+        border-bottom: 1px solid $payment-faq-base-color;
+        color: $payment-faq-base-color;
+        padding-bottom: 1px;
+        text-decoration: none;
+    }
+
     .section {
         display: block;
         position: relative;
@@ -89,13 +97,6 @@
         > ol {
             flex: 60%;
 
-            a {
-                border-bottom: 1px solid $payment-faq-base-color;
-                color: $payment-faq-base-color;
-                padding-bottom: 1px;
-                text-decoration: none;
-            }
-
             > li {
                 background-color: #fff;
                 border: 2px solid $text-color;
@@ -103,7 +104,6 @@
                 margin: 30px 0;
                 padding: 48px;
                 position: relative;
-
 
                 > ul {
                     list-style-type: initial;

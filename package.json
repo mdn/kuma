@@ -45,6 +45,7 @@
     "dependencies": {
         "@sentry/node": "^5.6.2",
         "express": "^4.16.4",
+        "fsevents": "^2.1.2",
         "jsesc": "2.5.2",
         "morgan": "^1.9.1",
         "newrelic": "^5.9.0",
