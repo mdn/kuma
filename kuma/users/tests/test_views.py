@@ -1639,8 +1639,8 @@ def test_delete_user_donate_attributions(
     whoami_url = reverse("api.v1.whoami")
     response = user_client.get(whoami_url)
     assert response.status_code == 200
-    assert not response.json()["username"]
-    assert not response.json()["is_authenticated"]
+    assert "username" not in response.json()
+    assert "is_authenticated" not in response.json()
 
 
 @mock.patch("kuma.users.signal_handlers.cancel_stripe_customer_subscription")
@@ -1772,8 +1772,8 @@ def test_delete_user_keep_attributions(
     whoami_url = reverse("api.v1.whoami")
     response = user_client.get(whoami_url)
     assert response.status_code == 200
-    assert not response.json()["username"]
-    assert not response.json()["is_authenticated"]
+    assert "username" not in response.json()
+    assert "is_authenticated" not in response.json()
 
     # There should be no Key left
     assert not Key.objects.all().exists()
@@ -1794,7 +1794,7 @@ def test_delete_user_keep_attributions_and_cancel_subscriptions(
     ]
 
     # Also, pretend that the user has a rich profile
-    User.objects.filter(id=wiki_user.id).update(stripe_customer_id="cus_12345",)
+    User.objects.filter(id=wiki_user.id).update(stripe_customer_id="cus_12345")
     UserSubscription.set_active(wiki_user, subscription_id)
 
     revision = root_doc.revisions.first()

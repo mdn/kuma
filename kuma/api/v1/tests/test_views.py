@@ -204,26 +204,12 @@ def test_whoami_anonymous(client, settings, timezone):
     assert response.status_code == 200
     assert response["content-type"] == "application/json"
     assert response.json() == {
-        "username": None,
         "timezone": timezone,
-        "is_authenticated": False,
-        "is_staff": False,
-        "is_superuser": False,
-        "is_beta_tester": False,
-        "avatar_url": None,
         "waffle": {
-            "flags": {
-                "section_edit": False,
-                "flag_all": True,
-                "flag_none": False,
-                "subscription": False,
-                "subscription_banner": False,
-            },
-            "switches": {"switch_on": True, "switch_off": False},
-            "samples": {"sample_always": True, "sample_never": False},
+            "flags": {"flag_all": True},
+            "switches": {"switch_on": True},
+            "samples": {"sample_always": True},
         },
-        "is_subscriber": False,
-        "email": None,
     }
     assert_no_cache_header(response)
 
@@ -265,28 +251,28 @@ def test_whoami(
     response = user_client.get(url)
     assert response.status_code == 200
     assert response["content-type"] == "application/json"
-    assert response.json() == {
+    expect = {
         "username": wiki_user.username,
         "timezone": timezone,
         "is_authenticated": True,
-        "is_staff": is_staff,
-        "is_superuser": is_superuser,
-        "is_beta_tester": is_beta_tester,
         "avatar_url": wiki_user_github_account.get_avatar_url(),
         "waffle": {
-            "flags": {
-                "section_edit": True,
-                "flag_all": True,
-                "flag_none": False,
-                "subscription": is_staff,
-                "subscription_banner": is_staff,
-            },
-            "switches": {"switch_on": True, "switch_off": False},
-            "samples": {"sample_always": True, "sample_never": False},
+            "flags": {"section_edit": True, "flag_all": True},
+            "switches": {"switch_on": True},
+            "samples": {"sample_always": True},
         },
-        "is_subscriber": False,
         "email": "wiki_user@example.com",
     }
+    if is_staff:
+        expect["is_staff"] = True
+        expect["waffle"]["flags"]["subscription"] = True
+        expect["waffle"]["flags"]["subscription_banner"] = True
+    if is_superuser:
+        expect["is_superuser"] = True
+    if is_beta_tester:
+        expect["is_beta_tester"] = True
+
+    assert response.json() == expect
     assert_no_cache_header(response)
 
 
@@ -299,7 +285,7 @@ def test_whoami_is_subscriber(
     url = reverse("api.v1.whoami")
     response = user_client.get(url)
     assert response.status_code == 200
-    assert response.json()["is_subscriber"] is False
+    assert "is_subscriber" not in response.json()
 
     UserSubscription.set_active(wiki_user, "abc123")
     response = user_client.get(url)
@@ -309,7 +295,7 @@ def test_whoami_is_subscriber(
     UserSubscription.set_canceled(wiki_user, "abc123")
     response = user_client.get(url)
     assert response.status_code == 200
-    assert response.json()["is_subscriber"] is False
+    assert "is_subscriber" not in response.json()
 
 
 @pytest.mark.django_db

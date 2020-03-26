@@ -57,14 +57,15 @@ export default function UserProvider(props: {
                     return;
                 }
                 let userData = {
-                    username: data.username,
-                    isAuthenticated: data.is_authenticated,
-                    isBetaTester: data.is_beta_tester,
-                    isStaff: data.is_staff,
-                    isSuperuser: data.is_super_user,
+                    username: data.username || null,
+                    isAuthenticated: data.is_authenticated || false,
+                    isBetaTester: data.is_beta_tester || false,
+                    isStaff: data.is_staff || false,
+                    isSuperuser: data.is_super_user || false,
+                    // # https://github.com/mdn/kuma/issues/6750
                     timezone: data.timezone,
-                    avatarUrl: data.avatar_url,
-                    isSubscriber: data.is_subscriber,
+                    avatarUrl: data.avatar_url || null,
+                    isSubscriber: data.is_subscriber || false,
                     // NOTE: if we ever decide that waffle data should
                     // be re-fetched on client-side navigation, we'll
                     // have to create a separate context for it.
