@@ -7,11 +7,11 @@ import { getLocale, gettext, Interpolated } from '../l10n.js';
 export default function SubscriptionForm() {
     const locale = getLocale();
     const subscriptionFormRef = useRef(null);
-    const [subscribeFormDisabled, setSubscribeFormDisabled] = useState(false);
-    const [subscribeButtonEnabled, setSubscribeButtonEnabled] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [paymentAuthorized, setPaymentAuthorized] = useState(false);
 
     const toggleButton = () => {
-        setSubscribeButtonEnabled(!subscribeButtonEnabled);
+        setPaymentAuthorized(!paymentAuthorized);
     };
 
     /**
@@ -24,7 +24,7 @@ export default function SubscriptionForm() {
         const subscriptionForm = subscriptionFormRef.current;
         if (subscriptionForm) {
             const formData = new FormData(subscriptionForm);
-            setSubscribeFormDisabled(true);
+            setIsSubmitting(true);
 
             const stripeHandler = window.StripeCheckout.configure({
                 key: window.mdn.stripePublicKey,
@@ -40,7 +40,7 @@ export default function SubscriptionForm() {
                 },
                 closed: function() {
                     if (!formData.get('stripe_token')) {
-                        setSubscribeFormDisabled(false);
+                        setIsSubmitting(false);
                     }
                 }
             });
@@ -64,7 +64,7 @@ export default function SubscriptionForm() {
                 name="subscription-form"
                 method="post"
                 onSubmit={submit}
-                disabled={subscribeFormDisabled}
+                disabled={isSubmitting}
             >
                 <label className="payment-opt-in">
                     <input
@@ -94,7 +94,7 @@ export default function SubscriptionForm() {
                 <button
                     type="submit"
                     className="button cta primary"
-                    disabled={subscribeButtonEnabled}
+                    disabled={!paymentAuthorized}
                 >
                     {gettext('Continue')}
                 </button>
