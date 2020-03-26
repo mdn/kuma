@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { getLocale, gettext, Interpolated } from '../l10n.js';
 
@@ -10,9 +10,20 @@ export default function SubscriptionForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [paymentAuthorized, setPaymentAuthorized] = useState(false);
 
-    const toggleButton = () => {
-        setPaymentAuthorized(!paymentAuthorized);
+    const toggleButton = event => {
+        setPaymentAuthorized(event.target.checked);
     };
+
+    useEffect(() => {
+        if (window.location.hash === '#continuestripe') {
+            const subscriptionForm = subscriptionFormRef.current;
+            if (subscriptionForm) {
+                setPaymentAuthorized(true);
+                subscriptionForm.submit();
+                // console.log('FORM:', subscriptionForm);
+            }
+        }
+    }, []);
 
     /**
      * Opens Stripe modal allowing a user to complete their subscription.
@@ -70,7 +81,8 @@ export default function SubscriptionForm() {
                     <input
                         type="checkbox"
                         required="required"
-                        onClick={toggleButton}
+                        checked={paymentAuthorized}
+                        onChange={toggleButton}
                     />
                     <small>
                         <Interpolated
