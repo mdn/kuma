@@ -5,9 +5,18 @@
 
   <article class="delete-document">
 
-    {% if prevent %}
+    {# HACK: https://bugzil.la/972545 - Don't delete pages that have children #}
+    {# TODO: https://bugzil.la/972541 - Deleting a page that has subpages #}
+    {% if document.children.exists() %}
         <p class="warning">{{ _('Cannot delete pages with children until we fix this bug:') }} <a target="_blank" rel="noopener" href="https://bugzilla.mozilla.org/show_bug.cgi?id=972541">https://bugzilla.mozilla.org/show_bug.cgi?id=972541</a>
         </p>
+
+        <p>{{ _('Here are the the children of this page') }}</p>
+        <ul>
+          {% for document in document.children.all().order_by('title') %}
+              <li><a href="{{ document.get_absolute_url() }}">{{ document.title }}</a></li>
+          {% endfor %}
+        </ul>
     {% else %}
 
     {{ build_document_crumbs(document) }}
