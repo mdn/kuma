@@ -14,12 +14,14 @@
     cursor: pointer;
 }
 
+button.cta,
 .cta {
     @extend .button-base;
     min-width: 200px;
     min-height: 40px;
 }
 
+button.primary,
 .primary {
     background-color: $brand-primary;
     color: #fff;
