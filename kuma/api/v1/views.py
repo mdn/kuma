@@ -1,3 +1,4 @@
+import stripe
 from django.conf import settings
 from django.http import Http404, HttpResponsePermanentRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
@@ -5,10 +6,12 @@ from django.utils.translation import activate, gettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET, require_safe
 from ratelimit.decorators import ratelimit
+from raven.contrib.django.models import client as raven_client
 from rest_framework import serializers, status
 from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
+from waffle import flag_is_active
 from waffle.models import Flag, Sample, Switch
 
 from kuma.api.v1.serializers import BCSignalSerializer
@@ -22,6 +25,7 @@ from kuma.search.filters import (
 )
 from kuma.search.search import SearchView
 from kuma.users.models import User, UserSubscription
+from kuma.users.stripe_utils import create_stripe_customer_and_subscription_for_user
 from kuma.users.templatetags.jinja_helpers import get_avatar_url
 from kuma.wiki.models import Document
 from kuma.wiki.templatetags.jinja_helpers import absolutify
@@ -347,3 +351,23 @@ def get_user(request, username):
     data = {field: getattr(user, field) for field in fields}
     data["avatar_url"] = get_avatar_url(user)
     return JsonResponse(data)
+
+
+@api_view(["POST"])
+def create_subscription(request):
+    if not flag_is_active(request, "subscription"):
+        return Response(
+            "subscription flag not active for this user",
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    try:
+        user = request.user
+        create_stripe_customer_and_subscription_for_user(
+            user, user.email, request.data.get("stripe_token", "")
+        )
+        return Response(None, status=status.HTTP_201_CREATED)
+
+    except stripe.error.StripeError:
+        raven_client.captureException()
+        return Response(None, status=status.HTTP_422_UNPROCESSABLE_ENTITY)

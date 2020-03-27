@@ -9,4 +9,9 @@ urlpatterns = [
     re_path(r"^search/(?P<locale>[^/]+)/?$", views.search, name="api.v1.search"),
     re_path(r"^bc-signal/?$", views.bc_signal, name="api.v1.bc_signal"),
     re_path(r"^users/(?P<username>[^/]+)/?$", views.get_user, name="api.v1.get_user"),
+    re_path(
+        r"^subscriptions/?$",
+        views.create_subscription,
+        name="api.v1.create_subscription",
+    ),
 ]
