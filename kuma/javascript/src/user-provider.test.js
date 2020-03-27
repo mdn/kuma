@@ -54,7 +54,8 @@ describe('UserProvider', () => {
             username: 'testing',
             isAuthenticated: true,
             isStaff: true,
-            waffle: waffleFlags
+            waffle: waffleFlags,
+            email: 'testuser@mail.com'
         };
 
         // In this test we want to verify that UserProvider is
@@ -71,7 +72,8 @@ describe('UserProvider', () => {
                         is_subscriber: false,
                         timezone: null,
                         avatar_url: null,
-                        waffle: waffleFlags
+                        waffle: waffleFlags,
+                        email: 'testuser@mail.com'
                     })
             });
         });
