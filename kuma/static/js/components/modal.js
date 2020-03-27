@@ -26,7 +26,9 @@
          */
         closeModal: function(modal, modalTrigger) {
             modal.classList.add('hidden');
-            modalTrigger.focus();
+            if (modalTrigger) {
+                modalTrigger.focus();
+            }
         },
         /**
          * Handles the following keyboard events:
