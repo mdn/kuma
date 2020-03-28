@@ -5,7 +5,9 @@ import { getCookie } from '../utils.js';
 
 const FeedbackForm = (): React.Node => {
     const [feedback, setFeedback] = React.useState<string>('');
-    const [status, setStatus] = React.useState<'success' | 'error' | ''>('');
+    const [status, setStatus] = React.useState<'success' | 'error' | null>(
+        null
+    );
 
     const handleChange = (event: SyntheticInputEvent<HTMLInputElement>) => {
         const { value } = event.target;
@@ -42,21 +44,14 @@ const FeedbackForm = (): React.Node => {
                 setStatus('success');
             })
             .catch(() => {
-                // Show error message
                 setStatus('error');
             });
     };
 
-    // ga('send', {
-    //     hitType: 'event',
-    //     eventCategory: 'monthly payments',
-    //     eventAction: 'feedback',
-    //     eventLabel: feedback.trim()
-    // });
-
     return (
         <form onSubmit={handleSubmit}>
             <input
+                data-testid="feedback-input"
                 type="text"
                 placeholder={gettext('Enter optional feedback…')}
                 name="feedback"
@@ -66,8 +61,8 @@ const FeedbackForm = (): React.Node => {
                 disabled={status === 'success'}
             />
             <div className="form-footer">
-                <span>
-                    {status === 'error' && (
+                {status === 'error' && (
+                    <span data-testid="error-msg">
                         <Interpolated
                             id={gettext(
                                 "We're sorry, something went wrong. Please try again or send your feedback to <emailLink />."
@@ -82,11 +77,17 @@ const FeedbackForm = (): React.Node => {
                                 </a>
                             }
                         />
-                    )}
-                    {status === 'success' &&
-                        gettext('Thank you for submitting your feedback!')}
-                </span>
-                <button type="submit">{gettext('Send')}</button>
+                    </span>
+                )}
+                {status === 'success' && (
+                    <strong data-testid="success-msg">
+                        {gettext('Thank you for submitting your feedback!')}
+                    </strong>
+                )}
+
+                <button data-testid="feedback-button" type="submit">
+                    {gettext('Send')}
+                </button>
             </div>
         </form>
     );

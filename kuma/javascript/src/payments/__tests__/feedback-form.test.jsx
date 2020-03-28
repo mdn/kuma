@@ -1,67 +1,117 @@
 //@flow
 import React from 'react';
-import { render, fireEvent, cleanup } from '@testing-library/react';
+import { render, fireEvent, cleanup, waitFor } from '@testing-library/react';
 import FeedbackForm from '../feedback-form.jsx';
 
 const setup = () => {
     const utils = render(<FeedbackForm />);
-    const input = utils.getByPlaceholderText(/enter optional feedback…/i);
-    const button = utils.getByText(/send/i);
-    const successMessage = 'Thank you for submitting your feedback!';
+    const input = utils.getByTestId('feedback-input');
+    const button = utils.getByTestId('feedback-button');
+    const successId = 'success-msg';
+    const errorId = 'error-msg';
+    const feedback = 'Here is my feedback. Thank you for listening.';
     return {
         input,
         button,
-        successMessage,
+        successId,
+        errorId,
+        feedback,
         ...utils
     };
 };
 
 describe('Payments Feedback Form', () => {
-    afterEach(cleanup);
+    afterEach(() => {
+        cleanup();
+        window.fetch.mockReset();
+    });
 
-    test('it shows a success message, clears and disables input after submission', () => {
-        const { input, button, successMessage, queryByText } = setup();
+    test('it shows a success message, clears and disables input after submission', async () => {
+        const { input, button, feedback, successId, queryByTestId } = setup();
+
+        window.fetch = jest.fn(() => Promise.resolve({ ok: true }));
+
         fireEvent.change(input, {
-            target: { value: 'Here is my feedback. Thank you for listening.' }
+            target: {
+                value: feedback
+            }
         });
 
         // Verify that message is not present before submitting the form
-        expect(queryByText(successMessage)).toBeNull();
+        expect(queryByTestId(successId)).toBeNull();
 
-        // submit form
+        // Submit form
         fireEvent.click(button);
 
-        // Ensure that message is visible after submission
-        expect(successMessage).toBeTruthy();
+        await waitFor(() => {
+            // Ensure that form is cleared
+            expect(input.value).toBe('');
 
-        // Ensure that form is cleared
-        expect(input.value).toBe('');
+            // Ensure that the input is disabled
+            expect(input.disabled).toBeTruthy();
 
-        // Ensure that the input is disabled
-        expect(input.disabled).toBeTruthy();
+            // Check for success message
+            expect(queryByTestId(successId)).toBeTruthy();
+        });
     });
 
-    test('a call to GA is made', () => {
-        const { input, button } = setup();
-        const feedback = 'Thank you for listening.';
-        const mockGA = jest.fn();
+    test('it shows error message when request fails', async () => {
+        const { input, button, feedback, errorId, queryByTestId } = setup();
 
-        window.ga = mockGA;
+        // Modify fetch to return false
+        window.fetch = jest.fn(() => Promise.resolve({ ok: false }));
 
-        // edit input
         fireEvent.change(input, {
-            target: { value: feedback }
+            target: {
+                value: feedback
+            }
         });
 
-        // submit form
+        // Verify that error is not present before submitting the form
+        expect(queryByTestId(errorId)).toBeNull();
+
+        // Submit form
         fireEvent.click(button);
 
-        // check that our GA event was called
-        expect(mockGA).toHaveBeenCalledWith('send', {
-            eventAction: 'feedback',
-            eventCategory: 'monthly payments',
-            eventLabel: feedback,
-            hitType: 'event'
+        await waitFor(() => {
+            // Check for error message
+            expect(queryByTestId(errorId)).toBeTruthy();
+        });
+    });
+
+    test('fetch() method submits feedback', async () => {
+        const { input, button, feedback } = setup();
+        const url = '/payments/feedback';
+        const mockArgs = {
+            url,
+            options: {
+                body: JSON.stringify({ feedback }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': null
+                },
+                method: 'POST'
+            }
+        };
+
+        // Mock window.fetch
+        window.fetch = jest.fn(() => Promise.resolve({ ok: true }));
+
+        fireEvent.change(input, {
+            target: {
+                value: feedback
+            }
+        });
+
+        // Submit form
+        fireEvent.click(button);
+
+        // Check that fetch was called with correct url and data
+        await waitFor(() => {
+            expect(window.fetch).toHaveBeenCalledWith(
+                mockArgs.url,
+                mockArgs.options
+            );
         });
     });
 });

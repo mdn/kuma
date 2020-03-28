@@ -49,8 +49,8 @@
         "jsesc": "2.5.2",
         "morgan": "^1.9.1",
         "newrelic": "^5.9.0",
-        "react": "^16.8.4",
-        "react-dom": "^16.8.4"
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1"
     },
     "devDependencies": {
         "@babel/core": "^7.2.2",
@@ -75,7 +75,7 @@
         "flow-bin": "^0.111.0",
         "hard-source-webpack-plugin": "0.13.1",
         "husky": "0.14.3",
-        "jest": "^24.1.0",
+        "jest": "^25.2.3",
         "jest-junit": "^8.0.0",
         "node-sass": "^4.13.0",
         "node-sass-chokidar": "^1.4.0",
