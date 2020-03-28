@@ -17,7 +17,7 @@ const FeedbackForm = (): React.Node => {
     const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        fetch('/payments/feedback', {
+        fetch('/api/v1/payments/feedback', {
             method: 'POST',
             body: JSON.stringify({ feedback: feedback.trim() }),
             headers: {
@@ -33,7 +33,7 @@ const FeedbackForm = (): React.Node => {
 
                 if (!res.ok) {
                     throw new Error(
-                        'Request (POST) to /payments/feedback failed'
+                        'Request (POST) to /api/v1/payments/feedback failed'
                     );
                 }
                 return res;

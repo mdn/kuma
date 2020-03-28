@@ -58,7 +58,7 @@ describe('Payments Feedback Form', () => {
     test('it shows error message when request fails', async () => {
         const { input, button, feedback, errorId, queryByTestId } = setup();
 
-        // Modify fetch to return false
+        // Modify fetch to return ok false
         window.fetch = jest.fn(() => Promise.resolve({ ok: false }));
 
         fireEvent.change(input, {
@@ -81,7 +81,7 @@ describe('Payments Feedback Form', () => {
 
     test('fetch() method submits feedback', async () => {
         const { input, button, feedback } = setup();
-        const url = '/payments/feedback';
+        const url = '/api/v1/payments/feedback';
         const mockArgs = {
             url,
             options: {
@@ -94,7 +94,6 @@ describe('Payments Feedback Form', () => {
             }
         };
 
-        // Mock window.fetch
         window.fetch = jest.fn(() => Promise.resolve({ ok: true }));
 
         fireEvent.change(input, {

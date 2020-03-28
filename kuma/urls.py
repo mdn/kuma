@@ -9,7 +9,6 @@ from django.views.static import serve
 
 from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
-from kuma.payments.views import send_feedback
 from kuma.core.decorators import ensure_wiki_domain, shared_cache_control
 from kuma.core.urlresolvers import i18n_patterns
 from kuma.dashboards.urls import lang_urlpatterns as dashboards_lang_urlpatterns
@@ -101,7 +100,7 @@ urlpatterns += i18n_patterns(
         name="redirect-to-payments",
     ),
 )
-urlpatterns += [re_path(r"^payments/feedback/?$", send_feedback, name="send_feedback")]
+
 urlpatterns += i18n_patterns(re_path(r"^payments/", include(payments_lang_urlpatterns)))
 urlpatterns += i18n_patterns(
     re_path("", decorator_include(never_cache, users_lang_urlpatterns))
