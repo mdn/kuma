@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from unittest import mock
+from unittest.mock import patch
 
 import pytest
 import stripe
@@ -8,6 +9,10 @@ from waffle.testutils import override_flag
 
 from kuma.core.tests import assert_no_cache_header, assert_redirect_to_wiki
 from kuma.core.urlresolvers import reverse
+from kuma.core.ga_tracking import (
+    CATEGORY_MONTHLY_PAYMENTS,
+    ACTION_FEEDBACK,
+)
 
 
 @dataclass
@@ -27,6 +32,25 @@ def test_payments_index(client):
     """Viewing the payments index page doesn't require you to be logged in"""
     response = client.get(reverse("payments_index"))
     assert response.status_code == 200
+
+
+@patch("kuma.payments.views.track_event")
+@pytest.mark.django_db
+@override_flag("subscription", True)
+def test_send_feedback(track_event_mock_signals, client, settings):
+    settings.GOOGLE_ANALYTICS_ACCOUNT = "UA-XXXX-1"
+    settings.GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS = True
+
+    response = client.post(
+        reverse("send_feedback"),
+        content_type="application/json",
+        data={"feedback": "my feedback"},
+    )
+    assert response.status_code == 204
+
+    track_event_mock_signals.assert_called_with(
+        CATEGORY_MONTHLY_PAYMENTS, ACTION_FEEDBACK, "my feedback",
+    )
 
 
 @pytest.mark.django_db
