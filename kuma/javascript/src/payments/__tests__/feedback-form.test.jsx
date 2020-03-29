@@ -26,6 +26,25 @@ describe('Payments Feedback Form', () => {
         window.fetch.mockReset();
     });
 
+    test('it only submits if input value is greater than minimum string length', () => {
+        const { input, button, errorId, queryByTestId } = setup();
+
+        window.fetch = jest.fn(() => Promise.resolve({ ok: true }));
+
+        fireEvent.change(input, {
+            target: {
+                value: 'abc        '
+            }
+        });
+
+        // Submit form
+        fireEvent.click(button);
+
+        // Check that error message shows and fetch was not called
+        expect(queryByTestId(errorId)).toBeTruthy();
+        expect(window.fetch).not.toHaveBeenCalled();
+    });
+
     test('it shows a success message, clears and disables input after submission', async () => {
         const { input, button, feedback, successId, queryByTestId } = setup();
 
