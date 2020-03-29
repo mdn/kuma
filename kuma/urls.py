@@ -171,7 +171,7 @@ if getattr(settings, "DEBUG_TOOLBAR_INSTALLED", False):
 # Legacy MindTouch redirects. These go last so that they don't mess
 # with local instances' ability to serve media.
 urlpatterns += [
-    re_path(lang_urlpatterns
+    re_path(
         r"^@api/deki/files/(?P<file_id>\d+)/=(?P<filename>.+)$",
         attachment_views.mindtouch_file_redirect,
         name="attachments.mindtouch_file_redirect",
