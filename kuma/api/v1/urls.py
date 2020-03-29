@@ -2,6 +2,7 @@ from django.urls import re_path
 
 from . import views
 
+
 urlpatterns = [
     re_path(r"^doc/(?P<locale>[^/]+)/(?P<slug>.*)$", views.doc, name="api.v1.doc"),
     re_path(r"^whoami/?$", views.whoami, name="api.v1.whoami"),
