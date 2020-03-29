@@ -52,6 +52,7 @@ const FeedbackForm = (): React.Node => {
             .then(() => {
                 // Clear form, show thank you message
                 setFeedback('');
+                setError('');
                 setStatus('success');
             })
             .catch(() => {
