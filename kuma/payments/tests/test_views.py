@@ -7,12 +7,12 @@ import stripe
 from django.conf import settings
 from waffle.testutils import override_flag
 
+from kuma.core.ga_tracking import (
+    ACTION_FEEDBACK,
+    CATEGORY_MONTHLY_PAYMENTS,
+)
 from kuma.core.tests import assert_no_cache_header, assert_redirect_to_wiki
 from kuma.core.urlresolvers import reverse
-from kuma.core.ga_tracking import (
-    CATEGORY_MONTHLY_PAYMENTS,
-    ACTION_FEEDBACK,
-)
 
 
 @dataclass

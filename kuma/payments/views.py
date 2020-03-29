@@ -1,20 +1,18 @@
-import logging
 import json
+import logging
 
 from django.conf import settings
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
-from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-from django.http import HttpResponse
-
 from stripe.error import StripeError
 from waffle.decorators import waffle_flag
 
 from kuma.core.decorators import ensure_wiki_domain, login_required
 from kuma.core.ga_tracking import (
-    CATEGORY_MONTHLY_PAYMENTS,
     ACTION_FEEDBACK,
+    CATEGORY_MONTHLY_PAYMENTS,
     track_event,
 )
 from kuma.users.models import UserSubscription
