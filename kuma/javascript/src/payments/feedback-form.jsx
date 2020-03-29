@@ -9,7 +9,7 @@ export const MIN_STRING_LENGTH = 10;
 const FeedbackForm = (): React.Node => {
     const [feedback, setFeedback] = React.useState<string>('');
     const [status, setStatus] = React.useState<'success' | 'idle'>('idle');
-    const [error, setError] = React.useState(null);
+    const [error, setError] = React.useState<React.Node | null>(null);
 
     const handleChange = (event: SyntheticInputEvent<HTMLInputElement>) => {
         const { value } = event.target;
