@@ -4,9 +4,13 @@ exports[`Payments Thank You page it renders 1`] = `
 <React.Fragment>
   <A11yNav />
   <Header />
-  <SubHeader
-    title="Thank you for becoming a monthly supporter!"
-  />
+  <div
+    className="subscriptions subheader-container"
+  >
+    <SubHeader
+      title="Thank you for becoming a monthly supporter!"
+    />
+  </div>
   <main
     className="contributions-page thank-you"
     role="main"
