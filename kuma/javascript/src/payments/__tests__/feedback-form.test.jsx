@@ -81,16 +81,13 @@ describe('Payments Feedback Form', () => {
 
     test('fetch() method submits feedback', async () => {
         const { input, button, feedback } = setup();
-        const mockArgs = {
-            url: FEEDBACK_URL,
-            options: {
-                body: JSON.stringify({ feedback }),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': null
-                },
-                method: 'POST'
-            }
+        const mockOptions = {
+            body: JSON.stringify({ feedback }),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': null
+            },
+            method: 'POST'
         };
 
         window.fetch = jest.fn(() => Promise.resolve({ ok: true }));
@@ -107,8 +104,8 @@ describe('Payments Feedback Form', () => {
         // Check that fetch was called with correct url and data
         await waitFor(() => {
             expect(window.fetch).toHaveBeenCalledWith(
-                mockArgs.url,
-                mockArgs.options
+                FEEDBACK_URL,
+                mockOptions
             );
         });
     });
