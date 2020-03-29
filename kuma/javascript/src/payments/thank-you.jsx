@@ -20,7 +20,9 @@ export default function ThankYouPage() {
         <>
             <A11yNav />
             <Header />
-            <SubHeader title="Thank you for becoming a monthly supporter!" />
+            <div className="subscriptions subheader-container">
+                <SubHeader title="Thank you for becoming a monthly supporter!" />
+            </div>
             <main className="contributions-page thank-you" role="main">
                 <section className="section">
                     <header>
