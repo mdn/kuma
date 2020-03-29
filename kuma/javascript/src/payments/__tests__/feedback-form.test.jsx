@@ -1,7 +1,7 @@
 //@flow
 import React from 'react';
 import { render, fireEvent, cleanup, waitFor } from '@testing-library/react';
-import FeedbackForm from '../feedback-form.jsx';
+import FeedbackForm, { FEEDBACK_URL } from '../feedback-form.jsx';
 
 const setup = () => {
     const utils = render(<FeedbackForm />);
@@ -81,9 +81,8 @@ describe('Payments Feedback Form', () => {
 
     test('fetch() method submits feedback', async () => {
         const { input, button, feedback } = setup();
-        const url = '/api/v1/payments/feedback';
         const mockArgs = {
-            url,
+            url: FEEDBACK_URL,
             options: {
                 body: JSON.stringify({ feedback }),
                 headers: {

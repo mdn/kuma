@@ -3,6 +3,8 @@ import * as React from 'react';
 import { gettext, Interpolated } from '../l10n.js';
 import { getCookie } from '../utils.js';
 
+export const FEEDBACK_URL = '/payments/feedback';
+
 const FeedbackForm = (): React.Node => {
     const [feedback, setFeedback] = React.useState<string>('');
     const [status, setStatus] = React.useState<'success' | 'error' | null>(
@@ -17,7 +19,7 @@ const FeedbackForm = (): React.Node => {
     const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        fetch('/api/v1/payments/feedback', {
+        fetch(FEEDBACK_URL, {
             method: 'POST',
             body: JSON.stringify({ feedback: feedback.trim() }),
             headers: {
