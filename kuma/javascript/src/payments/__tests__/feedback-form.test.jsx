@@ -3,6 +3,9 @@ import React from 'react';
 import { render, fireEvent, cleanup, waitFor } from '@testing-library/react';
 import FeedbackForm, { FEEDBACK_URL } from '../feedback-form.jsx';
 
+// Fixes "ReferenceError: regeneratorRuntime is not defined" when running jest tests
+require('regenerator-runtime/runtime');
+
 const setup = () => {
     const utils = render(<FeedbackForm />);
     const input = utils.getByTestId('feedback-input');

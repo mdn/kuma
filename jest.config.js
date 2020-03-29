@@ -92,7 +92,7 @@ module.exports = {
 
     // Use this configuration option to add custom reporters to Jest
     // reporters: undefined,
-    reporters: ['default', 'jest-junit'],
+    reporters: ['default', 'jest-junit']
 
     // Automatically reset mock state between every test
     // resetMocks: false,
@@ -118,7 +118,7 @@ module.exports = {
     // runner: "jest-runner",
 
     // The paths to modules that run some code to configure or set up the testing environment before each test
-    setupFiles: ['<rootDir>/node_modules/regenerator-runtime/runtime']
+    // setupFiles: ['<rootDir>/node_modules/regenerator-runtime/runtime']
 
     // The path to a module that runs some code to configure or set up the testing framework before each test
     // setupTestFrameworkScriptFile: null,
