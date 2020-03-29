@@ -10,8 +10,8 @@
         return;
     }
 
-    var pageHeader = document.querySelector('.page-header');
-    pageHeader.addEventListener('click', function(event) {
+    function triggerAuthModal() {
+
         function handleKeyup(event) {
             if (event.key === 'Escape') {
                 closeModalButton.click();
@@ -19,27 +19,21 @@
         }
 
         var closeModalButton = document.getElementById('close-modal');
+        var modalContentContainer = authModalContainer.querySelector('section');
+        authModalContainer.classList.remove('hidden');
+        modalContentContainer.focus();
 
-        if (event.target.classList.contains('signin-link')) {
-            event.preventDefault();
-            var modalContentContainer = authModalContainer.querySelector(
-                'section'
-            );
+        closeModalButton.addEventListener('click', function() {
+            window.mdn.modalDialog.closeModal(authModalContainer);
+            document.removeEventListener('keyup', handleKeyup);
+        });
 
-            authModalContainer.classList.remove('hidden');
-            modalContentContainer.focus();
+        window.mdn.modalDialog.handleKeyboardEvents(authModalContainer);
 
-            closeModalButton.addEventListener('click', function() {
-                window.mdn.modalDialog.closeModal(
-                    authModalContainer,
-                    event.target
-                );
-                document.removeEventListener('keyup', handleKeyup);
-            });
+        document.addEventListener('keyup', handleKeyup);
 
-            window.mdn.modalDialog.handleKeyboardEvents(authModalContainer);
+    }
 
-            document.addEventListener('keyup', handleKeyup);
-        }
-    });
+    window.mdn.triggerAuthModal = triggerAuthModal;
+
 })();

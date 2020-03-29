@@ -594,7 +594,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    "VERSION": "2020.08",
+    "VERSION": "2020.09",
     "BASE_DIR": BASE_DIR,
     "TEXT_DOMAIN": "django",
     # Tells the extract script what files to look for l10n in and what function
@@ -786,6 +786,12 @@ PIPELINE_CSS = {
     "stripe-subscription": {
         "source_filenames": ("styles/stripe-subscription.scss",),
         "output_filename": "build/styles/stripe-subscription.css",
+    },
+    "subscriptions": {
+        "source_filenames": (
+            "styles/minimalist/components/subscriptions/subscriptions.scss",
+        ),
+        "output_filename": "build/styles/subscriptions.css",
     },
     "error-403-alternate": {
         "source_filenames": ("styles/error-403-alternate.scss",),

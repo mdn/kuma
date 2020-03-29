@@ -223,6 +223,7 @@ def test_whoami_anonymous(client, settings, timezone):
             "samples": {"sample_always": True, "sample_never": False},
         },
         "is_subscriber": False,
+        "email": None,
     }
     assert_no_cache_header(response)
 
@@ -284,6 +285,7 @@ def test_whoami(
             "samples": {"sample_always": True, "sample_never": False},
         },
         "is_subscriber": False,
+        "email": "wiki_user@example.com",
     }
     assert_no_cache_header(response)
 

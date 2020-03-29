@@ -5,14 +5,17 @@ from celery import task
 from constance import config
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.core.mail import EmailMultiAlternatives, send_mail
 from django.utils import translation
 from django.utils.translation import gettext_lazy as _
 
 from kuma.core.decorators import skip_in_maintenance_mode
 from kuma.core.email_utils import render_email
 from kuma.core.urlresolvers import reverse
-from kuma.core.utils import strings_are_translated
+from kuma.core.utils import (
+    EmailMultiAlternativesRetrying,
+    send_mail_retrying,
+    strings_are_translated,
+)
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
@@ -37,7 +40,7 @@ def send_recovery_email(user_pk, email, locale=None):
         # Email subject *must not* contain newlines
         subject = "".join(subject.splitlines())
         plain = render_email("users/email/recovery/plain.ltxt", context)
-        send_mail(subject, plain, settings.DEFAULT_FROM_EMAIL, [email])
+        send_mail_retrying(subject, plain, settings.DEFAULT_FROM_EMAIL, [email])
 
 
 @task
@@ -53,7 +56,7 @@ def send_welcome_email(user_pk, locale):
             content_plain = render_email("users/email/welcome/plain.ltxt", context)
             content_html = render_email("users/email/welcome/html.ltxt", context)
 
-            email = EmailMultiAlternatives(
+            email = EmailMultiAlternativesRetrying(
                 _("Getting started with your new MDN account"),
                 content_plain,
                 config.WELCOME_EMAIL_FROM,
@@ -80,4 +83,4 @@ def send_payment_received_email(stripe_customer_id, locale, timestamp, invoice_p
         # Email subject *must not* contain newlines
         subject = "".join(subject.splitlines())
         plain = render_email("users/email/payment_received/plain.ltxt", context)
-        send_mail(subject, plain, settings.DEFAULT_FROM_EMAIL, [user.email])
+        send_mail_retrying(subject, plain, settings.DEFAULT_FROM_EMAIL, [user.email])

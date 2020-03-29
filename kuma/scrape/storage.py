@@ -72,6 +72,8 @@ class Storage(object):
         tags = doc_data.pop("tags", [])
         redirect_to = doc_data.pop("redirect_to", None)
 
+        Document.deleted_objects.filter(locale=locale, slug=slug).delete()
+
         attempt = 0
         document = None
         while attempt < 2 and not document:
