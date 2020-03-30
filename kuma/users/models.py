@@ -5,7 +5,9 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.tokens import default_token_generator
 from django.core import validators
-from django.db import models
+from django.db import models, transaction
+from django.db.models import Max
+from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.encoding import force_bytes
 from django.utils.functional import cached_property
@@ -158,6 +160,8 @@ class User(AbstractUser):
     )
     stripe_customer_id = models.CharField(max_length=255, blank=True)
 
+    subscriber_number = models.PositiveIntegerField(blank=True, null=True)
+
     class Meta:
         db_table = "auth_user"
 
@@ -193,6 +197,19 @@ class User(AbstractUser):
         link = reverse("users.recover", kwargs={"token": token, "uidb64": uidb64})
         return link
 
+    @transaction.atomic()
+    def set_next_subscriber_number_and_save(self):
+        assert not self.subscriber_number, "already set"
+        user = User.objects.select_for_update().get(id=self.id)
+        higest_number = (
+            User.objects.filter(subscriber_number__isnull=True).aggregate(
+                number=Max("subscriber_number")
+            )["number"]
+            or 0
+        )
+        user.subscriber_number = higest_number + 1
+        user.save()
+
 
 class UserSubscription(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -222,3 +239,9 @@ class UserSubscription(models.Model):
             user=user,
             defaults={"canceled": timezone.now(), "updated": timezone.now()},
         )
+
+
+@receiver(models.signals.post_save, sender=UserSubscription)
+def set_user_subscriber_number(sender, instance, **kwargs):
+    if not instance.canceled and not instance.user.subscriber_number:
+        instance.user.set_next_subscriber_number_and_save()
