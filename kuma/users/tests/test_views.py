@@ -1190,8 +1190,8 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
             p2 = mock.patch("kuma.users.views.track_event")
             p3 = mock.patch("kuma.users.providers.github.views.track_event")
             with p1 as track_event_mock_signals, p2 as track_event_mock_views, p3 as track_event_mock_github:
-
-                self.github_login()
+                # Needed to trigger the 'auth-started' GA tracking event.
+                self.github_login(headers={"HTTP_REFERER": "http://testserver/en-US/"})
 
                 data = {
                     "website": "",
@@ -1334,7 +1334,11 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
             p1 = mock.patch("kuma.users.signal_handlers.track_event")
             p2 = mock.patch("kuma.users.providers.github.views.track_event")
             with p1 as track_event_mock_signals, p2 as track_event_mock_github:
-                response = self.github_login(follow=False)
+                response = self.github_login(
+                    follow=False,
+                    # Needed to trigger the 'auth-started' GA tracking event.
+                    headers={"HTTP_REFERER": "http://testserver/en-US/"},
+                )
                 assert response.status_code == 302
 
                 track_event_mock_signals.assert_has_calls(
