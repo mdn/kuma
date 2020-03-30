@@ -9,69 +9,74 @@ import { getCookie } from '../utils';
 const SUBSCRIPTION_URL = '/api/v1/subscriptions';
 
 /**
- * Conditionally loads the script given by the URL and cleans up after itself
- * @returns {(Promise|null)} When it shouldLoad a promise indicating whether
- * the script has successfully loaded
+ * Loads the script given by the URL and cleans up after itself
+ * @returns {(null | Promise)} Indicating whether the script has successfully loaded
  */
-function useConditionalScriptLoad(url, shouldLoad) {
-    const [loadingPromise, setLoadingPromise] = useState(null);
-
+function useScriptLoading(url) {
+    const [loadingPromise, setLoadingPromise] = useState<null | Promise<void>>(
+        null
+    );
     useEffect(() => {
         let script;
-        if (shouldLoad && !loadingPromise) {
+        if (!loadingPromise) {
+            script = document.createElement('script');
             setLoadingPromise(
-                new Promise(resolve => {
-                    script = document.createElement('script');
-                    script.onload = () => {
-                        resolve();
-                    };
-                    script.src = url;
-
-                    if (document.head) {
-                        document.head.appendChild(script);
-                    }
+                new Promise((resolve, reject) => {
+                    script.onload = () => resolve;
+                    script.onerror = reject;
                 })
             );
+            script.src = url;
+
+            if (document.head) {
+                document.head.appendChild(script);
+            }
         }
         return () => {
             if (document.head && script) {
                 document.head.removeChild(script);
             }
         };
-    }, [shouldLoad, loadingPromise, url]);
+    }, [loadingPromise, url]);
 
-    return loadingPromise;
+    return [loadingPromise, () => setLoadingPromise(null)];
 }
 
 export default function SubscriptionForm() {
     const locale = getLocale();
     const userData = useContext(UserProvider.context);
 
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const [paymentAuthorized, setPaymentAuthorized] = useState(false);
+    const [formStep, setFormStep] = useState<
+        'initial' | 'stripe_error' | 'stripe' | 'sent' | 'server_error'
+    >('initial');
 
     const token = useRef(null);
 
-    const stripeLoadingPromise = useConditionalScriptLoad(
-        'https://checkout.stripe.com/checkout.js',
-        paymentAuthorized
+    const [stripeLoadingPromise, reloadStripe] = useScriptLoading(
+        'https://checkout.stripe.com/checkout.js'
     );
 
-    function togglePaymentAuthorized() {
-        const newValue = !paymentAuthorized;
-        setPaymentAuthorized(newValue);
-    }
-
-    function openStripeModal(event) {
-        event.preventDefault();
-
-        setIsSubmitting(true);
-
+    useEffect(() => {
         if (!stripeLoadingPromise) {
-            console.error('stripe script load was not started');
             return;
         }
+        stripeLoadingPromise
+            .then(() => {
+                if (formStep === 'stripe_error') {
+                    setFormStep('initial');
+                }
+            })
+            .catch(() => {
+                setFormStep('stripe_error');
+            });
+    }, [formStep, stripeLoadingPromise]);
 
+    function openStripeModal() {
+        if (!stripeLoadingPromise) {
+            return;
+        }
+        setFormStep('stripe');
         stripeLoadingPromise.then(() => {
             const stripeHandler = window.StripeCheckout.configure({
                 key: window.mdn.stripePublicKey,
@@ -81,14 +86,14 @@ export default function SubscriptionForm() {
                 currency: 'usd',
                 amount: 500,
                 email: userData ? userData.email : '',
+                // token is only called if Stripe was able to successfully
+                // create a token from the entered info
                 token(response) {
                     token.current = response.id;
                     createSubscription();
                 },
                 closed() {
-                    if (!token.current) {
-                        setIsSubmitting(false);
-                    }
+                    setFormStep(token.current ? 'sent' : 'initial');
                 }
             });
             stripeHandler.open();
@@ -111,35 +116,66 @@ export default function SubscriptionForm() {
             })
             .catch(e => {
                 console.error('error while creating subscription', e);
-                alert(
-                    gettext(
-                        "An error occurred trying to set up the subscription with Stripe's server. We've recorded the error and will investigate it."
-                    )
-                );
+                setFormStep('server_error');
             });
     }
 
-    return (
-        <div className="subscriptions-form">
-            <header className="subscriptions-form-header">
-                <h2>
-                    <Interpolated
-                        id={gettext('$5 <perMontSub />')}
-                        perMontSub={<sub>{gettext('/mo')}</sub>}
-                    />
-                </h2>
-            </header>
+    let content;
+    if (formStep === 'server_error') {
+        content = (
+            <>
+                <h2>{gettext('Sorry!')}</h2>
+                <p>
+                    {gettext(
+                        "An error occurred trying to set up the subscription with Stripe's server. We've recorded the error and will investigate it."
+                    )}
+                </p>
+                <button
+                    type="button"
+                    className="button cta primary"
+                    onClick={() => setFormStep('initial')}
+                >
+                    {gettext('Try again')}
+                </button>
+            </>
+        );
+    } else if (formStep === 'stripe_error') {
+        content = (
+            <>
+                <h2>{gettext('Sorry!')}</h2>
+                <p>
+                    {gettext(
+                        'An error happened trying to load the Stripe integration'
+                    )}
+                </p>
+                <button
+                    type="button"
+                    className="button cta primary"
+                    onClick={reloadStripe}
+                >
+                    {gettext('Try again')}
+                </button>
+            </>
+        );
+    } else {
+        content = (
             <form
                 name="subscription-form"
                 method="post"
-                onSubmit={openStripeModal}
-                disabled={isSubmitting}
+                onSubmit={event => {
+                    event.preventDefault();
+                    openStripeModal();
+                }}
+                disabled={formStep !== 'initial'}
             >
                 <label className="payment-opt-in">
                     <input
                         type="checkbox"
                         required="required"
-                        onClick={togglePaymentAuthorized}
+                        value={paymentAuthorized}
+                        onClick={() => {
+                            setPaymentAuthorized(!paymentAuthorized);
+                        }}
                     />
                     <small>
                         <Interpolated
@@ -161,7 +197,7 @@ export default function SubscriptionForm() {
                 <button
                     type="submit"
                     className="button cta primary"
-                    disabled={!paymentAuthorized}
+                    disabled={!paymentAuthorized || formStep !== 'initial'}
                 >
                     {gettext('Continue')}
                 </button>
@@ -169,6 +205,20 @@ export default function SubscriptionForm() {
                     {gettext('Payments are not tax deductible')}
                 </small>
             </form>
+        );
+    }
+
+    return (
+        <div className="subscriptions-form">
+            <header className="subscriptions-form-header">
+                <h2>
+                    <Interpolated
+                        id={gettext('$5 <perMontSub />')}
+                        perMontSub={<sub>{gettext('/mo')}</sub>}
+                    />
+                </h2>
+            </header>
+            {content}
         </div>
     );
 }
