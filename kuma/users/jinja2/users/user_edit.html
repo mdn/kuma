@@ -127,8 +127,8 @@
         </li>
         <li>
           {% if is_me %}
-            <a id="delete-user-button" class="negative"
-              href="{{ url('users.user_delete', username=request.user.username) }}">{{ _('Delete Account.') }}</a>
+            <a id="delete-user-button"
+              href="{{ url('users.user_delete', username=request.user.username) }}">{{ _('Delete your account') }}</a>
           {% endif %}
         </li>
       </ul>

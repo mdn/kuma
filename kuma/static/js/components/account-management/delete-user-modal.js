@@ -51,9 +51,9 @@
         });
 
         cancelButton.addEventListener('click', function(event) {
+            event.preventDefault();
             window.mdn.modalDialog.closeModal(
-                deleteUserModalContainer,
-                event.target
+                deleteUserModalContainer
             );
         });
     }
