@@ -25,7 +25,6 @@ from django.http import (
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
-from django.utils import timezone
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.utils.translation import gettext_lazy as _
@@ -70,8 +69,7 @@ from .models import User, UserBan, UserSubscription
 from .signup import SignupForm
 from .stripe_utils import (
     create_stripe_customer_and_subscription_for_user,
-    get_stripe_customer,
-    get_stripe_subscription_info,
+    retrieve_and_synchronize_subscription_info,
 )
 from .tasks import send_payment_received_email
 
@@ -483,62 +481,11 @@ def user_edit(request, username):
         "form": UserDeleteForm(username=username),
         "revisions": revisions,
         "attachment_revisions": attachment_revisions,
-        "subscription_info": _retrieve_and_synchronize_subscription_info(edit_user),
+        "subscription_info": retrieve_and_synchronize_subscription_info(edit_user),
         "has_stripe_error": has_stripe_error,
     }
 
     return render(request, "users/user_edit.html", context)
-
-
-def _retrieve_and_synchronize_subscription_info(user):
-    """For the given user, if it has as 'stripe_customer_id' retrieve the info
-    about the subscription if it's there. All packaged in a way that is
-    practical for the stripe_subscription.html template.
-
-    Also, whilst doing this check, we also verify that the UserSubscription record
-    for this user is right. Doing that check is a second-layer check in case
-    our webhooks have failed us.
-    """
-    subscription_info = None
-    stripe_customer = get_stripe_customer(user)
-    if stripe_customer:
-        stripe_subscription_info = get_stripe_subscription_info(stripe_customer)
-        if stripe_subscription_info:
-            source = stripe_customer.default_source
-            if source.object == "card":
-                card = source
-            elif source.object == "source":
-                card = source.card
-            else:
-                raise ValueError(
-                    f"unexpected stripe customer default_source of type {source.object!r}"
-                )
-
-            subscription_info = {
-                "next_payment_at": datetime.fromtimestamp(
-                    stripe_subscription_info.current_period_end
-                ),
-                "brand": card.brand,
-                "expires_at": f"{card.exp_month}/{card.exp_year}",
-                "last4": card.last4,
-                # Cards that are part of a "source" don't have a zip
-                "zip": card.get("address_zip", None),
-            }
-
-            # To perfect the synchronization, take this opportunity to make sure
-            # we have an up-to-date record of this.
-            UserSubscription.set_active(user, stripe_subscription_info.id)
-        else:
-            # The user has a stripe_customer_id but no active subscription
-            # on the current settings.STRIPE_PLAN_ID! Perhaps it has been cancelled
-            # and not updated in our own records.
-            for user_subscription in UserSubscription.objects.filter(
-                user=user, canceled__isnull=True
-            ):
-                user_subscription.canceled = timezone.now()
-                user_subscription.save()
-
-    return subscription_info
 
 
 @redirect_in_maintenance_mode
@@ -912,10 +859,7 @@ def stripe_hooks(request):
     if event.type == "invoice.payment_succeeded":
         payment_intent = event.data.object
         send_payment_received_email.delay(
-            payment_intent.customer,
-            request.LANGUAGE_CODE,
-            payment_intent.created,
-            payment_intent.invoice_pdf,
+            payment_intent, request.LANGUAGE_CODE,
         )
         track_event(
             CATEGORY_MONTHLY_PAYMENTS,

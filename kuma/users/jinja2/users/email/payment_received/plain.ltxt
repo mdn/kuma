@@ -1,10 +1,20 @@
 {% autoescape false -%}
-{{ _('Hello from MDN!') }}
+Thank you.
+
+You supported MDN with a ${{ dollar_amount }} monthly subscription.
+
+Amount paid: ${{ dollar_amount }}.00
+Payment method: {{ credit_card_brand }}
+
+Invoice number: {{ invoice_number }}
+Date of issue: {{ payment_date }}
+Date due: {{ payment_date }}
+
+Your next payment of ${{ dollar_amount }} (monthly) occurs on {{ next_payment_date }}.
+
+Cancel any time. To cancel your subscription, please go to the manage monthly subscriptions page ({{ manage_subscription_url }}).
+If you have questions, please read the FAQ ({{ faq_url }}) or you can also contact support ({{ contact_email }}).
 
 {{ invoice_pdf }}
 
-Cancel any time. To cancel your subscription, please go to the manage monthly subscriptions page: {{ manage_subscription_url }}.
-If you have questions, please read the FAQ ({{ faq_url }}) or you can also contact support: {{ contact_email }}
-
-{{ _('Thank you for using MDN!') }}
 {% endautoescape -%}

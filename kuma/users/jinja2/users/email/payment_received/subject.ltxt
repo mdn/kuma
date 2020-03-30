@@ -1,1 +1,1 @@
-MDN invoice for {{ payment_date }}
+Your MDN Monthly Subscription Receipt from {{ payment_date }}
