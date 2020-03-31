@@ -361,13 +361,8 @@ def create_subscription(request):
             status=status.HTTP_403_FORBIDDEN,
         )
 
-    try:
-        user = request.user
-        create_stripe_customer_and_subscription_for_user(
-            user, user.email, request.data.get("stripe_token", "")
-        )
-        return Response(None, status=status.HTTP_201_CREATED)
-
-    except stripe.error.StripeError:
-        raven_client.captureException()
-        return Response(None, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+    user = request.user
+    create_stripe_customer_and_subscription_for_user(
+        user, user.email, request.data.get("stripe_token", "")
+    )
+    return Response(None, status=status.HTTP_201_CREATED)
