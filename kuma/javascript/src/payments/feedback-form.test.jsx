@@ -78,10 +78,21 @@ describe('Payments Feedback Form', () => {
     });
 
     test('it shows error message when request fails', async () => {
-        const { input, button, feedback, errorId, queryByTestId } = setup();
+        const {
+            input,
+            button,
+            feedback,
+            errorId,
+            getByText,
+            queryByTestId
+        } = setup();
 
         // Modify fetch to return ok false
         window.fetch = jest.fn(() => Promise.resolve({ ok: false }));
+
+        window.mdn = {
+            contributionSupportEmail: 'mock-support@mozilla.com'
+        };
 
         fireEvent.change(input, {
             target: {
@@ -98,6 +109,13 @@ describe('Payments Feedback Form', () => {
         await waitFor(() => {
             // Check for error message
             expect(queryByTestId(errorId)).toBeTruthy();
+
+            // Check that our email address was rendered correctly
+            expect(
+                getByText(window.mdn.contributionSupportEmail).getAttribute(
+                    'href'
+                )
+            ).toEqual(`mailto:${window.mdn.contributionSupportEmail}`);
         });
     });
 

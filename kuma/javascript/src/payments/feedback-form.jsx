@@ -65,7 +65,7 @@ const FeedbackForm = (): React.Node => {
                                 rel="noopener noreferrer"
                                 href={`mailto:${window.mdn.contributionSupportEmail}`}
                             >
-                                {gettext('mdn-support@mozilla.com')}
+                                {gettext(window.mdn.contributionSupportEmail)}
                             </a>
                         }
                     />
