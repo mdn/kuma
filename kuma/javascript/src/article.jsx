@@ -118,10 +118,20 @@ export default function Article({ document }: DocumentProps) {
      * like that on the Wiki and click it, it will take you to the
      * form to *create* the page. Disable all of that here in the read-only
      * site.
+     *
+     * The reason we're only going ahead with this mutation for 'en-US' documents
+     * is that many non-en-US documents might have links to slugs that don't
+     * exist in *this* locale but will fall back on the en-US. For example,
+     * a link like this:
+     *
+     *     <a href="/pt-BR/docs/Foo/bar" class="new">Foo bar</a>
+     *
+     * ...might actually work. Even if there is no document with that locale +
+     * slug combination.
      */
     useEffect(() => {
         let rootElement = article.current;
-        if (rootElement) {
+        if (rootElement && document.locale === 'en-US') {
             for (let link of rootElement.querySelectorAll('a.new')) {
                 // Makes it not be clickable and no "pointer" cursor when
                 // hovering. Better than clicking on it and being
