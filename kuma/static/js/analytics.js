@@ -41,6 +41,10 @@
             if(ga && ga.create) {
                 // Send event to GA
                 ga('send', data);
+                // execute callback now
+                if(callback) {
+                    callback();
+                }
             }
             else if(ga && !ga.create) {
                 // GA blocked or not yet initialized
