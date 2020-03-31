@@ -539,4 +539,4 @@ def test_send_subscriptions_feedback_failure(client, settings):
     )
 
     assert response.status_code == 400
-    assert response.content.decode() == ("no feedback")
+    assert response.content.decode(response.charset) == "no feedback"
