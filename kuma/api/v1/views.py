@@ -32,12 +32,13 @@ from kuma.search.filters import (
 from kuma.search.search import SearchView
 from kuma.users.models import User, UserSubscription
 from kuma.users.templatetags.jinja_helpers import get_avatar_url
-from kuma.wiki.models import Document
 from kuma.core.ga_tracking import (
     ACTION_SUBSCRIPTION_FEEDBACK,
     CATEGORY_MONTHLY_PAYMENTS,
     track_event,
 )
+from kuma.wiki.models import Document
+
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 

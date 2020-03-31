@@ -7,8 +7,8 @@ from stripe.error import StripeError
 from waffle.decorators import waffle_flag
 
 from kuma.core.decorators import ensure_wiki_domain, login_required
-
 from kuma.users.models import UserSubscription
+
 from .utils import (
     cancel_stripe_customer_subscription,
     get_stripe_customer_data,
