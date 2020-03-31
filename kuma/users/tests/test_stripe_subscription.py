@@ -45,6 +45,7 @@ class StripeCustomer:
 class StripeSubscription:
     id: str
     current_period_end: int
+    next_payment_at: int
 
 
 def mock_get_stripe_customer(user):
@@ -57,7 +58,11 @@ def mock_get_stripe_customer(user):
 
 
 def mock_get_stripe_subscription_info(customer, id="sub_123456789"):
-    return StripeSubscription(id=id, current_period_end=time.time() + 10_000)
+    return StripeSubscription(
+        id=id,
+        current_period_end=time.time() + 10_000,
+        next_payment_at=time.time() + 30_000,
+    )
 
 
 @pytest.fixture
@@ -69,8 +74,8 @@ def test_user(db, django_user_model):
     )
 
 
-@patch("kuma.users.views.create_stripe_customer_and_subscription_for_user")
-@patch("kuma.users.views.get_stripe_customer")
+@patch("kuma.users.stripe_utils.create_stripe_customer_and_subscription_for_user")
+@patch("kuma.users.stripe_utils.get_stripe_customer")
 @override_flag("subscription", True)
 def test_create_stripe_subscription(mock1, mock2, test_user):
     customer = mock_get_stripe_customer(test_user)
@@ -90,8 +95,8 @@ def test_create_stripe_subscription(mock1, mock2, test_user):
     assert response["location"].endswith("#subscription")
 
 
-@patch("kuma.users.views.get_stripe_subscription_info")
-@patch("kuma.users.views.get_stripe_customer")
+@patch("kuma.users.stripe_utils.get_stripe_customer")
+@patch("kuma.users.stripe_utils.retrieve_and_synchronize_subscription_info")
 @override_flag("subscription", True)
 @pytest.mark.django_db
 def test_user_edit_with_subscription_info(mock1, mock2, test_user):
@@ -113,7 +118,7 @@ def test_user_edit_with_subscription_info(mock1, mock2, test_user):
 
 @patch("kuma.users.stripe_utils.create_stripe_customer_and_subscription_for_user")
 @patch(
-    "kuma.users.stripe_utils.get_stripe_subscription_info",
+    "kuma.users.stripe_utils.retrieve_and_synchronize_subscription_info",
     side_effect=mock_get_stripe_subscription_info,
 )
 @override_flag("subscription", False)
@@ -130,9 +135,10 @@ def test_create_stripe_subscription_fail(mock1, mock2, test_user):
 
 
 @patch("stripe.Event.construct_from")
+@patch("kuma.users.stripe_utils.retrieve_and_synchronize_subscription_info")
 @pytest.mark.django_db
-def test_stripe_payment_succeeded_sends_invoice_mail(mock1, client):
-    mock1.return_value = SimpleNamespace(
+def test_stripe_payment_succeeded_sends_invoice_mail(mock_retrieve, mock_construct_from, client):
+    mock_construct_from.return_value = SimpleNamespace(
         type="invoice.payment_succeeded",
         data=SimpleNamespace(
             object=SimpleNamespace(
@@ -141,6 +147,10 @@ def test_stripe_payment_succeeded_sends_invoice_mail(mock1, client):
                 invoice_pdf="https://developer.mozilla.org/mock-invoice-pdf-url",
             )
         ),
+    )
+    mock_retrieve.return_value = SimpleNamespace(
+        next_payment_at=1585326281,
+        brand="Master"
     )
 
     testuser = user(
@@ -156,8 +166,9 @@ def test_stripe_payment_succeeded_sends_invoice_mail(mock1, client):
     assert len(mail.outbox) == 1
     payment_email = mail.outbox[0]
     assert payment_email.to == [testuser.email]
+    assert "Invoice" in payment_email.subject
     assert "manage monthly subscriptions" in payment_email.body
-    assert "invoice" in payment_email.subject
+    assert "Master" in payment_email.body
 
 
 @patch("stripe.Event.construct_from")
