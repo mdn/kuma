@@ -3,8 +3,8 @@ import * as React from 'react';
 import { gettext, Interpolated } from '../l10n.js';
 import { getCookie } from '../utils.js';
 
-export const FEEDBACK_URL = '/payments/feedback';
-export const MIN_STRING_LENGTH = 10;
+export const FEEDBACK_URL = '/payments/feedback/';
+export const MIN_STRING_LENGTH = 5;
 
 const FeedbackForm = (): React.Node => {
     const [feedback, setFeedback] = React.useState<string>('');
@@ -20,7 +20,7 @@ const FeedbackForm = (): React.Node => {
         event.preventDefault();
         const trimmedFeedback = feedback.trim();
 
-        // Feedback should be greater than 10 characters
+        // Feedback should be greater than 5 characters
         if (trimmedFeedback.length < MIN_STRING_LENGTH) {
             setError(
                 `To ensure more constructive feedback, a minimum of ${MIN_STRING_LENGTH} characters is required.`
@@ -43,9 +43,7 @@ const FeedbackForm = (): React.Node => {
                 }
 
                 if (!res.ok) {
-                    throw new Error(
-                        'Request (POST) to /api/v1/payments/feedback failed'
-                    );
+                    throw new Error(`Request (POST) to ${FEEDBACK_URL} failed`);
                 }
                 return res;
             })
@@ -65,7 +63,7 @@ const FeedbackForm = (): React.Node => {
                             <a
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                href="mailto:mdn-support@mozilla.com"
+                                href={`mailto:${window.mdn.contributionSupportEmail}`}
                             >
                                 {gettext('mdn-support@mozilla.com')}
                             </a>
@@ -76,7 +74,7 @@ const FeedbackForm = (): React.Node => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form data-testid="feedback-form" onSubmit={handleSubmit}>
             <input
                 data-testid="feedback-input"
                 type="text"

@@ -110,7 +110,7 @@ exports[`Newsletter de-DE 1`] = `
       <span>
         Hide Newsletter Sign-up
       </span>
-      <svg mock />
+      <svg-mock />
     </button>
   </div>
 </section>
@@ -226,7 +226,7 @@ exports[`Newsletter en-US 1`] = `
       <span>
         Hide Newsletter Sign-up
       </span>
-      <svg mock />
+      <svg-mock />
     </button>
   </div>
 </section>

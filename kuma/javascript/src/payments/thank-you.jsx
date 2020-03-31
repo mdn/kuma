@@ -13,6 +13,7 @@ type PaymentsThankYouRouteParams = {
     locale: string
 };
 
+export const subheaderTitle = 'Thank you for becoming a monthly supporter!';
 export default function ThankYouPage() {
     const locale = getLocale();
 
@@ -20,15 +21,15 @@ export default function ThankYouPage() {
         <>
             <A11yNav />
             <Header />
-            <div className="subscriptions subheader-container">
-                <SubHeader title="Thank you for becoming a monthly supporter!" />
+            <div className="subscriptions subheader-container thank-you">
+                <SubHeader title={subheaderTitle} />
             </div>
             <main className="contributions-page thank-you" role="main">
                 <section className="section">
                     <header>
                         <h2>{gettext('Useful things')}</h2>
                     </header>
-                    <ul id="useful-things" className="clear">
+                    <ul data-testid="useful-things" className="clear">
                         <li>
                             <h3>
                                 {gettext('Cancel or manage your subscription')}
@@ -40,7 +41,7 @@ export default function ThankYouPage() {
                                     )}
                                     subscriptionLink={
                                         <a
-                                            href={`/${locale}/payments/recurring/management`}
+                                            href={`/${locale}/payments/recurring/management/`}
                                         >
                                             {gettext(
                                                 'manage monthly subscription page'
@@ -58,7 +59,7 @@ export default function ThankYouPage() {
                                         'Please read our <termsLink /> for more information.'
                                     )}
                                     termsLink={
-                                        <a href={`/${locale}/payments/terms`}>
+                                        <a href={`/${locale}/payments/terms/`}>
                                             {gettext('subscription terms')}
                                         </a>
                                     }

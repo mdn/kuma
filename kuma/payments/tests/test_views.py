@@ -8,7 +8,7 @@ from django.conf import settings
 from waffle.testutils import override_flag
 
 from kuma.core.ga_tracking import (
-    ACTION_FEEDBACK,
+    ACTION_SUBSCRIPTION_FEEDBACK,
     CATEGORY_MONTHLY_PAYMENTS,
 )
 from kuma.core.tests import assert_no_cache_header, assert_redirect_to_wiki
@@ -49,8 +49,19 @@ def test_send_feedback(track_event_mock_signals, client, settings):
     assert response.status_code == 204
 
     track_event_mock_signals.assert_called_with(
-        CATEGORY_MONTHLY_PAYMENTS, ACTION_FEEDBACK, "my feedback",
+        CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_FEEDBACK, "my feedback",
     )
+
+
+@pytest.mark.django_db
+@override_flag("subscription", True)
+def test_send_feedback_failure(client, settings):
+    response = client.post(
+        reverse("send_feedback"), content_type="application/json", data={},
+    )
+
+    assert response.status_code == 400
+    assert response.content.decode() == ("no feedback")
 
 
 @pytest.mark.django_db

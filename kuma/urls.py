@@ -148,7 +148,7 @@ urlpatterns += [
     ),
     # We use our own views for setting language in cookies. But to just align with django, set it like this.
     re_path(r"^i18n/setlang/", core_views.set_language, name="set-language-cookie"),
-    re_path(r"^payments/feedback/?$", send_feedback, name="send_feedback"),
+    re_path(r"^payments/feedback/$", send_feedback, name="send_feedback"),
 ]
 
 if settings.SERVE_LEGACY and settings.LEGACY_ROOT:

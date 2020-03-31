@@ -173,17 +173,20 @@
                 padding-left: 80px;
                 padding-right: 80px;
             }
+
             input {
                 height: 40px;
                 border-width: 1px;
                 border-radius: $payment-faq-border-radius;
             }
+
             button {
                 color: $link-color;
                 border: 2px solid $link-color;
                 border-radius: $payment-faq-border-radius;
                 height: 40px;
             }
+
             .form-footer {
                 margin-top: 20px;
                 display: flex;

@@ -2,7 +2,7 @@ import json
 import logging
 
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_POST
@@ -11,7 +11,7 @@ from waffle.decorators import waffle_flag
 
 from kuma.core.decorators import ensure_wiki_domain, login_required
 from kuma.core.ga_tracking import (
-    ACTION_FEEDBACK,
+    ACTION_SUBSCRIPTION_FEEDBACK,
     CATEGORY_MONTHLY_PAYMENTS,
     track_event,
 )
@@ -46,7 +46,14 @@ def send_feedback(request):
     from users with DNT or where GA is disabled.
     """
     data = json.loads(request.body)
-    track_event(CATEGORY_MONTHLY_PAYMENTS, ACTION_FEEDBACK, data["feedback"])
+    feedback = (data.get("feedback") or "").strip()
+
+    if not feedback:
+        return HttpResponseBadRequest("no feedback")
+
+    track_event(
+        CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_FEEDBACK, data["feedback"]
+    )
     return HttpResponse(status=204)
 
 
