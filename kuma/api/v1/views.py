@@ -21,6 +21,11 @@ from waffle.decorators import waffle_flag
 from waffle.models import Flag, Sample, Switch
 
 from kuma.api.v1.serializers import BCSignalSerializer
+from kuma.core.ga_tracking import (
+    ACTION_SUBSCRIPTION_FEEDBACK,
+    CATEGORY_MONTHLY_PAYMENTS,
+    track_event,
+)
 from kuma.core.urlresolvers import reverse
 from kuma.search.filters import (
     HighlightFilterBackend,
@@ -32,13 +37,7 @@ from kuma.search.filters import (
 from kuma.search.search import SearchView
 from kuma.users.models import User, UserSubscription
 from kuma.users.templatetags.jinja_helpers import get_avatar_url
-from kuma.core.ga_tracking import (
-    ACTION_SUBSCRIPTION_FEEDBACK,
-    CATEGORY_MONTHLY_PAYMENTS,
-    track_event,
-)
 from kuma.wiki.models import Document
-
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
