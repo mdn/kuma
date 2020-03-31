@@ -156,6 +156,7 @@ class SocialTestMixin(object):
         token_exc=None,
         profile_exc=None,
         email_exc=None,
+        headers=None,
     ):
         """
         Mock a login to GitHub and return the response.
@@ -175,9 +176,11 @@ class SocialTestMixin(object):
         # Ensure GitHub is setup as an auth provider
         self.ensure_github_app()
 
+        headers = headers or {}
+
         # Start the login process
         # Store state in the session, and redirect the user to GitHub
-        login_response = self.client.get(login_url, {"process": process})
+        login_response = self.client.get(login_url, {"process": process}, **headers)
         assert login_response.status_code == 302
         location = urlparse(login_response["location"])
         query = parse_qs(location.query)
@@ -244,6 +247,7 @@ class SocialTestMixin(object):
         token_exc=None,
         profile_exc=None,
         email_exc=None,
+        headers=None,
     ):
         """
         Mock a login to Google and return the response.
@@ -261,9 +265,11 @@ class SocialTestMixin(object):
         callback_url = reverse("google_callback")
         self.ensure_google_app()
 
+        headers = headers or {}
+
         # Start the login process
         # Store state in the session, and redirect the user to Google
-        login_response = self.client.get(login_url, {"process": process})
+        login_response = self.client.get(login_url, {"process": process}, **headers)
         assert login_response.status_code == 302
         location = urlparse(login_response["location"])
         query = parse_qs(location.query)
