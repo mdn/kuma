@@ -30,6 +30,10 @@
         var newsletterEmailInput = doc.getElementById('newsletterEmailInput');
         var newsletterPrivacy = doc.getElementById('newsletterPrivacy');
 
+        // if JS is enabled client-side, hide the privacy checkbox until
+        // the email input field receive focus
+        newsletterPrivacy.classList.add('hidden');
+
         // handle errors
         var errorArray = [];
         var newsletterErrors = doc.getElementById('newsletterErrors');
