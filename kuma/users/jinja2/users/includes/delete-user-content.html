@@ -21,8 +21,8 @@
 
         <p>{{ _('Are you sure you want to continue?') }}</p>
 
-        <button type="submit" id="delete-user-confirm" {% if revisions.exists() %}class="disabled" disabled{% else %}class="negative"{% endif %}>{{ _('Yes, Delete my Account') }}</button>
-        <a id="cancel-button" href="{{ url('users.user_edit', username=user.username) }}" data-first-focusable="true">{{ _('Cancel') }}</a>
+        <button type="submit" id="delete-user-confirm" {% if revisions.exists() %}class="disabled" disabled{% else %}class="negative"{% endif %} data-first-focusable="true">{{ _('Yes, Delete my Account') }}</button>
+        <a id="cancel-button" href="{{ url('users.user_edit', username=user.username) }}" >{{ _('Cancel') }}</a>
     </form>
     {% endif %}
 </div>
