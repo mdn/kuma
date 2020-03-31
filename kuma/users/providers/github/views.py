@@ -44,10 +44,8 @@ class KumaOAuth2LoginView(OAuth2LoginView):
         # For now, to make a simple distinction between uses of `curl` and normal
         # browser clicks we check that a HTTP_REFERER is actually set and comes
         # from the same host as the request.
+        # Note! This is the same in kuma.users.providers.google.KumaOAuth2LoginView
         # See https://github.com/mdn/kuma/issues/6759
-        print("HTTP_REFERER", repr(request.META.get("HTTP_REFERER")))
-        print("HTTP_HOST", repr(request.META.get("HTTP_HOST")))
-        print("get_host", request.get_host())
         http_referer = request.META.get("HTTP_REFERER")
         if http_referer:
             if urlparse(http_referer).netloc == request.get_host():
