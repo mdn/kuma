@@ -1,7 +1,6 @@
 from unittest.mock import patch
 
 import pytest
-import json
 
 from django.conf import settings
 from waffle.models import Flag, Sample, Switch
@@ -12,8 +11,9 @@ from kuma.core.urlresolvers import reverse
 from kuma.search.tests import ElasticTestCase
 from kuma.users.models import UserSubscription
 from kuma.wiki.models import BCSignal
-from kuma.wiki.templatetags.jinja_helpers import absolutify
 from waffle.testutils import override_flag
+
+from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 from kuma.core.ga_tracking import (
     ACTION_SUBSCRIPTION_FEEDBACK,

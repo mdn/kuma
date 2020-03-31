@@ -3,10 +3,10 @@ import json
 from django.conf import settings
 from django.http import (
     Http404,
-    HttpResponsePermanentRedirect,
-    JsonResponse,
     HttpResponse,
     HttpResponseBadRequest,
+    HttpResponsePermanentRedirect,
+    JsonResponse,
 )
 from django.shortcuts import get_object_or_404
 from django.utils.translation import activate, gettext as _
@@ -17,8 +17,8 @@ from rest_framework import serializers, status
 from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
-from waffle.models import Flag, Sample, Switch
 from waffle.decorators import waffle_flag
+from waffle.models import Flag, Sample, Switch
 
 from kuma.api.v1.serializers import BCSignalSerializer
 from kuma.core.urlresolvers import reverse
@@ -33,13 +33,12 @@ from kuma.search.search import SearchView
 from kuma.users.models import User, UserSubscription
 from kuma.users.templatetags.jinja_helpers import get_avatar_url
 from kuma.wiki.models import Document
-from kuma.wiki.templatetags.jinja_helpers import absolutify
-
 from kuma.core.ga_tracking import (
     ACTION_SUBSCRIPTION_FEEDBACK,
     CATEGORY_MONTHLY_PAYMENTS,
     track_event,
 )
+from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
 @never_cache

@@ -1,16 +1,11 @@
 from dataclasses import dataclass
 from unittest import mock
-from unittest.mock import patch
 
 import pytest
 import stripe
 from django.conf import settings
 from waffle.testutils import override_flag
 
-from kuma.core.ga_tracking import (
-    ACTION_SUBSCRIPTION_FEEDBACK,
-    CATEGORY_MONTHLY_PAYMENTS,
-)
 from kuma.core.tests import assert_no_cache_header, assert_redirect_to_wiki
 from kuma.core.urlresolvers import reverse
 
