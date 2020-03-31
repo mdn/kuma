@@ -10,12 +10,14 @@ const setup = () => {
     const utils = render(<FeedbackForm />);
     const input = utils.getByTestId('feedback-input');
     const button = utils.getByTestId('feedback-button');
+    const formId = 'feedback-form';
     const successId = 'success-msg';
     const errorId = 'error-msg';
     const feedback = 'Here is my feedback. Thank you for listening.';
     return {
         input,
         button,
+        formId,
         successId,
         errorId,
         feedback,
@@ -49,7 +51,14 @@ describe('Payments Feedback Form', () => {
     });
 
     test('it shows a success message, clears and disables input after submission', async () => {
-        const { input, button, feedback, successId, queryByTestId } = setup();
+        const {
+            input,
+            button,
+            feedback,
+            formId,
+            successId,
+            queryByTestId
+        } = setup();
 
         window.fetch = jest.fn(() => Promise.resolve({ ok: true }));
 
@@ -66,14 +75,11 @@ describe('Payments Feedback Form', () => {
         fireEvent.click(button);
 
         await waitFor(() => {
-            // Ensure that form is cleared
-            expect(input.value).toBe('');
-
-            // Ensure that the input is disabled
-            expect(input.disabled).toBeTruthy();
-
             // Check for success message
             expect(queryByTestId(successId)).toBeTruthy();
+
+            // Ensure that the form is gone
+            expect(queryByTestId(formId)).toBeNull();
         });
     });
 

@@ -5,7 +5,7 @@ import ThankYouPage, { subheaderTitle } from './thank-you.jsx';
 
 describe('Payments Thank You page', () => {
     test('it renders', () => {
-        // Ensure that header, footer, and feedback form renders
+        // Ensure that subheader, useful things, and feedback form renders
         const { queryByText, queryByTestId } = render(<ThankYouPage />);
 
         // Subheader

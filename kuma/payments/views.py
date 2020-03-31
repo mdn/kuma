@@ -2,19 +2,14 @@ import json
 import logging
 
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
-from django.views.decorators.http import require_POST
 from stripe.error import StripeError
 from waffle.decorators import waffle_flag
 
 from kuma.core.decorators import ensure_wiki_domain, login_required
-from kuma.core.ga_tracking import (
-    ACTION_SUBSCRIPTION_FEEDBACK,
-    CATEGORY_MONTHLY_PAYMENTS,
-    track_event,
-)
+
 from kuma.users.models import UserSubscription
 
 from .utils import (
@@ -34,27 +29,6 @@ def index(request):
 @never_cache
 def thank_you(request):
     return render(request, "payments/thank-you.html")
-
-
-@waffle_flag("subscription")
-@never_cache
-@require_POST
-def send_feedback(request):
-    """
-    Sends feedback to Google Analytics. This is done on the
-    backend to ensure that all feedback is collected, even
-    from users with DNT or where GA is disabled.
-    """
-    data = json.loads(request.body)
-    feedback = (data.get("feedback") or "").strip()
-
-    if not feedback:
-        return HttpResponseBadRequest("no feedback")
-
-    track_event(
-        CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_FEEDBACK, data["feedback"]
-    )
-    return HttpResponse(status=204)
 
 
 @waffle_flag("subscription")

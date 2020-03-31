@@ -3,7 +3,7 @@ import * as React from 'react';
 import { gettext, Interpolated } from '../l10n.js';
 import { getCookie } from '../utils.js';
 
-export const FEEDBACK_URL = '/payments/feedback/';
+export const FEEDBACK_URL = '/api/v1/subscriptions/feedback/';
 export const MIN_STRING_LENGTH = 5;
 
 const FeedbackForm = (): React.Node => {
@@ -73,6 +73,14 @@ const FeedbackForm = (): React.Node => {
             });
     };
 
+    if (status === 'success') {
+        return (
+            <strong className="success-msg" data-testid="success-msg">
+                {gettext('Thank you for submitting your feedback!')}
+            </strong>
+        );
+    }
+
     return (
         <form data-testid="feedback-form" onSubmit={handleSubmit}>
             <input
@@ -83,16 +91,9 @@ const FeedbackForm = (): React.Node => {
                 value={feedback}
                 onChange={handleChange}
                 required
-                disabled={status === 'success'}
             />
             <div className="form-footer">
                 {error && <span data-testid="error-msg">{error}</span>}
-                {status === 'success' && (
-                    <strong data-testid="success-msg">
-                        {gettext('Thank you for submitting your feedback!')}
-                    </strong>
-                )}
-
                 <button data-testid="feedback-button" type="submit">
                     {gettext('Send')}
                 </button>

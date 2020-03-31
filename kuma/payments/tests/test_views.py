@@ -34,36 +34,6 @@ def test_payments_index(client):
     assert response.status_code == 200
 
 
-@patch("kuma.payments.views.track_event")
-@pytest.mark.django_db
-@override_flag("subscription", True)
-def test_send_feedback(track_event_mock_signals, client, settings):
-    settings.GOOGLE_ANALYTICS_ACCOUNT = "UA-XXXX-1"
-    settings.GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS = True
-
-    response = client.post(
-        reverse("send_feedback"),
-        content_type="application/json",
-        data={"feedback": "my feedback"},
-    )
-    assert response.status_code == 204
-
-    track_event_mock_signals.assert_called_with(
-        CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_FEEDBACK, "my feedback",
-    )
-
-
-@pytest.mark.django_db
-@override_flag("subscription", True)
-def test_send_feedback_failure(client, settings):
-    response = client.post(
-        reverse("send_feedback"), content_type="application/json", data={},
-    )
-
-    assert response.status_code == 400
-    assert response.content.decode() == ("no feedback")
-
-
 @pytest.mark.django_db
 @override_flag("subscription", True)
 @mock.patch("kuma.payments.views.get_stripe_customer_data", return_value=True)

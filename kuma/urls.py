@@ -15,7 +15,6 @@ from kuma.dashboards.urls import lang_urlpatterns as dashboards_lang_urlpatterns
 from kuma.dashboards.views import index as dashboards_index
 from kuma.landing.urls import lang_urlpatterns as landing_lang_urlpatterns
 from kuma.payments.urls import lang_urlpatterns as payments_lang_urlpatterns
-from kuma.payments.views import send_feedback
 from kuma.search.urls import (
     lang_base_urlpatterns as search_lang_base_urlpatterns,
     lang_urlpatterns as search_lang_urlpatterns,
@@ -148,7 +147,6 @@ urlpatterns += [
     ),
     # We use our own views for setting language in cookies. But to just align with django, set it like this.
     re_path(r"^i18n/setlang/", core_views.set_language, name="set-language-cookie"),
-    re_path(r"^payments/feedback/$", send_feedback, name="send_feedback"),
 ]
 
 if settings.SERVE_LEGACY and settings.LEGACY_ROOT:
