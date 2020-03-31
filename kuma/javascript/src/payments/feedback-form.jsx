@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { gettext, Interpolated } from '../l10n.js';
+import { gettext, interpolate, Interpolated } from '../l10n.js';
 import { getCookie } from '../utils.js';
 
 export const FEEDBACK_URL = '/api/v1/subscriptions/feedback/';
@@ -23,7 +23,10 @@ const FeedbackForm = (): React.Node => {
         // Feedback should be greater than 5 characters
         if (trimmedFeedback.length < MIN_STRING_LENGTH) {
             setError(
-                `To ensure more constructive feedback, a minimum of ${MIN_STRING_LENGTH} characters is required.`
+                interpolate(
+                    'To ensure more constructive feedback, a minimum of %(MIN_STRING_LENGTH)s characters is required.',
+                    { MIN_STRING_LENGTH }
+                )
             );
             return false;
         }
