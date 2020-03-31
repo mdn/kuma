@@ -22,7 +22,7 @@ function useScriptLoading(url) {
             script = document.createElement('script');
             setLoadingPromise(
                 new Promise((resolve, reject) => {
-                    script.onload = () => resolve;
+                    script.onload = resolve;
                     script.onerror = reject;
                 })
             );
@@ -110,20 +110,23 @@ export default function SubscriptionForm() {
                 'X-CSRFToken': getCookie('csrftoken'),
                 'Content-Type': 'application/json'
             }
-        })
-            .then(() => {
+        }).then(response => {
+            if (response.ok) {
                 window.location = `/${locale}/payments/thank-you/`;
-            })
-            .catch(e => {
-                console.error('error while creating subscription', e);
+            } else {
+                console.error(
+                    'error while creating subscription',
+                    response.statusText
+                );
                 setFormStep('server_error');
-            });
+            }
+        });
     }
 
     let content;
     if (formStep === 'server_error') {
         content = (
-            <>
+            <section>
                 <h2>{gettext('Sorry!')}</h2>
                 <p>
                     {gettext(
@@ -137,11 +140,11 @@ export default function SubscriptionForm() {
                 >
                     {gettext('Try again')}
                 </button>
-            </>
+            </section>
         );
     } else if (formStep === 'stripe_error') {
         content = (
-            <>
+            <section>
                 <h2>{gettext('Sorry!')}</h2>
                 <p>
                     {gettext(
@@ -155,12 +158,11 @@ export default function SubscriptionForm() {
                 >
                     {gettext('Try again')}
                 </button>
-            </>
+            </section>
         );
     } else {
         content = (
             <form
-                name="subscription-form"
                 method="post"
                 onSubmit={event => {
                     event.preventDefault();
