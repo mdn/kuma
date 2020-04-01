@@ -5,7 +5,8 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.tokens import default_token_generator
 from django.core import validators
-from django.db import models, transaction
+from django.core.cache import cache
+from django.db import models
 from django.db.models import Max
 from django.dispatch import receiver
 from django.utils import timezone
@@ -197,18 +198,19 @@ class User(AbstractUser):
         link = reverse("users.recover", kwargs={"token": token, "uidb64": uidb64})
         return link
 
-    @transaction.atomic()
     def set_next_subscriber_number_and_save(self):
         assert not self.subscriber_number, "already set"
-        user = User.objects.select_for_update().get(id=self.id)
-        higest_number = (
-            User.objects.filter(subscriber_number__isnull=True).aggregate(
-                number=Max("subscriber_number")
-            )["number"]
-            or 0
-        )
-        user.subscriber_number = higest_number + 1
-        user.save()
+        lock_key = f"set_next_subscriber_number_and_save"
+        # By locking "globally", we get to be certain that our query to get
+        # the current highest `subscriber_number`, gets done alone.
+        with cache.lock(lock_key):
+            highest_number = (
+                User.objects.filter(subscriber_number__isnull=True).aggregate(
+                    number=Max("subscriber_number")
+                )["number"]
+                or 0
+            )
+            User.objects.filter(id=self.id).update(subscriber_number=highest_number + 1)
 
 
 class UserSubscription(models.Model):
