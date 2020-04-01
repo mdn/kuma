@@ -22,7 +22,8 @@ export default function PaymentsLandingPage() {
     const urls = {
         annualReport:
             'https://www.mozilla.org/en-US/foundation/annualreport/2018/',
-        email: `mailto:${window.mdn.contributionSupportEmail}?Subject=Manage%20monthly%20subscription`,
+        // email: `mailto:${window.mdn.contributionSupportEmail}?Subject=Manage%20monthly%20subscription`,
+        email: `mailto:HOWDIDWEMISS THIS!!!?Subject=Manage%20monthly%20subscription`,
         moco: 'https://www.mozilla.org/foundation/moco/',
         mozillaFoundation: 'https://www.mozilla.org/foundation/',
         managePayments: `/${locale}/payments/recurring/management/`,
@@ -34,6 +35,8 @@ export default function PaymentsLandingPage() {
     const showSubscriptionForm =
         userData && userData.waffle.flags.subscription_banner;
 
+    let nextSubscriberNumber = 1000;
+
     return (
         <>
             <A11yNav />
@@ -43,7 +46,7 @@ export default function PaymentsLandingPage() {
                     title="Become a monthly supporter"
                     subtitle={interpolate(
                         gettext('You will be MDN member number: %s'),
-                        [window.mdn.nextSubscriberNumber]
+                        [nextSubscriberNumber.toLocaleString()]
                     )}
                     description="Support MDN with a $5 monthly subscription and get back more of the knowledge and tools you rely on for when your work has to work."
                     columnWidth="7"

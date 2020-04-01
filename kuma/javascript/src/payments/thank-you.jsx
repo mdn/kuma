@@ -31,7 +31,7 @@ export default function ThankYouPage() {
                         userData &&
                         !!userData.subscriberNumber &&
                         interpolate(gettext('You are MDN member number: %s'), [
-                            userData.subscriberNumber,
+                            userData.subscriberNumber.toLocaleString(),
                         ])
                     }
                 />
