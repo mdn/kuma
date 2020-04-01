@@ -27,7 +27,7 @@ export default function ThankYouPage() {
             <div className="subscriptions subheader-container thank-you">
                 <SubHeader
                     title={subheaderTitle}
-                    description={
+                    subtitle={
                         userData &&
                         !!userData.subscriberNumber &&
                         interpolate(gettext('You are MDN member number: %s'), [

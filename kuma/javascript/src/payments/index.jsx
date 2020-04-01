@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
 
-import { getLocale, gettext, Interpolated } from '../l10n.js';
+import { getLocale, gettext, interpolate, Interpolated } from '../l10n.js';
 import A11yNav from '../a11y/a11y-nav.jsx';
 import Header from '../header/header.jsx';
 import Footer from '../footer.jsx';
@@ -41,6 +41,10 @@ export default function PaymentsLandingPage() {
             <div className="subscriptions subheader-container has-form">
                 <SubHeader
                     title="Become a monthly supporter"
+                    subtitle={interpolate(
+                        gettext('You will be MDN member number: %s'),
+                        [window.mdn.nextSubscriberNumber]
+                    )}
                     description="Support MDN with a $5 monthly subscription and get back more of the knowledge and tools you rely on for when your work has to work."
                     columnWidth="7"
                 />
