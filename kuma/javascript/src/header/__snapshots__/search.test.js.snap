@@ -8,7 +8,7 @@ exports[`Search snapshot 1`] = `
   method="get"
   role="search"
 >
-  <svg mock
+  <svg-mock
     className="search-icon"
   />
   <label

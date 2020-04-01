@@ -9,7 +9,7 @@ exports[`Header snapshot 1`] = `
     className="logo"
     href="/en-US/"
   >
-    <svg mock />
+    <svg-mock />
   </a>
   <nav
     className="main-nav"
@@ -376,7 +376,7 @@ exports[`Header snapshot 1`] = `
     method="get"
     role="search"
   >
-    <svg mock
+    <svg-mock
       className="search-icon"
     />
     <label
