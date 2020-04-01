@@ -4,7 +4,7 @@ from celery import task
 from constance import config
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.utils import formats, translation
+from django.utils import translation
 from django.utils.translation import gettext_lazy as _
 
 from kuma.core.decorators import skip_in_maintenance_mode

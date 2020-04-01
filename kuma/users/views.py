@@ -1,6 +1,6 @@
-from datetime import datetime, timedelta
 import json
 import os
+from datetime import datetime, timedelta
 from urllib.parse import urlparse
 
 import requests
@@ -28,7 +28,7 @@ from django.http import (
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
-from django.utils import formats, timezone, translation
+from django.utils import timezone, translation
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.utils.translation import gettext_lazy as _
