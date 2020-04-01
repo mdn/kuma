@@ -44,7 +44,7 @@ export default function Newsletter() {
     const newsletterFormat = 'H';
 
     const [showNewsletter, setShowNewsletter] = useState(true);
-    const [showPrivacyCheckbox, setShowPrivacyCheckbox] = useState(false);
+    const [showPrivacyCheckbox, setShowPrivacyCheckbox] = useState(true);
     const [errors, setError] = useState([]);
     const [
         showSuccessfulSubscription,
@@ -145,6 +145,9 @@ export default function Newsletter() {
         if (disableNewsletter) {
             setShowNewsletter(false);
         }
+        // if JS is enabled client-side, hide the privacy checkbox until
+        // the email input field receive focus
+        setShowPrivacyCheckbox(false);
     }, []);
 
     if (!showNewsletter) {
