@@ -10,7 +10,7 @@ import Route from '../route.js';
 import FeedbackForm from './feedback-form.jsx';
 
 type PaymentsThankYouRouteParams = {
-    locale: string
+    locale: string,
 };
 
 export const subheaderTitle = 'Thank you for becoming a monthly supporter!';
@@ -123,7 +123,7 @@ export class PaymentsThankYouRoute extends Route<
         const thankYouPath = `/${this.locale}/payments/thank-you`;
         if (currentPath.startsWith(thankYouPath)) {
             return {
-                locale: this.locale
+                locale: this.locale,
             };
         }
         return null;

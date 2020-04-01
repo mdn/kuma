@@ -44,8 +44,9 @@ export default function Login(): React.Node {
         // URL doesn't work.
         let label = (
             <img
-                srcSet={`${userData.avatarUrl ||
-                    ''} 200w, ${userData.avatarUrl || ''} 50w`}
+                srcSet={`${userData.avatarUrl || ''} 200w, ${
+                    userData.avatarUrl || ''
+                } 50w`}
                 src={'/static/img/avatar.png'}
                 className="avatar"
                 alt={userData.username}

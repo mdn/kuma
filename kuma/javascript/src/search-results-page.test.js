@@ -14,14 +14,14 @@ const fakeResults = {
             slug: 'slug1',
             title: 'title1',
             locale: 'en-US',
-            excerpt: 'Test <mark>result</mark> Excerpt <mark>2</mark>'
+            excerpt: 'Test <mark>result</mark> Excerpt <mark>2</mark>',
         },
         {
             slug: 'slug2',
             title: 'title2',
             locale: 'en-US',
-            excerpt: 'empty'
-        }
+            excerpt: 'empty',
+        },
     ],
     start: 0,
     end: 10,
@@ -31,7 +31,7 @@ const fakeResults = {
     page: 1,
     pages: 0,
     previous: null,
-    query: 'q'
+    query: 'q',
 };
 
 const fakeEmptyResults = {
@@ -45,17 +45,17 @@ const fakeEmptyResults = {
     page: 0,
     pages: 0,
     previous: null,
-    query: 'empty'
+    query: 'empty',
 };
 
 const fakeSearchResults: SearchResultsResponse = {
     results: fakeResults,
-    error: null
+    error: null,
 };
 
 const fakeEmptySearchResults: SearchResultsResponse = {
     results: fakeEmptyResults,
-    error: null
+    error: null,
 };
 
 describe('SearchResultsPage component', () => {
@@ -159,24 +159,24 @@ describe('SearchRoute', () => {
         expect(route.match('/en-US/search?q=qq')).toEqual({
             locale: 'en-US',
             page: 1,
-            query: 'qq'
+            query: 'qq',
         });
         expect(route.match('/en-US/search?foo=bar&q=qq')).toEqual({
             locale: 'en-US',
             page: 1,
-            query: 'qq'
+            query: 'qq',
         });
         expect(route.match('http://mdn.dev/en-US/search?q=qq')).toEqual({
             locale: 'en-US',
             page: 1,
-            query: 'qq'
+            query: 'qq',
         });
         expect(
             route.match('https://mdn.dev/en-US/search?foo=bar&q=qq')
         ).toEqual({
             locale: 'en-US',
             page: 1,
-            query: 'qq'
+            query: 'qq',
         });
     });
 
@@ -190,17 +190,17 @@ describe('SearchRoute', () => {
         expect(route.match('/en-US/searching?q=qq')).toBe(null);
     });
 
-    test('fetch() method invokes the search api', done => {
+    test('fetch() method invokes the search api', (done) => {
         global.fetch = jest.fn(() => {
             return Promise.resolve({
                 ok: true,
-                json: () => Promise.resolve(fakeResults)
+                json: () => Promise.resolve(fakeResults),
             });
         });
 
         route
             .fetch({ locale: 'en-US', query: 'foo bar#', page: null })
-            .then(results => {
+            .then((results) => {
                 expect(results).toEqual(fakeSearchResults);
                 expect(global.fetch.mock.calls[0][0]).toBe(
                     '/api/v1/search/en-US?q=foo%20bar%23&locale=en-US'

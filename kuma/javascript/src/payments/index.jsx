@@ -13,7 +13,7 @@ import ListItem from './list-item.jsx';
 import UserProvider from '../user-provider.jsx';
 
 type PaymentsIndexRouteParams = {
-    locale: string
+    locale: string,
 };
 
 export default function PaymentsLandingPage() {
@@ -28,7 +28,7 @@ export default function PaymentsLandingPage() {
         managePayments: `/${locale}/payments/recurring/management/`,
         stripe: 'https://stripe.com/',
         taxDeductible: 'https://donate.mozilla.org/faq#item_tax_a',
-        terms: `/${locale}/payments/terms/`
+        terms: `/${locale}/payments/terms/`,
     };
 
     const showSubscriptionForm =
@@ -359,7 +359,7 @@ export class PaymentsIndexRoute extends Route<PaymentsIndexRouteParams, null> {
 
         if (currentPath.startsWith(paymentsPath)) {
             return {
-                locale: this.locale
+                locale: this.locale,
             };
         }
         return null;

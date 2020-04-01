@@ -22,7 +22,7 @@ export default function A11yNav() {
             hitType: 'event',
             eventCategory: 'Access Links',
             eventAction: action,
-            eventLabel: label
+            eventLabel: label,
         });
     }
 

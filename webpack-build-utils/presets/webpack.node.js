@@ -7,6 +7,6 @@ module.exports = () => ({
         filename: 'ssr.js',
         path: path.resolve(__dirname, '../../kuma/javascript/dist/'),
         libraryExport: 'default',
-        libraryTarget: 'commonjs2'
-    }
+        libraryTarget: 'commonjs2',
+    },
 });
