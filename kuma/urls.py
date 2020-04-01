@@ -14,7 +14,6 @@ from kuma.core.urlresolvers import i18n_patterns
 from kuma.dashboards.urls import lang_urlpatterns as dashboards_lang_urlpatterns
 from kuma.dashboards.views import index as dashboards_index
 from kuma.landing.urls import lang_urlpatterns as landing_lang_urlpatterns
-from kuma.payments import views as payment_views
 from kuma.payments.urls import lang_urlpatterns as payments_lang_urlpatterns
 from kuma.search.urls import (
     lang_base_urlpatterns as search_lang_base_urlpatterns,
@@ -95,12 +94,9 @@ urlpatterns += i18n_patterns(
 )
 urlpatterns += [re_path("users/", include("kuma.users.urls"))]
 urlpatterns += i18n_patterns(
-    re_path(r"^payments/$", payment_views.contribute, name="payments"),
-)
-urlpatterns += i18n_patterns(
     re_path(
         r"^contribute/$",
-        ensure_wiki_domain(RedirectView.as_view(url=reverse_lazy("payments"))),
+        RedirectView.as_view(url=reverse_lazy("payments_index")),
         name="redirect-to-payments",
     ),
 )

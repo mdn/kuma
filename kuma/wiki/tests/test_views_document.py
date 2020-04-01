@@ -902,3 +902,24 @@ def test_wiki_only_query_params(
     assert response.status_code == status
     if status == 301:
         assert_redirect_to_wiki(response, url)
+
+
+def test_deleted_parent_redirect_url(client, root_doc):
+    """A non-en-US document, gets deleted and you try to view. Instead of a 404,
+    it at least redirects to the parent's URL."""
+    doc = Document.objects.create(
+        locale="sv-SE",
+        slug="Rot",
+        title="Rot Dokument",
+        rendered_html="<p>...</p>",
+        parent=root_doc,
+    )
+
+    response = client.get(doc.get_absolute_url())
+    assert response.status_code == 200
+
+    doc.delete()
+
+    response = client.get(doc.get_absolute_url())
+    assert response.status_code == 302
+    assert response["location"] == root_doc.get_absolute_url()

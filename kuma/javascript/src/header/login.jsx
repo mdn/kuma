@@ -5,10 +5,8 @@ import { useContext } from 'react';
 import Dropdown from './dropdown.jsx';
 import { getLocale, gettext } from '../l10n.js';
 import UserProvider from '../user-provider.jsx';
-import GAProvider from '../ga-provider.jsx';
 
 export default function Login(): React.Node {
-    const ga = useContext(GAProvider.context);
     const locale = getLocale();
     const userData = useContext(UserProvider.context);
 
@@ -17,29 +15,27 @@ export default function Login(): React.Node {
         return null;
     }
 
-    // In order to render links properly, we need to know our own
-    // URL and the URL of the editable wiki site. We get these from
-    // window.location and from window.mdn. Neither of those are
-    // available during server side rendering, but this code will
-    // never run during server side rendering because we won't have
-    // user data then.
+    // In order to render links properly, we need to know our own URL.
+    // We get this from window.location. This is not available during
+    // server side rendering, but this code will never run during
+    // server side rendering because we won't have user data then.
     const LOCATION = window.location.pathname;
-    const WIKI = window.mdn ? window.mdn.wikiSiteUrl : '';
 
     /**
-     * Send a signal to GA when a user clicks on the Sing In
-     * lnk in the header.
-     * @param {Object} event - The event object that was triggered
+     * If you click the "Sign in" link, reach out to the global
+     * 'windown.mdn.triggerAuthModal' if it's available.
+     *
+     * @param {Object} event - The click event
      */
-    function sendSignInEvent(event) {
-        const service = event.target.dataset.service;
-
-        ga('send', {
-            hitType: 'event',
-            eventCategory: 'Authentication',
-            eventAction: 'Started sign-in',
-            eventLabel: service
-        });
+    function triggerAuthModal(event) {
+        // If window.mdn.triggerAuthModal is available, use that. But note, the
+        // 'event' here is a React synthetic event object, not a regular DOM
+        // event. So, we prevent *this* synthetic event and hand over to the
+        // global window.mdn.triggerAuthModal() function to take over.
+        if (window.mdn && window.mdn.triggerAuthModal) {
+            event.preventDefault();
+            window.mdn.triggerAuthModal();
+        }
     }
 
     if (userData.isAuthenticated && userData.username) {
@@ -55,7 +51,7 @@ export default function Login(): React.Node {
                 alt={userData.username}
             />
         );
-        let viewProfileLink = `${WIKI}/${locale}/profiles/${userData.username}`;
+        let viewProfileLink = `/${locale}/profiles/${userData.username}`;
         let editProfileLink = `${viewProfileLink}/edit`;
 
         return (
@@ -88,10 +84,9 @@ export default function Login(): React.Node {
         return (
             <a
                 href={`/${locale}/users/account/signup-landing?next=${LOCATION}`}
-                data-service="GitHub"
                 rel="nofollow"
                 className="signin-link"
-                onClick={sendSignInEvent}
+                onClick={triggerAuthModal}
             >
                 {gettext('Sign in')}
             </a>

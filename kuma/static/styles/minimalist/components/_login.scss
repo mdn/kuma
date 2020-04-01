@@ -18,6 +18,12 @@
         padding: 0;
         border-width: 0;
     }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
 }
 
 .signin-link {
@@ -39,10 +45,4 @@
         /* Focus outline extends beyond header in Chrome without this */
         outline-offset: -3px;
     }
-}
-
-.avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
 }

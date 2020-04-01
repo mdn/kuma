@@ -26,7 +26,9 @@ def test_get_stripe_customer_data(mock_retrieve):
 
 
 @mock.patch("stripe.Customer.retrieve", return_value=simple_customer_data)
-@mock.patch("stripe.Subscription.retrieve", return_value=mock.Mock(spec_set=["delete"]))
+@mock.patch(
+    "stripe.Subscription.retrieve", return_value=mock.Mock(spec_set=["delete", "id"])
+)
 def test_cancel_stripe_customer_subscription(mock_sub, mock_cust):
     """A stripe customer's subscriptions can be cancelled."""
     cancel_stripe_customer_subscription("cust_id")
@@ -39,7 +41,10 @@ def test_cancel_stripe_customer_subscription(mock_sub, mock_cust):
 )
 @mock.patch(
     "stripe.Subscription.retrieve",
-    side_effect=[mock.Mock(spec_set=["delete"]), mock.Mock(spec_set=["delete"])],
+    side_effect=[
+        mock.Mock(spec_set=["delete", "id"]),
+        mock.Mock(spec_set=["delete", "id"]),
+    ],
 )
 def test_cancel_stripe_customer_multiple_subscriptions(mock_sub, mock_cust):
     """A stripe customer's subscriptions can be cancelled."""

@@ -88,6 +88,7 @@ DATABASES = {
 
 
 SILENCED_SYSTEM_CHECKS = [
+    # https://django-mysql.readthedocs.io/en/latest/checks.html#django-mysql-w003-utf8mb4
     "django_mysql.W003",
     # As of django-recaptcha==2.0.4 it checks that you have set either
     # settings.RECAPTCHA_PRIVATE_KEY or settings.RECAPTCHA_PUBLIC_KEY.
@@ -593,7 +594,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    "VERSION": "2020.08",
+    "VERSION": "2020.09",
     "BASE_DIR": BASE_DIR,
     "TEXT_DOMAIN": "django",
     # Tells the extract script what files to look for l10n in and what function
@@ -671,6 +672,14 @@ PIPELINE_CSS = {
     "banners": {
         "source_filenames": ("styles/components/banners/base.scss",),
         "output_filename": "build/styles/banners.css",
+    },
+    "banner_developer_needs": {
+        "source_filenames": ("styles/components/banners/developer-needs.scss",),
+        "output_filename": "build/styles/developer-needs.css",
+    },
+    "banner_mdn_subscriptions": {
+        "source_filenames": ("styles/components/banners/mdn-subscriptions.scss",),
+        "output_filename": "build/styles/mdn-subscriptions.css",
     },
     "home": {
         "source_filenames": ("styles/home.scss",),
@@ -777,6 +786,12 @@ PIPELINE_CSS = {
     "stripe-subscription": {
         "source_filenames": ("styles/stripe-subscription.scss",),
         "output_filename": "build/styles/stripe-subscription.css",
+    },
+    "subscriptions": {
+        "source_filenames": (
+            "styles/minimalist/components/subscriptions/subscriptions.scss",
+        ),
+        "output_filename": "build/styles/subscriptions.css",
     },
     "error-403-alternate": {
         "source_filenames": ("styles/error-403-alternate.scss",),
@@ -1724,6 +1739,15 @@ STRIPE_MAX_NETWORK_RETRIES = config("STRIPE_MAX_NETWORK_RETRIES", default=5, cas
 CONTRIBUTION_SUPPORT_EMAIL = config(
     "CONTRIBUTION_SUPPORT_EMAIL", default="mdn-support@mozilla.com"
 )
+
+# The default amount suggested for monthly subscription payments.
+# As of March 2020, we only have 1 plan and the number is fixed.
+# In the future, we might have multiple plans and this might a dict of amount
+# per plan.
+# The reason it's not an environment variable is to simply indicate that it
+# can't be overridden at the moment based on the environment.
+CONTRIBUTION_AMOUNT_USD = 5.0
+
 CSP_CONNECT_SRC.append("https://checkout.stripe.com")
 CSP_FRAME_SRC.append("https://checkout.stripe.com")
 CSP_IMG_SRC.append("https://*.stripe.com")
@@ -1801,3 +1825,20 @@ CACHEBACK_VERIFY_CACHE_WRITE = False
 # new migrations that aren't in the released upstream package.
 # One good example is: https://github.com/ubernostrum/django-soapbox/issues/5
 MIGRATION_MODULES = {"soapbox": "kuma.soap_migrations"}
+
+# html_attributes and css_classnames get indexed into Elasticsearch on every
+# document when sent in. These can be very memory consuming since the
+# 'html_attributes' makes up about 60% of the total weight.
+# Refer to this GitHub issue for an estimate of their weight contribution:
+# https://github.com/mdn/kuma/issues/6264#issue-539922604
+# Note that the only way to actually search on these fields is with a manual
+# use of the search v1 API. There is no UI at all for searching on something
+# in the 'html_attributes' or the 'css_classnames'.
+# By disabling indexing of these, in your local dev environment, your local
+# Elasticsearch instance will be a LOT smaller.
+INDEX_HTML_ATTRIBUTES = config("INDEX_HTML_ATTRIBUTES", cast=bool, default=not DEBUG)
+INDEX_CSS_CLASSNAMES = config("INDEX_CSS_CLASSNAMES", cast=bool, default=not DEBUG)
+
+# For local development you might want to set this to a hostname provided to
+# you by a tunneling service such as ngrok.
+STRIPE_WEBHOOK_HOSTNAME = config("STRIPE_WEBHOOK_HOSTNAME", default=None)

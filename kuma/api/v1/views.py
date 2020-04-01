@@ -1,17 +1,31 @@
+import json
+
 from django.conf import settings
-from django.http import Http404, HttpResponsePermanentRedirect, JsonResponse
+from django.http import (
+    Http404,
+    HttpResponse,
+    HttpResponseBadRequest,
+    HttpResponsePermanentRedirect,
+    JsonResponse,
+)
 from django.shortcuts import get_object_or_404
 from django.utils.translation import activate, gettext as _
 from django.views.decorators.cache import never_cache
-from django.views.decorators.http import require_GET, require_safe
+from django.views.decorators.http import require_GET, require_POST, require_safe
 from ratelimit.decorators import ratelimit
 from rest_framework import serializers, status
 from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
+from waffle.decorators import waffle_flag
 from waffle.models import Flag, Sample, Switch
 
 from kuma.api.v1.serializers import BCSignalSerializer
+from kuma.core.ga_tracking import (
+    ACTION_SUBSCRIPTION_FEEDBACK,
+    CATEGORY_MONTHLY_PAYMENTS,
+    track_event,
+)
 from kuma.core.urlresolvers import reverse
 from kuma.search.filters import (
     HighlightFilterBackend,
@@ -21,7 +35,7 @@ from kuma.search.filters import (
     TagGroupFilterBackend,
 )
 from kuma.search.search import SearchView
-from kuma.users.models import User
+from kuma.users.models import User, UserSubscription
 from kuma.users.templatetags.jinja_helpers import get_avatar_url
 from kuma.wiki.models import Document
 from kuma.wiki.templatetags.jinja_helpers import absolutify
@@ -219,6 +233,10 @@ def whoami(request):
             "is_superuser": user.is_superuser,
             "is_beta_tester": user.is_beta_tester,
             "avatar_url": get_avatar_url(user),
+            "is_subscriber": UserSubscription.objects.filter(
+                user=user, canceled__isnull=True
+            ).exists(),
+            "email": user.email,
         }
     else:
         data = {
@@ -229,6 +247,8 @@ def whoami(request):
             "is_superuser": False,
             "is_beta_tester": False,
             "avatar_url": None,
+            "is_subscriber": False,
+            "email": None,
         }
 
     # Add waffle data to the dict we're going to be returning.
@@ -341,3 +361,24 @@ def get_user(request, username):
     data = {field: getattr(user, field) for field in fields}
     data["avatar_url"] = get_avatar_url(user)
     return JsonResponse(data)
+
+
+@waffle_flag("subscription")
+@never_cache
+@require_POST
+def send_subscriptions_feedback(request):
+    """
+    Sends feedback to Google Analytics. This is done on the
+    backend to ensure that all feedback is collected, even
+    from users with DNT or where GA is disabled.
+    """
+    data = json.loads(request.body)
+    feedback = (data.get("feedback") or "").strip()
+
+    if not feedback:
+        return HttpResponseBadRequest("no feedback")
+
+    track_event(
+        CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_FEEDBACK, data["feedback"]
+    )
+    return HttpResponse(status=204)

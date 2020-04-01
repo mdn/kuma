@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from unittest import mock
 
 import pytest
@@ -9,11 +10,23 @@ from kuma.core.tests import assert_no_cache_header, assert_redirect_to_wiki
 from kuma.core.urlresolvers import reverse
 
 
+@dataclass
+class MockSubscription:
+    id: str = "sub_123456789"
+
+
 @pytest.fixture
 def stripe_user(wiki_user):
     wiki_user.stripe_customer_id = "fakeCustomerID123"
     wiki_user.save()
     return wiki_user
+
+
+@pytest.mark.django_db
+def test_payments_index(client):
+    """Viewing the payments index page doesn't require you to be logged in"""
+    response = client.get(reverse("payments_index"))
+    assert response.status_code == 200
 
 
 @pytest.mark.django_db
@@ -87,7 +100,8 @@ def test_recurring_payment_management_customer_id(get, user_client, stripe_user)
 @pytest.mark.django_db
 @override_flag("subscription", True)
 @mock.patch(
-    "kuma.payments.views.cancel_stripe_customer_subscription", return_value=True
+    "kuma.payments.views.cancel_stripe_customer_subscription",
+    return_value=[MockSubscription().id],
 )
 @mock.patch(
     "kuma.payments.views.get_stripe_customer_data",
@@ -165,14 +179,7 @@ def test_recurring_payment_management_not_logged_in(get, cancel_, client):
 
 @override_flag("subscription", True)
 @pytest.mark.parametrize(
-    "endpoint",
-    [
-        "payments",
-        "payment_terms",
-        "recurring_payment_initial",
-        "recurring_payment_subscription",
-        "recurring_payment_management",
-    ],
+    "endpoint", ["recurring_payment_management"],
 )
 def test_redirect(db, client, endpoint):
     """Redirect to the wiki domain if not already."""

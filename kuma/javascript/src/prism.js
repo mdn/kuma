@@ -54,7 +54,7 @@ export function highlightSyntax(root: HTMLElement) {
         // block is already formatted and does not need to be tweaked.
         if (
             block.childNodes.length !== 1 ||
-            block.childNodes[0].nodeType !== 3
+            block.childNodes[0].nodeType !== Node.TEXT_NODE
         ) {
             continue;
         }

@@ -1,11 +1,20 @@
+from unittest.mock import patch
+
 import pytest
+
 from django.conf import settings
 from waffle.models import Flag, Sample, Switch
+from waffle.testutils import override_flag
 
 from kuma.api.v1.views import document_api_data, get_content_based_redirect, get_s3_key
+from kuma.core.ga_tracking import (
+    ACTION_SUBSCRIPTION_FEEDBACK,
+    CATEGORY_MONTHLY_PAYMENTS,
+)
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.search.tests import ElasticTestCase
+from kuma.users.models import UserSubscription
 from kuma.wiki.models import BCSignal
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
@@ -216,10 +225,13 @@ def test_whoami_anonymous(client, settings, timezone):
                 "flag_all": True,
                 "flag_none": False,
                 "subscription": False,
+                "subscription_banner": False,
             },
             "switches": {"switch_on": True, "switch_off": False},
             "samples": {"sample_always": True, "sample_never": False},
         },
+        "is_subscriber": False,
+        "email": None,
     }
     assert_no_cache_header(response)
 
@@ -275,12 +287,37 @@ def test_whoami(
                 "flag_all": True,
                 "flag_none": False,
                 "subscription": is_staff,
+                "subscription_banner": is_staff,
             },
             "switches": {"switch_on": True, "switch_off": False},
             "samples": {"sample_always": True, "sample_never": False},
         },
+        "is_subscriber": False,
+        "email": "wiki_user@example.com",
     }
     assert_no_cache_header(response)
+
+
+@pytest.mark.django_db
+def test_whoami_is_subscriber(
+    user_client, wiki_user,
+):
+    """Test responses for logged-in users and whether they have an active
+    subscription."""
+    url = reverse("api.v1.whoami")
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert response.json()["is_subscriber"] is False
+
+    UserSubscription.set_active(wiki_user, "abc123")
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert response.json()["is_subscriber"] is True
+
+    UserSubscription.set_canceled(wiki_user, "abc123")
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert response.json()["is_subscriber"] is False
 
 
 @pytest.mark.django_db
@@ -471,3 +508,35 @@ def test_bc_signal_http_method(client):
 
     response = client.put(url)
     assert response.status_code == 405
+
+
+@patch("kuma.api.v1.views.track_event")
+@pytest.mark.django_db
+@override_flag("subscription", True)
+def test_send_subscriptions_feedback(track_event_mock_signals, client, settings):
+    settings.GOOGLE_ANALYTICS_ACCOUNT = "UA-XXXX-1"
+    settings.GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS = True
+
+    response = client.post(
+        reverse("api.v1.send_subscriptions_feedback"),
+        content_type="application/json",
+        data={"feedback": "my feedback"},
+    )
+    assert response.status_code == 204
+
+    track_event_mock_signals.assert_called_with(
+        CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_FEEDBACK, "my feedback",
+    )
+
+
+@pytest.mark.django_db
+@override_flag("subscription", True)
+def test_send_subscriptions_feedback_failure(client, settings):
+    response = client.post(
+        reverse("api.v1.send_subscriptions_feedback"),
+        content_type="application/json",
+        data={},
+    )
+
+    assert response.status_code == 400
+    assert response.content.decode(response.charset) == "no feedback"

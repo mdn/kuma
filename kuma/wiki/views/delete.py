@@ -82,10 +82,6 @@ def delete_document(request, document_slug, document_locale):
     """
     document = get_object_or_404(Document, locale=document_locale, slug=document_slug)
 
-    # HACK: https://bugzil.la/972545 - Don't delete pages that have children
-    # TODO: https://bugzil.la/972541 - Deleting a page that has subpages
-    prevent = document.children.exists()
-
     first_revision = document.revisions.all()[0]
 
     if request.method == "POST":
@@ -108,7 +104,6 @@ def delete_document(request, document_slug, document_locale):
         "form": form,
         "request": request,
         "revision": first_revision,
-        "prevent": prevent,
     }
     return render(request, "wiki/confirm_document_delete.html", context)
 

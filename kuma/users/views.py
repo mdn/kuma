@@ -17,6 +17,7 @@ from django.core.mail import send_mail
 from django.core.validators import validate_email, ValidationError
 from django.db import IntegrityError, transaction
 from django.http import (
+    HttpResponse,
     HttpResponseBadRequest,
     HttpResponseForbidden,
     HttpResponseRedirect,
@@ -24,10 +25,12 @@ from django.http import (
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
 from honeypot.decorators import verify_honeypot_value
@@ -44,10 +47,14 @@ from kuma.core.ga_tracking import (
     ACTION_PROFILE_AUDIT,
     ACTION_PROFILE_EDIT,
     ACTION_PROFILE_EDIT_ERROR,
+    ACTION_SUBSCRIPTION_CANCELED,
+    ACTION_SUBSCRIPTION_CREATED,
+    CATEGORY_MONTHLY_PAYMENTS,
     CATEGORY_SIGNUP_FLOW,
     track_event,
 )
 from kuma.core.utils import urlparams
+from kuma.payments.utils import cancel_stripe_customer_subscription
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import (
     Document,
@@ -59,12 +66,14 @@ from kuma.wiki.models import (
 # we have to import the SignupForm form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
 from .forms import UserBanForm, UserDeleteForm, UserEditForm, UserRecoveryEmailForm
-from .models import User, UserBan
+from .models import User, UserBan, UserSubscription
 from .signup import SignupForm
-from .utils import (
+from .stripe_utils import (
     create_stripe_customer_and_subscription_for_user,
-    retrieve_stripe_subscription_info,
+    get_stripe_customer,
+    get_stripe_subscription_info,
 )
+from .tasks import send_payment_received_email
 
 
 @ensure_wiki_domain
@@ -425,7 +434,6 @@ def user_edit(request, username):
     """
     View and edit user profile
     """
-    has_stripe_error = request.GET.get("has_stripe_error", "False") == "True"
     edit_user = get_object_or_404(User, username=username)
 
     if not edit_user.allows_editing_by(request.user):
@@ -464,6 +472,10 @@ def user_edit(request, username):
 
             return redirect(edit_user)
 
+    # Needed so the template can know to show a warning message and the
+    # template doesn't want to do code logic to look into the 'request' object.
+    has_stripe_error = request.GET.get("has_stripe_error", "False") == "True"
+
     context = {
         "edit_user": edit_user,
         "user_form": user_form,
@@ -471,11 +483,62 @@ def user_edit(request, username):
         "form": UserDeleteForm(username=username),
         "revisions": revisions,
         "attachment_revisions": attachment_revisions,
-        "subscription_info": retrieve_stripe_subscription_info(edit_user,),
+        "subscription_info": _retrieve_and_synchronize_subscription_info(edit_user),
         "has_stripe_error": has_stripe_error,
     }
 
     return render(request, "users/user_edit.html", context)
+
+
+def _retrieve_and_synchronize_subscription_info(user):
+    """For the given user, if it has as 'stripe_customer_id' retrieve the info
+    about the subscription if it's there. All packaged in a way that is
+    practical for the stripe_subscription.html template.
+
+    Also, whilst doing this check, we also verify that the UserSubscription record
+    for this user is right. Doing that check is a second-layer check in case
+    our webhooks have failed us.
+    """
+    subscription_info = None
+    stripe_customer = get_stripe_customer(user)
+    if stripe_customer:
+        stripe_subscription_info = get_stripe_subscription_info(stripe_customer)
+        if stripe_subscription_info:
+            source = stripe_customer.default_source
+            if source.object == "card":
+                card = source
+            elif source.object == "source":
+                card = source.card
+            else:
+                raise ValueError(
+                    f"unexpected stripe customer default_source of type {source.object!r}"
+                )
+
+            subscription_info = {
+                "next_payment_at": datetime.fromtimestamp(
+                    stripe_subscription_info.current_period_end
+                ),
+                "brand": card.brand,
+                "expires_at": f"{card.exp_month}/{card.exp_year}",
+                "last4": card.last4,
+                # Cards that are part of a "source" don't have a zip
+                "zip": card.get("address_zip", None),
+            }
+
+            # To perfect the synchronization, take this opportunity to make sure
+            # we have an up-to-date record of this.
+            UserSubscription.set_active(user, stripe_subscription_info.id)
+        else:
+            # The user has a stripe_customer_id but no active subscription
+            # on the current settings.STRIPE_PLAN_ID! Perhaps it has been cancelled
+            # and not updated in our own records.
+            for user_subscription in UserSubscription.objects.filter(
+                user=user, canceled__isnull=True
+            ):
+                user_subscription.canceled = timezone.now()
+                user_subscription.save()
+
+    return subscription_info
 
 
 @redirect_in_maintenance_mode
@@ -492,6 +555,13 @@ def user_delete(request, username):
         user.created_attachment_revisions.update(creator=anon)
 
     def scrub_user():
+        # Before doing anything, cancel any active subscriptions first.
+        if user.stripe_customer_id:
+            for subscription in cancel_stripe_customer_subscription(
+                user.stripe_customer_id
+            ):
+                UserSubscription.set_canceled(request.user, subscription.id)
+
         # From the User abstract class
         user.first_name = ""
         user.last_name = ""
@@ -793,7 +863,11 @@ def create_stripe_subscription(request):
     try:
         email = request.POST.get("stripe_email", "")
         stripe_token = request.POST.get("stripe_token", "")
-        create_stripe_customer_and_subscription_for_user(user, email, stripe_token)
+        subscription = create_stripe_customer_and_subscription_for_user(
+            user, email, stripe_token
+        )
+        UserSubscription.set_active(user, subscription.id)
+
     except stripe.error.StripeError:
         raven_client.captureException()
         has_stripe_error = True
@@ -815,3 +889,49 @@ recovery_email_sent = TemplateView.as_view(
 recover_done = login_required(
     never_cache(ConnectionsView.as_view(template_name="users/recover_done.html"))
 )
+
+
+@csrf_exempt
+def stripe_hooks(request):
+    try:
+        payload = json.loads(request.body)
+    except ValueError:
+        return HttpResponseBadRequest("Invalid JSON payload")
+
+    try:
+        event = stripe.Event.construct_from(payload, stripe.api_key)
+    except stripe.error.StripeError:
+        raven_client.captureException()
+        return HttpResponseBadRequest()
+
+    # Generally, for this list of if-statements, see the create_missing_stripe_webhook
+    # function.
+    # The list of events there ought to at least minimally match what we're prepared
+    # to deal with here.
+
+    if event.type == "invoice.payment_succeeded":
+        payment_intent = event.data.object
+        send_payment_received_email.delay(
+            payment_intent.customer,
+            request.LANGUAGE_CODE,
+            payment_intent.created,
+            payment_intent.invoice_pdf,
+        )
+        track_event(
+            CATEGORY_MONTHLY_PAYMENTS,
+            ACTION_SUBSCRIPTION_CREATED,
+            f"{settings.CONTRIBUTION_AMOUNT_USD:.2f}",
+        )
+
+    elif event.type == "customer.subscription.deleted":
+        obj = event.data.object
+        for user in User.objects.filter(stripe_customer_id=obj.customer):
+            UserSubscription.set_canceled(user, obj.id)
+        track_event(CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_CANCELED, "webhook")
+
+    else:
+        return HttpResponseBadRequest(
+            f"We did not expect a Stripe webhook of type {event.type!r}"
+        )
+
+    return HttpResponse()

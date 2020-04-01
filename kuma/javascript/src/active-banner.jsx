@@ -5,11 +5,8 @@
  * description and button call-to-action text of the banner, as well
  * as the URL of the page that clicking on the call-to-action button
  * takes the user to. The Banner component is not exported,
- * however. Instead, we export a Banners component that pages should
- * use. The Banners component takes an array of BannerProp objects as
- * a property, and also defines its own internal default array of
- * banner objects that is uses if no properties are passed. It loops
- * through the array looking for the first banner that is enabled by
+ * however. Instead, we export an ActiveBanner component that pages should
+ * use. It loops through an array of banner IDs for the first banner that is enabled by
  * Waffle and has not been dismissed by the user. If it finds such a
  * banner, it displays it with a <Banner>. Otherwise, if none of the
  * specified banners is enabled, or if all enabled banners have been
@@ -52,10 +49,10 @@
  * @flow
  */
 import * as React from 'react';
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useState } from 'react';
 
 import CloseIcon from './icons/close.svg';
-import { gettext } from './l10n.js';
+import { getLocale, gettext, Interpolated } from './l10n.js';
 import UserProvider from './user-provider.jsx';
 
 // Set a localStorage key with a timestamp the specified number of
@@ -114,34 +111,42 @@ export type BannerProps = {
     // name of the waffle flag that controls the banner, and is also
     // used as part of a localStorage key.
     id: string,
+    // class name used on main banner container. Exclusively used
+    // for styling purposes.
+    classname: string,
     // The banner title. e.g. "MDN Survey"
     title: string,
     // The banner description. e.g. "Help us understand the top 10 needs..."
-    copy: string,
+    // Could also be a React Element such as that returned by `<Interpolated />`
+    copy: Object | string,
     // The call to action button text. e.g. "Take the survey"
     cta: string,
     // The URL of the page to open when the button is clicked
     url: string,
+    // An optional property. If present, it should be set to true to indicate
+    // that this banner is to be shown to authenticated users only
+    authenticated?: boolean,
     // An optional property. If present, it specifies the number of days
     // for which a dismissed banner will not be shown. If omitted, the
     // default is 5 days.
-    embargoDays?: number
+    embargoDays?: number,
+    // An optional property. If present, it should be set to true to indicate
+    // that the main cta link should open in a new window
+    newWindow?: boolean
 };
 
 function Banner(props: BannerProps) {
     const [isDismissed, setDismissed] = useState(false);
+    const containerClassNames = `${props.classname} mdn-cta-container cta-background-linear`;
 
     if (isDismissed) {
         return null;
     }
 
     return (
-        <div className="mdn-cta-container">
-            <div
-                id="mdn-cta-content"
-                className="mdn-cta-content cta-background-linear"
-            >
-                <div id="developer-needs" className="mdn-cta-content-container">
+        <div className={containerClassNames}>
+            <div id="mdn-cta-content" className="mdn-cta-content">
+                <div id={props.id} className="mdn-cta-content-container">
                     <h2 className="mdn-cta-title slab-text">{props.title}</h2>
                     <p className="mdn-cta-copy">{props.copy}</p>
                 </div>
@@ -149,8 +154,8 @@ function Banner(props: BannerProps) {
                     <a
                         href={props.url}
                         className="mdn-cta-button"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        target={props.newWindow && '_blank'}
+                        rel={props.newWindow && 'noopener noreferrer'}
                     >
                         {props.cta}
                     </a>
@@ -174,48 +179,82 @@ function Banner(props: BannerProps) {
     );
 }
 
-type BannersProps = { banners?: Array<BannerProps> };
+export const DEVELOPER_NEEDS_ID = 'developer_needs';
+export const SUBSCRIPTION_ID = 'subscription_banner';
 
-export default function Banners(props: BannersProps) {
-    // This is the data structure that defines the default list of banners
-    // that we need to consider displaying. To change the set of banners
-    // displayed on MDN pages, just edit this data structure.
-    //
-    // It is defined here inside of the component so that the
-    // gettext() calls are made after our string catalog is ready. But
-    // we do it inside a useMemo() function so that the localization
-    // only happens once.
-    const defaultBanners = useMemo(
-        () => [
-            {
-                id: 'developer_needs',
-                title: gettext('MDN Survey'),
-                copy: gettext(
-                    'Help us understand the top 10 needs of Web developers and designers.'
-                ),
-                cta: gettext('Take the survey'),
-                url:
-                    'https://qsurvey.mozilla.com/s3/Developer-Needs-Assessment-2019'
-            }
-        ],
-        [] // This tells useMemo() to only compute this once.
-    );
-
+export default function ActiveBanner() {
     const userData = useContext(UserProvider.context);
+    const locale = getLocale();
 
-    // If we have user data the loop through the specified banners
-    // to see if we can find one that is enabled by waffle
-    // and has not been recently dismissed by the user. We render
-    // the first such banner that we find, or render nothing.
-    if (userData) {
-        let bannersList = props.banners || defaultBanners;
-        for (const banner of bannersList) {
-            if (userData.waffle.flags[banner.id]) {
-                if (!isEmbargoed(banner.id)) {
-                    return <Banner {...banner} />;
-                }
+    if (!userData || !userData.waffle.flags) {
+        return null;
+    }
+
+    for (const id in userData.waffle.flags) {
+        if (!userData.waffle.flags[id] || isEmbargoed(id)) {
+            continue;
+        }
+
+        // The Subscription banner is special. It should not be displayed
+        // if the user has a truthy `isSubscriber`.
+        if (id === SUBSCRIPTION_ID) {
+            if (userData.isSubscriber) {
+                // This user will NOT get this banner.
+                return true;
             }
         }
+
+        switch (id) {
+            case DEVELOPER_NEEDS_ID:
+                return (
+                    <Banner
+                        id={id}
+                        classname="developer-needs"
+                        title={gettext('MDN Survey')}
+                        copy={gettext(
+                            'Help us understand the top 10 needs of Web developers and designers.'
+                        )}
+                        cta={gettext('Take the survey')}
+                        url={
+                            'https://qsurvey.mozilla.com/s3/Developer-Needs-Assessment-2019'
+                        }
+                        newWindow
+                    />
+                );
+
+            case SUBSCRIPTION_ID:
+                if (!userData.isAuthenticated) {
+                    return null;
+                }
+
+                return (
+                    <Banner
+                        id={id}
+                        classname="mdn-subscriptions"
+                        title={gettext('Become a monthly supporter')}
+                        copy={
+                            <Interpolated
+                                id={gettext(
+                                    'Support MDN with a $5 monthly subscription <learnMore/>.'
+                                )}
+                                learnMore={
+                                    <a href={`/${locale}/payments/`}>
+                                        {gettext('Learn more')}
+                                    </a>
+                                }
+                            />
+                        }
+                        cta={gettext('Subscribe')}
+                        url={`${
+                            window.mdn ? window.mdn.wikiSiteUrl : ''
+                        }/${locale}/profiles/${userData.username ||
+                            ''}/edit#subscription`}
+                        embargoDays={7}
+                    />
+                );
+        }
     }
+
+    // No banner found in the waffle flags, so we have nothing to render
     return null;
 }
