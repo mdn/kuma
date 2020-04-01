@@ -1,16 +1,11 @@
-from datetime import datetime
-
 import stripe
 from django.conf import settings
-from django.utils import timezone
 
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
-from .models import UserSubscription
 
-
-def _get_stripe_subscription(customer):
+def retrieve_stripe_subscription(customer):
     for subscription in customer.subscriptions.list().auto_paging_iter():
         # We have to use array indexing syntax, as stripe uses dicts to
         # represent its objects (dicts come with an .items method)
@@ -32,7 +27,7 @@ def create_stripe_customer_and_subscription_for_user(user, email, stripe_token):
         user.stripe_customer_id = customer.id
         user.save()
 
-    subscription = _get_stripe_subscription(customer)
+    subscription = retrieve_stripe_subscription(customer)
     if not subscription:
         subscription = stripe.Subscription.create(
             customer=customer.id, items=[{"plan": settings.STRIPE_PLAN_ID}],
@@ -48,55 +43,8 @@ def get_stripe_customer(user):
         )
 
 
-def retrieve_and_synchronize_subscription_info(user):
-    """For the given user, if it has as 'stripe_customer_id' retrieve the info
-    about the subscription if it's there. All packaged in a way that is
-    practical for the stripe_subscription.html template.
-
-    Also, whilst doing this check, we also verify that the UserSubscription record
-    for this user is right. Doing that check is a second-layer check in case
-    our webhooks have failed us.
-    """
-    subscription_info = None
-    stripe_customer = get_stripe_customer(user)
-    if stripe_customer:
-        stripe_subscription_info = _get_stripe_subscription(stripe_customer)
-        if stripe_subscription_info:
-            source = stripe_customer.default_source
-            if source.object == "card":
-                card = source
-            elif source.object == "source":
-                card = source.card
-            else:
-                raise ValueError(
-                    f"unexpected stripe customer default_source of type {source.object!r}"
-                )
-
-            subscription_info = {
-                "next_payment_at": datetime.fromtimestamp(
-                    stripe_subscription_info.current_period_end
-                ),
-                "brand": card.brand,
-                "expires_at": f"{card.exp_month}/{card.exp_year}",
-                "last4": card.last4,
-                # Cards that are part of a "source" don't have a zip
-                "zip": card.get("address_zip", None),
-            }
-
-            # To perfect the synchronization, take this opportunity to make sure
-            # we have an up-to-date record of this.
-            UserSubscription.set_active(user, stripe_subscription_info.id)
-        else:
-            # The user has a stripe_customer_id but no active subscription
-            # on the current settings.STRIPE_PLAN_ID! Perhaps it has been cancelled
-            # and not updated in our own records.
-            for user_subscription in UserSubscription.objects.filter(
-                user=user, canceled__isnull=True
-            ):
-                user_subscription.canceled = timezone.now()
-                user_subscription.save()
-
-    return subscription_info
+def get_stripe_subscription_info(stripe_customer):
+    return retrieve_stripe_subscription(stripe_customer)
 
 
 def create_missing_stripe_webhook():

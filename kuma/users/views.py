@@ -1,6 +1,9 @@
-import json
 from datetime import datetime, timedelta
+import json
+import os
+from urllib.parse import urlparse
 
+import requests
 import stripe
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
@@ -25,6 +28,7 @@ from django.http import (
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.utils import formats, timezone, translation
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.utils.translation import gettext_lazy as _
@@ -42,6 +46,7 @@ from kuma.core.decorators import (
     login_required,
     redirect_in_maintenance_mode,
 )
+from kuma.core.email_utils import render_email
 from kuma.core.ga_tracking import (
     ACTION_PROFILE_AUDIT,
     ACTION_PROFILE_EDIT,
@@ -52,7 +57,7 @@ from kuma.core.ga_tracking import (
     CATEGORY_SIGNUP_FLOW,
     track_event,
 )
-from kuma.core.utils import urlparams
+from kuma.core.utils import send_mail_retrying, urlparams
 from kuma.payments.utils import cancel_stripe_customer_subscription
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import (
@@ -61,6 +66,7 @@ from kuma.wiki.models import (
     Revision,
     RevisionAkismetSubmission,
 )
+from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 # we have to import the SignupForm form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
@@ -69,9 +75,9 @@ from .models import User, UserBan, UserSubscription
 from .signup import SignupForm
 from .stripe_utils import (
     create_stripe_customer_and_subscription_for_user,
-    retrieve_and_synchronize_subscription_info,
+    get_stripe_customer,
+    get_stripe_subscription_info,
 )
-from .tasks import send_payment_received_email
 
 
 @ensure_wiki_domain
@@ -481,11 +487,62 @@ def user_edit(request, username):
         "form": UserDeleteForm(username=username),
         "revisions": revisions,
         "attachment_revisions": attachment_revisions,
-        "subscription_info": retrieve_and_synchronize_subscription_info(edit_user),
+        "subscription_info": _retrieve_and_synchronize_subscription_info(edit_user),
         "has_stripe_error": has_stripe_error,
     }
 
     return render(request, "users/user_edit.html", context)
+
+
+def _retrieve_and_synchronize_subscription_info(user):
+    """For the given user, if it has as 'stripe_customer_id' retrieve the info
+    about the subscription if it's there. All packaged in a way that is
+    practical for the stripe_subscription.html template.
+
+    Also, whilst doing this check, we also verify that the UserSubscription record
+    for this user is right. Doing that check is a second-layer check in case
+    our webhooks have failed us.
+    """
+    subscription_info = None
+    stripe_customer = get_stripe_customer(user)
+    if stripe_customer:
+        stripe_subscription_info = get_stripe_subscription_info(stripe_customer)
+        if stripe_subscription_info:
+            source = stripe_customer.default_source
+            if source.object == "card":
+                card = source
+            elif source.object == "source":
+                card = source.card
+            else:
+                raise ValueError(
+                    f"unexpected stripe customer default_source of type {source.object!r}"
+                )
+
+            subscription_info = {
+                "next_payment_at": datetime.fromtimestamp(
+                    stripe_subscription_info.current_period_end
+                ),
+                "brand": card.brand,
+                "expires_at": f"{card.exp_month}/{card.exp_year}",
+                "last4": card.last4,
+                # Cards that are part of a "source" don't have a zip
+                "zip": card.get("address_zip", None),
+            }
+
+            # To perfect the synchronization, take this opportunity to make sure
+            # we have an up-to-date record of this.
+            UserSubscription.set_active(user, stripe_subscription_info.id)
+        else:
+            # The user has a stripe_customer_id but no active subscription
+            # on the current settings.STRIPE_PLAN_ID! Perhaps it has been cancelled
+            # and not updated in our own records.
+            for user_subscription in UserSubscription.objects.filter(
+                user=user, canceled__isnull=True
+            ):
+                user_subscription.canceled = timezone.now()
+                user_subscription.save()
+
+    return subscription_info
 
 
 @redirect_in_maintenance_mode
@@ -858,7 +915,7 @@ def stripe_hooks(request):
 
     if event.type == "invoice.payment_succeeded":
         payment_intent = event.data.object
-        send_payment_received_email.delay(
+        _send_payment_received_email(
             payment_intent, request.LANGUAGE_CODE,
         )
         track_event(
@@ -879,3 +936,35 @@ def stripe_hooks(request):
         )
 
     return HttpResponse()
+
+
+def _send_payment_received_email(payment_intent, locale):
+    user = get_user_model().objects.get(stripe_customer_id=payment_intent.customer)
+    subscription_info = _retrieve_and_synchronize_subscription_info(user)
+    locale = locale or settings.WIKI_DEFAULT_LANGUAGE
+    context = {
+        "payment_date": datetime.fromtimestamp(payment_intent.created),
+        "next_payment_date": subscription_info["next_payment_at"],
+        "invoice_number": payment_intent.id,
+        "dollar_amount": settings.CONTRIBUTION_AMOUNT_USD,
+        "credit_card_brand": subscription_info["brand"],
+        "manage_subscription_url": absolutify(reverse("recurring_payment_management")),
+        "faq_url": absolutify(reverse("recurring_payment_subscription")),
+        "contact_email": settings.CONTRIBUTION_SUPPORT_EMAIL,
+    }
+    with translation.override(locale):
+        subject = render_email("users/email/payment_received/subject.ltxt", context)
+        # Email subject *must not* contain newlines
+        subject = "".join(subject.splitlines())
+        plain = render_email("users/email/payment_received/plain.ltxt", context)
+        send_mail_retrying(
+            subject,
+            plain,
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email],
+            attachment={
+                "name": os.path.basename(urlparse(payment_intent.invoice_pdf).path),
+                "bytes": requests.get(payment_intent.invoice_pdf).content,
+                "mime": "application/pdf",
+            },
+        )

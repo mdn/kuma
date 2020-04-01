@@ -1,20 +1,31 @@
-{% autoescape false -%}
 Thank you.
 
+{% trans dollar_amount=dollar_amount|int %}
 You supported MDN with a ${{ dollar_amount }} monthly subscription.
+{% endtrans %}
 
-Amount paid: ${{ dollar_amount }}.00
+{% trans dollar_amount= "%.2f"|format(dollar_amount) %}
+Amount paid: ${{ dollar_amount }}
+{% endtrans %}
+{% trans credit_card_brand=credit_card_brand %}
 Payment method: {{ credit_card_brand }}
+{% endtrans %}
 
+{% trans invoice_number=invoice_number %}
 Invoice number: {{ invoice_number }}
+{% endtrans %}
+{% trans payment_date=payment_date|date('DATE_FORMAT') %}
 Date of issue: {{ payment_date }}
+{% endtrans %}
+{% trans payment_date=payment_date|date('DATE_FORMAT') %}
 Date due: {{ payment_date }}
+{% endtrans %}
 
+{% trans dollar_amount=dollar_amount|int, next_payment_date=next_payment_date|date('DATE_FORMAT') %}
 Your next payment of ${{ dollar_amount }} (monthly) occurs on {{ next_payment_date }}.
+{% endtrans %}
 
+{% trans manage_subscription_url=manage_subscription_url, faq_url=faq_url, contact_email=contact_email %}
 Cancel any time. To cancel your subscription, please go to the manage monthly subscriptions page ({{ manage_subscription_url }}).
 If you have questions, please read the FAQ ({{ faq_url }}) or you can also contact support ({{ contact_email }}).
-
-{{ invoice_pdf }}
-
-{% endautoescape -%}
+{% endtrans %}
