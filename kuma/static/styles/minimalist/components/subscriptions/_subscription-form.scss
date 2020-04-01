@@ -15,11 +15,15 @@
         border-radius: 4px;
         box-shadow: $box-shadow-blue;
         max-width: 460px;
-        height: 320px;
+        min-height: 320px;
 
         section,
         form {
-            padding: 20px;
+            padding: 20px 20px 0;
+
+            h2 {
+                margin: 0;
+            }
 
             button {
                 display: block;
