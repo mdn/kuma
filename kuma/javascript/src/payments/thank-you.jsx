@@ -1,13 +1,15 @@
 // @flow
 import * as React from 'react';
+import { useContext } from 'react';
 
-import { getLocale, gettext, Interpolated } from '../l10n.js';
+import { getLocale, gettext, interpolate, Interpolated } from '../l10n.js';
 import A11yNav from '../a11y/a11y-nav.jsx';
 import Header from '../header/header.jsx';
 import SubHeader from './subheader.jsx';
 import Footer from '../footer.jsx';
 import Route from '../route.js';
 import FeedbackForm from './feedback-form.jsx';
+import UserProvider from '../user-provider.jsx';
 
 type PaymentsThankYouRouteParams = {
     locale: string,
@@ -16,13 +18,23 @@ type PaymentsThankYouRouteParams = {
 export const subheaderTitle = 'Thank you for becoming a monthly supporter!';
 export default function ThankYouPage() {
     const locale = getLocale();
+    const userData = useContext(UserProvider.context);
 
     return (
         <>
             <A11yNav />
             <Header />
             <div className="subscriptions subheader-container thank-you">
-                <SubHeader title={subheaderTitle} />
+                <SubHeader
+                    title={subheaderTitle}
+                    description={
+                        userData &&
+                        !!userData.subscriberNumber &&
+                        interpolate(gettext('You are MDN member number: %s'), [
+                            userData.subscriberNumber,
+                        ])
+                    }
+                />
             </div>
             <main className="contributions-page thank-you" role="main">
                 <section className="section">
