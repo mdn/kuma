@@ -36,10 +36,10 @@ const FeedbackForm = (): React.Node => {
             body: JSON.stringify({ feedback: trimmedFeedback }),
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken')
-            }
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
         })
-            .then(res => {
+            .then((res) => {
                 // Remove focus from button or input
                 if (document.activeElement) {
                     document.activeElement.blur();

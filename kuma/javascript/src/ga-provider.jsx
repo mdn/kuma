@@ -26,7 +26,7 @@ const context = React.createContext<GAFunction>(ga);
  * the function provided by this component.
  */
 export default function GAProvider(props: {
-    children: React.Node
+    children: React.Node,
 }): React.Node {
     return <context.Provider value={ga}>{props.children}</context.Provider>;
 }
@@ -37,7 +37,7 @@ function useClientId() {
     const [clientId, setClientId] = useState<string>('');
     const ga = useContext(GAProvider.context);
     useEffect(() => {
-        ga(tracker => {
+        ga((tracker) => {
             setClientId(tracker.get('clientId'));
         });
     }, [ga]);

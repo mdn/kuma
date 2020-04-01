@@ -14,11 +14,11 @@ import LastModified from './last-modified.jsx';
 import type { DocumentData } from './document.jsx';
 
 type DocumentProps = {
-    document: DocumentData
+    document: DocumentData,
 };
 
 function TranslationStatus({
-    document: { translationStatus, editURL }
+    document: { translationStatus, editURL },
 }: DocumentProps) {
     let content;
 
@@ -73,7 +73,7 @@ export default function Article({ document }: DocumentProps) {
                     hitType: 'event',
                     eventCategory: 'article-effect-error',
                     eventAction: 'addLiveExampleButtons',
-                    eventLabel: error.toString()
+                    eventLabel: error.toString(),
                 });
             }
             highlightSyntax(rootElement);
@@ -85,7 +85,7 @@ export default function Article({ document }: DocumentProps) {
                     hitType: 'event',
                     eventCategory: 'article-effect-error',
                     eventAction: 'activateBCDTables',
-                    eventLabel: error.toString()
+                    eventLabel: error.toString(),
                 });
             }
         }
@@ -105,7 +105,7 @@ export default function Article({ document }: DocumentProps) {
                         hitType: 'event',
                         eventCategory: 'article-effect-error',
                         eventAction: 'activateBCDSignals',
-                        eventLabel: error.toString()
+                        eventLabel: error.toString(),
                     });
                 }
             }
@@ -154,7 +154,7 @@ export default function Article({ document }: DocumentProps) {
                 hitType: 'event',
                 eventCategory: 'Translation Pending',
                 eventAction: 'displayed',
-                eventLabel: ''
+                eventLabel: '',
             });
         }
     }, [document, locale, ga]);

@@ -6,13 +6,13 @@ import { gettext } from './l10n.js';
 type Props = {
     documentLocale: string,
     lastModified: string,
-    wikiRevisionHistoryURL: string
+    wikiRevisionHistoryURL: string,
 };
 
 export default function LastModified({
     documentLocale,
     lastModified,
-    wikiRevisionHistoryURL
+    wikiRevisionHistoryURL,
 }: Props) {
     // This fortunately works because the 'lastModified' date string is
     // predictable and always of the same format. It's not a proper ISO
@@ -22,7 +22,7 @@ export default function LastModified({
     const dateStringOptions = {
         year: 'numeric',
         month: 'short',
-        day: 'numeric'
+        day: 'numeric',
     };
 
     return (

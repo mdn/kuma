@@ -37,7 +37,7 @@ const app = express();
 if (process.env.SENTRY_DSN) {
     console.log('Configuring Sentry for the SSR server.');
     let options = {
-        dsn: process.env.SENTRY_DSN
+        dsn: process.env.SENTRY_DSN,
     };
     if (process.env.REVISION_HASH) {
         options.release = process.env.REVISION_HASH;
@@ -101,20 +101,20 @@ if (require.main === module) {
     // set up signal handlers and start listening for connections
 
     // More gracefully handle some common exit conditions...
-    const exit = function() {
+    const exit = function () {
         console.log(`SSR server (PID ${PID}) exiting.`);
         server.close();
         process.exit(0);
     };
-    process.on('SIGINT', function() {
+    process.on('SIGINT', function () {
         console.log('Received SIGINT, exiting...');
         exit();
     });
-    process.on('SIGTERM', function() {
+    process.on('SIGTERM', function () {
         console.log('Received SIGTERM, exiting...');
         exit();
     });
-    process.on('uncaughtException', function(err) {
+    process.on('uncaughtException', function (err) {
         console.error('uncaughtException:', err.message);
         console.error(err.stack);
         exit();

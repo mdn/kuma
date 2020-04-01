@@ -11,19 +11,19 @@ import { PaymentsThankYouRoute } from './payments/thank-you.jsx';
 
 type SinglePageAppProps = {
     initialURL: string,
-    initialData: any
+    initialData: any,
 };
 
 export default function SinglePageApp({
     initialURL,
-    initialData
+    initialData,
 }: SinglePageAppProps) {
     const locale = getLocale();
     const routes = [
         new DocumentRoute(locale),
         new SearchRoute(locale),
         new PaymentsThankYouRoute(locale),
-        new PaymentsIndexRoute(locale)
+        new PaymentsIndexRoute(locale),
     ];
 
     return (

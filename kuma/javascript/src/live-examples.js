@@ -53,9 +53,9 @@ export function addLiveExampleButtons(rootElement) {
         let js = section.querySelectorAll('pre[class*=js]');
 
         // Now get the source code out of those pre elements
-        let htmlCode = [...html].map(p => p.textContent).join('');
-        let jsCode = [...js].map(p => p.textContent).join('');
-        let cssCode = [...css].map(p => p.textContent).join('');
+        let htmlCode = [...html].map((p) => p.textContent).join('');
+        let jsCode = [...js].map((p) => p.textContent).join('');
+        let cssCode = [...css].map((p) => p.textContent).join('');
 
         // If we found any source code, then add buttons
         if (htmlCode || cssCode || jsCode) {
@@ -107,7 +107,7 @@ export function addLiveExampleButtons(rootElement) {
                     title: sectionTitle,
                     html: htmlCode,
                     css: cssCode,
-                    js: jsCode
+                    js: jsCode,
                 });
                 document.body.appendChild(form);
                 form.submit();
@@ -119,7 +119,7 @@ export function addLiveExampleButtons(rootElement) {
                     window.mdn.analytics.trackEvent({
                         category: 'Samples',
                         action: 'open-codepen',
-                        label: sectid
+                        label: sectid,
                     });
                 }
             };
@@ -154,7 +154,7 @@ export function addLiveExampleButtons(rootElement) {
                     window.mdn.analytics.trackEvent({
                         category: 'Samples',
                         action: 'open-jsfiddle',
-                        label: sectid
+                        label: sectid,
                     });
                 }
             };

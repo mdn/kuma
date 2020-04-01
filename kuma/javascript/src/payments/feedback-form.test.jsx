@@ -21,7 +21,7 @@ const setup = () => {
         successId,
         errorId,
         feedback,
-        ...utils
+        ...utils,
     };
 };
 
@@ -38,8 +38,8 @@ describe('Payments Feedback Form', () => {
 
         fireEvent.change(input, {
             target: {
-                value: 'abc        '
-            }
+                value: 'abc        ',
+            },
         });
 
         // Submit form
@@ -57,15 +57,15 @@ describe('Payments Feedback Form', () => {
             feedback,
             formId,
             successId,
-            queryByTestId
+            queryByTestId,
         } = setup();
 
         window.fetch = jest.fn(() => Promise.resolve({ ok: true }));
 
         fireEvent.change(input, {
             target: {
-                value: feedback
-            }
+                value: feedback,
+            },
         });
 
         // Verify that message is not present before submitting the form
@@ -90,20 +90,20 @@ describe('Payments Feedback Form', () => {
             feedback,
             errorId,
             getByText,
-            queryByTestId
+            queryByTestId,
         } = setup();
 
         // Modify fetch to return ok false
         window.fetch = jest.fn(() => Promise.resolve({ ok: false }));
 
         window.mdn = {
-            contributionSupportEmail: 'mock-support@mozilla.com'
+            contributionSupportEmail: 'mock-support@mozilla.com',
         };
 
         fireEvent.change(input, {
             target: {
-                value: feedback
-            }
+                value: feedback,
+            },
         });
 
         // Verify that error is not present before submitting the form
@@ -131,17 +131,17 @@ describe('Payments Feedback Form', () => {
             body: JSON.stringify({ feedback }),
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': null
+                'X-CSRFToken': null,
             },
-            method: 'POST'
+            method: 'POST',
         };
 
         window.fetch = jest.fn(() => Promise.resolve({ ok: true }));
 
         fireEvent.change(input, {
             target: {
-                value: feedback
-            }
+                value: feedback,
+            },
         });
 
         // Submit form

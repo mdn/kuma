@@ -8,7 +8,7 @@ type Props = {
     subtitle?: string,
     description?: string,
     children?: React.Node,
-    columnWidth?: string
+    columnWidth?: string,
 };
 
 const SubHeader = ({
@@ -16,7 +16,7 @@ const SubHeader = ({
     subtitle,
     description,
     columnWidth = 'all', // number of columns, based on grid system defined in _columns.scss
-    children
+    children,
 }: Props): React.Node => (
     <div className="contribution-page-header">
         <div className="column-container">

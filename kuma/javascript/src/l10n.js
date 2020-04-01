@@ -22,7 +22,7 @@ type StringCatalog = { [string]: string | Array<string> };
 // a number that is an index into an array of plural forms. This default
 // function is suitable for English, but some languages have more than
 // one plural form and require more complicated rules.
-type PluralFunction = number => number;
+type PluralFunction = (number) => number;
 
 /*
  * These are default values for the state variables that define the
@@ -30,7 +30,7 @@ type PluralFunction = number => number;
  */
 const defaultLocale = 'en-US';
 const defaultStringCatalog: StringCatalog = {};
-const defaultPluralFunction: PluralFunction = n => (+n === 1 ? 0 : 1);
+const defaultPluralFunction: PluralFunction = (n) => (+n === 1 ? 0 : 1);
 
 /*
  * The currentLocale, currentStringCatalog, and currentPluralFunction
@@ -146,7 +146,7 @@ export function interpolate(s: string, args: Array<any> | { [string]: any }) {
     } else {
         // for flow's type refinement, which otherwise breaks inside of closures
         const typedArgs = args;
-        return s.replace(/%\(\w+\)s/g, match =>
+        return s.replace(/%\(\w+\)s/g, (match) =>
             String(typedArgs[match.slice(2, -2)])
         );
     }
@@ -173,7 +173,7 @@ export function Interpolated({
     ...args
 }: {
     id: string,
-    [key: string]: React.Node
+    [key: string]: React.Node,
 }): React.Node[] {
     return id.split(ELEMENT_REGEXP).map((str, i) => {
         if (!ELEMENT_REGEXP.test(str)) {
@@ -193,7 +193,7 @@ export function Interpolated({
         }
 
         return React.cloneElement(element, {
-            key: str + i
+            key: str + i,
         });
     });
 }

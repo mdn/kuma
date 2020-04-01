@@ -18,7 +18,7 @@ export default function SubscriptionForm() {
      * Opens Stripe modal allowing a user to complete their subscription.
      * @param {Object} event - The form submit event
      */
-    const submit = event => {
+    const submit = (event) => {
         event.preventDefault();
 
         const subscriptionForm = subscriptionFormRef.current;
@@ -34,15 +34,15 @@ export default function SubscriptionForm() {
                 currency: 'usd',
                 amount: 500,
                 email: '',
-                token: function(response) {
+                token: function (response) {
                     formData.set('stripe_token', response.id);
                     subscriptionForm.submit();
                 },
-                closed: function() {
+                closed: function () {
                     if (!formData.get('stripe_token')) {
                         setIsSubmitting(false);
                     }
-                }
+                },
             });
 
             stripeHandler.open();

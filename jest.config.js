@@ -72,7 +72,7 @@ module.exports = {
 
     // A map from regular expressions to module names that allow to stub out resources with a single module
     moduleNameMapper: {
-        '\\.svg$': '<rootDir>/kuma/javascript/src/__mocks__/mockSvg.js'
+        '\\.svg$': '<rootDir>/kuma/javascript/src/__mocks__/mockSvg.js',
     },
 
     // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -92,7 +92,7 @@ module.exports = {
 
     // Use this configuration option to add custom reporters to Jest
     // reporters: undefined,
-    reporters: ['default', 'jest-junit']
+    reporters: ['default', 'jest-junit'],
 
     // Automatically reset mock state between every test
     // resetMocks: false,

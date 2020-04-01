@@ -6,7 +6,7 @@ module.exports = () => ({
                 exclude: /node_modules/,
                 use: [
                     {
-                        loader: 'babel-loader'
+                        loader: 'babel-loader',
                     },
                     {
                         loader: 'react-svg-loader',
@@ -15,12 +15,12 @@ module.exports = () => ({
                             svgo: {
                                 // Disable this one svgo plugin because it
                                 // strips the role attribute from our svgs
-                                plugins: [{ removeUnknownsAndDefaults: false }]
-                            }
-                        }
-                    }
-                ]
-            }
-        ]
-    }
+                                plugins: [{ removeUnknownsAndDefaults: false }],
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+    },
 });
