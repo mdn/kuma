@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.tokens import default_token_generator
 from django.core import validators
 from django.core.cache import cache
-from django.db import models
+from django.db import models, transaction
 from django.db.models import Max
 from django.dispatch import receiver
 from django.utils import timezone
@@ -227,6 +227,12 @@ class UserSubscription(models.Model):
         )
 
     @classmethod
+    # The reason we make this (class) method transaction atomic is because this
+    # use of `update_or_create` will actually trigger a `post_save` signal
+    # on the `User` model which will set the `User.subscriber_number` if needed.
+    # So, this way we're pre-emptively making sure these two things are atomically
+    # connected.
+    @transaction.atomic()
     def set_active(cls, user, stripe_subscription_id):
         cls.objects.update_or_create(
             stripe_subscription_id=stripe_subscription_id,
