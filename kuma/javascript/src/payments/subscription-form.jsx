@@ -161,6 +161,7 @@ export default function SubscriptionForm() {
             </section>
         );
     } else {
+        const isFormDisabled = formStep !== 'initial';
         content = (
             <form
                 method="post"
@@ -168,7 +169,7 @@ export default function SubscriptionForm() {
                     event.preventDefault();
                     openStripeModal();
                 }}
-                disabled={formStep !== 'initial'}
+                disabled={isFormDisabled}
             >
                 <label className="payment-opt-in">
                     <input
@@ -199,9 +200,9 @@ export default function SubscriptionForm() {
                 <button
                     type="submit"
                     className="button cta primary"
-                    disabled={!paymentAuthorized || formStep !== 'initial'}
+                    disabled={!paymentAuthorized || isFormDisabled}
                 >
-                    {gettext('Continue')}
+                    {gettext(isFormDisabled ? 'Submitting...' : 'Continue')}
                 </button>
                 <small className="subtext">
                     {gettext('Payments are not tax deductible')}
