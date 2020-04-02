@@ -41,10 +41,6 @@
             if(ga && ga.create) {
                 // Send event to GA
                 ga('send', data);
-                // execute callback now
-                if(callback) {
-                    callback();
-                }
             }
             else if(ga && !ga.create) {
                 // GA blocked or not yet initialized
@@ -52,14 +48,9 @@
                 data.hitCallback = null;
                 // add to queue without callback
                 ga('send', data);
-                // execute callback now
-                if(callback) {
-                    callback();
-                }
             }
-            else if(callback) {
-                // GA disabled or blocked or something, make sure we still
-                // call the caller's callback:
+
+            if(callback) {
                 callback();
             }
         },
