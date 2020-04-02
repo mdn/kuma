@@ -4,7 +4,6 @@ from unittest import mock
 import pytest
 import stripe
 from django.conf import settings
-from pyquery import PyQuery as pq
 from waffle.testutils import override_flag
 
 from kuma.core.tests import assert_no_cache_header, assert_redirect_to_wiki
