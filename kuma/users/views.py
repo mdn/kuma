@@ -3,7 +3,6 @@ import os
 from datetime import datetime, timedelta
 from urllib.parse import urlparse
 
-import requests
 import stripe
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
@@ -57,7 +56,7 @@ from kuma.core.ga_tracking import (
     CATEGORY_SIGNUP_FLOW,
     track_event,
 )
-from kuma.core.utils import send_mail_retrying, urlparams
+from kuma.core.utils import requests_retry_session, send_mail_retrying, urlparams
 from kuma.payments.utils import cancel_stripe_customer_subscription
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import (
@@ -964,7 +963,9 @@ def _send_payment_received_email(payment_intent, locale):
             [user.email],
             attachment={
                 "name": os.path.basename(urlparse(payment_intent.invoice_pdf).path),
-                "bytes": requests.get(payment_intent.invoice_pdf).content,
+                "bytes": requests_retry_session()
+                .get(payment_intent.invoice_pdf)
+                .content,
                 "mime": "application/pdf",
             },
         )
