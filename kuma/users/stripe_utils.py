@@ -4,6 +4,8 @@ from django.conf import settings
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
+from .models import UserSubscription
+
 
 def retrieve_stripe_subscription(customer):
     for subscription in customer.subscriptions.list().auto_paging_iter():
@@ -33,7 +35,7 @@ def create_stripe_customer_and_subscription_for_user(user, email, stripe_token):
             customer=customer.id, items=[{"plan": settings.STRIPE_PLAN_ID}],
         )
 
-    return subscription
+    UserSubscription.set_active(user, subscription.id)
 
 
 def get_stripe_customer(user):
