@@ -24,9 +24,14 @@ def stripe_user(wiki_user):
 
 @pytest.mark.django_db
 def test_payments_index(client):
-    """Viewing the payments index page doesn't require you to be logged in"""
+    """Viewing the payments index page doesn't require you to be logged in.
+    Payments page shows support email and header."""
     response = client.get(reverse("payments_index"))
     assert response.status_code == 200
+    # doc = pq(response.content)
+    # Commented out until SSR issue is resolved (https://github.com/mdn/kuma/issues/6797)
+    # assert settings.CONTRIBUTION_SUPPORT_EMAIL in doc.find(".contributions-page").text()
+    # assert doc.find("h1").text() == "Become a monthly supporter"
 
 
 @pytest.mark.django_db
