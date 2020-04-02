@@ -397,7 +397,6 @@ exports[`Header snapshot 1`] = `
   </form>
   <a
     className="signin-link"
-    data-service="GitHub"
     href="/en-US/users/account/signup-landing?next=/[fake%20absolute%20url]"
     onClick={[Function]}
     rel="nofollow"
