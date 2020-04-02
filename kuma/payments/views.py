@@ -23,21 +23,19 @@ def index(request):
 
 
 @waffle_flag("subscription")
-@ensure_wiki_domain
 @never_cache
-def contribute(request):
-    return render(request, "payments/payments.html")
+def thank_you(request):
+    return render(request, "payments/thank-you.html")
 
 
 @waffle_flag("subscription")
-@ensure_wiki_domain
 @never_cache
 def payment_terms(request):
     return render(request, "payments/terms.html")
 
 
-@waffle_flag("subscription")
 @ensure_wiki_domain
+@waffle_flag("subscription")
 @login_required
 @never_cache
 def recurring_payment_management(request):

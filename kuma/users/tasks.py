@@ -74,7 +74,7 @@ def send_payment_received_email(stripe_customer_id, locale, timestamp, invoice_p
     context = {
         "payment_date": datetime.datetime.fromtimestamp(timestamp),
         "manage_subscription_url": absolutify(reverse("recurring_payment_management")),
-        "faq_url": absolutify(reverse("recurring_payment_subscription")),
+        "faq_url": absolutify(reverse("payments_index")),
         "contact_email": settings.CONTRIBUTION_SUPPORT_EMAIL,
         "invoice_pdf": invoice_pdf,
     }

@@ -13,7 +13,7 @@ import { localize } from './l10n.js';
 function stringifySafely(obj) {
     return jsesc(JSON.stringify(obj), {
         json: true,
-        isScriptContext: true
+        isScriptContext: true,
     });
 }
 /*

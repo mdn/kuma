@@ -94,7 +94,7 @@ export default function SubscriptionForm() {
                 },
                 closed() {
                     setFormStep(token.current ? 'sent' : 'initial');
-                }
+                },
             });
             stripeHandler.open();
         });
@@ -104,13 +104,13 @@ export default function SubscriptionForm() {
         fetch(SUBSCRIPTION_URL, {
             method: 'POST',
             body: JSON.stringify({
-                stripe_token: token.current // eslint-disable-line camelcase
+                stripe_token: token.current, // eslint-disable-line camelcase
             }),
             headers: {
                 'X-CSRFToken': getCookie('csrftoken'),
-                'Content-Type': 'application/json'
-            }
-        }).then(response => {
+                'Content-Type': 'application/json',
+            },
+        }).then((response) => {
             if (response.ok) {
                 window.location = `/${locale}/payments/thank-you/`;
             } else {
@@ -165,7 +165,7 @@ export default function SubscriptionForm() {
         content = (
             <form
                 method="post"
-                onSubmit={event => {
+                onSubmit={(event) => {
                     event.preventDefault();
                     openStripeModal();
                 }}

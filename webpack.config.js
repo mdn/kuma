@@ -19,9 +19,10 @@ const webpackMerge = require('webpack-merge');
 //
 const nodePath = (process.env.NODE_PATH &&
     process.env.NODE_PATH.split(path.delimiter)) || [
-    path.join(__dirname, 'node_modules')
+    path.join(__dirname, 'node_modules'),
 ];
-const modeConfig = env => require(`./webpack-build-utils/webpack.${env}`)(env);
+const modeConfig = (env) =>
+    require(`./webpack-build-utils/webpack.${env}`)(env);
 const presetsConfig = require('./webpack-build-utils/loadPresets');
 
 module.exports = ({ mode, presets } = { mode: 'production', presets: [] }) => {
@@ -34,21 +35,21 @@ module.exports = ({ mode, presets } = { mode: 'production', presets: [] }) => {
                         test: /\.jsx?$/,
                         exclude: /node_modules/,
                         use: {
-                            loader: 'babel-loader'
-                        }
-                    }
-                ]
+                            loader: 'babel-loader',
+                        },
+                    },
+                ],
             },
             resolve: {
-                modules: nodePath
+                modules: nodePath,
             },
             resolveLoader: {
-                modules: nodePath
+                modules: nodePath,
             },
             output: {
-                filename: 'react.js'
+                filename: 'react.js',
             },
-            plugins: [new webpack.ProgressPlugin()]
+            plugins: [new webpack.ProgressPlugin()],
         },
         modeConfig(mode),
         presetsConfig({ mode, presets })

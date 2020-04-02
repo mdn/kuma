@@ -13,7 +13,7 @@ describe('UserProvider', () => {
         const contextConsumer = jest.fn();
         const userData = {
             ...UserProvider.defaultUserData,
-            username: 'testing'
+            username: 'testing',
         };
 
         create(
@@ -38,7 +38,7 @@ describe('UserProvider', () => {
     // https://github.com/facebook/react/issues/14769 and hopefully a
     // version of act() that can take async methods will fix the
     // issue.
-    test('Provider fetches user data and waffle flags', done => {
+    test('Provider fetches user data and waffle flags', (done) => {
         const P = UserProvider;
         const C = UserProvider.context.Consumer;
         const contextConsumer = jest.fn();
@@ -46,7 +46,7 @@ describe('UserProvider', () => {
         const waffleFlags = {
             flags: { section_edit: true },
             switches: { bar: false },
-            samples: {}
+            samples: {},
         };
 
         const userData = {
@@ -55,7 +55,7 @@ describe('UserProvider', () => {
             isAuthenticated: true,
             isStaff: true,
             waffle: waffleFlags,
-            email: 'testuser@mail.com'
+            email: 'testuser@mail.com',
         };
 
         // In this test we want to verify that UserProvider is
@@ -73,8 +73,8 @@ describe('UserProvider', () => {
                         timezone: null,
                         avatar_url: null,
                         waffle: waffleFlags,
-                        email: 'testuser@mail.com'
-                    })
+                        email: 'testuser@mail.com',
+                    }),
             });
         });
 

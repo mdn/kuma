@@ -30,10 +30,10 @@ function submitNewsletterSubscription(form) {
         method: 'POST',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
-            'Content-type': 'application/x-www-form-urlencoded'
+            'Content-type': 'application/x-www-form-urlencoded',
         },
-        body: new URLSearchParams(new FormData(form)).toString()
-    }).then(response => response.json());
+        body: new URLSearchParams(new FormData(form)).toString(),
+    }).then((response) => response.json());
 }
 
 export default function Newsletter() {
@@ -44,11 +44,11 @@ export default function Newsletter() {
     const newsletterFormat = 'H';
 
     const [showNewsletter, setShowNewsletter] = useState(true);
-    const [showPrivacyCheckbox, setShowPrivacyCheckbox] = useState(false);
+    const [showPrivacyCheckbox, setShowPrivacyCheckbox] = useState(true);
     const [errors, setError] = useState([]);
     const [
         showSuccessfulSubscription,
-        setShowSuccessfulSubscription
+        setShowSuccessfulSubscription,
     ] = useState(false);
 
     /* If this is not en-US, show message informing the user
@@ -68,7 +68,7 @@ export default function Newsletter() {
             hitType: 'event',
             eventCategory: 'newsletter',
             eventAction: 'prompt',
-            eventLabel: 'hide'
+            eventLabel: 'hide',
         });
     };
 
@@ -82,7 +82,7 @@ export default function Newsletter() {
             hitType: 'event',
             eventCategory: 'newsletter',
             eventAction: 'prompt',
-            eventLabel: 'focus'
+            eventLabel: 'focus',
         });
     };
 
@@ -97,7 +97,7 @@ export default function Newsletter() {
      * user, and the visibility state will be stored in `localStorage`
      * @param {Object} event - The MouseEvent object
      */
-    const submit = event => {
+    const submit = (event) => {
         event.preventDefault();
 
         let newsletterForm = newsletterFormRef.current;
@@ -113,7 +113,7 @@ export default function Newsletter() {
                         hitType: 'event',
                         eventCategory: 'newsletter',
                         eventAction: 'progression',
-                        eventLabel: 'complete'
+                        eventLabel: 'complete',
                     });
                     return;
                 }
@@ -122,7 +122,7 @@ export default function Newsletter() {
                     setError(errors);
                 }
             })
-            .catch(e => {
+            .catch((e) => {
                 setError([e.toString()]);
             });
     };
@@ -145,6 +145,9 @@ export default function Newsletter() {
         if (disableNewsletter) {
             setShowNewsletter(false);
         }
+        // if JS is enabled client-side, hide the privacy checkbox until
+        // the email input field receive focus
+        setShowPrivacyCheckbox(false);
     }, []);
 
     if (!showNewsletter) {

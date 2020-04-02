@@ -11,7 +11,7 @@ import { fakeDocumentData } from './document.test.js';
 
 let mockData = {
     documentData: fakeDocumentData,
-    url: 'mock-url'
+    url: 'mock-url',
 };
 
 jest.mock('./single-page-app', () => '<single-page-app />');

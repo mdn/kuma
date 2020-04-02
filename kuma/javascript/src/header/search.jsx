@@ -6,7 +6,7 @@ import { getLocale, gettext } from '../l10n.js';
 import SearchIcon from '../icons/search.svg';
 
 type Props = {
-    initialQuery: string
+    initialQuery: string,
 };
 
 export default function Search(props: Props) {

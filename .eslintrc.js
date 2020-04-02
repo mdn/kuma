@@ -4,11 +4,11 @@ module.exports = {
         es6: true,
         'jest/globals': true,
         jquery: true,
-        node: true
+        node: true,
     },
     parser: 'babel-eslint',
     parserOptions: {
-        ecmaVersion: 6
+        ecmaVersion: 6,
     },
     plugins: ['jest', 'flowtype', 'import', 'jsx-a11y', 'react-hooks'],
     extends: [
@@ -16,7 +16,7 @@ module.exports = {
         'plugin:import/errors',
         'plugin:flowtype/recommended',
         'plugin:jsx-a11y/recommended',
-        'prettier'
+        'prettier',
     ],
     rules: {
         'no-global-assign': 'error',
@@ -26,8 +26,8 @@ module.exports = {
         'no-console': [
             'error',
             {
-                allow: ['error', 'info']
-            }
+                allow: ['error', 'info'],
+            },
         ],
         'no-empty': 'error',
         'no-extra-semi': 'error',
@@ -41,14 +41,14 @@ module.exports = {
         camelcase: [
             'error',
             {
-                properties: 'always'
-            }
+                properties: 'always',
+            },
         ],
         eqeqeq: ['error', 'smart'],
         'one-var-declaration-per-line': ['error', 'always'],
         'new-cap': 'error',
         'react-hooks/rules-of-hooks': 'error',
-        'react-hooks/exhaustive-deps': 'warn'
+        'react-hooks/exhaustive-deps': 'warn',
     },
     globals: {
         CKEDITOR: true,
@@ -59,6 +59,6 @@ module.exports = {
         Mozilla: true,
         waffle: true,
         Prism: true,
-        Promise: true
-    }
+        Promise: true,
+    },
 };

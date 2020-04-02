@@ -18,8 +18,8 @@ export type UserData = {
     waffle: {
         flags: { [flag_name: string]: boolean },
         switches: { [switch_name: string]: boolean },
-        samples: { [sample_name: string]: boolean }
-    }
+        samples: { [sample_name: string]: boolean },
+    },
 };
 
 const defaultUserData: UserData = {
@@ -35,14 +35,14 @@ const defaultUserData: UserData = {
     waffle: {
         flags: {},
         switches: {},
-        samples: {}
-    }
+        samples: {},
+    },
 };
 
 const context = React.createContext<?UserData>(defaultUserData);
 
 export default function UserProvider(props: {
-    children: React.Node
+    children: React.Node,
 }): React.Node {
     const [userData, setUserData] = useState<?UserData>(null);
     const ga = useContext(GAProvider.context);
@@ -50,8 +50,8 @@ export default function UserProvider(props: {
     useEffect(() => {
         let dismounted = false;
         fetch('/api/v1/whoami')
-            .then(response => response.json())
-            .then(data => {
+            .then((response) => response.json())
+            .then((data) => {
                 // No point attempting to update state if the component
                 // is dismounted.
                 if (dismounted) {
@@ -71,7 +71,7 @@ export default function UserProvider(props: {
                     // NOTE: if we ever decide that waffle data should
                     // be re-fetched on client-side navigation, we'll
                     // have to create a separate context for it.
-                    waffle: data.waffle
+                    waffle: data.waffle,
                 };
 
                 // Set the userData as a state variable that we provide
@@ -115,7 +115,7 @@ export default function UserProvider(props: {
                                 window.location.pathname
                             );
                         }
-                    }
+                    },
                 });
             });
         return () => {

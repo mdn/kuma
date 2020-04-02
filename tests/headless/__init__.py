@@ -17,7 +17,8 @@ INDEXED_ATTACHMENT_DOMAINS = {
 }
 
 # Kuma web domains that are indexed
-INDEXED_WEB_DOMAINS = {"developer.mozilla.org", "wiki.developer.mozilla.org"}
+WIKI_HOST = "wiki.developer.mozilla.org"
+INDEXED_WEB_DOMAINS = {"developer.mozilla.org", WIKI_HOST}
 
 
 def request(method, url, **kwargs):
