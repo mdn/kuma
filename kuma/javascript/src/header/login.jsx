@@ -28,14 +28,11 @@ export default function Login(): React.Node {
      * lnk in the header.
      * @param {Object} event - The event object that was triggered
      */
-    function sendSignInEvent(event) {
-        const service = event.target.dataset.service;
-
+    function sendSignInEvent() {
         ga('send', {
             hitType: 'event',
             eventCategory: 'Authentication',
             eventAction: 'Started sign-in',
-            eventLabel: service,
         });
     }
 
@@ -103,12 +100,11 @@ export default function Login(): React.Node {
         return (
             <a
                 href={`/${locale}/users/account/signup-landing?next=${LOCATION}`}
-                data-service="GitHub"
                 rel="nofollow"
                 className="signin-link"
                 onClick={(event) => {
                     // The old GitHub click event (even though it's not GitHub yet).
-                    sendSignInEvent(event);
+                    sendSignInEvent();
                     // The action that causes the auth modal to appear.
                     triggerAuthModal(event);
                 }}
