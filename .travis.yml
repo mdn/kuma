@@ -51,7 +51,6 @@ jobs:
           - static
       script:
         - set -e
-        - docker-compose ps
         - scripts/ci-python
         - scripts/ci-jest
         - scripts/ci-localerefresh
