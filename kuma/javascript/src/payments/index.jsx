@@ -42,7 +42,11 @@ export default function PaymentsLandingPage({
         <>
             <A11yNav />
             <Header />
-            <div className="subscriptions subheader-container has-form">
+            <div
+                className={`subscriptions subheader-container ${
+                    showSubscriptionForm ? 'has-form' : ''
+                }`}
+            >
                 <SubHeader
                     title="Become a monthly supporter"
                     subtitle={interpolate(
@@ -50,7 +54,6 @@ export default function PaymentsLandingPage({
                         [nextSubscriberNumber.toLocaleString()]
                     )}
                     description="Support MDN with a $5 monthly subscription and get back more of the knowledge and tools you rely on for when your work has to work."
-                    columnWidth="7"
                 />
                 {showSubscriptionForm && <SubscriptionForm />}
             </div>
