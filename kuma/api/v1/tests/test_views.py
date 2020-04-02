@@ -540,3 +540,30 @@ def test_send_subscriptions_feedback_failure(client, settings):
 
     assert response.status_code == 400
     assert response.content.decode(response.charset) == "no feedback"
+
+
+@pytest.mark.django_db
+@override_flag("subscription", True)
+@patch("kuma.api.v1.views.create_stripe_customer_and_subscription_for_user")
+def test_create_subscription_success(mock, user_client):
+    response = user_client.post(
+        reverse("api.v1.create_subscription"),
+        content_type="application/json",
+        data={"stripe_token": "tok_visa"},
+    )
+
+    assert response.status_code == 201
+
+
+@pytest.mark.django_db
+@override_flag("subscription", True)
+def test_create_subscription_failure_without_login(client):
+    response = client.post(reverse("api.v1.create_subscription"))
+    assert response.status_code == 302
+
+
+@pytest.mark.django_db
+@override_flag("subscription", False)
+def test_create_subscription_failure_with_disabled_waffle(user_client):
+    response = user_client.post(reverse("api.v1.create_subscription"))
+    assert response.status_code == 403

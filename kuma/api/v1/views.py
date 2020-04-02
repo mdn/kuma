@@ -1,6 +1,7 @@
 import json
 
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.http import (
     Http404,
     HttpResponse,
@@ -387,6 +388,7 @@ def send_subscriptions_feedback(request):
 
 
 @api_view(["POST"])
+@login_required
 def create_subscription(request):
     if not flag_is_active(request, "subscription"):
         return Response(
