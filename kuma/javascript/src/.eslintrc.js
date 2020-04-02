@@ -4,14 +4,14 @@ module.exports = {
         es6: true,
         'jest/globals': true,
         jquery: true,
-        node: true
+        node: true,
     },
     parser: 'babel-eslint',
     parserOptions: {
         ecmaVersion: 6,
         ecmaFeatures: {
-            jsx: true
-        }
+            jsx: true,
+        },
     },
     plugins: ['jest', 'flowtype', 'react', 'import', 'jsx-a11y'],
     extends: [
@@ -21,12 +21,12 @@ module.exports = {
         'plugin:react/recommended',
         'plugin:jsx-a11y/recommended',
         'prettier',
-        'prettier/react'
+        'prettier/react',
     ],
     settings: {
         react: {
-            version: 'detect'
-        }
+            version: 'detect',
+        },
     },
     rules: {
         'no-global-assign': 'error',
@@ -35,8 +35,8 @@ module.exports = {
         'no-console': [
             'error',
             {
-                allow: ['error', 'info']
-            }
+                allow: ['error', 'info'],
+            },
         ],
         'no-empty': 'error',
         'no-extra-semi': 'error',
@@ -49,12 +49,12 @@ module.exports = {
         camelcase: [
             'error',
             {
-                properties: 'always'
-            }
+                properties: 'always',
+            },
         ],
         eqeqeq: ['error', 'smart'],
         'one-var-declaration-per-line': ['error', 'always'],
-        'new-cap': 'error'
+        'new-cap': 'error',
     },
     globals: {
         CKEDITOR: true,
@@ -65,6 +65,6 @@ module.exports = {
         Mozilla: true,
         waffle: true,
         Prism: true,
-        Promise: true
-    }
+        Promise: true,
+    },
 };

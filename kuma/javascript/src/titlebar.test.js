@@ -11,7 +11,7 @@ describe('Titlebar', () => {
         let titlebar = create(
             <Titlebar title="test_title!" document={fakeDocumentData} />
         );
-        let heading = titlebar.root.find(instance => instance.type === 'h1');
+        let heading = titlebar.root.find((instance) => instance.type === 'h1');
         expect(heading).toBeDefined();
         expect(heading.props.children).toBe('test_title!');
     });
@@ -26,7 +26,7 @@ describe('Titlebar', () => {
                 <Titlebar title="test" document={fakeDocumentData} />
             </UserProvider.context.Provider>
         );
-        editLink = titlebar.root.findAll(instance => instance.type === 'a');
+        editLink = titlebar.root.findAll((instance) => instance.type === 'a');
         expect(editLink.length).toBe(0);
 
         // User not logged in, expect no buttons
@@ -35,7 +35,7 @@ describe('Titlebar', () => {
                 <Titlebar title="test" document={fakeDocumentData} />
             </UserProvider.context.Provider>
         );
-        editLink = titlebar.root.findAll(instance => instance.type === 'a');
+        editLink = titlebar.root.findAll((instance) => instance.type === 'a');
         expect(editLink.length).toBe(0);
 
         // User logged in and contributor, expect one button
@@ -44,19 +44,19 @@ describe('Titlebar', () => {
                 value={{
                     ...UserProvider.defaultUserData,
                     isAuthenticated: true,
-                    isContributor: true
+                    isContributor: true,
                 }}
             >
                 <Titlebar
                     title="test"
                     document={{
                         ...fakeDocumentData,
-                        wikiURL: 'foobar'
+                        wikiURL: 'foobar',
                     }}
                 />
             </UserProvider.context.Provider>
         );
-        editLink = titlebar.root.findAll(instance => instance.type === 'a');
+        editLink = titlebar.root.findAll((instance) => instance.type === 'a');
         expect(editLink.length).toBe(1);
         expect(editLink[0].props.href).toBe('foobar');
     });

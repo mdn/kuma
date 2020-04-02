@@ -949,7 +949,7 @@ def _send_payment_received_email(payment_intent, locale):
         "dollar_amount": settings.CONTRIBUTION_AMOUNT_USD,
         "credit_card_brand": subscription_info["brand"],
         "manage_subscription_url": absolutify(reverse("recurring_payment_management")),
-        "faq_url": absolutify(reverse("recurring_payment_subscription")),
+        "faq_url": absolutify(reverse("payments_index")),
         "contact_email": settings.CONTRIBUTION_SUPPORT_EMAIL,
     }
     with translation.override(locale):

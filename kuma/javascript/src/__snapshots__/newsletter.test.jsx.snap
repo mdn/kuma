@@ -66,8 +66,8 @@ exports[`Newsletter de-DE 1`] = `
           />
         </div>
         <div
-          aria-hidden={true}
-          className="hidden"
+          aria-hidden={false}
+          className="form-group form-group-agree newsletter-group-privacy"
           id="newsletter-privacy"
         >
           <input
@@ -110,7 +110,7 @@ exports[`Newsletter de-DE 1`] = `
       <span>
         Hide Newsletter Sign-up
       </span>
-      <svg mock />
+      <svg-mock />
     </button>
   </div>
 </section>
@@ -182,8 +182,8 @@ exports[`Newsletter en-US 1`] = `
           />
         </div>
         <div
-          aria-hidden={true}
-          className="hidden"
+          aria-hidden={false}
+          className="form-group form-group-agree newsletter-group-privacy"
           id="newsletter-privacy"
         >
           <input
@@ -226,7 +226,7 @@ exports[`Newsletter en-US 1`] = `
       <span>
         Hide Newsletter Sign-up
       </span>
-      <svg mock />
+      <svg-mock />
     </button>
   </div>
 </section>

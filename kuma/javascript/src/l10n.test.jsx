@@ -7,7 +7,7 @@ import {
     gettext,
     ngettext,
     interpolate,
-    Interpolated
+    Interpolated,
 } from './l10n';
 
 // We don't actually want the strings in this file to be extracted
@@ -62,7 +62,7 @@ describe('gettext', () => {
             // This should not happen, but I want to test that we
             // handle it if data is bad.
             // $FlowFixMe$ (purposeful type error we're supressing)
-            'null string': null
+            'null string': null,
         });
 
         expect(gtext('')).toBe('translated empty string');
@@ -96,7 +96,7 @@ describe('ngettext', () => {
         expect(ngtext('s', 'p', 2)).toBe('p');
         expect(ngtext('s', 'p', 3)).toBe('p');
 
-        localize('test', { t: 'translation' }, n =>
+        localize('test', { t: 'translation' }, (n) =>
             n >= 1 && n <= 4 ? n - 1 : 4
         );
         expect(ngtext('s', 'p', 1)).toBe('s');
@@ -115,7 +115,7 @@ describe('ngettext', () => {
     });
 
     it('Supports custom pluralization rules', () => {
-        localize('test', { s: ['one', 'two', 'three', 'four', 'many'] }, n =>
+        localize('test', { s: ['one', 'two', 'three', 'four', 'many'] }, (n) =>
             n >= 1 && n <= 4 ? n - 1 : 4
         );
         expect(ngtext('s', 'p', 1)).toBe('one');
@@ -128,21 +128,21 @@ describe('ngettext', () => {
     });
 
     it('Returns singular if no plural forms available', () => {
-        localize('test', { s: 't' }, n => (n >= 1 && n <= 4 ? n - 1 : 4));
+        localize('test', { s: 't' }, (n) => (n >= 1 && n <= 4 ? n - 1 : 4));
         expect(ngtext('s', 'p', 1)).toBe('t');
         expect(ngtext('s', 'p', 2)).toBe('t');
         expect(ngtext('s', 'p', 3)).toBe('t');
     });
 
     it('Returns sole plural form regardless of count', () => {
-        localize('test', { s: ['t'] }, n => (n === 1 ? 0 : 1));
+        localize('test', { s: ['t'] }, (n) => (n === 1 ? 0 : 1));
         expect(ngtext('s', 'p', 0)).toBe('t');
         expect(ngtext('s', 'p', 1)).toBe('t');
         expect(ngtext('s', 'p', 2)).toBe('t');
     });
 
     it('Returns untranslated text if plural function returns bad index', () => {
-        localize('test', { s: ['t1', 't2'] }, n => n);
+        localize('test', { s: ['t1', 't2'] }, (n) => n);
         expect(ngtext('s', 'p', 0)).toBe('t1');
         expect(ngtext('s', 'p', 1)).toBe('t2');
         expect(ngtext('s', 'p', 2)).toBe('p');

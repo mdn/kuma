@@ -89,7 +89,7 @@ if (container) {
     // See also kuma/static/js/main.js where similar code appears to
     // make the menu work on the wiki domain
     for (let menu of document.querySelectorAll('select.autosubmit')) {
-        menu.addEventListener('change', function() {
+        menu.addEventListener('change', function () {
             this.form.submit();
         });
     }

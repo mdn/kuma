@@ -7,7 +7,7 @@ import ssr from './ssr.jsx';
 
 let mockData = {
     documentData: fakeDocumentData,
-    url: 'mock-url'
+    url: 'mock-url',
 };
 
 describe('ssr', () => {

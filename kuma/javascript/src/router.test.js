@@ -53,7 +53,7 @@ document.body.addEventListener = jest.fn();
 
 window.LUX = {
     init: jest.fn(),
-    send: jest.fn()
+    send: jest.fn(),
 };
 
 // TODO: This is commented out in an effort to disable
@@ -62,7 +62,7 @@ window.LUX = {
 // This file, instead of deleting it, needs to have at least one
 // test otherwise jest will complain. And if you'd just do an early
 // return within the test, flow will complain.
-test('Router', done => {
+test('Router', (done) => {
     return done();
 });
 

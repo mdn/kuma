@@ -48,8 +48,8 @@
         "jsesc": "2.5.2",
         "morgan": "^1.9.1",
         "newrelic": "^5.9.0",
-        "react": "^16.8.4",
-        "react-dom": "^16.8.4"
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1"
     },
     "devDependencies": {
         "@babel/core": "^7.2.2",
@@ -57,6 +57,7 @@
         "@babel/preset-env": "^7.3.1",
         "@babel/preset-flow": "^7.0.0",
         "@babel/preset-react": "^7.0.0",
+        "@testing-library/react": "^10.0.2",
         "babel-eslint": "^10.0.1",
         "babel-loader": "^8.0.5",
         "babel-plugin-emotion": "^10.0.7",
@@ -73,12 +74,12 @@
         "flow-bin": "^0.111.0",
         "hard-source-webpack-plugin": "0.13.1",
         "husky": "0.14.3",
-        "jest": "^24.1.0",
+        "jest": "^25.2.3",
         "jest-junit": "^8.0.0",
         "node-sass": "^4.13.0",
         "node-sass-chokidar": "^1.4.0",
         "npm-run-all": "4.1.5",
-        "prettier": "1.18.2",
+        "prettier": "^2.0.2",
         "pretty-quick": "2.0.0",
         "react-svg-loader": "3.0.1",
         "react-test-renderer": "^16.8.4",

@@ -64,9 +64,9 @@
     </div>
     <hr>
     <p>
-      {% trans manage_url=url('recurring_payment_management'), terms_url=url('recurring_payment_initial'), support_email='mailto:' + settings.CONTRIBUTION_SUPPORT_EMAIL -%}
+      {% trans manage_url=url('recurring_payment_management'), faq_url=url('payments_index'), support_email='mailto:' + settings.CONTRIBUTION_SUPPORT_EMAIL -%}
         To cancel your subscription <a href="{{ manage_url }}">click here</a>. <br>If you have questions, please read
-        the <a href="{{ terms_url }}">FAQ</a> or you can also <a href="{{ support_email }}">contact support</a>.
+        the <a href="{{ faq_url }}">FAQ</a> or you can also <a href="{{ support_email }}">contact support</a>.
       {% endtrans -%}
     </p>
   {% endif %}

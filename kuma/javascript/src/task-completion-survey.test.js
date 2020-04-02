@@ -13,12 +13,12 @@ const mockDocumentData = { ...fakeDocumentData, slug: 'mock/slug' };
 const mockUserData = { ...UserProvider.defaultUserData };
 const mockClientId = 'mock-client-id';
 const mockGA1 = jest.fn();
-const mockGA2 = function(...args) {
+const mockGA2 = function (...args) {
     if (typeof args[0] === 'function') {
         args[0]({
             get(p) {
                 return p === 'clientId' ? mockClientId : '';
-            }
+            },
         });
     } else {
         mockGA1(...args);
