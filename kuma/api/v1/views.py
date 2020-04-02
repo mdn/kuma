@@ -393,6 +393,6 @@ def create_subscription(request):
 
     user = request.user
     create_stripe_customer_and_subscription_for_user(
-        user, user.email, request.data.get("stripe_token", "")
+        user, user.email, request.data["stripe_token"]
     )
     return Response(None, status=status.HTTP_201_CREATED)
