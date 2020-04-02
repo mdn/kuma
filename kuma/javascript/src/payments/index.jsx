@@ -6,7 +6,7 @@ import { getLocale, gettext, Interpolated } from '../l10n.js';
 import A11yNav from '../a11y/a11y-nav.jsx';
 import Header from '../header/header.jsx';
 import Footer from '../footer.jsx';
-import Route from '../route.js';
+import Route, { type RouteComponentProps } from '../route.js';
 import SubHeader from './subheader.jsx';
 import SubscriptionForm from './subscription-form.jsx';
 import ListItem from './list-item.jsx';
@@ -16,13 +16,13 @@ type PaymentsIndexRouteParams = {
     locale: string,
 };
 
-export default function PaymentsLandingPage() {
+export default function PaymentsLandingPage({ data }: RouteComponentProps) {
     const userData = useContext(UserProvider.context);
     const locale = getLocale();
     const urls = {
         annualReport:
             'https://www.mozilla.org/en-US/foundation/annualreport/2018/',
-        email: `mailto:${window.mdn.contributionSupportEmail}?Subject=Manage%20monthly%20subscription`,
+        email: `mailto:${data.email}?Subject=Manage%20monthly%20subscription`,
         moco: 'https://www.mozilla.org/foundation/moco/',
         mozillaFoundation: 'https://www.mozilla.org/foundation/',
         managePayments: `/${locale}/payments/recurring/management/`,
@@ -263,7 +263,7 @@ export default function PaymentsLandingPage() {
                                             rel="noopener noreferrer"
                                             href={urls.email}
                                         >
-                                            {gettext('mdn-support@mozilla.com')}
+                                            {gettext(data.email)}
                                         </a>
                                     }
                                 />

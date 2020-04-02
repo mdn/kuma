@@ -30,6 +30,15 @@ def test_payments_index(client):
 
 
 @pytest.mark.django_db
+def test_payments_index_email_renders(client):
+    """Subscriptions email renders on payments landing page"""
+    response = client.get(reverse("payments_index"))
+    email_link = "mailto:" + settings.CONTRIBUTION_SUPPORT_EMAIL
+    content = response.content.decode(response.charset)
+    assert email_link in content
+
+
+@pytest.mark.django_db
 @override_flag("subscription", True)
 @mock.patch("kuma.payments.views.get_stripe_customer_data", return_value=True)
 def test_recurring_payment_management_no_customer_id(get, user_client):
