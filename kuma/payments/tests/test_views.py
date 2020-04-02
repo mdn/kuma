@@ -4,6 +4,7 @@ from unittest import mock
 import pytest
 import stripe
 from django.conf import settings
+from pyquery import PyQuery as pq
 from waffle.testutils import override_flag
 
 from kuma.core.tests import assert_no_cache_header, assert_redirect_to_wiki
@@ -24,18 +25,16 @@ def stripe_user(wiki_user):
 
 @pytest.mark.django_db
 def test_payments_index(client):
-    """Viewing the payments index page doesn't require you to be logged in"""
+    """Viewing the payments index page doesn't require you to be logged in.
+    Payments page shows support email and header."""
     response = client.get(reverse("payments_index"))
     assert response.status_code == 200
-
-
-@pytest.mark.django_db
-def test_payments_index_email_renders(client):
-    """Subscriptions email renders on payments landing page"""
-    response = client.get(reverse("payments_index"))
-    email_link = "mailto:" + settings.CONTRIBUTION_SUPPORT_EMAIL
-    content = response.content.decode(response.charset)
-    assert email_link in content
+    doc = pq(response.content)
+    assert (
+        doc.find('.faq a[href^="mailto:{settings.CONTRIBUTION_SUPPORT_EMAIL}"]').text()
+        == settings.CONTRIBUTION_SUPPORT_EMAIL
+    )
+    assert doc.find("h1").text() == "Become a monthly supporter"
 
 
 @pytest.mark.django_db
