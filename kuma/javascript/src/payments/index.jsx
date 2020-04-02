@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
 
-import { getLocale, gettext, Interpolated } from '../l10n.js';
+import { gettext, Interpolated } from '../l10n.js';
 import A11yNav from '../a11y/a11y-nav.jsx';
 import Header from '../header/header.jsx';
 import Footer from '../footer.jsx';
@@ -16,9 +16,11 @@ type PaymentsIndexRouteParams = {
     locale: string,
 };
 
-export default function PaymentsLandingPage({ data }: RouteComponentProps) {
+export default function PaymentsLandingPage({
+    data,
+    locale
+}: RouteComponentProps) {
     const userData = useContext(UserProvider.context);
-    const locale = getLocale();
     const urls = {
         annualReport:
             'https://www.mozilla.org/en-US/foundation/annualreport/2018/',
@@ -263,7 +265,7 @@ export default function PaymentsLandingPage({ data }: RouteComponentProps) {
                                             rel="noopener noreferrer"
                                             href={urls.email}
                                         >
-                                            {gettext(data.email)}
+                                            {data.email}
                                         </a>
                                     }
                                 />
