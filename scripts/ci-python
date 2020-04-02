@@ -46,4 +46,7 @@ docker-compose exec -T web make build-static
 docker-compose exec -T web ./manage.py migrate
 # This checks that running `./manage.py makemigrations` wasn't forgotten
 docker-compose exec -T web ./manage.py makemigrations --check --dry-run
+
+docker-compose ps
+
 docker-compose exec -T web make coveragetest
