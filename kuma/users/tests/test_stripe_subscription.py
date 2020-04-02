@@ -129,19 +129,22 @@ def test_create_stripe_subscription_fail(mock1, mock2, test_user):
     assert response.status_code == 403
 
 
+@patch("kuma.users.views._retrieve_and_synchronize_subscription_info")
 @patch("stripe.Event.construct_from")
 @pytest.mark.django_db
-def test_stripe_payment_succeeded_sends_invoice_mail(mock1, client):
+def test_stripe_payment_succeeded_sends_invoice_mail(mock1, mock2, client):
     mock1.return_value = SimpleNamespace(
         type="invoice.payment_succeeded",
         data=SimpleNamespace(
             object=SimpleNamespace(
+                id="test_invoice_001",
                 customer="cus_mock_testuser",
                 created=1583842724,
                 invoice_pdf="https://developer.mozilla.org/mock-invoice-pdf-url",
             )
         ),
     )
+    mock2.return_value = {'next_payment_at': 1583842724, 'brand': 'MagicCard'}
 
     testuser = user(
         save=True,
@@ -157,7 +160,7 @@ def test_stripe_payment_succeeded_sends_invoice_mail(mock1, client):
     payment_email = mail.outbox[0]
     assert payment_email.to == [testuser.email]
     assert "manage monthly subscriptions" in payment_email.body
-    assert "invoice" in payment_email.subject
+    assert "Receipt" in payment_email.subject
 
 
 @patch("stripe.Event.construct_from")
@@ -217,11 +220,12 @@ def test_stripe_hook_stripe_api_error(mock1, client):
     assert response.status_code == 400
 
 
+@patch("kuma.users.views._send_payment_received_email")
 @patch("kuma.users.views.track_event")
 @patch("stripe.Event.construct_from")
 @pytest.mark.django_db
 def test_stripe_payment_succeeded_sends_ga_tracking(
-    mock1, track_event_mock_signals, client, settings
+    mock1, track_event_mock_signals, mock2, client, settings
 ):
     settings.GOOGLE_ANALYTICS_ACCOUNT = "UA-XXXX-1"
     settings.GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS = True
