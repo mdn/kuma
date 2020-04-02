@@ -48,7 +48,7 @@ export default function SubscriptionForm() {
 
     const [paymentAuthorized, setPaymentAuthorized] = useState(false);
     const [formStep, setFormStep] = useState<
-        'initial' | 'stripe_error' | 'stripe' | 'sent' | 'server_error'
+        'initial' | 'stripe_error' | 'stripe' | 'submitting' | 'server_error'
     >('initial');
 
     const token = useRef(null);
@@ -93,7 +93,7 @@ export default function SubscriptionForm() {
                     createSubscription();
                 },
                 closed() {
-                    setFormStep(token.current ? 'sent' : 'initial');
+                    setFormStep(token.current ? 'submitting' : 'initial');
                 },
             });
             stripeHandler.open();
@@ -126,7 +126,7 @@ export default function SubscriptionForm() {
     let content;
     if (formStep === 'server_error') {
         content = (
-            <section>
+            <section className="error">
                 <h2>{gettext('Sorry!')}</h2>
                 <p>
                     {gettext(
@@ -144,7 +144,7 @@ export default function SubscriptionForm() {
         );
     } else if (formStep === 'stripe_error') {
         content = (
-            <section>
+            <section className="error">
                 <h2>{gettext('Sorry!')}</h2>
                 <p>
                     {gettext(
@@ -161,7 +161,6 @@ export default function SubscriptionForm() {
             </section>
         );
     } else {
-        const isFormDisabled = formStep !== 'initial';
         content = (
             <form
                 method="post"
@@ -169,7 +168,7 @@ export default function SubscriptionForm() {
                     event.preventDefault();
                     openStripeModal();
                 }}
-                disabled={isFormDisabled}
+                disabled={formStep !== 'initial'}
             >
                 <label className="payment-opt-in">
                     <input
@@ -200,9 +199,11 @@ export default function SubscriptionForm() {
                 <button
                     type="submit"
                     className="button cta primary"
-                    disabled={!paymentAuthorized || isFormDisabled}
+                    disabled={!paymentAuthorized || formStep !== 'initial'}
                 >
-                    {gettext(isFormDisabled ? 'Submitting...' : 'Continue')}
+                    {gettext(
+                        formStep === 'submitting' ? 'Submitting...' : 'Continue'
+                    )}
                 </button>
                 <small className="subtext">
                     {gettext('Payments are not tax deductible')}

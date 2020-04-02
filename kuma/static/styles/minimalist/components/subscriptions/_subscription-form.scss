@@ -21,6 +21,10 @@
         form {
             padding: 20px 20px 0;
 
+            &.error {
+                padding: 20px;
+            }
+
             h2 {
                 margin: 0;
             }
