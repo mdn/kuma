@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
 
-import { gettext, Interpolated } from '../l10n.js';
+import { gettext, interpolate, Interpolated } from '../l10n.js';
 import A11yNav from '../a11y/a11y-nav.jsx';
 import Header from '../header/header.jsx';
 import Footer from '../footer.jsx';
@@ -36,7 +36,7 @@ export default function PaymentsLandingPage({
     const showSubscriptionForm =
         userData && userData.waffle.flags.subscription_banner;
 
-    let nextSubscriberNumber = 1000;
+    const nextSubscriberNumber = data.next_subscriber_number;
 
     return (
         <>

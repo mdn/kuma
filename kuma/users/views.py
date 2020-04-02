@@ -485,6 +485,7 @@ def user_edit(request, username):
         "attachment_revisions": attachment_revisions,
         "subscription_info": _retrieve_and_synchronize_subscription_info(edit_user),
         "has_stripe_error": has_stripe_error,
+        "next_subscriber_number": User.get_highest_subscriber_number() + 1,
     }
 
     return render(request, "users/user_edit.html", context)

@@ -97,8 +97,6 @@ export default function Router({
     // use a property of the component instance and need to use a ref.
     let initialPageLoad = useRef(true);
 
-    console.log('INITIAL DATA:', initialData);
-
     // When loading is true we display a loading bar animation.
     // If the initialData prop is truthy, we're not going to bother
     // calling any route.fetch() which means it won't need to be in a loading
@@ -231,8 +229,6 @@ export default function Router({
                 params: match,
                 data: null,
             };
-
-            console.log('DATA:', data);
 
             // If we were called with initial data, then we already
             // have all the pageState we need and can just call

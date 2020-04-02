@@ -204,13 +204,17 @@ class User(AbstractUser):
         # By locking "globally", we get to be certain that our query to get
         # the current highest `subscriber_number`, gets done alone.
         with cache.lock(lock_key):
-            highest_number = (
-                User.objects.filter(subscriber_number__isnull=True).aggregate(
-                    number=Max("subscriber_number")
-                )["number"]
-                or 0
-            )
+            highest_number = User.get_highest_subscriber_number()
             User.objects.filter(id=self.id).update(subscriber_number=highest_number + 1)
+
+    @classmethod
+    def get_highest_subscriber_number(cls):
+        return (
+            cls.objects.filter(subscriber_number__isnull=False).aggregate(
+                number=Max("subscriber_number")
+            )["number"]
+            or 0
+        )
 
 
 class UserSubscription(models.Model):

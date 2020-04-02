@@ -28,11 +28,12 @@ export default function ThankYouPage() {
                 <SubHeader
                     title={subheaderTitle}
                     subtitle={
-                        userData &&
-                        !!userData.subscriberNumber &&
-                        interpolate(gettext('You are MDN member number: %s'), [
-                            userData.subscriberNumber.toLocaleString(),
-                        ])
+                        userData && !!userData.subscriberNumber
+                            ? interpolate(
+                                  gettext('You are MDN member number: %s'),
+                                  [userData.subscriberNumber.toLocaleString()]
+                              )
+                            : ''
                     }
                 />
             </div>
