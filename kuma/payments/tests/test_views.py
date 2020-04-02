@@ -30,10 +30,7 @@ def test_payments_index(client):
     response = client.get(reverse("payments_index"))
     assert response.status_code == 200
     doc = pq(response.content)
-    assert (
-        doc.find('.faq a[href^="mailto:{settings.CONTRIBUTION_SUPPORT_EMAIL}"]').text()
-        == settings.CONTRIBUTION_SUPPORT_EMAIL
-    )
+    assert settings.CONTRIBUTION_SUPPORT_EMAIL in doc.find(".contributions-page").text()
     assert doc.find("h1").text() == "Become a monthly supporter"
 
 
