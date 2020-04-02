@@ -18,7 +18,7 @@ type PaymentsIndexRouteParams = {
 
 export default function PaymentsLandingPage({
     data,
-    locale
+    locale,
 }: RouteComponentProps) {
     const userData = useContext(UserProvider.context);
     const urls = {
