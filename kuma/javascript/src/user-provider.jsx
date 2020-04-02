@@ -14,7 +14,8 @@ export type UserData = {
     timezone: ?string,
     avatarUrl: ?string,
     isSubscriber: boolean,
-    isSubscriber: ?number,
+    subscriberNumber: ?number,
+    email: ?string,
     waffle: {
         flags: { [flag_name: string]: boolean },
         switches: { [switch_name: string]: boolean },
@@ -32,6 +33,7 @@ const defaultUserData: UserData = {
     avatarUrl: null,
     isSubscriber: false,
     subscriberNumber: null,
+    email: null,
     waffle: {
         flags: {},
         switches: {},
@@ -68,6 +70,7 @@ export default function UserProvider(props: {
                     avatarUrl: data.avatar_url,
                     isSubscriber: data.is_subscriber,
                     subscriberNumber: data.subscriber_number,
+                    email: data.email,
                     // NOTE: if we ever decide that waffle data should
                     // be re-fetched on client-side navigation, we'll
                     // have to create a separate context for it.

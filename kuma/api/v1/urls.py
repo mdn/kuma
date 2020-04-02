@@ -14,4 +14,9 @@ urlpatterns = [
         views.send_subscriptions_feedback,
         name="api.v1.send_subscriptions_feedback",
     ),
+    re_path(
+        r"^subscriptions/?$",
+        views.create_subscription,
+        name="api.v1.create_subscription",
+    ),
 ]

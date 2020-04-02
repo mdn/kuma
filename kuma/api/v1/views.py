@@ -17,6 +17,7 @@ from rest_framework import serializers, status
 from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
+from waffle import flag_is_active
 from waffle.decorators import waffle_flag
 from waffle.models import Flag, Sample, Switch
 
@@ -36,6 +37,7 @@ from kuma.search.filters import (
 )
 from kuma.search.search import SearchView
 from kuma.users.models import User, UserSubscription
+from kuma.users.stripe_utils import create_stripe_customer_and_subscription_for_user
 from kuma.users.templatetags.jinja_helpers import get_avatar_url
 from kuma.wiki.models import Document
 from kuma.wiki.templatetags.jinja_helpers import absolutify
@@ -384,3 +386,15 @@ def send_subscriptions_feedback(request):
         CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_FEEDBACK, data["feedback"]
     )
     return HttpResponse(status=204)
+
+
+@api_view(["POST"])
+def create_subscription(request):
+    if not request.user.is_authenticated or not flag_is_active(request, "subscription"):
+        return Response(None, status=status.HTTP_403_FORBIDDEN,)
+
+    user = request.user
+    create_stripe_customer_and_subscription_for_user(
+        user, user.email, request.data["stripe_token"]
+    )
+    return Response(None, status=status.HTTP_201_CREATED)
