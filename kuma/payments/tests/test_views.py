@@ -31,10 +31,10 @@ def test_payments_index(client):
     assert response.status_code == 200
     doc = pq(response.content)
     print("00000000000000")
-    print(doc.find("main"))
+    print(doc.find("body"))
     print("//////////////")
-    print(doc.find("#content"))
-    assert settings.CONTRIBUTION_SUPPORT_EMAIL in doc.find("#content").text()
+    print(doc.find("main"))
+    assert settings.CONTRIBUTION_SUPPORT_EMAIL in doc.find(".contributions-page").text()
     assert doc.find("h1").text() == "Become a monthly supporter"
 
 
