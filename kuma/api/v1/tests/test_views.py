@@ -559,7 +559,7 @@ def test_create_subscription_success(mock, user_client):
 @override_flag("subscription", True)
 def test_create_subscription_failure_without_login(client):
     response = client.post(reverse("api.v1.create_subscription"))
-    assert response.status_code == 302
+    assert response.status_code == 403
 
 
 @pytest.mark.django_db

@@ -1,7 +1,6 @@
 import json
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.http import (
     Http404,
     HttpResponse,
@@ -388,13 +387,9 @@ def send_subscriptions_feedback(request):
 
 
 @api_view(["POST"])
-@login_required
 def create_subscription(request):
-    if not flag_is_active(request, "subscription"):
-        return Response(
-            "subscription flag not active for this user",
-            status=status.HTTP_403_FORBIDDEN,
-        )
+    if not request.user.is_authenticated or not flag_is_active(request, "subscription"):
+        return Response(None, status=status.HTTP_403_FORBIDDEN,)
 
     user = request.user
     create_stripe_customer_and_subscription_for_user(
