@@ -1,11 +1,11 @@
 Thank you.
 
-{% trans dollar_amount=dollar_amount|int %}
-You supported MDN with a ${{ dollar_amount }} monthly subscription.
+{% trans cost=cost|money %}
+You supported MDN with a {{ cost }} monthly subscription.
 {% endtrans %}
 
-{% trans dollar_amount= "%.2f"|format(dollar_amount) %}
-Amount paid: ${{ dollar_amount }}
+{% trans cost=cost|money %}
+Amount paid: {{ cost }}
 {% endtrans %}
 {% trans credit_card_brand=credit_card_brand %}
 Payment method: {{ credit_card_brand }}
@@ -21,8 +21,8 @@ Date of issue: {{ payment_date }}
 Date due: {{ payment_date }}
 {% endtrans %}
 
-{% trans dollar_amount=dollar_amount|int, next_payment_date=next_payment_date|date('DATE_FORMAT') %}
-Your next payment of ${{ dollar_amount }} (monthly) occurs on {{ next_payment_date }}.
+{% trans cost=cost|money, next_payment_date=next_payment_date|date('DATE_FORMAT') %}
+Your next payment of {{ cost }} (monthly) occurs on {{ next_payment_date }}.
 {% endtrans %}
 
 {% trans manage_subscription_url=manage_subscription_url, faq_url=faq_url, contact_email=contact_email %}

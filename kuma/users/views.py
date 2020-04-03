@@ -945,7 +945,7 @@ def _send_payment_received_email(payment_intent, locale):
         "payment_date": datetime.fromtimestamp(payment_intent.created),
         "next_payment_date": subscription_info["next_payment_at"],
         "invoice_number": payment_intent.id,
-        "dollar_amount": settings.CONTRIBUTION_AMOUNT_USD,
+        "cost": settings.CONTRIBUTION_AMOUNT_USD,
         "credit_card_brand": subscription_info["brand"],
         "manage_subscription_url": absolutify(reverse("recurring_payment_management")),
         "faq_url": absolutify(reverse("payments_index")),
