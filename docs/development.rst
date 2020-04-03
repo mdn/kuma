@@ -133,6 +133,254 @@ To get an idea about the size distribution of our react codebase you can run::
 
 This will open an interactively explorable report in your browser.
 
+Add a React page
+----------------
+Let's say we are adding a new Example page to the dashboards section on Kuma. We'd like the pathname to be ``/dashboards/example/``.
+
+First we need to set up a few things in Django:
+
+#. In ``kuma/dashboards/jinja2/dashboards/``, create a new Jinja template that our view will render called ``example.html``. Paste the following code in ``example.html`` to get started::
+
+    {% extends "react_base.html" %}
+
+    {% block title %}{{ page_title(_('Example Page')) }}{% endblock %}
+
+    {% block content %}This works!{% endblock %}
+
+    {# This overrides the Jinja footer, since we will be using the React footer instead. Without this line, two footers will render. #}
+    {% block footer %}{% endblock %}
+
+#. In ``kuma/dashboards/views.py``, render the Jinja template we just created::
+
+    def example(request):
+        return render(request, "dashboards/example.html")
+
+
+#. In ``kuma/dashboards/urls.py``, add a new url that will render our view. This code will change slightly depending on your url and file structure::
+
+    # Import the view
+
+    # (This next line most likely will already be there, if not, add it to the top of the file.)
+    from . import views
+
+    ...
+
+    re_path(r"^example/$", views.example, name="dashboards.example"),
+
+
+#. We are done with the Django part! In your browser, go to http://wiki.localhost.org:8000/en-US/dashboards/example/ and you should see a page that says "This works!"
+
+#. Now we can set up the React part. In ``kuma/dashboards/jinja2/dashboards/example.html``, we can remove the "This works!" text and add the following code between ``{% block title %}`` and ``{% block content %}``::
+
+    {# Pass `True` for initial data if you do not have any data to fetch. Otherwise, change `True` to `None` or whatever your initial data will be. #}
+    {% block document_head %}
+        {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), True)|safe }}
+    {% endblock %}
+
+#. So your ``kuma/dashboards/jinja2/dashboards/example.html`` file should now look something like this::
+
+    {% extends "react_base.html" %}
+
+    {% block title %}{{ page_title(_('Example Page')) }}{% endblock %}
+
+    {# Pass `True` for initial data if you do not have any data to fetch (i.e. static page). #}
+    {# Otherwise, change `True` to `None` or whatever your initial data will be. #}
+    {% block document_head %}
+        {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), True)|safe }}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+    {# This overrides the Jinja footer, since we will be using the React footer instead. Without this line, two footers will render. #}
+    {% block footer %}{% endblock %}
+
+
+#. In ``kuma/javascript/src``, if there is not a ``kuma/javascript/dashboards`` folder already, add a folder called ``dashboards``.
+
+#. In ``kuma/javascript/src/dashboards``, create a file called ``example.jsx``. Add the following lines as a starter::
+
+    // @flow
+    import * as React from 'react';
+
+    import { gettext } from '../l10n.js';
+    import A11yNav from '../a11y/a11y-nav.jsx';
+    import Header from '../header/header.jsx';
+    import Footer from '../footer.jsx';
+    import Route from '../route.js';
+
+    type ExampleRouteParams = {
+        locale: string
+    };
+
+    export default function ExamplePage() {
+        return (
+            <>
+                <A11yNav />
+                <Header />
+                {gettext('Hello!')}
+                <Footer />
+            </>
+        );
+    }
+
+    const BASEURL =
+        typeof window !== 'undefined' && window.location
+            ? window.location.origin
+            : 'http://ssr.hack';
+
+    export class ExampleRoute extends Route<ExampleRouteParams, null> {
+        locale: string;
+
+        constructor(locale: string) {
+            super();
+            this.locale = locale;
+        }
+
+        getComponent() {
+            return ExamplePage;
+        }
+
+        match(url: string): ?ExampleRouteParams {
+            const path = new URL(url, BASEURL).pathname;
+            const examplePath = `/${this.locale}/dashboards/example/`;
+            const regex = new RegExp(examplePath, 'g');
+
+            if (regex.test(path)) {
+                return {
+                    locale: this.locale
+                };
+            }
+            return null;
+        }
+    }
+
+#. We need to tell the single-page-app component about our new Route component, ``ExampleRoute``. In ``kuma/javascript/src/single-page-app.jsx``, at the top, add::
+
+    import { ExampleRoute } from './dashboards/example.jsx';
+
+#. A few lines down in the same file, where you see ``const routes = [ ... ]``, add ``ExampleRoute``, so it should look like this::
+
+    const routes = [
+        ...
+        new ExampleRoute(locale)
+    ];
+
+#. We are done! Go to ``/dashboards/example/`` in your browser and you should see a header, footer, and the words, "Hello!"
+
+React page with initial data
+############################
+If we have initial data we'd like to pass to our React component, we can do so by updating the 4th argument (``document_data``) in the ``render_react`` function call. This data will then be available as a prop on the React side.
+For a real-life example, search for ``document_data`` in ``kuma/wiki/views/document.py``.
+
+
+#. Continuing our example from above, go back to ``kuma/dashboards/jinja2/dashboards/example.html``. In the call to ``render_react``, change ``True`` to your initial data. For our purposes, initial data will be ``{"content": "Goodbye!"}``. The full line should look like::
+
+    {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), {"content": "Goodbye!"})|safe }}
+
+#. In ``kuma/javascript/src/dashboards/example.jsx``, import the ``RouteComponentProps`` type by making the change below::
+
+    import Route from '../route.js';
+
+    ↑ to ↴
+
+    import Route, { type RouteComponentProps } from '../route.js';
+
+#. In the same file, update the ``ExamplePage`` function to accept a ``data`` parameter. The function declaration should now look like this::
+
+    export default function ExamplePage({ data }: RouteComponentProps) {
+        ...
+    }
+
+#. Now we can access the initial data from Step 1. Change ``{gettext("Hello!)}`` to ``{gettext(data.content)}``. Refresh the page and the "Hello!" text should be replaced by "Goodbye!"
+
+
+React page using ``fetch()``
+############################
+In some cases, you may choose to fetch data asynchronously when the page renders.
+
+#. Continuing our example from above, go back to ``kuma/dashboards/jinja2/dashboards/example.html``. In the call to ``render_react``, change the 4th argument to ``None``. The full line should look like::
+
+    {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), None)|safe }}
+
+#. Refresh the page in the browser and you should now get an error. That is because we do not have a ``fetch()`` method yet, so let's make one. In ``kuma/javascript/src/dashboards/example.jsx``, ``ExampleRoute`` class, add this method (note: we are using ``/api/v1/whoami`` just to show a working example of an API call. Change this to reflect your API endpoint.)::
+
+    fetch(): Promise<any> {
+        return fetch('/api/v1/whoami').then(response => response.json());
+
+    }
+
+#. Once the fetch completes, our data will be available as a data prop once again. In the `ExamplePage` function, replace the ``{gettext(data.content)}`` line with::
+
+    {!data && gettext('Loading...')}
+    {data && gettext(data.username)}
+
+#. Your ``kuma/javascript/src/dashboards/example.jsx`` file should look like::
+
+    // @flow
+    import * as React from 'react';
+
+    import { gettext } from '../l10n.js';
+    import A11yNav from '../a11y/a11y-nav.jsx';
+    import Header from '../header/header.jsx';
+    import Footer from '../footer.jsx';
+    import Route, { type RouteComponentProps } from '../route.js';
+
+    type ExampleRouteParams = {
+        locale: string
+    };
+
+    export default function ExamplePage({ data }: RouteComponentProps) {
+        return (
+            <>
+                <A11yNav />
+                <Header />
+                {!data && gettext('Loading...')}
+                {data && gettext(data.username)}
+                <Footer />
+            </>
+        );
+    }
+
+    const BASEURL =
+        typeof window !== 'undefined' && window.location
+            ? window.location.origin
+            : 'http://ssr.hack';
+
+    export class ExampleRoute extends Route<ExampleRouteParams, null> {
+        locale: string;
+
+        constructor(locale: string) {
+            super();
+            this.locale = locale;
+        }
+
+        getComponent() {
+            return ExamplePage;
+        }
+
+        match(url: string): ?ExampleRouteParams {
+            const path = new URL(url, BASEURL).pathname;
+            const examplePath = `/${this.locale}/dashboards/example/`;
+            const regex = new RegExp(examplePath, 'g');
+
+            if (regex.test(path)) {
+                return {
+                    locale: this.locale
+                };
+            }
+            return null;
+        }
+
+        fetch(): Promise<any> {
+            return fetch('/api/v1/whoami').then(response => response.json());
+        }
+    }
+
+
+
+#. Refresh the page in the browser, and you should now see your username if you are logged in. Or just the header and footer if you are logged out.
+
 Database migrations
 ===================
 Apps are migrated using Django's migration system. To run the migrations::
