@@ -40,7 +40,6 @@ def render_react(component_name, locale, url, document_data, ssr=True):
         "pluralExpression": localization_data["plural"],
         "url": url,
         "documentData": document_data,
-        "nextSubscriberNumber": 102,
     }
 
     if ssr:
