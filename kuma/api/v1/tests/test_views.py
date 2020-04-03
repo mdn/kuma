@@ -194,8 +194,7 @@ def test_whoami_disallowed_methods(client, http_method):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("timezone", ("US/Eastern", "US/Pacific"))
-def test_whoami_anonymous(client, settings, timezone):
+def test_whoami_anonymous(client, settings):
     """Test response for anonymous users."""
     # Create some fake waffle objects
     Flag.objects.create(name="section_edit", authenticated=True)
@@ -206,14 +205,12 @@ def test_whoami_anonymous(client, settings, timezone):
     Sample.objects.create(name="sample_never", percent=0)
     Sample.objects.create(name="sample_always", percent=100)
 
-    settings.TIME_ZONE = timezone
     url = reverse("api.v1.whoami")
     response = client.get(url)
     assert response.status_code == 200
     assert response["content-type"] == "application/json"
     assert response.json() == {
         "username": None,
-        "timezone": timezone,
         "is_authenticated": False,
         "is_staff": False,
         "is_superuser": False,
@@ -238,8 +235,8 @@ def test_whoami_anonymous(client, settings, timezone):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "timezone,is_staff,is_superuser,is_beta_tester",
-    [("US/Eastern", False, False, False), ("US/Pacific", True, True, True)],
+    "is_staff,is_superuser,is_beta_tester",
+    [(False, False, False), (True, True, True)],
     ids=("muggle", "wizard"),
 )
 def test_whoami(
@@ -247,7 +244,6 @@ def test_whoami(
     wiki_user,
     wiki_user_github_account,
     beta_testers_group,
-    timezone,
     is_staff,
     is_superuser,
     is_beta_tester,
@@ -262,7 +258,6 @@ def test_whoami(
     Sample.objects.create(name="sample_never", percent=0)
     Sample.objects.create(name="sample_always", percent=100)
 
-    wiki_user.timezone = timezone
     wiki_user.is_staff = is_staff
     wiki_user.is_superuser = is_superuser
     wiki_user.is_staff = is_staff
@@ -275,7 +270,6 @@ def test_whoami(
     assert response["content-type"] == "application/json"
     assert response.json() == {
         "username": wiki_user.username,
-        "timezone": timezone,
         "is_authenticated": True,
         "is_staff": is_staff,
         "is_superuser": is_superuser,
