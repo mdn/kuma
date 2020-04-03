@@ -192,4 +192,4 @@ def get_locale_localized(locale):
 
 @library.filter
 def money(value, currency="USD"):
-    return format_currency(value, currency, locale='en')
+    return format_currency(value, currency, locale="en")
