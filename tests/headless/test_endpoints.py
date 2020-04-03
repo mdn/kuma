@@ -45,7 +45,6 @@ def is_indexed(site_url):
         "/en-US/users/ban/trump",
         "/en-US/users/ban_user_and_cleanup/trump",
         "/en-US/users/ban_user_and_cleanup_summary/trump",
-        "/en-US/contribute/",
         "/en-US/docs/ckeditor_config.js",
         "/en-US/docs/preview-wiki-content",
         "/en-US/docs/all",
@@ -87,6 +86,16 @@ def test_redirect_to_wiki(site_url, wiki_site_url, slug):
     resp = request("get", site_url + slug)
     assert resp.status_code == 301
     assert resp.headers["location"] == wiki_site_url + slug
+
+
+@pytest.mark.headless
+@pytest.mark.nondestructive
+def test_redirect_contribute(site_url, wiki_site_url):
+    for base_url in (site_url, wiki_site_url):
+        url = base_url + "/en-US/contribute/"
+        resp = request("get", url)
+        assert resp.status_code == 302, url
+        assert resp.headers["location"] == "/en-US/payments/", url
 
 
 @pytest.mark.headless

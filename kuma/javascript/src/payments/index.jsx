@@ -1,42 +1,53 @@
 // @flow
 import * as React from 'react';
+import { useContext } from 'react';
 
-import { getLocale, gettext, Interpolated } from '../l10n.js';
+import { gettext, Interpolated } from '../l10n.js';
 import A11yNav from '../a11y/a11y-nav.jsx';
 import Header from '../header/header.jsx';
 import Footer from '../footer.jsx';
-import Route from '../route.js';
+import Route, { type RouteComponentProps } from '../route.js';
 import SubHeader from './subheader.jsx';
+import SubscriptionForm from './subscription-form.jsx';
 import ListItem from './list-item.jsx';
+import UserProvider from '../user-provider.jsx';
 
-type PaymentsRouteParams = {
-    locale: string
+type PaymentsIndexRouteParams = {
+    locale: string,
 };
 
-export default function PaymentsLandingPage() {
-    const locale = getLocale();
+export default function PaymentsLandingPage({
+    data,
+    locale,
+}: RouteComponentProps) {
+    const userData = useContext(UserProvider.context);
     const urls = {
         annualReport:
             'https://www.mozilla.org/en-US/foundation/annualreport/2018/',
-        email:
-            'mailto:mdn-support@mozilla.com?Subject=Manage%20monthly%20subscription',
+        email: `mailto:${data.email}?Subject=Manage%20monthly%20subscription`,
         moco: 'https://www.mozilla.org/foundation/moco/',
         mozillaFoundation: 'https://www.mozilla.org/foundation/',
-        managePayments: `/${locale}/payments/recurring/management`,
+        managePayments: `/${locale}/payments/recurring/management/`,
         stripe: 'https://stripe.com/',
         taxDeductible: 'https://donate.mozilla.org/faq#item_tax_a',
-        terms: `/${locale}/payments/terms`
+        terms: `/${locale}/payments/terms/`,
     };
+
+    const showSubscriptionForm =
+        userData && userData.waffle.flags.subscription_banner;
 
     return (
         <>
             <A11yNav />
             <Header />
-            <SubHeader
-                title="Become a monthly supporter"
-                description="Support MDN with a $5 monthly subscription and get back more of the knowledge and tools you rely on for when your work has to work."
-                columnWidth="7"
-            />
+            <div className="subscriptions subheader-container has-form">
+                <SubHeader
+                    title="Become a monthly supporter"
+                    description="Support MDN with a $5 monthly subscription and get back more of the knowledge and tools you rely on for when your work has to work."
+                    columnWidth="7"
+                />
+                {showSubscriptionForm && <SubscriptionForm />}
+            </div>
             <main
                 id="contributions-page"
                 className="contributions-page"
@@ -254,7 +265,7 @@ export default function PaymentsLandingPage() {
                                             rel="noopener noreferrer"
                                             href={urls.email}
                                         >
-                                            {gettext('mdn-support@mozilla.com')}
+                                            {data.email}
                                         </a>
                                     }
                                 />
@@ -332,7 +343,7 @@ const BASEURL =
         ? window.location.origin
         : 'http://ssr.hack';
 
-export class PaymentsRoute extends Route<PaymentsRouteParams, null> {
+export class PaymentsIndexRoute extends Route<PaymentsIndexRouteParams, null> {
     locale: string;
 
     constructor(locale: string) {
@@ -344,13 +355,13 @@ export class PaymentsRoute extends Route<PaymentsRouteParams, null> {
         return PaymentsLandingPage;
     }
 
-    match(url: string): ?PaymentsRouteParams {
+    match(url: string): ?PaymentsIndexRouteParams {
         const currentPath = new URL(url, BASEURL).pathname;
         const paymentsPath = `/${this.locale}/payments`;
 
         if (currentPath.startsWith(paymentsPath)) {
             return {
-                locale: this.locale
+                locale: this.locale,
             };
         }
         return null;

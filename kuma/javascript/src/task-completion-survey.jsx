@@ -52,7 +52,7 @@ function isEmbargoed() {
 }
 
 type Props = {
-    document: ?DocumentData
+    document: ?DocumentData,
 };
 
 export default function TaskCompletionSurvey(props: Props) {
@@ -87,7 +87,7 @@ export default function TaskCompletionSurvey(props: Props) {
                 eventAction: 'prompt',
                 eventLabel: '',
                 eventValue: 'impression',
-                nonInteraction: true
+                nonInteraction: true,
             });
         }
     }, [shouldShow, ga]);
@@ -132,7 +132,7 @@ export default function TaskCompletionSurvey(props: Props) {
             eventAction: 'prompt',
             eventLabel: '',
             eventValue: 'participate',
-            nonInteraction: false
+            nonInteraction: false,
         });
         // Since they opened the survey, we can dismiss the notification
         dismiss();

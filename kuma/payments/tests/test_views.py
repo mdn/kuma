@@ -4,6 +4,7 @@ from unittest import mock
 import pytest
 import stripe
 from django.conf import settings
+from pyquery import PyQuery as pq
 from waffle.testutils import override_flag
 
 from kuma.core.tests import assert_no_cache_header, assert_redirect_to_wiki
@@ -24,9 +25,13 @@ def stripe_user(wiki_user):
 
 @pytest.mark.django_db
 def test_payments_index(client):
-    """Viewing the payments index page doesn't require you to be logged in"""
+    """Viewing the payments index page doesn't require you to be logged in.
+    Payments page shows support email and header."""
     response = client.get(reverse("payments_index"))
     assert response.status_code == 200
+    doc = pq(response.content)
+    assert settings.CONTRIBUTION_SUPPORT_EMAIL in doc.find(".contributions-page").text()
+    assert doc.find("h1").text() == "Become a monthly supporter"
 
 
 @pytest.mark.django_db
@@ -179,13 +184,7 @@ def test_recurring_payment_management_not_logged_in(get, cancel_, client):
 
 @override_flag("subscription", True)
 @pytest.mark.parametrize(
-    "endpoint",
-    [
-        "payment_terms",
-        "recurring_payment_initial",
-        "recurring_payment_subscription",
-        "recurring_payment_management",
-    ],
+    "endpoint", ["recurring_payment_management"],
 )
 def test_redirect(db, client, endpoint):
     """Redirect to the wiki domain if not already."""

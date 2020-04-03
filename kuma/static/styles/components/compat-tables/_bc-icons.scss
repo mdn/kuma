@@ -2,24 +2,25 @@
     .bc-head-txt-label {
         display: inline-block;
         bottom: 0;
-        margin: 0 0 20px 10px;
+        margin: 0 0 0 10px;
+        @include bidi(((margin-bottom, 20px, 40px),));
         padding: 0;
         width: 20px;
         height: 20px;
-        transform: rotate(-90deg);
-        transform-origin: left;
+        @include bidi(((transform, rotate(-90deg), rotate(90deg)),));
+        @include bidi(((transform-origin, left, center),));
         @include set-font-size($small-bump-font-size);
         text-align: left;
         white-space: nowrap;
 
         &:before {
             position: absolute;
-            top: 2px;
-            left: -28px;
+            @include bidi(((top, 2px, 5px),));
+            @include bidi(((left, -28px, 28px),));
             display: inline-block;
             content: '';
             background-repeat: no-repeat;
-            transform: rotate(90deg);
+            @include bidi(((transform, rotate(90deg), rotate(-90deg)),));
         }
     }
 

@@ -7,7 +7,7 @@ import { gettext, interpolate } from '../l10n.js';
 import type { DocumentData } from '../document.jsx';
 
 type Props = {
-    document: ?DocumentData
+    document: ?DocumentData,
 };
 
 export default function LanguageMenu({ document }: Props): React.Node {
@@ -41,7 +41,7 @@ export default function LanguageMenu({ document }: Props): React.Node {
             ariaOwns="language-menu"
             ariaLabel={chooseLanguageString}
         >
-            {document.translations.map(t => (
+            {document.translations.map((t) => (
                 <li key={t.locale} lang={t.locale} role="menuitem">
                     <a href={t.url} title={t.localizedLanguage}>
                         <bdi>{t.language}</bdi>

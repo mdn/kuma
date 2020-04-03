@@ -6,7 +6,7 @@ import GAProvider from './ga-provider.jsx';
 import { gettext } from './l10n.js';
 
 type Props = {
-    html: string
+    html: string,
 };
 
 export default function TOC({ html }: Props) {
@@ -27,7 +27,7 @@ export default function TOC({ html }: Props) {
                 hitType: 'event',
                 eventCategory: 'MozMenu',
                 eventAction: action,
-                eventLabel: label
+                eventLabel: label,
             });
         }
     }
@@ -54,7 +54,7 @@ export default function TOC({ html }: Props) {
                 </header>
                 <ul
                     dangerouslySetInnerHTML={{
-                        __html: html
+                        __html: html,
                     }}
                 />
             </section>

@@ -18,9 +18,10 @@
         var brush = defaultBrush;
         var lineSearch;
 
-        // If the PRE has a child <code> tag, it's likely a copy/pasted, already-prism'd code samples.
-        // Bail to avoid an error
-        if ($pre.find('code').length) {
+        // If there are *any* tags within the $pre block, then bail. It might be
+        // existing <code> tags (put there for a copy-and-paste) or the pre block
+        // has its own tags like <sub>. Don't attempt to syntax highlight these.
+        if ($pre.find('*').length) {
             return;
         }
 

@@ -12,6 +12,11 @@ from django.urls import reverse
 from stripe.error import APIError
 from waffle.testutils import override_flag
 
+from kuma.core.ga_tracking import (
+    ACTION_SUBSCRIPTION_CANCELED,
+    ACTION_SUBSCRIPTION_CREATED,
+    CATEGORY_MONTHLY_PAYMENTS,
+)
 from kuma.core.utils import safer_pyquery as pq
 from kuma.users.models import User, UserSubscription
 
@@ -210,3 +215,69 @@ def test_stripe_hook_stripe_api_error(mock1, client):
         reverse("users.stripe_hooks"), content_type="application/json", data={},
     )
     assert response.status_code == 400
+
+
+@patch("kuma.users.views.track_event")
+@patch("stripe.Event.construct_from")
+@pytest.mark.django_db
+def test_stripe_payment_succeeded_sends_ga_tracking(
+    mock1, track_event_mock_signals, client, settings
+):
+    settings.GOOGLE_ANALYTICS_ACCOUNT = "UA-XXXX-1"
+    settings.GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS = True
+
+    mock1.return_value = SimpleNamespace(
+        type="invoice.payment_succeeded",
+        data=SimpleNamespace(
+            object=SimpleNamespace(
+                customer="cus_mock_testuser",
+                created=1583842724,
+                invoice_pdf="https://developer.mozilla.org/mock-invoice-pdf-url",
+            )
+        ),
+    )
+    user(
+        save=True,
+        username="testuser",
+        email="testuser@example.com",
+        stripe_customer_id="cus_mock_testuser",
+    )
+    response = client.post(
+        reverse("users.stripe_hooks"), content_type="application/json", data={},
+    )
+    assert response.status_code == 200
+
+    track_event_mock_signals.assert_called_with(
+        CATEGORY_MONTHLY_PAYMENTS,
+        ACTION_SUBSCRIPTION_CREATED,
+        f"{settings.CONTRIBUTION_AMOUNT_USD:.2f}",
+    )
+
+
+@patch("kuma.users.views.track_event")
+@patch("stripe.Event.construct_from")
+@pytest.mark.django_db
+def test_stripe_subscription_canceled_sends_ga_tracking(
+    mock1, track_event_mock_signals, client
+):
+    mock1.return_value = SimpleNamespace(
+        type="customer.subscription.deleted",
+        data=SimpleNamespace(
+            object=SimpleNamespace(customer="cus_mock_testuser", id="sub_123456789")
+        ),
+    )
+
+    user(
+        save=True,
+        username="testuser",
+        email="testuser@example.com",
+        stripe_customer_id="cus_mock_testuser",
+    )
+    response = client.post(
+        reverse("users.stripe_hooks"), content_type="application/json", data={},
+    )
+    assert response.status_code == 200
+
+    track_event_mock_signals.assert_called_with(
+        CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_CANCELED, "webhook"
+    )

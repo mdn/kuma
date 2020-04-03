@@ -43,7 +43,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
      * Moves user to a step, by settings displaying related blocks
      * @param {Number} step - Step index to be shown
      */
-    const toStep = step => {
+    const toStep = (step) => {
         if (step !== bcSignalStep) {
             const prevStep = bcSignalStep;
             bcSignalStep = step;
@@ -51,7 +51,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
                 gettext('Step %(current)s of %(total)s'),
                 {
                     current: bcSignalStep,
-                    total: bcSignalSteps
+                    total: bcSignalSteps,
                 }
             );
 
@@ -222,7 +222,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
             feature: feature,
             explanation: explanation,
             browsers: browsers.join(', '),
-            supporting_material: supportingMaterial // eslint-disable-line camelcase
+            supporting_material: supportingMaterial, // eslint-disable-line camelcase
         };
 
         fetch(signalApiUrl, {
@@ -230,10 +230,10 @@ window.activateBCDSignals = (slug: string, locale: string) => {
             body: JSON.stringify(payload),
             headers: {
                 'X-CSRFToken': getCookie('csrftoken'),
-                'Content-Type': 'application/json'
-            }
+                'Content-Type': 'application/json',
+            },
         })
-            .then(function(response) {
+            .then(function (response) {
                 if (!response.ok) {
                     throw new Error(
                         `Response was not OK (${response.statusText})`
@@ -241,11 +241,11 @@ window.activateBCDSignals = (slug: string, locale: string) => {
                 }
                 return response;
             })
-            .then(function() {
+            .then(function () {
                 bcSignalBlock.classList.remove('open');
                 bcSignalCompleteBlock.classList.add('open');
             })
-            .catch(function() {
+            .catch(function () {
                 errorMessageWrapper.classList.add('visible');
             });
     };
@@ -273,7 +273,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
      * @param {Object} controlObj - Object containing element that needs to be wrapped and related params
      * @returns Form control as a `HTMLElement`
      */
-    const createFormControl = controlObj => {
+    const createFormControl = (controlObj) => {
         const control = document.createElement('div');
         const controlInnerWrapper = document.createElement('div');
         const controlHeader = document.createElement('div');
@@ -369,7 +369,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
             browserBlock.appendChild(browserLogoWrapper);
             browserBlock.appendChild(browserNameBlock);
 
-            browserBlock.addEventListener('click', function() {
+            browserBlock.addEventListener('click', function () {
                 this.classList.toggle('selected');
                 validateControls();
             });
@@ -381,7 +381,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
             header: headerText,
             description: descriptionText,
             el: browserControlBlock,
-            index: 1
+            index: 1,
         });
     };
 
@@ -412,7 +412,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
             description: '',
             el: rowControlBlock,
             index: 2,
-            inline: true
+            inline: true,
         });
     };
 
@@ -429,7 +429,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
                 gettext('Minimum %(min)s and maximum %(max)s characters.'),
                 {
                     min: MIN_BRIEF_EXPLANATION,
-                    max: MAX_BRIEF_EXPLANATION.toLocaleString()
+                    max: MAX_BRIEF_EXPLANATION.toLocaleString(),
                 }
             );
 
@@ -458,7 +458,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
             el: textAreaControl,
             index: 3,
             optional: true,
-            optionalLabelHidden: true
+            optionalLabelHidden: true,
         });
     };
 
@@ -486,7 +486,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
             description: descriptionText,
             el: textAreaControl,
             index: 4,
-            optional: true
+            optional: true,
         });
     };
 
@@ -769,7 +769,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
                 }
                 const scrollEndElem = scrollTo;
 
-                requestAnimationFrame(timestamp => {
+                requestAnimationFrame((timestamp) => {
                     const stamp = timestamp || new Date().getTime();
                     const duration = 100;
                     const start = stamp;
@@ -802,7 +802,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
         scrollEndElemTop,
         startScrollOffset
     ) => {
-        const easeInCubic = t => t * t * t;
+        const easeInCubic = (t) => t * t * t;
         const runtime = currentTime - startTime;
         let progress = runtime / duration;
 
@@ -812,7 +812,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
 
         window.scroll(0, startScrollOffset + scrollEndElemTop * ease);
         if (runtime < duration) {
-            requestAnimationFrame(timestamp => {
+            requestAnimationFrame((timestamp) => {
                 const currentTime = timestamp || new Date().getTime();
                 scrollToElem(
                     startTime,
@@ -838,7 +838,7 @@ window.activateBCDSignals = (slug: string, locale: string) => {
         signalLink.setAttribute('class', 'scroll-to-signal');
         signalLink.href = '#';
 
-        signalLink.addEventListener('click', function() {
+        signalLink.addEventListener('click', function () {
             toggleBcSignalBlock();
         });
 

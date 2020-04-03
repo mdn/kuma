@@ -8,7 +8,7 @@
         as an argument to indicate that we have the data we need, which
         allows the component to render in the server.
     #}
-    {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), True)|safe }}
+    {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), {"email": settings.CONTRIBUTION_SUPPORT_EMAIL})|safe }}
 {% endblock %}
 
 {% block content %}{% endblock %}

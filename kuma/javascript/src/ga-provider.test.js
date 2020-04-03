@@ -52,7 +52,7 @@ describe('GAProvider.useClientId', () => {
         const mockTrackerObject = {
             get(p) {
                 return p === 'clientId' ? 'mockClientId' : '';
-            }
+            },
         };
 
         function mockGA(f) {

@@ -16,7 +16,7 @@ const path = require('path');
 //
 const nodePath = process.env.NODE_PATH || path.join(__dirname, 'node_modules');
 
-module.exports = api => {
+module.exports = (api) => {
     api.cache(() => process.env.NODE_ENV);
     const presets = [
         path.join(nodePath, '@babel/preset-react'),
@@ -25,17 +25,17 @@ module.exports = api => {
             path.join(nodePath, '@babel/preset-env'),
             {
                 targets: {
-                    browsers: 'last 2 versions'
-                }
-            }
-        ]
+                    browsers: 'last 2 versions',
+                },
+            },
+        ],
     ];
     const plugins = [
-        path.join(nodePath, '@babel/plugin-proposal-class-properties')
+        path.join(nodePath, '@babel/plugin-proposal-class-properties'),
     ];
 
     return {
         presets,
-        plugins
+        plugins,
     };
 };

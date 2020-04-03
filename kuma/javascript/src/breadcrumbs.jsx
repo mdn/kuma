@@ -7,7 +7,7 @@ import GAProvider from './ga-provider.jsx';
 import type { DocumentData } from './document.jsx';
 
 type DocumentProps = {
-    document: DocumentData
+    document: DocumentData,
 };
 
 export default function Breadcrumbs({ document }: DocumentProps) {
@@ -25,7 +25,7 @@ export default function Breadcrumbs({ document }: DocumentProps) {
             hitType: 'event',
             eventCategory: 'Wiki',
             eventAction: 'Crumbs',
-            eventLabel: label
+            eventLabel: label,
         });
     }
 

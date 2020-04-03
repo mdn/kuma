@@ -40,6 +40,10 @@ def search(request, *args, **kwargs):
         # If q is returned in the data, there was a validation error for that field,
         # so return 400 status.
         status = 200 if results.get("q") is None else 400
+        # If there was an error with the pagination you'll get...
+        if results.get("detail"):
+            error = str(results["detail"])
+            status = 400
 
         context = {"results": {"results": None if error else results, "error": error}}
     return render(request, "search/react.html", context, status=status)

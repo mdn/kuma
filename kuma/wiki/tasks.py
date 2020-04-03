@@ -8,7 +8,7 @@ from celery import chain, chord, task
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sitemaps import GenericSitemap
-from django.core.mail import mail_admins, send_mail
+from django.core.mail import mail_admins
 from django.db import transaction
 from django.db.models import Q
 from django.template.loader import render_to_string
@@ -17,7 +17,7 @@ from lxml import etree
 
 from kuma.core.decorators import skip_in_maintenance_mode
 from kuma.core.urlresolvers import reverse
-from kuma.core.utils import chunked
+from kuma.core.utils import chunked, send_mail_retrying
 from kuma.search.models import Index
 from kuma.users.models import User
 
@@ -207,7 +207,7 @@ def move_page(locale, slug, new_slug, user_id):
             "locale": locale,
         }
         logging.error(message)
-        send_mail(
+        send_mail_retrying(
             "Page move failed",
             textwrap.dedent(message),
             settings.DEFAULT_FROM_EMAIL,
@@ -235,7 +235,7 @@ def move_page(locale, slug, new_slug, user_id):
             "message": e.message,
         }
         logging.error(message)
-        send_mail(
+        send_mail_retrying(
             "Page move failed",
             textwrap.dedent(message),
             settings.DEFAULT_FROM_EMAIL,
@@ -258,7 +258,7 @@ def move_page(locale, slug, new_slug, user_id):
             "info": e,
         }
         logging.error(message)
-        send_mail(
+        send_mail_retrying(
             "Page move failed",
             textwrap.dedent(message),
             settings.DEFAULT_FROM_EMAIL,
@@ -316,7 +316,7 @@ def move_page(locale, slug, new_slug, user_id):
         }
     )
 
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
+    send_mail_retrying(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
 
 
 @task

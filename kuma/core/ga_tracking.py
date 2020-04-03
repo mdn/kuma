@@ -54,6 +54,14 @@ ACTION_FREE_NEWSLETTER = "free-newsletter"
 # existing based on a *different* (already created profile) provider.
 ACTION_SOCIAL_AUTH_ADD = "social-auth-add"
 
+CATEGORY_MONTHLY_PAYMENTS = "monthly payments"
+# When a subscription is successfully set up
+ACTION_SUBSCRIPTION_CREATED = "subscription created"
+# When it's canceled either by webhook or by UI
+ACTION_SUBSCRIPTION_CANCELED = "subscription canceled"
+# When a user submits feedback
+ACTION_SUBSCRIPTION_FEEDBACK = "feedback"
+
 
 def track_event(
     event_category,

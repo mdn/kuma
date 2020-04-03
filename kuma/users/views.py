@@ -47,6 +47,9 @@ from kuma.core.ga_tracking import (
     ACTION_PROFILE_AUDIT,
     ACTION_PROFILE_EDIT,
     ACTION_PROFILE_EDIT_ERROR,
+    ACTION_SUBSCRIPTION_CANCELED,
+    ACTION_SUBSCRIPTION_CREATED,
+    CATEGORY_MONTHLY_PAYMENTS,
     CATEGORY_SIGNUP_FLOW,
     track_event,
 )
@@ -860,10 +863,7 @@ def create_stripe_subscription(request):
     try:
         email = request.POST.get("stripe_email", "")
         stripe_token = request.POST.get("stripe_token", "")
-        subscription = create_stripe_customer_and_subscription_for_user(
-            user, email, stripe_token
-        )
-        UserSubscription.set_active(user, subscription.id)
+        create_stripe_customer_and_subscription_for_user(user, email, stripe_token)
 
     except stripe.error.StripeError:
         raven_client.captureException()
@@ -914,10 +914,17 @@ def stripe_hooks(request):
             payment_intent.created,
             payment_intent.invoice_pdf,
         )
+        track_event(
+            CATEGORY_MONTHLY_PAYMENTS,
+            ACTION_SUBSCRIPTION_CREATED,
+            f"{settings.CONTRIBUTION_AMOUNT_USD:.2f}",
+        )
+
     elif event.type == "customer.subscription.deleted":
         obj = event.data.object
         for user in User.objects.filter(stripe_customer_id=obj.customer):
             UserSubscription.set_canceled(user, obj.id)
+        track_event(CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_CANCELED, "webhook")
 
     else:
         return HttpResponseBadRequest(

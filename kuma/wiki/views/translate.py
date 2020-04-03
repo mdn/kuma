@@ -189,6 +189,15 @@ def translate(request, document_slug, document_locale):
             # If we are submitting the whole form, we need to check that
             # the Revision is valid before saving the Document.
             if doc_form.is_valid() and (which_form == "doc" or rev_form.is_valid()):
+
+                # If the document you're about to save already exists, as a
+                # soft-delete, then really delete it first.
+                for soft_deleted_document in Document.deleted_objects.filter(
+                    locale=doc_form.cleaned_data["locale"],
+                    slug=doc_form.cleaned_data["slug"],
+                ):
+                    soft_deleted_document.delete(purge=True)
+
                 doc = doc_form.save(parent=parent_doc)
 
                 if which_form == "doc":
