@@ -4,6 +4,7 @@ from unittest import mock
 import pytest
 import stripe
 from django.conf import settings
+from pyquery import PyQuery as pq
 from waffle.testutils import override_flag
 
 from kuma.core.tests import assert_no_cache_header, assert_redirect_to_wiki
@@ -28,10 +29,9 @@ def test_payments_index(client):
     Payments page shows support email and header."""
     response = client.get(reverse("payments_index"))
     assert response.status_code == 200
-    # doc = pq(response.content)
-    # Commented out until SSR issue is resolved (https://github.com/mdn/kuma/issues/6797)
-    # assert settings.CONTRIBUTION_SUPPORT_EMAIL in doc.find(".contributions-page").text()
-    # assert doc.find("h1").text() == "Become a monthly supporter"
+    doc = pq(response.content)
+    assert settings.CONTRIBUTION_SUPPORT_EMAIL in doc.find(".contributions-page").text()
+    assert doc.find("h1").text() == "Become a monthly supporter"
 
 
 @pytest.mark.django_db
