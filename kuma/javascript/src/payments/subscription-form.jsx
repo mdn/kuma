@@ -72,55 +72,118 @@ export default function SubscriptionForm() {
             });
     }, [formStep, stripeLoadingPromise]);
 
-    function openStripeModal() {
-        if (!stripeLoadingPromise) {
-            return;
-        }
-        setFormStep('stripe');
-        stripeLoadingPromise.then(() => {
-            const stripeHandler = window.StripeCheckout.configure({
-                key: window.mdn.stripePublicKey,
-                locale,
-                name: 'MDN Web Docs',
-                zipCode: true,
-                currency: 'usd',
-                amount: 500,
-                email: userData ? userData.email : '',
-                // token is only called if Stripe was able to successfully
-                // create a token from the entered info
-                token(response) {
-                    token.current = response.id;
-                    createSubscription();
-                },
-                closed() {
-                    setFormStep(token.current ? 'submitting' : 'initial');
-                },
-            });
-            stripeHandler.open();
-        });
-    }
+    const STRIPE_CONTINUE_SESSIONSTORAGE_KEY = 'stripe-form-continue';
 
-    function createSubscription() {
-        fetch(SUBSCRIPTION_URL, {
-            method: 'POST',
-            body: JSON.stringify({
-                stripe_token: token.current, // eslint-disable-line camelcase
-            }),
-            headers: {
-                'X-CSRFToken': getCookie('csrftoken'),
-                'Content-Type': 'application/json',
-            },
-        }).then((response) => {
-            if (response.ok) {
-                window.location = `/${locale}/payments/thank-you/`;
-            } else {
-                console.error(
-                    'error while creating subscription',
-                    response.statusText
+    /**
+     * If you arrived on this page, being anonymous, you'd have to first sign in.
+     * Suppose that you do that, we will make sure to send you back to this page
+     * with the sessionStorage key set.
+     * Basically, if you have that sessionStorage key, it will, for you, check the
+     * checkbox and press the "Continue" button.
+     */
+
+    useEffect(() => {
+        if (userData && userData.isAuthenticated) {
+            let autoTriggerStripe = false;
+            try {
+                autoTriggerStripe = JSON.parse(
+                    sessionStorage.getItem(
+                        STRIPE_CONTINUE_SESSIONSTORAGE_KEY
+                    ) || 'false'
                 );
-                setFormStep('server_error');
+                sessionStorage.removeItem(STRIPE_CONTINUE_SESSIONSTORAGE_KEY);
+            } catch (e) {
+                // If sessionStorage is not supported, they'll have to manually click
+                // the Continue button again.
             }
-        });
+            if (autoTriggerStripe) {
+                setPaymentAuthorized(true);
+                setOpenStripeModal(true);
+            }
+        }
+    }, [userData]);
+
+    const [openStripeModal, setOpenStripeModal] = useState(false);
+    useEffect(() => {
+        function createSubscription() {
+            fetch(SUBSCRIPTION_URL, {
+                method: 'POST',
+                body: JSON.stringify({
+                    stripe_token: token.current, // eslint-disable-line camelcase
+                }),
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'Content-Type': 'application/json',
+                },
+            }).then((response) => {
+                if (response.ok) {
+                    window.location = `/${locale}/payments/thank-you/`;
+                } else {
+                    console.error(
+                        'error while creating subscription',
+                        response.statusText
+                    );
+                    setFormStep('server_error');
+                }
+            });
+        }
+
+        if (stripeLoadingPromise && openStripeModal) {
+            setFormStep('stripe');
+            stripeLoadingPromise.then(() => {
+                const stripeHandler = window.StripeCheckout.configure({
+                    key: window.mdn.stripePublicKey,
+                    locale,
+                    name: 'MDN Web Docs',
+                    zipCode: true,
+                    currency: 'usd',
+                    amount: 500,
+                    email: userData ? userData.email : '',
+                    // token is only called if Stripe was able to successfully
+                    // create a token from the entered info
+                    token(response) {
+                        token.current = response.id;
+                        createSubscription();
+                    },
+                    closed() {
+                        setFormStep(token.current ? 'submitting' : 'initial');
+                    },
+                });
+                stripeHandler.open();
+            });
+        }
+    }, [stripeLoadingPromise, openStripeModal, userData, locale]);
+
+    function submitHandler(event) {
+        event.preventDefault();
+        // Not so fast! If you're not authenticated yet, trigger the
+        // authentication modal instead.
+        if (userData && userData.isAuthenticated) {
+            setOpenStripeModal(true);
+        } else {
+            try {
+                sessionStorage.setItem(
+                    STRIPE_CONTINUE_SESSIONSTORAGE_KEY,
+                    'true'
+                );
+            } catch (e) {
+                // No sessionStorage, no remembering to trigger opening the Stripe
+                // form automatically next time.
+            }
+            const next = encodeURIComponent(window.location.pathname);
+            if (window.mdn && window.mdn.triggerAuthModal) {
+                window.mdn.triggerAuthModal(
+                    gettext(
+                        "Sign in to support MDN. If you haven't already created an account, you will be prompted to do so after signing in."
+                    )
+                );
+            } else {
+                // If window.mdn.triggerAuthModal is falsy, it most likely means
+                // it deliberately doesn't want this user to use a modal. E.g.
+                // certain mobile clients.
+                window.location.href = `/${locale}/users/account/signup-landing?next=${next}`;
+            }
+        }
     }
 
     let content;
@@ -164,19 +227,16 @@ export default function SubscriptionForm() {
         content = (
             <form
                 method="post"
-                onSubmit={(event) => {
-                    event.preventDefault();
-                    openStripeModal();
-                }}
+                onSubmit={submitHandler}
                 disabled={formStep !== 'initial'}
             >
                 <label className="payment-opt-in">
                     <input
                         type="checkbox"
-                        required="required"
-                        value={paymentAuthorized}
-                        onClick={() => {
-                            setPaymentAuthorized(!paymentAuthorized);
+                        required
+                        checked={paymentAuthorized}
+                        onChange={(event) => {
+                            setPaymentAuthorized(event.target.checked);
                         }}
                     />
                     <small>
