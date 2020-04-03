@@ -137,7 +137,7 @@ def test_stripe_payment_succeeded_sends_invoice_mail(mock1, mock2, client):
         type="invoice.payment_succeeded",
         data=SimpleNamespace(
             object=SimpleNamespace(
-                id="test_invoice_001",
+                number="test_invoice_001",
                 customer="cus_mock_testuser",
                 created=1583842724,
                 invoice_pdf="https://developer.mozilla.org/mock-invoice-pdf-url",
@@ -159,8 +159,10 @@ def test_stripe_payment_succeeded_sends_invoice_mail(mock1, mock2, client):
     assert len(mail.outbox) == 1
     payment_email = mail.outbox[0]
     assert payment_email.to == [testuser.email]
-    assert "manage monthly subscriptions" in payment_email.body
     assert "Receipt" in payment_email.subject
+    assert 'Invoice number: test_invoice_001' in payment_email.body
+    assert 'You supported MDN with a $4.99 monthly subscription' in payment_email.body
+    assert "manage monthly subscriptions" in payment_email.body
 
 
 @patch("stripe.Event.construct_from")
