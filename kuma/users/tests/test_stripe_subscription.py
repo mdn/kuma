@@ -144,7 +144,7 @@ def test_stripe_payment_succeeded_sends_invoice_mail(mock1, mock2, client):
             )
         ),
     )
-    mock2.return_value = {'next_payment_at': 1583842724, 'brand': 'MagicCard'}
+    mock2.return_value = {"next_payment_at": 1583842724, "brand": "MagicCard"}
 
     testuser = user(
         save=True,
