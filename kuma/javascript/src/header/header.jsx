@@ -11,7 +11,7 @@ import type { DocumentData } from '../document.jsx';
 
 type Props = {
     document?: ?DocumentData,
-    searchQuery?: string
+    searchQuery?: string,
 };
 
 export default function Header(props: Props): React.Node {

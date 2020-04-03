@@ -132,7 +132,7 @@ export type BannerProps = {
     embargoDays?: number,
     // An optional property. If present, it should be set to true to indicate
     // that the main cta link should open in a new window
-    newWindow?: boolean
+    newWindow?: boolean,
 };
 
 function Banner(props: BannerProps) {
@@ -247,8 +247,9 @@ export default function ActiveBanner() {
                         cta={gettext('Subscribe')}
                         url={`${
                             window.mdn ? window.mdn.wikiSiteUrl : ''
-                        }/${locale}/profiles/${userData.username ||
-                            ''}/edit#subscription`}
+                        }/${locale}/profiles/${
+                            userData.username || ''
+                        }/edit#subscription`}
                         embargoDays={7}
                     />
                 );

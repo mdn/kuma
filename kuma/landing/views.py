@@ -50,6 +50,13 @@ def promote_buttons(request):
     return render(request, "landing/promote_buttons.html")
 
 
+ROBOTS_ALL_ALLOWED_TXT = """\
+User-agent: *
+Sitemap: https://wiki.developer.mozilla.org/sitemap.xml
+
+Disallow:
+"""
+
 ROBOTS_ALLOWED_TXT = """\
 User-agent: *
 Sitemap: https://developer.mozilla.org/sitemap.xml
@@ -119,7 +126,10 @@ def robots_txt(request):
     if host in settings.ALLOW_ROBOTS_DOMAINS:
         robots = ""
     elif host in settings.ALLOW_ROBOTS_WEB_DOMAINS:
-        robots = ROBOTS_ALLOWED_TXT
+        if host == settings.WIKI_HOST:
+            robots = ROBOTS_ALL_ALLOWED_TXT
+        else:
+            robots = ROBOTS_ALLOWED_TXT
     else:
         robots = ROBOTS_GO_AWAY_TXT
     return HttpResponse(robots, content_type="text/plain")

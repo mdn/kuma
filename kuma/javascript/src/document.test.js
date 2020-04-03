@@ -33,12 +33,12 @@ export const fakeDocumentData = {
     parents: [
         {
             url: '[fake grandparent url]',
-            title: '[fake grandparent title]'
+            title: '[fake grandparent title]',
         },
         {
             url: '[fake parent url]',
-            title: '[fake parent title]'
-        }
+            title: '[fake parent title]',
+        },
     ],
     translations: [
         {
@@ -47,10 +47,10 @@ export const fakeDocumentData = {
             hrefLang: 'es',
             localizedLanguage: 'Spanish',
             url: '[fake spanish url]',
-            title: '[fake spanish translation]'
-        }
+            title: '[fake spanish translation]',
+        },
     ],
-    lastModified: '2019-01-02T03:04:05Z'
+    lastModified: '2019-01-02T03:04:05Z',
 };
 
 describe('Document component renders all of its parts', () => {
@@ -133,20 +133,20 @@ describe('DocumentRoute', () => {
     test('matches well-formed URLs and paths, extracts slug', () => {
         expect(route.match('https://mdn.dev/en-US/docs/slug')).toEqual({
             locale: 'en-US',
-            slug: 'slug'
+            slug: 'slug',
         });
         expect(route.match('/en-US/docs/slug')).toEqual({
             locale: 'en-US',
-            slug: 'slug'
+            slug: 'slug',
         });
         expect(route.match('en-US/docs/slug')).toEqual({
             locale: 'en-US',
-            slug: 'slug'
+            slug: 'slug',
         });
 
         expect(route.match('/en-US/docs/Web/API/Canvas')).toEqual({
             locale: 'en-US',
-            slug: 'Web/API/Canvas'
+            slug: 'Web/API/Canvas',
         });
     });
 
@@ -161,13 +161,13 @@ describe('DocumentRoute', () => {
         expect(route.match('https://mdn.dev/en-US/ducks/slug')).toBe(null);
     });
 
-    test('fetch() method fetches the right data', done => {
+    test('fetch() method fetches the right data', (done) => {
         // In this test we want to verify that UserProvider is
         // fetching user data from an API. So we need to mock fetch().
         global.fetch = jest.fn(() => {
             return Promise.resolve({
                 ok: true,
-                json: () => Promise.resolve({ documentData: fakeDocumentData })
+                json: () => Promise.resolve({ documentData: fakeDocumentData }),
             });
         });
 
@@ -179,13 +179,13 @@ describe('DocumentRoute', () => {
             done();
         });
     });
-    test('fetch() method falls back to en-US for untranslated docs', done => {
+    test('fetch() method falls back to en-US for untranslated docs', (done) => {
         // In this test we want to verify that UserProvider is
         // fetching user data from an API. So we need to mock fetch().
-        global.fetch = jest.fn(url => {
+        global.fetch = jest.fn((url) => {
             return Promise.resolve({
                 ok: url.includes('en-US'),
-                json: () => Promise.resolve({ documentData: fakeDocumentData })
+                json: () => Promise.resolve({ documentData: fakeDocumentData }),
             });
         });
 

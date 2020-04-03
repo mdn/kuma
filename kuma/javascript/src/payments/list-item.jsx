@@ -6,7 +6,7 @@ import { gettext } from '../l10n.js';
 type ListItemProps = {
     title: string,
     number: string,
-    children: React.Node
+    children: React.Node,
 };
 
 const ListItem = ({ title, number, children }: ListItemProps) => (

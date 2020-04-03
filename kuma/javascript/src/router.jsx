@@ -32,7 +32,7 @@ import GAProvider from './ga-provider.jsx';
 import {
     navigateStart,
     navigateFetchComplete,
-    navigateRenderComplete
+    navigateRenderComplete,
 } from './perf.js';
 
 // These are the props that we pass to the <Router> component
@@ -42,13 +42,13 @@ type RouterProps = {
     // The URL of the initial page to render
     initialURL: string,
     // The data for the initial page, if we have it.
-    initialData: any
+    initialData: any,
 };
 
 export default function Router({
     routes,
     initialURL,
-    initialData
+    initialData,
 }: RouterProps) {
     /**
      * This type describes the basic state object that <Router> uses
@@ -66,7 +66,7 @@ export default function Router({
         params: ?RouteParams,
         // Data fetched asynchronously by the Route.fetch() function.
         // This value will be passed to the component as the data prop.
-        data: ?RouteData
+        data: ?RouteData,
     };
 
     // Router state: this is the data we'll use below to render the page
@@ -75,7 +75,7 @@ export default function Router({
         route: null,
         component: null,
         params: null,
-        data: null
+        data: null,
     });
 
     // We also need to access the current page state from our event
@@ -227,7 +227,7 @@ export default function Router({
                 route: route,
                 component: route.getComponent(),
                 params: match,
-                data: null
+                data: null,
             };
 
             // If we were called with initial data, then we already
@@ -278,7 +278,7 @@ export default function Router({
             // the data we need.
             route
                 .fetch(match)
-                .then(data => {
+                .then((data) => {
                     // When the data arrives:
                     // 1) Note how much time passed since navigateStart()
                     navigateFetchComplete();
@@ -312,7 +312,7 @@ export default function Router({
                     //    effect functions below will be invoked to
                     //    finish up the client-side navigation process.
                 })
-                .catch(e => {
+                .catch((e) => {
                     // If anything went wrong (such as a 404 when
                     // fetching data), we give up on client-side nav
                     // and just try loading the page. This may allow
@@ -455,7 +455,7 @@ export default function Router({
             // Put together the query string and full url for this form
             let params = Array.from(form.querySelectorAll('[name]'))
                 // $FlowFixMe: we kmow it has a name because of the query
-                .map(e => `${e.name}=${e.value || ''}`)
+                .map((e) => `${e.name}=${e.value || ''}`)
                 .join('&');
             relativeURL += `?${params}`;
 
@@ -473,7 +473,7 @@ export default function Router({
     // popstate event listener that makes the brower's Back and Forward
     // buttons work within our single-page application.
     function handleBackAndForwardButtons() {
-        window.addEventListener('popstate', event => {
+        window.addEventListener('popstate', (event) => {
             // Every time we call pushState() or replaceState() we
             // pass the page URL as the state for the page. So if we
             // get a popstate event with state, we know that the state

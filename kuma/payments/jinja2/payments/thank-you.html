@@ -1,0 +1,11 @@
+{% extends "react_base.html" %}
+
+{% block title %}{{ page_title(_('Thank you')) }}{% endblock %}
+
+{% block document_head %}
+    {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), True)|safe }}
+{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block footer %}{% endblock %}

@@ -863,10 +863,7 @@ def create_stripe_subscription(request):
     try:
         email = request.POST.get("stripe_email", "")
         stripe_token = request.POST.get("stripe_token", "")
-        subscription = create_stripe_customer_and_subscription_for_user(
-            user, email, stripe_token
-        )
-        UserSubscription.set_active(user, subscription.id)
+        create_stripe_customer_and_subscription_for_user(user, email, stripe_token)
 
     except stripe.error.StripeError:
         raven_client.captureException()

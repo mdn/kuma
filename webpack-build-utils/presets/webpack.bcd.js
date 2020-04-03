@@ -5,6 +5,6 @@ module.exports = () => ({
     entry: path.resolve(__dirname, '../../kuma/javascript/src/bcd-signal.jsx'),
     output: {
         filename: 'bcd-signal.js',
-        path: path.resolve(__dirname, '../../kuma/javascript/dist/')
-    }
+        path: path.resolve(__dirname, '../../kuma/javascript/dist/'),
+    },
 });

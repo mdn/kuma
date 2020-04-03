@@ -14,12 +14,6 @@
     }
 
     form {
-        text-align: right;
-
-        .simple-text {
-            margin-right: 10px;
-        }
-
         ul {
             margin: 0;
             padding: 0;
@@ -33,6 +27,10 @@
                     margin-bottom: 24px;
                 }
             }
+        }
+        a {
+            margin-left: 20px;
+            font-weight: bold;
         }
     }
 }

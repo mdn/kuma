@@ -33,7 +33,7 @@ const mediaQuery =
 // implement that kind of cleanup.
 export function makeResponsive() {
     mediaQuery &&
-        mediaQuery.addListener(function(event) {
+        mediaQuery.addListener(function (event) {
             for (let iframe of document.querySelectorAll(ieSelector)) {
                 if (iframe instanceof HTMLIFrameElement) {
                     iframe.contentWindow.postMessage(

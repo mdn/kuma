@@ -1,8 +1,16 @@
+from unittest.mock import patch
+
 import pytest
+
 from django.conf import settings
 from waffle.models import Flag, Sample, Switch
+from waffle.testutils import override_flag
 
 from kuma.api.v1.views import document_api_data, get_content_based_redirect, get_s3_key
+from kuma.core.ga_tracking import (
+    ACTION_SUBSCRIPTION_FEEDBACK,
+    CATEGORY_MONTHLY_PAYMENTS,
+)
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.search.tests import ElasticTestCase
@@ -500,3 +508,62 @@ def test_bc_signal_http_method(client):
 
     response = client.put(url)
     assert response.status_code == 405
+
+
+@patch("kuma.api.v1.views.track_event")
+@pytest.mark.django_db
+@override_flag("subscription", True)
+def test_send_subscriptions_feedback(track_event_mock_signals, client, settings):
+    settings.GOOGLE_ANALYTICS_ACCOUNT = "UA-XXXX-1"
+    settings.GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS = True
+
+    response = client.post(
+        reverse("api.v1.send_subscriptions_feedback"),
+        content_type="application/json",
+        data={"feedback": "my feedback"},
+    )
+    assert response.status_code == 204
+
+    track_event_mock_signals.assert_called_with(
+        CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_FEEDBACK, "my feedback",
+    )
+
+
+@pytest.mark.django_db
+@override_flag("subscription", True)
+def test_send_subscriptions_feedback_failure(client, settings):
+    response = client.post(
+        reverse("api.v1.send_subscriptions_feedback"),
+        content_type="application/json",
+        data={},
+    )
+
+    assert response.status_code == 400
+    assert response.content.decode(response.charset) == "no feedback"
+
+
+@pytest.mark.django_db
+@override_flag("subscription", True)
+@patch("kuma.api.v1.views.create_stripe_customer_and_subscription_for_user")
+def test_create_subscription_success(mock, user_client):
+    response = user_client.post(
+        reverse("api.v1.create_subscription"),
+        content_type="application/json",
+        data={"stripe_token": "tok_visa"},
+    )
+
+    assert response.status_code == 201
+
+
+@pytest.mark.django_db
+@override_flag("subscription", True)
+def test_create_subscription_failure_without_login(client):
+    response = client.post(reverse("api.v1.create_subscription"))
+    assert response.status_code == 403
+
+
+@pytest.mark.django_db
+@override_flag("subscription", False)
+def test_create_subscription_failure_with_disabled_waffle(user_client):
+    response = user_client.post(reverse("api.v1.create_subscription"))
+    assert response.status_code == 403
