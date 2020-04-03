@@ -19,6 +19,7 @@ export const subheaderTitle = 'Thank you for becoming a monthly supporter!';
 export default function ThankYouPage() {
     const locale = getLocale();
     const userData = useContext(UserProvider.context);
+    const subscriberNumber = userData ? userData.subscriberNumber : null;
 
     return (
         <>
@@ -28,10 +29,10 @@ export default function ThankYouPage() {
                 <SubHeader
                     title={subheaderTitle}
                     subtitle={
-                        userData && !!userData.subscriberNumber
+                        subscriberNumber
                             ? interpolate(
                                   gettext('You are MDN member number: %s'),
-                                  [userData.subscriberNumber.toLocaleString()]
+                                  [subscriberNumber.toLocaleString()]
                               )
                             : ''
                     }
