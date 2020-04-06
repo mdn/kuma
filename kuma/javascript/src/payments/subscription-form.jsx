@@ -237,11 +237,7 @@ export default function SubscriptionForm() {
         );
     } else {
         content = (
-            <form
-                method="post"
-                onSubmit={handleSubmit}
-                disabled={formStep !== 'initial'}
-            >
+            <form method="post" onSubmit={handleSubmit}>
                 <label className="payment-opt-in">
                     <input
                         type="checkbox"
@@ -268,11 +264,7 @@ export default function SubscriptionForm() {
                         />
                     </small>
                 </label>
-                <button
-                    type="submit"
-                    className="button cta primary"
-                    disabled={!paymentAuthorized || formStep !== 'initial'}
-                >
+                <button type="submit" className="button cta primary">
                     {gettext(
                         formStep === 'submitting' ? 'Submitting...' : 'Continue'
                     )}

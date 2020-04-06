@@ -52,7 +52,7 @@ import * as React from 'react';
 import { useContext, useState } from 'react';
 
 import CloseIcon from './icons/close.svg';
-import { getLocale, gettext, Interpolated } from './l10n.js';
+import { getLocale, gettext } from './l10n.js';
 import UserProvider from './user-provider.jsx';
 
 // Set a localStorage key with a timestamp the specified number of
@@ -232,24 +232,13 @@ export default function ActiveBanner() {
                         id={id}
                         classname="mdn-subscriptions"
                         title={gettext('Become a monthly supporter')}
-                        copy={
-                            <Interpolated
-                                id={gettext(
-                                    'Support MDN with a $5 monthly subscription <learnMore/>.'
-                                )}
-                                learnMore={
-                                    <a href={`/${locale}/payments/`}>
-                                        {gettext('Learn more')}
-                                    </a>
-                                }
-                            />
-                        }
-                        cta={gettext('Subscribe')}
-                        url={`${
-                            window.mdn ? window.mdn.wikiSiteUrl : ''
-                        }/${locale}/profiles/${
-                            userData.username || ''
-                        }/edit#subscription`}
+                        // do not hardcode dollar amount, use CONTRIBUTION_AMOUNT_USD
+                        // https://github.com/mdn/kuma/issues/6654
+                        copy={gettext(
+                            'Support MDN with a $5 monthly subscription'
+                        )}
+                        cta={gettext('Learn more')}
+                        url={`/${locale}/payments/`}
                         embargoDays={7}
                     />
                 );

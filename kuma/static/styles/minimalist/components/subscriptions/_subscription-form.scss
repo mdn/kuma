@@ -33,6 +33,18 @@
                 display: block;
                 margin-top: 20px;
                 width: 100%;
+                text-align: left;
+
+                &::after {
+                    float: right;
+                    display: inline-block;
+                    content: '';
+                    background: transparent
+                        url('../../../../arrows/arrow-right.svg') 0 0 no-repeat;
+                    background-size: 14px;
+                    width: 14px;
+                    height: 18px;
+                }
             }
 
             // The subscription form has an <input type=checkbox required>

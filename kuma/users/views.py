@@ -1,5 +1,7 @@
 import json
+import os
 from datetime import datetime, timedelta
+from urllib.parse import urlparse
 
 import stripe
 from allauth.account.adapter import get_adapter
@@ -25,7 +27,7 @@ from django.http import (
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
-from django.utils import timezone
+from django.utils import timezone, translation
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.utils.translation import gettext_lazy as _
@@ -43,6 +45,7 @@ from kuma.core.decorators import (
     login_required,
     redirect_in_maintenance_mode,
 )
+from kuma.core.email_utils import render_email
 from kuma.core.ga_tracking import (
     ACTION_PROFILE_AUDIT,
     ACTION_PROFILE_EDIT,
@@ -53,7 +56,7 @@ from kuma.core.ga_tracking import (
     CATEGORY_SIGNUP_FLOW,
     track_event,
 )
-from kuma.core.utils import urlparams
+from kuma.core.utils import requests_retry_session, send_mail_retrying, urlparams
 from kuma.payments.utils import cancel_stripe_customer_subscription
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import (
@@ -62,6 +65,7 @@ from kuma.wiki.models import (
     Revision,
     RevisionAkismetSubmission,
 )
+from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 # we have to import the SignupForm form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
@@ -73,7 +77,6 @@ from .stripe_utils import (
     get_stripe_customer,
     get_stripe_subscription_info,
 )
-from .tasks import send_payment_received_email
 
 
 @ensure_wiki_domain
@@ -485,6 +488,7 @@ def user_edit(request, username):
         "attachment_revisions": attachment_revisions,
         "subscription_info": _retrieve_and_synchronize_subscription_info(edit_user),
         "has_stripe_error": has_stripe_error,
+        "next_subscriber_number": User.get_highest_subscriber_number() + 1,
     }
 
     return render(request, "users/user_edit.html", context)
@@ -908,11 +912,8 @@ def stripe_hooks(request):
 
     if event.type == "invoice.payment_succeeded":
         payment_intent = event.data.object
-        send_payment_received_email.delay(
-            payment_intent.customer,
-            request.LANGUAGE_CODE,
-            payment_intent.created,
-            payment_intent.invoice_pdf,
+        _send_payment_received_email(
+            payment_intent, request.LANGUAGE_CODE,
         )
         track_event(
             CATEGORY_MONTHLY_PAYMENTS,
@@ -932,3 +933,42 @@ def stripe_hooks(request):
         )
 
     return HttpResponse()
+
+
+def _send_payment_received_email(payment_intent, locale):
+    user = get_user_model().objects.get(stripe_customer_id=payment_intent.customer)
+    subscription_info = _retrieve_and_synchronize_subscription_info(user)
+    locale = locale or settings.WIKI_DEFAULT_LANGUAGE
+    context = {
+        "payment_date": datetime.fromtimestamp(payment_intent.created),
+        "next_payment_date": subscription_info["next_payment_at"],
+        "invoice_number": payment_intent.number,
+        "cost": settings.CONTRIBUTION_AMOUNT_USD,
+        "credit_card_brand": subscription_info["brand"],
+        "manage_subscription_url": absolutify(reverse("recurring_payment_management")),
+        "faq_url": absolutify(reverse("payments_index")),
+        "contact_email": settings.CONTRIBUTION_SUPPORT_EMAIL,
+    }
+    with translation.override(locale):
+        subject = render_email("users/email/payment_received/subject.ltxt", context)
+        # Email subject *must not* contain newlines
+        subject = "".join(subject.splitlines())
+        plain = render_email("users/email/payment_received/plain.ltxt", context)
+
+        send_mail_retrying(
+            subject,
+            plain,
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email],
+            attachment={
+                "name": os.path.basename(urlparse(payment_intent.invoice_pdf).path),
+                "bytes": _download_from_url(payment_intent.invoice_pdf),
+                "mime": "application/pdf",
+            },
+        )
+
+
+def _download_from_url(url):
+    pdf_download = requests_retry_session().get(url)
+    pdf_download.raise_for_status()
+    return pdf_download.content
