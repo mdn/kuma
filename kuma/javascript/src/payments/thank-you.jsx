@@ -15,7 +15,6 @@ type PaymentsThankYouRouteParams = {
     locale: string,
 };
 
-export const subheaderTitle = 'Thank you for becoming a monthly supporter!';
 export default function ThankYouPage() {
     const locale = getLocale();
     const userData = useContext(UserProvider.context);

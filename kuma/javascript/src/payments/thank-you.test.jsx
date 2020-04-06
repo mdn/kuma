@@ -1,7 +1,8 @@
 //@flow
 import React from 'react';
 import { render } from '@testing-library/react';
-import ThankYouPage, { subheaderTitle } from './thank-you.jsx';
+import ThankYouPage from './thank-you.jsx';
+import { title } from './thank-you-subheader.jsx';
 
 describe('Payments Thank You page', () => {
     test('it renders', () => {
@@ -9,7 +10,7 @@ describe('Payments Thank You page', () => {
         const { queryByText, queryByTestId } = render(<ThankYouPage />);
 
         // Subheader
-        expect(queryByText(subheaderTitle)).toBeTruthy();
+        expect(queryByText(title)).toBeTruthy();
 
         // Useful things section
         expect(queryByTestId('useful-things')).toBeTruthy();

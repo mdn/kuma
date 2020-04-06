@@ -8,16 +8,19 @@ type Props = {
 };
 
 export const title = 'Thank you for becoming a monthly supporter!';
-export const subtitle = (num: ?number): ?string => {
+export const subtitle = 'You are MDN member number:';
+export const getSubtitle = (num: ?number): ?string => {
     if (num) {
-        return interpolate(gettext('You are MDN member number: %s'), [
-            num.toLocaleString(),
-        ]);
+        return interpolate(gettext('%(subtitle)s %(num)s'), {
+            subtitle,
+            num: num.toLocaleString(),
+        });
     }
     return null;
 };
 
 const ThankYouSubheader = ({ subscriberNumber }: Props): React.Node => (
-    <SubHeader title={title} subtitle={subtitle(subscriberNumber)} />
+    <SubHeader title={title} subtitle={getSubtitle(subscriberNumber)} />
 );
+
 export default ThankYouSubheader;

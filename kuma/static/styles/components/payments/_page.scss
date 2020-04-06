@@ -40,6 +40,9 @@
 
         h2 {
             font-size: 24px;
+            &:last-child {
+                margin-bottom: 0;
+            }
         }
 
         p {
