@@ -42,6 +42,42 @@ function useScriptLoading(url) {
     return [loadingPromise, () => setLoadingPromise(null)];
 }
 
+const STRIPE_CONTINUE_SESSIONSTORAGE_KEY = 'stripe-form-continue';
+
+/**
+ * Return true if you have a sessionStorage key that says you can go straight
+ * to continue the Stripe subscription form.
+ * This also has the side-effect that once you call it, it demolishes that
+ * sessionStorage.
+ */
+function getStripeContinuation() {
+    try {
+        let autoTriggerStripe = JSON.parse(
+            sessionStorage.getItem(STRIPE_CONTINUE_SESSIONSTORAGE_KEY) ||
+                'false'
+        );
+        sessionStorage.removeItem(STRIPE_CONTINUE_SESSIONSTORAGE_KEY);
+        return autoTriggerStripe;
+    } catch (e) {
+        // If sessionStorage is not supported, they'll have to manually click
+        // the Continue button again.
+        return false;
+    }
+}
+
+/**
+ * Remembers, in sessionStorage, that the user can continue the Stripe
+ * subscription form next time they come back.
+ */
+function setStripeContinuation() {
+    try {
+        sessionStorage.setItem(STRIPE_CONTINUE_SESSIONSTORAGE_KEY, 'true');
+    } catch (e) {
+        // No sessionStorage, no remembering to trigger opening the Stripe
+        // form automatically next time.
+    }
+}
+
 export default function SubscriptionForm() {
     const userData = useContext(UserProvider.context);
     const locale = getLocale();
@@ -72,8 +108,6 @@ export default function SubscriptionForm() {
             });
     }, [formStep, stripeLoadingPromise]);
 
-    const STRIPE_CONTINUE_SESSIONSTORAGE_KEY = 'stripe-form-continue';
-
     /**
      * If you arrived on this page, being anonymous, you'd have to first sign in.
      * Suppose that you do that, we will make sure to send you back to this page
@@ -83,23 +117,9 @@ export default function SubscriptionForm() {
      */
 
     useEffect(() => {
-        if (userData && userData.isAuthenticated) {
-            let autoTriggerStripe = false;
-            try {
-                autoTriggerStripe = JSON.parse(
-                    sessionStorage.getItem(
-                        STRIPE_CONTINUE_SESSIONSTORAGE_KEY
-                    ) || 'false'
-                );
-                sessionStorage.removeItem(STRIPE_CONTINUE_SESSIONSTORAGE_KEY);
-            } catch (e) {
-                // If sessionStorage is not supported, they'll have to manually click
-                // the Continue button again.
-            }
-            if (autoTriggerStripe) {
-                setPaymentAuthorized(true);
-                setOpenStripeModal(true);
-            }
+        if (userData && userData.isAuthenticated && getStripeContinuation()) {
+            setPaymentAuthorized(true);
+            setOpenStripeModal(true);
         }
     }, [userData]);
 
@@ -154,22 +174,14 @@ export default function SubscriptionForm() {
         }
     }, [stripeLoadingPromise, openStripeModal, userData, locale]);
 
-    function submitHandler(event) {
+    function handleSubmit(event) {
         event.preventDefault();
         // Not so fast! If you're not authenticated yet, trigger the
         // authentication modal instead.
         if (userData && userData.isAuthenticated) {
             setOpenStripeModal(true);
         } else {
-            try {
-                sessionStorage.setItem(
-                    STRIPE_CONTINUE_SESSIONSTORAGE_KEY,
-                    'true'
-                );
-            } catch (e) {
-                // No sessionStorage, no remembering to trigger opening the Stripe
-                // form automatically next time.
-            }
+            setStripeContinuation();
             const next = encodeURIComponent(window.location.pathname);
             if (window.mdn && window.mdn.triggerAuthModal) {
                 window.mdn.triggerAuthModal(
@@ -227,7 +239,7 @@ export default function SubscriptionForm() {
         content = (
             <form
                 method="post"
-                onSubmit={submitHandler}
+                onSubmit={handleSubmit}
                 disabled={formStep !== 'initial'}
             >
                 <label className="payment-opt-in">
