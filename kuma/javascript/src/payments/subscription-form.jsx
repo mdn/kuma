@@ -50,7 +50,7 @@ const STRIPE_CONTINUE_SESSIONSTORAGE_KEY = 'stripe-form-continue';
  * This also has the side-effect that once you call it, it demolishes that
  * sessionStorage.
  */
-function getStripeContinuation() {
+function popStripeContinuation() {
     try {
         let autoTriggerStripe = JSON.parse(
             sessionStorage.getItem(STRIPE_CONTINUE_SESSIONSTORAGE_KEY) ||
@@ -69,7 +69,7 @@ function getStripeContinuation() {
  * Remembers, in sessionStorage, that the user can continue the Stripe
  * subscription form next time they come back.
  */
-function setStripeContinuation() {
+function pushStripeContinuation() {
     try {
         sessionStorage.setItem(STRIPE_CONTINUE_SESSIONSTORAGE_KEY, 'true');
     } catch (e) {
@@ -117,7 +117,7 @@ export default function SubscriptionForm() {
      */
 
     useEffect(() => {
-        if (userData && userData.isAuthenticated && getStripeContinuation()) {
+        if (userData && userData.isAuthenticated && popStripeContinuation()) {
             setPaymentAuthorized(true);
             setOpenStripeModal(true);
         }
@@ -181,7 +181,7 @@ export default function SubscriptionForm() {
         if (userData && userData.isAuthenticated) {
             setOpenStripeModal(true);
         } else {
-            setStripeContinuation();
+            pushStripeContinuation();
             const next = encodeURIComponent(window.location.pathname);
             if (window.mdn && window.mdn.triggerAuthModal) {
                 window.mdn.triggerAuthModal(
