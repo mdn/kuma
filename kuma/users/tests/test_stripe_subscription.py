@@ -129,11 +129,14 @@ def test_create_stripe_subscription_fail(mock1, mock2, test_user):
     assert response.status_code == 403
 
 
+@patch("kuma.users.views._download_from_url")
 @patch("kuma.users.views._retrieve_and_synchronize_subscription_info")
 @patch("stripe.Event.construct_from")
 @pytest.mark.django_db
-def test_stripe_payment_succeeded_sends_invoice_mail(mock1, mock2, client):
-    mock1.return_value = SimpleNamespace(
+def test_stripe_payment_succeeded_sends_invoice_mail(
+    construct_stripe_event, retrieve_subscription, download_url
+):
+    construct_stripe_event.return_value = SimpleNamespace(
         type="invoice.payment_succeeded",
         data=SimpleNamespace(
             object=SimpleNamespace(
@@ -144,7 +147,11 @@ def test_stripe_payment_succeeded_sends_invoice_mail(mock1, mock2, client):
             )
         ),
     )
-    mock2.return_value = {"next_payment_at": 1583842724, "brand": "MagicCard"}
+    retrieve_subscription.return_value = {
+        "next_payment_at": 1583842724,
+        "brand": "MagicCard",
+    }
+    download_url.return_value = bytes("totally not a pdf", "utf-8")
 
     testuser = user(
         save=True,
@@ -152,7 +159,7 @@ def test_stripe_payment_succeeded_sends_invoice_mail(mock1, mock2, client):
         email="testuser@example.com",
         stripe_customer_id="cus_mock_testuser",
     )
-    response = client.post(
+    response = Client().post(
         reverse("users.stripe_hooks"), content_type="application/json", data={},
     )
     assert response.status_code == 200

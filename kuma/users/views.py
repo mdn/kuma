@@ -956,8 +956,7 @@ def _send_payment_received_email(payment_intent, locale):
         # Email subject *must not* contain newlines
         subject = "".join(subject.splitlines())
         plain = render_email("users/email/payment_received/plain.ltxt", context)
-        pdf_download = requests_retry_session().get(payment_intent.invoice_pdf)
-        pdf_download.raise_for_status()
+
         send_mail_retrying(
             subject,
             plain,
@@ -965,7 +964,13 @@ def _send_payment_received_email(payment_intent, locale):
             [user.email],
             attachment={
                 "name": os.path.basename(urlparse(payment_intent.invoice_pdf).path),
-                "bytes": pdf_download.content,
+                "bytes": _download_from_url(payment_intent.invoice_pdf),
                 "mime": "application/pdf",
             },
         )
+
+
+def _download_from_url(url):
+    pdf_download = requests_retry_session().get(url)
+    pdf_download.raise_for_status()
+    return pdf_download.content
