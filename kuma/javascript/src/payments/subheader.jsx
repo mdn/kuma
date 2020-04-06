@@ -5,7 +5,7 @@ import { gettext } from '../l10n.js';
 
 type Props = {
     title: string,
-    subtitle?: string,
+    subtitle?: ?string,
     description?: string,
     children?: React.Node,
     columnWidth?: string,
