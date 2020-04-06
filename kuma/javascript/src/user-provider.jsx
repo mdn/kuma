@@ -13,6 +13,7 @@ export type UserData = {
     isSuperuser: boolean,
     avatarUrl: ?string,
     isSubscriber: boolean,
+    subscriberNumber: ?number,
     email: ?string,
     waffle: {
         flags: { [flag_name: string]: boolean },
@@ -29,6 +30,7 @@ const defaultUserData: UserData = {
     isSuperuser: false,
     avatarUrl: null,
     isSubscriber: false,
+    subscriberNumber: null,
     email: null,
     waffle: {
         flags: {},
@@ -64,6 +66,7 @@ export default function UserProvider(props: {
                     isSuperuser: data.is_super_user,
                     avatarUrl: data.avatar_url,
                     isSubscriber: data.is_subscriber,
+                    subscriberNumber: data.subscriber_number,
                     email: data.email,
                     // NOTE: if we ever decide that waffle data should
                     // be re-fetched on client-side navigation, we'll

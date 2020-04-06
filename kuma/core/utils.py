@@ -554,6 +554,7 @@ def send_mail_retrying(
     auth_password=None,
     connection=None,
     html_message=None,
+    attachment=None,
     **kwargs,
 ):
     """Copied verbatim from django.core.mail.send_mail but with the override
@@ -571,6 +572,9 @@ def send_mail_retrying(
     )
     if html_message:
         mail.attach_alternative(html_message, "text/html")
+
+    if attachment:
+        mail.attach(attachment["name"], attachment["bytes"], attachment["mime"])
 
     return mail.send(**kwargs)
 

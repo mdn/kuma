@@ -4,7 +4,7 @@ from django.utils.translation import deactivate_all
 from kuma.wiki.tests import revision
 
 from . import UserTestCase
-from ..models import UserBan, UserSubscription
+from ..models import User, UserBan, UserSubscription
 
 
 class TestUser(UserTestCase):
@@ -201,3 +201,9 @@ def test_user_subscription_and_subscriber_number(wiki_user):
     UserSubscription.set_active(wiki_user, "xyz789")
     wiki_user.refresh_from_db()
     assert wiki_user.subscriber_number == 1
+
+
+def test_get_highest_subscriber_number(wiki_user):
+    assert User.get_highest_subscriber_number() == 0
+    UserSubscription.set_active(wiki_user, "abc123")
+    assert User.get_highest_subscriber_number() == 1

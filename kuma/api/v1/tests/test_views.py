@@ -216,6 +216,7 @@ def test_whoami_anonymous(client, settings):
         "is_superuser": False,
         "is_beta_tester": False,
         "avatar_url": None,
+        "subscriber_number": None,
         "waffle": {
             "flags": {
                 "section_edit": False,
@@ -275,6 +276,7 @@ def test_whoami(
         "is_superuser": is_superuser,
         "is_beta_tester": is_beta_tester,
         "avatar_url": wiki_user_github_account.get_avatar_url(),
+        "subscriber_number": None,
         "waffle": {
             "flags": {
                 "section_edit": True,
@@ -293,7 +295,7 @@ def test_whoami(
 
 
 @pytest.mark.django_db
-def test_whoami_is_subscriber(
+def test_whoami_subscriber(
     user_client, wiki_user,
 ):
     """Test responses for logged-in users and whether they have an active
@@ -307,11 +309,13 @@ def test_whoami_is_subscriber(
     response = user_client.get(url)
     assert response.status_code == 200
     assert response.json()["is_subscriber"] is True
+    assert response.json()["subscriber_number"] == 1
 
     UserSubscription.set_canceled(wiki_user, "abc123")
     response = user_client.get(url)
     assert response.status_code == 200
     assert response.json()["is_subscriber"] is False
+    assert response.json()["subscriber_number"] == 1
 
 
 @pytest.mark.django_db

@@ -50,13 +50,13 @@ def test_server_side_render(
         body, toc, links, contributors
     )
 
-    url = "{}/{}".format(settings.SSR_URL, "document")
+    url = "{}/{}".format(settings.SSR_URL, "SPA")
 
     mock_requests.post(url, json={"html": mock_html, "script": "STUFF"})
 
     # Run the template tag
     path = "/en-US/docs/foo"
-    output = ssr.render_react("document", locale, path, document_data)
+    output = ssr.render_react("SPA", locale, path, document_data)
 
     # Make sure the output is as expected
     data = {
@@ -68,7 +68,7 @@ def test_server_side_render(
     expect = (
         '<div id="react-container" data-component-name="{}">{}</div>\n'
         "<script>window._react_data = JSON.parse(STUFF);</script>\n"
-    ).format("document", mock_html, json.dumps(data))
+    ).format("SPA", mock_html, json.dumps(data))
     assert output == expect
 
 
