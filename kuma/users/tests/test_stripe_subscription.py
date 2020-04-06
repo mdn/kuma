@@ -90,6 +90,16 @@ def test_create_stripe_subscription(mock1, mock2, test_user):
     assert response["location"].endswith("#subscription")
 
 
+@override_flag("subscription", True)
+def test_next_subscriber_number_shown_for_non_subscribers(test_user):
+    client = Client()
+    client.force_login(test_user)
+    response = client.get(reverse("users.user_edit", args=[test_user.username]))
+    assert response.status_code == 200
+    page = pq(response.content)
+    assert "You will be MDN member number 1" in page("#subscription p").text()
+
+
 @patch("kuma.users.views.get_stripe_subscription_info")
 @patch("kuma.users.views.get_stripe_customer")
 @override_flag("subscription", True)
@@ -99,6 +109,15 @@ def test_user_edit_with_subscription_info(mock1, mock2, test_user):
     page contains information about that from Stripe."""
     mock1.side_effect = mock_get_stripe_customer
     mock2.side_effect = mock_get_stripe_subscription_info
+
+    # We need to fake the User.subscriber_number because the
+    # 'get_stripe_subscription_info' is faked so the signals that set it are
+    # never happening in this context.
+    UserSubscription.set_active(test_user, "sub_123456789")
+    # sanity check
+    test_user.refresh_from_db()
+    assert test_user.subscriber_number == 1
+
     client = Client()
     client.force_login(test_user)
     response = client.post(
@@ -107,6 +126,7 @@ def test_user_edit_with_subscription_info(mock1, mock2, test_user):
     )
     assert response.status_code == 200
     page = pq(response.content)
+    assert page("#subscription h2").text() == "You are MDN member number 1"
     assert not page(".stripe-error").size()
     assert "MagicCard ending in 4242" in page(".card-info p").text()
 
