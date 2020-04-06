@@ -168,7 +168,6 @@ export default function SubscriptionForm() {
                     event.preventDefault();
                     openStripeModal();
                 }}
-                disabled={formStep !== 'initial'}
             >
                 <label className="payment-opt-in">
                     <input
@@ -196,11 +195,7 @@ export default function SubscriptionForm() {
                         />
                     </small>
                 </label>
-                <button
-                    type="submit"
-                    className="button cta primary"
-                    disabled={!paymentAuthorized || formStep !== 'initial'}
-                >
+                <button type="submit" className="button cta primary">
                     {gettext(
                         formStep === 'submitting' ? 'Submitting...' : 'Continue'
                     )}
