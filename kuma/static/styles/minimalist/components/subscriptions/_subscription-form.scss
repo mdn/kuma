@@ -46,6 +46,15 @@
                     height: 18px;
                 }
             }
+
+            // The subscription form has an <input type=checkbox required>
+            // which is part of the form submission but when you load the page,
+            // and haven't even started paying attention to the form, the checkbox,
+            // in Firefox, will appear red. Like something is wrong!
+            // This will undo that.
+            input[type='checkbox']:required {
+                box-shadow: none;
+            }
         }
 
         .subtext {
