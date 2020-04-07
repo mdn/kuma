@@ -399,11 +399,16 @@ window.activateBCDSignals = (slug: string, locale: string) => {
 
         const rows = document.querySelectorAll('.bc-table th[scope=row]');
         for (const elem of rows) {
-            const featureName = elem.innerText;
-            const option = document.createElement('option');
-            option.innerText = featureName;
-            option.setAttribute('value', featureName);
-            selectControl.appendChild(option);
+            // elemNode can be an HTML element (typically an <a /> tag) or string
+            const elemNode = elem.firstChild;
+            const featureName =
+                elemNode && (elemNode.nodeValue || elemNode.innerText);
+            if (featureName) {
+                const option = document.createElement('option');
+                option.innerText = featureName;
+                option.setAttribute('value', featureName);
+                selectControl.appendChild(option);
+            }
         }
 
         rowControlBlock.appendChild(selectControl);
