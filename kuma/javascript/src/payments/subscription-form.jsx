@@ -237,7 +237,11 @@ export default function SubscriptionForm() {
         );
     } else {
         content = (
-            <form method="post" onSubmit={handleSubmit}>
+            <form
+                method="post"
+                onSubmit={handleSubmit}
+                data-testid="subscription-form"
+            >
                 <label className="payment-opt-in">
                     <input
                         type="checkbox"

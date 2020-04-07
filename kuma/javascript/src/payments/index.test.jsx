@@ -1,4 +1,3 @@
-//@flow
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import PaymentsLandingPage from './index.jsx';
@@ -68,6 +67,6 @@ describe('Payments Landing Page', () => {
             },
         };
         const { queryByTestId } = setup(mockData);
-        expect(queryByTestId('payments-subscription-form')).toBeTruthy();
+        expect(queryByTestId('subscription-form')).toBeTruthy();
     });
 });
