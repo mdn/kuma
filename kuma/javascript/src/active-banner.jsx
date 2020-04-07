@@ -49,11 +49,15 @@
  * @flow
  */
 import * as React from 'react';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import CloseIcon from './icons/close.svg';
 import { getLocale, gettext } from './l10n.js';
 import UserProvider from './user-provider.jsx';
+import GAProvider, {
+    CATEGORY_MONTHLY_PAYMENTS,
+    useTrackAndNavigate,
+} from './ga-provider.jsx';
 
 // Set a localStorage key with a timestamp the specified number of
 // days into the future. When the user dismisses a banner we use this
@@ -133,6 +137,9 @@ export type BannerProps = {
     // An optional property. If present, it should be set to true to indicate
     // that the main cta link should open in a new window
     newWindow?: boolean,
+    // an optional property. If present, it will be called when the CTA
+    // link is clicked
+    onCTAClick?: (event: SyntheticEvent<HTMLAnchorElement>) => any,
 };
 
 function Banner(props: BannerProps) {
@@ -156,6 +163,7 @@ function Banner(props: BannerProps) {
                         className="mdn-cta-button"
                         target={props.newWindow && '_blank'}
                         rel={props.newWindow && 'noopener noreferrer'}
+                        onClick={props.onCTAClick}
                     >
                         {props.cta}
                     </a>
@@ -182,9 +190,48 @@ function Banner(props: BannerProps) {
 export const DEVELOPER_NEEDS_ID = 'developer_needs';
 export const SUBSCRIPTION_ID = 'subscription_banner';
 
+function SubscriptionBanner() {
+    const ga = useContext(GAProvider.context);
+    const trackAndNavigate = useTrackAndNavigate();
+
+    useEffect(() => {
+        ga('send', {
+            hitType: 'event',
+            eventCategory: CATEGORY_MONTHLY_PAYMENTS,
+            eventAction: 'CTA shown',
+            eventLabel: 'banner',
+        });
+    }, [ga]);
+
+    return (
+        <Banner
+            id={SUBSCRIPTION_ID}
+            classname="mdn-subscriptions"
+            title={gettext('Become a monthly supporter')}
+            // do not hardcode dollar amount, use CONTRIBUTION_AMOUNT_USD
+            // https://github.com/mdn/kuma/issues/6654
+            copy={gettext('Support MDN with a $5 monthly subscription')}
+            cta={gettext('Learn more')}
+            url={`/${getLocale()}/payments/`}
+            embargoDays={7}
+            onCTAClick={(event) => {
+                event.preventDefault();
+                trackAndNavigate(
+                    {
+                        hitType: 'event',
+                        eventCategory: CATEGORY_MONTHLY_PAYMENTS,
+                        eventAction: 'subscribe intent',
+                        eventLabel: 'banner',
+                    },
+                    event.currentTarget.href
+                );
+            }}
+        />
+    );
+}
+
 export default function ActiveBanner() {
     const userData = useContext(UserProvider.context);
-    const locale = getLocale();
 
     if (!userData || !userData.waffle.flags) {
         return null;
@@ -193,15 +240,6 @@ export default function ActiveBanner() {
     for (const id in userData.waffle.flags) {
         if (!userData.waffle.flags[id] || isEmbargoed(id)) {
             continue;
-        }
-
-        // The Subscription banner is special. It should not be displayed
-        // if the user has a truthy `isSubscriber`.
-        if (id === SUBSCRIPTION_ID) {
-            if (userData.isSubscriber) {
-                // This user will NOT get this banner.
-                return true;
-            }
         }
 
         switch (id) {
@@ -223,25 +261,9 @@ export default function ActiveBanner() {
                 );
 
             case SUBSCRIPTION_ID:
-                if (!userData.isAuthenticated) {
-                    return null;
-                }
-
-                return (
-                    <Banner
-                        id={id}
-                        classname="mdn-subscriptions"
-                        title={gettext('Become a monthly supporter')}
-                        // do not hardcode dollar amount, use CONTRIBUTION_AMOUNT_USD
-                        // https://github.com/mdn/kuma/issues/6654
-                        copy={gettext(
-                            'Support MDN with a $5 monthly subscription'
-                        )}
-                        cta={gettext('Learn more')}
-                        url={`/${locale}/payments/`}
-                        embargoDays={7}
-                    />
-                );
+                return userData.isAuthenticated && !userData.isSubscriber ? (
+                    <SubscriptionBanner />
+                ) : null;
         }
     }
 

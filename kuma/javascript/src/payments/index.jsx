@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { gettext, interpolate, Interpolated } from '../l10n.js';
 import A11yNav from '../a11y/a11y-nav.jsx';
@@ -10,6 +10,7 @@ import Route, { type RouteComponentProps } from '../route.js';
 import SubHeader from './subheader.jsx';
 import SubscriptionForm from './subscription-form.jsx';
 import ListItem from './list-item.jsx';
+import GAProvider, { CATEGORY_MONTHLY_PAYMENTS } from '../ga-provider.jsx';
 import UserProvider from '../user-provider.jsx';
 
 type PaymentsIndexRouteParams = {
@@ -21,6 +22,7 @@ export default function PaymentsLandingPage({
     locale,
 }: RouteComponentProps) {
     const userData = useContext(UserProvider.context);
+    const ga = useContext(GAProvider.context);
     const urls = {
         annualReport:
             'https://www.mozilla.org/en-US/foundation/annualreport/2018/',
@@ -37,6 +39,15 @@ export default function PaymentsLandingPage({
         userData && userData.waffle.flags.subscription_banner;
 
     const nextSubscriberNumber = data.next_subscriber_number;
+
+    useEffect(() => {
+        ga('send', {
+            hitType: 'event',
+            eventCategory: CATEGORY_MONTHLY_PAYMENTS,
+            eventAction: 'CTA shown',
+            eventLabel: 'subscription-landing-page',
+        });
+    }, [ga]);
 
     return (
         <>

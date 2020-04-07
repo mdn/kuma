@@ -1,8 +1,10 @@
 // @flow
 import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 export type GAFunction = (...any) => void;
+
+export const CATEGORY_MONTHLY_PAYMENTS = 'monthly payments';
 
 function ga(...args) {
     if (typeof window === 'object' && typeof window.ga === 'function') {
@@ -49,3 +51,44 @@ function useClientId() {
 // of the GAProvider component
 GAProvider.context = context;
 GAProvider.useClientId = useClientId;
+
+const MAX_ANALYTICS_WAIT_MS = 300;
+/**
+ * A React hook returning a single-use function that is called with analytics
+ * event options and a URL. It tries to send an event to analytics and will
+ * navigate to the given URL after. If analytics does not respond in a timely
+ * manner, which can happen due to ad-blockers or network problems,
+ * it will not wait for it, but rather just start the navigation.
+ * It also asks the browser to preload the given URL.
+ */
+export function useTrackAndNavigate() {
+    const status = useRef<null | 'started' | 'navigating'>(null);
+
+    return function trackAndNavigate(fieldsObject: any, url: string) {
+        if (status.current === 'started') {
+            return;
+        }
+        status.current = 'started';
+
+        function followLink() {
+            if (status.current === 'navigating') {
+                return;
+            }
+            status.current = 'navigating';
+            window.location = url;
+        }
+
+        const preload = document.createElement('link');
+        preload.setAttribute('rel', 'preload');
+        preload.setAttribute('as', 'document');
+        preload.setAttribute('href', url);
+        document.head && document.head.appendChild(preload);
+
+        ga('send', {
+            ...fieldsObject,
+            hitCallback: followLink,
+        });
+
+        setTimeout(followLink, MAX_ANALYTICS_WAIT_MS);
+    };
+}
