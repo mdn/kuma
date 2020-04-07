@@ -4,6 +4,8 @@ from constance import config
 from django.conf import settings
 from django.utils import translation
 
+from kuma.core.urlresolvers import reverse
+
 from .i18n import get_language_mapping
 
 
@@ -54,10 +56,30 @@ def i18n(request):
 
 
 def next_url(request):
-    if (
-        hasattr(request, "path")
-        and "login" not in request.path
-        and "register" not in request.path
-    ):
-        return {"next_url": request.get_full_path()}
-    return {}
+    """Return a function by the same name as the context processor.
+    That means, in the jinja templates, instead of doing
+
+        {% set url = next_url %}
+
+    you just have to do:
+
+        {% set url = next_url() %}
+
+    which means that the actual content processor function isn't executed
+    every single time any jinja template is rendered. Now, only if the
+    context processor is actually needed, it gets executed.
+
+    See https://www.peterbe.com/plog/closure-django-context-processors
+    """
+
+    def inner():
+        if hasattr(request, "path"):
+            if request.GET.get("next"):
+                if "://" not in request.GET["next"]:
+                    return request.GET["next"]
+            elif reverse(settings.LOGIN_URL) != request.get_full_path():
+                # The only exception is the sign-in landing page which you get to
+                # if you can't use the auth modal.
+                return request.get_full_path()
+
+    return {"next_url": inner}

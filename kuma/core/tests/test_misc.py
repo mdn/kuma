@@ -1,23 +1,34 @@
 from django.test import RequestFactory
 
-from . import KumaTestCase
-from ..context_processors import next_url
+from kuma.core.context_processors import next_url
+from kuma.core.urlresolvers import reverse
 
 
-class TestNextUrl(KumaTestCase):
-    """
-    Tests that the next_url value is properly set,
-    including query string
-    """
+def test_next_url_basic():
+    path = "/one/two"
+    request = RequestFactory().get(path)
+    assert path == next_url(request)["next_url"]()
 
-    rf = RequestFactory()
 
-    def test_basic(self):
-        path = "/one/two"
-        request = self.rf.get(path)
-        assert path == next_url(request)["next_url"]
+def test_next_url_querystring():
+    path = "/one/two?something"
+    request = RequestFactory().get(path)
+    assert path == next_url(request)["next_url"]()
 
-    def test_querystring(self):
-        path = "/one/two?something"
-        request = self.rf.get(path)
-        assert path == next_url(request)["next_url"]
+
+def test_next_url_with_next_querystring():
+    path = "/one/two?next=/foo/bar"
+    request = RequestFactory().get(path)
+    assert next_url(request)["next_url"]() == "/foo/bar"
+
+
+def test_next_url_with_next_querystring_but_remote():
+    path = "/one/two?next=http://foo/bar"
+    request = RequestFactory().get(path)
+    assert next_url(request)["next_url"]() is None
+
+
+def test_next_url_already_on_login_url(settings):
+    path = reverse(settings.LOGIN_URL)
+    request = RequestFactory().get(path)
+    assert next_url(request)["next_url"]() is None
