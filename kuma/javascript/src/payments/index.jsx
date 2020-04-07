@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
 
-import { gettext, interpolate, Interpolated } from '../l10n.js';
+import { gettext, Interpolated } from '../l10n.js';
 import A11yNav from '../a11y/a11y-nav.jsx';
 import Header from '../header/header.jsx';
 import Footer from '../footer.jsx';
@@ -12,6 +12,7 @@ import ThankYouSubheader from './thank-you-subheader.jsx';
 import SubscriptionForm from './subscription-form.jsx';
 import ListItem from './list-item.jsx';
 import UserProvider from '../user-provider.jsx';
+import { strings, getMemberNumberString } from './strings.js';
 
 type PaymentsIndexRouteParams = {
     locale: string,
@@ -50,16 +51,18 @@ export default function PaymentsLandingPage({
                 }`}
             >
                 {isSubscriber && (
-                    <ThankYouSubheader subscriberNumber={subscriberNumber} />
+                    <ThankYouSubheader
+                        subscriberNumber={subscriberNumber}
+                        isSubscriber={isSubscriber}
+                    />
                 )}
                 {!isSubscriber && (
                     <SubHeader
-                        title="Become a monthly supporter"
-                        subtitle={interpolate(
-                            gettext('You will be MDN member number: %s'),
-                            [nextSubscriberNumber.toLocaleString()]
+                        title={strings.signup}
+                        subtitle={getMemberNumberString(
+                            nextSubscriberNumber.toLocaleString()
                         )}
-                        description="Support MDN with a $5 monthly subscription and get back more of the knowledge and tools you rely on for when your work has to work."
+                        description={strings.signupDesc}
                     >
                         {showSubscriptionForm && <SubscriptionForm />}
                     </SubHeader>

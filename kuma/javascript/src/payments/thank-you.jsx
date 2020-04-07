@@ -18,15 +18,16 @@ type PaymentsThankYouRouteParams = {
 export default function ThankYouPage() {
     const locale = getLocale();
     const userData = useContext(UserProvider.context);
-
+    const subscriberProps = {
+        subscriberNumber: userData && userData.subscriberNumber,
+        isSubscriber: userData && userData.isSubscriber,
+    };
     return (
         <>
             <A11yNav />
             <Header />
             <div className="subscriptions subheader-container thank-you">
-                <ThankYouSubheader
-                    subscriberNumber={userData && userData.subscriberNumber}
-                />
+                <ThankYouSubheader {...subscriberProps} />
             </div>
             <main className="contributions-page thank-you" role="main">
                 <section className="section">

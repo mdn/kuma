@@ -1,26 +1,21 @@
 // @flow
 import * as React from 'react';
-import { gettext, interpolate } from '../l10n.js';
 import SubHeader from './subheader.jsx';
+import { strings, getMemberNumberString } from './strings.js';
 
 type Props = {
-    subscriberNumber: ?number,
+    subscriberNumber?: ?number,
+    isSubscriber?: ?boolean,
 };
 
-export const title = 'Thank you for becoming a monthly supporter!';
-export const subtitle = 'You are MDN member number:';
-export const getSubtitle = (num: ?number): ?string => {
-    if (num) {
-        return interpolate(gettext('%(subtitle)s %(num)s'), {
-            subtitle,
-            num: num.toLocaleString(),
-        });
-    }
-    return null;
-};
-
-const ThankYouSubheader = ({ subscriberNumber }: Props): React.Node => (
-    <SubHeader title={title} subtitle={getSubtitle(subscriberNumber)} />
+const ThankYouSubheader = ({
+    subscriberNumber,
+    isSubscriber,
+}: Props): React.Node => (
+    <SubHeader
+        title={strings.thankYou}
+        subtitle={getMemberNumberString(subscriberNumber, isSubscriber)}
+    />
 );
 
 export default ThankYouSubheader;
