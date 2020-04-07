@@ -25,7 +25,11 @@ const SubHeader = ({
                     <span className="highlight-span">{gettext(title)}</span>
                 </h1>
                 {subtitle && <h2>{gettext(subtitle)}</h2>}
-                {description && <p>{gettext(description)}</p>}
+                {description && (
+                    <p className="readable-line-length">
+                        {gettext(description)}
+                    </p>
+                )}
             </div>
             {children}
         </div>
