@@ -31,7 +31,7 @@ test('Login component when user is logged in', () => {
                 ...UserProvider.defaultUserData,
                 isAuthenticated: true,
                 username: 'test-username',
-                avatarUrl: 'test-url'
+                avatarUrl: 'test-url',
             }}
         >
             <Login />

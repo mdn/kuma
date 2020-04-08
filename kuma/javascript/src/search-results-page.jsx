@@ -9,7 +9,7 @@ import Titlebar from './titlebar.jsx';
 type SearchRouteParams = {
     locale: string,
     query: string,
-    page: ?number
+    page: ?number,
 };
 
 type SearchResults = {
@@ -18,7 +18,7 @@ type SearchResults = {
         slug: string,
         title: string,
         locale: string,
-        excerpt: string
+        excerpt: string,
     }>,
     start: number,
     end: number,
@@ -28,17 +28,17 @@ type SearchResults = {
     page: number,
     pages: number,
     previous: ?string,
-    query: string
+    query: string,
 };
 export type SearchResultsResponse = {
     results: ?SearchResults,
-    error: ?any
+    error: ?any,
 };
 
 type Props = {
     locale: string,
     query: string,
-    data: ?SearchResultsResponse
+    data: ?SearchResultsResponse,
 };
 
 function makePaginationPageURL(uri) {
@@ -47,10 +47,10 @@ function makePaginationPageURL(uri) {
 
 function ResultsMeta({
     locale,
-    results: { count, previous, next, query, start, end }
+    results: { count, previous, next, query, start, end },
 }: {
     locale: string,
-    results: SearchResults
+    results: SearchResults,
 }) {
     let resultsText;
     if (count > 0) {
@@ -77,7 +77,7 @@ function ResultsMeta({
                         // XXX this 'locale' is something like 'en-US'
                         // need to turn that into "English (US)".
                         locale,
-                        query
+                        query,
                     }
                 )}{' '}
                 {resultsText}
@@ -88,12 +88,12 @@ function ResultsMeta({
 
 function Results({
     locale,
-    results
+    results,
 }: {
     locale: string,
-    results: SearchResults
+    results: SearchResults,
 }) {
-    return (results.documents || []).map(result => {
+    return (results.documents || []).map((result) => {
         const path = `/${locale}/docs/${result.slug}`;
         return (
             <div className="result-container" key={result.slug}>
@@ -106,7 +106,7 @@ function Results({
                     <div
                         className="result-excerpt"
                         dangerouslySetInnerHTML={{
-                            __html: result.excerpt
+                            __html: result.excerpt,
                         }}
                     />
                     <div className="result-url">
@@ -256,7 +256,7 @@ export class SearchRoute extends Route<
             // page.
             return Promise.resolve({
                 results: null,
-                error: null
+                error: null,
             });
         }
         let encoded = encodeURIComponent(query);
@@ -268,7 +268,7 @@ export class SearchRoute extends Route<
 
         return (
             fetch(url)
-                .then(response => {
+                .then((response) => {
                     if (response.ok) {
                         return response.json();
                     } else {
@@ -277,7 +277,7 @@ export class SearchRoute extends Route<
                         );
                     }
                 })
-                .then(results => {
+                .then((results) => {
                     if (
                         !results ||
                         !results.documents ||
@@ -288,7 +288,7 @@ export class SearchRoute extends Route<
 
                     return {
                         results,
-                        error: null
+                        error: null,
                     };
                 })
                 // If anything goes wrong while we're fetching, just
@@ -298,13 +298,13 @@ export class SearchRoute extends Route<
                 // back on a full page reload. But for this route that
                 // will just cause the error again and will result in
                 // an infinite reload loop.
-                .catch(error => ({ error, results: null }))
+                .catch((error) => ({ error, results: null }))
         );
     }
 
     getTitle({ query }: SearchRouteParams): string {
         return `${interpolate(gettext('Search results for "%(query)s"'), {
-            query
+            query,
         })} | MDN`;
     }
 }

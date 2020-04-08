@@ -13,9 +13,8 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models, transaction
 from django.db.models import signals
-from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils.translation import gettext, gettext_lazy as _
 from taggit.managers import TaggableManager
 from taggit.models import ItemBase, TagBase
 from taggit.utils import edit_string_for_tags, parse_tags
@@ -79,7 +78,7 @@ def cache_with_field(field_name):
     """
 
     def decorator(fn):
-        @wraps(fn, assigned=available_attrs(fn))
+        @wraps(fn)
         def wrapper(self, *args, **kwargs):
             force_fresh = kwargs.pop("force_fresh", False)
 
@@ -108,9 +107,7 @@ def valid_slug_parent(slug, locale):
             parent = Document.objects.get(locale=locale, slug=parent_slug)
         except Document.DoesNotExist:
             raise Exception(
-                ugettext(
-                    "Parent %s does not exist." % ("%s/%s" % (locale, parent_slug))
-                )
+                gettext("Parent %s does not exist." % ("%s/%s" % (locale, parent_slug)))
             )
 
     return parent
@@ -324,7 +321,6 @@ class Document(NotificationsMixin, models.Model):
             ("slug", "locale"),
         )
         permissions = (
-            ("view_document", "Can view document"),
             ("move_tree", "Can move a tree of documents"),
             ("purge_document", "Can permanently delete document"),
             ("restore_document", "Can restore deleted document"),
@@ -656,6 +652,8 @@ class Document(NotificationsMixin, models.Model):
         if self.pk:
             for translation in self.other_translations:
                 revision = translation.current_revision
+                if not revision:
+                    continue
                 if revision.summary:
                     summary = revision.summary
                 else:
@@ -1789,7 +1787,7 @@ class Revision(models.Model):
                     old = self.based_on
                     self.based_on = based_on  # Guess a correct value.
                     locale = settings.LOCALES[settings.WIKI_DEFAULT_LANGUAGE].native
-                    error = ugettext(
+                    error = gettext(
                         "A revision must be based on a revision of the "
                         "%(locale)s document. Revision ID %(id)s does "
                         "not fit those criteria."

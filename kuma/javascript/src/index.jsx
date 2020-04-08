@@ -2,9 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import SinglePageApp from './single-page-app.jsx';
-import LandingPage from './landing-page.jsx';
-import SignupFlow from './signup-flow.jsx';
+import App from './app.jsx';
 import { AppErrorBoundary } from './error-boundaries.jsx';
 import GAProvider from './ga-provider.jsx';
 import { localize } from './l10n.js';
@@ -14,7 +12,7 @@ if (container) {
     let componentName = container.dataset.componentName;
 
     // The HTML page that loads this code is expected to have an inline
-    // script that sets this window._document_data property to an object
+    // script that sets this window._react_data property to an object
     // with all the data needed to hydrate or render the UI.
     let data = window._react_data;
 
@@ -25,49 +23,15 @@ if (container) {
     // Store the string catalog so that l10n.gettext() can do translations
     localize(data.locale, data.stringCatalog, data.pluralFunction);
 
-    let app = null;
-    // This switch statement is duplicated in ssr.jsx. Anything changed
-    // here should also be changed there. TODO: refactor this!
-    switch (componentName) {
-        case 'SPA':
-            // Ideally, we want as much as possible of MDN to be part
-            // of the single page app so that we can get client-side
-            // navigation between pages. Currently the single page app
-            // handles document pages and search results
-            app = (
-                <SinglePageApp
-                    initialURL={data.url}
-                    initialData={data.documentData}
-                />
-            );
-            break;
-        case 'landing':
-            // This is the React UI for the MDN homepage.
-            // The homepage has a React-based header, but most of the
-            // content is still based on Jinja templates, so we can't
-            // currently make it part of the single page app and have
-            // to handle it as a special case here.
-            app = <LandingPage />;
-            break;
-        case 'signupflow':
-            // This is the React UI for the MDN sign-up flow.
-            // The signup flow has a React-based header, but most of the
-            // content is still based on Jinja templates, so we can't
-            // currently make it part of the single page app and have
-            // to handle it as a special case here.
-            app = <SignupFlow />;
-            break;
-        case 'default':
-            throw new Error(
-                `Cannot render or hydrate unknown component: ${componentName}`
-            );
-    }
+    // Will throw an error for an unknown componentName.
+    let app = <App componentName={componentName} data={data} />;
 
     /* StrictMode is a tool for highlighting potential problems
        in an application. Like Fragment, StrictMode does not
        render any visible UI. It activates additional checks and
        warnings for its descendants.
        @see https://reactjs.org/docs/strict-mode.html */
+
     app = (
         <GAProvider>
             <AppErrorBoundary>
@@ -125,7 +89,7 @@ if (container) {
     // See also kuma/static/js/main.js where similar code appears to
     // make the menu work on the wiki domain
     for (let menu of document.querySelectorAll('select.autosubmit')) {
-        menu.addEventListener('change', function() {
+        menu.addEventListener('change', function () {
             this.form.submit();
         });
     }

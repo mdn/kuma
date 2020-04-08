@@ -1,6 +1,6 @@
 from django import forms
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from sundial.forms import TimezoneChoiceField
 from sundial.zones import COMMON_GROUPED_CHOICES
 
@@ -204,17 +204,17 @@ class UserRecoveryEmailForm(forms.Form):
 
 
 class UserDeleteForm(forms.Form):
+    def __init__(self, *args, username, **kwargs):
+        super().__init__(*args, **kwargs)
 
-    ATTRIBUTIONS_KEEP = "keep"
-    ATTRIBUTIONS_DONATE = "donate"
-    ATTRIBUTIONS_CHOICES = (
-        (ATTRIBUTIONS_KEEP, _("Keep my attribution for my page changes")),
-        (
-            ATTRIBUTIONS_DONATE,
-            _('Switch my attribution for my page changes to "Anonymous"'),
-        ),
-    )
+        choices = {
+            "keep": (
+                _("Keep my attribution for my page changes (%(username)s)")
+                % {"username": username}
+            ),
+            "donate": _('Switch my attribution for my page changes to "Anonymous"'),
+        }
 
-    attributions = forms.ChoiceField(
-        required=True, choices=ATTRIBUTIONS_CHOICES, widget=forms.widgets.RadioSelect()
-    )
+        self.fields["attributions"].choices = choices.items()
+
+    attributions = forms.ChoiceField(required=True, widget=forms.widgets.RadioSelect())

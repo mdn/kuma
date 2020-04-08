@@ -34,7 +34,7 @@ transitioning to Docker containers for deployment as well.
 .. _`Docker for Mac`: https://docs.docker.com/docker-for-mac/
 .. _`Docker's Ubuntu packages`: https://docs.docker.com/engine/installation/linux/ubuntulinux/
 .. _`DockerHub`: https://hub.docker.com/r/mdnwebdocs/kuma_base/tags/
-.. _TravisCI: https://travis-ci.org/mdn/kuma/
+.. _TravisCI: https://travis-ci.com/mdn/kuma/
 .. _Jenkins: https://ci.us-west-2.mdn.mozit.cloud/blue/organizations/jenkins/kuma/activity
 .. _discourse: https://discourse.mozilla.org/c/mdn
 
@@ -309,6 +309,13 @@ Enable Stripe payments (optional)
 If you're using Stripe in testing mode you can also get test numbers from this site:
 https://stripe.com/docs/testing#cards
 
+Testing Stripe's hooks locally requires setting up a tunneling service, like ngrok (https://ngrok.com).
+You should then set ``STRIPE_WEBHOOK_HOSTNAME`` to the hostname you get from your tunneling service, e.g. for
+ngrok it might be https://203ebfab.ngrok.io
+After kuma has started you will have a webhook configured in stripe. You can view it on Stripe's dashboard:
+https://dashboard.stripe.com/test/webhooks
+Note that with the free tier a restart of ngrok gives you a new hostname, so you'll have to change the config
+again and restart the server (or manually change the webhook in Stripe's dashboard).
 
 Interact with the Docker containers
 ===================================

@@ -1,16 +1,6 @@
 (function() {
     var stripeConfigElement = document.getElementById('stripe-config');
-    var stripeSection = document.querySelector('.stripe-subscription');
     var stripeForm = document.getElementById('stripe-form');
-
-    // The query parameter is added when the user submits the form
-    if (
-        stripeSection.scrollIntoView &&
-        location.search.indexOf('has_stripe_error') !== -1
-    ) {
-        history.replaceState(null, '', location.pathname);
-        stripeSection.scrollIntoView({behavior: 'smooth'});
-    }
 
     // This script is loaded for both before and after form submission.
     // In the latter case no form is rendered anymore
@@ -36,11 +26,17 @@
         token: function(response) {
             stripeTokenInput.value = response.id;
             stripeForm.submit();
+        },
+        closed: function() {
+            if (!stripeTokenInput.value) {
+                stripeForm.classList.remove('disabled');
+            }
         }
     });
 
     stripeForm.addEventListener('submit', function(e) {
         if (!stripeTokenInput.value) {
+            this.classList.add('disabled');
             handler.open();
             e.preventDefault();
         }

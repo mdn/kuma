@@ -1,0 +1,59 @@
+@import '../../includes/vars';
+@import '../../minimalist/vars/vars-color-palette';
+@import '../../includes/mixins';
+
+.mdn-cta-container {
+    display: none;
+
+    @media #{$mq-small-desktop-and-up} {
+        display: block;
+    }
+}
+
+.mdn-subscriptions {
+    @media #{$mq-small-desktop-and-up} {
+
+        .mdn-cta-content {
+            align-items: center;
+        }
+
+        .mdn-cta-button-container {
+            align-self: baseline;
+            margin-top: 17px;
+        }
+
+        .mdn-cta-button,
+        .mdn-cta-button:link,
+        .mdn-cta-button:visited {
+            box-sizing: border-box;
+            background-color: #fff;
+            color: $banner-button-text-color;
+            padding: 12px;
+            border: 2px solid $banner-button-border-color;
+            border-radius: 3px;
+            max-width: 185px;
+            height: 45px;
+            line-height: 1;
+        }
+    }
+
+    @media #{$mq-large-desktop-and-up} {
+        .mdn-cta-content {
+            margin: 0 auto;
+            padding-top: 0;
+            max-width: $max-width-default;
+        }
+
+        .mdn-cta-content-container {
+            display: flex;
+            justify-content: space-around;
+            flex-basis: 80%;
+        }
+
+        .mdn-cta-button-container {
+            flex-basis: 20%;
+            align-self: center;
+            margin-top: 0;
+        }
+    }
+}

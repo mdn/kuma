@@ -9,7 +9,7 @@ import type { DocumentData } from '../document.jsx';
 
 type Props = {
     document?: ?DocumentData,
-    locale: string
+    locale: string,
 };
 
 // To avoid problems with flow and React.memo(), define the component
@@ -41,14 +41,14 @@ const _MainMenu = ({ document, locale }: Props) => {
             hitType: 'event',
             eventCategory: 'Wiki',
             eventAction: 'MainNav',
-            eventLabel: label
+            eventLabel: label,
         });
     }
 
     /**
      * Selectively pass on a trigger to sendMenuItemInteraction() because
      * onMouseOver is tricky. Not only might you trigger an onMouseover on
-     * an element that isn't the actual button, if you mousever, mouseout,
+     * an element that isn't the actual button, if you mouseover, mouseout,
      * and then mouseover the same thing again, it should only count once.
      * @param {Object} event - the event object that was triggered
      */
@@ -77,109 +77,109 @@ const _MainMenu = ({ document, locale }: Props) => {
                 items: [
                     {
                         url: `/${locale}/docs/Web`,
-                        label: gettext('Technologies Overview')
+                        label: gettext('Technologies Overview'),
                     },
                     {
                         url: `/${locale}/docs/Web/HTML`,
-                        label: gettext('HTML')
+                        label: gettext('HTML'),
                     },
                     {
                         url: `/${locale}/docs/Web/CSS`,
-                        label: gettext('CSS')
+                        label: gettext('CSS'),
                     },
                     {
                         url: `/${locale}/docs/Web/JavaScript`,
-                        label: gettext('JavaScript')
+                        label: gettext('JavaScript'),
                     },
                     {
                         url: `/${locale}/docs/Web/Guide/Graphics`,
-                        label: gettext('Graphics')
+                        label: gettext('Graphics'),
                     },
                     {
                         url: `/${locale}/docs/Web/HTTP`,
-                        label: gettext('HTTP')
+                        label: gettext('HTTP'),
                     },
                     {
                         url: `/${locale}/docs/Web/API`,
-                        label: gettext('APIs / DOM')
+                        label: gettext('APIs / DOM'),
                     },
                     {
                         url: `/${locale}/docs/Mozilla/Add-ons/WebExtensions`,
-                        label: gettext('Browser Extensions')
+                        label: gettext('Browser Extensions'),
                     },
                     {
                         url: `/${locale}/docs/Web/MathML`,
-                        label: gettext('MathML')
-                    }
-                ]
+                        label: gettext('MathML'),
+                    },
+                ],
             },
             {
                 label: gettext('References & Guides'),
                 items: [
                     {
                         url: `/${locale}/docs/Learn`,
-                        label: gettext('Learn web development')
+                        label: gettext('Learn web development'),
                     },
                     {
                         url: `/${locale}/docs/Web/Tutorials`,
-                        label: gettext('Tutorials')
+                        label: gettext('Tutorials'),
                     },
                     {
                         url: `/${locale}/docs/Web/Reference`,
-                        label: gettext('References')
+                        label: gettext('References'),
                     },
                     {
                         url: `/${locale}/docs/Web/Guide`,
-                        label: gettext('Developer Guides')
+                        label: gettext('Developer Guides'),
                     },
                     {
                         url: `/${locale}/docs/Web/Accessibility`,
-                        label: gettext('Accessibility')
+                        label: gettext('Accessibility'),
                     },
                     {
                         url: `/${locale}/docs/Games`,
-                        label: gettext('Game development')
+                        label: gettext('Game development'),
                     },
                     {
                         url: `/${locale}/docs/Web`,
-                        label: gettext('...more docs')
-                    }
-                ]
+                        label: gettext('...more docs'),
+                    },
+                ],
             },
             {
                 label: gettext('Feedback'),
                 items: [
                     {
                         url: `/${locale}/docs/MDN/Feedback`,
-                        label: gettext('Send Feedback')
+                        label: gettext('Send Feedback'),
                     },
                     {
                         url: 'https://support.mozilla.org/',
                         label: gettext('Get Firefox help'),
-                        external: true
+                        external: true,
                     },
                     {
                         url: 'https://stackoverflow.com/',
                         label: gettext('Get web development help'),
-                        external: true
+                        external: true,
                     },
                     {
                         url: `/${locale}/docs/MDN/Community`,
-                        label: gettext('Join the MDN community')
+                        label: gettext('Join the MDN community'),
                     },
                     {
                         label: gettext('Report a content problem'),
                         external: true,
                         url:
-                            'https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title={{PATH}}'
+                            'https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title={{PATH}}',
                     },
                     {
                         label: gettext('Report an issue'),
                         external: true,
-                        url: 'https://github.com/mdn/kuma/issues/new'
-                    }
-                ]
-            }
+                        url: 'https://github.com/mdn/kuma/issues/new',
+                    },
+                ],
+            },
         ],
         [locale]
     );
@@ -216,7 +216,7 @@ const _MainMenu = ({ document, locale }: Props) => {
     return (
         <nav className="main-nav" role="navigation">
             <ul>
-                {menus.map(menuEntry => (
+                {menus.map((menuEntry) => (
                     <li
                         key={menuEntry.label}
                         className="top-level-entry-container"
@@ -252,7 +252,7 @@ const _MainMenu = ({ document, locale }: Props) => {
                                 menuEntry.label === showSubMenu ? 'show' : null
                             }
                         >
-                            {menuEntry.items.map(item => (
+                            {menuEntry.items.map((item) => (
                                 <li
                                     key={item.url}
                                     data-item={menuEntry.label}

@@ -17,7 +17,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.cache import add_never_cache_headers, patch_vary_headers
 from django.utils.http import parse_etags, quote_etag
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext
+from django.utils.translation import gettext
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_http_methods, require_POST
@@ -245,6 +245,14 @@ def _default_locale_fallback(request, document_slug, document_locale):
         pass
 
     return fallback_doc, fallback_reason, redirect_url
+
+
+def _get_deleted_parent_redirect_url(document_locale, document_slug):
+    for document in Document.deleted_objects.filter(
+        locale=document_locale, slug=document_slug, parent__isnull=False
+    ):
+        if document.parent:
+            return document.parent.get_absolute_url()
 
 
 def _get_doc_and_fallback_reason(document_locale, document_slug):
@@ -744,7 +752,7 @@ def wiki_document(request, document_slug, document_locale):
             request,
             messages.WARNING,
             mark_safe(
-                ugettext("Redirected from %(url)s")
+                gettext("Redirected from %(url)s")
                 % {"url": request.build_absolute_uri(doc.get_absolute_url())}
             ),
             extra_tags="wiki_redirect",
@@ -801,9 +809,7 @@ def wiki_document(request, document_slug, document_locale):
         else:
             en_slug = ""
 
-        share_text = ugettext("I learned about %(title)s on MDN.") % {
-            "title": doc.title
-        }
+        share_text = gettext("I learned about %(title)s on MDN.") % {"title": doc.title}
 
         contributors = doc.contributors
         contributors_count = len(contributors)
@@ -887,6 +893,18 @@ def react_document(request, document_slug, document_locale):
             if redirect_url is not None:
                 return redirect(redirect_url)
         else:
+            # It could be that the document you're trying to view was deleted and
+            # the reason we're not finding a fallback is because the slug
+            # doesn't match.
+            # E.g. you're trying to view `/sv-SE/docs/Foö/Bår` but that document
+            # was soft-deleted and its parent was `/en-US/docs/Foo/Bar`
+            if document_locale != settings.LANGUAGE_CODE:  # Not in English!
+                redirect_url = _get_deleted_parent_redirect_url(
+                    document_locale, document_slug
+                )
+                if redirect_url:
+                    return redirect(redirect_url)
+
             raise Http404
 
     # We found a Document. Now we need to figure out how we're going
@@ -910,7 +928,7 @@ def react_document(request, document_slug, document_locale):
             request,
             messages.WARNING,
             mark_safe(
-                ugettext("Redirected from %(url)s")
+                gettext("Redirected from %(url)s")
                 % {"url": request.build_absolute_uri(doc.get_absolute_url())}
             ),
             extra_tags="wiki_redirect",
@@ -1033,13 +1051,13 @@ def _document_api_PUT(request, document_slug, document_locale):
         else:
             resp = HttpResponse()
             resp.status_code = 400
-            resp.content = ugettext("Unsupported content-type: %s") % content_type
+            resp.content = gettext("Unsupported content-type: %s") % content_type
             return resp
 
     except Exception as e:
         resp = HttpResponse()
         resp.status_code = 400
-        resp.content = ugettext("Request parsing error: %s") % e
+        resp.content = gettext("Request parsing error: %s") % e
         return resp
 
     try:
@@ -1062,7 +1080,7 @@ def _document_api_PUT(request, document_slug, document_locale):
             if current_etag not in expected_etags:
                 resp = HttpResponse()
                 resp.status_code = 412
-                resp.content = ugettext("ETag precondition failed")
+                resp.content = gettext("ETag precondition failed")
                 return resp
 
     except Document.DoesNotExist:

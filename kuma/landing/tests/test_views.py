@@ -22,6 +22,7 @@ def cleared_cache():
 
 def test_contribute_json(client, db):
     response = client.get(reverse("contribute_json"))
+    response.close()  # Discard response body; prevents an unclosed file warning
     assert response.status_code == 200
     assert_shared_cache_header(response)
     assert response["Content-Type"].startswith("application/json")
@@ -98,6 +99,23 @@ def test_robots_allowed_main_website(client, settings):
     assert b"Sitemap: " in content
     assert b"Disallow: /\n" not in content
     assert b"Disallow: /admin/\n" in content
+
+
+def test_robots_all_allowed_wiki_website(client, settings):
+    """On the wiki website, allow robots with NO restrictions."""
+    host = "main.mdn.moz.works"
+    wiki_host = "wiki." + host
+    settings.WIKI_HOST = wiki_host
+    settings.ALLOWED_HOSTS = [host, wiki_host]
+    settings.ALLOW_ROBOTS_WEB_DOMAINS = [host, wiki_host]
+    response = client.get(reverse("robots_txt"), HTTP_HOST=wiki_host)
+    assert response.status_code == 200
+    assert_shared_cache_header(response)
+    assert response["Content-Type"] == "text/plain"
+    content = response.content
+    assert b"Sitemap: " in content
+    assert b"Disallow:\n" in content
+    assert b"Disallow: /" not in content
 
 
 def test_robots_allowed_main_attachment_host(client, settings):

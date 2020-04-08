@@ -1,51 +1,45 @@
 import logging
-from functools import wraps
 
 from django.conf import settings
-from django.http import Http404
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 from stripe.error import StripeError
+from waffle.decorators import waffle_flag
 
 from kuma.core.decorators import ensure_wiki_domain, login_required
+from kuma.users.models import User, UserSubscription
 
 from .utils import (
     cancel_stripe_customer_subscription,
-    enabled,
     get_stripe_customer_data,
 )
 
 log = logging.getLogger("kuma.payments.views")
 
 
-def skip_if_disabled(func):
-    """If contributions are not enabled, then 404."""
-
-    @wraps(func)
-    def wrapped(request, *args, **kwargs):
-        if enabled(request):
-            return func(request, *args, **kwargs)
-        raise Http404
-
-    return wrapped
-
-
-@skip_if_disabled
-@ensure_wiki_domain
 @never_cache
-def contribute(request):
-    return render(request, "payments/payments.html")
+def index(request):
+    highest_subscriber_number = User.get_highest_subscriber_number()
+    # TODO: This is never unit tested because our tests never test SSR rendering.
+    # See https://github.com/mdn/kuma/issues/6797
+    context = {"next_subscriber_number": highest_subscriber_number + 1}
+    return render(request, "payments/index.html", context)
 
 
-@skip_if_disabled
-@ensure_wiki_domain
+@waffle_flag("subscription")
+@never_cache
+def thank_you(request):
+    return render(request, "payments/thank-you.html")
+
+
+@waffle_flag("subscription")
 @never_cache
 def payment_terms(request):
     return render(request, "payments/terms.html")
 
 
-@skip_if_disabled
 @ensure_wiki_domain
+@waffle_flag("subscription")
 @login_required
 @never_cache
 def recurring_payment_management(request):
@@ -62,7 +56,10 @@ def recurring_payment_management(request):
         context["cancel_request"] = True
         cancel_success = False
         try:
-            cancel_stripe_customer_subscription(request.user.stripe_customer_id)
+            for subscription_id in cancel_stripe_customer_subscription(
+                request.user.stripe_customer_id
+            ):
+                UserSubscription.set_canceled(request.user, subscription_id)
         except StripeError:
             log.exception(
                 "Stripe subscription cancellation: Stripe error for %s [%s]",

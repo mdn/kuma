@@ -1,7 +1,6 @@
 {% extends "wiki/base.html" %}
 {% set title = _('Revision %(id)s | %(title)s', id=revision.id, title=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
-{% block robots_value %}noindex, nofollow{% endblock %}
 {% set classes = 'document' %}
 
 {% block content %}

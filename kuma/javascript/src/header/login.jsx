@@ -17,29 +17,40 @@ export default function Login(): React.Node {
         return null;
     }
 
-    // In order to render links properly, we need to know our own
-    // URL and the URL of the editable wiki site. We get these from
-    // window.location and from window.mdn. Neither of those are
-    // available during server side rendering, but this code will
-    // never run during server side rendering because we won't have
-    // user data then.
+    // In order to render links properly, we need to know our own URL.
+    // We get this from window.location. This is not available during
+    // server side rendering, but this code will never run during
+    // server side rendering because we won't have user data then.
     const LOCATION = window.location.pathname;
-    const WIKI = window.mdn ? window.mdn.wikiSiteUrl : '';
 
     /**
      * Send a signal to GA when a user clicks on the Sing In
      * lnk in the header.
      * @param {Object} event - The event object that was triggered
      */
-    function sendSignInEvent(event) {
-        const service = event.target.dataset.service;
-
+    function sendSignInEvent() {
         ga('send', {
             hitType: 'event',
             eventCategory: 'Authentication',
             eventAction: 'Started sign-in',
-            eventLabel: service
         });
+    }
+
+    /**
+     * If you click the "Sign in" link, reach out to the global
+     * 'windown.mdn.triggerAuthModal' if it's available.
+     *
+     * @param {Object} event - The click event
+     */
+    function triggerAuthModal(event) {
+        // If window.mdn.triggerAuthModal is available, use that. But note, the
+        // 'event' here is a React synthetic event object, not a regular DOM
+        // event. So, we prevent *this* synthetic event and hand over to the
+        // global window.mdn.triggerAuthModal() function to take over.
+        if (window.mdn && window.mdn.triggerAuthModal) {
+            event.preventDefault();
+            window.mdn.triggerAuthModal();
+        }
     }
 
     if (userData.isAuthenticated && userData.username) {
@@ -48,14 +59,15 @@ export default function Login(): React.Node {
         // URL doesn't work.
         let label = (
             <img
-                srcSet={`${userData.avatarUrl ||
-                    ''} 200w, ${userData.avatarUrl || ''} 50w`}
+                srcSet={`${userData.avatarUrl || ''} 200w, ${
+                    userData.avatarUrl || ''
+                } 50w`}
                 src={'/static/img/avatar.png'}
                 className="avatar"
                 alt={userData.username}
             />
         );
-        let viewProfileLink = `${WIKI}/${locale}/profiles/${userData.username}`;
+        let viewProfileLink = `/${locale}/profiles/${userData.username}`;
         let editProfileLink = `${viewProfileLink}/edit`;
 
         return (
@@ -87,15 +99,15 @@ export default function Login(): React.Node {
         // Otherwise, show a login prompt
         return (
             <a
-                href={
-                    (window && window.mdn && window.mdn.multiAuthEnabled
-                        ? `/${locale}/users/account/signup-landing`
-                        : '/users/github/login') + `?next=${LOCATION}`
-                }
-                data-service="GitHub"
+                href={`/${locale}/users/account/signup-landing?next=${LOCATION}`}
                 rel="nofollow"
                 className="signin-link"
-                onClick={sendSignInEvent}
+                onClick={(event) => {
+                    // The old GitHub click event (even though it's not GitHub yet).
+                    sendSignInEvent();
+                    // The action that causes the auth modal to appear.
+                    triggerAuthModal(event);
+                }}
             >
                 {gettext('Sign in')}
             </a>

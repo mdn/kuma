@@ -1,4 +1,7 @@
 $brand-primary: #015fdf;
+$brand-primary-200: #3d7e9a;
+$brand-primary-300: #3c7e9a;
+$brand-primary-500: #ebf4f7;
 $brand-red: #d65752;
 $brand-green: #4d9f0c;
 $brand-grey: #aeb7c2;
@@ -7,7 +10,7 @@ $blue-grey: #dce3e5;
 $light-blue-grey: #a1b4ce;
 $light-grey: #fdfdfd;
 
-$link-color: #3d7e9a;
+$link-color: $brand-primary-200;
 $text-color: #333;
 
 $border-color: #585858;
@@ -21,3 +24,8 @@ $warning-background-color: scale-color($warning-border-color, $lightness: 50%);
 $featured-banner-hover-shadow: 2px 2px 5px
     scale-color($brand-primary, $lightness: 70%);
 $button-box-shadow: 5px 5px 5px $light-blue-grey;
+
+$banner-button-border-color: #4c89a5;
+$banner-button-text-color: #295c77;
+
+$box-shadow-blue: 5px 5px 15px rgba(61, 126, 154, 0.3);

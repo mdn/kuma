@@ -1,7 +1,6 @@
 (function() {
     'use strict';
 
-    var otherEmailInput = document.getElementById('id_other_email');
     var signupForm = document.getElementById('social-signup-form');
 
     /**
@@ -31,27 +30,6 @@
             );
             focusElement = editContainer.querySelector('input');
             showEditFields(staticContainer, editContainer, focusElement);
-        } else if (event.target.id === 'change-email') {
-            staticContainer = document.getElementById('email-static-container');
-            editContainer = document.getElementById('change-email-container');
-            focusElement = editContainer.querySelector('label');
-            showEditFields(staticContainer, editContainer, focusElement);
-        } else if (event.target.id === 'create-mdn-account') {
-            var mdnProfileImgContainer = document.querySelector('.mdn-profile');
-            mdnProfileImgContainer.classList.add('checked');
         }
     });
-
-    /* when the "other" email input field lose focus, set its
-       associated radio button to the checked state if the
-       data entered was valid */
-    if (otherEmailInput) {
-        otherEmailInput.addEventListener('blur', function(event) {
-            if (event.target.validity.valid) {
-                event.target.parentElement.querySelector(
-                    'input[type="radio"]'
-                ).checked = true;
-            }
-        });
-    }
 })();

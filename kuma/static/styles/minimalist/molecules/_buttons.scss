@@ -14,20 +14,22 @@
     cursor: pointer;
 }
 
+button.cta,
 .cta {
     @extend .button-base;
     min-width: 200px;
     min-height: 40px;
 }
 
+button.primary,
 .primary {
-    background-color: $brand-primary;
+    background-color: $brand-primary-300;
     color: #fff;
 
     &:hover,
     &:active,
     &:focus {
-        background-color: scale-color($brand-primary, $lightness: -20%);
+        background-color: scale-color($brand-primary-300, $lightness: -20%);
     }
 }
 

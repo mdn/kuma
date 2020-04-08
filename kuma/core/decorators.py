@@ -8,7 +8,6 @@ from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import redirect, render
-from django.utils.decorators import available_attrs
 
 from .jobs import BannedIPsJob
 from .urlresolvers import reverse
@@ -31,7 +30,7 @@ def shared_cache_control(func=None, **kwargs):
     """
 
     def _shared_cache_controller(viewfunc):
-        @wraps(viewfunc, assigned=available_attrs(viewfunc))
+        @wraps(viewfunc)
         def _cache_controlled(request, *args, **kw):
             response = viewfunc(request, *args, **kw)
             add_shared_cache_control(response, **kwargs)
@@ -78,7 +77,7 @@ def user_access_decorator(
 
             return view_fn(request, *args, **kwargs)
 
-        return wraps(view_fn, assigned=available_attrs(view_fn))(_wrapped_view)
+        return wraps(view_fn)(_wrapped_view)
 
     return decorator
 
@@ -158,7 +157,7 @@ def block_user_agents(view_func):
                     return HttpResponseForbidden()
         return view_func(request, *args, **kwargs)
 
-    return wraps(view_func, assigned=available_attrs(view_func))(agent_blocked_view)
+    return wraps(view_func)(agent_blocked_view)
 
 
 def block_banned_ips(view_func):

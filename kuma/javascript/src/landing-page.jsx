@@ -2,8 +2,9 @@
 import * as React from 'react';
 
 import A11yNav from './a11y/a11y-nav.jsx';
-import Banners from './banners.jsx';
+import ActiveBanner from './active-banner.jsx';
 import Header from './header/header.jsx';
+import TaskCompletionSurvey from './task-completion-survey.jsx';
 import UserProvider from './user-provider.jsx';
 
 /**
@@ -17,7 +18,8 @@ export default function LandingPage() {
         <UserProvider>
             <A11yNav />
             <Header />
-            <Banners />
+            <ActiveBanner />
+            <TaskCompletionSurvey document={null} />
         </UserProvider>
     );
 }

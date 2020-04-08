@@ -1,8 +1,7 @@
 from django import forms
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
-
-from kuma.core.form_fields import StrippedCharField
+from django.forms.fields import CharField
+from django.utils.translation import gettext_lazy as _
 
 
 LANG_CHOICES = [("", _("All Locales"))] + settings.SORTED_LANGUAGES
@@ -32,12 +31,8 @@ class RevisionDashboardForm(forms.Form):
         required=False,
         label=_("Locale:"),
     )
-    user = StrippedCharField(
-        min_length=1, max_length=255, required=False, label=_("User:")
-    )
-    topic = StrippedCharField(
-        min_length=1, max_length=255, required=False, label=_("Topic:")
-    )
+    user = CharField(min_length=1, max_length=255, required=False, label=_("User:"))
+    topic = CharField(min_length=1, max_length=255, required=False, label=_("Topic:"))
     start_date = forms.DateField(
         required=False,
         label=_("Start Date:"),

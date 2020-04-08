@@ -6,7 +6,7 @@ from allauth.socialaccount.templatetags.socialaccount import get_providers
 from allauth.utils import get_request_param
 from django.conf import settings
 from django.contrib import admin
-from django.utils.translation import ugettext
+from django.utils.translation import gettext
 from django_jinja import library
 from honeypot.templatetags.honeypot import render_honeypot_field
 from jinja2 import contextfunction, escape, Markup
@@ -46,7 +46,7 @@ def ban_links(context, ban_user, banner_user):
         )
         if active_ban:
             url = reverse("admin:users_userban_change", args=(active_ban.id,))
-            title = ugettext("Banned on %(ban_date)s by %(ban_admin)s.") % {
+            title = gettext("Banned on %(ban_date)s by %(ban_admin)s.") % {
                 "ban_date": datetimeformat(
                     context, active_ban.date, format="date", output="json"
                 ),
@@ -55,24 +55,24 @@ def ban_links(context, ban_user, banner_user):
             link = (
                 '<a id="ban_link" href="%s" class="button ban-link" title="%s">%s'
                 '<i aria-hidden="true" class="icon-ban"></i></a>'
-                % (url, title, ugettext("Banned"))
+                % (url, title, gettext("Banned"))
             )
             link_cleanup = (
                 '<a id="cleanup_link" href="%s" class="button negative ban-link">%s'
                 '<i aria-hidden="true" class="icon-ban"></i></a>'
-                % (url_ban_cleanup, ugettext("Clean Up Revisions"))
+                % (url_ban_cleanup, gettext("Clean Up Revisions"))
             )
         else:
             url = reverse("users.ban_user", kwargs={"username": ban_user.username})
             link = (
                 '<a id="ban_link" href="%s" class="button negative ban-link">%s'
                 '<i aria-hidden="true" class="icon-ban"></i></a>'
-                % (url, ugettext("Ban User"))
+                % (url, gettext("Ban User"))
             )
             link_cleanup = (
                 '<a id="cleanup_link" href="%s" class="button negative ban-link">%s'
                 '<i aria-hidden="true" class="icon-ban"></i></a>'
-                % (url_ban_cleanup, ugettext("Ban User & Clean Up"))
+                % (url_ban_cleanup, gettext("Ban User & Clean Up"))
             )
         links = link_cleanup + " " + link
     return Markup(links)
@@ -86,7 +86,7 @@ def admin_link(user):
     )
     link = (
         '<a href="%s" class="button neutral">%s'
-        '<i aria-hidden="true" class="icon-wrench"></i></a>' % (url, ugettext("Admin"))
+        '<i aria-hidden="true" class="icon-wrench"></i></a>' % (url, gettext("Admin"))
     )
     return Markup(link)
 

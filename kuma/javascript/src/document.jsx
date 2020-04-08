@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import A11yNav from './a11y/a11y-nav.jsx';
 import Article from './article.jsx';
-import Banners from './banners.jsx';
+import ActiveBanner from './active-banner.jsx';
 import Breadcrumbs from './breadcrumbs.jsx';
 import { gettext } from './l10n.js';
 import LanguageMenu from './header/language-menu.jsx';
@@ -29,7 +29,8 @@ export type DocumentData = {
     hrefLang: string,
     absoluteURL: string,
     wikiURL: string,
-    translateURL: string,
+    editURL: string,
+    translateURL: string | null,
     translationStatus: null | 'in-progress' | 'outdated',
     bodyHTML: string,
     quickLinksHTML: string,
@@ -41,13 +42,13 @@ export type DocumentData = {
         hrefLang: string,
         localizedLanguage: string,
         url: string,
-        title: string
+        title: string,
     }>,
-    lastModified: string // An ISO date
+    lastModified: string, // An ISO date
 };
 
 export type DocumentProps = {
-    document: DocumentData
+    document: DocumentData,
 };
 
 export function Sidebar({ document }: DocumentProps) {
@@ -60,7 +61,7 @@ export function Sidebar({ document }: DocumentProps) {
                     </div>
                     <div
                         dangerouslySetInnerHTML={{
-                            __html: document.quickLinksHTML
+                            __html: document.quickLinksHTML,
                         }}
                     />
                 </div>
@@ -113,7 +114,7 @@ function DocumentPage({ document }: DocumentProps) {
             <Newsletter />
             <Footer />
             <TaskCompletionSurvey document={document} />
-            <Banners />
+            <ActiveBanner />
         </>
     );
 }
@@ -130,7 +131,7 @@ export default function Document({ data }: Props) {
 
 // Like fetch(), but if the first URL doesn't work, try the second instead.
 function fetchWithFallback(url1: string, url2: string) {
-    return fetch(url1).then(response => {
+    return fetch(url1).then((response) => {
         if (response.ok || !url2 || url2 === url1) {
             return response;
         } else {
@@ -149,7 +150,7 @@ const BASEURL =
 
 type DocumentRouteParams = {
     locale: string,
-    slug: string
+    slug: string,
 };
 
 // This Route subclass tells the Router component how to convert
@@ -178,7 +179,7 @@ export class DocumentRoute extends Route<DocumentRouteParams, DocumentData> {
 
         return {
             locale: this.locale,
-            slug: path.substring(expectedPrefix.length)
+            slug: path.substring(expectedPrefix.length),
         };
     }
 
@@ -191,7 +192,7 @@ export class DocumentRoute extends Route<DocumentRouteParams, DocumentData> {
             `/api/v1/doc/${locale}/${slug}`,
             `/api/v1/doc/en-US/${slug}`
         )
-            .then(response => {
+            .then((response) => {
                 if (response.ok) {
                     return response.json();
                 } else {
@@ -202,7 +203,7 @@ export class DocumentRoute extends Route<DocumentRouteParams, DocumentData> {
                     );
                 }
             })
-            .then(json => {
+            .then((json) => {
                 if (json && json.redirectURL) {
                     // We've got a redirect to a document that can't be
                     // handled via the /api/v1/doc/ API, so we just do a

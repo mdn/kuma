@@ -16,6 +16,10 @@ table.bc-table {
     border-collapse: separate; /* to over-ride .text-content styles */
     border-spacing: 0;
     @include rgba-fallback('background-color', $table-blue, .5);
+
+    th {
+        text-align: center;
+    }
 }
 
 .bc-table,
@@ -72,7 +76,7 @@ table.bc-table {
 /* second column */
 .bc-table thead td + th,
 .bc-table tbody th + td {
-    border-left: 0;
+    @include bidi(((border-left, 0, 1px solid),));
 }
 
 /* thicker border between platforms */
@@ -116,8 +120,12 @@ table.bc-table {
 }
 
 .bc-table tbody th {
-    border-right: $bc-border-width-thick solid $bc-border-color;
-    border-left: 0;
+    border-width: $bc-border-width-thick;
+    border-color: $bc-border-color;
+    border-style: none;
+    border-top: 1px solid $bc-border-color;
+    @include bidi(((border-right, solid, 0), ));
+    @include bidi(((border-left, 0, solid), ));
     text-align: left;
 }
 
@@ -126,9 +134,12 @@ table.bc-table {
 
 /* empty td in thead */
 .bc-table thead td {
+    border-width: $bc-border-width-thick;
+    border-color: $bc-border-color;
+    border-style: none;
     border-top: 0;
-    border-right: $bc-border-width-thick solid $bc-border-color;
-    border-left: 0;
+    @include bidi(((border-right, solid, 0), ));
+    @include bidi(((border-left, 0, solid), ));
 }
 
 /* make outline more visible */

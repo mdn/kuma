@@ -3,6 +3,7 @@ import html
 import json
 
 import jinja2
+from babel.numbers import format_currency
 from django.conf import settings
 from django.contrib.messages.storage.base import LEVEL_TAGS
 from django.contrib.staticfiles.storage import staticfiles_storage
@@ -10,7 +11,7 @@ from django.template import defaultfilters
 from django.template.loader import get_template
 from django.utils.encoding import force_text
 from django.utils.html import strip_tags
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django_jinja import library
 from pytz import timezone, utc
 from soapbox.models import Message
@@ -187,3 +188,8 @@ def get_locale_localized(locale):
     language = settings.LOCALES[locale].english
 
     return _(language)
+
+
+@library.filter
+def money(value, currency="USD"):
+    return format_currency(value, currency, locale="en")

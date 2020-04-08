@@ -104,3 +104,4 @@ kuma/static/js/libs/ckeditor/source/ckbuilder/
 
 # Emacs backup files
 *~
+junit.xml

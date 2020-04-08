@@ -1,20 +1,28 @@
 <div class="text-content delete-user-content" id="user-delete">
-    
+    {% if username %}
     <form id="delete-user-form" action="{{ url('users.user_delete', username) }}" method="post">
         {% csrf_token %}
-        
-        {% if revisions.count() == 0 %}
-            <p>{{ _('Deleting your account loses any preferences you have set, as well as makes your username available for others to use.') }}</p>
-            <p>{{ _('Are you sure you want to continue?') }}</p>
-        {% elif revisions.exists() %}
-            <p>{{ _('Deleting your account loses any preferences you have set.') }}</p>
-            <p>{{ _('Although we can delete your account, any revisions you have made to pages on MDN will remain. Please select how would like us to handle the attribution for your changes') }}</p>
+
+        {% if revisions.exists() or attachment_revisions.exists() %}
+            <p>{{ _('Deleting your account loses any preferences you have set.') }}
+                <br>
+                {{ _('It will also cancel any MDN subscription you might have.') }}
+            </p>
+            <p>{{ _('Although we can delete your account, any revisions you have made to pages on MDN will remain. Please select how would like us to handle the attribution for your changes.') }}</p>
             {{ form.attributions.errors }}
             {{ form.attributions }}
-            <p>{{ _('Are you sure you want to continue?') }}</p>
+        {% else %}
+            <p>
+                {{ _('Deleting your account loses any preferences you have set, as well as makes your username available for others to use.') }}
+                <br>
+                {{ _('It will also cancel any MDN subscription you might have.') }}
+            </p>
         {% endif %}
 
-        <button type="button" id="cancel-button" class="simple-text" data-first-focusable="true">{{ _('Cancel') }}</button>
-        <button type="submit" id="delete-user-confirm" {% if revisions.exists() %}class="disabled" disabled{% else %}class="negative"{% endif %}>{{ _('Yes, Delete my Account') }}</button>
+        <p>{{ _('Are you sure you want to continue?') }}</p>
+
+        <button type="submit" id="delete-user-confirm" {% if revisions.exists() %}class="disabled" disabled{% else %}class="negative"{% endif %} data-first-focusable="true">{{ _('Yes, Delete my Account') }}</button>
+        <a id="cancel-button" href="{{ url('users.user_edit', username=user.username) }}" >{{ _('Cancel') }}</a>
     </form>
+    {% endif %}
 </div>

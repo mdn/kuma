@@ -1,6 +1,6 @@
 from operator import attrgetter
 
-from django.utils.translation import ugettext
+from django.utils.translation import gettext
 from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
 
@@ -95,8 +95,8 @@ class SearchView(ListAPIView):
                 group_slug = None
             else:
                 # Let's check if we can get the name from the gettext catalog
-                filter_name = ugettext(filter_["name"])
-                group_name = ugettext(filter_["group"]["name"])
+                filter_name = gettext(filter_["name"])
+                group_name = gettext(filter_["group"]["name"])
                 group_slug = filter_["group"]["slug"]
 
             filter_groups.setdefault(

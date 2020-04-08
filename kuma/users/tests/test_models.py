@@ -4,7 +4,7 @@ from django.utils.translation import deactivate_all
 from kuma.wiki.tests import revision
 
 from . import UserTestCase
-from ..models import UserBan
+from ..models import User, UserBan, UserSubscription
 
 
 class TestUser(UserTestCase):
@@ -105,19 +105,6 @@ class TestUser(UserTestCase):
         url2 = user.get_recovery_url()
         assert url == url2
 
-    def test_get_recovery_url_blank_password(self):
-        user = self.user_model.objects.get(username="testuser")
-        user.password = ""
-        user.save()
-        url = user.get_recovery_url()
-        assert url
-        assert not user.has_usable_password()
-
-        # The same URL is returned on second call
-        user.refresh_from_db()
-        url2 = user.get_recovery_url()
-        assert url == url2
-
     def test_get_recovery_url_no_active_translation(self):
         """
         When no translation is active, the locale is /en-US/.
@@ -158,3 +145,65 @@ class BanTestCase(UserTestCase):
         testuser_unbanned = self.user_model.objects.get(username="testuser")
         assert testuser_unbanned.is_active
         assert testuser_unbanned.active_ban is None
+
+
+def test_user_subscription_set_active(wiki_user):
+    UserSubscription.set_active(wiki_user, "abc123")
+    assert UserSubscription.objects.filter(user=wiki_user).count() == 1
+    assert not UserSubscription.objects.filter(user=wiki_user).first().canceled
+    # idempotent
+    UserSubscription.set_active(wiki_user, "abc123")
+    assert UserSubscription.objects.filter(user=wiki_user).count() == 1
+    # different stripe_subscription_id
+    UserSubscription.set_active(wiki_user, "xyz789")
+    assert UserSubscription.objects.filter(user=wiki_user).count() == 2
+    assert (
+        UserSubscription.objects.filter(user=wiki_user, canceled__isnull=True).count()
+        == 2
+    )
+
+
+def test_user_subscription_set_canceled(wiki_user):
+    UserSubscription.set_canceled(wiki_user, "abc123")
+    assert UserSubscription.objects.filter(user=wiki_user).count() == 1
+    assert UserSubscription.objects.filter(user=wiki_user).first().canceled
+    # idempotent
+    UserSubscription.set_canceled(wiki_user, "abc123")
+    assert UserSubscription.objects.filter(user=wiki_user).count() == 1
+    # different stripe_subscription_id
+    UserSubscription.set_canceled(wiki_user, "xyz789")
+    assert UserSubscription.objects.filter(user=wiki_user).count() == 2
+    assert (
+        UserSubscription.objects.filter(user=wiki_user, canceled__isnull=False).count()
+        == 2
+    )
+
+
+def test_user_subscription_and_subscriber_number(wiki_user):
+    """This test checks the relationship between UserSubscription.set_active,
+    UserSubscription.set_canceled, and User.subscriber_number."""
+    assert wiki_user.subscriber_number is None
+    UserSubscription.set_active(wiki_user, "abc123")
+    wiki_user.refresh_from_db()
+    assert wiki_user.subscriber_number == 1
+
+    # Hit it again, and the subscriber_number shouldn't go up
+    UserSubscription.set_active(wiki_user, "abc123")
+    wiki_user.refresh_from_db()
+    assert wiki_user.subscriber_number == 1
+
+    # And not go down if you cancel
+    UserSubscription.set_canceled(wiki_user, "abc123")
+    wiki_user.refresh_from_db()
+    assert wiki_user.subscriber_number == 1
+
+    # And creating a brand new subscription doesn't change it either
+    UserSubscription.set_active(wiki_user, "xyz789")
+    wiki_user.refresh_from_db()
+    assert wiki_user.subscriber_number == 1
+
+
+def test_get_highest_subscriber_number(wiki_user):
+    assert User.get_highest_subscriber_number() == 0
+    UserSubscription.set_active(wiki_user, "abc123")
+    assert User.get_highest_subscriber_number() == 1

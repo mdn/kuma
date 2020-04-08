@@ -8,16 +8,16 @@ from django import forms
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
+from django.forms.fields import CharField
 from django.forms.widgets import CheckboxSelectMultiple
 from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 from taggit.utils import parse_tags
 
 import kuma.wiki.content
-from kuma.core.form_fields import StrippedCharField
 from kuma.core.urlresolvers import reverse
 from kuma.spam.akismet import AkismetError
 from kuma.spam.forms import AkismetCheckFormMixin, AkismetSubmissionFormMixin
@@ -373,7 +373,7 @@ class DocumentForm(forms.ModelForm):
     data of a wiki page.
     """
 
-    title = StrippedCharField(
+    title = CharField(
         min_length=1,
         max_length=255,
         widget=forms.TextInput(attrs={"placeholder": TITLE_PLACEHOLDER}),
@@ -386,7 +386,7 @@ class DocumentForm(forms.ModelForm):
         },
     )
 
-    slug = StrippedCharField(
+    slug = CharField(
         min_length=1,
         max_length=255,
         widget=forms.TextInput(),
@@ -456,7 +456,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
     Form to create new revisions.
     """
 
-    title = StrippedCharField(
+    title = CharField(
         min_length=1,
         max_length=255,
         required=False,
@@ -470,7 +470,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         },
     )
 
-    slug = StrippedCharField(
+    slug = CharField(
         min_length=1,
         max_length=255,
         required=False,
@@ -484,18 +484,18 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         },
     )
 
-    tags = StrippedCharField(
+    tags = CharField(
         required=False,
         max_length=255,
         label=_("Tags:"),
         error_messages={"max_length": TAGS_LONG},
     )
 
-    keywords = StrippedCharField(
+    keywords = CharField(
         required=False, label=_("Keywords:"), help_text=_("Affects search results"),
     )
 
-    summary = StrippedCharField(
+    summary = CharField(
         required=False,
         min_length=5,
         max_length=1000,
@@ -509,7 +509,7 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         },
     )
 
-    content = StrippedCharField(
+    content = CharField(
         min_length=5,
         max_length=300000,
         label=_("Content:"),
@@ -521,17 +521,17 @@ class RevisionForm(AkismetCheckFormMixin, forms.ModelForm):
         },
     )
 
-    comment = StrippedCharField(required=False, label=_("Comment:"))
+    comment = CharField(required=False, label=_("Comment:"))
 
     review_tags = forms.MultipleChoiceField(
-        label=ugettext("Tag this revision for review?"),
+        label=gettext("Tag this revision for review?"),
         widget=CheckboxSelectMultiple,
         required=False,
         choices=REVIEW_FLAG_TAGS,
     )
 
     localization_tags = forms.MultipleChoiceField(
-        label=ugettext("Tag this revision for localization?"),
+        label=gettext("Tag this revision for localization?"),
         widget=CheckboxSelectMultiple,
         required=False,
         choices=LOCALIZATION_FLAG_TAGS,
@@ -944,7 +944,7 @@ class RevisionAkismetSubmissionSpamForm(RevisionAkismetSubmissionAdminForm):
 
 
 class TreeMoveForm(forms.Form):
-    title = StrippedCharField(
+    title = CharField(
         min_length=1,
         max_length=255,
         required=False,
@@ -957,7 +957,7 @@ class TreeMoveForm(forms.Form):
             "max_length": TITLE_LONG,
         },
     )
-    slug = StrippedCharField(
+    slug = CharField(
         min_length=1,
         max_length=255,
         widget=forms.TextInput(),
@@ -969,7 +969,7 @@ class TreeMoveForm(forms.Form):
             "max_length": SLUG_LONG,
         },
     )
-    locale = StrippedCharField(min_length=2, max_length=5, widget=forms.HiddenInput())
+    locale = CharField(min_length=2, max_length=5, widget=forms.HiddenInput())
 
     def clean_slug(self):
         slug = self.cleaned_data["slug"]

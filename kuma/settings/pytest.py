@@ -96,8 +96,13 @@ STRIPE_PUBLIC_KEY = "testing"
 STRIPE_SECRET_KEY = "testing"
 STRIPE_PLAN_ID = "testing"
 
-# (peterbe) All existing tests will now assume this is always the case.
-# The day the *default* is to set MULTI_AUTH_ENABLED=True in settings/common.py
-# this needs to change too! It would also mean having to change a bunch of legacy
-# tests that depend on multi-auth not being enabled.
-MULTI_AUTH_ENABLED = False
+# For legacy reasons, the tests assume these are always true so don't
+# let local overrides take effect.
+INDEX_HTML_ATTRIBUTES = True
+INDEX_CSS_CLASSNAMES = True
+
+# Amount for the monthly subscription.
+# It's hardcoded here in case some test depends on the number and it futureproofs
+# our tests to not deviate when the actual number changes since that number
+# change shouldn't affect the tests.
+CONTRIBUTION_AMOUNT_USD = 4.99

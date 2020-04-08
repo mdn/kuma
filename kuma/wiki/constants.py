@@ -3,7 +3,7 @@ from urllib.parse import urlparse, urlunparse
 
 import bleach
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
@@ -665,4 +665,7 @@ WIKI_ONLY_DOCUMENT_QUERY_PARAMS = frozenset(
 # Any slug that, case *sensitively*, matches this list get the
 # <meta name="robots" content="noindex, nofollow"> HTML header and they get
 # excluded from the sitemap XML files.
-NOINDEX_SLUG_PREFIXES = ("MDN/Doc_status",)
+NOINDEX_SLUG_PREFIXES = (
+    "MDN/Doc_status",
+    "MDN/Jobs",
+)

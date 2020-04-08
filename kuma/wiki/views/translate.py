@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
 
 import kuma.wiki.content
@@ -189,6 +189,15 @@ def translate(request, document_slug, document_locale):
             # If we are submitting the whole form, we need to check that
             # the Revision is valid before saving the Document.
             if doc_form.is_valid() and (which_form == "doc" or rev_form.is_valid()):
+
+                # If the document you're about to save already exists, as a
+                # soft-delete, then really delete it first.
+                for soft_deleted_document in Document.deleted_objects.filter(
+                    locale=doc_form.cleaned_data["locale"],
+                    slug=doc_form.cleaned_data["slug"],
+                ):
+                    soft_deleted_document.delete(purge=True)
+
                 doc = doc_form.save(parent=parent_doc)
 
                 if which_form == "doc":
@@ -220,7 +229,10 @@ def translate(request, document_slug, document_locale):
                 # Attempt to set a parent
                 if parent_id:
                     try:
-                        parent_doc = get_object_or_404(Document, id=parent_id)
+                        try:
+                            parent_doc = Document.all_objects.get(id=parent_id)
+                        except Document.DoesNotExist:
+                            raise Http404("Parent document does not exist")
                         rev_form.instance.document.parent = parent_doc
                         doc.parent = parent_doc
                         rev_form.instance.based_on.document = doc.original

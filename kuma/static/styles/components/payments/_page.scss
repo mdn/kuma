@@ -1,17 +1,23 @@
 .contribution-page-header {
-    background-image: $payment-background-gradient;
     min-width: 320px;
     overflow: hidden;
     position: relative;
 
     .column-container {
         box-sizing: border-box;
+        display: flex;
+        align-items: center;
         margin: 0 auto;
         max-height: 100%;
         max-width: $payment-header-max-width;
-        padding: $payment-header-padding;
+        padding: $payment-header-padding-mobile;
         position: relative;
         transition: padding .3s ease;
+
+        @media #{$mq-tablet-and-up} {
+            min-height: 200px;
+            padding: $payment-header-padding;
+        }
 
         > .column-half {
             box-sizing: border-box;
@@ -22,8 +28,22 @@
             }
         }
 
-        @media #{$mq-mobile-and-down} {
-            padding: $payment-header-padding-mobile;
+        h1 {
+            @extend %highlight;
+            @include set-font-size($h2-font-size);
+            margin-bottom: 20px;
+
+            &:only-child {
+                margin-bottom: 0;
+            }
+        }
+
+        h2 {
+            font-size: 24px;
+        }
+
+        p {
+            margin-bottom: 0;
         }
     }
 
@@ -48,102 +68,147 @@
 }
 
 .contributions-page {
+    &:not(.thank-you) {
+        @media #{$mq-tablet-and-up} {
+            background: url('/static/img/hero-dino-blank.png') no-repeat 10% 1%;
+        }
+    }
+
+    a {
+        border-bottom: 1px solid $payment-faq-base-color;
+        color: $payment-faq-base-color;
+        padding-bottom: 1px;
+        text-decoration: none;
+    }
+
     .section {
-        display: flex;
+        display: block;
         position: relative;
         margin: 0 auto;
-        padding: 56px 18px;
+        padding: 56px 25px;
         max-width: 1160px;
 
         .sub-section {
             margin-bottom: 2em;
         }
 
-        @media #{$mq-mobile-and-down} {
-            display: block;
-            h2,
-            .faqs {
-                display: block;
+        @media #{$mq-tablet-and-up} {
+            display: flex;
+        }
 
-                .faq {
-                    margin: 30px 0;
+        > ul,
+        > ol {
+            flex: 60%;
+
+            > li {
+                background-color: #fff;
+                border: 2px solid $text-color;
+                border-radius: $payment-faq-border-radius;
+                margin: 30px 0;
+                padding: 48px;
+                position: relative;
+
+                > ul {
+                    list-style-type: initial;
+                    padding-left: 1em;
+                }
+
+                p:last-child {
+                    margin-bottom: 0;
+                }
+
+                .faq-number {
+                    background: #333;
+                    box-sizing: border-box;
+                    color: #fff;
+                    font-family: $heading-font-family;
+                    font-size: 36px;
+                    font-weight: 500;
+                    height: 45px;
+                    left: -22px;
+                    line-height: 40px;
+                    padding: 0;
+                    position: absolute;
+                    text-align: center;
+                    top: 42px;
+                    width: 45px;
+                }
+
+                .small {
+                    display: block;
+                    font-weight: 700;
+                }
+            }
+
+            h3 {
+                font-size: 1.8em;
+                font-weight: normal;
+                margin-top: 0;
+            }
+
+            @media #{$mq-tablet-and-up} {
+                > li {
+                    margin: 32px;
+                }
+            }
+        }
+
+
+        > ul {
+            > li {
+                border: none;
+                padding: 24px 48px 48px;
+            }
+
+            @media #{$mq-tablet-and-up} {
+                > li {
+                    margin: 0 32px;
+                }
+            }
+        }
+
+        > form,
+        .success-msg {
+            flex: 60%;
+            box-sizing: border-box;
+            padding: 24px 0 48px;
+            display: flex;
+            flex-direction: column;
+            @media #{$mq-tablet-and-up} {
+                padding-left: 80px;
+                padding-right: 80px;
+            }
+
+            input {
+                height: 40px;
+                border-width: 1px;
+                border-radius: $payment-faq-border-radius;
+            }
+
+            button {
+                color: $link-color;
+                border: 2px solid $link-color;
+                border-radius: $payment-faq-border-radius;
+                height: 40px;
+            }
+
+            .form-footer {
+                margin-top: 20px;
+                display: flex;
+                justify-content: space-between;
+                button {
+                    // this keeps button flush right
+                    margin-left: auto;
                 }
             }
         }
     }
 
-    .backdrop-image {
-        display: none;
-
-        @media #{$mq-small-desktop-and-up} {
-            display: block;
-            position: absolute;
-            top: 30px;
-            left: 70px;
-            width: 410px;
-            height: auto;
-        }
-    }
-
-    .index {
+    header {
         flex: 30%;
-        z-index: 99;
 
         h2 {
             border-bottom: 2px solid $text-color;
-        }
-    }
-
-    .faqs {
-        flex: 60%;
-
-        a {
-            border-bottom: 1px solid $payment-faq-base-color;
-            color: $payment-faq-base-color;
-            padding-bottom: 1px;
-            text-decoration: none;
-        }
-
-        .faq {
-            background-color: #fff;
-            border: 2px solid $text-color;
-            border-radius: $payment-faq-border-radius;
-            margin: 2em;
-            padding: 48px;
-            position: relative;
-
-            ul {
-                list-style-type: initial;
-                padding-left: 1em;
-            }
-
-            .faq-number {
-                background: #333;
-                box-sizing: border-box;
-                color: #fff;
-                font-family: $heading-font-family;
-                font-size: 36px;
-                font-weight: 500;
-                height: 45px;
-                left: -22px;
-                line-height: 40px;
-                padding: 0;
-                position: absolute;
-                text-align: center;
-                top: 42px;
-                width: 45px;
-            }
-
-            .small {
-                display: block;
-                font-weight: 700;
-            }
-        }
-
-        h3 {
-            font-size: 1.8em;
-            font-weight: normal;
-            margin-top: 0;
         }
     }
 }

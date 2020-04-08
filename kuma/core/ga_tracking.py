@@ -44,11 +44,23 @@ ACTION_RETURNING_USER_SIGNIN = "returning-user-signin"
 ACTION_PROFILE_AUDIT = "profile-audit"
 # Have completed the profile creation form.
 ACTION_PROFILE_CREATED = "profile-created"
+# Have changed a suggested default. E.g. not "peterbe2" but "peterbe_new"
+ACTION_PROFILE_EDIT = "profile-edit"
+# Have detected an error in the edited profile creation form.
+ACTION_PROFILE_EDIT_ERROR = "profile-edit-error"
 # Checked or didn't check the "Newsletter" checkbox on sign up.
 ACTION_FREE_NEWSLETTER = "free-newsletter"
 # When logging in with one provider and benefitting from a verified email
 # existing based on a *different* (already created profile) provider.
 ACTION_SOCIAL_AUTH_ADD = "social-auth-add"
+
+CATEGORY_MONTHLY_PAYMENTS = "monthly payments"
+# When a subscription is successfully set up
+ACTION_SUBSCRIPTION_CREATED = "subscription created"
+# When it's canceled either by webhook or by UI
+ACTION_SUBSCRIPTION_CANCELED = "subscription canceled"
+# When a user submits feedback
+ACTION_SUBSCRIPTION_FEEDBACK = "feedback"
 
 
 def track_event(

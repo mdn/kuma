@@ -1,0 +1,21 @@
+.subscriptions.subheader-container {
+    background-image: $payment-background-gradient;
+
+    &.has-form {
+        @media #{$mq-small-desktop-and-up} {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+            min-height: 400px;
+
+            .contribution-page-header {
+                flex-basis: 60%;
+            }
+
+            .subscriptions-form {
+                flex-basis: 40%;
+            }
+        }
+    }
+}

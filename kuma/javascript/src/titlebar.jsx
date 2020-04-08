@@ -18,10 +18,10 @@ function EditButton({ document }: DocumentProps) {
 
 export default function Titlebar({
     title,
-    document
+    document,
 }: {
     title: string,
-    document?: DocumentData
+    document?: DocumentData,
 }) {
     const userData = useContext(UserProvider.context);
 

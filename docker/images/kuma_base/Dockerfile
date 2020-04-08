@@ -1,15 +1,11 @@
 FROM python:3.8.0-slim@sha256:7df1fd6bb894e03b488c01fd05eaa4dd677f5b57d800c209f7f0af9867137df9
 
 # Set the environment variables
-ENV NODE_VERSION=12.16.0 \
+ENV NODE_VERSION=12.16.1 \
     # extra python env
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    # disable this when preparing for Django upgrade
-    PYTHONWARNINGS=ignore \
-    # enable this when preparing for Django upgrade
-    # PYTHONWARNINGS=all \
     # Kuma Pipeline definitions
     PIPELINE_CSS_COMPRESSOR=kuma.core.pipeline.cleancss.CleanCSSCompressor \
     PIPELINE_CLEANCSS_BINARY=/usr/local/bin/cleancss \
@@ -112,6 +108,8 @@ RUN mkdir /tools \
     && chmod 775 /tools
 WORKDIR /tools
 USER kuma
+# So that npm doesn't try to suggest we upgrade itself.
+ENV NPM_CONFIG_UPDATE_NOTIFIER=false
 RUN ln -s /app/package.json /tools \
     && ln -s /app/package-lock.json /tools \
     && npm ci

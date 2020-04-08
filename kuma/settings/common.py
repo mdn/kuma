@@ -88,6 +88,7 @@ DATABASES = {
 
 
 SILENCED_SYSTEM_CHECKS = [
+    # https://django-mysql.readthedocs.io/en/latest/checks.html#django-mysql-w003-utf8mb4
     "django_mysql.W003",
     # As of django-recaptcha==2.0.4 it checks that you have set either
     # settings.RECAPTCHA_PRIVATE_KEY or settings.RECAPTCHA_PUBLIC_KEY.
@@ -593,7 +594,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    "VERSION": "2020.06",
+    "VERSION": "2020.10",
     "BASE_DIR": BASE_DIR,
     "TEXT_DOMAIN": "django",
     # Tells the extract script what files to look for l10n in and what function
@@ -602,7 +603,7 @@ PUENTE = {
         "django": [
             ("kumascript/node_modules/**", "ignore"),
             ("kuma/**.py", "python"),
-            ("**/templates/**.html", "django_babel.extract.extract_django"),
+            ("**/templates/**.html", "enmerkar.extract.extract_django"),
             ("**/jinja2/**.html", "jinja2"),
             ("**/jinja2/**.ltxt", "jinja2"),
         ],
@@ -671,6 +672,14 @@ PIPELINE_CSS = {
     "banners": {
         "source_filenames": ("styles/components/banners/base.scss",),
         "output_filename": "build/styles/banners.css",
+    },
+    "banner_developer_needs": {
+        "source_filenames": ("styles/components/banners/developer-needs.scss",),
+        "output_filename": "build/styles/developer-needs.css",
+    },
+    "banner_mdn_subscriptions": {
+        "source_filenames": ("styles/components/banners/mdn-subscriptions.scss",),
+        "output_filename": "build/styles/mdn-subscriptions.css",
     },
     "home": {
         "source_filenames": ("styles/home.scss",),
@@ -777,6 +786,12 @@ PIPELINE_CSS = {
     "stripe-subscription": {
         "source_filenames": ("styles/stripe-subscription.scss",),
         "output_filename": "build/styles/stripe-subscription.css",
+    },
+    "subscriptions": {
+        "source_filenames": (
+            "styles/minimalist/components/subscriptions/subscriptions.scss",
+        ),
+        "output_filename": "build/styles/subscriptions.css",
     },
     "error-403-alternate": {
         "source_filenames": ("styles/error-403-alternate.scss",),
@@ -901,17 +916,19 @@ PIPELINE_JS = {
             "js/components/banners/banners.js",
         ),
         "output_filename": "build/js/banners.js",
-        "extra_context": {"async": True},
+    },
+    "mathml": {
+        "source_filenames": ("js/components/mathml.js",),
+        "output_filename": "build/js/mathml.js",
+        "extra_context": {"defer": True},
     },
     "users": {
         "source_filenames": ("js/users.js",),
         "output_filename": "build/js/users.js",
-        "extra_context": {"async": True},
     },
     "user-signup": {
         "source_filenames": ("js/components/user-signup/signup.js",),
         "output_filename": "build/js/signup.js",
-        "extra_context": {"async": True},
     },
     "delete-user-page": {
         "source_filenames": (
@@ -940,7 +957,6 @@ PIPELINE_JS = {
     "dashboard": {
         "source_filenames": ("js/dashboard.js",),
         "output_filename": "build/js/dashboard.js",
-        "extra_context": {"async": True},
     },
     "jquery-ui": {
         "source_filenames": (
@@ -953,7 +969,6 @@ PIPELINE_JS = {
     "search": {
         "source_filenames": ("js/search.js",),
         "output_filename": "build/js/search.js",
-        "extra_context": {"async": True},
     },
     "payments": {
         "source_filenames": ("js/components/payments/payments-manage.js",),
@@ -1000,7 +1015,6 @@ PIPELINE_JS = {
             "js/components/page-load-actions.js",
         ),
         "output_filename": "build/js/wiki.js",
-        "extra_context": {"async": True},
     },
     "wiki-edit": {
         "source_filenames": (
@@ -1014,7 +1028,6 @@ PIPELINE_JS = {
     "wiki-move": {
         "source_filenames": ("js/wiki-move.js",),
         "output_filename": "build/js/wiki-move.js",
-        "extra_context": {"async": True},
     },
     "wiki-compat-tables": {
         "source_filenames": ("js/wiki-compat-tables.js",),
@@ -1024,7 +1037,6 @@ PIPELINE_JS = {
     "task-completion": {
         "source_filenames": ("js/task-completion.js",),
         "output_filename": "build/js/task-completion.js",
-        "extra_context": {"async": True},
     },
     "newsletter": {
         "source_filenames": ("js/newsletter.js",),
@@ -1140,7 +1152,11 @@ ENABLE_RESTRICTIONS_BY_HOST = config(
 # Allow robots, but restrict some paths
 # If the domain is a CDN, the CDN origin should be included.
 ALLOW_ROBOTS_WEB_DOMAINS = set(
-    config("ALLOW_ROBOTS_WEB_DOMAINS", default="developer.mozilla.org", cast=Csv())
+    config(
+        "ALLOW_ROBOTS_WEB_DOMAINS",
+        default="developer.mozilla.org,wiki.developer.mozilla.org",
+        cast=Csv(),
+    )
 )
 
 # Allow robots, no path restrictions
@@ -1684,19 +1700,12 @@ FOUNDATION_CALLOUT = config("FOUNDATION_CALLOUT", False, cast=bool)
 NEWSLETTER = True
 NEWSLETTER_ARTICLE = True
 
-# Newsletter Signup Settings
-ENABLE_NEWSLETTER_SIGNUP = config("ENABLE_NEWSLETTER_SIGNUP", default=False, cast=bool)
-
 # Whether or not to enable the BCD signalling feature.
 # Affects loading of CSS (statically) and JS (in runtime).
 ENABLE_BCD_SIGNAL = config("ENABLE_BCD_SIGNAL", default=True, cast=bool)
 
-# Enable or disable the multi auth(Google and Github) sign-in flow
-# When disabled, Github will be the default and only Auth provider
-MULTI_AUTH_ENABLED = config("MULTI_AUTH_ENABLED", default=False, cast=bool)
-
 # Auth and permissions related constants
-LOGIN_URL = "socialaccount_signin" if MULTI_AUTH_ENABLED else "account_login"
+LOGIN_URL = "socialaccount_signin"
 LOGIN_REDIRECT_URL = "home"
 
 # Content Experiments
@@ -1727,15 +1736,22 @@ STRIPE_PLAN_ID = config("STRIPE_PLAN_ID", default="")
 # Misc Stripe settings
 STRIPE_MAX_NETWORK_RETRIES = config("STRIPE_MAX_NETWORK_RETRIES", default=5, cast=int)
 
-MDN_CONTRIBUTION = config("MDN_CONTRIBUTION", False, cast=bool)
 CONTRIBUTION_SUPPORT_EMAIL = config(
     "CONTRIBUTION_SUPPORT_EMAIL", default="mdn-support@mozilla.com"
 )
-if MDN_CONTRIBUTION:
-    CSP_CONNECT_SRC.append("https://checkout.stripe.com")
-    CSP_FRAME_SRC.append("https://checkout.stripe.com")
-    CSP_IMG_SRC.append("https://*.stripe.com")
-    CSP_SCRIPT_SRC.append("https://checkout.stripe.com")
+
+# The default amount suggested for monthly subscription payments.
+# As of March 2020, we only have 1 plan and the number is fixed.
+# In the future, we might have multiple plans and this might a dict of amount
+# per plan.
+# The reason it's not an environment variable is to simply indicate that it
+# can't be overridden at the moment based on the environment.
+CONTRIBUTION_AMOUNT_USD = 5.0
+
+CSP_CONNECT_SRC.append("https://checkout.stripe.com")
+CSP_FRAME_SRC.append("https://checkout.stripe.com")
+CSP_IMG_SRC.append("https://*.stripe.com")
+CSP_SCRIPT_SRC.append("https://checkout.stripe.com")
 
 # Settings used for communication with the React server side rendering server
 SSR_URL = config("SSR_URL", default="http://localhost:8002/ssr")
@@ -1809,3 +1825,20 @@ CACHEBACK_VERIFY_CACHE_WRITE = False
 # new migrations that aren't in the released upstream package.
 # One good example is: https://github.com/ubernostrum/django-soapbox/issues/5
 MIGRATION_MODULES = {"soapbox": "kuma.soap_migrations"}
+
+# html_attributes and css_classnames get indexed into Elasticsearch on every
+# document when sent in. These can be very memory consuming since the
+# 'html_attributes' makes up about 60% of the total weight.
+# Refer to this GitHub issue for an estimate of their weight contribution:
+# https://github.com/mdn/kuma/issues/6264#issue-539922604
+# Note that the only way to actually search on these fields is with a manual
+# use of the search v1 API. There is no UI at all for searching on something
+# in the 'html_attributes' or the 'css_classnames'.
+# By disabling indexing of these, in your local dev environment, your local
+# Elasticsearch instance will be a LOT smaller.
+INDEX_HTML_ATTRIBUTES = config("INDEX_HTML_ATTRIBUTES", cast=bool, default=not DEBUG)
+INDEX_CSS_CLASSNAMES = config("INDEX_CSS_CLASSNAMES", cast=bool, default=not DEBUG)
+
+# For local development you might want to set this to a hostname provided to
+# you by a tunneling service such as ngrok.
+STRIPE_WEBHOOK_HOSTNAME = config("STRIPE_WEBHOOK_HOSTNAME", default=None)

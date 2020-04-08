@@ -26,7 +26,7 @@ type DropdownProps = {|
     right?: boolean,
     // If true, we won't show the arrow next to the menu
     hideArrow?: boolean,
-    children: React.Node
+    children: React.Node,
 |};
 
 export default function Dropdown(props: DropdownProps) {
@@ -44,7 +44,7 @@ export default function Dropdown(props: DropdownProps) {
         ga('send', {
             hitType: 'event',
             eventCategory: 'MozMenu',
-            eventAction: action
+            eventAction: action,
         });
     }
 

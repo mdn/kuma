@@ -1,15 +1,15 @@
 import json
+import os
 from datetime import datetime, timedelta
+from urllib.parse import urlparse
 
 import stripe
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
 from allauth.socialaccount import helpers
-from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.views import ConnectionsView
 from allauth.socialaccount.views import SignupView as BaseSignupView
 from constance import config
-from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import permission_required
@@ -18,9 +18,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.core.validators import validate_email, ValidationError
 from django.db import IntegrityError, transaction
-from django.db.models import Q
 from django.http import (
-    Http404,
+    HttpResponse,
     HttpResponseBadRequest,
     HttpResponseForbidden,
     HttpResponseRedirect,
@@ -28,26 +27,37 @@ from django.http import (
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.utils import timezone, translation
 from django.utils.encoding import force_text
-from django.utils.http import urlencode, urlsafe_base64_decode
-from django.utils.translation import ugettext_lazy as _
+from django.utils.http import urlsafe_base64_decode
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
 from honeypot.decorators import verify_honeypot_value
 from raven.contrib.django.models import client as raven_client
 from waffle import flag_is_active
 
+from kuma.attachments.models import AttachmentRevision
 from kuma.core.decorators import (
     ensure_wiki_domain,
     login_required,
     redirect_in_maintenance_mode,
 )
+from kuma.core.email_utils import render_email
 from kuma.core.ga_tracking import (
     ACTION_PROFILE_AUDIT,
+    ACTION_PROFILE_EDIT,
+    ACTION_PROFILE_EDIT_ERROR,
+    ACTION_SUBSCRIPTION_CANCELED,
+    ACTION_SUBSCRIPTION_CREATED,
+    CATEGORY_MONTHLY_PAYMENTS,
     CATEGORY_SIGNUP_FLOW,
     track_event,
 )
+from kuma.core.utils import requests_retry_session, send_mail_retrying, urlparams
+from kuma.payments.utils import cancel_stripe_customer_subscription
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import (
     Document,
@@ -55,15 +65,17 @@ from kuma.wiki.models import (
     Revision,
     RevisionAkismetSubmission,
 )
+from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 # we have to import the SignupForm form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
 from .forms import UserBanForm, UserDeleteForm, UserEditForm, UserRecoveryEmailForm
-from .models import User, UserBan
+from .models import User, UserBan, UserSubscription
 from .signup import SignupForm
-from .utils import (
+from .stripe_utils import (
     create_stripe_customer_and_subscription_for_user,
-    retrieve_stripe_subscription_info,
+    get_stripe_customer,
+    get_stripe_subscription_info,
 )
 
 
@@ -425,13 +437,13 @@ def user_edit(request, username):
     """
     View and edit user profile
     """
-    has_stripe_error = request.GET.get("has_stripe_error", "False") == "True"
     edit_user = get_object_or_404(User, username=username)
 
     if not edit_user.allows_editing_by(request.user):
         return HttpResponseForbidden()
 
     revisions = Revision.objects.filter(creator=edit_user)
+    attachment_revisions = AttachmentRevision.objects.filter(creator=edit_user)
 
     if request.method != "POST":
         initial = {
@@ -463,21 +475,79 @@ def user_edit(request, username):
 
             return redirect(edit_user)
 
+    # Needed so the template can know to show a warning message and the
+    # template doesn't want to do code logic to look into the 'request' object.
+    has_stripe_error = request.GET.get("has_stripe_error", "False") == "True"
+
     context = {
         "edit_user": edit_user,
         "user_form": user_form,
         "username": user_form["username"].value(),
-        "form": UserDeleteForm(),
+        "form": UserDeleteForm(username=username),
         "revisions": revisions,
-        "subscription_info": retrieve_stripe_subscription_info(edit_user,),
+        "attachment_revisions": attachment_revisions,
+        "subscription_info": _retrieve_and_synchronize_subscription_info(edit_user),
         "has_stripe_error": has_stripe_error,
+        "next_subscriber_number": User.get_highest_subscriber_number() + 1,
     }
 
     return render(request, "users/user_edit.html", context)
 
 
+def _retrieve_and_synchronize_subscription_info(user):
+    """For the given user, if it has as 'stripe_customer_id' retrieve the info
+    about the subscription if it's there. All packaged in a way that is
+    practical for the stripe_subscription.html template.
+
+    Also, whilst doing this check, we also verify that the UserSubscription record
+    for this user is right. Doing that check is a second-layer check in case
+    our webhooks have failed us.
+    """
+    subscription_info = None
+    stripe_customer = get_stripe_customer(user)
+    if stripe_customer:
+        stripe_subscription_info = get_stripe_subscription_info(stripe_customer)
+        if stripe_subscription_info:
+            source = stripe_customer.default_source
+            if source.object == "card":
+                card = source
+            elif source.object == "source":
+                card = source.card
+            else:
+                raise ValueError(
+                    f"unexpected stripe customer default_source of type {source.object!r}"
+                )
+
+            subscription_info = {
+                "next_payment_at": datetime.fromtimestamp(
+                    stripe_subscription_info.current_period_end
+                ),
+                "brand": card.brand,
+                "expires_at": f"{card.exp_month}/{card.exp_year}",
+                "last4": card.last4,
+                # Cards that are part of a "source" don't have a zip
+                "zip": card.get("address_zip", None),
+            }
+
+            # To perfect the synchronization, take this opportunity to make sure
+            # we have an up-to-date record of this.
+            UserSubscription.set_active(user, stripe_subscription_info.id)
+        else:
+            # The user has a stripe_customer_id but no active subscription
+            # on the current settings.STRIPE_PLAN_ID! Perhaps it has been cancelled
+            # and not updated in our own records.
+            for user_subscription in UserSubscription.objects.filter(
+                user=user, canceled__isnull=True
+            ):
+                user_subscription.canceled = timezone.now()
+                user_subscription.save()
+
+    return subscription_info
+
+
 @redirect_in_maintenance_mode
 @login_required
+@transaction.atomic()
 def user_delete(request, username):
     user = get_object_or_404(User, username=username)
     if user != request.user:
@@ -489,6 +559,13 @@ def user_delete(request, username):
         user.created_attachment_revisions.update(creator=anon)
 
     def scrub_user():
+        # Before doing anything, cancel any active subscriptions first.
+        if user.stripe_customer_id:
+            for subscription in cancel_stripe_customer_subscription(
+                user.stripe_customer_id
+            ):
+                UserSubscription.set_canceled(request.user, subscription.id)
+
         # From the User abstract class
         user.first_name = ""
         user.last_name = ""
@@ -538,39 +615,38 @@ def user_delete(request, username):
         user.delete()
 
     revisions = Revision.objects.filter(creator=request.user)
+    attachment_revisions = AttachmentRevision.objects.filter(creator=request.user)
     context = {}
     if request.method == "POST":
         # If the user has no revisions there's not choices on the form.
-        if revisions.exists():
-            form = UserDeleteForm(request.POST)
+        if revisions.exists() or attachment_revisions.exists():
+            form = UserDeleteForm(request.POST, username=username)
             if form.is_valid():
-                with transaction.atomic():
-                    if form.cleaned_data["attributions"] == "donate":
-                        donate_attributions()
-                        delete_user()
-                    elif form.cleaned_data["attributions"] == "keep":
-                        scrub_user()
-                        force_logout()
-                    else:
-                        raise NotImplementedError(form.cleaned_data["attributions"])
-                    return HttpResponseRedirect("/")
+                if form.cleaned_data["attributions"] == "donate":
+                    donate_attributions()
+                    delete_user()
+                elif form.cleaned_data["attributions"] == "keep":
+                    scrub_user()
+                    force_logout()
+                else:
+                    raise NotImplementedError(form.cleaned_data["attributions"])
+                return HttpResponseRedirect("/")
 
         else:
             delete_user()
             return HttpResponseRedirect("/")
     else:
-        form = UserDeleteForm()
+        form = UserDeleteForm(username=username)
 
     context["form"] = form
     context["username"] = username
     context["revisions"] = revisions
+    context["attachment_revisions"] = attachment_revisions
 
     return render(request, "users/user_delete.html", context)
 
 
 def signin_landing(request):
-    if not settings.MULTI_AUTH_ENABLED:
-        raise Http404("Multi-auth is not enabled.")
     return render(request, "socialaccount/signup-landing.html")
 
 
@@ -593,34 +669,32 @@ class SignupView(BaseSignupView):
         form = super(SignupView, self).get_form(form_class)
         form.fields["email"].label = _("Email address")
 
-        User = get_user_model()
-
-        # When no username is provided, default to the local-part of the email address
-        if form.initial.get("username", "") == "":
-            email = form.initial.get("email", "")
-            if isinstance(email, tuple):
-                email = email[0]
-            suggested_username = suggested_username_base = email.split("@")[0]
-            increment = 1
-            while User.objects.filter(username__iexact=suggested_username).exists():
-                increment += 1
-                suggested_username = f"{suggested_username_base}{increment}"
-            form.initial["username"] = suggested_username
-
-        self.matching_user = None
-        initial_username = form.initial.get("username", None)
-
-        # For GitHub/Google users, see if we can find matching user by username
+        # We should only see GitHub/Google users.
         assert self.sociallogin.account.provider in ("github", "google")
-        try:
-            self.matching_user = User.objects.get(username=initial_username)
-            # deleting the initial username because we found a matching user
-            del form.initial["username"]
-        except User.DoesNotExist:
-            pass
+
+        initial_username = form.initial.get("username") or ""
+
+        # When no username is provided, try to derive one from the email address.
+        if not initial_username:
+            email = form.initial.get("email")
+            if email:
+                if isinstance(email, tuple):
+                    email = email[0]
+                initial_username = email.split("@")[0]
+
+        if initial_username:
+            # Find a new username if it clashes with an existing username.
+            increment = 1
+            User = get_user_model()
+            initial_username_base = initial_username
+            while User.objects.filter(username__iexact=initial_username).exists():
+                increment += 1
+                initial_username = f"{initial_username_base}{increment}"
+
+        form.initial["username"] = initial_username
 
         email = self.sociallogin.account.extra_data.get("email") or None
-        email_data = (self.sociallogin.account.extra_data.get("email_addresses")) or []
+        email_data = self.sociallogin.account.extra_data.get("email_addresses") or []
 
         # Discard email addresses that won't validate
         extra_email_addresses = []
@@ -654,22 +728,6 @@ class SignupView(BaseSignupView):
                     "verified": False,
                     "primary": False,
                 }
-            choices = []
-            verified_emails = []
-            for email_data in self.email_addresses.values():
-                email_address = email_data["email"]
-                if email_data["verified"]:
-                    verified_emails.append(email_address)
-                choices.append((email_address, email_address))
-            if extra_email_addresses:
-                choices.append((form.other_email_value, _("Other:")))
-            else:
-                choices.append((form.other_email_value, _("Email:")))
-            email_select = forms.RadioSelect(choices=choices, attrs={"id": "email"})
-            form.fields["email"].widget = email_select
-            form.initial.update(email=choices[0])
-            if not email and len(verified_emails) == 1:
-                form.initial.update(email=verified_emails[0])
         return form
 
     def form_valid(self, form):
@@ -680,55 +738,59 @@ class SignupView(BaseSignupView):
         We send our welcome email via celery during complete_signup.
         So, we need to manually commit the user to the db for it.
         """
+
         selected_email = form.cleaned_data["email"]
-        if form.other_email_used:
+        if selected_email in self.email_addresses:
+            data = self.email_addresses[selected_email]
+        elif selected_email == self.default_email:
             data = {
                 "email": selected_email,
-                "verified": False,
+                "verified": True,
                 "primary": True,
             }
         else:
-            data = self.email_addresses.get(selected_email, None)
+            return HttpResponseBadRequest("email not a valid choice")
 
-        if data:
-            primary_email_address = EmailAddress(
-                email=data["email"], verified=data["verified"], primary=True
-            )
-            form.sociallogin.email_addresses = self.sociallogin.email_addresses = [
-                primary_email_address
-            ]
-            if data["verified"]:
-                # we have to stash the selected email address here
-                # so that no email verification is sent again
-                # this is done by adding the email address to the session
-                get_adapter().stash_verified_email(self.request, data["email"])
+        primary_email_address = EmailAddress(
+            email=data["email"], verified=data["verified"], primary=True
+        )
+        form.sociallogin.email_addresses = self.sociallogin.email_addresses = [
+            primary_email_address
+        ]
+        if data["verified"]:
+            # we have to stash the selected email address here
+            # so that no email verification is sent again
+            # this is done by adding the email address to the session
+            get_adapter().stash_verified_email(self.request, data["email"])
 
         with transaction.atomic():
-            form.save(self.request)
+            saved_user = form.save(self.request)
+
+            if saved_user.username != form.initial["username"]:
+                track_event(
+                    CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT, "username edit",
+                )
+
         return helpers.complete_social_signup(self.request, self.sociallogin)
+
+    def form_invalid(self, form):
+        """
+        This is called on POST but only when the form is invalid. We're
+        overriding this method simply to send GA events when we find an
+        error in the username field.
+        """
+        if form.errors.get("username") is not None:
+            track_event(
+                CATEGORY_SIGNUP_FLOW, ACTION_PROFILE_EDIT_ERROR, "username",
+            )
+        return super().form_invalid(form)
 
     def get_context_data(self, **kwargs):
         context = super(SignupView, self).get_context_data(**kwargs)
-
-        # For GitHub/Google users, find matching legacy Persona social accounts
-        assert self.sociallogin.account.provider in ("github", "google")
-        uids = Q()
-        for email_address in self.email_addresses.values():
-            if email_address["verified"]:
-                uids |= Q(uid=email_address["email"])
-        if uids:
-            # only persona accounts have emails as UIDs
-            # but adding the provider criteria makes this explicit and future-proof
-            matching_accounts = SocialAccount.objects.filter(uids, provider="persona")
-        else:
-            matching_accounts = SocialAccount.objects.none()
-
         context.update(
             {
                 "default_email": self.default_email,
                 "email_addresses": self.email_addresses,
-                "matching_user": self.matching_user,
-                "matching_accounts": matching_accounts,
             }
         )
         return context
@@ -806,12 +868,18 @@ def create_stripe_subscription(request):
         email = request.POST.get("stripe_email", "")
         stripe_token = request.POST.get("stripe_token", "")
         create_stripe_customer_and_subscription_for_user(user, email, stripe_token)
+
     except stripe.error.StripeError:
         raven_client.captureException()
         has_stripe_error = True
 
-    query_params = "?" + urlencode({"has_stripe_error": has_stripe_error})
-    return redirect(reverse("users.user_edit", args=[user.username]) + query_params)
+    return redirect(
+        urlparams(
+            reverse("users.user_edit", args=[user.username]),
+            has_stripe_error=has_stripe_error,
+        )
+        + "#subscription"
+    )
 
 
 recovery_email_sent = TemplateView.as_view(
@@ -822,3 +890,85 @@ recovery_email_sent = TemplateView.as_view(
 recover_done = login_required(
     never_cache(ConnectionsView.as_view(template_name="users/recover_done.html"))
 )
+
+
+@csrf_exempt
+def stripe_hooks(request):
+    try:
+        payload = json.loads(request.body)
+    except ValueError:
+        return HttpResponseBadRequest("Invalid JSON payload")
+
+    try:
+        event = stripe.Event.construct_from(payload, stripe.api_key)
+    except stripe.error.StripeError:
+        raven_client.captureException()
+        return HttpResponseBadRequest()
+
+    # Generally, for this list of if-statements, see the create_missing_stripe_webhook
+    # function.
+    # The list of events there ought to at least minimally match what we're prepared
+    # to deal with here.
+
+    if event.type == "invoice.payment_succeeded":
+        payment_intent = event.data.object
+        _send_payment_received_email(
+            payment_intent, request.LANGUAGE_CODE,
+        )
+        track_event(
+            CATEGORY_MONTHLY_PAYMENTS,
+            ACTION_SUBSCRIPTION_CREATED,
+            f"{settings.CONTRIBUTION_AMOUNT_USD:.2f}",
+        )
+
+    elif event.type == "customer.subscription.deleted":
+        obj = event.data.object
+        for user in User.objects.filter(stripe_customer_id=obj.customer):
+            UserSubscription.set_canceled(user, obj.id)
+        track_event(CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_CANCELED, "webhook")
+
+    else:
+        return HttpResponseBadRequest(
+            f"We did not expect a Stripe webhook of type {event.type!r}"
+        )
+
+    return HttpResponse()
+
+
+def _send_payment_received_email(payment_intent, locale):
+    user = get_user_model().objects.get(stripe_customer_id=payment_intent.customer)
+    subscription_info = _retrieve_and_synchronize_subscription_info(user)
+    locale = locale or settings.WIKI_DEFAULT_LANGUAGE
+    context = {
+        "payment_date": datetime.fromtimestamp(payment_intent.created),
+        "next_payment_date": subscription_info["next_payment_at"],
+        "invoice_number": payment_intent.number,
+        "cost": settings.CONTRIBUTION_AMOUNT_USD,
+        "credit_card_brand": subscription_info["brand"],
+        "manage_subscription_url": absolutify(reverse("recurring_payment_management")),
+        "faq_url": absolutify(reverse("payments_index")),
+        "contact_email": settings.CONTRIBUTION_SUPPORT_EMAIL,
+    }
+    with translation.override(locale):
+        subject = render_email("users/email/payment_received/subject.ltxt", context)
+        # Email subject *must not* contain newlines
+        subject = "".join(subject.splitlines())
+        plain = render_email("users/email/payment_received/plain.ltxt", context)
+
+        send_mail_retrying(
+            subject,
+            plain,
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email],
+            attachment={
+                "name": os.path.basename(urlparse(payment_intent.invoice_pdf).path),
+                "bytes": _download_from_url(payment_intent.invoice_pdf),
+                "mime": "application/pdf",
+            },
+        )
+
+
+def _download_from_url(url):
+    pdf_download = requests_retry_session().get(url)
+    pdf_download.raise_for_status()
+    return pdf_download.content

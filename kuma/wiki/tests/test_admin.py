@@ -47,13 +47,13 @@ class DocumentSpamAttemptAdminTestCase(UserTestCase):
         dsa = DocumentSpamAttempt(title="A short title")
         assert self.admin.title_short(dsa) == "A short title"
         dsa.title = "A long title that will need to be truncated."
-        assert self.admin.title_short(dsa) == "A long title that will..."
+        assert self.admin.title_short(dsa) == "A long title that will n…"
 
     def test_slug_short(self):
         dsa = DocumentSpamAttempt(slug="Web/CSS")
         assert self.admin.slug_short(dsa) == "Web/CSS"
         dsa.slug = "Web/A_long_slug_that_will_be_truncated"
-        assert self.admin.slug_short(dsa) == "Web/A_long_slug_that_w..." ""
+        assert self.admin.slug_short(dsa) == "Web/A_long_slug_that_wil…"
 
     def test_doc_short_without_document(self):
         dsa = DocumentSpamAttempt(slug="Slug")

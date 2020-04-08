@@ -37,7 +37,7 @@ class SerializerTests(ElasticTestCase):
         assert 1 == len(data["tags"])
         assert "tag" == data["tags"][0]
 
-    @mock.patch("kuma.search.serializers.ugettext")
+    @mock.patch("kuma.search.serializers.gettext")
     def test_filter_serializer_with_translations(self, _mock):
         _mock.return_value = "Juegos"
         translation.activate("es")
