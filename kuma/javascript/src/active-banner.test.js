@@ -54,24 +54,26 @@ describe('ActiveBanner', () => {
         ).toContain(SUBSCRIPTION_ID);
     });
 
-    test('renders nothing for logged in users is active subscriber', () => {
-        mockUserData.isAuthenticated = true;
-        mockUserData.isSubscriber = true;
+    test('renders banner for anonymous users', () => {
+        mockUserData.isAuthenticated = false;
         mockUserData.waffle.flags = {
             [SUBSCRIPTION_ID]: true,
         };
 
         expect(
-            create(
-                <UserProvider.context.Provider value={mockUserData}>
-                    <ActiveBanner />
-                </UserProvider.context.Provider>
-            ).toJSON()
-        ).toBe(null);
+            JSON.stringify(
+                create(
+                    <UserProvider.context.Provider value={mockUserData}>
+                        <ActiveBanner />
+                    </UserProvider.context.Provider>
+                ).toJSON()
+            )
+        ).toContain(SUBSCRIPTION_ID);
     });
 
-    test('renders nothing if user not logged in', () => {
-        mockUserData.isAuthenticated = false;
+    test('renders nothing for logged in users is active subscriber', () => {
+        mockUserData.isAuthenticated = true;
+        mockUserData.isSubscriber = true;
         mockUserData.waffle.flags = {
             [SUBSCRIPTION_ID]: true,
         };
