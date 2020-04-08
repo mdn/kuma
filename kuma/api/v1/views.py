@@ -229,7 +229,6 @@ def whoami(request):
     if user.is_authenticated:
         data = {
             "username": user.username,
-            "timezone": user.timezone,
             "is_authenticated": True,
             "is_staff": user.is_staff,
             "is_superuser": user.is_superuser,
@@ -244,7 +243,6 @@ def whoami(request):
     else:
         data = {
             "username": None,
-            "timezone": settings.TIME_ZONE,
             "is_authenticated": False,
             "is_staff": False,
             "is_superuser": False,

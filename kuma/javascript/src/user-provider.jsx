@@ -11,7 +11,6 @@ export type UserData = {
     isContributor?: boolean, // This is not implemented on backend yet
     isStaff: boolean,
     isSuperuser: boolean,
-    timezone: ?string,
     avatarUrl: ?string,
     isSubscriber: boolean,
     subscriberNumber: ?number,
@@ -29,7 +28,6 @@ const defaultUserData: UserData = {
     isBetaTester: false,
     isStaff: false,
     isSuperuser: false,
-    timezone: null,
     avatarUrl: null,
     isSubscriber: false,
     subscriberNumber: null,
@@ -66,7 +64,6 @@ export default function UserProvider(props: {
                     isBetaTester: data.is_beta_tester,
                     isStaff: data.is_staff,
                     isSuperuser: data.is_super_user,
-                    timezone: data.timezone,
                     avatarUrl: data.avatar_url,
                     isSubscriber: data.is_subscriber,
                     subscriberNumber: data.subscriber_number,

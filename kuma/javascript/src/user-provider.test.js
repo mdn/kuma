@@ -71,7 +71,6 @@ describe('UserProvider', () => {
                         is_super_user: false,
                         is_subscriber: false,
                         subscriber_number: null,
-                        timezone: null,
                         avatar_url: null,
                         waffle: waffleFlags,
                         email: 'testuser@mail.com',
