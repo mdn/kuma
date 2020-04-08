@@ -5,7 +5,10 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.tokens import default_token_generator
 from django.core import validators
-from django.db import models
+from django.core.cache import cache
+from django.db import models, transaction
+from django.db.models import Max
+from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.encoding import force_bytes
 from django.utils.functional import cached_property
@@ -158,6 +161,8 @@ class User(AbstractUser):
     )
     stripe_customer_id = models.CharField(max_length=255, blank=True)
 
+    subscriber_number = models.PositiveIntegerField(blank=True, null=True)
+
     class Meta:
         db_table = "auth_user"
 
@@ -193,6 +198,24 @@ class User(AbstractUser):
         link = reverse("users.recover", kwargs={"token": token, "uidb64": uidb64})
         return link
 
+    def set_next_subscriber_number_and_save(self):
+        assert not self.subscriber_number, "already set"
+        lock_key = f"set_next_subscriber_number_and_save"
+        # By locking "globally", we get to be certain that our query to get
+        # the current highest `subscriber_number`, gets done alone.
+        with cache.lock(lock_key):
+            highest_number = User.get_highest_subscriber_number()
+            User.objects.filter(id=self.id).update(subscriber_number=highest_number + 1)
+
+    @classmethod
+    def get_highest_subscriber_number(cls):
+        return (
+            cls.objects.filter(subscriber_number__isnull=False).aggregate(
+                number=Max("subscriber_number")
+            )["number"]
+            or 0
+        )
+
 
 class UserSubscription(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -208,6 +231,12 @@ class UserSubscription(models.Model):
         )
 
     @classmethod
+    # The reason we make this (class) method transaction atomic is because this
+    # use of `update_or_create` will actually trigger a `post_save` signal
+    # on the `User` model which will set the `User.subscriber_number` if needed.
+    # So, this way we're pre-emptively making sure these two things are atomically
+    # connected.
+    @transaction.atomic()
     def set_active(cls, user, stripe_subscription_id):
         cls.objects.update_or_create(
             stripe_subscription_id=stripe_subscription_id,
@@ -222,3 +251,9 @@ class UserSubscription(models.Model):
             user=user,
             defaults={"canceled": timezone.now(), "updated": timezone.now()},
         )
+
+
+@receiver(models.signals.post_save, sender=UserSubscription)
+def set_user_subscriber_number(sender, instance, **kwargs):
+    if not instance.canceled and not instance.user.subscriber_number:
+        instance.user.set_next_subscriber_number_and_save()

@@ -4,7 +4,7 @@ from django.utils.translation import deactivate_all
 from kuma.wiki.tests import revision
 
 from . import UserTestCase
-from ..models import UserBan, UserSubscription
+from ..models import User, UserBan, UserSubscription
 
 
 class TestUser(UserTestCase):
@@ -177,3 +177,33 @@ def test_user_subscription_set_canceled(wiki_user):
         UserSubscription.objects.filter(user=wiki_user, canceled__isnull=False).count()
         == 2
     )
+
+
+def test_user_subscription_and_subscriber_number(wiki_user):
+    """This test checks the relationship between UserSubscription.set_active,
+    UserSubscription.set_canceled, and User.subscriber_number."""
+    assert wiki_user.subscriber_number is None
+    UserSubscription.set_active(wiki_user, "abc123")
+    wiki_user.refresh_from_db()
+    assert wiki_user.subscriber_number == 1
+
+    # Hit it again, and the subscriber_number shouldn't go up
+    UserSubscription.set_active(wiki_user, "abc123")
+    wiki_user.refresh_from_db()
+    assert wiki_user.subscriber_number == 1
+
+    # And not go down if you cancel
+    UserSubscription.set_canceled(wiki_user, "abc123")
+    wiki_user.refresh_from_db()
+    assert wiki_user.subscriber_number == 1
+
+    # And creating a brand new subscription doesn't change it either
+    UserSubscription.set_active(wiki_user, "xyz789")
+    wiki_user.refresh_from_db()
+    assert wiki_user.subscriber_number == 1
+
+
+def test_get_highest_subscriber_number(wiki_user):
+    assert User.get_highest_subscriber_number() == 0
+    UserSubscription.set_active(wiki_user, "abc123")
+    assert User.get_highest_subscriber_number() == 1

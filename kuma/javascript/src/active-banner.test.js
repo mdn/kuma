@@ -3,7 +3,7 @@ import React from 'react';
 import { act, create } from 'react-test-renderer';
 import ActiveBanner, {
     DEVELOPER_NEEDS_ID,
-    SUBSCRIPTION_ID
+    SUBSCRIPTION_ID,
 } from './active-banner.jsx';
 import UserProvider from './user-provider.jsx';
 
@@ -40,7 +40,24 @@ describe('ActiveBanner', () => {
     test('renders banner for logged in users', () => {
         mockUserData.isAuthenticated = true;
         mockUserData.waffle.flags = {
-            [SUBSCRIPTION_ID]: true
+            [SUBSCRIPTION_ID]: true,
+        };
+
+        expect(
+            JSON.stringify(
+                create(
+                    <UserProvider.context.Provider value={mockUserData}>
+                        <ActiveBanner />
+                    </UserProvider.context.Provider>
+                ).toJSON()
+            )
+        ).toContain(SUBSCRIPTION_ID);
+    });
+
+    test('renders banner for anonymous users', () => {
+        mockUserData.isAuthenticated = false;
+        mockUserData.waffle.flags = {
+            [SUBSCRIPTION_ID]: true,
         };
 
         expect(
@@ -58,22 +75,7 @@ describe('ActiveBanner', () => {
         mockUserData.isAuthenticated = true;
         mockUserData.isSubscriber = true;
         mockUserData.waffle.flags = {
-            [SUBSCRIPTION_ID]: true
-        };
-
-        expect(
-            create(
-                <UserProvider.context.Provider value={mockUserData}>
-                    <ActiveBanner />
-                </UserProvider.context.Provider>
-            ).toJSON()
-        ).toBe(null);
-    });
-
-    test('renders nothing if user not logged in', () => {
-        mockUserData.isAuthenticated = false;
-        mockUserData.waffle.flags = {
-            [SUBSCRIPTION_ID]: true
+            [SUBSCRIPTION_ID]: true,
         };
 
         expect(
@@ -88,7 +90,7 @@ describe('ActiveBanner', () => {
     test('renders first banner and not second when both flags are set', () => {
         mockUserData.waffle.flags = {
             [DEVELOPER_NEEDS_ID]: true,
-            [SUBSCRIPTION_ID]: true
+            [SUBSCRIPTION_ID]: true,
         };
         let banner = create(
             <UserProvider.context.Provider value={mockUserData}>
@@ -105,7 +107,7 @@ describe('ActiveBanner', () => {
         mockUserData.isAuthenticated = true;
         mockUserData.waffle.flags = {
             [DEVELOPER_NEEDS_ID]: true,
-            [SUBSCRIPTION_ID]: true
+            [SUBSCRIPTION_ID]: true,
         };
 
         localStorage.setItem(
@@ -127,7 +129,7 @@ describe('ActiveBanner', () => {
     test('renders nothing if all active banners are embargoed', () => {
         mockUserData.waffle.flags = {
             [DEVELOPER_NEEDS_ID]: true,
-            [SUBSCRIPTION_ID]: true
+            [SUBSCRIPTION_ID]: true,
         };
 
         localStorage.setItem(
@@ -152,7 +154,7 @@ describe('ActiveBanner', () => {
         mockUserData.isAuthenticated = true;
         mockUserData.waffle.flags = {
             [DEVELOPER_NEEDS_ID]: true,
-            [SUBSCRIPTION_ID]: true
+            [SUBSCRIPTION_ID]: true,
         };
 
         localStorage.setItem(
@@ -192,7 +194,7 @@ describe('ActiveBanner', () => {
         mockUserData.isAuthenticated = true;
         mockUserData.waffle.flags = {
             [DEVELOPER_NEEDS_ID]: true,
-            [SUBSCRIPTION_ID]: true
+            [SUBSCRIPTION_ID]: true,
         };
         let banner = create(
             <UserProvider.context.Provider value={mockUserData}>
@@ -245,7 +247,7 @@ describe('ActiveBanner', () => {
     test('adds target and rel for banners set to open in new window', () => {
         mockUserData.isAuthenticated = false;
         mockUserData.waffle.flags = {
-            [DEVELOPER_NEEDS_ID]: true
+            [DEVELOPER_NEEDS_ID]: true,
         };
 
         let banner = create(
@@ -255,7 +257,7 @@ describe('ActiveBanner', () => {
         );
 
         let ctaButtonProps = banner.root.findByProps({
-            className: 'mdn-cta-button'
+            className: 'mdn-cta-button',
         }).props;
 
         expect(JSON.stringify(banner.toJSON())).toContain(DEVELOPER_NEEDS_ID);
@@ -266,7 +268,7 @@ describe('ActiveBanner', () => {
     test('does not add target and rel for default banners', () => {
         mockUserData.isAuthenticated = true;
         mockUserData.waffle.flags = {
-            [SUBSCRIPTION_ID]: true
+            [SUBSCRIPTION_ID]: true,
         };
 
         let banner = create(
@@ -276,7 +278,7 @@ describe('ActiveBanner', () => {
         );
 
         let ctaButtonProps = banner.root.findByProps({
-            className: 'mdn-cta-button'
+            className: 'mdn-cta-button',
         }).props;
 
         expect(ctaButtonProps.target).not.toBeDefined();

@@ -28,15 +28,29 @@ export default function Login(): React.Node {
      * lnk in the header.
      * @param {Object} event - The event object that was triggered
      */
-    function sendSignInEvent(event) {
-        const service = event.target.dataset.service;
-
+    function sendSignInEvent() {
         ga('send', {
             hitType: 'event',
             eventCategory: 'Authentication',
             eventAction: 'Started sign-in',
-            eventLabel: service
         });
+    }
+
+    /**
+     * If you click the "Sign in" link, reach out to the global
+     * 'windown.mdn.triggerAuthModal' if it's available.
+     *
+     * @param {Object} event - The click event
+     */
+    function triggerAuthModal(event) {
+        // If window.mdn.triggerAuthModal is available, use that. But note, the
+        // 'event' here is a React synthetic event object, not a regular DOM
+        // event. So, we prevent *this* synthetic event and hand over to the
+        // global window.mdn.triggerAuthModal() function to take over.
+        if (window.mdn && window.mdn.triggerAuthModal) {
+            event.preventDefault();
+            window.mdn.triggerAuthModal();
+        }
     }
 
     if (userData.isAuthenticated && userData.username) {
@@ -45,8 +59,9 @@ export default function Login(): React.Node {
         // URL doesn't work.
         let label = (
             <img
-                srcSet={`${userData.avatarUrl ||
-                    ''} 200w, ${userData.avatarUrl || ''} 50w`}
+                srcSet={`${userData.avatarUrl || ''} 200w, ${
+                    userData.avatarUrl || ''
+                } 50w`}
                 src={'/static/img/avatar.png'}
                 className="avatar"
                 alt={userData.username}
@@ -85,10 +100,14 @@ export default function Login(): React.Node {
         return (
             <a
                 href={`/${locale}/users/account/signup-landing?next=${LOCATION}`}
-                data-service="GitHub"
                 rel="nofollow"
                 className="signin-link"
-                onClick={sendSignInEvent}
+                onClick={(event) => {
+                    // The old GitHub click event (even though it's not GitHub yet).
+                    sendSignInEvent();
+                    // The action that causes the auth modal to appear.
+                    triggerAuthModal(event);
+                }}
             >
                 {gettext('Sign in')}
             </a>

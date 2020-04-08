@@ -52,7 +52,7 @@ import * as React from 'react';
 import { useContext, useState } from 'react';
 
 import CloseIcon from './icons/close.svg';
-import { getLocale, gettext, Interpolated } from './l10n.js';
+import { getLocale, gettext } from './l10n.js';
 import UserProvider from './user-provider.jsx';
 
 // Set a localStorage key with a timestamp the specified number of
@@ -123,16 +123,13 @@ export type BannerProps = {
     cta: string,
     // The URL of the page to open when the button is clicked
     url: string,
-    // An optional property. If present, it should be set to true to indicate
-    // that this banner is to be shown to authenticated users only
-    authenticated?: boolean,
     // An optional property. If present, it specifies the number of days
     // for which a dismissed banner will not be shown. If omitted, the
     // default is 5 days.
     embargoDays?: number,
     // An optional property. If present, it should be set to true to indicate
     // that the main cta link should open in a new window
-    newWindow?: boolean
+    newWindow?: boolean,
 };
 
 function Banner(props: BannerProps) {
@@ -223,32 +220,18 @@ export default function ActiveBanner() {
                 );
 
             case SUBSCRIPTION_ID:
-                if (!userData.isAuthenticated) {
-                    return null;
-                }
-
                 return (
                     <Banner
                         id={id}
                         classname="mdn-subscriptions"
                         title={gettext('Become a monthly supporter')}
-                        copy={
-                            <Interpolated
-                                id={gettext(
-                                    'Support MDN with a $5 monthly subscription <learnMore/>.'
-                                )}
-                                learnMore={
-                                    <a href={`/${locale}/payments/`}>
-                                        {gettext('Learn more')}
-                                    </a>
-                                }
-                            />
-                        }
-                        cta={gettext('Subscribe')}
-                        url={`${
-                            window.mdn ? window.mdn.wikiSiteUrl : ''
-                        }/${locale}/profiles/${userData.username ||
-                            ''}/edit#subscription`}
+                        // do not hardcode dollar amount, use CONTRIBUTION_AMOUNT_USD
+                        // https://github.com/mdn/kuma/issues/6654
+                        copy={gettext(
+                            'Support MDN with a $5 monthly subscription'
+                        )}
+                        cta={gettext('Learn more')}
+                        url={`/${locale}/payments/`}
                         embargoDays={7}
                     />
                 );

@@ -7,7 +7,7 @@ from stripe.error import StripeError
 from waffle.decorators import waffle_flag
 
 from kuma.core.decorators import ensure_wiki_domain, login_required
-from kuma.users.models import UserSubscription
+from kuma.users.models import User, UserSubscription
 
 from .utils import (
     cancel_stripe_customer_subscription,
@@ -19,25 +19,27 @@ log = logging.getLogger("kuma.payments.views")
 
 @never_cache
 def index(request):
-    return render(request, "payments/index.html")
+    highest_subscriber_number = User.get_highest_subscriber_number()
+    # TODO: This is never unit tested because our tests never test SSR rendering.
+    # See https://github.com/mdn/kuma/issues/6797
+    context = {"next_subscriber_number": highest_subscriber_number + 1}
+    return render(request, "payments/index.html", context)
 
 
 @waffle_flag("subscription")
-@ensure_wiki_domain
 @never_cache
-def contribute(request):
-    return render(request, "payments/payments.html")
+def thank_you(request):
+    return render(request, "payments/thank-you.html")
 
 
 @waffle_flag("subscription")
-@ensure_wiki_domain
 @never_cache
 def payment_terms(request):
     return render(request, "payments/terms.html")
 
 
-@waffle_flag("subscription")
 @ensure_wiki_domain
+@waffle_flag("subscription")
 @login_required
 @never_cache
 def recurring_payment_management(request):

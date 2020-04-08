@@ -48,7 +48,7 @@ export function navigateFetchComplete() {
             console.error(
                 `Error in performance.measure(${JSON.stringify({
                     FETCH,
-                    START
+                    START,
                 })}) (error: ${e.toString()})`
             );
         }
@@ -67,7 +67,7 @@ export function navigateRenderComplete(ga: GAFunction) {
             console.error(
                 `Error in performance.measure(${JSON.stringify({
                     FETCH,
-                    START
+                    START,
                 })}) (error: ${e.toString()})`
             );
         }
@@ -94,7 +94,7 @@ export function navigateRenderComplete(ga: GAFunction) {
             console.error(
                 `Error in performance.getEntriesByName() (${JSON.stringify({
                     FETCH,
-                    RENDER
+                    RENDER,
                 })}) (error: ${e.toString()})`
             );
             return;
@@ -105,20 +105,20 @@ export function navigateRenderComplete(ga: GAFunction) {
                 hitType: 'timing',
                 timingCategory: 'Client side navigation',
                 timingVar: 'fetch',
-                timingValue: Math.round(fetchTime)
+                timingValue: Math.round(fetchTime),
             });
 
             ga('send', {
                 hitType: 'timing',
                 timingCategory: 'Client side navigation',
                 timingVar: 'render',
-                timingValue: Math.round(renderTime)
+                timingValue: Math.round(renderTime),
             });
         } catch (e) {
             console.error(
                 `Error sending to ga (${JSON.stringify({
                     fetchTime,
-                    renderTime
+                    renderTime,
                 })}) (error: ${e.toString()})`
             );
         }

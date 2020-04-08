@@ -10,36 +10,41 @@
         return;
     }
 
-    var pageHeader = document.querySelector('.page-header');
-    pageHeader.addEventListener('click', function(event) {
+    var authTextElement = authModalContainer.querySelector('p');
+    var originalText = authTextElement.textContent;
+
+    function triggerAuthModal(textOverride) {
+
         function handleKeyup(event) {
             if (event.key === 'Escape') {
                 closeModalButton.click();
             }
         }
 
-        var closeModalButton = document.getElementById('close-modal');
-
-        if (event.target.classList.contains('signin-link')) {
-            event.preventDefault();
-            var modalContentContainer = authModalContainer.querySelector(
-                'section'
-            );
-
-            authModalContainer.classList.remove('hidden');
-            modalContentContainer.focus();
-
-            closeModalButton.addEventListener('click', function() {
-                window.mdn.modalDialog.closeModal(
-                    authModalContainer,
-                    event.target
-                );
-                document.removeEventListener('keyup', handleKeyup);
-            });
-
-            window.mdn.modalDialog.handleKeyboardEvents(authModalContainer);
-
-            document.addEventListener('keyup', handleKeyup);
+        if (textOverride && textOverride !== originalText) {
+            authTextElement.textContent = textOverride;
         }
-    });
+
+        var closeModalButton = document.getElementById('close-modal');
+        var modalContentContainer = authModalContainer.querySelector('section');
+        authModalContainer.classList.remove('hidden');
+        modalContentContainer.focus();
+
+        closeModalButton.addEventListener('click', function() {
+            window.mdn.modalDialog.closeModal(authModalContainer);
+            document.removeEventListener('keyup', handleKeyup);
+
+            if (textOverride && textOverride !== originalText) {
+                authTextElement.textContent = originalText;
+            }
+        });
+
+        window.mdn.modalDialog.handleKeyboardEvents(authModalContainer);
+
+        document.addEventListener('keyup', handleKeyup);
+
+    }
+
+    window.mdn.triggerAuthModal = triggerAuthModal;
+
 })();

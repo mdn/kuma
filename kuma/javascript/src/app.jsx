@@ -11,7 +11,7 @@ export type AppProps = {
     componentName: string,
 
     // Data needed to hydrate or render the UI
-    data: any
+    data: any,
 };
 
 export default function App({ componentName, data }: AppProps) {

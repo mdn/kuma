@@ -30,7 +30,7 @@ app.post('/collect', (req, res) => {
     const parts = [
         chalk.bold('ec: ') + chalk.green(showValue(ec, 20)),
         chalk.bold('ea: ') + chalk.green(showValue(ea, 30)),
-        chalk.bold('el: ') + chalk.green(showValue(el, 50))
+        chalk.bold('el: ') + chalk.green(showValue(el, 50)),
     ];
     const output = `[${new Date().toISOString()}] GA TRACK EVENT cid=${showValue(
         cid,

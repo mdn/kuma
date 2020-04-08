@@ -23,7 +23,7 @@ export class AppErrorBoundary extends React.Component<
             hitType: 'event',
             eventCategory: 'errorboundary',
             eventAction: `${boundaryName}:${error.toString()}`,
-            eventLabel: document.location.href
+            eventLabel: document.location.href,
         });
     }
 
@@ -65,10 +65,10 @@ export class ContentErrorBoundary extends AppErrorBoundary {
 
 function ErrorMessage({
     title,
-    children
+    children,
 }: {
     title: string,
-    children?: React.Node
+    children?: React.Node,
 }) {
     return (
         <section id="content">
@@ -100,5 +100,5 @@ function ErrorMessage({
 
 ErrorMessage.propTypes = {
     title: PropTypes.string,
-    children: PropTypes.element.isRequired
+    children: PropTypes.element.isRequired,
 };

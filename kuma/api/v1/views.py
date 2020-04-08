@@ -1,17 +1,32 @@
+import json
+
 from django.conf import settings
-from django.http import Http404, HttpResponsePermanentRedirect, JsonResponse
+from django.http import (
+    Http404,
+    HttpResponse,
+    HttpResponseBadRequest,
+    HttpResponsePermanentRedirect,
+    JsonResponse,
+)
 from django.shortcuts import get_object_or_404
 from django.utils.translation import activate, gettext as _
 from django.views.decorators.cache import never_cache
-from django.views.decorators.http import require_GET, require_safe
+from django.views.decorators.http import require_GET, require_POST, require_safe
 from ratelimit.decorators import ratelimit
 from rest_framework import serializers, status
 from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
+from waffle import flag_is_active
+from waffle.decorators import waffle_flag
 from waffle.models import Flag, Sample, Switch
 
 from kuma.api.v1.serializers import BCSignalSerializer
+from kuma.core.ga_tracking import (
+    ACTION_SUBSCRIPTION_FEEDBACK,
+    CATEGORY_MONTHLY_PAYMENTS,
+    track_event,
+)
 from kuma.core.urlresolvers import reverse
 from kuma.search.filters import (
     HighlightFilterBackend,
@@ -22,6 +37,7 @@ from kuma.search.filters import (
 )
 from kuma.search.search import SearchView
 from kuma.users.models import User, UserSubscription
+from kuma.users.stripe_utils import create_stripe_customer_and_subscription_for_user
 from kuma.users.templatetags.jinja_helpers import get_avatar_url
 from kuma.wiki.models import Document
 from kuma.wiki.templatetags.jinja_helpers import absolutify
@@ -216,8 +232,7 @@ def whoami(request):
             "is_authenticated": True,
             "avatar_url": get_avatar_url(user),
             "email": user.email,
-            # https://github.com/mdn/kuma/issues/6750
-            "timezone": user.timezone,
+            "subscriber_number": user.subscriber_number,
         }
         if UserSubscription.objects.filter(user=user, canceled__isnull=True).exists():
             data["is_subscriber"] = True
@@ -228,10 +243,7 @@ def whoami(request):
         if user.is_beta_tester:
             data["is_beta_tester"] = True
     else:
-        data = {
-            # https://github.com/mdn/kuma/issues/6750
-            "timezone": settings.TIME_ZONE,
-        }
+        data = {}
 
     # Add waffle data to the dict we're going to be returning.
     # This is what the waffle.wafflejs() template tag does, but we're
@@ -277,24 +289,11 @@ class APILanguageFilterBackend(LanguageFilterBackend):
         )
 
 
-class APISearchQueryBackend(SearchQueryBackend):
-    """Override of kuma.search.filters.SearchQueryBackend that makes a
-    stink if the 'q' query parameter is falsy."""
-
-    def filter_queryset(self, request, queryset, view):
-        search_term = (view.query_params.get("q") or "").strip()
-        if not search_term:
-            raise serializers.ValidationError({"error": "Search term 'q' must be set"})
-        return super(APISearchQueryBackend, self).filter_queryset(
-            request, queryset, view
-        )
-
-
 class APISearchView(SearchView):
     serializer_class = APIDocumentSerializer
     renderer_classes = [JSONRenderer]
     filter_backends = (
-        APISearchQueryBackend,
+        SearchQueryBackend,
         KeywordQueryBackend,
         TagGroupFilterBackend,
         APILanguageFilterBackend,
@@ -343,3 +342,36 @@ def get_user(request, username):
     data = {field: getattr(user, field) for field in fields}
     data["avatar_url"] = get_avatar_url(user)
     return JsonResponse(data)
+
+
+@waffle_flag("subscription")
+@never_cache
+@require_POST
+def send_subscriptions_feedback(request):
+    """
+    Sends feedback to Google Analytics. This is done on the
+    backend to ensure that all feedback is collected, even
+    from users with DNT or where GA is disabled.
+    """
+    data = json.loads(request.body)
+    feedback = (data.get("feedback") or "").strip()
+
+    if not feedback:
+        return HttpResponseBadRequest("no feedback")
+
+    track_event(
+        CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_FEEDBACK, data["feedback"]
+    )
+    return HttpResponse(status=204)
+
+
+@api_view(["POST"])
+def create_subscription(request):
+    if not request.user.is_authenticated or not flag_is_active(request, "subscription"):
+        return Response(None, status=status.HTTP_403_FORBIDDEN,)
+
+    user = request.user
+    create_stripe_customer_and_subscription_for_user(
+        user, user.email, request.data["stripe_token"]
+    )
+    return Response(None, status=status.HTTP_201_CREATED)

@@ -1,4 +1,3 @@
-import datetime
 import logging
 
 from celery import task
@@ -10,13 +9,11 @@ from django.utils.translation import gettext_lazy as _
 
 from kuma.core.decorators import skip_in_maintenance_mode
 from kuma.core.email_utils import render_email
-from kuma.core.urlresolvers import reverse
 from kuma.core.utils import (
     EmailMultiAlternativesRetrying,
     send_mail_retrying,
     strings_are_translated,
 )
-from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
 log = logging.getLogger("kuma.users.tasks")
@@ -64,23 +61,3 @@ def send_welcome_email(user_pk, locale):
             )
             email.attach_alternative(content_html, "text/html")
             email.send()
-
-
-@task
-@skip_in_maintenance_mode
-def send_payment_received_email(stripe_customer_id, locale, timestamp, invoice_pdf):
-    user = get_user_model().objects.get(stripe_customer_id=stripe_customer_id)
-    locale = locale or settings.WIKI_DEFAULT_LANGUAGE
-    context = {
-        "payment_date": datetime.datetime.fromtimestamp(timestamp),
-        "manage_subscription_url": absolutify(reverse("recurring_payment_management")),
-        "faq_url": absolutify(reverse("recurring_payment_subscription")),
-        "contact_email": settings.CONTRIBUTION_SUPPORT_EMAIL,
-        "invoice_pdf": invoice_pdf,
-    }
-    with translation.override(locale):
-        subject = render_email("users/email/payment_received/subject.ltxt", context)
-        # Email subject *must not* contain newlines
-        subject = "".join(subject.splitlines())
-        plain = render_email("users/email/payment_received/plain.ltxt", context)
-        send_mail_retrying(subject, plain, settings.DEFAULT_FROM_EMAIL, [user.email])

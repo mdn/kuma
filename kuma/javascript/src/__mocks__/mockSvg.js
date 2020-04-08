@@ -1,1 +1,1 @@
-export default 'svg mock';
+export default 'svg-mock';

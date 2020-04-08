@@ -1,8 +1,16 @@
+from unittest.mock import patch
+
 import pytest
+
 from django.conf import settings
 from waffle.models import Flag, Sample, Switch
+from waffle.testutils import override_flag
 
 from kuma.api.v1.views import document_api_data, get_content_based_redirect, get_s3_key
+from kuma.core.ga_tracking import (
+    ACTION_SUBSCRIPTION_FEEDBACK,
+    CATEGORY_MONTHLY_PAYMENTS,
+)
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.search.tests import ElasticTestCase
@@ -186,8 +194,7 @@ def test_whoami_disallowed_methods(client, http_method):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("timezone", ("US/Eastern", "US/Pacific"))
-def test_whoami_anonymous(client, settings, timezone):
+def test_whoami_anonymous(client, settings):
     """Test response for anonymous users."""
     # Create some fake waffle objects
     Flag.objects.create(name="section_edit", authenticated=True)
@@ -198,13 +205,11 @@ def test_whoami_anonymous(client, settings, timezone):
     Sample.objects.create(name="sample_never", percent=0)
     Sample.objects.create(name="sample_always", percent=100)
 
-    settings.TIME_ZONE = timezone
     url = reverse("api.v1.whoami")
     response = client.get(url)
     assert response.status_code == 200
     assert response["content-type"] == "application/json"
     assert response.json() == {
-        "timezone": timezone,
         "waffle": {
             "flags": {"flag_all": True},
             "switches": {"switch_on": True},
@@ -216,8 +221,8 @@ def test_whoami_anonymous(client, settings, timezone):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "timezone,is_staff,is_superuser,is_beta_tester",
-    [("US/Eastern", False, False, False), ("US/Pacific", True, True, True)],
+    "is_staff,is_superuser,is_beta_tester",
+    [(False, False, False), (True, True, True)],
     ids=("muggle", "wizard"),
 )
 def test_whoami(
@@ -225,7 +230,6 @@ def test_whoami(
     wiki_user,
     wiki_user_github_account,
     beta_testers_group,
-    timezone,
     is_staff,
     is_superuser,
     is_beta_tester,
@@ -240,7 +244,6 @@ def test_whoami(
     Sample.objects.create(name="sample_never", percent=0)
     Sample.objects.create(name="sample_always", percent=100)
 
-    wiki_user.timezone = timezone
     wiki_user.is_staff = is_staff
     wiki_user.is_superuser = is_superuser
     wiki_user.is_staff = is_staff
@@ -253,9 +256,9 @@ def test_whoami(
     assert response["content-type"] == "application/json"
     expect = {
         "username": wiki_user.username,
-        "timezone": timezone,
         "is_authenticated": True,
         "avatar_url": wiki_user_github_account.get_avatar_url(),
+        "subscriber_number": None,
         "waffle": {
             "flags": {"section_edit": True, "flag_all": True},
             "switches": {"switch_on": True},
@@ -277,7 +280,7 @@ def test_whoami(
 
 
 @pytest.mark.django_db
-def test_whoami_is_subscriber(
+def test_whoami_subscriber(
     user_client, wiki_user,
 ):
     """Test responses for logged-in users and whether they have an active
@@ -291,38 +294,30 @@ def test_whoami_is_subscriber(
     response = user_client.get(url)
     assert response.status_code == 200
     assert response.json()["is_subscriber"] is True
+    assert response.json()["subscriber_number"] == 1
 
     UserSubscription.set_canceled(wiki_user, "abc123")
     response = user_client.get(url)
     assert response.status_code == 200
     assert "is_subscriber" not in response.json()
+    assert response.json()["subscriber_number"] == 1
 
 
 @pytest.mark.django_db
 def test_search_validation_problems(user_client):
     url = reverse("api.v1.search", args=["en-US"])
 
-    # 'q' not present
-    response = user_client.get(url)
-    assert response.status_code == 400
-    assert response.json()["error"] == "Search term 'q' must be set"
-
-    # 'q' present but falsy
-    response = user_client.get(url, {"q": ""})
-    assert response.status_code == 400
-    assert response.json()["error"] == "Search term 'q' must be set"
-
-    # 'q' present but locale invalid
+    # locale invalid
     response = user_client.get(url, {"q": "x", "locale": "xxx"})
     assert response.status_code == 400
     assert response.json()["error"] == "Not a valid locale code"
 
-    # 'q' present but contains new line
+    # 'q' contains new line
     response = user_client.get(url, {"q": r"test\nsomething"})
     assert response.status_code == 400
     assert response.json()["q"] == ["Search term must not contain new line"]
 
-    # 'q' present but exceeds max allowed characters
+    # 'q' exceeds max allowed characters
     response = user_client.get(url, {"q": "x" * (settings.ES_Q_MAXLENGTH + 1)})
     assert response.status_code == 400
     assert response.json()["q"] == [
@@ -486,3 +481,62 @@ def test_bc_signal_http_method(client):
 
     response = client.put(url)
     assert response.status_code == 405
+
+
+@patch("kuma.api.v1.views.track_event")
+@pytest.mark.django_db
+@override_flag("subscription", True)
+def test_send_subscriptions_feedback(track_event_mock_signals, client, settings):
+    settings.GOOGLE_ANALYTICS_ACCOUNT = "UA-XXXX-1"
+    settings.GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS = True
+
+    response = client.post(
+        reverse("api.v1.send_subscriptions_feedback"),
+        content_type="application/json",
+        data={"feedback": "my feedback"},
+    )
+    assert response.status_code == 204
+
+    track_event_mock_signals.assert_called_with(
+        CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_FEEDBACK, "my feedback",
+    )
+
+
+@pytest.mark.django_db
+@override_flag("subscription", True)
+def test_send_subscriptions_feedback_failure(client, settings):
+    response = client.post(
+        reverse("api.v1.send_subscriptions_feedback"),
+        content_type="application/json",
+        data={},
+    )
+
+    assert response.status_code == 400
+    assert response.content.decode(response.charset) == "no feedback"
+
+
+@pytest.mark.django_db
+@override_flag("subscription", True)
+@patch("kuma.api.v1.views.create_stripe_customer_and_subscription_for_user")
+def test_create_subscription_success(mock, user_client):
+    response = user_client.post(
+        reverse("api.v1.create_subscription"),
+        content_type="application/json",
+        data={"stripe_token": "tok_visa"},
+    )
+
+    assert response.status_code == 201
+
+
+@pytest.mark.django_db
+@override_flag("subscription", True)
+def test_create_subscription_failure_without_login(client):
+    response = client.post(reverse("api.v1.create_subscription"))
+    assert response.status_code == 403
+
+
+@pytest.mark.django_db
+@override_flag("subscription", False)
+def test_create_subscription_failure_with_disabled_waffle(user_client):
+    response = user_client.post(reverse("api.v1.create_subscription"))
+    assert response.status_code == 403

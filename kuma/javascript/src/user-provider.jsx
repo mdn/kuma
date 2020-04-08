@@ -11,14 +11,15 @@ export type UserData = {
     isContributor?: boolean, // This is not implemented on backend yet
     isStaff: boolean,
     isSuperuser: boolean,
-    timezone: ?string,
     avatarUrl: ?string,
     isSubscriber: boolean,
+    subscriberNumber: ?number,
+    email: ?string,
     waffle: {
         flags: { [flag_name: string]: boolean },
         switches: { [switch_name: string]: boolean },
-        samples: { [sample_name: string]: boolean }
-    }
+        samples: { [sample_name: string]: boolean },
+    },
 };
 
 const defaultUserData: UserData = {
@@ -27,20 +28,21 @@ const defaultUserData: UserData = {
     isBetaTester: false,
     isStaff: false,
     isSuperuser: false,
-    timezone: null,
     avatarUrl: null,
     isSubscriber: false,
+    subscriberNumber: null,
+    email: null,
     waffle: {
         flags: {},
         switches: {},
-        samples: {}
-    }
+        samples: {},
+    },
 };
 
 const context = React.createContext<?UserData>(defaultUserData);
 
 export default function UserProvider(props: {
-    children: React.Node
+    children: React.Node,
 }): React.Node {
     const [userData, setUserData] = useState<?UserData>(null);
     const ga = useContext(GAProvider.context);
@@ -48,8 +50,8 @@ export default function UserProvider(props: {
     useEffect(() => {
         let dismounted = false;
         fetch('/api/v1/whoami')
-            .then(response => response.json())
-            .then(data => {
+            .then((response) => response.json())
+            .then((data) => {
                 // No point attempting to update state if the component
                 // is dismounted.
                 if (dismounted) {
@@ -62,14 +64,14 @@ export default function UserProvider(props: {
                     isBetaTester: data.is_beta_tester || false,
                     isStaff: data.is_staff || false,
                     isSuperuser: data.is_super_user || false,
-                    // # https://github.com/mdn/kuma/issues/6750
-                    timezone: data.timezone,
                     avatarUrl: data.avatar_url || null,
                     isSubscriber: data.is_subscriber || false,
+                    subscriberNumber: data.subscriber_number || null,
+                    email: data.email || null,
                     // NOTE: if we ever decide that waffle data should
                     // be re-fetched on client-side navigation, we'll
                     // have to create a separate context for it.
-                    waffle: data.waffle
+                    waffle: data.waffle,
                 };
 
                 // Set the userData as a state variable that we provide
@@ -113,7 +115,7 @@ export default function UserProvider(props: {
                                 window.location.pathname
                             );
                         }
-                    }
+                    },
                 });
             });
         return () => {

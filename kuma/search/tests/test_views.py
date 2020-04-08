@@ -139,6 +139,13 @@ class ViewTests(ElasticTestCase):
         assert response.status_code == 405
         assert_no_cache_header(response)
 
+    def test_missing_q(self):
+        response = self.client.get("/en-US/search")
+        assert response.status_code == 400
+
+        response = self.client.get("/en-US/search?q=+")
+        assert response.status_code == 400
+
     def test_paginate_by_param(self):
         request = self.get_request("/en-US/search")
 

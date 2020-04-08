@@ -90,6 +90,16 @@ def test_create_stripe_subscription(mock1, mock2, test_user):
     assert response["location"].endswith("#subscription")
 
 
+@override_flag("subscription", True)
+def test_next_subscriber_number_shown_for_non_subscribers(test_user):
+    client = Client()
+    client.force_login(test_user)
+    response = client.get(reverse("users.user_edit", args=[test_user.username]))
+    assert response.status_code == 200
+    page = pq(response.content)
+    assert "You will be MDN member number 1" in page("#subscription p").text()
+
+
 @patch("kuma.users.views.get_stripe_subscription_info")
 @patch("kuma.users.views.get_stripe_customer")
 @override_flag("subscription", True)
@@ -99,6 +109,15 @@ def test_user_edit_with_subscription_info(mock1, mock2, test_user):
     page contains information about that from Stripe."""
     mock1.side_effect = mock_get_stripe_customer
     mock2.side_effect = mock_get_stripe_subscription_info
+
+    # We need to fake the User.subscriber_number because the
+    # 'get_stripe_subscription_info' is faked so the signals that set it are
+    # never happening in this context.
+    UserSubscription.set_active(test_user, "sub_123456789")
+    # sanity check
+    test_user.refresh_from_db()
+    assert test_user.subscriber_number == 1
+
     client = Client()
     client.force_login(test_user)
     response = client.post(
@@ -107,6 +126,7 @@ def test_user_edit_with_subscription_info(mock1, mock2, test_user):
     )
     assert response.status_code == 200
     page = pq(response.content)
+    assert page("#subscription h2").text() == "You are MDN member number 1"
     assert not page(".stripe-error").size()
     assert "MagicCard ending in 4242" in page(".card-info p").text()
 
@@ -129,19 +149,29 @@ def test_create_stripe_subscription_fail(mock1, mock2, test_user):
     assert response.status_code == 403
 
 
+@patch("kuma.users.views._download_from_url")
+@patch("kuma.users.views._retrieve_and_synchronize_subscription_info")
 @patch("stripe.Event.construct_from")
 @pytest.mark.django_db
-def test_stripe_payment_succeeded_sends_invoice_mail(mock1, client):
-    mock1.return_value = SimpleNamespace(
+def test_stripe_payment_succeeded_sends_invoice_mail(
+    construct_stripe_event, retrieve_subscription, download_url
+):
+    construct_stripe_event.return_value = SimpleNamespace(
         type="invoice.payment_succeeded",
         data=SimpleNamespace(
             object=SimpleNamespace(
+                number="test_invoice_001",
                 customer="cus_mock_testuser",
                 created=1583842724,
                 invoice_pdf="https://developer.mozilla.org/mock-invoice-pdf-url",
             )
         ),
     )
+    retrieve_subscription.return_value = {
+        "next_payment_at": 1583842724,
+        "brand": "MagicCard",
+    }
+    download_url.return_value = bytes("totally not a pdf", "utf-8")
 
     testuser = user(
         save=True,
@@ -149,15 +179,17 @@ def test_stripe_payment_succeeded_sends_invoice_mail(mock1, client):
         email="testuser@example.com",
         stripe_customer_id="cus_mock_testuser",
     )
-    response = client.post(
+    response = Client().post(
         reverse("users.stripe_hooks"), content_type="application/json", data={},
     )
     assert response.status_code == 200
     assert len(mail.outbox) == 1
     payment_email = mail.outbox[0]
     assert payment_email.to == [testuser.email]
+    assert "Receipt" in payment_email.subject
+    assert "Invoice number: test_invoice_001" in payment_email.body
+    assert "You supported MDN with a $4.99 monthly subscription" in payment_email.body
     assert "manage monthly subscriptions" in payment_email.body
-    assert "invoice" in payment_email.subject
 
 
 @patch("stripe.Event.construct_from")
@@ -217,11 +249,12 @@ def test_stripe_hook_stripe_api_error(mock1, client):
     assert response.status_code == 400
 
 
+@patch("kuma.users.views._send_payment_received_email")
 @patch("kuma.users.views.track_event")
 @patch("stripe.Event.construct_from")
 @pytest.mark.django_db
 def test_stripe_payment_succeeded_sends_ga_tracking(
-    mock1, track_event_mock_signals, client, settings
+    mock1, track_event_mock_signals, mock2, client, settings
 ):
     settings.GOOGLE_ANALYTICS_ACCOUNT = "UA-XXXX-1"
     settings.GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS = True
