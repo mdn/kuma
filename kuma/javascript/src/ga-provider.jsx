@@ -6,7 +6,7 @@ export type GAFunction = (...any) => void;
 
 export const CATEGORY_MONTHLY_PAYMENTS = 'monthly payments';
 
-export const GA_QUERY_KEY = 'ga';
+const GA_QUERY_KEY = 'ga';
 
 const QUERY_PARAM_GA_DATA = {
     'subscription-success': {
@@ -22,6 +22,10 @@ const QUERY_PARAM_GA_DATA = {
         eventLabel: 'banner',
     },
 };
+
+export function gaQuery(id: $Keys<typeof QUERY_PARAM_GA_DATA>) {
+    return GA_QUERY_KEY + '=' + id;
+}
 
 function ga(...args) {
     if (typeof window === 'object' && typeof window.ga === 'function') {

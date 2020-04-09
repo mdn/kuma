@@ -56,7 +56,7 @@ import { getLocale, gettext, interpolate } from './l10n.js';
 import UserProvider from './user-provider.jsx';
 import GAProvider, {
     CATEGORY_MONTHLY_PAYMENTS,
-    GA_QUERY_KEY,
+    gaQuery,
 } from './ga-provider.jsx';
 
 // Set a localStorage key with a timestamp the specified number of
@@ -229,7 +229,7 @@ function SubscriptionBanner() {
                 }
             )}
             cta={gettext('Learn more')}
-            url={`/${getLocale()}/payments/?${GA_QUERY_KEY}=banner-cta`}
+            url={`/${getLocale()}/payments/?${gaQuery('banner-cta')}`}
             embargoDays={7}
         />
     );
