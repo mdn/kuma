@@ -2,10 +2,10 @@
 import * as React from 'react';
 import { useContext } from 'react';
 
-import { getLocale, gettext, interpolate, Interpolated } from '../l10n.js';
+import { getLocale, gettext, Interpolated } from '../l10n.js';
 import A11yNav from '../a11y/a11y-nav.jsx';
 import Header from '../header/header.jsx';
-import SubHeader from './subheader.jsx';
+import ThankYouSubheader from './subheaders/thank-you.jsx';
 import Footer from '../footer.jsx';
 import Route from '../route.js';
 import FeedbackForm from './feedback-form.jsx';
@@ -15,29 +15,17 @@ type PaymentsThankYouRouteParams = {
     locale: string,
 };
 
-export const subheaderTitle = 'Thank you for becoming a monthly supporter!';
 export default function ThankYouPage() {
     const locale = getLocale();
     const userData = useContext(UserProvider.context);
-    const subscriberNumber = userData ? userData.subscriberNumber : null;
+    const isSubscriber = userData && userData.isSubscriber;
+    const subscriberNumber = userData && userData.subscriberNumber;
 
     return (
         <>
             <A11yNav />
             <Header />
-            <div className="subscriptions subheader-container thank-you">
-                <SubHeader
-                    title={subheaderTitle}
-                    subtitle={
-                        subscriberNumber
-                            ? interpolate(
-                                  gettext('You are MDN member number: %s'),
-                                  [subscriberNumber.toLocaleString()]
-                              )
-                            : ''
-                    }
-                />
-            </div>
+            <ThankYouSubheader num={isSubscriber ? subscriberNumber : null} />
             <main className="contributions-page thank-you" role="main">
                 <section className="section">
                     <header>

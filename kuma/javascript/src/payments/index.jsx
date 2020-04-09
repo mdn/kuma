@@ -2,13 +2,13 @@
 import * as React from 'react';
 import { useContext } from 'react';
 
-import { gettext, interpolate, Interpolated } from '../l10n.js';
+import { gettext, Interpolated } from '../l10n.js';
 import A11yNav from '../a11y/a11y-nav.jsx';
 import Header from '../header/header.jsx';
 import Footer from '../footer.jsx';
 import Route, { type RouteComponentProps } from '../route.js';
-import SubHeader from './subheader.jsx';
-import SubscriptionForm from './subscription-form.jsx';
+import ThankYouSubheader from './subheaders/thank-you.jsx';
+import SignupSubheader from './subheaders/signup.jsx';
 import ListItem from './list-item.jsx';
 import UserProvider from '../user-provider.jsx';
 
@@ -33,30 +33,27 @@ export default function PaymentsLandingPage({
         terms: `/${locale}/payments/terms/`,
     };
 
+    const isSubscriber = userData && userData.isSubscriber;
+    const subscriberNumber = isSubscriber
+        ? userData && userData.subscriberNumber
+        : data.next_subscriber_number;
     const showSubscriptionForm =
-        userData && userData.waffle.flags.subscription_banner;
-
-    const nextSubscriberNumber = data.next_subscriber_number;
+        userData && userData.waffle.flags.subscription_banner && !isSubscriber;
 
     return (
         <>
             <A11yNav />
             <Header />
-            <div
-                className={`subscriptions subheader-container ${
-                    showSubscriptionForm ? 'has-form' : ''
-                }`}
-            >
-                <SubHeader
-                    title="Become a monthly supporter"
-                    subtitle={interpolate(
-                        gettext('You will be MDN member number: %s'),
-                        [nextSubscriberNumber.toLocaleString()]
-                    )}
-                    description="Support MDN with a $5 monthly subscription and get back more of the knowledge and tools you rely on for when your work has to work."
+
+            {isSubscriber ? (
+                <ThankYouSubheader num={subscriberNumber} />
+            ) : (
+                <SignupSubheader
+                    num={subscriberNumber}
+                    showSubscriptionForm={showSubscriptionForm}
                 />
-                {showSubscriptionForm && <SubscriptionForm />}
-            </div>
+            )}
+
             <main
                 id="contributions-page"
                 className="contributions-page"
