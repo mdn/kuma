@@ -229,7 +229,6 @@ def whoami(request):
     if user.is_authenticated:
         data = {
             "username": user.username,
-            "timezone": user.timezone,
             "is_authenticated": True,
             "is_staff": user.is_staff,
             "is_superuser": user.is_superuser,
@@ -244,7 +243,6 @@ def whoami(request):
     else:
         data = {
             "username": None,
-            "timezone": settings.TIME_ZONE,
             "is_authenticated": False,
             "is_staff": False,
             "is_superuser": False,
@@ -299,24 +297,11 @@ class APILanguageFilterBackend(LanguageFilterBackend):
         )
 
 
-class APISearchQueryBackend(SearchQueryBackend):
-    """Override of kuma.search.filters.SearchQueryBackend that makes a
-    stink if the 'q' query parameter is falsy."""
-
-    def filter_queryset(self, request, queryset, view):
-        search_term = (view.query_params.get("q") or "").strip()
-        if not search_term:
-            raise serializers.ValidationError({"error": "Search term 'q' must be set"})
-        return super(APISearchQueryBackend, self).filter_queryset(
-            request, queryset, view
-        )
-
-
 class APISearchView(SearchView):
     serializer_class = APIDocumentSerializer
     renderer_classes = [JSONRenderer]
     filter_backends = (
-        APISearchQueryBackend,
+        SearchQueryBackend,
         KeywordQueryBackend,
         TagGroupFilterBackend,
         APILanguageFilterBackend,

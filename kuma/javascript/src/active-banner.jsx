@@ -127,9 +127,6 @@ export type BannerProps = {
     cta: string,
     // The URL of the page to open when the button is clicked
     url: string,
-    // An optional property. If present, it should be set to true to indicate
-    // that this banner is to be shown to authenticated users only
-    authenticated?: boolean,
     // An optional property. If present, it specifies the number of days
     // for which a dismissed banner will not be shown. If omitted, the
     // default is 5 days.
@@ -248,9 +245,7 @@ export default function ActiveBanner() {
                 );
 
             case SUBSCRIPTION_ID:
-                return userData.isAuthenticated && !userData.isSubscriber ? (
-                    <SubscriptionBanner />
-                ) : null;
+                return userData.isSubscriber ? null : <SubscriptionBanner />;
         }
     }
 
