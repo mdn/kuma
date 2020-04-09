@@ -65,7 +65,7 @@ def next_url(request):
 
         {% set url = next_url() %}
 
-    which means that the actual content processor function isn't executed
+    which means that the actual context processor function isn't executed
     every single time any jinja template is rendered. Now, only if the
     context processor is actually needed, it gets executed.
 
