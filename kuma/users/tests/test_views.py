@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from datetime import timedelta
 from textwrap import dedent
 from unittest import mock
+from urllib.parse import urlencode
 
 import pytest
 import requests_mock
@@ -1908,7 +1909,7 @@ def test_invalid_uid_fails(wiki_user, client):
 
 
 def test_signin_landing(db, client, settings):
-    response = client.get(reverse("socialaccount_signin"))
+    response = client.get(reverse(settings.LOGIN_URL))
     github_login_url = "/users/github/login/"
     google_login_url = "/users/google/login/"
     # first, make sure that the page loads
@@ -1919,3 +1920,34 @@ def test_signin_landing(db, client, settings):
     # ensure each button links to the appropriate endpoint
     assert doc(".github-auth").attr.href == github_login_url
     assert doc(".google-auth").attr.href == google_login_url
+    # just to be absolutely clear, there is no ?next=... on *this* page
+    assert "next" not in doc(".github-auth").attr.href
+    assert "next" not in doc(".google-auth").attr.href
+
+
+def test_signin_landing_next(db, client, settings):
+    """Going to /en-US/users/account/signup-landing?next=THIS should pick put
+    that 'THIS' and put it into the Google and GitHub auth links."""
+    next_page = "/en-US/Foo/Bar"
+    response = client.get(reverse(settings.LOGIN_URL), {"next": next_page})
+    assert response.status_code == 200
+    doc = pq(response.content)
+    github_login_url = "/users/github/login/"
+    google_login_url = "/users/google/login/"
+    next = f"?{urlencode({'next': next_page})}"
+    assert doc(".github-auth").attr.href == github_login_url + next
+    assert doc(".google-auth").attr.href == google_login_url + next
+
+
+def test_next_paramter_in_auth_links(db, client, root_doc):
+    """View any other page and observe that the auth links (they're part of the
+    auth modal) have a ?next= link on them."""
+    url = root_doc.get_absolute_url()
+    response = client.get(url)
+    assert response.status_code == 200
+    doc = pq(response.content)
+    github_login_url = "/users/github/login/"
+    google_login_url = "/users/google/login/"
+    next = f"?{urlencode({'next': url})}"
+    assert doc(".github-auth").attr.href == github_login_url + next
+    assert doc(".google-auth").attr.href == google_login_url + next

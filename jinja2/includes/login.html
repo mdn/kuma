@@ -11,14 +11,14 @@
                     <li><a href="{{ user.get_absolute_url() }}">{{ _('View profile') }}</a></li>
                     <li><a href="{{ url('users.user_edit', username=user.username) }}">{{ _('Edit profile') }}</a></li>
                     <li><form class="login-form" action="{{ url('account_logout') }}" method="post">
-                        <input name="next" type="hidden" value="{{ next_url }}">
+                        <input name="next" type="hidden" value="{{ next_url() }}">
                         <button class="logout button link" type="submit">{{ _('Sign out') }}</button>
                     </form></li>
                 </ul>
             </div>
         </div>
     {% else %}
-        {% set login_url = login_url(next=next_url) %}
+        {% set login_url = login_url(next=next_url()) %}
         <a href="{{ login_url }}" class="login-link js-login-link" rel="nofollow">
             {{ _('Sign in') }}
         </a>
