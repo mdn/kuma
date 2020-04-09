@@ -16,10 +16,10 @@ export const description = gettext(
 );
 
 const SignupSubheader = ({ num, showSubscriptionForm }: Props): React.Node => {
-    const subtitleInterpolate = interpolate(gettext(subtitle), {
+    const subtitleInterpolate = interpolate(subtitle, {
         num: num && num.toLocaleString(),
     });
-    const descriptionInterpolate = interpolate(gettext(description), {
+    const descriptionInterpolate = interpolate(description, {
         // Hard-coded until this issue is addressed: https://github.com/mdn/kuma/issues/6654
         amount: '$5',
     });
@@ -29,7 +29,6 @@ const SignupSubheader = ({ num, showSubscriptionForm }: Props): React.Node => {
             title={title}
             subtitle={subtitleInterpolate}
             description={descriptionInterpolate}
-            classNames={showSubscriptionForm ? 'has-form' : ''}
         >
             {showSubscriptionForm && <SubscriptionForm />}
         </SubHeader>
