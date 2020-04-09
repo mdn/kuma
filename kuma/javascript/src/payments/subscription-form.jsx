@@ -5,7 +5,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { getLocale, gettext, Interpolated } from '../l10n.js';
 import GAProvider, {
     CATEGORY_MONTHLY_PAYMENTS,
-    useTrackAndNavigate,
+    GA_QUERY_KEY,
 } from '../ga-provider.jsx';
 import UserProvider from '../user-provider.jsx';
 import { getCookie } from '../utils';
@@ -99,8 +99,6 @@ export default function SubscriptionForm() {
         'https://checkout.stripe.com/checkout.js'
     );
 
-    const trackAndNavigate = useTrackAndNavigate();
-
     useEffect(() => {
         if (!stripeLoadingPromise) {
             return;
@@ -145,14 +143,8 @@ export default function SubscriptionForm() {
                 },
             }).then((response) => {
                 if (response.ok) {
-                    trackAndNavigate(
-                        {
-                            eventCategory: CATEGORY_MONTHLY_PAYMENTS,
-                            eventAction: 'successful subscription',
-                            eventLabel: 'subscription-landing-page',
-                        },
-                        `/${locale}/payments/thank-you/`
-                    );
+                    const query = `?${GA_QUERY_KEY}=subscription-success`;
+                    window.location = `/${locale}/payments/thank-you/${query}`;
                 } else {
                     console.error(
                         'error while creating subscription',
@@ -187,13 +179,7 @@ export default function SubscriptionForm() {
                 stripeHandler.open();
             });
         }
-    }, [
-        stripeLoadingPromise,
-        openStripeModal,
-        userData,
-        locale,
-        trackAndNavigate,
-    ]);
+    }, [stripeLoadingPromise, openStripeModal, userData, locale]);
 
     function handleSubmit(event) {
         event.preventDefault();

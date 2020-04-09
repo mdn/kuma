@@ -56,7 +56,7 @@ import { getLocale, gettext } from './l10n.js';
 import UserProvider from './user-provider.jsx';
 import GAProvider, {
     CATEGORY_MONTHLY_PAYMENTS,
-    useTrackAndNavigate,
+    GA_QUERY_KEY,
 } from './ga-provider.jsx';
 
 // Set a localStorage key with a timestamp the specified number of
@@ -192,7 +192,6 @@ export const SUBSCRIPTION_ID = 'subscription_banner';
 
 function SubscriptionBanner() {
     const ga = useContext(GAProvider.context);
-    const trackAndNavigate = useTrackAndNavigate();
 
     useEffect(() => {
         ga('send', {
@@ -212,20 +211,8 @@ function SubscriptionBanner() {
             // https://github.com/mdn/kuma/issues/6654
             copy={gettext('Support MDN with a $5 monthly subscription')}
             cta={gettext('Learn more')}
-            url={`/${getLocale()}/payments/`}
+            url={`/${getLocale()}/payments/?${GA_QUERY_KEY}=banner-cta`}
             embargoDays={7}
-            onCTAClick={(event) => {
-                event.preventDefault();
-                trackAndNavigate(
-                    {
-                        hitType: 'event',
-                        eventCategory: CATEGORY_MONTHLY_PAYMENTS,
-                        eventAction: 'subscribe intent',
-                        eventLabel: 'banner',
-                    },
-                    event.currentTarget.href
-                );
-            }}
         />
     );
 }
