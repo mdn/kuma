@@ -52,7 +52,7 @@ import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 
 import CloseIcon from './icons/close.svg';
-import { getLocale, gettext } from './l10n.js';
+import { getLocale, gettext, interpolate } from './l10n.js';
 import UserProvider from './user-provider.jsx';
 import GAProvider, {
     CATEGORY_MONTHLY_PAYMENTS,
@@ -187,6 +187,24 @@ function Banner(props: BannerProps) {
 export const DEVELOPER_NEEDS_ID = 'developer_needs';
 export const SUBSCRIPTION_ID = 'subscription_banner';
 
+function DeveloperNeedsBanner() {
+    return (
+        <Banner
+            id={DEVELOPER_NEEDS_ID}
+            classname="developer-needs"
+            title={gettext('MDN Survey')}
+            copy={gettext(
+                'Help us understand the top 10 needs of Web developers and designers.'
+            )}
+            cta={gettext('Take the survey')}
+            url={
+                'https://qsurvey.mozilla.com/s3/Developer-Needs-Assessment-2019'
+            }
+            newWindow
+        />
+    );
+}
+
 function SubscriptionBanner() {
     const ga = useContext(GAProvider.context);
 
@@ -204,9 +222,12 @@ function SubscriptionBanner() {
             id={SUBSCRIPTION_ID}
             classname="mdn-subscriptions"
             title={gettext('Become a monthly supporter')}
-            // do not hardcode dollar amount, use CONTRIBUTION_AMOUNT_USD
-            // https://github.com/mdn/kuma/issues/6654
-            copy={gettext('Support MDN with a $5 monthly subscription')}
+            copy={interpolate(
+                gettext('Support MDN with a $%(amount)s monthly subscription'),
+                {
+                    amount: 5,
+                }
+            )}
             cta={gettext('Learn more')}
             url={`/${getLocale()}/payments/?${GA_QUERY_KEY}=banner-cta`}
             embargoDays={7}
@@ -228,21 +249,7 @@ export default function ActiveBanner() {
 
         switch (id) {
             case DEVELOPER_NEEDS_ID:
-                return (
-                    <Banner
-                        id={id}
-                        classname="developer-needs"
-                        title={gettext('MDN Survey')}
-                        copy={gettext(
-                            'Help us understand the top 10 needs of Web developers and designers.'
-                        )}
-                        cta={gettext('Take the survey')}
-                        url={
-                            'https://qsurvey.mozilla.com/s3/Developer-Needs-Assessment-2019'
-                        }
-                        newWindow
-                    />
-                );
+                return <DeveloperNeedsBanner />;
 
             case SUBSCRIPTION_ID:
                 return userData.isSubscriber ? null : <SubscriptionBanner />;
