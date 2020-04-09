@@ -10,6 +10,7 @@
   {% stylesheet 'stripe-subscription' %}
 
   {% if not subscription_info %}
+    {% if waffle.flag('subscription_form') %}
     <form id="stripe-form" action="{{ url('users.create_stripe_subscription') }}" method="post">
       {% csrf_token %}
       <h2>{{ _('Become a monthly supporter') }}</h2>
@@ -50,6 +51,7 @@
     <script type="application/json" id="stripe-config">
       {"STRIPE_PUBLIC_KEY": "{{ settings.STRIPE_PUBLIC_KEY }}"}
     </script>
+    {% endif %}
   {% else %}
     <h2>{{ _("You are MDN member number %(number)s", number=edit_user.subscriber_number) }}</h2>
     <p>

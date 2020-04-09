@@ -38,7 +38,7 @@ export default function PaymentsLandingPage({
         ? userData && userData.subscriberNumber
         : data.next_subscriber_number;
     const showSubscriptionForm =
-        userData && userData.waffle.flags.subscription_banner && !isSubscriber;
+        userData && userData.waffle.flags.subscription_form && !isSubscriber;
 
     return (
         <>
