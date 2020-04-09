@@ -2,7 +2,8 @@ import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import PaymentsLandingPage from './index.jsx';
 import UserProvider from '../user-provider.jsx';
-import { strings, getMemberNumberString } from './strings.js';
+import { title as signupTitle } from './subheaders/signup.jsx';
+import { title as thankYouTitle } from './subheaders/thank-you.jsx';
 
 const setup = (mockData = {}) => {
     const mockProps = {
@@ -27,31 +28,20 @@ describe('Payments Landing Page', () => {
         cleanup();
     });
 
-    test('it renders promotional subheader', () => {
+    // Test the basics since more detailed tests are in each subheader
+    test('it renders Signup subheader', () => {
         const { queryByText } = setup();
-        const mockSubscriberNumber = 99;
-        const expectedSubtitle = getMemberNumberString(mockSubscriberNumber);
-        expect(queryByText(strings.signup)).toBeTruthy();
-        expect(queryByText(expectedSubtitle)).toBeTruthy();
+        expect(queryByText(signupTitle)).toBeTruthy();
     });
 
     test('it renders Thank You subheader if user is a subscriber', () => {
         const mockData = {
-            subscriberNumber: 100,
             isSubscriber: true,
         };
         const { queryByText } = setup(mockData);
-        const expectedSubtitle = getMemberNumberString(
-            mockData.subscriberNumber,
-            mockData.isSubscriber
-        );
 
-        // Ensure that promo text is gone
-        expect(queryByText(strings.signup)).toBeNull();
-
-        // Ensure that Thank You content renders
-        expect(queryByText(strings.thankYou)).toBeTruthy();
-        expect(queryByText(expectedSubtitle)).toBeTruthy();
+        // Ensure that Thank You title renders
+        expect(queryByText(thankYouTitle)).toBeTruthy();
     });
 
     test('it renders subscriber form', () => {

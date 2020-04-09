@@ -7,12 +7,10 @@ import A11yNav from '../a11y/a11y-nav.jsx';
 import Header from '../header/header.jsx';
 import Footer from '../footer.jsx';
 import Route, { type RouteComponentProps } from '../route.js';
-import SubHeader from './subheader.jsx';
-import ThankYouSubheader from './thank-you-subheader.jsx';
-import SubscriptionForm from './subscription-form.jsx';
+import ThankYouSubheader from './subheaders/thank-you.jsx';
+import SignupSubheader from './subheaders/signup.jsx';
 import ListItem from './list-item.jsx';
 import UserProvider from '../user-provider.jsx';
-import { strings, getMemberNumberString } from './strings.js';
 
 type PaymentsIndexRouteParams = {
     locale: string,
@@ -35,9 +33,10 @@ export default function PaymentsLandingPage({
         terms: `/${locale}/payments/terms/`,
     };
 
-    const nextSubscriberNumber = data.next_subscriber_number;
-    const subscriberNumber = userData && userData.subscriberNumber;
     const isSubscriber = userData && userData.isSubscriber;
+    const subscriberNumber = isSubscriber
+        ? userData && userData.subscriberNumber
+        : data.next_subscriber_number;
     const showSubscriptionForm =
         userData && userData.waffle.flags.subscription_banner && !isSubscriber;
 
@@ -45,29 +44,16 @@ export default function PaymentsLandingPage({
         <>
             <A11yNav />
             <Header />
-            <div
-                className={`subscriptions subheader-container ${
-                    showSubscriptionForm ? 'has-form' : ''
-                }`}
-            >
-                {isSubscriber && (
-                    <ThankYouSubheader
-                        subscriberNumber={subscriberNumber}
-                        isSubscriber={isSubscriber}
-                    />
-                )}
-                {!isSubscriber && (
-                    <SubHeader
-                        title={strings.signup}
-                        subtitle={getMemberNumberString(
-                            nextSubscriberNumber.toLocaleString()
-                        )}
-                        description={strings.signupDesc}
-                    >
-                        {showSubscriptionForm && <SubscriptionForm />}
-                    </SubHeader>
-                )}
-            </div>
+
+            {isSubscriber ? (
+                <ThankYouSubheader num={subscriberNumber} />
+            ) : (
+                <SignupSubheader
+                    num={subscriberNumber}
+                    showSubscriptionForm={showSubscriptionForm}
+                />
+            )}
+
             <main
                 id="contributions-page"
                 className="contributions-page"

@@ -1,26 +1,21 @@
 //@flow
 import React from 'react';
 import { render } from '@testing-library/react';
-import ThankYouSubheader from './thank-you-subheader.jsx';
-import { strings, getMemberNumberString } from './strings.js';
+import ThankYouSubheader, { title, subtitle } from './thank-you.jsx';
+import { interpolate } from '../../l10n.js';
 
 describe('Thank You Subheader', () => {
     test('it renders with subscriber number', () => {
         const mockSubscriberNum = 100;
-        const mockIsSubscriber = true;
-        const mockSubtitle = getMemberNumberString(
-            mockSubscriberNum,
-            mockIsSubscriber
-        );
+        const mockSubtitle = interpolate(subtitle, {
+            num: mockSubscriberNum.toLocaleString(),
+        });
         const { queryByText } = render(
-            <ThankYouSubheader
-                subscriberNumber={mockSubscriberNum}
-                isSubscriber={mockIsSubscriber}
-            />
+            <ThankYouSubheader num={mockSubscriberNum} />
         );
 
         // Title
-        expect(queryByText(strings.thankYou)).toBeTruthy();
+        expect(queryByText(title)).toBeTruthy();
 
         // Subtitle with member number
         expect(queryByText(mockSubtitle)).toBeTruthy();
@@ -32,9 +27,9 @@ describe('Thank You Subheader', () => {
         );
 
         // Title
-        expect(queryByText(strings.thankYou)).toBeTruthy();
+        expect(queryByText(title)).toBeTruthy();
 
         // Subtitle should not render
-        expect(queryByText(strings.memberNum)).toBeNull();
+        expect(queryByText(subtitle)).toBeNull();
     });
 });

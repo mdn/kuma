@@ -1,14 +1,13 @@
 //@flow
 import * as React from 'react';
 
-import { gettext } from '../l10n.js';
-
 type Props = {
     title: string,
     subtitle?: ?string,
     description?: string,
     children?: React.Node,
     columnWidth?: string,
+    classNames?: string,
 };
 
 const SubHeader = ({
@@ -17,18 +16,17 @@ const SubHeader = ({
     description,
     columnWidth = 'all', // number of columns, based on grid system defined in _columns.scss
     children,
+    classNames = '',
 }: Props): React.Node => (
-    <div className="contribution-page-header">
+    <div className={`subscriptions subheader-container ${classNames}`}>
         <div className="column-container">
             <div className={`column-${columnWidth}`}>
                 <h1 className="highlight highlight-spanned">
-                    <span className="highlight-span">{gettext(title)}</span>
+                    <span className="highlight-span">{title}</span>
                 </h1>
-                {subtitle && <h2>{gettext(subtitle)}</h2>}
+                {subtitle && <h2>{subtitle}</h2>}
                 {description && (
-                    <p className="readable-line-length">
-                        {gettext(description)}
-                    </p>
+                    <p className="readable-line-length">{description}</p>
                 )}
             </div>
             {children}
