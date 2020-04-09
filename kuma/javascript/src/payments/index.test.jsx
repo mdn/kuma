@@ -8,7 +8,7 @@ import { title as thankYouTitle } from './subheaders/thank-you.jsx';
 const setup = (mockData = {}) => {
     const mockProps = {
         /* eslint-disable camelcase */
-        data: { email: 'test@mozilla.com', next_subscriber_number: '99' },
+        data: { email: 'test@mozilla.com', next_subscriber_number: 99 },
         /* eslint-enable camelcase */
     };
     const mockUserData = {
