@@ -59,15 +59,15 @@ export default function UserProvider(props: {
                     return;
                 }
                 let userData = {
-                    username: data.username,
-                    isAuthenticated: data.is_authenticated,
-                    isBetaTester: data.is_beta_tester,
-                    isStaff: data.is_staff,
-                    isSuperuser: data.is_super_user,
-                    avatarUrl: data.avatar_url,
-                    isSubscriber: data.is_subscriber,
-                    subscriberNumber: data.subscriber_number,
-                    email: data.email,
+                    username: data.username || null,
+                    isAuthenticated: data.is_authenticated || false,
+                    isBetaTester: data.is_beta_tester || false,
+                    isStaff: data.is_staff || false,
+                    isSuperuser: data.is_super_user || false,
+                    avatarUrl: data.avatar_url || null,
+                    isSubscriber: data.is_subscriber || false,
+                    subscriberNumber: data.subscriber_number || null,
+                    email: data.email || null,
                     // NOTE: if we ever decide that waffle data should
                     // be re-fetched on client-side navigation, we'll
                     // have to create a separate context for it.

@@ -230,28 +230,20 @@ def whoami(request):
         data = {
             "username": user.username,
             "is_authenticated": True,
-            "is_staff": user.is_staff,
-            "is_superuser": user.is_superuser,
-            "is_beta_tester": user.is_beta_tester,
             "avatar_url": get_avatar_url(user),
-            "is_subscriber": UserSubscription.objects.filter(
-                user=user, canceled__isnull=True
-            ).exists(),
             "email": user.email,
             "subscriber_number": user.subscriber_number,
         }
+        if UserSubscription.objects.filter(user=user, canceled__isnull=True).exists():
+            data["is_subscriber"] = True
+        if user.is_staff:
+            data["is_staff"] = True
+        if user.is_superuser:
+            data["is_superuser"] = True
+        if user.is_beta_tester:
+            data["is_beta_tester"] = True
     else:
-        data = {
-            "username": None,
-            "is_authenticated": False,
-            "is_staff": False,
-            "is_superuser": False,
-            "is_beta_tester": False,
-            "avatar_url": None,
-            "is_subscriber": False,
-            "email": None,
-            "subscriber_number": None,
-        }
+        data = {}
 
     # Add waffle data to the dict we're going to be returning.
     # This is what the waffle.wafflejs() template tag does, but we're
@@ -264,9 +256,9 @@ def whoami(request):
     #    get_waffle_flag_model().get_all()
     #
     data["waffle"] = {
-        "flags": {f.name: f.is_active(request) for f in Flag.get_all()},
-        "switches": {s.name: s.is_active() for s in Switch.get_all()},
-        "samples": {s.name: s.is_active() for s in Sample.get_all()},
+        "flags": {f.name: True for f in Flag.get_all() if f.is_active(request)},
+        "switches": {s.name: True for s in Switch.get_all() if s.is_active()},
+        "samples": {s.name: True for s in Sample.get_all() if s.is_active()},
     }
     return JsonResponse(data)
 

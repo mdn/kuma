@@ -45,7 +45,7 @@ describe('UserProvider', () => {
 
         const waffleFlags = {
             flags: { section_edit: true },
-            switches: { bar: false },
+            switches: {},
             samples: {},
         };
 
@@ -66,12 +66,7 @@ describe('UserProvider', () => {
                     Promise.resolve({
                         username: 'testing',
                         is_authenticated: true,
-                        is_beta_tester: false,
                         is_staff: true,
-                        is_super_user: false,
-                        is_subscriber: false,
-                        subscriber_number: null,
-                        avatar_url: null,
                         waffle: waffleFlags,
                         email: 'testuser@mail.com',
                     }),
