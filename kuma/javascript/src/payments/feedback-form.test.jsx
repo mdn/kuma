@@ -118,10 +118,11 @@ describe('Payments Feedback Form', () => {
 
             // Check that our email address was rendered correctly
             expect(
-                getByText(window.mdn.contributionSupportEmail).getAttribute(
-                    'href'
-                )
-            ).toEqual(`mailto:${window.mdn.contributionSupportEmail}`);
+                getByText(window.mdn.contributionSupportEmail)
+            ).toHaveAttribute(
+                'href',
+                `mailto:${window.mdn.contributionSupportEmail}`
+            );
         });
     });
 
