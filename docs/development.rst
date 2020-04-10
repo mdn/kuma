@@ -474,14 +474,30 @@ this approach the next time they're upgraded.
 
 Front-end toolchain dependencies
 --------------------------------
-The Front-end toolchain dependencies are managed by npm_, but not checked in to
-the repository. Follow these steps to add or upgrade a dependency:
+The Front-end toolchain dependencies are managed by yarn_, but not checked in to
+the repository. Follow these steps to add a dependency:
 
-#. On the host, update ``package.json``.
-#. In the web container, install the new dependencies with ``make npmrefresh``
-#. On the host, commit the new ``package.json`` and ``package-lock.json``.
+    docker-compose exec web bash
 
-.. _npm: https://www.npmjs.com/
+Once you're inside the Docker container, run:
+
+    yarn add my-needed-new-lib
+
+Exit the container and the check in the changes to ``package.json`` and ``yarn.lock``.
+
+To *upgrade* a dependency:
+
+    docker-compose exec web bash
+
+Once you're inside the Docker container, run:
+
+    yarn upgrade-interactive --latest
+
+Use the interactive prompt.
+Exit the container and the check in the changes to ``package.json`` and ``yarn.lock``.
+
+.. _yarn: https://yarnpkg.com/
+
 
 Customizing with environment variables
 ======================================

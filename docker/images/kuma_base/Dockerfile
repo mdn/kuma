@@ -124,17 +124,15 @@ RUN pip install poetry~=1.0.0b9 \
 
 # install Node.js tools
 # config files are symlinks to make updating easier
-COPY --chown=kuma:kuma ./package.json ./package-lock.json /app/
+COPY --chown=kuma:kuma ./package.json ./yarn.lock /app/
 RUN mkdir /tools \
     && chown kuma:kuma /tools \
     && chmod 775 /tools
 WORKDIR /tools
 USER kuma
-# So that npm doesn't try to suggest we upgrade itself.
-ENV NPM_CONFIG_UPDATE_NOTIFIER=false
 RUN ln -s /app/package.json /tools \
-    && ln -s /app/package-lock.json /tools \
-    && npm ci
+    && ln -s /app/yarn.lock /tools \
+    && yarn
 USER root
 RUN find /tools/node_modules/.bin/ -executable -type f -o -type l -exec ln -s {} /usr/local/bin/ \;
 ENV NODE_PATH=/tools/node_modules
