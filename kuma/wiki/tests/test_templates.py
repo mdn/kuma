@@ -3,7 +3,6 @@ from unittest import mock
 from urllib.parse import parse_qs, quote, urlparse
 
 import pytest
-from constance import config
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser, Group
 from django.contrib.sites.models import Site
