@@ -41,7 +41,7 @@ coveragetesthtml: coveragetest
 
 webpack:
 	@ echo "## Running webpack ##"
-	@ npm run webpack:prod
+	@ yarn run webpack:prod
 
 compilejsi18n:
 	@ echo "## Generating JavaScript translation catalogs ##"
@@ -153,16 +153,11 @@ pythonlint:
 	flake8 kuma docs tests
 
 jslint:
-	npm run eslint
-	npm run stylelint
-	npm run pretty
+	yarn run eslint
+	yarn run stylelint
+	yarn run pretty
 
 lint: pythonlint jslint
 
-npmrefresh:
-	cd /tools
-	echo '{"lockfileVersion": 1}' > package-lock.json
-	npm install
-
 # Those tasks don't have file targets
-.PHONY: test coveragetest clean locale compilejsi18n collectstatic localetest localeextract localecompile localerefresh npmrefresh webpack compile-react-i18n
+.PHONY: test coveragetest clean locale compilejsi18n collectstatic localetest localeextract localecompile localerefresh webpack compile-react-i18n
