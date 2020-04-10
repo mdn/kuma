@@ -151,7 +151,7 @@ def first_edit_email(revision):
         subject,
         message,
         settings.DEFAULT_FROM_EMAIL,
-        to=[config.EMAIL_LIST_SPAM_WATCH],
+        to=[settings.EMAIL_LIST_SPAM_WATCH],
         headers=extra_headers(user, doc),
     )
     return email
@@ -174,7 +174,7 @@ def spam_attempt_email(spam_attempt):
         subject,
         body,
         settings.DEFAULT_FROM_EMAIL,
-        to=[config.EMAIL_LIST_SPAM_WATCH],
+        to=[settings.EMAIL_LIST_SPAM_WATCH],
         headers=extra_headers(spam_attempt.user, document),
     )
     return email

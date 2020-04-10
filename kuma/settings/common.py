@@ -1519,15 +1519,16 @@ CONSTANCE_CONFIG = dict(
         "Janet Swisher <no-reply@mozilla.org>",
         "Email address from which welcome emails will be sent",
     ),
-    EMAIL_LIST_SPAM_WATCH=(
-        "mdn-spam-watch@mozilla.com",
-        "Email address to notify of possible spam (first edits, blocked edits)",
-    ),
     AKISMET_KEY=("", "API key for Akismet spam checks, leave empty to disable"),
     EMAIL_LIST_MDN_ADMINS=(
         "mdn-admins@mozilla.org",
         "Email address to request admin intervention",
     ),
+)
+
+# Email address to notify of possible spam (first edits, blocked edits)
+EMAIL_LIST_SPAM_WATCH = config(
+    "EMAIL_LIST_SPAM_WATCH", default="mdn-spam-watch@mozilla.com"
 )
 
 # Google Analytics Tracking Account Number (0 to disable)

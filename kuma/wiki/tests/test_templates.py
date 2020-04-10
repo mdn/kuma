@@ -772,7 +772,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         time.sleep(1)
         assert 2 == len(mail.outbox)
         first_edit_email = mail.outbox[0]
-        expected_to = [config.EMAIL_LIST_SPAM_WATCH]
+        expected_to = [settings.EMAIL_LIST_SPAM_WATCH]
         expected_subject = (
             "[MDN][%(loc)s] %(user)s made their first edit, to: %(title)s"
             % {
