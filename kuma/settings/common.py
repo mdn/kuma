@@ -1446,10 +1446,6 @@ CONSTANCE_CONFIG = dict(
         ),
         "Regex comprised of domain names that are allowed for IFRAME SRCs",
     ),
-    # TODO: Delete this line once we know that the production environment
-    # definitely has 'GOOGLE_ANALYTICS_ACCOUNT' set.
-    # See https://bugzilla.mozilla.org/show_bug.cgi?id=1570076
-    GOOGLE_ANALYTICS_ACCOUNT=("0", "(This is deprecated and will disappear)",),
     GOOGLE_ANALYTICS_CREDENTIALS=(
         "{}",
         "Google Analytics (read-only) API credentials",
