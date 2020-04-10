@@ -1277,6 +1277,21 @@
     dom-accessibility-api "^0.4.2"
     pretty-format "^25.1.0"
 
+"@testing-library/jest-dom@^5.5.0":
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/@testing-library/jest-dom/-/jest-dom-5.5.0.tgz#4707023e8f572021e8a84f65721303ff60828d88"
+  integrity sha512-7sWHrpxG4Yd8TmryI7Rtbx8Ff4mbs3ASye3oshQIuHvsCR+QHgr7rTR/PfeXvOmwUwR36wSTTAvrLKsPmr6VEQ==
+  dependencies:
+    "@babel/runtime" "^7.9.2"
+    "@types/testing-library__jest-dom" "^5.0.2"
+    chalk "^3.0.0"
+    css "^2.2.4"
+    css.escape "^1.5.1"
+    jest-diff "^25.1.0"
+    jest-matcher-utils "^25.1.0"
+    lodash "^4.17.15"
+    redent "^3.0.0"
+
 "@testing-library/react@^10.0.2":
   version "10.0.2"
   resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-10.0.2.tgz#8eca7aa52d810cf7150048a2829fdc487162006d"
@@ -1344,6 +1359,14 @@
     "@types/istanbul-lib-coverage" "*"
     "@types/istanbul-lib-report" "*"
 
+"@types/jest@*":
+  version "25.2.1"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-25.2.1.tgz#9544cd438607955381c1bdbdb97767a249297db5"
+  integrity sha512-msra1bCaAeEdkSyA0CZ6gW1ukMIvZ5YoJkdXw/qhQdsuuDlFTcEUrUw8CLCPt2rVRUfXlClVvK2gvPs9IokZaA==
+  dependencies:
+    jest-diff "^25.2.1"
+    pretty-format "^25.2.1"
+
 "@types/minimatch@^3.0.3":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
@@ -1405,6 +1428,13 @@
   integrity sha512-WokGRksRJb3Dla6h02/0/NNHTkjsj4S8aJZiwMj/5/UL8VZ1iCe3H8SHzfpmBeH8Vp4SPRT8iC2o9kYULFhDIw==
   dependencies:
     pretty-format "^25.1.0"
+
+"@types/testing-library__jest-dom@^5.0.2":
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/@types/testing-library__jest-dom/-/testing-library__jest-dom-5.0.3.tgz#8efef348eeedc62e7de21acbe455a779936417c4"
+  integrity sha512-NdbKc6yseg6uq4UJFwimPws0iwsGugVbPoOTP2EH+PJMJKiZsoSg5F2H3XYweOyytftCOuIMuXifBUrF9CSvaQ==
+  dependencies:
+    "@types/jest" "*"
 
 "@types/testing-library__react@^10.0.0":
   version "10.0.1"
@@ -3025,7 +3055,12 @@ css-what@^3.2.1:
   resolved "https://registry.yarnpkg.com/css-what/-/css-what-3.2.1.tgz#f4a8f12421064621b456755e34a03a2c22df5da1"
   integrity sha512-WwOrosiQTvyms+Ti5ZC5vGEK0Vod3FTt1ca+payZqvKuGJF+dq7bG63DstxtN0dpm6FxY27a/zS3Wten+gEtGw==
 
-css@^2.2.1:
+css.escape@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/css.escape/-/css.escape-1.5.1.tgz#42e27d4fa04ae32f931a4b4d4191fa9cddee97cb"
+  integrity sha1-QuJ9T6BK4y+TGktNQZH6nN3ul8s=
+
+css@^2.2.1, css@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/css/-/css-2.2.4.tgz#c646755c73971f2bba6a601e2cf2fd71b1298929"
   integrity sha512-oUnjmWpy0niI3x/mPL8dVEI1l7MnG3+HHyRPHf+YFSbK+svOhXpmSOcDURUh2aOCgl2grzrOPt1nHLuCVFULLw==
@@ -5222,7 +5257,7 @@ jest-config@^25.3.0:
     pretty-format "^25.3.0"
     realpath-native "^2.0.0"
 
-jest-diff@^25.3.0:
+jest-diff@^25.1.0, jest-diff@^25.2.1, jest-diff@^25.3.0:
   version "25.3.0"
   resolved "https://registry.yarnpkg.com/jest-diff/-/jest-diff-25.3.0.tgz#0d7d6f5d6171e5dacde9e05be47b3615e147c26f"
   integrity sha512-vyvs6RPoVdiwARwY4kqFWd4PirPLm2dmmkNzKqo38uZOzJvLee87yzDjIZLmY1SjM3XR5DwsUH+cdQ12vgqi1w==
@@ -5344,7 +5379,7 @@ jest-leak-detector@^25.3.0:
     jest-get-type "^25.2.6"
     pretty-format "^25.3.0"
 
-jest-matcher-utils@^25.3.0:
+jest-matcher-utils@^25.1.0, jest-matcher-utils@^25.3.0:
   version "25.3.0"
   resolved "https://registry.yarnpkg.com/jest-matcher-utils/-/jest-matcher-utils-25.3.0.tgz#76765788a26edaa8bc5f0100aea52ae383559648"
   integrity sha512-ZBUJ2fchNIZt+fyzkuCFBb8SKaU//Rln45augfUtbHaGyVxCO++ANARdBK9oPGXU3hEDgyy7UHnOP/qNOJXFUg==
@@ -7241,7 +7276,7 @@ pretty-format@^24.9.0:
     ansi-styles "^3.2.0"
     react-is "^16.8.4"
 
-pretty-format@^25.1.0, pretty-format@^25.3.0:
+pretty-format@^25.1.0, pretty-format@^25.2.1, pretty-format@^25.3.0:
   version "25.3.0"
   resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-25.3.0.tgz#d0a4f988ff4a6cd350342fdabbb809aeb4d49ad5"
   integrity sha512-wToHwF8bkQknIcFkBqNfKu4+UZqnrLn/Vr+wwKQwwvPzkBfDDKp/qIabFqdgtoi5PEnM8LFByVsOrHoa3SpTVA==
