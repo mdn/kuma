@@ -1442,10 +1442,6 @@ CONSTANCE_CONFIG = dict(
         ),
         "Regex comprised of domain names that are allowed for IFRAME SRCs",
     ),
-    # TODO: Delete this line once we know that the production environment
-    # definitely has 'GOOGLE_ANALYTICS_ACCOUNT' set.
-    # See https://bugzilla.mozilla.org/show_bug.cgi?id=1570076
-    GOOGLE_ANALYTICS_ACCOUNT=("0", "(This is deprecated and will disappear)",),
     GOOGLE_ANALYTICS_CREDENTIALS=(
         "{}",
         "Google Analytics (read-only) API credentials",
@@ -1515,10 +1511,6 @@ CONSTANCE_CONFIG = dict(
         "Janet Swisher <no-reply@mozilla.org>",
         "Email address from which welcome emails will be sent",
     ),
-    EMAIL_LIST_SPAM_WATCH=(
-        "mdn-spam-watch@mozilla.com",
-        "Email address to notify of possible spam (first edits, blocked edits)",
-    ),
     AKISMET_KEY=("", "API key for Akismet spam checks, leave empty to disable"),
     EMAIL_LIST_MDN_ADMINS=(
         "mdn-admins@mozilla.org",
@@ -1526,8 +1518,14 @@ CONSTANCE_CONFIG = dict(
     ),
 )
 
+
 # Name of the django.contrib.auth.models.Group to use as beta testers
 BETA_GROUP_NAME = config("BETA_GROUP_NAME", default="Beta Testers")
+
+# Email address to notify of possible spam (first edits, blocked edits)
+EMAIL_LIST_SPAM_WATCH = config(
+    "EMAIL_LIST_SPAM_WATCH", default="mdn-spam-watch@mozilla.com"
+)
 
 # Google Analytics Tracking Account Number (0 to disable)
 GOOGLE_ANALYTICS_ACCOUNT = config("GOOGLE_ANALYTICS_ACCOUNT", default=None)

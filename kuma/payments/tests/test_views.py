@@ -32,7 +32,7 @@ def test_payments_index(client):
     doc = pq(response.content)
     assert settings.CONTRIBUTION_SUPPORT_EMAIL in doc.find(".contributions-page").text()
     assert doc.find("h1").text() == "Become a monthly supporter"
-    assert doc(".subscriptions h2").text() == "You will be MDN member number: 1"
+    assert doc(".subscriptions h2").text() == "You will be MDN member number 1"
 
 
 @pytest.mark.django_db
