@@ -21,12 +21,14 @@
         background-color: #fff;
         border-radius: 4px;
         box-shadow: $box-shadow-blue;
-        max-width: 460px;
-        min-height: 320px;
+        min-width: 470px;
+        width: 470px;
 
         section,
         form {
-            padding: 20px 20px 0;
+            font-size: 12px;
+
+            padding: 20px 20px 5px;
 
             &.error {
                 padding: 20px;
@@ -34,6 +36,13 @@
 
             h2 {
                 margin: 0;
+            }
+
+            label {
+                display: flex;
+                input {
+                    margin: 0 10px 0 0;
+                }
             }
 
             button {

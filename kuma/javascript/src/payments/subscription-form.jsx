@@ -267,7 +267,7 @@ export default function SubscriptionForm() {
                             setPaymentAuthorized(event.target.checked);
                         }}
                     />
-                    <small>
+                    <div>
                         <Interpolated
                             id={gettext(
                                 'By clicking this button, I authorize Mozilla to charge this payment method each month, according to the <paymentTermsLink />, until I cancel my subscription.'
@@ -282,16 +282,16 @@ export default function SubscriptionForm() {
                                 </a>
                             }
                         />
-                    </small>
+                    </div>
                 </label>
                 <button type="submit" className="button cta primary">
                     {gettext(
                         formStep === 'submitting' ? 'Submitting...' : 'Continue'
                     )}
                 </button>
-                <small className="subtext">
+                <span className="subtext">
                     {gettext('Payments are not tax deductible')}
-                </small>
+                </span>
             </form>
         );
     }
