@@ -27,7 +27,6 @@
         section,
         form {
             font-size: 12px;
-
             padding: 20px 20px 5px;
 
             &.error {
@@ -40,9 +39,6 @@
 
             label {
                 display: flex;
-                input {
-                    margin: 0 10px 0 0;
-                }
             }
 
             button {
@@ -53,7 +49,6 @@
 
                 &::after {
                     float: right;
-                    display: inline-block;
                     content: '';
                     background: transparent
                         url('../../../../arrows/arrow-right.svg') 0 0 no-repeat;
@@ -68,8 +63,11 @@
             // and haven't even started paying attention to the form, the checkbox,
             // in Firefox, will appear red. Like something is wrong!
             // This will undo that.
-            input[type='checkbox']:required {
-                box-shadow: none;
+            input[type='checkbox'] {
+                margin: 0 10px 0 0;
+                &:required {
+                    box-shadow: none;
+                }
             }
         }
 

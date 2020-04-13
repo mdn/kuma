@@ -267,7 +267,7 @@ export default function SubscriptionForm() {
                             setPaymentAuthorized(event.target.checked);
                         }}
                     />
-                    <div>
+                    <span>
                         <Interpolated
                             id={gettext(
                                 'By clicking this button, I authorize Mozilla to charge this payment method each month, according to the <paymentTermsLink />, until I cancel my subscription.'
@@ -282,7 +282,7 @@ export default function SubscriptionForm() {
                                 </a>
                             }
                         />
-                    </div>
+                    </span>
                 </label>
                 <button type="submit" className="button cta primary">
                     {gettext(
