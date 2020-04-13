@@ -1382,10 +1382,6 @@ CONSTANCE_DATABASE_CACHE_BACKEND = "default"
 
 # Settings and defaults controllable by Constance in admin
 CONSTANCE_CONFIG = dict(
-    BETA_GROUP_NAME=(
-        "Beta Testers",
-        "Name of the django.contrib.auth.models.Group to use as beta testers",
-    ),
     KUMA_DOCUMENT_RENDER_TIMEOUT=(
         180.0,
         "Maximum seconds to wait before considering a rendering in progress or "
@@ -1521,6 +1517,10 @@ CONSTANCE_CONFIG = dict(
         "Email address to request admin intervention",
     ),
 )
+
+
+# Name of the django.contrib.auth.models.Group to use as beta testers
+BETA_GROUP_NAME = config("BETA_GROUP_NAME", default="Beta Testers")
 
 # Email address to notify of possible spam (first edits, blocked edits)
 EMAIL_LIST_SPAM_WATCH = config(

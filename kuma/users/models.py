@@ -1,6 +1,5 @@
 import datetime
 
-from constance import config
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.tokens import default_token_generator
@@ -172,7 +171,7 @@ class User(AbstractUser):
 
     @cached_property
     def is_beta_tester(self):
-        return config.BETA_GROUP_NAME in self.groups.values_list("name", flat=True)
+        return settings.BETA_GROUP_NAME in self.groups.values_list("name", flat=True)
 
     @cached_property
     def active_ban(self):
