@@ -25,6 +25,7 @@ jobs:
       node_js: 12
       cache: yarn
       script:
+        - scripts/ci-yarn-lock-check
         - scripts/ci-jslint
         - scripts/ci-flow
 
