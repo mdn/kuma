@@ -10,16 +10,16 @@ import Route from '../route.js';
 type PaymentTermsParams = {
     locale: string,
 };
-
+export const title = 'MDN Web Docs payment terms';
 export default function PaymentsTermsPage() {
     return (
         <>
             <A11yNav />
             <Header />
-            <SubHeader title="MDN Web Docs payment terms" />
-            <main className="contributions-page " role="main">
+            <SubHeader title={title} />
+            <main className="contributions-page" role="main">
                 <section>
-                    <h2>Payment terms</h2>
+                    <h2>Payment Terms</h2>
 
                     <p>Mozilla (that’s us) operates MDN Web Docs.</p>
                     <p>
