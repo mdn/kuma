@@ -10,12 +10,20 @@ module.exports = {
     parserOptions: {
         ecmaVersion: 6,
     },
-    plugins: ['jest', 'flowtype', 'import', 'jsx-a11y', 'react-hooks'],
+    plugins: [
+        'jest',
+        'jest-dom',
+        'flowtype',
+        'import',
+        'jsx-a11y',
+        'react-hooks',
+    ],
     extends: [
         'eslint:recommended',
         'plugin:import/errors',
         'plugin:flowtype/recommended',
         'plugin:jsx-a11y/recommended',
+        'plugin:jest-dom/recommended',
         'prettier',
     ],
     rules: {
