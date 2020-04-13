@@ -286,7 +286,7 @@ export default function SubscriptionForm() {
                 <h2>
                     <Interpolated
                         id={gettext('$5 <perMontSub />')}
-                        perMontSub={<sub>{gettext('/mo')}</sub>}
+                        perMontSub={<span>{gettext('/mo')}</span>}
                     />
                 </h2>
             </header>

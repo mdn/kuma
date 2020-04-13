@@ -4,6 +4,13 @@
     border-top-left-radius: 4px;
     padding: 20px;
     text-align: center;
+    
+    h2 {
+        font-size: 60px;
+        span {
+            font-size: 24px;
+        }
+    }
 }
 
 .subscriptions-form {
