@@ -29,7 +29,7 @@ export default function ThankYouPage() {
             <ThankYouSubheader num={isSubscriber ? subscriberNumber : null} />
             <Incentives isSubscriber={isSubscriber} />
             <main className="contributions-page thank-you" role="main">
-                <section className="section">
+                <section>
                     <header>
                         <h2>{gettext('Useful things')}</h2>
                     </header>

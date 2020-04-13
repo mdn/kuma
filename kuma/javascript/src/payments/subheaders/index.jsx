@@ -7,7 +7,6 @@ type Props = {
     description?: string,
     children?: React.Node,
     columnWidth?: string,
-    classNames?: string,
 };
 
 const SubHeader = ({

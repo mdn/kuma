@@ -70,10 +70,10 @@ export default function PaymentsLandingPage({
 
             <main
                 id="contributions-page"
-                className="contributions-page"
+                className="contributions-page faq"
                 role="main"
             >
-                <section className="section">
+                <section>
                     <header>
                         <h2>{gettext('FAQs')}</h2>
                     </header>
@@ -258,7 +258,7 @@ export default function PaymentsLandingPage({
                         </ListItem>
                     </ol>
                 </section>
-                <section className="section">
+                <section>
                     <header>
                         <h2>{gettext('Monthly payments')}</h2>
                     </header>
