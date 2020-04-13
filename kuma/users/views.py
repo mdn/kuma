@@ -364,7 +364,7 @@ def ban_and_revert_notification(spammer, moderator, info):
     body = render_to_string("wiki/email/spam_ban.ltxt", context)
 
     send_mail(
-        subject, body, settings.DEFAULT_FROM_EMAIL, [config.EMAIL_LIST_SPAM_WATCH]
+        subject, body, settings.DEFAULT_FROM_EMAIL, [settings.EMAIL_LIST_SPAM_WATCH]
     )
 
 
