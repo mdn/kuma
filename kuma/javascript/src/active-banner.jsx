@@ -207,6 +207,7 @@ function DeveloperNeedsBanner() {
 
 function SubscriptionBanner() {
     const ga = useContext(GAProvider.context);
+    const locale = getLocale();
 
     useEffect(() => {
         ga('send', {
@@ -223,13 +224,17 @@ function SubscriptionBanner() {
             classname="mdn-subscriptions"
             title={gettext('Become a monthly supporter')}
             copy={interpolate(
-                gettext('Support MDN with a $%(amount)s monthly subscription'),
+                gettext('Support MDN with a %(amount)s monthly subscription'),
                 {
-                    amount: 5,
+                    amount: new Intl.NumberFormat(locale, {
+                        style: 'currency',
+                        currency: 'USD',
+                        maximumSignificantDigits: 3,
+                    }).format(5),
                 }
             )}
             cta={gettext('Learn more')}
-            url={`/${getLocale()}/payments/?${gaQuery('banner-cta')}`}
+            url={`/${locale}/payments/?${gaQuery('banner-cta')}`}
             embargoDays={7}
         />
     );
