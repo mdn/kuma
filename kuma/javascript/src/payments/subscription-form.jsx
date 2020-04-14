@@ -3,6 +3,10 @@ import * as React from 'react';
 import { useContext, useEffect, useRef, useState } from 'react';
 
 import { getLocale, gettext, Interpolated } from '../l10n.js';
+import GAProvider, {
+    CATEGORY_MONTHLY_PAYMENTS,
+    gaQuery,
+} from '../ga-provider.jsx';
 import UserProvider from '../user-provider.jsx';
 import { getCookie } from '../utils';
 
@@ -16,6 +20,7 @@ function useScriptLoading(url) {
     const [loadingPromise, setLoadingPromise] = useState<null | Promise<void>>(
         null
     );
+
     useEffect(() => {
         let script;
         if (!loadingPromise) {
@@ -79,6 +84,7 @@ function pushStripeContinuation() {
 }
 
 export default function SubscriptionForm() {
+    const ga = useContext(GAProvider.context);
     const userData = useContext(UserProvider.context);
     const locale = getLocale();
 
@@ -137,7 +143,9 @@ export default function SubscriptionForm() {
                 },
             }).then((response) => {
                 if (response.ok) {
-                    window.location = `/${locale}/payments/thank-you/`;
+                    window.location = `/${locale}/payments/thank-you/?${gaQuery(
+                        'subscription-success'
+                    )}`;
                 } else {
                     console.error(
                         'error while creating subscription',
@@ -176,6 +184,14 @@ export default function SubscriptionForm() {
 
     function handleSubmit(event) {
         event.preventDefault();
+
+        ga('send', {
+            hitType: 'event',
+            eventCategory: CATEGORY_MONTHLY_PAYMENTS,
+            eventAction: 'subscribe intent',
+            eventLabel: 'subscription-landing-page',
+        });
+
         // Not so fast! If you're not authenticated yet, trigger the
         // authentication modal instead.
         if (userData && userData.isAuthenticated) {
