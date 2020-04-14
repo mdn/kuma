@@ -4,6 +4,29 @@ import { useContext, useEffect, useState } from 'react';
 
 export type GAFunction = (...any) => void;
 
+export const CATEGORY_MONTHLY_PAYMENTS = 'monthly payments';
+
+const GA_QUERY_KEY = 'ga';
+
+const QUERY_PARAM_GA_DATA = {
+    'subscription-success': {
+        hitType: 'event',
+        eventCategory: CATEGORY_MONTHLY_PAYMENTS,
+        eventAction: 'successful subscription',
+        eventLabel: 'subscription-landing-page',
+    },
+    'banner-cta': {
+        hitType: 'event',
+        eventCategory: CATEGORY_MONTHLY_PAYMENTS,
+        eventAction: 'subscribe intent',
+        eventLabel: 'banner',
+    },
+};
+
+export function gaQuery(id: $Keys<typeof QUERY_PARAM_GA_DATA>) {
+    return GA_QUERY_KEY + '=' + id;
+}
+
 function ga(...args) {
     if (typeof window === 'object' && typeof window.ga === 'function') {
         window.ga(...args);
@@ -28,6 +51,23 @@ const context = React.createContext<GAFunction>(ga);
 export default function GAProvider(props: {
     children: React.Node,
 }): React.Node {
+    /**
+     * Checks for the existence of the analytics parameter in the URL query,
+     * and sends events for every present parameter for which we have associated
+     * analytics data.
+     */
+    useEffect(() => {
+        const analyticIds = new URLSearchParams(
+            window.location.search.substr(1)
+        )
+            .getAll(GA_QUERY_KEY)
+            .filter((id) => id in QUERY_PARAM_GA_DATA);
+
+        for (const id of analyticIds) {
+            ga('send', QUERY_PARAM_GA_DATA[id]);
+        }
+    }, []);
+
     return <context.Provider value={ga}>{props.children}</context.Provider>;
 }
 

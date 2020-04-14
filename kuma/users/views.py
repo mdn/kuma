@@ -364,7 +364,7 @@ def ban_and_revert_notification(spammer, moderator, info):
     body = render_to_string("wiki/email/spam_ban.ltxt", context)
 
     send_mail(
-        subject, body, settings.DEFAULT_FROM_EMAIL, [config.EMAIL_LIST_SPAM_WATCH]
+        subject, body, settings.DEFAULT_FROM_EMAIL, [settings.EMAIL_LIST_SPAM_WATCH]
     )
 
 
@@ -464,7 +464,7 @@ def user_edit(request, username):
 
             try:
                 # Beta
-                beta_group = Group.objects.get(name=config.BETA_GROUP_NAME)
+                beta_group = Group.objects.get(name=settings.BETA_GROUP_NAME)
                 if user_form.cleaned_data["beta"]:
                     beta_group.user_set.add(request.user)
                 else:

@@ -1,7 +1,10 @@
 //@flow
 import React from 'react';
 import { render, fireEvent, cleanup, waitFor } from '@testing-library/react';
+import { toHaveAttribute } from '@testing-library/jest-dom/matchers';
 import FeedbackForm, { FEEDBACK_URL } from './feedback-form.jsx';
+
+expect.extend({ toHaveAttribute });
 
 // Fixes "ReferenceError: regeneratorRuntime is not defined" when running jest tests
 require('regenerator-runtime/runtime');
@@ -118,10 +121,11 @@ describe('Payments Feedback Form', () => {
 
             // Check that our email address was rendered correctly
             expect(
-                getByText(window.mdn.contributionSupportEmail).getAttribute(
-                    'href'
-                )
-            ).toEqual(`mailto:${window.mdn.contributionSupportEmail}`);
+                getByText(window.mdn.contributionSupportEmail)
+            ).toHaveAttribute(
+                'href',
+                `mailto:${window.mdn.contributionSupportEmail}`
+            );
         });
     });
 

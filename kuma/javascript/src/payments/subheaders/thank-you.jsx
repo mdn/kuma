@@ -8,7 +8,7 @@ type Props = {
 };
 
 export const title = gettext('Thank you for becoming a monthly supporter!');
-export const subtitle = gettext('You are MDN member number: %(num)s');
+export const subtitle = gettext('You are MDN member number %(num)s');
 
 const ThankYouSubheader = ({ num }: Props): React.Node => {
     const subtitleInterpolated = num

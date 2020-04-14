@@ -3,7 +3,6 @@ from unittest import mock
 from urllib.parse import parse_qs, quote, urlparse
 
 import pytest
-from constance import config
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser, Group
 from django.contrib.sites.models import Site
@@ -772,7 +771,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         time.sleep(1)
         assert 2 == len(mail.outbox)
         first_edit_email = mail.outbox[0]
-        expected_to = [config.EMAIL_LIST_SPAM_WATCH]
+        expected_to = [settings.EMAIL_LIST_SPAM_WATCH]
         expected_subject = (
             "[MDN][%(loc)s] %(user)s made their first edit, to: %(title)s"
             % {

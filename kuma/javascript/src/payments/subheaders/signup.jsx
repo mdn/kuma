@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const title = gettext('Become a monthly supporter');
-export const subtitle = gettext('You will be MDN member number: %(num)s');
+export const subtitle = gettext('You will be MDN member number %(num)s');
 export const description = gettext(
     'Support MDN with a %(amount)s monthly subscription and get back more of the knowledge and tools you rely on for when your work has to work.'
 );

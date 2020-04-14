@@ -66,8 +66,8 @@ exports[`Newsletter de-DE 1`] = `
           />
         </div>
         <div
-          aria-hidden={false}
-          className="form-group form-group-agree newsletter-group-privacy"
+          aria-hidden={true}
+          className="hidden"
           id="newsletter-privacy"
         >
           <input

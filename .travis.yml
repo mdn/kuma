@@ -23,7 +23,7 @@ jobs:
     - name: "JavaScript Lints"
       language: node_js
       node_js: 12
-      cache: npm
+      cache: yarn
       script:
         - scripts/ci-jslint
         - scripts/ci-flow

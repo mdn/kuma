@@ -594,7 +594,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    "VERSION": "2020.10",
+    "VERSION": "2020.11",
     "BASE_DIR": BASE_DIR,
     "TEXT_DOMAIN": "django",
     # Tells the extract script what files to look for l10n in and what function
@@ -1382,10 +1382,6 @@ CONSTANCE_DATABASE_CACHE_BACKEND = "default"
 
 # Settings and defaults controllable by Constance in admin
 CONSTANCE_CONFIG = dict(
-    BETA_GROUP_NAME=(
-        "Beta Testers",
-        "Name of the django.contrib.auth.models.Group to use as beta testers",
-    ),
     KUMA_DOCUMENT_RENDER_TIMEOUT=(
         180.0,
         "Maximum seconds to wait before considering a rendering in progress or "
@@ -1446,10 +1442,6 @@ CONSTANCE_CONFIG = dict(
         ),
         "Regex comprised of domain names that are allowed for IFRAME SRCs",
     ),
-    # TODO: Delete this line once we know that the production environment
-    # definitely has 'GOOGLE_ANALYTICS_ACCOUNT' set.
-    # See https://bugzilla.mozilla.org/show_bug.cgi?id=1570076
-    GOOGLE_ANALYTICS_ACCOUNT=("0", "(This is deprecated and will disappear)",),
     GOOGLE_ANALYTICS_CREDENTIALS=(
         "{}",
         "Google Analytics (read-only) API credentials",
@@ -1519,15 +1511,20 @@ CONSTANCE_CONFIG = dict(
         "Janet Swisher <no-reply@mozilla.org>",
         "Email address from which welcome emails will be sent",
     ),
-    EMAIL_LIST_SPAM_WATCH=(
-        "mdn-spam-watch@mozilla.com",
-        "Email address to notify of possible spam (first edits, blocked edits)",
-    ),
     AKISMET_KEY=("", "API key for Akismet spam checks, leave empty to disable"),
     EMAIL_LIST_MDN_ADMINS=(
         "mdn-admins@mozilla.org",
         "Email address to request admin intervention",
     ),
+)
+
+
+# Name of the django.contrib.auth.models.Group to use as beta testers
+BETA_GROUP_NAME = config("BETA_GROUP_NAME", default="Beta Testers")
+
+# Email address to notify of possible spam (first edits, blocked edits)
+EMAIL_LIST_SPAM_WATCH = config(
+    "EMAIL_LIST_SPAM_WATCH", default="mdn-spam-watch@mozilla.com"
 )
 
 # Google Analytics Tracking Account Number (0 to disable)
