@@ -91,6 +91,7 @@ def test_create_stripe_subscription(mock1, mock2, test_user):
 
 
 @override_flag("subscription", True)
+@override_flag("subscription_form", True)
 def test_next_subscriber_number_shown_for_non_subscribers(test_user):
     client = Client()
     client.force_login(test_user)
