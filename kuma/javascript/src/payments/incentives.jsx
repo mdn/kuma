@@ -4,7 +4,7 @@ import * as React from 'react';
 import { gettext, Interpolated } from '../l10n.js';
 
 type Props = {
-    isSubscriber: Boolean,
+    isSubscriber: ?boolean,
     locale: string,
 };
 
@@ -21,7 +21,7 @@ export const subscriberInvitationCopy = gettext(
     'Check back for invitations to attend special events and conferences.'
 );
 
-const Incentives = ({ isSubscriber, locale }: Props) => {
+const Incentives = ({ isSubscriber = false, locale }: Props) => {
     return (
         <div className="subscriptions-incentive">
             <h3>{gettext('Enjoy exclusive member perks')}</h3>
