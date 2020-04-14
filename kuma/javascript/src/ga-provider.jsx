@@ -57,15 +57,13 @@ export default function GAProvider(props: {
      * analytics data.
      */
     useEffect(() => {
-        const ids = window.location.search
-            .substr(1)
-            .split('&')
-            .map((part) => part.split('='))
-            .filter(
-                ([key, id]) => key === GA_QUERY_KEY && id in QUERY_PARAM_GA_DATA
-            );
+        const analyticIds = new URLSearchParams(
+            window.location.search.substr(1)
+        )
+            .getAll(GA_QUERY_KEY)
+            .filter((id) => id in QUERY_PARAM_GA_DATA);
 
-        for (const [, id] of ids) {
+        for (const id of analyticIds) {
             ga('send', QUERY_PARAM_GA_DATA[id]);
         }
     }, []);
