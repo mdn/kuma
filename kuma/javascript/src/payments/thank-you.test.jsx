@@ -5,6 +5,8 @@ import UserProvider from '../user-provider.jsx';
 import { interpolate } from '../l10n.js';
 import ThankYouPage from './thank-you.jsx';
 import { title, subtitle } from './subheaders/thank-you.jsx';
+import { nonSubscriberInvitationCopy } from './incentives.jsx';
+import { subscriberInvitationCopy } from './incentives.jsx';
 
 describe('Payments Thank You page', () => {
     test('it renders', () => {
@@ -19,6 +21,9 @@ describe('Payments Thank You page', () => {
 
         // Feedback form
         expect(queryByTestId('feedback-form')).toBeTruthy();
+
+        // Render non-subscriber invitations copy
+        expect(queryByText(nonSubscriberInvitationCopy)).toBeTruthy();
     });
 
     test('it only renders subtitle if user is active subscriber', () => {
@@ -42,5 +47,27 @@ describe('Payments Thank You page', () => {
 
         // Subtitle should not appear because isSubscriber is false
         expect(queryByText(mockSubtitle)).toBeNull();
+        // Render subscriber invitations copy
+        expect(queryByText(nonSubscriberInvitationCopy)).toBeTruthy();
+    });
+
+    test('it only renders subscriber invitation copy if active subscriber', () => {
+        // If a user subscribed, then cancelled their subscription,
+        // we should not show "You are member number [#]"
+        // (i.e. a user will have a subscriberNumber but not be a subscriber)
+        const mockUserData = {
+            ...UserProvider.defaultUserData,
+            isSubscriber: true,
+            subscriberNumber: 10,
+        };
+
+        const { queryByText } = render(
+            <UserProvider.context.Provider value={mockUserData}>
+                <ThankYouPage />
+            </UserProvider.context.Provider>
+        );
+
+        // Render subscriber invitations copy
+        expect(queryByText(subscriberInvitationCopy)).toBeTruthy();
     });
 });

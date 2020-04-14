@@ -10,6 +10,7 @@ import Route, { type RouteComponentProps } from '../route.js';
 import ThankYouSubheader from './subheaders/thank-you.jsx';
 import SignupSubheader from './subheaders/signup.jsx';
 import ListItem from './list-item.jsx';
+import Incentives from './incentives.jsx';
 import GAProvider, { CATEGORY_MONTHLY_PAYMENTS } from '../ga-provider.jsx';
 import UserProvider from '../user-provider.jsx';
 
@@ -64,6 +65,8 @@ export default function PaymentsLandingPage({
                     showSubscriptionForm={showSubscriptionForm}
                 />
             )}
+
+            <Incentives isSubscriber={isSubscriber} locale="locale" />
 
             <main
                 id="contributions-page"

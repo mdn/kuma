@@ -4,6 +4,8 @@ import PaymentsLandingPage from './index.jsx';
 import UserProvider from '../user-provider.jsx';
 import { title as signupTitle } from './subheaders/signup.jsx';
 import { title as thankYouTitle } from './subheaders/thank-you.jsx';
+import { nonSubscriberInvitationCopy } from './incentives.jsx';
+import { subscriberInvitationCopy } from './incentives.jsx';
 
 const setup = (mockData = {}) => {
     const mockProps = {
@@ -32,6 +34,8 @@ describe('Payments Landing Page', () => {
     test('it renders Signup subheader', () => {
         const { queryByText } = setup();
         expect(queryByText(signupTitle)).toBeTruthy();
+        // Render non-subscriber invitations copy
+        expect(queryByText(nonSubscriberInvitationCopy)).toBeTruthy();
     });
 
     test('it renders Thank You subheader if user is a subscriber', () => {
@@ -42,6 +46,8 @@ describe('Payments Landing Page', () => {
 
         // Ensure that Thank You title renders
         expect(queryByText(thankYouTitle)).toBeTruthy();
+        // Render subscriber invitations copy
+        expect(queryByText(subscriberInvitationCopy)).toBeTruthy();
     });
 
     test('it renders subscriber form', () => {

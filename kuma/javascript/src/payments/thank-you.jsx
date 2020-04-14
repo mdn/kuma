@@ -6,6 +6,7 @@ import { getLocale, gettext, Interpolated } from '../l10n.js';
 import A11yNav from '../a11y/a11y-nav.jsx';
 import Header from '../header/header.jsx';
 import ThankYouSubheader from './subheaders/thank-you.jsx';
+import Incentives from './incentives.jsx';
 import Footer from '../footer.jsx';
 import Route from '../route.js';
 import FeedbackForm from './feedback-form.jsx';
@@ -26,6 +27,7 @@ export default function ThankYouPage() {
             <A11yNav />
             <Header />
             <ThankYouSubheader num={isSubscriber ? subscriberNumber : null} />
+            <Incentives isSubscriber={isSubscriber} locale="locale" />
             <main className="contributions-page thank-you" role="main">
                 <section className="section">
                     <header>
