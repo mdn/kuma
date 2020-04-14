@@ -11,46 +11,46 @@
 
   {% if not subscription_info %}
     {% if waffle.flag('subscription_form') %}
-    <form id="stripe-form" action="{{ url('users.create_stripe_subscription') }}" method="post">
-      {% csrf_token %}
-      <h2>{{ _('Become a monthly supporter') }}</h2>
-      {% if has_stripe_error %}
-          <div class="stripe-error">
-              <h3>{{ _('Stripe error') }}</h3>
-              <p>
-                  {{ _("An error occurred trying to set up the subscription with Stripe's server. We've recorded the error and will investigate it.") }}
-              </p>
-              <hr>
-          </div>
-      {% endif %}
-      <p>
-        {# TODO: https://github.com/mdn/kuma/issues/6654 to avoid hardcoding the dollar amount. #}
-        {{ _("You will be MDN member number %(number)s to support MDN with a $5 monthly subscription.", number=next_subscriber_number) }}
-        {{ _("Get back more of the knowledge and tools you rely on for when your work has to work.") }}
-      </p>
-      <hr>
-      <div>
-        <b>{{ _('$5 billed every month.') }}</b> {{ _('Cancel any time.') }}
-      </div>
-      <hr>
-      <label class="payment-opt-in">
-        <input type="checkbox" required="required">
-        <small>
-          {{ _('By clicking this button, I authorize Mozilla to charge this payment method each month, according to the <a target="_blank" rel="noopener" href="%(url)s">Payment Terms</a>, until I cancel my subscription.', url=url('payment_terms')) }}
-        </small>
-      </label>
-      <input type="hidden" name="stripe_token">
-      <input type="hidden" name="stripe_email" value="{{ edit_user.email }}">
-      <button type="submit" disabled="disabled">
-        {{ _('Continue') }}
-        {% include 'includes/icons/arrows/arrow-right.svg' %}
-      </button>
-    </form>
+      <form id="stripe-form" action="{{ url('users.create_stripe_subscription') }}" method="post">
+        {% csrf_token %}
+        <h2>{{ _('Become a monthly supporter') }}</h2>
+        {% if has_stripe_error %}
+            <div class="stripe-error">
+                <h3>{{ _('Stripe error') }}</h3>
+                <p>
+                    {{ _("An error occurred trying to set up the subscription with Stripe's server. We've recorded the error and will investigate it.") }}
+                </p>
+                <hr>
+            </div>
+        {% endif %}
+        <p>
+          {# TODO: https://github.com/mdn/kuma/issues/6654 to avoid hardcoding the dollar amount. #}
+          {{ _("You will be MDN member number %(number)s to support MDN with a $5 monthly subscription.", number=next_subscriber_number) }}
+          {{ _("Get back more of the knowledge and tools you rely on for when your work has to work.") }}
+        </p>
+        <hr>
+        <div>
+          <b>{{ _('$5 billed every month.') }}</b> {{ _('Cancel any time.') }}
+        </div>
+        <hr>
+        <label class="payment-opt-in">
+          <input type="checkbox" required="required">
+          <small>
+            {{ _('By clicking this button, I authorize Mozilla to charge this payment method each month, according to the <a target="_blank" rel="noopener" href="%(url)s">Payment Terms</a>, until I cancel my subscription.', url=url('payment_terms')) }}
+          </small>
+        </label>
+        <input type="hidden" name="stripe_token">
+        <input type="hidden" name="stripe_email" value="{{ edit_user.email }}">
+        <button type="submit" disabled="disabled">
+          {{ _('Continue') }}
+          {% include 'includes/icons/arrows/arrow-right.svg' %}
+        </button>
+      </form>
 
-    <script src="https://checkout.stripe.com/checkout.js"></script>
-    <script type="application/json" id="stripe-config">
-      {"STRIPE_PUBLIC_KEY": "{{ settings.STRIPE_PUBLIC_KEY }}"}
-    </script>
+      <script src="https://checkout.stripe.com/checkout.js"></script>
+      <script type="application/json" id="stripe-config">
+        {"STRIPE_PUBLIC_KEY": "{{ settings.STRIPE_PUBLIC_KEY }}"}
+      </script>
     {% endif %}
   {% else %}
     <h2>{{ _("You are MDN member number %(number)s", number=edit_user.subscriber_number) }}</h2>
