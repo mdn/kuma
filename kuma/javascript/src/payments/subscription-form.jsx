@@ -50,36 +50,34 @@ function useScriptLoading(url) {
 const STRIPE_CONTINUE_SESSIONSTORAGE_KEY = 'stripe-form-continue';
 
 /**
- * Return true if you have a sessionStorage key that says you can go straight
- * to continue the Stripe subscription form.
- * This also has the side-effect that once you call it, it demolishes that
- * sessionStorage.
+ * Returns true if the user has previously started the subscription process, but
+ * wasn't authenticated yet
  */
-function popStripeContinuation() {
+function popStartedUnauthenticated() {
     try {
-        let autoTriggerStripe = JSON.parse(
+        const startedUnauthenticated = JSON.parse(
             sessionStorage.getItem(STRIPE_CONTINUE_SESSIONSTORAGE_KEY) ||
-                'false'
+                JSON.stringify(false)
         );
         sessionStorage.removeItem(STRIPE_CONTINUE_SESSIONSTORAGE_KEY);
-        return autoTriggerStripe;
+        return startedUnauthenticated;
     } catch (e) {
-        // If sessionStorage is not supported, they'll have to manually click
-        // the Continue button again.
+        // If sessionStorage is not supported, it defaults to false
         return false;
     }
 }
 
 /**
- * Remembers, in sessionStorage, that the user can continue the Stripe
- * subscription form next time they come back.
+ * Remembers, in sessionStorage, that the user started unauthenticated
  */
-function pushStripeContinuation() {
+function setStartedUnauthenticated() {
     try {
-        sessionStorage.setItem(STRIPE_CONTINUE_SESSIONSTORAGE_KEY, 'true');
+        sessionStorage.setItem(
+            STRIPE_CONTINUE_SESSIONSTORAGE_KEY,
+            JSON.stringify(true)
+        );
     } catch (e) {
-        // No sessionStorage, no remembering to trigger opening the Stripe
-        // form automatically next time.
+        // No sessionStorage support
     }
 }
 
@@ -92,8 +90,10 @@ export default function SubscriptionForm() {
     const [formStep, setFormStep] = useState<
         'initial' | 'stripe_error' | 'stripe' | 'submitting' | 'server_error'
     >('initial');
+    const [openStripeModal, setOpenStripeModal] = useState(false);
 
     const token = useRef(null);
+    const startedUnauthenticated = useRef<boolean | null>(null);
 
     const [stripeLoadingPromise, reloadStripe] = useScriptLoading(
         'https://checkout.stripe.com/checkout.js'
@@ -114,6 +114,10 @@ export default function SubscriptionForm() {
             });
     }, [formStep, stripeLoadingPromise]);
 
+    useEffect(() => {
+        startedUnauthenticated.current = popStartedUnauthenticated();
+    }, []);
+
     /**
      * If you arrived on this page, being anonymous, you'd have to first sign in.
      * Suppose that you do that, we will make sure to send you back to this page
@@ -121,15 +125,17 @@ export default function SubscriptionForm() {
      * Basically, if you have that sessionStorage key, it will, for you, check the
      * checkbox and press the "Continue" button.
      */
-
     useEffect(() => {
-        if (userData && userData.isAuthenticated && popStripeContinuation()) {
+        if (
+            userData &&
+            userData.isAuthenticated &&
+            startedUnauthenticated.current
+        ) {
             setPaymentAuthorized(true);
             setOpenStripeModal(true);
         }
     }, [userData]);
 
-    const [openStripeModal, setOpenStripeModal] = useState(false);
     useEffect(() => {
         function createSubscription() {
             fetch(SUBSCRIPTION_URL, {
@@ -144,7 +150,12 @@ export default function SubscriptionForm() {
             }).then((response) => {
                 if (response.ok) {
                     window.location = `/${locale}/payments/thank-you/?${gaQuery(
-                        'subscription-success'
+                        [
+                            'subscription-success',
+                            startedUnauthenticated.current
+                                ? 'subscription-success-unauthenticated'
+                                : 'subscription-success-authenticated',
+                        ]
                     )}`;
                 } else {
                     console.error(
@@ -188,6 +199,16 @@ export default function SubscriptionForm() {
         ga('send', {
             hitType: 'event',
             eventCategory: CATEGORY_MONTHLY_PAYMENTS,
+            eventAction: `subscribe intent (${
+                userData && userData.isAuthenticated
+                    ? 'authenticated'
+                    : 'unauthenticated'
+            })`,
+            eventLabel: 'subscription-landing-page',
+        });
+        ga('send', {
+            hitType: 'event',
+            eventCategory: CATEGORY_MONTHLY_PAYMENTS,
             eventAction: 'subscribe intent',
             eventLabel: 'subscription-landing-page',
         });
@@ -197,7 +218,7 @@ export default function SubscriptionForm() {
         if (userData && userData.isAuthenticated) {
             setOpenStripeModal(true);
         } else {
-            pushStripeContinuation();
+            setStartedUnauthenticated();
             const next = encodeURIComponent(window.location.pathname);
             if (window.mdn && window.mdn.triggerAuthModal) {
                 window.mdn.triggerAuthModal(

@@ -15,6 +15,18 @@ const QUERY_PARAM_GA_DATA = {
         eventAction: 'successful subscription',
         eventLabel: 'subscription-landing-page',
     },
+    'subscription-success-authenticated': {
+        hitType: 'event',
+        eventCategory: CATEGORY_MONTHLY_PAYMENTS,
+        eventAction: 'successful subscription (authenticated)',
+        eventLabel: 'subscription-landing-page',
+    },
+    'subscription-success-unauthenticated': {
+        hitType: 'event',
+        eventCategory: CATEGORY_MONTHLY_PAYMENTS,
+        eventAction: 'successful subscription (unauthenticated)',
+        eventLabel: 'subscription-landing-page',
+    },
     'banner-cta': {
         hitType: 'event',
         eventCategory: CATEGORY_MONTHLY_PAYMENTS,
@@ -23,8 +35,8 @@ const QUERY_PARAM_GA_DATA = {
     },
 };
 
-export function gaQuery(id: $Keys<typeof QUERY_PARAM_GA_DATA>) {
-    return GA_QUERY_KEY + '=' + id;
+export function gaQuery(ids: $Keys<typeof QUERY_PARAM_GA_DATA>[]) {
+    return new URLSearchParams(ids.map((id) => [GA_QUERY_KEY, id])).toString();
 }
 
 function ga(...args) {
@@ -57,9 +69,7 @@ export default function GAProvider(props: {
      * analytics data.
      */
     useEffect(() => {
-        const analyticIds = new URLSearchParams(
-            window.location.search.substr(1)
-        )
+        const analyticIds = new URLSearchParams(window.location.search)
             .getAll(GA_QUERY_KEY)
             .filter((id) => id in QUERY_PARAM_GA_DATA);
 

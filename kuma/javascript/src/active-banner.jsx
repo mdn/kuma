@@ -234,7 +234,7 @@ function SubscriptionBanner() {
                 }
             )}
             cta={gettext('Learn more')}
-            url={`/${locale}/payments/?${gaQuery('banner-cta')}`}
+            url={`/${locale}/payments/?${gaQuery(['banner-cta'])}`}
             embargoDays={7}
         />
     );
