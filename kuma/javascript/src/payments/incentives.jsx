@@ -55,9 +55,9 @@ const Incentives = ({ isSubscriber = false, locale }: Props) => {
                 <li className="invitations">
                     <h4>{gettext('Invitations to events')}</h4>
                     <p>
-                        {!isSubscriber && nonSubscriberInvitationCopy}
-
-                        {isSubscriber && subscriberInvitationCopy}
+                        {!isSubscriber
+                            ? nonSubscriberInvitationCopy
+                            : subscriberInvitationCopy}
                     </p>
                 </li>
             </ul>
