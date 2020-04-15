@@ -9,13 +9,13 @@ type Props = {
 };
 
 const nonSubscriberDiscountCopy = gettext(
-    'Get discounts on sweet loot from the <merchStoreLink />'
+    'Get discounts on sweet loot from the <merchStoreLink />.'
 );
 export const nonSubscriberInvitationCopy = gettext(
     'Get invited to attend special events and conferences.'
 );
 const subscriberDiscountCopy = gettext(
-    'Get 30% of the <merchStoreLink /> with discount code MDNMEMBER30'
+    'Get 20% of the <merchStoreLink /> with discount code MDNMEMBER20.'
 );
 export const subscriberInvitationCopy = gettext(
     'Check back for invitations to attend special events and conferences.'
