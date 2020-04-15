@@ -54,7 +54,7 @@ describe('Payments Landing Page', () => {
         const mockData = {
             waffle: {
                 flags: {
-                    ['subscription_banner']: true,
+                    ['subscription_form']: true,
                 },
 
                 // this is to avoid having to do a deep merge in setup()

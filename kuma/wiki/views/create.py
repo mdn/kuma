@@ -1,5 +1,5 @@
 import newrelic.agent
-from constance import config
+from django.conf import settings
 from django.shortcuts import redirect, render
 from django.views.decorators.cache import never_cache
 
@@ -31,7 +31,7 @@ def create(request):
         context = {
             "reason": "create-page",
             "request_page_url": DEV_DOC_REQUEST_FORM,
-            "email_address": config.EMAIL_LIST_MDN_ADMINS,
+            "email_address": settings.EMAIL_LIST_MDN_ADMINS,
         }
         return render(request, "403-create-page.html", context=context, status=403)
 

@@ -1512,12 +1512,12 @@ CONSTANCE_CONFIG = dict(
         "Email address from which welcome emails will be sent",
     ),
     AKISMET_KEY=("", "API key for Akismet spam checks, leave empty to disable"),
-    EMAIL_LIST_MDN_ADMINS=(
-        "mdn-admins@mozilla.org",
-        "Email address to request admin intervention",
-    ),
 )
 
+# Email address to request admin intervention
+EMAIL_LIST_MDN_ADMINS = config(
+    "EMAIL_LIST_MDN_ADMINS", default="mdn-admins@mozilla.org"
+)
 
 # Name of the django.contrib.auth.models.Group to use as beta testers
 BETA_GROUP_NAME = config("BETA_GROUP_NAME", default="Beta Testers")

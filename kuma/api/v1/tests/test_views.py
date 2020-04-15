@@ -235,6 +235,9 @@ def test_whoami(
     is_beta_tester,
 ):
     """Test responses for logged-in users."""
+    # First delete all flags created from data migrations
+    Flag.objects.all().delete()
+
     # Create some fake waffle objects
     Flag.objects.create(name="section_edit", authenticated=True)
     Flag.objects.create(name="flag_all", everyone=True)
@@ -268,8 +271,6 @@ def test_whoami(
     }
     if is_staff:
         expect["is_staff"] = True
-        expect["waffle"]["flags"]["subscription"] = True
-        expect["waffle"]["flags"]["subscription_banner"] = True
     if is_superuser:
         expect["is_superuser"] = True
     if is_beta_tester:
