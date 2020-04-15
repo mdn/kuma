@@ -26,7 +26,7 @@
 
         section,
         form {
-            font-size: 12px;
+            font-size: 14.5px; // this sets the <small /> text to about 12px
             padding: 20px 20px 5px;
 
             &.error {
@@ -39,6 +39,7 @@
 
             label {
                 display: flex;
+                align-items: flex-start;
             }
 
             button {
@@ -64,7 +65,7 @@
             // in Firefox, will appear red. Like something is wrong!
             // This will undo that.
             input[type='checkbox'] {
-                margin: 0 10px 0 0;
+                margin: 2px 8px 0 0;
                 &:required {
                     box-shadow: none;
                 }
