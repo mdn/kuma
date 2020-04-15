@@ -67,7 +67,7 @@ describe('Payments Thank You page', () => {
 
         const { queryByText } = render(
             <UserProvider.context.Provider value={mockUserData}>
-                <ThankYouPage />
+                <ThankYouPage locale="fr" />
             </UserProvider.context.Provider>
         );
 
