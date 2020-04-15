@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { gettext, interpolate } from '../../l10n.js';
+import { gettext, interpolate } from '../../../l10n.js';
 import SubHeader from './index.jsx';
 import SubscriptionForm from '../subscription-form.jsx';
 

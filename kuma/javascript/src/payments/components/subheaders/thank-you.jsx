@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import SubHeader from './index.jsx';
-import { gettext, interpolate } from '../../l10n.js';
+import { gettext, interpolate } from '../../../l10n.js';
 
 type Props = {
     num?: ?number,

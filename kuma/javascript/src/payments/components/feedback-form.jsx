@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
-import { gettext, interpolate, Interpolated } from '../l10n.js';
-import { getCookie } from '../utils.js';
+import { gettext, interpolate, Interpolated } from '../../l10n.js';
+import { getCookie } from '../../utils.js';
 
 export const FEEDBACK_URL = '/api/v1/subscriptions/feedback/';
 export const MIN_STRING_LENGTH = 5;

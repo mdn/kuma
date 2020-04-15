@@ -1,17 +1,21 @@
 //@flow
 import React from 'react';
 import { render } from '@testing-library/react';
-import UserProvider from '../user-provider.jsx';
-import { interpolate } from '../l10n.js';
+import UserProvider from '../../user-provider.jsx';
+import { interpolate } from '../../l10n.js';
 import ThankYouPage from './thank-you.jsx';
-import { title, subtitle } from './subheaders/thank-you.jsx';
-import { nonSubscriberInvitationCopy } from './incentives.jsx';
-import { subscriberInvitationCopy } from './incentives.jsx';
+import { title, subtitle } from '../components/subheaders/thank-you.jsx';
+import {
+    nonSubscriberInvitationCopy,
+    subscriberInvitationCopy,
+} from '../components/incentives.jsx';
 
 describe('Payments Thank You page', () => {
     test('it renders', () => {
         // Ensure that subheader, useful things, and feedback form renders
-        const { queryByText, queryByTestId } = render(<ThankYouPage />);
+        const { queryByText, queryByTestId } = render(
+            <ThankYouPage locale="fr" />
+        );
 
         // Subheader
         expect(queryByText(title)).toBeTruthy();
@@ -41,7 +45,7 @@ describe('Payments Thank You page', () => {
 
         const { queryByText } = render(
             <UserProvider.context.Provider value={mockUserData}>
-                <ThankYouPage />
+                <ThankYouPage locale="fr" />
             </UserProvider.context.Provider>
         );
 

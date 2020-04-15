@@ -2,13 +2,13 @@
 import * as React from 'react';
 import { useContext, useEffect, useRef, useState } from 'react';
 
-import { getLocale, gettext, Interpolated } from '../l10n.js';
+import { getLocale, gettext, Interpolated } from '../../l10n.js';
 import GAProvider, {
     CATEGORY_MONTHLY_PAYMENTS,
-    gaSendOnNextPage,
-} from '../ga-provider.jsx';
-import UserProvider from '../user-provider.jsx';
-import { getCookie } from '../utils';
+    gaQuery,
+} from '../../ga-provider.jsx';
+import UserProvider from '../../user-provider.jsx';
+import { getCookie } from '../../utils';
 
 const SUBSCRIPTION_URL = '/api/v1/subscriptions';
 
