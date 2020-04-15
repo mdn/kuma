@@ -3,6 +3,7 @@
 exports[`Header snapshot 1`] = `
 <header
   className="page-header"
+  data-testid="header"
 >
   <a
     aria-label="MDN Web Docs"

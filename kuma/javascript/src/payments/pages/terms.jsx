@@ -6,7 +6,11 @@ export const title = 'MDN Web Docs payment terms';
 const TermsPage = () => (
     <>
         <SubHeader title={title} />
-        <main className="contributions-page" role="main">
+        <main
+            className="contributions-page"
+            role="main"
+            data-testid="terms-page"
+        >
             <section>
                 <h2>Payment Terms</h2>
 

@@ -21,7 +21,11 @@ const ThankYouPage = ({ locale }: Props) => {
         <>
             <ThankYouSubheader num={isSubscriber ? subscriberNumber : null} />
             <Incentives isSubscriber={isSubscriber} />
-            <main className="contributions-page thank-you" role="main">
+            <main
+                className="contributions-page thank-you"
+                role="main"
+                data-testid="thank-you-page"
+            >
                 <section>
                     <header>
                         <h2>{gettext('Useful things')}</h2>

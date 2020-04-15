@@ -8,15 +8,13 @@ type Props = {
     children: any,
 };
 
-const Page = ({ children }: Props) => {
-    return (
-        <>
-            <A11yNav />
-            <Header />
-            {children}
-            <Footer />
-        </>
-    );
-};
+const Page = ({ children }: Props) => (
+    <>
+        <A11yNav />
+        <Header />
+        {children}
+        <Footer />
+    </>
+);
 
 export default Page;

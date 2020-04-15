@@ -16,7 +16,7 @@ export const PAYMENT_PATHS = {
     TERMS: 'terms',
 };
 
-export default function PaymentPage(props: RouteComponentProps) {
+export function PaymentPage(props: RouteComponentProps) {
     const { locale, slug, data } = props;
 
     // remove forward slashes

@@ -12,7 +12,6 @@ import GAProvider, { CATEGORY_MONTHLY_PAYMENTS } from '../../ga-provider.jsx';
 import UserProvider from '../../user-provider.jsx';
 
 export default function LandingPage({ data, locale }: RouteComponentProps) {
-    console.log('LANDING', data, locale);
     const userData = useContext(UserProvider.context);
     const ga = useContext(GAProvider.context);
     const urls = {
@@ -60,6 +59,7 @@ export default function LandingPage({ data, locale }: RouteComponentProps) {
                 id="contributions-page"
                 className="contributions-page faq"
                 role="main"
+                data-testid="landing-page"
             >
                 <section>
                     <header>
