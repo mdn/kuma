@@ -5,7 +5,6 @@ import { gettext, Interpolated } from '../l10n.js';
 
 type Props = {
     isSubscriber: ?boolean,
-    locale: string,
 };
 
 const nonSubscriberDiscountCopy = gettext(
@@ -21,7 +20,9 @@ export const subscriberInvitationCopy = gettext(
     'Check back for invitations to attend special events and conferences.'
 );
 
-const Incentives = ({ isSubscriber = false, locale }: Props) => {
+const Incentives = ({ isSubscriber = false }: Props) => {
+    const merchStoreURL =
+        'https://shop.spreadshirt.com/mozilla-developer-network/';
     return (
         <div className="subscriptions-incentive">
             <h3>{gettext('Enjoy exclusive member perks')}</h3>
@@ -29,27 +30,22 @@ const Incentives = ({ isSubscriber = false, locale }: Props) => {
                 <li className="discounts">
                     <h4>{gettext('Discounts on swag')}</h4>
                     <p>
-                        {!isSubscriber && (
-                            <Interpolated
-                                id={nonSubscriberDiscountCopy}
-                                merchStoreLink={
-                                    <a href={`/${locale}/payments/terms/`}>
-                                        {gettext('MDN Merch store')}
-                                    </a>
-                                }
-                            />
-                        )}
-
-                        {isSubscriber && (
-                            <Interpolated
-                                id={subscriberDiscountCopy}
-                                merchStoreLink={
-                                    <a href={`/${locale}/payments/terms/`}>
-                                        {gettext('MDN Merch store')}
-                                    </a>
-                                }
-                            />
-                        )}
+                        <Interpolated
+                            id={
+                                isSubscriber
+                                    ? subscriberDiscountCopy
+                                    : nonSubscriberDiscountCopy
+                            }
+                            merchStoreLink={
+                                <a
+                                    href={merchStoreURL}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {gettext('MDN Merch store')}
+                                </a>
+                            }
+                        />
                     </p>
                 </li>
                 <li className="invitations">

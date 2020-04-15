@@ -66,7 +66,7 @@ export default function PaymentsLandingPage({
                 />
             )}
 
-            <Incentives isSubscriber={isSubscriber} locale="locale" />
+            <Incentives isSubscriber={isSubscriber} />
 
             <main
                 id="contributions-page"

@@ -27,7 +27,7 @@ export default function ThankYouPage() {
             <A11yNav />
             <Header />
             <ThankYouSubheader num={isSubscriber ? subscriberNumber : null} />
-            <Incentives isSubscriber={isSubscriber} locale="locale" />
+            <Incentives isSubscriber={isSubscriber} />
             <main className="contributions-page thank-you" role="main">
                 <section className="section">
                     <header>
