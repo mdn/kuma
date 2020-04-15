@@ -25,8 +25,7 @@
         {% endif %}
         <p>
           {# TODO: https://github.com/mdn/kuma/issues/6654 to avoid hardcoding the dollar amount. #}
-          {{ _("You will be MDN member number %(number)s to support MDN with a $5 monthly subscription.", number=next_subscriber_number) }}
-          {{ _("Get back more of the knowledge and tools you rely on for when your work has to work.") }}
+          {{ _("You will be MDN member number %(number)s to support MDN with a $5 monthly subscription, enjoying discounts on swag and invitations to special events!", number=next_subscriber_number) }}
         </p>
         <hr>
         <div>
@@ -67,12 +66,15 @@
       </p>
     </div>
     <hr>
-    <p>
-      {% trans manage_url=url('recurring_payment_management'), faq_url=url('payments_index'), support_email='mailto:' + settings.CONTRIBUTION_SUPPORT_EMAIL -%}
-        To cancel your subscription <a href="{{ manage_url }}">click here</a>. <br>If you have questions, please read
-        the <a href="{{ faq_url }}">FAQ</a> or you can also <a href="{{ support_email }}">contact support</a>.
-      {% endtrans -%}
-    </p>
-  {% endif %}
+    {% trans thank_you_url=url('thank_you'), manage_url=url('recurring_payment_management'), faq_url=url('payments_index'), support_email='mailto:' + settings.CONTRIBUTION_SUPPORT_EMAIL -%}
+      <ul>
+        <li>To see your member perks, visit the <a href="{{ thank_you_url }}">thank you page</a>.</li>
+        <li>To cancel your subscription <a href="{{ manage_url }}">click here</a>.</li>
+        <li>If you have questions, please read
+        the <a href="{{ faq_url }}">FAQ</a> or you can also <a href="{{ support_email }}">contact
+          support</a>.</li>
+      </ul>
+    {% endtrans -%}
+    {% endif %}
   {% javascript "stripe-subscription" %}
 </section>
