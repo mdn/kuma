@@ -56,7 +56,7 @@ import { getLocale, gettext, interpolate } from './l10n.js';
 import UserProvider from './user-provider.jsx';
 import GAProvider, {
     CATEGORY_MONTHLY_PAYMENTS,
-    gaQuery,
+    gaSendOnNextPage,
 } from './ga-provider.jsx';
 
 // Set a localStorage key with a timestamp the specified number of
@@ -234,7 +234,17 @@ function SubscriptionBanner() {
                 }
             )}
             cta={gettext('Learn more')}
-            url={`/${locale}/payments/?${gaQuery(['banner-cta'])}`}
+            url={`/${locale}/payments/`}
+            onCTAClick={() => {
+                gaSendOnNextPage([
+                    {
+                        hitType: 'event',
+                        eventCategory: CATEGORY_MONTHLY_PAYMENTS,
+                        eventAction: 'subscribe intent',
+                        eventLabel: 'banner',
+                    },
+                ]);
+            }}
             embargoDays={7}
         />
     );

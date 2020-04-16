@@ -6,37 +6,26 @@ export type GAFunction = (...any) => void;
 
 export const CATEGORY_MONTHLY_PAYMENTS = 'monthly payments';
 
-const GA_QUERY_KEY = 'ga';
+const GA_SESSION_STORAGE_KEY = 'ga';
 
-const QUERY_PARAM_GA_DATA = {
-    'subscription-success': {
-        hitType: 'event',
-        eventCategory: CATEGORY_MONTHLY_PAYMENTS,
-        eventAction: 'successful subscription',
-        eventLabel: 'subscription-landing-page',
-    },
-    'subscription-success-authenticated': {
-        hitType: 'event',
-        eventCategory: CATEGORY_MONTHLY_PAYMENTS,
-        eventAction: 'successful subscription (authenticated)',
-        eventLabel: 'subscription-landing-page',
-    },
-    'subscription-success-unauthenticated': {
-        hitType: 'event',
-        eventCategory: CATEGORY_MONTHLY_PAYMENTS,
-        eventAction: 'successful subscription (unauthenticated)',
-        eventLabel: 'subscription-landing-page',
-    },
-    'banner-cta': {
-        hitType: 'event',
-        eventCategory: CATEGORY_MONTHLY_PAYMENTS,
-        eventAction: 'subscribe intent',
-        eventLabel: 'banner',
-    },
-};
+function getPostponedEvents() {
+    return JSON.parse(
+        sessionStorage.getItem(GA_SESSION_STORAGE_KEY) || JSON.stringify([])
+    );
+}
 
-export function gaQuery(ids: $Keys<typeof QUERY_PARAM_GA_DATA>[]) {
-    return new URLSearchParams(ids.map((id) => [GA_QUERY_KEY, id])).toString();
+/**
+ * Saves given events into sessionStorage so that they are sent once the next
+ * page has loaded. This should be used for events that need to be sent without
+ * delaying navigation to a new page (which would cancel pending network
+ * requests).
+ */
+export function gaSendOnNextPage(newEvents: any[]) {
+    const events = getPostponedEvents();
+    sessionStorage.setItem(
+        GA_SESSION_STORAGE_KEY,
+        JSON.stringify(events.concat(newEvents))
+    );
 }
 
 function ga(...args) {
@@ -64,17 +53,14 @@ export default function GAProvider(props: {
     children: React.Node,
 }): React.Node {
     /**
-     * Checks for the existence of the analytics parameter in the URL query,
-     * and sends events for every present parameter for which we have associated
-     * analytics data.
+     * Checks for the existence of postponed analytics events, which we store
+     * in sessionStorage. It also clears them so that they aren't sent again.
      */
     useEffect(() => {
-        const analyticIds = new URLSearchParams(window.location.search)
-            .getAll(GA_QUERY_KEY)
-            .filter((id) => id in QUERY_PARAM_GA_DATA);
-
-        for (const id of analyticIds) {
-            ga('send', QUERY_PARAM_GA_DATA[id]);
+        const events = getPostponedEvents();
+        sessionStorage.removeItem(GA_SESSION_STORAGE_KEY);
+        for (const event of events) {
+            ga('send', event);
         }
     }, []);
 

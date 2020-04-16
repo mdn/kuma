@@ -5,7 +5,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { getLocale, gettext, Interpolated } from '../l10n.js';
 import GAProvider, {
     CATEGORY_MONTHLY_PAYMENTS,
-    gaQuery,
+    gaSendOnNextPage,
 } from '../ga-provider.jsx';
 import UserProvider from '../user-provider.jsx';
 import { getCookie } from '../utils';
@@ -149,14 +149,28 @@ export default function SubscriptionForm() {
                 },
             }).then((response) => {
                 if (response.ok) {
-                    window.location = `/${locale}/payments/thank-you/?${gaQuery(
-                        [
-                            'subscription-success',
-                            startedUnauthenticated.current
-                                ? 'subscription-success-unauthenticated'
-                                : 'subscription-success-authenticated',
-                        ]
-                    )}`;
+                    // We're sending two events because it is cumbersome to
+                    // aggregate events inside of Analytics
+                    // See: https://github.com/mdn/kuma/pull/6877
+                    gaSendOnNextPage([
+                        {
+                            hitType: 'event',
+                            eventCategory: CATEGORY_MONTHLY_PAYMENTS,
+                            eventAction: 'successful subscription',
+                            eventLabel: 'subscription-landing-page',
+                        },
+                        {
+                            hitType: 'event',
+                            eventCategory: CATEGORY_MONTHLY_PAYMENTS,
+                            eventAction: `successful subscription (${
+                                startedUnauthenticated.current
+                                    ? 'unauthenticated'
+                                    : 'authenticated'
+                            })`,
+                            eventLabel: 'subscription-landing-page',
+                        },
+                    ]);
+                    window.location = `/${locale}/payments/thank-you/`;
                 } else {
                     console.error(
                         'error while creating subscription',
@@ -196,6 +210,9 @@ export default function SubscriptionForm() {
     function handleSubmit(event) {
         event.preventDefault();
 
+        // We're sending two events because it is cumbersome to
+        // aggregate events inside of Analytics
+        // See: https://github.com/mdn/kuma/pull/6877
         ga('send', {
             hitType: 'event',
             eventCategory: CATEGORY_MONTHLY_PAYMENTS,
