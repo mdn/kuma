@@ -18,8 +18,6 @@ const TermsPage = ({ data: { contributionSupportEmail } }: Props) => (
             data-testid="terms-page"
         >
             <section>
-                <h2>Payment Terms</h2>
-
                 <p>Mozilla (that’s us) operates MDN Web Docs.</p>
                 <p>
                     These Payment Terms cover your payment to MDN.{' '}
