@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import Route, { type RouteComponentProps } from '../route.js';
+import Route from '../route.js';
 import Page from './pages/page.jsx';
 import LandingPage from './pages/index.jsx';
 import ThankYouPage from './pages/thank-you.jsx';
@@ -11,25 +11,29 @@ type PaymentRoutesParams = {
     slug: string,
 };
 
-export const PAYMENT_PATHS = {
-    THANK_YOU: 'thank-you',
-    TERMS: 'terms',
+type PaymentPageProps = PaymentRoutesParams & {
+    data: any,
 };
 
-export function PaymentPage(props: RouteComponentProps) {
+export const PAYMENT_PATHS = {
+    TERMS: 'terms',
+    THANK_YOU: 'thank-you',
+};
+
+export function PaymentPage(props: PaymentPageProps) {
     const { locale, slug, data } = props;
+    const getPage = () => {
+        switch (true) {
+            case slug.includes(PAYMENT_PATHS.TERMS):
+                return <TermsPage data={data} />;
+            case slug.includes(PAYMENT_PATHS.THANK_YOU):
+                return <ThankYouPage locale={locale} />;
+            default:
+                return <LandingPage data={data} locale={locale} />;
+        }
+    };
 
-    // remove forward slashes
-    const pathname = slug.replace(/\//g, '');
-
-    return (
-        <Page>
-            {{
-                [PAYMENT_PATHS.THANK_YOU]: <ThankYouPage locale={locale} />,
-                [PAYMENT_PATHS.TERMS]: <TermsPage data={data} />,
-            }[pathname] || <LandingPage data={data} locale={locale} />}
-        </Page>
-    );
+    return <Page>{getPage()}</Page>;
 }
 
 // In order to use new URL() with relative URLs, we need an absolute base

@@ -68,7 +68,7 @@ const TermsPage = ({ data: { contributionSupportEmail } }: Props) => (
                 <h2>Cancellation</h2>
                 <p>
                     If you sign up for monthly payments, you may cancel at any
-                    time by sending an email to
+                    time by sending an email to{' '}
                     <a
                         href={`mailto:${contributionSupportEmail}`}
                         target="_blank"
