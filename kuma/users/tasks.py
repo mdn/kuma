@@ -1,7 +1,6 @@
 import logging
 
 from celery import task
-from constance import config
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils import translation
@@ -56,7 +55,7 @@ def send_welcome_email(user_pk, locale):
             email = EmailMultiAlternativesRetrying(
                 _("Getting started with your new MDN account"),
                 content_plain,
-                config.WELCOME_EMAIL_FROM,
+                settings.WELCOME_EMAIL_FROM,
                 [user.email],
             )
             email.attach_alternative(content_html, "text/html")

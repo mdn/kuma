@@ -1507,11 +1507,12 @@ CONSTANCE_CONFIG = dict(
         1000,
         "Number of expired sessions to cleanup up in one go.",
     ),
-    WELCOME_EMAIL_FROM=(
-        "Janet Swisher <no-reply@mozilla.org>",
-        "Email address from which welcome emails will be sent",
-    ),
     AKISMET_KEY=("", "API key for Akismet spam checks, leave empty to disable"),
+)
+
+# Email address from which welcome emails will be sent
+WELCOME_EMAIL_FROM = config(
+    "WELCOME_EMAIL_FROM", default="Janet Swisher <no-reply@mozilla.org>"
 )
 
 # Email address to request admin intervention
