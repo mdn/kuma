@@ -1,6 +1,6 @@
 //@flow
 import React from 'react';
-import { render, fireEvent, cleanup, waitFor } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import { toHaveAttribute } from '@testing-library/jest-dom/matchers';
 import FeedbackForm, { FEEDBACK_URL } from './feedback-form.jsx';
 
@@ -30,7 +30,6 @@ const setup = () => {
 
 describe('Payments Feedback Form', () => {
     afterEach(() => {
-        cleanup();
         window.fetch.mockReset();
     });
 

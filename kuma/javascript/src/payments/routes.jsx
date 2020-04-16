@@ -26,7 +26,7 @@ export function PaymentPage(props: RouteComponentProps) {
         <Page>
             {{
                 [PAYMENT_PATHS.THANK_YOU]: <ThankYouPage locale={locale} />,
-                [PAYMENT_PATHS.TERMS]: <TermsPage />,
+                [PAYMENT_PATHS.TERMS]: <TermsPage data={data} />,
             }[pathname] || <LandingPage data={data} locale={locale} />}
         </Page>
     );
