@@ -15,6 +15,7 @@ function getPostponedEvents() {
         );
     } catch (e) {
         // No sessionStorage support
+        return [];
     }
 }
 
