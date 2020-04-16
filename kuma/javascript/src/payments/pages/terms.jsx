@@ -66,7 +66,7 @@ const TermsPage = () => (
                     If you sign up for monthly payments, you may cancel at any
                     time by sending an email to
                     <a
-                        href="mailto:mdn-support@mozilla.com"
+                        href={`mailto:${contribution_support_email}`}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
