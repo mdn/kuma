@@ -17,7 +17,7 @@ export default function LandingPage({ data, locale }: RouteComponentProps) {
     const urls = {
         annualReport:
             'https://www.mozilla.org/en-US/foundation/annualreport/2018/',
-        email: `mailto:${data.email}?Subject=Manage%20monthly%20subscription`,
+        email: `mailto:${data.contributionSupportEmail}?Subject=Manage%20monthly%20subscription`,
         moco: 'https://www.mozilla.org/foundation/moco/',
         mozillaFoundation: 'https://www.mozilla.org/foundation/',
         managePayments: `/${locale}/payments/recurring/management/`,
@@ -273,7 +273,7 @@ export default function LandingPage({ data, locale }: RouteComponentProps) {
                                             rel="noopener noreferrer"
                                             href={urls.email}
                                         >
-                                            {data.email}
+                                            {data.contributionSupportEmail}
                                         </a>
                                     }
                                 />

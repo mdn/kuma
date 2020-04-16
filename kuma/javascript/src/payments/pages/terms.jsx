@@ -2,8 +2,14 @@
 import * as React from 'react';
 import SubHeader from '../components/subheaders/index.jsx';
 
+type Props = {
+    data: {
+        contributionSupportEmail: string,
+    },
+};
+
 export const title = 'MDN Web Docs payment terms';
-const TermsPage = () => (
+const TermsPage = ({ data: { contributionSupportEmail } }: Props) => (
     <>
         <SubHeader title={title} />
         <main
@@ -66,11 +72,11 @@ const TermsPage = () => (
                     If you sign up for monthly payments, you may cancel at any
                     time by sending an email to
                     <a
-                        href={`mailto:${contribution_support_email}`}
+                        href={`mailto:${contributionSupportEmail}`}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        mdn-support@mozilla.com
+                        {contributionSupportEmail}
                     </a>
                     . If you choose to cancel, we will not charge your payment
                     card for subsequent months.
