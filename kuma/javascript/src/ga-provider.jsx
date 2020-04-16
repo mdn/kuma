@@ -9,9 +9,13 @@ export const CATEGORY_MONTHLY_PAYMENTS = 'monthly payments';
 const GA_SESSION_STORAGE_KEY = 'ga';
 
 function getPostponedEvents() {
-    return JSON.parse(
-        sessionStorage.getItem(GA_SESSION_STORAGE_KEY) || JSON.stringify([])
-    );
+    try {
+        return JSON.parse(
+            sessionStorage.getItem(GA_SESSION_STORAGE_KEY) || JSON.stringify([])
+        );
+    } catch (e) {
+        // No sessionStorage support
+    }
 }
 
 /**
@@ -21,11 +25,15 @@ function getPostponedEvents() {
  * requests).
  */
 export function gaSendOnNextPage(newEvents: any[]) {
-    const events = getPostponedEvents();
-    sessionStorage.setItem(
-        GA_SESSION_STORAGE_KEY,
-        JSON.stringify(events.concat(newEvents))
-    );
+    try {
+        const events = getPostponedEvents();
+        sessionStorage.setItem(
+            GA_SESSION_STORAGE_KEY,
+            JSON.stringify(events.concat(newEvents))
+        );
+    } catch (e) {
+        // No sessionStorage support
+    }
 }
 
 function ga(...args) {
@@ -58,7 +66,11 @@ export default function GAProvider(props: {
      */
     useEffect(() => {
         const events = getPostponedEvents();
-        sessionStorage.removeItem(GA_SESSION_STORAGE_KEY);
+        try {
+            sessionStorage.removeItem(GA_SESSION_STORAGE_KEY);
+        } catch (e) {
+            // No sessionStorage support
+        }
         for (const event of events) {
             ga('send', event);
         }
