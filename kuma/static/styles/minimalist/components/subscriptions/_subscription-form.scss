@@ -21,12 +21,13 @@
         background-color: #fff;
         border-radius: 4px;
         box-shadow: $box-shadow-blue;
-        max-width: 460px;
-        min-height: 320px;
+        min-width: 470px;
+        width: 470px;
 
         section,
         form {
-            padding: 20px 20px 0;
+            font-size: 14.5px; // this sets the <small /> text to about 12px
+            padding: 20px 20px 5px;
 
             &.error {
                 padding: 20px;
@@ -34,6 +35,11 @@
 
             h2 {
                 margin: 0;
+            }
+
+            label {
+                display: flex;
+                align-items: flex-start;
             }
 
             button {
@@ -44,7 +50,6 @@
 
                 &::after {
                     float: right;
-                    display: inline-block;
                     content: '';
                     background: transparent
                         url('../../../../arrows/arrow-right.svg') 0 0 no-repeat;
@@ -59,8 +64,11 @@
             // and haven't even started paying attention to the form, the checkbox,
             // in Firefox, will appear red. Like something is wrong!
             // This will undo that.
-            input[type='checkbox']:required {
-                box-shadow: none;
+            input[type='checkbox'] {
+                margin: 2px 8px 0 0;
+                &:required {
+                    box-shadow: none;
+                }
             }
         }
 
