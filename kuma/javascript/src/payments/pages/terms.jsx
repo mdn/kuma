@@ -8,7 +8,7 @@ type Props = {
     },
 };
 
-export const title = 'MDN Web Docs payment terms';
+export const title = 'Payment Terms';
 const TermsPage = ({ data: { contributionSupportEmail } }: Props) => (
     <>
         <SubHeader title={title} />
