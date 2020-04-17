@@ -23,7 +23,7 @@ describe('PaymentPage', () => {
 
     it('renders Landing page by default', () => {
         const { queryByTestId } = render(
-            <PaymentPage slug={'/someotherpath/'} data={mockData} />
+            <PaymentPage slug={'/'} data={mockData} />
         );
         expect(queryByTestId('landing-page')).toBeInTheDocument();
     });
