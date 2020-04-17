@@ -36,6 +36,19 @@ def test_payments_index(client):
 
 
 @pytest.mark.django_db
+def test_payments_url_fixes(client):
+    """These tests just make sure that the use of trailing slashes are correct."""
+    url = reverse("payments_index")
+    # if you remove the trailing / it should redirect back to that
+    assert url.endswith("/")
+    response = client.get(url[:-1], follow=False)
+    assert response.status_code == 301
+    assert response["location"] == url
+    response = client.get(url + "xxxx", follow=False)
+    assert response.status_code == 404
+
+
+@pytest.mark.django_db
 @override_flag("subscription", True)
 @mock.patch("kuma.payments.views.get_stripe_customer_data", return_value=True)
 def test_recurring_payment_management_no_customer_id(get, user_client):
