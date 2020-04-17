@@ -42,9 +42,15 @@ class StripeCustomer:
 
 
 @dataclass
+class StripeSubscriptionPlan:
+    amount: int
+
+
+@dataclass
 class StripeSubscription:
     id: str
     current_period_end: int
+    plan: StripeSubscriptionPlan
 
 
 def mock_get_stripe_customer(user):
@@ -57,7 +63,11 @@ def mock_get_stripe_customer(user):
 
 
 def mock_get_stripe_subscription_info(customer, id="sub_123456789"):
-    return StripeSubscription(id=id, current_period_end=time.time() + 10_000)
+    return StripeSubscription(
+        id=id,
+        current_period_end=time.time() + 10_000,
+        plan=StripeSubscriptionPlan(amount=int(settings.CONTRIBUTION_AMOUNT_USD * 100)),
+    )
 
 
 @pytest.fixture
@@ -70,7 +80,7 @@ def test_user(db, django_user_model):
 
 
 @patch("kuma.users.views.create_stripe_customer_and_subscription_for_user")
-@patch("kuma.users.views.get_stripe_customer")
+@patch("kuma.users.stripe_utils.get_stripe_customer")
 @override_flag("subscription", True)
 def test_create_stripe_subscription(mock1, mock2, test_user):
     customer = mock_get_stripe_customer(test_user)
@@ -101,8 +111,8 @@ def test_next_subscriber_number_shown_for_non_subscribers(test_user):
     assert "You will be MDN member number 1" in page("#subscription p").text()
 
 
-@patch("kuma.users.views.get_stripe_subscription_info")
-@patch("kuma.users.views.get_stripe_customer")
+@patch("kuma.users.stripe_utils.get_stripe_subscription_info")
+@patch("kuma.users.stripe_utils.get_stripe_customer")
 @override_flag("subscription", True)
 @pytest.mark.django_db
 def test_user_edit_with_subscription_info(mock1, mock2, test_user):
@@ -151,7 +161,7 @@ def test_create_stripe_subscription_fail(mock1, mock2, test_user):
 
 
 @patch("kuma.users.views._download_from_url")
-@patch("kuma.users.views._retrieve_and_synchronize_subscription_info")
+@patch("kuma.users.views.retrieve_and_synchronize_subscription_info")
 @patch("stripe.Event.construct_from")
 @pytest.mark.django_db
 def test_stripe_payment_succeeded_sends_invoice_mail(

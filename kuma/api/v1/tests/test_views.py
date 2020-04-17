@@ -521,23 +521,66 @@ def test_send_subscriptions_feedback_failure(client, settings):
 @patch("kuma.api.v1.views.create_stripe_customer_and_subscription_for_user")
 def test_create_subscription_success(mock, user_client):
     response = user_client.post(
-        reverse("api.v1.create_subscription"),
+        reverse("api.v1.subscriptions"),
         content_type="application/json",
         data={"stripe_token": "tok_visa"},
     )
-
     assert response.status_code == 201
 
 
 @pytest.mark.django_db
 @override_flag("subscription", True)
-def test_create_subscription_failure_without_login(client):
-    response = client.post(reverse("api.v1.create_subscription"))
+def test_subscriptions_without_login(client):
+    response = client.post(reverse("api.v1.subscriptions"))
+    assert response.status_code == 403
+    response = client.get(reverse("api.v1.subscriptions"))
     assert response.status_code == 403
 
 
 @pytest.mark.django_db
 @override_flag("subscription", False)
-def test_create_subscription_failure_with_disabled_waffle(user_client):
-    response = user_client.post(reverse("api.v1.create_subscription"))
+def test_subscription_with_disabled_waffle(user_client):
+    response = user_client.post(reverse("api.v1.subscriptions"))
     assert response.status_code == 403
+    response = user_client.get(reverse("api.v1.subscriptions"))
+    assert response.status_code == 403
+
+
+@pytest.mark.django_db
+@override_flag("subscription", True)
+def test_list_subscriptions_no_stripe_customer_id(user_client):
+    response = user_client.get(reverse("api.v1.subscriptions"))
+    assert response.status_code == 200
+    assert response.json()["subscriptions"] == []
+
+
+@patch("kuma.api.v1.views.retrieve_and_synchronize_subscription_info")
+@pytest.mark.django_db
+@override_flag("subscription", True)
+def test_list_subscriptions_no_subscription(retrieve_subscription, stripe_user_client):
+    retrieve_subscription.return_value = None
+    response = stripe_user_client.get(reverse("api.v1.subscriptions"))
+    assert response.status_code == 200
+    assert response.json()["subscriptions"] == []
+
+
+@patch("kuma.api.v1.views.retrieve_and_synchronize_subscription_info")
+@pytest.mark.django_db
+@override_flag("subscription", True)
+def test_list_subscriptions_with_active_subscription(
+    retrieve_subscription, stripe_user_client
+):
+    # The data doesn't actually matter much because we're wholesale testing the
+    # utility function retrieve_and_synchronize_subscription_info.
+    # There exists other tests that breaks that one day.
+    # The kuma.api.v1.views.subscriptions, it just passes all it without
+    # needing to break it down. So this keeps the view-tests simple.
+    # Actually all the kuma.api.v1.views.subscriptions view function does
+    # is return that as a list under a key 'subscriptions'.
+    mock_data = {
+        "brand": "MagicCard",
+    }
+    retrieve_subscription.return_value = mock_data
+    response = stripe_user_client.get(reverse("api.v1.subscriptions"))
+    assert response.status_code == 200
+    assert response.json()["subscriptions"] == [mock_data]
