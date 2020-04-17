@@ -9,14 +9,14 @@ export const CATEGORY_MONTHLY_PAYMENTS = 'monthly payments';
 const GA_SESSION_STORAGE_KEY = 'ga';
 
 function getPostponedEvents() {
+    let value;
     try {
-        return JSON.parse(
-            sessionStorage.getItem(GA_SESSION_STORAGE_KEY) || JSON.stringify([])
-        );
+        value = sessionStorage.getItem(GA_SESSION_STORAGE_KEY);
     } catch (e) {
         // No sessionStorage support
         return [];
     }
+    return JSON.parse(value || JSON.stringify([]));
 }
 
 /**
@@ -26,12 +26,10 @@ function getPostponedEvents() {
  * requests).
  */
 export function gaSendOnNextPage(newEvents: any[]) {
+    const events = getPostponedEvents();
+    const value = JSON.stringify(events.concat(newEvents));
     try {
-        const events = getPostponedEvents();
-        sessionStorage.setItem(
-            GA_SESSION_STORAGE_KEY,
-            JSON.stringify(events.concat(newEvents))
-        );
+        sessionStorage.setItem(GA_SESSION_STORAGE_KEY, value);
     } catch (e) {
         // No sessionStorage support
     }
