@@ -1,14 +1,14 @@
-from django.urls import re_path
+from django.urls import path
 
 from . import views
 
 lang_urlpatterns = [
-    re_path(r"^terms/$", views.payment_terms, name="payment_terms"),
-    re_path(r"^thank-you/$", views.thank_you, name="thank_you"),
-    re_path(
-        r"^recurring/management/$",
+    path("terms/", views.payment_terms, name="payment_terms"),
+    path("thank-you/", views.thank_you, name="thank_you"),
+    path(
+        "recurring/management/",
         views.recurring_payment_management,
         name="recurring_payment_management",
     ),
-    re_path(r"", views.index, name="payments_index"),
+    path("", views.index, name="payments_index"),
 ]
