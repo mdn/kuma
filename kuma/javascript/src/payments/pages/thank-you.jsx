@@ -2,34 +2,31 @@
 import * as React from 'react';
 import { useContext } from 'react';
 
-import { getLocale, gettext, Interpolated } from '../l10n.js';
-import A11yNav from '../a11y/a11y-nav.jsx';
-import Header from '../header/header.jsx';
-import ThankYouSubheader from './subheaders/thank-you.jsx';
-import Incentives from './incentives.jsx';
-import Footer from '../footer.jsx';
-import Route from '../route.js';
-import FeedbackForm from './feedback-form.jsx';
-import UserProvider from '../user-provider.jsx';
+import { gettext, Interpolated } from '../../l10n.js';
+import ThankYouSubheader from '../components/subheaders/thank-you.jsx';
+import Incentives from '../components/incentives.jsx';
+import FeedbackForm from '../components/feedback-form.jsx';
+import UserProvider from '../../user-provider.jsx';
 
-type PaymentsThankYouRouteParams = {
+type Props = {
     locale: string,
 };
 
-export default function ThankYouPage() {
-    const locale = getLocale();
+const ThankYouPage = ({ locale }: Props) => {
     const userData = useContext(UserProvider.context);
     const isSubscriber = userData && userData.isSubscriber;
     const subscriberNumber = userData && userData.subscriberNumber;
 
     return (
         <>
-            <A11yNav />
-            <Header />
             <ThankYouSubheader num={isSubscriber ? subscriberNumber : null} />
             <Incentives isSubscriber={isSubscriber} />
-            <main className="contributions-page thank-you" role="main">
-                <section className="section">
+            <main
+                className="contributions-page thank-you"
+                role="main"
+                data-testid="thank-you-page"
+            >
+                <section>
                     <header>
                         <h2>{gettext('Useful things')}</h2>
                     </header>
@@ -94,46 +91,8 @@ export default function ThankYouPage() {
                     <FeedbackForm />
                 </section>
             </main>
-            <Footer />
         </>
     );
-}
+};
 
-// In order to use new URL() with relative URLs, we need an absolute base
-// URL. If we're running in the browser we can use our current page URL.
-// But if we're doing SSR, we just have to make something up.
-const BASEURL =
-    typeof window !== 'undefined' && window.location
-        ? window.location.origin
-        : 'http://ssr.hack';
-
-export class PaymentsThankYouRoute extends Route<
-    PaymentsThankYouRouteParams,
-    null
-> {
-    locale: string;
-
-    constructor(locale: string) {
-        super();
-        this.locale = locale;
-    }
-
-    getComponent() {
-        return ThankYouPage;
-    }
-
-    match(url: string): ?PaymentsThankYouRouteParams {
-        const currentPath = new URL(url, BASEURL).pathname;
-        const thankYouPath = `/${this.locale}/payments/thank-you`;
-        if (currentPath.startsWith(thankYouPath)) {
-            return {
-                locale: this.locale,
-            };
-        }
-        return null;
-    }
-
-    fetch() {
-        throw new Error('Payments should never need to post-fetch more data');
-    }
-}
+export default ThankYouPage;

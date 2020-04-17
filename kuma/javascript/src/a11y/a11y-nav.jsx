@@ -27,7 +27,7 @@ export default function A11yNav() {
     }
 
     return (
-        <ul id="nav-access">
+        <ul id="nav-access" data-testid="a11y-nav">
             <li>
                 <a
                     id="skip-main"

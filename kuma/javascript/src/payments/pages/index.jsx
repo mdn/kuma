@@ -2,32 +2,22 @@
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
 
-import { gettext, Interpolated } from '../l10n.js';
-import A11yNav from '../a11y/a11y-nav.jsx';
-import Header from '../header/header.jsx';
-import Footer from '../footer.jsx';
-import Route, { type RouteComponentProps } from '../route.js';
-import ThankYouSubheader from './subheaders/thank-you.jsx';
-import SignupSubheader from './subheaders/signup.jsx';
-import ListItem from './list-item.jsx';
-import Incentives from './incentives.jsx';
-import GAProvider, { CATEGORY_MONTHLY_PAYMENTS } from '../ga-provider.jsx';
-import UserProvider from '../user-provider.jsx';
+import { gettext, Interpolated } from '../../l10n.js';
+import { type RouteComponentProps } from '../../route.js';
+import ThankYouSubheader from '../components/subheaders/thank-you.jsx';
+import SignupSubheader from '../components/subheaders/signup.jsx';
+import ListItem from '../components/list-item.jsx';
+import Incentives from '../components/incentives.jsx';
+import GAProvider, { CATEGORY_MONTHLY_PAYMENTS } from '../../ga-provider.jsx';
+import UserProvider from '../../user-provider.jsx';
 
-type PaymentsIndexRouteParams = {
-    locale: string,
-};
-
-export default function PaymentsLandingPage({
-    data,
-    locale,
-}: RouteComponentProps) {
+export default function LandingPage({ data, locale }: RouteComponentProps) {
     const userData = useContext(UserProvider.context);
     const ga = useContext(GAProvider.context);
     const urls = {
         annualReport:
             'https://www.mozilla.org/en-US/foundation/annualreport/2018/',
-        email: `mailto:${data.email}?Subject=Manage%20monthly%20subscription`,
+        email: `mailto:${data.contributionSupportEmail}?Subject=Manage%20monthly%20subscription`,
         moco: 'https://www.mozilla.org/foundation/moco/',
         mozillaFoundation: 'https://www.mozilla.org/foundation/',
         managePayments: `/${locale}/payments/recurring/management/`,
@@ -54,9 +44,6 @@ export default function PaymentsLandingPage({
 
     return (
         <>
-            <A11yNav />
-            <Header />
-
             {isSubscriber ? (
                 <ThankYouSubheader num={subscriberNumber} />
             ) : (
@@ -70,10 +57,11 @@ export default function PaymentsLandingPage({
 
             <main
                 id="contributions-page"
-                className="contributions-page"
+                className="contributions-page faq"
                 role="main"
+                data-testid="landing-page"
             >
-                <section className="section">
+                <section>
                     <header>
                         <h2>{gettext('FAQs')}</h2>
                     </header>
@@ -258,7 +246,7 @@ export default function PaymentsLandingPage({
                         </ListItem>
                     </ol>
                 </section>
-                <section className="section">
+                <section>
                     <header>
                         <h2>{gettext('Monthly payments')}</h2>
                     </header>
@@ -285,7 +273,7 @@ export default function PaymentsLandingPage({
                                             rel="noopener noreferrer"
                                             href={urls.email}
                                         >
-                                            {data.email}
+                                            {data.contributionSupportEmail}
                                         </a>
                                     }
                                 />
@@ -350,44 +338,6 @@ export default function PaymentsLandingPage({
                     </ol>
                 </section>
             </main>
-            <Footer />
         </>
     );
-}
-
-// In order to use new URL() with relative URLs, we need an absolute base
-// URL. If we're running in the browser we can use our current page URL.
-// But if we're doing SSR, we just have to make something up.
-const BASEURL =
-    typeof window !== 'undefined' && window.location
-        ? window.location.origin
-        : 'http://ssr.hack';
-
-export class PaymentsIndexRoute extends Route<PaymentsIndexRouteParams, null> {
-    locale: string;
-
-    constructor(locale: string) {
-        super();
-        this.locale = locale;
-    }
-
-    getComponent() {
-        return PaymentsLandingPage;
-    }
-
-    match(url: string): ?PaymentsIndexRouteParams {
-        const currentPath = new URL(url, BASEURL).pathname;
-        const paymentsPath = `/${this.locale}/payments`;
-
-        if (currentPath.startsWith(paymentsPath)) {
-            return {
-                locale: this.locale,
-            };
-        }
-        return null;
-    }
-
-    fetch() {
-        throw new Error('Payments should never need to post-fetch more data');
-    }
 }

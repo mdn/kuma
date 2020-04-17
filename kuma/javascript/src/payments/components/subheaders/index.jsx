@@ -7,7 +7,6 @@ type Props = {
     description?: string,
     children?: React.Node,
     columnWidth?: string,
-    classNames?: string,
 };
 
 const SubHeader = ({
@@ -17,7 +16,7 @@ const SubHeader = ({
     columnWidth = 'all', // number of columns, based on grid system defined in _columns.scss
     children,
 }: Props): React.Node => (
-    <div className="subscriptions subheader-container">
+    <div data-testid="subheader" className="subscriptions subheader-container">
         <div className="column-container">
             <div className={`column-${columnWidth}`}>
                 <h1 className="highlight highlight-spanned">

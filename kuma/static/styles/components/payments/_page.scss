@@ -1,7 +1,3 @@
-// planning on removing .contribution-page-header in
-// favor of subheader-container once terms is converted
-// to react
-.contribution-page-header,
 .subheader-container {
     min-width: 320px;
     overflow: hidden;
@@ -68,16 +64,20 @@
     }
 }
 
-.payment-terms-container {
-    margin: 0 auto;
-    padding: 16px 86px;
-    max-width: 1320px;
-}
-
 .contributions-page {
-    &:not(.thank-you) {
+    &.faq {
         @media #{$mq-tablet-and-up} {
             background: url('/static/img/hero-dino-blank.png') no-repeat 10% 1%;
+        }
+    }
+
+    // faq and thank you pages have two column layouts
+    &.faq,
+    &.thank-you {
+        section {
+            @media #{$mq-tablet-and-up} {
+                display: flex;
+            }
         }
     }
 
@@ -88,7 +88,7 @@
         text-decoration: none;
     }
 
-    .section {
+    section {
         display: block;
         position: relative;
         margin: 0 auto;
@@ -97,10 +97,6 @@
 
         .sub-section {
             margin-bottom: 2em;
-        }
-
-        @media #{$mq-tablet-and-up} {
-            display: flex;
         }
 
         > ul,

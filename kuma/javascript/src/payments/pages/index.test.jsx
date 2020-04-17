@@ -1,11 +1,11 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import PaymentsLandingPage from './index.jsx';
-import UserProvider from '../user-provider.jsx';
-import { title as signupTitle } from './subheaders/signup.jsx';
-import { title as thankYouTitle } from './subheaders/thank-you.jsx';
-import { nonSubscriberInvitationCopy } from './incentives.jsx';
-import { subscriberInvitationCopy } from './incentives.jsx';
+import UserProvider from '../../user-provider.jsx';
+import { title as signupTitle } from '../components/subheaders/signup.jsx';
+import { title as thankYouTitle } from '../components/subheaders/thank-you.jsx';
+import { nonSubscriberInvitationCopy } from '../components/incentives.jsx';
+import { subscriberInvitationCopy } from '../components/incentives.jsx';
 
 const setup = (mockData = {}) => {
     const mockProps = {
@@ -26,10 +26,6 @@ const setup = (mockData = {}) => {
 };
 
 describe('Payments Landing Page', () => {
-    afterEach(() => {
-        cleanup();
-    });
-
     // Test the basics since more detailed tests are in each subheader
     test('it renders Signup subheader', () => {
         const { queryByText } = setup();

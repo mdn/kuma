@@ -2,7 +2,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import ThankYouSubheader, { title, subtitle } from './thank-you.jsx';
-import { interpolate } from '../../l10n.js';
+import { interpolate } from '../../../l10n.js';
 
 describe('Thank You Subheader', () => {
     test('it renders with subscriber number', () => {

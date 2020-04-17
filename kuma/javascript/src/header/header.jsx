@@ -18,7 +18,7 @@ export default function Header(props: Props): React.Node {
     const locale = getLocale();
 
     return (
-        <header className="page-header">
+        <header className="page-header" data-testid="header">
             <a
                 href={`/${locale}/`}
                 className="logo"

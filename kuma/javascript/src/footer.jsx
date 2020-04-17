@@ -10,7 +10,7 @@ export default function Footer() {
     const locale = getLocale();
 
     return (
-        <footer id="nav-footer" className="nav-footer">
+        <footer id="nav-footer" className="nav-footer" data-testid="footer">
             <div className="center">
                 <a href={`/${locale}/`} className="nav-footer-logo">
                     {gettext('MDN Web Docs')}

@@ -2,7 +2,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import SignupSubheader, { title, subtitle, description } from './signup.jsx';
-import { interpolate } from '../../l10n.js';
+import { interpolate } from '../../../l10n.js';
 
 describe('Signup Subheader', () => {
     it('renders with correct content', () => {
