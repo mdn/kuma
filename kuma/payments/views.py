@@ -1,4 +1,5 @@
 import logging
+import datetime
 
 from django.conf import settings
 from django.shortcuts import render
@@ -36,7 +37,6 @@ def payment_terms(request):
     return render(request, "payments/terms.html")
 
 
-@ensure_wiki_domain
 @waffle_flag("subscription")
 @login_required
 @never_cache
@@ -77,4 +77,7 @@ def recurring_payment_management(request):
             )
         context.update(data)
 
+        # placeholder data
+        context["next_payment_at"] = datetime.datetime.now().isoformat()
+        context["expires_at"] = f"11/20"
     return render(request, "payments/management.html", context)

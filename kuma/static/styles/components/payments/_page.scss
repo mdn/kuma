@@ -214,4 +214,27 @@
             border-bottom: 2px solid $text-color;
         }
     }
+
+    .subscriptions {
+        border: 2px solid #000;
+        padding: 20px;
+        width: 100%;
+        .cancel {
+            background-color: #e74b4b;
+            color: #fff;
+        }
+    }
+
+    .alert {
+        &.danger {
+            background: $red-light;
+            border: 1px solid $red;
+        }
+
+        &.success {
+            background: $green-light;
+            border: 1px solid $green;
+            color: #008200;
+        }
+    }
 }
