@@ -970,10 +970,6 @@ PIPELINE_JS = {
         "source_filenames": ("js/search.js",),
         "output_filename": "build/js/search.js",
     },
-    "payments": {
-        "source_filenames": ("js/components/payments/payments-manage.js",),
-        "output_filename": "build/js/payments.js",
-    },
     "stripe-subscription": {
         "source_filenames": ("js/stripe-subscription.js",),
         "output_filename": "build/js/stripe-subscription.js",

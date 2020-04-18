@@ -1,3 +1,8 @@
+@import '../../includes/vars';
+@import '../../minimalist/vars/_vars-color-palette.scss';
+
+@import '../../minimalist/atoms/buttons.scss';
+
 .subheader-container {
     min-width: 320px;
     overflow: hidden;
@@ -49,19 +54,6 @@
             margin-bottom: 0;
         }
     }
-
-    /* Mozilla dino background image. */
-    .backdrop-image {
-        display: none;
-
-        @media #{$mq-small-desktop-and-up} {
-            bottom: -150px;
-            left: auto;
-            position: absolute;
-            right: 0;
-            z-index: -1;
-        }
-    }
 }
 
 .contributions-page {
@@ -88,6 +80,29 @@
         text-decoration: none;
     }
 
+
+    button {
+        color: $link-color;
+        border: 2px solid $link-color;
+        border-radius: $payment-faq-border-radius;
+        box-sizing: border-box;
+        height: 40px;
+        &.confirm {
+            background-color: $brand-red;
+            border-color: $brand-red;
+            color: #fff;
+            &.inverse {
+                background-color: #fff;
+                color: $brand-red;
+            }
+        }
+
+        &.cancel {
+            border-color: $border-color;
+            color: $text-color;
+        }
+    }
+
     section {
         display: block;
         position: relative;
@@ -97,6 +112,10 @@
 
         .sub-section {
             margin-bottom: 2em;
+        }
+
+        h2:first-child {
+            margin-top: 0;
         }
 
         > ul,
@@ -187,14 +206,6 @@
                 border-width: 1px;
                 border-radius: $payment-faq-border-radius;
             }
-
-            button {
-                color: $link-color;
-                border: 2px solid $link-color;
-                border-radius: $payment-faq-border-radius;
-                height: 40px;
-            }
-
             .form-footer {
                 margin-top: 20px;
                 display: flex;
@@ -215,25 +226,67 @@
         }
     }
 
-    .subscriptions {
-        border: 2px solid #000;
-        padding: 20px;
-        width: 100%;
-        .cancel {
-            background-color: #e74b4b;
-            color: #fff;
+
+    &.manage-subscriptions {
+        .active-subscriptions {
+            table {
+                border: 2px solid $text-color;
+                font-weight: bold;
+                margin-bottom: 10px;
+                padding: 20px;
+                width: 100%;
+
+                th {
+                    padding-left: 30px;
+
+                    &.amount {
+                        background: url('/static/img/subscriptions/money.svg') 0 4px no-repeat;
+                        width: 10%;
+                    }
+
+                    &.credit-card {
+                        background: url('/static/img/subscriptions/credit-card.svg')
+                            0 4px no-repeat;
+                        width: 20%;
+                    }
+                }
+            }
+            button {
+                float: right;
+                margin-bottom: 10px;
+            }
+        }
+
+        form {
+            background: $red-light;
+            border: 1px solid $brand-red;
+            clear: both;
+            padding: 20px;
+            overflow: hidden;
+            strong {
+                display: block;
+                margin-bottom: 10px;
+            }
+            .form-footer {
+                display: flex;
+                justify-content: flex-end;
+                button:last-child {
+                    margin-left: 10px;
+                }
+            }
         }
     }
 
+
     .alert {
-        &.danger {
+        &.warning {
             background: $red-light;
-            border: 1px solid $red;
+            border: 1px solid $brand-red;
         }
 
         &.success {
             background: $green-light;
-            border: 1px solid $green;
+            border: 1px solid $brand-green;
             color: #008200;
         }
     }

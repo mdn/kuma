@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import { gettext, Interpolated } from '../../l10n.js';
 import Subheader from '../components/subheaders/index.jsx';
+import CancelSubscriptionForm from '../components/cancel-subscription-form.jsx';
 // import UserProvider from '../../user-provider.jsx';
 
 type Props = {
@@ -19,23 +20,32 @@ type Props = {
 
 const ManagementPage = ({ data, locale }: Props) => {
     const { activeSubscriptions, amount, last4, nextPayment, expires } = data;
+    const [showForm, setShowForm]: [
+        boolean,
+        (((boolean) => boolean) | boolean) => void
+    ] = React.useState<boolean>(false);
     // console.log('data', data);
 
-    const handleClick = () => {
-        // console.log('ev', event);
+    const handleClick = (event) => {
+        event.preventDefault();
+        setShowForm(true);
     };
 
     const renderContent = () => {
         if (activeSubscriptions) {
             return (
-                <>
+                <div className="active-subscriptions">
                     <p>Next payment occurs on {nextPayment}</p>
-                    <table className="subscriptions">
+                    <table>
                         <thead>
                             <tr>
-                                <th>{gettext('Amount')}</th>
-                                <th>{gettext('Card Number')}</th>
-                                <th>{gettext('Expiry')}</th>
+                                <th className="amount">{gettext('Amount')}</th>
+                                <th className="credit-card">
+                                    {gettext('Card Number')}
+                                </th>
+                                <th className="credit-card">
+                                    {gettext('Expiry')}
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,17 +58,17 @@ const ManagementPage = ({ data, locale }: Props) => {
                         </tbody>
                     </table>
                     <button
-                        className="cancel"
+                        className="confirm"
                         onClick={handleClick}
                         type="button"
                     >
                         {gettext('Cancel subscription')}
                     </button>
-                </>
+                </div>
             );
         }
         return (
-            <p className="subscriptions">
+            <p className="active-subscriptions">
                 <Interpolated
                     id={gettext(
                         'You have no active subscriptions. Why not <signupLink />?'
@@ -73,52 +83,11 @@ const ManagementPage = ({ data, locale }: Props) => {
         );
     };
 
-    const renderForm = () => {
-        return (
-            <div className="alert danger">
-                <h3>{gettext('Are you sure you want to cancel?')}</h3>
-                <p>
-                    {gettext(
-                        'You will have to set up a new subscription if you wish to resume making payments to MDN Web Docs.'
-                    )}
-                </p>
-                <div className="button-group">
-                    <button type="button">
-                        {gettext('Keep my membership')}
-                    </button>
-                    <button type="submit">
-                        {gettext('Yes, cancel subscription')}
-                    </button>
-                </div>
-            </div>
-        );
-    };
-
-    const renderSuccess = () => {
-        return (
-            <div className="alert success">
-                {gettext(
-                    'Your monthly subscription has been successfully canceled.'
-                )}
-            </div>
-        );
-    };
-
-    const renderError = () => {
-        return (
-            <div className="alert danger">
-                {gettext(
-                    'There was a problem canceling your subscription. Please contact <email>'
-                )}
-            </div>
-        );
-    };
-
     return (
         <>
             <Subheader title="Manage monthly subscription" />
             <main
-                className="contributions-page"
+                className="contributions-page manage-subscriptions"
                 role="main"
                 data-testid="management-page"
             >
@@ -127,9 +96,11 @@ const ManagementPage = ({ data, locale }: Props) => {
                         <div className="column-7">
                             <h2>Subscriptions</h2>
                             {renderContent()}
-                            {renderForm()}
-                            {renderSuccess()}
-                            {renderError()}
+                            {showForm && (
+                                <CancelSubscriptionForm
+                                    setShowForm={setShowForm}
+                                />
+                            )}
                         </div>
                     </div>
                 </section>
