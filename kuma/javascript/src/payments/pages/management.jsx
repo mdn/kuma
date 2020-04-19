@@ -33,53 +33,70 @@ const ManagementPage = ({ data, locale }: Props) => {
 
     const renderContent = () => {
         if (activeSubscriptions) {
+            const date = new Date(nextPayment);
+            const dateOptions = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            };
+            const formattedDate = new Intl.DateTimeFormat(
+                locale,
+                dateOptions
+            ).format(date);
+
             return (
-                <div className="active-subscriptions">
-                    <p>Next payment occurs on {nextPayment}</p>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th className="amount">{gettext('Amount')}</th>
-                                <th className="credit-card">
-                                    {gettext('Card Number')}
-                                </th>
-                                <th className="credit-card">
-                                    {gettext('Expiry')}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{`$${amount}`}</td>
-                                <td>{`**** **** **** ${last4}`}</td>
-                                <td>{expires}</td>
-                            </tr>
-                            <tr></tr>
-                        </tbody>
-                    </table>
+                <>
+                    <p>Next payment occurs on {formattedDate}.</p>
+                    <div className="active-subscriptions">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th className="amount">
+                                        {gettext('Amount')}
+                                    </th>
+                                    <th className="credit-card">
+                                        {gettext('Card Number')}
+                                    </th>
+                                    <th className="credit-card">
+                                        {gettext('Expiry')}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{`$${amount}`}</td>
+                                    <td>{`**** **** **** ${last4}`}</td>
+                                    <td>{expires}</td>
+                                </tr>
+                                <tr></tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <button
-                        className="confirm"
+                        className="confirm toggle"
                         onClick={handleClick}
                         type="button"
                     >
                         {gettext('Cancel subscription')}
                     </button>
-                </div>
+                </>
             );
         }
         return (
-            <p className="active-subscriptions">
-                <Interpolated
-                    id={gettext(
-                        'You have no active subscriptions. Why not <signupLink />?'
-                    )}
-                    signupLink={
-                        <a href={`${locale}/payments/edit`}>
-                            {gettext('set one up')}
-                        </a>
-                    }
-                />
-            </p>
+            <div className="active-subscriptions">
+                <p>
+                    <Interpolated
+                        id={gettext(
+                            'You have no active subscriptions. Why not <signupLink />?'
+                        )}
+                        signupLink={
+                            <a href={`/${locale}/payments`}>
+                                {gettext('set one up')}
+                            </a>
+                        }
+                    />
+                </p>
+            </div>
         );
     };
 
@@ -92,16 +109,12 @@ const ManagementPage = ({ data, locale }: Props) => {
                 data-testid="management-page"
             >
                 <section>
-                    <div className="column-container">
-                        <div className="column-7">
-                            <h2>Subscriptions</h2>
-                            {renderContent()}
-                            {showForm && (
-                                <CancelSubscriptionForm
-                                    setShowForm={setShowForm}
-                                />
-                            )}
-                        </div>
+                    <div className="column-8">
+                        <h2>Subscriptions</h2>
+                        {renderContent()}
+                        {showForm && (
+                            <CancelSubscriptionForm setShowForm={setShowForm} />
+                        )}
                     </div>
                 </section>
             </main>

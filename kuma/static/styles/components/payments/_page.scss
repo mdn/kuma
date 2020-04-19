@@ -91,6 +91,10 @@
             background-color: $brand-red;
             border-color: $brand-red;
             color: #fff;
+            &.toggle {
+                float: right;
+                margin-bottom: 10px;
+            }
             &.inverse {
                 background-color: #fff;
                 color: $brand-red;
@@ -229,31 +233,28 @@
 
     &.manage-subscriptions {
         .active-subscriptions {
+            border: 2px solid $text-color;
+            padding: 20px;
+            margin-bottom: 10px;
+            p {
+                margin: 0;
+            }
             table {
-                border: 2px solid $text-color;
                 font-weight: bold;
-                margin-bottom: 10px;
-                padding: 20px;
-                width: 100%;
+                margin: 0;
 
                 th {
                     padding-left: 30px;
-
+                    padding-right: 40px;
                     &.amount {
                         background: url('/static/img/subscriptions/money.svg') 0 4px no-repeat;
-                        width: 10%;
                     }
 
                     &.credit-card {
                         background: url('/static/img/subscriptions/credit-card.svg')
                             0 4px no-repeat;
-                        width: 20%;
                     }
                 }
-            }
-            button {
-                float: right;
-                margin-bottom: 10px;
             }
         }
 
@@ -279,15 +280,17 @@
 
 
     .alert {
-        &.warning {
+        clear: both;
+        padding: 20px;
+        &.error {
             background: $red-light;
             border: 1px solid $brand-red;
         }
 
         &.success {
             background: $green-light;
-            border: 1px solid $brand-green;
-            color: #008200;
+            border: 1px solid  $brand-green;
+            color: $brand-green;
         }
     }
 }
