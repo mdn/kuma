@@ -7507,7 +7507,7 @@ react-is@^16.12.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-svg-core@^3.0.1:
+react-svg-core@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/react-svg-core/-/react-svg-core-3.0.3.tgz#5d856efeaa4d089b0afeebe885b20b8c9500d162"
   integrity sha512-Ws3eM3xCAwcaYeqm4Ajcz3zxBYNI6BeTWWhFR0cpOT+pWuVtozgHYK9xUM0S/ilapZgYMQDe49XgOxpvooFq4w==
@@ -7520,13 +7520,13 @@ react-svg-core@^3.0.1:
     lodash.isplainobject "^4.0.6"
     svgo "^1.2.2"
 
-react-svg-loader@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/react-svg-loader/-/react-svg-loader-3.0.1.tgz#65b0359ad6f5af578497afaaeac686e7dc7c0f9c"
-  integrity sha512-43VG2S+aKwu7MIagxhzHyN9nPTJBatHL7RfIxyqQ2/voKXi0xkIOxvyfIt04G2HcVlDdxeq6CxyR1sZx+iL3Cw==
+react-svg-loader@3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/react-svg-loader/-/react-svg-loader-3.0.3.tgz#8baa2d5daa32523dfd0745425ac65e0a90edae15"
+  integrity sha512-V1KnIUtvWVvc4xCig34n+f+/74ylMMugB2FbuAF/yq+QRi+WLi2hUYp9Ze3VylhA1D7ZgRygBh3Ojj8S3TPhJA==
   dependencies:
     loader-utils "^1.2.3"
-    react-svg-core "^3.0.1"
+    react-svg-core "^3.0.3"
 
 react-test-renderer@^16.8.4:
   version "16.13.1"
