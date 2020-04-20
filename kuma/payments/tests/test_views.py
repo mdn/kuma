@@ -112,7 +112,7 @@ def test_recurring_payment_management_customer_id(get, user_client, stripe_user)
 @pytest.mark.django_db
 @override_flag("subscription", True)
 @mock.patch(
-    "kuma.payments.views.cancel_stripe_customer_subscription",
+    "kuma.payments.views.cancel_stripe_customer_subscriptions",
     return_value=[MockSubscription().id],
 )
 @mock.patch(
@@ -140,7 +140,7 @@ def test_recurring_payment_management_cancel(_cancel, get, user_client, stripe_u
 @pytest.mark.django_db
 @override_flag("subscription", True)
 @mock.patch(
-    "kuma.payments.views.cancel_stripe_customer_subscription",
+    "kuma.payments.views.cancel_stripe_customer_subscriptions",
     side_effect=stripe.error.InvalidRequestError(
         "No such customer: fakeCustomerID123",
         param="id",
@@ -175,7 +175,7 @@ def test_recurring_payment_management_cancel_fails(
 @pytest.mark.django_db
 @override_flag("subscription", True)
 @mock.patch(
-    "kuma.payments.views.cancel_stripe_customer_subscription", return_value=True
+    "kuma.payments.views.cancel_stripe_customer_subscriptions", return_value=True
 )
 @mock.patch("kuma.payments.views.get_stripe_customer_data", return_value=True)
 def test_recurring_payment_management_not_logged_in(get, cancel_, client):

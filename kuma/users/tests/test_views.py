@@ -1658,29 +1658,19 @@ def test_delete_user_donate_attributions(
     assert "is_authenticated" not in response.json()
 
 
-@mock.patch("kuma.users.signal_handlers.cancel_stripe_customer_subscription")
+@mock.patch("kuma.users.signal_handlers.cancel_stripe_customer_subscriptions")
 def test_delete_user_donate_attributions_and_cancel_subscriptions(
-    mocked_cancel_stripe_customer_subscription,
-    db,
-    user_client,
-    wiki_user,
-    wiki_user_github_account,
-    root_doc,
+    mocked_cancel_stripe_customer_subscriptions, db, user_client, stripe_user, root_doc,
 ):
-    wiki_user.stripe_customer_id = "cus_12345"
-    wiki_user.save()
-    UserSubscription.set_active(wiki_user, "sub_1234")
+    UserSubscription.set_active(stripe_user, "sub_1234")
 
-    url = reverse("users.user_delete", kwargs={"username": wiki_user.username})
+    url = reverse("users.user_delete", kwargs={"username": stripe_user.username})
     response = user_client.post(
         url, {"attributions": "donate"}, HTTP_HOST=settings.WIKI_HOST
     )
     assert response.status_code == 302
-    assert not User.objects.filter(username=wiki_user.username).exists()
-
+    assert not User.objects.filter(username=stripe_user.username).exists()
     assert not UserSubscription.objects.filter(stripe_subscription_id="sub_1234")
-
-    mocked_cancel_stripe_customer_subscription.assert_called_with("cus_12345")
 
 
 def test_delete_user_keep_attributions(
@@ -1794,7 +1784,7 @@ def test_delete_user_keep_attributions(
     assert not Key.objects.all().exists()
 
 
-@mock.patch("kuma.users.views.cancel_stripe_customer_subscription")
+@mock.patch("kuma.users.stripe_utils.cancel_stripe_customer_subscription")
 def test_delete_user_keep_attributions_and_cancel_subscriptions(
     mocked_cancel_stripe_customer_subscription,
     db,
@@ -1804,9 +1794,7 @@ def test_delete_user_keep_attributions_and_cancel_subscriptions(
     root_doc,
 ):
     subscription_id = "sub_1234"
-    mocked_cancel_stripe_customer_subscription.return_value = [
-        StripeSubscription(id=subscription_id)
-    ]
+    mocked_cancel_stripe_customer_subscription.return_value = [subscription_id]
 
     # Also, pretend that the user has a rich profile
     User.objects.filter(id=wiki_user.id).update(stripe_customer_id="cus_12345")

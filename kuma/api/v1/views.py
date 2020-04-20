@@ -38,6 +38,7 @@ from kuma.search.filters import (
 from kuma.search.search import SearchView
 from kuma.users.models import User, UserSubscription
 from kuma.users.stripe_utils import (
+    cancel_stripe_customer_subscriptions,
     create_stripe_customer_and_subscription_for_user,
     retrieve_and_synchronize_subscription_info,
 )
@@ -368,7 +369,8 @@ def send_subscriptions_feedback(request):
     return HttpResponse(status=204)
 
 
-@api_view(["POST", "GET"])
+@api_view(["POST", "GET", "DELETE"])
+@never_cache
 def subscriptions(request):
     if not request.user.is_authenticated or not flag_is_active(request, "subscription"):
         return Response(None, status=status.HTTP_403_FORBIDDEN)
@@ -378,6 +380,12 @@ def subscriptions(request):
             request.user, request.user.email, request.data["stripe_token"]
         )
         return Response(None, status=status.HTTP_201_CREATED)
+    elif request.method == "DELETE":
+        cancelled = cancel_stripe_customer_subscriptions(request.user)
+        if cancelled:
+            return Response(None, status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response("nothing to cancel", status=status.HTTP_410_GONE)
 
     all_subscriptions = []
     subscription_info = retrieve_and_synchronize_subscription_info(request.user)
