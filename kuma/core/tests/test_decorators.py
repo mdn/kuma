@@ -10,6 +10,7 @@ from kuma.users.tests import UserTestCase
 from . import assert_no_cache_header, KumaTestCase
 from ..decorators import (
     block_user_agents,
+    header,
     login_required,
     logout_required,
     permission_required,
@@ -225,3 +226,10 @@ def test_shared_cache_control_decorator_keeps_no_cache(rf, settings):
     assert "public" not in response["Cache-Control"]
     assert "s-maxage" not in response["Cache-Control"]
     assert_no_cache_header(response)
+
+
+def test_header(rf, settings):
+    request = rf.get("/foo")
+    response = header("X-Robots-Tag", "noindex,nofollow")(simple_view)(request)
+    assert response.status_code == 200
+    assert response["X-Robots-Tag"] == "noindex,nofollow"

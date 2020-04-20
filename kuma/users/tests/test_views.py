@@ -863,6 +863,7 @@ def test_user_edit(wiki_user, client, user_client):
     url = edit_button.attr("href")
     response = user_client.get(url)
     assert response.status_code == 200
+    assert response["X-Robots-Tag"] == "noindex,nofollow"
     assert_no_cache_header(response)
     doc = pq(response.content)
 

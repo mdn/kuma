@@ -7,6 +7,7 @@ from django.views.decorators.http import require_GET
 from kuma.core.decorators import (
     block_user_agents,
     ensure_wiki_domain,
+    header,
     shared_cache_control,
 )
 
@@ -41,6 +42,7 @@ def ckeditor_config(request):
     )
 
 
+@header("X-Robots-Tag", "noindex,nofollow")
 @shared_cache_control
 @newrelic.agent.function_trace()
 @block_user_agents

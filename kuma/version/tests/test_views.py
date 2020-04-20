@@ -12,6 +12,7 @@ def test_revision_hash(client, db, method, settings):
     settings.REVISION_HASH = "the_revision_hash"
     response = getattr(client, method)(reverse("version.kuma"))
     assert response.status_code == 200
+    assert response["X-Robots-Tag"] == "noindex,nofollow"
     assert response["Content-Type"] == "text/plain; charset=utf-8"
     assert_no_cache_header(response)
     if method == "get":
@@ -36,6 +37,7 @@ def test_kumascript_revision_hash(client, db, method, mock_requests):
     )
     response = client.get(reverse("version.kumascript"))
     assert response.status_code == 200
+    assert response["X-Robots-Tag"] == "noindex,nofollow"
     assert response["Content-Type"] == "text/plain; charset=utf-8"
     assert_no_cache_header(response)
     if method == "get":

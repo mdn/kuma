@@ -75,6 +75,7 @@ def test_doc_api_404(client, root_doc):
     response = client.get(url)
     assert response.status_code == 404
     assert_no_cache_header(response)
+    assert response["X-Robots-Tag"] == "noindex,nofollow"
 
 
 def test_doc_api(client, trans_doc):
@@ -83,6 +84,7 @@ def test_doc_api(client, trans_doc):
     response = client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
+    assert response["X-Robots-Tag"] == "noindex,nofollow"
 
     data = response.json()
     assert data["documentData"]
@@ -128,6 +130,7 @@ def test_doc_api_for_redirect_to_doc(client, root_doc, redirect_doc):
     response = client.get(url, follow=True)
     assert response.status_code == 200
     assert_no_cache_header(response)
+    assert response["X-Robots-Tag"] == "noindex,nofollow"
 
     data = response.json()
     assert data["documentData"]
@@ -174,6 +177,7 @@ def test_doc_api_for_redirect_to_non_doc(
     response = client.get(url)
     assert response.status_code == 200
     assert_no_cache_header(response)
+    assert response["X-Robots-Tag"] == "noindex,nofollow"
 
     data = response.json()
     assert data["documentData"] is None
@@ -209,6 +213,7 @@ def test_whoami_anonymous(client, settings):
     response = client.get(url)
     assert response.status_code == 200
     assert response["content-type"] == "application/json"
+    assert response["X-Robots-Tag"] == "noindex,nofollow"
     assert response.json() == {
         "waffle": {
             "flags": {"flag_all": True},
@@ -256,6 +261,7 @@ def test_whoami(
     url = reverse("api.v1.whoami")
     response = user_client.get(url)
     assert response.status_code == 200
+    assert response["X-Robots-Tag"] == "noindex,nofollow"
     assert response["content-type"] == "application/json"
     expect = {
         "username": wiki_user.username,
@@ -289,17 +295,20 @@ def test_whoami_subscriber(
     url = reverse("api.v1.whoami")
     response = user_client.get(url)
     assert response.status_code == 200
+    assert response["X-Robots-Tag"] == "noindex,nofollow"
     assert "is_subscriber" not in response.json()
 
     UserSubscription.set_active(wiki_user, "abc123")
     response = user_client.get(url)
     assert response.status_code == 200
+    assert response["X-Robots-Tag"] == "noindex,nofollow"
     assert response.json()["is_subscriber"] is True
     assert response.json()["subscriber_number"] == 1
 
     UserSubscription.set_canceled(wiki_user, "abc123")
     response = user_client.get(url)
     assert response.status_code == 200
+    assert response["X-Robots-Tag"] == "noindex,nofollow"
     assert "is_subscriber" not in response.json()
     assert response.json()["subscriber_number"] == 1
 
@@ -311,16 +320,19 @@ def test_search_validation_problems(user_client):
     # locale invalid
     response = user_client.get(url, {"q": "x", "locale": "xxx"})
     assert response.status_code == 400
+    assert response["X-Robots-Tag"] == "noindex,nofollow"
     assert response.json()["error"] == "Not a valid locale code"
 
     # 'q' contains new line
     response = user_client.get(url, {"q": r"test\nsomething"})
     assert response.status_code == 400
+    assert response["X-Robots-Tag"] == "noindex,nofollow"
     assert response.json()["q"] == ["Search term must not contain new line"]
 
     # 'q' exceeds max allowed characters
     response = user_client.get(url, {"q": "x" * (settings.ES_Q_MAXLENGTH + 1)})
     assert response.status_code == 400
+    assert response["X-Robots-Tag"] == "noindex,nofollow"
     assert response.json()["q"] == [
         f"Ensure this field has no more than {settings.ES_Q_MAXLENGTH} characters."
     ]
@@ -333,6 +345,7 @@ class SearchViewTests(ElasticTestCase):
         url = reverse("api.v1.search", args=["en-US"])
         response = self.client.get(url, {"q": "article"})
         assert response.status_code == 200
+        assert response["X-Robots-Tag"] == "noindex,nofollow"
         assert response["content-type"] == "application/json"
         data = response.json()
         assert data["documents"]
@@ -342,6 +355,7 @@ class SearchViewTests(ElasticTestCase):
         # Now search in a non-en-US locale
         response = self.client.get(url, {"q": "title", "locale": "fr"})
         assert response.status_code == 200
+        assert response["X-Robots-Tag"] == "noindex,nofollow"
         assert response["content-type"] == "application/json"
         data = response.json()
         assert data["documents"]
@@ -374,6 +388,7 @@ def test_get_existing_user(
     url = reverse("api.v1.get_user", args=(username,))
     response = getattr(client, http_method)(url)
     assert response.status_code == 200
+    assert response["X-Robots-Tag"] == "noindex,nofollow"
     assert response["content-type"] == "application/json"
     assert_no_cache_header(response)
     if http_method == "get":
@@ -400,6 +415,7 @@ def test_get_nonexisting_user(db, client, http_method):
     response = getattr(client, http_method)(url)
     assert response.status_code == 404
     assert_no_cache_header(response)
+    assert response["X-Robots-Tag"] == "noindex,nofollow"
 
 
 @pytest.mark.django_db
@@ -476,9 +492,11 @@ def test_bc_signal_http_method(client):
     url = reverse("api.v1.bc_signal")
     response = client.get(url)
     assert response.status_code == 405
+    assert response["X-Robots-Tag"] == "noindex,nofollow"
 
     response = client.head(url)
     assert response.status_code == 405
+    assert response["X-Robots-Tag"] == "noindex,nofollow"
 
     response = client.put(url)
     assert response.status_code == 405

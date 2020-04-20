@@ -30,6 +30,7 @@ from kuma.authkeys.decorators import accepts_auth_key
 from kuma.core.decorators import (
     block_user_agents,
     ensure_wiki_domain,
+    header,
     login_required,
     permission_required,
     redirect_in_maintenance_mode,
@@ -377,6 +378,7 @@ def _apply_content_experiment(request, doc):
     return doc, None  # Not a content experiment
 
 
+@header("X-Robots-Tag", "noindex,nofollow")
 @shared_cache_control
 @block_user_agents
 @require_GET

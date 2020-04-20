@@ -22,6 +22,7 @@ from waffle.decorators import waffle_flag
 from waffle.models import Flag, Sample, Switch
 
 from kuma.api.v1.serializers import BCSignalSerializer
+from kuma.core.decorators import header
 from kuma.core.ga_tracking import (
     ACTION_SUBSCRIPTION_FEEDBACK,
     CATEGORY_MONTHLY_PAYMENTS,
@@ -43,6 +44,7 @@ from kuma.wiki.models import Document
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 
+@header("X-Robots-Tag", "noindex,nofollow")
 @never_cache
 @require_GET
 def doc(request, locale, slug):
@@ -218,6 +220,7 @@ def document_api_data(doc=None, redirect_url=None):
     }
 
 
+@header("X-Robots-Tag", "noindex,nofollow")
 @never_cache
 @require_GET
 def whoami(request):
@@ -301,9 +304,12 @@ class APISearchView(SearchView):
     )
 
 
-search = never_cache(APISearchView.as_view())
+search = header("X-Robots-Tag", "noindex,nofollow")(
+    never_cache(APISearchView.as_view())
+)
 
 
+@header("X-Robots-Tag", "noindex,nofollow")
 @ratelimit(key="user_or_ip", rate="10/d", block=True)
 @api_view(["POST"])
 def bc_signal(request):
@@ -317,6 +323,7 @@ def bc_signal(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@header("X-Robots-Tag", "noindex,nofollow")
 @never_cache
 @require_safe
 def get_user(request, username):
@@ -344,6 +351,7 @@ def get_user(request, username):
     return JsonResponse(data)
 
 
+@header("X-Robots-Tag", "noindex,nofollow")
 @waffle_flag("subscription")
 @never_cache
 @require_POST
@@ -365,6 +373,7 @@ def send_subscriptions_feedback(request):
     return HttpResponse(status=204)
 
 
+@header("X-Robots-Tag", "noindex,nofollow")
 @api_view(["POST"])
 def create_subscription(request):
     if not request.user.is_authenticated or not flag_is_active(request, "subscription"):

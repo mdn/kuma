@@ -76,6 +76,7 @@ def test_autosuggest(client, redirect_doc, doc_hierarchy, locale_case, term):
     assert_shared_cache_header(response)
     assert "Access-Control-Allow-Origin" in response
     assert response["Access-Control-Allow-Origin"] == "*"
+    assert response["x-Robots-Tag"] == "noindex,nofollow"
     if expected_status_code == 200:
         assert response["Content-Type"] == "application/json"
         data = json.loads(response.content)

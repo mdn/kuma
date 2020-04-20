@@ -224,3 +224,20 @@ def ensure_wiki_domain(func):
         return func(request, *args, **kwargs)
 
     return wrapped
+
+
+def header(name, value):
+    """
+    Decorator for view functions. Sets a response headers.
+    """
+
+    def decorator(func):
+        @wraps(func)
+        def wrapper(request, *args, **kwargs):
+            response = func(request, *args, **kwargs)
+            response[name] = value
+            return response
+
+        return wrapper
+
+    return decorator

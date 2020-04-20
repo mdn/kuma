@@ -9,7 +9,7 @@ from django.views.static import serve
 
 from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
-from kuma.core.decorators import ensure_wiki_domain, shared_cache_control
+from kuma.core.decorators import ensure_wiki_domain, header, shared_cache_control
 from kuma.core.urlresolvers import i18n_patterns
 from kuma.dashboards.urls import lang_urlpatterns as dashboards_lang_urlpatterns
 from kuma.dashboards.views import index as dashboards_index
@@ -92,7 +92,14 @@ urlpatterns += i18n_patterns(
 urlpatterns += i18n_patterns(
     re_path(r"^dashboards/", include(dashboards_lang_urlpatterns))
 )
-urlpatterns += [re_path("users/", include("kuma.users.urls"))]
+urlpatterns += [
+    re_path(
+        "users/",
+        decorator_include(
+            header("X-Robots-Tag", "noindex,nofollow"), "kuma.users.urls"
+        ),
+    )
+]
 urlpatterns += i18n_patterns(
     re_path(
         r"^contribute/$",
@@ -102,7 +109,13 @@ urlpatterns += i18n_patterns(
 )
 urlpatterns += i18n_patterns(re_path(r"^payments/", include(payments_lang_urlpatterns)))
 urlpatterns += i18n_patterns(
-    re_path("", decorator_include(never_cache, users_lang_urlpatterns))
+    re_path(
+        "",
+        decorator_include(
+            (header("X-Robots-Tag", "noindex,nofollow"), never_cache),
+            users_lang_urlpatterns,
+        ),
+    )
 )
 
 if settings.MAINTENANCE_MODE:
