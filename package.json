@@ -91,7 +91,7 @@
         "svgo": "1.2.2",
         "uglify-js": "2.8.29",
         "webpack": "^4.29.3",
-        "webpack-bundle-analyzer": "3.6.1",
+        "webpack-bundle-analyzer": "3.7.0",
         "webpack-cli": "^3.2.3",
         "webpack-merge": "4.2.1"
     }
