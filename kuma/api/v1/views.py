@@ -37,7 +37,10 @@ from kuma.search.filters import (
 )
 from kuma.search.search import SearchView
 from kuma.users.models import User, UserSubscription
-from kuma.users.stripe_utils import create_stripe_customer_and_subscription_for_user
+from kuma.users.stripe_utils import (
+    create_stripe_customer_and_subscription_for_user,
+    retrieve_and_synchronize_subscription_info,
+)
 from kuma.users.templatetags.jinja_helpers import get_avatar_url
 from kuma.wiki.models import Document
 from kuma.wiki.templatetags.jinja_helpers import absolutify
@@ -365,13 +368,20 @@ def send_subscriptions_feedback(request):
     return HttpResponse(status=204)
 
 
-@api_view(["POST"])
-def create_subscription(request):
+@api_view(["POST", "GET"])
+def subscriptions(request):
     if not request.user.is_authenticated or not flag_is_active(request, "subscription"):
-        return Response(None, status=status.HTTP_403_FORBIDDEN,)
+        return Response(None, status=status.HTTP_403_FORBIDDEN)
 
-    user = request.user
-    create_stripe_customer_and_subscription_for_user(
-        user, user.email, request.data["stripe_token"]
-    )
-    return Response(None, status=status.HTTP_201_CREATED)
+    if request.method == "POST":
+        create_stripe_customer_and_subscription_for_user(
+            request.user, request.user.email, request.data["stripe_token"]
+        )
+        return Response(None, status=status.HTTP_201_CREATED)
+
+    all_subscriptions = []
+    subscription_info = retrieve_and_synchronize_subscription_info(request.user)
+    if subscription_info:
+        all_subscriptions.append(subscription_info)
+
+    return Response({"subscriptions": all_subscriptions})

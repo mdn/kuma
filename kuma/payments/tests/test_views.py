@@ -16,13 +16,6 @@ class MockSubscription:
     id: str = "sub_123456789"
 
 
-@pytest.fixture
-def stripe_user(wiki_user):
-    wiki_user.stripe_customer_id = "fakeCustomerID123"
-    wiki_user.save()
-    return wiki_user
-
-
 @pytest.mark.django_db
 def test_payments_index(client):
     """Viewing the payments index page doesn't require you to be logged in.

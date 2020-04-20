@@ -146,6 +146,22 @@ def user_client(client, wiki_user):
 
 
 @pytest.fixture
+def stripe_user(wiki_user):
+    wiki_user.stripe_customer_id = "fakeCustomerID123"
+    wiki_user.save()
+    return wiki_user
+
+
+@pytest.fixture
+def stripe_user_client(client, stripe_user):
+    """A test client with wiki_user logged in and with a stripe_customer_id."""
+    stripe_user.set_password("password")
+    stripe_user.save()
+    client.login(username=stripe_user.username, password="password")
+    return client
+
+
+@pytest.fixture
 def editor_client(user_client):
     """A test client with wiki_user logged in for editing."""
     with override_flag("kumaediting", True):
