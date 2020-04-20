@@ -1,15 +1,16 @@
 // @flow
 import * as React from 'react';
-import { gettext, Interpolated } from '../../l10n.js';
+import { gettext, interpolate, Interpolated } from '../../l10n.js';
 import { getCookie } from '../../utils.js';
 
 export const FEEDBACK_URL = '/api/v1/subscriptions/feedback/';
 
 type Props = {
     setShowForm: (((boolean) => boolean) | boolean) => void,
+    date: string,
 };
 
-const CancelSubscriptionForm = ({ setShowForm }: Props): React.Node => {
+const CancelSubscriptionForm = ({ setShowForm, date }: Props): React.Node => {
     const [status, setStatus] = React.useState<
         'success' | 'error' | 'loading' | 'idle'
     >('idle');
@@ -94,8 +95,9 @@ const CancelSubscriptionForm = ({ setShowForm }: Props): React.Node => {
                         {gettext('Are you sure you want to cancel?')}
                     </strong>
                     <p>
-                        {gettext(
-                            'Your monthly subscription will end on <date>. You will have to set up a new subscription if you wish to resume making payments to MDN Web Docs.'
+                        {interpolate(
+                            'Your monthly subscription will end on %(date)s. You will have to set up a new subscription if you wish to resume making payments to MDN Web Docs.',
+                            { date }
                         )}
                     </p>
                     <div className="form-footer">

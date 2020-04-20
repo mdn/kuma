@@ -1,7 +1,8 @@
 // @flow
 import * as React from 'react';
-import { gettext, interpolate, Interpolated } from '../../l10n.js';
+import { gettext, interpolate } from '../../l10n.js';
 import { getCookie } from '../../utils.js';
+import ErrorMessage from '../components/error-message.jsx';
 
 export const FEEDBACK_URL = '/api/v1/subscriptions/feedback/';
 export const MIN_STRING_LENGTH = 5;
@@ -57,22 +58,7 @@ const FeedbackForm = (): React.Node => {
                 setStatus('success');
             })
             .catch(() => {
-                setError(
-                    <Interpolated
-                        id={gettext(
-                            "We're sorry, something went wrong. Please try again or send your feedback to <emailLink />."
-                        )}
-                        emailLink={
-                            <a
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                href={`mailto:${window.mdn.contributionSupportEmail}`}
-                            >
-                                {gettext(window.mdn.contributionSupportEmail)}
-                            </a>
-                        }
-                    />
-                );
+                setError(<ErrorMessage />);
             });
     };
 

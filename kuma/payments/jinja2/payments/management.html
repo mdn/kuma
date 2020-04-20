@@ -14,13 +14,7 @@
 {% endblock %}
 
 {% block document_head %}
-    {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), {
-        "activeSubscriptions": active_subscriptions,
-        "amount": stripe_plan_amount,
-        "last4": stripe_card_last4,
-        "nextPayment": next_payment_at,
-        "expires": expires_at,
-     })|safe }}
+    {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), True)|safe }}
 {% endblock %}
 
 {% block content %}

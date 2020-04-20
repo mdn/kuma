@@ -27,7 +27,7 @@ export function PaymentPage(props: PaymentPageProps) {
     const getPage = () => {
         switch (true) {
             case slug.includes(PAYMENT_PATHS.MANAGEMENT):
-                return <ManagementPage data={data} locale={locale} />;
+                return <ManagementPage locale={locale} />;
             case slug.includes(PAYMENT_PATHS.TERMS):
                 return <TermsPage data={data} />;
             case slug.includes(PAYMENT_PATHS.THANK_YOU):

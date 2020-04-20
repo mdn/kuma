@@ -1,87 +1,81 @@
 // @flow
 import * as React from 'react';
-// import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { gettext, Interpolated } from '../../l10n.js';
 import Subheader from '../components/subheaders/index.jsx';
 import CancelSubscriptionForm from '../components/cancel-subscription-form.jsx';
-// import UserProvider from '../../user-provider.jsx';
+import ErrorMessage from '../components/error-message.jsx';
+
+import UserProvider, { type UserData } from '../../user-provider.jsx';
+
+export type SubscriptionData = {
+    id: string,
+    amount: number,
+    brand: string,
+    expires_at: string,
+    last4: string,
+    zip: string,
+    next_payment_at: string,
+};
 
 type Props = {
     locale: string,
-    data: {
-        activeSubscriptions: boolean,
-        amount: number,
-        last4: string,
-        nextPayment: string,
-        expires: string,
-    },
+};
+const SUBSCRIPTIONS_URL = '/api/v1/subscriptions';
+
+const formatDate = (
+    locale,
+    date,
+    options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    }
+) => {
+    const dateObj = new Date(date);
+    return new Intl.DateTimeFormat(locale, options).format(dateObj);
 };
 
-const ManagementPage = ({ data, locale }: Props) => {
-    const { activeSubscriptions, amount, last4, nextPayment, expires } = data;
-    const [showForm, setShowForm]: [
-        boolean,
-        (((boolean) => boolean) | boolean) => void
-    ] = React.useState<boolean>(false);
-    // console.log('data', data);
+const ManagementPage = ({ locale }: Props) => {
+    const [showForm, setShowForm] = React.useState<boolean>(false);
+    const [status, setStatus] = React.useState<'success' | 'error' | 'idle'>(
+        'idle'
+    );
+    const [subscriptions, setSubscriptions] = useState<?(SubscriptionData[])>(
+        null
+    );
+
+    const userData: ?UserData = useContext(UserProvider.context);
+    const isSubscriber: ?boolean = userData && userData.isSubscriber;
+
+    useEffect(() => {
+        if (isSubscriber) {
+            fetch(SUBSCRIPTIONS_URL)
+                .then((res) => {
+                    if (res.ok) {
+                        return res.json();
+                    } else {
+                        throw new Error(
+                            `${res.status} ${res.statusText} fetching ${SUBSCRIPTIONS_URL}`
+                        );
+                    }
+                })
+                .then((data) => {
+                    setSubscriptions(data.subscriptions);
+                })
+                .catch(() => {
+                    setStatus('error');
+                });
+        }
+    }, [isSubscriber]);
 
     const handleClick = (event) => {
         event.preventDefault();
         setShowForm(true);
     };
 
-    const renderContent = () => {
-        if (activeSubscriptions) {
-            const date = new Date(nextPayment);
-            const dateOptions = {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-            };
-            const formattedDate = new Intl.DateTimeFormat(
-                locale,
-                dateOptions
-            ).format(date);
-
-            return (
-                <>
-                    <p>Next payment occurs on {formattedDate}.</p>
-                    <div className="active-subscriptions">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th className="amount">
-                                        {gettext('Amount')}
-                                    </th>
-                                    <th className="credit-card">
-                                        {gettext('Card Number')}
-                                    </th>
-                                    <th className="credit-card">
-                                        {gettext('Expiry')}
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>{`$${amount}`}</td>
-                                    <td>{`**** **** **** ${last4}`}</td>
-                                    <td>{expires}</td>
-                                </tr>
-                                <tr></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <button
-                        className="confirm toggle"
-                        onClick={handleClick}
-                        type="button"
-                    >
-                        {gettext('Cancel subscription')}
-                    </button>
-                </>
-            );
-        }
+    const renderInvitation = () => {
         return (
             <div className="active-subscriptions">
                 <p>
@@ -100,6 +94,79 @@ const ManagementPage = ({ data, locale }: Props) => {
         );
     };
 
+    const renderSubscriptions = () => {
+        if (!subscriptions) {
+            return;
+        }
+        const dateObj = new Date(subscriptions[0].next_payment_at);
+        const nextPaymentDate = formatDate(
+            locale,
+            subscriptions[0].next_payment_at
+        );
+        const lastActiveDate = formatDate(
+            locale,
+            dateObj.setDate(dateObj.getDate() - 1)
+        );
+
+        return (
+            <>
+                <p>Next payment occurs on {nextPaymentDate}.</p>
+                <div className="active-subscriptions">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th className="amount">{gettext('Amount')}</th>
+                                <th className="credit-card">
+                                    {gettext('Card Number')}
+                                </th>
+                                <th className="credit-card">
+                                    {gettext('Expiry')}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {subscriptions.map((subscription) => {
+                                return (
+                                    <tr
+                                        key={`${subscription.brand}-${subscription.last4}`}
+                                    >
+                                        <td>{`$${subscription.amount}`}</td>
+                                        <td>{`**** **** **** ${subscription.last4}`}</td>
+                                        <td>{subscription.expires_at}</td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+                <button
+                    className="confirm toggle"
+                    onClick={handleClick}
+                    type="button"
+                >
+                    {gettext('Cancel subscription')}
+                </button>
+                {showForm && (
+                    <CancelSubscriptionForm
+                        setShowForm={setShowForm}
+                        date={lastActiveDate}
+                    />
+                )}
+            </>
+        );
+    };
+
+    const renderContent = () => {
+        if (userData && !isSubscriber) {
+            return renderInvitation();
+        } else if (isSubscriber && subscriptions) {
+            return renderSubscriptions();
+        } else if (status === 'error') {
+            return <ErrorMessage />;
+        }
+        return 'Loading...';
+    };
+
     return (
         <>
             <Subheader title="Manage monthly subscription" />
@@ -112,9 +179,6 @@ const ManagementPage = ({ data, locale }: Props) => {
                     <div className="column-8">
                         <h2>Subscriptions</h2>
                         {renderContent()}
-                        {showForm && (
-                            <CancelSubscriptionForm setShowForm={setShowForm} />
-                        )}
                     </div>
                 </section>
             </main>
