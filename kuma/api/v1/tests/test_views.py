@@ -584,3 +584,25 @@ def test_list_subscriptions_with_active_subscription(
     response = stripe_user_client.get(reverse("api.v1.subscriptions"))
     assert response.status_code == 200
     assert response.json()["subscriptions"] == [mock_data]
+
+
+@patch("kuma.api.v1.views.cancel_stripe_customer_subscriptions")
+@pytest.mark.django_db
+@override_flag("subscription", True)
+def test_cancel_subscriptions_with_active_subscription(
+    cancel_stripe_customer_subscriptions, stripe_user_client
+):
+    cancel_stripe_customer_subscriptions.return_value = ["sub_12345"]
+    response = stripe_user_client.delete(reverse("api.v1.subscriptions"))
+    assert response.status_code == 204
+
+
+@patch("kuma.api.v1.views.cancel_stripe_customer_subscriptions")
+@pytest.mark.django_db
+@override_flag("subscription", True)
+def test_cancel_subscriptions_with_no_active_subscription(
+    cancel_stripe_customer_subscriptions, stripe_user_client
+):
+    cancel_stripe_customer_subscriptions.return_value = []
+    response = stripe_user_client.delete(reverse("api.v1.subscriptions"))
+    assert response.status_code == 410
