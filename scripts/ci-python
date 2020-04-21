@@ -62,41 +62,39 @@ docker-compose exec -T web ./manage.py makemigrations --check --dry-run
 # echo "git diff --name-only master...:"
 # git diff --name-only master...
 
-echo "TRAVIS_COMMIT_RANGE"
-echo $TRAVIS_COMMIT_RANGE
+# echo "TRAVIS_COMMIT_RANGE"
+# echo $TRAVIS_COMMIT_RANGE
 
-echo "git diff $TRAVIS_COMMIT_RANGE"
-git diff $TRAVIS_COMMIT_RANGE
+# echo "git diff $TRAVIS_COMMIT_RANGE"
+# git diff $TRAVIS_COMMIT_RANGE
 
 echo "git diff --name-only $TRAVIS_COMMIT_RANGE"
 git diff --name-only $TRAVIS_COMMIT_RANGE
 
-echo "git diff --name-only HEAD origin/${TRAVIS_BRANCH}"
-git diff --name-only HEAD origin/${TRAVIS_BRANCH}
-
-echo "git diff HEAD...$TRAVIS_BRANCH:"
-git diff HEAD...$TRAVIS_BRANCH
-echo "git diff --name-only HEAD...$TRAVIS_BRANCH:"
-git diff --name-only HEAD...$TRAVIS_BRANCH
-
-# echo "git diff --name-only HEAD...$TRAVIS_BRANCH | grep '\.py':"
-# git diff --name-only HEAD...$TRAVIS_BRANCH | grep '\.py'
-
-
-echo "TRAVIS_PULL_REQUEST:"
-echo $TRAVIS_PULL_REQUEST
+# echo "git diff --name-only HEAD origin/${TRAVIS_BRANCH}"
+# git diff --name-only HEAD origin/${TRAVIS_BRANCH}
 
 is_pullrequest_build() {
   [[ ${TRAVIS_PULL_REQUEST-default} != "false" ]]
 }
 has_python_changes() {
-    git diff --name-only HEAD...$TRAVIS_BRANCH | grep '\.py'
+    git diff --name-only $TRAVIS_COMMIT_RANGE | grep '\.py'
 }
-if is_pullrequest_build && has_python_changes; then
-    echo "IS PR and has Python changes!"
+if is_pullrequest_build; then
+    echo "IT IS A PULL REQUEST"
 else
-    echo "Regular build, no coverage needed"
+    echo "IT'S NOT A PULL REQUEST"
 fi
+if has_python_changes; then
+    echo "IT HAS PYTHON CHANGES!!"
+else
+    echo "NO PYTHON IN DIFF"
+fi
+# if is_pullrequest_build && has_python_changes; then
+#     echo "IS PR and has Python changes!"
+# else
+#     echo "Regular build, no coverage needed"
+# fi
 
 
 #docker-compose exec -T web make test
