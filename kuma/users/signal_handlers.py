@@ -15,7 +15,7 @@ from kuma.core.ga_tracking import (
     CATEGORY_SIGNUP_FLOW,
     track_event,
 )
-from kuma.payments.utils import cancel_stripe_customer_subscription
+from kuma.users.stripe_utils import cancel_stripe_customer_subscriptions
 from kuma.wiki.jobs import DocumentContributorsJob
 
 from .models import User, UserBan
@@ -173,4 +173,4 @@ def unsubscribe_payments_on_user_delete(sender, instance, **kwargs):
     if user.stripe_customer_id:
         # This may raise an exception if the Stripe API call fails.
         # This will stop User deletion while an admin investigates.
-        cancel_stripe_customer_subscription(user.stripe_customer_id)
+        cancel_stripe_customer_subscriptions(user)

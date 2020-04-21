@@ -95,6 +95,16 @@ def create_stripe_customer_and_subscription_for_user(user, email, stripe_token):
     UserSubscription.set_active(user, subscription.id)
 
 
+def cancel_stripe_customer_subscriptions(user):
+    """Delete all subscriptions for a Stripe customer."""
+    assert user.stripe_customer_id
+    customer = stripe.Customer.retrieve(user.stripe_customer_id)
+    for sub in customer.subscriptions.data:
+        s = stripe.Subscription.retrieve(sub.id)
+        UserSubscription.set_canceled(user, s.id)
+        s.delete()
+
+
 def get_stripe_customer(user):
     if settings.STRIPE_PLAN_ID and user.stripe_customer_id:
         return stripe.Customer.retrieve(

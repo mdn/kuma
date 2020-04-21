@@ -10,7 +10,7 @@ import GAProvider, {
 import UserProvider from '../../user-provider.jsx';
 import { getCookie } from '../../utils';
 
-const SUBSCRIPTION_URL = '/api/v1/subscriptions';
+const SUBSCRIPTION_URL = '/api/v1/subscriptions/';
 
 /**
  * Loads the script given by the URL and cleans up after itself

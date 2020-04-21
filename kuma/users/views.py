@@ -57,7 +57,6 @@ from kuma.core.ga_tracking import (
     track_event,
 )
 from kuma.core.utils import requests_retry_session, send_mail_retrying, urlparams
-from kuma.payments.utils import cancel_stripe_customer_subscription
 from kuma.wiki.forms import RevisionAkismetSubmissionSpamForm
 from kuma.wiki.models import (
     Document,
@@ -73,6 +72,7 @@ from .forms import UserBanForm, UserDeleteForm, UserEditForm, UserRecoveryEmailF
 from .models import User, UserBan, UserSubscription
 from .signup import SignupForm
 from .stripe_utils import (
+    cancel_stripe_customer_subscriptions,
     create_stripe_customer_and_subscription_for_user,
     retrieve_and_synchronize_subscription_info,
 )
@@ -509,10 +509,7 @@ def user_delete(request, username):
     def scrub_user():
         # Before doing anything, cancel any active subscriptions first.
         if user.stripe_customer_id:
-            for subscription in cancel_stripe_customer_subscription(
-                user.stripe_customer_id
-            ):
-                UserSubscription.set_canceled(request.user, subscription.id)
+            cancel_stripe_customer_subscriptions(request.user)
 
         # From the User abstract class
         user.first_name = ""
