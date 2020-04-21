@@ -1,19 +1,22 @@
 // @flow
 import * as React from 'react';
 import { gettext, interpolate } from '../../l10n.js';
-import { getCookie } from '../../utils.js';
 import ErrorMessage from '../components/error-message.jsx';
+import { deleteSubscriptions } from '../api.js';
 
 export const FEEDBACK_URL = '/api/v1/subscriptions/feedback/';
 
 type Props = {
     setShowForm: (((boolean) => boolean) | boolean) => void,
+    onSuccess: () => void,
     date: string,
 };
 
-const SUBSCRIPTIONS_URL = '/api/v1/subscriptions/';
-
-const CancelSubscriptionForm = ({ setShowForm, date }: Props): React.Node => {
+const CancelSubscriptionForm = ({
+    setShowForm,
+    onSuccess,
+    date,
+}: Props): React.Node => {
     const [status, setStatus] = React.useState<
         'success' | 'error' | 'loading' | 'idle'
     >('idle');
@@ -25,25 +28,12 @@ const CancelSubscriptionForm = ({ setShowForm, date }: Props): React.Node => {
     const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
         event.preventDefault();
         setStatus('loading');
-
-        fetch(SUBSCRIPTIONS_URL, {
-            method: 'DELETE',
-            headers: {
-                'X-CSRFToken': getCookie('csrftoken'),
-            },
-        })
-            .then((res) => {
-                if (res.ok) {
-                    setStatus('success');
-                } else {
-                    throw new Error(
-                        `${res.status} ${res.statusText} fetching ${SUBSCRIPTIONS_URL}`
-                    );
-                }
-            })
-            .catch(() => {
-                setStatus('error');
-            });
+        const handleSuccess = () => {
+            setStatus('success');
+            onSuccess();
+        };
+        const handleError = () => setStatus('error');
+        deleteSubscriptions(handleSuccess, handleError);
     };
 
     if (status === 'success') {

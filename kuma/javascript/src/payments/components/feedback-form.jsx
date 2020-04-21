@@ -1,8 +1,8 @@
 // @flow
 import * as React from 'react';
 import { gettext, interpolate } from '../../l10n.js';
-import { getCookie } from '../../utils.js';
 import ErrorMessage from '../components/error-message.jsx';
+import { sendFeedback } from '../api.js';
 
 export const FEEDBACK_URL = '/api/v1/subscriptions/feedback/';
 export const MIN_STRING_LENGTH = 5;
@@ -32,34 +32,21 @@ const FeedbackForm = (): React.Node => {
             return false;
         }
 
-        fetch(FEEDBACK_URL, {
-            method: 'POST',
-            body: JSON.stringify({ feedback: trimmedFeedback }),
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken'),
-            },
-        })
-            .then((res) => {
-                // Remove focus from button or input
-                if (document.activeElement) {
-                    document.activeElement.blur();
-                }
-
-                if (!res.ok) {
-                    throw new Error(`Request (POST) to ${FEEDBACK_URL} failed`);
-                }
-                return res;
-            })
-            .then(() => {
-                // Clear form, show thank you message
-                setFeedback('');
-                setError('');
-                setStatus('success');
-            })
-            .catch(() => {
-                setError(<ErrorMessage />);
-            });
+        const reqBody = JSON.stringify({ feedback: trimmedFeedback });
+        const handleSuccess = () => {
+            // Remove focus from button or input
+            if (document.activeElement) {
+                document.activeElement.blur();
+            }
+            // Clear form, show thank you message
+            setFeedback('');
+            setError('');
+            setStatus('success');
+        };
+        const handleError = () => {
+            setError(<ErrorMessage />);
+        };
+        sendFeedback(reqBody, handleSuccess, handleError);
     };
 
     if (status === 'success') {

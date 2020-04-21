@@ -6,6 +6,7 @@ import { gettext, Interpolated } from '../../l10n.js';
 import Subheader from '../components/subheaders/index.jsx';
 import CancelSubscriptionForm from '../components/cancel-subscription-form.jsx';
 import ErrorMessage from '../components/error-message.jsx';
+import { getSubscriptions } from '../api.js';
 
 import UserProvider, { type UserData } from '../../user-provider.jsx';
 
@@ -22,7 +23,6 @@ export type SubscriptionData = {
 type Props = {
     locale: string,
 };
-const SUBSCRIPTIONS_URL = '/api/v1/subscriptions/';
 
 const formatDate = (
     locale,
@@ -47,25 +47,16 @@ const ManagementPage = ({ locale }: Props) => {
     const userData: ?UserData = useContext(UserProvider.context);
     const isSubscriber: ?boolean = userData && userData.isSubscriber;
 
+    // console.log('is a subscriber?', isSubscriber);
+
     useEffect(() => {
         if (isSubscriber) {
-            fetch(SUBSCRIPTIONS_URL)
-                .then((res) => {
-                    if (res.ok) {
-                        return res.json();
-                    } else {
-                        throw new Error(
-                            `${res.status} ${res.statusText} fetching ${SUBSCRIPTIONS_URL}`
-                        );
-                    }
-                })
-                .then((data) => {
-                    const [subscription] = data.subscriptions;
-                    setSubscription(subscription);
-                })
-                .catch(() => {
-                    setStatus('error');
-                });
+            const handleSuccess = (data) => {
+                const [subscription] = data.subscriptions;
+                setSubscription(subscription);
+            };
+            const handleError = () => setStatus('error');
+            getSubscriptions(handleSuccess, handleError);
         }
     }, [isSubscriber]);
 
@@ -74,24 +65,28 @@ const ManagementPage = ({ locale }: Props) => {
         setShowForm(true);
     };
 
-    const renderInvitation = () => {
-        return (
-            <div className="active-subscriptions">
-                <p>
-                    <Interpolated
-                        id={gettext(
-                            'You have no active subscriptions. Why not <signupLink />?'
-                        )}
-                        signupLink={
-                            <a href={`/${locale}/payments/`}>
-                                {gettext('set one up')}
-                            </a>
-                        }
-                    />
-                </p>
-            </div>
-        );
+    const handleDeleteSuccess = () => {
+        setSubscription(null);
+
+        // Update isSubscriber context
     };
+
+    const renderInvitation = () => (
+        <div className="active-subscriptions">
+            <p>
+                <Interpolated
+                    id={gettext(
+                        'You have no active subscriptions. Why not <signupLink />?'
+                    )}
+                    signupLink={
+                        <a href={`/${locale}/payments/`}>
+                            {gettext('set one up')}
+                        </a>
+                    }
+                />
+            </p>
+        </div>
+    );
 
     const renderSubscriptions = () => {
         if (!subscription) {
@@ -144,6 +139,7 @@ const ManagementPage = ({ locale }: Props) => {
                 </button>
                 {showForm && (
                     <CancelSubscriptionForm
+                        onSuccess={handleDeleteSuccess}
                         setShowForm={setShowForm}
                         date={lastActiveDate}
                     />
@@ -153,6 +149,7 @@ const ManagementPage = ({ locale }: Props) => {
     };
 
     const renderContent = () => {
+        // console.log('in renderContent', isSubscriber);
         if (userData && !isSubscriber) {
             return renderInvitation();
         } else if (isSubscriber && subscription) {
