@@ -55,46 +55,16 @@ docker-compose exec -T web ./manage.py makemigrations --check --dry-run
 # The idea here is that coverage analysis on the pytest tests is
 # pretty slow. Around 1 minute slower than without.
 # So can it be skipped if there were no .py changes in the PR.
-# echo "git diff master...:"
-# git diff master...
-# echo "git diff --name-only master:"
-# git diff --name-only master
-# echo "git diff --name-only master...:"
-# git diff --name-only master...
-
-# echo "TRAVIS_COMMIT_RANGE"
-# echo $TRAVIS_COMMIT_RANGE
-
-# echo "git diff $TRAVIS_COMMIT_RANGE"
-# git diff $TRAVIS_COMMIT_RANGE
-
-echo "git diff --name-only $TRAVIS_COMMIT_RANGE"
-git diff --name-only $TRAVIS_COMMIT_RANGE
-
-# echo "git diff --name-only HEAD origin/${TRAVIS_BRANCH}"
-# git diff --name-only HEAD origin/${TRAVIS_BRANCH}
-
 is_pullrequest_build() {
   [[ ${TRAVIS_PULL_REQUEST-default} != "false" ]]
 }
 has_python_changes() {
     git diff --name-only $TRAVIS_COMMIT_RANGE | grep '\.py'
 }
-if is_pullrequest_build; then
-    echo "IT IS A PULL REQUEST"
+if is_pullrequest_build && has_python_changes; then
+    echo "IS PR and has Python changes!"
+    docker-compose exec -T web make coveragetest
 else
-    echo "IT'S NOT A PULL REQUEST"
+    echo "Regular build, no coverage needed"
+    docker-compose exec -T web make test
 fi
-if has_python_changes; then
-    echo "IT HAS PYTHON CHANGES!!"
-else
-    echo "NO PYTHON IN DIFF"
-fi
-# if is_pullrequest_build && has_python_changes; then
-#     echo "IS PR and has Python changes!"
-# else
-#     echo "Regular build, no coverage needed"
-# fi
-
-
-#docker-compose exec -T web make test
