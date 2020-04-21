@@ -61,6 +61,21 @@ docker-compose exec -T web ./manage.py makemigrations --check --dry-run
 # git diff --name-only master
 # echo "git diff --name-only master...:"
 # git diff --name-only master...
+
+echo "TRAVIS_COMMIT_RANGE"
+echo $TRAVIS_COMMIT_RANGE
+
+echo "git diff $TRAVIS_COMMIT_RANGE"
+git diff $TRAVIS_COMMIT_RANGE
+
+echo "git diff --name-only $TRAVIS_COMMIT_RANGE"
+git diff --name-only $TRAVIS_COMMIT_RANGE
+
+echo "git diff --name-only HEAD origin/${TRAVIS_BRANCH}"
+git diff --name-only HEAD origin/${TRAVIS_BRANCH}
+
+echo "git diff HEAD...$TRAVIS_BRANCH:"
+git diff HEAD...$TRAVIS_BRANCH
 echo "git diff --name-only HEAD...$TRAVIS_BRANCH:"
 git diff --name-only HEAD...$TRAVIS_BRANCH
 
