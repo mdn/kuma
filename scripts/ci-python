@@ -61,16 +61,20 @@ echo "git diff --name-only master:"
 git diff --name-only master
 echo "git diff --name-only master...:"
 git diff --name-only master...
+echo "git diff --name-only HEAD...$TRAVIS_BRANCH:"
+git diff --name-only HEAD...$TRAVIS_BRANCH
+
 
 echo "TRAVIS_PULL_REQUEST:"
 echo $TRAVIS_PULL_REQUEST
-echo "TRAVIS_BRANCH:"
-echo $TRAVIS_BRANCH
 
 is_pullrequest_build() {
     # $TRAVIS_PULL_REQUEST is something like '00123' if this is a pull request.
     # But just 'false' if not.
     [[ $TRAVIS_PULL_REQUEST -ne 'false' ]]
+
+    # Note! If $TRAVIS_PULL_REQUEST is something like '1234'
+    # the $TRAVIS_BRANCH env var will still be 'master'.
 }
 has_python_changes() {
     git diff --name-only master | grep '\.py'
