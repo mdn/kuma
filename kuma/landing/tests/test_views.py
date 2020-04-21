@@ -83,7 +83,7 @@ def test_robots_not_allowed(client):
     content = response.content
     assert b"Sitemap: " not in content
     assert b"Disallow: /\n" in content
-    assert b"Disallow: /admin/\n" not in content
+    assert b"Disallow: /api/\n" not in content
 
 
 def test_robots_allowed_main_website(client, settings):
@@ -98,7 +98,7 @@ def test_robots_allowed_main_website(client, settings):
     content = response.content
     assert b"Sitemap: " in content
     assert b"Disallow: /\n" not in content
-    assert b"Disallow: /admin/\n" in content
+    assert b"Disallow: /api/\n" in content
 
 
 def test_robots_all_allowed_wiki_website(client, settings):
