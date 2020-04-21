@@ -53,7 +53,7 @@ docker-compose exec -T web ./manage.py makemigrations --check --dry-run
 
 
 # The idea here is that coverage analysis on the pytest tests is
-# pretty slow. Still useful but significant slowdown.
+# pretty slow. Around 1 minute slower than without.
 # So can it be skipped if there were no .py changes in the PR.
 # echo "git diff master...:"
 # git diff master...
@@ -74,7 +74,7 @@ echo $TRAVIS_PULL_REQUEST
 is_pullrequest_build() {
     # $TRAVIS_PULL_REQUEST is something like '00123' if this is a pull request.
     # But just 'false' if not.
-    [[ $TRAVIS_PULL_REQUEST -ne false ]]
+    [[ $TRAVIS_PULL_REQUEST -ne "false" ]]
 
     # Note! If $TRAVIS_PULL_REQUEST is something like '1234'
     # the $TRAVIS_BRANCH env var will still be 'master'.
@@ -82,7 +82,11 @@ is_pullrequest_build() {
 has_python_changes() {
     git diff --name-only HEAD...$TRAVIS_BRANCH | grep '\.py'
 }
-if is_pullrequest_build && has_python_changes; then echo "IS PR and has Python changes!"; else echo "Regular build, no coverage needed"; fi
+if is_pullrequest_build && has_python_changes; then
+    echo "IS PR and has Python changes!"
+else
+    echo "Regular build, no coverage needed"
+fi
 
 
 #docker-compose exec -T web make test
