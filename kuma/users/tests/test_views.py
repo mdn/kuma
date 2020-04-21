@@ -1784,17 +1784,17 @@ def test_delete_user_keep_attributions(
     assert not Key.objects.all().exists()
 
 
-@mock.patch("kuma.users.stripe_utils.cancel_stripe_customer_subscription")
+@mock.patch("kuma.users.stripe_utils.stripe")
 def test_delete_user_keep_attributions_and_cancel_subscriptions(
-    mocked_cancel_stripe_customer_subscription,
-    db,
-    user_client,
-    wiki_user,
-    wiki_user_github_account,
-    root_doc,
+    mocked_stripe, db, user_client, wiki_user, wiki_user_github_account, root_doc,
 ):
     subscription_id = "sub_1234"
-    mocked_cancel_stripe_customer_subscription.return_value = [subscription_id]
+    mock_subscription = mock.MagicMock()
+    mock_subscription.id = subscription_id
+    mock_customer = mock.MagicMock()
+    mock_customer.subscriptions.data.__iter__.return_value = [mock_subscription]
+    mocked_stripe.Customer.retrieve.return_value = mock_customer
+    mocked_stripe.Subscription.retrieve.return_value = mock_subscription
 
     # Also, pretend that the user has a rich profile
     User.objects.filter(id=wiki_user.id).update(stripe_customer_id="cus_12345")

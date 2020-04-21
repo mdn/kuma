@@ -98,21 +98,11 @@ def create_stripe_customer_and_subscription_for_user(user, email, stripe_token):
 def cancel_stripe_customer_subscriptions(user):
     """Delete all subscriptions for a Stripe customer."""
     assert user.stripe_customer_id
-    cancelled = []
-    for subscription_id in cancel_stripe_customer_subscription(user.stripe_customer_id):
-        UserSubscription.set_canceled(user, subscription_id)
-        cancelled.append(subscription_id)
-    return cancelled
-
-
-def cancel_stripe_customer_subscription(stripe_customer_id):
-    customer = stripe.Customer.retrieve(stripe_customer_id)
-    deleted_ids = []
+    customer = stripe.Customer.retrieve(user.stripe_customer_id)
     for sub in customer.subscriptions.data:
         s = stripe.Subscription.retrieve(sub.id)
-        deleted_ids.append(s.id)
+        UserSubscription.set_canceled(user, s.id)
         s.delete()
-    return deleted_ids
 
 
 def get_stripe_customer(user):
