@@ -17,34 +17,21 @@ const CancelSubscriptionForm = ({
     onSuccess,
     date,
 }: Props): React.Node => {
-    const [status, setStatus] = React.useState<
-        'success' | 'error' | 'loading' | 'idle'
-    >('idle');
+    const [status, setStatus] = React.useState<'error' | 'submitting' | 'idle'>(
+        'idle'
+    );
 
-    const handleCancel = () => {
-        setShowForm(false);
-    };
+    const handleCancel = () => setShowForm(false);
 
     const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setStatus('loading');
-        const handleSuccess = () => {
-            setStatus('success');
-            onSuccess();
-        };
+        setStatus('submitting');
+
+        // success is handled by parent component
+        const handleSuccess = () => onSuccess();
         const handleError = () => setStatus('error');
         deleteSubscriptions(handleSuccess, handleError);
     };
-
-    if (status === 'success') {
-        return (
-            <p className="alert success" data-testid="success-msg">
-                {gettext(
-                    'Your monthly subscription has been successfully canceled.'
-                )}
-            </p>
-        );
-    }
 
     if (status === 'error') {
         return (
@@ -57,7 +44,7 @@ const CancelSubscriptionForm = ({
     return (
         <>
             <form
-                disabled={status === 'loading'}
+                disabled={status === 'submitting'}
                 data-testid="feedback-form"
                 onSubmit={handleSubmit}
             >

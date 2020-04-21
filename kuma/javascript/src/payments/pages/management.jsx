@@ -43,11 +43,14 @@ const ManagementPage = ({ locale }: Props) => {
         'idle'
     );
     const [subscription, setSubscription] = useState<?SubscriptionData>(null);
-
+    const [isSubscriber, setIsSubscriber] = useState<?boolean>(null);
     const userData: ?UserData = useContext(UserProvider.context);
-    const isSubscriber: ?boolean = userData && userData.isSubscriber;
 
-    // console.log('is a subscriber?', isSubscriber);
+    // Currently we don't have a way to update the UserProvider context, so
+    // we are saving the context value to local state.
+    useEffect(() => {
+        setIsSubscriber(userData && userData.isSubscriber);
+    }, [userData]);
 
     useEffect(() => {
         if (isSubscriber) {
@@ -67,9 +70,17 @@ const ManagementPage = ({ locale }: Props) => {
 
     const handleDeleteSuccess = () => {
         setSubscription(null);
-
-        // Update isSubscriber context
+        setIsSubscriber(false);
+        setStatus('success');
     };
+
+    const renderSuccess = () => (
+        <p className="alert success" data-testid="success-msg">
+            {gettext(
+                'Your monthly subscription has been successfully canceled.'
+            )}
+        </p>
+    );
 
     const renderInvitation = () => (
         <div className="active-subscriptions">
@@ -149,7 +160,6 @@ const ManagementPage = ({ locale }: Props) => {
     };
 
     const renderContent = () => {
-        // console.log('in renderContent', isSubscriber);
         if (userData && !isSubscriber) {
             return renderInvitation();
         } else if (isSubscriber && subscription) {
@@ -172,6 +182,7 @@ const ManagementPage = ({ locale }: Props) => {
                     <div className="column-8">
                         <h2>Subscriptions</h2>
                         {renderContent()}
+                        {status === 'success' && renderSuccess()}
                     </div>
                 </section>
             </main>
