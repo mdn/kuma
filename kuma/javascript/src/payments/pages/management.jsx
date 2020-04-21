@@ -83,7 +83,7 @@ const ManagementPage = ({ locale }: Props) => {
                             'You have no active subscriptions. Why not <signupLink />?'
                         )}
                         signupLink={
-                            <a href={`/${locale}/payments`}>
+                            <a href={`/${locale}/payments/`}>
                                 {gettext('set one up')}
                             </a>
                         }
@@ -160,7 +160,7 @@ const ManagementPage = ({ locale }: Props) => {
         } else if (status === 'error') {
             return <ErrorMessage />;
         }
-        return 'Loading...';
+        return <strong>Loading…</strong>;
     };
 
     return (

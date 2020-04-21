@@ -1,7 +1,6 @@
 from datetime import datetime
 
 import stripe
-from stripe.error import StripeError
 from django.conf import settings
 from django.utils import timezone
 
