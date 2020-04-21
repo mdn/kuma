@@ -47,7 +47,10 @@ const ManagementPage = ({ locale }: Props) => {
     const userData: ?UserData = useContext(UserProvider.context);
 
     // Currently we don't have a way to update the UserProvider context, so
-    // we are saving the context value to local state.
+    // we are saving the context value `isSubscriber` to local state. It will be
+    // out-of-sync when a successful delete occurs, but I think it's ok for now,
+    // since actions are limited (nothing builds upon `isSubscriber`-- the only
+    // thing you can do from this point is go to /payments).
     useEffect(() => {
         setIsSubscriber(userData && userData.isSubscriber);
     }, [userData]);
