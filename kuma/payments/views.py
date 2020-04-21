@@ -76,8 +76,4 @@ def recurring_payment_management(request):
                 request.user.email,
             )
         context.update(data)
-
-        # placeholder data
-        context["next_payment_at"] = datetime.datetime.now().isoformat()
-        context["expires_at"] = f"11/20"
     return render(request, "payments/management.html", context)

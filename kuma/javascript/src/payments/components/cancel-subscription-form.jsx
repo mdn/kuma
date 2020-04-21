@@ -1,7 +1,8 @@
 // @flow
 import * as React from 'react';
-import { gettext, interpolate, Interpolated } from '../../l10n.js';
+import { gettext, interpolate } from '../../l10n.js';
 import { getCookie } from '../../utils.js';
+import ErrorMessage from '../components/error-message.jsx';
 
 export const FEEDBACK_URL = '/api/v1/subscriptions/feedback/';
 
@@ -9,6 +10,8 @@ type Props = {
     setShowForm: (((boolean) => boolean) | boolean) => void,
     date: string,
 };
+
+const SUBSCRIPTIONS_URL = '/api/v1/subscriptions/';
 
 const CancelSubscriptionForm = ({ setShowForm, date }: Props): React.Node => {
     const [status, setStatus] = React.useState<
@@ -23,29 +26,20 @@ const CancelSubscriptionForm = ({ setShowForm, date }: Props): React.Node => {
         event.preventDefault();
         setStatus('loading');
 
-        fetch(FEEDBACK_URL, {
-            method: 'POST',
-            body: JSON.stringify({ feedback: '' }),
+        fetch(SUBSCRIPTIONS_URL, {
+            method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json',
                 'X-CSRFToken': getCookie('csrftoken'),
             },
         })
             .then((res) => {
-                // Remove focus from button
-                if (document.activeElement) {
-                    document.activeElement.blur();
+                if (res.ok) {
+                    setStatus('success');
+                } else {
+                    throw new Error(
+                        `${res.status} ${res.statusText} fetching ${SUBSCRIPTIONS_URL}`
+                    );
                 }
-
-                if (!res.ok) {
-                    throw new Error(`Request (POST) to ${FEEDBACK_URL} failed`);
-                }
-                return res;
-            })
-            .then(() => {
-                setStatus('success');
-
-                // refresh list of active subscriptions in parent
             })
             .catch(() => {
                 setStatus('error');
@@ -65,20 +59,7 @@ const CancelSubscriptionForm = ({ setShowForm, date }: Props): React.Node => {
     if (status === 'error') {
         return (
             <p className="alert error" data-testid="error-msg">
-                <Interpolated
-                    id={gettext(
-                        "We're sorry, there was a problem canceling your subscription. Please contact <emailLink />."
-                    )}
-                    emailLink={
-                        <a
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href={`mailto:${window.mdn.contributionSupportEmail}`}
-                        >
-                            {gettext(window.mdn.contributionSupportEmail)}
-                        </a>
-                    }
-                />
+                <ErrorMessage />
             </p>
         );
     }

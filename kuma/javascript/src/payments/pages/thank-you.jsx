@@ -42,7 +42,7 @@ const ThankYouPage = ({ locale }: Props) => {
                                     )}
                                     subscriptionLink={
                                         <a
-                                            href={`/${locale}/payments/recurring/management/`}
+                                            href={`/${locale}/payments/management/`}
                                         >
                                             {gettext(
                                                 'manage monthly subscription page'

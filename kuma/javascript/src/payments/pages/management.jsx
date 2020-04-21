@@ -22,7 +22,7 @@ export type SubscriptionData = {
 type Props = {
     locale: string,
 };
-const SUBSCRIPTIONS_URL = '/api/v1/subscriptions';
+const SUBSCRIPTIONS_URL = '/api/v1/subscriptions/';
 
 const formatDate = (
     locale,
@@ -42,9 +42,7 @@ const ManagementPage = ({ locale }: Props) => {
     const [status, setStatus] = React.useState<'success' | 'error' | 'idle'>(
         'idle'
     );
-    const [subscriptions, setSubscriptions] = useState<?(SubscriptionData[])>(
-        null
-    );
+    const [subscription, setSubscription] = useState<?SubscriptionData>(null);
 
     const userData: ?UserData = useContext(UserProvider.context);
     const isSubscriber: ?boolean = userData && userData.isSubscriber;
@@ -62,7 +60,8 @@ const ManagementPage = ({ locale }: Props) => {
                     }
                 })
                 .then((data) => {
-                    setSubscriptions(data.subscriptions);
+                    const [subscription] = data.subscriptions;
+                    setSubscription(subscription);
                 })
                 .catch(() => {
                     setStatus('error');
@@ -95,17 +94,18 @@ const ManagementPage = ({ locale }: Props) => {
     };
 
     const renderSubscriptions = () => {
-        if (!subscriptions) {
+        if (!subscription) {
             return;
         }
-        const dateObj = new Date(subscriptions[0].next_payment_at);
+
+        const date = new Date(subscription.next_payment_at);
         const nextPaymentDate = formatDate(
             locale,
-            subscriptions[0].next_payment_at
+            subscription.next_payment_at
         );
         const lastActiveDate = formatDate(
             locale,
-            dateObj.setDate(dateObj.getDate() - 1)
+            date.setDate(date.getDate() - 1)
         );
 
         return (
@@ -125,17 +125,13 @@ const ManagementPage = ({ locale }: Props) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {subscriptions.map((subscription) => {
-                                return (
-                                    <tr
-                                        key={`${subscription.brand}-${subscription.last4}`}
-                                    >
-                                        <td>{`$${subscription.amount}`}</td>
-                                        <td>{`**** **** **** ${subscription.last4}`}</td>
-                                        <td>{subscription.expires_at}</td>
-                                    </tr>
-                                );
-                            })}
+                            <tr
+                                key={`${subscription.brand}-${subscription.last4}`}
+                            >
+                                <td>{`$${subscription.amount}`}</td>
+                                <td>{`**** **** **** ${subscription.last4}`}</td>
+                                <td>{subscription.expires_at}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -159,7 +155,7 @@ const ManagementPage = ({ locale }: Props) => {
     const renderContent = () => {
         if (userData && !isSubscriber) {
             return renderInvitation();
-        } else if (isSubscriber && subscriptions) {
+        } else if (isSubscriber && subscription) {
             return renderSubscriptions();
         } else if (status === 'error') {
             return <ErrorMessage />;
