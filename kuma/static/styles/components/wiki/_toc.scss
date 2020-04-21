@@ -126,36 +126,105 @@ On This Page component
     background-color: unset;
     margin: 0;
     padding-top: 0;
+    padding-bottom: 0;
     width: unset;
+
+    @media #{$mq-small-desktop-and-up} {
+        padding-bottom: 20px;
+    }
 }
 
 .document-toc {
-    background-color: $toc-background-color;
-    margin-top: 30px;
-    border: solid 1px $toc-border-color;
-
-    &:before {
-        display: block;
-        background-image: linear-gradient(-272deg, $toc-gradient-start-color, $toc-gradient-end-color);
-        content: '';
-        height: 4px;
-    }
+    position: relative;
 
     h2 {
-        margin: 15px 0;
-        @include bidi(((padding-left, 10px, padding-right, 0),));
-        font-weight: 400;
-        @include set-font-size(24px);
+        display: none;
+
+        @media #{$mq-small-desktop-and-up} {
+            display: block;
+        }
+    }
+
+    .toc-trigger-mobile {
+        margin-top: $gutter-width / 2;
+        padding: 10px 0;
+        border: 0;
+        border-bottom: 2px solid $blue;
+        color: $link-color;
+        width: 100%;
+        font-weight: normal;
+        text-align: left;
+
+        svg {
+            margin-left: 5px;
+            fill: currentColor;
+            width: 18px;
+            height: 18px;
+            vertical-align: bottom;
+
+            @media #{$mq-small-desktop-and-up} {
+                display: none;
+            }
+        }
+
+        @media #{$mq-small-desktop-and-up} {
+            display: none;
+        }
     }
 
     ul {
-        @include bidi(((padding-left, 20px, padding-right, 0),));
+        display: none;
+        position: absolute;
+        top: 50px;
+        background-color: #fff;
+        padding: 0 20px;
+        border: 2px solid $blue;
+        width: 90%;
         list-style: none;
-        @include set-font-size(16px);
+        z-index: 99;
+
+        @media #{$mq-small-desktop-and-up} {
+            @include bidi(((padding-left, 20px, padding-right, 0),));
+            @include set-font-size(16px);
+            display: block;
+            position: inherit;
+            top: inherit;
+            background-color: inherit;
+            border: 0;
+            width: auto;
+        }
 
         li {
-            margin: 10px 0;
+            margin: 20px 0;
             line-height: 1.2;
+
+            @media #{$mq-small-desktop-and-up} {
+                margin: 10px 0;
+            }
+        }
+
+        &.show-toc {
+            display: block;
+        }
+    }
+
+    @media #{$mq-small-desktop-and-up} {
+        background-color: $toc-background-color;
+        margin-top: 30px;
+        border: solid 1px $toc-border-color;
+
+        &:before {
+            display: block;
+            background-image: linear-gradient(-272deg, $toc-gradient-start-color, $toc-gradient-end-color);
+            content: '';
+            height: 4px;
+        }
+
+        h2 {
+            margin: 15px 0;
+            @include bidi(((padding-left, 10px, padding-right, 0),));
+            font-weight: 400;
+            @include set-font-size(24px);
         }
     }
 }
