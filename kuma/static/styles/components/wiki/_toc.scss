@@ -183,6 +183,10 @@ On This Page component
         list-style: none;
         z-index: 99;
 
+        @media #{$mq-tablet-and-up} {
+            width: 94%;
+        }
+
         @media #{$mq-small-desktop-and-up} {
             @include bidi(((padding-left, 20px, padding-right, 0),));
             @include set-font-size(16px);
