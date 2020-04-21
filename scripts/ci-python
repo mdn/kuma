@@ -50,4 +50,13 @@ docker-compose restart ssr
 docker-compose exec -T web ./manage.py migrate
 # This checks that running `./manage.py makemigrations` wasn't forgotten
 docker-compose exec -T web ./manage.py makemigrations --check --dry-run
-docker-compose exec -T web make coveragetest
+
+# The idea here is that coverage analysis on the pytest tests is
+# pretty slow. Still useful but significant slowdown.
+# So can it be skipped if there were no .py changes in the PR.
+git diff --name-only
+
+echo "TRAVIS_PULL_REQUEST:"
+echo $TRAVIS_PULL_REQUEST
+
+docker-compose exec -T web make test
