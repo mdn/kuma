@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 import GAProvider from './ga-provider.jsx';
 import { gettext } from './l10n.js';
@@ -14,7 +14,7 @@ type Props = {
 export default function TOC({ html }: Props) {
     const ga = useContext(GAProvider.context);
     const documentTOCRef = useRef(null);
-    const tocRef = useRef(null);
+    const [showTOC, setShowTOC] = useState(false);
 
     /**
      * Send a signal to GA when the user clicks on one of links
@@ -40,10 +40,7 @@ export default function TOC({ html }: Props) {
      * mobile devices
      */
     function toggleTOC() {
-        const toc = tocRef.current;
-        if (toc) {
-            toc.classList.toggle('show-toc');
-        }
+        setShowTOC(!showTOC);
     }
 
     useEffect(() => {
@@ -75,7 +72,7 @@ export default function TOC({ html }: Props) {
                     </button>
                 </header>
                 <ul
-                    ref={tocRef}
+                    className={showTOC && 'show-toc'}
                     dangerouslySetInnerHTML={{
                         __html: html,
                     }}
