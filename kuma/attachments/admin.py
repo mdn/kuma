@@ -1,4 +1,4 @@
-from constance import config
+from django.conf import settings
 from django.contrib import admin, messages
 from django.utils.encoding import force_text
 from django.utils.html import format_html
@@ -65,7 +65,7 @@ class AttachmentAdmin(DisabledDeleteActionMixin, admin.ModelAdmin):
                 )
                 % {
                     "filenames": get_text_list(trashed_attachments, _("and")),
-                    "days": config.WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS,
+                    "days": settings.WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS,
                 },
                 messages.SUCCESS,
             )
@@ -142,7 +142,7 @@ class AttachmentRevisionAdmin(DisabledDeleteActionMixin, admin.ModelAdmin):
             )
             % {
                 "filename": force_text(trash_item.filename),
-                "days": config.WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS,
+                "days": settings.WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS,
             },
             messages.SUCCESS,
         )

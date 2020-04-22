@@ -1420,11 +1420,6 @@ CONSTANCE_CONFIG = dict(
         "Disable uploading of new or revised attachments via the Wiki. "
         "Attachments may still be modified via the Django Admin.",
     ),
-    WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS=(
-        14,
-        "Number of days to keep the trashed attachments files before they "
-        "are removed from the file storage",
-    ),
     KUMA_WIKI_IFRAME_ALLOWED_HOSTS=(
         (
             r"^https?\:\/\/"
@@ -1447,6 +1442,12 @@ CONSTANCE_CONFIG = dict(
         "Google Analytics (read-only) API credentials",
     ),
     AKISMET_KEY=("", "API key for Akismet spam checks, leave empty to disable"),
+)
+
+# Number of days to keep the trashed attachments files before they are removed from
+# the file storage.
+WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS = config(
+    "WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS", default=14, cast=int
 )
 
 # JSON array listing tag suggestions for documents
