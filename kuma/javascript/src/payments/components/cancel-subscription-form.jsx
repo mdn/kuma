@@ -61,12 +61,12 @@ const CancelSubscriptionForm = ({
                     <div className="form-footer">
                         <button
                             type="button"
-                            className="cancel"
+                            className="cta keep-membership"
                             onClick={handleCancel}
                         >
                             {gettext('Keep my membership')}
                         </button>
-                        <button type="submit" className="confirm inverse">
+                        <button type="submit" className="cta negative">
                             {gettext('Yes, cancel subscription')}
                         </button>
                     </div>

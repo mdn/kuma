@@ -121,31 +121,31 @@ const ManagementPage = ({ locale }: Props) => {
             <>
                 <p>Next payment occurs on {nextPaymentDate}.</p>
                 <div className="active-subscriptions">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th className="amount">{gettext('Amount')}</th>
-                                <th className="credit-card">
-                                    {gettext('Card Number')}
-                                </th>
-                                <th className="credit-card">
-                                    {gettext('Expiry')}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr
-                                key={`${subscription.brand}-${subscription.last4}`}
-                            >
-                                <td>{`$${subscription.amount}`}</td>
-                                <td>{`**** **** **** ${subscription.last4}`}</td>
-                                <td>{subscription.expires_at}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <ul>
+                        <li>
+                            <span className="label amount">
+                                {gettext('Amount')}
+                            </span>
+                            <span className="value">{`$${subscription.amount}`}</span>
+                        </li>
+                        <li>
+                            <span className="label credit-card">
+                                {gettext('Card number')}
+                            </span>
+                            <span className="value">{`**** **** **** ${subscription.last4}`}</span>
+                        </li>
+                        <li>
+                            <span className="label credit-card">
+                                {gettext('Expiry')}
+                            </span>
+                            <span className="value">
+                                {subscription.expires_at}
+                            </span>
+                        </li>
+                    </ul>
                 </div>
                 <button
-                    className="confirm toggle"
+                    className="cta cancel"
                     onClick={handleClick}
                     type="button"
                 >
@@ -175,7 +175,7 @@ const ManagementPage = ({ locale }: Props) => {
 
     return (
         <>
-            <Subheader title="Manage monthly subscription" />
+            <Subheader title="Manage monthly subscriptions" />
             <main
                 className="contributions-page manage-subscriptions"
                 role="main"

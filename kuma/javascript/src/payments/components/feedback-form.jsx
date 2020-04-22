@@ -70,7 +70,11 @@ const FeedbackForm = (): React.Node => {
             />
             <div className="form-footer">
                 {error && <span data-testid="error-msg">{error}</span>}
-                <button data-testid="feedback-button" type="submit">
+                <button
+                    data-testid="feedback-button"
+                    type="submit"
+                    className="cta primary"
+                >
                     {gettext('Send')}
                 </button>
             </div>
