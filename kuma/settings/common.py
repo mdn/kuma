@@ -1491,19 +1491,21 @@ CONSTANCE_CONFIG = dict(
         ),
         "JSON array listing tag suggestions for documents",
     ),
-    COMMON_REASONS_TO_BAN_USERS=(
-        json.dumps(
-            [
-                "Spam",
-                "Profile Spam ",
-                "Sandboxing",
-                "Incorrect Translation",
-                "Penetration Testing",
-            ]
-        ),
-        "JSON array listing some common reasons to ban users",
-    ),
     AKISMET_KEY=("", "API key for Akismet spam checks, leave empty to disable"),
+)
+
+# JSON array listing some common reasons to ban users
+COMMON_REASONS_TO_BAN_USERS = config(
+    "COMMON_REASONS_TO_BAN_USERS",
+    default=json.dumps(
+        [
+            "Spam",
+            "Profile Spam ",
+            "Sandboxing",
+            "Incorrect Translation",
+            "Penetration Testing",
+        ]
+    ),
 )
 
 # Number of expired sessions to cleanup up in one go.

@@ -9,7 +9,6 @@ from allauth.account.models import EmailAddress
 from allauth.socialaccount import helpers
 from allauth.socialaccount.views import ConnectionsView
 from allauth.socialaccount.views import SignupView as BaseSignupView
-from constance import config
 from django.conf import settings
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import permission_required
@@ -104,7 +103,7 @@ def ban_user(request, username):
         form = UserBanForm()
     # A list of common reasons for banning a user, loaded from constance
     try:
-        common_reasons = json.loads(config.COMMON_REASONS_TO_BAN_USERS)
+        common_reasons = json.loads(settings.COMMON_REASONS_TO_BAN_USERS)
     except (TypeError, ValueError):
         common_reasons = ["Spam"]
     else:
