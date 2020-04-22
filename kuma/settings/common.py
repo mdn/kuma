@@ -1503,11 +1503,12 @@ CONSTANCE_CONFIG = dict(
         ),
         "JSON array listing some common reasons to ban users",
     ),
-    SESSION_CLEANUP_CHUNK_SIZE=(
-        1000,
-        "Number of expired sessions to cleanup up in one go.",
-    ),
     AKISMET_KEY=("", "API key for Akismet spam checks, leave empty to disable"),
+)
+
+# Number of expired sessions to cleanup up in one go.
+SESSION_CLEANUP_CHUNK_SIZE = config(
+    "SESSION_CLEANUP_CHUNK_SIZE", default=1000, cast=int
 )
 
 # Email address from which welcome emails will be sent
