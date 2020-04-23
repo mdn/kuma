@@ -44,7 +44,7 @@ export default function TOC({ html }: Props) {
 
     return (
         <aside className="document-toc-container">
-            {/* eslint-disable-next-line */}
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
             <section className="document-toc" onClick={sendTOCClicks}>
                 <header>
                     <h2>{gettext('On this Page')}</h2>
