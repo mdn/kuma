@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useState } from 'react';
 
 import GAProvider from './ga-provider.jsx';
 import { gettext } from './l10n.js';
@@ -13,7 +13,6 @@ type Props = {
 
 export default function TOC({ html }: Props) {
     const ga = useContext(GAProvider.context);
-    const documentTOCRef = useRef(null);
     const [showTOC, setShowTOC] = useState(false);
 
     /**
@@ -43,23 +42,10 @@ export default function TOC({ html }: Props) {
         setShowTOC(!showTOC);
     }
 
-    useEffect(() => {
-        const documentToc = documentTOCRef.current;
-
-        if (documentToc) {
-            documentToc.addEventListener('click', sendTOCClicks);
-        }
-
-        return () => {
-            if (documentToc) {
-                documentToc.removeEventListener('click', sendTOCClicks);
-            }
-        };
-    });
-
     return (
         <aside className="document-toc-container">
-            <section className="document-toc" ref={documentTOCRef}>
+            {/* eslint-disable-next-line */}
+            <section className="document-toc" onClick={sendTOCClicks}>
                 <header>
                     <h2>{gettext('On this Page')}</h2>
                     <button
@@ -72,7 +58,7 @@ export default function TOC({ html }: Props) {
                     </button>
                 </header>
                 <ul
-                    className={showTOC && 'show-toc'}
+                    className={showTOC ? 'show-toc' : undefined}
                     dangerouslySetInnerHTML={{
                         __html: html,
                     }}
