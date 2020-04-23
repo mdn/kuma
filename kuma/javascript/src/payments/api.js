@@ -3,11 +3,14 @@ import { getCookie } from '../utils.js';
 /**
  * API methods for subscriptions
  */
-const SUBSCRIPTIONS_URL = '/api/v1/subscriptions/';
-const SUBSCRIPTIONS_FEEDBACK_URL = `${SUBSCRIPTIONS_URL}feedback/`;
+export const SUBSCRIPTIONS_URL = '/api/v1/subscriptions/';
+export const SUBSCRIPTIONS_FEEDBACK_URL = `${SUBSCRIPTIONS_URL}feedback/`;
 
 /**
- * Get all subscriptions
+ * Get all user's subscriptions
+ *
+ * @param {function({ "subscriptions": Array}):void} onSuccess - The callback that handles a successful response.
+ * @param {function(string):void} onError - The callback that handles an error.
  */
 export function getSubscriptions(onSuccess, onError) {
     fetch(SUBSCRIPTIONS_URL)
@@ -16,7 +19,7 @@ export function getSubscriptions(onSuccess, onError) {
                 return res.json();
             } else {
                 throw new Error(
-                    `${res.status} ${res.statusText} fetching ${SUBSCRIPTIONS_URL}`
+                    `${res.status} - ${res.statusText} while fetching ${SUBSCRIPTIONS_URL}`
                 );
             }
         })
@@ -27,7 +30,10 @@ export function getSubscriptions(onSuccess, onError) {
 }
 
 /**
- * Cancel all user subscriptions
+ * Cancel all user's subscriptions
+ *
+ * @param {function(Object):void} onSuccess - The callback that handles a successful response.
+ * @param {function(string):void} onError - The callback that handles an error.
  */
 export function deleteSubscriptions(onSuccess, onError) {
     fetch(SUBSCRIPTIONS_URL, {
@@ -39,7 +45,7 @@ export function deleteSubscriptions(onSuccess, onError) {
         .then((res) => {
             if (!res.ok) {
                 throw new Error(
-                    `${res.status} ${res.statusText} deleting ${SUBSCRIPTIONS_URL}`
+                    `${res.status} - ${res.statusText} while deleting ${SUBSCRIPTIONS_URL}`
                 );
             }
             return res;
@@ -52,6 +58,10 @@ export function deleteSubscriptions(onSuccess, onError) {
 
 /**
  * Submit user feedback to Google Analytics
+ *
+ * @param {{ "feedback": string }} body - body of request, data type JSON
+ * @param {function(Object)} onSuccess - The callback that handles a successful response.
+ * @param {function(string)} onError - The callback that handles an error.
  */
 export function sendFeedback(body, onSuccess, onError) {
     fetch(SUBSCRIPTIONS_FEEDBACK_URL, {
@@ -65,7 +75,7 @@ export function sendFeedback(body, onSuccess, onError) {
         .then((res) => {
             if (!res.ok) {
                 throw new Error(
-                    `${res.status} ${res.statusText} posting ${SUBSCRIPTIONS_FEEDBACK_URL}`
+                    `${res.status} - ${res.statusText} posting ${SUBSCRIPTIONS_FEEDBACK_URL}`
                 );
             }
             return res;

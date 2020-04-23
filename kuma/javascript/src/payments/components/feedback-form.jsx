@@ -4,7 +4,6 @@ import { gettext, interpolate } from '../../l10n.js';
 import ErrorMessage from '../components/error-message.jsx';
 import { sendFeedback } from '../api.js';
 
-export const FEEDBACK_URL = '/api/v1/subscriptions/feedback/';
 export const MIN_STRING_LENGTH = 5;
 
 const FeedbackForm = (): React.Node => {

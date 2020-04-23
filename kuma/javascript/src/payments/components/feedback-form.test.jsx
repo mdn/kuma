@@ -2,7 +2,8 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import { toHaveAttribute } from '@testing-library/jest-dom/matchers';
-import FeedbackForm, { FEEDBACK_URL } from './feedback-form.jsx';
+import FeedbackForm from './feedback-form.jsx';
+import { SUBSCRIPTIONS_FEEDBACK_URL } from '../api.js';
 
 expect.extend({ toHaveAttribute });
 
@@ -153,7 +154,7 @@ describe('Payments Feedback Form', () => {
         // Check that fetch was called with correct url and data
         await waitFor(() => {
             expect(window.fetch).toHaveBeenCalledWith(
-                FEEDBACK_URL,
+                SUBSCRIPTIONS_FEEDBACK_URL,
                 mockOptions
             );
         });

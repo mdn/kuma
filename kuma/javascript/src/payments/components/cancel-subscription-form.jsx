@@ -4,8 +4,6 @@ import { gettext, interpolate } from '../../l10n.js';
 import ErrorMessage from '../components/error-message.jsx';
 import { deleteSubscriptions } from '../api.js';
 
-export const FEEDBACK_URL = '/api/v1/subscriptions/feedback/';
-
 type Props = {
     setShowForm: (((boolean) => boolean) | boolean) => void,
     onSuccess: () => void,
@@ -42,37 +40,33 @@ const CancelSubscriptionForm = ({
     }
 
     return (
-        <>
-            <form
-                disabled={status === 'submitting'}
-                data-testid="feedback-form"
-                onSubmit={handleSubmit}
-            >
-                <div>
-                    <strong>
-                        {gettext('Are you sure you want to cancel?')}
-                    </strong>
-                    <p>
-                        {interpolate(
-                            'Your monthly subscription will end on %(date)s. You will have to set up a new subscription if you wish to resume making payments to MDN Web Docs.',
-                            { date }
-                        )}
-                    </p>
-                    <div className="form-footer">
-                        <button
-                            type="button"
-                            className="cta keep-membership"
-                            onClick={handleCancel}
-                        >
-                            {gettext('Keep my membership')}
-                        </button>
-                        <button type="submit" className="cta negative">
-                            {gettext('Yes, cancel subscription')}
-                        </button>
-                    </div>
+        <form onSubmit={handleSubmit}>
+            <div>
+                <strong>{gettext('Are you sure you want to cancel?')}</strong>
+                <p>
+                    {interpolate(
+                        'Your monthly subscription will end on %(date)s. You will have to set up a new subscription if you wish to resume making payments to MDN Web Docs.',
+                        { date }
+                    )}
+                </p>
+                <div className="form-footer">
+                    <button
+                        type="button"
+                        className="cta keep-membership"
+                        onClick={handleCancel}
+                    >
+                        {gettext('Keep my membership')}
+                    </button>
+                    <button
+                        type="submit"
+                        className="cta negative"
+                        disabled={status === 'submitting'}
+                    >
+                        {gettext('Yes, cancel subscription')}
+                    </button>
                 </div>
-            </form>
-        </>
+            </div>
+        </form>
     );
 };
 

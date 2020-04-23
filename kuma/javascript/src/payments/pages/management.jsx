@@ -3,12 +3,11 @@ import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 
 import { gettext, Interpolated } from '../../l10n.js';
+import UserProvider, { type UserData } from '../../user-provider.jsx';
 import Subheader from '../components/subheaders/index.jsx';
 import CancelSubscriptionForm from '../components/cancel-subscription-form.jsx';
 import ErrorMessage from '../components/error-message.jsx';
 import { getSubscriptions } from '../api.js';
-
-import UserProvider, { type UserData } from '../../user-provider.jsx';
 
 export type SubscriptionData = {
     id: string,
@@ -48,9 +47,10 @@ const ManagementPage = ({ locale }: Props) => {
 
     // Currently we don't have a way to update the UserProvider context, so
     // we are saving the context value `isSubscriber` to local state. It will be
-    // out-of-sync when a successful delete occurs, but I think it's ok for now,
-    // since actions are limited (nothing builds upon `isSubscriber`-- the only
-    // thing you can do from this point is go to /payments).
+    // out-of-sync with context upon a successful delete, but I think it's ok
+    // for now, since actions after deleting are limited-- nothing builds upon
+    // `isSubscriber`. The only thing you can do from this point is go to
+    // /payments which will refresh the UserProvider context.
     useEffect(() => {
         setIsSubscriber(userData && userData.isSubscriber);
     }, [userData]);
