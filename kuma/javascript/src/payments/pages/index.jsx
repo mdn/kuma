@@ -263,7 +263,7 @@ export default function LandingPage({ data, locale }: RouteComponentProps) {
                                     subscriptionsLink={
                                         <a href={urls.managePayments}>
                                             {gettext(
-                                                'manage monthly subscription page'
+                                                'manage monthly subscriptions page'
                                             )}
                                         </a>
                                     }
@@ -291,7 +291,7 @@ export default function LandingPage({ data, locale }: RouteComponentProps) {
                                     subscriptionsLink={
                                         <a href={urls.managePayments}>
                                             {gettext(
-                                                'manage monthly subscription page'
+                                                'manage monthly subscriptions page'
                                             )}
                                         </a>
                                     }
