@@ -4,11 +4,11 @@ import { toBeVisible, toBeDisabled } from '@testing-library/jest-dom/matchers';
 import CancelSubscriptionForm from './cancel-subscription-form.jsx';
 import { SUBSCRIPTIONS_URL } from '../api.js';
 
-expect.extend({ toBeVisible, toBeDisabled });
-
 // Fixes "ReferenceError: regeneratorRuntime is not defined"
 // when running tests that use fetch
 require('regenerator-runtime/runtime');
+
+expect.extend({ toBeVisible, toBeDisabled });
 
 const setup = (props = {}) => {
     const mockProps = {

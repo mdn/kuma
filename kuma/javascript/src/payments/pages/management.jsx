@@ -2,12 +2,13 @@
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 
-import { gettext, Interpolated } from '../../l10n.js';
+import { gettext, interpolate, Interpolated } from '../../l10n.js';
 import UserProvider, { type UserData } from '../../user-provider.jsx';
 import Subheader from '../components/subheaders/index.jsx';
 import CancelSubscriptionForm from '../components/cancel-subscription-form.jsx';
 import ErrorMessage from '../components/error-message.jsx';
 import { getSubscriptions } from '../api.js';
+import { formatDate } from '../formatDate.js';
 
 export type SubscriptionData = {
     id: string,
@@ -22,19 +23,10 @@ export type SubscriptionData = {
 type Props = {
     locale: string,
 };
-
-const formatDate = (
-    locale,
-    date,
-    options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    }
-) => {
-    const dateObj = new Date(date);
-    return new Intl.DateTimeFormat(locale, options).format(dateObj);
-};
+export const title = gettext('Manage monthly subscriptions');
+export const successMsg = gettext(
+    'Your monthly subscription has been successfully canceled.'
+);
 
 const ManagementPage = ({ locale }: Props) => {
     const [showForm, setShowForm] = React.useState<boolean>(false);
@@ -79,26 +71,20 @@ const ManagementPage = ({ locale }: Props) => {
 
     const renderSuccess = () => (
         <p className="alert success" data-testid="success-msg">
-            {gettext(
-                'Your monthly subscription has been successfully canceled.'
-            )}
+            {successMsg}
         </p>
     );
 
     const renderInvitation = () => (
         <div className="active-subscriptions">
-            <p>
-                <Interpolated
-                    id={gettext(
-                        'You have no active subscriptions. Why not <signupLink />?'
-                    )}
-                    signupLink={
-                        <a href={`/${locale}/payments/`}>
-                            {gettext('set one up')}
-                        </a>
-                    }
-                />
-            </p>
+            <Interpolated
+                id={gettext(
+                    'You have no active subscriptions. Why not <signupLink />?'
+                )}
+                signupLink={
+                    <a href={`/${locale}/payments/`}>{gettext('set one up')}</a>
+                }
+            />
         </div>
     );
 
@@ -106,7 +92,6 @@ const ManagementPage = ({ locale }: Props) => {
         if (!subscription) {
             return;
         }
-
         const date = new Date(subscription.next_payment_at);
         const nextPaymentDate = formatDate(
             locale,
@@ -119,7 +104,14 @@ const ManagementPage = ({ locale }: Props) => {
 
         return (
             <>
-                <p>Next payment occurs on {nextPaymentDate}.</p>
+                <p>
+                    {interpolate(
+                        'Next payment occurs on %(nextPaymentDate)s.',
+                        {
+                            nextPaymentDate,
+                        }
+                    )}
+                </p>
                 <div className="active-subscriptions">
                     <ul>
                         <li>
@@ -170,12 +162,12 @@ const ManagementPage = ({ locale }: Props) => {
         } else if (status === 'error') {
             return <ErrorMessage />;
         }
-        return <strong>Loading…</strong>;
+        return <strong>{gettext('Loading…')}</strong>;
     };
 
     return (
         <>
-            <Subheader title="Manage monthly subscriptions" />
+            <Subheader title={title} />
             <main
                 className="contributions-page manage-subscriptions"
                 role="main"
@@ -183,7 +175,7 @@ const ManagementPage = ({ locale }: Props) => {
             >
                 <section>
                     <div className="column-8">
-                        <h2>Subscriptions</h2>
+                        <h2>{gettext('Subscriptions')}</h2>
                         {renderContent()}
                         {status === 'success' && renderSuccess()}
                     </div>

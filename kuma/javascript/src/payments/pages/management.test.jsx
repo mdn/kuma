@@ -1,0 +1,136 @@
+import React from 'react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
+import {
+    toBeVisible,
+    toBeInTheDocument,
+} from '@testing-library/jest-dom/matchers';
+import UserProvider from '../../user-provider.jsx';
+import { title as cancelTitle } from '../components/cancel-subscription-form.jsx';
+import { formatDate } from '../formatDate.js';
+import ManagementPage, { title, successMsg } from './management.jsx';
+
+// Fixes "ReferenceError: regeneratorRuntime is not defined"
+// when running tests that use fetch
+require('regenerator-runtime/runtime');
+
+expect.extend({ toBeVisible, toBeInTheDocument });
+
+const setup = (userData = {}) => {
+    const mockUserData = {
+        ...UserProvider.defaultUserData,
+        ...userData,
+    };
+    return render(
+        <UserProvider.context.Provider value={mockUserData}>
+            <ManagementPage locale="en-US" />
+        </UserProvider.context.Provider>
+    );
+};
+
+describe('Payments Management Page', () => {
+    test('renders subheader, container, and loading by default', () => {
+        const { getByText, queryByTestId } = render(
+            <UserProvider.context.Provider value={null}>
+                <ManagementPage locale="en-US" />
+            </UserProvider.context.Provider>
+        );
+        expect(getByText(title)).toBeInTheDocument();
+        expect(queryByTestId('management-page')).toBeInTheDocument();
+        expect(getByText(/loading/i)).toBeInTheDocument();
+    });
+
+    it('shows no subscriptions message if not a subscriber', () => {
+        const { getByText } = setup();
+        expect(getByText(/no active subscriptions/i)).toBeInTheDocument();
+    });
+
+    it('shows error message if cannot retrieve subscriptions', async () => {
+        window.fetch = jest.fn(() => Promise.resolve({ ok: false }));
+        window.mdn = {
+            contributionSupportEmail: 'mock-support@mozilla.com',
+        };
+        const { getByText } = setup({ isSubscriber: true });
+        await waitFor(() => {
+            expect(
+                getByText(/sorry, something went wrong/i)
+            ).toBeInTheDocument();
+            window.fetch.mockReset();
+        });
+    });
+
+    test('subscriptions render and buttons work', async () => {
+        const mockResponse = {
+            subscriptions: [
+                {
+                    id: 'sub_H9PQHPTDQGQCK1',
+                    amount: 5,
+                    brand: 'Visa',
+                    expires_at: '11/2020', // eslint-disable-line camelcase
+                    last4: '4242',
+                    next_payment_at: '2020-05-23T08:04:40', // eslint-disable-line camelcase
+                    zip: '11201',
+                },
+            ],
+        };
+
+        // mock first request to get subscriptions
+        // second request is to delete subscription
+        window.fetch = jest
+            .fn()
+            .mockImplementationOnce(() =>
+                Promise.resolve({ ok: true, json: () => mockResponse })
+            )
+            .mockImplementationOnce(() => Promise.resolve({ ok: true }));
+
+        const { getByText } = setup({ isSubscriber: true });
+        const expected = mockResponse.subscriptions[0];
+
+        // Content renders
+        await waitFor(() => {
+            // check last 4
+            expect(
+                getByText(expected.last4, { exact: false })
+            ).toBeInTheDocument();
+
+            // check expires at
+            expect(getByText(expected.expires_at)).toBeInTheDocument();
+
+            // check next payment date
+            expect(
+                getByText(formatDate('en-US', expected.next_payment_at), {
+                    exact: false,
+                })
+            ).toBeInTheDocument();
+        });
+
+        // Click on cancel subscription button to show confirmation message
+        let cancelBtn;
+        await waitFor(() => {
+            cancelBtn = getByText('Cancel subscription');
+            expect(cancelBtn).toBeInTheDocument();
+            fireEvent.click(cancelBtn);
+            expect(getByText(cancelTitle)).toBeVisible();
+        });
+
+        // Click on Keep my membership button to hide confirmation message
+        const keepBtn = getByText(/keep my membership/i);
+        const cancelText = getByText(cancelTitle);
+        fireEvent.click(keepBtn);
+
+        expect(keepBtn).not.toBeInTheDocument();
+        expect(cancelText).not.toBeInTheDocument();
+
+        // Open confirmation again, click on "Yes, cancel subscription"
+        fireEvent.click(cancelBtn);
+        const submitBtn = getByText('Yes, cancel subscription');
+        fireEvent.click(submitBtn);
+
+        // Success message and no subscriptions message should show
+        await waitFor(() => {
+            expect(getByText(successMsg)).toBeInTheDocument();
+            expect(getByText(/no active subscriptions/i)).toBeInTheDocument();
+        });
+
+        window.fetch.mockReset();
+    });
+});

@@ -10,6 +10,8 @@ type Props = {
     date: string,
 };
 
+export const title = gettext('Are you sure you want to cancel?');
+
 const CancelSubscriptionForm = ({
     setShowForm,
     onSuccess,
@@ -42,7 +44,7 @@ const CancelSubscriptionForm = ({
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <strong>{gettext('Are you sure you want to cancel?')}</strong>
+                <strong>{title}</strong>
                 <p>
                     {interpolate(
                         'Your monthly subscription will end on %(date)s. You will have to set up a new subscription if you wish to resume making payments to MDN Web Docs.',
