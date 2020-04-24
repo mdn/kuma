@@ -349,59 +349,6 @@ class SearchViewTests(ElasticTestCase):
         assert data["locale"] == "fr"
 
 
-@pytest.mark.parametrize("http_method", ("put", "post", "delete", "options"))
-def test_get_user_disallowed_methods(client, wiki_user, http_method):
-    """
-    HTTP methods other than GET and HEAD are not allowed on the api.v1.get_user
-    endpoint.
-    """
-    url = reverse("api.v1.get_user", args=(wiki_user.username,))
-    response = getattr(client, http_method)(url)
-    assert response.status_code == 405
-    assert_no_cache_header(response)
-
-
-@pytest.mark.parametrize("case", ("upper", "lower"))
-@pytest.mark.parametrize("http_method", ("get", "head"))
-def test_get_existing_user(
-    client, wiki_user, wiki_user_github_account, http_method, case
-):
-    """
-    Test GET and HEAD on the api.v1.get_user endpoint for an existing user, and
-    also that the username is case insensitive.
-    """
-    username = getattr(str, case)(wiki_user.username)
-    url = reverse("api.v1.get_user", args=(username,))
-    response = getattr(client, http_method)(url)
-    assert response.status_code == 200
-    assert response["content-type"] == "application/json"
-    assert_no_cache_header(response)
-    if http_method == "get":
-        data = response.json()
-        assert data["username"] == wiki_user.username
-        assert data["avatar_url"] == wiki_user_github_account.get_avatar_url()
-        for field in (
-            "title",
-            "fullname",
-            "organization",
-            "location",
-            "timezone",
-            "locale",
-        ):
-            assert data[field] == getattr(wiki_user, field)
-
-
-@pytest.mark.parametrize("http_method", ("get", "head"))
-def test_get_nonexisting_user(db, client, http_method):
-    """
-    Test GET and HEAD on the api.v1.get_user endpoint for a non-existing user.
-    """
-    url = reverse("api.v1.get_user", args=("nonexistent",))
-    response = getattr(client, http_method)(url)
-    assert response.status_code == 404
-    assert_no_cache_header(response)
-
-
 @pytest.mark.django_db
 def test_bc_signal_happy_path(client, root_doc):
     url = reverse("api.v1.bc_signal")

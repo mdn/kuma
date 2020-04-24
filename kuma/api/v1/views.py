@@ -2,7 +2,6 @@ import json
 
 from django.conf import settings
 from django.http import (
-    Http404,
     HttpResponse,
     HttpResponseBadRequest,
     HttpResponsePermanentRedirect,
@@ -11,7 +10,7 @@ from django.http import (
 from django.shortcuts import get_object_or_404
 from django.utils.translation import activate, gettext as _
 from django.views.decorators.cache import never_cache
-from django.views.decorators.http import require_GET, require_POST, require_safe
+from django.views.decorators.http import require_GET, require_POST
 from ratelimit.decorators import ratelimit
 from rest_framework import serializers, status
 from rest_framework.decorators import api_view
@@ -36,7 +35,7 @@ from kuma.search.filters import (
     TagGroupFilterBackend,
 )
 from kuma.search.search import SearchView
-from kuma.users.models import User, UserSubscription
+from kuma.users.models import UserSubscription
 from kuma.users.stripe_utils import (
     cancel_stripe_customer_subscriptions,
     create_stripe_customer_and_subscription_for_user,
@@ -319,33 +318,6 @@ def bc_signal(request):
         serializer.save()
         return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@never_cache
-@require_safe
-def get_user(request, username):
-    """
-    Returns a JSON response with a small subset of public information if a
-    user with the given username exists, otherwise returns a status code of
-    404. The case of the username is not important, since the collation of
-    the username column of the user table in MySQL is case-insensitive.
-    """
-    fields = (
-        "username",
-        "title",
-        "fullname",
-        "organization",
-        "location",
-        "timezone",
-        "locale",
-    )
-    try:
-        user = User.objects.only(*fields).get(username=username)
-    except User.DoesNotExist:
-        raise Http404(f'No user exists with the username "{username}".')
-    data = {field: getattr(user, field) for field in fields}
-    data["avatar_url"] = get_avatar_url(user)
-    return JsonResponse(data)
 
 
 @waffle_flag("subscription")
