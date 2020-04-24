@@ -38,7 +38,7 @@ export const formatDate = (
 ): string => {
     const dateObj = new Date(date);
     if (dateObj instanceof Date && isNaN(dateObj.valueOf())) {
-        return '';
+        throw new Error('Invalid date');
     }
     return new Intl.DateTimeFormat(locale, options).format(dateObj);
 };

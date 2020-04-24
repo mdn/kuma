@@ -1,8 +1,8 @@
 import { formatDate } from './formatDate.js';
 
 describe('formatDate()', () => {
-    // in order for tests to pass in Docker, we have to stick
-    // with the default locale that Node 12 provides, which is `en-US`.
+    // Node v12 doesn't support Intl out-of-the-box, so in order for tests to
+    // pass in Docker, we have to write tests using the default locale, `en-US`.
     const locale = 'en-US';
     it('if no options are provided, formats date in long month and numeric date and year', () => {
         const mockDate = '2020-05-23T08:04:40';
@@ -18,8 +18,8 @@ describe('formatDate()', () => {
         const expected = '05/20';
         expect(formatDate(locale, mockDate, mockOptions)).toEqual(expected);
     });
-    it('returns empty string for invalid date', () => {
+    it('throws error for invalid date', () => {
         const mockDate = '11/9999';
-        expect(formatDate(locale, mockDate)).toEqual('');
+        expect(() => formatDate(locale, mockDate)).toThrowError('Invalid date');
     });
 });

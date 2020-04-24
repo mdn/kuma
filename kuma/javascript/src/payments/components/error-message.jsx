@@ -12,7 +12,7 @@ const errorMessage = () => (
                 rel="noopener noreferrer"
                 href={`mailto:${window.mdn.contributionSupportEmail}`}
             >
-                {gettext(window.mdn.contributionSupportEmail)}
+                {window.mdn.contributionSupportEmail}
             </a>
         }
     />

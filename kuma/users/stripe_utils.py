@@ -58,14 +58,12 @@ def retrieve_and_synchronize_subscription_info(user):
 
             subscription_info = {
                 "id": stripe_subscription_info.id,
-                # Amount is in cents, so divide by 100
-                "amount": stripe_subscription_info.plan.amount / 100,
+                "amount": stripe_subscription_info.plan.amount,
                 "brand": card.brand,
                 "expires_at": f"{card.exp_month}/{card.exp_year}",
                 "last4": card.last4,
                 # Cards that are part of a "source" don't have a zip
                 "zip": card.get("address_zip", None),
-                # TODO: Deprecated. Only used in the Edit Profile and Payments Management view
                 "next_payment_at": datetime.fromtimestamp(
                     stripe_subscription_info.current_period_end
                 ),

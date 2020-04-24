@@ -101,7 +101,6 @@ const ManagementPage = ({ locale }: Props) => {
             locale,
             date.setDate(date.getDate() - 1)
         );
-
         return (
             <>
                 <p>
@@ -118,7 +117,10 @@ const ManagementPage = ({ locale }: Props) => {
                             <span className="label amount">
                                 {gettext('Amount')}
                             </span>
-                            <span className="value">{`$${subscription.amount}`}</span>
+                            <span className="value">
+                                {/* amount is in cents, so divide amount by 100 */}
+                                {`$${subscription.amount / 100}`}
+                            </span>
                         </li>
                         <li>
                             <span className="label credit-card">
