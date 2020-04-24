@@ -5,7 +5,7 @@ set -u  # Treat unset variables as an error
 # Why is this not using docker-compose??
 # Short answer; because it doesn't need to and it doesn't work otherwise.
 #
-# Long answer; Inside the docker container, we install npm packages into
+# Long answer; Inside the docker container, we install yarn packages into
 # /tools/node_modules. For some executable tools you can then tell them
 # that node_modules is NOT in `.`. You can do that with flow too, by
 # setting a config in .flowconfig. But if you do that, you make it impossible
