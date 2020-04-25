@@ -34,18 +34,9 @@ const ManagementPage = ({ locale }: Props) => {
         'idle'
     );
     const [subscription, setSubscription] = useState<?SubscriptionData>(null);
-    const [isSubscriber, setIsSubscriber] = useState<?boolean>(null);
+    const [canceled, setCanceled] = useState<?boolean>(false);
     const userData: ?UserData = useContext(UserProvider.context);
-
-    // Currently we don't have a way to update the UserProvider context, so
-    // we are saving the context value `isSubscriber` to local state. It will be
-    // out-of-sync with context upon a successful delete, but I think it's ok
-    // for now, since actions after deleting are limited-- nothing builds upon
-    // `isSubscriber`. The only thing you can do from this point is go to
-    // /payments which will refresh the UserProvider context.
-    useEffect(() => {
-        setIsSubscriber(userData && userData.isSubscriber);
-    }, [userData]);
+    const isSubscriber = userData && userData.isSubscriber;
 
     useEffect(() => {
         if (isSubscriber) {
@@ -65,7 +56,7 @@ const ManagementPage = ({ locale }: Props) => {
 
     const handleDeleteSuccess = () => {
         setSubscription(null);
-        setIsSubscriber(false);
+        setCanceled(true);
         setStatus('success');
     };
 
@@ -118,7 +109,7 @@ const ManagementPage = ({ locale }: Props) => {
                                 {gettext('Amount')}
                             </span>
                             <span className="value">
-                                {/* amount is in cents, so divide amount by 100 */}
+                                {/* amount is in cents, so divide by 100 to get dollars */}
                                 {`$${subscription.amount / 100}`}
                             </span>
                         </li>
@@ -157,7 +148,7 @@ const ManagementPage = ({ locale }: Props) => {
     };
 
     const renderContent = () => {
-        if (userData && !isSubscriber) {
+        if ((userData && !isSubscriber) || canceled) {
             return renderInvitation();
         } else if (isSubscriber && subscription) {
             return renderSubscriptions();
