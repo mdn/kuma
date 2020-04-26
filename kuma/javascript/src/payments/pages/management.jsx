@@ -8,7 +8,7 @@ import Subheader from '../components/subheaders/index.jsx';
 import CancelSubscriptionForm from '../components/cancel-subscription-form.jsx';
 import ErrorMessage from '../components/error-message.jsx';
 import { getSubscriptions } from '../api.js';
-import { formatDate } from '../formatDate.js';
+import { formatDate, formatMoney } from '../../formatters.js';
 
 export type SubscriptionData = {
     id: string,
@@ -110,7 +110,7 @@ const ManagementPage = ({ locale }: Props) => {
                             </span>
                             <span className="value">
                                 {/* amount is in cents, so divide by 100 to get dollars */}
-                                {`$${subscription.amount / 100}`}
+                                {formatMoney(locale, subscription.amount / 100)}
                             </span>
                         </li>
                         <li>

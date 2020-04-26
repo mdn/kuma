@@ -6,7 +6,7 @@ import {
 } from '@testing-library/jest-dom/matchers';
 import UserProvider from '../../user-provider.jsx';
 import { title as cancelTitle } from '../components/cancel-subscription-form.jsx';
-import { formatDate } from '../formatDate.js';
+import { formatDate } from '../../formatters.js';
 import ManagementPage, { title, successMsg } from './management.jsx';
 
 // Fixes "ReferenceError: regeneratorRuntime is not defined"
