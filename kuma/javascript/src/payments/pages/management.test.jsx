@@ -9,10 +9,6 @@ import { title as cancelTitle } from '../components/cancel-subscription-form.jsx
 import { formatDate } from '../../formatters.js';
 import ManagementPage, { title, successMsg } from './management.jsx';
 
-// Fixes "ReferenceError: regeneratorRuntime is not defined"
-// when running tests that use fetch
-require('regenerator-runtime/runtime');
-
 expect.extend({ toBeVisible, toBeInTheDocument });
 
 const setup = (userData = {}) => {

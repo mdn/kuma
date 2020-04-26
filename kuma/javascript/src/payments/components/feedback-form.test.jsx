@@ -7,9 +7,6 @@ import { SUBSCRIPTIONS_FEEDBACK_URL } from '../api.js';
 
 expect.extend({ toHaveAttribute });
 
-// Fixes "ReferenceError: regeneratorRuntime is not defined" when running jest tests
-require('regenerator-runtime/runtime');
-
 const setup = () => {
     const utils = render(<FeedbackForm />);
     const input = utils.getByTestId('feedback-input');
