@@ -1,3 +1,13 @@
+---
+name: Content request
+about: Suggest a change to MDN Content
+title: ''
+labels: ''
+assignees: ''
+
+---
+
+
 # Content Issue
 <!-- Select the appropriate option -->
 - [x] Please close this issue, I accidentally submitted it without adding any details
