@@ -1,3 +1,5 @@
+@import '../utils/utility-mixins.scss';
+
 .breadcrumbs {
     flex: 1 1;
 
@@ -17,17 +19,68 @@
             }
         }
 
-        .breadcrumb-chevron:after {
-            display: inline-block;
-            content: '›';
-            color: $grey-vdark;
-            margin: 0 5px;
-            font-size: 1rem;
-            font-weight: bold;
+        .breadcrumb-previous {
+            &::before {
+                display: inline-block;
+                content: '‹';
+                margin: 0 5px;
+                font-size: 1rem;
+                font-weight: bold;
+            }
+            span::before {
+                display: inline-block;
+                content: 'See\00a0';
+            }
+            &:hover {
+                span {
+                    &::before {
+                        text-decoration: underline;
+                    }
+                }
+            }
         }
 
-        :last-child .breadcrumb-chevron:after {
-            display: none;
+        &:first-child > [class*='crumb-current-page'] {
+            @include reset-visually-hidden();
+        }
+
+        // only show immediate parent on mobile and tablet
+        .crumb-current-page,
+        .breadcrumb-chevron {
+            @include visually-hidden();
+        }
+    }
+}
+
+@media #{$mq-small-desktop-and-up} {
+    .breadcrumbs {
+        li {
+            // reveal other breadcrumbs on Desktop
+            .breadcrumb-chevron,
+            .crumb-current-page {
+                @include reset-visually-hidden();
+            }
+
+            .breadcrumb-previous {
+                &::before {
+                    display: none;
+                }
+                span::before {
+                    display: none;
+                }
+            }
+
+            .breadcrumb-previous,
+            .breadcrumb-chevron {
+                &::after {
+                    display: inline-block;
+                    content: '›';
+                    color: $grey-vdark;
+                    margin: 0 5px;
+                    font-size: 1rem;
+                    font-weight: bold;
+                }
+            }
         }
     }
 }

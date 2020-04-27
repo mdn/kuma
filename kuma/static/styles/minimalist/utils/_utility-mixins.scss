@@ -10,3 +10,14 @@
     position: absolute !important; /* stylelint-disable-line declaration-no-important */
     width: 1px;
 }
+
+@mixin reset-visually-hidden {
+    border: initial;
+    clip: initial;
+    height: initial;
+    margin: initial;
+    overflow: initial;
+    padding: initial;
+    position: initial !important; /* stylelint-disable-line declaration-no-important */
+    width: initial;
+}
