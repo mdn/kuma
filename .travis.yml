@@ -56,4 +56,4 @@ jobs:
         - scripts/ci-localerefresh
         # - bash <(curl -s https://codecov.io/bash)
         - curl --version
-        - script/ci-codecovsubmit
+        - scripts/ci-codecovsubmit
