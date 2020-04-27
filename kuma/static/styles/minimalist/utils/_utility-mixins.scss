@@ -21,3 +21,23 @@
     position: initial !important; /* stylelint-disable-line declaration-no-important */
     width: initial;
 }
+
+@mixin caret-arrow($color, $size, $direction: right, $thickness: 2px) {
+    content: '';
+    border: solid $color;
+    border-width: 0 $thickness $thickness 0;
+    display: inline-block;
+    width: $size;
+    height: $size;
+
+    /* stylelint-disable block-closing-brace-newline-after */
+    @if ($direction == up) {
+        transform: rotate(-135deg);
+    } @else if ($direction == left) {
+        transform: rotate(135deg);
+    } @else if ($direction == down) {
+        transform: rotate(45deg);
+    } @else if ($direction == right) {
+        transform: rotate(-45deg);
+    }
+}

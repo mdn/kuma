@@ -21,11 +21,10 @@
 
         .breadcrumb-previous {
             &::before {
-                display: inline-block;
-                content: '‹';
-                margin: 0 5px 0 0;
-                font-size: 1rem;
-                font-weight: bold;
+                @include caret-arrow($blue, 6px, left);
+                margin: 0 10px 0 0;
+                position: relative;
+                top: -1px;
             }
             span::before {
                 display: inline-block;
@@ -73,12 +72,10 @@
             .breadcrumb-previous,
             .breadcrumb-chevron {
                 &::after {
-                    display: inline-block;
-                    content: '›';
-                    color: $grey-vdark;
-                    margin: 0 5px;
-                    font-size: 1rem;
-                    font-weight: bold;
+                    @include caret-arrow($grey-vdark, 6px, right);
+                    margin: 0 8px 0 5px;
+                    position: relative;
+                    top: -1px;
                 }
             }
         }
