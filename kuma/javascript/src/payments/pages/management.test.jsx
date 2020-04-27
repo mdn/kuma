@@ -24,28 +24,42 @@ const setup = (userData = {}) => {
 };
 
 describe('Payments Management Page', () => {
-    test('renders subheader, container, and loading by default', () => {
-        const { getByText, queryByTestId } = render(
-            <UserProvider.context.Provider value={null}>
-                <ManagementPage locale="en-US" />
-            </UserProvider.context.Provider>
-        );
+    it('renders login view if user is not logged in', () => {
+        const { getByText, queryByTestId } = setup();
         expect(getByText(title)).toBeInTheDocument();
         expect(queryByTestId('management-page')).toBeInTheDocument();
+        expect(getByText(/sign in/)).toBeInTheDocument();
+    });
+
+    test('renders loading while fetching subscriptions data', () => {
+        const mockUserData = { isAuthenticated: true, isSubscriber: true };
+        const mockResponse = {
+            subscriptions: [],
+        };
+        window.fetch = jest
+            .fn()
+            .mockImplementationOnce(() =>
+                Promise.resolve({ ok: true, json: () => mockResponse })
+            );
+
+        const { getByText } = setup(mockUserData);
+
         expect(getByText(/loading/i)).toBeInTheDocument();
     });
 
     it('shows no subscriptions message if not a subscriber', () => {
-        const { getByText } = setup();
+        const mockUserData = { isAuthenticated: true };
+        const { getByText } = setup(mockUserData);
         expect(getByText(/no active subscriptions/i)).toBeInTheDocument();
     });
 
     it('shows error message if cannot retrieve subscriptions', async () => {
+        const mockUserData = { isAuthenticated: true, isSubscriber: true };
         window.fetch = jest.fn(() => Promise.resolve({ ok: false }));
         window.mdn = {
             contributionSupportEmail: 'mock-support@mozilla.com',
         };
-        const { getByText } = setup({ isSubscriber: true });
+        const { getByText } = setup(mockUserData);
         await waitFor(() => {
             expect(
                 getByText(/sorry, something went wrong/i)
@@ -55,6 +69,7 @@ describe('Payments Management Page', () => {
     });
 
     test('subscriptions render and buttons work', async () => {
+        const mockUserData = { isAuthenticated: true, isSubscriber: true };
         const mockResponse = {
             subscriptions: [
                 {
@@ -78,7 +93,7 @@ describe('Payments Management Page', () => {
             )
             .mockImplementationOnce(() => Promise.resolve({ ok: true }));
 
-        const { getByText } = setup({ isSubscriber: true });
+        const { getByText } = setup(mockUserData);
         const expected = mockResponse.subscriptions[0];
 
         // Content renders

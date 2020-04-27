@@ -36,21 +36,3 @@ def test_payments_url_fixes(client):
     assert response["location"] == url
     response = client.get(url + "xxxx", follow=False)
     assert response.status_code == 404
-
-
-@pytest.mark.django_db
-@override_flag("subscription", True)
-def test_payment_management_not_logged_in(client):
-    """A user who is not logged in can't see payments management page."""
-    response = client.get(reverse("payment_management"))
-    assert response.status_code == 302
-    assert response.url == "?next=".join(
-        [reverse("account_login"), reverse("payment_management")]
-    )
-
-
-@override_flag("subscription", True)
-def test_payment_management_logged_in(user_client):
-    """The payments management page works for logged in users."""
-    response = user_client.get(reverse("payment_management"))
-    assert response.status_code == 200

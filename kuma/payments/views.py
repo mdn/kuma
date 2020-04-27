@@ -4,7 +4,6 @@ from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 from waffle.decorators import waffle_flag
 
-from kuma.core.decorators import login_required
 from kuma.users.models import User
 
 
@@ -33,7 +32,6 @@ def payment_terms(request):
 
 
 @waffle_flag("subscription")
-@login_required
 @never_cache
 def payment_management(request):
     return render(request, "payments/management.html")
