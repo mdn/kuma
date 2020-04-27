@@ -51,7 +51,6 @@ describe('Payments Management Page', () => {
             );
 
         const { getByText } = setup(mockUserData);
-
         expect(getByText(/loading/i)).toBeInTheDocument();
     });
 
@@ -125,7 +124,9 @@ describe('Payments Management Page', () => {
         // Click on cancel subscription button to show confirmation message
         let cancelBtn;
         await waitFor(() => {
-            cancelBtn = getByText('Cancel subscription');
+            // there are two matches for `/cancel subscription/i`, so we use the
+            // case-sensitive version to get the button:
+            cancelBtn = getByText(/Cancel subscription/);
             expect(cancelBtn).toBeInTheDocument();
             fireEvent.click(cancelBtn);
             expect(getByText(cancelTitle)).toBeVisible();
@@ -141,7 +142,7 @@ describe('Payments Management Page', () => {
 
         // Open confirmation again, click on "Yes, cancel subscription"
         fireEvent.click(cancelBtn);
-        const submitBtn = getByText('Yes, cancel subscription');
+        const submitBtn = getByText(/yes, cancel subscription/i);
         fireEvent.click(submitBtn);
 
         // Success message and no subscriptions message should show
