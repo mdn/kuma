@@ -85,6 +85,9 @@ const ManagementPage = ({ locale }: Props): React.Node => {
     );
 
     const renderSubscriptions = () => {
+        if (!subscription) {
+            return false;
+        }
         const date = new Date(subscription.next_payment_at);
         const nextPaymentDate = formatDate(
             locale,
