@@ -25,10 +25,18 @@ const setup = (userData = {}) => {
 
 describe('Payments Management Page', () => {
     it('renders login view if user is not logged in', () => {
+        window.mdn = {
+            triggerAuthModal: jest.fn(),
+        };
         const { getByText, queryByTestId } = setup();
         expect(getByText(title)).toBeInTheDocument();
         expect(queryByTestId('management-page')).toBeInTheDocument();
-        expect(getByText(/sign in/)).toBeInTheDocument();
+
+        // sign in link triggers auth modal
+        const signInLink = getByText(/sign in/);
+        expect(signInLink).toBeInTheDocument();
+        fireEvent.click(signInLink);
+        expect(window.mdn.triggerAuthModal).toHaveBeenCalled();
     });
 
     test('renders loading while fetching subscriptions data', () => {
