@@ -86,7 +86,7 @@
         "react-svg-loader": "3.0.3",
         "react-test-renderer": "^16.8.4",
         "sass-true": "4.0.0",
-        "stylelint": "^13.3.2",
+        "stylelint": "^13.3.3",
         "supertest": "^4.0.2",
         "svgo": "1.2.2",
         "uglify-js": "2.8.29",
