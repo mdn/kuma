@@ -1,4 +1,5 @@
-from unittest.mock import patch
+import time
+from unittest import mock
 
 import pytest
 
@@ -484,7 +485,7 @@ def test_bc_signal_http_method(client):
     assert response.status_code == 405
 
 
-@patch("kuma.api.v1.views.track_event")
+@mock.patch("kuma.api.v1.views.track_event")
 @pytest.mark.django_db
 @override_flag("subscription", True)
 def test_send_subscriptions_feedback(track_event_mock_signals, client, settings):
@@ -518,14 +519,26 @@ def test_send_subscriptions_feedback_failure(client, settings):
 
 @pytest.mark.django_db
 @override_flag("subscription", True)
-@patch("kuma.api.v1.views.create_stripe_customer_and_subscription_for_user")
-def test_create_subscription_success(mock, user_client):
+@mock.patch("kuma.users.stripe_utils.stripe")
+def test_create_subscription_success(mocked_stripe, user_client):
+
+    mock_customer = mock.MagicMock()
+    mock_customer.id = "cus_1234"
+    mock_customer.subscriptions.list().auto_paging_iter().__iter__.return_value = []
+    mocked_stripe.Customer.create.return_value = mock_customer
+
+    mock_subscription = mock.MagicMock()
+    subscription_id = "sub_1234"
+    mock_subscription.id = subscription_id
+    mocked_stripe.Subscription.create.return_value = mock_subscription
+
     response = user_client.post(
         reverse("api.v1.subscriptions"),
         content_type="application/json",
         data={"stripe_token": "tok_visa"},
     )
     assert response.status_code == 201
+    assert UserSubscription.objects.filter(stripe_subscription_id=subscription_id)
 
 
 @pytest.mark.django_db
@@ -554,55 +567,90 @@ def test_list_subscriptions_no_stripe_customer_id(user_client):
     assert response.json()["subscriptions"] == []
 
 
-@patch("kuma.api.v1.views.retrieve_and_synchronize_subscription_info")
+@mock.patch("kuma.users.stripe_utils.stripe")
 @pytest.mark.django_db
 @override_flag("subscription", True)
-def test_list_subscriptions_no_subscription(retrieve_subscription, stripe_user_client):
-    retrieve_subscription.return_value = None
+def test_list_subscriptions_customer_no_subscription(mocked_stripe, stripe_user_client):
+    mock_customer = mock.MagicMock()
+    mock_customer.id = "cus_1234"
+    mock_customer.subscriptions.list().auto_paging_iter().__iter__.return_value = []
+    mocked_stripe.Customer.retrieve.return_value = mock_customer
     response = stripe_user_client.get(reverse("api.v1.subscriptions"))
     assert response.status_code == 200
     assert response.json()["subscriptions"] == []
 
 
-@patch("kuma.api.v1.views.retrieve_and_synchronize_subscription_info")
+@pytest.mark.django_db
+@override_flag("subscription", True)
+def test_list_subscriptions_not_customer(user_client):
+    response = user_client.get(reverse("api.v1.subscriptions"))
+    assert response.status_code == 200
+    assert response.json()["subscriptions"] == []
+
+
+@mock.patch("kuma.users.stripe_utils.stripe")
 @pytest.mark.django_db
 @override_flag("subscription", True)
 def test_list_subscriptions_with_active_subscription(
-    retrieve_subscription, stripe_user_client
+    mocked_stripe, stripe_user_client, settings
 ):
-    # The data doesn't actually matter much because we're wholesale testing the
-    # utility function retrieve_and_synchronize_subscription_info.
-    # There exists other tests that breaks that one day.
-    # The kuma.api.v1.views.subscriptions, it just passes all it without
-    # needing to break it down. So this keeps the view-tests simple.
-    # Actually all the kuma.api.v1.views.subscriptions view function does
-    # is return that as a list under a key 'subscriptions'.
-    mock_data = {
-        "brand": "MagicCard",
-    }
-    retrieve_subscription.return_value = mock_data
+    mock_subscription_items = mock.MagicMock()
+    mock_subscription_item = mock.MagicMock()
+    mock_subscription_item.plan = mock.MagicMock()
+    mock_subscription_item.plan.id = settings.STRIPE_PLAN_ID
+    mock_subscription_item.plan.amount = 500
+    mock_subscription_items.auto_paging_iter().__iter__.return_value = [
+        mock_subscription_item
+    ]
+    mock_subscription = mock.MagicMock()
+    mock_subscription.id = "sub_1234"
+    mock_subscription.plan.amount = 500
+    mock_subscription.__getitem__.return_value = mock_subscription_items
+
+    mock_customer = mock.MagicMock()
+    mock_customer.id = "cus_1234"
+    mock_customer.subscriptions.list().auto_paging_iter().__iter__.return_value = [
+        mock_subscription
+    ]
+    mock_customer.default_source.object = "card"
+    mock_customer.default_source.brand = "Amex"
+    mock_customer.default_source.exp_month = 12
+    mock_customer.default_source.exp_year = 23
+    mock_customer.default_source.last4 = 6789
+    mock_customer.default_source.get.return_value = "29466"
+    now_timestamp = int(time.time())
+    mock_customer.default_source.next_payment_at = now_timestamp
+    mocked_stripe.Customer.retrieve.return_value = mock_customer
     response = stripe_user_client.get(reverse("api.v1.subscriptions"))
     assert response.status_code == 200
-    assert response.json()["subscriptions"] == [mock_data]
+    assert response.json()["subscriptions"][0]["amount"] == 500
+    assert response.json()["subscriptions"][0]["id"] == "sub_1234"
 
 
-@patch("kuma.api.v1.views.cancel_stripe_customer_subscriptions")
+@mock.patch("kuma.users.stripe_utils.stripe")
 @pytest.mark.django_db
 @override_flag("subscription", True)
 def test_cancel_subscriptions_with_active_subscription(
-    cancel_stripe_customer_subscriptions, stripe_user_client
+    mocked_stripe, stripe_user_client
 ):
-    cancel_stripe_customer_subscriptions.return_value = ["sub_12345"]
+    subscription_id = "sub_1234"
+    mock_subscription = mock.MagicMock()
+    mock_subscription.id = subscription_id
+    mocked_stripe.Customer.retrieve().subscriptions.data.__iter__.return_value = [
+        mock_subscription
+    ]
+    mocked_stripe.Subscription.retrieve.return_value = mock_subscription
     response = stripe_user_client.delete(reverse("api.v1.subscriptions"))
     assert response.status_code == 204
+    assert UserSubscription.objects.get(stripe_subscription_id=subscription_id).canceled
 
 
-@patch("kuma.api.v1.views.cancel_stripe_customer_subscriptions")
+@mock.patch("kuma.users.stripe_utils.stripe")
 @pytest.mark.django_db
 @override_flag("subscription", True)
 def test_cancel_subscriptions_with_no_active_subscription(
-    cancel_stripe_customer_subscriptions, stripe_user_client
+    mocked_stripe, stripe_user_client
 ):
-    cancel_stripe_customer_subscriptions.return_value = []
+    mocked_stripe.Customer.retrieve().subscriptions.data.__iter__.return_value = []
     response = stripe_user_client.delete(reverse("api.v1.subscriptions"))
     assert response.status_code == 410

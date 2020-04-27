@@ -64,7 +64,7 @@ def retrieve_and_synchronize_subscription_info(user):
             UserSubscription.set_active(user, stripe_subscription_info.id)
         else:
             # The user has a stripe_customer_id but no active subscription
-            # on the current settings.STRIPE_PLAN_ID! Perhaps it has been cancelled
+            # on the current settings.STRIPE_PLAN_ID! Perhaps it has been canceled
             # and not updated in our own records.
             for user_subscription in UserSubscription.objects.filter(
                 user=user, canceled__isnull=True
@@ -82,7 +82,7 @@ def create_stripe_customer_and_subscription_for_user(user, email, stripe_token):
         else None
     )
     if not customer or customer.email != email:
-        customer = stripe.Customer.create(email=email, source=stripe_token,)
+        customer = stripe.Customer.create(email=email, source=stripe_token)
         user.stripe_customer_id = customer.id
         user.save()
 
@@ -99,10 +99,13 @@ def cancel_stripe_customer_subscriptions(user):
     """Delete all subscriptions for a Stripe customer."""
     assert user.stripe_customer_id
     customer = stripe.Customer.retrieve(user.stripe_customer_id)
+    canceled = []
     for sub in customer.subscriptions.data:
         s = stripe.Subscription.retrieve(sub.id)
         UserSubscription.set_canceled(user, s.id)
         s.delete()
+        canceled.append(s)
+    return canceled
 
 
 def get_stripe_customer(user):
