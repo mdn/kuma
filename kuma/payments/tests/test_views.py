@@ -3,7 +3,6 @@ from dataclasses import dataclass
 import pytest
 from django.conf import settings
 from pyquery import PyQuery as pq
-from waffle.testutils import override_flag
 
 from kuma.core.urlresolvers import reverse
 
