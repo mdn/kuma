@@ -181,7 +181,7 @@ On This Page component
         border: 2px solid $blue;
         width: calc(100% - 40px);
         list-style: none;
-        z-index: 99;
+        z-index: 94;
 
         @media #{$mq-small-desktop-and-up} {
             @include bidi(((padding-left, 20px, padding-right, 0),));
