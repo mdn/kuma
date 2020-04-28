@@ -45,7 +45,7 @@ const ThankYouPage = ({ locale }: Props) => {
                                             href={`/${locale}/payments/management/`}
                                         >
                                             {gettext(
-                                                'manage monthly subscriptions page'
+                                                'manage monthly subscription page'
                                             )}
                                         </a>
                                     }

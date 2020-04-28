@@ -44,7 +44,7 @@ const CancelSubscriptionForm = ({
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <strong>{title}</strong>
+                <h4>{title}</h4>
                 <p>
                     {interpolate(
                         'Your monthly subscription will end on %(date)s. You will have to set up a new subscription if you wish to resume making payments to MDN Web Docs.',

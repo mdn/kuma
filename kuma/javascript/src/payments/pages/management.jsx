@@ -24,7 +24,7 @@ export type SubscriptionData = {
 type Props = {
     locale: string,
 };
-export const title = gettext('Manage monthly subscriptions');
+export const title = gettext('Manage monthly subscription');
 export const successMsg = gettext(
     'Your monthly subscription has been successfully canceled.'
 );

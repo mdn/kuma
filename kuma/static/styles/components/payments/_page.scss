@@ -253,6 +253,12 @@
             padding: 20px;
             overflow: hidden;
 
+            h4 {
+                font-family: inherit;
+                font-size: inherit;
+                margin: 0 0 10px;
+            }
+
             strong {
                 display: block;
                 margin-bottom: 10px;
@@ -309,7 +315,6 @@
         // Keep my membership button
         &.keep-membership {
             background-color: #fff;
-            border-color: $border-color;
             color: $text-color;
             border: 2px solid $border-color;
             font-weight: bold;
