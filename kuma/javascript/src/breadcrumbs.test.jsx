@@ -11,8 +11,8 @@ expect.extend({ toBeInTheDocument, toHaveClass });
 
 describe('Breadcrumbs', () => {
     const mockDocumentData = {
-        // url needs a # to get around a JSDOM error:
-        // Error: Not implemented: navigation (except hash changes)
+        // url needs a # to trick it into thinking it's a hash change:
+        // JSDOM error - `Not implemented: navigation (except hash changes)`
         absoluteURL: '#main-url',
         title: 'main crumb',
         parents: [
