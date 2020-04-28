@@ -11,14 +11,20 @@ from .models import UserSubscription
 
 
 def retrieve_stripe_subscription(customer):
+    """
+    Returns the first subscription it finds matching the configured stripe
+    plan or, if there's none, just the first it finds.
+    """
+    first_subscription = None
     for subscription in customer.subscriptions.list().auto_paging_iter():
         # We have to use array indexing syntax, as stripe uses dicts to
         # represent its objects (dicts come with an .items method)
         for item in subscription["items"].auto_paging_iter():
             if item.plan.id == settings.STRIPE_PLAN_ID:
                 return subscription
-
-    return None
+            elif first_subscription is None:
+                first_subscription = subscription
+    return first_subscription
 
 
 def retrieve_and_synchronize_subscription_info(user):
