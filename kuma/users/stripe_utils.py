@@ -16,14 +16,19 @@ def retrieve_stripe_subscription(customer):
     plan or, if there's none, just the first it finds.
     """
     first_subscription = None
+
     for subscription in customer.subscriptions.list().auto_paging_iter():
+        if first_subscription is None:
+            first_subscription = subscription
+
         # We have to use array indexing syntax, as stripe uses dicts to
         # represent its objects (dicts come with an .items method)
         for item in subscription["items"].auto_paging_iter():
             if item.plan.id == settings.STRIPE_PLAN_ID:
+                # If we find a subscription matching the selected plan we
+                # return that instead of whatever we found first
                 return subscription
-            elif first_subscription is None:
-                first_subscription = subscription
+
     return first_subscription
 
 
