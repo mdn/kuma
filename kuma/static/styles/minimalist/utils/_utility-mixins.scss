@@ -12,17 +12,17 @@
 }
 
 @mixin reset-visually-hidden {
-    border: initial;
-    clip: initial;
-    height: initial;
-    margin: initial;
-    overflow: initial;
-    padding: initial;
-    position: initial !important; /* stylelint-disable-line declaration-no-important */
-    width: initial;
+    border: inherit;
+    clip: inherit;
+    height: inherit;
+    margin: inherit;
+    overflow: inherit;
+    padding: inherit;
+    position: inherit !important; /* stylelint-disable-line declaration-no-important */
+    width: inherit;
 }
 
-@mixin caret-arrow($color, $size, $direction: right, $thickness: 2px) {
+@mixin caret-arrow($color, $direction: right, $size: 6px, $thickness: 2px) {
     content: '';
     border: solid $color;
     border-width: 0 $thickness $thickness 0;

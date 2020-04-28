@@ -21,7 +21,7 @@
 
         .breadcrumb-previous {
             &::before {
-                @include caret-arrow($blue, 6px, left);
+                @include caret-arrow($blue, left);
                 margin: 0 10px 0 0;
                 position: relative;
                 top: -1px;
@@ -72,7 +72,7 @@
             .breadcrumb-previous,
             .breadcrumb-chevron {
                 &::after {
-                    @include caret-arrow($grey-vdark, 6px, right);
+                    @include caret-arrow($grey-vdark);
                     margin: 0 8px 0 5px;
                     position: relative;
                     top: -1px;
