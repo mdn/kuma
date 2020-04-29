@@ -9,7 +9,7 @@ from . import INDEXED_ATTACHMENT_DOMAINS, INDEXED_WEB_DOMAINS, WIKI_HOST
 @pytest.mark.smoke
 @pytest.mark.headless
 @pytest.mark.nondestructive
-def test_robots(any_host_url, wiki_host):
+def test_robots(any_host_url):
     url = any_host_url + "/robots.txt"
     response = requests.get(url)
     assert response.status_code == 200
@@ -24,6 +24,7 @@ def test_robots(any_host_url, wiki_host):
             assert "Disallow:\n" in response.text
             assert "Disallow: /" not in response.text
         else:
-            assert "Disallow: /admin/\n" in response.text
+            assert "Disallow:\n" not in response.text
+            assert "Disallow: /" in response.text
     else:
         assert "Disallow: /\n" in response.text
