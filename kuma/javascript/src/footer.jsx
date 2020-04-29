@@ -11,79 +11,93 @@ export default function Footer() {
 
     return (
         <footer id="nav-footer" className="nav-footer" data-testid="footer">
-            <div className="center">
+            <div className="content-container">
                 <a href={`/${locale}/`} className="nav-footer-logo">
                     {gettext('MDN Web Docs')}
                 </a>
-                <div className="footer-group footer-group-mdn">
-                    <h2 className="footer-title">MDN</h2>
-                    <ul className="footer-list">
+                <ul className="link-list-mdn">
+                    <li>
+                        <a href={`/${locale}/docs/Web`}>
+                            {gettext('Web Technologies')}
+                        </a>
+                    </li>
+                    <li>
+                        <a href={`/${locale}/docs/Learn`}>
+                            {gettext('Learn Web Development')}
+                        </a>
+                    </li>
+                    <li>
+                        <a href={`/${locale}/docs/MDN/About`}>
+                            {gettext('About MDN')}
+                        </a>
+                    </li>
+                    <li>
+                        <a href={`/${locale}/docs/MDN/Feedback`}>
+                            {gettext('Feedback')}
+                        </a>
+                    </li>
+                </ul>
+
+                <ul className="link-list-moz">
+                    <li>
+                        <a href="https://www.mozilla.org/about/">
+                            {gettext('About')}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.mozilla.org/contact/">
+                            {gettext('Contact Us')}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.mozilla.org/firefox/?utm_source=developer.mozilla.org&utm_campaign=footer&utm_medium=referral">
+                            Firefox
+                        </a>
+                    </li>
+                </ul>
+
+                <div className="social social-mdn">
+                    <h4>{gettext('MDN')}</h4>
+                    <ul>
                         <li>
-                            <a href={`/${locale}/docs/Web`}>
-                                {gettext('Web Technologies')}
-                            </a>
-                        </li>
-                        <li>
-                            <a href={`/${locale}/docs/Learn`}>
-                                {gettext('Learn Web Development')}
-                            </a>
-                        </li>
-                        <li>
-                            <a href={`/${locale}/docs/MDN/About`}>
-                                {gettext('About MDN')}
-                            </a>
-                        </li>
-                        <li>
-                            <a href={`/${locale}/docs/MDN/Feedback`}>
-                                {gettext('Feedback')}
-                            </a>
-                        </li>
-                        <li className="footer-social">
                             <a href="https://twitter.com/mozdevnet">
                                 <TwitterIcon />
                             </a>
                         </li>
-                        <li className="footer-social">
+                        <li>
                             <a href="https://github.com/mdn/">
                                 <GithubIcon />
                             </a>
                         </li>
                     </ul>
                 </div>
-                <a href="https://mozilla.org" className="nav-footer-mozilla">
-                    {gettext('Mozilla')}
-                </a>
-                <div className="footer-group footer-group-mozilla">
-                    <h2 className="footer-title">Mozilla</h2>
-                    <ul className="footer-list">
+
+                <div className="social social-moz">
+                    <h4>{gettext('Mozilla')}</h4>
+                    <ul>
                         <li>
-                            <a href="https://www.mozilla.org/about/">
-                                {gettext('About')}
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.mozilla.org/contact/">
-                                {gettext('Contact Us')}
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.mozilla.org/firefox/?utm_source=developer.mozilla.org&utm_campaign=footer&utm_medium=referral">
-                                Firefox
-                            </a>
-                        </li>
-                        <li className="footer-social">
                             <a href="https://twitter.com/mozilla">
                                 <TwitterIcon />
                             </a>
                         </li>
-                        <li className="footer-social">
+                        <li>
                             <a href="https://www.instagram.com/mozillagram/">
                                 <InstagramIcon />
                             </a>
                         </li>
                     </ul>
                 </div>
-                <ul className="footer-tos">
+
+                <p id="license" className="footer-license">
+                    &copy; 2005-{new Date().getFullYear()} Mozilla and
+                    individual contributors. Content is available under{' '}
+                    <a href="/docs/MDN/About#Copyrights_and_licenses">
+                        these licenses
+                    </a>
+                    .
+                </p>
+
+                <ul className="footer-legal">
                     <li>
                         <a href="https://www.mozilla.org/about/legal/terms/mozilla">
                             {gettext('Terms')}
@@ -100,17 +114,6 @@ export default function Footer() {
                         </a>
                     </li>
                 </ul>
-
-                <div id="license" className="contentinfo">
-                    <p>
-                        &copy; 2005-{new Date().getFullYear()} Mozilla and
-                        individual contributors. Content is available under{' '}
-                        <a href="/docs/MDN/About#Copyrights_and_licenses">
-                            these licenses
-                        </a>
-                        .
-                    </p>
-                </div>
             </div>
         </footer>
     );

@@ -3,6 +3,9 @@ $brand-primary-200: #3d7e9a;
 $brand-primary-300: #3c7e9a;
 $brand-primary-500: #ebf4f7;
 $brand-primary-600: #f2f9ff;
+
+$neutral-100: #fff;
+
 $brand-red: #d65752;
 $brand-green: #4d9f0c;
 $brand-grey: #aeb7c2;
@@ -13,6 +16,7 @@ $light-grey: #fdfdfd;
 
 $link-color: $brand-primary-200;
 $text-color: #333;
+$text-color-inverted: $neutral-100;
 
 $border-color: #585858;
 $light-border-color: scale-color($border-color, $lightness: 70%);
