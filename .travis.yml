@@ -54,4 +54,4 @@ jobs:
         - scripts/ci-python
         - scripts/ci-jest
         - scripts/ci-localerefresh
-        - bash <(curl -s https://codecov.io/bash)
+        - scripts/ci-codecovsubmit
