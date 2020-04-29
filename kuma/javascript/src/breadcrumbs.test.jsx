@@ -62,10 +62,9 @@ describe('Breadcrumbs', () => {
                 <Breadcrumbs document={mockDocumentData} />
             </GAProvider.context.Provider>
         );
-        const link = queryByText(mockDocumentData.title).closest('a');
 
         // click on current crumb
-        fireEvent.click(link);
+        fireEvent.click(queryByText(mockDocumentData.title).closest('a'));
 
         // check that our GA event was called
         expect(mockGA).toHaveBeenCalledWith('send', {
