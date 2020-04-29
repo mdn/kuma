@@ -26,17 +26,6 @@
                 position: relative;
                 top: -1px;
             }
-            span::before {
-                display: inline-block;
-                content: 'See\00a0';
-            }
-            &:hover {
-                span {
-                    &::before {
-                        text-decoration: underline;
-                    }
-                }
-            }
         }
 
         &:first-child > [class*='crumb-current-page'] {
@@ -78,6 +67,9 @@
                     top: -1px;
                 }
             }
+        }
+        .pre-text {
+            @include visually-hidden();
         }
     }
 }
