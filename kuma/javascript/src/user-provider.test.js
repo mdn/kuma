@@ -1,10 +1,13 @@
 //@flow
 /* eslint-disable camelcase */
 import React from 'react';
-import { act, create } from 'react-test-renderer';
+import { render, waitFor } from '@testing-library/react';
 
 import GAProvider from './ga-provider.jsx';
 import UserProvider from './user-provider.jsx';
+
+// This can be removed once https://github.com/mdn/kuma/pull/6940 lands
+require('regenerator-runtime/runtime');
 
 describe('UserProvider', () => {
     test('context works', () => {
@@ -16,7 +19,7 @@ describe('UserProvider', () => {
             username: 'testing',
         };
 
-        create(
+        render(
             <P value={userData}>
                 <C>{contextConsumer}</C>
             </P>
@@ -38,7 +41,7 @@ describe('UserProvider', () => {
     // https://github.com/facebook/react/issues/14769 and hopefully a
     // version of act() that can take async methods will fix the
     // issue.
-    test('Provider fetches user data and waffle flags', (done) => {
+    test('Provider fetches user data and waffle flags', async () => {
         const P = UserProvider;
         const C = UserProvider.context.Consumer;
         const contextConsumer = jest.fn();
@@ -60,8 +63,9 @@ describe('UserProvider', () => {
 
         // In this test we want to verify that UserProvider is
         // fetching user data from an API. So we need to mock fetch().
-        global.fetch = jest.fn(() => {
-            return Promise.resolve({
+        window.fetch = jest.fn().mockImplementationOnce(() =>
+            Promise.resolve({
+                ok: true,
                 json: () =>
                     Promise.resolve({
                         username: 'testing',
@@ -70,30 +74,30 @@ describe('UserProvider', () => {
                         waffle: waffleFlags,
                         email: 'testuser@mail.com',
                     }),
-            });
-        });
+            })
+        );
 
         let gaMock = (window.ga = jest.fn());
 
-        act(() => {
-            create(
-                <GAProvider>
-                    <P>
-                        <C>{contextConsumer}</C>
-                    </P>
-                </GAProvider>
-            );
-        });
+        render(
+            <GAProvider>
+                <P>
+                    <C>{contextConsumer}</C>
+                </P>
+            </GAProvider>
+        );
 
         // To start, we expect the contextConsumer function to be called
         // with the default null value. And we expect our fetch() mock to
         // be called when the component is first mounted, too.
         // At this point we don't expect any GA calls
-        expect(contextConsumer).toHaveBeenCalledTimes(1);
-        expect(contextConsumer).toHaveBeenCalledWith(null);
-        expect(global.fetch).toHaveBeenCalledTimes(1);
-        expect(global.fetch).toHaveBeenCalledWith('/api/v1/whoami');
-        expect(gaMock).toHaveBeenCalledTimes(0);
+        await waitFor(() => {
+            expect(contextConsumer).toHaveBeenCalledTimes(1);
+            expect(contextConsumer).toHaveBeenCalledWith(null);
+            expect(global.fetch).toHaveBeenCalledTimes(1);
+            expect(global.fetch).toHaveBeenCalledWith('/api/v1/whoami');
+            expect(gaMock).toHaveBeenCalledTimes(0);
+        });
 
         // After the fetch succeeds, we expect contextConsumer to be
         // called again with the fetched userdata. And we expect some
@@ -107,7 +111,6 @@ describe('UserProvider', () => {
             expect(gaMock.mock.calls[2]).toEqual(['set', 'dimension9', 'Yes']);
             expect(gaMock.mock.calls[3][0]).toEqual('send');
             expect(gaMock.mock.calls[3][1].hitType).toEqual('pageview');
-            done();
         });
     });
 });
