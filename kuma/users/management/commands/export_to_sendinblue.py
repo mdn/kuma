@@ -85,5 +85,5 @@ class Command(BaseCommand):
 
         print(f"Exporting {len(paying_users)} paying user(s)")
         export_users(paying_users, options["paying_users_list_id"])
-        print(f"Exporting {len(non_paying_users)} non-paying user(s)")
+        print(f"Exporting {len(non_paying_users)} non-paying users")
         export_users(non_paying_users, options["non_paying_users_list_id"])
