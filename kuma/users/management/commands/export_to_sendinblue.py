@@ -4,7 +4,8 @@ from io import StringIO
 
 import requests
 from django.core.management.base import BaseCommand
-from django.db import connection
+
+from kuma.users.models import User, UserSubscription
 
 URL = "https://api.sendinblue.com/v3/contacts/import"
 
@@ -24,31 +25,24 @@ class Command(BaseCommand):
         parser.add_argument("--non-paying-users-list-id", type=int)
 
     def handle(self, **options):
-        cursor = connection.cursor()
-        cursor.execute(
-            """
-            SELECT
-                email,
-                first_name,
-                last_name,
-                EXISTS(
-                    SELECT 1
-                    FROM users_usersubscription
-                    WHERE user_id = auth_user.id AND canceled IS NULL
-                ) AS is_paying
-            FROM auth_user
-            WHERE email <> '' AND is_newsletter_subscribed
-        """
+        active_subscriber_user_ids = set(
+            UserSubscription.objects.filter(canceled__isnull=True).values_list(
+                "user_id", flat=True
+            )
         )
-        rows = _dictfetchall(cursor)
-
+        users = User.objects.filter(is_newsletter_subscribed=True).exclude(email="")
         paying_users = []
         non_paying_users = []
-        for row in rows:
-            if row["is_paying"]:
-                paying_users.append(row)
-            else:
-                non_paying_users.append(row)
+        for user in users.only("email", "first_name", "last_name"):
+            is_paying = user.id in active_subscriber_user_ids
+            list = paying_users if is_paying else non_paying_users
+            list.append(
+                {
+                    "EMAIL": user.email,
+                    "FIRSTNAME": user.first_name,
+                    "LASTNAME": user.last_name,
+                }
+            )
 
         def export_users(users, list_id):
             csv_out = StringIO()
@@ -57,13 +51,7 @@ class Command(BaseCommand):
             )
             writer.writeheader()
             for user in users:
-                writer.writerow(
-                    {
-                        "EMAIL": user["email"],
-                        "FIRSTNAME": user["first_name"],
-                        "LASTNAME": user["last_name"],
-                    }
-                )
+                writer.writerow(user)
 
             payload = json.dumps(
                 {
