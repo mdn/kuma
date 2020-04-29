@@ -199,6 +199,7 @@ export default function SubscriptionForm() {
                         createSubscription();
                     },
                     closed() {
+                        setOpenStripeModal(false);
                         setFormStep(token.current ? 'submitting' : 'initial');
                     },
                 });
