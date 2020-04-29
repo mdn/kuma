@@ -39,19 +39,21 @@ describe('Payments Management Page', () => {
         expect(window.mdn.triggerAuthModal).toHaveBeenCalled();
     });
 
-    test('renders loading while fetching subscriptions data', () => {
+    test('renders loading while fetching subscriptions data', async () => {
         const mockUserData = { isAuthenticated: true, isSubscriber: true };
         const mockResponse = {
             subscriptions: [],
         };
-        window.fetch = jest
-            .fn()
-            .mockImplementationOnce(() =>
-                Promise.resolve({ ok: true, json: () => mockResponse })
-            );
+
+        window.fetch = jest.fn(() =>
+            Promise.resolve({ ok: true, json: () => mockResponse })
+        );
 
         const { getByText } = setup(mockUserData);
-        expect(getByText(/loading/i)).toBeInTheDocument();
+        await waitFor(() => {
+            expect(getByText(/loading/i)).toBeInTheDocument();
+            window.fetch.mockReset();
+        });
     });
 
     it('shows no subscriptions message if not a subscriber', () => {
