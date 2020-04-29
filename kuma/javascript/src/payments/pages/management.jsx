@@ -107,33 +107,31 @@ const ManagementPage = ({ locale }: Props): React.Node => {
                         }
                     )}
                 </p>
-                <div className="active-subscriptions">
-                    <ul>
-                        <li>
-                            <span className="label amount">
-                                {gettext('Amount')}
-                            </span>
-                            <span className="value">
-                                {/* amount is in cents, so divide by 100 to get dollars */}
-                                {formatMoney(locale, subscription.amount / 100)}
-                            </span>
-                        </li>
-                        <li>
-                            <span className="label credit-card">
-                                {gettext('Card number')}
-                            </span>
-                            <span className="value">{`**** **** **** ${subscription.last4}`}</span>
-                        </li>
-                        <li>
-                            <span className="label credit-card">
-                                {gettext('Expiry')}
-                            </span>
-                            <span className="value">
-                                {subscription.expires_at}
-                            </span>
-                        </li>
-                    </ul>
-                </div>
+
+                <ul className="active-subscriptions">
+                    <li>
+                        <span className="label amount">
+                            {gettext('Amount')}
+                        </span>
+                        <span className="value">
+                            {/* amount is in cents, so divide by 100 to get dollars */}
+                            {formatMoney(locale, subscription.amount / 100)}
+                        </span>
+                    </li>
+                    <li>
+                        <span className="label credit-card">
+                            {gettext('Card number')}
+                        </span>
+                        <span className="value">{`**** **** **** ${subscription.last4}`}</span>
+                    </li>
+                    <li>
+                        <span className="label credit-card">
+                            {gettext('Expiry')}
+                        </span>
+                        <span className="value">{subscription.expires_at}</span>
+                    </li>
+                </ul>
+
                 <button
                     className="cta cancel"
                     onClick={handleClick}

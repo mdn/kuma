@@ -16,11 +16,6 @@ export default function SignInLink({
 }: Props): React.Node {
     const ga = useContext(GAProvider.context);
     const locale = getLocale();
-
-    if (typeof window === 'undefined') {
-        return null;
-    }
-
     const LOCATION = window.location.pathname;
     /**
      * Send a signal to GA when a user clicks on the Sing In

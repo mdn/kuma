@@ -165,6 +165,7 @@
             padding: 24px 0 48px;
             display: flex;
             flex-direction: column;
+
             @media #{$mq-tablet-and-up} {
                 padding-left: 80px;
                 padding-right: 80px;
@@ -203,45 +204,44 @@
             border: 2px solid $text-color;
             padding: 20px;
             margin-bottom: 10px;
-
             p {
                 margin: 0;
             }
+        }
 
-            ul {
-                display: flex;
-                flex-direction: column;
-                font-weight: bold;
-                margin: 0;
+        ul {
+            display: flex;
+            flex-direction: column;
+            font-weight: bold;
+            margin: 0;
 
-                @media #{$mq-tablet-and-up} {
-                    flex-direction: row;
-                    li:not(:first-child) {
-                        margin-left: 10%;
-                    }
+            @media #{$mq-tablet-and-up} {
+                flex-direction: row;
+                li:not(:first-child) {
+                    margin-left: 10%;
                 }
             }
+        }
 
-            .label {
-                padding-left: 30px;
+        .label {
+            padding-left: 30px;
+            &::after {
+                content: ': ';
+            }
+
+            &.amount {
+                background: url('/static/img/subscriptions/money.svg') 0 50% no-repeat;
+            }
+
+            &.credit-card {
+                background: url('/static/img/subscriptions/credit-card.svg')
+                    0 50% no-repeat;
+            }
+
+            @media #{$mq-tablet-and-up} {
+                display: block;
                 &::after {
-                    content: ': ';
-                }
-
-                &.amount {
-                    background: url('/static/img/subscriptions/money.svg') 0 50% no-repeat;
-                }
-
-                &.credit-card {
-                    background: url('/static/img/subscriptions/credit-card.svg')
-                        0 50% no-repeat;
-                }
-
-                @media #{$mq-tablet-and-up} {
-                    display: block;
-                    &::after {
-                        content: '';
-                    }
+                    content: '';
                 }
             }
         }
@@ -267,16 +267,18 @@
             .form-footer {
                 display: flex;
                 flex-direction: column;
+
                 button:last-child {
                     margin-bottom: 10px;
                     order: -1;
                 }
+
                 @media #{$mq-tablet-and-up} {
                     flex-direction: row;
                     justify-content: flex-end;
                     button:last-child {
                         margin: 0 0 0 10px;
-                        order: unset;
+                        order: inherit;
                     }
                 }
             }
@@ -293,6 +295,7 @@
             color: #fff;
             float: right;
             margin-bottom: 10px;
+
             &:hover,
             &:focus,
             &:active {
@@ -305,6 +308,7 @@
         &.negative {
             background-color: #fff;
             min-height: 40px;
+
             &:hover,
             &:focus,
             &:active {
@@ -319,6 +323,7 @@
             border: 2px solid $border-color;
             font-weight: bold;
             text-decoration: none;
+
             &:hover,
             &:focus,
             &:active {
@@ -331,6 +336,7 @@
     .alert {
         clear: both;
         padding: 20px;
+
         &.error {
             background: $red-light;
             border: 1px solid $brand-red;
