@@ -108,29 +108,25 @@ const ManagementPage = ({ locale }: Props): React.Node => {
                     )}
                 </p>
 
-                <ul className="active-subscriptions">
-                    <li>
-                        <span className="label amount">
-                            {gettext('Amount')}
-                        </span>
-                        <span className="value">
+                <dl className="active-subscriptions">
+                    <div>
+                        <dt className="amount">{gettext('Amount')}</dt>
+                        <dd>
                             {/* amount is in cents, so divide by 100 to get dollars */}
                             {formatMoney(locale, subscription.amount / 100)}
-                        </span>
-                    </li>
-                    <li>
-                        <span className="label credit-card">
+                        </dd>
+                    </div>
+                    <div>
+                        <dt className="credit-card">
                             {gettext('Card number')}
-                        </span>
-                        <span className="value">{`**** **** **** ${subscription.last4}`}</span>
-                    </li>
-                    <li>
-                        <span className="label credit-card">
-                            {gettext('Expiry')}
-                        </span>
-                        <span className="value">{subscription.expires_at}</span>
-                    </li>
-                </ul>
+                        </dt>
+                        <dd>{`**** **** **** ${subscription.last4}`}</dd>
+                    </div>
+                    <div>
+                        <dt className="credit-card">{gettext('Expiry')}</dt>
+                        <dd>{subscription.expires_at}</dd>
+                    </div>
+                </dl>
 
                 <button
                     className="cta cancel"

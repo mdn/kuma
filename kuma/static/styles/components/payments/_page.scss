@@ -209,42 +209,57 @@
             }
         }
 
-        ul {
+        dl {
             display: flex;
             flex-direction: column;
             font-weight: bold;
-            margin: 0;
+
+            div {
+                display: flex;
+                &:not(:first-child) {
+                    margin-top: 5px;
+                }
+            }
+
+            dt {
+                padding-left: 30px;
+
+                &.amount {
+                    background: url('/static/img/subscriptions/money.svg') 0 50% no-repeat;
+                }
+
+                &.credit-card {
+                    background: url('/static/img/subscriptions/credit-card.svg')
+                        0 50% no-repeat;
+                }
+                &::after {
+                    content: ': ';
+                }
+            }
+
+            dd {
+                padding-left: 5px;
+            }
 
             @media #{$mq-tablet-and-up} {
                 flex-direction: row;
-                li:not(:first-child) {
-                    margin-left: 10%;
+
+                div {
+                    display: block;
+                    &:not(:first-child) {
+                        margin: 0 0 0 10%;
+                    }
+                }
+
+                dt {
+                    display: block;
+                    &::after {
+                        content: '';
+                    }
                 }
             }
         }
 
-        .label {
-            padding-left: 30px;
-            &::after {
-                content: ': ';
-            }
-
-            &.amount {
-                background: url('/static/img/subscriptions/money.svg') 0 50% no-repeat;
-            }
-
-            &.credit-card {
-                background: url('/static/img/subscriptions/credit-card.svg')
-                    0 50% no-repeat;
-            }
-
-            @media #{$mq-tablet-and-up} {
-                display: block;
-                &::after {
-                    content: '';
-                }
-            }
-        }
 
         form {
             background: $red-light;
