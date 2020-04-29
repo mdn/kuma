@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 
-from constance import config
+from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from ...models import TrashedAttachment
@@ -33,7 +33,7 @@ class Command(BaseCommand):
         if options["force"]:
             trashed_attachments = TrashedAttachment.objects.all()
         else:
-            timeframe = timedelta(days=config.WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS)
+            timeframe = timedelta(days=settings.WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS)
             trashed_attachments = TrashedAttachment.objects.filter(
                 trashed_at__lte=date.today() - timeframe
             )
