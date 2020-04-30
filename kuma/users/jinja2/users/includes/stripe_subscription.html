@@ -66,7 +66,7 @@
       </p>
     </div>
     <hr>
-    {% trans thank_you_url=url('thank_you'), manage_url=url('recurring_payment_management'), faq_url=url('payments_index'), support_email='mailto:' + settings.CONTRIBUTION_SUPPORT_EMAIL -%}
+    {% trans thank_you_url=url('thank_you'), manage_url=url('payment_management'), faq_url=url('payments_index'), support_email='mailto:' + settings.CONTRIBUTION_SUPPORT_EMAIL -%}
       <ul>
         <li>To see your member perks, visit the <a href="{{ thank_you_url }}">thank you page</a>.</li>
         <li>To cancel your subscription <a href="{{ manage_url }}">click here</a>.</li>

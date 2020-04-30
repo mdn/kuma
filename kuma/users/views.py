@@ -887,7 +887,7 @@ def _send_payment_received_email(invoice, locale):
         "invoice_number": invoice.number,
         "cost": invoice.total / 100,
         "credit_card_brand": subscription_info["brand"],
-        "manage_subscription_url": absolutify(reverse("recurring_payment_management")),
+        "manage_subscription_url": absolutify(reverse("payment_management")),
         "faq_url": absolutify(reverse("payments_index")),
         "contact_email": settings.CONTRIBUTION_SUPPORT_EMAIL,
     }

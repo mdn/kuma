@@ -58,6 +58,7 @@ import GAProvider, {
     CATEGORY_MONTHLY_PAYMENTS,
     gaSendOnNextPage,
 } from './ga-provider.jsx';
+import { formatMoney } from './formatters.js';
 
 // Set a localStorage key with a timestamp the specified number of
 // days into the future. When the user dismisses a banner we use this
@@ -226,11 +227,7 @@ function SubscriptionBanner() {
             copy={interpolate(
                 gettext('Support MDN with a %(amount)s monthly subscription'),
                 {
-                    amount: new Intl.NumberFormat(locale, {
-                        style: 'currency',
-                        currency: 'USD',
-                        maximumSignificantDigits: 3,
-                    }).format(5),
+                    amount: formatMoney(locale, 5),
                 }
             )}
             cta={gettext('Learn more')}
