@@ -2,11 +2,10 @@ import json
 from unittest.mock import patch
 
 from allauth.account.models import EmailAddress
-from constance import config as constance_config
-from constance.test.utils import override_config
 from django.conf import settings
 from django.db import IntegrityError
 from django.http import HttpResponse
+from django.test import override_settings
 from pyquery import PyQuery as pq
 from waffle.testutils import override_switch
 
@@ -234,15 +233,13 @@ class BanTestCase(UserTestCase):
         page = pq(resp.content)
 
         reasons_to_ban_found = page.find(".ban-common-reason")
-        reasons_to_ban_expected = json.loads(
-            constance_config.COMMON_REASONS_TO_BAN_USERS
-        )
+        reasons_to_ban_expected = json.loads(settings.COMMON_REASONS_TO_BAN_USERS)
 
         assert len(reasons_to_ban_found) == len(reasons_to_ban_expected)
         for reason in reasons_to_ban_found:
             assert reason.text in reasons_to_ban_expected
 
-    @override_config(COMMON_REASONS_TO_BAN_USERS="Not valid JSON")
+    @override_settings(COMMON_REASONS_TO_BAN_USERS="Not valid JSON")
     def test_common_reasons_error(self):
         # If there is an error in getting the common reasons from constance,
         # then 'Spam' should still show up in the template as the default
@@ -263,7 +260,7 @@ class BanTestCase(UserTestCase):
         for reason in reasons_to_ban_found:
             assert reason.text in reasons_to_ban_expected
 
-    @override_config(COMMON_REASONS_TO_BAN_USERS="[]")
+    @override_settings(COMMON_REASONS_TO_BAN_USERS="[]")
     def test_common_reasons_empty(self):
         # If the list of common reasons to ban users in constance is empty,
         # then 'Spam' should still show up in the template as the default

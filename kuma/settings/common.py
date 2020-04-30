@@ -1420,11 +1420,6 @@ CONSTANCE_CONFIG = dict(
         "Disable uploading of new or revised attachments via the Wiki. "
         "Attachments may still be modified via the Django Admin.",
     ),
-    WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS=(
-        14,
-        "Number of days to keep the trashed attachments files before they "
-        "are removed from the file storage",
-    ),
     KUMA_WIKI_IFRAME_ALLOWED_HOSTS=(
         (
             r"^https?\:\/\/"
@@ -1446,68 +1441,124 @@ CONSTANCE_CONFIG = dict(
         "{}",
         "Google Analytics (read-only) API credentials",
     ),
-    WIKI_DOCUMENT_TAG_SUGGESTIONS=(
-        json.dumps(
-            [
-                "Accessibility",
-                "AJAX",
-                "API",
-                "Apps",
-                "B2G OS",
-                "Canvas",
-                "CSS",
-                "Device",
-                "DOM",
-                "Events",
-                "Extensions",
-                "Firefox",
-                "Firefox OS",
-                "Games",
-                "Gecko",
-                "Graphics",
-                "Internationalization",
-                "History",
-                "HTML",
-                "HTTP",
-                "JavaScript",
-                "Layout",
-                "Localization",
-                "MDN",
-                "Mobile",
-                "Mozilla",
-                "Networking",
-                "Persona",
-                "Places",
-                "Plugins",
-                "Protocols",
-                "Reference",
-                "Tutorial",
-                "Landing",
-                "junk",
-                "NeedsMarkupWork",
-                "NeedsContent",
-                "NeedsExample",
-            ]
-        ),
-        "JSON array listing tag suggestions for documents",
-    ),
-    COMMON_REASONS_TO_BAN_USERS=(
-        json.dumps(
-            [
-                "Spam",
-                "Profile Spam ",
-                "Sandboxing",
-                "Incorrect Translation",
-                "Penetration Testing",
-            ]
-        ),
-        "JSON array listing some common reasons to ban users",
-    ),
-    SESSION_CLEANUP_CHUNK_SIZE=(
-        1000,
-        "Number of expired sessions to cleanup up in one go.",
-    ),
     AKISMET_KEY=("", "API key for Akismet spam checks, leave empty to disable"),
+)
+
+# Number of days to keep the trashed attachments files before they are removed from
+# the file storage.
+WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS = config(
+    "WIKI_ATTACHMENTS_KEEP_TRASHED_DAYS", default=14, cast=int
+)
+
+# JSON array listing tag suggestions for documents
+WIKI_DOCUMENT_TAG_SUGGESTIONS = config(
+    "WIKI_DOCUMENT_TAG_SUGGESTIONS",
+    default=json.dumps(
+        [
+            "Accessibility",
+            "Advanced",
+            "AJAX",
+            "API",
+            "Apps",
+            "Attribute",
+            "Audio",
+            "Beginner",
+            "Canvas",
+            "CodingScripting",
+            "Collaborating",
+            "Community",
+            "Composing",
+            "Credibility",
+            "CSS",
+            "Deprecated",
+            "Design",
+            "Device",
+            "DOM",
+            "ECMAScript6",
+            "Events",
+            "Event Handler",
+            "Example",
+            "Experimental",
+            "Extensions",
+            "Featured",
+            "Firefox",
+            "Games",
+            "Gecko",
+            "Glossary",
+            "Graphics",
+            "Guide",
+            "History",
+            "HTML",
+            "HTTP",
+            "Infrastructure",
+            "Interface",
+            "Intermediate",
+            "Internationalization",
+            "Intro",
+            "JavaScript",
+            "JSAPI Reference",
+            "l10n:exclude",
+            "l10n:priority",
+            "Landing",
+            "Layout",
+            "Learn",
+            "Localization",
+            "MDN",
+            "Media",
+            "Method",
+            "Mobile",
+            "Mozilla",
+            "Navigation",
+            "NeedsBrowserCompatibility",
+            "NeedsCompatTable",
+            "NeedsContent",
+            "NeedsExample",
+            "NeedsLiveSample",
+            "NeedsMarkupWork",
+            "NeedsMobileBrowserCompatibility",
+            "NeedsUpdate",
+            "Networking",
+            "Non-standard",
+            "Obsolete",
+            "OpenPractices",
+            "Privacy",
+            "Property",
+            "Protocols",
+            "Pseudo-class",
+            "Pseudo-element",
+            "Reference",
+            "Remixing",
+            "Search",
+            "Security",
+            "Sharing",
+            "SpiderMonkey",
+            "SVG",
+            "Tutorial",
+            "Video",
+            "WebGL",
+            "WebRTC",
+            "WebMechanics",
+        ]
+    ),
+)
+
+# JSON array listing some common reasons to ban users
+COMMON_REASONS_TO_BAN_USERS = config(
+    "COMMON_REASONS_TO_BAN_USERS",
+    default=json.dumps(
+        [
+            "Spam",
+            "Profile Spam ",
+            "Sandboxing",
+            "Incorrect Translation",
+            "Penetration Testing",
+        ]
+    ),
+)
+
+# Number of expired sessions to cleanup up in one go.
+SESSION_CLEANUP_CHUNK_SIZE = config(
+    "SESSION_CLEANUP_CHUNK_SIZE", default=1000, cast=int
 )
 
 # Email address from which welcome emails will be sent

@@ -7,7 +7,6 @@ import stripe
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.http import (
-    Http404,
     HttpResponse,
     HttpResponseBadRequest,
     HttpResponsePermanentRedirect,
@@ -18,7 +17,7 @@ from django.utils import translation
 from django.utils.translation import activate, gettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_GET, require_POST, require_safe
+from django.views.decorators.http import require_GET, require_POST
 from ratelimit.decorators import ratelimit
 from raven.contrib.django.models import client as raven_client
 from rest_framework import serializers, status
@@ -333,33 +332,6 @@ def bc_signal(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@never_cache
-@require_safe
-def get_user(request, username):
-    """
-    Returns a JSON response with a small subset of public information if a
-    user with the given username exists, otherwise returns a status code of
-    404. The case of the username is not important, since the collation of
-    the username column of the user table in MySQL is case-insensitive.
-    """
-    fields = (
-        "username",
-        "title",
-        "fullname",
-        "organization",
-        "location",
-        "timezone",
-        "locale",
-    )
-    try:
-        user = User.objects.only(*fields).get(username=username)
-    except User.DoesNotExist:
-        raise Http404(f'No user exists with the username "{username}".')
-    data = {field: getattr(user, field) for field in fields}
-    data["avatar_url"] = get_avatar_url(user)
-    return JsonResponse(data)
-
-
 @waffle_flag("subscription")
 @never_cache
 @require_POST
@@ -428,10 +400,8 @@ def stripe_hooks(request):
     # to deal with here.
 
     if event.type == "invoice.payment_succeeded":
-        payment_intent = event.data.object
-        _send_payment_received_email(
-            payment_intent, request.LANGUAGE_CODE,
-        )
+        invoice = event.data.object
+        _send_payment_received_email(invoice, request.LANGUAGE_CODE)
         track_event(
             CATEGORY_MONTHLY_PAYMENTS,
             ACTION_SUBSCRIPTION_CREATED,
@@ -452,15 +422,15 @@ def stripe_hooks(request):
     return HttpResponse()
 
 
-def _send_payment_received_email(payment_intent, locale):
-    user = get_user_model().objects.get(stripe_customer_id=payment_intent.customer)
+def _send_payment_received_email(invoice, locale):
+    user = get_user_model().objects.get(stripe_customer_id=invoice.customer)
     subscription_info = retrieve_and_synchronize_subscription_info(user)
     locale = locale or settings.WIKI_DEFAULT_LANGUAGE
     context = {
-        "payment_date": datetime.fromtimestamp(payment_intent.created),
+        "payment_date": datetime.fromtimestamp(invoice.created),
         "next_payment_date": subscription_info["next_payment_at"],
-        "invoice_number": payment_intent.number,
-        "cost": settings.CONTRIBUTION_AMOUNT_USD,
+        "invoice_number": invoice.number,
+        "cost": invoice.total / 100,
         "credit_card_brand": subscription_info["brand"],
         "manage_subscription_url": absolutify(reverse("recurring_payment_management")),
         "faq_url": absolutify(reverse("payments_index")),
@@ -478,8 +448,8 @@ def _send_payment_received_email(payment_intent, locale):
             settings.DEFAULT_FROM_EMAIL,
             [user.email],
             attachment={
-                "name": os.path.basename(urlparse(payment_intent.invoice_pdf).path),
-                "bytes": _download_from_url(payment_intent.invoice_pdf),
+                "name": os.path.basename(urlparse(invoice.invoice_pdf).path),
+                "bytes": _download_from_url(invoice.invoice_pdf),
                 "mime": "application/pdf",
             },
         )

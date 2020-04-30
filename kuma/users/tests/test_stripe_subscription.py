@@ -172,6 +172,7 @@ def test_stripe_payment_succeeded_sends_invoice_mail(
         data=SimpleNamespace(
             object=SimpleNamespace(
                 number="test_invoice_001",
+                total=700,
                 customer="cus_mock_testuser",
                 created=1583842724,
                 invoice_pdf="https://developer.mozilla.org/mock-invoice-pdf-url",
@@ -199,7 +200,7 @@ def test_stripe_payment_succeeded_sends_invoice_mail(
     assert payment_email.to == [testuser.email]
     assert "Receipt" in payment_email.subject
     assert "Invoice number: test_invoice_001" in payment_email.body
-    assert "You supported MDN with a $4.99 monthly subscription" in payment_email.body
+    assert "You supported MDN with a $7.00 monthly subscription" in payment_email.body
     assert "manage monthly subscriptions" in payment_email.body
 
 

@@ -1,5 +1,5 @@
 from celery.task import task
-from constance import config
+from django.conf import settings
 from django.contrib.sessions.models import Session
 from django.core.cache import cache
 from django.db import connection
@@ -25,7 +25,7 @@ def clean_sessions():
     """
     now = timezone.now()
     logger = clean_sessions.get_logger()
-    chunk_size = config.SESSION_CLEANUP_CHUNK_SIZE
+    chunk_size = settings.SESSION_CLEANUP_CHUNK_SIZE
 
     if cache.add(LOCK_ID, now.strftime("%c"), LOCK_EXPIRE):
         total_count = get_expired_sessions(now).count()

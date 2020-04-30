@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e  # Exit on non-zero status
+set -u  # Treat unset variables as an error
+
+# FYI, as of April 2020, you get version 7.47.0 of curl
+# and `--retry-connrefused` was added in curl 7.52.0 :(
+
+bash <(curl -s --retry 3 https://codecov.io/bash)
