@@ -11,8 +11,6 @@ from stripe.error import APIError
 from waffle.models import Flag, Sample, Switch
 from waffle.testutils import override_flag
 
-from kuma.users.tests import user
-
 from kuma.api.v1.views import document_api_data, get_content_based_redirect, get_s3_key
 from kuma.core.ga_tracking import (
     ACTION_SUBSCRIPTION_CANCELED,
@@ -24,6 +22,7 @@ from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.search.tests import ElasticTestCase
 from kuma.users.models import UserSubscription
+from kuma.users.tests import user
 from kuma.wiki.models import BCSignal
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 

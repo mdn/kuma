@@ -148,6 +148,3 @@ def test_create_stripe_subscription_fail(mock1, mock2, test_user):
         HTTP_HOST=settings.WIKI_HOST,
     )
     assert response.status_code == 403
-
-
-
