@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import { useContext } from 'react';
-
+import { gettext } from './l10n.js';
 import GAProvider from './ga-provider.jsx';
 
 import type { DocumentData } from './document.jsx';
@@ -36,7 +36,7 @@ export default function Breadcrumbs({ document }: DocumentProps) {
                 vocab="https://schema.org/"
                 aria-label="breadcrumbs"
             >
-                {document.parents.map((p, i) => (
+                {document.parents.map((p, i, { length }) => (
                     <li
                         key={p.url}
                         property="itemListElement"
@@ -44,12 +44,19 @@ export default function Breadcrumbs({ document }: DocumentProps) {
                     >
                         <a
                             href={p.url}
-                            className="breadcrumb-chevron"
+                            className={
+                                i === length - 1
+                                    ? 'breadcrumb-previous'
+                                    : 'breadcrumb-chevron'
+                            }
                             property="item"
                             typeof="WebPage"
                             onClick={sendBreadcrumbItemClick}
                             onContextMenu={sendBreadcrumbItemClick}
                         >
+                            <span className="pre-text">
+                                {gettext('See')}&nbsp;
+                            </span>
                             <span property="name">{p.title}</span>
                         </a>
                         <meta property="position" content={i + 1} />
