@@ -225,12 +225,12 @@
                 padding-left: 30px;
 
                 &.amount {
-                    background: url('/static/img/subscriptions/money.svg') 0 50% no-repeat;
+                    background: url('/static/img/subscriptions/money.svg') 0 50% / 23px 16px no-repeat;
                 }
 
                 &.credit-card {
                     background: url('/static/img/subscriptions/credit-card.svg')
-                        0 50% no-repeat;
+                        0 50% / 21px 16px no-repeat;
                 }
                 &::after {
                     content: ': ';

@@ -75,7 +75,7 @@ const ManagementPage = ({ locale }: Props): React.Node => {
         <div className="active-subscriptions">
             <Interpolated
                 id={gettext(
-                    'You have no active subscriptions. Why not <signupLink />?'
+                    'You have no active subscription. Why not <signupLink />?'
                 )}
                 signupLink={
                     <a href={`/${locale}/payments/`}>{gettext('set one up')}</a>
@@ -181,7 +181,7 @@ const ManagementPage = ({ locale }: Props): React.Node => {
             >
                 <section>
                     <div className="column-8">
-                        <h2>{gettext('Subscriptions')}</h2>
+                        <h2>{gettext('Subscription')}</h2>
                         {renderContent()}
                         {status === 'success' && renderSuccess()}
                     </div>

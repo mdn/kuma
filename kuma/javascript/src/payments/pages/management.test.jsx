@@ -59,7 +59,7 @@ describe('Payments Management Page', () => {
     it('shows no subscriptions message if not a subscriber', () => {
         const mockUserData = { isAuthenticated: true };
         const { getByText } = setup(mockUserData);
-        expect(getByText(/no active subscriptions/i)).toBeInTheDocument();
+        expect(getByText(/no active subscription/i)).toBeInTheDocument();
     });
 
     it('shows error message if cannot retrieve subscriptions', async () => {
@@ -150,7 +150,7 @@ describe('Payments Management Page', () => {
         // Success message and no subscriptions message should show
         await waitFor(() => {
             expect(getByText(successMsg)).toBeInTheDocument();
-            expect(getByText(/no active subscriptions/i)).toBeInTheDocument();
+            expect(getByText(/no active subscription/i)).toBeInTheDocument();
         });
 
         window.fetch.mockReset();
