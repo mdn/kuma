@@ -160,8 +160,8 @@ def test_create_stripe_subscription_fail(mock1, mock2, test_user):
     assert response.status_code == 403
 
 
-@patch("kuma.users.views._download_from_url")
-@patch("kuma.users.views.retrieve_and_synchronize_subscription_info")
+@patch("kuma.api.v1.views._download_from_url")
+@patch("kuma.api.v1.views.retrieve_and_synchronize_subscription_info")
 @patch("stripe.Event.construct_from")
 @pytest.mark.django_db
 def test_stripe_payment_succeeded_sends_invoice_mail(
@@ -191,7 +191,7 @@ def test_stripe_payment_succeeded_sends_invoice_mail(
         stripe_customer_id="cus_mock_testuser",
     )
     response = Client().post(
-        reverse("users.stripe_hooks"), content_type="application/json", data={},
+        reverse("api.v1.stripe_hooks"), content_type="application/json", data={},
     )
     assert response.status_code == 200
     assert len(mail.outbox) == 1
@@ -221,7 +221,7 @@ def test_stripe_subscription_canceled(mock1, client):
     )
     UserSubscription.set_active(testuser, "sub_123456789")
     response = client.post(
-        reverse("users.stripe_hooks"), content_type="application/json", data={},
+        reverse("api.v1.stripe_hooks"), content_type="application/json", data={},
     )
     assert response.status_code == 200
     (user_subscription,) = UserSubscription.objects.filter(user=testuser)
@@ -231,7 +231,7 @@ def test_stripe_subscription_canceled(mock1, client):
 @pytest.mark.django_db
 def test_stripe_hook_invalid_json(client):
     response = client.post(
-        reverse("users.stripe_hooks"),
+        reverse("api.v1.stripe_hooks"),
         content_type="application/json",
         data="{not valid!",
     )
@@ -245,7 +245,7 @@ def test_stripe_hook_unexpected_type(mock1, client):
         type="not.expected", data=SimpleNamespace(foo="bar"),
     )
     response = client.post(
-        reverse("users.stripe_hooks"), content_type="application/json", data={},
+        reverse("api.v1.stripe_hooks"), content_type="application/json", data={},
     )
     assert response.status_code == 400
 
@@ -255,13 +255,13 @@ def test_stripe_hook_unexpected_type(mock1, client):
 def test_stripe_hook_stripe_api_error(mock1, client):
     mock1.side_effect = APIError("badness")
     response = client.post(
-        reverse("users.stripe_hooks"), content_type="application/json", data={},
+        reverse("api.v1.stripe_hooks"), content_type="application/json", data={},
     )
     assert response.status_code == 400
 
 
-@patch("kuma.users.views._send_payment_received_email")
-@patch("kuma.users.views.track_event")
+@patch("kuma.api.v1.views._send_payment_received_email")
+@patch("kuma.api.v1.views.track_event")
 @patch("stripe.Event.construct_from")
 @pytest.mark.django_db
 def test_stripe_payment_succeeded_sends_ga_tracking(
@@ -287,7 +287,7 @@ def test_stripe_payment_succeeded_sends_ga_tracking(
         stripe_customer_id="cus_mock_testuser",
     )
     response = client.post(
-        reverse("users.stripe_hooks"), content_type="application/json", data={},
+        reverse("api.v1.stripe_hooks"), content_type="application/json", data={},
     )
     assert response.status_code == 200
 
@@ -298,7 +298,7 @@ def test_stripe_payment_succeeded_sends_ga_tracking(
     )
 
 
-@patch("kuma.users.views.track_event")
+@patch("kuma.api.v1.views.track_event")
 @patch("stripe.Event.construct_from")
 @pytest.mark.django_db
 def test_stripe_subscription_canceled_sends_ga_tracking(
@@ -318,7 +318,7 @@ def test_stripe_subscription_canceled_sends_ga_tracking(
         stripe_customer_id="cus_mock_testuser",
     )
     response = client.post(
-        reverse("users.stripe_hooks"), content_type="application/json", data={},
+        reverse("api.v1.stripe_hooks"), content_type="application/json", data={},
     )
     assert response.status_code == 200
 
