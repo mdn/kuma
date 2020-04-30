@@ -6,9 +6,6 @@ import { render, waitFor } from '@testing-library/react';
 import GAProvider from './ga-provider.jsx';
 import UserProvider from './user-provider.jsx';
 
-// This can be removed once https://github.com/mdn/kuma/pull/6940 lands
-require('regenerator-runtime/runtime');
-
 describe('UserProvider', () => {
     test('context works', () => {
         const P = UserProvider.context.Provider;
