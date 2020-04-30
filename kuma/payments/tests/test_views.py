@@ -1,19 +1,11 @@
-from dataclasses import dataclass
-
 import pytest
-from django.conf import settings
 from pyquery import PyQuery as pq
 
 from kuma.core.urlresolvers import reverse
 
 
-@dataclass
-class MockSubscription:
-    id: str = "sub_123456789"
-
-
 @pytest.mark.django_db
-def test_payments_index(client):
+def test_payments_index(client, settings):
     """Viewing the payments index page doesn't require you to be logged in.
     Payments page shows support email and header."""
     response = client.get(reverse("payments_index"))
@@ -35,3 +27,11 @@ def test_payments_url_fixes(client):
     assert response["location"] == url
     response = client.get(url + "xxxx", follow=False)
     assert response.status_code == 404
+
+
+def test_payments_recurring_management_redirect(client):
+    """That old redirect used to be something we exposed, so it's important to
+    assert that we took care of redirecting it to its new location."""
+    response = client.get(reverse("recurring_payment_management"), follow=False)
+    assert response.status_code == 301
+    assert response["location"] == reverse("payment_management")

@@ -13,8 +13,6 @@ log = logging.getLogger("kuma.payments.views")
 @never_cache
 def index(request):
     highest_subscriber_number = User.get_highest_subscriber_number()
-    # TODO: This is never unit tested because our tests never test SSR rendering.
-    # See https://github.com/mdn/kuma/issues/6797
     context = {"next_subscriber_number": highest_subscriber_number + 1}
     return render(request, "payments/index.html", context)
 
