@@ -73,9 +73,10 @@ def test_translate_post(root_doc, trans_doc_client):
     )
 
 
-def test_translate_over_deleted_document(root_doc, trans_doc_client):
+def test_translate_over_deleted_document_same_slug(root_doc, trans_doc_client):
     """Trying to create a new translation when there already existed a document
-    for that locale, but it was soft-deleted.
+    for that locale, but it was soft-deleted. Where "already existed" means that the
+    previous soft-delete had the same slug.
     If this is the case, it should fully delete the soft-deleted document and
     proceed with the new translation.
 
@@ -83,7 +84,7 @@ def test_translate_over_deleted_document(root_doc, trans_doc_client):
     worked.
     """
     # Create the soft-delete document that would otherwise "be in the way".
-    Document.objects.create(slug=root_doc.slug, locale="fr").delete()
+    Document.objects.create(slug=root_doc.slug, locale="fr", parent=root_doc).delete()
 
     data = {
         "slug": root_doc.slug,
@@ -100,4 +101,36 @@ def test_translate_over_deleted_document(root_doc, trans_doc_client):
     assert response.status_code == 302
 
     assert not Document.deleted_objects.filter(slug=root_doc.slug, locale="fr")
+    assert Document.objects.filter(slug=root_doc.slug, locale="fr")
+
+
+def test_translate_over_deleted_document_different_slug(root_doc, trans_doc_client):
+    """Trying to create a new translation when there already existed a document
+    for that locale, but it was soft-deleted. Where "already existed" means that the
+    previous soft-delete shared the same parent.
+    If this is the case, it should fully delete the soft-deleted document and
+    proceed with the new translation.
+
+    Much of this is to assert that the fix in https://github.com/mdn/kuma/issues/6673
+    worked.
+    """
+    # Create the soft-delete document that would otherwise "be in the way".
+    french_slug = root_doc.slug + "frenchness"
+    Document.objects.create(slug=french_slug, locale="fr", parent=root_doc).delete()
+
+    data = {
+        "slug": root_doc.slug,
+        "title": root_doc.title,
+        "content": root_doc.current_revision.content,
+        "form-type": "both",
+        "toc_depth": 1,
+    }
+
+    url = reverse("wiki.translate", args=(root_doc.slug,))
+    url += "?tolocale=fr"
+
+    response = trans_doc_client.post(url, data, HTTP_HOST=settings.WIKI_HOST)
+    assert response.status_code == 302
+
+    assert not Document.deleted_objects.filter(slug=french_slug, locale="fr")
     assert Document.objects.filter(slug=root_doc.slug, locale="fr")
