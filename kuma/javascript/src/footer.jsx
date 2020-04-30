@@ -104,10 +104,7 @@ export default function Footer() {
                 <div id="license" className="contentinfo">
                     <p>
                         &copy; 2005-{new Date().getFullYear()} Mozilla and
-                        individual contributors.
-                    </p>
-                    <p>
-                        Content is available under{' '}
+                        individual contributors. Content is available under{' '}
                         <a href="/docs/MDN/About#Copyrights_and_licenses">
                             these licenses
                         </a>
