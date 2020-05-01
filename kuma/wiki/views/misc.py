@@ -84,7 +84,7 @@ def autosuggest_documents(request):
 
     # Generates a list of acceptable docs
     docs_list = []
-    for doc in docs:
+    for doc in docs[:100]:
         data = doc.get_json_data()
         data["label"] += " [" + doc.locale + "]"
         docs_list.append(data)
