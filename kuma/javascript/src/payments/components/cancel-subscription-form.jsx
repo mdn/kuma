@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import { gettext, interpolate } from '../../l10n.js';
-import ErrorMessage from '../components/error-message.jsx';
+import { GenericError } from '../components/errors.jsx';
 import { deleteSubscriptions } from '../api.js';
 
 type Props = {
@@ -36,7 +36,7 @@ const CancelSubscriptionForm = ({
     if (status === 'error') {
         return (
             <p className="alert error" data-testid="error-msg">
-                <ErrorMessage />
+                <GenericError />
             </p>
         );
     }
