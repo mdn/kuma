@@ -28,15 +28,7 @@ describe('When submitting Subscription Form', () => {
         };
     });
 
-    afterAll(() => {
-        window.location = location;
-    });
-
     it('renders initial form', () => {
-        // useScriptLoading.mockReturnValue([
-        //     Promise.resolve('success'),
-        //     () => null,
-        // ]);
         const { queryByTestId, queryByText } = render(<SubscriptionForm />);
         expect(queryByText('$5')).toBeInTheDocument();
         expect(queryByTestId('subscription-form')).toBeInTheDocument();
@@ -100,6 +92,7 @@ describe('When submitting Subscription Form', () => {
     it('shows error message if Stripe cannot load', async () => {
         const mockReloadStripe = jest.fn();
 
+        // mock failed script loading
         useScriptLoading.mockReturnValue([
             Promise.reject({ ok: false }),
             mockReloadStripe,
