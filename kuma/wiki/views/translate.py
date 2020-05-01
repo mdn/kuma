@@ -3,6 +3,7 @@ from urllib.parse import urlencode
 from csp.decorators import csp_update
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.safestring import mark_safe
@@ -192,10 +193,10 @@ def translate(request, document_slug, document_locale):
 
                 # If the document you're about to save already exists, as a
                 # soft-delete, then really delete it first.
-                for soft_deleted_document in Document.deleted_objects.filter(
-                    locale=doc_form.cleaned_data["locale"],
-                    slug=doc_form.cleaned_data["slug"],
-                ):
+                previously_deleted_documents = Document.deleted_objects.filter(
+                    locale=doc_form.cleaned_data["locale"]
+                ).filter(Q(slug=doc_form.cleaned_data["slug"]) | Q(parent=parent_doc))
+                for soft_deleted_document in previously_deleted_documents:
                     soft_deleted_document.delete(purge=True)
 
                 doc = doc_form.save(parent=parent_doc)
