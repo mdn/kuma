@@ -2,8 +2,8 @@
 name: Content request
 about: Suggest a change to MDN Content
 title: ''
-labels: ''
-assignees: ''
+labels: 'meta: content'
+assignees: 'chrisdavidmills'
 
 ---
 
