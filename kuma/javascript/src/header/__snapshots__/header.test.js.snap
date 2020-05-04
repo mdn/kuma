@@ -356,7 +356,7 @@ exports[`Header snapshot 1`] = `
             role="menuitem"
           >
             <a
-              href="https://github.com/mdn/kuma/issues/new"
+              href="https://github.com/mdn/kuma/issues/new/choose"
               onClick={[Function]}
               onContextMenu={[Function]}
               rel="noopener noreferrer"
