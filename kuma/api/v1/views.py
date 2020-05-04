@@ -1,6 +1,11 @@
 import json
+import os
+from datetime import datetime
+from urllib.parse import urlparse
 
+import stripe
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.http import (
     HttpResponse,
     HttpResponseBadRequest,
@@ -8,10 +13,13 @@ from django.http import (
     JsonResponse,
 )
 from django.shortcuts import get_object_or_404
+from django.utils import translation
 from django.utils.translation import activate, gettext as _
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 from ratelimit.decorators import ratelimit
+from raven.contrib.django.models import client as raven_client
 from rest_framework import serializers, status
 from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
@@ -21,12 +29,16 @@ from waffle.decorators import waffle_flag
 from waffle.models import Flag, Sample, Switch
 
 from kuma.api.v1.serializers import BCSignalSerializer
+from kuma.core.email_utils import render_email
 from kuma.core.ga_tracking import (
+    ACTION_SUBSCRIPTION_CANCELED,
+    ACTION_SUBSCRIPTION_CREATED,
     ACTION_SUBSCRIPTION_FEEDBACK,
     CATEGORY_MONTHLY_PAYMENTS,
     track_event,
 )
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import requests_retry_session, send_mail_retrying
 from kuma.search.filters import (
     HighlightFilterBackend,
     KeywordQueryBackend,
@@ -35,7 +47,7 @@ from kuma.search.filters import (
     TagGroupFilterBackend,
 )
 from kuma.search.search import SearchView
-from kuma.users.models import UserSubscription
+from kuma.users.models import User, UserSubscription
 from kuma.users.stripe_utils import (
     cancel_stripe_customer_subscriptions,
     create_stripe_customer_and_subscription_for_user,
@@ -365,3 +377,85 @@ def subscriptions(request):
         all_subscriptions.append(subscription_info)
 
     return Response({"subscriptions": all_subscriptions})
+
+
+@csrf_exempt
+@require_POST
+@never_cache
+def stripe_hooks(request):
+    try:
+        payload = json.loads(request.body)
+    except ValueError:
+        return HttpResponseBadRequest("Invalid JSON payload")
+
+    try:
+        event = stripe.Event.construct_from(payload, stripe.api_key)
+    except stripe.error.StripeError:
+        raven_client.captureException()
+        return HttpResponseBadRequest()
+
+    # Generally, for this list of if-statements, see the create_missing_stripe_webhook
+    # function.
+    # The list of events there ought to at least minimally match what we're prepared
+    # to deal with here.
+
+    if event.type == "invoice.payment_succeeded":
+        invoice = event.data.object
+        _send_payment_received_email(invoice, request.LANGUAGE_CODE)
+        track_event(
+            CATEGORY_MONTHLY_PAYMENTS,
+            ACTION_SUBSCRIPTION_CREATED,
+            f"{settings.CONTRIBUTION_AMOUNT_USD:.2f}",
+        )
+
+    elif event.type == "customer.subscription.deleted":
+        obj = event.data.object
+        for user in User.objects.filter(stripe_customer_id=obj.customer):
+            UserSubscription.set_canceled(user, obj.id)
+        track_event(CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_CANCELED, "webhook")
+
+    else:
+        return HttpResponseBadRequest(
+            f"We did not expect a Stripe webhook of type {event.type!r}"
+        )
+
+    return HttpResponse()
+
+
+def _send_payment_received_email(invoice, locale):
+    user = get_user_model().objects.get(stripe_customer_id=invoice.customer)
+    subscription_info = retrieve_and_synchronize_subscription_info(user)
+    locale = locale or settings.WIKI_DEFAULT_LANGUAGE
+    context = {
+        "payment_date": datetime.fromtimestamp(invoice.created),
+        "next_payment_date": subscription_info["next_payment_at"],
+        "invoice_number": invoice.number,
+        "cost": invoice.total / 100,
+        "credit_card_brand": subscription_info["brand"],
+        "manage_subscription_url": absolutify(reverse("payment_management")),
+        "faq_url": absolutify(reverse("payments_index")),
+        "contact_email": settings.CONTRIBUTION_SUPPORT_EMAIL,
+    }
+    with translation.override(locale):
+        subject = render_email("users/email/payment_received/subject.ltxt", context)
+        # Email subject *must not* contain newlines
+        subject = "".join(subject.splitlines())
+        plain = render_email("users/email/payment_received/plain.ltxt", context)
+
+        send_mail_retrying(
+            subject,
+            plain,
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email],
+            attachment={
+                "name": os.path.basename(urlparse(invoice.invoice_pdf).path),
+                "bytes": _download_from_url(invoice.invoice_pdf),
+                "mime": "application/pdf",
+            },
+        )
+
+
+def _download_from_url(url):
+    pdf_download = requests_retry_session().get(url)
+    pdf_download.raise_for_status()
+    return pdf_download.content

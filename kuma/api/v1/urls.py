@@ -14,4 +14,5 @@ urlpatterns = [
         name="api.v1.send_subscriptions_feedback",
     ),
     path("subscriptions/", views.subscriptions, name="api.v1.subscriptions"),
+    path("stripe_hooks/", views.stripe_hooks, name="api.v1.stripe_hooks"),
 ]
