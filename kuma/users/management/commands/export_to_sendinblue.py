@@ -10,12 +10,6 @@ from kuma.users.models import User, UserSubscription
 URL = "https://api.sendinblue.com/v3/contacts/import"
 
 
-def _dictfetchall(cursor):
-    "Returns all rows from a cursor as a dict. source: https://stackoverflow.com/a/14294314"
-    desc = cursor.description
-    return [dict(zip([col[0] for col in desc], row)) for row in cursor.fetchall()]
-
-
 class Command(BaseCommand):
     help = "Exports newsletter subscribed users to sendinblue"
 
