@@ -81,9 +81,10 @@
             border: none;
             width: 100%;
             text-align: left;
-            padding: 10px;
+            padding: 10px 10px 15px 0;
 
             @media #{$mq-tablet-and-up} {
+                padding-left: 10px;
                 width: unset;
             }
         }
