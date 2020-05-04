@@ -17,8 +17,10 @@ table.bc-table {
     border-spacing: 0;
     @include rgba-fallback('background-color', $table-blue, .5);
 
-    th {
-        text-align: center;
+    thead {
+        th {
+            text-align: center;
+        }
     }
 }
 
@@ -127,6 +129,7 @@ table.bc-table {
     @include bidi(((border-right, solid, 0), ));
     @include bidi(((border-left, 0, solid), ));
     text-align: left;
+    vertical-align: top;
 }
 
 /* td
