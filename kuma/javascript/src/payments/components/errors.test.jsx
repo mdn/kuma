@@ -1,27 +1,17 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { toBeInTheDocument } from '@testing-library/jest-dom/matchers';
-import { GenericError, ErrorComponent } from './errors.jsx';
+import { GenericError, ErrorWithRetry } from './errors.jsx';
 
 expect.extend({ toBeInTheDocument });
 
-describe('ErrorComponent', () => {
-    it('renders text and no button', () => {
-        const mockProps = {
-            text: 'An explanation for why we are sorry.',
-        };
-        const { queryByText } = render(<ErrorComponent {...mockProps} />);
-
-        expect(queryByText(mockProps.text)).toBeInTheDocument();
-        expect(queryByText(/try again/i)).not.toBeInTheDocument();
-    });
-
+describe('ErrorWithRetry', () => {
     it('renders text and a functioning button', () => {
         const mockProps = {
             text: 'More reasons why we are sorry.',
             onClick: jest.fn(),
         };
-        const { queryByText } = render(<ErrorComponent {...mockProps} />);
+        const { queryByText } = render(<ErrorWithRetry {...mockProps} />);
         const button = queryByText(/try again/i);
 
         fireEvent.click(button);

@@ -4,25 +4,19 @@ import { gettext, Interpolated } from '../../l10n.js';
 
 type Props = {
     text: string,
-    onClick?: (event: SyntheticEvent<HTMLAnchorElement>) => void,
+    onClick: (event: SyntheticEvent<HTMLAnchorElement>) => void,
 };
 
 /**
- * Structured error message with header, text, and optional button
+ * Structured error message with header, text, and button
  */
-const ErrorComponent = ({ text, onClick }: Props): React.Node => (
+const ErrorWithRetry = ({ text, onClick }: Props): React.Node => (
     <section className="error">
         <h4>{gettext('Sorry!')}</h4>
         <p>{text}</p>
-        {onClick && (
-            <button
-                type="button"
-                className="button cta primary"
-                onClick={onClick}
-            >
-                {gettext('Try again')}
-            </button>
-        )}
+        <button type="button" className="button cta primary" onClick={onClick}>
+            {gettext('Try again')}
+        </button>
     </section>
 );
 
@@ -46,4 +40,4 @@ const GenericError = (): React.Node => (
     />
 );
 
-export { GenericError, ErrorComponent };
+export { GenericError, ErrorWithRetry };

@@ -6,9 +6,9 @@ import SubscriptionForm, {
 } from './subscription-form.jsx';
 import GAProvider from '../../ga-provider.jsx';
 import UserProvider from '../../user-provider.jsx';
-import useScriptLoading from './useScriptLoading.js';
+import useScriptLoading from './use-script-loading.js';
 
-jest.mock('./useScriptLoading.js');
+jest.mock('./use-script-loading.js');
 
 expect.extend({ toBeInTheDocument });
 

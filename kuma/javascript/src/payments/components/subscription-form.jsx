@@ -9,8 +9,8 @@ import GAProvider, {
 } from '../../ga-provider.jsx';
 import UserProvider from '../../user-provider.jsx';
 import { getCookie } from '../../utils';
-import { ErrorComponent } from './errors.jsx';
-import useScriptLoading from './useScriptLoading.js';
+import { ErrorWithRetry } from './errors.jsx';
+import useScriptLoading from './use-script-loading.js';
 
 const SUBSCRIPTION_URL = '/api/v1/subscriptions/';
 export const STRIPE_CONTINUE_SESSIONSTORAGE_KEY = 'stripe-form-continue';
@@ -224,7 +224,7 @@ export default function SubscriptionForm() {
     let content;
     if (formStep === 'server_error') {
         content = (
-            <ErrorComponent
+            <ErrorWithRetry
                 text={gettext(
                     "An error occurred trying to set up the subscription with Stripe's server. We've recorded the error and will investigate it."
                 )}
@@ -233,7 +233,7 @@ export default function SubscriptionForm() {
         );
     } else if (formStep === 'stripe_error') {
         content = (
-            <ErrorComponent
+            <ErrorWithRetry
                 text={gettext(
                     'An error happened trying to load the Stripe integration'
                 )}
