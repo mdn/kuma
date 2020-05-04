@@ -29,10 +29,7 @@ export default function Login(): React.Node {
         let label = (
             <>
                 <img
-                    srcSet={`${userData.avatarUrl || ''} 200w, ${
-                        userData.avatarUrl || ''
-                    } 50w`}
-                    src={'/static/img/avatar.png'}
+                    src={userData.avatarUrl || '/static/img/avatar.png'}
                     className="avatar"
                     alt={userData.username}
                 />

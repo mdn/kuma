@@ -15,6 +15,7 @@
     @media #{$mq-small-desktop-and-up} {
         grid-template-columns: 221px 5fr minmax(250px, 2fr) minmax(90px, auto);
         grid-template-areas: 'I M S L';
+        padding: 0 16px;
         height: 68px;
         font-size: 16px;
     }

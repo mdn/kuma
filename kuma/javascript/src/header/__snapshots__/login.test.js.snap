@@ -18,9 +18,13 @@ exports[`Login component when user is logged in 1`] = `
       <img
         alt="test-username"
         className="avatar"
-        src="/static/img/avatar.png"
-        srcSet="test-url 200w, test-url 50w"
+        src="test-url"
       />
+      <span
+        className="username"
+      >
+        test-username
+      </span>
     </button>
     <ul
       className="dropdown-menu-items right"
