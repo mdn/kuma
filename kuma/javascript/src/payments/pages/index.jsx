@@ -20,7 +20,7 @@ export default function LandingPage({ data, locale }: RouteComponentProps) {
         email: `mailto:${data.contributionSupportEmail}?Subject=Manage%20monthly%20subscription`,
         moco: 'https://www.mozilla.org/foundation/moco/',
         mozillaFoundation: 'https://www.mozilla.org/foundation/',
-        managePayments: `/${locale}/payments/recurring/management/`,
+        managePayments: `/${locale}/payments/management/`,
         stripe: 'https://stripe.com/',
         taxDeductible: 'https://donate.mozilla.org/faq#item_tax_a',
         terms: `/${locale}/payments/terms/`,

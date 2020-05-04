@@ -22,6 +22,17 @@ aside {
 main {
     background: #fff;
     min-height: 200px;
+
+    > header {
+        display: flex;
+
+        // arrange breadcrumbs above title bar for mobile
+        // and below title bar for desktop
+        flex-direction: column-reverse;
+        @media #{$mq-small-desktop-and-up} {
+            flex-direction: column;
+        }
+    }
 }
 
 details {

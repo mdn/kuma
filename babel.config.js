@@ -32,6 +32,7 @@ module.exports = (api) => {
     ];
     const plugins = [
         path.join(nodePath, '@babel/plugin-proposal-class-properties'),
+        path.join(nodePath, '@babel/plugin-transform-runtime'),
     ];
 
     return {

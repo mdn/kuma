@@ -1,3 +1,5 @@
+@import '../utils/utility-mixins.scss';
+
 .breadcrumbs {
     flex: 1 1;
 
@@ -17,17 +19,59 @@
             }
         }
 
-        .breadcrumb-chevron:after {
-            display: inline-block;
-            content: '›';
-            color: $grey-vdark;
-            margin: 0 5px;
-            font-size: 1rem;
-            font-weight: bold;
+        .breadcrumb-previous {
+            &::before {
+                @include caret-arrow($blue, left);
+                margin: 0 10px 0 0;
+                position: relative;
+                top: -1px;
+            }
         }
 
-        :last-child .breadcrumb-chevron:after {
-            display: none;
+        // only show immediate parent on mobile and tablet
+        .crumb-current-page,
+        .breadcrumb-chevron {
+            @include visually-hidden();
+        }
+
+        // if there are no crumb parents, reveal the current page crumb
+        &:first-child > [class*='crumb-current-page'] {
+            @include reset-visually-hidden();
+        }
+    }
+}
+
+@media #{$mq-small-desktop-and-up} {
+    .breadcrumbs {
+        li {
+            // reveal other breadcrumbs on Desktop
+            .breadcrumb-chevron,
+            .crumb-current-page {
+                @include reset-visually-hidden();
+            }
+
+            .breadcrumb-previous {
+                &::before {
+                    display: none;
+                }
+                span::before {
+                    display: none;
+                }
+            }
+
+            .breadcrumb-previous,
+            .breadcrumb-chevron {
+                &::after {
+                    @include caret-arrow($grey-vdark);
+                    margin: 0 8px 0 5px;
+                    position: relative;
+                    top: -1px;
+                }
+            }
+        }
+
+        .pre-text {
+            @include visually-hidden();
         }
     }
 }

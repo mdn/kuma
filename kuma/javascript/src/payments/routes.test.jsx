@@ -7,6 +7,7 @@ expect.extend({ toBeInTheDocument });
 
 describe('PaymentPage', () => {
     const mockData = { email: 'mock-support@mozilla.com' };
+
     it('renders Thank You page if path contains thank-you', () => {
         const { queryByTestId } = render(
             <PaymentPage slug={PAYMENT_PATHS.THANK_YOU} />
@@ -19,6 +20,13 @@ describe('PaymentPage', () => {
             <PaymentPage slug={PAYMENT_PATHS.TERMS} data={mockData} />
         );
         expect(queryByTestId('terms-page')).toBeInTheDocument();
+    });
+
+    it('renders Management page if path contains management', () => {
+        const { queryByTestId } = render(
+            <PaymentPage slug={PAYMENT_PATHS.MANAGEMENT} />
+        );
+        expect(queryByTestId('management-page')).toBeInTheDocument();
     });
 
     it('renders Landing page by default', () => {

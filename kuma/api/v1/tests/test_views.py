@@ -651,7 +651,7 @@ def test_stripe_payment_succeeded_sends_invoice_mail(
     assert "Receipt" in payment_email.subject
     assert "Invoice number: test_invoice_001" in payment_email.body
     assert "You supported MDN with a $7.00 monthly subscription" in payment_email.body
-    assert "manage monthly subscriptions" in payment_email.body
+    assert "manage monthly subscription" in payment_email.body
 
 
 @mock.patch("stripe.Event.construct_from")

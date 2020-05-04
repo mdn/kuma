@@ -64,7 +64,6 @@ def retrieve_and_synchronize_subscription_info(user):
                 "last4": card.last4,
                 # Cards that are part of a "source" don't have a zip
                 "zip": card.get("address_zip", None),
-                # TODO: Deprecated. Only used in the Edit Profile view
                 "next_payment_at": datetime.fromtimestamp(
                     stripe_subscription_info.current_period_end
                 ),

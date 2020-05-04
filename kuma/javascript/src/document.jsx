@@ -100,13 +100,15 @@ function DocumentPage({ document }: DocumentProps) {
             <A11yNav />
             <Header document={document} />
             <main role="main">
-                <Titlebar title={document.title} document={document} />
-                <div className="full-width-row-container">
-                    <div className="max-content-width-container">
-                        <Breadcrumbs document={document} />
-                        <LanguageMenu document={document} />
+                <header>
+                    <Titlebar title={document.title} document={document} />
+                    <div className="full-width-row-container">
+                        <div className="max-content-width-container">
+                            <Breadcrumbs document={document} />
+                            <LanguageMenu document={document} />
+                        </div>
                     </div>
-                </div>
+                </header>
                 <ContentErrorBoundary>
                     <Content document={document} />
                 </ContentErrorBoundary>

@@ -1,16 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'react_base.html' %}
 
-{% block title %}{{ page_title(_('MDN subscription management')) }}{% endblock %}
-
-{% block site_css %}
-    {{ super() }}
-    {% stylesheet 'users' %}
-{% endblock %}
+{% block title %}{{ page_title(_('Manage monthly subscription')) }}{% endblock %}
 
 {% block site_meta %}
     {{ super() }}
-    {% set seo_description = _('MDN subscription management') %}
-    {% set social_title = _('MDN subscription management') %}
+    {% set seo_description = _('Manage monthly subscription') %}
+    {% set social_title = _('Manage monthly subscription') %}
     <meta property="og:description" content="{{ seo_description }}">
     <meta name="description" content="{{ seo_description }}">
     <meta name="twitter:description" content="{{ seo_description }}">
@@ -18,108 +13,11 @@
     <meta property="og:title" content="{{ social_title }}">
 {% endblock %}
 
-{% block content %}
-    <div class="manage-payments">
-        <article class="column-container">
-            <header class="manage-payments-header">
-                <h1>{{_('MDN subscription management')}}</h1>
-            </header>
-            <div>
-                <a href="{{ url('users.user_edit', username=user.username) }}" class="button neutral back">{% include 'includes/icons/arrows/arrow-left.svg' %} {{_('Back to profile')}}</a>
-            </div>
-            <div class="manage-payments-help column-4">
-                <h4>{{_('Help')}}</h4>
-                <ul>
-                    <li>
-                        <a href="{{ url('payments_index') + '#contribute-monthly-faqs' }}" class="cta-link full-width">{{_('Monthly subscriptions FAQ')}} {% include 'includes/icons/arrows/arrow.svg' %}</a>
-                    </li>
-                    <li>
-                        <a href="{{ support_mail_link }}" class="cta-link cta-link email full-width">{{ support_mail }}{% include 'includes/icons/general/envelope.svg' %}</a>
-                    </li>
-                </ul>
-            </div>
-            <section class="column-half">
-                <h2>{{_('Subscriptions')}}</h2>
-                <p>
-                    {% trans url=support_mail_link, email=support_mail %}
-                        This is a list of your active subscriptions to MDN Web Docs.
-                        If you wish to amend any of the details below please
-                        contact <a href="{{ url }}">{{ email }}</a>.
-                    {% endtrans %}
-                </p>
-            </section>
-        </article>
-        {% if request.user.stripe_customer_id and active_subscriptions %}
-            <section>
-                <h3>{{_('Monthly Subscription')}}</h3>
-                <table class="bordered-info">
-                    <thead>
-                        <tr>
-                            <th>{% include 'includes/icons/general/money-bill-alt.svg' %} {{_('Amount')}}</th>
-                            <th>{% include 'includes/icons/general/credit-card.svg' %} {{_('Card Number')}}</th>
-                            <th>{% include 'includes/icons/general/credit-card.svg' %} {{_('Expiry')}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>${{ stripe_plan_amount }}</td>
-                            <td>**** **** **** {{ stripe_card_last4 }}</td>
-                            <td>02/19</td>
-                        </tr>
-                    </tbody>
-                </table>
-                {% if not cancel_request %}
-                    <form id="id_stripe_management_form" method="post">
-                        {% csrf_token %}
-                        <button class="button negative" type="button" toggle-confirmation>{{_('Cancel your subscription')}}</button>
-                        <div id="delete-confirmation" class="hidden" aria-hidden="true">
-                            <div class="confirmation column-8 alert danger">
-                                <h5>{{_('Are you sure?')}}</h5>
-                                <p>
-                                    {{_('You will have to set up a new subscription if you wish to resume making payments to MDN Web Docs.')}}
-                                </p>
-                                <div class="button-group">
-                                    <button class="button" type="button" toggle-confirmation>{{_('Cancel')}}</button>
-                                    <button id="id_stripe_cancel_subscription" name="stripe_cancel_subscription" class="button negative" type="submit">{{_('Confirm')}}</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                {% endif %}
-            </section>
-        {% else %}
-            <section>
-                <h3>{{_('Monthly Subscription')}}</h3>
-                <div class="bordered-info">
-                    <span>
-                        {% trans url=settings.SITE_URL + url('payments_index') %}
-                            You have no active subscriptions.
-                            Why not <a href="{{ url }}">set one up</a>?
-                        {% endtrans %}
-                    </span>
-                </div>
-            </section>
-        {% endif %}
-        {% if cancel_request %}
-            {% if cancel_success %}
-                <div class="confirmation column-8 alert success">
-                    <b>{{_('Your monthly subscription has been successfully canceled')}}</b>
-                </div>
-            {% else %}
-                <div class="confirmation column-8 alert danger">
-                    <b>
-                        {% trans url=support_mail_link, email=support_mail, reference_number=request.user.stripe_customer_id %}
-                            There was a problem canceling your subscription,
-                            please contact <a href="{{ url }}">{{ email }}</a>
-                            and provide your customer reference number {{ reference_number }}.
-                        {% endtrans %}
-                    </b>
-                </div>
-            {% endif %}
-        {% endif %}
-    </div>
+{% block document_head %}
+    {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), True)|safe }}
 {% endblock %}
 
-{% block js %}
-    {% javascript 'payments' %}
+{% block content %}
 {% endblock %}
+
+{% block footer %}{% endblock %}

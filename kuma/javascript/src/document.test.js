@@ -87,7 +87,7 @@ describe('Document component renders all of its parts', () => {
             let parent = fakeDocumentData.parents[i];
             let link = links[i];
             expect(link.props.href).toBe(parent.url);
-            expect(link.children[0].children[0]).toBe(parent.title);
+            expect(link.children[1].children[0]).toBe(parent.title);
         }
     });
 
