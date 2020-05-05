@@ -105,29 +105,73 @@
   {% block footer %}
     <!-- Footer -->
     <footer id="nav-footer" class="nav-footer">
-      <div class="center">
-          {% include "includes/footer/mdn-footer.html" %}
-
-          {% include "includes/footer/moz-footer.html" %}
-
-          {% block lang_switcher %}
-            {% include "includes/lang_switcher.html" %}
-          {% endblock %}
-
-          {% block footer_copyright %}
-            <ul class="footer-tos">
-              <li><a href="https://www.mozilla.org/about/legal/terms/mozilla">{{ _('Terms') }}</a></li>
-              <li><a href="https://www.mozilla.org/privacy/websites/">{{ _('Privacy') }}</a></li>
-              <li><a href="https://www.mozilla.org/privacy/websites/#cookies">{{ _('Cookies') }}</a></li>
-            </ul>
-
-            <div id="license" class="contentinfo">
-              {% trans copyright_url='/en-US/docs/MDN/About#Copyrights_and_licenses', thisyear=thisyear() %}
-                <p>&copy; 2005-{{ thisyear }} Mozilla and individual contributors.</p>
-                <p>Content is available under <a href="{{ copyright_url }}">these licenses</a>.</p>
-              {% endtrans %}
-            </div>
-          {% endblock %}
+      <div class="content-container">
+        <a href="{{ url('home') }}" class="nav-footer-logo">{{ _('MDN Web Docs') }}</a>
+        
+        <ul class="link-list-mdn">
+          <li><a href="{{ wiki_url('Web') }}">{{ _('Web Technologies') }}</a></li>
+          <li><a href="{{ wiki_url('Learn') }}">{{ _('Learn Web Development') }}</a></li>
+          <li><a href="/docs/MDN/About">{{ _('About MDN') }}</a></li>
+          <li><a href="{{ wiki_url('MDN/Feedback') }}">{{ _('Feedback') }}</a></li>
+        </ul>
+        
+        <ul class="link-list-moz">
+          <li><a href="https://www.mozilla.org/about/" target="_blank" rel="noopener noreferrer">{{ _('About') }}</a></li>
+          <li><a href="https://www.mozilla.org/contact/" target="_blank" rel="noopener noreferrer">{{ _('Contact Us') }}</a></li>
+          <li><a
+              href="https://www.mozilla.org/firefox/?utm_source=developer.mozilla.org&utm_campaign=footer&utm_medium=referral" target="_blank" rel="noopener noreferrer">Firefox</a>
+          </li>
+        </ul>
+        
+        <div class="social social-mdn">
+          <h4>{{ _('MDN') }}</h4>
+          <ul>
+            <li>
+              <a href="https://twitter.com/mozdevnet" target="_blank" rel="noopener noreferrer">
+                {{ include_svg('includes/icons/social/twitter.svg', _('Twitter')) }}
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/mdn/" target="_blank" rel="noopener noreferrer">
+                {{ include_svg('includes/icons/social/github.svg', _('GitHub')) }}
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="social social-moz">
+          <h4>{{ _('Mozilla') }}</h4>
+          <ul>
+            <li>
+              <a href="https://twitter.com/mozilla" target="_blank" rel="noopener noreferrer">
+                {{ include_svg('includes/icons/social/twitter.svg', _('Twitter')) }}
+              </a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/mozillagram/" target="_blank" rel="noopener noreferrer">
+                {{ include_svg('includes/icons/social/instagram.svg', _('Instagram')) }}
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div id="license" class="footer-license">
+          {% trans copyright_url='/en-US/docs/MDN/About#Copyrights_and_licenses', thisyear=thisyear() %}
+          &copy; 2005-{{ thisyear }} Mozilla and individual contributors. Content is available
+          under <a href="{{ copyright_url }}">these licenses</a>.
+          {% endtrans %}
+        </div>
+        
+        <ul class="footer-legal">
+          <li>
+            <a href="https://www.mozilla.org/about/legal/terms/mozilla" target="_blank" rel="noopener noreferrer">{{ _('Terms') }}</a>
+          </li>
+          <li>
+            <a href="https://www.mozilla.org/privacy/websites/" target="_blank" rel="noopener noreferrer">{{ _('Privacy') }}</a></li>
+          <li>
+            <a href="https://www.mozilla.org/privacy/websites/#cookies" target="_blank" rel="noopener noreferrer">{{ _('Cookies') }}</a>
+          </li>
+        </ul>
       </div>
     </footer>
   {% endblock %}
