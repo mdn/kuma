@@ -1,10 +1,9 @@
 import csv
-import json
 from io import StringIO
 
-import requests
 from django.core.management.base import BaseCommand
 
+from kuma.core.utils import requests_retry_session
 from kuma.users.models import User, UserSubscription
 
 URL = "https://api.sendinblue.com/v3/contacts/import"
@@ -47,22 +46,19 @@ class Command(BaseCommand):
             for user in users:
                 writer.writerow(user)
 
-            payload = json.dumps(
-                {
-                    "fileBody": csv_out.getvalue(),
-                    "listIds": [list_id],
-                    "updateExistingContacts": True,
-                    "emptyContactsAttributes": True,
-                },
-                separators=(",", ":"),
-            )
+            payload = {
+                "fileBody": csv_out.getvalue(),
+                "listIds": [list_id],
+                "updateExistingContacts": True,
+                "emptyContactsAttributes": True,
+            }
             headers = {
                 "api-key": options["api_key"],
                 "accept": "application/json",
                 "content-type": "application/json",
             }
 
-            response = requests.request("POST", URL, data=payload, headers=headers)
+            response = requests_retry_session().request("POST", URL, json=payload, headers=headers)
             response.raise_for_status()
 
         print(f"Exporting {len(paying_users)} paying user(s)")
