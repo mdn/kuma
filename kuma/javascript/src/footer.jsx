@@ -40,17 +40,29 @@ export default function Footer() {
 
                 <ul className="link-list-moz">
                     <li>
-                        <a href="https://www.mozilla.org/about/">
+                        <a
+                            href="https://www.mozilla.org/about/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             {gettext('About')}
                         </a>
                     </li>
                     <li>
-                        <a href="https://www.mozilla.org/contact/">
+                        <a
+                            href="https://www.mozilla.org/contact/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             {gettext('Contact Us')}
                         </a>
                     </li>
                     <li>
-                        <a href="https://www.mozilla.org/firefox/?utm_source=developer.mozilla.org&utm_campaign=footer&utm_medium=referral">
+                        <a
+                            href="https://www.mozilla.org/firefox/?utm_source=developer.mozilla.org&utm_campaign=footer&utm_medium=referral"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             Firefox
                         </a>
                     </li>
@@ -60,12 +72,20 @@ export default function Footer() {
                     <h4>{gettext('MDN')}</h4>
                     <ul>
                         <li>
-                            <a href="https://twitter.com/mozdevnet">
+                            <a
+                                href="https://twitter.com/mozdevnet"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 <TwitterIcon />
                             </a>
                         </li>
                         <li>
-                            <a href="https://github.com/mdn/">
+                            <a
+                                href="https://github.com/mdn/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 <GithubIcon />
                             </a>
                         </li>
@@ -76,12 +96,20 @@ export default function Footer() {
                     <h4>{gettext('Mozilla')}</h4>
                     <ul>
                         <li>
-                            <a href="https://twitter.com/mozilla">
+                            <a
+                                href="https://twitter.com/mozilla"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 <TwitterIcon />
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.instagram.com/mozillagram/">
+                            <a
+                                href="https://www.instagram.com/mozillagram/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 <InstagramIcon />
                             </a>
                         </li>
@@ -99,17 +127,29 @@ export default function Footer() {
 
                 <ul className="footer-legal">
                     <li>
-                        <a href="https://www.mozilla.org/about/legal/terms/mozilla">
+                        <a
+                            href="https://www.mozilla.org/about/legal/terms/mozilla"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             {gettext('Terms')}
                         </a>
                     </li>
                     <li>
-                        <a href="https://www.mozilla.org/privacy/websites/">
+                        <a
+                            href="https://www.mozilla.org/privacy/websites/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             {gettext('Privacy')}
                         </a>
                     </li>
                     <li>
-                        <a href="https://www.mozilla.org/privacy/websites/#cookies">
+                        <a
+                            href="https://www.mozilla.org/privacy/websites/#cookies"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             {gettext('Cookies')}
                         </a>
                     </li>
