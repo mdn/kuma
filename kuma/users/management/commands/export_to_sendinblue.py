@@ -39,6 +39,7 @@ class Command(BaseCommand):
             )
 
         def export_users(users, list_id):
+             print(f"Exporting {len(paying_users):,} on list ${list_id}")
             csv_out = StringIO()
             writer = csv.DictWriter(
                 csv_out, fieldnames=["EMAIL", "FIRSTNAME", "LASTNAME"]
