@@ -39,7 +39,7 @@ class Command(BaseCommand):
                 non_paying_users.append(row)
 
         def export_users(users, list_id):
-             print(f"Exporting {len(paying_users):,} on list ${list_id}")
+            print(f"Exporting {len(users):,} on list {list_id}")
             csv_out = StringIO()
             writer = csv.DictWriter(
                 csv_out, fieldnames=["EMAIL", "FIRSTNAME", "LASTNAME"]
@@ -65,7 +65,5 @@ class Command(BaseCommand):
             )
             response.raise_for_status()
 
-        print(f"Exporting {len(paying_users)} paying user(s)")
         export_users(paying_users, options["paying_users_list_id"])
-        print(f"Exporting {len(non_paying_users)} non-paying users")
         export_users(non_paying_users, options["non_paying_users_list_id"])
