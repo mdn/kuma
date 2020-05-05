@@ -8,7 +8,7 @@ import { formatDate, formatMoney } from '../../formatters.js';
 import SignInLink from '../../signin-link.jsx';
 import Subheader from '../components/subheaders/index.jsx';
 import CancelSubscriptionForm from '../components/cancel-subscription-form.jsx';
-import ErrorMessage from '../components/error-message.jsx';
+import { GenericError } from '../components/errors.jsx';
 import { getSubscriptions } from '../api.js';
 
 export type SubscriptionData = {
@@ -164,7 +164,7 @@ const ManagementPage = ({ locale }: Props): React.Node => {
                 return renderSubscriptions();
             case status === 'error':
                 // Something went wrong with fetching data
-                return <ErrorMessage />;
+                return <GenericError />;
             default:
                 // Fetching data
                 return <strong>{gettext('Loading…')}</strong>;

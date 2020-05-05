@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import { gettext, interpolate } from '../../l10n.js';
-import ErrorMessage from '../components/error-message.jsx';
+import { GenericError } from '../components/errors.jsx';
 import { sendFeedback } from '../api.js';
 
 export const MIN_STRING_LENGTH = 5;
@@ -43,7 +43,7 @@ const FeedbackForm = (): React.Node => {
             setStatus('success');
         };
         const handleError = () => {
-            setError(<ErrorMessage />);
+            setError(<GenericError />);
         };
         sendFeedback(reqBody, handleSuccess, handleError);
     };

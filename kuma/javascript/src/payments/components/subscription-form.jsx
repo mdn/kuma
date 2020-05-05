@@ -9,45 +9,11 @@ import GAProvider, {
 } from '../../ga-provider.jsx';
 import UserProvider from '../../user-provider.jsx';
 import { getCookie } from '../../utils';
+import { ErrorWithRetry } from './errors.jsx';
+import useScriptLoading from './use-script-loading.js';
 
 const SUBSCRIPTION_URL = '/api/v1/subscriptions/';
-
-/**
- * Loads the script given by the URL and cleans up after itself
- * @returns {(null | Promise)} Indicating whether the script has successfully loaded
- */
-function useScriptLoading(url) {
-    const [loadingPromise, setLoadingPromise] = useState<null | Promise<void>>(
-        null
-    );
-
-    useEffect(() => {
-        let script;
-        if (!loadingPromise) {
-            script = document.createElement('script');
-            setLoadingPromise(
-                new Promise((resolve, reject) => {
-                    script.onload = resolve;
-                    script.onerror = reject;
-                })
-            );
-            script.src = url;
-
-            if (document.head) {
-                document.head.appendChild(script);
-            }
-        }
-        return () => {
-            if (document.head && script) {
-                document.head.removeChild(script);
-            }
-        };
-    }, [loadingPromise, url]);
-
-    return [loadingPromise, () => setLoadingPromise(null)];
-}
-
-const STRIPE_CONTINUE_SESSIONSTORAGE_KEY = 'stripe-form-continue';
+export const STRIPE_CONTINUE_SESSIONSTORAGE_KEY = 'stripe-form-continue';
 
 /**
  * Returns true if the user has previously started the subscription process, but
@@ -199,6 +165,7 @@ export default function SubscriptionForm() {
                         createSubscription();
                     },
                     closed() {
+                        setOpenStripeModal(false);
                         setFormStep(token.current ? 'submitting' : 'initial');
                     },
                 });
@@ -247,7 +214,9 @@ export default function SubscriptionForm() {
                 // If window.mdn.triggerAuthModal is falsy, it most likely means
                 // it deliberately doesn't want this user to use a modal. E.g.
                 // certain mobile clients.
-                window.location.href = `/${locale}/users/account/signup-landing?next=${next}`;
+                window.location.assign(
+                    `/${locale}/users/account/signup-landing?next=${next}`
+                );
             }
         }
     }
@@ -255,39 +224,21 @@ export default function SubscriptionForm() {
     let content;
     if (formStep === 'server_error') {
         content = (
-            <section className="error">
-                <h2>{gettext('Sorry!')}</h2>
-                <p>
-                    {gettext(
-                        "An error occurred trying to set up the subscription with Stripe's server. We've recorded the error and will investigate it."
-                    )}
-                </p>
-                <button
-                    type="button"
-                    className="button cta primary"
-                    onClick={() => setFormStep('initial')}
-                >
-                    {gettext('Try again')}
-                </button>
-            </section>
+            <ErrorWithRetry
+                text={gettext(
+                    "An error occurred trying to set up the subscription with Stripe's server. We've recorded the error and will investigate it."
+                )}
+                onClick={() => setFormStep('initial')}
+            />
         );
     } else if (formStep === 'stripe_error') {
         content = (
-            <section className="error">
-                <h2>{gettext('Sorry!')}</h2>
-                <p>
-                    {gettext(
-                        'An error happened trying to load the Stripe integration'
-                    )}
-                </p>
-                <button
-                    type="button"
-                    className="button cta primary"
-                    onClick={reloadStripe}
-                >
-                    {gettext('Try again')}
-                </button>
-            </section>
+            <ErrorWithRetry
+                text={gettext(
+                    'An error happened trying to load the Stripe integration'
+                )}
+                onClick={reloadStripe}
+            />
         );
     } else {
         content = (
