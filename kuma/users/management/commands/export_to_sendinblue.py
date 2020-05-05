@@ -28,14 +28,15 @@ class Command(BaseCommand):
         non_paying_users = []
         for user in users.only("email", "first_name", "last_name"):
             is_paying = user.id in active_subscriber_user_ids
-            list = paying_users if is_paying else non_paying_users
-            list.append(
-                {
-                    "EMAIL": user.email,
-                    "FIRSTNAME": user.first_name,
-                    "LASTNAME": user.last_name,
-                }
-            )
+            row = {
+                "EMAIL": user.email,
+                "FIRSTNAME": user.first_name,
+                "LASTNAME": user.last_name,
+            }
+            if is_paying:
+                paying_users.append(row)
+            else:
+                non_paying_users.append(row)
 
         def export_users(users, list_id):
             csv_out = StringIO()
@@ -58,7 +59,9 @@ class Command(BaseCommand):
                 "content-type": "application/json",
             }
 
-            response = requests_retry_session().request("POST", URL, json=payload, headers=headers)
+            response = requests_retry_session().request(
+                "POST", URL, json=payload, headers=headers
+            )
             response.raise_for_status()
 
         print(f"Exporting {len(paying_users)} paying user(s)")
