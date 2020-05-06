@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
 import { useContext, useState } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 import GAProvider from './ga-provider.jsx';
 import { gettext } from './l10n.js';
@@ -35,6 +36,27 @@ export default function TOC({ html }: Props) {
     }
 
     /**
+     * Returns the related topics list item to be appended
+     * to the end of the TOC items list.
+     */
+    function relatedTopicsListitem() {
+        return (
+            <li className="toc-related-topics">
+                <a href="#sidebar-quicklinks">{gettext('Related topics')}</a>
+            </li>
+        );
+    }
+
+    /**
+     * Returns the HTML for the table of contents with the
+     * related topics list item appended to the end of the
+     * original list.
+     */
+    function getTOCHTML() {
+        return html + renderToStaticMarkup(relatedTopicsListitem());
+    }
+
+    /**
      * Show or hide the table of contents on
      * mobile devices
      */
@@ -60,7 +82,7 @@ export default function TOC({ html }: Props) {
                 <ul
                     className={showTOC ? 'show-toc' : undefined}
                     dangerouslySetInnerHTML={{
-                        __html: html,
+                        __html: getTOCHTML(),
                     }}
                 />
             </section>

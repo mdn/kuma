@@ -54,7 +54,7 @@ export type DocumentProps = {
 export function Sidebar({ document }: DocumentProps) {
     return (
         document.quickLinksHTML && (
-            <div className="sidebar">
+            <div id="sidebar-quicklinks" className="sidebar">
                 <div className="quick-links">
                     <div className="quick-links-head sidebar-heading">
                         {gettext('Related Topics')}
