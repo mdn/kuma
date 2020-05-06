@@ -14,11 +14,15 @@
         flex-direction: row;
         align-items: center;
         color: $text-color;
-        padding: 0 5px 5px;
+        padding-left: 5px;
         border: none;
         white-space: nowrap;
         font-size: $tiny-font-size;
         font-weight: bold;
+
+        @media #{$mq-tablet-and-up} {
+            padding: 0 5px 5px;
+        }
     }
 
     .dropdown-menu-items {

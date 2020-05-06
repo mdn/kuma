@@ -1,12 +1,12 @@
 .page-header {
     display: grid;
-    margin: 0 16px;
-    align-items: center;
-    font-size: 10px;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-areas: 'I I L L' 'S S S S' 'M M M M';
+    padding: 20px;
+    gap: 20px;
+    grid-template-columns: 1fr;
+    grid-template-areas: 'I' 'L' 'M' 'S';
 
     @media #{$mq-tablet-and-up} {
+        align-items: center;
         grid-template-columns: minmax(206px, 1fr) 300px minmax(90px, auto);
         grid-template-areas: 'I S L' 'R R R' 'M M M';
         height: 122px;
@@ -15,6 +15,7 @@
     @media #{$mq-small-desktop-and-up} {
         grid-template-columns: 221px 5fr minmax(250px, 2fr) minmax(90px, auto);
         grid-template-areas: 'I M S L';
+        padding: 0 16px;
         height: 68px;
         font-size: 16px;
     }
