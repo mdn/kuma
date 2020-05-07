@@ -10,6 +10,6 @@ def request(method, path, **kwargs):
     return requests_retry_session().request(
         method,
         API_URL + path,
-        headers={"api-key": settings.SENDINBLUE_API_KEY, "accept": "application/json",},
+        headers={"api-key": settings.SENDINBLUE_API_KEY, "accept": "application/json"},
         **kwargs,
     )
