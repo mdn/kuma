@@ -1844,5 +1844,5 @@ STRIPE_WEBHOOK_HOSTNAME = config("STRIPE_WEBHOOK_HOSTNAME", default=None)
 # We use sendinblue.com to send marketing emails and are subdividing users
 # into lists of paying and not paying users
 SENDINBLUE_API_KEY = config("SENDINBLUE_API_KEY", default=None)
-SENDINBLUE_PAYING_LIST_ID = config("SENDINBLUE_PAYING_LIST_ID", cast=int)
-SENDINBLUE_NOT_PAYING_LIST_ID = config("SENDINBLUE_NOT_PAYING_LIST_ID", cast=int)
+SENDINBLUE_PAYING_LIST_ID = config("SENDINBLUE_PAYING_LIST_ID", cast=int, default=None)
+SENDINBLUE_NOT_PAYING_LIST_ID = config("SENDINBLUE_NOT_PAYING_LIST_ID", cast=int, default=None)
