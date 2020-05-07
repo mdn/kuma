@@ -19,4 +19,8 @@
 
 .cta-background-linear {
     background-image: linear-gradient(to right, #83cff3, #ebf8e1);
+
+    .icon-close {
+        fill: $neutral-600;
+    }
 }
