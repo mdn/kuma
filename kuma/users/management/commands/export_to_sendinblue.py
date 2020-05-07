@@ -12,7 +12,7 @@ from kuma.users.models import User, UserSubscription
 class Command(BaseCommand):
     help = "Exports newsletter subscribed users to sendinblue"
 
-    def handle(self):
+    def handle(self, **options):
         if not settings.SENDINBLUE_API_KEY:
             raise CommandError("SENDINBLUE_API_KEY config not set")
 
@@ -48,7 +48,7 @@ class Command(BaseCommand):
 
             payload = {
                 "fileBody": csv_out.getvalue(),
-                "listIds": [list_id],
+                "listIds": [int(list_id)],
                 "updateExistingContacts": True,
                 "emptyContactsAttributes": True,
             }
