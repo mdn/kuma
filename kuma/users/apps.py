@@ -18,9 +18,10 @@ class UserConfig(AuthConfig):
         # Connect signal handlers
         from . import signal_handlers  # noqa
 
-        from kuma.users.checks import stripe_check
+        from kuma.users.checks import stripe_check, sendinblue_check
 
         register(stripe_check)
+        register(sendinblue_check)
 
         # Configure global 'stripe' module
         if settings.STRIPE_SECRET_KEY:

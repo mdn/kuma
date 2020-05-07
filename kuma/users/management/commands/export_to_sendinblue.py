@@ -1,23 +1,21 @@
 import csv
 from io import StringIO
 
-from django.core.management.base import BaseCommand
+from django.conf import settings
+from django.core.management.base import BaseCommand, CommandError
 
-from kuma.core.utils import requests_retry_session
+
+from kuma.users import sendinblue
 from kuma.users.models import User, UserSubscription
-
-URL = "https://api.sendinblue.com/v3/contacts/import"
 
 
 class Command(BaseCommand):
     help = "Exports newsletter subscribed users to sendinblue"
 
-    def add_arguments(self, parser):
-        parser.add_argument("--api-key")
-        parser.add_argument("--paying-users-list-id", type=int)
-        parser.add_argument("--non-paying-users-list-id", type=int)
+    def handle(self):
+        if not settings.SENDINBLUE_API_KEY:
+            raise CommandError("SENDINBLUE_API_KEY config not set")
 
-    def handle(self, **options):
         active_subscriber_user_ids = set(
             UserSubscription.objects.filter(canceled__isnull=True).values_list(
                 "user_id", flat=True
@@ -54,16 +52,9 @@ class Command(BaseCommand):
                 "updateExistingContacts": True,
                 "emptyContactsAttributes": True,
             }
-            headers = {
-                "api-key": options["api_key"],
-                "accept": "application/json",
-                "content-type": "application/json",
-            }
 
-            response = requests_retry_session().request(
-                "POST", URL, json=payload, headers=headers
-            )
+            response = sendinblue.request("POST", "contacts/import", json=payload)
             response.raise_for_status()
 
-        export_users(paying_users, options["paying_users_list_id"])
-        export_users(non_paying_users, options["non_paying_users_list_id"])
+        export_users(paying_users, settings.SENDINBLUE_PAYING_LIST_ID)
+        export_users(non_paying_users, settings.SENDINBLUE_NOT_PAYING_LIST_ID)
