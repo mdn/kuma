@@ -63,19 +63,31 @@ search items in .main-nav
 }
 
 .search-trigger {
+    $search-icon-size: 24px;
     position: absolute;
     top: 12px;
     @include bidi(((left, 15px, right, auto),));
     z-index: 2;
+    svg {
+        width: $search-icon-size;
+        height: $search-icon-size;
+    }
 
     @media #{$mq-small-desktop-and-up} {
+        $lg-search-icon-size: 40px;
         position: absolute;
-        top: 5px;
+        top: calc(50% - #{$lg-search-icon-size/2});
+        line-height: 1;
         @include bidi((
             (left, 30%, 30%),
             (right, auto, auto),
         ));
         color: #fff;
+
+        svg {
+            width: $lg-search-icon-size;
+            height: $lg-search-icon-size;
+        }
     }
 
     #{$selector-icon} {
