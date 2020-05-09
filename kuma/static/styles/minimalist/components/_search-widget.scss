@@ -29,6 +29,9 @@
     // show toggle button {
     .toggle-form {
         @include reset-visually-hidden();
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 68px;
         height: 68px;
         right: 0;
@@ -84,6 +87,7 @@
 
         &.show-form {
             width: auto;
+            position: inherit;
         }
 
         // needs [role='search'] to make it more specific in order to
