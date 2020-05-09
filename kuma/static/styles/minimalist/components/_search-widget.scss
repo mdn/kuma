@@ -1,26 +1,70 @@
-.header-search {
-    grid-area: S;
-    display: flex;
-    flex: 2 1;
-    flex-direction: row;
-    align-items: center;
-    box-sizing: border-box;
-    padding: 2px 8px;
-    border: 2px solid $text-color;
-    border-radius: 20px;
-    height: 40px;
-    min-width: 80px;
+@import '../utils/utility-mixins.scss';
 
-    .search-icon {
-        flex: 0 0 25px;
-        fill: $text-color;
+.header-search {
+    background: $neutral-100;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    right: 0;
+    // background: magenta;
+    height: 68px;
+
+    &.show-form {
+        // opacity: 1;
+        width: 100vw;
+        position: fixed;
+        z-index: 1;
+
+        form {
+            @include reset-visually-hidden();
+            // transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            // transition: transform 300ms 300ms cubic-bezier(0.4, 0, 0.2, 1),
+            //     width cubic-bezier(0.4, 0, 0.2, 1) 0ms 300ms;
+            // transform: translateY(0);
+            width: calc(100% - 68px);
+            padding: 0 20px;
+        }
+    }
+
+    // show toggle button {
+    .toggle-form {
+        @include reset-visually-hidden();
+        width: 68px;
+        height: 68px;
+        right: 0;
+        padding: 0;
+        // background: blueviolet;
+
+        .search-icon,
+        .close-icon {
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    form {
+        // hide form on mobile / small screens
+        @include visually-hidden();
+        // transform: translateY(-68px);
+        grid-area: S;
+        display: flex;
+        flex: 2 1;
+        flex-direction: row;
+        align-items: center;
+        box-sizing: border-box;
+        height: 40px;
+        min-width: 80px;
+        // background: yellowgreen;
+
+        .search-icon {
+            display: none;
+        }
     }
 
     input.search-input-field {
         flex: 1 1 100px;
         color: $text-color;
         border-width: 0;
-        font-size: $tiny-font-size;
         min-width: 60px;
 
         &:focus,
@@ -28,6 +72,52 @@
             border: 0;
             outline: none;
             box-shadow: none;
+        }
+    }
+}
+
+@media #{$mq-tablet-and-up} {
+    .header-search {
+        height: 40px;
+        min-width: 80px;
+        position: inherit;
+
+        &.show-form {
+            width: auto;
+        }
+
+        // needs [role='search'] to make it more specific in order to
+        //  override reset-visually-hidden styles
+        form[role='search'] {
+            @include reset-visually-hidden();
+            padding: 2px 8px;
+            border: 2px solid $text-color;
+            border-radius: 20px;
+
+            .search-icon {
+                display: inline-block;
+                flex: 0 0 25px;
+                fill: $text-color;
+            }
+        }
+
+        input.search-input-field {
+            flex: 1 1 100px;
+            color: $text-color;
+            border-width: 0;
+            font-size: $tiny-font-size;
+            min-width: 60px;
+
+            &:focus,
+            &:invalid {
+                border: 0;
+                outline: none;
+                box-shadow: none;
+            }
+        }
+
+        .toggle-form {
+            @include visually-hidden();
         }
     }
 }
