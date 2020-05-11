@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
 import { useContext, useState } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 import GAProvider from './ga-provider.jsx';
 import { gettext } from './l10n.js';
@@ -35,6 +36,36 @@ export default function TOC({ html }: Props) {
     }
 
     /**
+     * Returns the related topics list item to be appended
+     * to the end of the TOC items list.
+     */
+    function relatedTopicsListitem() {
+        return (
+            <li className="toc-related-topics">
+                <a href="#sidebar-quicklinks">{gettext('Related topics')}</a>
+            </li>
+        );
+    }
+
+    /**
+     * Returns the HTML for the table of contents with the
+     * related topics list item appended to the end of the
+     * original list.
+     *
+     * NOTE: The reason this is needed is because the initial
+     * list of table of content entries is retrieved from the
+     * document API and provided as raw HTML. The additional
+     * entry is not provided by the API and thus, we need to
+     * manually append it here.
+     *
+     * At the time of writing this is the only way to have both
+     * raw HTML and React elements as siblings
+     */
+    function getTOCHTML() {
+        return html + renderToStaticMarkup(relatedTopicsListitem());
+    }
+
+    /**
      * Show or hide the table of contents on
      * mobile devices
      */
@@ -60,7 +91,7 @@ export default function TOC({ html }: Props) {
                 <ul
                     className={showTOC ? 'show-toc' : undefined}
                     dangerouslySetInnerHTML={{
-                        __html: html,
+                        __html: getTOCHTML(),
                     }}
                 />
             </section>

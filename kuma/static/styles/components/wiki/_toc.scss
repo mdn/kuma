@@ -226,5 +226,9 @@ On This Page component
             font-weight: 400;
             @include set-font-size(24px);
         }
+
+        .toc-related-topics {
+            display: none;
+        }
     }
 }
