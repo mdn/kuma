@@ -195,7 +195,7 @@ pushing to production.
   on homepage and article pages. Try to verify features in the newly pushed
   code. Check the `functional tests`_.
 
-* Announce in Matrix (#mdn) that staging looks good, and you are pushing to production.
+* Announce in Slack (#mdn-dev) that staging looks good, and you are pushing to production.
 
 .. _Jenkins: https://ci.us-west-2.mdn.mozit.cloud
 .. _`What's Deployed on KumaScript`: https://whatsdeployed.io/s-SWJ
@@ -254,4 +254,3 @@ the AWS US West datacenter.
     git merge --ff-only origin/master
     git push
     cd ..
-
