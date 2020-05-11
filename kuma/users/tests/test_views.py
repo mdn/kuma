@@ -787,6 +787,7 @@ def _get_current_form_field_values(doc):
         "location",
         "irc_nickname",
         "is_github_url_public",
+        "is_newsletter_subscribed"
     )
     form = dict()
     lookup_pattern = '#{prefix}edit *[name="{prefix}{field}"]'
@@ -1039,6 +1040,28 @@ def test_user_edit_github_is_public(wiki_user, wiki_user_github_account, user_cl
     )
     wiki_user.refresh_from_db()
     assert wiki_user.is_github_url_public
+
+
+def test_user_edit_is_newsletter_subscribed(wiki_user, wiki_user_github_account, user_client):
+    """A user can set that they want their GitHub to be public."""
+    assert not wiki_user.is_newsletter_subscribed
+    url = reverse("users.user_edit", args=(wiki_user.username,))
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert_no_cache_header(response)
+    form = _get_current_form_field_values(pq(response.content))
+    assert not form["user-is_newsletter_subscribed"]
+    form["user-is_newsletter_subscribed"] = True
+    # Filter out keys with `None` values
+    form = {k: v for k, v in form.items() if v is not None}
+    response = user_client.post(url, form)
+    assert response.status_code == 302
+    assert_no_cache_header(response)
+    assert response["Location"].endswith(
+        reverse("users.user_detail", args=(wiki_user.username,))
+    )
+    wiki_user.refresh_from_db()
+    assert wiki_user.is_newsletter_subscribed
 
 
 @pytest.mark.parametrize("case", ("DOMAIN", "WIKI_HOST"))

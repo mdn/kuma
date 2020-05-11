@@ -60,8 +60,15 @@
 
     .terms-privacy {
         display: block;
-        margin: 8px 0 40px;
         font-weight: normal;
+    }
+
+    .newsletter-signup {
+        margin: 8px 0 40px;
+
+        svg {
+            height: 17px;
+        }
     }
 
     .submit {

@@ -92,13 +92,6 @@
           </fieldset>
         </li>
 
-        <li class="newsletter-signup">
-          <label for="{{ form.is_newsletter_subscribed.id_for_label  }}">
-            {{ form.is_newsletter_subscribed }}
-            {{ _('Get updates on what’s new with MDN to your inbox.') }}
-          </label>
-        </li>
-
         <li>
           <ul class="errorlist">
             {{ form.terms.errors }}
@@ -108,6 +101,14 @@
             {% trans terms_url='https://www.mozilla.org/about/legal/terms/mozilla', privacy_url='https://www.mozilla.org/privacy/websites/' %}
             to Mozilla's <a href="{{ terms_url }}">Terms</a> and <a href="{{ privacy_url }}">Privacy Notice</a>.
             {% endtrans %}
+          </label>
+        </li>
+
+        <li class="newsletter-signup">
+          <label for="{{ form.is_newsletter_subscribed.id_for_label  }}">
+            {{ form.is_newsletter_subscribed }}
+            {% include 'includes/icons/general/gift.svg' %}
+            {{ _('Get exclusive content, offers and invitations to your inbox') }}
           </label>
         </li>
 
