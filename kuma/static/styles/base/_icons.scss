@@ -52,6 +52,11 @@ label #{$selector-icon}:first-child {
     height: $icon-size;
 }
 
+.icon-close {
+    width: 24px;
+    height: 24px;
+}
+
 /* icons used by PreviousMenuNext macro */
 .prevnext {
     .icon-arrow-left {

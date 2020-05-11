@@ -594,7 +594,7 @@ TEMPLATES = [
 ]
 
 PUENTE = {
-    "VERSION": "2020.15",
+    "VERSION": "2020.16",
     "BASE_DIR": BASE_DIR,
     "TEXT_DOMAIN": "django",
     # Tells the extract script what files to look for l10n in and what function
@@ -1887,3 +1887,9 @@ INDEX_CSS_CLASSNAMES = config("INDEX_CSS_CLASSNAMES", cast=bool, default=not DEB
 # For local development you might want to set this to a hostname provided to
 # you by a tunneling service such as ngrok.
 STRIPE_WEBHOOK_HOSTNAME = config("STRIPE_WEBHOOK_HOSTNAME", default=None)
+
+# We use sendinblue.com to send marketing emails and are subdividing users
+# into lists of paying and not paying users
+SENDINBLUE_API_KEY = config("SENDINBLUE_API_KEY", default=None)
+SENDINBLUE_PAYING_LIST_ID = config("SENDINBLUE_PAYING_LIST_ID", default=None)
+SENDINBLUE_NOT_PAYING_LIST_ID = config("SENDINBLUE_NOT_PAYING_LIST_ID", default=None)

@@ -3,8 +3,18 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-self: center;
 
+    @media #{$mq-tablet-and-up} {
+        justify-self: center;
+    }
+
+    .username {
+        margin-left: 5px;
+
+        @media #{$mq-tablet-and-up} {
+            display: none;
+        }
+    }
     /* Buttons (in the dropdown labels) don't seem to inherit font sizes
         so we need to make this explicit. */
     button {
@@ -29,12 +39,15 @@
 .signin-link {
     display: flex;
     align-items: center;
-    justify-self: center;
+    color: $text-color;
     font-size: 1rem;
     font-weight: bold;
-    color: $text-color;
-    margin-left: 24px;
     text-decoration: none;
+
+    @media #{$mq-tablet-and-up} {
+        justify-self: center;
+        margin-left: 24px;
+    }
 
     &:hover {
         text-decoration: none;
