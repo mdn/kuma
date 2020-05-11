@@ -787,7 +787,7 @@ def _get_current_form_field_values(doc):
         "location",
         "irc_nickname",
         "is_github_url_public",
-        "is_newsletter_subscribed"
+        "is_newsletter_subscribed",
     )
     form = dict()
     lookup_pattern = '#{prefix}edit *[name="{prefix}{field}"]'
@@ -1042,7 +1042,9 @@ def test_user_edit_github_is_public(wiki_user, wiki_user_github_account, user_cl
     assert wiki_user.is_github_url_public
 
 
-def test_user_edit_is_newsletter_subscribed(wiki_user, wiki_user_github_account, user_client):
+def test_user_edit_is_newsletter_subscribed(
+    wiki_user, wiki_user_github_account, user_client
+):
     """A user can set that they want their GitHub to be public."""
     assert not wiki_user.is_newsletter_subscribed
     url = reverse("users.user_edit", args=(wiki_user.username,))
