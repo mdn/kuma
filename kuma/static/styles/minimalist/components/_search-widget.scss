@@ -1,63 +1,28 @@
 @import '../utils/utility-mixins.scss';
 
 .header-search {
-    background: $neutral-100;
+    $mobile-search-height: 68px;
+    $icon-size: 24px;
     box-sizing: border-box;
     position: absolute;
-    top: 0;
+    top: -$mobile-search-height;
     right: 0;
-    // background: magenta;
-    height: 68px;
-
-    &.show-form {
-        // opacity: 1;
-        width: 100vw;
-        position: fixed;
-        z-index: 1;
-
-        form {
-            @include reset-visually-hidden();
-            // transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            // transition: transform 300ms 300ms cubic-bezier(0.4, 0, 0.2, 1),
-            //     width cubic-bezier(0.4, 0, 0.2, 1) 0ms 300ms;
-            // transform: translateY(0);
-            width: calc(100% - 68px);
-            padding: 0 20px;
-        }
-    }
-
-    // show toggle button {
-    .toggle-form {
-        @include reset-visually-hidden();
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 68px;
-        height: 68px;
-        right: 0;
-        padding: 0;
-        // background: blueviolet;
-
-        .search-icon,
-        .close-icon {
-            width: 24px;
-            height: 24px;
-        }
-    }
+    width: 100vw;
+    height: $mobile-search-height;
 
     form {
-        // hide form on mobile / small screens
-        @include visually-hidden();
-        // transform: translateY(-68px);
+        background: $neutral-100;
         grid-area: S;
         display: flex;
         flex: 2 1;
         flex-direction: row;
+        height: $mobile-search-height;
         align-items: center;
         box-sizing: border-box;
-        height: 40px;
-        min-width: 80px;
-        // background: yellowgreen;
+        position: relative;
+        padding: 0 20px;
+        transition: transform 0.2s ease-in;
+        width: calc(100% - #{$mobile-search-height});
 
         .search-icon {
             display: none;
@@ -77,13 +42,67 @@
             box-shadow: none;
         }
     }
+
+    .toggle-form {
+        @include reset-visually-hidden();
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        width: $mobile-search-height;
+        top: $mobile-search-height;
+        right: 0;
+
+        i {
+            @include visually-hidden;
+        }
+
+        .search-icon,
+        .close-icon {
+            transition: transform 0.2s ease-in;
+            width: $icon-size;
+            height: $icon-size;
+            position: absolute;
+        }
+
+        .close-icon {
+            transform: translateY(-$mobile-search-height);
+        }
+    }
+
+    &.show-form {
+        position: fixed;
+        z-index: 1;
+
+        form {
+            position: relative;
+            background: $neutral-100;
+            transform: translateY($mobile-search-height);
+            padding: 0 20px;
+            width: calc(100% - #{$mobile-search-height});
+            z-index: 1;
+        }
+
+        .toggle-form {
+            top: 0;
+
+            .close-icon {
+                transform: translateY(0);
+            }
+
+            .search-icon {
+                transform: translateY($mobile-search-height);
+            }
+        }
+    }
 }
 
 @media #{$mq-tablet-and-up} {
     .header-search {
+        position: inherit;
+        width: inherit;
         height: 40px;
         min-width: 80px;
-        position: inherit;
 
         &.show-form {
             width: auto;
@@ -91,32 +110,21 @@
         }
 
         // needs [role='search'] to make it more specific in order to
-        //  override reset-visually-hidden styles
+        // override form.show-form styles
         form[role='search'] {
             @include reset-visually-hidden();
+            transition: none;
+            transform: translateY(0);
             padding: 2px 8px;
             border: 2px solid $text-color;
             border-radius: 20px;
+            height: 40px;
+            min-width: 80px;
 
             .search-icon {
                 display: inline-block;
                 flex: 0 0 25px;
                 fill: $text-color;
-            }
-        }
-
-        input.search-input-field {
-            flex: 1 1 100px;
-            color: $text-color;
-            border-width: 0;
-            font-size: $tiny-font-size;
-            min-width: 60px;
-
-            &:focus,
-            &:invalid {
-                border: 0;
-                outline: none;
-                box-shadow: none;
             }
         }
 
