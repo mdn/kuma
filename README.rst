@@ -37,7 +37,7 @@ Development
 :Dev Docs:      https://kuma.readthedocs.io/en/latest/installation.html
 :CI Server:     https://travis-ci.com/mdn/kuma
 :Forum:         https://discourse.mozilla.org/c/mdn
-:IRC:           irc://irc.mozilla.org/mdndev
+:Matrix:        `#mdn room`_
 :Servers:       `What's Deployed on MDN?`_
 
                 https://developer.allizom.org/ (stage)
@@ -50,6 +50,7 @@ Development
 .. _`Pull Request Queues`: http://prs.mozilla.io/mdn:kuma,kumascript,infra,mdn-fiori
 .. _`What's Deployed on MDN?`: https://whatsdeployed.io/s/HC0/mdn/kuma
 .. _sprint: https://wiki.mozilla.org/Engagement/MDN_Durable_Team/Processes#Planning_Sprints
+.. _`#mdn room`: https://chat.mozilla.org/#/room/#mdn:mozilla.org
 
 
 Getting started

@@ -29,7 +29,7 @@ transitioning to Docker containers for deployment as well.
   tests using Docker.
 * We are documenting tips and tricks on the
   :doc:`Troubleshooting page <troubleshooting>`.
-* Feel free to ask for help on IRC at ``#mdndev`` or on `discourse`_.
+* Feel free to ask for help on Matrix at ``#mdn`` or on `discourse`_.
 
 .. _`Docker for Mac`: https://docs.docker.com/docker-for-mac/
 .. _`Docker's Ubuntu packages`: https://docs.docker.com/engine/installation/linux/ubuntulinux/
@@ -148,8 +148,8 @@ Pontoon_. If there is an error, the output will end with the error, such as::
     ./az/LC_MESSAGES/django.po:263: 'msgid' and 'msgstr' entries do not both end with '\n'
     msgfmt: found 1 fatal error
 
-These need to be fixed by a Kuma developer. Notify them in the #mdndev IRC
-channel or open a bug. You can continue with installation, but non-English
+These need to be fixed by a Kuma developer. Notify them in the #mdn Matrix
+room or open a bug. You can continue with installation, but non-English
 locales will not be localized.
 
 .. _Pontoon: https://pontoon.mozilla.org/projects/mdn/
