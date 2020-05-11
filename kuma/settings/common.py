@@ -1835,28 +1835,6 @@ ATTACHMENTS_AWS_S3_ENDPOINT_URL = config(
 AWS_BUCKET_ACL = None
 AWS_DEFAULT_ACL = None
 
-# When we potentially have multiple CDN distributions that do different
-# things.
-# Inside kuma, when a document is considered "changed", we trigger
-# worker tasks that do things such as publishing/unpublishing to S3.
-# Quite agnostic from *how* that works, this list of distributions,
-# if they have an 'id', gets called for each (locale, slug) to
-# turn that into CloudFront "paths".
-# Note that the 'id' is optional because its ultimate value might
-# or not might not be in the environment.
-MDN_CLOUDFRONT_DISTRIBUTIONS = {
-    "api": {
-        "id": config("MDN_API_CLOUDFRONT_DISTRIBUTIONID", default=None),
-        # TODO We should have a (Django) system check that checks that this
-        # transform callable works. For example, it *has* to start with a '/'.
-        "transform_function": "kuma.api.v1.views.get_cdn_key",
-    },
-    # TODO We should have an entry here for the existing website.
-    # At the time of writing we conservatively set the TTL to 5 min.
-    # If this CloudFront invalidation really works, we can bump that 5 min
-    # to ~60min and put configuration here for it too.
-}
-
 # We use django-cacheback for a bunch of tasks. By default, when cacheback,
 # has called the `.fetch` of a job class, it calls `cache.set(key, ...)`
 # and then it immediately does `cache.get(key)` just to see that the `.set`
