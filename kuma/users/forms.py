@@ -138,7 +138,7 @@ class UserEditForm(forms.ModelForm):
             "facebook_url",
             "discourse_url",
             "username",
-            "is_newsletter_subscribed"
+            "is_newsletter_subscribed",
         )
 
     def __init__(self, *args, **kwargs):
