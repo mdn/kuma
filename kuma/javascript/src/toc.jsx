@@ -57,6 +57,9 @@ export default function TOC({ html }: Props) {
      * document API and provided as raw HTML. The additional
      * entry is not provided by the API and thus, we need to
      * manually append it here.
+     *
+     * At the time of writing this is the only way to have both
+     * raw HTML and React elements as siblings
      */
     function getTOCHTML() {
         return html + renderToStaticMarkup(relatedTopicsListitem());
