@@ -64,17 +64,20 @@
     .top-level-entry-container {
         position: relative;
 
-        @media #{$mq-tablet-and-up} {
-            &:hover ul,
-            &:focus-within ul {
-                display: block;
-                position: absolute;
-                width: max-content;
-            }
-        }
-
         ul.show {
             display: block;
+
+            @media #{$mq-tablet-and-up} {
+                position: absolute;
+                right: 0;
+                min-width: 220px;
+                min-width: max-content;
+                z-index: 99;
+            }
+
+            @media #{$mq-small-desktop-and-up} {
+                right: inherit;
+            }
         }
 
         button {
