@@ -51,6 +51,12 @@ export default function TOC({ html }: Props) {
      * Returns the HTML for the table of contents with the
      * related topics list item appended to the end of the
      * original list.
+     *
+     * NOTE: The reason this is needed is because the initial
+     * list of table of content entries is retrieved from the
+     * document API and provided as raw HTML. The additional
+     * entry is not provided by the API and thus, we need to
+     * manually append it here.
      */
     function getTOCHTML() {
         return html + renderToStaticMarkup(relatedTopicsListitem());
