@@ -59,16 +59,10 @@ def test_server_side_render(
     output = ssr.render_react("SPA", locale, path, document_data)
 
     # Make sure the output is as expected
-    data = {
-        "locale": locale,
-        "url": path,
-        "stringCatalog": localization_data["catalog"],
-        "documentData": document_data,
-    }
     expect = (
-        '<div id="react-container" data-component-name="{}">{}</div>\n'
+        f'<div id="react-container" data-component-name="SPA">{mock_html}</div>\n'
         "<script>window._react_data = JSON.parse(STUFF);</script>\n"
-    ).format("SPA", mock_html, json.dumps(data))
+    )
     assert output == expect
 
 
