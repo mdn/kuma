@@ -75,12 +75,8 @@
         z-index: 1;
 
         form {
-            position: relative;
             background: $neutral-100;
             transform: translateY($mobile-search-height);
-            padding: 0 20px;
-            width: calc(100% - #{$mobile-search-height});
-            z-index: 1;
         }
 
         .toggle-form {
