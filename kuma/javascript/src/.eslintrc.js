@@ -13,7 +13,16 @@ module.exports = {
             jsx: true,
         },
     },
-    plugins: ['jest', 'flowtype', 'react', 'import', 'jsx-a11y'],
+    plugins: [
+        'jest',
+        'jest-dom',
+        'flowtype',
+        'react',
+        'import',
+        'jsx-a11y',
+        'react-hooks',
+        'testing-library',
+    ],
     extends: [
         'eslint:recommended',
         'plugin:import/errors',
@@ -22,6 +31,8 @@ module.exports = {
         'plugin:jsx-a11y/recommended',
         'prettier',
         'prettier/react',
+        'plugin:testing-library/recommended',
+        'plugin:testing-library/react',
     ],
     settings: {
         react: {

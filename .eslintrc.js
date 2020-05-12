@@ -16,7 +16,7 @@ module.exports = {
         'flowtype',
         'import',
         'jsx-a11y',
-        'react-hooks',
+        'testing-library',
     ],
     extends: [
         'eslint:recommended',
@@ -25,6 +25,7 @@ module.exports = {
         'plugin:jsx-a11y/recommended',
         'plugin:jest-dom/recommended',
         'prettier',
+        'plugin:testing-library/recommended',
     ],
     rules: {
         'no-global-assign': 'error',
