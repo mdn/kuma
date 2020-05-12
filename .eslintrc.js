@@ -25,8 +25,8 @@ module.exports = {
         'plugin:flowtype/recommended',
         'plugin:jsx-a11y/recommended',
         'plugin:jest-dom/recommended',
-        'prettier',
         'plugin:testing-library/recommended',
+        'prettier',
     ],
     rules: {
         'no-global-assign': 'error',

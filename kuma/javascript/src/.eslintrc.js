@@ -29,10 +29,10 @@ module.exports = {
         'plugin:flowtype/recommended',
         'plugin:react/recommended',
         'plugin:jsx-a11y/recommended',
-        'prettier',
-        'prettier/react',
         'plugin:testing-library/recommended',
         'plugin:testing-library/react',
+        'prettier',
+        'prettier/react',
     ],
     settings: {
         react: {
