@@ -27,7 +27,10 @@ def get_target_name() {
     )
 }
 
-def get_target_script() {
+def get_target_script(target='') {
+    if (target != null && !target.trim().isEmpty()) {
+        return target
+    }
     if (env.BRANCH_NAME == PROD_BRANCH_NAME) {
         return 'prod'
     }
@@ -111,9 +114,9 @@ def sh_with_notify(cmd, display, notify_on_success=false) {
     }
 }
 
-def get_revision_hash() {
+def get_revision_hash(target='') {
     def region = get_region()
-    def target = get_target_script()
+    def target = get_target_script(target)
     def repo_name = get_repo_name()
     return sh(
         returnStdout: true,
@@ -140,8 +143,8 @@ def ensure_pull() {
     )
 }
 
-def make(cmd, display, notify_on_success=false) {
-    def target = get_target_script()
+def make(cmd, display, notify_on_success=false, target='') {
+    def target = get_target_script(target)
     def region = get_region()
     def tag = get_commit_tag()
     def repo_upper = get_repo_name().toUpperCase()
@@ -166,37 +169,37 @@ def is_read_only_db() {
     }
 }
 
-def migrate_db() {
+def migrate_db(target='') {
     /*
      * Migrate the database (only for kuma and writeable databases).
      */
     if ((get_repo_name() == 'kuma') && !is_read_only_db()) {
-        make('k8s-db-migration-job', 'Migrate Database')
+        make('k8s-db-migration-job', 'Migrate Database', target)
     }
 }
 
-def rollout() {
+def rollout(target='') {
     /*
      * Start a rolling update.
      */
     def repo = get_repo_name()
-    make("k8s-${repo}-deployments", 'Start Rollout')
+    make("k8s-${repo}-deployments", 'Start Rollout', target)
 }
 
-def monitor_rollout() {
+def monitor_rollout(target='') {
     /*
      * Monitor the rolling update until it succeeds or fails.
      */
     def repo = get_repo_name()
-    make("k8s-${repo}-rollout-status", 'Check Rollout Status', true)
+    make("k8s-${repo}-rollout-status", 'Check Rollout Status', true, target)
 }
 
-def record_rollout() {
+def record_rollout(target='') {
     /*
      * Record the rollout in external services like New Relic and SpeedCurve.
      */
     def repo = get_repo_name()
-    make("k8s-${repo}-record-deployment-job", 'Record Rollout', true)
+    make("k8s-${repo}-record-deployment-job", 'Record Rollout', true, target)
 }
 
 def announce_push() {
