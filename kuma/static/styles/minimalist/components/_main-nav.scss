@@ -17,11 +17,6 @@
             font-weight: bold;
             z-index: $menu-zindex;
         }
-
-        .main-menu-arrow {
-            padding-left: 2px;
-            font-size: 75%;
-        }
     }
 
     li ul {
@@ -85,6 +80,15 @@
             width: 100%;
             text-align: left;
             padding: 10px 10px 15px 0;
+
+            &::after {
+                display: inline-block;
+                content: '▼';
+                margin-left: 5px;
+                width: 12px;
+                height: 12px;
+                font-size: $tiny-font-size;
+            }
 
             @media #{$mq-tablet-and-up} {
                 padding: 10px;

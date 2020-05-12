@@ -210,12 +210,6 @@ const _MainMenu = ({ documentData, locale }: Props) => {
                             }}
                         >
                             {menuEntry.label}
-                            <span
-                                className="main-menu-arrow"
-                                aria-hidden="true"
-                            >
-                                ▼
-                            </span>
                         </button>
                         <ul
                             className={
