@@ -1,10 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import { toBeVisible, toBeDisabled } from '@testing-library/jest-dom/matchers';
 import CancelSubscriptionForm from './cancel-subscription-form.jsx';
 import { SUBSCRIPTIONS_URL } from '../api.js';
-
-expect.extend({ toBeVisible, toBeDisabled });
 
 const setup = (props = {}) => {
     const mockProps = {

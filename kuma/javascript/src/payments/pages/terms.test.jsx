@@ -1,12 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import {
-    toBeInTheDocument,
-    toHaveTextContent,
-} from '@testing-library/jest-dom/matchers';
 import TermsPage, { title } from './terms.jsx';
-
-expect.extend({ toBeInTheDocument, toHaveTextContent });
 
 describe('Payments Terms page', () => {
     it('renders', () => {

@@ -16,6 +16,7 @@ module.exports = {
         'flowtype',
         'import',
         'jsx-a11y',
+        'react-hooks',
         'testing-library',
     ],
     extends: [
