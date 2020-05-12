@@ -110,8 +110,8 @@ class KeyViewsTest(RefetchingUserTestCase):
             log_lines.append(("ping", self.user2, "Number #%s" % i))
 
         # Record the log lines for this key
-        for l in log_lines:
-            self.key1.log(*l)
+        for log_line in log_lines:
+            self.key1.log(*log_line)
 
         # Reverse the lines for comparison.
         log_lines.reverse()

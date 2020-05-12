@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import { toBeInTheDocument } from '@testing-library/jest-dom/matchers';
 import SubscriptionForm, {
     STRIPE_CONTINUE_SESSIONSTORAGE_KEY,
 } from './subscription-form.jsx';
@@ -9,8 +8,6 @@ import UserProvider from '../../user-provider.jsx';
 import useScriptLoading from './use-script-loading.js';
 
 jest.mock('./use-script-loading.js');
-
-expect.extend({ toBeInTheDocument });
 
 describe('When submitting Subscription Form', () => {
     beforeAll(() => {
