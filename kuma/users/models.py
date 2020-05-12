@@ -199,7 +199,7 @@ class User(AbstractUser):
 
     def set_next_subscriber_number_and_save(self):
         assert not self.subscriber_number, "already set"
-        lock_key = f"set_next_subscriber_number_and_save"
+        lock_key = "set_next_subscriber_number_and_save"
         # By locking "globally", we get to be certain that our query to get
         # the current highest `subscriber_number`, gets done alone.
         with cache.lock(lock_key):
