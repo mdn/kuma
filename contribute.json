@@ -3,27 +3,20 @@
     "description": "The app powering MDN Web Docs.",
     "repository": {
         "url": "https://github.com/mdn/kuma",
-        "license": "MPL2",
+        "license": "MPL-2.0",
         "tests": "https://travis-ci.com/mdn/kuma"
     },
     "participate": {
         "home": "https://wiki.mozilla.org/MDN",
         "docs": "https://kuma.readthedocs.io/",
         "mailing-list": "https://discourse.mozilla.org/c/mdn",
-        "irc": "irc://irc.mozilla.org/#mdndev",
-        "irc-contacts": [
-            "djf",
-            "espressive",
-            "jwhitlock",
-            "peterbe",
-            "rjohnson"
-        ]
+        "chat": {
+            "url": "https://mozilla.slack.com/archives/CLTBV3W9X"
+        }
     },
     "bugs": {
-        "list": "https://mzl.la/2onLvZ8",
-        "report": "https://github.com/mdn/kuma/issues/new/choose",
-        "mentored": "https://mzl.la/2BFx4Ie",
-        "goodfirstbug": "https://mzl.la/2ojEGaW"
+        "list": "https://github.com/mdn/kuma/issues",
+        "report": "https://github.com/mdn/kuma/issues/new/choose"
     },
     "urls": {
         "prod": "https://developer.mozilla.org/",
