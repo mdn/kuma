@@ -53,7 +53,7 @@
         top: $mobile-search-height;
         right: 0;
 
-        i {
+        span {
             @include visually-hidden;
         }
 
