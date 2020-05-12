@@ -18,9 +18,9 @@ module.exports = {
         'jest-dom',
         'flowtype',
         'react',
+        'react-hooks',
         'import',
         'jsx-a11y',
-        'react-hooks',
         'testing-library',
     ],
     extends: [
