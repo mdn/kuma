@@ -1,11 +1,8 @@
 //@flow
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import { toHaveAttribute } from '@testing-library/jest-dom/matchers';
 import FeedbackForm from './feedback-form.jsx';
 import { SUBSCRIPTIONS_FEEDBACK_URL } from '../api.js';
-
-expect.extend({ toHaveAttribute });
 
 const setup = () => {
     const utils = render(<FeedbackForm />);

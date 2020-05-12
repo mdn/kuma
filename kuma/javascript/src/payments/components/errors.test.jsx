@@ -1,9 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { toBeInTheDocument } from '@testing-library/jest-dom/matchers';
 import { GenericError, ErrorWithRetry } from './errors.jsx';
-
-expect.extend({ toBeInTheDocument });
 
 describe('ErrorWithRetry', () => {
     it('renders text and a functioning button', () => {

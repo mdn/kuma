@@ -1,15 +1,9 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import {
-    toBeVisible,
-    toBeInTheDocument,
-} from '@testing-library/jest-dom/matchers';
 import UserProvider from '../../user-provider.jsx';
 import { title as cancelTitle } from '../components/cancel-subscription-form.jsx';
 import { formatDate } from '../../formatters.js';
 import ManagementPage, { title, successMsg } from './management.jsx';
-
-expect.extend({ toBeVisible, toBeInTheDocument });
 
 const setup = (userData = {}) => {
     const mockUserData = {

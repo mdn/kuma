@@ -1,13 +1,7 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import {
-    toBeInTheDocument,
-    toHaveClass,
-} from '@testing-library/jest-dom/matchers';
 import GAProvider from './ga-provider.jsx';
 import Breadcrumbs from './breadcrumbs.jsx';
-
-expect.extend({ toBeInTheDocument, toHaveClass });
 
 describe('Breadcrumbs', () => {
     const mockDocumentData = {

@@ -9,16 +9,16 @@ type Props = {
     initialQuery: string,
 };
 
-export default function Search(props: Props) {
+export default function Search({ initialQuery }: Props) {
     const locale = getLocale();
 
     // After our first render, set the input field's initial value
     const inputfield = useRef(null);
     useEffect(() => {
-        if (inputfield.current && props.initialQuery) {
-            inputfield.current.value = props.initialQuery;
+        if (inputfield.current && initialQuery) {
+            inputfield.current.value = initialQuery;
         }
-    }, [props.initialQuery]);
+    }, [initialQuery]);
 
     return (
         <form
