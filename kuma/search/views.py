@@ -11,6 +11,7 @@ from kuma.core.utils import is_wiki
 
 from .search import SearchView
 
+
 # Since the search endpoint accepts user input (via query parameters) and its
 # response is compressed, use rate limiting to mitigate the BREACH attack
 # (see http://breachattack.com/). It still needs to allow a user to click
