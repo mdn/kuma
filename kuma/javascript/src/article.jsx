@@ -55,7 +55,9 @@ export default function Article({ document }: DocumentProps) {
     // This is a one-time effect we need to call the first time an article
     // is rendered, to ensure that interactive examples resize themselves
     // if the browser width changes.
-    useEffect(InteractiveExamples.makeResponsive, []);
+    useEffect(() => {
+        InteractiveExamples.makeResponsive();
+    }, []);
 
     // Each time we display an article we need to patch it up
     // in various ways.
