@@ -21,8 +21,7 @@ export const subscriberInvitationCopy = gettext(
 );
 
 const Incentives = ({ isSubscriber = false }: Props) => {
-    const merchStoreURL =
-        'https://shop.spreadshirt.com/mozilla-developer-network/';
+    const merchStoreURL = 'https://shop.spreadshirt.com/mdn-store/';
     return (
         <div className="subscriptions-incentive">
             <h3>{gettext('Enjoy exclusive member perks')}</h3>
