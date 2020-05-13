@@ -1,16 +1,16 @@
 from django.conf import settings
 from django.core.checks import Error
 
-from . import api
+from . import sendinblue
 
 SENDINBLUE_ERROR = "kuma.users.sendinblue.E001"
 
 
-def check(app_configs, **kwargs):
+def sendinblue_check(app_configs, **kwargs):
     if not settings.SENDINBLUE_API_KEY:
         return []
 
-    response = api.request("GET", f"contacts/attributes")
+    response = sendinblue.request("GET", f"contacts/attributes")
     if not response.ok:
         return [
             Error(
@@ -22,7 +22,7 @@ def check(app_configs, **kwargs):
     if not any(
         attribute["name"] == "IS_PAYING" for attribute in response.json()["attributes"]
     ):
-        response = api.request(
+        response = sendinblue.request(
             "POST", f"contacts/attributes/normal/IS_PAYING", json={"type": "boolean"},
         )
         if not response.ok:

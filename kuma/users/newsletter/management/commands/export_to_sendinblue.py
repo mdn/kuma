@@ -5,11 +5,10 @@ from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 
 from kuma.users.models import User, UserSubscription
+from kuma.users.newsletter import sendinblue
 
-from . import api
 
-
-class ExportCommand(BaseCommand):
+class Command(BaseCommand):
     help = "Exports newsletter subscribed users to sendinblue"
 
     def handle(self, **options):
@@ -38,12 +37,12 @@ class ExportCommand(BaseCommand):
 
         payload = {
             "fileBody": csv_out.getvalue(),
-            "listIds": [int(api.LIST_ID)],
+            "listIds": [int(sendinblue.LIST_ID)],
             "updateExistingContacts": True,
             "emptyContactsAttributes": True,
         }
 
         print(f"Exporting {len(users):,} users")
 
-        response = api.request("POST", "contacts/import", json=payload)
+        response = sendinblue.request("POST", "contacts/import", json=payload)
         response.raise_for_status()

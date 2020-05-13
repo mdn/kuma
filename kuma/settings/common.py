@@ -520,6 +520,7 @@ INSTALLED_APPS = (
     "allauth.socialaccount",
     "kuma.users.providers.github",
     "kuma.users.providers.google",
+    "kuma.users.newsletter.apps.UserNewsletterConfig",
     # util
     "django_jinja",
     "pipeline",

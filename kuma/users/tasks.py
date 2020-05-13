@@ -14,8 +14,6 @@ from kuma.core.utils import (
     strings_are_translated,
 )
 
-import kuma.users.sendinblue.tasks  # noqa
-
 log = logging.getLogger("kuma.users.tasks")
 
 

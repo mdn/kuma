@@ -11,25 +11,25 @@ from kuma.users.signals import (
 )
 
 from .tasks import (
-    sendinblue_create_or_update_contact,
-    sendinblue_delete_contact,
+    create_or_update_contact,
+    delete_contact,
 )
 
 
 @receiver(newsletter_subscribed, dispatch_uid="sendinblue.newsletter_subscribed")
 def on_newsletter_subscribed(user, **kwargs):
-    sendinblue_create_or_update_contact.delay(user.email)
+    create_or_update_contact.delay(user.email)
 
 
 @receiver(newsletter_unsubscribed, dispatch_uid="sendinblue.newsletter_unsubscribed")
 def on_newsletter_unsubscribed(user, **kwargs):
-    sendinblue_delete_contact.delay(user.email)
+    delete_contact.delay(user.email)
 
 
 @receiver(pre_delete, sender=User, dispatch_uid="sendinblue.user_pre_delete")
 def on_user_delete(instance, **kwargs):
     if instance.is_newsletter_subscribed:
-        sendinblue_delete_contact.delay(instance.email)
+        delete_contact.delay(instance.email)
 
 
 def newsletter_receiver(*receiver_args, **receiver_kwargs):
@@ -51,13 +51,13 @@ def newsletter_receiver(*receiver_args, **receiver_kwargs):
 
 @newsletter_receiver(user_signed_up, dispatch_uid="sendinblue.signed_up")
 def on_signed_up(user, **kwargs):
-    sendinblue_create_or_update_contact.delay(user.email, {"IS_PAYING": False})
+    create_or_update_contact.delay(user.email, {"IS_PAYING": False})
 
 
 @newsletter_receiver(email_changed, dispatch_uid="sendinblue.email_changed")
 def on_email_changed(user, from_email_address, to_email_address, **kwargs):
-    sendinblue_delete_contact.delay(from_email_address.email)
-    sendinblue_create_or_update_contact.delay(
+    delete_contact.delay(from_email_address.email)
+    create_or_update_contact.delay(
         to_email_address.email,
         {
             "IS_PAYING": UserSubscription.objects.filter(
@@ -71,11 +71,11 @@ def on_email_changed(user, from_email_address, to_email_address, **kwargs):
     subscription_created, dispatch_uid="sendinblue.subscription_created"
 )
 def on_subscription_created(user, **kwargs):
-    sendinblue_create_or_update_contact.delay(user.email, {"IS_PAYING": True})
+    create_or_update_contact.delay(user.email, {"IS_PAYING": True})
 
 
 @newsletter_receiver(
     subscription_cancelled, dispatch_uid="sendinblue.subscription_cancelled"
 )
 def on_subscription_cancelled(user, **kwargs):
-    sendinblue_create_or_update_contact.delay(user.email, {"IS_PAYING": False})
+    create_or_update_contact.delay(user.email, {"IS_PAYING": False})
