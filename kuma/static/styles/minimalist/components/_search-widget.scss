@@ -3,6 +3,7 @@
 .header-search {
     $mobile-search-height: 68px;
     $icon-size: 24px;
+    grid-area: S;
     box-sizing: border-box;
     position: absolute;
     top: -$mobile-search-height;
@@ -12,9 +13,7 @@
 
     form {
         background: $neutral-100;
-        grid-area: S;
         display: flex;
-        flex: 2 1;
         flex-direction: row;
         height: $mobile-search-height;
         align-items: center;
@@ -44,7 +43,9 @@
     }
 
     .toggle-form {
-        @include reset-visually-hidden();
+        border: inherit;
+        height: inherit;
+        position: inherit;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -125,7 +126,7 @@
         }
 
         .toggle-form {
-            @include visually-hidden();
+            display: none;
         }
     }
 }
