@@ -14,15 +14,14 @@ export const nonSubscriberInvitationCopy = gettext(
     'Get invited to attend special events and conferences.'
 );
 const subscriberDiscountCopy = gettext(
-    'Get 20% of the <merchStoreLink /> with discount code MDNMEMBER20.'
+    'Get 20% off at the <merchStoreLink /> with discount code MDNMEMBER20.'
 );
 export const subscriberInvitationCopy = gettext(
     'Check back for invitations to attend special events and conferences.'
 );
 
 const Incentives = ({ isSubscriber = false }: Props) => {
-    const merchStoreURL =
-        'https://shop.spreadshirt.com/mozilla-developer-network/';
+    const merchStoreURL = 'https://shop.spreadshirt.com/mdn-store/';
     return (
         <div className="subscriptions-incentive">
             <h3>{gettext('Enjoy exclusive member perks')}</h3>
