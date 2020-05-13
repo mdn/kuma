@@ -17,11 +17,6 @@
             font-weight: bold;
             z-index: $menu-zindex;
         }
-
-        .main-menu-arrow {
-            padding-left: 2px;
-            font-size: 75%;
-        }
     }
 
     li ul {
@@ -64,17 +59,20 @@
     .top-level-entry-container {
         position: relative;
 
-        @media #{$mq-tablet-and-up} {
-            &:hover ul,
-            &:focus-within ul {
-                display: block;
-                position: absolute;
-                width: max-content;
-            }
-        }
-
         ul.show {
             display: block;
+
+            @media #{$mq-tablet-and-up} {
+                position: absolute;
+                right: 0;
+                min-width: 220px;
+                min-width: max-content;
+                z-index: 99;
+            }
+
+            @media #{$mq-small-desktop-and-up} {
+                right: inherit;
+            }
         }
 
         button {
@@ -82,6 +80,15 @@
             width: 100%;
             text-align: left;
             padding: 10px 10px 15px 0;
+
+            &::after {
+                display: inline-block;
+                content: '▼';
+                margin-left: 5px;
+                width: 12px;
+                height: 12px;
+                font-size: $tiny-font-size;
+            }
 
             @media #{$mq-tablet-and-up} {
                 padding: 10px;

@@ -1,6 +1,6 @@
 //@flow
 import * as React from 'react';
-import { memo, useContext, useMemo, useState } from 'react';
+import { memo, useContext, useEffect, useMemo, useState } from 'react';
 
 import GAProvider from '../ga-provider.jsx';
 
@@ -8,13 +8,13 @@ import { gettext } from '../l10n.js';
 import type { DocumentData } from '../document.jsx';
 
 type Props = {
-    document?: ?DocumentData,
+    documentData?: ?DocumentData,
     locale: string,
 };
 
 // To avoid problems with flow and React.memo(), define the component
 // in this plain way first. See bottom of file for the final memo() and export.
-const _MainMenu = ({ document, locale }: Props) => {
+const _MainMenu = ({ documentData, locale }: Props) => {
     // The CSS that supports this is sufficiently smart to understand
     // hovering over the top-level menu items and stuff. But for mobile,
     // there's no mouse hover so for that we use a piece of state to
@@ -28,13 +28,6 @@ const _MainMenu = ({ document, locale }: Props) => {
      * @param {Object} event - The event object that was triggered
      */
     function sendMenuItemInteraction(event) {
-        // What could happen is that this is a click and right before the
-        // click there was a mouseover on the same target. If that's the
-        // case bail early.
-        if (previousMouseover && event.target === previousMouseover) {
-            return;
-        }
-
         const label = event.target.href || event.target.textContent;
 
         ga('send', {
@@ -45,24 +38,29 @@ const _MainMenu = ({ document, locale }: Props) => {
         });
     }
 
-    /**
-     * Selectively pass on a trigger to sendMenuItemInteraction() because
-     * onMouseOver is tricky. Not only might you trigger an onMouseover on
-     * an element that isn't the actual button, if you mouseover, mouseout,
-     * and then mouseover the same thing again, it should only count once.
-     * @param {Object} event - the event object that was triggered
-     */
-    function menuMouseoverHandler(event) {
-        // Only the buttons that have this count.
-        if (event.target.getAttribute('aria-haspopup') === 'true') {
-            if (event.target !== previousMouseover) {
-                sendMenuItemInteraction(event);
-                previousMouseover = event.target;
-            }
+    function hideSubMenuIfVisible() {
+        if (showSubMenu) {
+            setShowSubMenu(false);
         }
     }
-    // In-component memory of which DOM element was mouseover'ed last time
-    let previousMouseover = null;
+
+    useEffect(() => {
+        document.addEventListener('keyup', (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                hideSubMenuIfVisible();
+            }
+        });
+
+        document.addEventListener('click', (event: MouseEvent) => {
+            if (
+                event.target &&
+                event.target instanceof HTMLElement &&
+                !event.target.classList.contains('top-level-entry')
+            ) {
+                hideSubMenuIfVisible();
+            }
+        });
+    });
 
     // The menus array includes objects that define the set of
     // menus displayed by this header component. The data structure
@@ -184,33 +182,10 @@ const _MainMenu = ({ document, locale }: Props) => {
         [locale]
     );
 
-    // For Desktop, we don't need any JavaScript to make the menu behave
-    // nicely. But for mobile, we're using the onTouchStart event to
-    // update state that tells the menu to start with className="show".
-    // However, if that mobile user opened a menu (with onTouchStart) and
-    // decided to click on of the links, there's no good chance to now
-    // hide what was forcibly shown. So we use the first mount effect to
-    // make it so that it hides the menu if it was shown.
-    // To a mobile user, the effect is that after their click (on a sub-menu
-    // item) has completed, it manually closes the menu.
-    // See https://bugzilla.mozilla.org/show_bug.cgi?id=1570043
-    // for why this is commented out.
-    // useEffect(() => {
-    //     if (showSubMenu) {
-    //         setShowSubMenu(null);
-    //     }
-    //     // TODO: react-hooks/exhaustive-deps will say to include showSubMenu
-    //     // in list of dependencies. But if you do that, you won't be able
-    //     // to distinguish between a new mount (navigating to a new document
-    //     // for example) and the menu having been shown.
-    //     // We only want this effect to run when the component is re-rendered
-    //     // with a new 'document'.
-    // }, [document]); // eslint-disable-line react-hooks/exhaustive-deps
-
     // One of the menu items has a URL that we need to substitute
     // the current document path into. Compute that now.
     let path = encodeURIComponent(
-        `/${locale}` + (document ? `/docs/${document.slug}` : '')
+        `/${locale}` + (documentData ? `/docs/${documentData.slug}` : '')
     );
 
     return (
@@ -225,13 +200,8 @@ const _MainMenu = ({ document, locale }: Props) => {
                             type="button"
                             className="top-level-entry"
                             aria-haspopup="true"
-                            onMouseOver={menuMouseoverHandler}
-                            onContextMenu={sendMenuItemInteraction}
                             onFocus={sendMenuItemInteraction}
-                            onTouchStart={() => {
-                                // Ultimately, because there's no :hover on
-                                // mobile, we have to compensate for that using
-                                // JavaScript.
+                            onClick={() => {
                                 setShowSubMenu(
                                     showSubMenu === menuEntry.label
                                         ? null
@@ -240,12 +210,6 @@ const _MainMenu = ({ document, locale }: Props) => {
                             }}
                         >
                             {menuEntry.label}
-                            <span
-                                className="main-menu-arrow"
-                                aria-hidden="true"
-                            >
-                                ▼
-                            </span>
                         </button>
                         <ul
                             className={

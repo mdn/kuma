@@ -23,19 +23,11 @@ exports[`Header snapshot 1`] = `
         <button
           aria-haspopup="true"
           className="top-level-entry"
-          onContextMenu={[Function]}
+          onClick={[Function]}
           onFocus={[Function]}
-          onMouseOver={[Function]}
-          onTouchStart={[Function]}
           type="button"
         >
           Technologies
-          <span
-            aria-hidden="true"
-            className="main-menu-arrow"
-          >
-            ▼
-          </span>
         </button>
         <ul
           className={null}
@@ -156,19 +148,11 @@ exports[`Header snapshot 1`] = `
         <button
           aria-haspopup="true"
           className="top-level-entry"
-          onContextMenu={[Function]}
+          onClick={[Function]}
           onFocus={[Function]}
-          onMouseOver={[Function]}
-          onTouchStart={[Function]}
           type="button"
         >
           References & Guides
-          <span
-            aria-hidden="true"
-            className="main-menu-arrow"
-          >
-            ▼
-          </span>
         </button>
         <ul
           className={null}
@@ -265,19 +249,11 @@ exports[`Header snapshot 1`] = `
         <button
           aria-haspopup="true"
           className="top-level-entry"
-          onContextMenu={[Function]}
+          onClick={[Function]}
           onFocus={[Function]}
-          onMouseOver={[Function]}
-          onTouchStart={[Function]}
           type="button"
         >
           Feedback
-          <span
-            aria-hidden="true"
-            className="main-menu-arrow"
-          >
-            ▼
-          </span>
         </button>
         <ul
           className={null}
@@ -341,7 +317,7 @@ exports[`Header snapshot 1`] = `
             role="menuitem"
           >
             <a
-              href="https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=%2Fen-US%2Fdocs%2Ftest"
+              href="https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=%2Fen-US"
               onClick={[Function]}
               onContextMenu={[Function]}
               rel="noopener noreferrer"
