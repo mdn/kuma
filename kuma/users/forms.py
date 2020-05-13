@@ -117,6 +117,7 @@ class UserEditForm(forms.ModelForm):
             }
         ),
     )
+    is_newsletter_subscribed = forms.BooleanField(required=False)
 
     class Meta:
         model = User
@@ -137,6 +138,7 @@ class UserEditForm(forms.ModelForm):
             "facebook_url",
             "discourse_url",
             "username",
+            "is_newsletter_subscribed",
         )
 
     def __init__(self, *args, **kwargs):

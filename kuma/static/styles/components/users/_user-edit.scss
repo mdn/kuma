@@ -1,5 +1,4 @@
 .user-edit {
-
     h1,
     fieldset {
         @include clearfix();
@@ -16,9 +15,19 @@
         @include vendorize(box-sizing, border-box);
     }
 
-    .save-and-delete {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .newsletter-signup {
+        margin-bottom: 20px;
+
+        svg {
+            height: 17px;
+        }
+    }
+
+    .button-container {
+        a,
+        button {
+            border-radius: 3px;
+            padding: 5px 20px;
+        }
     }
 }

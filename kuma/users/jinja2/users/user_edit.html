@@ -62,6 +62,15 @@
             <label>{{ _('Primary Email') }} <a class="field-management" href="{{ url('account_email') }}">{{ _('Edit email') }}</a></label>
             {{ edit_user.email }}
           </li>
+
+          <li class="newsletter-signup">
+            <label for="{{ user_form.is_newsletter_subscribed.id_for_label  }}">
+              {{ user_form.is_newsletter_subscribed }}
+              {% include 'includes/icons/general/gift.svg' %}
+              {{ _('Get exclusive content, offers and invitations to your inbox') }}
+            </label>
+          </li>
+
           {{ li_field(user_form, 'username') }}
           {{ li_field(user_form, 'fullname') }}
           {{ li_field(user_form, 'title') }}
@@ -121,14 +130,13 @@
       <ul class="button-container">
         <li>
           <button type="submit" class="positive">
-            {% include 'includes/icons/general/check-mark.svg' %}
-            {{ _('Publish') }}
+            {{ _('Save') }}
           </button>
         </li>
         <li>
           {% if is_me %}
-            <a id="delete-user-button"
-              href="{{ url('users.user_delete', username=request.user.username) }}">{{ _('Delete your account') }}</a>
+            <a id="delete-user-button" class="negative"
+              href="{{ url('users.user_delete', username=request.user.username) }}">{{ _('Delete account') }}</a>
           {% endif %}
         </li>
       </ul>
