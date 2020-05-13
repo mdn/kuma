@@ -10,7 +10,7 @@ def sendinblue_check(app_configs, **kwargs):
     if not settings.SENDINBLUE_API_KEY:
         return []
 
-    response = sendinblue.request("GET", f"contacts/attributes")
+    response = sendinblue.request("GET", "contacts/attributes")
     if not response.ok:
         return [
             Error(
@@ -23,7 +23,7 @@ def sendinblue_check(app_configs, **kwargs):
         attribute["name"] == "IS_PAYING" for attribute in response.json()["attributes"]
     ):
         response = sendinblue.request(
-            "POST", f"contacts/attributes/normal/IS_PAYING", json={"type": "boolean"},
+            "POST", "contacts/attributes/normal/IS_PAYING", json={"type": "boolean"},
         )
         if not response.ok:
             return [
