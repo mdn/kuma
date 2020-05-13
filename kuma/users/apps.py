@@ -17,8 +17,10 @@ class UserConfig(AuthConfig):
     def ready(self):
         # Connect signal handlers
         from . import signal_handlers  # noqa
+        from .sendinblue import signal_handlers  # noqa
 
-        from kuma.users.checks import stripe_check, sendinblue_check
+        from .checks import stripe_check
+        from .sendinblue.checks import check as sendinblue_check
 
         register(stripe_check)
         register(sendinblue_check)
