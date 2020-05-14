@@ -155,9 +155,9 @@ def make(cmd, display, notify_on_success=false, target='') {
     sh_with_notify(cmds, display, notify_on_success)
 }
 
-def is_read_only_db() {
+def is_read_only_db(target='') {
     def region = get_region()
-    def target = get_target_script()
+    def target = get_target_script(target)
     try {
         sh """
             . regions/${region}/${target}.sh
@@ -173,7 +173,7 @@ def migrate_db(target='') {
     /*
      * Migrate the database (only for kuma and writeable databases).
      */
-    if ((get_repo_name() == 'kuma') && !is_read_only_db()) {
+    if ((get_repo_name() == 'kuma') && !is_read_only_db(target)) {
         make('k8s-db-migration-job', 'Migrate Database', target)
     }
 }

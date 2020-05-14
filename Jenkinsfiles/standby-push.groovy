@@ -31,8 +31,8 @@ stage('Push') {
 }
 
 stage('Push EKS') {
-    def current_revision_hash = utils.get_revision_hash('prod.eks.mm')
     dir('infra/apps/mdn/mdn-aws/k8s') {
+        def current_revision_hash = utils.get_revision_hash('prod.eks.mm')
         withEnv(["TO_REVISION_HASH=${env.GIT_COMMIT}",
                  "FROM_REVISION_HASH=${current_revision_hash}"]) {
             utils.migrate_db('prod.eks.mm')
