@@ -5,10 +5,6 @@ stage('Build base') {
     )
 }
 
-stage('Test') {
-    utils.compose_test()
-}
-
 stage('Build & push images') {
     utils.sh_with_notify(
         'make build-kuma push-kuma',
