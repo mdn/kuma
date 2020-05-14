@@ -25,7 +25,6 @@ from pyquery import PyQuery as pq
 from ratelimit.decorators import ratelimit
 
 import kuma.wiki.content
-from kuma.api.v1.views import document_api_data
 from kuma.authkeys.decorators import accepts_auth_key
 from kuma.core.decorators import (
     block_user_agents,
@@ -39,6 +38,7 @@ from kuma.core.decorators import (
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import is_wiki, redirect_to_wiki, to_html, urlparams
 from kuma.search.store import get_search_url_from_referer
+from kuma.wiki.templatetags.jinja_helpers import absolutify
 
 from .utils import calculate_etag, split_slug
 from .. import kumascript
@@ -980,6 +980,87 @@ def react_document(request, document_slug, document_locale):
     response = render(request, "wiki/react_document.html", context)
 
     return _add_kuma_revision_header(doc, response)
+
+
+def document_api_data(doc=None, redirect_url=None):
+    """
+    Returns the JSON data for the document for the document API.
+    """
+    if redirect_url:
+        return {
+            "documentData": None,
+            "redirectURL": redirect_url,
+        }
+
+    # The original english slug for this document, for google analytics
+    if doc.locale == "en-US":
+        en_slug = doc.slug
+    elif doc.parent_id and doc.parent.locale == "en-US":
+        en_slug = doc.parent.slug
+    else:
+        en_slug = ""
+
+    other_translations = doc.get_other_translations(
+        fields=("locale", "slug", "title", "parent")
+    )
+    available_locales = {doc.locale} | set(t.locale for t in other_translations)
+
+    doc_absolute_url = doc.get_absolute_url()
+    revision = doc.current_or_latest_revision()
+    translation_status = None
+    if doc.parent_id and revision and revision.localization_in_progress:
+        translation_status = (
+            "outdated" if revision.translation_age >= 10 else "in-progress"
+        )
+    return {
+        "documentData": {
+            "locale": doc.locale,
+            "slug": doc.slug,
+            "enSlug": en_slug,
+            "id": doc.id,
+            "title": doc.title,
+            "summary": doc.get_summary_html(),
+            "language": doc.language,
+            "hrefLang": doc.get_hreflang(available_locales),
+            "absoluteURL": doc_absolute_url,
+            "wikiURL": absolutify(doc_absolute_url, for_wiki_site=True),
+            "editURL": absolutify(
+                reverse("wiki.edit", args=(doc.slug,), locale=doc.locale),
+                for_wiki_site=True,
+            ),
+            "translateURL": (
+                absolutify(
+                    reverse("wiki.select_locale", args=(doc.slug,), locale=doc.locale),
+                    for_wiki_site=True,
+                )
+                if doc.is_localizable
+                else None
+            ),
+            "translationStatus": translation_status,
+            "bodyHTML": doc.get_body_html(),
+            "quickLinksHTML": doc.get_quick_links_html(),
+            "tocHTML": doc.get_toc_html(),
+            "raw": doc.html,
+            "parents": [
+                {"url": d.get_absolute_url(), "title": d.title} for d in doc.parents
+            ],
+            "translations": [
+                {
+                    "language": t.language,
+                    "hrefLang": t.get_hreflang(available_locales),
+                    "localizedLanguage": gettext(settings.LOCALES[t.locale].english),
+                    "locale": t.locale,
+                    "url": t.get_absolute_url(),
+                    "title": t.title,
+                }
+                for t in other_translations
+            ],
+            "lastModified": (
+                doc.current_revision and doc.current_revision.created.isoformat()
+            ),
+        },
+        "redirectURL": None,
+    }
 
 
 @ensure_wiki_domain
