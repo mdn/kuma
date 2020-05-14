@@ -11,6 +11,13 @@
     width: 100vw;
     height: $mobile-search-height;
 
+    @media #{$mq-tablet-and-up} {
+        position: inherit;
+        width: inherit;
+        height: 40px;
+        min-width: 80px;
+    }
+
     form {
         background: $neutral-100;
         display: flex;
@@ -23,8 +30,25 @@
         transition: transform 0.2s ease-in;
         width: calc(100% - #{$mobile-search-height});
 
+        @media #{$mq-tablet-and-up} {
+            @include reset-visually-hidden();
+            transition: none;
+            transform: translateY(0);
+            padding: 2px 8px;
+            border: 2px solid $text-color;
+            border-radius: 20px;
+            height: 40px;
+            min-width: 80px;
+        }
+
         .search-icon {
             display: none;
+
+            @media #{$mq-tablet-and-up} {
+                display: inline-block;
+                flex: 0 0 25px;
+                fill: $text-color;
+            }
         }
     }
 
@@ -54,6 +78,10 @@
         top: $mobile-search-height;
         right: 0;
 
+        @media #{$mq-tablet-and-up} {
+            display: none;
+        }
+
         span {
             @include visually-hidden;
         }
@@ -75,9 +103,17 @@
         position: fixed;
         z-index: 1;
 
+        @media #{$mq-tablet-and-up} {
+            width: auto;
+            position: inherit;
+        }
+
         form {
-            background: $neutral-100;
             transform: translateY($mobile-search-height);
+
+            @media #{$mq-tablet-and-up} {
+                transform: translateY(0);
+            }
         }
 
         .toggle-form {
@@ -90,43 +126,6 @@
             .search-icon {
                 transform: translateY($mobile-search-height);
             }
-        }
-    }
-}
-
-@media #{$mq-tablet-and-up} {
-    .header-search {
-        position: inherit;
-        width: inherit;
-        height: 40px;
-        min-width: 80px;
-
-        &.show-form {
-            width: auto;
-            position: inherit;
-        }
-
-        // needs [role='search'] to make it more specific in order to
-        // override form.show-form styles
-        form[role='search'] {
-            @include reset-visually-hidden();
-            transition: none;
-            transform: translateY(0);
-            padding: 2px 8px;
-            border: 2px solid $text-color;
-            border-radius: 20px;
-            height: 40px;
-            min-width: 80px;
-
-            .search-icon {
-                display: inline-block;
-                flex: 0 0 25px;
-                fill: $text-color;
-            }
-        }
-
-        .toggle-form {
-            display: none;
         }
     }
 }
