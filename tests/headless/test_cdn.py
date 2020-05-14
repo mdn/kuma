@@ -153,7 +153,6 @@ def test_not_cached(site_url, is_behind_cdn, slug, status):
         ("/@api/deki/files/3613/=hut.jpg", 301),
         ("/diagrams/workflow/workflow.svg", 200),
         ("/presentations/microsummaries/index.html", 200),
-        ("/api/v1/doc/en-US/Web/CSS", 200),
         ("/en-US/search/xml", 200),
         ("/en-US/docs.json?slug=Web/HTML", 200),
         ("/en-US/Firefox", 302),
