@@ -174,7 +174,7 @@ def migrate_db(target_file='') {
      * Migrate the database (only for kuma and writeable databases).
      */
     if ((get_repo_name() == 'kuma') && !is_read_only_db(target_file)) {
-        make('k8s-db-migration-job', 'Migrate Database', target_file)
+        make('k8s-db-migration-job', 'Migrate Database', false, target_file)
     }
 }
 
@@ -183,7 +183,7 @@ def rollout(target_file='') {
      * Start a rolling update.
      */
     def repo = get_repo_name()
-    make("k8s-${repo}-deployments", 'Start Rollout', target_file)
+    make("k8s-${repo}-deployments", 'Start Rollout', false, target_file)
 }
 
 def monitor_rollout(target_file='') {

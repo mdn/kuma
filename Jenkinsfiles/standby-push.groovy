@@ -31,6 +31,13 @@ stage('Push') {
 }
 
 stage('Push EKS') {
+
+    // add additional notify
+    notify_slack([
+        status: "Pushing to EKS",
+        message: "${repo} image ${tag}"
+    ])
+
     dir('infra/apps/mdn/mdn-aws/k8s') {
         def current_revision_hash = utils.get_revision_hash('prod.eks.mm')
         withEnv(["TO_REVISION_HASH=${env.GIT_COMMIT}",
@@ -40,8 +47,6 @@ stage('Push EKS') {
             utils.rollout('prod.eks.mm')
             // Monitor the rollout until it has completed.
             utils.monitor_rollout('prod.eks.mm')
-            // Record the rollout in external services like New-Relic.
-            utils.record_rollout('prod.eks.mm')
         }
     }
 }
