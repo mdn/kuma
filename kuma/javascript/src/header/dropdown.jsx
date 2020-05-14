@@ -9,8 +9,9 @@ type DropdownProps = {|
     // Dropdown component
     id?: string,
     // An optional string that, when specified, is added to the
-    // the existing classes for the container element. Useful when
-    // custom styling for a specific dropdown component is needed.
+    // the existing classes for the dropdown-menu-items element.
+    // Useful when custom styling for a specific dropdown
+    // component is needed.
     componentClassName?: string,
     // The string or component to display. Clicking this will
     // display the menu
