@@ -2,7 +2,7 @@
 
 exports[`LanguageMenu snapshot 1`] = `
 <div
-  className="dropdown-container"
+  className="dropdown-container language-menu"
 >
   <button
     aria-haspopup="true"
@@ -10,8 +10,8 @@ exports[`LanguageMenu snapshot 1`] = `
     aria-owns="language-menu"
     className="dropdown-menu-label"
     id="header-language-menu"
+    onClick={[Function]}
     onFocus={[Function]}
-    onMouseOver={[Function]}
     type="button"
   >
     English
@@ -23,7 +23,7 @@ exports[`LanguageMenu snapshot 1`] = `
     </span>
   </button>
   <ul
-    className="dropdown-menu-items right"
+    className="dropdown-menu-items right "
     id="language-menu"
     role="menu"
   >

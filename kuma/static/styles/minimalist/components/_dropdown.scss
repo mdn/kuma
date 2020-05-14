@@ -9,6 +9,14 @@
     /* This adjusts for the 5px left padding */
     margin-left: -5px;
 
+    &:hover,
+    &:focus {
+        .dropdown-menu-label,
+        .dropdown-menu-label a {
+            color: $dropdown-item-background-color;
+        }
+    }
+
     .dropdown-menu-label {
         display: flex;
         flex-direction: row;
@@ -26,17 +34,20 @@
     }
 
     .dropdown-menu-items {
-        position: absolute;
         display: none;
         flex-direction: column;
         box-sizing: border-box;
         background-color: #fff;
         padding: 4px 0;
-        border: $menu-border;
-        border-radius: $menu-border-radius;
-        box-shadow: $menu-box-shadow;
         min-width: 100%;
-        z-index: $menu-zindex;
+
+        @media #{$mq-tablet-and-up} {
+            position: absolute;
+            border: $menu-border;
+            border-radius: $menu-border-radius;
+            box-shadow: $menu-box-shadow;
+            z-index: $menu-zindex;
+        }
 
         // Mirror left and right positions for LTR and RTL languages
         /* prettier-ignore */
@@ -60,8 +71,6 @@
             color: $dropdown-item-background-color;
             padding: 6px 16px;
             width: 100%;
-            font-size: 15px;
-            font-weight: bold;
             /* buttons have centered text by default */
             text-align: start;
             white-space: nowrap;
@@ -74,25 +83,24 @@
         }
     }
 
-    &:hover,
-    &:focus {
-        .dropdown-menu-label,
-        .dropdown-menu-label a {
-            color: $dropdown-item-background-color;
-        }
-    }
-
-    &:hover,
-    &:focus,
-    &:focus-within {
-        .dropdown-menu-items,
+    /* The dropdown for the language menu is
+       positioned absolutely across all devices */
+    &.language-menu {
         .dropdown-menu-items {
-            display: flex;
+            position: absolute;
+            border: $menu-border;
+            border-radius: $menu-border-radius;
+            box-shadow: $menu-box-shadow;
+            z-index: $menu-zindex;
         }
     }
 
     .dropdown-arrow-down {
         padding-left: 2px;
         font-size: 75%;
+    }
+
+    .show {
+        display: block;
     }
 }

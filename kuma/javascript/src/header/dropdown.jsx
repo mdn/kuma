@@ -1,6 +1,6 @@
 //@flow
 import * as React from 'react';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import GAProvider from '../ga-provider.jsx';
 
@@ -8,7 +8,11 @@ type DropdownProps = {|
     // A string set as the id attribute to uniquely identify this
     // Dropdown component
     id?: string,
-    // The string or component to display. Hovering over this will
+    // An optional string that, when specified, is added to the
+    // the existing classes for the container element. Useful when
+    // custom styling for a specific dropdown component is needed.
+    componentClassName?: string,
+    // The string or component to display. Clicking this will
     // display the menu
     label: string | React.Node,
     // An optional string that, when specified, is set as the `id` attribute
@@ -31,6 +35,7 @@ type DropdownProps = {|
 
 export default function Dropdown(props: DropdownProps) {
     const ga = useContext(GAProvider.context);
+    const [showDropdownMenu, setShowDropdownMenu] = useState(null);
 
     /**
      * Send a signal to GA when there is an interaction on one
@@ -48,8 +53,36 @@ export default function Dropdown(props: DropdownProps) {
         });
     }
 
+    function hideDropdownMenuIfVisible() {
+        if (showDropdownMenu) {
+            setShowDropdownMenu(false);
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('keyup', (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                hideDropdownMenuIfVisible();
+            }
+        });
+
+        document.addEventListener('click', (event: MouseEvent) => {
+            if (
+                event.target &&
+                event.target instanceof HTMLElement &&
+                !event.target.classList.contains('dropdown-menu-label')
+            ) {
+                hideDropdownMenuIfVisible();
+            }
+        });
+    });
+
     return (
-        <div className="dropdown-container">
+        <div
+            className={`dropdown-container ${
+                props.componentClassName ? props.componentClassName : ''
+            }`}
+        >
             <button
                 id={props.id}
                 type="button"
@@ -57,7 +90,9 @@ export default function Dropdown(props: DropdownProps) {
                 aria-haspopup="true"
                 aria-owns={props.ariaOwns}
                 aria-label={props.ariaLabel}
-                onMouseOver={sendDropdownInteraction}
+                onClick={() => {
+                    setShowDropdownMenu(!showDropdownMenu);
+                }}
                 onFocus={sendDropdownInteraction}
             >
                 {props.label}
@@ -69,7 +104,9 @@ export default function Dropdown(props: DropdownProps) {
             </button>
             <ul
                 id={props.ariaOwns}
-                className={`dropdown-menu-items${props.right ? ' right' : ''}`}
+                className={`dropdown-menu-items${props.right ? ' right' : ''} ${
+                    showDropdownMenu ? ' show' : ''
+                }`}
                 role="menu"
             >
                 {props.children}
