@@ -32,50 +32,33 @@ def on_user_delete(instance, **kwargs):
         delete_contact.delay(instance.email)
 
 
-def newsletter_receiver(*receiver_args, **receiver_kwargs):
-    """
-    Decorator wrapping the signal handler @receiver decorator. It needs to be called
-    with a signal that gets user as an argument. It then only calls the decorated
-    function if the given user is subscribed to the newsletter.
-    """
-
-    def receive_decorator(func):
-        def newsletter_check_decorator(user, *signal_args, **signal_kwargs):
-            if user.is_newsletter_subscribed:
-                func(user, *signal_args, **signal_kwargs)
-
-        return receiver(*receiver_args, **receiver_kwargs)(newsletter_check_decorator)
-
-    return receive_decorator
-
-
-@newsletter_receiver(user_signed_up, dispatch_uid="sendinblue.signed_up")
+@receiver(user_signed_up, dispatch_uid="sendinblue.signed_up")
 def on_signed_up(user, **kwargs):
-    create_or_update_contact.delay(user.email, {"IS_PAYING": False})
+    if user.is_newsletter_subscribed:
+        create_or_update_contact.delay(user.email, {"IS_PAYING": False})
 
 
-@newsletter_receiver(email_changed, dispatch_uid="sendinblue.email_changed")
+@receiver(email_changed, dispatch_uid="sendinblue.email_changed")
 def on_email_changed(user, from_email_address, to_email_address, **kwargs):
-    delete_contact.delay(from_email_address.email)
-    create_or_update_contact.delay(
-        to_email_address.email,
-        {
-            "IS_PAYING": UserSubscription.objects.filter(
-                user=user, canceled__isnull=True
-            ).exists()
-        },
-    )
+    if user.is_newsletter_subscribed:
+        delete_contact.delay(from_email_address.email)
+        create_or_update_contact.delay(
+            to_email_address.email,
+            {
+                "IS_PAYING": UserSubscription.objects.filter(
+                    user=user, canceled__isnull=True
+                ).exists()
+            },
+        )
 
 
-@newsletter_receiver(
-    subscription_created, dispatch_uid="sendinblue.subscription_created"
-)
+@receiver(subscription_created, dispatch_uid="sendinblue.subscription_created")
 def on_subscription_created(user, **kwargs):
-    create_or_update_contact.delay(user.email, {"IS_PAYING": True})
+    if user.is_newsletter_subscribed:
+        create_or_update_contact.delay(user.email, {"IS_PAYING": True})
 
 
-@newsletter_receiver(
-    subscription_cancelled, dispatch_uid="sendinblue.subscription_cancelled"
-)
+@receiver(subscription_cancelled, dispatch_uid="sendinblue.subscription_cancelled")
 def on_subscription_cancelled(user, **kwargs):
-    create_or_update_contact.delay(user.email, {"IS_PAYING": False})
+    if user.is_newsletter_subscribed:
+        create_or_update_contact.delay(user.email, {"IS_PAYING": False})
