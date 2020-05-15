@@ -346,32 +346,49 @@ exports[`Header snapshot 1`] = `
       </li>
     </ul>
   </nav>
-  <form
-    action="/en-US/search"
-    className="header-search"
-    id="nav-main-search"
-    method="get"
-    role="search"
+  <div
+    className="header-search "
   >
-    <svg-mock
-      className="search-icon"
-    />
-    <label
-      className="visually-hidden"
-      htmlFor="main-q"
+    <form
+      action="/en-US/search"
+      id="nav-main-search"
+      method="get"
+      role="search"
     >
-      Search MDN
-    </label>
-    <input
-      className="search-input-field"
-      id="main-q"
-      name="q"
-      pattern="(.|\\\\s)*\\\\S(.|\\\\s)*"
-      placeholder="Search MDN"
-      required={true}
-      type="search"
-    />
-  </form>
+      <svg-mock
+        className="search-icon"
+      />
+      <label
+        className="visually-hidden"
+        htmlFor="main-q"
+      >
+        Search MDN
+      </label>
+      <input
+        className="search-input-field"
+        id="main-q"
+        name="q"
+        pattern="(.|\\\\s)*\\\\S(.|\\\\s)*"
+        placeholder="Search MDN"
+        required={true}
+        type="search"
+      />
+    </form>
+    <button
+      className="toggle-form"
+      onClick={[Function]}
+    >
+      <svg-mock
+        className="close-icon"
+      />
+      <svg-mock
+        className="search-icon"
+      />
+      <span>
+        Open search
+      </span>
+    </button>
+  </div>
   <a
     className="signin-link"
     href="/en-US/users/account/signup-landing?next=/[fake%20absolute%20url]"
