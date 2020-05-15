@@ -13,9 +13,9 @@ def get_commit_tag() {
 }
 
 def get_target_name(target_name='') {
-    if (target_name != null && !target_name.trim().isEmpty()){
+    if (target_name) {
         return target_name
-    {
+    }
     if (env.BRANCH_NAME == PROD_BRANCH_NAME) {
         return 'prod'
     }
