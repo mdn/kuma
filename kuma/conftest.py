@@ -99,6 +99,7 @@ def wiki_user(db, django_user_model):
     return django_user_model.objects.create(
         username="wiki_user",
         email="wiki_user@example.com",
+        is_newsletter_subscribed=True,
         date_joined=datetime(2017, 4, 14, 12, 0),
     )
 
