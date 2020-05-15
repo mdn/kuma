@@ -1069,9 +1069,7 @@ def test_user_subscribe_to_newsletter(
     )
     wiki_user.refresh_from_db()
     assert wiki_user.is_newsletter_subscribed
-    mock_create_or_update_newsletter_contact_delay.assert_called_once_with(
-        "wiki_user@example.com"
-    )
+    mock_create_or_update_newsletter_contact_delay.assert_called_once_with(wiki_user.pk)
 
 
 @mock.patch("kuma.users.newsletter.tasks.delete_contact.delay")

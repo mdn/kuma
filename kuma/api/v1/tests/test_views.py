@@ -476,7 +476,10 @@ def test_send_subscriptions_feedback_failure(client, settings):
 @mock.patch("kuma.users.newsletter.tasks.create_or_update_contact.delay")
 @mock.patch("kuma.users.stripe_utils.stripe")
 def test_create_subscription_success(
-    mocked_stripe, mock_create_or_update_newsletter_contact_delay, user_client
+    mocked_stripe,
+    mock_create_or_update_newsletter_contact_delay,
+    wiki_user,
+    user_client,
 ):
 
     mock_customer = mock.MagicMock()
@@ -496,9 +499,7 @@ def test_create_subscription_success(
     )
     assert response.status_code == 201
     assert UserSubscription.objects.filter(stripe_subscription_id=subscription_id)
-    mock_create_or_update_newsletter_contact_delay.assert_called_once_with(
-        "wiki_user@example.com", {"IS_PAYING": True}
-    )
+    mock_create_or_update_newsletter_contact_delay.assert_called_once_with(wiki_user.pk)
 
 
 @pytest.mark.django_db
@@ -592,7 +593,10 @@ def test_list_subscriptions_with_active_subscription(
 @pytest.mark.django_db
 @override_flag("subscription", True)
 def test_cancel_subscriptions_with_active_subscription(
-    mocked_stripe, mock_create_or_update_newsletter_contact_delay, stripe_user_client
+    mocked_stripe,
+    mock_create_or_update_newsletter_contact_delay,
+    stripe_user_client,
+    wiki_user,
 ):
     subscription_id = "sub_1234"
     mock_subscription = mock.MagicMock()
@@ -605,9 +609,7 @@ def test_cancel_subscriptions_with_active_subscription(
     assert response.status_code == 204
     assert UserSubscription.objects.get(stripe_subscription_id=subscription_id).canceled
 
-    mock_create_or_update_newsletter_contact_delay.assert_called_once_with(
-        "wiki_user@example.com", {"IS_PAYING": False}
-    )
+    mock_create_or_update_newsletter_contact_delay.assert_called_once_with(wiki_user.pk)
 
 
 @mock.patch("kuma.users.stripe_utils.stripe")

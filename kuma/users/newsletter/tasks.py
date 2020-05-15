@@ -2,18 +2,29 @@ from urllib.parse import quote
 
 from celery import task
 
+from kuma.users.models import User, UserSubscription
+
 from . import sendinblue
 
 
 @task
-def create_or_update_contact(email, attributes=None):
+def create_or_update_contact(user_pk):
+    user = User.objects.get(pk=user_pk)
+
+    if not user.is_newsletter_subscribed:
+        return
+
     response = sendinblue.request(
         "POST",
         "contacts",
         json={
             "updateEnabled": True,
-            "email": email,
-            "attributes": attributes or {},
+            "email": user.email,
+            "attributes": {
+                "IS_PAYING": UserSubscription.objects.filter(
+                    user=user, canceled__isnull=True
+                ).exists()
+            },
             "listIds": [int(sendinblue.LIST_ID)],
         },
     )

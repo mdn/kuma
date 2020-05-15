@@ -2,7 +2,7 @@ from allauth.account.signals import email_changed, user_signed_up
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 
-from kuma.users.models import User, UserSubscription
+from kuma.users.models import User
 from kuma.users.signals import (
     newsletter_subscribed,
     newsletter_unsubscribed,
@@ -18,7 +18,7 @@ from .tasks import (
 
 @receiver(newsletter_subscribed, dispatch_uid="sendinblue.newsletter_subscribed")
 def on_newsletter_subscribed(user, **kwargs):
-    create_or_update_contact.delay(user.email)
+    create_or_update_contact.delay(user.pk)
 
 
 @receiver(newsletter_unsubscribed, dispatch_uid="sendinblue.newsletter_unsubscribed")
@@ -34,31 +34,21 @@ def on_user_delete(instance, **kwargs):
 
 @receiver(user_signed_up, dispatch_uid="sendinblue.signed_up")
 def on_signed_up(user, **kwargs):
-    if user.is_newsletter_subscribed:
-        create_or_update_contact.delay(user.email, {"IS_PAYING": False})
+    create_or_update_contact.delay(user.pk)
 
 
 @receiver(email_changed, dispatch_uid="sendinblue.email_changed")
 def on_email_changed(user, from_email_address, to_email_address, **kwargs):
     if user.is_newsletter_subscribed:
         delete_contact.delay(from_email_address.email)
-        create_or_update_contact.delay(
-            to_email_address.email,
-            {
-                "IS_PAYING": UserSubscription.objects.filter(
-                    user=user, canceled__isnull=True
-                ).exists()
-            },
-        )
+        create_or_update_contact.delay(user.pk)
 
 
 @receiver(subscription_created, dispatch_uid="sendinblue.subscription_created")
 def on_subscription_created(user, **kwargs):
-    if user.is_newsletter_subscribed:
-        create_or_update_contact.delay(user.email, {"IS_PAYING": True})
+    create_or_update_contact.delay(user.pk)
 
 
 @receiver(subscription_cancelled, dispatch_uid="sendinblue.subscription_cancelled")
 def on_subscription_cancelled(user, **kwargs):
-    if user.is_newsletter_subscribed:
-        create_or_update_contact.delay(user.email, {"IS_PAYING": False})
+    create_or_update_contact.delay(user.pk)
