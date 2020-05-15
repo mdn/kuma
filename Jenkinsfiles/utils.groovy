@@ -12,7 +12,10 @@ def get_commit_tag() {
     return env.GIT_COMMIT.take(7)
 }
 
-def get_target_name() {
+def get_target_name(target_name='') {
+    if (target_name != null && !target_name.trim().isEmpty()){
+        return target_name
+    {
     if (env.BRANCH_NAME == PROD_BRANCH_NAME) {
         return 'prod'
     }
@@ -202,11 +205,11 @@ def record_rollout(target_file='') {
     make("k8s-${repo}-record-deployment-job", 'Record Rollout', true, target_file)
 }
 
-def announce_push() {
+def announce_push(target_name='') {
     /*
      * Announce the push.
      */
-    def target = get_target_name()
+    def target = get_target_name(target_name)
     def repo = get_repo_name()
     def tag = get_commit_tag()
     notify_slack([

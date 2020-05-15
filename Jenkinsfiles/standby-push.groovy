@@ -30,14 +30,11 @@ stage('Push') {
     }
 }
 
+stage('Announce Push EKS') {
+    utils.announce_push('EKS')
+}
+
 stage('Push EKS') {
-
-    // add additional notify
-    notify_slack([
-        status: "Pushing to EKS",
-        message: "${repo} image ${tag}"
-    ])
-
     dir('infra/apps/mdn/mdn-aws/k8s') {
         def current_revision_hash = utils.get_revision_hash('prod.eks.mm')
         withEnv(["TO_REVISION_HASH=${env.GIT_COMMIT}",
