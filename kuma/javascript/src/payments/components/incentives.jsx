@@ -14,7 +14,7 @@ export const nonSubscriberInvitationCopy = gettext(
     'Get invited to attend special events and conferences.'
 );
 const subscriberDiscountCopy = gettext(
-    'Get 20% off at the <merchStoreLink /> with discount code MDNMEMBER20.'
+    'Get 20% off at the <merchStoreLink /> with the code MDN20OFF.'
 );
 export const subscriberInvitationCopy = gettext(
     'Check back for invitations to attend special events and conferences.'
