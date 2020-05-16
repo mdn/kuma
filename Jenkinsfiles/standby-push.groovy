@@ -30,6 +30,10 @@ stage('Push') {
     }
 }
 
+stage('Announce Push EKS') {
+    utils.announce_push('EKS')
+}
+
 stage('Push EKS') {
     dir('infra/apps/mdn/mdn-aws/k8s') {
         def current_revision_hash = utils.get_revision_hash('prod.eks.mm')
@@ -40,8 +44,6 @@ stage('Push EKS') {
             utils.rollout('prod.eks.mm')
             // Monitor the rollout until it has completed.
             utils.monitor_rollout('prod.eks.mm')
-            // Record the rollout in external services like New-Relic.
-            utils.record_rollout('prod.eks.mm')
         }
     }
 }

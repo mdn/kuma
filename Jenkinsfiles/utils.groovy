@@ -12,7 +12,10 @@ def get_commit_tag() {
     return env.GIT_COMMIT.take(7)
 }
 
-def get_target_name() {
+def get_target_name(target_name='') {
+    if (target_name) {
+        return target_name
+    }
     if (env.BRANCH_NAME == PROD_BRANCH_NAME) {
         return 'prod'
     }
@@ -174,7 +177,7 @@ def migrate_db(target_file='') {
      * Migrate the database (only for kuma and writeable databases).
      */
     if ((get_repo_name() == 'kuma') && !is_read_only_db(target_file)) {
-        make('k8s-db-migration-job', 'Migrate Database', target_file)
+        make('k8s-db-migration-job', 'Migrate Database', false, target_file)
     }
 }
 
@@ -183,7 +186,7 @@ def rollout(target_file='') {
      * Start a rolling update.
      */
     def repo = get_repo_name()
-    make("k8s-${repo}-deployments", 'Start Rollout', target_file)
+    make("k8s-${repo}-deployments", 'Start Rollout', false, target_file)
 }
 
 def monitor_rollout(target_file='') {
@@ -202,11 +205,11 @@ def record_rollout(target_file='') {
     make("k8s-${repo}-record-deployment-job", 'Record Rollout', true, target_file)
 }
 
-def announce_push() {
+def announce_push(target_name='') {
     /*
      * Announce the push.
      */
-    def target = get_target_name()
+    def target = get_target_name(target_name)
     def repo = get_repo_name()
     def tag = get_commit_tag()
     notify_slack([
