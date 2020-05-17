@@ -36,6 +36,7 @@ export default function LanguageMenu({ document }: Props): React.Node {
     return (
         <Dropdown
             id="header-language-menu"
+            componentClassName="language-menu"
             label={label}
             right={true}
             ariaOwns="language-menu"

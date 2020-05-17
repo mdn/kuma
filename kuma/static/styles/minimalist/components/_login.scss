@@ -33,6 +33,9 @@
         width: 40px;
         height: 40px;
         border-radius: 50%;
+        /* avoid click events being sent from
+         the avatar image */
+        pointer-events: none;
     }
 }
 

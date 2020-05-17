@@ -2,13 +2,13 @@
 
 exports[`Dropdown closed and open snapshots 1`] = `
 <div
-  className="dropdown-container"
+  className="dropdown-container "
 >
   <button
     aria-haspopup="true"
     className="dropdown-menu-label"
+    onClick={[Function]}
     onFocus={[Function]}
-    onMouseOver={[Function]}
     type="button"
   >
     Test
@@ -20,7 +20,7 @@ exports[`Dropdown closed and open snapshots 1`] = `
     </span>
   </button>
   <ul
-    className="dropdown-menu-items"
+    className="dropdown-menu-items  "
     role="menu"
   >
     <li>

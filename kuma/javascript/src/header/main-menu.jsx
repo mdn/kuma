@@ -15,10 +15,6 @@ type Props = {
 // To avoid problems with flow and React.memo(), define the component
 // in this plain way first. See bottom of file for the final memo() and export.
 const _MainMenu = ({ documentData, locale }: Props) => {
-    // The CSS that supports this is sufficiently smart to understand
-    // hovering over the top-level menu items and stuff. But for mobile,
-    // there's no mouse hover so for that we use a piece of state to
-    // record onTouchStart events.
     const [showSubMenu, setShowSubMenu] = useState(null);
     const ga = useContext(GAProvider.context);
 
