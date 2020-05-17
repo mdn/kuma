@@ -1,26 +1,61 @@
-.header-search {
-    grid-area: S;
-    display: flex;
-    flex: 2 1;
-    flex-direction: row;
-    align-items: center;
-    box-sizing: border-box;
-    padding: 2px 8px;
-    border: 2px solid $text-color;
-    border-radius: 20px;
-    height: 40px;
-    min-width: 80px;
+@import '../utils/utility-mixins.scss';
 
-    .search-icon {
-        flex: 0 0 25px;
-        fill: $text-color;
+.header-search {
+    $mobile-search-height: 68px;
+    $icon-size: 24px;
+    grid-area: S;
+    box-sizing: border-box;
+    position: absolute;
+    top: -$mobile-search-height;
+    right: 0;
+    width: 100vw;
+    height: $mobile-search-height;
+
+    @media #{$mq-tablet-and-up} {
+        position: inherit;
+        width: inherit;
+        height: 40px;
+        min-width: 80px;
+    }
+
+    form {
+        background: $neutral-100;
+        display: flex;
+        flex-direction: row;
+        height: $mobile-search-height;
+        align-items: center;
+        box-sizing: border-box;
+        position: relative;
+        padding: 0 20px;
+        transition: transform 0.2s ease-in;
+        width: calc(100% - #{$mobile-search-height});
+
+        @media #{$mq-tablet-and-up} {
+            @include reset-visually-hidden();
+            transition: none;
+            transform: translateY(0);
+            padding: 2px 8px;
+            border: 2px solid $text-color;
+            border-radius: 20px;
+            height: 40px;
+            min-width: 80px;
+        }
+
+        .search-icon {
+            display: none;
+
+            @media #{$mq-tablet-and-up} {
+                display: inline-block;
+                flex: 0 0 25px;
+                fill: $text-color;
+            }
+        }
     }
 
     input.search-input-field {
         flex: 1 1 100px;
         color: $text-color;
         border-width: 0;
-        font-size: $tiny-font-size;
         min-width: 60px;
 
         &:focus,
@@ -28,6 +63,69 @@
             border: 0;
             outline: none;
             box-shadow: none;
+        }
+    }
+
+    .toggle-form {
+        border: inherit;
+        height: inherit;
+        position: inherit;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        width: $mobile-search-height;
+        top: $mobile-search-height;
+        right: 0;
+
+        @media #{$mq-tablet-and-up} {
+            display: none;
+        }
+
+        span {
+            @include visually-hidden;
+        }
+
+        .search-icon,
+        .close-icon {
+            transition: transform 0.2s ease-in;
+            width: $icon-size;
+            height: $icon-size;
+            position: absolute;
+        }
+
+        .close-icon {
+            transform: translateY(-$mobile-search-height);
+        }
+    }
+
+    &.show-form {
+        position: fixed;
+        z-index: 1;
+
+        @media #{$mq-tablet-and-up} {
+            width: auto;
+            position: inherit;
+        }
+
+        form {
+            transform: translateY($mobile-search-height);
+
+            @media #{$mq-tablet-and-up} {
+                transform: translateY(0);
+            }
+        }
+
+        .toggle-form {
+            top: 0;
+
+            .close-icon {
+                transform: translateY(0);
+            }
+
+            .search-icon {
+                transform: translateY($mobile-search-height);
+            }
         }
     }
 }

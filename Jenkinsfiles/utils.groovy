@@ -12,7 +12,10 @@ def get_commit_tag() {
     return env.GIT_COMMIT.take(7)
 }
 
-def get_target_name() {
+def get_target_name(target_name='') {
+    if (target_name) {
+        return target_name
+    }
     if (env.BRANCH_NAME == PROD_BRANCH_NAME) {
         return 'prod'
     }
@@ -27,7 +30,10 @@ def get_target_name() {
     )
 }
 
-def get_target_script() {
+def get_target_script(target_file='') {
+    if (target_file != null && !target_file.trim().isEmpty()) {
+        return target_file
+    }
     if (env.BRANCH_NAME == PROD_BRANCH_NAME) {
         return 'prod'
     }
@@ -111,9 +117,9 @@ def sh_with_notify(cmd, display, notify_on_success=false) {
     }
 }
 
-def get_revision_hash() {
+def get_revision_hash(target_file='') {
     def region = get_region()
-    def target = get_target_script()
+    def target = get_target_script(target_file)
     def repo_name = get_repo_name()
     return sh(
         returnStdout: true,
@@ -140,8 +146,8 @@ def ensure_pull() {
     )
 }
 
-def make(cmd, display, notify_on_success=false) {
-    def target = get_target_script()
+def make(cmd, display, notify_on_success=false, target_file='') {
+    def target = get_target_script(target_file)
     def region = get_region()
     def tag = get_commit_tag()
     def repo_upper = get_repo_name().toUpperCase()
@@ -152,9 +158,9 @@ def make(cmd, display, notify_on_success=false) {
     sh_with_notify(cmds, display, notify_on_success)
 }
 
-def is_read_only_db() {
+def is_read_only_db(target_file='') {
     def region = get_region()
-    def target = get_target_script()
+    def target = get_target_script(target_file)
     try {
         sh """
             . regions/${region}/${target}.sh
@@ -166,44 +172,44 @@ def is_read_only_db() {
     }
 }
 
-def migrate_db() {
+def migrate_db(target_file='') {
     /*
      * Migrate the database (only for kuma and writeable databases).
      */
-    if ((get_repo_name() == 'kuma') && !is_read_only_db()) {
-        make('k8s-db-migration-job', 'Migrate Database')
+    if ((get_repo_name() == 'kuma') && !is_read_only_db(target_file)) {
+        make('k8s-db-migration-job', 'Migrate Database', false, target_file)
     }
 }
 
-def rollout() {
+def rollout(target_file='') {
     /*
      * Start a rolling update.
      */
     def repo = get_repo_name()
-    make("k8s-${repo}-deployments", 'Start Rollout')
+    make("k8s-${repo}-deployments", 'Start Rollout', false, target_file)
 }
 
-def monitor_rollout() {
+def monitor_rollout(target_file='') {
     /*
      * Monitor the rolling update until it succeeds or fails.
      */
     def repo = get_repo_name()
-    make("k8s-${repo}-rollout-status", 'Check Rollout Status', true)
+    make("k8s-${repo}-rollout-status", 'Check Rollout Status', true, target_file)
 }
 
-def record_rollout() {
+def record_rollout(target_file='') {
     /*
      * Record the rollout in external services like New Relic and SpeedCurve.
      */
     def repo = get_repo_name()
-    make("k8s-${repo}-record-deployment-job", 'Record Rollout', true)
+    make("k8s-${repo}-record-deployment-job", 'Record Rollout', true, target_file)
 }
 
-def announce_push() {
+def announce_push(target_name='') {
     /*
      * Announce the push.
      */
-    def target = get_target_name()
+    def target = get_target_name(target_name)
     def repo = get_repo_name()
     def tag = get_commit_tag()
     notify_slack([

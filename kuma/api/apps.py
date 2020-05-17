@@ -9,8 +9,3 @@ class APIConfig(AppConfig):
 
     name = "kuma.api"
     verbose_name = "API"
-
-    def ready(self):
-        """Configure kuma.api after models are loaded."""
-        # Register signal handlers
-        from . import signal_handlers  # noqa

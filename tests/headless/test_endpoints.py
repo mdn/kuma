@@ -207,35 +207,8 @@ def test_hreflang_basic(site_url):
 @pytest.mark.nondestructive
 @pytest.mark.parametrize(
     "uri,expected_keys",
-    [
-        ("/api/v1/whoami", (("waffle", ("flags", "switches", "samples")),),),
-        (
-            "/api/v1/doc/en-US/Web/CSS",
-            (
-                (
-                    "documentData",
-                    (
-                        "locale",
-                        "title",
-                        "slug",
-                        "tocHTML",
-                        "bodyHTML",
-                        "id",
-                        "quickLinksHTML",
-                        "parents",
-                        "translations",
-                        "wikiURL",
-                        "summary",
-                        "language",
-                        "lastModified",
-                        "absoluteURL",
-                    ),
-                ),
-                "redirectURL",
-            ),
-        ),
-    ],
-    ids=("whoami", "doc"),
+    [["/api/v1/whoami", [("waffle", ("flags", "switches", "samples"))]]],
+    ids=("whoami",),
 )
 def test_api_basic(site_url, uri, expected_keys):
     """Basic test of site's api endpoints."""
