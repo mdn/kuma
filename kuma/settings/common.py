@@ -520,6 +520,7 @@ INSTALLED_APPS = (
     "allauth.socialaccount",
     "kuma.users.providers.github",
     "kuma.users.providers.google",
+    "kuma.users.newsletter.apps.UserNewsletterConfig",
     # util
     "django_jinja",
     "pipeline",
@@ -1869,5 +1870,4 @@ STRIPE_WEBHOOK_HOSTNAME = config("STRIPE_WEBHOOK_HOSTNAME", default=None)
 # We use sendinblue.com to send marketing emails and are subdividing users
 # into lists of paying and not paying users
 SENDINBLUE_API_KEY = config("SENDINBLUE_API_KEY", default=None)
-SENDINBLUE_PAYING_LIST_ID = config("SENDINBLUE_PAYING_LIST_ID", default=None)
-SENDINBLUE_NOT_PAYING_LIST_ID = config("SENDINBLUE_NOT_PAYING_LIST_ID", default=None)
+SENDINBLUE_LIST_ID = config("SENDINBLUE_LIST_ID", default=None)

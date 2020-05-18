@@ -322,10 +322,8 @@ Enable Sendinblue email integration
 #. Create a Sendinblue account over at https://www.sendinblue.com (you can skip a lot of the profile set-up,
    look for skip in the upper right).
 #. Get your v3 API key at https://account.sendinblue.com/advanced/api
-#. Create two lists at https://my.sendinblue.com/lists/new/parent_id/1 - one for paying and one for non-paying
-   users and remember their IDs
-#. Add the sendinblue config keys to your .env, the keynames are ``SENDINBLUE_API_KEY``,
-   ``SENDINBLUE_PAYING_LIST_ID`` and ``SENDINBLUE_NOT_PAYING_LIST_ID``
+#. Create a list at https://my.sendinblue.com/lists/new/parent_id/1
+#. Add the sendinblue config keys to your .env, the keynames are ``SENDINBLUE_API_KEY`` and ``SENDINBLUE_LIST_ID``
 
 Interact with the Docker containers
 ===================================

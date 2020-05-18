@@ -57,6 +57,7 @@ from kuma.wiki.models import (
 
 # we have to import the SignupForm form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
+from . import signals
 from .forms import UserBanForm, UserDeleteForm, UserEditForm, UserRecoveryEmailForm
 from .models import User, UserBan
 from .signup import SignupForm
@@ -443,12 +444,19 @@ def user_edit(request, username):
         # Finally, set up the forms.
         user_form = UserEditForm(instance=edit_user, initial=initial, prefix="user")
     else:
+        was_subscribed = edit_user.is_newsletter_subscribed
+
         user_form = UserEditForm(
             data=request.POST, files=request.FILES, instance=edit_user, prefix="user"
         )
 
         if user_form.is_valid():
             user_form.save()
+
+            if not was_subscribed and edit_user.is_newsletter_subscribed:
+                signals.newsletter_subscribed.send(None, user=edit_user)
+            if was_subscribed and not edit_user.is_newsletter_subscribed:
+                signals.newsletter_unsubscribed.send(None, user=edit_user)
 
             try:
                 # Beta

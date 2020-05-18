@@ -14,7 +14,6 @@ from kuma.core.utils import (
     strings_are_translated,
 )
 
-
 log = logging.getLogger("kuma.users.tasks")
 
 

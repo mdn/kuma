@@ -7,6 +7,7 @@ from django.utils import timezone
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 
+from . import signals
 from .models import UserSubscription
 
 
@@ -97,12 +98,16 @@ def create_stripe_customer_and_subscription_for_user(user, email, stripe_token):
         user.save()
 
     subscription = retrieve_stripe_subscription(customer)
-    if not subscription:
+    should_create_subscription = not subscription
+    if should_create_subscription:
         subscription = stripe.Subscription.create(
             customer=customer.id, items=[{"plan": settings.STRIPE_PLAN_ID}],
         )
 
     UserSubscription.set_active(user, subscription.id)
+
+    if should_create_subscription:
+        signals.subscription_created.send(None, user=user)
 
 
 def cancel_stripe_customer_subscriptions(user):
@@ -114,6 +119,7 @@ def cancel_stripe_customer_subscriptions(user):
         s = stripe.Subscription.retrieve(sub.id)
         UserSubscription.set_canceled(user, s.id)
         s.delete()
+        signals.subscription_cancelled.send(None, user=user)
         canceled.append(s)
     return canceled
 

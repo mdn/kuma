@@ -2,7 +2,6 @@ from django.conf import settings
 
 from kuma.core.utils import requests_retry_session
 
-
 API_URL = "https://api.sendinblue.com/v3/"
 
 

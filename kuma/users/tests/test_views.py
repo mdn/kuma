@@ -1042,10 +1042,15 @@ def test_user_edit_github_is_public(wiki_user, wiki_user_github_account, user_cl
     assert wiki_user.is_github_url_public
 
 
-def test_user_edit_is_newsletter_subscribed(
-    wiki_user, wiki_user_github_account, user_client
+@mock.patch("kuma.users.newsletter.tasks.create_or_update_contact.delay")
+def test_user_subscribe_to_newsletter(
+    mock_create_or_update_newsletter_contact_delay,
+    wiki_user,
+    wiki_user_github_account,
+    user_client,
 ):
-    """A user can set that they want their GitHub to be public."""
+    wiki_user.is_newsletter_subscribed = False
+    wiki_user.save()
     assert not wiki_user.is_newsletter_subscribed
     url = reverse("users.user_edit", args=(wiki_user.username,))
     response = user_client.get(url)
@@ -1064,6 +1069,36 @@ def test_user_edit_is_newsletter_subscribed(
     )
     wiki_user.refresh_from_db()
     assert wiki_user.is_newsletter_subscribed
+    mock_create_or_update_newsletter_contact_delay.assert_called_once_with(wiki_user.pk)
+
+
+@mock.patch("kuma.users.newsletter.tasks.delete_contact.delay")
+def test_user_unsubscribe_from_newsletter(
+    mock_delete_newsletter_contact_delay,
+    wiki_user,
+    wiki_user_github_account,
+    user_client,
+):
+    url = reverse("users.user_edit", args=(wiki_user.username,))
+    response = user_client.get(url)
+    assert response.status_code == 200
+    assert_no_cache_header(response)
+    form = _get_current_form_field_values(pq(response.content))
+    assert form["user-is_newsletter_subscribed"]
+    form["user-is_newsletter_subscribed"] = False
+    # Filter out keys with `None` values
+    form = {k: v for k, v in form.items() if v is not None}
+    response = user_client.post(url, form)
+    assert response.status_code == 302
+    assert_no_cache_header(response)
+    assert response["Location"].endswith(
+        reverse("users.user_detail", args=(wiki_user.username,))
+    )
+    wiki_user.refresh_from_db()
+    assert not wiki_user.is_newsletter_subscribed
+    mock_delete_newsletter_contact_delay.assert_called_once_with(
+        "wiki_user@example.com"
+    )
 
 
 @pytest.mark.parametrize("case", ("DOMAIN", "WIKI_HOST"))
@@ -1581,7 +1616,10 @@ def test_delete_user_not_allowed(db, user_client, wiki_user_2):
     assert response.status_code == 403
 
 
-def test_delete_user_with_no_revisions(db, user_client, wiki_user):
+@mock.patch("kuma.users.newsletter.tasks.delete_contact.delay")
+def test_delete_user_with_no_revisions(
+    mock_delete_newsletter_contact_delay, db, user_client, wiki_user
+):
     # sanity check fixtures
     assert not Revision.objects.filter(creator=wiki_user).exists()
     assert not AttachmentRevision.objects.filter(creator=wiki_user).exists()
@@ -1591,6 +1629,9 @@ def test_delete_user_with_no_revisions(db, user_client, wiki_user):
     response = user_client.post(url, HTTP_HOST=settings.WIKI_HOST)
     assert response.status_code == 302
     assert not User.objects.filter(username=wiki_user.username).exists()
+    mock_delete_newsletter_contact_delay.assert_called_once_with(
+        "wiki_user@example.com"
+    )
 
 
 def test_delete_user_no_revisions_misc_related(db, user_client, wiki_user):
