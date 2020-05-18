@@ -102,3 +102,6 @@ INDEX_CSS_CLASSNAMES = True
 # our tests to not deviate when the actual number changes since that number
 # change shouldn't affect the tests.
 CONTRIBUTION_AMOUNT_USD = 4.99
+
+SENDINBLUE_API_KEY = "testing"
+SENDINBLUE_LIST_ID = 7327
