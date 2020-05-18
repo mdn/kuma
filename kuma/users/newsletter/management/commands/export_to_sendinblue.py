@@ -37,7 +37,7 @@ class Command(BaseCommand):
 
         payload = {
             "fileBody": csv_out.getvalue(),
-            "listIds": [int(sendinblue.LIST_ID)],
+            "listIds": [int(settings.SENDINBLUE_LIST_ID)],
             "updateExistingContacts": True,
             "emptyContactsAttributes": True,
         }

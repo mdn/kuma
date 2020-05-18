@@ -1,6 +1,7 @@
 from urllib.parse import quote
 
 from celery import task
+from django.conf import settings
 
 from kuma.users.models import User, UserSubscription
 
@@ -25,7 +26,7 @@ def create_or_update_contact(user_pk):
                     user=user, canceled__isnull=True
                 ).exists()
             },
-            "listIds": [int(sendinblue.LIST_ID)],
+            "listIds": [int(settings.SENDINBLUE_LIST_ID)],
         },
     )
     response.raise_for_status()
