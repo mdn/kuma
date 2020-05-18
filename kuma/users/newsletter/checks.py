@@ -14,7 +14,7 @@ def sendinblue_check(app_configs, **kwargs):
     if not response.ok:
         return [
             Error(
-                f"Error when creating sendinblue attribute: {response.json()['message']}",
+                f"Error getting sendinblue attributes: {response.status_code}",
                 id=SENDINBLUE_ERROR,
             )
         ]
