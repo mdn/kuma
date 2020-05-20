@@ -15,6 +15,7 @@ type Props = {
 // To avoid problems with flow and React.memo(), define the component
 // in this plain way first. See bottom of file for the final memo() and export.
 const _MainMenu = ({ documentData, locale }: Props) => {
+    const [showMainMenu, setShowMainMenu] = useState(false);
     const [showSubMenu, setShowSubMenu] = useState(null);
     const ga = useContext(GAProvider.context);
 
@@ -185,8 +186,17 @@ const _MainMenu = ({ documentData, locale }: Props) => {
     );
 
     return (
-        <nav className="main-nav" role="navigation">
-            <ul>
+        <nav className="main-nav" aria-label="Main menu">
+            <button
+                type="button"
+                className="ghost main-menu-toggle"
+                aria-haspopup="true"
+                aria-label="Show Menu"
+                onClick={() => {
+                    setShowMainMenu(!showMainMenu);
+                }}
+            />
+            <ul className={`main-menu ${showMainMenu ? 'show' : ''}`}>
                 {menus.map((menuEntry) => (
                     <li
                         key={menuEntry.label}
@@ -210,6 +220,11 @@ const _MainMenu = ({ documentData, locale }: Props) => {
                         <ul
                             className={
                                 menuEntry.label === showSubMenu ? 'show' : null
+                            }
+                            aria-expanded={
+                                menuEntry.label === showSubMenu
+                                    ? 'true'
+                                    : 'false'
                             }
                         >
                             {menuEntry.items.map((item) => (

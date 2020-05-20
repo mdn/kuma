@@ -1,5 +1,4 @@
 .auth-container {
-    grid-area: L;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -40,14 +39,14 @@
 }
 
 .signin-link {
-    display: flex;
-    align-items: center;
     color: $text-color;
     font-size: 1rem;
     font-weight: bold;
     text-decoration: none;
 
     @media #{$mq-tablet-and-up} {
+        display: flex;
+        align-items: center;
         justify-self: center;
         margin-left: 24px;
     }

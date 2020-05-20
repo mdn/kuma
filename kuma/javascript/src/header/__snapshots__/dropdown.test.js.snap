@@ -20,6 +20,7 @@ exports[`Dropdown closed and open snapshots 1`] = `
     </span>
   </button>
   <ul
+    aria-expanded={false}
     className="dropdown-menu-items  "
     role="menu"
   >

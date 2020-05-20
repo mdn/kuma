@@ -13,10 +13,20 @@ exports[`Header snapshot 1`] = `
     <svg-mock />
   </a>
   <nav
+    aria-label="Main menu"
     className="main-nav"
-    role="navigation"
   >
-    <ul>
+    <button
+      aria-haspopup="true"
+      aria-label="Show Menu"
+      className="ghost main-menu-toggle"
+      onClick={[Function]}
+      type="button"
+    />
+    <ul
+      aria-expanded={false}
+      className="main-menu "
+    >
       <li
         className="top-level-entry-container"
       >
@@ -30,6 +40,7 @@ exports[`Header snapshot 1`] = `
           Technologies
         </button>
         <ul
+          aria-expanded="false"
           className={null}
         >
           <li
@@ -155,6 +166,7 @@ exports[`Header snapshot 1`] = `
           References & Guides
         </button>
         <ul
+          aria-expanded="false"
           className={null}
         >
           <li
@@ -256,6 +268,7 @@ exports[`Header snapshot 1`] = `
           Feedback
         </button>
         <ul
+          aria-expanded="false"
           className={null}
         >
           <li

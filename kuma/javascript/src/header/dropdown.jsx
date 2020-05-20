@@ -36,7 +36,7 @@ type DropdownProps = {|
 
 export default function Dropdown(props: DropdownProps) {
     const ga = useContext(GAProvider.context);
-    const [showDropdownMenu, setShowDropdownMenu] = useState(null);
+    const [showDropdownMenu, setShowDropdownMenu] = useState(false);
 
     /**
      * Send a signal to GA when there is an interaction on one
@@ -108,6 +108,7 @@ export default function Dropdown(props: DropdownProps) {
                 className={`dropdown-menu-items ${props.right ? 'right' : ''} ${
                     showDropdownMenu ? 'show' : ''
                 }`}
+                aria-expanded={showDropdownMenu}
                 role="menu"
             >
                 {props.children}

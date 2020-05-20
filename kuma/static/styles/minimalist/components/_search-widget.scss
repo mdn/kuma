@@ -3,7 +3,6 @@
 .header-search {
     $mobile-search-height: 68px;
     $icon-size: 24px;
-    grid-area: S;
     box-sizing: border-box;
     position: absolute;
     top: -$mobile-search-height;
@@ -13,9 +12,16 @@
 
     @media #{$mq-tablet-and-up} {
         position: inherit;
+        top: inherit;
+        justify-self: end;
         width: inherit;
         height: 40px;
         min-width: 80px;
+        max-width: 400px;
+    }
+
+    @media #{$mq-large-desktop-and-up} {
+        max-width: 350px;
     }
 
     form {

@@ -23,6 +23,7 @@ exports[`LanguageMenu snapshot 1`] = `
     </span>
   </button>
   <ul
+    aria-expanded={false}
     className="dropdown-menu-items right "
     id="language-menu"
     role="menu"
