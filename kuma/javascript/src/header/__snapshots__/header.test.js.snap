@@ -24,7 +24,6 @@ exports[`Header snapshot 1`] = `
       type="button"
     />
     <ul
-      aria-expanded={false}
       className="main-menu "
     >
       <li
