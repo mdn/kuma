@@ -12,19 +12,19 @@
 {# Note: If you change this string also change ``WELCOME_EMAIL_STRINGS`` in kuma/users/tasks.py #}
 {# L10n: This is an email. Whitespace matters! #}
 {{ _('Like words?') }}
-{{ add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_1.3A_I_like_words', 'welcome') }}
+{{ add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_1_I_like_words', 'welcome') }}
 
 {# L10n: This is an email. Whitespace matters! #}
 {{ _('Like code?') }}
-{{ add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_2.3A_I_like_code', 'welcome') }}
+{{ add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_2_I_like_code', 'welcome') }}
 
 {# L10n: This is an email. Whitespace matters! #}
 {{ _('Like both words and code?') }}
-{{ add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_3.3A_I_like_both_words_and_code', 'welcome') }}
+{{ add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_3_I_like_both_words_and_code', 'welcome') }}
 
 {# L10n: This is an email. Whitespace matters! #}
 {{ _('Want to translate MDN to your language?') }}
-{{ add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_4.3A_I_want_MDN_in_my_language', 'welcome') }}
+{{ add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_4_I_want_MDN_in_my_language', 'welcome') }}
 
 {# L10n: This is an email. Whitespace matters! #}
 {{ _('Want to talk to someone about MDN? There are a few ways you can do that:') }}
