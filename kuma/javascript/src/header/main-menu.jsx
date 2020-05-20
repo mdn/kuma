@@ -1,6 +1,6 @@
 //@flow
 import * as React from 'react';
-import { memo, useContext, useEffect, useMemo, useState } from 'react';
+import { memo, useContext, useEffect, useMemo, useState, useRef } from 'react';
 
 import GAProvider from '../ga-provider.jsx';
 
@@ -15,6 +15,7 @@ type Props = {
 // To avoid problems with flow and React.memo(), define the component
 // in this plain way first. See bottom of file for the final memo() and export.
 const _MainMenu = ({ documentData, locale }: Props) => {
+    const mainMenuToggleRef = useRef(null);
     const [showMainMenu, setShowMainMenu] = useState(false);
     const [showSubMenu, setShowSubMenu] = useState(null);
     const ga = useContext(GAProvider.context);
@@ -38,6 +39,15 @@ const _MainMenu = ({ documentData, locale }: Props) => {
     function hideSubMenuIfVisible() {
         if (showSubMenu) {
             setShowSubMenu(false);
+        }
+    }
+
+    function toggleMainMenu() {
+        let mainMenuButton = mainMenuToggleRef.current;
+
+        if (mainMenuButton) {
+            mainMenuButton.classList.toggle('expanded');
+            setShowMainMenu(!showMainMenu);
         }
     }
 
@@ -188,13 +198,12 @@ const _MainMenu = ({ documentData, locale }: Props) => {
     return (
         <nav className="main-nav" aria-label="Main menu">
             <button
+                ref={mainMenuToggleRef}
                 type="button"
                 className="ghost main-menu-toggle"
                 aria-haspopup="true"
                 aria-label="Show Menu"
-                onClick={() => {
-                    setShowMainMenu(!showMainMenu);
-                }}
+                onClick={toggleMainMenu}
             />
             <ul className={`main-menu ${showMainMenu ? 'show' : ''}`}>
                 {menus.map((menuEntry) => (
