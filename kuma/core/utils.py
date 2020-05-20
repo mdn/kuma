@@ -598,7 +598,7 @@ class EmailMultiAlternativesRetrying(EmailMultiAlternatives):
         retry_options = retry_options or {
             "retry_exceptions": (SMTPServerDisconnected,),
             # The default in redo is 60 seconds. Let's tone that down.
-            "sleeptime": 10,
+            "sleeptime": 3,
             "attempts": 10,
         }
 

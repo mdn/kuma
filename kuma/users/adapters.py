@@ -1,3 +1,5 @@
+from smtplib import SMTPServerDisconnected
+
 from allauth.account.adapter import DefaultAccountAdapter, get_adapter
 from allauth.account.models import EmailAddress
 from allauth.account.utils import cleanup_email_addresses
@@ -11,6 +13,7 @@ from django.db.models import Q
 from django.shortcuts import redirect, render
 from django.utils.cache import add_never_cache_headers
 from django.utils.translation import gettext_lazy as _
+from redo import retrying
 from waffle import switch_is_active
 
 from kuma.core.ga_tracking import (
@@ -138,6 +141,17 @@ class KumaAccountAdapter(DefaultAccountAdapter):
             # commit will be True, unless extended by a derived class
             user.save()
         return user
+
+    def send_mail(self, *args, **kwargs):
+        retry_options = {
+            "retry_exceptions": (SMTPServerDisconnected,),
+            # The default in redo is 60 seconds. Let's tone that down.
+            "sleeptime": 3,
+            "attempts": 10,
+        }
+        parent_method = super(KumaAccountAdapter, self).send_mail
+        with retrying(parent_method, **retry_options) as method:
+            return method(*args, **kwargs)
 
 
 class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
