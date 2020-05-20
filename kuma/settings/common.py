@@ -1561,7 +1561,7 @@ SESSION_CLEANUP_CHUNK_SIZE = config(
 # Email address from which welcome emails will be sent
 WELCOME_EMAIL_FROM = config(
     "WELCOME_EMAIL_FROM",
-    default="Janet Swisher, MDN Community Lead <no-reply@mozilla.org>",
+    default="Janet Swisher, MDN Community Lead <mdn-admins@mozilla.org>",
 )
 
 # Email address to request admin intervention
