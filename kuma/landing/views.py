@@ -69,7 +69,6 @@ Disallow: /*docs.json
 Disallow: /*/files/
 Disallow: /media
 Disallow: /*profiles*/edit
-Disallow: /*users/
 """ + "\n".join(
     "Disallow: /{locale}/search".format(locale=locale)
     for locale in settings.ENABLED_LOCALES
