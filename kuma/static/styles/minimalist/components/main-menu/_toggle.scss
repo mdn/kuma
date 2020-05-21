@@ -1,0 +1,21 @@
+.main-menu-toggle {
+    padding: 10px;
+
+    &::before {
+        display: block;
+        content: '';
+        background: transparent url('/static/navigation/menu-open.svg') 0 0
+            no-repeat;
+        background-size: 18px 12px;
+        width: 18px;
+        height: 12px;
+    }
+
+    &.expanded::before {
+        background-image: url('/static/navigation/menu-close.svg');
+    }
+
+    @media #{$mq-tablet-and-up} {
+        display: none;
+    }
+}

@@ -4,19 +4,33 @@
 [mdn-static] ~ main navigation menu
 ********************************************************************** */
 .main-nav {
-    grid-area: M;
     @include set-font-size(18px);
+}
 
-    & > ul {
-        display: block;
+.main-menu {
+    display: none;
+    box-sizing: border-box;
+    position: absolute;
+    top: 80px;
+    left: 0;
+    background-color: #fff;
+    padding: 20px;
+    width: 100%;
+    height: 100vh;
+    font-weight: bold;
+    z-index: $menu-zindex;
 
-        @media #{$mq-tablet-and-up} {
-            display: flex;
-            position: relative;
-            justify-content: space-evenly;
-            font-weight: bold;
-            z-index: $menu-zindex;
-        }
+    @media #{$mq-tablet-and-up} {
+        position: relative;
+        top: inherit;
+        display: flex;
+        justify-content: space-evenly;
+        width: inherit;
+        height: inherit;
+    }
+
+    @media #{$mq-small-desktop-and-up} {
+        padding: 0;
     }
 
     li ul {
@@ -94,6 +108,14 @@
                 padding: 10px;
                 width: unset;
             }
+        }
+    }
+
+    &.show {
+        display: block;
+
+        @media #{$mq-tablet-and-up} {
+            display: flex;
         }
     }
 }

@@ -27,6 +27,7 @@ exports[`Login component when user is logged in 1`] = `
       </span>
     </button>
     <ul
+      aria-expanded={false}
       className="dropdown-menu-items right "
       role="menu"
     >
