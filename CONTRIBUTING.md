@@ -22,11 +22,11 @@ the [MDN "Getting Involved" page][get-involved]. There are interesting
 they may be harder to find. If you have questions about what to work on, you
 can ask:
 
-* In the #mdndev [IRC channel on irc.mozilla.org][irc-howto].
+* In the #mdn [Matrix room on chat.mozilla.org][matrix-howto].
 * In the [MDN Topic][discourse] in Discourse.
 
 [get-involved]: https://wiki.mozilla.org/Webdev/GetInvolved/developer.mozilla.org#Mentored_Bugs
-[irc-howto]: https://wiki.mozilla.org/Irc
+[matrix-howto]: https://wiki.mozilla.org/Matrix
 [mdn-projects]: https://github.com/mdn
 
 How to submit code
@@ -274,8 +274,7 @@ merge after fixing minor issues.
 
 Deployment and Closing Bugs
 ---------------------------
-MDN staff deploy new code one to three times a week. Deployments are announced
-in the #mdndev IRC channel. Currently deployed code can be seen on the
+MDN staff deploy new code one to three times a week. Currently deployed code can be seen on the
 [What's Deployed?](https://whatsdeployed.io/s-HC0) page.
 
 Once a bug fix is in production, the bug can be marked as RESOLVED:FIXED.

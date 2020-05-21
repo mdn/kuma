@@ -179,13 +179,8 @@ pushing to production.
 
   * Look at the changes to be pushed (`What's Deployed on Kuma`_, and
     `What's deployed on KumaScript`_). To enlist the help of pull request
-    authors and others, you can report bug numbers and PRs in IRC.
-    ``firebot`` will give handy links to Bugzilla.
+    authors and others, you can report bug numbers and PRs in Matrix.
   * Think about manual tests to confirm the code changes work without errors.
-  * Monitor the push in the ``#mdndev`` IRC channel. The final messages
-    (one for kuma, one for kumascript) look like::
-
-        🎉 SUCCESS: Check Rollout Status: Branch stage-push build #104:
 
 * Merge and push to the ``stage-integration-tests`` branch::
 
@@ -200,7 +195,7 @@ pushing to production.
   on homepage and article pages. Try to verify features in the newly pushed
   code. Check the `functional tests`_.
 
-* Announce in IRC that staging looks good, and you are pushing to production.
+* Announce in Slack (#mdn-dev) that staging looks good, and you are pushing to production.
 
 .. _Jenkins: https://ci.us-west-2.mdn.mozit.cloud
 .. _`What's Deployed on KumaScript`: https://whatsdeployed.io/s-SWJ
@@ -212,7 +207,7 @@ Deploy to Production
 The production site is located at https://developer.mozilla.org. It is
 monitored by the development team and MozMEAO.
 
-* Pick a push song on https://www.youtube.com. Post link to IRC.
+* Pick a push song on https://www.youtube.com. Post link to Matrix.
 
 * Start the production push::
 
@@ -226,12 +221,6 @@ monitored by the development team and MozMEAO.
     git merge --ff-only origin/master
     git push
     cd ..
-
-* Monitor the push in the ``#mdndev`` IRC channel. The final messages (one
-  for kuma, one for kumascript) are something like::
-
-    🎉 SUCCESS: Check Rollout Status: Branch prod-push build #7
-
 
 * For the next 30-60 minutes,
 
@@ -265,8 +254,3 @@ the AWS US West datacenter.
     git merge --ff-only origin/master
     git push
     cd ..
-
-* Monitor the push in the ``#mdndev`` IRC channel. The final messages (one
-  for kuma, one for kumascript) are something like::
-
-    🎉 SUCCESS: Check Rollout Status: Branch standby-push build #7
