@@ -9,6 +9,7 @@
 
 .main-menu {
     display: none;
+    box-sizing: border-box;
     position: absolute;
     top: 80px;
     left: 0;
@@ -112,5 +113,9 @@
 
     &.show {
         display: block;
+
+        @media #{$mq-tablet-and-up} {
+            display: flex;
+        }
     }
 }
