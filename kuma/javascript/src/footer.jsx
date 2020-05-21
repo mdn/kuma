@@ -50,6 +50,15 @@ export default function Footer() {
                     </li>
                     <li>
                         <a
+                            href="https://shop.spreadshirt.com/mdn-store/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            MDN Web Docs Store
+                        </a>
+                    </li>
+                    <li>
+                        <a
                             href="https://www.mozilla.org/contact/"
                             target="_blank"
                             rel="noopener noreferrer"
