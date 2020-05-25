@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import Route from '../route.js';
-import Page from './pages/page.jsx';
+import Page from '../base/page.jsx';
 import LandingPage from './pages/index.jsx';
 import ManagementPage from './pages/management.jsx';
 import ThankYouPage from './pages/thank-you.jsx';

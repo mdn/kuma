@@ -1,0 +1,20 @@
+.account-titlebar {
+    display: flex;
+    align-items: center;
+    padding: 40px 20px 60px;
+
+    h2 {
+        margin: 0;
+    }
+
+    .foonote {
+        margin-bottom: 0;
+    }
+
+    .avatar {
+        margin-right: 20px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+    }
+}

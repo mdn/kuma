@@ -11,6 +11,7 @@ from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
 from kuma.core.decorators import ensure_wiki_domain, shared_cache_control
 from kuma.core.urlresolvers import i18n_patterns
+from kuma.accounts.urls import lang_urlpatterns as accounts_lang_urlpatterns
 from kuma.dashboards.urls import lang_urlpatterns as dashboards_lang_urlpatterns
 from kuma.dashboards.views import index as dashboards_index
 from kuma.landing.urls import lang_urlpatterns as landing_lang_urlpatterns
@@ -100,6 +101,7 @@ urlpatterns += i18n_patterns(
         name="redirect-to-payments",
     ),
 )
+urlpatterns += i18n_patterns(re_path(r"^accounts/", include(accounts_lang_urlpatterns)))
 urlpatterns += i18n_patterns(re_path(r"^payments/", include(payments_lang_urlpatterns)))
 urlpatterns += i18n_patterns(
     re_path("", decorator_include(never_cache, users_lang_urlpatterns))
