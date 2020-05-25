@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { gettext, interpolate, Interpolated } from '../../l10n.js';
 import UserProvider, { type UserData } from '../../user-provider.jsx';
@@ -9,17 +9,7 @@ import SignInLink from '../../signin-link.jsx';
 import Subheader from '../components/subheaders/index.jsx';
 import CancelSubscriptionForm from '../components/cancel-subscription-form.jsx';
 import { GenericError } from '../components/errors.jsx';
-import { getSubscriptions } from '../api.js';
-
-export type SubscriptionData = {
-    id: string,
-    amount: number,
-    brand: string,
-    expires_at: string,
-    last4: string,
-    zip: string,
-    next_payment_at: string,
-};
+import useSubscriptionData from '../../hooks/useSubscriptionData.js';
 
 type Props = {
     locale: string,
@@ -34,24 +24,17 @@ const ManagementPage = ({ locale }: Props): React.Node => {
     const [status, setStatus] = React.useState<'success' | 'error' | 'idle'>(
         'idle'
     );
-    const [subscription, setSubscription] = useState<?SubscriptionData>(null);
     const [canceled, setCanceled] = useState<?boolean>(false);
     const userData: ?UserData = useContext(UserProvider.context);
-
-    useEffect(() => {
-        if (userData && userData.isSubscriber) {
-            const handleSuccess = (data) => {
-                const [subscription] = data.subscriptions;
-                setSubscription(subscription);
-            };
-            const handleError = () => setStatus('error');
-            getSubscriptions(handleSuccess, handleError);
-        }
-    }, [userData]);
+    let { subscription, error } = useSubscriptionData(userData);
 
     // if there's no user data yet, don't render anything
     if (!userData) {
         return null;
+    }
+
+    if (error && status !== 'error') {
+        setStatus('error');
     }
 
     const handleClick = (event) => {
@@ -60,7 +43,7 @@ const ManagementPage = ({ locale }: Props): React.Node => {
     };
 
     const handleDeleteSuccess = () => {
-        setSubscription(null);
+        subscription = null;
         setCanceled(true);
         setStatus('success');
     };
