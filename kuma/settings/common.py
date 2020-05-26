@@ -4,6 +4,7 @@ import os
 import platform
 import re
 from collections import namedtuple
+from email.utils import parseaddr
 from os.path import dirname
 from urllib.parse import parse_qs, urlencode, urlsplit, urlunsplit
 
@@ -1563,6 +1564,9 @@ WELCOME_EMAIL_FROM = config(
     "WELCOME_EMAIL_FROM",
     default="Janet Swisher - MDN Community Lead <mdn-admins@mozilla.org>",
 )
+# If this fails, SMTP will probably also fail.
+# E.g. https://github.com/mdn/kuma/issues/7121
+assert parseaddr(WELCOME_EMAIL_FROM)[1].count("@") == 1, parseaddr(WELCOME_EMAIL_FROM)
 
 # Email address to request admin intervention
 EMAIL_LIST_MDN_ADMINS = config(
