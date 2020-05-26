@@ -2,19 +2,12 @@
 import * as React from 'react';
 import Route from '../route.js';
 import Page from '../base/page.jsx';
+import { type PageProps, type PageRoutesParams } from '../base/page.jsx';
+
 import LandingPage from './pages/index.jsx';
 import ManagementPage from './pages/management.jsx';
 import ThankYouPage from './pages/thank-you.jsx';
 import TermsPage from './pages/terms.jsx';
-
-type PaymentRoutesParams = {
-    locale: string,
-    slug: string,
-};
-
-type PaymentPageProps = PaymentRoutesParams & {
-    data: any,
-};
 
 export const PAYMENT_PATHS = {
     MANAGEMENT: 'management',
@@ -22,8 +15,8 @@ export const PAYMENT_PATHS = {
     THANK_YOU: 'thank-you',
 };
 
-export function PaymentPage(props: PaymentPageProps) {
-    const { locale, slug, data } = props;
+export function PaymentPage(props: PageProps) {
+    const { locale, slug = '', data } = props;
     const getPage = () => {
         switch (true) {
             case slug.includes(PAYMENT_PATHS.MANAGEMENT):
@@ -48,7 +41,7 @@ const BASEURL =
         ? window.location.origin
         : 'http://ssr.hack';
 
-export class PaymentRoutes extends Route<PaymentRoutesParams, null> {
+export class PaymentRoutes extends Route<PageRoutesParams, null> {
     locale: string;
 
     constructor(locale: string) {
@@ -60,7 +53,7 @@ export class PaymentRoutes extends Route<PaymentRoutesParams, null> {
         return PaymentPage;
     }
 
-    match(url: string): ?PaymentRoutesParams {
+    match(url: string): ?PageRoutesParams {
         const currentPath = new URL(url, BASEURL).pathname;
         const paymentsPath = `/${this.locale}/payments`;
 

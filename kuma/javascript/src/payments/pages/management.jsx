@@ -175,6 +175,7 @@ const ManagementPage = ({ locale }: Props): React.Node => {
         <>
             <Subheader title={title} />
             <main
+                id="content"
                 className="contributions-page manage-subscriptions"
                 role="main"
                 data-testid="management-page"

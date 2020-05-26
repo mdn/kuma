@@ -2,23 +2,16 @@
 import * as React from 'react';
 import Route from '../route.js';
 import Page from '../base/page.jsx';
+import { type PageProps, type PageRoutesParams } from '../base/page.jsx';
+
 import LandingPage from './pages/index.jsx';
-
-type AccountRoutesParams = {
-    locale: string,
-    slug: string,
-};
-
-type AccountPageProps = AccountRoutesParams & {
-    data: any,
-};
 
 export const ACCOUNT_PATHS = {
     MANAGE_EMAIL: 'manage-email',
     SUBSCRIPTION: 'subscription',
 };
 
-export function AccountPage(props: AccountPageProps) {
+export function AccountPage(props: PageProps) {
     const { locale } = props;
     const getPage = () => {
         switch (true) {
@@ -38,7 +31,7 @@ const BASEURL =
         ? window.location.origin
         : 'http://ssr.hack';
 
-export class AccountRoutes extends Route<AccountRoutesParams, null> {
+export class AccountRoutes extends Route<PageRoutesParams, null> {
     locale: string;
 
     constructor(locale: string) {
@@ -50,7 +43,7 @@ export class AccountRoutes extends Route<AccountRoutesParams, null> {
         return AccountPage;
     }
 
-    match(url: string): ?AccountRoutesParams {
+    match(url: string): ?PageRoutesParams {
         const currentPath = new URL(url, BASEURL).pathname;
         const accountPath = `/${this.locale}/account`;
 

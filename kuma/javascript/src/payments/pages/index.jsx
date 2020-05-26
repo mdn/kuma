@@ -56,7 +56,7 @@ export default function LandingPage({ data, locale }: RouteComponentProps) {
             <Incentives isSubscriber={isSubscriber} />
 
             <main
-                id="contributions-page"
+                id="content"
                 className="contributions-page faq"
                 role="main"
                 data-testid="landing-page"
