@@ -1566,7 +1566,7 @@ WELCOME_EMAIL_FROM = config(
 )
 # If this fails, SMTP will probably also fail.
 # E.g. https://github.com/mdn/kuma/issues/7121
-assert parseaddr(WELCOME_EMAIL_FROM)[1].count('@') == 1, parseaddr(WELCOME_EMAIL_FROM)
+assert parseaddr(WELCOME_EMAIL_FROM)[1].count("@") == 1, parseaddr(WELCOME_EMAIL_FROM)
 
 # Email address to request admin intervention
 EMAIL_LIST_MDN_ADMINS = config(
