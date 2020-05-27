@@ -1,5 +1,6 @@
 from functools import partial
 
+from django.conf import settings
 from redirect_urls import redirect as lib_redirect
 
 from kuma.core.decorators import shared_cache_control
@@ -704,6 +705,14 @@ scl3_redirectpatterns = [
         "http://mdn.github.io/webgl-examples/tutorial/webgl.css",
         re_flags="i",
         permanent=True,
+    ),
+    # All of the remaining "samples/" URL's are redirected to the
+    # the media domain (ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN).
+    redirect(
+        r"^samples/(?P<sample_path>.*)$",
+        f"{settings.ATTACHMENTS_AWS_S3_CUSTOM_URL}/samples/{{sample_path}}",
+        re_flags="i",
+        permanent=False,
     ),
     # Bug 887428 - Misprinted URL in promo materials
     # RewriteRule ^Firefox_OS/Security$ docs/Mozilla/Firefox_OS/Security

@@ -336,10 +336,6 @@ STATIC_ROOT = path("static")
 
 SERVE_MEDIA = False
 
-# Serve diagrams, presentations, and samples from 2005-2012
-SERVE_LEGACY = config("SERVE_LEGACY", default=False, cast=bool)
-LEGACY_ROOT = config("LEGACY_ROOT", default=None)
-
 # Paths that don't require a locale prefix.
 LANGUAGE_URL_IGNORED_PATHS = (
     "healthz",
@@ -1840,6 +1836,7 @@ ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN = config(
 ATTACHMENTS_AWS_S3_SECURE_URLS = config(
     "ATTACHMENTS_AWS_S3_SECURE_URLS", default=True, cast=bool
 )  # Does the custom domain use TLS
+ATTACHMENTS_AWS_S3_CUSTOM_URL = f"{'https' if ATTACHMENTS_AWS_S3_SECURE_URLS else 'http'}://{ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN}"
 
 ATTACHMENTS_AWS_S3_REGION_NAME = config(
     "ATTACHMENTS_AWS_S3_REGION_NAME", default="us-east-1"

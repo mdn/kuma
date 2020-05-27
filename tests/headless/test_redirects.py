@@ -3,6 +3,7 @@ import pytest
 from utils.urls import assert_valid_url
 
 from .map_301 import (
+    DEFAULT_SAMPLES_URLS,
     GITHUB_IO_URLS,
     LEGACY_URLS,
     MARIONETTE_URLS,
@@ -45,6 +46,20 @@ def test_github_redirects(url, base_url):
 def test_mozillademos_redirects(url, base_url):
     url["base_url"] = base_url
     assert_valid_url(**url)
+
+
+@pytest.mark.headless
+@pytest.mark.nondestructive
+@pytest.mark.parametrize(
+    "url", DEFAULT_SAMPLES_URLS, ids=[item["url"] for item in DEFAULT_SAMPLES_URLS]
+)
+def test_default_samples_redirects(url, base_url, media_url):
+    url["base_url"] = base_url
+    url["location"] = f"{media_url}{url['url']}"
+    assert_valid_url(**url)
+    print(url["url"])
+    print(url["location"])
+    assert False
 
 
 @pytest.mark.headless
