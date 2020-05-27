@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { AccountPage } from './routes.jsx';
+import { PreferencesPage } from './routes.jsx';
 
-describe('AccountPage', () => {
+describe('PreferencesPage', () => {
     it('renders Landing page by default', () => {
-        const { queryByTestId } = render(<AccountPage slug="/" />);
+        const { queryByTestId } = render(<PreferencesPage slug="/" />);
         expect(queryByTestId('landing-page')).toBeInTheDocument();
     });
 });

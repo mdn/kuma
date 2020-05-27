@@ -22,8 +22,8 @@ const setup = (mockData = {}) => {
     return utils;
 };
 
-describe('Account Titlebar', () => {
-    it('renders the account landing page titlebar', () => {
+describe('Preferences Titlebar', () => {
+    it('renders the preferences landing page titlebar', () => {
         const mockData = {
             username: 'dino',
         };

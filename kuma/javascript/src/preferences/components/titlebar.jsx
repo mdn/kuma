@@ -12,11 +12,11 @@ const Titlebar = ({ locale, pageTitle, userData }: Props) => {
     const username = userData && userData.username;
 
     return (
-        <header className="account-titlebar">
+        <header className="preferences-titlebar">
             <img src={avatarUrl} className="avatar" width="90" alt="" />
             <div className="txt-container">
                 <h2>
-                    <a href={`/${locale}/accounts`}>{username}</a>
+                    <a href={`/${locale}/preferences`}>{username}</a>
                     {` / ${pageTitle}`}
                 </h2>
                 <p className="foonote">Update your avatar from</p>
