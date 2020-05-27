@@ -1,0 +1,22 @@
+{% extends "react_base.html" %}
+
+{% block title %}{{ page_title(_('Account Settings')) }}{% endblock %}
+
+{% block site_css %}
+{{ super() }}
+{% stylesheet 'accountsettings' %}
+{% stylesheet 'accountsettings-titlebar' %}
+{% endblock %}
+
+{% block document_head %}
+{#
+        This page doesn't need to fetch data, so we pass `True`
+        as an argument to indicate that we have the data we need, which
+        allows the component to render in the server.
+    #}
+{{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), True)|safe }}
+{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block footer %}{% endblock %}

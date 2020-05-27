@@ -4,6 +4,7 @@ import * as React from 'react';
 import { DocumentRoute } from './document.jsx';
 import { getLocale } from './l10n.js';
 import Router from './router.jsx';
+import { AccountSettingsRoutes } from './accountsettings/routes.jsx';
 import { SearchRoute } from './search-results-page.jsx';
 import UserProvider from './user-provider.jsx';
 import { PaymentRoutes } from './payments/routes.jsx';
@@ -19,6 +20,7 @@ export default function SinglePageApp({
 }: SinglePageAppProps) {
     const locale = getLocale();
     const routes = [
+        new AccountSettingsRoutes(locale),
         new DocumentRoute(locale),
         new SearchRoute(locale),
         new PaymentRoutes(locale),

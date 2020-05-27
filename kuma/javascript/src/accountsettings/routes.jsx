@@ -5,28 +5,18 @@ import Page from '../base/page.jsx';
 import { type PageProps, type PageRoutesParams } from '../base/page.jsx';
 
 import LandingPage from './pages/index.jsx';
-import ManagementPage from './pages/management.jsx';
-import ThankYouPage from './pages/thank-you.jsx';
-import TermsPage from './pages/terms.jsx';
 
-export const PAYMENT_PATHS = {
-    MANAGEMENT: 'management',
-    TERMS: 'terms',
-    THANK_YOU: 'thank-you',
+export const ACCOUNTSETTINGS_PATHS = {
+    MANAGE_EMAIL: 'manage-email',
+    SUBSCRIPTION: 'subscription',
 };
 
-export function PaymentPage(props: PageProps) {
-    const { locale, slug = '', data } = props;
+export function AccountSettingsPage(props: PageProps) {
+    const { locale } = props;
     const getPage = () => {
         switch (true) {
-            case slug.includes(PAYMENT_PATHS.MANAGEMENT):
-                return <ManagementPage locale={locale} />;
-            case slug.includes(PAYMENT_PATHS.TERMS):
-                return <TermsPage data={data} />;
-            case slug.includes(PAYMENT_PATHS.THANK_YOU):
-                return <ThankYouPage locale={locale} />;
             default:
-                return <LandingPage data={data} locale={locale} />;
+                return <LandingPage locale={locale} />;
         }
     };
 
@@ -41,7 +31,7 @@ const BASEURL =
         ? window.location.origin
         : 'http://ssr.hack';
 
-export class PaymentRoutes extends Route<PageRoutesParams, null> {
+export class AccountSettingsRoutes extends Route<PageRoutesParams, null> {
     locale: string;
 
     constructor(locale: string) {
@@ -50,17 +40,17 @@ export class PaymentRoutes extends Route<PageRoutesParams, null> {
     }
 
     getComponent() {
-        return PaymentPage;
+        return AccountSettingsPage;
     }
 
     match(url: string): ?PageRoutesParams {
         const currentPath = new URL(url, BASEURL).pathname;
-        const paymentsPath = `/${this.locale}/payments`;
+        const path = `/${this.locale}/account`;
 
-        if (currentPath.startsWith(paymentsPath)) {
+        if (currentPath.startsWith(path)) {
             return {
                 locale: this.locale,
-                slug: currentPath.substring(paymentsPath.length),
+                slug: currentPath.substring(path.length),
             };
         }
         return null;

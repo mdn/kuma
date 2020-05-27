@@ -100,7 +100,7 @@ function DocumentPage({ document }: DocumentProps) {
             <A11yNav />
             <Header document={document} />
             <main role="main">
-                <header>
+                <header className="documentation-page-header">
                     <Titlebar title={document.title} document={document} />
                     <div className="full-width-row-container">
                         <div className="max-content-width-container">

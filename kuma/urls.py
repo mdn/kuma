@@ -7,6 +7,9 @@ from django.views.decorators.cache import never_cache
 from django.views.generic import RedirectView
 from django.views.static import serve
 
+from kuma.accountsettings.urls import (
+    lang_urlpatterns as accountsettings_lang_urlpatterns,
+)
 from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
 from kuma.core.decorators import ensure_wiki_domain, shared_cache_control
@@ -99,6 +102,9 @@ urlpatterns += i18n_patterns(
         RedirectView.as_view(url=reverse_lazy("payments_index")),
         name="redirect-to-payments",
     ),
+)
+urlpatterns += i18n_patterns(
+    re_path(r"^account/", include(accountsettings_lang_urlpatterns))
 )
 urlpatterns += i18n_patterns(re_path(r"^payments/", include(payments_lang_urlpatterns)))
 urlpatterns += i18n_patterns(

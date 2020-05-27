@@ -13,6 +13,7 @@ const TermsPage = ({ data: { contributionSupportEmail } }: Props) => (
     <>
         <SubHeader title={title} />
         <main
+            id="content"
             className="contributions-page"
             role="main"
             data-testid="terms-page"

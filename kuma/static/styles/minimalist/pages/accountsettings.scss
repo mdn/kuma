@@ -1,0 +1,10 @@
+@import '../vars/vars-media-queries';
+
+.signin-required {
+    margin: 40px auto;
+    max-width: 1400px;
+
+    @media #{$mq-tablet-and-up} {
+        margin: 80px auto;
+    }
+}

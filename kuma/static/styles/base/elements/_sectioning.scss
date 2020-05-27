@@ -23,7 +23,7 @@ main {
     background: #fff;
     min-height: 200px;
 
-    > header {
+    .documentation-page-header {
         display: flex;
 
         // arrange breadcrumbs above title bar for mobile

@@ -95,10 +95,8 @@
   {% block pageheader %}{% endblock %}
 
   <!-- Content will go here -->
-  <main id="content">
-      {% block document_head %}{% endblock %}
-      {% block content %}{% endblock %}
-  </main>
+  {% block document_head %}{% endblock %}
+  {% block content %}{% endblock %}
 
   {%- block contrib_popup %}{# Inject contributions popup where needed #}{% endblock %}
 
