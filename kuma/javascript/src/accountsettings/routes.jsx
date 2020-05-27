@@ -6,12 +6,12 @@ import { type PageProps, type PageRoutesParams } from '../base/page.jsx';
 
 import LandingPage from './pages/index.jsx';
 
-export const PREFERENCES_PATHS = {
+export const ACCOUNTSETTINGS_PATHS = {
     MANAGE_EMAIL: 'manage-email',
     SUBSCRIPTION: 'subscription',
 };
 
-export function PreferencesPage(props: PageProps) {
+export function AccountSettingsPage(props: PageProps) {
     const { locale } = props;
     const getPage = () => {
         switch (true) {
@@ -31,7 +31,7 @@ const BASEURL =
         ? window.location.origin
         : 'http://ssr.hack';
 
-export class PreferencesRoutes extends Route<PageRoutesParams, null> {
+export class AccountSettingsRoutes extends Route<PageRoutesParams, null> {
     locale: string;
 
     constructor(locale: string) {
@@ -40,17 +40,17 @@ export class PreferencesRoutes extends Route<PageRoutesParams, null> {
     }
 
     getComponent() {
-        return PreferencesPage;
+        return AccountSettingsPage;
     }
 
     match(url: string): ?PageRoutesParams {
         const currentPath = new URL(url, BASEURL).pathname;
-        const preferencesPath = `/${this.locale}/preferences`;
+        const path = `/${this.locale}/account`;
 
-        if (currentPath.startsWith(preferencesPath)) {
+        if (currentPath.startsWith(path)) {
             return {
                 locale: this.locale,
-                slug: currentPath.substring(preferencesPath.length),
+                slug: currentPath.substring(path.length),
             };
         }
         return null;

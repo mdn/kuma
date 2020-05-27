@@ -503,7 +503,7 @@ INSTALLED_APPS = (
     "django.contrib.staticfiles",
     "soapbox",  # must be before kuma.wiki, or RemovedInDjango19Warning
     # MDN
-    "kuma.preferences.apps.PreferencesConfig",
+    "kuma.accountsettings.apps.AccountSettingsConfig",
     "kuma.payments.apps.PaymentsConfig",
     "kuma.core.apps.CoreConfig",
     "kuma.banners",
@@ -667,13 +667,15 @@ PIPELINE_CSS = {
         "source_filenames": ("styles/minimalist/search-page.scss",),
         "output_filename": "build/styles/react-search.css",
     },
-    "preferences": {
-        "source_filenames": ("styles/minimalist/pages/preferences.scss",),
-        "output_filename": "build/styles/pages-preferences.css",
+    "accountsettings": {
+        "source_filenames": ("styles/minimalist/pages/accountsettings.scss",),
+        "output_filename": "build/styles/pages-accountsettings.css",
     },
-    "preferences-titlebar": {
-        "source_filenames": ("styles/minimalist/components/preferences/titlebar.scss",),
-        "output_filename": "build/styles/preferences-titlebar.css",
+    "accountsettings-titlebar": {
+        "source_filenames": (
+            "styles/minimalist/components/accountsettings/titlebar.scss",
+        ),
+        "output_filename": "build/styles/accountsettings-titlebar.css",
     },
     "mdn": {
         "source_filenames": ("styles/main.scss",),
