@@ -1827,7 +1827,7 @@ ATTACHMENTS_AWS_SECRET_ACCESS_KEY = config(
     "ATTACHMENTS_AWS_SECRET_ACCESS_KEY", default=None
 )
 ATTACHMENTS_AWS_STORAGE_BUCKET_NAME = config(
-    "ATTACHMENTS_AWS_STORAGE_BUCKET_NAME", default="mdn-attachments"
+    "ATTACHMENTS_AWS_STORAGE_BUCKET_NAME", default="media"
 )
 
 ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN = config(
@@ -1884,3 +1884,5 @@ STRIPE_WEBHOOK_HOSTNAME = config("STRIPE_WEBHOOK_HOSTNAME", default=None)
 # into lists of paying and not paying users
 SENDINBLUE_API_KEY = config("SENDINBLUE_API_KEY", default=None)
 SENDINBLUE_LIST_ID = config("SENDINBLUE_LIST_ID", default=None)
+
+SITEMAP_USE_S3 = config("SITEMAP_USE_S3", cast=bool, default=False)

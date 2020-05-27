@@ -1,8 +1,9 @@
 import os
 import re
 from datetime import datetime
-from glob import glob
 from urllib.parse import urlparse
+
+import pytest
 
 from kuma.core.urlresolvers import reverse
 from kuma.users.models import User
@@ -18,21 +19,24 @@ from ..tasks import (
 )
 
 
-def test_sitemaps(tmpdir, settings, doc_hierarchy):
+@pytest.mark.parametrize("storage_mode", ["s3", "media_root"])
+def test_sitemaps(tmpdir, settings, doc_hierarchy, sitemap_storage, storage_mode):
     """
     Test the build of the sitemaps.
     """
     settings.SITE_URL = "https://example.com"
     settings.MEDIA_ROOT = str(tmpdir.mkdir("media"))
+    settings.SITEMAP_USE_S3 = storage_mode == "s3"
 
     build_sitemaps()
 
     loc_re = re.compile(r"<loc>(.+)</loc>")
     lastmod_re = re.compile(r"<lastmod>(.+)</lastmod>")
 
-    sitemap_file_path = os.path.join(settings.MEDIA_ROOT, "sitemap.xml")
-    assert os.path.exists(sitemap_file_path)
-    with open(sitemap_file_path) as file:
+    sitemap_file_path = sitemap_storage.joinpaths("sitemap.xml")
+
+    assert sitemap_storage.exists(sitemap_file_path)
+    with sitemap_storage.open(sitemap_file_path, "r") as file:
         actual_index_locs = loc_re.findall(file.read())
 
     # Check for duplicates.
@@ -48,9 +52,9 @@ def test_sitemaps(tmpdir, settings, doc_hierarchy):
         for name in names:
             sitemap_path = os.path.join("sitemaps", locale, name)
             expected_index_locs.add(absolutify(sitemap_path))
-            sitemap_file_path = os.path.join(settings.MEDIA_ROOT, sitemap_path)
-            assert os.path.exists(sitemap_file_path)
-            with open(sitemap_file_path) as file:
+            sitemap_file_path = sitemap_storage.joinpaths(sitemap_path)
+            assert sitemap_storage.exists(sitemap_file_path)
+            with sitemap_storage.open(sitemap_file_path, "r") as file:
                 sitemap = file.read()
                 actual_locs.extend(loc_re.findall(sitemap))
                 actual_lastmods.extend(lastmod_re.findall(sitemap))
@@ -70,7 +74,10 @@ def test_sitemaps(tmpdir, settings, doc_hierarchy):
     assert set(actual_index_locs) == expected_index_locs
 
 
-def test_sitemaps_excluded_documents(tmpdir, settings, wiki_user):
+@pytest.mark.parametrize("storage_mode", ["s3", "media_root"])
+def test_sitemaps_excluded_documents(
+    tmpdir, settings, wiki_user, sitemap_storage, storage_mode
+):
     """
     Test the build of the sitemaps.
     """
@@ -82,6 +89,7 @@ def test_sitemaps_excluded_documents(tmpdir, settings, wiki_user):
         for code, english in settings.LANGUAGES
         if code in ("en-US", "sv-SE")
     ]
+    settings.SITEMAP_USE_S3 = storage_mode == "s3"
 
     top_doc = Document.objects.create(locale="en-US", slug="top", title="Top Document")
     Revision.objects.create(
@@ -141,11 +149,11 @@ def test_sitemaps_excluded_documents(tmpdir, settings, wiki_user):
 
     build_sitemaps()
 
-    sitemaps = glob(os.path.join(settings.MEDIA_ROOT, "**/*.xml"), recursive=True)
+    sitemaps = sitemap_storage.get_all()
 
     all_locs = []
     for sitemap in sitemaps:
-        with open(sitemap) as f:
+        with sitemap_storage.open(sitemap, "r") as f:
             content = f.read()
             matches = re.findall("<loc>(.*?)</loc>", content)
             all_locs.extend(matches)

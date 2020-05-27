@@ -3,6 +3,7 @@ import logging
 import os
 import textwrap
 from datetime import datetime, timedelta
+from glob import glob
 
 from celery import chain, chord, task
 from django.conf import settings
@@ -15,6 +16,7 @@ from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 from lxml import etree
 
+from kuma.attachments.models import AttachmentStorage
 from kuma.core.decorators import skip_in_maintenance_mode
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import chunked, send_mail_retrying
@@ -42,6 +44,64 @@ from .utils import tidy_content
 
 
 log = logging.getLogger("kuma.wiki.tasks")
+
+
+class SitemapStorage:
+    @staticmethod
+    def joinpaths(path, *paths, makedirs=False):
+        if settings.SITEMAP_USE_S3:
+            return os.path.join(path, *paths)
+        result = os.path.join(settings.MEDIA_ROOT, path, *paths)
+        if makedirs:
+            os.makedirs(result, exist_ok=True)
+        return result
+
+    def __init__(self):
+        self.__s3_storage = None
+
+    @property
+    def s3_storage(self):
+        # Lazily create the S3 storage instance.
+        if not self.__s3_storage and settings.SITEMAP_USE_S3:
+            self.__s3_storage = AttachmentStorage(
+                object_parameters={
+                    "CacheControl": "public, max-age=3600",
+                    "ContentType": "application/xml; charset=utf-8",
+                }
+            )
+        return self.__s3_storage
+
+    def open(self, path, mode="r"):
+        if settings.SITEMAP_USE_S3:
+            return self.s3_storage.open(path, mode)
+        return open(path, mode)
+
+    def exists(self, path):
+        if settings.SITEMAP_USE_S3:
+            return self.s3_storage.exists(path)
+        return os.path.exists(path)
+
+    def s3_clear(self):
+        # Convenience function for clean-up of the test S3 bucket. There is
+        # no need for a filesystem equivalent since you should be using
+        # the "tmpdir" fixture for that within tests.
+        if settings.SITEMAP_USE_S3 and (self.s3_storage.bucket.name == "test"):
+            self.s3_storage.bucket.objects.delete()
+
+    def get_all(self):
+        # Convenience function for use in tests that returns a list of all
+        # filenames with an ".xml" extension within the S3 bucket or under
+        # settings.MEDIA_ROOT on the filesystem.
+        if settings.SITEMAP_USE_S3:
+            return [
+                obj.key
+                for obj in self.s3_storage.bucket.objects.all()
+                if obj.key.endswith(".xml")
+            ]
+        return glob(os.path.join(settings.MEDIA_ROOT, "**/*.xml"), recursive=True)
+
+
+sitemap_storage = SitemapStorage()
 
 
 @task(rate_limit="60/m")
@@ -348,9 +408,7 @@ def build_locale_sitemap(locale):
     now = datetime.utcnow()
     timestamp = "%s+00:00" % now.replace(microsecond=0).isoformat()
 
-    directory = os.path.join(settings.MEDIA_ROOT, "sitemaps", locale)
-    if not os.path.isdir(directory):
-        os.makedirs(directory)
+    directory = sitemap_storage.joinpaths("sitemaps", locale, makedirs=True)
 
     # Add any non-document URL's, which will always include the home page.
     other_urls = [
@@ -418,7 +476,7 @@ def build_locale_sitemap(locale):
     for name, urls in make:
         rendered = smart_str(render_to_string("wiki/sitemap.xml", {"urls": urls}))
         path = os.path.join(directory, name)
-        with open(path, "w") as sitemap_file:
+        with sitemap_storage.open(path, "w") as sitemap_file:
             sitemap_file.write(rendered)
 
     return locale, [name for name, _ in make], timestamp
@@ -442,9 +500,9 @@ def build_index_sitemap(results):
 
     sitemap_parts.append(SITEMAP_END)
 
-    index_path = os.path.join(settings.MEDIA_ROOT, "sitemap.xml")
+    index_path = sitemap_storage.joinpaths("sitemap.xml")
     sitemap_tree = etree.fromstringlist(sitemap_parts)
-    with open(index_path, "wb") as index_file:
+    with sitemap_storage.open(index_path, "wb") as index_file:
         sitemap_tree.getroottree().write(
             index_file, encoding="utf-8", pretty_print=True
         )

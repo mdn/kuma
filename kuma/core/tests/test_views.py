@@ -148,20 +148,30 @@ def test_not_possible_to_set_non_locale_cookie(client):
     assert not response.client.cookies.get(settings.LANGUAGE_COOKIE_NAME)
 
 
+@pytest.mark.parametrize("storage_mode", ["s3", "media_root"])
 @pytest.mark.parametrize("method", ["get", "head"])
-def test_sitemap(client, settings, sitemaps, db, method):
+def test_sitemap(client, settings, sitemaps, db, sitemap_storage, method, storage_mode):
     settings.MEDIA_ROOT = sitemaps["tmpdir"].realpath()
+    settings.SITEMAP_USE_S3 = storage_mode == "s3"
+    if settings.SITEMAP_USE_S3:
+        with sitemap_storage.open("sitemap.xml", "w") as sitemap_file:
+            sitemap_file.write(sitemaps["index"])
     response = getattr(client, method)(reverse("sitemap"))
     assert response.status_code == 200
     assert_shared_cache_header(response)
-    assert response["Content-Type"] == "application/xml"
-    if method == "get":
-        assert (
-            "".join([chunk.decode() for chunk in response.streaming_content])
-            == sitemaps["index"]
-        )
+    if settings.SITEMAP_USE_S3:
+        assert response["Content-Type"] == "application/xml; charset=utf-8"
+        if method == "get":
+            assert response.content.decode() == sitemaps["index"]
     else:
-        response.close()  # Discard response body; prevents an unclosed file warning
+        assert response["Content-Type"] == "application/xml"
+        if method == "get":
+            assert (
+                "".join([chunk.decode() for chunk in response.streaming_content])
+                == sitemaps["index"]
+            )
+        else:
+            response.close()  # Discard response body; prevents an unclosed file warning
 
 
 @pytest.mark.parametrize("method", ["post", "put", "delete", "options", "patch"])
@@ -171,22 +181,34 @@ def test_sitemap_405s(client, db, method):
     assert_shared_cache_header(response)
 
 
+@pytest.mark.parametrize("storage_mode", ["s3", "media_root"])
 @pytest.mark.parametrize("method", ["get", "head"])
-def test_sitemaps(client, settings, sitemaps, db, method):
+def test_sitemaps(
+    client, settings, sitemaps, db, sitemap_storage, method, storage_mode
+):
     settings.MEDIA_ROOT = sitemaps["tmpdir"].realpath()
+    settings.SITEMAP_USE_S3 = storage_mode == "s3"
+    if settings.SITEMAP_USE_S3:
+        with sitemap_storage.open("sitemaps/en-US/sitemap.xml", "w") as sitemap_file:
+            sitemap_file.write(sitemaps["locales"]["en-US"])
     response = getattr(client, method)(
         reverse("sitemaps", kwargs={"path": "sitemaps/en-US/sitemap.xml"})
     )
     assert response.status_code == 200
     assert_shared_cache_header(response)
-    assert response["Content-Type"] == "application/xml"
-    if method == "get":
-        assert (
-            "".join([chunk.decode() for chunk in response.streaming_content])
-            == sitemaps["locales"]["en-US"]
-        )
+    if settings.SITEMAP_USE_S3:
+        assert response["Content-Type"] == "application/xml; charset=utf-8"
+        if method == "get":
+            assert response.content.decode() == sitemaps["locales"]["en-US"]
     else:
-        response.close()  # Discard response body; prevents an unclosed file warning
+        assert response["Content-Type"] == "application/xml"
+        if method == "get":
+            assert (
+                "".join([chunk.decode() for chunk in response.streaming_content])
+                == sitemaps["locales"]["en-US"]
+            )
+        else:
+            response.close()  # Discard response body; prevents an unclosed file warning
 
 
 @pytest.mark.parametrize("method", ["post", "put", "delete", "options", "patch"])

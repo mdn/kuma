@@ -12,6 +12,7 @@ from waffle.testutils import override_flag
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.constants import REDIRECT_CONTENT
 from kuma.wiki.models import Document, Revision
+from kuma.wiki.tasks import sitemap_storage as real_sitemap_storage
 
 
 @pytest.fixture(autouse=True)
@@ -235,3 +236,12 @@ def redirect_doc(wiki_user, root_doc):
 def mock_requests():
     with requests_mock.Mocker() as mocker:
         yield mocker
+
+
+@pytest.fixture
+def sitemap_storage(settings):
+    """A well-behaved sitemap_storage that cleans-up before and after itself."""
+    settings.ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN = "localhost:9000/test"
+    real_sitemap_storage.s3_clear()
+    yield real_sitemap_storage
+    real_sitemap_storage.s3_clear()
