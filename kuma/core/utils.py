@@ -599,6 +599,7 @@ class EmailMultiAlternativesRetrying(EmailMultiAlternatives):
             "retry_exceptions": (SMTPServerDisconnected,),
             # The default in redo is 60 seconds. Let's tone that down.
             "sleeptime": 3,
+            "attempts": 10,
         }
 
         parent_method = super(EmailMultiAlternativesRetrying, self).send
