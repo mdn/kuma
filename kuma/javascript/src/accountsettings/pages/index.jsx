@@ -30,7 +30,7 @@ export default function LandingPage({ locale }: Props) {
             {userData && !userData.isAuthenticated && (
                 <p className="signin-required">
                     {gettext(
-                        'You need to be signed in to access user preferences. '
+                        'You need to be signed in to access account settings. '
                     )}
                     <SignInLink />
                 </p>
