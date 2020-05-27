@@ -5,7 +5,6 @@ from django.shortcuts import render
 from django.urls import include, re_path, reverse_lazy
 from django.views.decorators.cache import never_cache
 from django.views.generic import RedirectView
-from django.views.static import serve
 
 from kuma.attachments import views as attachment_views
 from kuma.core import views as core_views
@@ -148,15 +147,6 @@ urlpatterns += [
     # We use our own views for setting language in cookies. But to just align with django, set it like this.
     re_path(r"^i18n/setlang/", core_views.set_language, name="set-language-cookie"),
 ]
-
-if settings.SERVE_LEGACY and settings.LEGACY_ROOT:
-    urlpatterns.append(
-        re_path(
-            r"^(?P<path>(diagrams|presentations|samples)/.+)$",
-            shared_cache_control(s_maxage=MONTH)(serve),
-            {"document_root": settings.LEGACY_ROOT},
-        )
-    )
 
 if getattr(settings, "DEBUG_TOOLBAR_INSTALLED", False):
     import debug_toolbar

@@ -517,6 +517,13 @@ MOZILLADEMOS_URLS = list(
     )
 )
 
+# These are the remaining "samples/*" URL's, the ones that haven't been redirected
+# by any of the special cases, which we expect to be redirected to the media CDN.
+DEFAULT_SAMPLES_URLS = [
+    url_test("/samples/cssref/background.html", status_code=302,),
+    url_test("/samples/html/progress.html", status_code=302,),
+]
+
 # Converted from SCL3 Apache files - MindTouch / old hosted files
 LEGACY_URLS = list(
     flatten(

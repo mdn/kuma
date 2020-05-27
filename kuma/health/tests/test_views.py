@@ -112,6 +112,7 @@ def test_status(client, settings, mock_status_externals):
         "ALLOWED_HOSTS": ["*"],
         "ATTACHMENT_HOST": "demos:8000",
         "ATTACHMENT_ORIGIN": "demos:8000",
+        "ATTACHMENTS_AWS_S3_CUSTOM_URL": "https://media.prod.mdn.mozit.cloud",
         "DEBUG": False,
         "INTERACTIVE_EXAMPLES_BASE": "https://interactive-examples.mdn.mozilla.net",
         "MAINTENANCE_MODE": False,

@@ -119,3 +119,8 @@ def site_url(kuma_status):
 @pytest.fixture(scope="session")
 def wiki_site_url(kuma_status):
     return kuma_status["settings"]["WIKI_SITE_URL"]
+
+
+@pytest.fixture(scope="session")
+def media_url(kuma_status):
+    return kuma_status["settings"]["ATTACHMENTS_AWS_S3_CUSTOM_URL"]

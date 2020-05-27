@@ -82,6 +82,7 @@ def status(request):
             "ALLOWED_HOSTS": settings.ALLOWED_HOSTS,
             "ATTACHMENT_HOST": settings.ATTACHMENT_HOST,
             "ATTACHMENT_ORIGIN": settings.ATTACHMENT_ORIGIN,
+            "ATTACHMENTS_AWS_S3_CUSTOM_URL": settings.ATTACHMENTS_AWS_S3_CUSTOM_URL,
             "DEBUG": settings.DEBUG,
             "INTERACTIVE_EXAMPLES_BASE": settings.INTERACTIVE_EXAMPLES_BASE,
             "MAINTENANCE_MODE": settings.MAINTENANCE_MODE,
