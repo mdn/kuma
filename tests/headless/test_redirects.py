@@ -57,9 +57,6 @@ def test_default_samples_redirects(url, base_url, media_url):
     url["base_url"] = base_url
     url["location"] = f"{media_url}{url['url']}"
     assert_valid_url(**url)
-    print(url["url"])
-    print(url["location"])
-    assert False
 
 
 @pytest.mark.headless
