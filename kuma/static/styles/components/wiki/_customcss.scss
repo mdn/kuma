@@ -10,7 +10,7 @@ In a perfect world we go through the contents of this file and integrate it with
 eventually emptying this file.
 
 ********************************************************************** */
-
+@import '../../minimalist/vars/vars-color-palette.scss';
 
 .prevnext {
     @include restrict-line-length();

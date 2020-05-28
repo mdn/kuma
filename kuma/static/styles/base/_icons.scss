@@ -59,6 +59,14 @@ label #{$selector-icon}:first-child {
 
 /* icons used by PreviousMenuNext macro */
 .prevnext {
+    $arrow-icon-width: 20px;
+
+    // svg has 5px of whitespace around the arrow, so we have to offset the
+    // arrow's position to get the content truly centered within the button
+    $arrow-icon-offset: 5px;
+
+    // spacing between text and arrow
+    $arrow-icon-spacing: 5px;
     .icon-arrow-left {
         @include set-icon('../arrows/arrow-left.svg');
         vertical-align: sub;
