@@ -10,10 +10,52 @@ In a perfect world we go through the contents of this file and integrate it with
 eventually emptying this file.
 
 ********************************************************************** */
-
+@import '../../minimalist/vars/vars-color-palette.scss';
+@import '../../minimalist/utils/utility-mixins.scss';
 
 .prevnext {
     @include restrict-line-length();
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 50px;
+
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: scale-color($brand-grey, $lightness: 70%);
+        border-radius: 4px;
+        box-shadow: inset 0 -1px $light-border-color;
+        color: $text-color;
+        padding: 10px 15px;
+
+        &:active,
+        &:hover {
+            background: scale-color($brand-grey, $lightness: 50%);
+            color: $text-color;
+            text-decoration: none;
+        }
+
+        .label {
+            @include visually-hidden();
+        }
+
+        i {
+            pointer-events: none;
+        }
+
+        @media #{$mq-tablet-and-up} {
+            justify-content: space-between;
+            padding-top: 5px;
+            padding-bottom: 5px;
+
+            .label {
+                @include reset-visually-hidden();
+                padding: 0;
+            }
+        }
+    }
 }
 
 /* Used for footnotes in {{PricePointTable}}

@@ -19,9 +19,6 @@ label #{$selector-icon}:first-child {
 }
 
 .icon-arrow,
-.icon-arrow-up,
-.icon-arrow-right,
-.icon-arrow-left,
 .icon-book,
 .icon-caret-down,
 .icon-caret-right,
@@ -59,19 +56,34 @@ label #{$selector-icon}:first-child {
 
 /* icons used by PreviousMenuNext macro */
 .prevnext {
+    $arrow-icon-width: 20px;
+
+    // SVG icon has 4px of whitespace around the arrow, so we have to offset the
+    // arrow's position to get the content truly centered within the button
+    $arrow-icon-offset: -4px;
+
+    // spacing between text and arrow
+    $arrow-icon-spacing: 5px;
+
     .icon-arrow-left {
-        @include set-icon('../arrows/arrow-left.svg');
-        vertical-align: sub;
+        @include set-icon('../arrows/arrow-left.svg', $arrow-icon-width);
+        @include bidi(((transform, none, scaleX(-1)),));
+        @media #{$mq-tablet-and-up} {
+            @include bidi(((margin, 0 $arrow-icon-spacing 0 $arrow-icon-offset, 0 $arrow-icon-offset 0 $arrow-icon-spacing),));
+        }
     }
 
     .icon-arrow-up {
-        @include set-icon('../arrows/arrow-up.svg');
-        vertical-align: sub;
+        @include set-icon('../arrows/arrow-up.svg', $arrow-icon-width);
+        @include bidi(((margin, 0 $arrow-icon-spacing 0 $arrow-icon-offset, 0 $arrow-icon-offset 0 $arrow-icon-spacing),));
     }
 
     .icon-arrow-right {
-        @include set-icon('../arrows/arrow-right.svg');
-        vertical-align: sub;
+        @include set-icon('../arrows/arrow-right.svg', $arrow-icon-width);
+        @include bidi(((transform, none, scaleX(-1)),));
+        @media #{$mq-tablet-and-up} {
+            @include bidi(((margin, 0 $arrow-icon-offset 0 $arrow-icon-spacing, 0 $arrow-icon-spacing 0 $arrow-icon-offset),));
+        }
     }
 }
 
