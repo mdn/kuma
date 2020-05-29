@@ -1885,4 +1885,4 @@ STRIPE_WEBHOOK_HOSTNAME = config("STRIPE_WEBHOOK_HOSTNAME", default=None)
 SENDINBLUE_API_KEY = config("SENDINBLUE_API_KEY", default=None)
 SENDINBLUE_LIST_ID = config("SENDINBLUE_LIST_ID", default=None)
 
-SITEMAP_USE_S3 = config("SITEMAP_USE_S3", cast=bool, default=False)
+SITEMAP_USE_S3 = config("SITEMAP_USE_S3", cast=bool, default=True)
