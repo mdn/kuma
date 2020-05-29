@@ -51,7 +51,7 @@ const TermsPage = () => (
                     >
                         Privacy Policy
                     </a>
-                    Google also has its own{' '}
+                    . Google also has its own{' '}
                     <a
                         href="https://policies.google.com/terms"
                         target="_blank"
