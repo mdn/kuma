@@ -37,10 +37,3 @@
         }
     }
 }
-
-/* right to left */
-html[dir='rtl'] #home {
-    .icon-arrow-right:before {
-        content: '\f060';
-    }
-}
