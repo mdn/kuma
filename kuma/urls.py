@@ -22,7 +22,7 @@ from kuma.search.urls import (
     lang_urlpatterns as search_lang_urlpatterns,
 )
 from kuma.users.urls import lang_urlpatterns as users_lang_urlpatterns
-from kuma.views import serve_from_media_root
+from kuma.views import serve_sitemap
 from kuma.wiki.admin import purge_view
 from kuma.wiki.urls import lang_urlpatterns as wiki_lang_urlpatterns
 from kuma.wiki.views.document import as_json as document_as_json
@@ -139,10 +139,8 @@ urlpatterns += [
     re_path("^api/", include("kuma.api.urls")),
     re_path("", include("kuma.version.urls")),
     # Serve sitemap files.
-    re_path(
-        r"^sitemap.xml$", serve_from_media_root, {"path": "sitemap.xml"}, name="sitemap"
-    ),
-    re_path(r"^(?P<path>sitemaps/.+)$", serve_from_media_root, name="sitemaps"),
+    re_path(r"^sitemap.xml$", serve_sitemap, {"path": "sitemap.xml"}, name="sitemap"),
+    re_path(r"^(?P<path>sitemaps/.+)$", serve_sitemap, name="sitemaps"),
     re_path(r"^humans.txt$", core_views.humans_txt, name="humans_txt"),
     re_path(
         r"^miel$",

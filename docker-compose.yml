@@ -21,7 +21,7 @@ services:
       - ATTACHMENTS_USE_S3=${ATTACHMENTS_USE_S3:-True}
       - ATTACHMENTS_AWS_ACCESS_KEY_ID=${ATTACHMENTS_AWS_ACCESS_KEY_ID:-minio}
       - ATTACHMENTS_AWS_SECRET_ACCESS_KEY=${ATTACHMENTS_AWS_SECRET_ACCESS_KEY:-minio123}
-      - ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN=${ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN:-localhost:9000/mdn-attachments}
+      - ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN=${ATTACHMENTS_AWS_S3_CUSTOM_DOMAIN:-localhost:9000/media}
       - ATTACHMENTS_AWS_S3_SECURE_URLS=${ATTACHMENTS_AWS_S3_SECURE_URLS:-False}
       - ATTACHMENTS_AWS_S3_ENDPOINT_URL=${ATTACHMENTS_AWS_S3_ENDPOINT_URL:-http://minio:9000}
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
@@ -41,6 +41,7 @@ services:
       - PROTOCOL=http://
       - SESSION_COOKIE_SECURE=False
       - SITE_URL=${SITE_URL:-http://localhost:8000}
+      - SITEMAP_USE_S3=${SITEMAP_USE_S3:-True}
       - STATIC_URL=${STATIC_URL:-http://localhost:8000/static/}
       - WAFFLE_COOKIE_SECURE=False
       # Other environment overrides
@@ -144,7 +145,7 @@ services:
     environment:
       MC_HOST_minio: "http://${MINIO_ACCESS_KEY:-minio}:${MINIO_SECRET_KEY:-minio123}@minio:9000"
     entrypoint: ""
-    command: /bin/sh -c "for BUCKET in 'test' 'mdn-attachments'; do mc mb -p minio/$$BUCKET && mc policy set download minio/$$BUCKET; done"
+    command: /bin/sh -c "for BUCKET in 'test' 'media'; do mc mb -p minio/$$BUCKET && mc policy set download minio/$$BUCKET; done"
 
   mockga:
     build:
