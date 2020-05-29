@@ -2,14 +2,8 @@
 import * as React from 'react';
 import SubHeader from '../components/subheaders/index.jsx';
 
-type Props = {
-    data: {
-        contributionSupportEmail: string,
-    },
-};
-
 export const title = 'Payment Terms';
-const TermsPage = ({ data: { contributionSupportEmail } }: Props) => (
+const TermsPage = () => (
     <>
         <SubHeader title={title} />
         <main
@@ -36,8 +30,8 @@ const TermsPage = ({ data: { contributionSupportEmail } }: Props) => (
 
                 <h2>Payment Authorization</h2>
                 <p>
-                    You can support MDN with monthly payments. Your payments are not
-                    tax deductible.
+                    You can support MDN with monthly payments. Your payments are
+                    not tax deductible.
                 </p>
                 <p>
                     In order to sign up for monthly payments, you must sign in
@@ -77,13 +71,13 @@ const TermsPage = ({ data: { contributionSupportEmail } }: Props) => (
                 </p>
                 <p>
                     When you choose to support MDN, you authorize us to charge
-                    the payment card you provide for the amount you choose,
-                    as a recurring monthly payment until you cancel.
+                    the payment card you provide for the amount you choose, as a
+                    recurring monthly payment until you cancel.
                 </p>
                 <h2>Cancellation</h2>
                 <p>
                     If you sign up for monthly payments, you may cancel at any
-                    time from your account settings. If you choose to cancel, we 
+                    time from your account settings. If you choose to cancel, we
                     will not charge your payment card for subsequent months.
                 </p>
                 <h2>Privacy Notice</h2>
@@ -100,11 +94,12 @@ const TermsPage = ({ data: { contributionSupportEmail } }: Props) => (
                 </p>
                 <p>
                     Mozilla receives a record of your payment, information about
-                    how much you’ve decided to pay. Mozilla does not receive your 
-                    payment details. If you sign up for an MDN account, Mozilla also
-                    receives the information you include in your account, as
-                    well as your email address and profile information from your GitHub or Google login. When
-                    Mozilla receives information from you, our{' '}
+                    how much you’ve decided to pay. Mozilla does not receive
+                    your payment details. If you sign up for an MDN account,
+                    Mozilla also receives the information you include in your
+                    account, as well as your email address and profile
+                    information from your GitHub or Google login. When Mozilla
+                    receives information from you, our{' '}
                     <a
                         href="https://www.mozilla.org/en-US/privacy/websites/"
                         target="_blank"
