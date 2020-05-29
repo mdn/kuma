@@ -2,14 +2,8 @@
 import * as React from 'react';
 import SubHeader from '../components/subheaders/index.jsx';
 
-type Props = {
-    data: {
-        contributionSupportEmail: string,
-    },
-};
-
 export const title = 'Payment Terms';
-const TermsPage = ({ data: { contributionSupportEmail } }: Props) => (
+const TermsPage = () => (
     <>
         <SubHeader title={title} />
         <main
@@ -36,13 +30,12 @@ const TermsPage = ({ data: { contributionSupportEmail } }: Props) => (
 
                 <h2>Payment Authorization</h2>
                 <p>
-                    You can support MDN with a one-time payment, or you can
-                    choose to schedule monthly payments. Your payments are not
-                    tax deductible.
+                    You can support MDN with monthly payments. Your payments are
+                    not tax deductible.
                 </p>
                 <p>
                     In order to sign up for monthly payments, you must sign in
-                    to MDN using a GitHub account. GitHub has its own{' '}
+                    to MDN using a GitHub or Google account. GitHub has its own{' '}
                     <a
                         href="https://help.github.com/articles/github-terms-of-service/"
                         target="_blank"
@@ -58,27 +51,34 @@ const TermsPage = ({ data: { contributionSupportEmail } }: Props) => (
                     >
                         Privacy Policy
                     </a>
+                    . Google also has its own{' '}
+                    <a
+                        href="https://policies.google.com/terms"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Terms
+                    </a>{' '}
+                    and{' '}
+                    <a
+                        href="https://policies.google.com/privacy"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Privacy Policy
+                    </a>
                     .
                 </p>
                 <p>
                     When you choose to support MDN, you authorize us to charge
-                    the payment card you provide for the amount you choose,
-                    either as a one-time payment, or as a recurring monthly
-                    payment.
+                    the payment card you provide for the amount you choose, as a
+                    recurring monthly payment until you cancel.
                 </p>
                 <h2>Cancellation</h2>
                 <p>
                     If you sign up for monthly payments, you may cancel at any
-                    time by sending an email to{' '}
-                    <a
-                        href={`mailto:${contributionSupportEmail}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {contributionSupportEmail}
-                    </a>
-                    . If you choose to cancel, we will not charge your payment
-                    card for subsequent months.
+                    time from your account settings. If you choose to cancel, we
+                    will not charge your payment card for subsequent months.
                 </p>
                 <h2>Privacy Notice</h2>
                 <p>
@@ -94,12 +94,12 @@ const TermsPage = ({ data: { contributionSupportEmail } }: Props) => (
                 </p>
                 <p>
                     Mozilla receives a record of your payment, information about
-                    how much you’ve decided to pay, and whether you’ve set up
-                    monthly payments. Mozilla does not receive your payment
-                    details. If you sign up for an MDN account, Mozilla also
-                    receives the information you include in your account, as
-                    well as your email address from your GitHub login. When
-                    Mozilla receives information from you, our{' '}
+                    how much you’ve decided to pay. Mozilla does not receive
+                    your payment details. If you sign up for an MDN account,
+                    Mozilla also receives the information you include in your
+                    account, as well as your email address and profile
+                    information from your GitHub or Google login. When Mozilla
+                    receives information from you, our{' '}
                     <a
                         href="https://www.mozilla.org/en-US/privacy/websites/"
                         target="_blank"

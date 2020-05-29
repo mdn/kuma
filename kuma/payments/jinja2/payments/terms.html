@@ -14,9 +14,7 @@
 {% endblock %}
 
 {% block document_head %}
-    {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), {
-        "contributionSupportEmail": settings.CONTRIBUTION_SUPPORT_EMAIL,
-     })|safe }}
+    {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), True)|safe }}
 {% endblock %}
 
 {% block content %}

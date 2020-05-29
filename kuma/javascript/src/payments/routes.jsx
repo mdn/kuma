@@ -22,7 +22,7 @@ export function PaymentPage(props: PageProps) {
             case slug.includes(PAYMENT_PATHS.MANAGEMENT):
                 return <ManagementPage locale={locale} />;
             case slug.includes(PAYMENT_PATHS.TERMS):
-                return <TermsPage data={data} />;
+                return <TermsPage />;
             case slug.includes(PAYMENT_PATHS.THANK_YOU):
                 return <ThankYouPage locale={locale} />;
             default:
