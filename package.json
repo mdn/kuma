@@ -92,7 +92,7 @@
         "stylelint": "^13.5.0",
         "supertest": "^4.0.2",
         "svgo": "1.2.2",
-        "uglify-js": "2.8.29",
+        "uglify-js": "3.9.4",
         "webpack": "^4.43.0",
         "webpack-bundle-analyzer": "3.7.0",
         "webpack-cli": "^3.2.3",
