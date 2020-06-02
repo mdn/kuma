@@ -24,15 +24,18 @@ class IsStripeCustomer(admin.SimpleListFilter):
 
     def lookups(self, request, model_admin):
         return (
-            (True, "Yes"),
-            (False, "No"),
+            ("yes", "Yes"),
+            ("no", "No"),
         )
 
     def queryset(self, request, queryset):
-        if self.value():
+        value = self.value()
+        if value == "yes":
             return queryset.exclude(stripe_customer_id="")
-        else:
+        elif value == "no":
             return queryset.filter(stripe_customer_id="")
+        else:
+            return queryset
 
 
 @admin.register(User)
