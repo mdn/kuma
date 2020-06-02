@@ -37,6 +37,7 @@ export default function Login(): React.Node {
             </>
         );
         let viewProfileLink = `/${locale}/profiles/${userData.username}`;
+        let contributionsLink = `/${locale}/dashboards/revisions?user=${userData.username}`;
         let editProfileLink = `${viewProfileLink}/edit`;
 
         return (
@@ -47,6 +48,11 @@ export default function Login(): React.Node {
                     right={true}
                     hideArrow={true}
                 >
+                    <li>
+                        <a href={contributionsLink}>
+                            {gettext('Contributions')}
+                        </a>
+                    </li>
                     <li>
                         <a href={viewProfileLink}>{gettext('View profile')}</a>
                     </li>
