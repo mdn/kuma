@@ -33,6 +33,13 @@ exports[`Login component when user is logged in 1`] = `
     >
       <li>
         <a
+          href="/en-US/dashboards/revisions?user=test-username"
+        >
+          Contributions
+        </a>
+      </li>
+      <li>
+        <a
           href="/en-US/profiles/test-username"
         >
           View profile
