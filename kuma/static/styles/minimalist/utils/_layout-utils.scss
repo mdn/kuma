@@ -1,0 +1,17 @@
+.girdle {
+    margin: 0 auto;
+    max-width: 1400px;
+}
+
+.account-girdle {
+    margin: 0 auto;
+    max-width: 360px;
+
+    @media #{$mq-tablet-and-up} {
+        max-width: 700px;
+    }
+
+    @media #{$mq-large-desktop-and-up} {
+        max-width: 1000px;
+    }
+}

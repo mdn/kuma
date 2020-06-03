@@ -674,6 +674,12 @@ PIPELINE_CSS = {
         ),
         "output_filename": "build/styles/accountsettings-titlebar.css",
     },
+    "accountsettings-user-details": {
+        "source_filenames": (
+            "styles/minimalist/components/accountsettings/user-details.scss",
+        ),
+        "output_filename": "build/styles/accountsettings-user-details.css",
+    },
     "mdn": {
         "source_filenames": ("styles/main.scss",),
         "output_filename": "build/styles/mdn.css",

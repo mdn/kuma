@@ -1,0 +1,18 @@
+@import '../../vars/vars-media-queries';
+
+.user-details {
+    margin-bottom: 40px;
+    padding: 0 20px 40px;
+
+    input[type='text'] {
+        width: 90%;
+    }
+
+    select {
+        width: 95%;
+    }
+
+    .cta {
+        min-width: 100px;
+    }
+}

@@ -12,11 +12,11 @@ export const ACCOUNTSETTINGS_PATHS = {
 };
 
 export function AccountSettingsPage(props: PageProps) {
-    const { locale } = props;
+    const { data, locale } = props;
     const getPage = () => {
         switch (true) {
             default:
-                return <LandingPage locale={locale} />;
+                return <LandingPage data={data} locale={locale} />;
         }
     };
 
