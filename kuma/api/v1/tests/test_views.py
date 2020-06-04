@@ -109,6 +109,8 @@ def test_whoami(
             "samples": {"sample_always": True},
         },
         "email": "wiki_user@example.com",
+        # TODO Remove this once we're off the Wiki.
+        "wiki_contributions": 0,
     }
     if is_staff:
         expect["is_staff"] = True

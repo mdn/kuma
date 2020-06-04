@@ -78,6 +78,10 @@ def whoami(request):
             data["is_superuser"] = True
         if user.is_beta_tester:
             data["is_beta_tester"] = True
+
+        # This is rather temporary field. Once we're off the Wiki and into Yari
+        # this no longer makes sense to keep.
+        data["wiki_contributions"] = user.created_revisions.count()
     else:
         data = {}
 
