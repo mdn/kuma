@@ -994,6 +994,45 @@ def test_annotate_links_external_link():
     assert normalize_html(actual_raw) == expected
 
 
+@pytest.mark.parametrize(
+    "code",
+    (
+        # Simple existing class value
+        [
+            '<pre class="syntaxbox">h1 { color:brown }</pre>',
+            '<pre class="syntaxbox notranslate">h1 { color:brown }</pre>',
+        ],
+        # No class attribute at all
+        [
+            "<pre>h1 { color:pink }</pre>",
+            '<pre class="notranslate">h1 { color:pink }</pre>',
+        ],
+        # 'notranslate' already set
+        [
+            '<pre class="notranslate brush:js">h1 { color:brown }</pre>',
+            # Note, no difference!
+            '<pre class="notranslate brush:js">h1 { color:brown }</pre>',
+        ],
+        [
+            '<pre class="NOTranslate">h1 { color:brown }</pre>',
+            '<pre class="NOTranslate notranslate">h1 { color:brown }</pre>',
+        ],
+        # Present as a string but not really right
+        [
+            '<pre class="syntaxbox">h1 { color:brown }</pre>',
+            '<pre class="syntaxbox notranslate">h1 { color:brown }</pre>',
+        ],
+    ),
+    ids=("simple", "empty", "already", "already-case-insensitive", "tricky"),
+)
+def test_annotate_pre_tags(code):
+    """pre tags should get a 'notranslate' class added"""
+    html, expected_html = code
+    actual_raw = parse(html).annotatePreTags().serialize()
+    expected = normalize_html(expected_html)
+    assert normalize_html(actual_raw) == expected
+
+
 class FilterEditorSafetyTests(TestCase):
     def test_editor_safety_filter(self):
         """Markup that's hazardous for editing should be stripped"""
