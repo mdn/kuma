@@ -1015,7 +1015,7 @@ def test_annotate_links_external_link():
         ],
         [
             '<pre class="NOTranslate">h1 { color:brown }</pre>',
-            '<pre class="NOTranslate">h1 { color:brown }</pre>',
+            '<pre class="NOTranslate notranslate">h1 { color:brown }</pre>',
         ],
         # Present as a string but not really right
         [
