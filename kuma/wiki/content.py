@@ -576,7 +576,7 @@ class PreNotranslateClassFilter(html5lib_Filter):
             if token["type"] == "StartTag" and token["name"] == "pre":
                 attrs = dict(token["data"]) or {(None, "class"): ""}
                 for (namespace, name), value in attrs.copy().items():
-                    if name == "class" and "notranslate" not in value.lower().split():
+                    if name == "class" and "notranslate" not in value.split():
                         before = attrs.get((namespace, "class")) or ""
                         after = f"{before} notranslate".strip()
                         attrs[(namespace, "class")] = after
