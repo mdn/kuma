@@ -22,7 +22,7 @@
         flex-direction: row;
         align-items: center;
         color: $text-color;
-        padding-left: 5px;
+        padding: 0 5px;
         border: none;
         white-space: nowrap;
         font-size: $tiny-font-size;
@@ -83,16 +83,12 @@
         }
     }
 
-    /* The dropdown for the language menu is
-       positioned absolutely across all devices */
-    &.language-menu {
-        .dropdown-menu-items {
-            position: absolute;
-            border: $menu-border;
-            border-radius: $menu-border-radius;
-            box-shadow: $menu-box-shadow;
-            z-index: $menu-zindex;
-        }
+    .dropdown-menu-items {
+        position: absolute;
+        border: $menu-border;
+        border-radius: $menu-border-radius;
+        box-shadow: $menu-box-shadow;
+        z-index: $menu-zindex;
     }
 
     .dropdown-arrow-down {

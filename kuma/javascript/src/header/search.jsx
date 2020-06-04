@@ -65,8 +65,12 @@ export default function Search({ initialQuery }: Props) {
                 />
             </form>
             <button className="toggle-form" onClick={handleClick}>
-                <CloseIcon className="close-icon" />
-                <SearchIcon className="search-icon" />
+                <CloseIcon
+                    className={showForm ? 'close-icon' : 'close-icon hide'}
+                />
+                <SearchIcon
+                    className={showForm ? 'search-icon hidden' : 'search-icon'}
+                />
                 <span>
                     {showForm
                         ? gettext('Close search')

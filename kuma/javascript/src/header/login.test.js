@@ -43,12 +43,11 @@ test('Login component when user is logged in', () => {
     // Expect a Dropdown element
     let root = login.root;
     let dropdown = root.findByType(Dropdown);
-    let dropDownLabelProps = dropdown.props.label.props.children[0].props;
+
     expect(dropdown).toBeDefined();
 
-    // Whose label prop is an image with the expected src and alt attributes
-    expect(dropDownLabelProps.src).toContain('test-url');
-    expect(dropDownLabelProps.alt).toEqual('test-username');
+    // Whose label prop is an image with the expected src
+    expect(dropdown.props.label.props.src).toContain('test-url');
 
     let string = JSON.stringify(login.toJSON());
     expect(string).toContain('View profile');

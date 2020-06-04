@@ -20,11 +20,6 @@ exports[`Login component when user is logged in 1`] = `
         className="avatar"
         src="test-url"
       />
-      <span
-        className="username"
-      >
-        test-username
-      </span>
     </button>
     <ul
       aria-expanded={false}

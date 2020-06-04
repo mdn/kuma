@@ -5,14 +5,15 @@
     $icon-size: 24px;
     box-sizing: border-box;
     position: absolute;
-    top: -$mobile-search-height;
-    right: 0;
+    top: -58px;
+    right: 75px;
     width: 100vw;
     height: $mobile-search-height;
 
     @media #{$mq-tablet-and-up} {
         position: inherit;
         top: inherit;
+        right: inherit;
         justify-self: end;
         width: inherit;
         height: 40px;
@@ -33,8 +34,8 @@
         box-sizing: border-box;
         position: relative;
         padding: 0 20px;
-        transition: transform 0.2s ease-in;
-        width: calc(100% - #{$mobile-search-height});
+        transition: transform 0.1s ease-in;
+        width: 100%;
 
         @media #{$mq-tablet-and-up} {
             @include reset-visually-hidden();
@@ -80,7 +81,7 @@
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        width: $mobile-search-height;
+        width: ($mobile-search-height - 20);
         top: $mobile-search-height;
         right: 0;
 
@@ -94,7 +95,7 @@
 
         .search-icon,
         .close-icon {
-            transition: transform 0.2s ease-in;
+            transition: transform 0.1s ease-in;
             width: $icon-size;
             height: $icon-size;
             position: absolute;
@@ -107,6 +108,7 @@
 
     &.show-form {
         position: fixed;
+        right: 0;
         z-index: 1;
 
         @media #{$mq-tablet-and-up} {
@@ -127,10 +129,6 @@
 
             .close-icon {
                 transform: translateY(0);
-            }
-
-            .search-icon {
-                transform: translateY($mobile-search-height);
             }
         }
     }
