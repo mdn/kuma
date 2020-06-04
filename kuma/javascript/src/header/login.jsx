@@ -37,7 +37,9 @@ export default function Login(): React.Node {
             </>
         );
         let viewProfileLink = `/${locale}/profiles/${userData.username}`;
-        let contributionsLink = `/${locale}/dashboards/revisions?user=${userData.username}`;
+        let contributionsLink = `/${locale}/dashboards/revisions?user=${encodeURIComponent(
+            userData.username
+        )}`;
         let editProfileLink = `${viewProfileLink}/edit`;
 
         return (
