@@ -1013,7 +1013,17 @@ def test_annotate_links_external_link():
             # Note, no difference!
             '<pre class="notranslate brush:js">h1 { color:brown }</pre>',
         ],
+        [
+            '<pre class="NOTranslate">h1 { color:brown }</pre>',
+            '<pre class="NOTranslate">h1 { color:brown }</pre>',
+        ],
+        # Present as a string but not really right
+        [
+            '<pre class="syntaxbox">h1 { color:brown }</pre>',
+            '<pre class="syntaxbox notranslate">h1 { color:brown }</pre>',
+        ],
     ),
+    ids=("simple", "empty", "already", "already-case-insensitive", "tricky"),
 )
 def test_annotate_pre_tags(code):
     """pre tags should get a 'notranslate' class added"""
