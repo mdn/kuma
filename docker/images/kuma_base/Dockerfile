@@ -35,7 +35,7 @@ RUN set -x \
     && rm -rf /var/lib/apt/lists/*
 
 # ----------------------------------------------------------------------------
-# add node.js 10.x, copied from:
+# add node.js 12.x, copied from:
 #     https://github.com/nodejs/docker-node/blob/master/12/stretch/Dockerfile
 # but with:
 #  The NODE_VERSION environment variable is set above
@@ -45,7 +45,7 @@ RUN set -x \
 RUN groupadd --gid 1001 node \
   && useradd --uid 1001 --gid node --shell /bin/bash --create-home node
 
-ENV NODE_VERSION 12.16.3
+ENV NODE_VERSION 12.17.0
 
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \

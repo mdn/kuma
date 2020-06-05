@@ -359,7 +359,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
             " specifies the type of rendering box used for an element.</p>\n"
             "<p>{{cssinfo}}</p>\n"
             '<h2 id="Syntax">Syntax</h2>\n'
-            '<pre class="brush:css">'
+            '<pre class="brush:css notranslate">'
             "display: none;\n"
             "</pre>"
         ),
@@ -377,7 +377,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
             "<p>{{cssinfo}} and my changes.</p>\n"
             '<h2 id="Syntax">Syntax</h2>\n'
             '<p><a href="http://spam.example.com">Buy my product!</a></p>\n'
-            '<pre class="brush:css">display: none;</pre>\n'
+            '<pre class="brush:css notranslate">display: none;</pre>\n'
         ),
         "comment": "Comment",
         "days": "0",
@@ -447,7 +447,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
         expected_content = (
             "<p>{{cssinfo}} and my changes.</p>\n"
             '<p><a href="http://spam.example.com">Buy my product!</a></p>\n'
-            '<pre class="brush:css">display: none;</pre>\n'
+            '<pre class="brush:css notranslate">display: none;</pre>\n'
             "Comment"
         )
         assert parameters["comment_content"] == expected_content
@@ -476,7 +476,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
         expected_content = (
             "<p>{{cssinfo}} and my changes.</p>\n"
             '<p><a href="http://spam.example.com">Buy my product!</a></p>\n'
-            '<pre class="brush:css">display: none;</pre>\n'
+            '<pre class="brush:css notranslate">display: none;</pre>\n'
             "Comment\n"
             "CSS Positioning"
         )
@@ -507,7 +507,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
         expected_content = (
             "The CSS property display\n" + "<p>{{cssinfo}} and my changes.</p>\n"
             '<p><a href="http://spam.example.com">Buy my product!</a></p>\n'
-            '<pre class="brush:css">display: none;</pre>\n'
+            '<pre class="brush:css notranslate">display: none;</pre>\n'
             "Updated\n"
             "CSS display, hidden"
         )
@@ -528,7 +528,7 @@ class RevisionFormEditTests(RevisionFormViewTests):
         expected_content = (
             "<p>{{cssinfo}} and my changes.</p>\n"
             '<p><a href="http://spam.example.com">Buy my product!</a></p>\n'
-            '<pre class="brush:css">display: none;</pre>\n'
+            '<pre class="brush:css notranslate">display: none;</pre>\n'
             "Comment\n"
             "CSS\n"
             "CSS Property\n"
