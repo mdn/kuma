@@ -65,12 +65,20 @@ export default function Search({ initialQuery }: Props) {
                 />
             </form>
             <button className="toggle-form" onClick={handleClick}>
+                {/* In order for transitions to work correctly we need
+                     the `CloseIcon` icon to be in the DOM prior to transitioning.
+                    Transitions can also not be done between `display: none` and
+                    `display: block` so, we use the `.hide` class which uses
+                    `visibility:hidden`
+                   */}
                 <CloseIcon
                     className={showForm ? 'close-icon' : 'close-icon hide'}
                 />
-                <SearchIcon
-                    className={showForm ? 'search-icon hidden' : 'search-icon'}
-                />
+
+                {/* The `SearchIcon` is not animated and so we can add/remove
+                     the SVG dynamically based on the `showForm` state */}
+                {!showForm && <SearchIcon className="search-icon" />}
+
                 <span>
                     {showForm
                         ? gettext('Close search')
