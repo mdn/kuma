@@ -193,6 +193,7 @@ def clean_content(content):
     parsed.injectSectionIDs()
     if not settings.ALLOW_ALL_IFRAMES:
         parsed.filterIframeHosts(settings.ALLOWED_IFRAME_PATTERNS)
+    parsed.annotatePreTags()
     return parsed.serialize()
 
 
@@ -365,6 +366,11 @@ class ContentSectionTool(object):
     @newrelic.agent.function_trace()
     def annotateLinks(self, base_url):
         self.stream = LinkAnnotationFilter(self.stream, base_url)
+        return self
+
+    @newrelic.agent.function_trace()
+    def annotatePreTags(self):
+        self.stream = PreNotranslateClassFilter(self.stream)
         return self
 
     @newrelic.agent.function_trace()
@@ -553,6 +559,27 @@ class LinkAnnotationFilter(html5lib_Filter):
 
                         add_to_attr("class", links[href]["classes"])
                         add_to_attr("rel", links[href]["rel"])
+
+                token["data"] = attrs
+
+            yield token
+
+
+class PreNotranslateClassFilter(html5lib_Filter):
+    """
+    Filter which annotates <pre> tags with the 'notranslate' class.
+    """
+
+    def __iter__(self):
+        input = html5lib_Filter.__iter__(self)
+        for token in input:
+            if token["type"] == "StartTag" and token["name"] == "pre":
+                attrs = dict(token["data"]) or {(None, "class"): ""}
+                for (namespace, name), value in attrs.copy().items():
+                    if name == "class" and "notranslate" not in value.split():
+                        before = attrs.get((namespace, "class")) or ""
+                        after = f"{before} notranslate".strip()
+                        attrs[(namespace, "class")] = after
 
                 token["data"] = attrs
 

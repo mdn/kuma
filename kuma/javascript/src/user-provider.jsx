@@ -15,6 +15,7 @@ export type UserData = {
     isSubscriber: boolean,
     subscriberNumber: ?number,
     email: ?string,
+    wikiContributions: ?number,
     waffle: {
         flags: { [flag_name: string]: boolean },
         switches: { [switch_name: string]: boolean },
@@ -32,6 +33,7 @@ const defaultUserData: UserData = {
     isSubscriber: false,
     subscriberNumber: null,
     email: null,
+    wikiContributions: 0,
     waffle: {
         flags: {},
         switches: {},
@@ -68,6 +70,7 @@ export default function UserProvider(props: {
                     isSubscriber: data.is_subscriber || false,
                     subscriberNumber: data.subscriber_number || null,
                     email: data.email || null,
+                    wikiContributions: data.wiki_contributions || 0,
                     // NOTE: if we ever decide that waffle data should
                     // be re-fetched on client-side navigation, we'll
                     // have to create a separate context for it.
