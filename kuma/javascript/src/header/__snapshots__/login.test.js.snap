@@ -83,11 +83,6 @@ exports[`Login component when user is logged in and has wiki contributions 1`] =
         className="avatar"
         src="test-url"
       />
-      <span
-        className="username"
-      >
-        test-username
-      </span>
     </button>
     <ul
       aria-expanded={false}
