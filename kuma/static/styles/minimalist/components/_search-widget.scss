@@ -107,7 +107,7 @@
     }
 
     &.show-form {
-        position: fixed;
+        position: absolute;
         right: 0;
         z-index: 1;
 
@@ -125,8 +125,6 @@
         }
 
         .toggle-form {
-            top: 0;
-
             .close-icon {
                 transform: translateY(0);
             }
