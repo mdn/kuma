@@ -27,14 +27,11 @@ export default function Login(): React.Node {
         // profile pic, defaulting to the dino head if the avatar
         // URL doesn't work.
         let label = (
-            <>
-                <img
-                    src={userData.avatarUrl || '/static/img/avatar.png'}
-                    className="avatar"
-                    alt={userData.username}
-                />
-                <span className="username">{userData.username}</span>
-            </>
+            <img
+                src={userData.avatarUrl || '/static/img/avatar.png'}
+                className="avatar"
+                alt={userData.username}
+            />
         );
         let viewProfileLink = `/${locale}/profiles/${userData.username}`;
         let editProfileLink = `${viewProfileLink}/edit`;

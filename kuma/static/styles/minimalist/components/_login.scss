@@ -1,19 +1,13 @@
 .auth-container {
     display: flex;
     flex-direction: row;
+    justify-self: end;
     align-items: center;
 
     @media #{$mq-tablet-and-up} {
         justify-self: center;
     }
 
-    .username {
-        margin-left: 5px;
-
-        @media #{$mq-tablet-and-up} {
-            display: none;
-        }
-    }
     /* Buttons (in the dropdown labels) don't seem to inherit font sizes
         so we need to make this explicit. */
     button {
@@ -39,6 +33,8 @@
 }
 
 .signin-link {
+    justify-self: end;
+    align-self: center;
     color: $text-color;
     font-size: 1rem;
     font-weight: bold;
