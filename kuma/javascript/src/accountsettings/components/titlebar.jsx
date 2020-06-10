@@ -2,24 +2,20 @@
 import * as React from 'react';
 
 type Props = {
-    locale: string,
     pageTitle: string,
+    pageSubtitle: string,
     userData: Object,
 };
 
-const Titlebar = ({ locale, pageTitle, userData }: Props) => {
+const Titlebar = ({ pageTitle, pageSubtitle, userData }: Props) => {
     const avatarUrl = userData && userData.avatarUrl;
-    const username = userData && userData.username;
 
     return (
-        <header className="accountsettings-titlebar">
+        <header className="account-girdle accountsettings-titlebar">
             <img src={avatarUrl} className="avatar" width="90" alt="" />
             <div className="txt-container">
-                <h2>
-                    <a href={`/${locale}/account`}>{username}</a>
-                    {` / ${pageTitle}`}
-                </h2>
-                <p className="foonote">Update your avatar from</p>
+                <h2>{pageTitle}</h2>
+                <p className="foonote">{pageSubtitle}</p>
             </div>
         </header>
     );

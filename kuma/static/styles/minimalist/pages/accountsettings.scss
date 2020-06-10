@@ -1,8 +1,11 @@
+@import '../vars/vars-color-palette';
 @import '../vars/vars-media-queries';
+@import '../utils/layout-utils';
+
+@import '../atoms/forms';
 
 .signin-required {
     margin: 40px auto;
-    max-width: 1400px;
 
     @media #{$mq-tablet-and-up} {
         margin: 80px auto;

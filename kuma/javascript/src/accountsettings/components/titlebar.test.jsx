@@ -24,14 +24,9 @@ const setup = (mockData = {}) => {
 
 describe('Account Settings Titlebar', () => {
     it('renders the account settings landing page titlebar', () => {
-        const mockData = {
-            username: 'dino',
-        };
-        const { queryByText } = setup(mockData);
+        const { queryByText } = setup();
 
         expect(queryByText('Faulty Towers', { exact: false })).toBeNull();
-
         expect(queryByText(pageTitle, { exact: false })).toBeTruthy();
-        expect(queryByText(mockData.username, { exact: false })).toBeTruthy();
     });
 });
