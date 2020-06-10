@@ -7,7 +7,16 @@ import UserProvider from '../../user-provider.jsx';
 const getTestData = (mockData = {}) => {
     const mockProps = {
         /* eslint-disable camelcase */
-        data: { email: 'test@mozilla.com', next_subscriber_number: 99 },
+        data: {
+            email: 'test@mozilla.com',
+            next_subscriber_number: 99,
+            sortedLanguages: {
+                'en-US': 'English (US)',
+                'en-GB': 'English (UK)',
+                fr: 'French',
+                de: 'German',
+            },
+        },
         /* eslint-enable camelcase */
     };
     const mockUserData = {
