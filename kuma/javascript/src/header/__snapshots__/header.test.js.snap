@@ -391,7 +391,7 @@ exports[`Header snapshot 1`] = `
       onClick={[Function]}
     >
       <svg-mock
-        className="close-icon"
+        className="close-icon hide"
       />
       <svg-mock
         className="search-icon"

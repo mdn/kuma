@@ -6,6 +6,7 @@ global notices (via soapbox)
     position: relative;
     margin: 0 0 -1px;
     background: $light-background-color;
+    z-index: 9;
 
     .wrap {
         @include set-smaller-font-size();

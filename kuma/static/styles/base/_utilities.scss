@@ -37,6 +37,10 @@ Utility classes
 }
 
 /* simple hiding of elements */
+.hide {
+    visibility: hidden;
+}
+
 .is-hidden,
 .hidden {
     display: none;

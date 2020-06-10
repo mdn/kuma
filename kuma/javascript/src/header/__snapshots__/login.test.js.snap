@@ -20,17 +20,83 @@ exports[`Login component when user is logged in 1`] = `
         className="avatar"
         src="test-url"
       />
-      <span
-        className="username"
-      >
-        test-username
-      </span>
     </button>
     <ul
       aria-expanded={false}
       className="dropdown-menu-items right "
       role="menu"
     >
+      <li>
+        <a
+          href="/en-US/profiles/test-username"
+        >
+          View profile
+        </a>
+      </li>
+      <li>
+        <a
+          href="/en-US/profiles/test-username/edit"
+        >
+          Edit profile
+        </a>
+      </li>
+      <li>
+        <form
+          action="/en-US/users/signout"
+          method="post"
+        >
+          <input
+            name="next"
+            type="hidden"
+            value="/"
+          />
+          <button
+            className="signout-button"
+            type="submit"
+          >
+            Sign out
+          </button>
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Login component when user is logged in and has wiki contributions 1`] = `
+<div
+  className="auth-container"
+>
+  <div
+    className="dropdown-container "
+  >
+    <button
+      aria-haspopup="true"
+      className="dropdown-menu-label"
+      id="user-avatar-menu"
+      onClick={[Function]}
+      onFocus={[Function]}
+      type="button"
+    >
+      <img
+        alt="test-username"
+        className="avatar"
+        src="test-url"
+      />
+    </button>
+    <ul
+      aria-expanded={false}
+      className="dropdown-menu-items right "
+      role="menu"
+    >
+      <li>
+        <a
+          href="/en-US/dashboards/revisions?user=test-username"
+          title="You have 1 Wiki revisions"
+        >
+          Contributions
+        </a>
+      </li>
       <li>
         <a
           href="/en-US/profiles/test-username"
