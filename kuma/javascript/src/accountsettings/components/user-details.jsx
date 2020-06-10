@@ -27,7 +27,12 @@ const UserDetails = ({ locale, userData, sortedLanguages }: Props) => {
                         <div className="label">{gettext('Email')}</div>
                         {email}
                         <p>
-                            <a href={`/${locale}/users/account/email`}>
+                            <a
+                                href={`/${locale}/users/account/email`}
+                                title={gettext(
+                                    'You can change your email address by adding a new one'
+                                )}
+                            >
                                 {gettext('Manage email addresses')}
                             </a>
                         </p>
