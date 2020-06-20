@@ -1332,7 +1332,7 @@ CELERY_WORKER_MAX_TASKS_PER_CHILD = (
 # Just remember, avoid passing types that are non-trivial and is
 # different in pickle vs json. Keep things simple. Even if it means
 # you have to do type conversions in the tasks' code.
-CELERY_ACCEPT_CONTENT = ["pickle"]
+CELERY_ACCEPT_CONTENT = ["pickle", "application/x-python-serialize"]
 CELERY_TASK_SERIALIZER = "pickle"
 CELERY_RESULT_SERIALIZER = "pickle"
 CELERY_EVENT_SERIALIZER = "pickle"
