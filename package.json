@@ -95,7 +95,7 @@
         "uglify-js": "2.8.29",
         "webpack": "^4.43.0",
         "webpack-bundle-analyzer": "3.8.0",
-        "webpack-cli": "^3.2.3",
+        "webpack-cli": "^3.3.12",
         "webpack-merge": "4.2.2"
     }
 }
