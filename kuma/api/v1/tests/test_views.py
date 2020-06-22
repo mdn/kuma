@@ -634,10 +634,7 @@ def test_sendinblue_unsubscribe(mock_check_sendinblue, client):
     email = "testuser@example.com"
 
     user(
-        save=True,
-        username="testuser",
-        email=email,
-        is_newsletter_subscribed=True,
+        save=True, username="testuser", email=email, is_newsletter_subscribed=True,
     )
 
     response = client.post(
