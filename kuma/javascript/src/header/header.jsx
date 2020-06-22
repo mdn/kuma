@@ -26,7 +26,7 @@ export default function Header(props: Props): React.Node {
             >
                 <Logo />
             </a>
-            <MainMenu document={props.document} locale={locale} />
+            <MainMenu documentData={props.document} locale={locale} />
             <Search initialQuery={props.searchQuery || ''} />
             <Login />
         </header>

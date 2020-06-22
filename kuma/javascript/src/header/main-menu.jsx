@@ -8,7 +8,7 @@ import { gettext } from '../l10n.js';
 import type { DocumentData } from '../document.jsx';
 
 type Props = {
-    documentData?: ?DocumentData,
+    documentData: ?DocumentData,
     locale: string,
 };
 
@@ -191,9 +191,12 @@ const _MainMenu = ({ documentData, locale }: Props) => {
 
     // One of the menu items has a URL that we need to substitute
     // the current document path into. Compute that now.
-    let path = encodeURIComponent(
-        `/${locale}` + (documentData ? `/docs/${documentData.slug}` : '')
+    const [currentAbsoluteUrl, setCurrentAbsoluteUrl] = useState(
+        documentData ? documentData.absoluteURL : ''
     );
+    useEffect(() => {
+        setCurrentAbsoluteUrl(window.location.href);
+    }, []);
 
     return (
         <nav className="main-nav" aria-label="Main menu">
@@ -248,7 +251,7 @@ const _MainMenu = ({ documentData, locale }: Props) => {
                                             rel="noopener noreferrer"
                                             href={item.url.replace(
                                                 '{{PATH}}',
-                                                path
+                                                currentAbsoluteUrl
                                             )}
                                             onClick={sendMenuItemInteraction}
                                             onContextMenu={
