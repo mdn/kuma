@@ -41,7 +41,6 @@ def render_react(component_name, locale, url, document_data, ssr=True):
         "url": url,
         "documentData": document_data,
     }
-    print("IN render_react:", repr(url))
     if ssr:
         return server_side_render(component_name, data)
     else:

@@ -190,7 +190,9 @@ const _MainMenu = ({ documentData, locale }: Props) => {
     );
 
     // One of the menu items has a URL that we need to substitute
-    // the current document path into. Compute that now.
+    // the current document path into. Compute that now, if possible.
+    // In SPAs (e.g. the home page) there is no `documentData` but the
+    // useEffect below will take care of it anyway.
     const [currentAbsoluteUrl, setCurrentAbsoluteUrl] = useState(
         documentData ? documentData.absoluteURL : ''
     );
