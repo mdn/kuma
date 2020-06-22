@@ -20,7 +20,7 @@ from kuma.core.ga_tracking import (
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.search.tests import ElasticTestCase
-from kuma.users.models import UserSubscription
+from kuma.users.models import User, UserSubscription
 from kuma.users.tests import user
 from kuma.wiki.models import BCSignal
 
@@ -624,3 +624,27 @@ def test_stripe_subscription_canceled_sends_ga_tracking(
     track_event_mock_signals.assert_called_with(
         CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_CANCELED, "webhook"
     )
+
+
+@mock.patch("kuma.users.newsletter.utils.check_is_in_sendinblue_list")
+@pytest.mark.django_db
+def test_sendinblue_unsubscribe(mock_check_sendinblue, client):
+    mock_check_sendinblue.return_value = False
+
+    email = "testuser@example.com"
+
+    user(
+        save=True,
+        username="testuser",
+        email=email,
+        is_newsletter_subscribed=True,
+    )
+
+    response = client.post(
+        reverse("api.v1.sendinblue_hooks"),
+        content_type="application/json",
+        data={"event": "unsubscribe", "email": email},
+    )
+    assert response.status_code == 200
+
+    assert not User.objects.get(email=email).is_newsletter_subscribed
