@@ -1884,7 +1884,7 @@ INDEX_CSS_CLASSNAMES = config("INDEX_CSS_CLASSNAMES", cast=bool, default=not DEB
 
 # For local development you might want to set this to a hostname provided to
 # you by a tunneling service such as ngrok.
-STRIPE_WEBHOOK_HOSTNAME = config("STRIPE_WEBHOOK_HOSTNAME", default=None)
+CUSTOM_WEBHOOK_HOSTNAME = config("CUSTOM_WEBHOOK_HOSTNAME", default=None)
 
 # We use sendinblue.com to send marketing emails and are subdividing users
 # into lists of paying and not paying users
