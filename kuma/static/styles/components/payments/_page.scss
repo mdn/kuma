@@ -2,6 +2,9 @@
 @import '../../minimalist/vars/_vars-color-palette.scss';
 @import '../../minimalist/atoms/buttons.scss';
 
+@import '../../minimalist/components/accountsettings/subscription.scss';
+@import '../../minimalist/components/accountsettings/cancel-subscription-form';
+
 .subheader-container {
     min-width: 320px;
     overflow: hidden;
@@ -195,156 +198,6 @@
 
         h2 {
             border-bottom: 2px solid $text-color;
-        }
-    }
-
-
-    &.manage-subscriptions {
-        .active-subscriptions {
-            border: 2px solid $text-color;
-            padding: 20px;
-            margin-bottom: 10px;
-            p {
-                margin: 0;
-            }
-        }
-
-        dl {
-            display: flex;
-            flex-direction: column;
-            font-weight: bold;
-
-            div {
-                display: flex;
-                &:not(:first-child) {
-                    margin-top: 5px;
-                }
-            }
-
-            dt {
-                padding-left: 30px;
-
-                &.amount {
-                    background: url('/static/img/subscriptions/money.svg') 0 50% / 23px 16px no-repeat;
-                }
-
-                &.credit-card {
-                    background: url('/static/img/subscriptions/credit-card.svg')
-                        0 50% / 21px 16px no-repeat;
-                }
-                &::after {
-                    content: ': ';
-                }
-            }
-
-            dd {
-                padding-left: 5px;
-            }
-
-            @media #{$mq-tablet-and-up} {
-                flex-direction: row;
-
-                div {
-                    display: block;
-                    &:not(:first-child) {
-                        margin: 0 0 0 10%;
-                    }
-                }
-
-                dt {
-                    display: block;
-                    &::after {
-                        content: '';
-                    }
-                }
-            }
-        }
-
-
-        form {
-            background: $red-light;
-            border: 1px solid $brand-red;
-            clear: both;
-            padding: 20px;
-            overflow: hidden;
-
-            h4 {
-                font-family: inherit;
-                font-size: inherit;
-                margin: 0 0 10px;
-            }
-
-            strong {
-                display: block;
-                margin-bottom: 10px;
-            }
-
-            .form-footer {
-                display: flex;
-                flex-direction: column;
-
-                button:last-child {
-                    margin-bottom: 10px;
-                    order: -1;
-                }
-
-                @media #{$mq-tablet-and-up} {
-                    flex-direction: row;
-                    justify-content: flex-end;
-                    button:last-child {
-                        margin: 0 0 0 10px;
-                        order: inherit;
-                    }
-                }
-            }
-        }
-    }
-
-    button {
-        box-sizing: border-box;
-
-        // Cancel toggle button
-        &.cancel {
-            background-color: $brand-red;
-            border-color: $brand-red;
-            color: #fff;
-            float: right;
-            margin-bottom: 10px;
-
-            &:hover,
-            &:focus,
-            &:active {
-                background-color: darken($brand-red, 10%);
-                border-color: darken($brand-red, 10%);
-            }
-        }
-
-        // Cancel submit button
-        &.negative {
-            background-color: #fff;
-            min-height: 40px;
-
-            &:hover,
-            &:focus,
-            &:active {
-                background-color: $brand-red;
-            }
-        }
-
-        // Keep my membership button
-        &.keep-membership {
-            background-color: #fff;
-            color: $text-color;
-            border: 2px solid $border-color;
-            font-weight: bold;
-            text-decoration: none;
-
-            &:hover,
-            &:focus,
-            &:active {
-                border-color: darken($border-color, 50%);
-                color: darken($text-color, 50%);
-            }
         }
     }
 

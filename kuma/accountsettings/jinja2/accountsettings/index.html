@@ -5,13 +5,14 @@
 {% block site_css %}
 {{ super() }}
 {% stylesheet 'accountsettings' %}
-{% stylesheet 'accountsettings-titlebar' %}
 {% stylesheet 'accountsettings-user-details' %}
+{% stylesheet 'accountsettings-subscription' %}
 {% endblock %}
 
 {% block document_head %}
 {{ render_react("SPA", request.LANGUAGE_CODE, request.get_full_path(), {
-"sortedLanguages": sorted_languages
+"sortedLanguages": sorted_languages,
+"contributionSupportEmail": settings.CONTRIBUTION_SUPPORT_EMAIL,
 })|safe }}
 {% endblock %}
 

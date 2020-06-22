@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import CancelSubscriptionForm from './cancel-subscription-form.jsx';
-import { SUBSCRIPTIONS_URL } from '../api.js';
+import { SUBSCRIPTIONS_URL } from '../../payments/api.js';
 
 const setup = (props = {}) => {
     const mockProps = {
@@ -11,7 +11,7 @@ const setup = (props = {}) => {
         ...props,
     };
     const utils = render(<CancelSubscriptionForm {...mockProps} />);
-    const cancelBtn = utils.getByText(/keep my membership/i);
+    const cancelBtn = utils.getByText(/keep subscription/i);
     const submitBtn = utils.getByText(/cancel subscription/i);
 
     return {

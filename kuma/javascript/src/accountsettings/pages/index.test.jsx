@@ -41,8 +41,24 @@ describe('Account Settings Landing Page', () => {
             </UserProvider.context.Provider>
         );
 
-        expect(screen.queryByTestId('user-details-form')).toBeTruthy();
+        expect(screen.getByTestId('user-details-form')).toBeInTheDocument();
         expect(screen.queryByText('Sign in')).not.toBeInTheDocument();
+    });
+
+    it('renders the subscription component for authenticated users', () => {
+        const mockData = getTestData({
+            isAuthenticated: true,
+        });
+
+        render(
+            <UserProvider.context.Provider value={mockData.mockUserData}>
+                <AccountSettingsLandingPage {...mockData.mockProps} />
+            </UserProvider.context.Provider>
+        );
+
+        expect(
+            screen.getByRole('region', { name: /Subscription/i })
+        ).toBeInTheDocument();
     });
 
     it('show singin link for unauthticated users', () => {
@@ -54,7 +70,9 @@ describe('Account Settings Landing Page', () => {
             </UserProvider.context.Provider>
         );
 
-        expect(screen.getByText('Sign in')).not.toBeNull();
-        expect(screen.queryByTestId('user-details-form')).toBeNull();
+        expect(screen.getByText('signed in')).toBeInTheDocument();
+        expect(
+            screen.queryByTestId('user-details-form')
+        ).not.toBeInTheDocument();
     });
 });

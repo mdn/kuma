@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import { gettext, interpolate } from '../../l10n.js';
-import { GenericError } from '../components/errors.jsx';
+import { GenericError } from '../../common/errors.jsx';
 import { sendFeedback } from '../api.js';
 
 export const MIN_STRING_LENGTH = 5;
