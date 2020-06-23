@@ -1,6 +1,7 @@
 from rest_framework import exceptions
 from rest_framework import serializers
 
+from kuma.users.models import User
 from kuma.wiki.models import BCSignal, Document
 
 
@@ -26,3 +27,9 @@ class BCSignalSerializer(serializers.Serializer):
         if document:
             return BCSignal.objects.create(document=document, **validated_data)
         raise exceptions.ValidationError("Document not found")
+
+
+class UserDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("username", "fullname", "is_newsletter_subscribed", "locale")
