@@ -22,6 +22,7 @@ def create_or_update_contact(user_pk):
             "updateEnabled": True,
             "email": user.email,
             "attributes": {
+                "USERNAME": user.username,
                 "IS_PAYING": UserSubscription.objects.filter(
                     user=user, canceled__isnull=True
                 ).exists()
