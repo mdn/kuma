@@ -9,6 +9,28 @@ from . import sendinblue
 SENDINBLUE_API_ERROR = "kuma.users.sendinblue.E001"
 
 
+def create_missing_attributes(existing_attributes, required_attributes):
+    for name, sendinblue_type in required_attributes.items():
+        if any(attribute["name"] == name for attribute in existing_attributes):
+            continue
+
+        response = sendinblue.request(
+            "POST",
+            f"contacts/attributes/normal/{name}",
+            json={"type": sendinblue_type},
+        )
+        if not response.ok:
+            message = response.json()["message"]
+            return [
+                Error(
+                    f"Error when creating sendinblue attribute '{name}' of type '{sendinblue_type}': {message}",
+                    id=SENDINBLUE_API_ERROR,
+                )
+            ]
+
+    return []
+
+
 def create_sendinblue_attributes():
     response = sendinblue.request("GET", "contacts/attributes")
     if not response.ok:
@@ -19,21 +41,9 @@ def create_sendinblue_attributes():
             )
         ]
 
-    if not any(
-        attribute["name"] == "IS_PAYING" for attribute in response.json()["attributes"]
-    ):
-        response = sendinblue.request(
-            "POST", "contacts/attributes/normal/IS_PAYING", json={"type": "boolean"},
-        )
-        if not response.ok:
-            return [
-                Error(
-                    f"Error when creating sendinblue attribute: {response.json()['message']}",
-                    id=SENDINBLUE_API_ERROR,
-                )
-            ]
-
-    return []
+    return create_missing_attributes(
+        response.json()["attributes"], {"USERNAME": "text", "IS_PAYING": "boolean"}
+    )
 
 
 # We're using sendinblue for marketing emails. Another possible use-case is "transactional"
