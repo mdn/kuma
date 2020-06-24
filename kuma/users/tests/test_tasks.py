@@ -11,12 +11,12 @@ from kuma.core.tests import assert_no_cache_header, call_on_commit_immediately
 from kuma.core.urlresolvers import reverse
 from kuma.users.tasks import send_recovery_email, send_welcome_email
 
-from . import user, UserTestCase
+from . import create_user, UserTestCase
 
 
 class SendRecoveryEmailTests(TestCase):
     def test_send_email(self):
-        testuser = user(username="legacy", email="legacy@example.com")
+        testuser = create_user(username="legacy", email="legacy@example.com")
         testuser.set_unusable_password()
         testuser.save()
         send_recovery_email(testuser.pk, email="actual@example.com")
@@ -64,7 +64,7 @@ class TestWelcomeEmails(UserTestCase):
     @override_switch("welcome_email", True)
     @call_on_commit_immediately
     def test_welcome_mail_for_verified_email(self):
-        testuser = user(
+        testuser = create_user(
             username="welcome",
             email="welcome@tester.com",
             password="welcome",
@@ -93,7 +93,7 @@ class TestWelcomeEmails(UserTestCase):
     @override_switch("welcome_email", True)
     @call_on_commit_immediately
     def test_welcome_mail_for_unverified_email(self):
-        testuser = user(
+        testuser = create_user(
             username="welcome2",
             email="welcome2@tester.com",
             password="welcome2",

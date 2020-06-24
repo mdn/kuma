@@ -7,7 +7,7 @@ from django.test import RequestFactory
 
 from kuma.core.tests import call_on_commit_immediately, KumaTestCase
 
-from . import user
+from . import create_user
 from ..adapters import KumaAccountAdapter, USERNAME_CHARACTERS, USERNAME_EMAIL
 from ..forms import UserEditForm, UserRecoveryEmailForm
 from ..models import User
@@ -16,7 +16,7 @@ from ..models import User
 class TestUserEditForm(KumaTestCase):
     def test_username(self):
         """bug 753563: Support username changes"""
-        test_user = user(save=True)
+        test_user = create_user(save=True)
         data = {
             "username": test_user.username,
         }
@@ -24,19 +24,19 @@ class TestUserEditForm(KumaTestCase):
         assert form.is_valid()
 
         # let's try this with the username above
-        test_user2 = user(save=True)
+        test_user2 = create_user(save=True)
         form = UserEditForm(data, instance=test_user2)
         assert not form.is_valid()
 
     def test_can_keep_legacy_username(self):
-        test_user = user(username="legacy@example.com", save=True)
+        test_user = create_user(username="legacy@example.com", save=True)
         assert test_user.has_legacy_username
         data = {"username": "legacy@example.com"}
         form = UserEditForm(data, instance=test_user)
         assert form.is_valid(), repr(form.errors)
 
     def test_cannot_change_legacy_username(self):
-        test_user = user(username="legacy@example.com", save=True)
+        test_user = create_user(username="legacy@example.com", save=True)
         assert test_user.has_legacy_username
         data = {"username": "mr.legacy@example.com"}
         form = UserEditForm(data, instance=test_user)
@@ -44,7 +44,7 @@ class TestUserEditForm(KumaTestCase):
         assert {"username": [USERNAME_CHARACTERS]} == form.errors
 
     def test_cannot_change_to_legacy_username(self):
-        test_user = user(save=True)
+        test_user = create_user(save=True)
         assert not test_user.has_legacy_username
         data = {"username": "mr.legacy@example.com"}
         form = UserEditForm(data, instance=test_user)
@@ -52,7 +52,7 @@ class TestUserEditForm(KumaTestCase):
         assert {"username": [USERNAME_CHARACTERS]} == form.errors
 
     def test_blank_username_invalid(self):
-        test_user = user(save=True)
+        test_user = create_user(save=True)
         data = {
             "username": "",
         }
@@ -93,7 +93,7 @@ class TestUserEditForm(KumaTestCase):
         self._assert_protos_and_sites(protos, sites)
 
     def _assert_protos_and_sites(self, protos, sites):
-        edit_user = user(save=True)
+        edit_user = create_user(save=True)
         for proto, expected_valid in protos:
             for name, site in sites:
                 url = "%s%s" % (proto, site)
