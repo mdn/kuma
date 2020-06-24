@@ -3,7 +3,6 @@ from types import SimpleNamespace
 from unittest import mock
 
 import pytest
-
 from django.conf import settings
 from django.core import mail
 from django.test import Client
@@ -20,7 +19,7 @@ from kuma.core.ga_tracking import (
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.search.tests import ElasticTestCase
-from kuma.users.models import User, UserSubscription
+from kuma.users.models import UserSubscription
 from kuma.users.tests import create_user
 from kuma.wiki.models import BCSignal
 
