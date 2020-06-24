@@ -47,7 +47,7 @@ from kuma.wiki.models import (
 from kuma.wiki.templatetags.jinja_helpers import absolutify
 from kuma.wiki.tests import document as create_document
 
-from . import SampleRevisionsMixin, SocialTestMixin, user, UserTestCase
+from . import create_user, SampleRevisionsMixin, SocialTestMixin, UserTestCase
 from ..models import User, UserBan, UserSubscription
 from ..views import delete_document, revert_document
 
@@ -1423,7 +1423,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
 
     def test_account_tokens(self):
         testemail = "account_token@acme.com"
-        testuser = user(
+        testuser = create_user(
             username="user", is_active=True, email=testemail, password="test", save=True
         )
         EmailAddress.objects.create(
@@ -1451,7 +1451,7 @@ class KumaGitHubTests(UserTestCase, SocialTestMixin):
         """
         # Setup a user with a token and refresh token
         testemail = "account_token@acme.com"
-        testuser = user(
+        testuser = create_user(
             username="user", is_active=True, email=testemail, password="test", save=True
         )
         EmailAddress.objects.create(
@@ -1539,7 +1539,7 @@ class KumaGoogleTests(UserTestCase, SocialTestMixin):
         whose email address, when `email.split('@')[0]` would become the same
         as the existing GitHub user.
         """
-        user(username="octocat", save=True)
+        create_user(username="octocat", save=True)
         self.google_login(
             profile_data=dict(self.google_profile_data, email="octocat@gmail.com",)
         )
@@ -1553,7 +1553,7 @@ class KumaGoogleTests(UserTestCase, SocialTestMixin):
         Tests that GA tracking events are sent for errors in the username
         field submitted when signing-up with a new account.
         """
-        user(username="octocat", save=True)
+        create_user(username="octocat", save=True)
         with self.settings(
             GOOGLE_ANALYTICS_ACCOUNT="UA-XXXX-1",
             GOOGLE_ANALYTICS_TRACKING_RAISE_ERRORS=True,

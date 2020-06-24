@@ -31,7 +31,7 @@ class UserTestCase(UserTestMixin, KumaTestCase):
     pass
 
 
-def user(save=False, **kwargs):
+def create_user(save=False, **kwargs):
     if "username" not in kwargs:
         kwargs["username"] = get_random_string(length=15)
     password = kwargs.pop("password", "password")

@@ -21,7 +21,7 @@ from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.search.tests import ElasticTestCase
 from kuma.users.models import User, UserSubscription
-from kuma.users.tests import user
+from kuma.users.tests import create_user
 from kuma.wiki.models import BCSignal
 
 
@@ -483,7 +483,7 @@ def test_stripe_payment_succeeded_sends_invoice_mail(
     }
     download_url.return_value = bytes("totally not a pdf", "utf-8")
 
-    testuser = user(
+    testuser = create_user(
         save=True,
         username="testuser",
         email="testuser@example.com",
@@ -512,7 +512,7 @@ def test_stripe_subscription_canceled(mock1, client):
         ),
     )
 
-    testuser = user(
+    testuser = create_user(
         save=True,
         username="testuser",
         email="testuser@example.com",
@@ -579,7 +579,7 @@ def test_stripe_payment_succeeded_sends_ga_tracking(
             )
         ),
     )
-    user(
+    create_user(
         save=True,
         username="testuser",
         email="testuser@example.com",
@@ -610,7 +610,7 @@ def test_stripe_subscription_canceled_sends_ga_tracking(
         ),
     )
 
-    user(
+    create_user(
         save=True,
         username="testuser",
         email="testuser@example.com",
@@ -633,7 +633,7 @@ def test_sendinblue_unsubscribe(mock_check_sendinblue, client):
 
     email = "testuser@example.com"
 
-    user(
+    create_user(
         save=True, username="testuser", email=email, is_newsletter_subscribed=True,
     )
 
