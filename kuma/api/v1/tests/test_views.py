@@ -633,7 +633,7 @@ def test_sendinblue_unsubscribe(mock_check_sendinblue, client):
 
     email = "testuser@example.com"
 
-    create_user(
+    user = create_user(
         save=True, username="testuser", email=email, is_newsletter_subscribed=True,
     )
 
@@ -644,4 +644,5 @@ def test_sendinblue_unsubscribe(mock_check_sendinblue, client):
     )
     assert response.status_code == 200
 
-    assert not User.objects.get(email=email).is_newsletter_subscribed
+    user.refresh_from_db()
+    assert not user.is_newsletter_subscribed
