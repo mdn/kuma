@@ -14,4 +14,5 @@ urlpatterns = [
     ),
     path("subscriptions/", views.subscriptions, name="api.v1.subscriptions"),
     path("stripe_hooks/", views.stripe_hooks, name="api.v1.stripe_hooks"),
+    path("sendinblue_hooks/", views.sendinblue_hooks, name="api.v1.sendinblue_hooks"),
 ]

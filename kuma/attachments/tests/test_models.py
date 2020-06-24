@@ -6,7 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.files.base import ContentFile
 from django.db.utils import IntegrityError
 
-from kuma.users.tests import user, UserTestCase
+from kuma.users.tests import create_user, UserTestCase
 from kuma.wiki.models import DocumentAttachment
 from kuma.wiki.tests import document
 
@@ -146,42 +146,42 @@ class AttachmentModelTests(UserTestCase):
         g2.save()
 
         # User with no explicit permission is allowed
-        u2 = user(username="test_user2", save=True)
+        u2 = create_user(username="test_user2", save=True)
         self.assertTrue(allow_add_attachment_by(u2))
 
         # User in group with negative permission is disallowed
-        u3 = user(username="test_user3", save=True)
+        u3 = create_user(username="test_user3", save=True)
         u3.groups.set([g1])
         u3.save()
         self.assertTrue(not allow_add_attachment_by(u3))
 
         # Superusers can do anything, despite group perms
-        u1 = user(username="test_super", is_superuser=True, save=True)
+        u1 = create_user(username="test_super", is_superuser=True, save=True)
         u1.groups.set([g1])
         u1.save()
         self.assertTrue(allow_add_attachment_by(u1))
 
         # User with negative permission is disallowed
-        u4 = user(username="test_user4", save=True)
+        u4 = create_user(username="test_user4", save=True)
         u4.user_permissions.add(p1)
         u4.save()
         self.assertTrue(not allow_add_attachment_by(u4))
 
         # User with positive permission overrides group
-        u5 = user(username="test_user5", save=True)
+        u5 = create_user(username="test_user5", save=True)
         u5.groups.set([g1])
         u5.user_permissions.add(p2)
         u5.save()
         self.assertTrue(allow_add_attachment_by(u5))
 
         # Group with positive permission takes priority
-        u6 = user(username="test_user6", save=True)
+        u6 = create_user(username="test_user6", save=True)
         u6.groups.set([g1, g2])
         u6.save()
         self.assertTrue(allow_add_attachment_by(u6))
 
         # positive permission takes priority, period.
-        u7 = user(username="test_user7", save=True)
+        u7 = create_user(username="test_user7", save=True)
         u7.user_permissions.add(p1)
         u7.user_permissions.add(p2)
         u7.save()

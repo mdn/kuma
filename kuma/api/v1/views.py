@@ -45,6 +45,7 @@ from kuma.search.filters import (
 )
 from kuma.search.search import SearchView
 from kuma.users.models import User, UserSubscription
+from kuma.users.newsletter.utils import refresh_is_user_newsletter_subscribed
 from kuma.users.stripe_utils import (
     cancel_stripe_customer_subscriptions,
     create_stripe_customer_and_subscription_for_user,
@@ -284,3 +285,29 @@ def _download_from_url(url):
     pdf_download = requests_retry_session().get(url)
     pdf_download.raise_for_status()
     return pdf_download.content
+
+
+@csrf_exempt
+@require_POST
+@never_cache
+def sendinblue_hooks(request):
+    # Sendinblue does not sign its webhook requests, hence the event handlers following
+    # are different from the Stripe ones, in that they treat the event as a notification
+    # of a _potential_ change, while still needing to contact sendinblue to verify that
+    # it actually happened.
+    try:
+        payload = json.loads(request.body)
+        event = payload["event"]
+        email = payload["email"]
+    except (json.decoder.JSONDecodeError, KeyError) as exception:
+        return HttpResponseBadRequest(
+            f"{exception.__class__.__name__} on {request.body}"
+        )
+
+    if event == "unsubscribe":
+        refresh_is_user_newsletter_subscribed(email)
+        return HttpResponse()
+    else:
+        return HttpResponseBadRequest(
+            f"We did not expect a Sendinblue webhook of type {event['event']!r}"
+        )

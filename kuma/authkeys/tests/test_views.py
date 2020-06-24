@@ -7,7 +7,7 @@ from pyquery import PyQuery as pq
 
 from kuma.core.tests import assert_no_cache_header, assert_redirect_to_wiki
 from kuma.core.urlresolvers import reverse
-from kuma.users.tests import user
+from kuma.users.tests import create_user
 
 from ..models import Key
 from ..views import ITEMS_PER_PAGE
@@ -26,7 +26,9 @@ class KeyViewsTest(RefetchingUserTestCase):
         password = "trustno1"
         email = "tester23@example.com"
 
-        self.user = user(username=username, email=email, password=password, save=True)
+        self.user = create_user(
+            username=username, email=email, password=password, save=True
+        )
         self.client.login(username=username, password=password)
 
         # Give self.user (tester23) keys permissions
@@ -41,7 +43,7 @@ class KeyViewsTest(RefetchingUserTestCase):
         password2 = "somepass"
         email2 = "someone@example.com"
 
-        self.user2 = user(
+        self.user2 = create_user(
             username=username2, email=email2, password=password2, save=True
         )
 
@@ -169,7 +171,9 @@ class KeyViewsPermissionTest(RefetchingUserTestCase):
         password = "trustno1"
         email = "tester23@example.com"
 
-        self.user = user(username=username, email=email, password=password, save=True)
+        self.user = create_user(
+            username=username, email=email, password=password, save=True
+        )
         self.client.login(username=username, password=password)
 
     def test_new_key_requires_permission(self):

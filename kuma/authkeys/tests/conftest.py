@@ -1,6 +1,6 @@
 import pytest
 
-from kuma.users.tests import user
+from kuma.users.tests import create_user
 
 from ..models import Key
 
@@ -14,7 +14,7 @@ class Object(object):
 @pytest.fixture
 @pytest.mark.django_db
 def user_auth_key():
-    u = user(username="test23", email="test23@example.com", save=True)
+    u = create_user(username="test23", email="test23@example.com", save=True)
     key = Key(user=u)
     secret = key.generate_secret()
     key.save()

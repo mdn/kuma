@@ -3,7 +3,6 @@ from types import SimpleNamespace
 from unittest import mock
 
 import pytest
-
 from django.conf import settings
 from django.core import mail
 from django.test import Client
@@ -21,7 +20,7 @@ from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.search.tests import ElasticTestCase
 from kuma.users.models import UserSubscription
-from kuma.users.tests import user
+from kuma.users.tests import create_user
 from kuma.wiki.models import BCSignal
 
 
@@ -483,7 +482,7 @@ def test_stripe_payment_succeeded_sends_invoice_mail(
     }
     download_url.return_value = bytes("totally not a pdf", "utf-8")
 
-    testuser = user(
+    testuser = create_user(
         save=True,
         username="testuser",
         email="testuser@example.com",
@@ -512,7 +511,7 @@ def test_stripe_subscription_canceled(mock1, client):
         ),
     )
 
-    testuser = user(
+    testuser = create_user(
         save=True,
         username="testuser",
         email="testuser@example.com",
@@ -579,7 +578,7 @@ def test_stripe_payment_succeeded_sends_ga_tracking(
             )
         ),
     )
-    user(
+    create_user(
         save=True,
         username="testuser",
         email="testuser@example.com",
@@ -610,7 +609,7 @@ def test_stripe_subscription_canceled_sends_ga_tracking(
         ),
     )
 
-    user(
+    create_user(
         save=True,
         username="testuser",
         email="testuser@example.com",
@@ -624,3 +623,25 @@ def test_stripe_subscription_canceled_sends_ga_tracking(
     track_event_mock_signals.assert_called_with(
         CATEGORY_MONTHLY_PAYMENTS, ACTION_SUBSCRIPTION_CANCELED, "webhook"
     )
+
+
+@mock.patch("kuma.users.newsletter.utils.check_is_in_sendinblue_list")
+@pytest.mark.django_db
+def test_sendinblue_unsubscribe(mock_check_sendinblue, client):
+    mock_check_sendinblue.return_value = False
+
+    email = "testuser@example.com"
+
+    user = create_user(
+        save=True, username="testuser", email=email, is_newsletter_subscribed=True,
+    )
+
+    response = client.post(
+        reverse("api.v1.sendinblue_hooks"),
+        content_type="application/json",
+        data={"event": "unsubscribe", "email": email},
+    )
+    assert response.status_code == 200
+
+    user.refresh_from_db()
+    assert not user.is_newsletter_subscribed

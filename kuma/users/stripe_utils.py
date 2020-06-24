@@ -138,8 +138,8 @@ def get_stripe_subscription_info(stripe_customer):
 def create_missing_stripe_webhook():
     url_path = reverse("api.v1.stripe_hooks")
     url = (
-        "https://" + settings.STRIPE_WEBHOOK_HOSTNAME + url_path
-        if settings.STRIPE_WEBHOOK_HOSTNAME
+        "https://" + settings.CUSTOM_WEBHOOK_HOSTNAME + url_path
+        if settings.CUSTOM_WEBHOOK_HOSTNAME
         else absolutify(url_path)
     )
 
