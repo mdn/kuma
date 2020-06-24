@@ -295,10 +295,17 @@ def sendinblue_hooks(request):
     # are different from the Stripe ones, in that they treat the event as a notification
     # of a _potential_ change, while still needing to contact sendinblue to verify that
     # it actually happened.
-    event = json.loads(request.body)
+    try:
+        payload = json.loads(request.body)
+        event = payload["event"]
+        email = payload["email"]
+    except (json.decoder.JSONDecodeError, KeyError) as exception:
+        return HttpResponseBadRequest(
+            f"{exception.__class__.__name__} on {request.body}"
+        )
 
-    if event["event"] == "unsubscribe":
-        refresh_is_user_newsletter_subscribed(event["email"])
+    if event == "unsubscribe":
+        refresh_is_user_newsletter_subscribed(email)
         return HttpResponse()
     else:
         return HttpResponseBadRequest(
