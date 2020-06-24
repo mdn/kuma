@@ -47,11 +47,8 @@ from kuma.search.filters import (
 )
 from kuma.search.search import SearchView
 from kuma.users.models import User, UserSubscription
-<<<<<<< HEAD
-from kuma.users.signals import newsletter_subscribed, newsletter_unsubscribed
-=======
 from kuma.users.newsletter.utils import refresh_is_user_newsletter_subscribed
->>>>>>> master
+from kuma.users.signals import newsletter_subscribed, newsletter_unsubscribed
 from kuma.users.stripe_utils import (
     cancel_stripe_customer_subscriptions,
     create_stripe_customer_and_subscription_for_user,
