@@ -82,13 +82,23 @@ table.bc-table {
 }
 
 /* thicker border between platforms */
+$bc-table-border-selectors: ();
+
 @each $type, $config in $table-types {
     @each $border in map-get($config, platform-border) {
-        .bc-table-#{$type} th:nth-child(#{$border}),
-        .bc-table-#{$type} td:nth-child(#{$border}) {
-            border-left: $bc-border-width-thick solid $bc-border-color;
-        }
+        $bc-table-border-selectors: join(
+            $bc-table-border-selectors,
+            (
+                '.bc-table-#{$type} th:nth-child(#{$border})',
+                '.bc-table-#{$type} td:nth-child(#{$border})',
+            ),
+            $separator: comma,
+        );
     }
+}
+
+#{$bc-table-border-selectors} {
+    border-left: $bc-border-width-thick solid $bc-border-color;
 }
 
 /* th
@@ -289,13 +299,8 @@ mobile display
     }
 
     /* thicker border between platforms */
-    @each $type, $config in $table-types {
-        @each $border in map-get($config, platform-border) {
-            .bc-table-#{$type} th:nth-child(#{$border}),
-            .bc-table-#{$type} td:nth-child(#{$border}) {
-                border-top: $bc-border-width-thick solid $bc-border-color;
-                border-left: none;
-            }
-        }
+    #{$bc-table-border-selectors} {
+        border-top: $bc-border-width-thick solid $bc-border-color;
+        border-left: none;
     }
 }
