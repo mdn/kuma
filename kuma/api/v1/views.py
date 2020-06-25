@@ -19,13 +19,15 @@ from ratelimit.decorators import ratelimit
 from raven.contrib.django.models import client as raven_client
 from rest_framework import serializers, status
 from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from waffle import flag_is_active
 from waffle.decorators import waffle_flag
 from waffle.models import Flag, Sample, Switch
 
-from kuma.api.v1.serializers import BCSignalSerializer
+from kuma.api.v1.serializers import BCSignalSerializer, UserDetailsSerializer
 from kuma.core.email_utils import render_email
 from kuma.core.ga_tracking import (
     ACTION_SUBSCRIPTION_CANCELED,
@@ -46,6 +48,7 @@ from kuma.search.filters import (
 from kuma.search.search import SearchView
 from kuma.users.models import User, UserSubscription
 from kuma.users.newsletter.utils import refresh_is_user_newsletter_subscribed
+from kuma.users.signals import newsletter_subscribed, newsletter_unsubscribed
 from kuma.users.stripe_utils import (
     cancel_stripe_customer_subscriptions,
     create_stripe_customer_and_subscription_for_user,
@@ -285,6 +288,36 @@ def _download_from_url(url):
     pdf_download = requests_retry_session().get(url)
     pdf_download.raise_for_status()
     return pdf_download.content
+
+
+class APIUserDetailsView(APIView):
+    http_method_names = ["get", "put"]
+    serializer_class = UserDetailsSerializer
+    renderer_classes = [JSONRenderer]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        assert request.user.is_authenticated
+        serializer = UserDetailsSerializer(request.user, many=False)
+        return Response(serializer.data)
+
+    def put(self, request, format=None):
+        user = request.user
+        serializer = UserDetailsSerializer(instance=user, data=request.data)
+        if serializer.is_valid():
+            was_subscribed = user.is_newsletter_subscribed
+            serializer.save(user=user)
+
+            if not was_subscribed and user.is_newsletter_subscribed:
+                newsletter_subscribed.send(None, user=user)
+            if was_subscribed and not user.is_newsletter_subscribed:
+                newsletter_unsubscribed.send(None, user=user)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+user_details = never_cache(APIUserDetailsView.as_view())
 
 
 @csrf_exempt
