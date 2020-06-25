@@ -26,7 +26,9 @@ class KeyViewsTest(RefetchingUserTestCase):
         password = "trustno1"
         email = "tester23@example.com"
 
-        self.user = create_user(username=username, email=email, password=password, save=True)
+        self.user = create_user(
+            username=username, email=email, password=password, save=True
+        )
         self.client.login(username=username, password=password)
 
         # Give self.user (tester23) keys permissions
@@ -169,7 +171,9 @@ class KeyViewsPermissionTest(RefetchingUserTestCase):
         password = "trustno1"
         email = "tester23@example.com"
 
-        self.user = create_user(username=username, email=email, password=password, save=True)
+        self.user = create_user(
+            username=username, email=email, password=password, save=True
+        )
         self.client.login(username=username, password=password)
 
     def test_new_key_requires_permission(self):

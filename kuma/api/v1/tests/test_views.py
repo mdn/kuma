@@ -3,7 +3,6 @@ from types import SimpleNamespace
 from unittest import mock
 
 import pytest
-
 from django.conf import settings
 from django.core import mail
 from django.test import Client
@@ -20,7 +19,7 @@ from kuma.core.ga_tracking import (
 from kuma.core.tests import assert_no_cache_header
 from kuma.core.urlresolvers import reverse
 from kuma.search.tests import ElasticTestCase
-from kuma.users.models import User, UserSubscription
+from kuma.users.models import UserSubscription
 from kuma.users.tests import create_user
 from kuma.wiki.models import BCSignal
 
@@ -626,6 +625,150 @@ def test_stripe_subscription_canceled_sends_ga_tracking(
     )
 
 
+@pytest.mark.django_db
+def test_user_details_logged_in(client):
+    response = client.get(reverse("api.v1.user_details"))
+    assert response.status_code == 403
+    assert_no_cache_header(response)
+
+
+@pytest.mark.django_db
+def test_user_details_happy_path(user_client, wiki_user):
+    # There are dedicated tests to toggling your 'is_newsletter_subscribed'
+    # but don't want to trigger that in this test. So set it to False.
+    wiki_user.is_newsletter_subscribed = False
+    wiki_user.save()
+
+    response = user_client.get(reverse("api.v1.user_details"))
+    assert response.status_code == 200
+    assert_no_cache_header(response)
+    assert response.json()["username"] == wiki_user.username
+    assert response.json()["fullname"] == wiki_user.fullname
+    assert (
+        response.json()["is_newsletter_subscribed"]
+        == wiki_user.is_newsletter_subscribed
+    )
+    assert response.json()["locale"] == wiki_user.locale
+
+    response = user_client.put(
+        reverse("api.v1.user_details"),
+        content_type="application/json",
+        data={
+            "fullname": "Art Vandelay",
+            "username": "art",
+            "is_newsletter_subscribed": False,
+            "locale": "sv-SE",
+        },
+    )
+    assert response.status_code == 200
+    assert response.json()["username"] == "art"
+    assert response.json()["fullname"] == "Art Vandelay"
+    assert response.json()["is_newsletter_subscribed"] is False
+    assert response.json()["locale"] == "sv-SE"
+
+    wiki_user.refresh_from_db()
+    assert wiki_user.username == "art"
+    assert wiki_user.fullname == "Art Vandelay"
+    assert wiki_user.is_newsletter_subscribed is False
+    assert wiki_user.locale == "sv-SE"
+
+
+@pytest.mark.django_db
+def test_user_details_invalid_username(user_client, wiki_user, django_user_model):
+    def put():
+        return user_client.put(
+            reverse("api.v1.user_details"), content_type="application/json", data=data,
+        )
+
+    # Empty username
+    data = {
+        "fullname": wiki_user.fullname,
+        "username": "   ",
+        "is_newsletter_subscribed": False,
+        "locale": "sv-SE",
+    }
+    response = put()
+    assert response.status_code == 400
+    assert response.json()["username"]
+
+    # Username present but when stripped an empty string
+    data["username"] = "  \t  "
+    response = put()
+    assert response.status_code == 400
+    assert response.json()["username"]
+
+    django_user_model.objects.create(
+        username="washerefirst", email="washerefirst@example.com",
+    )
+    # Username taken by someone else
+    data["username"] = "washerefirst"
+    response = put()
+    assert response.status_code == 400
+    assert response.json()["username"]
+
+
+@pytest.mark.django_db
+def test_user_details_invalid_locale(user_client, wiki_user):
+    data = {
+        "fullname": wiki_user.fullname,
+        "username": wiki_user.username,
+        "is_newsletter_subscribed": False,
+        # Note! It's not a valid locale
+        "locale": "xxx",
+    }
+    response = user_client.put(
+        reverse("api.v1.user_details"), content_type="application/json", data=data,
+    )
+    assert response.status_code == 400
+    assert response.json()["locale"]
+
+
+@mock.patch("kuma.users.newsletter.tasks.create_or_update_contact.delay")
+@pytest.mark.django_db
+def test_user_details_toggle_is_newsletter_subscribed_on(
+    mock_create_or_update_newsletter_contact_delay, user_client, wiki_user
+):
+    wiki_user.is_newsletter_subscribed = False
+    wiki_user.save()
+    data = {
+        "fullname": wiki_user.fullname,
+        "username": wiki_user.username,
+        "is_newsletter_subscribed": True,  # Note!
+        "locale": wiki_user.locale,
+    }
+    response = user_client.put(
+        reverse("api.v1.user_details"), content_type="application/json", data=data,
+    )
+    assert response.status_code == 200
+    wiki_user.refresh_from_db()
+    assert wiki_user.is_newsletter_subscribed
+    mock_create_or_update_newsletter_contact_delay.assert_called_once_with(wiki_user.pk)
+
+
+@mock.patch("kuma.users.newsletter.tasks.delete_contact.delay")
+@pytest.mark.django_db
+def test_user_details_toggle_is_newsletter_subscribed_off(
+    mock_create_or_update_newsletter_contact_delay, user_client, wiki_user
+):
+    wiki_user.is_newsletter_subscribed = True
+    wiki_user.save()
+    data = {
+        "fullname": wiki_user.fullname,
+        "username": wiki_user.username,
+        "is_newsletter_subscribed": False,  # Note!
+        "locale": wiki_user.locale,
+    }
+    response = user_client.put(
+        reverse("api.v1.user_details"), content_type="application/json", data=data,
+    )
+    assert response.status_code == 200
+    wiki_user.refresh_from_db()
+    assert not wiki_user.is_newsletter_subscribed
+    mock_create_or_update_newsletter_contact_delay.assert_called_once_with(
+        wiki_user.email
+    )
+
+
 @mock.patch("kuma.users.newsletter.utils.check_is_in_sendinblue_list")
 @pytest.mark.django_db
 def test_sendinblue_unsubscribe(mock_check_sendinblue, client):
@@ -633,7 +776,7 @@ def test_sendinblue_unsubscribe(mock_check_sendinblue, client):
 
     email = "testuser@example.com"
 
-    create_user(
+    user = create_user(
         save=True, username="testuser", email=email, is_newsletter_subscribed=True,
     )
 
@@ -644,4 +787,5 @@ def test_sendinblue_unsubscribe(mock_check_sendinblue, client):
     )
     assert response.status_code == 200
 
-    assert not User.objects.get(email=email).is_newsletter_subscribed
+    user.refresh_from_db()
+    assert not user.is_newsletter_subscribed
