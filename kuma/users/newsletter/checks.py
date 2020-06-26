@@ -23,7 +23,7 @@ def create_missing_attributes(existing_attributes, required_attributes):
             message = response.json()["message"]
             return [
                 Error(
-                    f"Error when creating sendinblue attribute '{name}' of type '{sendinblue_type}': {message}",
+                    f"Error when creating sendinblue attribute {name!r} of type {sendinblue_type!r}: {message}",
                     id=SENDINBLUE_API_ERROR,
                 )
             ]
