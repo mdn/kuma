@@ -48,7 +48,11 @@ from kuma.search.filters import (
 from kuma.search.search import SearchView
 from kuma.users.models import User, UserSubscription
 from kuma.users.newsletter.utils import refresh_is_user_newsletter_subscribed
-from kuma.users.signals import newsletter_subscribed, newsletter_unsubscribed
+from kuma.users.signals import (
+    newsletter_subscribed,
+    newsletter_unsubscribed,
+    username_changed,
+)
 from kuma.users.stripe_utils import (
     cancel_stripe_customer_subscriptions,
     create_stripe_customer_and_subscription_for_user,
@@ -306,12 +310,16 @@ class APIUserDetailsView(APIView):
         serializer = UserDetailsSerializer(instance=user, data=request.data)
         if serializer.is_valid():
             was_subscribed = user.is_newsletter_subscribed
+            old_username = user.username
             serializer.save(user=user)
 
             if not was_subscribed and user.is_newsletter_subscribed:
                 newsletter_subscribed.send(None, user=user)
             if was_subscribed and not user.is_newsletter_subscribed:
                 newsletter_unsubscribed.send(None, user=user)
+
+            if old_username != user.username:
+                username_changed.send(None, user=user)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

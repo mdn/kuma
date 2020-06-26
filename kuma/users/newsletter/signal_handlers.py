@@ -8,6 +8,7 @@ from kuma.users.signals import (
     newsletter_unsubscribed,
     subscription_cancelled,
     subscription_created,
+    username_changed,
 )
 
 from .tasks import (
@@ -35,6 +36,12 @@ def on_user_delete(instance, **kwargs):
 @receiver(user_signed_up, dispatch_uid="sendinblue.signed_up")
 def on_signed_up(user, **kwargs):
     create_or_update_contact.delay(user.pk)
+
+
+@receiver(username_changed, dispatch_uid="sendinblue.username_changed")
+def on_username_changed(user, **kwargs):
+    if user.is_newsletter_subscribed:
+        create_or_update_contact.delay(user.pk)
 
 
 @receiver(email_changed, dispatch_uid="sendinblue.email_changed")

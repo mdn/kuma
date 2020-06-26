@@ -445,6 +445,7 @@ def user_edit(request, username):
         user_form = UserEditForm(instance=edit_user, initial=initial, prefix="user")
     else:
         was_subscribed = edit_user.is_newsletter_subscribed
+        old_username = edit_user.username
 
         user_form = UserEditForm(
             data=request.POST, files=request.FILES, instance=edit_user, prefix="user"
@@ -457,6 +458,9 @@ def user_edit(request, username):
                 signals.newsletter_subscribed.send(None, user=edit_user)
             if was_subscribed and not edit_user.is_newsletter_subscribed:
                 signals.newsletter_unsubscribed.send(None, user=edit_user)
+
+            if old_username != edit_user.username:
+                signals.username_changed.send(None, user=edit_user)
 
             try:
                 # Beta
