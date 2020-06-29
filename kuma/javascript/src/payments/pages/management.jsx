@@ -37,7 +37,7 @@ const ManagementPage = ({ data, locale }: RouteComponentProps): React.Node => {
         setStatus('error');
     }
 
-    const handleDeleteSuccess = () => {
+    const onDeleteSuccess = () => {
         subscription = null;
         setCanceled(true);
         setStatus('success');
@@ -57,7 +57,7 @@ const ManagementPage = ({ data, locale }: RouteComponentProps): React.Node => {
         return (
             <SubscriptionDetail
                 locale={locale}
-                handleDeleteSuccess={handleDeleteSuccess}
+                onDeleteSuccess={onDeleteSuccess}
                 subscription={subscription}
                 contributionSupportEmail={email}
             />

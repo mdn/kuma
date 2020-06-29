@@ -5,7 +5,7 @@ import { GenericError } from '../../common/errors.jsx';
 import { deleteSubscriptions } from '../../payments/api.js';
 
 type Props = {
-    setShowForm: (((boolean) => boolean) | boolean) => void,
+    onCancel: () => mixed,
     onSuccess: () => void,
     date: string,
 };
@@ -13,15 +13,13 @@ type Props = {
 export const title = gettext('Are you sure you want to cancel?');
 
 const CancelSubscriptionForm = ({
-    setShowForm,
+    onCancel,
     onSuccess,
     date,
 }: Props): React.Node => {
     const [status, setStatus] = React.useState<'error' | 'submitting' | 'idle'>(
         'idle'
     );
-
-    const handleCancel = () => setShowForm(false);
 
     const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -59,7 +57,7 @@ const CancelSubscriptionForm = ({
                 <button
                     type="button"
                     className="cta neutral"
-                    onClick={handleCancel}
+                    onClick={onCancel}
                 >
                     {gettext('Keep subscription')}
                 </button>

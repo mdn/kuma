@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { gettext } from '../../l10n.js';
 import { GenericError } from '../../common/errors.jsx';
 
+import { type UserData } from '../../user-provider.jsx';
 import useSubscriptionData from '../../hooks/useSubscriptionData.js';
 
 import Invitation from './invitation.jsx';
@@ -13,7 +14,7 @@ import SubscriptionDetails from './subscription-detail.jsx';
 type Props = {
     contributionSupportEmail: string,
     locale: string,
-    userData: Object,
+    userData: UserData,
 };
 
 export const successMsg = gettext(
@@ -34,7 +35,7 @@ const Subscription = ({
         setStatus('error');
     }
 
-    const handleDeleteSuccess = () => {
+    const onDeleteSuccess = () => {
         subscription = null;
         setCanceled(true);
         setStatus('success');
@@ -54,7 +55,7 @@ const Subscription = ({
         return (
             <SubscriptionDetails
                 locale={locale}
-                handleDeleteSuccess={handleDeleteSuccess}
+                onDeleteSuccess={onDeleteSuccess}
                 subscription={subscription}
                 contributionSupportEmail={contributionSupportEmail}
             />

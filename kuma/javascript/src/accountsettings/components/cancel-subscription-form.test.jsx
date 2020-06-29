@@ -5,7 +5,7 @@ import { SUBSCRIPTIONS_URL } from '../../payments/api.js';
 
 const setup = (props = {}) => {
     const mockProps = {
-        setShowForm: () => {},
+        onCancel: () => {},
         onSuccess: () => {},
         date: 'April 22, 2020',
         ...props,
@@ -22,13 +22,13 @@ const setup = (props = {}) => {
 };
 
 describe('Cancel Subscriptions Form', () => {
-    it('calls setShowForm() with false if cancel button is clicked', () => {
+    it('calls onCancel() with false if cancel button is clicked', () => {
         const mockProps = {
-            setShowForm: jest.fn(),
+            onCancel: jest.fn(),
         };
         const { cancelBtn } = setup(mockProps);
         fireEvent.click(cancelBtn);
-        expect(mockProps.setShowForm).toHaveBeenCalledWith(false);
+        expect(mockProps.onCancel).toHaveBeenCalled();
     });
 
     it('submits and disables form when submit button is clicked', async () => {

@@ -10,14 +10,14 @@ import CancelSubscriptionForm from './cancel-subscription-form.jsx';
 
 type Props = {
     contributionSupportEmail: string,
-    handleDeleteSuccess: Function,
+    onDeleteSuccess: Function,
     locale: string,
     subscription: SubscriptionData,
 };
 
 const SubscriptionDetail = ({
     contributionSupportEmail,
-    handleDeleteSuccess,
+    onDeleteSuccess,
     locale,
     subscription,
 }: Props) => {
@@ -59,8 +59,8 @@ const SubscriptionDetail = ({
 
             {showForm && (
                 <CancelSubscriptionForm
-                    onSuccess={handleDeleteSuccess}
-                    setShowForm={setShowForm}
+                    onSuccess={onDeleteSuccess}
+                    onCancel={() => setShowForm(false)}
                     date={lastActiveDate}
                 />
             )}
