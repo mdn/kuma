@@ -5,7 +5,7 @@ import { GenericError } from '../../common/errors.jsx';
 import { deleteSubscriptions } from '../../payments/api.js';
 
 type Props = {
-    onCancel: () => mixed,
+    onCancel: () => void,
     onSuccess: () => void,
     date: string,
 };
