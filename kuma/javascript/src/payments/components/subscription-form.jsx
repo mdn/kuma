@@ -9,7 +9,7 @@ import GAProvider, {
 } from '../../ga-provider.jsx';
 import UserProvider from '../../user-provider.jsx';
 import { getCookie } from '../../utils';
-import { ErrorWithRetry } from './errors.jsx';
+import { ErrorWithRetry } from '../../common/errors.jsx';
 import useScriptLoading from './use-script-loading.js';
 
 const SUBSCRIPTION_URL = '/api/v1/subscriptions/';

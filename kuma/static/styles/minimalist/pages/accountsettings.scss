@@ -3,6 +3,9 @@
 @import '../utils/layout-utils';
 
 @import '../atoms/forms';
+@import '../atoms/buttons';
+
+@import '../components/accountsettings/titlebar';
 
 .signin-required {
     margin: 40px auto;

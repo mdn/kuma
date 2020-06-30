@@ -2,22 +2,35 @@
 import * as React from 'react';
 import { useContext } from 'react';
 
-import { gettext } from '../../l10n.js';
+import { gettext, Interpolated } from '../../l10n.js';
 import { type RouteComponentProps } from '../../route.js';
 import UserProvider from '../../user-provider.jsx';
 
 import SignInLink from '../../signin-link.jsx';
 import Titlebar from '../components/titlebar.jsx';
 import UserDetails from '../components/user-details.jsx';
+import Subscription from '../components/subscription.jsx';
 
 export const pageTitle = gettext('Account Settings');
 const pageSubtitle = gettext('Update your details and manage your preferences');
 
 export default function LandingPage({ data, locale }: RouteComponentProps) {
+    const contributionSupportEmail = data.contributionSupportEmail;
     const userData = useContext(UserProvider.context);
 
     return (
         <main id="content" role="main" data-testid="landing-page">
+            {userData && !userData.isAuthenticated && (
+                <p className="account-girdle signin-required">
+                    <Interpolated
+                        id={gettext(
+                            'You need to be <signInLink /> to access account settings.'
+                        )}
+                        signInLink={<SignInLink text={gettext('signed in')} />}
+                    />
+                </p>
+            )}
+
             {userData && userData.isAuthenticated && (
                 <>
                     <Titlebar
@@ -30,16 +43,12 @@ export default function LandingPage({ data, locale }: RouteComponentProps) {
                         userData={userData}
                         sortedLanguages={data.sortedLanguages}
                     />
+                    <Subscription
+                        locale={locale}
+                        userData={userData}
+                        contributionSupportEmail={contributionSupportEmail}
+                    />
                 </>
-            )}
-
-            {userData && !userData.isAuthenticated && (
-                <p className="account-girdle signin-required">
-                    {gettext(
-                        'You need to be signed in to access account settings. '
-                    )}
-                    <SignInLink />
-                </p>
             )}
         </main>
     );

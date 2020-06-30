@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { gettext, Interpolated } from '../../l10n.js';
+import { gettext, Interpolated } from '../l10n.js';
 
 type Props = {
     text: string,

@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { PaymentPage, PAYMENT_PATHS } from './routes.jsx';
 
 describe('PaymentPage', () => {
-    const mockData = { email: 'mock-support@mozilla.com' };
+    const mockData = { contributionSupportEmail: 'mock-support@mozilla.com' };
 
     it('renders Thank You page if path contains thank-you', () => {
         const { queryByTestId } = render(
@@ -14,14 +14,14 @@ describe('PaymentPage', () => {
 
     it('renders Terms page if path contains terms', () => {
         const { queryByTestId } = render(
-            <PaymentPage slug={PAYMENT_PATHS.TERMS} data={mockData} />
+            <PaymentPage slug={PAYMENT_PATHS.TERMS} />
         );
         expect(queryByTestId('terms-page')).toBeInTheDocument();
     });
 
     it('renders Management page if path contains management', () => {
         const { queryByTestId } = render(
-            <PaymentPage slug={PAYMENT_PATHS.MANAGEMENT} />
+            <PaymentPage slug={PAYMENT_PATHS.MANAGEMENT} data={mockData} />
         );
         expect(queryByTestId('management-page')).toBeInTheDocument();
     });

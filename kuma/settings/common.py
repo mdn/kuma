@@ -668,17 +668,17 @@ PIPELINE_CSS = {
         "source_filenames": ("styles/minimalist/pages/accountsettings.scss",),
         "output_filename": "build/styles/pages-accountsettings.css",
     },
-    "accountsettings-titlebar": {
-        "source_filenames": (
-            "styles/minimalist/components/accountsettings/titlebar.scss",
-        ),
-        "output_filename": "build/styles/accountsettings-titlebar.css",
-    },
     "accountsettings-user-details": {
         "source_filenames": (
             "styles/minimalist/components/accountsettings/user-details.scss",
         ),
         "output_filename": "build/styles/accountsettings-user-details.css",
+    },
+    "accountsettings-subscription": {
+        "source_filenames": (
+            "styles/minimalist/components/accountsettings/subscription.scss",
+        ),
+        "output_filename": "build/styles/accountsettings-subscription.css",
     },
     "mdn": {
         "source_filenames": ("styles/main.scss",),

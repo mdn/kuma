@@ -28,6 +28,7 @@
 .primary {
     background-color: $brand-primary;
     color: #fff;
+    padding: 10px 20px;
 
     &:hover,
     &:active,
@@ -44,21 +45,38 @@
 }
 
 /* Button states */
+.neutral,
 .negative,
 .positive,
+a.neutral,
 a.negative,
 a.positive,
 a.disabled,
+button.neutral,
 button.negative,
 button.positive,
 button.disabled {
     display: inline-block;
-    padding: 0 7px;
+    padding: 10px 20px;
     border: 2px solid #000;
     min-height: 28px;
     font-weight: bold;
     box-sizing: content-box;
     text-decoration: none;
+}
+
+.neutral,
+a.neutral,
+button.neutral {
+    background-color: #fff;
+    color: $text-color;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: $text-color;
+        color: #fff;
+    }
 }
 
 .negative,
@@ -69,7 +87,8 @@ button.negative {
 
     &:hover,
     &:focus,
-    &:active {
+    &:active,
+    &.solid {
         background-color: $brand-red;
         color: #fff;
     }
