@@ -29,6 +29,7 @@ const Subscription = ({
     const [canceled, setCanceled] = useState<?boolean>(false);
     const [status, setStatus] = useState<'success' | 'error' | 'idle'>('idle');
 
+    let content = null;
     let { subscription, error } = useSubscriptionData(userData);
 
     if (error && status !== 'error') {
@@ -41,18 +42,12 @@ const Subscription = ({
         setStatus('success');
     };
 
-    const renderSuccess = () => (
-        <p className="alert success" data-testid="success-msg">
-            {successMsg}
-        </p>
-    );
-
-    const renderSubscriptionDetail = () => {
-        if (!subscription) {
-            return false;
-        }
-
-        return (
+    if (!userData.isSubscriber || canceled) {
+        // Not a subscriber or just canceled their subscription
+        content = <Invitation locale={locale} />;
+    } else if (userData.isSubscriber && !!subscription) {
+        // Is a subscriber and has subscriptions
+        content = (
             <SubscriptionDetails
                 locale={locale}
                 onDeleteSuccess={onDeleteSuccess}
@@ -60,24 +55,12 @@ const Subscription = ({
                 contributionSupportEmail={contributionSupportEmail}
             />
         );
-    };
-
-    const renderContent = () => {
-        switch (true) {
-            case !userData.isSubscriber || canceled:
-                // Not a subscriber or just canceled their subscription
-                return <Invitation locale={locale} />;
-            case userData.isSubscriber && !!subscription:
-                // Is a subscriber and has subscriptions
-                return renderSubscriptionDetail();
-            case status === 'error':
-                // Something went wrong with fetching data
-                return <GenericError />;
-            default:
-                // Fetching data
-                return <strong>{gettext('Loading…')}</strong>;
-        }
-    };
+    } else if (status === 'error') {
+        // Something went wrong with fetching data
+        content = <GenericError />;
+    } else {
+        content = <strong>{gettext('Loading…')}</strong>;
+    }
 
     return (
         <section
@@ -85,8 +68,12 @@ const Subscription = ({
             aria-labelledby="subscription-heading"
         >
             <h2 id="subscription-heading">{gettext('Subscription')}</h2>
-            {status === 'success' && renderSuccess()}
-            {renderContent()}
+            {status === 'success' && (
+                <p className="alert success" data-testid="success-msg">
+                    {successMsg}
+                </p>
+            )}
+            {content}
         </section>
     );
 };
