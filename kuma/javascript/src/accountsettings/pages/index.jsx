@@ -10,6 +10,7 @@ import SignInLink from '../../signin-link.jsx';
 import Titlebar from '../components/titlebar.jsx';
 import UserDetails from '../components/user-details.jsx';
 import Subscription from '../components/subscription.jsx';
+import CloseAccount from '../components/close-account.jsx';
 
 export const pageTitle = gettext('Account Settings');
 const pageSubtitle = gettext('Update your details and manage your preferences');
@@ -48,6 +49,7 @@ export default function LandingPage({ data, locale }: RouteComponentProps) {
                         userData={userData}
                         contributionSupportEmail={contributionSupportEmail}
                     />
+                    <CloseAccount />
                 </>
             )}
         </main>

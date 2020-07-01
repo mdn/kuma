@@ -32,30 +32,29 @@ const SubscriptionDetail = ({
     };
     const [showForm, setShowForm] = useState<boolean>(false);
 
-    const handleClick = (event) => {
-        event.preventDefault();
-        setShowForm(true);
-    };
-
     return (
         <>
-            <p className="subscription-status">
-                {interpolate(
-                    'Next payment of %(amount)s (monthly) occurs on %(nextPaymentDate)s.',
-                    {
-                        amount,
-                        nextPaymentDate,
-                    }
-                )}
+            <div className="lead-in">
+                <p>
+                    {interpolate(
+                        'Next payment of %(amount)s (monthly) occurs on %(nextPaymentDate)s.',
+                        {
+                            amount,
+                            nextPaymentDate,
+                        }
+                    )}
+                </p>
 
                 <button
                     className="cta negative"
-                    onClick={handleClick}
+                    onClick={() => {
+                        setShowForm(true);
+                    }}
                     type="button"
                 >
                     {gettext('Cancel subscription')}
                 </button>
-            </p>
+            </div>
 
             {showForm && (
                 <CancelSubscriptionForm
@@ -75,35 +74,39 @@ const SubscriptionDetail = ({
                 <li>{gettext(`Postal/Zip Code: ${subscription.zip}`)}</li>
             </ul>
 
-            <ul>
-                <li>
-                    <Interpolated
-                        id={gettext(
-                            'To see your member perks, visit the <thankYouLink />'
-                        )}
-                        thankYouLink={
-                            <a href={urls.paymentsThankyou}>
-                                {gettext('thank you page.')}
-                            </a>
-                        }
-                    />
-                </li>
-                <li>
-                    <Interpolated
-                        id={gettext(
-                            'If you have questions, please read the <faqLink /> or you can also <supportEmail />'
-                        )}
-                        faqLink={
-                            <a href={urls.paymentsIndex}>{gettext('FAQ')}</a>
-                        }
-                        supportEmail={
-                            <a href={urls.email}>
-                                {gettext('contact support.')}
-                            </a>
-                        }
-                    />
-                </li>
-            </ul>
+            <footer className="subscription-footer">
+                <ul>
+                    <li>
+                        <Interpolated
+                            id={gettext(
+                                'To see your member perks, visit the <thankYouLink />'
+                            )}
+                            thankYouLink={
+                                <a href={urls.paymentsThankyou}>
+                                    {gettext('thank you page.')}
+                                </a>
+                            }
+                        />
+                    </li>
+                    <li>
+                        <Interpolated
+                            id={gettext(
+                                'If you have questions, please read the <faqLink /> or you can also <supportEmail />'
+                            )}
+                            faqLink={
+                                <a href={urls.paymentsIndex}>
+                                    {gettext('FAQ')}
+                                </a>
+                            }
+                            supportEmail={
+                                <a href={urls.email}>
+                                    {gettext('contact support.')}
+                                </a>
+                            }
+                        />
+                    </li>
+                </ul>
+            </footer>
         </>
     );
 };

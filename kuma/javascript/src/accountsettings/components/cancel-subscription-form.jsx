@@ -42,7 +42,7 @@ const CancelSubscriptionForm = ({
     return (
         <form
             name="cancel-subscription"
-            className="cancel-subscription"
+            className="confirmation-form"
             onSubmit={handleSubmit}
             aria-labelledby="subscription-form-heading"
         >
